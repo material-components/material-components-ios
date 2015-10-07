@@ -17,7 +17,7 @@
 #import <XCTest/XCTest.h>
 #import "MDCTypography.h"
 
-static const CGFloat kEpslion = 0.001f;
+static const CGFloat kEpsilon = 0.001f;
 
 @interface TypographyTests : XCTestCase
 
@@ -46,7 +46,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography displayFont4Opacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon);
 }
 - (void)testDisplayFont3Opacity {
   // Given
@@ -55,7 +55,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography displayFont3Opacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon);
 }
 - (void)testDisplayFont2Opacity {
   // Given
@@ -64,7 +64,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography displayFont2Opacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon);
 }
 - (void)testDisplayFont1Opacity {
   // Given
@@ -73,7 +73,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography displayFont1Opacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon);
 }
 
 - (void)testHeadlineFontOpacity {
@@ -83,7 +83,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography headlineFontOpacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon);
 }
 
 - (void)testSubheadFontOpacity {
@@ -93,7 +93,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography subheadFontOpacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon);
 }
 
 - (void)testBody2FontOpacity {
@@ -103,7 +103,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography body2FontOpacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon);
 }
 
 - (void)testBody1FontOpacity {
@@ -113,7 +113,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography body1FontOpacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon);
 }
 
 - (void)testCaptionFontOpacity {
@@ -123,7 +123,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography captionFontOpacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon);
 }
 
 - (void)testButtonFontOpacity {
@@ -133,7 +133,7 @@ static const CGFloat kEpslion = 0.001f;
   CGFloat opacity = [MDCTypography buttonFontOpacity];
   
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpslion);
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon);
 }
 
 #pragma mark - font name and size
@@ -143,7 +143,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography displayFont4];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 112, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 112, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Light");
 }
 
@@ -152,7 +152,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography displayFont3];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 56, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 56, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular");
 }
 
@@ -161,7 +161,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography displayFont2];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 45, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 45, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular");
 }
 
@@ -170,7 +170,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography displayFont1];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 34, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 34, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular");
 }
 
@@ -179,7 +179,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography headlineFont];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 24, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 24, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular");
 }
 
@@ -188,7 +188,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography titleFont];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 20, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 20, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Medium");
 }
 
@@ -197,7 +197,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography subheadFont];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 16, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 16, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular");
 }
 
@@ -206,7 +206,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography body2Font];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Medium");
 }
 
@@ -215,7 +215,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography body1Font];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular");
 }
 
@@ -224,7 +224,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography captionFont];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 12, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 12, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular");
 }
 
@@ -233,7 +233,7 @@ static const CGFloat kEpslion = 0.001f;
   // When
   UIFont *font = [MDCTypography buttonFont];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Medium");
 }
 #pragma mark - Roboto fonts
@@ -246,7 +246,7 @@ static const CGFloat kEpslion = 0.001f;
   UIFont *font = [MDCTypography robotoRegularWithSize:size];
   
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular");
 }
 
@@ -258,7 +258,7 @@ static const CGFloat kEpslion = 0.001f;
   UIFont *font = [MDCTypography robotoBoldWithSize:size];
   
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Bold");
 }
 
@@ -270,7 +270,7 @@ static const CGFloat kEpslion = 0.001f;
   UIFont *font = [MDCTypography robotoMediumWithSize:size];
   
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Medium");
 }
 
@@ -282,7 +282,7 @@ static const CGFloat kEpslion = 0.001f;
   UIFont *font = [MDCTypography robotoLightWithSize:size];
   
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Light");
 }
 
@@ -294,7 +294,7 @@ static const CGFloat kEpslion = 0.001f;
   UIFont *font = [MDCTypography robotoItalicWithSize:size];
   
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-Italic");
 }
 
@@ -306,7 +306,7 @@ static const CGFloat kEpslion = 0.001f;
   UIFont *font = [MDCTypography robotoBoldItalicWithSize:size];
   
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpslion);
+  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilon);
   XCTAssertEqualObjects(font.fontName, @"Roboto-BoldItalic");
 }
 
