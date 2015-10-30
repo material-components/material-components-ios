@@ -14,5 +14,5 @@
  limitations under the License.
  */
 
-#import "MaterialTypography/MDCTypography.h"
+#import "MDCTypography.h"
 
