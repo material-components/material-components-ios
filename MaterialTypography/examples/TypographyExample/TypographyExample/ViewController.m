@@ -15,7 +15,7 @@
  */
 
 #import "ViewController.h"
-#import "MDCTypography.h"
+#import "MaterialTypography.h"
 
 @interface ViewController ()
 
