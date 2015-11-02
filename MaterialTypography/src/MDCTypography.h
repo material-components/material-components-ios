@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- * Typographic constants and helpers.
+ * Material typographic specification.
  *
  * To use these fonts, you must add MDCTypography.bundle to your target.
  *
