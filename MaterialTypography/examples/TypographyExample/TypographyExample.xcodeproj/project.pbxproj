@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B5D80121BE3EB5C00AA67C1 /* MDCTypography.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0B5D800F1BE3EB5C00AA67C1 /* MDCTypography.bundle */; };
 		0B5D80131BE3EB5C00AA67C1 /* MDCTypography.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5D80111BE3EB5C00AA67C1 /* MDCTypography.m */; };
+		201B0ABD1BE95A8C009CE0C6 /* TypographyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 201B0ABC1BE95A8C009CE0C6 /* TypographyTest.m */; settings = {ASSET_TAGS = (); }; };
 		20DA31C71BAA01AB00CE11C2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C61BAA01AB00CE11C2 /* main.m */; };
 		20DA31CA1BAA01AB00CE11C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C91BAA01AB00CE11C2 /* AppDelegate.m */; };
 		20DA31CD1BAA01AB00CE11C2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31CC1BAA01AB00CE11C2 /* ViewController.m */; };
@@ -17,7 +18,6 @@
 		20DA31D51BAA01AB00CE11C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20DA31D31BAA01AB00CE11C2 /* LaunchScreen.storyboard */; };
 		20DA31E01BAA01AB00CE11C2 /* TypographyExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31DF1BAA01AB00CE11C2 /* TypographyExampleTests.m */; };
 		20DA31EB1BAA01AB00CE11C2 /* TypographyExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31EA1BAA01AB00CE11C2 /* TypographyExampleUITests.m */; };
-		20DA32011BAB662500CE11C2 /* TypographyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA32001BAB662500CE11C2 /* TypographyTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +42,7 @@
 		0B5D800F1BE3EB5C00AA67C1 /* MDCTypography.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MDCTypography.bundle; sourceTree = "<group>"; };
 		0B5D80101BE3EB5C00AA67C1 /* MDCTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCTypography.h; sourceTree = "<group>"; };
 		0B5D80111BE3EB5C00AA67C1 /* MDCTypography.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCTypography.m; sourceTree = "<group>"; };
+		201B0ABC1BE95A8C009CE0C6 /* TypographyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TypographyTest.m; path = ../../../tests/TypographyTest.m; sourceTree = "<group>"; };
 		20DA31C21BAA01AB00CE11C2 /* TypographyExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypographyExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20DA31C61BAA01AB00CE11C2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		20DA31C81BAA01AB00CE11C2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -58,7 +59,6 @@
 		20DA31E61BAA01AB00CE11C2 /* TypographyExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TypographyExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20DA31EA1BAA01AB00CE11C2 /* TypographyExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TypographyExampleUITests.m; sourceTree = "<group>"; };
 		20DA31EC1BAA01AB00CE11C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		20DA32001BAB662500CE11C2 /* TypographyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TypographyTest.m; path = ../../../tests/Typography/TypographyTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +134,7 @@
 		20DA31DE1BAA01AB00CE11C2 /* TypographyExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				20DA32001BAB662500CE11C2 /* TypographyTest.m */,
+				201B0ABC1BE95A8C009CE0C6 /* TypographyTest.m */,
 				20DA31DF1BAA01AB00CE11C2 /* TypographyExampleTests.m */,
 				20DA31E11BAA01AB00CE11C2 /* Info.plist */,
 			);
@@ -304,7 +304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20DA32011BAB662500CE11C2 /* TypographyTest.m in Sources */,
+				201B0ABD1BE95A8C009CE0C6 /* TypographyTest.m in Sources */,
 				20DA31E01BAA01AB00CE11C2 /* TypographyExampleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
