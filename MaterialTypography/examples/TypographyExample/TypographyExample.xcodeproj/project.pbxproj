@@ -10,8 +10,6 @@
 		20B947851BEB3051005EE125 /* MDCFontResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947701BEB3051005EE125 /* MDCFontResource.m */; settings = {ASSET_TAGS = (); }; };
 		20B947871BEB3051005EE125 /* MDCRobotoFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947741BEB3051005EE125 /* MDCRobotoFontLoader.m */; settings = {ASSET_TAGS = (); }; };
 		20B947881BEB3051005EE125 /* MDCTypography.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947761BEB3051005EE125 /* MDCTypography.m */; settings = {ASSET_TAGS = (); }; };
-		20B947891BEB3051005EE125 /* MDCTypography+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947781BEB3051005EE125 /* MDCTypography+Deprecated.m */; settings = {ASSET_TAGS = (); }; };
-		20B9478A1BEB3051005EE125 /* MDCTypography+GoogleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B9477A1BEB3051005EE125 /* MDCTypography+GoogleAdditions.m */; settings = {ASSET_TAGS = (); }; };
 		20B947931BEB33B9005EE125 /* MDCTypography+Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B9478F1BEB33B9005EE125 /* MDCTypography+Constants.m */; settings = {ASSET_TAGS = (); }; };
 		20B947941BEB33B9005EE125 /* MDCTypographyFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947921BEB33B9005EE125 /* MDCTypographyFontLoader.m */; settings = {ASSET_TAGS = (); }; };
 		20B947961BEB33D1005EE125 /* MaterialTypography.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B947951BEB33D1005EE125 /* MaterialTypography.bundle */; settings = {ASSET_TAGS = (); }; };
@@ -53,10 +51,6 @@
 		20B947741BEB3051005EE125 /* MDCRobotoFontLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCRobotoFontLoader.m; sourceTree = "<group>"; };
 		20B947751BEB3051005EE125 /* MDCTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCTypography.h; sourceTree = "<group>"; };
 		20B947761BEB3051005EE125 /* MDCTypography.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCTypography.m; sourceTree = "<group>"; };
-		20B947771BEB3051005EE125 /* MDCTypography+Deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDCTypography+Deprecated.h"; sourceTree = "<group>"; };
-		20B947781BEB3051005EE125 /* MDCTypography+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCTypography+Deprecated.m"; sourceTree = "<group>"; };
-		20B947791BEB3051005EE125 /* MDCTypography+GoogleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDCTypography+GoogleAdditions.h"; sourceTree = "<group>"; };
-		20B9477A1BEB3051005EE125 /* MDCTypography+GoogleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCTypography+GoogleAdditions.m"; sourceTree = "<group>"; };
 		20B9478F1BEB33B9005EE125 /* MDCTypography+Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCTypography+Constants.m"; sourceTree = "<group>"; };
 		20B947901BEB33B9005EE125 /* MDCTypography+Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDCTypography+Constants.h"; sourceTree = "<group>"; };
 		20B947911BEB33B9005EE125 /* MDCTypographyFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCTypographyFontLoader.h; sourceTree = "<group>"; };
@@ -195,10 +189,6 @@
 				20B947741BEB3051005EE125 /* MDCRobotoFontLoader.m */,
 				20B947751BEB3051005EE125 /* MDCTypography.h */,
 				20B947761BEB3051005EE125 /* MDCTypography.m */,
-				20B947771BEB3051005EE125 /* MDCTypography+Deprecated.h */,
-				20B947781BEB3051005EE125 /* MDCTypography+Deprecated.m */,
-				20B947791BEB3051005EE125 /* MDCTypography+GoogleAdditions.h */,
-				20B9477A1BEB3051005EE125 /* MDCTypography+GoogleAdditions.m */,
 				20B947951BEB33D1005EE125 /* MaterialTypography.bundle */,
 				20B9477C1BEB3051005EE125 /* Private */,
 			);
@@ -338,7 +328,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				20DA31CD1BAA01AB00CE11C2 /* ViewController.m in Sources */,
-				20B9478A1BEB3051005EE125 /* MDCTypography+GoogleAdditions.m in Sources */,
 				20B947941BEB33B9005EE125 /* MDCTypographyFontLoader.m in Sources */,
 				20B947871BEB3051005EE125 /* MDCRobotoFontLoader.m in Sources */,
 				20B947851BEB3051005EE125 /* MDCFontResource.m in Sources */,
@@ -346,7 +335,6 @@
 				20B947881BEB3051005EE125 /* MDCTypography.m in Sources */,
 				20DA31C71BAA01AB00CE11C2 /* main.m in Sources */,
 				20B947931BEB33B9005EE125 /* MDCTypography+Constants.m in Sources */,
-				20B947891BEB3051005EE125 /* MDCTypography+Deprecated.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
