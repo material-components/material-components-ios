@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		201B0ABD1BE95A8C009CE0C6 /* TypographyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 201B0ABC1BE95A8C009CE0C6 /* TypographyTest.m */; settings = {ASSET_TAGS = (); }; };
 		20B947851BEB3051005EE125 /* GOOFontResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947701BEB3051005EE125 /* GOOFontResource.m */; settings = {ASSET_TAGS = (); }; };
 		20B947871BEB3051005EE125 /* GOORobotoFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947741BEB3051005EE125 /* GOORobotoFontLoader.m */; settings = {ASSET_TAGS = (); }; };
 		20B947881BEB3051005EE125 /* GOOTypography.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947761BEB3051005EE125 /* GOOTypography.m */; settings = {ASSET_TAGS = (); }; };
@@ -47,7 +46,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		201B0ABC1BE95A8C009CE0C6 /* TypographyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TypographyTest.m; path = ../../../tests/TypographyTest.m; sourceTree = "<group>"; };
 		20B9476F1BEB3051005EE125 /* GOOFontResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOOFontResource.h; sourceTree = "<group>"; };
 		20B947701BEB3051005EE125 /* GOOFontResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOOFontResource.m; sourceTree = "<group>"; };
 		20B947711BEB3051005EE125 /* GoogleKitTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleKitTypography.h; sourceTree = "<group>"; };
@@ -172,7 +170,6 @@
 				20B947971BEB34E1005EE125 /* GOOFontResourceTests.m */,
 				20B947981BEB34E2005EE125 /* GOORobotoFontLoaderTests.m */,
 				20B947991BEB34E2005EE125 /* GOOTypographyTests.m */,
-				201B0ABC1BE95A8C009CE0C6 /* TypographyTest.m */,
 				20DA31DF1BAA01AB00CE11C2 /* TypographyExampleTests.m */,
 				20DA31E11BAA01AB00CE11C2 /* Info.plist */,
 			);
@@ -360,7 +357,6 @@
 				20B9479B1BEB34E2005EE125 /* GOORobotoFontLoaderTests.m in Sources */,
 				20B9479A1BEB34E2005EE125 /* GOOFontResourceTests.m in Sources */,
 				20B9479C1BEB34E2005EE125 /* GOOTypographyTests.m in Sources */,
-				201B0ABD1BE95A8C009CE0C6 /* TypographyTest.m in Sources */,
 				20DA31E01BAA01AB00CE11C2 /* TypographyExampleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

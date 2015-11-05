@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 
 #import "GOORobotoFontLoader.h"
-#import "Private/GOOTypography+Constants.h"
+#import "GOOTypography+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
