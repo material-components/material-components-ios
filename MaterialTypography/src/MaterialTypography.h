@@ -8,8 +8,7 @@
 #import "MDCFontResource.h"
 #import "MDCRobotoFontLoader.h"
 #import "MDCTypography.h"
-#import "MDCTypography+Deprecated.h"
-#import "MDCTypography+GoogleAdditions.h"
+
 /**
  * @defgroup Typography
  * @brief Material typography.
