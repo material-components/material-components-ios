@@ -16,6 +16,9 @@
 		20B947931BEB33B9005EE125 /* GOOTypography+Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B9478F1BEB33B9005EE125 /* GOOTypography+Constants.m */; settings = {ASSET_TAGS = (); }; };
 		20B947941BEB33B9005EE125 /* GOOTypographyFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947921BEB33B9005EE125 /* GOOTypographyFontLoader.m */; settings = {ASSET_TAGS = (); }; };
 		20B947961BEB33D1005EE125 /* GoogleKitTypography.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B947951BEB33D1005EE125 /* GoogleKitTypography.bundle */; settings = {ASSET_TAGS = (); }; };
+		20B9479A1BEB34E2005EE125 /* GOOFontResourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947971BEB34E1005EE125 /* GOOFontResourceTests.m */; settings = {ASSET_TAGS = (); }; };
+		20B9479B1BEB34E2005EE125 /* GOORobotoFontLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947981BEB34E2005EE125 /* GOORobotoFontLoaderTests.m */; settings = {ASSET_TAGS = (); }; };
+		20B9479C1BEB34E2005EE125 /* GOOTypographyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947991BEB34E2005EE125 /* GOOTypographyTests.m */; settings = {ASSET_TAGS = (); }; };
 		20DA31C71BAA01AB00CE11C2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C61BAA01AB00CE11C2 /* main.m */; };
 		20DA31CA1BAA01AB00CE11C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C91BAA01AB00CE11C2 /* AppDelegate.m */; };
 		20DA31CD1BAA01AB00CE11C2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31CC1BAA01AB00CE11C2 /* ViewController.m */; };
@@ -61,6 +64,9 @@
 		20B947911BEB33B9005EE125 /* GOOTypographyFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOOTypographyFontLoader.h; sourceTree = "<group>"; };
 		20B947921BEB33B9005EE125 /* GOOTypographyFontLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOOTypographyFontLoader.m; sourceTree = "<group>"; };
 		20B947951BEB33D1005EE125 /* GoogleKitTypography.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleKitTypography.bundle; sourceTree = "<group>"; };
+		20B947971BEB34E1005EE125 /* GOOFontResourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOOFontResourceTests.m; sourceTree = "<group>"; };
+		20B947981BEB34E2005EE125 /* GOORobotoFontLoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOORobotoFontLoaderTests.m; sourceTree = "<group>"; };
+		20B947991BEB34E2005EE125 /* GOOTypographyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOOTypographyTests.m; sourceTree = "<group>"; };
 		20DA31C21BAA01AB00CE11C2 /* TypographyExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypographyExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20DA31C61BAA01AB00CE11C2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		20DA31C81BAA01AB00CE11C2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -163,6 +169,9 @@
 		20DA31DE1BAA01AB00CE11C2 /* TypographyExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				20B947971BEB34E1005EE125 /* GOOFontResourceTests.m */,
+				20B947981BEB34E2005EE125 /* GOORobotoFontLoaderTests.m */,
+				20B947991BEB34E2005EE125 /* GOOTypographyTests.m */,
 				201B0ABC1BE95A8C009CE0C6 /* TypographyTest.m */,
 				20DA31DF1BAA01AB00CE11C2 /* TypographyExampleTests.m */,
 				20DA31E11BAA01AB00CE11C2 /* Info.plist */,
@@ -348,6 +357,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20B9479B1BEB34E2005EE125 /* GOORobotoFontLoaderTests.m in Sources */,
+				20B9479A1BEB34E2005EE125 /* GOOFontResourceTests.m in Sources */,
+				20B9479C1BEB34E2005EE125 /* GOOTypographyTests.m in Sources */,
 				201B0ABD1BE95A8C009CE0C6 /* TypographyTest.m in Sources */,
 				20DA31E01BAA01AB00CE11C2 /* TypographyExampleTests.m in Sources */,
 			);
