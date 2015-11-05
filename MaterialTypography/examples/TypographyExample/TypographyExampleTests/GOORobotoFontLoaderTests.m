@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOORobotoFontLoader.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/Private/GOOTypography+Constants.h"
+#import "GOORobotoFontLoader.h"
+#import "Private/GOOTypography+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
