@@ -1,4 +1,4 @@
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/Private/GOOTypography+Constants.h"
+#import "GOOTypography+Constants.h"
 
 #ifndef GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
 #define GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE @"GoogleKitTypography.bundle"

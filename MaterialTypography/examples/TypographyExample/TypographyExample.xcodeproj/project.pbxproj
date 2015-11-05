@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B5D80121BE3EB5C00AA67C1 /* MDCTypography.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0B5D800F1BE3EB5C00AA67C1 /* MDCTypography.bundle */; };
-		0B5D80131BE3EB5C00AA67C1 /* MDCTypography.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5D80111BE3EB5C00AA67C1 /* MDCTypography.m */; };
 		201B0ABD1BE95A8C009CE0C6 /* TypographyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 201B0ABC1BE95A8C009CE0C6 /* TypographyTest.m */; settings = {ASSET_TAGS = (); }; };
+		20B947851BEB3051005EE125 /* GOOFontResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947701BEB3051005EE125 /* GOOFontResource.m */; settings = {ASSET_TAGS = (); }; };
+		20B947871BEB3051005EE125 /* GOORobotoFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947741BEB3051005EE125 /* GOORobotoFontLoader.m */; settings = {ASSET_TAGS = (); }; };
+		20B947881BEB3051005EE125 /* GOOTypography.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947761BEB3051005EE125 /* GOOTypography.m */; settings = {ASSET_TAGS = (); }; };
+		20B947891BEB3051005EE125 /* GOOTypography+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947781BEB3051005EE125 /* GOOTypography+Deprecated.m */; settings = {ASSET_TAGS = (); }; };
+		20B9478A1BEB3051005EE125 /* GOOTypography+GoogleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B9477A1BEB3051005EE125 /* GOOTypography+GoogleAdditions.m */; settings = {ASSET_TAGS = (); }; };
+		20B947931BEB33B9005EE125 /* GOOTypography+Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B9478F1BEB33B9005EE125 /* GOOTypography+Constants.m */; settings = {ASSET_TAGS = (); }; };
+		20B947941BEB33B9005EE125 /* GOOTypographyFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947921BEB33B9005EE125 /* GOOTypographyFontLoader.m */; settings = {ASSET_TAGS = (); }; };
+		20B947961BEB33D1005EE125 /* GoogleKitTypography.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B947951BEB33D1005EE125 /* GoogleKitTypography.bundle */; settings = {ASSET_TAGS = (); }; };
 		20DA31C71BAA01AB00CE11C2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C61BAA01AB00CE11C2 /* main.m */; };
 		20DA31CA1BAA01AB00CE11C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C91BAA01AB00CE11C2 /* AppDelegate.m */; };
 		20DA31CD1BAA01AB00CE11C2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31CC1BAA01AB00CE11C2 /* ViewController.m */; };
@@ -38,11 +44,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B5D800E1BE3EB5C00AA67C1 /* MaterialTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTypography.h; sourceTree = "<group>"; };
-		0B5D800F1BE3EB5C00AA67C1 /* MDCTypography.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MDCTypography.bundle; sourceTree = "<group>"; };
-		0B5D80101BE3EB5C00AA67C1 /* MDCTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCTypography.h; sourceTree = "<group>"; };
-		0B5D80111BE3EB5C00AA67C1 /* MDCTypography.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCTypography.m; sourceTree = "<group>"; };
 		201B0ABC1BE95A8C009CE0C6 /* TypographyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TypographyTest.m; path = ../../../tests/TypographyTest.m; sourceTree = "<group>"; };
+		20B9476F1BEB3051005EE125 /* GOOFontResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOOFontResource.h; sourceTree = "<group>"; };
+		20B947701BEB3051005EE125 /* GOOFontResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOOFontResource.m; sourceTree = "<group>"; };
+		20B947711BEB3051005EE125 /* GoogleKitTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleKitTypography.h; sourceTree = "<group>"; };
+		20B947731BEB3051005EE125 /* GOORobotoFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOORobotoFontLoader.h; sourceTree = "<group>"; };
+		20B947741BEB3051005EE125 /* GOORobotoFontLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOORobotoFontLoader.m; sourceTree = "<group>"; };
+		20B947751BEB3051005EE125 /* GOOTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOOTypography.h; sourceTree = "<group>"; };
+		20B947761BEB3051005EE125 /* GOOTypography.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOOTypography.m; sourceTree = "<group>"; };
+		20B947771BEB3051005EE125 /* GOOTypography+Deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GOOTypography+Deprecated.h"; sourceTree = "<group>"; };
+		20B947781BEB3051005EE125 /* GOOTypography+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GOOTypography+Deprecated.m"; sourceTree = "<group>"; };
+		20B947791BEB3051005EE125 /* GOOTypography+GoogleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GOOTypography+GoogleAdditions.h"; sourceTree = "<group>"; };
+		20B9477A1BEB3051005EE125 /* GOOTypography+GoogleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GOOTypography+GoogleAdditions.m"; sourceTree = "<group>"; };
+		20B9478F1BEB33B9005EE125 /* GOOTypography+Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GOOTypography+Constants.m"; sourceTree = "<group>"; };
+		20B947901BEB33B9005EE125 /* GOOTypography+Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GOOTypography+Constants.h"; sourceTree = "<group>"; };
+		20B947911BEB33B9005EE125 /* GOOTypographyFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOOTypographyFontLoader.h; sourceTree = "<group>"; };
+		20B947921BEB33B9005EE125 /* GOOTypographyFontLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOOTypographyFontLoader.m; sourceTree = "<group>"; };
+		20B947951BEB33D1005EE125 /* GoogleKitTypography.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleKitTypography.bundle; sourceTree = "<group>"; };
 		20DA31C21BAA01AB00CE11C2 /* TypographyExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypographyExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20DA31C61BAA01AB00CE11C2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		20DA31C81BAA01AB00CE11C2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -86,6 +104,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		20B9477C1BEB3051005EE125 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				20B9478F1BEB33B9005EE125 /* GOOTypography+Constants.m */,
+				20B947901BEB33B9005EE125 /* GOOTypography+Constants.h */,
+				20B947911BEB33B9005EE125 /* GOOTypographyFontLoader.h */,
+				20B947921BEB33B9005EE125 /* GOOTypographyFontLoader.m */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
 		20DA31B91BAA01AB00CE11C2 = {
 			isa = PBXGroup;
 			children = (
@@ -153,10 +182,19 @@
 		20DA31FA1BAA062000CE11C2 /* Typography */ = {
 			isa = PBXGroup;
 			children = (
-				0B5D800E1BE3EB5C00AA67C1 /* MaterialTypography.h */,
-				0B5D800F1BE3EB5C00AA67C1 /* MDCTypography.bundle */,
-				0B5D80101BE3EB5C00AA67C1 /* MDCTypography.h */,
-				0B5D80111BE3EB5C00AA67C1 /* MDCTypography.m */,
+				20B9476F1BEB3051005EE125 /* GOOFontResource.h */,
+				20B947701BEB3051005EE125 /* GOOFontResource.m */,
+				20B947711BEB3051005EE125 /* GoogleKitTypography.h */,
+				20B947731BEB3051005EE125 /* GOORobotoFontLoader.h */,
+				20B947741BEB3051005EE125 /* GOORobotoFontLoader.m */,
+				20B947751BEB3051005EE125 /* GOOTypography.h */,
+				20B947761BEB3051005EE125 /* GOOTypography.m */,
+				20B947771BEB3051005EE125 /* GOOTypography+Deprecated.h */,
+				20B947781BEB3051005EE125 /* GOOTypography+Deprecated.m */,
+				20B947791BEB3051005EE125 /* GOOTypography+GoogleAdditions.h */,
+				20B9477A1BEB3051005EE125 /* GOOTypography+GoogleAdditions.m */,
+				20B947951BEB33D1005EE125 /* GoogleKitTypography.bundle */,
+				20B9477C1BEB3051005EE125 /* Private */,
 			);
 			name = Typography;
 			path = ../../src;
@@ -267,8 +305,8 @@
 			files = (
 				20DA31D51BAA01AB00CE11C2 /* LaunchScreen.storyboard in Resources */,
 				20DA31D21BAA01AB00CE11C2 /* Assets.xcassets in Resources */,
+				20B947961BEB33D1005EE125 /* GoogleKitTypography.bundle in Resources */,
 				20DA31D01BAA01AB00CE11C2 /* Main.storyboard in Resources */,
-				0B5D80121BE3EB5C00AA67C1 /* MDCTypography.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,9 +332,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				20DA31CD1BAA01AB00CE11C2 /* ViewController.m in Sources */,
-				0B5D80131BE3EB5C00AA67C1 /* MDCTypography.m in Sources */,
+				20B9478A1BEB3051005EE125 /* GOOTypography+GoogleAdditions.m in Sources */,
+				20B947941BEB33B9005EE125 /* GOOTypographyFontLoader.m in Sources */,
+				20B947871BEB3051005EE125 /* GOORobotoFontLoader.m in Sources */,
+				20B947851BEB3051005EE125 /* GOOFontResource.m in Sources */,
 				20DA31CA1BAA01AB00CE11C2 /* AppDelegate.m in Sources */,
+				20B947881BEB3051005EE125 /* GOOTypography.m in Sources */,
 				20DA31C71BAA01AB00CE11C2 /* main.m in Sources */,
+				20B947931BEB33B9005EE125 /* GOOTypography+Constants.m in Sources */,
+				20B947891BEB3051005EE125 /* GOOTypography+Deprecated.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

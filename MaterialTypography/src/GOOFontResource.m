@@ -1,4 +1,4 @@
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOFontResource.h"
+#import "GOOFontResource.h"
 
 #import <CoreText/CoreText.h>
 

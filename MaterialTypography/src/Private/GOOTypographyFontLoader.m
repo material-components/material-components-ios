@@ -1,8 +1,8 @@
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/Private/GOOTypographyFontLoader.h"
+#import "GOOTypographyFontLoader.h"
 
 #import <CoreText/CoreText.h>
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/Private/GOOTypography+Constants.h"
+#import "GOOTypography+Constants.h"
 
 @implementation GOOTypographyFontLoader
 

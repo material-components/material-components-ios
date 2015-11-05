@@ -1,8 +1,6 @@
 #import <UIKit/UIKit.h>
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypographyConfig.h"
-
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GoogleKitTypography.h"
+#import "GoogleKitTypography.h"
 
 @interface GOOTypography (GoogleAdditions)  // not in Material Components
 

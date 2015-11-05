@@ -2,9 +2,9 @@
 #error "This file requires ARC support."
 #endif
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOORobotoFontLoader.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypography+Deprecated.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/Private/GOOTypography+Constants.h"
+#import "GOORobotoFontLoader.h"
+#import "GOOTypography+Deprecated.h"
+#import "Private/GOOTypography+Constants.h"
 
 static const CGFloat kHintOpacity = 0.26f;
 

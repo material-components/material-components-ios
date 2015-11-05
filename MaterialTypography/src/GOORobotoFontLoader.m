@@ -1,6 +1,6 @@
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOORobotoFontLoader.h"
+#import "GOORobotoFontLoader.h"
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/Private/GOOTypography+Constants.h"
+#import "Private/GOOTypography+Constants.h"
 
 @implementation GOORobotoFontLoader
 

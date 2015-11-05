@@ -1,9 +1,7 @@
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypographyConfig.h"
-
 #import <UIKit/UIKit.h>
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOFontResource.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypography.h"
+#import "GOOFontResource.h"
+#import "GOOTypography.h"
 
 /**
  * This class provides references to a set of @c GOOFontResources for the Roboto fonts.

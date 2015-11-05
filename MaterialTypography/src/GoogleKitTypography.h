@@ -5,13 +5,11 @@
 #error "This component only supports iOS 6.0 and above."
 #endif
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOFontResource.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOORobotoFontLoader.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypography.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypography+Deprecated.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypography+GoogleAdditions.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypographyConfig.h"
-
+#import "GOOFontResource.h"
+#import "GOORobotoFontLoader.h"
+#import "GOOTypography.h"
+#import "GOOTypography+Deprecated.h"
+#import "GOOTypography+GoogleAdditions.h"
 /**
  * @defgroup Typography
  * @brief Material typography.

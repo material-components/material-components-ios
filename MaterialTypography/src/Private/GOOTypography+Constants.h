@@ -1,5 +1,3 @@
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypographyConfig.h"
-
 #import <UIKit/UIKit.h>
 
 extern const CGFloat kStandardOpacity;

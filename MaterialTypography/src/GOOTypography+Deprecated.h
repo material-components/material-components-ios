@@ -1,8 +1,6 @@
 #import <UIKit/UIKit.h>
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypographyConfig.h"
-
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypography.h"
+#import "GOOTypography.h"
 
 // TODO(randallli): Methods in this file are scheduled for deprecation. (b/24808912)
 @interface GOOTypography (Deprecated)

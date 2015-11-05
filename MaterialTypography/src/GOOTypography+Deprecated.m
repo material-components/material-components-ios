@@ -2,7 +2,7 @@
 #error "This file requires ARC support."
 #endif
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypography+Deprecated.h"
+#import "GOOTypography+Deprecated.h"
 
 @implementation GOOTypography (Deprecated)
 

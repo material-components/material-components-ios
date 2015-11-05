@@ -2,9 +2,9 @@
 #error "This file requires ARC support."
 #endif
 
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOORobotoFontLoader.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypography.h"
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/Private/GOOTypography+Constants.h"
+#import "GOORobotoFontLoader.h"
+#import "GOOTypography.h"
+#import "Private/GOOTypography+Constants.h"
 
 static id<GOOTypographyFontLoader> sFontLoader = nil;
 

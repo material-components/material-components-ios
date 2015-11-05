@@ -1,5 +1,3 @@
-#import "googlemac/iPhone/Shared/GoogleKit/Typography/GOOTypographyConfig.h"
-
 #import <Foundation/Foundation.h>
 
 @interface GOOTypographyFontLoader : NSObject
