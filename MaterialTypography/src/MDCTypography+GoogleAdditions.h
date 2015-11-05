@@ -2,12 +2,12 @@
 
 #import "GoogleKitTypography.h"
 
-@interface GOOTypography (GoogleAdditions)  // not in Material Components
+@interface MDCTypography (GoogleAdditions)  // not in Material Components
 
 /**
  * Returns YES if the font is considered "large" for the purposes of calculating contrast ratios.
  *
- * If font was obtained from GOOTypography then the result will be accurate, otherwise the
+ * If font was obtained from MDCTypography then the result will be accurate, otherwise the
  * implementation guesses conservatively.
  *
  * @ingroup ContrastRatios

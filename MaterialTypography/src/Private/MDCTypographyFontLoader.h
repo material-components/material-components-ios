@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface GOOTypographyFontLoader : NSObject
+@interface MDCTypographyFontLoader : NSObject
 /**
  * @internal
  * This class provides conveince methods to grab roboto fonts.

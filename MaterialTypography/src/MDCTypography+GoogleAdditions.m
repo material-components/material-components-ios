@@ -2,9 +2,9 @@
 #error "This file requires ARC support."
 #endif
 
-#import "GOORobotoFontLoader.h"
-#import "GOOTypography+Deprecated.h"
-#import "Private/GOOTypography+Constants.h"
+#import "MDCRobotoFontLoader.h"
+#import "MDCTypography+Deprecated.h"
+#import "Private/MDCTypography+Constants.h"
 
 static const CGFloat kHintOpacity = 0.26f;
 
@@ -20,7 +20,7 @@ static BOOL isBoldFontName(NSString *fontName) {
          [fontName isEqualToString:kBoldItalicFontName];
 }
 
-@implementation GOOTypography (GoogleAdditions)
+@implementation MDCTypography (GoogleAdditions)
 
 + (UIFont *)italicFontFromFont:(UIFont *)font {
   NSString *fontName = font.fontName;
@@ -28,13 +28,13 @@ static BOOL isBoldFontName(NSString *fontName) {
   if (isItalicFontName(fontName)) {
     return font;
   } else if ([fontName isEqual:kRegularFontName]) {
-    return [[GOORobotoFontLoader sharedInstance] italicFontOfSize:fontSize];
+    return [[MDCRobotoFontLoader sharedInstance] italicFontOfSize:fontSize];
   } else if ([fontName isEqual:kBoldFontName]) {
-    return [[GOORobotoFontLoader sharedInstance] boldItalicFontOfSize:fontSize];
+    return [[MDCRobotoFontLoader sharedInstance] boldItalicFontOfSize:fontSize];
   } else if ([fontName isEqual:kMediumFontName]) {
-    return [[GOORobotoFontLoader sharedInstance] mediumItalicFontOfSize:fontSize];
+    return [[MDCRobotoFontLoader sharedInstance] mediumItalicFontOfSize:fontSize];
   } else if ([fontName isEqual:kLightFontName]) {
-    return [[GOORobotoFontLoader sharedInstance] lightItalicFontOfSize:fontSize];
+    return [[MDCRobotoFontLoader sharedInstance] lightItalicFontOfSize:fontSize];
   }
   return [UIFont italicSystemFontOfSize:fontSize];
 }
@@ -48,15 +48,15 @@ static BOOL isBoldFontName(NSString *fontName) {
 }
 
 + (UIFont *)robotoItalicWithSize:(CGFloat)pointSize {
-  return [[GOORobotoFontLoader sharedInstance] italicFontOfSize:pointSize];
+  return [[MDCRobotoFontLoader sharedInstance] italicFontOfSize:pointSize];
 }
 
 + (UIFont *)robotoBoldWithSize:(CGFloat)pointSize {
-  return [[GOORobotoFontLoader sharedInstance] boldFontOfSize:pointSize];
+  return [[MDCRobotoFontLoader sharedInstance] boldFontOfSize:pointSize];
 }
 
 + (UIFont *)robotoBoldItalicWithSize:(CGFloat)pointSize {
-  return [[GOORobotoFontLoader sharedInstance] boldItalicFontOfSize:pointSize];
+  return [[MDCRobotoFontLoader sharedInstance] boldItalicFontOfSize:pointSize];
 }
 
 @end

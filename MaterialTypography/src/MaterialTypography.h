@@ -5,11 +5,11 @@
 #error "This component only supports iOS 6.0 and above."
 #endif
 
-#import "GOOFontResource.h"
-#import "GOORobotoFontLoader.h"
-#import "GOOTypography.h"
-#import "GOOTypography+Deprecated.h"
-#import "GOOTypography+GoogleAdditions.h"
+#import "MDCFontResource.h"
+#import "MDCRobotoFontLoader.h"
+#import "MDCTypography.h"
+#import "MDCTypography+Deprecated.h"
+#import "MDCTypography+GoogleAdditions.h"
 /**
  * @defgroup Typography
  * @brief Material typography.

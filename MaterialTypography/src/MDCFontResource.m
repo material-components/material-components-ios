@@ -1,8 +1,8 @@
-#import "GOOFontResource.h"
+#import "MDCFontResource.h"
 
 #import <CoreText/CoreText.h>
 
-@implementation GOOFontResource
+@implementation MDCFontResource
 
 - (instancetype)initWithFontName:(NSString *)fontName
                         filename:(NSString *)filename

@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- * GOOTypography uses this protocol to delegate responsibility of loading the custom fonts.
+ * MDCTypography uses this protocol to delegate responsibility of loading the custom fonts.
  *
  * The spec defines the Roboto font family and uses three fonts in the named styles. Use this
  * protocol to define your own fonts if there is a brand need.
@@ -10,7 +10,7 @@
  *
  * @ingroup Typography
  */
-@protocol GOOTypographyFontLoader <NSObject>
+@protocol MDCTypographyFontLoader <NSObject>
 @required
 
 - (nonnull UIFont *)lightFontOfSize:(CGFloat)fontSize;
@@ -22,19 +22,19 @@
 /**
  * Typographic constants and helpers.
  *
- * To use these fonts, you must add GOOTypography.bundle to your target.
+ * To use these fonts, you must add MDCTypography.bundle to your target.
  *
  * Spec:
  * https://www.google.com/design/spec/style/typography.html#typography-styles
  *
  * @ingroup Typography
  */
-@interface GOOTypography : NSObject
+@interface MDCTypography : NSObject
 
 #pragma mark - Custom font loader
 
 /** Set the font loader in order to use a non-Roboto or non-system font. */
-+ (void)setFontLoader:(nonnull id<GOOTypographyFontLoader>)fontLoader;
++ (void)setFontLoader:(nonnull id<MDCTypographyFontLoader>)fontLoader;
 
 #pragma mark - Display fonts (extra large fonts)
 
@@ -132,10 +132,10 @@
 @end
 
 /**
- * GOOSystemFontLoader allows you to use the system font for @c GOOTypography.
+ * MDCSystemFontLoader allows you to use the system font for @c MDCTypography.
  *
  * To use:
- * [GOOTypography setFontLoader:[GOOSystemFontLoader new]];
+ * [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
  */
-@interface GOOSystemFontLoader : NSObject <GOOTypographyFontLoader>
+@interface MDCSystemFontLoader : NSObject <MDCTypographyFontLoader>
 @end

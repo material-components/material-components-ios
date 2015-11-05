@@ -2,9 +2,9 @@
 #error "This file requires ARC support."
 #endif
 
-#import "GOOTypography+Deprecated.h"
+#import "MDCTypography+Deprecated.h"
 
-@implementation GOOTypography (Deprecated)
+@implementation MDCTypography (Deprecated)
 
 + (UIFont *)subtitleFont {
   return [self subheadFont];

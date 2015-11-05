@@ -1,8 +1,8 @@
-#import "GOORobotoFontLoader.h"
+#import "MDCRobotoFontLoader.h"
 
-#import "Private/GOOTypography+Constants.h"
+#import "Private/MDCTypography+Constants.h"
 
-@implementation GOORobotoFontLoader
+@implementation MDCRobotoFontLoader
 
 - (instancetype)init {
   self = [super init];
@@ -26,9 +26,9 @@
   return sharedInstance;
 }
 
-- (GOOFontResource *)regularFontResource {
+- (MDCFontResource *)regularFontResource {
   if (!_regularFontResource) {
-    _regularFontResource = [[GOOFontResource alloc] initWithFontName:kRegularFontName
+    _regularFontResource = [[MDCFontResource alloc] initWithFontName:kRegularFontName
                                                             filename:kRegularFontFilename
                                                       bundleFileName:kTypographyBundle
                                                           baseBundle:[[self class] baseBundle]];
@@ -40,9 +40,9 @@
   return [self.regularFontResource fontOfSize:fontSize];
 }
 
-- (GOOFontResource *)mediumFontResource {
+- (MDCFontResource *)mediumFontResource {
   if (!_mediumFontResource) {
-    _mediumFontResource = [[GOOFontResource alloc] initWithFontName:kMediumFontName
+    _mediumFontResource = [[MDCFontResource alloc] initWithFontName:kMediumFontName
                                                            filename:kMediumFontFilename
                                                      bundleFileName:kTypographyBundle
                                                          baseBundle:[[self class] baseBundle]];
@@ -54,9 +54,9 @@
   return [self.mediumFontResource fontOfSize:fontSize];
 }
 
-- (GOOFontResource *)lightFontResource {
+- (MDCFontResource *)lightFontResource {
   if (!_lightFontResource) {
-    _lightFontResource = [[GOOFontResource alloc] initWithFontName:kLightFontName
+    _lightFontResource = [[MDCFontResource alloc] initWithFontName:kLightFontName
                                                           filename:kLightFontFilename
                                                     bundleFileName:kTypographyBundle
                                                         baseBundle:[[self class] baseBundle]];
@@ -68,9 +68,9 @@
   return [self.lightFontResource fontOfSize:fontSize];
 }
 
-- (GOOFontResource *)boldFontResource {
+- (MDCFontResource *)boldFontResource {
   if (!_boldFontResource) {
-    _boldFontResource = [[GOOFontResource alloc] initWithFontName:kBoldFontName
+    _boldFontResource = [[MDCFontResource alloc] initWithFontName:kBoldFontName
                                                          filename:kBoldFontFilename
                                                    bundleFileName:kTypographyBundle
                                                        baseBundle:[[self class] baseBundle]];
@@ -82,9 +82,9 @@
   return [self.boldFontResource fontOfSize:fontSize];
 }
 
-- (GOOFontResource *)italicFontResource {
+- (MDCFontResource *)italicFontResource {
   if (!_italicFontResource) {
-    _italicFontResource = [[GOOFontResource alloc] initWithFontName:kRegularItalicFontName
+    _italicFontResource = [[MDCFontResource alloc] initWithFontName:kRegularItalicFontName
                                                            filename:kRegularItalicFontFilename
                                                      bundleFileName:kTypographyBundle
                                                          baseBundle:[[self class] baseBundle]];
@@ -96,9 +96,9 @@
   return [self.italicFontResource fontOfSize:fontSize];
 }
 
-- (GOOFontResource *)lightItalicFontResource {
+- (MDCFontResource *)lightItalicFontResource {
   if (!_lightItalicFontResource) {
-    _lightItalicFontResource = [[GOOFontResource alloc] initWithFontName:kLightItalicFontName
+    _lightItalicFontResource = [[MDCFontResource alloc] initWithFontName:kLightItalicFontName
                                                                 filename:kLightItalicFontFilename
                                                           bundleFileName:kTypographyBundle
                                                               baseBundle:[[self class] baseBundle]];
@@ -110,10 +110,10 @@
   return [self.lightItalicFontResource fontOfSize:fontSize];
 }
 
-- (GOOFontResource *)mediumItalicFontResource {
+- (MDCFontResource *)mediumItalicFontResource {
   if (!_mediumItalicFontResource) {
     _mediumItalicFontResource =
-        [[GOOFontResource alloc] initWithFontName:kMediumItalicFontName
+        [[MDCFontResource alloc] initWithFontName:kMediumItalicFontName
                                          filename:kMediumItalicFontFilename
                                    bundleFileName:kTypographyBundle
                                        baseBundle:[[self class] baseBundle]];
@@ -125,9 +125,9 @@
   return [self.mediumItalicFontResource fontOfSize:fontSize];
 }
 
-- (GOOFontResource *)boldItalicFontResource {
+- (MDCFontResource *)boldItalicFontResource {
   if (!_boldItalicFontResource) {
-    _boldItalicFontResource = [[GOOFontResource alloc] initWithFontName:kBoldItalicFontName
+    _boldItalicFontResource = [[MDCFontResource alloc] initWithFontName:kBoldItalicFontName
                                                                filename:kBoldItalicFontFilename
                                                          bundleFileName:kTypographyBundle
                                                              baseBundle:[[self class] baseBundle]];

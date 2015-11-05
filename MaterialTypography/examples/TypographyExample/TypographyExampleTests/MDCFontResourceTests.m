@@ -1,19 +1,19 @@
 #import <XCTest/XCTest.h>
 
-#import "GOOFontResource.h"
-#import "GOORobotoFontLoader.h"
-#import "GOOTypography+Constants.h"
+#import "MDCFontResource.h"
+#import "MDCRobotoFontLoader.h"
+#import "MDCTypography+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
-@interface GOOFontResourceTests : XCTestCase
+@interface MDCFontResourceTests : XCTestCase
 @end
 
-@implementation GOOFontResourceTests
+@implementation MDCFontResourceTests
 
-- (GOOFontResource *)validResource {
-  NSBundle *bundle = [NSBundle bundleForClass:[GOORobotoFontLoader class]];
-  return [[GOOFontResource alloc] initWithFontName:kRegularFontName
+- (MDCFontResource *)validResource {
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
+  return [[MDCFontResource alloc] initWithFontName:kRegularFontName
                                           filename:kRegularFontFilename
                                     bundleFileName:kTypographyBundle
                                         baseBundle:bundle];
@@ -21,7 +21,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testCreatesAFontURL {
   // Given
-  GOOFontResource *resource = [self validResource];
+  MDCFontResource *resource = [self validResource];
 
   // When
 
@@ -37,7 +37,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRegisterFont {
   // Given
-  GOOFontResource *resource = [self validResource];
+  MDCFontResource *resource = [self validResource];
 
   // When
   [resource registerFont];
@@ -48,7 +48,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRegisterFontFailure {
   // Given
-  GOOFontResource *resource = [self validResource];
+  MDCFontResource *resource = [self validResource];
   resource.filename = @"some invalid font filename";
 
   // When
@@ -60,7 +60,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testProvidesACustomFont {
   // Given
-  GOOFontResource *resource = [self validResource];
+  MDCFontResource *resource = [self validResource];
   CGFloat randomSize = arc4random() * 100 / CGFLOAT_MAX;
 
   // When
@@ -74,7 +74,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testProvidesASystemFontWhenTheCustomFontCantBeFound {
   // Given
-  GOOFontResource *resource = [self validResource];
+  MDCFontResource *resource = [self validResource];
   resource.fontName = @"some invalid font name";
   CGFloat randomSize = arc4random() * 100 / CGFLOAT_MAX;
 

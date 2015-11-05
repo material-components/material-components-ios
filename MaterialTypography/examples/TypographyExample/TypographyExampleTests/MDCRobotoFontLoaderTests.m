@@ -1,19 +1,19 @@
 #import <XCTest/XCTest.h>
 
-#import "GOORobotoFontLoader.h"
-#import "GOOTypography+Constants.h"
+#import "MDCRobotoFontLoader.h"
+#import "MDCTypography+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
-@interface GOORobotoFontLoaderTests : XCTestCase
+@interface MDCRobotoFontLoaderTests : XCTestCase
 @end
 
-@implementation GOORobotoFontLoaderTests
+@implementation MDCRobotoFontLoaderTests
 
 - (void)testRobotoRegularWithSize {
   // Given
   CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-  GOORobotoFontLoader *fontLoader = [GOORobotoFontLoader sharedInstance];
+  MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
   UIFont *font = [fontLoader regularFontOfSize:size];
@@ -27,7 +27,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testRobotoMediumWithSize {
   // Given
   CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-  GOORobotoFontLoader *fontLoader = [GOORobotoFontLoader sharedInstance];
+  MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
   UIFont *font = [fontLoader mediumFontOfSize:size];
@@ -41,7 +41,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testRobotoLightWithSize {
   // Given
   CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-  GOORobotoFontLoader *fontLoader = [GOORobotoFontLoader sharedInstance];
+  MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
   UIFont *font = [fontLoader lightFontOfSize:size];
@@ -55,7 +55,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testRobotoBoldWithSize {
   // Given
   CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-  GOORobotoFontLoader *fontLoader = [GOORobotoFontLoader sharedInstance];
+  MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
   UIFont *font = [fontLoader boldFontOfSize:size];
@@ -69,7 +69,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testRobotoItalicWithSize {
   // Given
   CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-  GOORobotoFontLoader *fontLoader = [GOORobotoFontLoader sharedInstance];
+  MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
   UIFont *font = [fontLoader italicFontOfSize:size];
@@ -83,7 +83,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testRobotoMediumItalicWithSize {
   // Given
   CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-  GOORobotoFontLoader *fontLoader = [GOORobotoFontLoader sharedInstance];
+  MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
   UIFont *font = [fontLoader mediumItalicFontOfSize:size];
@@ -97,7 +97,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testRobotoLightItalicWithSize {
   // Given
   CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-  GOORobotoFontLoader *fontLoader = [GOORobotoFontLoader sharedInstance];
+  MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
   UIFont *font = [fontLoader lightItalicFontOfSize:size];
@@ -111,7 +111,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testRobotoBoldItalicWithSize {
   // Given
   CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-  GOORobotoFontLoader *fontLoader = [GOORobotoFontLoader sharedInstance];
+  MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
   UIFont *font = [fontLoader boldItalicFontOfSize:size];

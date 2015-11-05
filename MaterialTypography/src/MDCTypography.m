@@ -2,17 +2,17 @@
 #error "This file requires ARC support."
 #endif
 
-#import "GOORobotoFontLoader.h"
-#import "GOOTypography.h"
-#import "Private/GOOTypography+Constants.h"
+#import "MDCRobotoFontLoader.h"
+#import "MDCTypography.h"
+#import "Private/MDCTypography+Constants.h"
 
-static id<GOOTypographyFontLoader> sFontLoader = nil;
+static id<MDCTypographyFontLoader> sFontLoader = nil;
 
-@implementation GOOTypography
+@implementation MDCTypography
 
 #pragma mark - Custom font loader
 
-+ (void)setFontLoader:(id<GOOTypographyFontLoader>)fontLoader {
++ (void)setFontLoader:(id<MDCTypographyFontLoader>)fontLoader {
   sFontLoader = fontLoader;
   NSAssert(sFontLoader, @"Font loader can't be null."
                         @"The font loader will be reset to the default.");
@@ -21,7 +21,7 @@ static id<GOOTypographyFontLoader> sFontLoader = nil;
   }
 }
 
-+ (id<GOOTypographyFontLoader>)fontLoader {
++ (id<MDCTypographyFontLoader>)fontLoader {
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     if (!sFontLoader) {
@@ -153,17 +153,17 @@ static id<GOOTypographyFontLoader> sFontLoader = nil;
 
 #pragma mark - Private
 
-+ (id<GOOTypographyFontLoader>)defaultFontLoader {
-  Class fontLoaderClass = NSClassFromString(@"GOORobotoFontLoader");
++ (id<MDCTypographyFontLoader>)defaultFontLoader {
+  Class fontLoaderClass = NSClassFromString(@"MDCRobotoFontLoader");
   if (fontLoaderClass) {
-    return [GOORobotoFontLoader sharedInstance];
+    return [MDCRobotoFontLoader sharedInstance];
   }
-  return [[GOOSystemFontLoader alloc] init];
+  return [[MDCSystemFontLoader alloc] init];
 }
 
 @end
 
-@implementation GOOSystemFontLoader
+@implementation MDCSystemFontLoader
 
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
   return [UIFont systemFontOfSize:fontSize];

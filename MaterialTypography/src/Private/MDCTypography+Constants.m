@@ -1,8 +1,8 @@
-#import "GOOTypography+Constants.h"
+#import "MDCTypography+Constants.h"
 
-#ifndef GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
-#define GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE @"GoogleKitTypography.bundle"
-#endif  // GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
+#ifndef MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
+#define MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE @"GoogleKitTypography.bundle"
+#endif  // MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
 
 const CGFloat kStandardOpacity = 0.87f;
 const CGFloat kSecondaryOpacity = 0.54f;
@@ -25,4 +25,4 @@ NSString *const kMediumItalicFontFilename = @"Roboto-MediumItalic.ttf";
 NSString *const kLightFontFilename = @"Roboto-Light.ttf";
 NSString *const kLightItalicFontFilename = @"Roboto-LightItalic.ttf";
 
-NSString *const kTypographyBundle = GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE;
+NSString *const kTypographyBundle = MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE;

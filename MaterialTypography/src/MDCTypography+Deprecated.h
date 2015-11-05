@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
 
-#import "GOOTypography.h"
+#import "MDCTypography.h"
 
 // TODO(randallli): Methods in this file are scheduled for deprecation. (b/24808912)
-@interface GOOTypography (Deprecated)
+@interface MDCTypography (Deprecated)
 
 #pragma mark - deprecated API
 // TODO(randallli): move these api into the components that use them. (b/24811114)

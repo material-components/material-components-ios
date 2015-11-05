@@ -1,10 +1,10 @@
-#import "GOOTypographyFontLoader.h"
+#import "MDCTypographyFontLoader.h"
 
 #import <CoreText/CoreText.h>
 
-#import "GOOTypography+Constants.h"
+#import "MDCTypography+Constants.h"
 
-@implementation GOOTypographyFontLoader
+@implementation MDCTypographyFontLoader
 
 + (NSBundle *)baseBundle {
   static NSBundle *bundle = nil;
@@ -100,7 +100,7 @@
 + (void)tryToLoadRobotoRegularItalicFont {
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    [GOOTypographyFontLoader loadFontWithBundleFilename:kRegularItalicFontFilename];
+    [MDCTypographyFontLoader loadFontWithBundleFilename:kRegularItalicFontFilename];
   });
 }
 
