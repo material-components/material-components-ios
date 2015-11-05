@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCRobotoFontLoader.h"
-#import "GoogleKitTypography.h"
+#import "MaterialTypography.h"
 
 static const CGFloat kEpsilon = 0.001f;
 

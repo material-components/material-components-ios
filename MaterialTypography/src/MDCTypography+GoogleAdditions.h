@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-#import "GoogleKitTypography.h"
+#import "MaterialTypography.h"
 
 @interface MDCTypography (GoogleAdditions)  // not in Material Components
 

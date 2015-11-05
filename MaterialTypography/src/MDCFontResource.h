@@ -5,7 +5,7 @@
  *
  * @ingroup Typography
  */
-@interface GOOFontResource : NSObject
+@interface MDCFontResource : NSObject
 
 /** The name of the font within the *.ttf file. */
 @property(nonatomic, strong, nonnull) NSString *fontName;
@@ -31,7 +31,7 @@
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
- * Designated initializer for the GOOFontResource.
+ * Designated initializer for the MDCFontResource.
  *
  * @param fontName The font's name as it is defined in the ttf file.
  * @param filename The name of the font file. usually a *.ttf file.

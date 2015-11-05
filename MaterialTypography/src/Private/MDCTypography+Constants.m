@@ -1,7 +1,7 @@
 #import "MDCTypography+Constants.h"
 
 #ifndef MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
-#define MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE @"GoogleKitTypography.bundle"
+#define MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE @"MaterialTypography.bundle"
 #endif  // MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
 
 const CGFloat kStandardOpacity = 0.87f;
