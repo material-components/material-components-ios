@@ -15,7 +15,7 @@
  */
 
 #import "ViewController.h"
-#import "MaterialTypography.h"
+//#import "MaterialTypography.h"
 
 @interface ViewController ()
 
@@ -29,8 +29,8 @@
 
   UILabel *label = [[UILabel alloc] init];
   label.text = @"This is sometext";
-  label.font = [MDCTypography displayFont2];
-  label.alpha = [MDCTypography displayFont2Opacity];
+//  label.font = [MDCTypography displayFont2];
+//  label.alpha = [MDCTypography displayFont2Opacity];
 
   [label sizeToFit];
   label.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
