@@ -24,7 +24,7 @@
  * Spec:
  * https://www.google.com/design/spec/style/typography.html#typography-styles
  *
- * @ingroup GOOTypography
+ * @ingroup MDCTypography
  */
 @interface MDCTypography : NSObject
 
