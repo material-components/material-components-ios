@@ -16,57 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MDCScrollViewDelegateMultiplexer;
+@protocol MDCScrollViewDelegateCombining;
 
 /**
- * The MDCScrollViewDelegateCombining protocol defines an internal mechanism through which
- * MDCScrollViewDelegateMultiplexer provides an array of responding observing delegates
- * and their respective return values.
- *
- * Since it is possible that multiple delegates may respond to UIScrollViewDelegate methods that
- * provide return values, this protocol allows the receiver to select the specific value to return
- * from an array of those responding result values.
- *
- * @ingroup MaterialScrollViewDelegateMultiplexer
- */
-@protocol MDCScrollViewDelegateCombining <NSObject>
-@optional
-
-/**
- * Allows the receiver to return the preferred UIView result from observer delegates that have
- * responded to the UIScrollViewDelegate -viewForZoomingInScrollView method.
- *
- * @param multiplexer The scrollView delegate multiplexer.
- * @param results A pointer array of UIView instances returned by responding observer delegates.
- *                NSPointerArray here to allow nil results from -viewForZoomingInScrollView.
- * @param respondingObservers An array of observing delegates that responded.
- *
- * @return The preferred UIView result for this method.
- */
-- (nullable UIView *)scrollViewDelegateMultiplexer:(nonnull id
-                                                    <MDCScrollViewDelegateMultiplexer>)multiplexer
-                         viewForZoomingWithResults:(nonnull NSPointerArray *)results
-                           fromRespondingObservers:(nonnull NSArray *)respondingObservers;
-
-/**
- * Allows the receiver to return the preferred BOOL result from observer delegates that have
- * responded to the UIScrollViewDelegate -scrollViewShouldScrollToTop method.
- *
- * @param multiplexer The scrollView delegate multiplexer.
- * @param results An array of NSNumber instances returned by responding observer delegates.
- * @param respondingObservers An array of observing delegates that responded.
- *
- * @return The preferred BOOL result for this method.
- */
-- (BOOL)scrollViewDelegateMultiplexer:(nonnull id<MDCScrollViewDelegateMultiplexer>)multiplexer
-         shouldScrollToTopWithResults:(nonnull NSArray *)results
-              fromRespondingObservers:(nonnull NSArray *)respondingObservers;
-
-@end
-
-/**
- * This class acts as a proxy object for UIScrollViewDelegate events and forwards all received
- * events to an ordered list of registered observers.
+ * MDCScrollViewDelegateMultiplexer acts as a proxy object for UIScrollViewDelegate events and
+ * forwards all received events to an ordered list of registered observers.
  *
  * When a UIScrollViewDelegate method invocation is received by the multiplexer, the multiplexer
  * forwards the invocation to each observer in order of registration.
@@ -109,5 +63,50 @@
  * single UIScrollViewDelegate protocol return value from its array of observing delegates.
  */
 @property(nonatomic, weak, null_resettable) id<MDCScrollViewDelegateCombining> combiner;
+
+@end
+
+/**
+ * The MDCScrollViewDelegateCombining protocol defines an internal mechanism through which
+ * MDCScrollViewDelegateMultiplexer provides an array of responding observing delegates
+ * and their respective return values.
+ *
+ * Since it is possible that multiple delegates may respond to UIScrollViewDelegate methods that
+ * provide return values, this protocol allows the receiver to select the specific value to return
+ * from an array of those responding result values.
+ *
+ * @ingroup MaterialScrollViewDelegateMultiplexer
+ */
+@protocol MDCScrollViewDelegateCombining <NSObject>
+@optional
+
+/**
+ * Allows the receiver to return the preferred UIView result from observer delegates that have
+ * responded to the UIScrollViewDelegate -viewForZoomingInScrollView method.
+ *
+ * @param multiplexer The scrollView delegate multiplexer.
+ * @param results A pointer array of UIView instances returned by responding observer delegates.
+ *                NSPointerArray here to allow nil results from -viewForZoomingInScrollView.
+ * @param respondingObservers An array of observing delegates that responded.
+ *
+ * @return The preferred UIView result for this method.
+ */
+- (nullable UIView *)scrollViewDelegateMultiplexer:(nonnull MDCScrollViewDelegateMultiplexer *)multiplexer
+                         viewForZoomingWithResults:(nonnull NSPointerArray *)results
+                           fromRespondingObservers:(nonnull NSArray *)respondingObservers;
+
+/**
+ * Allows the receiver to return the preferred BOOL result from observer delegates that have
+ * responded to the UIScrollViewDelegate -scrollViewShouldScrollToTop method.
+ *
+ * @param multiplexer The scrollView delegate multiplexer.
+ * @param results An array of NSNumber instances returned by responding observer delegates.
+ * @param respondingObservers An array of observing delegates that responded.
+ *
+ * @return The preferred BOOL result for this method.
+ */
+- (BOOL)scrollViewDelegateMultiplexer:(nonnull MDCScrollViewDelegateMultiplexer *)multiplexer
+         shouldScrollToTopWithResults:(nonnull NSArray *)results
+              fromRespondingObservers:(nonnull NSArray *)respondingObservers;
 
 @end
