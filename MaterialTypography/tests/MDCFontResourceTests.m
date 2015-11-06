@@ -1,3 +1,19 @@
+/*
+ Copyright 2015-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import <XCTest/XCTest.h>
 
 #import "MDCFontResource.h"
@@ -19,6 +35,14 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                                         baseBundle:bundle];
 }
 
+- (MDCFontResource *)invalidResource {
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
+  return [[MDCFontResource alloc] initWithFontName:kRegularFontName
+                                          filename:@"some invalid filename"
+                                    bundleFileName:kTypographyBundle
+                                        baseBundle:bundle];
+}
+
 - (void)testCreatesAFontURL {
   // Given
   MDCFontResource *resource = [self validResource];
@@ -27,11 +51,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertNotNil(resource.fontURL, @"expecting font url to be valid");
-  XCTAssertTrue([[resource.fontURL path] containsString:resource.filename],
+  XCTAssertTrue([[resource.fontURL path] containsString:kRegularFontFilename],
                 @"expecting font to be correct");
-  XCTAssertTrue([[resource.fontURL path] containsString:resource.bundleFilename],
-                @"expecting font to be correct");
-  XCTAssertTrue([[resource.fontURL path] containsString:[resource.baseBundle bundlePath]],
+  XCTAssertTrue([[resource.fontURL path] containsString:kTypographyBundle],
                 @"expecting font to be correct");
 }
 
@@ -48,8 +70,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRegisterFontFailure {
   // Given
-  MDCFontResource *resource = [self validResource];
-  resource.filename = @"some invalid font filename";
+  MDCFontResource *resource = [self invalidResource];
 
   // When
   [resource registerFont];
@@ -72,7 +93,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects(font.fontName, kRegularFontName);
 }
 
-- (void)testProvidesASystemFontWhenTheCustomFontCantBeFound {
+- (void)testReturnNilWhenTheCustomFontCanNotBeFound {
   // Given
   MDCFontResource *resource = [self validResource];
   resource.fontName = @"some invalid font name";
@@ -82,9 +103,6 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   UIFont *font = [resource fontOfSize:randomSize];
 
   // Then
-  XCTAssertNotNil(font);
-  XCTAssertEqualWithAccuracy(font.pointSize, randomSize, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, [UIFont systemFontOfSize:randomSize].fontName);
+  XCTAssertNil(font);
 }
-
 @end

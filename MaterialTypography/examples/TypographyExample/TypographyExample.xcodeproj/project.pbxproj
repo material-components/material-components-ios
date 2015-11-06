@@ -13,9 +13,9 @@
 		20B947931BEB33B9005EE125 /* MDCTypography+Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B9478F1BEB33B9005EE125 /* MDCTypography+Constants.m */; settings = {ASSET_TAGS = (); }; };
 		20B947941BEB33B9005EE125 /* MDCTypographyFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947921BEB33B9005EE125 /* MDCTypographyFontLoader.m */; settings = {ASSET_TAGS = (); }; };
 		20B947961BEB33D1005EE125 /* MaterialTypography.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B947951BEB33D1005EE125 /* MaterialTypography.bundle */; settings = {ASSET_TAGS = (); }; };
-		20B9479A1BEB34E2005EE125 /* MDCFontResourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947971BEB34E1005EE125 /* MDCFontResourceTests.m */; settings = {ASSET_TAGS = (); }; };
-		20B9479B1BEB34E2005EE125 /* MDCRobotoFontLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947981BEB34E2005EE125 /* MDCRobotoFontLoaderTests.m */; settings = {ASSET_TAGS = (); }; };
-		20B9479C1BEB34E2005EE125 /* MDCTypographyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947991BEB34E2005EE125 /* MDCTypographyTests.m */; settings = {ASSET_TAGS = (); }; };
+		20B947A61BECA394005EE125 /* MDCFontResourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947A31BECA394005EE125 /* MDCFontResourceTests.m */; settings = {ASSET_TAGS = (); }; };
+		20B947A71BECA394005EE125 /* MDCRobotoFontLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947A41BECA394005EE125 /* MDCRobotoFontLoaderTests.m */; settings = {ASSET_TAGS = (); }; };
+		20B947A81BECA394005EE125 /* MDCTypographyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947A51BECA394005EE125 /* MDCTypographyTests.m */; settings = {ASSET_TAGS = (); }; };
 		20DA31C71BAA01AB00CE11C2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C61BAA01AB00CE11C2 /* main.m */; };
 		20DA31CA1BAA01AB00CE11C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C91BAA01AB00CE11C2 /* AppDelegate.m */; };
 		20DA31CD1BAA01AB00CE11C2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31CC1BAA01AB00CE11C2 /* ViewController.m */; };
@@ -56,9 +56,9 @@
 		20B947911BEB33B9005EE125 /* MDCTypographyFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCTypographyFontLoader.h; sourceTree = "<group>"; };
 		20B947921BEB33B9005EE125 /* MDCTypographyFontLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCTypographyFontLoader.m; sourceTree = "<group>"; };
 		20B947951BEB33D1005EE125 /* MaterialTypography.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MaterialTypography.bundle; sourceTree = "<group>"; };
-		20B947971BEB34E1005EE125 /* MDCFontResourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCFontResourceTests.m; sourceTree = "<group>"; };
-		20B947981BEB34E2005EE125 /* MDCRobotoFontLoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCRobotoFontLoaderTests.m; sourceTree = "<group>"; };
-		20B947991BEB34E2005EE125 /* MDCTypographyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCTypographyTests.m; sourceTree = "<group>"; };
+		20B947A31BECA394005EE125 /* MDCFontResourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCFontResourceTests.m; path = ../../../tests/MDCFontResourceTests.m; sourceTree = "<group>"; };
+		20B947A41BECA394005EE125 /* MDCRobotoFontLoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCRobotoFontLoaderTests.m; path = ../../../tests/MDCRobotoFontLoaderTests.m; sourceTree = "<group>"; };
+		20B947A51BECA394005EE125 /* MDCTypographyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCTypographyTests.m; path = ../../../tests/MDCTypographyTests.m; sourceTree = "<group>"; };
 		20DA31C21BAA01AB00CE11C2 /* TypographyExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypographyExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20DA31C61BAA01AB00CE11C2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		20DA31C81BAA01AB00CE11C2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -161,9 +161,9 @@
 		20DA31DE1BAA01AB00CE11C2 /* TypographyExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				20B947971BEB34E1005EE125 /* MDCFontResourceTests.m */,
-				20B947981BEB34E2005EE125 /* MDCRobotoFontLoaderTests.m */,
-				20B947991BEB34E2005EE125 /* MDCTypographyTests.m */,
+				20B947A31BECA394005EE125 /* MDCFontResourceTests.m */,
+				20B947A41BECA394005EE125 /* MDCRobotoFontLoaderTests.m */,
+				20B947A51BECA394005EE125 /* MDCTypographyTests.m */,
 				20DA31DF1BAA01AB00CE11C2 /* TypographyExampleTests.m */,
 				20DA31E11BAA01AB00CE11C2 /* Info.plist */,
 			);
@@ -342,10 +342,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20B9479B1BEB34E2005EE125 /* MDCRobotoFontLoaderTests.m in Sources */,
-				20B9479A1BEB34E2005EE125 /* MDCFontResourceTests.m in Sources */,
-				20B9479C1BEB34E2005EE125 /* MDCTypographyTests.m in Sources */,
 				20DA31E01BAA01AB00CE11C2 /* TypographyExampleTests.m in Sources */,
+				20B947A81BECA394005EE125 /* MDCTypographyTests.m in Sources */,
+				20B947A71BECA394005EE125 /* MDCRobotoFontLoaderTests.m in Sources */,
+				20B947A61BECA394005EE125 /* MDCFontResourceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

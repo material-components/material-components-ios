@@ -1,32 +1,50 @@
+/*
+ Copyright 2015-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import "MDCFontResource.h"
 
 #import <CoreText/CoreText.h>
 
+@interface MDCFontResource ()
+@property(nonatomic, strong) NSURL *fontURL;
+@end
+
 @implementation MDCFontResource
+
+- (instancetype)initWithName:(NSString *)fontName URL:(NSURL *)fontURL {
+  self = [super init];
+  if (self) {
+    _fontName = fontName;
+    _fontURL = fontURL;
+  }
+  return self;
+}
 
 - (instancetype)initWithFontName:(NSString *)fontName
                         filename:(NSString *)filename
                   bundleFileName:(NSString *)bundleFilename
                       baseBundle:(NSBundle *)baseBundle {
-  self = [super init];
-  if (self) {
-    _fontName = fontName;
-    _filename = filename;
-    _bundleFilename = bundleFilename;
-    _baseBundle = baseBundle;
-  }
-  return self;
-}
-
-- (NSURL *)fontURL {
-  NSString *searchPath = [self.baseBundle bundlePath];
-  NSString *fontsBundlePath = [searchPath stringByAppendingPathComponent:self.bundleFilename];
-  NSString *fontPath = [fontsBundlePath stringByAppendingPathComponent:self.filename];
+  NSString *searchPath = [baseBundle bundlePath];
+  NSString *fontsBundlePath = [searchPath stringByAppendingPathComponent:bundleFilename];
+  NSString *fontPath = [fontsBundlePath stringByAppendingPathComponent:filename];
   NSURL *fontURL = [NSURL fileURLWithPath:fontPath isDirectory:NO];
   if (!fontURL) {
-    NSLog(@"Failed to locate '%@' in bundle at path '%@'.", _filename, fontsBundlePath);
+    NSLog(@"Failed to locate '%@' in bundle at path '%@'.", filename, fontsBundlePath);
   }
-  return fontURL;
+  return [self initWithName:fontName URL:fontURL];
 }
 
 - (BOOL)registerFont {
@@ -59,12 +77,7 @@
 
 - (UIFont *)fontOfSize:(CGFloat)fontSize {
   [self registerFont];
-  UIFont *font = [UIFont fontWithName:self.fontName size:fontSize];
-  if (!font) {
-    // TODO(randallli) setup sysetm to do bold and italics fallback system fonts.
-    font = [UIFont systemFontOfSize:fontSize];
-  }
-  return font;
+  return [UIFont fontWithName:self.fontName size:fontSize];
 }
 
 @end
