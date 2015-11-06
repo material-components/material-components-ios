@@ -14,7 +14,6 @@
  limitations under the License.
  */
 
-
 #import <UIKit/UIKit.h>
 
 extern const CGFloat kStandardOpacity;

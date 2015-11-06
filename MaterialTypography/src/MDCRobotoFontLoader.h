@@ -14,9 +14,7 @@
  limitations under the License.
  */
 
-
 #import <UIKit/UIKit.h>
-
 
 #import "MDCTypography.h"
 
