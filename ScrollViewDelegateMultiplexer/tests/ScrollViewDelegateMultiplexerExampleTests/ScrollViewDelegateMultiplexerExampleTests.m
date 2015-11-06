@@ -77,7 +77,7 @@ static NSString *const kScrollViewDidScroll = @"scrollViewDidScroll";
   // Instigate event.
   [_scrollView setContentOffset:CGPointMake(50, 0) animated:YES];
 
-  [self waitForExpectationsWithTimeout:0 handler:^(NSError * _Nullable error) {
+  [self waitForExpectationsWithTimeout:0 handler:^(NSError *error) {
     XCTAssertEqual(error, nil);
   }];
 }
@@ -93,7 +93,7 @@ static NSString *const kScrollViewDidScroll = @"scrollViewDidScroll";
   // Instigate event.
   [_scrollView setContentOffset:CGPointMake(50, 0) animated:YES];
 
-  [self waitForExpectationsWithTimeout:0 handler:^(NSError * _Nullable error) {
+  [self waitForExpectationsWithTimeout:0 handler:^(NSError *error) {
     XCTAssertEqual(error, nil);
   }];
 }
@@ -114,10 +114,10 @@ static NSString *const kScrollViewDidScroll = @"scrollViewDidScroll";
   // Instigate event.
   [_scrollView setContentOffset:CGPointMake(50, 0) animated:YES];
 
-  [self waitForExpectationsWithTimeout:0 handler:^(NSError * _Nullable error) {
+  [self waitForExpectationsWithTimeout:0 handler:^(NSError *error) {
     XCTAssertEqual(error, nil);
 
-    [self waitForExpectationsWithTimeout:0 handler:^(NSError * _Nullable error2) {
+    [self waitForExpectationsWithTimeout:0 handler:^(NSError *error2) {
       XCTAssertEqual(error2, nil);
     }];
 
