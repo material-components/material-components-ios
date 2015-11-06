@@ -159,7 +159,6 @@
   if ([_combiner respondsToSelector:@selector(scrollViewDelegateMultiplexer:
                                               viewForZoomingWithResults:
                                               fromRespondingObservers:)]) {
-    // Return value provided by combiner.
     return [_combiner scrollViewDelegateMultiplexer:(id)self
                           viewForZoomingWithResults:results
                             fromRespondingObservers:respondingObservers];
@@ -176,10 +175,9 @@
              " observer return value for this method.");
 #endif
 
-    // Return value of first responder.
     return [results pointerAtIndex:0];
   }
-  // Returns nil as default.
+
   return nil;
 }
 
@@ -217,7 +215,6 @@
   if ([_combiner respondsToSelector:@selector(scrollViewDelegateMultiplexer:
                                               shouldScrollToTopWithResults:
                                               fromRespondingObservers:)]) {
-    // Return value provided by combiner.
     return [_combiner scrollViewDelegateMultiplexer:(id)self
                        shouldScrollToTopWithResults:results
                             fromRespondingObservers:respondingObservers];
@@ -231,10 +228,9 @@
              " observer return value for this method.");
 #endif
 
-    // Return value of first responder.
     return [results[0] boolValue];
   }
-  // Returns YES as default.
+
   return YES;
 }
 
