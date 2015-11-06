@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D3AFE831BECF1B0003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AFE7B1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests.m */; };
+		5D3AFE841BECF1BA003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AFE7E1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests.m */; };
+		5D3AFE851BECF1E7003EA2B2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D3AFE7A1BECF13C003EA2B2 /* Info.plist */; };
+		5D3AFE861BECF1EA003EA2B2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D3AFE7D1BECF13C003EA2B2 /* Info.plist */; };
 		5D79E5801BEC181B00833C35 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E57F1BEC181B00833C35 /* main.m */; };
 		5D79E5831BEC181B00833C35 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5821BEC181B00833C35 /* AppDelegate.m */; };
 		5D79E5861BEC181B00833C35 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5851BEC181B00833C35 /* ViewController.m */; };
 		5D79E5891BEC181B00833C35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D79E5871BEC181B00833C35 /* Main.storyboard */; };
 		5D79E58B1BEC181B00833C35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D79E58A1BEC181B00833C35 /* Assets.xcassets */; };
 		5D79E58E1BEC181B00833C35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D79E58C1BEC181B00833C35 /* LaunchScreen.storyboard */; };
-		5D79E5991BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5981BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleTests.m */; };
-		5D79E5A41BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5A31BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleUITests.m */; };
 		5D79E5BE1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5BC1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.m */; };
 		5D79E5C11BEC835100833C35 /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5C01BEC835100833C35 /* CustomLabel.m */; };
 /* End PBXBuildFile section */
@@ -37,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D3AFE7A1BECF13C003EA2B2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D3AFE7B1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewDelegateMultiplexerExampleTests.m; sourceTree = "<group>"; };
+		5D3AFE7D1BECF13C003EA2B2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D3AFE7E1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewDelegateMultiplexerExampleUITests.m; sourceTree = "<group>"; };
 		5D79E57B1BEC181B00833C35 /* ScrollViewDelegateMultiplexerExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollViewDelegateMultiplexerExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D79E57F1BEC181B00833C35 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5D79E5811BEC181B00833C35 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -48,11 +54,7 @@
 		5D79E58D1BEC181B00833C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D79E58F1BEC181B00833C35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D79E5941BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollViewDelegateMultiplexerExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D79E5981BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollViewDelegateMultiplexerExampleTests.m; sourceTree = "<group>"; };
-		5D79E59A1BEC181B00833C35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D79E59F1BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollViewDelegateMultiplexerExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D79E5A31BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollViewDelegateMultiplexerExampleUITests.m; sourceTree = "<group>"; };
-		5D79E5A51BEC181B00833C35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D79E5B91BEC196B00833C35 /* MaterialScrollViewDelegateMultiplexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialScrollViewDelegateMultiplexer.h; sourceTree = "<group>"; };
 		5D79E5BB1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCScrollViewDelegateMultiplexer.h; sourceTree = "<group>"; };
 		5D79E5BC1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCScrollViewDelegateMultiplexer.m; sourceTree = "<group>"; };
@@ -85,13 +87,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D3AFE781BECF13C003EA2B2 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				5D3AFE791BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests */,
+				5D3AFE7C1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests */,
+			);
+			name = tests;
+			path = ../tests;
+			sourceTree = "<group>";
+		};
+		5D3AFE791BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				5D3AFE7A1BECF13C003EA2B2 /* Info.plist */,
+				5D3AFE7B1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests.m */,
+			);
+			path = ScrollViewDelegateMultiplexerExampleTests;
+			sourceTree = "<group>";
+		};
+		5D3AFE7C1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5D3AFE7D1BECF13C003EA2B2 /* Info.plist */,
+				5D3AFE7E1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests.m */,
+			);
+			path = ScrollViewDelegateMultiplexerExampleUITests;
+			sourceTree = "<group>";
+		};
 		5D79E5721BEC181B00833C35 = {
 			isa = PBXGroup;
 			children = (
 				5D79E5B81BEC196B00833C35 /* ScrollViewDelegateMultiplexer */,
 				5D79E57D1BEC181B00833C35 /* ScrollViewDelegateMultiplexerExample */,
-				5D79E5971BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleTests */,
-				5D79E5A21BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleUITests */,
+				5D3AFE781BECF13C003EA2B2 /* tests */,
 				5D79E57C1BEC181B00833C35 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,24 +159,6 @@
 				5D79E57F1BEC181B00833C35 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5D79E5971BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				5D79E5981BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleTests.m */,
-				5D79E59A1BEC181B00833C35 /* Info.plist */,
-			);
-			path = ScrollViewDelegateMultiplexerExampleTests;
-			sourceTree = "<group>";
-		};
-		5D79E5A21BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleUITests */ = {
-			isa = PBXGroup;
-			children = (
-				5D79E5A31BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleUITests.m */,
-				5D79E5A51BEC181B00833C35 /* Info.plist */,
-			);
-			path = ScrollViewDelegateMultiplexerExampleUITests;
 			sourceTree = "<group>";
 		};
 		5D79E5B81BEC196B00833C35 /* ScrollViewDelegateMultiplexer */ = {
@@ -274,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D3AFE851BECF1E7003EA2B2 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D3AFE861BECF1EA003EA2B2 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,7 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D79E5991BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleTests.m in Sources */,
+				5D3AFE831BECF1B0003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D79E5A41BEC181B00833C35 /* ScrollViewDelegateMultiplexerExampleUITests.m in Sources */,
+				5D3AFE841BECF1BA003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,7 +471,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = ScrollViewDelegateMultiplexerExampleTests/Info.plist;
+				INFOPLIST_FILE = ../tests/ScrollViewDelegateMultiplexerExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -470,7 +483,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = ScrollViewDelegateMultiplexerExampleTests/Info.plist;
+				INFOPLIST_FILE = ../tests/ScrollViewDelegateMultiplexerExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -481,7 +494,7 @@
 		5D79E5AF1BEC181B00833C35 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = ScrollViewDelegateMultiplexerExampleUITests/Info.plist;
+				INFOPLIST_FILE = ../tests/ScrollViewDelegateMultiplexerExampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -493,7 +506,7 @@
 		5D79E5B01BEC181B00833C35 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = ScrollViewDelegateMultiplexerExampleUITests/Info.plist;
+				INFOPLIST_FILE = ../tests/ScrollViewDelegateMultiplexerExampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
