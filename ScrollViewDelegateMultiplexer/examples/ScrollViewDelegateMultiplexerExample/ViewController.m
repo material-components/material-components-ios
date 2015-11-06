@@ -26,10 +26,10 @@
 @end
 
 @implementation ViewController {
-  MDCScrollViewDelegateMultiplexer *_multiplexer;
-  NSArray *_pageColors;
   UIScrollView *_scrollView;
   UIPageControl *_pageControl;
+  
+  MDCScrollViewDelegateMultiplexer *_multiplexer;
 }
 
 - (void)viewDidLoad {
@@ -38,32 +38,32 @@
   CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
-  _pageColors = @[HEXCOLOR(0x81D4FA), HEXCOLOR(0x80CBC4), HEXCOLOR(0xFFCC80)];
+  NSArray *pageColors = @[HEXCOLOR(0x81D4FA), HEXCOLOR(0x80CBC4), HEXCOLOR(0xFFCC80)];
 
   // Scroll view configuration
 
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
   _scrollView.pagingEnabled = YES;
-  _scrollView.contentSize = CGSizeMake(boundsWidth * _pageColors.count, boundsHeight);
+  _scrollView.contentSize = CGSizeMake(boundsWidth * pageColors.count, boundsHeight);
   _scrollView.minimumZoomScale = 0.5;
   _scrollView.maximumZoomScale = 6.0;
 
   // Add pages to scrollView.
-  for (NSInteger i = 0; i < _pageColors.count; i++) {
+  for (NSInteger i = 0; i < pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
     page.font = [UIFont systemFontOfSize:50];
     page.textColor = [UIColor colorWithWhite:0 alpha:0.8];
     page.textAlignment = NSTextAlignmentCenter;
-    page.backgroundColor = _pageColors[i];
+    page.backgroundColor = pageColors[i];
     [_scrollView addSubview:page];
   }
 
   // Page control configuration
 
   ObservingPageControl *pageControl = [[ObservingPageControl alloc] init];
-  pageControl.numberOfPages = _pageColors.count;
+  pageControl.numberOfPages = pageColors.count;
 
   pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0 alpha:0.2];
   pageControl.currentPageIndicatorTintColor = [UIColor colorWithWhite:0 alpha:0.8];
