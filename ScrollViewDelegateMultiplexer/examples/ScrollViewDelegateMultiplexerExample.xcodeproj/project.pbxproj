@@ -14,11 +14,11 @@
 		5D79E5801BEC181B00833C35 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E57F1BEC181B00833C35 /* main.m */; };
 		5D79E5831BEC181B00833C35 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5821BEC181B00833C35 /* AppDelegate.m */; };
 		5D79E5861BEC181B00833C35 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5851BEC181B00833C35 /* ViewController.m */; };
-		5D79E5891BEC181B00833C35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D79E5871BEC181B00833C35 /* Main.storyboard */; };
 		5D79E58B1BEC181B00833C35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D79E58A1BEC181B00833C35 /* Assets.xcassets */; };
 		5D79E58E1BEC181B00833C35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D79E58C1BEC181B00833C35 /* LaunchScreen.storyboard */; };
 		5D79E5BE1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5BC1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.m */; };
-		5D79E5C11BEC835100833C35 /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5C01BEC835100833C35 /* CustomLabel.m */; };
+		5D79E5C11BEC835100833C35 /* ObservingPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D79E5C01BEC835100833C35 /* ObservingPageControl.m */; };
+		66EC266D1BED38D00091D31F /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 66EC266C1BED38D00091D31F /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +49,6 @@
 		5D79E5821BEC181B00833C35 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5D79E5841BEC181B00833C35 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		5D79E5851BEC181B00833C35 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		5D79E5881BEC181B00833C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D79E58A1BEC181B00833C35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D79E58D1BEC181B00833C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D79E58F1BEC181B00833C35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,8 +57,9 @@
 		5D79E5B91BEC196B00833C35 /* MaterialScrollViewDelegateMultiplexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialScrollViewDelegateMultiplexer.h; sourceTree = "<group>"; };
 		5D79E5BB1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCScrollViewDelegateMultiplexer.h; sourceTree = "<group>"; };
 		5D79E5BC1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCScrollViewDelegateMultiplexer.m; sourceTree = "<group>"; };
-		5D79E5BF1BEC835100833C35 /* CustomLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLabel.h; sourceTree = "<group>"; };
-		5D79E5C01BEC835100833C35 /* CustomLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLabel.m; sourceTree = "<group>"; };
+		5D79E5BF1BEC835100833C35 /* ObservingPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObservingPageControl.h; sourceTree = "<group>"; };
+		5D79E5C01BEC835100833C35 /* ObservingPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservingPageControl.m; sourceTree = "<group>"; };
+		66EC266C1BED38D00091D31F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ScrollViewDelegateMultiplexerExample/README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,36 +90,40 @@
 		5D3AFE781BECF13C003EA2B2 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				5D3AFE791BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests */,
-				5D3AFE7C1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests */,
+				5D3AFE791BECF13C003EA2B2 /* Unit tests */,
+				5D3AFE7C1BECF13C003EA2B2 /* UI tests */,
 			);
 			name = tests;
 			path = ../tests;
 			sourceTree = "<group>";
 		};
-		5D3AFE791BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests */ = {
+		5D3AFE791BECF13C003EA2B2 /* Unit tests */ = {
 			isa = PBXGroup;
 			children = (
 				5D3AFE7A1BECF13C003EA2B2 /* Info.plist */,
 				5D3AFE7B1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleTests.m */,
 			);
+			name = "Unit tests";
 			path = ScrollViewDelegateMultiplexerExampleTests;
 			sourceTree = "<group>";
 		};
-		5D3AFE7C1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests */ = {
+		5D3AFE7C1BECF13C003EA2B2 /* UI tests */ = {
 			isa = PBXGroup;
 			children = (
 				5D3AFE7D1BECF13C003EA2B2 /* Info.plist */,
 				5D3AFE7E1BECF13C003EA2B2 /* ScrollViewDelegateMultiplexerExampleUITests.m */,
 			);
+			name = "UI tests";
 			path = ScrollViewDelegateMultiplexerExampleUITests;
 			sourceTree = "<group>";
 		};
 		5D79E5721BEC181B00833C35 = {
 			isa = PBXGroup;
 			children = (
-				5D79E5B81BEC196B00833C35 /* ScrollViewDelegateMultiplexer */,
-				5D79E57D1BEC181B00833C35 /* ScrollViewDelegateMultiplexerExample */,
+				66EC266C1BED38D00091D31F /* README.md */,
+				5D79E57D1BEC181B00833C35 /* App */,
+				5D79E57E1BEC181B00833C35 /* Supporting Files */,
+				66EC266E1BED38DC0091D31F /* Material components */,
 				5D3AFE781BECF13C003EA2B2 /* tests */,
 				5D79E57C1BEC181B00833C35 /* Products */,
 			);
@@ -135,30 +139,29 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5D79E57D1BEC181B00833C35 /* ScrollViewDelegateMultiplexerExample */ = {
+		5D79E57D1BEC181B00833C35 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				5D79E5811BEC181B00833C35 /* AppDelegate.h */,
-				5D79E5821BEC181B00833C35 /* AppDelegate.m */,
 				5D79E5841BEC181B00833C35 /* ViewController.h */,
 				5D79E5851BEC181B00833C35 /* ViewController.m */,
-				5D79E5BF1BEC835100833C35 /* CustomLabel.h */,
-				5D79E5C01BEC835100833C35 /* CustomLabel.m */,
-				5D79E5871BEC181B00833C35 /* Main.storyboard */,
-				5D79E58A1BEC181B00833C35 /* Assets.xcassets */,
-				5D79E58C1BEC181B00833C35 /* LaunchScreen.storyboard */,
-				5D79E58F1BEC181B00833C35 /* Info.plist */,
-				5D79E57E1BEC181B00833C35 /* Supporting Files */,
+				5D79E5BF1BEC835100833C35 /* ObservingPageControl.h */,
+				5D79E5C01BEC835100833C35 /* ObservingPageControl.m */,
 			);
+			name = App;
 			path = ScrollViewDelegateMultiplexerExample;
 			sourceTree = "<group>";
 		};
 		5D79E57E1BEC181B00833C35 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				66EC266F1BED39680091D31F /* Scaffolding */,
+				5D79E58A1BEC181B00833C35 /* Assets.xcassets */,
+				5D79E58C1BEC181B00833C35 /* LaunchScreen.storyboard */,
+				5D79E58F1BEC181B00833C35 /* Info.plist */,
 				5D79E57F1BEC181B00833C35 /* main.m */,
 			);
 			name = "Supporting Files";
+			path = ScrollViewDelegateMultiplexerExample;
 			sourceTree = "<group>";
 		};
 		5D79E5B81BEC196B00833C35 /* ScrollViewDelegateMultiplexer */ = {
@@ -169,7 +172,24 @@
 				5D79E5BC1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.m */,
 			);
 			name = ScrollViewDelegateMultiplexer;
+			sourceTree = "<group>";
+		};
+		66EC266E1BED38DC0091D31F /* Material components */ = {
+			isa = PBXGroup;
+			children = (
+				5D79E5B81BEC196B00833C35 /* ScrollViewDelegateMultiplexer */,
+			);
+			name = "Material components";
 			path = ../src;
+			sourceTree = "<group>";
+		};
+		66EC266F1BED39680091D31F /* Scaffolding */ = {
+			isa = PBXGroup;
+			children = (
+				5D79E5811BEC181B00833C35 /* AppDelegate.h */,
+				5D79E5821BEC181B00833C35 /* AppDelegate.m */,
+			);
+			name = Scaffolding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,7 +297,6 @@
 			files = (
 				5D79E58E1BEC181B00833C35 /* LaunchScreen.storyboard in Resources */,
 				5D79E58B1BEC181B00833C35 /* Assets.xcassets in Resources */,
-				5D79E5891BEC181B00833C35 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +323,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D79E5C11BEC835100833C35 /* CustomLabel.m in Sources */,
+				66EC266D1BED38D00091D31F /* README.md in Sources */,
+				5D79E5C11BEC835100833C35 /* ObservingPageControl.m in Sources */,
 				5D79E5BE1BEC196B00833C35 /* MDCScrollViewDelegateMultiplexer.m in Sources */,
 				5D79E5861BEC181B00833C35 /* ViewController.m in Sources */,
 				5D79E5831BEC181B00833C35 /* AppDelegate.m in Sources */,
@@ -344,14 +364,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5D79E5871BEC181B00833C35 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5D79E5881BEC181B00833C35 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5D79E58C1BEC181B00833C35 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -450,9 +462,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ScrollViewDelegateMultiplexerExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -461,9 +475,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ScrollViewDelegateMultiplexerExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -14,22 +14,14 @@
  limitations under the License.
  */
 
-#import "CustomLabel.h"
+#import "ObservingPageControl.h"
 
-@implementation CustomLabel
-
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-  if (self) {
-    self.text = @"ScrollView Offset: 0";
-  }
-  return self;
-}
+@implementation ObservingPageControl
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  self.text = [NSString stringWithFormat:@"ScrollView Offset: %0.f", scrollView.contentOffset.x];
+  self.currentPage = scrollView.contentOffset.x / scrollView.bounds.size.width + 0.5;
 }
 
 @end

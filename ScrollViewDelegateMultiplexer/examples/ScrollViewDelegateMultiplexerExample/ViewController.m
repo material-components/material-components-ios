@@ -17,16 +17,19 @@
 #import "ViewController.h"
 
 #import "MaterialScrollViewDelegateMultiplexer.h"
-#import "CustomLabel.h"
+#import "ObservingPageControl.h"
+
+#define RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]
+#define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex) & 0xFF))
 
 @interface ViewController () <UIScrollViewDelegate>
-
 @end
 
 @implementation ViewController {
   MDCScrollViewDelegateMultiplexer *_multiplexer;
   NSArray *_pageColors;
   UIScrollView *_scrollView;
+  UIPageControl *_pageControl;
 }
 
 - (void)viewDidLoad {
@@ -35,43 +38,74 @@
   CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
-  _pageColors = @[[UIColor greenColor], [UIColor blueColor], [UIColor redColor]];
+  _pageColors = @[HEXCOLOR(0x81D4FA), HEXCOLOR(0x80CBC4), HEXCOLOR(0xFFCC80)];
 
-  // Create scrollView.
+  // Scroll view configuration
+
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
   _scrollView.pagingEnabled = YES;
   _scrollView.contentSize = CGSizeMake(boundsWidth * _pageColors.count, boundsHeight);
   _scrollView.minimumZoomScale = 0.5;
   _scrollView.maximumZoomScale = 6.0;
-  [self.view addSubview:_scrollView];
 
   // Add pages to scrollView.
   for (NSInteger i = 0; i < _pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
+    page.font = [UIFont systemFontOfSize:50];
+    page.textColor = [UIColor colorWithWhite:0 alpha:0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = _pageColors[i];
     [_scrollView addSubview:page];
   }
 
-  // Add a custom label.
-  CustomLabel *label =
-      [[CustomLabel alloc] initWithFrame:CGRectMake(0, boundsHeight - 40, boundsWidth, 20)];
-  label.textAlignment = NSTextAlignmentCenter;
-  [self.view addSubview:label];
+  // Page control configuration
 
-  // Create scrollView delegate multiplexer.
+  ObservingPageControl *pageControl = [[ObservingPageControl alloc] init];
+  pageControl.numberOfPages = _pageColors.count;
+
+  pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0 alpha:0.2];
+  pageControl.currentPageIndicatorTintColor = [UIColor colorWithWhite:0 alpha:0.8];
+
+  CGSize pageControlSize = [pageControl sizeThatFits:self.view.bounds.size];
+  // We want the page control to span the bottom of the screen.
+  pageControlSize.width = self.view.bounds.size.width;
+  pageControl.frame = CGRectMake(0, self.view.bounds.size.height - pageControlSize.height,
+                                 self.view.bounds.size.width, pageControlSize.height);
+  [pageControl addTarget:self
+                  action:@selector(didChangePage:)
+        forControlEvents:UIControlEventValueChanged];
+  pageControl.defersCurrentPageDisplay = YES;
+  _pageControl = pageControl;
+
+  // Add subviews
+
+  [self.view addSubview:_scrollView];
+  [self.view addSubview:pageControl];
+
+  // Create scrollView delegate multiplexer and register observers
+
   _multiplexer = [[MDCScrollViewDelegateMultiplexer alloc] init];
   _scrollView.delegate = _multiplexer;
   [_multiplexer addObservingDelegate:self];
-  [_multiplexer addObservingDelegate:label];
+  [_multiplexer addObservingDelegate:pageControl];
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  NSLog(@"scrollViewDidEndDecelerating");
+  NSLog(@"%@", NSStringFromSelector(_cmd));
+
+  [_pageControl updateCurrentPageDisplay];
+}
+
+#pragma mark - User events
+
+- (void)didChangePage:(UIPageControl *)sender {
+  CGPoint offset = _scrollView.contentOffset;
+  offset.x = sender.currentPage * _scrollView.bounds.size.width;
+  [_scrollView setContentOffset:offset animated:YES];
 }
 
 @end
