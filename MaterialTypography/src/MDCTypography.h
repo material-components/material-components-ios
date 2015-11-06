@@ -17,83 +17,107 @@
 #import <UIKit/UIKit.h>
 
 /**
- * Material typographic specification.
+ * MDCTypography uses this protocol to delegate responsibility of loading the custom fonts.
+ *
+ * The spec defines the Roboto font family and uses three fonts in the named styles. Use this
+ * protocol to define your own fonts if there is a brand need.
+ *
+ * @see https://www.google.com/design/spec/style/typography.html#typography-styles
+ *
+ * @ingroup Typography
+ */
+@protocol MDCTypographyFontLoader <NSObject>
+@required
+
+- (nonnull UIFont *)lightFontOfSize:(CGFloat)fontSize;
+- (nonnull UIFont *)regularFontOfSize:(CGFloat)fontSize;
+- (nonnull UIFont *)mediumFontOfSize:(CGFloat)fontSize;
+
+@end
+
+/**
+ * Typographic constants and helpers.
  *
  * To use these fonts, you must add MDCTypography.bundle to your target.
  *
  * Spec:
  * https://www.google.com/design/spec/style/typography.html#typography-styles
  *
- * @ingroup MDCTypography
+ * @ingroup Typography
  */
 @interface MDCTypography : NSObject
+
+#pragma mark - Custom font loader
+
+/** Set the font loader in order to use a non-Roboto or non-system font. */
++ (void)setFontLoader:(nonnull id<MDCTypographyFontLoader>)fontLoader;
 
 #pragma mark - Display fonts (extra large fonts)
 
 /** Returns the display 4 font. (largest of the display font sizes) */
-+ (UIFont *)displayFont4;
++ (nonnull UIFont *)display4Font;
 
 /** Returns the recommended opacity of black text for the display fonts 4. */
-+ (CGFloat)displayFont4Opacity;
++ (CGFloat)display4FontOpacity;
 
 /** Returns the display 3 font. (second largest of the display font sizes) */
-+ (UIFont *)displayFont3;
++ (nonnull UIFont *)display3Font;
 
 /** Returns the recommended opacity of black text for the display fonts 3. */
-+ (CGFloat)displayFont3Opacity;
++ (CGFloat)display3FontOpacity;
 
 /** Returns the display 2 font. (third largest of the display font sizes) */
-+ (UIFont *)displayFont2;
++ (nonnull UIFont *)display2Font;
 
 /** Returns the recommended opacity of black text for the display fonts 2. */
-+ (CGFloat)displayFont2Opacity;
++ (CGFloat)display2FontOpacity;
 
 /** Returns the display 1 font. (smallest of the display font sizes) */
-+ (UIFont *)displayFont1;
++ (nonnull UIFont *)display1Font;
 
 /** Returns the recommended opacity of black text for the display fonts 1. */
-+ (CGFloat)displayFont1Opacity;
++ (CGFloat)display1FontOpacity;
 
 #pragma mark - Common UI fonts.
 
 /** Returns the headline font. */
-+ (UIFont *)headlineFont;
++ (nonnull UIFont *)headlineFont;
 
 /** Returns the recommended opacity of black text for the headline font. */
 + (CGFloat)headlineFontOpacity;
 
 /** Returns the title font. */
-+ (UIFont *)titleFont;
++ (nonnull UIFont *)titleFont;
 
 /** Returns the recommended opacity of black text for the title font. */
 + (CGFloat)titleFontOpacity;
 
 /** Returns the subhead font. (subtitle) */
-+ (UIFont *)subheadFont;
++ (nonnull UIFont *)subheadFont;
 
 /** Returns the recommended opacity of black text for the subhead font. */
 + (CGFloat)subheadFontOpacity;
 
 /** Returns the body 2 text font. (bold text) */
-+ (UIFont *)body2Font;
++ (nonnull UIFont *)body2Font;
 
 /** Returns the recommended opacity of black text for the body 2 font. */
 + (CGFloat)body2FontOpacity;
 
 /** Returns the body 1 text font. (normal text) */
-+ (UIFont *)body1Font;
++ (nonnull UIFont *)body1Font;
 
 /** Returns the recommended opacity of black text for the body 1 font. */
 + (CGFloat)body1FontOpacity;
 
 /** Returns the caption font. (a small font for image captions) */
-+ (UIFont *)captionFont;
++ (nonnull UIFont *)captionFont;
 
 /** Returns the recommended opacity of black text for the caption font. */
 + (CGFloat)captionFontOpacity;
 
 /** Returns a font for buttons. */
-+ (UIFont *)buttonFont;
++ (nonnull UIFont *)buttonFont;
 
 /** Returns the recommended opacity of black text for the button font. */
 + (CGFloat)buttonFontOpacity;
@@ -105,41 +129,29 @@
  *
  * @param pointSize The requested point size for the font.
  */
-+ (UIFont *)robotoRegularWithSize:(CGFloat)pointSize;
-
-/**
- * Returns the bold Roboto font at the indicated point size.
- *
- * @param pointSize The requested point size for the font.
- */
-+ (UIFont *)robotoBoldWithSize:(CGFloat)pointSize;
++ (nonnull UIFont *)robotoRegularWithSize:(CGFloat)pointSize;
 
 /**
  * Returns the medium Roboto font at the indicated point size.
  *
  * @param pointSize The requested point size for the font.
  */
-+ (UIFont *)robotoMediumWithSize:(CGFloat)pointSize;
++ (nonnull UIFont *)robotoMediumWithSize:(CGFloat)pointSize;
 
 /**
  * Returns the light Roboto font at the indicated point size.
  *
  * @param pointSize The requested point size for the font.
  */
-+ (UIFont *)robotoLightWithSize:(CGFloat)pointSize;
++ (nonnull UIFont *)robotoLightWithSize:(CGFloat)pointSize;
+
+@end
 
 /**
- * Returns the italic Roboto font at the indicated point size.
+ * MDCSystemFontLoader allows you to use the system font for @c MDCTypography.
  *
- * @param pointSize The requested point size for the font.
+ * To use:
+ * [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
  */
-+ (UIFont *)robotoItalicWithSize:(CGFloat)pointSize;
-
-/**
- * Returns the bold italic Roboto font at the indicated point size.
- *
- * @param pointSize The requested point size for the font.
- */
-+ (UIFont *)robotoBoldItalicWithSize:(CGFloat)pointSize;
-
+@interface MDCSystemFontLoader : NSObject <MDCTypographyFontLoader>
 @end
