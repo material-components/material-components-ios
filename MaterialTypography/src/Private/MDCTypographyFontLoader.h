@@ -14,20 +14,26 @@
  limitations under the License.
  */
 
-#import <Availability.h>
 #import <Foundation/Foundation.h>
 
-#if !defined(__IPHONE_6_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_6_0)
-#error "This component only supports iOS 6.0 and above."
-#endif
-
-#import "MDCFontResource.h"
-#import "MDCRobotoFontLoader.h"
-#import "MDCTypography.h"
-#import "MDCTypography+Deprecated.h"
-#import "MDCTypography+GoogleAdditions.h"
-
+@interface MDCTypographyFontLoader : NSObject
 /**
- * @defgroup Typography
- * @brief Material typography.
+ * @internal
+ * This class provides conveince methods to grab roboto fonts.
+ *
+ * @ingroup Typography
  */
+
+// fonts in the spec
++ (void)tryToLoadRobotoLightFont;
++ (void)tryToLoadRobotoRegularFont;
++ (void)tryToLoadRobotoMediumFont;
+
+// others
++ (void)tryToLoadRobotoBoldFont;
++ (void)tryToLoadRobotoRegularItalicFont;
++ (void)tryToLoadRobotoBoldItalicFont;
++ (void)tryToLoadRobotoMediumItalicFont;
++ (void)tryToLoadRobotoLightItalicFont;
+
+@end

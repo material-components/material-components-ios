@@ -14,67 +14,70 @@
  limitations under the License.
  */
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
+#import "MDCRobotoFontLoader.h"
 #import "MDCTypography.h"
+#import "MDCTypography+Constants.h"
 
-#import <CoreText/CoreText.h>
-
-static const CGFloat kStandardOpacity = 0.87f;
-static const CGFloat kSecondaryOpacity = 0.54f;
-
-static NSString *const kRegularFontName = @"Roboto-Regular";
-static NSString *const kRegularItalicFontName = @"Roboto-Italic";
-static NSString *const kBoldFontName = @"Roboto-Bold";
-static NSString *const kBoldItalicFontName = @"Roboto-BoldItalic";
-static NSString *const kMediumFontName = @"Roboto-Medium";
-static NSString *const kMediumItalicFontName = @"Roboto-MediumItalic";
-static NSString *const kLightFontName = @"Roboto-Light";
-static NSString *const kLightItalicFontName = @"Roboto-LightItalic";
-
-static NSString *const kRegularFontFilename = @"Roboto-Regular.ttf";
-static NSString *const kRegularItalicFontFilename = @"Roboto-Italic.ttf";
-static NSString *const kBoldFontFilename = @"Roboto-Bold.ttf";
-static NSString *const kBoldItalicFontFilename = @"Roboto-BoldItalic.ttf";
-static NSString *const kMediumFontFilename = @"Roboto-Medium.ttf";
-static NSString *const kMediumItalicFontFilename = @"Roboto-MediumItalic.ttf";
-static NSString *const kLightFontFilename = @"Roboto-Light.ttf";
-static NSString *const kLightItalicFontFilename = @"Roboto-LightItalic.ttf";
-
-static NSString *const kTypographyBundle = @"MDCTypography.bundle";
+static id<MDCTypographyFontLoader> sFontLoader = nil;
 
 @implementation MDCTypography
 
+#pragma mark - Custom font loader
+
++ (void)setFontLoader:(id<MDCTypographyFontLoader>)fontLoader {
+  sFontLoader = fontLoader;
+  NSAssert(sFontLoader, @"Font loader can't be null."
+                        @"The font loader will be reset to the default.");
+  if (!sFontLoader) {
+    sFontLoader = [self defaultFontLoader];
+  }
+}
+
++ (id<MDCTypographyFontLoader>)fontLoader {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    if (!sFontLoader) {
+      sFontLoader = [self defaultFontLoader];
+    }
+  });
+  return sFontLoader;
+}
+
 #pragma mark - Display fonts (extra large fonts)
 
-+ (UIFont *)displayFont4 {
-  return [self robotoLightWithSize:112];
++ (UIFont *)display4Font {
+  return [[self fontLoader] lightFontOfSize:112];
 }
 
-+ (CGFloat)displayFont4Opacity {
++ (CGFloat)display4FontOpacity {
   return kSecondaryOpacity;
 }
 
-+ (UIFont *)displayFont3 {
-  return [self robotoRegularWithSize:56];
++ (UIFont *)display3Font {
+  return [[self fontLoader] regularFontOfSize:56];
 }
 
-+ (CGFloat)displayFont3Opacity {
++ (CGFloat)display3FontOpacity {
   return kSecondaryOpacity;
 }
 
-+ (UIFont *)displayFont2 {
-  return [self robotoRegularWithSize:45];
++ (UIFont *)display2Font {
+  return [[self fontLoader] regularFontOfSize:45];
 }
 
-+ (CGFloat)displayFont2Opacity {
++ (CGFloat)display2FontOpacity {
   return kSecondaryOpacity;
 }
 
-+ (UIFont *)displayFont1 {
-  return [self robotoRegularWithSize:34];
++ (UIFont *)display1Font {
+  return [[self fontLoader] regularFontOfSize:34];
 }
 
-/** Returns the recommended opacity of black text for the display fonts 1. */
-+ (CGFloat)displayFont1Opacity {
++ (CGFloat)display1FontOpacity {
   return kSecondaryOpacity;
 }
 
@@ -82,7 +85,7 @@ static NSString *const kTypographyBundle = @"MDCTypography.bundle";
 
 /** Returns the headline font. */
 + (UIFont *)headlineFont {
-  return [self robotoRegularWithSize:24];
+  return [[self fontLoader] regularFontOfSize:24];
 }
 
 /** Returns the recommended opacity of black text for the headline font. */
@@ -92,7 +95,7 @@ static NSString *const kTypographyBundle = @"MDCTypography.bundle";
 
 /** Returns the title font. */
 + (UIFont *)titleFont {
-  return [self robotoMediumWithSize:20];
+  return [[self fontLoader] mediumFontOfSize:20];
 }
 
 /** Returns the recommended opacity of black text for the title font. */
@@ -102,7 +105,7 @@ static NSString *const kTypographyBundle = @"MDCTypography.bundle";
 
 /** Returns the subhead font. (subtitle) */
 + (UIFont *)subheadFont {
-  return [self robotoRegularWithSize:16];
+  return [[self fontLoader] regularFontOfSize:16];
 }
 
 /** Returns the recommended opacity of black text for the subhead font. */
@@ -112,7 +115,7 @@ static NSString *const kTypographyBundle = @"MDCTypography.bundle";
 
 /** Returns the body 2 text font. (bold text) */
 + (UIFont *)body2Font {
-  return [self robotoMediumWithSize:14];
+  return [[self fontLoader] mediumFontOfSize:14];
 }
 
 /** Returns the recommended opacity of black text for the body 2 font. */
@@ -122,7 +125,7 @@ static NSString *const kTypographyBundle = @"MDCTypography.bundle";
 
 /** Returns the body 1 text font. (normal text) */
 + (UIFont *)body1Font {
-  return [self robotoRegularWithSize:14];
+  return [[self fontLoader] regularFontOfSize:14];
 }
 
 /** Returns the recommended opacity of black text for the body 1 font. */
@@ -132,7 +135,7 @@ static NSString *const kTypographyBundle = @"MDCTypography.bundle";
 
 /** Returns the caption font. (a small font for image captions) */
 + (UIFont *)captionFont {
-  return [self robotoRegularWithSize:12];
+  return [[self fontLoader] regularFontOfSize:12];
 }
 
 /** Returns the recommended opacity of black text for the caption font. */
@@ -142,7 +145,7 @@ static NSString *const kTypographyBundle = @"MDCTypography.bundle";
 
 /** Returns a font for buttons. */
 + (UIFont *)buttonFont {
-  return [self robotoMediumWithSize:14];
+  return [[self fontLoader] mediumFontOfSize:14];
 }
 
 /** Returns the recommended opacity of black text for the button font. */
@@ -153,174 +156,41 @@ static NSString *const kTypographyBundle = @"MDCTypography.bundle";
 #pragma mark - Roboto fonts
 
 + (UIFont *)robotoRegularWithSize:(CGFloat)pointSize {
-  UIFont *font = [UIFont fontWithName:kRegularFontName size:pointSize];
-  if (!font) {
-    [self tryToLoadRobotoRegularFont];
-    font = [UIFont fontWithName:kRegularFontName size:pointSize];
-  }
-  if (!font) {
-    font = [UIFont systemFontOfSize:pointSize];
-  }
-  return font;
-}
-
-+ (UIFont *)robotoBoldWithSize:(CGFloat)pointSize {
-  UIFont *font = [UIFont fontWithName:kBoldFontName size:pointSize];
-  if (!font) {
-    [self tryToLoadRobotoBoldFont];
-    font = [UIFont fontWithName:kBoldFontName size:pointSize];
-  }
-  if (!font) {
-    font = [UIFont boldSystemFontOfSize:pointSize];
-  }
-  return font;
+  return [[self fontLoader] regularFontOfSize:pointSize];
 }
 
 + (UIFont *)robotoMediumWithSize:(CGFloat)pointSize {
-  UIFont *font = [UIFont fontWithName:kMediumFontName size:pointSize];
-  if (!font) {
-    [self tryToLoadRobotoMediumFont];
-    font = [UIFont fontWithName:kMediumFontName size:pointSize];
-  }
-  if (!font) {
-    font = [UIFont systemFontOfSize:pointSize];
-  }
-  return font;
+  return [[self fontLoader] mediumFontOfSize:pointSize];
 }
 
 + (UIFont *)robotoLightWithSize:(CGFloat)pointSize {
-  UIFont *font = [UIFont fontWithName:kLightFontName size:pointSize];
-  if (!font) {
-    [self tryToLoadRobotoLightFont];
-    font = [UIFont fontWithName:kLightFontName size:pointSize];
-  }
-  if (!font) {
-    font = [UIFont systemFontOfSize:pointSize];
-  }
-  return font;
-}
-
-+ (UIFont *)robotoItalicWithSize:(CGFloat)pointSize {
-  UIFont *font = [UIFont fontWithName:kRegularItalicFontName size:pointSize];
-  if (!font) {
-    [self tryToLoadRobotoRegularItalicFont];
-    font = [UIFont fontWithName:kRegularItalicFontName size:pointSize];
-  }
-  if (!font) {
-    font = [UIFont systemFontOfSize:pointSize];
-  }
-  return font;
-}
-
-+ (UIFont *)robotoBoldItalicWithSize:(CGFloat)pointSize {
-  UIFont *font = [UIFont fontWithName:kBoldItalicFontName size:pointSize];
-  if (!font) {
-    [self tryToLoadRobotoBoldItalicFont];
-    font = [UIFont fontWithName:kBoldItalicFontName size:pointSize];
-  }
-  if (!font) {
-    font = [UIFont systemFontOfSize:pointSize];
-  }
-  return font;
+  return [[self fontLoader] lightFontOfSize:pointSize];
 }
 
 #pragma mark - Private
 
-+ (NSBundle *)baseBundle {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    // We may not be included by the main bundle, but rather by an embedded framework, so figure out
-    // to which bundle our code is compiled, and use that as the starting point for bundle loading.
-    bundle = [NSBundle bundleForClass:[self class]];
-  });
-
-  return bundle;
-}
-
-+ (BOOL)loadFontWithBundleFilename:(NSString *)filename {
-  NSString *searchPath = [[self baseBundle] bundlePath];
-  NSString *fontsBundlePath = [searchPath stringByAppendingPathComponent:kTypographyBundle];
-  NSString *fontPath = [fontsBundlePath stringByAppendingPathComponent:filename];
-  NSURL *fontURL = [NSURL fileURLWithPath:fontPath isDirectory:NO];
-  if (!fontURL) {
-    NSLog(@"Failed to locate '%@' in bundle at path '%@'.", filename, fontsBundlePath);
-    return NO;
++ (id<MDCTypographyFontLoader>)defaultFontLoader {
+  Class fontLoaderClass = NSClassFromString(@"MDCRobotoFontLoader");
+  if (fontLoaderClass) {
+    return [MDCRobotoFontLoader sharedInstance];
   }
-  CFErrorRef error = NULL;
-  BOOL registerResult = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL,
-                                                         kCTFontManagerScopeProcess, &error);
-  if (!registerResult) {
-    if (error && CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
-      // If it's already been loaded by somebody else, we don't care.
-      // We do not check the error domain to make sure they match because
-      // kCTFontManagerErrorDomain is not defined in the iOS 8 SDK.
-      // Radar 18651170 iOS 8 SDK missing definition for kCTFontManagerErrorDomain
-      registerResult = YES;
-    } else {
-      NSLog(@"Failed to load font: %@", error);
-    }
-  }
-  if (error) {
-    CFRelease(error);
-  }
-  return registerResult;
+  return [[MDCSystemFontLoader alloc] init];
 }
 
-+ (void)tryToLoadRobotoRegularFont {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [self loadFontWithBundleFilename:kRegularFontFilename];
-  });
+@end
+
+@implementation MDCSystemFontLoader
+
+- (UIFont *)regularFontOfSize:(CGFloat)fontSize {
+  return [UIFont systemFontOfSize:fontSize];
 }
 
-+ (void)tryToLoadRobotoRegularItalicFont {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [self loadFontWithBundleFilename:kRegularItalicFontFilename];
-  });
+- (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+  return [UIFont boldSystemFontOfSize:fontSize];
 }
 
-+ (void)tryToLoadRobotoBoldFont {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [self loadFontWithBundleFilename:kBoldFontFilename];
-  });
-}
-
-+ (void)tryToLoadRobotoBoldItalicFont {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [self loadFontWithBundleFilename:kBoldItalicFontFilename];
-  });
-}
-
-+ (void)tryToLoadRobotoMediumFont {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [self loadFontWithBundleFilename:kMediumFontFilename];
-  });
-}
-
-+ (void)tryToLoadRobotoMediumItalicFont {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [self loadFontWithBundleFilename:kMediumItalicFontFilename];
-  });
-}
-
-+ (void)tryToLoadRobotoLightFont {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [self loadFontWithBundleFilename:kLightFontFilename];
-  });
-}
-
-+ (void)tryToLoadRobotoLightItalicFont {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [self loadFontWithBundleFilename:kLightItalicFontFilename];
-  });
+- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+  return [UIFont systemFontOfSize:fontSize];
 }
 
 @end
