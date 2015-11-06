@@ -16,6 +16,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomLabel : UILabel <UIScrollViewDelegate>
-
+@interface ObservingPageControl : UIPageControl <UIScrollViewDelegate>
 @end
