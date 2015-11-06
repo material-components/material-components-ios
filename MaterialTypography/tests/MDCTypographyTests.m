@@ -59,38 +59,38 @@ static const CGFloat kEpsilon = 0.001f;
 
 #pragma mark - Font opacity
 
-- (void)testDisplayFont4Opacity {
+- (void)testDisplay4FontOpacity {
   // Given
 
   // When
-  CGFloat opacity = [MDCTypography displayFont4Opacity];
+  CGFloat opacity = [MDCTypography display4FontOpacity];
 
   // Then
   XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon);
 }
-- (void)testDisplayFont3Opacity {
+- (void)testDisplay3FontOpacity {
   // Given
 
   // When
-  CGFloat opacity = [MDCTypography displayFont3Opacity];
+  CGFloat opacity = [MDCTypography display3FontOpacity];
 
   // Then
   XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon);
 }
-- (void)testDisplayFont2Opacity {
+- (void)testDisplay2FontOpacity {
   // Given
 
   // When
-  CGFloat opacity = [MDCTypography displayFont2Opacity];
+  CGFloat opacity = [MDCTypography display2FontOpacity];
 
   // Then
   XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon);
 }
-- (void)testDisplayFont1Opacity {
+- (void)testDisplay1FontOpacity {
   // Given
 
   // When
-  CGFloat opacity = [MDCTypography displayFont1Opacity];
+  CGFloat opacity = [MDCTypography display1FontOpacity];
 
   // Then
   XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon);
