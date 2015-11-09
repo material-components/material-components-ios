@@ -29,8 +29,8 @@
 
   UILabel *label = [[UILabel alloc] init];
   label.text = @"This is sometext";
-  label.font = [MDCTypography displayFont2];
-  label.alpha = [MDCTypography displayFont2Opacity];
+  label.font = [MDCTypography titleFont];
+  label.alpha = [MDCTypography titleFontOpacity];
 
   [label sizeToFit];
   label.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
