@@ -42,8 +42,8 @@
 		5D3AFE941BED1598003EA2B2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5D3AFE961BED1598003EA2B2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5D3AFE971BED1598003EA2B2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5D3AFE991BED1598003EA2B2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5D3AFE9A1BED1598003EA2B2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5D3AFE991BED1598003EA2B2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = SpritedAnimationViewExample/ViewController.h; sourceTree = "<group>"; };
+		5D3AFE9A1BED1598003EA2B2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = SpritedAnimationViewExample/ViewController.m; sourceTree = "<group>"; };
 		5D3AFE9D1BED1598003EA2B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D3AFE9F1BED1598003EA2B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D3AFEA21BED1598003EA2B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -87,8 +87,9 @@
 		5D3AFE871BED1598003EA2B2 = {
 			isa = PBXGroup;
 			children = (
-				5D3AFED11BED189F003EA2B2 /* SpritedAnimationView */,
-				5D3AFE921BED1598003EA2B2 /* SpritedAnimationViewExample */,
+				5D63B0A71BF0163800B646E3 /* App */,
+				5D3AFE921BED1598003EA2B2 /* Supporting File */,
+				5D63B0A81BF0167100B646E3 /* Material components */,
 				5D3AFEC61BED1613003EA2B2 /* tests */,
 				5D3AFE911BED1598003EA2B2 /* Products */,
 			);
@@ -104,55 +105,56 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5D3AFE921BED1598003EA2B2 /* SpritedAnimationViewExample */ = {
+		5D3AFE921BED1598003EA2B2 /* Supporting File */ = {
 			isa = PBXGroup;
 			children = (
-				5D3AFE961BED1598003EA2B2 /* AppDelegate.h */,
-				5D3AFE971BED1598003EA2B2 /* AppDelegate.m */,
-				5D3AFE991BED1598003EA2B2 /* ViewController.h */,
-				5D3AFE9A1BED1598003EA2B2 /* ViewController.m */,
+				5D3AFE931BED1598003EA2B2 /* Scaffolding */,
 				5D3AFE9C1BED1598003EA2B2 /* Main.storyboard */,
 				5D3AFE9F1BED1598003EA2B2 /* Assets.xcassets */,
 				5D3AFEA11BED1598003EA2B2 /* LaunchScreen.storyboard */,
 				5D3AFEA41BED1598003EA2B2 /* Info.plist */,
-				5D3AFE931BED1598003EA2B2 /* Supporting Files */,
+				5D3AFE941BED1598003EA2B2 /* main.m */,
 			);
+			name = "Supporting File";
 			path = SpritedAnimationViewExample;
 			sourceTree = "<group>";
 		};
-		5D3AFE931BED1598003EA2B2 /* Supporting Files */ = {
+		5D3AFE931BED1598003EA2B2 /* Scaffolding */ = {
 			isa = PBXGroup;
 			children = (
-				5D3AFE941BED1598003EA2B2 /* main.m */,
+				5D3AFE961BED1598003EA2B2 /* AppDelegate.h */,
+				5D3AFE971BED1598003EA2B2 /* AppDelegate.m */,
 			);
-			name = "Supporting Files";
+			name = Scaffolding;
 			sourceTree = "<group>";
 		};
 		5D3AFEC61BED1613003EA2B2 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				5D3AFEC71BED1613003EA2B2 /* SpritedAnimationViewTests */,
-				5D3AFECA1BED1613003EA2B2 /* SpritedAnimationViewUITests */,
+				5D3AFEC71BED1613003EA2B2 /* Unit tests */,
+				5D3AFECA1BED1613003EA2B2 /* UI tests */,
 			);
 			name = tests;
 			path = ../tests;
 			sourceTree = "<group>";
 		};
-		5D3AFEC71BED1613003EA2B2 /* SpritedAnimationViewTests */ = {
+		5D3AFEC71BED1613003EA2B2 /* Unit tests */ = {
 			isa = PBXGroup;
 			children = (
 				5D3AFEC81BED1613003EA2B2 /* Info.plist */,
 				5D3AFEC91BED1613003EA2B2 /* SpritedAnimationViewTests.m */,
 			);
+			name = "Unit tests";
 			path = SpritedAnimationViewTests;
 			sourceTree = "<group>";
 		};
-		5D3AFECA1BED1613003EA2B2 /* SpritedAnimationViewUITests */ = {
+		5D3AFECA1BED1613003EA2B2 /* UI tests */ = {
 			isa = PBXGroup;
 			children = (
 				5D3AFECB1BED1613003EA2B2 /* Info.plist */,
 				5D3AFECC1BED1613003EA2B2 /* SpritedAnimationViewUITests.m */,
 			);
+			name = "UI tests";
 			path = SpritedAnimationViewUITests;
 			sourceTree = "<group>";
 		};
@@ -165,6 +167,23 @@
 			);
 			name = SpritedAnimationView;
 			path = ../src;
+			sourceTree = "<group>";
+		};
+		5D63B0A71BF0163800B646E3 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5D3AFE991BED1598003EA2B2 /* ViewController.h */,
+				5D3AFE9A1BED1598003EA2B2 /* ViewController.m */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		5D63B0A81BF0167100B646E3 /* Material components */ = {
+			isa = PBXGroup;
+			children = (
+				5D3AFED11BED189F003EA2B2 /* SpritedAnimationView */,
+			);
+			name = "Material components";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

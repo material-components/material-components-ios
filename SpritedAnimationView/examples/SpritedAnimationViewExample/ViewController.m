@@ -15,31 +15,55 @@
  */
 
 #import "ViewController.h"
-//#import "MaterialTypography.h"
 
-@interface ViewController ()
+#import "MaterialSpritedAnimationView.h"
 
-@end
+static NSString *const kSpriteChecked = @"mdc_sprite_check__hide";
+static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
 
-@implementation ViewController
+@implementation ViewController {
+  MDCSpritedAnimationView *_animationView;
+  BOOL _checked;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  // Do any additional setup after loading the view, typically from a nib.
 
-  UILabel *label = [[UILabel alloc] init];
-  label.text = @"This is sometext";
-//  label.font = [MDCTypography displayFont2];
-//  label.alpha = [MDCTypography displayFont2Opacity];
+  // Initial checked state.
+  _checked = YES;
 
-  [label sizeToFit];
-  label.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
+  // Sprited animation view.
+  UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked];
+  _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
+  _animationView.frame = CGRectMake(0, 0, 30, 30);
+  _animationView.center = self.view.center;
+  _animationView.tintColor = [UIColor redColor];
+  _animationView.userInteractionEnabled = YES;
+  [self.view addSubview:_animationView];
+
+  // Add label with tap instructions.
+  UILabel *label = [[UILabel alloc] initWithFrame:CGRectOffset(self.view.bounds, 0, 30)];
+  label.text = @"Tap anywhere to animate checkmark.";
+  label.textColor = [UIColor colorWithWhite:0 alpha:0.8];
+  label.textAlignment = NSTextAlignmentCenter;
   [self.view addSubview:label];
+
+  // Add tap gesture to view.
+  UITapGestureRecognizer *tapGesture =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+  [self.view addGestureRecognizer:tapGesture];
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+- (void)didTap:(UITapGestureRecognizer *)recognizer {
+  // Animate the sprited view.
+  [_animationView startAnimatingWithCompletion:^{
+
+    // When animation completes, toggle image.
+    _checked = !_checked;
+    UIImage *spriteImage = [UIImage imageNamed:_checked ? kSpriteChecked : kSpriteUnchecked];
+    _animationView.spriteSheetImage = spriteImage;
+
+  }];
 }
 
 @end
