@@ -37,7 +37,7 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
   _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
   _animationView.frame = CGRectMake(0, 0, 30, 30);
   _animationView.center = self.view.center;
-  _animationView.tintColor = [UIColor redColor];
+  _animationView.tintColor = [UIColor blueColor];
   _animationView.userInteractionEnabled = YES;
   [self.view addSubview:_animationView];
 

@@ -18,6 +18,7 @@
 		5D3AFECF1BED1622003EA2B2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D3AFECB1BED1613003EA2B2 /* Info.plist */; };
 		5D3AFED01BED1624003EA2B2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D3AFEC81BED1613003EA2B2 /* Info.plist */; };
 		5D3AFED41BED189F003EA2B2 /* MDCSpritedAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AFED31BED189F003EA2B2 /* MDCSpritedAnimationView.m */; };
+		5D63B0AA1BF05F2C00B646E3 /* MDCSpritedAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AFED31BED189F003EA2B2 /* MDCSpritedAnimationView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		5D3AFED21BED189F003EA2B2 /* MDCSpritedAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCSpritedAnimationView.h; sourceTree = "<group>"; };
 		5D3AFED31BED189F003EA2B2 /* MDCSpritedAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCSpritedAnimationView.m; sourceTree = "<group>"; };
 		5D3AFED51BED1E88003EA2B2 /* MaterialSpritedAnimationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialSpritedAnimationView.h; sourceTree = "<group>"; };
+		5D63B0A91BF05CF800B646E3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = SpritedAnimationViewExample/README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 		5D3AFE871BED1598003EA2B2 = {
 			isa = PBXGroup;
 			children = (
+				5D63B0A91BF05CF800B646E3 /* README.md */,
 				5D63B0A71BF0163800B646E3 /* App */,
 				5D3AFE921BED1598003EA2B2 /* Supporting File */,
 				5D63B0A81BF0167100B646E3 /* Material components */,
@@ -329,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D63B0AA1BF05F2C00B646E3 /* MDCSpritedAnimationView.m in Sources */,
 				5D3AFECD1BED161C003EA2B2 /* SpritedAnimationViewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

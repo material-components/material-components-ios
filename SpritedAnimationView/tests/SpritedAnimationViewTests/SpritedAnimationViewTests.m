@@ -16,33 +16,43 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialSpritedAnimationView.h"
+
+static NSString *const kSpriteChecked = @"mdc_sprite_check__hide";
+
 @interface SpritedAnimationViewTests : XCTestCase
 
 @end
 
-@implementation SpritedAnimationViewTests
+@implementation SpritedAnimationViewTests {
+  XCTestExpectation *_expectation;
+  MDCSpritedAnimationView *_animationView;
+}
 
 - (void)setUp {
   [super setUp];
-  // Put setup code here. This method is called before the invocation of each test method in
-  // the class.
 }
 
 - (void)tearDown {
-  // Put teardown code here. This method is called after the invocation of each test method in
-  // the class.
   [super tearDown];
 }
 
-- (void)testExample {
-  // This is an example of a functional test case.
-  // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
+- (void)testAnimationCompletion {
 
-- (void)testPerformanceExample {
-  // This is an example of a performance test case.
-  [self measureBlock:^{
-    // Put the code you want to measure the time of here.
+  // Sprited animation view.
+  UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked];
+  _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
+
+  // Create expectation.
+  _expectation = [self expectationWithDescription:@"startAnimatingWithCompletion"];
+
+  // Fulfill expectation after completion of animation.
+  [_animationView startAnimatingWithCompletion:^{
+    [_expectation fulfill];
+  }];
+
+  [self waitForExpectationsWithTimeout:1.0 handler:^(NSError *error) {
+    XCTAssertEqual(error, nil);
   }];
 }
 
