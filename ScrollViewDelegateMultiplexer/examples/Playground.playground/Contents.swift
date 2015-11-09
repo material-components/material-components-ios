@@ -3,7 +3,11 @@
 
 This playground explores the use of a UIScrollViewDelegate multiplexer in order to react to UIScrollView events.
 
+Requirements: **Xcode 7.1 or higher**.
+
 We've created a framework called MaterialScrollViewDelegateMultiplexer in which we've placed the relevant code.
+
+If the Playground can't find the framework then you need to initiate a build of the ScrollViewDelegateMultiplexerExample project. Also make sure that you're viewing the playground via Examples.xcworkspace.
 */
 import MaterialScrollViewDelegateMultiplexer
 

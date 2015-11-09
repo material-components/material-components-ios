@@ -2,9 +2,13 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Playground.playground">
-   </FileRef>
-   <FileRef
       location = "group:ScrollViewDelegateMultiplexerExample.xcodeproj">
    </FileRef>
+   <Group
+      location = "container:"
+      name = "Xcode 7.1 Playgrounds">
+      <FileRef
+         location = "group:Playground.playground">
+      </FileRef>
+   </Group>
 </Workspace>
