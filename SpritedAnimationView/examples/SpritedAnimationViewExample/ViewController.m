@@ -30,6 +30,7 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
   [super viewDidLoad];
 
   _checked = YES;
+  self.view.backgroundColor = [UIColor whiteColor];
 
   // Sprited animation view.
   UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked];
@@ -37,7 +38,6 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
   _animationView.frame = CGRectMake(0, 0, 30, 30);
   _animationView.center = self.view.center;
   _animationView.tintColor = [UIColor blueColor];
-  _animationView.userInteractionEnabled = YES;
   [self.view addSubview:_animationView];
 
   // Add label with tap instructions.
@@ -54,6 +54,8 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
 }
 
 - (void)didTap:(UITapGestureRecognizer *)recognizer {
+  recognizer.enabled = NO;
+
   // Animate the sprited view.
   [_animationView startAnimatingWithCompletion:^{
 
@@ -62,6 +64,7 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
     UIImage *spriteImage = [UIImage imageNamed:_checked ? kSpriteChecked : kSpriteUnchecked];
     _animationView.spriteSheetImage = spriteImage;
 
+    recognizer.enabled = YES;
   }];
 }
 
