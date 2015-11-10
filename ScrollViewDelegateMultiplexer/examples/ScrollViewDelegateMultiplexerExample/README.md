@@ -3,6 +3,10 @@
 This app demonstrates how to register multiple observers to a scroll view's' delegate using the
 MDCScrollViewDelegateMultiplexer API.
 
+## Requirements
+
+Xcode 7.0 or higher.
+
 ## Where is the code?
 
 The relevant code may be found in the 'App' directory.
