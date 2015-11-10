@@ -10,7 +10,6 @@
 		5D3AFE951BED1598003EA2B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AFE941BED1598003EA2B2 /* main.m */; };
 		5D3AFE981BED1598003EA2B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AFE971BED1598003EA2B2 /* AppDelegate.m */; };
 		5D3AFE9B1BED1598003EA2B2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AFE9A1BED1598003EA2B2 /* ViewController.m */; };
-		5D3AFE9E1BED1598003EA2B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D3AFE9C1BED1598003EA2B2 /* Main.storyboard */; };
 		5D3AFEA01BED1598003EA2B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D3AFE9F1BED1598003EA2B2 /* Assets.xcassets */; };
 		5D3AFEA31BED1598003EA2B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D3AFEA11BED1598003EA2B2 /* LaunchScreen.storyboard */; };
 		5D3AFECD1BED161C003EA2B2 /* SpritedAnimationViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AFEC91BED1613003EA2B2 /* SpritedAnimationViewTests.m */; };
@@ -45,7 +44,6 @@
 		5D3AFE971BED1598003EA2B2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5D3AFE991BED1598003EA2B2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = SpritedAnimationViewExample/ViewController.h; sourceTree = "<group>"; };
 		5D3AFE9A1BED1598003EA2B2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = SpritedAnimationViewExample/ViewController.m; sourceTree = "<group>"; };
-		5D3AFE9D1BED1598003EA2B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D3AFE9F1BED1598003EA2B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D3AFEA21BED1598003EA2B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D3AFEA41BED1598003EA2B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -91,7 +89,7 @@
 			children = (
 				5D63B0A91BF05CF800B646E3 /* README.md */,
 				5D63B0A71BF0163800B646E3 /* App */,
-				5D3AFE921BED1598003EA2B2 /* Supporting File */,
+				5D3AFE921BED1598003EA2B2 /* Supporting Files */,
 				5D63B0A81BF0167100B646E3 /* Material components */,
 				5D3AFEC61BED1613003EA2B2 /* tests */,
 				5D3AFE911BED1598003EA2B2 /* Products */,
@@ -108,17 +106,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5D3AFE921BED1598003EA2B2 /* Supporting File */ = {
+		5D3AFE921BED1598003EA2B2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				5D3AFE931BED1598003EA2B2 /* Scaffolding */,
-				5D3AFE9C1BED1598003EA2B2 /* Main.storyboard */,
 				5D3AFE9F1BED1598003EA2B2 /* Assets.xcassets */,
 				5D3AFEA11BED1598003EA2B2 /* LaunchScreen.storyboard */,
 				5D3AFEA41BED1598003EA2B2 /* Info.plist */,
 				5D3AFE941BED1598003EA2B2 /* main.m */,
 			);
-			name = "Supporting File";
+			name = "Supporting Files";
 			path = SpritedAnimationViewExample;
 			sourceTree = "<group>";
 		};
@@ -294,7 +291,6 @@
 			files = (
 				5D3AFEA31BED1598003EA2B2 /* LaunchScreen.storyboard in Resources */,
 				5D3AFEA01BED1598003EA2B2 /* Assets.xcassets in Resources */,
-				5D3AFE9E1BED1598003EA2B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,14 +357,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5D3AFE9C1BED1598003EA2B2 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5D3AFE9D1BED1598003EA2B2 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5D3AFEA11BED1598003EA2B2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -467,6 +455,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SpritedAnimationViewExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.SpritedAnimationView;
 				PRODUCT_NAME = SpritedAnimationViewExample;
@@ -478,6 +467,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SpritedAnimationViewExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.SpritedAnimationView;
 				PRODUCT_NAME = SpritedAnimationViewExample;
