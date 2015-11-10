@@ -20,7 +20,7 @@
 
 #import "MDCRobotoFontLoader.h"
 #import "MDCTypography.h"
-#import "MDCTypography+Constants.h"
+#import "Private/MDCTypography+Constants.h"
 
 static id<MDCTypographyFontLoader> sFontLoader = nil;
 
