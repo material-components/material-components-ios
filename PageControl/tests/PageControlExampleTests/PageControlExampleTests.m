@@ -18,21 +18,16 @@
 
 #import "MaterialPageControl.h"
 
-@interface PageControlExampleTests : XCTestCase <UIScrollViewDelegate>
+@interface PageControlExampleTests : XCTestCase
 
 @end
 
 @implementation PageControlExampleTests {
   MDCPageControl *_pageControl;
-//  UIScrollView *_scrollView;
-//  XCTestExpectation *_expectation;
-//  XCTestExpectation *_observerExpectation;
 }
 
 - (void)setUp {
   [super setUp];
-//  _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
-//  _scrollView.contentSize = CGSizeMake(200, 10);
   _pageControl = [[MDCPageControl alloc] initWithFrame:CGRectZero];
 }
 
@@ -70,7 +65,7 @@
   [_pageControl layoutIfNeeded];
   XCTAssertEqual(_pageControl.hidden, YES);
 
-   _pageControl.hidesForSinglePage = NO;
+  _pageControl.hidesForSinglePage = NO;
   _pageControl.numberOfPages = 1;
   [_pageControl layoutIfNeeded];
   XCTAssertEqual(_pageControl.hidden, NO);
