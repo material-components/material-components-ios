@@ -110,11 +110,12 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   _animatedIndicator.color = _currentPageIndicatorTintColor;
   _trackLayer.trackColor = _pageIndicatorTintColor;
 
+  // TODO(cjcox): Add back in RTL once we get the view category ready.
   // This view must be mirrored by flipping instead of relayout, because we want to mirror
   // the view itself, not its subviews.
-//  if ([self class] == [MDCPageControl class]) {
-//    [self goo_flipViewForRTL];
-//  }
+  //  if ([self class] == [MDCPageControl class]) {
+  //    [self goo_flipViewForRTL];
+  //  }
 }
 
 - (void)setNumberOfPages:(NSInteger)numberOfPages {
