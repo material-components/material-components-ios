@@ -566,7 +566,7 @@
 				INFOPLIST_FILE = ScrollViewDelegateMultiplexerExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.ScrollViewDelegateMultiplexerExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -579,7 +579,7 @@
 				INFOPLIST_FILE = ScrollViewDelegateMultiplexerExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.ScrollViewDelegateMultiplexerExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -591,7 +591,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = ../tests/ScrollViewDelegateMultiplexerExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.ScrollViewDelegateMultiplexerExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScrollViewDelegateMultiplexerExample.app/ScrollViewDelegateMultiplexerExample";
 			};
@@ -603,7 +603,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = ../tests/ScrollViewDelegateMultiplexerExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.ScrollViewDelegateMultiplexerExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScrollViewDelegateMultiplexerExample.app/ScrollViewDelegateMultiplexerExample";
 			};
@@ -614,7 +614,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = ../tests/ScrollViewDelegateMultiplexerExampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.ScrollViewDelegateMultiplexerExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = ScrollViewDelegateMultiplexerExample;
 				USES_XCTRUNNER = YES;
@@ -626,7 +626,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = ../tests/ScrollViewDelegateMultiplexerExampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComonents.ScrollViewDelegateMultiplexerExampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.ScrollViewDelegateMultiplexerExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = ScrollViewDelegateMultiplexerExample;
 				USES_XCTRUNNER = YES;
