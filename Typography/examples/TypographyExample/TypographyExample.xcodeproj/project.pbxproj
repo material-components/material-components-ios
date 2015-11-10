@@ -8,14 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0B5D80131BE3EB5C00AA67C1 /* MDCTypography.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5D80111BE3EB5C00AA67C1 /* MDCTypography.m */; };
-		20B947AE1BED3A84005EE125 /* MDCTypography+Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947AB1BED3A84005EE125 /* MDCTypography+Constants.m */; settings = {ASSET_TAGS = (); }; };
-		20B947AF1BED3A84005EE125 /* MDCTypographyFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947AD1BED3A84005EE125 /* MDCTypographyFontLoader.m */; settings = {ASSET_TAGS = (); }; };
 		20B947B51BED3AA1005EE125 /* MaterialTypography.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B947B01BED3AA1005EE125 /* MaterialTypography.bundle */; settings = {ASSET_TAGS = (); }; };
 		20B947B61BED3AA1005EE125 /* MDCFontResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947B21BED3AA1005EE125 /* MDCFontResource.m */; settings = {ASSET_TAGS = (); }; };
 		20B947B71BED3AA1005EE125 /* MDCRobotoFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947B41BED3AA1005EE125 /* MDCRobotoFontLoader.m */; settings = {ASSET_TAGS = (); }; };
 		20B947BB1BED3AC4005EE125 /* MDCFontResourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947B81BED3AC4005EE125 /* MDCFontResourceTests.m */; settings = {ASSET_TAGS = (); }; };
 		20B947BC1BED3AC4005EE125 /* MDCRobotoFontLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947B91BED3AC4005EE125 /* MDCRobotoFontLoaderTests.m */; settings = {ASSET_TAGS = (); }; };
 		20B947BD1BED3AC4005EE125 /* MDCTypographyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B947BA1BED3AC4005EE125 /* MDCTypographyTests.m */; settings = {ASSET_TAGS = (); }; };
+		20CEC5541BF1320D004D1868 /* MDCTypography+Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CEC5531BF1320D004D1868 /* MDCTypography+Constants.m */; settings = {ASSET_TAGS = (); }; };
 		20DA31C71BAA01AB00CE11C2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C61BAA01AB00CE11C2 /* main.m */; };
 		20DA31CA1BAA01AB00CE11C2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31C91BAA01AB00CE11C2 /* AppDelegate.m */; };
 		20DA31CD1BAA01AB00CE11C2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DA31CC1BAA01AB00CE11C2 /* ViewController.m */; };
@@ -47,10 +46,6 @@
 		0B5D800E1BE3EB5C00AA67C1 /* MaterialTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTypography.h; sourceTree = "<group>"; };
 		0B5D80101BE3EB5C00AA67C1 /* MDCTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCTypography.h; sourceTree = "<group>"; };
 		0B5D80111BE3EB5C00AA67C1 /* MDCTypography.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCTypography.m; sourceTree = "<group>"; };
-		20B947AA1BED3A84005EE125 /* MDCTypography+Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDCTypography+Constants.h"; sourceTree = "<group>"; };
-		20B947AB1BED3A84005EE125 /* MDCTypography+Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCTypography+Constants.m"; sourceTree = "<group>"; };
-		20B947AC1BED3A84005EE125 /* MDCTypographyFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCTypographyFontLoader.h; sourceTree = "<group>"; };
-		20B947AD1BED3A84005EE125 /* MDCTypographyFontLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCTypographyFontLoader.m; sourceTree = "<group>"; };
 		20B947B01BED3AA1005EE125 /* MaterialTypography.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MaterialTypography.bundle; sourceTree = "<group>"; };
 		20B947B11BED3AA1005EE125 /* MDCFontResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCFontResource.h; sourceTree = "<group>"; };
 		20B947B21BED3AA1005EE125 /* MDCFontResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCFontResource.m; sourceTree = "<group>"; };
@@ -59,6 +54,8 @@
 		20B947B81BED3AC4005EE125 /* MDCFontResourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCFontResourceTests.m; path = ../../../tests/MDCFontResourceTests.m; sourceTree = "<group>"; };
 		20B947B91BED3AC4005EE125 /* MDCRobotoFontLoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCRobotoFontLoaderTests.m; path = ../../../tests/MDCRobotoFontLoaderTests.m; sourceTree = "<group>"; };
 		20B947BA1BED3AC4005EE125 /* MDCTypographyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCTypographyTests.m; path = ../../../tests/MDCTypographyTests.m; sourceTree = "<group>"; };
+		20CEC5521BF1320D004D1868 /* MDCTypography+Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDCTypography+Constants.h"; sourceTree = "<group>"; };
+		20CEC5531BF1320D004D1868 /* MDCTypography+Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCTypography+Constants.m"; sourceTree = "<group>"; };
 		20DA31C21BAA01AB00CE11C2 /* TypographyExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypographyExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20DA31C61BAA01AB00CE11C2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		20DA31C81BAA01AB00CE11C2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -102,13 +99,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		20B947A91BED3A84005EE125 /* Private */ = {
+		20CEC5511BF1320D004D1868 /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				20B947AA1BED3A84005EE125 /* MDCTypography+Constants.h */,
-				20B947AB1BED3A84005EE125 /* MDCTypography+Constants.m */,
-				20B947AC1BED3A84005EE125 /* MDCTypographyFontLoader.h */,
-				20B947AD1BED3A84005EE125 /* MDCTypographyFontLoader.m */,
+				20CEC5521BF1320D004D1868 /* MDCTypography+Constants.h */,
+				20CEC5531BF1320D004D1868 /* MDCTypography+Constants.m */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -182,6 +177,7 @@
 		20DA31FA1BAA062000CE11C2 /* Typography */ = {
 			isa = PBXGroup;
 			children = (
+				20CEC5511BF1320D004D1868 /* Private */,
 				20B947B01BED3AA1005EE125 /* MaterialTypography.bundle */,
 				0B5D800E1BE3EB5C00AA67C1 /* MaterialTypography.h */,
 				20B947B11BED3AA1005EE125 /* MDCFontResource.h */,
@@ -190,7 +186,6 @@
 				20B947B41BED3AA1005EE125 /* MDCRobotoFontLoader.m */,
 				0B5D80101BE3EB5C00AA67C1 /* MDCTypography.h */,
 				0B5D80111BE3EB5C00AA67C1 /* MDCTypography.m */,
-				20B947A91BED3A84005EE125 /* Private */,
 			);
 			name = Typography;
 			path = ../../src;
@@ -328,12 +323,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				20DA31CD1BAA01AB00CE11C2 /* ViewController.m in Sources */,
-				20B947AF1BED3A84005EE125 /* MDCTypographyFontLoader.m in Sources */,
 				0B5D80131BE3EB5C00AA67C1 /* MDCTypography.m in Sources */,
 				20B947B61BED3AA1005EE125 /* MDCFontResource.m in Sources */,
+				20CEC5541BF1320D004D1868 /* MDCTypography+Constants.m in Sources */,
 				20DA31CA1BAA01AB00CE11C2 /* AppDelegate.m in Sources */,
 				20DA31C71BAA01AB00CE11C2 /* main.m in Sources */,
-				20B947AE1BED3A84005EE125 /* MDCTypography+Constants.m in Sources */,
 				20B947B71BED3AA1005EE125 /* MDCRobotoFontLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +427,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = ../../src;
 			};
 			name = Debug;
 		};
@@ -470,6 +465,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = ../../src;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -478,6 +474,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TypographyExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.TypographyExample;
@@ -489,6 +486,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TypographyExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.TypographyExample;

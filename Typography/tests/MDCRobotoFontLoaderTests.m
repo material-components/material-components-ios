@@ -18,7 +18,7 @@
 
 #import "MDCFontResource.h"
 #import "MDCRobotoFontLoader.h"
-#import "MDCTypography+Constants.h"
+#import "Private/MDCTypography+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
@@ -36,13 +36,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 @property(nonatomic, strong) MDCFontResource *mediumItalicFontResource;
 @property(nonatomic, strong) MDCFontResource *boldItalicFontResource;
 
-- (instancetype)initInternal;
-
-@end
-
-@interface MDCRobotoFontLoader (Testing)
-
 @property(nonatomic, strong, null_resettable) NSBundle *baseBundle;
+
+- (instancetype)initInternal;
 
 @end
 
