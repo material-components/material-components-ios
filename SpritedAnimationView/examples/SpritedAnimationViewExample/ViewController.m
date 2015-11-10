@@ -29,7 +29,6 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  // Initial checked state.
   _checked = YES;
 
   // Sprited animation view.
