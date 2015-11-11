@@ -84,8 +84,8 @@
 
 - (MDCFontResource *)regularFontResource {
   if (!_regularFontResource) {
-    _regularFontResource = [[MDCFontResource alloc] initWithFontName:kRegularFontName
-                                                            filename:kRegularFontFilename
+    _regularFontResource = [[MDCFontResource alloc] initWithFontName:kMDCRegularFontName
+                                                            filename:kMDCRegularFontFilename
                                                       bundleFileName:kTypographyBundle
                                                           baseBundle:_baseBundle];
   }
@@ -102,8 +102,8 @@
 
 - (MDCFontResource *)mediumFontResource {
   if (!_mediumFontResource) {
-    _mediumFontResource = [[MDCFontResource alloc] initWithFontName:kMediumFontName
-                                                           filename:kMediumFontFilename
+    _mediumFontResource = [[MDCFontResource alloc] initWithFontName:kMDCMediumFontName
+                                                           filename:kMDCMediumFontFilename
                                                      bundleFileName:kTypographyBundle
                                                          baseBundle:_baseBundle];
   }
@@ -120,8 +120,8 @@
 
 - (MDCFontResource *)lightFontResource {
   if (!_lightFontResource) {
-    _lightFontResource = [[MDCFontResource alloc] initWithFontName:kLightFontName
-                                                          filename:kLightFontFilename
+    _lightFontResource = [[MDCFontResource alloc] initWithFontName:kMDCLightFontName
+                                                          filename:kMDCLightFontFilename
                                                     bundleFileName:kTypographyBundle
                                                         baseBundle:_baseBundle];
   }
@@ -138,8 +138,8 @@
 
 - (MDCFontResource *)boldFontResource {
   if (!_boldFontResource) {
-    _boldFontResource = [[MDCFontResource alloc] initWithFontName:kBoldFontName
-                                                         filename:kBoldFontFilename
+    _boldFontResource = [[MDCFontResource alloc] initWithFontName:kMDCBoldFontName
+                                                         filename:kMDCBoldFontFilename
                                                    bundleFileName:kTypographyBundle
                                                        baseBundle:_baseBundle];
   }
@@ -157,8 +157,8 @@
 
 - (MDCFontResource *)italicFontResource {
   if (!_italicFontResource) {
-    _italicFontResource = [[MDCFontResource alloc] initWithFontName:kRegularItalicFontName
-                                                           filename:kRegularItalicFontFilename
+    _italicFontResource = [[MDCFontResource alloc] initWithFontName:kMDCRegularItalicFontName
+                                                           filename:kMDCRegularItalicFontFilename
                                                      bundleFileName:kTypographyBundle
                                                          baseBundle:_baseBundle];
   }
@@ -175,8 +175,8 @@
 
 - (MDCFontResource *)lightItalicFontResource {
   if (!_lightItalicFontResource) {
-    _lightItalicFontResource = [[MDCFontResource alloc] initWithFontName:kLightItalicFontName
-                                                                filename:kLightItalicFontFilename
+    _lightItalicFontResource = [[MDCFontResource alloc] initWithFontName:kMDCLightItalicFontName
+                                                                filename:kMDCLightItalicFontFilename
                                                           bundleFileName:kTypographyBundle
                                                               baseBundle:_baseBundle];
   }
@@ -194,8 +194,8 @@
 - (MDCFontResource *)mediumItalicFontResource {
   if (!_mediumItalicFontResource) {
     _mediumItalicFontResource =
-        [[MDCFontResource alloc] initWithFontName:kMediumItalicFontName
-                                         filename:kMediumItalicFontFilename
+        [[MDCFontResource alloc] initWithFontName:kMDCMediumItalicFontName
+                                         filename:kMDCMediumItalicFontFilename
                                    bundleFileName:kTypographyBundle
                                        baseBundle:_baseBundle];
   }
@@ -212,8 +212,8 @@
 
 - (MDCFontResource *)boldItalicFontResource {
   if (!_boldItalicFontResource) {
-    _boldItalicFontResource = [[MDCFontResource alloc] initWithFontName:kBoldItalicFontName
-                                                               filename:kBoldItalicFontFilename
+    _boldItalicFontResource = [[MDCFontResource alloc] initWithFontName:kMDCBoldItalicFontName
+                                                               filename:kMDCBoldItalicFontFilename
                                                          bundleFileName:kTypographyBundle
                                                              baseBundle:_baseBundle];
   }

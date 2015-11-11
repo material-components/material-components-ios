@@ -54,7 +54,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 }
 
 + (CGFloat)display4FontOpacity {
-  return kSecondaryOpacity;
+  return kMDCSecondaryOpacity;
 }
 
 + (UIFont *)display3Font {
@@ -62,7 +62,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 }
 
 + (CGFloat)display3FontOpacity {
-  return kSecondaryOpacity;
+  return kMDCSecondaryOpacity;
 }
 
 + (UIFont *)display2Font {
@@ -70,7 +70,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 }
 
 + (CGFloat)display2FontOpacity {
-  return kSecondaryOpacity;
+  return kMDCSecondaryOpacity;
 }
 
 + (UIFont *)display1Font {
@@ -78,7 +78,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 }
 
 + (CGFloat)display1FontOpacity {
-  return kSecondaryOpacity;
+  return kMDCSecondaryOpacity;
 }
 
 #pragma mark - Common UI fonts.
@@ -90,7 +90,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 
 /** Returns the recommended opacity of black text for the headline font. */
 + (CGFloat)headlineFontOpacity {
-  return kStandardOpacity;
+  return kMDCStandardOpacity;
 }
 
 /** Returns the title font. */
@@ -100,7 +100,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 
 /** Returns the recommended opacity of black text for the title font. */
 + (CGFloat)titleFontOpacity {
-  return kStandardOpacity;
+  return kMDCStandardOpacity;
 }
 
 /** Returns the subhead font. (subtitle) */
@@ -110,7 +110,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 
 /** Returns the recommended opacity of black text for the subhead font. */
 + (CGFloat)subheadFontOpacity {
-  return kStandardOpacity;
+  return kMDCStandardOpacity;
 }
 
 /** Returns the body 2 text font. (bold text) */
@@ -120,7 +120,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 
 /** Returns the recommended opacity of black text for the body 2 font. */
 + (CGFloat)body2FontOpacity {
-  return kStandardOpacity;
+  return kMDCStandardOpacity;
 }
 
 /** Returns the body 1 text font. (normal text) */
@@ -130,7 +130,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 
 /** Returns the recommended opacity of black text for the body 1 font. */
 + (CGFloat)body1FontOpacity {
-  return kStandardOpacity;
+  return kMDCStandardOpacity;
 }
 
 /** Returns the caption font. (a small font for image captions) */
@@ -140,7 +140,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 
 /** Returns the recommended opacity of black text for the caption font. */
 + (CGFloat)captionFontOpacity {
-  return kSecondaryOpacity;
+  return kMDCSecondaryOpacity;
 }
 
 /** Returns a font for buttons. */
@@ -150,7 +150,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 
 /** Returns the recommended opacity of black text for the button font. */
 + (CGFloat)buttonFontOpacity {
-  return kStandardOpacity;
+  return kMDCStandardOpacity;
 }
 
 #pragma mark - Roboto fonts
