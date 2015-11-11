@@ -19,73 +19,74 @@
 #import "MDCTypography.h"
 
 /**
- * This class provides references to a set of @c MDCFontResources for the Roboto fonts.
- *
- * @ingroup Typography
+ The MDCRobotoFontLoader class provides a shared mechanism through which the Roboto fonts can
+ be loaded and customized.
  */
 // TODO:(b/24810716) Move into separate target so that font assets can be excluded.
 @interface MDCRobotoFontLoader : NSObject <MDCTypographyFontLoader>
 
+#pragma mark Accessing the font loader
+
 /** Shared singleton instance. */
 + (nonnull instancetype)sharedInstance;
 
-#pragma mark non-italic
+#pragma mark Non-italic fonts
 
 /**
- * Returns a lazy-registered Roboto Light font.
- *
- * If registration fails then the system font is returned.
+ Returns a lazy-registered Roboto Light font.
+
+ If registration fails then the system font is returned.
  */
 - (nonnull UIFont *)lightFontOfSize:(CGFloat)fontSize;
 
 /**
- * Returns a lazy-registered Roboto Regular font.
- *
- * If registration fails then the system font is returned.
+ Returns a lazy-registered Roboto Regular font.
+
+ If registration fails then the system font is returned.
  */
 - (nonnull UIFont *)regularFontOfSize:(CGFloat)fontSize;
 
 /**
- * Returns a lazy-registered Roboto Medium font.
- *
- * If registration fails then the bold system font is returned.
+ Returns a lazy-registered Roboto Medium font.
+
+ If registration fails then the bold system font is returned.
  */
 - (nonnull UIFont *)mediumFontOfSize:(CGFloat)fontSize;
 
 /**
- * Returns a lazy-registered Roboto Bold font.
- *
- * If registration fails then the bold system font is returned.
+ Returns a lazy-registered Roboto Bold font.
+
+ If registration fails then the bold system font is returned.
  */
 - (nonnull UIFont *)boldFontOfSize:(CGFloat)fontSize;
 
-#pragma mark italic
+#pragma mark Italic fonts
 
 /**
- * Returns a lazy-registered Roboto Light Italic font.
- *
- * If registration fails then the italic system font is returned.
+ Returns a lazy-registered Roboto Light Italic font.
+
+ If registration fails then the italic system font is returned.
  */
 - (nonnull UIFont *)lightItalicFontOfSize:(CGFloat)fontSize;
 
 /**
- * Returns a lazy-registered Roboto Regular Italic font.
- *
- * If registration fails then the italic system font is returned.
+ Returns a lazy-registered Roboto Regular Italic font.
+
+ If registration fails then the italic system font is returned.
  */
 - (nonnull UIFont *)italicFontOfSize:(CGFloat)fontSize;
 
 /**
- * Returns a lazy-registered Roboto Medium Italic font.
- *
- * If registration fails then the italic system font is returned.
+ Returns a lazy-registered Roboto Medium Italic font.
+
+ If registration fails then the italic system font is returned.
  */
 - (nonnull UIFont *)mediumItalicFontOfSize:(CGFloat)fontSize;
 
 /**
- * Returns a lazy-registered Roboto Bold Italic font.
- *
- * If registration fails then the italic system font is returned.
+ Returns a lazy-registered Roboto Bold Italic font.
+
+ If registration fails then the italic system font is returned.
  */
 - (nonnull UIFont *)boldItalicFontOfSize:(CGFloat)fontSize;
 

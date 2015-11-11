@@ -1,0 +1,2 @@
+MDCFontResource.h
+	- (nonnull instancetype)init NS_UNAVAILABLE;
