@@ -41,7 +41,7 @@
 /**
  Typographic constants and helpers.
 
- To use these fonts, you must add MDCTypography.bundle to your target.
+ To use these fonts, you must add MaterialTypography.bundle to your target.
 
  @see https://www.google.com/design/spec/style/typography.html#typography-styles
  */
