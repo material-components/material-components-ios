@@ -20,25 +20,25 @@
 #define MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE @"MaterialTypography.bundle"
 #endif  // MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
 
-const CGFloat MDCStandardOpacity = 0.87f;
-const CGFloat MDCSecondaryOpacity = 0.54f;
+const CGFloat MDCTypographyStandardOpacity = 0.87f;
+const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
-NSString *const MDCRegularFontName = @"Roboto-Regular";
-NSString *const MDCRegularItalicFontName = @"Roboto-Italic";
-NSString *const MDCBoldFontName = @"Roboto-Bold";
-NSString *const MDCBoldItalicFontName = @"Roboto-BoldItalic";
-NSString *const MDCMediumFontName = @"Roboto-Medium";
-NSString *const MDCMediumItalicFontName = @"Roboto-MediumItalic";
-NSString *const MDCLightFontName = @"Roboto-Light";
-NSString *const MDCLightItalicFontName = @"Roboto-LightItalic";
+NSString *const MDCTypographyRegularFontName = @"Roboto-Regular";
+NSString *const MDCTypographyRegularItalicFontName = @"Roboto-Italic";
+NSString *const MDCTypographyBoldFontName = @"Roboto-Bold";
+NSString *const MDCTypographyBoldItalicFontName = @"Roboto-BoldItalic";
+NSString *const MDCTypographyMediumFontName = @"Roboto-Medium";
+NSString *const MDCTypographyMediumItalicFontName = @"Roboto-MediumItalic";
+NSString *const MDCTypographyLightFontName = @"Roboto-Light";
+NSString *const MDCTypographyLightItalicFontName = @"Roboto-LightItalic";
 
-NSString *const MDCRegularFontFilename = @"Roboto-Regular.ttf";
-NSString *const MDCRegularItalicFontFilename = @"Roboto-Italic.ttf";
-NSString *const MDCBoldFontFilename = @"Roboto-Bold.ttf";
-NSString *const MDCBoldItalicFontFilename = @"Roboto-BoldItalic.ttf";
-NSString *const MDCMediumFontFilename = @"Roboto-Medium.ttf";
-NSString *const MDCMediumItalicFontFilename = @"Roboto-MediumItalic.ttf";
-NSString *const MDCLightFontFilename = @"Roboto-Light.ttf";
-NSString *const MDCLightItalicFontFilename = @"Roboto-LightItalic.ttf";
+NSString *const MDCTypographyRegularFontFilename = @"Roboto-Regular.ttf";
+NSString *const MDCTypographyRegularItalicFontFilename = @"Roboto-Italic.ttf";
+NSString *const MDCTypographyBoldFontFilename = @"Roboto-Bold.ttf";
+NSString *const MDCTypographyBoldItalicFontFilename = @"Roboto-BoldItalic.ttf";
+NSString *const MDCTypographyMediumFontFilename = @"Roboto-Medium.ttf";
+NSString *const MDCTypographyMediumItalicFontFilename = @"Roboto-MediumItalic.ttf";
+NSString *const MDCTypographyLightFontFilename = @"Roboto-Light.ttf";
+NSString *const MDCTypographyLightItalicFontFilename = @"Roboto-LightItalic.ttf";
 
 NSString *const MDCTypographyBundle = MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE;
