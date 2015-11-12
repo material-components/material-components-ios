@@ -86,7 +86,7 @@
   if (!_regularFontResource) {
     _regularFontResource = [[MDCFontResource alloc] initWithFontName:MDCRegularFontName
                                                             filename:MDCRegularFontFilename
-                                                      bundleFileName:kTypographyBundle
+                                                      bundleFileName:MDCTypographyBundle
                                                           baseBundle:_baseBundle];
   }
   return _regularFontResource;
@@ -104,7 +104,7 @@
   if (!_mediumFontResource) {
     _mediumFontResource = [[MDCFontResource alloc] initWithFontName:MDCMediumFontName
                                                            filename:MDCMediumFontFilename
-                                                     bundleFileName:kTypographyBundle
+                                                     bundleFileName:MDCTypographyBundle
                                                          baseBundle:_baseBundle];
   }
   return _mediumFontResource;
@@ -122,7 +122,7 @@
   if (!_lightFontResource) {
     _lightFontResource = [[MDCFontResource alloc] initWithFontName:MDCLightFontName
                                                           filename:MDCLightFontFilename
-                                                    bundleFileName:kTypographyBundle
+                                                    bundleFileName:MDCTypographyBundle
                                                         baseBundle:_baseBundle];
   }
   return _lightFontResource;
@@ -140,7 +140,7 @@
   if (!_boldFontResource) {
     _boldFontResource = [[MDCFontResource alloc] initWithFontName:MDCBoldFontName
                                                          filename:MDCBoldFontFilename
-                                                   bundleFileName:kTypographyBundle
+                                                   bundleFileName:MDCTypographyBundle
                                                        baseBundle:_baseBundle];
   }
   return _boldFontResource;
@@ -159,7 +159,7 @@
   if (!_italicFontResource) {
     _italicFontResource = [[MDCFontResource alloc] initWithFontName:MDCRegularItalicFontName
                                                            filename:MDCRegularItalicFontFilename
-                                                     bundleFileName:kTypographyBundle
+                                                     bundleFileName:MDCTypographyBundle
                                                          baseBundle:_baseBundle];
   }
   return _italicFontResource;
@@ -177,7 +177,7 @@
   if (!_lightItalicFontResource) {
     _lightItalicFontResource = [[MDCFontResource alloc] initWithFontName:MDCLightItalicFontName
                                                                 filename:MDCLightItalicFontFilename
-                                                          bundleFileName:kTypographyBundle
+                                                          bundleFileName:MDCTypographyBundle
                                                               baseBundle:_baseBundle];
   }
   return _lightItalicFontResource;
@@ -196,7 +196,7 @@
     _mediumItalicFontResource =
         [[MDCFontResource alloc] initWithFontName:MDCMediumItalicFontName
                                          filename:MDCMediumItalicFontFilename
-                                   bundleFileName:kTypographyBundle
+                                   bundleFileName:MDCTypographyBundle
                                        baseBundle:_baseBundle];
   }
   return _mediumItalicFontResource;
@@ -214,7 +214,7 @@
   if (!_boldItalicFontResource) {
     _boldItalicFontResource = [[MDCFontResource alloc] initWithFontName:MDCBoldItalicFontName
                                                                filename:MDCBoldItalicFontFilename
-                                                         bundleFileName:kTypographyBundle
+                                                         bundleFileName:MDCTypographyBundle
                                                              baseBundle:_baseBundle];
   }
   return _boldItalicFontResource;

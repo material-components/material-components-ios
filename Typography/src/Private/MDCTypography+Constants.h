@@ -37,4 +37,4 @@ extern NSString *const MDCMediumItalicFontFilename;
 extern NSString *const MDCLightFontFilename;
 extern NSString *const MDCLightItalicFontFilename;
 
-extern NSString *const kTypographyBundle;
+extern NSString *const MDCTypographyBundle;

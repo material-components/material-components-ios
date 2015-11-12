@@ -31,7 +31,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
   return [[MDCFontResource alloc] initWithFontName:MDCRegularFontName
                                           filename:MDCRegularFontFilename
-                                    bundleFileName:kTypographyBundle
+                                    bundleFileName:MDCTypographyBundle
                                         baseBundle:bundle];
 }
 
@@ -39,7 +39,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
   return [[MDCFontResource alloc] initWithFontName:MDCRegularFontName
                                           filename:@"some invalid filename"
-                                    bundleFileName:kTypographyBundle
+                                    bundleFileName:MDCTypographyBundle
                                         baseBundle:bundle];
 }
 
@@ -53,7 +53,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertNotNil(resource.fontURL, @"expecting font url to be valid");
   XCTAssertTrue([[resource.fontURL path] containsString:MDCRegularFontFilename],
                 @"expecting font to be correct");
-  XCTAssertTrue([[resource.fontURL path] containsString:kTypographyBundle],
+  XCTAssertTrue([[resource.fontURL path] containsString:MDCTypographyBundle],
                 @"expecting font to be correct");
 }
 

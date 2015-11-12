@@ -41,4 +41,4 @@ NSString *const MDCMediumItalicFontFilename = @"Roboto-MediumItalic.ttf";
 NSString *const MDCLightFontFilename = @"Roboto-Light.ttf";
 NSString *const MDCLightItalicFontFilename = @"Roboto-LightItalic.ttf";
 
-NSString *const kTypographyBundle = MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE;
+NSString *const MDCTypographyBundle = MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE;
