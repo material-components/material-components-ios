@@ -29,17 +29,17 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (MDCFontResource *)validResource {
   NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
-  return [[MDCFontResource alloc] initWithFontName:kRegularFontName
-                                          filename:kRegularFontFilename
-                                    bundleFileName:kTypographyBundle
+  return [[MDCFontResource alloc] initWithFontName:MDCTypographyRegularFontName
+                                          filename:MDCTypographyRegularFontFilename
+                                    bundleFileName:MDCTypographyBundle
                                         baseBundle:bundle];
 }
 
 - (MDCFontResource *)invalidResource {
   NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
-  return [[MDCFontResource alloc] initWithFontName:kRegularFontName
+  return [[MDCFontResource alloc] initWithFontName:MDCTypographyRegularFontName
                                           filename:@"some invalid filename"
-                                    bundleFileName:kTypographyBundle
+                                    bundleFileName:MDCTypographyBundle
                                         baseBundle:bundle];
 }
 
@@ -51,9 +51,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertNotNil(resource.fontURL, @"expecting font url to be valid");
-  XCTAssertTrue([[resource.fontURL path] containsString:kRegularFontFilename],
+  XCTAssertTrue([[resource.fontURL path] containsString:MDCTypographyRegularFontFilename],
                 @"expecting font to be correct");
-  XCTAssertTrue([[resource.fontURL path] containsString:kTypographyBundle],
+  XCTAssertTrue([[resource.fontURL path] containsString:MDCTypographyBundle],
                 @"expecting font to be correct");
 }
 
@@ -90,7 +90,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   // Then
   XCTAssertNotNil(font);
   XCTAssertEqualWithAccuracy(font.pointSize, randomSize, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, kRegularFontName);
+  XCTAssertEqualObjects(font.fontName, MDCTypographyRegularFontName);
 }
 
 - (void)testReturnNilWhenTheCustomFontCanNotBeFound {
