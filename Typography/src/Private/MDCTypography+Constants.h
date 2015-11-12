@@ -16,25 +16,25 @@
 
 #import <UIKit/UIKit.h>
 
-extern const CGFloat kMDCStandardOpacity;
-extern const CGFloat kMDCSecondaryOpacity;
+extern const CGFloat MDCStandardOpacity;
+extern const CGFloat MDCSecondaryOpacity;
 
-extern NSString *const kMDCRegularFontName;
-extern NSString *const kMDCRegularItalicFontName;
-extern NSString *const kMDCBoldFontName;
-extern NSString *const kMDCBoldItalicFontName;
-extern NSString *const kMDCMediumFontName;
-extern NSString *const kMDCMediumItalicFontName;
-extern NSString *const kMDCLightFontName;
-extern NSString *const kMDCLightItalicFontName;
+extern NSString *const MDCRegularFontName;
+extern NSString *const MDCRegularItalicFontName;
+extern NSString *const MDCBoldFontName;
+extern NSString *const MDCBoldItalicFontName;
+extern NSString *const MDCMediumFontName;
+extern NSString *const MDCMediumItalicFontName;
+extern NSString *const MDCLightFontName;
+extern NSString *const MDCLightItalicFontName;
 
-extern NSString *const kMDCRegularFontFilename;
-extern NSString *const kMDCRegularItalicFontFilename;
-extern NSString *const kMDCBoldFontFilename;
-extern NSString *const kMDCBoldItalicFontFilename;
-extern NSString *const kMDCMediumFontFilename;
-extern NSString *const kMDCMediumItalicFontFilename;
-extern NSString *const kMDCLightFontFilename;
-extern NSString *const kMDCLightItalicFontFilename;
+extern NSString *const MDCRegularFontFilename;
+extern NSString *const MDCRegularItalicFontFilename;
+extern NSString *const MDCBoldFontFilename;
+extern NSString *const MDCBoldItalicFontFilename;
+extern NSString *const MDCMediumFontFilename;
+extern NSString *const MDCMediumItalicFontFilename;
+extern NSString *const MDCLightFontFilename;
+extern NSString *const MDCLightItalicFontFilename;
 
 extern NSString *const kTypographyBundle;
