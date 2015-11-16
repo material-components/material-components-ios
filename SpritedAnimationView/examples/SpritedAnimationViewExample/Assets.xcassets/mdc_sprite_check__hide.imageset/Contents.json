@@ -1,0 +1,23 @@
+{
+    "images": [
+        {
+            "filename": "goo_sprite_check__hide.png",
+            "idiom": "universal",
+            "scale": "1x"
+        },
+        {
+            "filename": "goo_sprite_check__hide_2x.png",
+            "idiom": "universal",
+            "scale": "2x"
+        },
+        {
+            "filename": "goo_sprite_check__hide_3x.png",
+            "idiom": "universal",
+            "scale": "3x"
+        }
+    ],
+    "info": {
+        "author": "xcode",
+        "version": 1
+    }
+}
