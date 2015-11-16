@@ -1,7 +1,11 @@
 # SpritedAnimationView example app
 
 This app demonstrates how to create a sprited animation view using the
-MDCSpritedAnimationView. 
+MDCSpritedAnimationView.
+
+## Requirements
+
+Xcode 7.0 or higher.
 
 ## Where is the code?
 
