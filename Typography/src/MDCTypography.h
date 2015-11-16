@@ -17,33 +17,33 @@
 #import <UIKit/UIKit.h>
 
 /**
- * MDCTypography uses this protocol to delegate responsibility of loading the custom fonts.
- *
- * The spec defines the Roboto font family and uses three fonts in the named styles. Use this
- * protocol to define your own fonts if there is a brand need.
- *
- * @see https://www.google.com/design/spec/style/typography.html#typography-styles
- *
- * @ingroup Typography
+ MDCTypography uses this protocol to delegate responsibility of loading the custom fonts.
+
+ The spec defines the Roboto font family and uses three fonts in the named styles. Use this
+ protocol to define your own fonts if there is a brand need.
+
+ @see https://www.google.com/design/spec/style/typography.html#typography-styles
  */
 @protocol MDCTypographyFontLoader <NSObject>
 @required
 
+/** Asks the receiver to return a font with a light weight. */
 - (nonnull UIFont *)lightFontOfSize:(CGFloat)fontSize;
+
+/** Asks the receiver to return a font with a normal weight. */
 - (nonnull UIFont *)regularFontOfSize:(CGFloat)fontSize;
+
+/** Asks the receiver to return a font with a medium weight. */
 - (nonnull UIFont *)mediumFontOfSize:(CGFloat)fontSize;
 
 @end
 
 /**
- * Typographic constants and helpers.
- *
- * To use these fonts, you must add MDCTypography.bundle to your target.
- *
- * Spec:
- * https://www.google.com/design/spec/style/typography.html#typography-styles
- *
- * @ingroup Typography
+ Typographic constants and helpers.
+
+ To use these fonts, you must add MaterialTypography.bundle to your target.
+
+ @see https://www.google.com/design/spec/style/typography.html#typography-styles
  */
 @interface MDCTypography : NSObject
 
@@ -78,7 +78,7 @@
 /** Returns the recommended opacity of black text for the display fonts 1. */
 + (CGFloat)display1FontOpacity;
 
-#pragma mark - Common UI fonts.
+#pragma mark - Common UI fonts
 
 /** Returns the headline font. */
 + (nonnull UIFont *)headlineFont;
@@ -125,33 +125,36 @@
 #pragma mark - Roboto fonts
 
 /**
- * Returns the regular Roboto font at the indicated point size.
- *
- * @param pointSize The requested point size for the font.
+ Returns the regular Roboto font at the indicated point size.
+
+ @param pointSize The requested point size for the font.
  */
 + (nonnull UIFont *)robotoRegularWithSize:(CGFloat)pointSize;
 
 /**
- * Returns the medium Roboto font at the indicated point size.
- *
- * @param pointSize The requested point size for the font.
+ Returns the medium Roboto font at the indicated point size.
+
+ @param pointSize The requested point size for the font.
  */
 + (nonnull UIFont *)robotoMediumWithSize:(CGFloat)pointSize;
 
 /**
- * Returns the light Roboto font at the indicated point size.
- *
- * @param pointSize The requested point size for the font.
+ Returns the light Roboto font at the indicated point size.
+
+ @param pointSize The requested point size for the font.
  */
 + (nonnull UIFont *)robotoLightWithSize:(CGFloat)pointSize;
 
 @end
 
 /**
- * MDCSystemFontLoader allows you to use the system font for @c MDCTypography.
- *
- * To use:
- * [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+ MDCSystemFontLoader allows you to use the system font for @c MDCTypography.
+
+ #### Example
+
+ ```
+ [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+ ```
  */
 @interface MDCSystemFontLoader : NSObject <MDCTypographyFontLoader>
 @end

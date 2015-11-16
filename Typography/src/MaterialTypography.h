@@ -24,8 +24,3 @@
 #import "MDCFontResource.h"
 #import "MDCRobotoFontLoader.h"
 #import "MDCTypography.h"
-
-/**
- * @defgroup Typography
- * @brief Material typography.
- */
