@@ -54,7 +54,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, kRegularFontName);
+  XCTAssertEqualObjects(font.fontName, MDCTypographyRegularFontName);
 }
 
 - (void)testRobotoMediumWithSize {
@@ -67,7 +67,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, kMediumFontName);
+  XCTAssertEqualObjects(font.fontName, MDCTypographyMediumFontName);
 }
 
 - (void)testRobotoLightWithSize {
@@ -80,7 +80,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, kLightFontName);
+  XCTAssertEqualObjects(font.fontName, MDCTypographyLightFontName);
 }
 
 - (void)testRobotoBoldWithSize {
@@ -93,7 +93,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, kBoldFontName);
+  XCTAssertEqualObjects(font.fontName, MDCTypographyBoldFontName);
 }
 
 - (void)testRobotoItalicWithSize {
@@ -106,7 +106,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, kRegularItalicFontName);
+  XCTAssertEqualObjects(font.fontName, MDCTypographyRegularItalicFontName);
 }
 
 - (void)testRobotoMediumItalicWithSize {
@@ -119,7 +119,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, kMediumItalicFontName);
+  XCTAssertEqualObjects(font.fontName, MDCTypographyMediumItalicFontName);
 }
 
 - (void)testRobotoLightItalicWithSize {
@@ -132,7 +132,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, kLightItalicFontName);
+  XCTAssertEqualObjects(font.fontName, MDCTypographyLightItalicFontName);
 }
 
 - (void)testRobotoBoldItalicWithSize {
@@ -145,7 +145,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, kBoldItalicFontName);
+  XCTAssertEqualObjects(font.fontName, MDCTypographyBoldItalicFontName);
 }
 
 - (void)testLightFallbackSystemFonts {

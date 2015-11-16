@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MDCFontResource Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/objc/Class/MDCFontResource" class="dashAnchor"></a>
+    <a title="MDCFontResource Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MaterialTypography Docs</a> (98% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MaterialTypography Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        MDCFontResource Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            Tasks
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="#/Creating%20a%20font%20resource">Creating a font resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="#/Accessing%20a%20font&#39;s%20properties">Accessing a font&#39;s properties</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="#/Registering%20a%20font">Registering a font</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="#/Accessing%20the%20font&#39;s%20registration%20status">Accessing the font&#39;s registration status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="#/Requesting%20fonts%20of%20a%20given%20size">Requesting fonts of a given size</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/MDCFontResource.html">MDCFontResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MDCTypography.html">MDCTypography</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>MDCFontResource</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="k">@interface</span> <span class="nc">MDCFontResource</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Register and load a custom font resource.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a class="anchor" name="/Creating%20a%20font%20resource"></a>
+                <a name="//apple_ref/objc/Section/Creating a font resource" class="dashAnchor"></a>
+                <a href="#/Creating%20a%20font%20resource">
+                  <h3 class="section-name">Creating a font resource</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDCFontResource(im)initWithName:URL:"></a>
+                    <a name="//apple_ref/objc/Method/-initWithName:URL:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDCFontResource(im)initWithName:URL:">-initWithName:URL:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Designated initializer for the <a href="../Classes/MDCFontResource.html">MDCFontResource</a>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithName</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">fontName</span>
+                                 <span class="nf">URL</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">fontURL</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fontName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The font&rsquo;s name as it is defined in the resource file.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fontURL</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The url location of the font on the file system.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDCFontResource(im)initWithFontName:filename:bundleFileName:baseBundle:"></a>
+                    <a name="//apple_ref/objc/Method/-initWithFontName:filename:bundleFileName:baseBundle:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDCFontResource(im)initWithFontName:filename:bundleFileName:baseBundle:">-initWithFontName:filename:bundleFileName:baseBundle:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience initializer for the <a href="../Classes/MDCFontResource.html">MDCFontResource</a>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithFontName</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">fontName</span>
+                                <span class="nf">filename</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">filename</span>
+                          <span class="nf">bundleFileName</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">bundleFilename</span>
+                              <span class="nf">baseBundle</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSBundle</span> <span class="o">*</span><span class="p">)</span><span class="nv">baseBundle</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fontName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The font&rsquo;s name as it is defined in the ttf file.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>filename</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the font file. For example a *.ttf file.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundleFilename</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the bundle.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>baseBundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle to look in.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDCFontResource(im)init"></a>
+                    <a name="//apple_ref/objc/Method/-init" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDCFontResource(im)init">-init</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@interface</span> <span class="nc">MDCFontResource</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a class="anchor" name="/Accessing%20a%20font&#39;s%20properties"></a>
+                <a name="//apple_ref/objc/Section/Accessing a font&#39;s properties" class="dashAnchor"></a>
+                <a href="#/Accessing%20a%20font&#39;s%20properties">
+                  <h3 class="section-name">Accessing a font&#39;s properties</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDCFontResource(py)fontName"></a>
+                    <a name="//apple_ref/objc/Property/fontName" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDCFontResource(py)fontName">fontName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The name of the font within the *.ttf file.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">fontName</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDCFontResource(py)fontURL"></a>
+                    <a name="//apple_ref/objc/Property/fontURL" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDCFontResource(py)fontURL">fontURL</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The URL of the font asset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSURL</span> <span class="o">*</span><span class="n">fontURL</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a class="anchor" name="/Registering%20a%20font"></a>
+                <a name="//apple_ref/objc/Section/Registering a font" class="dashAnchor"></a>
+                <a href="#/Registering%20a%20font">
+                  <h3 class="section-name">Registering a font</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDCFontResource(im)registerFont"></a>
+                    <a name="//apple_ref/objc/Method/-registerFont" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDCFontResource(im)registerFont">-registerFont</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Attempts to register the font.</p>
+
+<p>The @c isRegistered and @c hasFailedRegistration flags reflect the results of this registration
+attempt. Returns the value of isRegistered.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">registerFont</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a class="anchor" name="/Accessing%20the%20font&#39;s%20registration%20status"></a>
+                <a name="//apple_ref/objc/Section/Accessing the font&#39;s registration status" class="dashAnchor"></a>
+                <a href="#/Accessing%20the%20font&#39;s%20registration%20status">
+                  <h3 class="section-name">Accessing the font&#39;s registration status</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDCFontResource(py)isRegistered"></a>
+                    <a name="//apple_ref/objc/Property/isRegistered" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDCFontResource(py)isRegistered">isRegistered</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The registered state of the custom font.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isRegistered</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDCFontResource(py)hasFailedRegistration"></a>
+                    <a name="//apple_ref/objc/Property/hasFailedRegistration" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDCFontResource(py)hasFailedRegistration">hasFailedRegistration</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This flag is true when the registration failed. It prevents future attempts at registration.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">hasFailedRegistration</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a class="anchor" name="/Requesting%20fonts%20of%20a%20given%20size"></a>
+                <a name="//apple_ref/objc/Section/Requesting fonts of a given size" class="dashAnchor"></a>
+                <a href="#/Requesting%20fonts%20of%20a%20given%20size">
+                  <h3 class="section-name">Requesting fonts of a given size</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDCFontResource(im)fontOfSize:"></a>
+                    <a name="//apple_ref/objc/Method/-fontOfSize:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDCFontResource(im)fontOfSize:">-fontOfSize:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A convience method for getting a font.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">UIFont</span> <span class="o">*</span><span class="p">)</span><span class="nf">fontOfSize</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">fontSize</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2015 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2015-11-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.4.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
