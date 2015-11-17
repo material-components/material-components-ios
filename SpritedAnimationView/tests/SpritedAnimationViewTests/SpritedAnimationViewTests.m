@@ -19,15 +19,13 @@
 #import "MaterialSpritedAnimationView.h"
 
 static NSString *const kSpriteChecked = @"mdc_sprite_check__hide";
+static NSString *const kExpectationDescription = @"animatingWithCompletion";
 
 @interface SpritedAnimationViewTests : XCTestCase
 
 @end
 
-@implementation SpritedAnimationViewTests {
-  XCTestExpectation *_expectation;
-  MDCSpritedAnimationView *_animationView;
-}
+@implementation SpritedAnimationViewTests
 
 - (void)setUp {
   [super setUp];
@@ -41,18 +39,79 @@ static NSString *const kSpriteChecked = @"mdc_sprite_check__hide";
 
   // Sprited animation view.
   UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked];
-  _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
+  MDCSpritedAnimationView *animationView =
+      [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
 
   // Create expectation.
-  _expectation = [self expectationWithDescription:@"startAnimatingWithCompletion"];
+  XCTestExpectation *expectation = [self expectationWithDescription:kExpectationDescription];
 
   // Fulfill expectation after completion of animation.
-  [_animationView startAnimatingWithCompletion:^{
-    [_expectation fulfill];
+  [animationView startAnimatingWithCompletion:^{
+    [expectation fulfill];
   }];
 
   [self waitForExpectationsWithTimeout:1.0 handler:^(NSError *error) {
     XCTAssertEqual(error, nil);
+  }];
+}
+
+- (void)testAnimationPerformance {
+  NSArray *metrics = [[self class] defaultPerformanceMetrics];
+  [self measureMetrics:metrics automaticallyStartMeasuring:NO forBlock:^{
+    [self startMeasuring];
+
+    // Sprited animation view.
+    UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked];
+    MDCSpritedAnimationView *animationView =
+        [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
+
+    // Create expectation.
+    XCTestExpectation *expectation = [self expectationWithDescription:kExpectationDescription];
+
+    // Fulfill expectation after completion of animation.
+    [animationView startAnimatingWithCompletion:^{
+      [expectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:1.0 handler:^(NSError *error) {
+      [self stopMeasuring];
+    }];
+  }];
+}
+
+- (void)testImageViewAnimationPerformance {
+  NSArray *metrics = [[self class] defaultPerformanceMetrics];
+  [self measureMetrics:metrics automaticallyStartMeasuring:NO forBlock:^{
+
+    // Array of images.
+    NSMutableArray *images = [NSMutableArray array];
+    for (int i = 1; i <= 21; i++) {
+      [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"%d", i]]];
+    }
+
+    [self startMeasuring];
+
+    // Create UIImageView with array of images.
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"1"]];
+    imageView.animationDuration = images.count / 30;
+    imageView.animationRepeatCount = 1;
+
+    imageView.animationImages = images;
+
+    // Create expectation.
+    XCTestExpectation *expectation = [self expectationWithDescription:kExpectationDescription];
+
+    // Fulfill expectation after completion of animation transaction.
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+      [expectation fulfill];
+    }];
+    [imageView startAnimating];
+    [CATransaction commit];
+
+    [self waitForExpectationsWithTimeout:1.0 handler:^(NSError *error) {
+      [self stopMeasuring];
+    }];
   }];
 }
 
