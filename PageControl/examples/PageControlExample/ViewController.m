@@ -58,9 +58,13 @@
   }
 
   // Page control configuration.
-  CGRect frame =
-      CGRectMake(0, CGRectGetHeight(self.view.bounds) - 40, CGRectGetWidth(self.view.bounds), 40);
-  _pageControl = [[MDCPageControl alloc] initWithFrame:frame];
+  _pageControl = [[MDCPageControl alloc] init];
+
+  // We want the page control to span the bottom of the screen.
+  CGFloat bottomPadding = 20.f;
+  CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
+  _pageControl.frame = CGRectMake(0, boundsHeight - pageControlSize.height - bottomPadding,
+                                  boundsWidth, pageControlSize.height);
   _pageControl.numberOfPages = pageColors.count;
   [_pageControl addTarget:self
                    action:@selector(didChangePage:)
