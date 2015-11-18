@@ -18,6 +18,8 @@
 		5D2DA4531BF193A1007C4436 /* MDCPageControlTrackLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2DA44C1BF193A1007C4436 /* MDCPageControlTrackLayer.m */; };
 		5D2DA4631BF1A610007C4436 /* PageControlExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2DA4611BF1A610007C4436 /* PageControlExampleTests.m */; };
 		5D2DA4671BF1A645007C4436 /* PageControlExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2DA4651BF1A645007C4436 /* PageControlExampleUITests.m */; };
+		5DF96A3A1BFD2AEE007D7144 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D2DA4601BF1A610007C4436 /* Info.plist */; };
+		5DF96A3B1BFD2AFA007D7144 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D2DA4641BF1A645007C4436 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,10 +59,10 @@
 		5D2DA4481BF193A1007C4436 /* MDCPageControlIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCPageControlIndicator.m; sourceTree = "<group>"; };
 		5D2DA44B1BF193A1007C4436 /* MDCPageControlTrackLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCPageControlTrackLayer.h; sourceTree = "<group>"; };
 		5D2DA44C1BF193A1007C4436 /* MDCPageControlTrackLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCPageControlTrackLayer.m; sourceTree = "<group>"; };
-		5D2DA4601BF1A610007C4436 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../PageControlExampleTests/Info.plist; sourceTree = "<group>"; };
-		5D2DA4611BF1A610007C4436 /* PageControlExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageControlExampleTests.m; path = ../PageControlExampleTests/PageControlExampleTests.m; sourceTree = "<group>"; };
-		5D2DA4641BF1A645007C4436 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../PageControlExampleUITests/Info.plist; sourceTree = "<group>"; };
-		5D2DA4651BF1A645007C4436 /* PageControlExampleUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageControlExampleUITests.m; path = ../PageControlExampleUITests/PageControlExampleUITests.m; sourceTree = "<group>"; };
+		5D2DA4601BF1A610007C4436 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PageControlExampleTests/Info.plist; sourceTree = "<group>"; };
+		5D2DA4611BF1A610007C4436 /* PageControlExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageControlExampleTests.m; path = PageControlExampleTests/PageControlExampleTests.m; sourceTree = "<group>"; };
+		5D2DA4641BF1A645007C4436 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PageControlExampleUITests/Info.plist; sourceTree = "<group>"; };
+		5D2DA4651BF1A645007C4436 /* PageControlExampleUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageControlExampleUITests.m; path = PageControlExampleUITests/PageControlExampleUITests.m; sourceTree = "<group>"; };
 		5D79E57B1BEC181B00833C35 /* PageControlExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PageControlExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D79E5941BEC181B00833C35 /* PageControlExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PageControlExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D79E59F1BEC181B00833C35 /* PageControlExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PageControlExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,39 +109,19 @@
 		5D3AFE781BECF13C003EA2B2 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				5D3AFE791BECF13C003EA2B2 /* Unit tests */,
-				5D3AFE7C1BECF13C003EA2B2 /* UI tests */,
+				5DF96A401BFD2C7C007D7144 /* Unit tests */,
+				5DF96A411BFD2C8B007D7144 /* UI tests */,
 			);
 			name = tests;
 			path = ../tests;
-			sourceTree = "<group>";
-		};
-		5D3AFE791BECF13C003EA2B2 /* Unit tests */ = {
-			isa = PBXGroup;
-			children = (
-				5D2DA4601BF1A610007C4436 /* Info.plist */,
-				5D2DA4611BF1A610007C4436 /* PageControlExampleTests.m */,
-			);
-			name = "Unit tests";
-			path = ScrollViewDelegateMultiplexerExampleTests;
-			sourceTree = "<group>";
-		};
-		5D3AFE7C1BECF13C003EA2B2 /* UI tests */ = {
-			isa = PBXGroup;
-			children = (
-				5D2DA4641BF1A645007C4436 /* Info.plist */,
-				5D2DA4651BF1A645007C4436 /* PageControlExampleUITests.m */,
-			);
-			name = "UI tests";
-			path = ScrollViewDelegateMultiplexerExampleUITests;
 			sourceTree = "<group>";
 		};
 		5D79E5721BEC181B00833C35 = {
 			isa = PBXGroup;
 			children = (
 				5D2DA43B1BF1850F007C4436 /* README.md */,
-				5D79E57D1BEC181B00833C35 /* App */,
-				5D79E57E1BEC181B00833C35 /* Supporting Files */,
+				5DF96A3C1BFD2BB3007D7144 /* App */,
+				5DF96A3E1BFD2BF6007D7144 /* Supporting Files */,
 				66EC266E1BED38DC0091D31F /* Material components */,
 				5D3AFE781BECF13C003EA2B2 /* tests */,
 				5D79E57C1BEC181B00833C35 /* Products */,
@@ -156,29 +138,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5D79E57D1BEC181B00833C35 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				5D2DA42C1BF18485007C4436 /* ViewController.h */,
-				5D2DA42D1BF18485007C4436 /* ViewController.m */,
-			);
-			name = App;
-			path = ScrollViewDelegateMultiplexerExample;
-			sourceTree = "<group>";
-		};
-		5D79E57E1BEC181B00833C35 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				66EC266F1BED39680091D31F /* Scaffolding */,
-				5D2DA4321BF184B7007C4436 /* Assets.xcassets */,
-				5D2DA4341BF184E5007C4436 /* LaunchScreen.storyboard */,
-				5D2DA4371BF184F1007C4436 /* Info.plist */,
-				5D2DA4381BF184F1007C4436 /* main.m */,
-			);
-			name = "Supporting Files";
-			path = ScrollViewDelegateMultiplexerExample;
-			sourceTree = "<group>";
-		};
 		5D79E5B81BEC196B00833C35 /* PageControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +150,54 @@
 			name = PageControl;
 			sourceTree = "<group>";
 		};
+		5DF96A3C1BFD2BB3007D7144 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5D2DA42C1BF18485007C4436 /* ViewController.h */,
+				5D2DA42D1BF18485007C4436 /* ViewController.m */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		5DF96A3E1BFD2BF6007D7144 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5DF96A3F1BFD2C1E007D7144 /* Scaffolding */,
+				5D2DA4321BF184B7007C4436 /* Assets.xcassets */,
+				5D2DA4341BF184E5007C4436 /* LaunchScreen.storyboard */,
+				5D2DA4371BF184F1007C4436 /* Info.plist */,
+				5D2DA4381BF184F1007C4436 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5DF96A3F1BFD2C1E007D7144 /* Scaffolding */ = {
+			isa = PBXGroup;
+			children = (
+				5D2DA42F1BF1849F007C4436 /* AppDelegate.h */,
+				5D2DA4301BF1849F007C4436 /* AppDelegate.m */,
+			);
+			name = Scaffolding;
+			sourceTree = "<group>";
+		};
+		5DF96A401BFD2C7C007D7144 /* Unit tests */ = {
+			isa = PBXGroup;
+			children = (
+				5D2DA4601BF1A610007C4436 /* Info.plist */,
+				5D2DA4611BF1A610007C4436 /* PageControlExampleTests.m */,
+			);
+			name = "Unit tests";
+			sourceTree = "<group>";
+		};
+		5DF96A411BFD2C8B007D7144 /* UI tests */ = {
+			isa = PBXGroup;
+			children = (
+				5D2DA4641BF1A645007C4436 /* Info.plist */,
+				5D2DA4651BF1A645007C4436 /* PageControlExampleUITests.m */,
+			);
+			name = "UI tests";
+			sourceTree = "<group>";
+		};
 		66EC266E1BED38DC0091D31F /* Material components */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,15 +205,6 @@
 			);
 			name = "Material components";
 			path = ../src;
-			sourceTree = "<group>";
-		};
-		66EC266F1BED39680091D31F /* Scaffolding */ = {
-			isa = PBXGroup;
-			children = (
-				5D2DA42F1BF1849F007C4436 /* AppDelegate.h */,
-				5D2DA4301BF1849F007C4436 /* AppDelegate.m */,
-			);
-			name = Scaffolding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +320,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DF96A3A1BFD2AEE007D7144 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +328,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DF96A3B1BFD2AFA007D7144 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +386,7 @@
 				5D2DA4351BF184E5007C4436 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = ScrollViewDelegateMultiplexerExample;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
