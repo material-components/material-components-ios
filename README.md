@@ -1,6 +1,5 @@
-Material Components is a production-quality UI framework focused on design details. The
-framework is designed to be a stable, documented and pixel-perfect set of UI
-components suitable for shipping high-quality material applications.
+Material Components is a collection of standalone production-quality UI libraries focused on design
+details.
 
 Material Components’s visual style is based on the
 [material design](http://www.google.com/design/spec/material-design/introduction.html)
