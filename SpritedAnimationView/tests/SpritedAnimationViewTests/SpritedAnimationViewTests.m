@@ -79,40 +79,4 @@ static NSString *const kExpectationDescription = @"animatingWithCompletion";
   }];
 }
 
-- (void)testImageViewAnimationPerformance {
-  NSArray *metrics = [[self class] defaultPerformanceMetrics];
-  [self measureMetrics:metrics automaticallyStartMeasuring:NO forBlock:^{
-
-    // Array of images.
-    NSMutableArray *images = [NSMutableArray array];
-    for (int i = 1; i <= 21; i++) {
-      [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"%d", i]]];
-    }
-
-    [self startMeasuring];
-
-    // Create UIImageView with array of images.
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"1"]];
-    imageView.animationDuration = images.count / 30;
-    imageView.animationRepeatCount = 1;
-
-    imageView.animationImages = images;
-
-    // Create expectation.
-    XCTestExpectation *expectation = [self expectationWithDescription:kExpectationDescription];
-
-    // Fulfill expectation after completion of animation transaction.
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-      [expectation fulfill];
-    }];
-    [imageView startAnimating];
-    [CATransaction commit];
-
-    [self waitForExpectationsWithTimeout:1.0 handler:^(NSError *error) {
-      [self stopMeasuring];
-    }];
-  }];
-}
-
 @end
