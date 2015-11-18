@@ -1,0 +1,325 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		404D94581BFE8BF300CB8290 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404D94571BFE8BF300CB8290 /* AppDelegate.swift */; };
+		404D945A1BFE8BF300CB8290 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404D94591BFE8BF300CB8290 /* ViewController.swift */; };
+		404D945D1BFE8BF300CB8290 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 404D945B1BFE8BF300CB8290 /* Main.storyboard */; };
+		404D945F1BFE8BF300CB8290 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 404D945E1BFE8BF300CB8290 /* Assets.xcassets */; };
+		404D94621BFE8BF300CB8290 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 404D94601BFE8BF300CB8290 /* LaunchScreen.storyboard */; };
+		404D946E1BFE8D1400CB8290 /* MDCShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 404D946D1BFE8D1400CB8290 /* MDCShadowLayer.m */; };
+		404D94741BFE8FEB00CB8290 /* ShadowedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404D94731BFE8FEB00CB8290 /* ShadowedView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		404D94541BFE8BF300CB8290 /* MovableShadowedView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovableShadowedView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		404D94571BFE8BF300CB8290 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		404D94591BFE8BF300CB8290 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		404D945C1BFE8BF300CB8290 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		404D945E1BFE8BF300CB8290 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		404D94611BFE8BF300CB8290 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		404D94631BFE8BF300CB8290 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		404D946A1BFE8D1400CB8290 /* MovableShadowedView-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MovableShadowedView-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		404D946B1BFE8D1400CB8290 /* MaterialShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialShadow.h; path = ../../src/MaterialShadow.h; sourceTree = "<group>"; };
+		404D946C1BFE8D1400CB8290 /* MDCShadowLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCShadowLayer.h; path = ../../src/MDCShadowLayer.h; sourceTree = "<group>"; };
+		404D946D1BFE8D1400CB8290 /* MDCShadowLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCShadowLayer.m; path = ../../src/MDCShadowLayer.m; sourceTree = "<group>"; };
+		404D94711BFE8F0E00CB8290 /* MDCStrictCompilerWarnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MDCStrictCompilerWarnings.xcconfig; sourceTree = "<group>"; };
+		404D94731BFE8FEB00CB8290 /* ShadowedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowedView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		404D94511BFE8BF300CB8290 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		404D944B1BFE8BF300CB8290 = {
+			isa = PBXGroup;
+			children = (
+				404D94561BFE8BF300CB8290 /* MovableShadowedView */,
+				404D94691BFE8CD200CB8290 /* Material components */,
+				404D94551BFE8BF300CB8290 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		404D94551BFE8BF300CB8290 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				404D94541BFE8BF300CB8290 /* MovableShadowedView.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		404D94561BFE8BF300CB8290 /* MovableShadowedView */ = {
+			isa = PBXGroup;
+			children = (
+				404D94571BFE8BF300CB8290 /* AppDelegate.swift */,
+				404D94731BFE8FEB00CB8290 /* ShadowedView.swift */,
+				404D94591BFE8BF300CB8290 /* ViewController.swift */,
+				404D945B1BFE8BF300CB8290 /* Main.storyboard */,
+				404D945E1BFE8BF300CB8290 /* Assets.xcassets */,
+				404D94601BFE8BF300CB8290 /* LaunchScreen.storyboard */,
+				404D94631BFE8BF300CB8290 /* Info.plist */,
+				404D946A1BFE8D1400CB8290 /* MovableShadowedView-Bridging-Header.h */,
+				404D94711BFE8F0E00CB8290 /* MDCStrictCompilerWarnings.xcconfig */,
+			);
+			path = MovableShadowedView;
+			sourceTree = "<group>";
+		};
+		404D94691BFE8CD200CB8290 /* Material components */ = {
+			isa = PBXGroup;
+			children = (
+				404D946B1BFE8D1400CB8290 /* MaterialShadow.h */,
+				404D946C1BFE8D1400CB8290 /* MDCShadowLayer.h */,
+				404D946D1BFE8D1400CB8290 /* MDCShadowLayer.m */,
+			);
+			name = "Material components";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		404D94531BFE8BF300CB8290 /* MovableShadowedView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 404D94661BFE8BF300CB8290 /* Build configuration list for PBXNativeTarget "MovableShadowedView" */;
+			buildPhases = (
+				404D94501BFE8BF300CB8290 /* Sources */,
+				404D94511BFE8BF300CB8290 /* Frameworks */,
+				404D94521BFE8BF300CB8290 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MovableShadowedView;
+			productName = MovableShadowedView;
+			productReference = 404D94541BFE8BF300CB8290 /* MovableShadowedView.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		404D944C1BFE8BF300CB8290 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Google;
+				TargetAttributes = {
+					404D94531BFE8BF300CB8290 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 404D944F1BFE8BF300CB8290 /* Build configuration list for PBXProject "MovableShadowedView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 404D944B1BFE8BF300CB8290;
+			productRefGroup = 404D94551BFE8BF300CB8290 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				404D94531BFE8BF300CB8290 /* MovableShadowedView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		404D94521BFE8BF300CB8290 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				404D94621BFE8BF300CB8290 /* LaunchScreen.storyboard in Resources */,
+				404D945F1BFE8BF300CB8290 /* Assets.xcassets in Resources */,
+				404D945D1BFE8BF300CB8290 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		404D94501BFE8BF300CB8290 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				404D945A1BFE8BF300CB8290 /* ViewController.swift in Sources */,
+				404D94581BFE8BF300CB8290 /* AppDelegate.swift in Sources */,
+				404D946E1BFE8D1400CB8290 /* MDCShadowLayer.m in Sources */,
+				404D94741BFE8FEB00CB8290 /* ShadowedView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		404D945B1BFE8BF300CB8290 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				404D945C1BFE8BF300CB8290 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		404D94601BFE8BF300CB8290 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				404D94611BFE8BF300CB8290 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		404D94641BFE8BF300CB8290 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 404D94711BFE8F0E00CB8290 /* MDCStrictCompilerWarnings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WARNING_CFLAGS = "$(MDC_STRICT_WARNING_CFLAGS)";
+			};
+			name = Debug;
+		};
+		404D94651BFE8BF300CB8290 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 404D94711BFE8F0E00CB8290 /* MDCStrictCompilerWarnings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "$(MDC_STRICT_WARNING_CFLAGS)";
+			};
+			name = Release;
+		};
+		404D94671BFE8BF300CB8290 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = MovableShadowedView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MovableShadowedView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MovableShadowedView-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		404D94681BFE8BF300CB8290 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = MovableShadowedView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MovableShadowedView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MovableShadowedView-Bridging-Header.h";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		404D944F1BFE8BF300CB8290 /* Build configuration list for PBXProject "MovableShadowedView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				404D94641BFE8BF300CB8290 /* Debug */,
+				404D94651BFE8BF300CB8290 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		404D94661BFE8BF300CB8290 /* Build configuration list for PBXNativeTarget "MovableShadowedView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				404D94671BFE8BF300CB8290 /* Debug */,
+				404D94681BFE8BF300CB8290 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 404D944C1BFE8BF300CB8290 /* Project object */;
+}
