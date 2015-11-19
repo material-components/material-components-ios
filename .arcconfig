@@ -1,0 +1,5 @@
+{
+  "load": ["clang-format-linter", "xcode"],
+  "phabricator.uri" : "http://mux-oss-phabricator.appspot.com/",
+  "repository.callsign" : "MDC"
+}

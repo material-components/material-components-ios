@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:ScrollViewDelegateMultiplexer/examples/ScrollViewDelegateMultiplexerExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SpritedAnimationView/examples/SpritedAnimationViewExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Typography/examples/TypographyExample/TypographyExample.xcodeproj">
+   </FileRef>
+</Workspace>
