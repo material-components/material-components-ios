@@ -81,13 +81,16 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     // Defaults.
     _currentPage = 0;
     _currentPageIndicatorTintColor =
-        [UIColor colorWithWhite:kMDCPageControlCurrentPageIndicatorWhiteColor alpha:1];
+        [UIColor colorWithWhite:kMDCPageControlCurrentPageIndicatorWhiteColor
+                          alpha:1];
     _pageIndicatorTintColor =
-        [UIColor colorWithWhite:kMDCPageControlPageIndicatorWhiteColor alpha:1];
+        [UIColor colorWithWhite:kMDCPageControlPageIndicatorWhiteColor
+                          alpha:1];
   }
 
   UITapGestureRecognizer *tapGestureRecognizer =
-      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+      [[UITapGestureRecognizer alloc] initWithTarget:self
+                                              action:@selector(handleTapGesture:)];
   [self addGestureRecognizer:tapGestureRecognizer];
 
   return self;
@@ -367,7 +370,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 - (NSString *)accessibilityLabel {
   return
-      [[self class] pageControlAccessibilityLabelWithPage:_currentPage + 1 ofPages:_numberOfPages];
+      [[self class] pageControlAccessibilityLabelWithPage:_currentPage + 1
+                                                  ofPages:_numberOfPages];
 }
 
 - (UIAccessibilityTraits)accessibilityTraits {
@@ -416,7 +420,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     CGFloat offsetY = radius;
     CGPoint center = CGPointMake(offsetX + radius, offsetY);
     MDCPageControlIndicator *indicator =
-        [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
+        [[MDCPageControlIndicator alloc] initWithCenter:center
+                                                 radius:radius];
     indicator.opacity = kMDCPageControlIndicatorDefaultOpacity;
     [_containerView.layer addSublayer:indicator];
     [_indicators addObject:indicator];

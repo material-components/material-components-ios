@@ -18,8 +18,8 @@
 
 #import "MDCPageControl.h"
 
-#define RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]
-#define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex) & 0xFF))
+#define RGBCOLOR(r, g, b) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
+#define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
 
 @interface ViewController () <UIScrollViewDelegate>
 @end
@@ -35,7 +35,7 @@
   CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
-  NSArray *pageColors = @[HEXCOLOR(0x81D4FA), HEXCOLOR(0x80CBC4), HEXCOLOR(0xFFCC80)];
+  NSArray *pageColors = @[ HEXCOLOR(0x81D4FA), HEXCOLOR(0x80CBC4), HEXCOLOR(0xFFCC80) ];
 
   // Scroll view configuration
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
