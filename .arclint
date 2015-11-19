@@ -3,6 +3,10 @@
     "clang-format": {
       "type": "clang-format",
       "include": "(\\.(m|h|mm)$)"
+    },
+    "spelling": {
+      "type": "spelling",
+      "include": "(\\.(m|h|mm|md)$)"
     }
   }
 }
