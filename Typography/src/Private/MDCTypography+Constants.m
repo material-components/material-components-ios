@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "Private/MDCTypography+Constants.h"
+#import "MDCTypography+Constants.h"
 
 #ifndef MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
 #define MDCGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE @"MaterialTypography.bundle"
