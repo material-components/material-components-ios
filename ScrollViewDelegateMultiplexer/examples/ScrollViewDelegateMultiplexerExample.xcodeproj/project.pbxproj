@@ -122,13 +122,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5D3AFE781BECF13C003EA2B2 /* tests */ = {
+		5D3AFE781BECF13C003EA2B2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				5D3AFE791BECF13C003EA2B2 /* Unit tests */,
 				5D3AFE7C1BECF13C003EA2B2 /* UI tests */,
 			);
-			name = tests;
+			name = Tests;
 			path = ../tests;
 			sourceTree = "<group>";
 		};
@@ -157,9 +157,9 @@
 			children = (
 				66EC266C1BED38D00091D31F /* README.md */,
 				5D79E57D1BEC181B00833C35 /* App */,
-				5D79E57E1BEC181B00833C35 /* Supporting Files */,
 				66EC266E1BED38DC0091D31F /* Material components */,
-				5D3AFE781BECF13C003EA2B2 /* tests */,
+				5D79E57E1BEC181B00833C35 /* Supporting Files */,
+				5D3AFE781BECF13C003EA2B2 /* Tests */,
 				5D79E57C1BEC181B00833C35 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -717,6 +717,7 @@
 				66EC26921BEECE8A0091D31F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

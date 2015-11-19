@@ -106,13 +106,13 @@
 			path = Private;
 			sourceTree = "<group>";
 		};
-		5D3AFE781BECF13C003EA2B2 /* tests */ = {
+		5D3AFE781BECF13C003EA2B2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				5DF96A401BFD2C7C007D7144 /* Unit tests */,
 				5DF96A411BFD2C8B007D7144 /* UI tests */,
 			);
-			name = tests;
+			name = Tests;
 			path = ../tests;
 			sourceTree = "<group>";
 		};
@@ -121,9 +121,9 @@
 			children = (
 				5D2DA43B1BF1850F007C4436 /* README.md */,
 				5DF96A3C1BFD2BB3007D7144 /* App */,
-				5DF96A3E1BFD2BF6007D7144 /* Supporting Files */,
 				66EC266E1BED38DC0091D31F /* Material components */,
-				5D3AFE781BECF13C003EA2B2 /* tests */,
+				5DF96A3E1BFD2BF6007D7144 /* Supporting Files */,
+				5D3AFE781BECF13C003EA2B2 /* Tests */,
 				5D79E57C1BEC181B00833C35 /* Products */,
 			);
 			sourceTree = "<group>";

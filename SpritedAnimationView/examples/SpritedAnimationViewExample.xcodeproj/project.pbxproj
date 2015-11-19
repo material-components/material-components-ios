@@ -89,9 +89,9 @@
 			children = (
 				5D63B0A91BF05CF800B646E3 /* README.md */,
 				5D63B0A71BF0163800B646E3 /* App */,
-				5D3AFE921BED1598003EA2B2 /* Supporting Files */,
 				5D63B0A81BF0167100B646E3 /* Material components */,
-				5D3AFEC61BED1613003EA2B2 /* tests */,
+				5D3AFE921BED1598003EA2B2 /* Supporting Files */,
+				5D3AFEC61BED1613003EA2B2 /* Tests */,
 				5D3AFE911BED1598003EA2B2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -128,13 +128,13 @@
 			name = Scaffolding;
 			sourceTree = "<group>";
 		};
-		5D3AFEC61BED1613003EA2B2 /* tests */ = {
+		5D3AFEC61BED1613003EA2B2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				5D3AFEC71BED1613003EA2B2 /* Unit tests */,
 				5D3AFECA1BED1613003EA2B2 /* UI tests */,
 			);
-			name = tests;
+			name = Tests;
 			path = ../tests;
 			sourceTree = "<group>";
 		};
