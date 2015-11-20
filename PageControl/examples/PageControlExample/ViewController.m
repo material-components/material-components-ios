@@ -59,13 +59,13 @@
 
   // Page control configuration.
   _pageControl = [[MDCPageControl alloc] init];
+  _pageControl.numberOfPages = pageColors.count;
 
   // We want the page control to span the bottom of the screen.
-  CGFloat bottomPadding = 20.f;
   CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
-  _pageControl.frame = CGRectMake(0, boundsHeight - pageControlSize.height - bottomPadding,
+  _pageControl.frame = CGRectMake(0, boundsHeight - pageControlSize.height,
                                   boundsWidth, pageControlSize.height);
-  _pageControl.numberOfPages = pageColors.count;
+
   [_pageControl addTarget:self
                    action:@selector(didChangePage:)
          forControlEvents:UIControlEventValueChanged];

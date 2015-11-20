@@ -1,2 +1,2 @@
 /* Accessibility label for page control. Example: "page 1 of 4". */
-"GoogleKitPageControlAccessibilityLabel" = "page %1$zd of %2$zd";
+"MaterialPageControlAccessibilityLabel" = "page %1$zd of %2$zd";

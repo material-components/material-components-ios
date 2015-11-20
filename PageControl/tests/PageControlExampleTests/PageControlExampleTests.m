@@ -71,4 +71,31 @@
   XCTAssertEqual(_pageControl.hidden, NO);
 }
 
+- (void)testSizeThatFits {
+  // Tests that MDCPageControl and UIPageControl frames are equivalent when calling -sizeToFit.
+  MDCPageControl *pageControl = [[MDCPageControl alloc] init];
+  UIPageControl *nativePageControl = [[UIPageControl alloc] init];
+
+  // Test both controls with 1 page.
+  pageControl.numberOfPages = 1;
+  [pageControl sizeToFit];
+  nativePageControl.numberOfPages = 1;
+  [nativePageControl sizeToFit];
+  XCTAssertTrue(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
+
+  // Test both controls with 4 pages.
+  pageControl.numberOfPages = 4;
+  [pageControl sizeToFit];
+  nativePageControl.numberOfPages = 4;
+  [nativePageControl sizeToFit];
+  XCTAssertTrue(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
+
+  // Test with different number of pages for each control.
+  pageControl.numberOfPages = 4;
+  [pageControl sizeToFit];
+  nativePageControl.numberOfPages = 2;
+  [nativePageControl sizeToFit];
+  XCTAssertFalse(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
+}
+
 @end

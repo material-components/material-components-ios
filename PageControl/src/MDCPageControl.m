@@ -26,6 +26,9 @@
 // The Bundle for string resources.
 static NSString *const kMaterialPageControlBundle = @"MaterialPageControl.bundle";
 
+// Matches native UIPageControl minimum height.
+static const CGFloat kMDCPageControlMinimumHeight = 37.0f;
+
 // Matches native UIPageControl indicator radius.
 static const CGFloat kMDCPageControlIndicatorRadius = 3.5f;
 
@@ -183,7 +186,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   CGFloat radius = kMDCPageControlIndicatorRadius;
   CGFloat margin = kMDCPageControlIndicatorMargin;
   CGFloat width = _numberOfPages * ((radius * 2) + margin) - margin;
-  CGFloat height = radius * 2;
+  CGFloat height = MAX(kMDCPageControlMinimumHeight, radius * 2);
   return CGSizeMake(width, height);
 }
 
