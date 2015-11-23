@@ -4,6 +4,11 @@
       "type": "clang-format",
       "include": "(\\.(m|h|mm)$)"
     },
+    "text": {
+      "type": "text",
+      "text.max-line-length": 9999999999,
+      "include": "(\\.(m|h|mm|md|swift)$)"
+    },
     "spelling": {
       "type": "spelling",
       "include": "(\\.(m|h|mm|md)$)"
