@@ -9,6 +9,13 @@
       "text.max-line-length": 9999999999,
       "include": "(\\.(m|h|mm|md|swift)$)"
     },
+    "chmod": {
+      "type": "chmod"
+    },
+    "filename": {
+      "type": "filename",
+      "include": "(\\.(m|h|mm|md|swift)$)"
+    },
     "spelling": {
       "type": "spelling",
       "include": "(\\.(m|h|mm|md)$)"
