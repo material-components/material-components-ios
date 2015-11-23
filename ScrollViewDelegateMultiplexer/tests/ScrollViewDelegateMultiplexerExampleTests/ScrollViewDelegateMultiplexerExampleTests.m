@@ -45,7 +45,6 @@ static NSString *const kScrollViewDidScroll = @"scrollViewDidScroll";
 
 @end
 
-
 @interface ScrollViewDelegateMultiplexerExampleTests : XCTestCase <UIScrollViewDelegate>
 @end
 
@@ -100,7 +99,7 @@ static NSString *const kScrollViewDidScroll = @"scrollViewDidScroll";
 
 - (void)testMuliplexerMultipleDelegate {
   _expectation = [self expectationWithDescription:kScrollViewDidScroll];
-  _observerExpectation  = [self expectationWithDescription:kScrollViewDidScroll];
+  _observerExpectation = [self expectationWithDescription:kScrollViewDidScroll];
 
   // Create simple object
   _observingObject = [[ScrollObservingObject alloc] initWithExpectation:_observerExpectation];

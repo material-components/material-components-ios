@@ -63,8 +63,10 @@
 
   // We want the page control to span the bottom of the screen.
   CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
-  _pageControl.frame = CGRectMake(0, boundsHeight - pageControlSize.height,
-                                  boundsWidth, pageControlSize.height);
+  _pageControl.frame = CGRectMake(0,
+                                  boundsHeight - pageControlSize.height,
+                                  boundsWidth,
+                                  pageControlSize.height);
 
   [_pageControl addTarget:self
                    action:@selector(didChangePage:)

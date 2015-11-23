@@ -152,7 +152,6 @@
     font = [UIFont boldSystemFontOfSize:fontSize];
   }
   return font;
-
 }
 
 - (MDCFontResource *)italicFontResource {

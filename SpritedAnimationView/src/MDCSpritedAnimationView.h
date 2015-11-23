@@ -72,7 +72,7 @@
  * @return Initialized sprited animation view.
  */
 - (nonnull instancetype)initWithSpriteSheetImage:
-    (nullable UIImage *)spriteSheetImage NS_DESIGNATED_INITIALIZER;
+        (nullable UIImage *)spriteSheetImage NS_DESIGNATED_INITIALIZER;
 
 /** Please use initWithSpriteSheetImage:. */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;

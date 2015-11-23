@@ -157,13 +157,12 @@
   }
 
   if ([_combiner respondsToSelector:@selector(scrollViewDelegateMultiplexer:
-                                              viewForZoomingWithResults:
-                                              fromRespondingObservers:)]) {
+                                                  viewForZoomingWithResults:
+                                                    fromRespondingObservers:)]) {
     return [_combiner scrollViewDelegateMultiplexer:(id)self
                           viewForZoomingWithResults:results
                             fromRespondingObservers:respondingObservers];
   } else if (results.count > 0) {
-
 #if DEBUG
     NSHashTable *hash = [NSHashTable weakObjectsHashTable];
     for (UIView *view in results) {
@@ -171,8 +170,8 @@
     }
     NSAssert(hash.count == 1,
              @"-viewForZoomingInScrollView returns different results from multiple observers."
-             " Use the combiner protocol MDCScrollViewDelegateCombining to select the appropriate"
-             " observer return value for this method.");
+              " Use the combiner protocol MDCScrollViewDelegateCombining to select the appropriate"
+              " observer return value for this method.");
 #endif
 
     return [results pointerAtIndex:0];
@@ -213,19 +212,18 @@
   }
 
   if ([_combiner respondsToSelector:@selector(scrollViewDelegateMultiplexer:
-                                              shouldScrollToTopWithResults:
-                                              fromRespondingObservers:)]) {
+                                               shouldScrollToTopWithResults:
+                                                    fromRespondingObservers:)]) {
     return [_combiner scrollViewDelegateMultiplexer:(id)self
                        shouldScrollToTopWithResults:results
                             fromRespondingObservers:respondingObservers];
   } else if (results.count > 0) {
-
 #if DEBUG
     NSSet *set = [NSSet setWithArray:results];
     NSAssert(set.count == 1,
              @"-scrollViewShouldScrollToTop returns different results from multiple observers."
-             " Use the combiner protocol MDCScrollViewDelegateCombining to select the appropriate"
-             " observer return value for this method.");
+              " Use the combiner protocol MDCScrollViewDelegateCombining to select the appropriate"
+              " observer return value for this method.");
 #endif
 
     return [results[0] boolValue];

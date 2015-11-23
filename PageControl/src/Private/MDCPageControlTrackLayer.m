@@ -71,7 +71,7 @@ static NSString *const kMDCPageControlAnimationKeyDraw = @"drawTrack";
   // Get animation keyframes.
   NSMutableArray *values = [NSMutableArray array];
   for (NSInteger i = 0; i < kMDCPageControlKeyframeCount; i++) {
-    [values addObject:(id)[self pathAtKeyframe:i]];
+    [values addObject:(id)[self pathAtKeyframe : i]];
   }
 
   // Add animation path.
@@ -136,8 +136,10 @@ static NSString *const kMDCPageControlAnimationKeyDraw = @"drawTrack";
       completion();
     }
   }];
-  self.frame = CGRectMake(_startPoint.x - _radius, _startPoint.y - _radius,
-                          _endPoint.x - _startPoint.x + (_radius * 2), _radius * 2);
+  self.frame = CGRectMake(_startPoint.x - _radius,
+                          _startPoint.y - _radius,
+                          _endPoint.x - _startPoint.x + (_radius * 2),
+                          _radius * 2);
   [CATransaction commit];
 }
 

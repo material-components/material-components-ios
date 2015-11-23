@@ -30,8 +30,7 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
 
 + (void)setFontLoader:(id<MDCTypographyFontLoader>)fontLoader {
   sFontLoader = fontLoader;
-  NSAssert(sFontLoader, @"Font loader can't be null."
-                        @"The font loader will be reset to the default.");
+  NSAssert(sFontLoader, @"Font loader can't be null. The font loader will be reset to the default.");
   if (!sFontLoader) {
     sFontLoader = [self defaultFontLoader];
   }

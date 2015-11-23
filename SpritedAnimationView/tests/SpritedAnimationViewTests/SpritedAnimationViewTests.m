@@ -36,7 +36,6 @@ static NSString *const kExpectationDescription = @"animatingWithCompletion";
 }
 
 - (void)testAnimationCompletion {
-
   // Sprited animation view.
   UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked];
   MDCSpritedAnimationView *animationView =

@@ -56,7 +56,8 @@
   }
   CFErrorRef error = NULL;
   _isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                   kCTFontManagerScopeProcess, &error);
+                                                   kCTFontManagerScopeProcess,
+                                                   &error);
   if (!_isRegistered) {
     if (error && CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
       // If it's already been loaded by somebody else, we don't care.

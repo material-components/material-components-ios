@@ -6,7 +6,7 @@ material design specifications for animation and layout.
 ## Requirements
 
 - Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher. 
+- iOS SDK version 7.0 or higher.
 
 ## Usage
 

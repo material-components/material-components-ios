@@ -70,8 +70,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   self = [super initWithFrame:frame];
   if (self) {
     CGFloat radius = kMDCPageControlIndicatorRadius;
-    CGRect containerFrame = CGRectMake(0, (floor(CGRectGetHeight(self.bounds) - (radius * 2)) / 2),
-                                       CGRectGetWidth(self.bounds), radius * 2);
+    CGFloat topEdge = (floor(CGRectGetHeight(self.bounds) - (radius * 2)) / 2);
+    CGRect containerFrame = CGRectMake(0, topEdge, CGRectGetWidth(self.bounds), radius * 2);
     _containerView = [[UIView alloc] initWithFrame:containerFrame];
 
     _trackLayer = [[MDCPageControlTrackLayer alloc] initWithRadius:radius];
@@ -223,7 +223,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 - (CGFloat)scrolledPercentage:(UIScrollView *)scrollView {
   // Returns scrolled percentage of scrollView from 0 to 1. If the scrollView has bounced past
   // the edge of its content, it will return either a negative value or value above 1.
-  return normalizeValue(scrollView.contentOffset.x, 0,
+  return normalizeValue(scrollView.contentOffset.x,
+                        0,
                         scrollView.contentSize.width - scrollView.frame.size.width);
 }
 
@@ -452,7 +453,9 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                                             ofPages:(NSInteger)ofPages {
   NSString *key = kMaterialPageControlStringTable[kStr_MaterialPageControlAccessibilityLabel];
   NSString *localizedString =
-      NSLocalizedStringFromTableInBundle(key, kMaterialPageControlStringsTableName, [self bundle],
+      NSLocalizedStringFromTableInBundle(key,
+                                         kMaterialPageControlStringsTableName,
+                                         [self bundle],
                                          @"page {number} of {total number}");
   return [NSString localizedStringWithFormat:localizedString, currentPage, ofPages];
 }
