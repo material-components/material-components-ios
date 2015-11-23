@@ -15,10 +15,6 @@
     "chmod": {
       "type": "chmod"
     },
-    "filename": {
-      "type": "filename",
-      "include": "(\\.(m|h|mm|md|swift)$)"
-    },
     "spelling": {
       "type": "spelling",
       "include": "(\\.(m|h|mm|md)$)"
