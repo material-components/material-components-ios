@@ -6,8 +6,11 @@
     },
     "text": {
       "type": "text",
-      "text.max-line-length": 9999999999,
-      "include": "(\\.(m|h|mm|md|swift)$)"
+      "include": "(\\.(m|h|mm|md|swift)$)",
+      "severity": {
+        "3": "disabled",
+        "5": "disabled"
+      }
     },
     "chmod": {
       "type": "chmod"
