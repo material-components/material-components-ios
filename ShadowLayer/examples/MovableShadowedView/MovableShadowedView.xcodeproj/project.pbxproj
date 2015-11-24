@@ -25,7 +25,7 @@
 		404D94611BFE8BF300CB8290 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		404D94631BFE8BF300CB8290 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		404D946A1BFE8D1400CB8290 /* MovableShadowedView-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MovableShadowedView-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
-		404D946B1BFE8D1400CB8290 /* MaterialShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialShadow.h; path = ../../src/MaterialShadow.h; sourceTree = "<group>"; };
+		404D946B1BFE8D1400CB8290 /* MaterialShadowLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialShadowLayer.h; path = ../../src/MaterialShadowLayer.h; sourceTree = "<group>"; };
 		404D946C1BFE8D1400CB8290 /* MDCShadowLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCShadowLayer.h; path = ../../src/MDCShadowLayer.h; sourceTree = "<group>"; };
 		404D946D1BFE8D1400CB8290 /* MDCShadowLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCShadowLayer.m; path = ../../src/MDCShadowLayer.m; sourceTree = "<group>"; };
 		404D94711BFE8F0E00CB8290 /* MDCStrictCompilerWarnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MDCStrictCompilerWarnings.xcconfig; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 		404D94691BFE8CD200CB8290 /* Material components */ = {
 			isa = PBXGroup;
 			children = (
-				404D946B1BFE8D1400CB8290 /* MaterialShadow.h */,
+				404D946B1BFE8D1400CB8290 /* MaterialShadowLayer.h */,
 				404D946C1BFE8D1400CB8290 /* MDCShadowLayer.h */,
 				404D946D1BFE8D1400CB8290 /* MDCShadowLayer.m */,
 			);
