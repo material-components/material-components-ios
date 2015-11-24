@@ -20,7 +20,7 @@ class ViewController: UIViewController {
 
   // We store the offset from the initial touch to the center of the
   // view to properly update its location when dragged.
-  var movingViewOffset: CGPoint = CGPointZero
+  var movingViewOffset = CGPointZero
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,18 +35,18 @@ class ViewController: UIViewController {
   func longPressedInView(sender:UILongPressGestureRecognizer) {
     // Elevation of the view is changed to indicate that it has been pressed or released.
     // view.center is changed to follow the touch events.
-    if (sender.state == UIGestureRecognizerState.Began) {
+    if (sender.state == .Began) {
       self.blueView.setElevation(kMDCSelectedCardElevation)
 
       let selfPoint = sender.locationInView(self.view)
       movingViewOffset.x = selfPoint.x - self.blueView.center.x
       movingViewOffset.y = selfPoint.y - self.blueView.center.y
-    } else if (sender.state == UIGestureRecognizerState.Changed) {
+    } else if (sender.state == .Changed) {
       let selfPoint = sender.locationInView(self.view)
       let newCenterPoint =
           CGPoint(x: selfPoint.x - movingViewOffset.x, y: selfPoint.y - movingViewOffset.y)
       self.blueView.center = newCenterPoint
-    } else if (sender.state == UIGestureRecognizerState.Ended) {
+    } else if (sender.state == .Ended) {
       self.blueView.setElevation(kMDCRestingCardElevation)
 
       movingViewOffset = CGPointZero
