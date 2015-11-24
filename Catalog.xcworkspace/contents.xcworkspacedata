@@ -9,6 +9,9 @@
       </FileRef>
    </Group>
    <FileRef
+      location = "group:Shadow/examples/MovableShadowedView/MovableShadowedView.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:PageControl/examples/PageControlExample.xcodeproj">
    </FileRef>
    <FileRef
