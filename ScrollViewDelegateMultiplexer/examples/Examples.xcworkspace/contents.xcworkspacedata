@@ -8,7 +8,7 @@
       location = "container:"
       name = "Xcode 7.1 Playgrounds">
       <FileRef
-         location = "group:Playground.playground">
+         location = "group:SVDMultiplexer.playground">
       </FileRef>
    </Group>
 </Workspace>

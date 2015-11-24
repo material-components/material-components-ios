@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "container:"
+      name = "Xcode 7.1 playgrounds">
+      <FileRef
+         location = "group:ScrollViewDelegateMultiplexer/examples/SVDMultiplexer.playground">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:PageControl/examples/PageControlExample.xcodeproj">
    </FileRef>
