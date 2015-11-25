@@ -12,10 +12,12 @@ updating the layer contentsRect.
 ## Usage
 
 ```objectivec
+#import "MaterialSpritedAnimationView.h"
+
 // Create a Sprited Animation View.
 UIImage *spriteSheet = [UIImage imageNamed:@"myImage"];
-QTMSpritedAnimationView *animationView =
-    [[QTMSpritedAnimationView alloc] initWithSpriteSheetImage:spriteSheet];
+MDCSpritedAnimationView *animationView =
+    [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteSheet];
 animationView.tintColor = [UIColor blueColor];
 [self.view addSubview:animationView];
 
