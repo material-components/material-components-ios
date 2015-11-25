@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+	<key>Identifier</key>
+	<string>com.google.MaterialComponents.cocoaTouchApplicationUnitTestBundle</string>
+	<key>Ancestors</key>
+	<array>
+		<string>com.apple.dt.unit.iosUnitTestBundleBase</string>
+	</array>
+	<key>Targets</key>
+	<array>
+		<dict>
+			<key>TargetIdentifier</key>
+			<string>com.apple.dt.cocoaTouchApplicationUnitTestBundleTarget</string>
+            <key>TargetIdentifierToBeTested</key>
+            <string>com.apple.dt.cocoaTouchApplicationTarget</string>
+		</dict>
+	</array>
+    <key>Options</key>
+    <array>
+        <dict>
+            <key>Identifier</key>
+            <string>languageChoice</string>
+            <key>Units</key>
+            <dict>
+                <key>Objective-C</key>
+                <dict>
+                    <key>Nodes</key>
+                    <array>
+                        <string>___PACKAGENAMEASIDENTIFIER___.m</string>
+                    </array>
+                    <key>Definitions</key>
+                    <dict>
+                        <key>___PACKAGENAMEASIDENTIFIER___.m</key>
+                        <dict>
+                            <key>Path</key>
+                            <string>../File Templates/objc/tests/___PACKAGENAMEASIDENTIFIER___Tests.m</string>
+                        </dict>
+                    </dict>
+                </dict>
+                <key>Swift</key>
+                <dict>
+                    <key>Nodes</key>
+                    <array>
+                        <string>___PACKAGENAMEASIDENTIFIER___.swift</string>
+                    </array>
+                    <key>Definitions</key>
+                    <dict>
+                        <key>___PACKAGENAMEASIDENTIFIER___.swift</key>
+                        <dict>
+                            <key>Path</key>
+                            <string>../File Templates/swift/tests/___PACKAGENAMEASIDENTIFIER___.swift</string>
+                        </dict>
+                    </dict>
+                </dict>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>

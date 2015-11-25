@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+	<key>Identifier</key>
+	<string>com.google.MaterialComponents.cocoaTouchApplicationBase</string>
+	<key>Ancestors</key>
+	<array>
+		<string>com.apple.dt.unit.applicationBase</string>
+		<string>com.apple.dt.unit.iosBase</string>
+		<string>com.apple.dt.unit.languageChoice</string>
+	</array>
+	<key>Targets</key>
+	<array>
+		<dict>
+			<key>TargetIdentifier</key>
+			<string>com.apple.dt.cocoaTouchApplicationTarget</string>
+			<key>SharedSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+			</dict>
+		</dict>
+	</array>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Identifier</key>
+			<string>universalDeviceFamily</string>
+			<key>Name</key>
+			<string>Devices:</string>
+			<key>Description</key>
+			<string>Which device family to create a project for</string>
+			<key>SortOrder</key>
+			<integer>1</integer>
+			<key>Type</key>
+			<string>popup</string>
+			<key>Default</key>
+			<string>Universal</string>
+            <key>Values</key>
+            <array>
+                <string>Universal</string>
+                <string>iPhone</string>
+                <string>iPad</string>
+            </array>
+			<key>Units</key>
+			<dict>
+				<key>iPhone</key>
+				<dict>
+					<key>Nodes</key>
+					<array>
+						<string>Info.plist:UISupportedInterfaceOrientations~iPhone</string>
+					</array>
+					<key>Definitions</key>
+					<dict>
+						<key>Assets.xcassets</key>
+						<dict>
+							<key>Path</key>
+							<string>Images-iPhone.xcassets</string>
+							<key>SortOrder</key>
+							<integer>100</integer>
+						</dict>
+					</dict>
+				</dict>
+				<key>iPad</key>
+				<dict>
+					<key>Project</key>
+					<dict>
+						<key>SharedSettings</key>
+						<dict>
+							<key>TARGETED_DEVICE_FAMILY</key>
+							<string>2</string>
+						</dict>
+					</dict>
+					<key>Nodes</key>
+					<array>
+						<string>Info.plist:UISupportedInterfaceOrientations~iPad</string>
+					</array>
+					<key>Definitions</key>
+					<dict>
+						<key>Assets.xcassets</key>
+						<dict>
+							<key>Path</key>
+							<string>Images-iPad.xcassets</string>
+							<key>SortOrder</key>
+							<integer>100</integer>
+						</dict>
+					</dict>
+				</dict>
+				<key>Universal</key>
+				<dict>
+					<key>Project</key>
+					<dict>
+						<key>SharedSettings</key>
+						<dict>
+							<key>TARGETED_DEVICE_FAMILY</key>
+							<string>1,2</string>
+						</dict>
+					</dict>
+					<key>Nodes</key>
+					<array>
+						<string>Info.plist:UISupportedInterfaceOrientations~iPhone</string>
+						<string>Info.plist:UISupportedInterfaceOrientations~iPad</string>
+					</array>
+					<key>Definitions</key>
+					<dict>
+						<key>Assets.xcassets</key>
+						<dict>
+							<key>Path</key>
+							<string>Images-Universal.xcassets</string>
+							<key>SortOrder</key>
+							<integer>100</integer>
+						</dict>
+					</dict>
+				</dict>
+			</dict>
+		</dict>
+        <dict>
+            <key>Identifier</key>
+            <string>hasUnitTests</string>
+            <key>Name</key>
+            <string>Include Unit Tests</string>
+            <key>NotPersisted</key>
+            <false/>
+            <key>SortOrder</key>
+            <integer>100</integer>
+            <key>Type</key>
+            <string>checkbox</string>
+            <key>Default</key>
+            <string>true</string>
+            <key>Units</key>
+            <dict>
+                <key>true</key>
+                <dict>
+                    <key>Components</key>
+                    <array>
+                        <dict>
+                            <key>Identifier</key>
+                            <string>com.google.MaterialComponents.cocoaTouchApplicationUnitTestBundle</string>
+                            <key>Name</key>
+                            <string>___PACKAGENAME___Tests</string>
+                        </dict>
+                    </array>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Identifier</key>
+            <string>hasUITests</string>
+            <key>Name</key>
+            <string>Include UI Tests</string>
+            <key>NotPersisted</key>
+            <false/>
+            <key>SortOrder</key>
+            <integer>101</integer>
+            <key>Type</key>
+            <string>checkbox</string>
+            <key>Default</key>
+            <string>true</string>
+            <key>Units</key>
+            <dict>
+                <key>true</key>
+                <dict>
+                    <key>Components</key>
+                    <array>
+                        <dict>
+                            <key>Identifier</key>
+                            <string>com.google.MaterialComponents.cocoaTouchApplicationUITestBundle</string>
+                            <key>Name</key>
+                            <string>___PACKAGENAME___UITests</string>
+                        </dict>
+                    </array>
+                </dict>
+            </dict>
+        </dict>
+		<dict>
+			<key>Identifier</key>
+			<string>languageChoice</string>
+			<key>Units</key>
+			<dict>
+				<key>Objective-C</key>
+				<dict>
+					<key>Nodes</key>
+					<array>
+                        <string>main.m:comments</string>
+                        <string>main.m:imports:importCocoa</string>
+						<string>main.m:imports:importHeader:AppDelegate.h</string>
+						<string>main.m:main:UIApplicationMain</string>
+						<string>AppDelegate.h:comments</string>
+						<string>AppDelegate.h:imports:importCocoa</string>
+						<string>AppDelegate.h:interface(AppDelegate : UIResponder &lt;UIApplicationDelegate&gt;)</string>
+						<string>AppDelegate.h:interface:window</string>
+						<string>AppDelegate.m:comments</string>
+						<string>AppDelegate.m:imports:importHeader:AppDelegate.h</string>
+						<string>AppDelegate.m:extension</string>
+						<string>AppDelegate.m:implementation:synthesize</string>
+						<string>AppDelegate.m:implementation:methods:applicationdidFinishLaunchingWithOptions(- (BOOL\)application:(UIApplication *\)application didFinishLaunchingWithOptions:(NSDictionary *\)launchOptions)</string>
+						<string>AppDelegate.m:implementation:methods:applicationdidFinishLaunchingWithOptions:body</string>
+						<string>AppDelegate.m:implementation:methods:applicationdidFinishLaunchingWithOptions:return</string>
+						<string>AppDelegate.m:implementation:methods:applicationWillResignActive(- (void\)applicationWillResignActive:(UIApplication *\)application)</string>
+						<string>AppDelegate.m:implementation:methods:applicationWillResignActive:comments</string>
+						<string>AppDelegate.m:implementation:methods:applicationDidEnterBackground(- (void\)applicationDidEnterBackground:(UIApplication *\)application)</string>
+						<string>AppDelegate.m:implementation:methods:applicationDidEnterBackground:comments</string>
+						<string>AppDelegate.m:implementation:methods:applicationWillEnterForeground(- (void\)applicationWillEnterForeground:(UIApplication *\)application)</string>
+						<string>AppDelegate.m:implementation:methods:applicationWillEnterForeground:comments</string>
+						<string>AppDelegate.m:implementation:methods:applicationDidBecomeActive(- (void\)applicationDidBecomeActive:(UIApplication *\)application)</string>
+						<string>AppDelegate.m:implementation:methods:applicationDidBecomeActive:comments</string>
+						<string>AppDelegate.m:implementation:methods:applicationWillTerminate(- (void\)applicationWillTerminate:(UIApplication *\)application)</string>
+						<string>AppDelegate.m:implementation:methods:applicationWillTerminate:comments</string>
+					</array>
+					<key>Definitions</key>
+					<dict>
+						<key>main.m:main</key>
+						<dict>
+							<key>Beginning</key>
+							<string>int main(int argc, char * argv[]) {</string>
+							<key>End</key>
+							<string>}</string>
+							<key>Indent</key>
+							<integer>1</integer>
+						</dict>
+						<key>main.m:main:UIApplicationMain</key>
+						<string>@autoreleasepool {
+    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+}
+</string>
+						<key>AppDelegate.h:interface:window</key>
+						<string>@property (strong, nonatomic) UIWindow *window;
+</string>
+						<key>AppDelegate.m:implementation:methods:applicationdidFinishLaunchingWithOptions:body</key>
+						<string>// Override point for customization after application launch.</string>
+						<key>AppDelegate.m:implementation:methods:applicationdidFinishLaunchingWithOptions:return</key>
+						<string>return YES;</string>
+						<key>*:implementation:methods:viewDidLoad:super</key>
+						<string>[super viewDidLoad];
+// Do any additional setup after loading the view, typically from a nib.</string>
+						<key>*:implementation:methods:didReceiveMemoryWarning:super</key>
+						<string>[super didReceiveMemoryWarning];
+// Dispose of any resources that can be recreated.</string>
+					</dict>
+				</dict>
+				<key>Swift</key>
+				<dict>
+					<key>Nodes</key>
+					<array>
+                        <!--
+                         <string>main.swift:comments</string>
+                         <string>main.swift:imports:importCocoa</string>
+                         <string>main.swift:main:UIApplicationMain</string>
+                         -->
+						<string>AppDelegate.swift:comments</string>
+                        <string>AppDelegate.swift:imports:importCocoa</string>
+                        <string>AppDelegate.swift:UIApplicationMain</string>
+						<string>AppDelegate.swift:implementation(AppDelegate: UIResponder, UIApplicationDelegate)</string>
+						<string>AppDelegate.swift:implementation:properties:window</string>
+                        <string>AppDelegate.swift:implementation:methods:applicationdidFinishLaunchingWithOptions(func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?\) -&gt; Bool)</string>
+						<string>AppDelegate.swift:implementation:methods:applicationdidFinishLaunchingWithOptions:body</string>
+						<string>AppDelegate.swift:implementation:methods:applicationdidFinishLaunchingWithOptions:return</string>
+						<string>AppDelegate.swift:implementation:methods:applicationWillResignActive(func applicationWillResignActive(application: UIApplication\))</string>
+						<string>AppDelegate.swift:implementation:methods:applicationWillResignActive:comments</string>
+						<string>AppDelegate.swift:implementation:methods:applicationDidEnterBackground(func applicationDidEnterBackground(application: UIApplication\))</string>
+						<string>AppDelegate.swift:implementation:methods:applicationDidEnterBackground:comments</string>
+						<string>AppDelegate.swift:implementation:methods:applicationWillEnterForeground(func applicationWillEnterForeground(application: UIApplication\))</string>
+						<string>AppDelegate.swift:implementation:methods:applicationWillEnterForeground:comments</string>
+						<string>AppDelegate.swift:implementation:methods:applicationDidBecomeActive(func applicationDidBecomeActive(application: UIApplication\))</string>
+						<string>AppDelegate.swift:implementation:methods:applicationDidBecomeActive:comments</string>
+						<string>AppDelegate.swift:implementation:methods:applicationWillTerminate(func applicationWillTerminate(application: UIApplication\))</string>
+						<string>AppDelegate.swift:implementation:methods:applicationWillTerminate:comments</string>
+					</array>
+					<key>Definitions</key>
+					<dict>
+                        <!--
+						<key>main.swift:main:UIApplicationMain</key>
+						<string>UIApplicationMain(C_ARGC, C_ARGV, nil, NSStringFromClass(AppDelegate.self))</string>
+                         -->
+                        <key>AppDelegate.swift:UIApplicationMain</key>
+                        <string>@UIApplicationMain</string>
+						<key>AppDelegate.swift:implementation:properties:window</key>
+						<string>var window: UIWindow?</string>
+						<key>AppDelegate.swift:implementation:methods:applicationdidFinishLaunchingWithOptions:body</key>
+						<string>// Override point for customization after application launch.</string>
+						<key>AppDelegate.swift:implementation:methods:applicationdidFinishLaunchingWithOptions:return</key>
+						<string>return true</string>
+						<key>*:implementation:methods:viewDidLoad:super</key>
+						<string>super.viewDidLoad()
+// Do any additional setup after loading the view, typically from a nib.</string>
+						<key>*:implementation:methods:didReceiveMemoryWarning:super</key>
+						<string>super.didReceiveMemoryWarning()
+// Dispose of any resources that can be recreated.</string>
+					</dict>
+				</dict>
+			</dict>
+		</dict>
+	</array>
+	<key>Nodes</key>
+	<array>
+		<string>Info.plist:iPhone</string>
+        <string>Info.plist:UIRequiredDeviceCapabilities:base</string>
+		<string>Info.plist:LaunchScreen</string>
+		<string>Assets.xcassets</string>
+		<string>Base.lproj/LaunchScreen.storyboard</string>
+	</array>
+	<key>Definitions</key>
+	<dict>
+		<key>Info.plist:iPhone</key>
+		<string>&lt;key&gt;LSRequiresIPhoneOS&lt;/key&gt;
+&lt;true/&gt;</string>
+        <key>Info.plist:UIRequiredDeviceCapabilities</key>
+        <dict>
+            <key>Beginning</key>
+            <string>&lt;key&gt;UIRequiredDeviceCapabilities&lt;/key&gt;
+&lt;array&gt;</string>
+            <key>End</key>
+            <string>&lt;/array&gt;</string>
+            <key>Indent</key>
+            <integer>1</integer>
+        </dict>
+        <key>Info.plist:UIRequiredDeviceCapabilities:base</key>
+        <string>&lt;string&gt;armv7&lt;/string&gt;</string>
+		<key>Info.plist:statusBarTintForNavBar</key>
+		<string>&lt;key&gt;UIStatusBarTintParameters&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;UINavigationBar&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;Style&lt;/key&gt;
+        &lt;string&gt;UIBarStyleDefault&lt;/string&gt;
+        &lt;key&gt;Translucent&lt;/key&gt;
+        &lt;false/&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+</string>
+		<key>Info.plist:LaunchScreen</key>
+		<string>&lt;key&gt;UILaunchStoryboardName&lt;/key&gt;
+&lt;string&gt;LaunchScreen&lt;/string&gt;
+</string>
+		<key>Base.lproj/LaunchScreen.storyboard</key>
+		<dict>
+			<key>Path</key>
+			<string>LaunchScreen.storyboard</string>
+			<key>SortOrder</key>
+			<integer>101</integer>
+		</dict>
+		<key>*:implementation:methods:applicationWillResignActive:comments</key>
+		<string>// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+</string>
+		<key>*:implementation:methods:applicationDidEnterBackground:comments</key>
+		<string>// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+</string>
+		<key>*:implementation:methods:applicationWillEnterForeground:comments</key>
+		<string>// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.</string>
+		<key>*:implementation:methods:applicationDidBecomeActive:comments</key>
+		<string>// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.</string>
+		<key>*:implementation:methods:applicationWillTerminate:comments</key>
+		<string>// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.</string>
+	</dict>
+</dict>
+</plist>
