@@ -142,9 +142,6 @@ static const CGFloat kMDCAmbientShadowOpacity = 0.08;
 /** Returns a shadowPath based on the layer properties. */
 - (UIBezierPath *)defaultShadowPath {
   CGFloat cornerRadius = self.cornerRadius;
-  // TODO(iangordon): Verify corner radius *can* be negative, even if that has no visual effect. If
-  // not, we can return this to this original if (0.0 != cornerRadius) and suppress the associated
-  // warning.
   if (0.0 < cornerRadius) {
     return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
   }
