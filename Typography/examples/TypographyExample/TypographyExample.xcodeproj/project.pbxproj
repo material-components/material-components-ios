@@ -70,6 +70,7 @@
 		20DA31E61BAA01AB00CE11C2 /* TypographyExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TypographyExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20DA31EA1BAA01AB00CE11C2 /* TypographyExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TypographyExampleUITests.m; sourceTree = "<group>"; };
 		20DA31EC1BAA01AB00CE11C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20EFD83D1C0CECC4006815B2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = TypographyExample/README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +110,7 @@
 		20DA31B91BAA01AB00CE11C2 = {
 			isa = PBXGroup;
 			children = (
+				20EFD83D1C0CECC4006815B2 /* README.md */,
 				20DA31C41BAA01AB00CE11C2 /* App */,
 				6637B25D1BFE3CCD007EB4BF /* Material components */,
 				20DA31C51BAA01AB00CE11C2 /* Supporting Files */,
