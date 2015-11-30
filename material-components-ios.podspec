@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   #
   # public_header_files  => Exposes our public headers for use in an app target.
   # source_files         => Must include all source required to successfully build the component.
-  # header_mappings_dir  => Must be 'ComponentName/src/*'. Flattens the headers into one directory.
+  # header_mappings_dir  => Must be 'components/ComponentName/src/*'. Flattens the headers into one directory.
   #
   # ## Optional properties
   #
@@ -29,24 +29,24 @@ Pod::Spec.new do |s|
   # Find-and-replace for 'ComponentName' is your friend once you copy-paste this :)
   #
   #  s.subspec 'ComponentName' do |ss|
-  #    ss.public_header_files = 'ComponentName/src/*.h'
-  #    ss.source_files = 'ComponentName/src/*.{h,m}', 'ComponentName/src/Private/*.{h,m}'
-  #    ss.header_mappings_dir = 'ComponentName/src/*'
+  #    ss.public_header_files = 'components/ComponentName/src/*.h'
+  #    ss.source_files = 'components/ComponentName/src/*.{h,m}', 'components/ComponentName/src/Private/*.{h,m}'
+  #    ss.header_mappings_dir = 'components/ComponentName/src/*'
   #
   #    # Only if you have private headers
-  #    ss.private_header_files = 'ComponentName/src/Private/*.h'
+  #    ss.private_header_files = 'components/ComponentName/src/Private/*.h'
   #
   #    # Only if you have a resource bundle
   #    s.resource_bundles = {
-  #      'MaterialComponentName' => ['ComponentName/MaterialComponentName.bundle/*']
+  #      'MaterialComponentName' => ['components/ComponentName/MaterialComponentName.bundle/*']
   #    }
   #  end
   #
 
   s.subspec 'ScrollViewDelegateMultiplexer' do |ss|
-    ss.public_header_files = 'ScrollViewDelegateMultiplexer/src/*.h'
-    ss.source_files = 'ScrollViewDelegateMultiplexer/src/*.{h,m}'
-    ss.header_mappings_dir = 'ScrollViewDelegateMultiplexer/src/*'
+    ss.public_header_files = 'components/ScrollViewDelegateMultiplexer/src/*.h'
+    ss.source_files = 'components/ScrollViewDelegateMultiplexer/src/*.{h,m}'
+    ss.header_mappings_dir = 'components/ScrollViewDelegateMultiplexer/src/*'
   end
 
   s.subspec 'ShadowLayer' do |ss|

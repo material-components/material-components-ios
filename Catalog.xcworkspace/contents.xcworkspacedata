@@ -19,7 +19,7 @@
       location = "group:PageControl/examples/PageControlExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ScrollViewDelegateMultiplexer/examples/ScrollViewDelegateMultiplexerExample.xcodeproj">
+      location = "group:components/ScrollViewDelegateMultiplexer/examples/ScrollViewDelegateMultiplexerExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:SpritedAnimationView/examples/SpritedAnimationViewExample.xcodeproj">
