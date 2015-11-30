@@ -2,22 +2,26 @@
   "linters": {
     "clang-format": {
       "type": "clang-format",
-      "include": "(\\.(m|h|mm)$)"
+      "include": "(\\.(m|h|mm)$)",
+      "exclude": "(/Pods/)"
     },
     "text": {
       "type": "text",
       "include": "(\\.(m|h|mm|md|swift)$)",
+      "exclude": "(/Pods/)",
       "severity": {
         "3": "disabled",
         "5": "disabled"
       }
     },
     "chmod": {
-      "type": "chmod"
+      "type": "chmod",
+      "exclude": "(/Pods/)"
     },
     "spelling": {
       "type": "spelling",
-      "include": "(\\.(m|h|mm|md)$)"
+      "include": "(\\.(m|h|mm|md)$)",
+      "exclude": "(/Pods/)"
     }
   }
 }
