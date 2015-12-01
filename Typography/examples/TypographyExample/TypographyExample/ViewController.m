@@ -22,9 +22,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view, typically from a nib.
+  self.view.backgroundColor = [UIColor whiteColor];
 
   UILabel *label = [[UILabel alloc] init];
-  label.text = @"This is sometext";
+  label.text = @"This is a title";
   label.font = [MDCTypography titleFont];
   label.alpha = [MDCTypography titleFontOpacity];
 
