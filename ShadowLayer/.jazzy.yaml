@@ -1,0 +1,5 @@
+module_name: ShadowLayer
+module_name: src/ShadowLayer.h
+objc_mode: true
+sdk: iphonesimulator
+output: docs/
