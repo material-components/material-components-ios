@@ -37,7 +37,7 @@ Pod::Spec.new do |s|
   #    ss.private_header_files = 'components/ComponentName/src/Private/*.h'
   #
   #    # Only if you have a resource bundle
-  #    s.resource_bundles = {
+  #    ss.resource_bundles = {
   #      'MaterialComponentName' => ['components/ComponentName/MaterialComponentName.bundle/*']
   #    }
   #  end
@@ -67,7 +67,7 @@ Pod::Spec.new do |s|
     ss.header_mappings_dir = 'Typography/src/*'
 
     ss.private_header_files = 'Typography/src/Private/*.h'
-    s.resource_bundles = {
+    ss.resource_bundles = {
       'MaterialTypography' => ['Typography/src/MaterialTypography.bundle/*']
     }
   end
