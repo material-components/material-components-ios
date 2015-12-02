@@ -17,8 +17,8 @@
 #import "MDCShadowLayer.h"
 
 static const CGFloat kMDCShadowElevationDialog = 24.0;
-static const CGFloat kMDCKeyShadowOpacity = 0.26;
-static const CGFloat kMDCAmbientShadowOpacity = 0.08;
+static const float kMDCKeyShadowOpacity = 0.26f;
+static const float kMDCAmbientShadowOpacity = 0.08f;
 
 @implementation MDCShadowMetrics
 
@@ -50,10 +50,10 @@ static const CGFloat kMDCAmbientShadowOpacity = 0.08;
     emptyShadowMetrics = [[MDCShadowMetrics alloc] init];
     emptyShadowMetrics->_topShadowRadius = (CGFloat)0.0;
     emptyShadowMetrics->_topShadowOffset = CGSizeMake(0.0, 0.0);
-    emptyShadowMetrics->_topShadowOpacity = 0.0;
+    emptyShadowMetrics->_topShadowOpacity = 0.0f;
     emptyShadowMetrics->_bottomShadowRadius = (CGFloat)0.0;
     emptyShadowMetrics->_bottomShadowOffset = CGSizeMake(0.0, 0.0);
-    emptyShadowMetrics->_bottomShadowOpacity = 0.0;
+    emptyShadowMetrics->_bottomShadowOpacity = 0.0f;
   });
 
   return emptyShadowMetrics;

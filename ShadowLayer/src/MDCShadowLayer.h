@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 /**
  Metrics of the material shadow effect.
@@ -25,10 +25,10 @@
 @interface MDCShadowMetrics : NSObject
 @property(nonatomic, readonly) CGFloat topShadowRadius;
 @property(nonatomic, readonly) CGSize topShadowOffset;
-@property(nonatomic, readonly) CGFloat topShadowOpacity;
+@property(nonatomic, readonly) float topShadowOpacity;
 @property(nonatomic, readonly) CGFloat bottomShadowRadius;
 @property(nonatomic, readonly) CGSize bottomShadowOffset;
-@property(nonatomic, readonly) CGFloat bottomShadowOpacity;
+@property(nonatomic, readonly) float bottomShadowOpacity;
 
 /**
  The shadow metrics for manually creating shadows given an elevation.

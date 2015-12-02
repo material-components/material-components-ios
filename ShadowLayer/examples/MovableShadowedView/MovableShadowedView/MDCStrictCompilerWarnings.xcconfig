@@ -6,5 +6,5 @@
 // - Under PROJECT - Build Settings - Custom Compiler Flags - Other Warning Flags, add
 //   $(MDC_STRICT_WARNING_CFLAGS)
 MDC_ENABLED_WARNINGS = -Weverything
-MDC_DISABLED_WARNINGS = -Wno-objc-missing-property-synthesis -Wno-direct-ivar-access -Wno-gnu-statement-expression
+MDC_DISABLED_WARNINGS = -Wno-objc-missing-property-synthesis -Wno-direct-ivar-access -Wno-gnu-statement-expression -Wno-auto-import
 MDC_STRICT_WARNING_CFLAGS = $(MDC_ENABLED_WARNINGS) $(MDC_DISABLED_WARNINGS)
