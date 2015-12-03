@@ -1,5 +1,5 @@
 module_name: ShadowLayer
-module_name: src/ShadowLayer.h
+umbrella_header: src/MaterialShadowLayer.h
 objc_mode: true
 sdk: iphonesimulator
 output: docs/

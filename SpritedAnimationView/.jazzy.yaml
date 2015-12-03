@@ -1,5 +1,5 @@
 module_name: SpritedAnimationView
-module_name: src/SpritedAnimationView.h
+umbrella_header: src/MaterialSpritedAnimationView.h
 objc_mode: true
 sdk: iphonesimulator
 output: docs/
