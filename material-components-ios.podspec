@@ -56,9 +56,9 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'SpritedAnimationView' do |ss|
-    ss.public_header_files = 'SpritedAnimationView/src/*.h'
-    ss.source_files = 'SpritedAnimationView/src/*.{h,m}'
-    ss.header_mappings_dir = 'SpritedAnimationView/src/*'
+    ss.public_header_files = 'components/SpritedAnimationView/src/*.h'
+    ss.source_files = 'components/SpritedAnimationView/src/*.{h,m}'
+    ss.header_mappings_dir = 'components/SpritedAnimationView/src/*'
   end
 
   s.subspec 'Typography' do |ss|
