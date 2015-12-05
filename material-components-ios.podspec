@@ -71,4 +71,15 @@ Pod::Spec.new do |s|
       'MaterialTypography' => ['Typography/src/MaterialTypography.bundle/*']
     }
   end
+
+  s.subspec 'private' do |pss|
+
+    pss.subspec 'ShadowElevations' do |ss|
+      ss.public_header_files = 'components/private/ShadowElevations/src/*.h'
+      ss.source_files = 'components/private/ShadowElevations/src/*.{h,m}'
+      ss.header_mappings_dir = 'components/private/ShadowElevations/src/*'
+    end
+
+  end
+
 end
