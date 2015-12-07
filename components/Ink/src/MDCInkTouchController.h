@@ -36,13 +36,13 @@
 @interface MDCInkTouchController : NSObject <UIGestureRecognizerDelegate>
 
 /** Weak reference to the view that responds to touch events. */
-@property(nonatomic, weak, readonly) UIView *view;
+@property(nonatomic, weak, readonly, nullable) UIView *view;
 
 /** View containing the ink effect. Valid after addInkView has been called. */
 @property(nonatomic, strong, readonly, nonnull) MDCInkView *inkView;
 
 /** Delegate to extend the behavior of the touch control. */
-@property(nonatomic, weak) id<MDCInkTouchControllerDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCInkTouchControllerDelegate> delegate;
 
 /** If YES, the gesture recognizer should delay the start of ink spread. Default is NO. */
 @property(nonatomic, assign) BOOL delaysInkSpread;
