@@ -49,6 +49,12 @@ Pod::Spec.new do |s|
     ss.header_mappings_dir = 'components/ScrollViewDelegateMultiplexer/src/*'
   end
 
+  s.subspec 'ShadowElevations' do |ss|
+    ss.public_header_files = 'components/ShadowElevations/src/*.h'
+    ss.source_files = 'components/ShadowElevations/src/*.{h,m}'
+    ss.header_mappings_dir = 'components/ShadowElevations/src/*'
+  end
+
   s.subspec 'ShadowLayer' do |ss|
     ss.public_header_files = 'ShadowLayer/src/*.h'
     ss.source_files = 'ShadowLayer/src/*.{h,m}'
@@ -70,16 +76,6 @@ Pod::Spec.new do |s|
     ss.resource_bundles = {
       'MaterialTypography' => ['Typography/src/MaterialTypography.bundle/*']
     }
-  end
-
-  s.subspec 'private' do |pss|
-
-    pss.subspec 'ShadowElevations' do |ss|
-      ss.public_header_files = 'components/private/ShadowElevations/src/*.h'
-      ss.source_files = 'components/private/ShadowElevations/src/*.{h,m}'
-      ss.header_mappings_dir = 'components/private/ShadowElevations/src/*'
-    end
-
   end
 
 end
