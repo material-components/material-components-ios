@@ -17,10 +17,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
-// TODO(ajsecord): This is shared with InkView.h, separate out into its own header?
-/** Completion block signature for all ink animations. */
-typedef void (^MDCInkCompletionBlock)();
-
 /**
  A Core Animation layer that draws and animates the ink effect.
 
@@ -88,7 +84,7 @@ typedef void (^MDCInkCompletionBlock)();
  @param completionBlock Block called after the completion of the animation.
  @param point Point at which the ink spreads from.
  */
-- (void)spreadFromPoint:(CGPoint)point completion:(MDCInkCompletionBlock)completionBlock;
+- (void)spreadFromPoint:(CGPoint)point completion:(void (^)())completionBlock;
 
 /**
  Dissipate ink blast, should be called on touch up.
@@ -97,7 +93,7 @@ typedef void (^MDCInkCompletionBlock)();
 
  @param completionBlock Block called after the completion of the evaporation.
  */
-- (void)evaporateWithCompletion:(MDCInkCompletionBlock)completionBlock;
+- (void)evaporateWithCompletion:(void (^)())completionBlock;
 
 /**
  Dissipates the ink blast, but condenses to a point. Used for touch exit or cancel.
@@ -107,6 +103,6 @@ typedef void (^MDCInkCompletionBlock)();
  @param point Evaporate the ink towards the point.
  @param completionBlock Block called after the completion of the evaporation.
  */
-- (void)evaporateToPoint:(CGPoint)point completion:(MDCInkCompletionBlock)completionBlock;
+- (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock;
 
 @end

@@ -168,7 +168,7 @@ static inline CGFloat MDCRectHypotenuse(CGRect rect) {
     [times addObject:@(ratio)];
 
     // This is the spread formula:
-    CGFloat fraction = (1 - powf(80.f, -ratio));
+    CGFloat fraction = (CGFloat)(1 - pow(80, -ratio));
 
     // Work out the transform for both scaling and translating.
     CATransform3D transform = CATransform3DIdentity;
@@ -209,7 +209,7 @@ static inline CGFloat MDCRectHypotenuse(CGRect rect) {
   }
 }
 
-- (void)spreadFromPoint:(CGPoint)point completion:(MDCInkCompletionBlock)completionBlock {
+- (void)spreadFromPoint:(CGPoint)point completion:(void (^)())completionBlock {
   _rippleState = kMDCInkRippleSpreading;
 
   // Create a mask layer before drawing the ink using the superlayer's shadowPath
@@ -268,7 +268,7 @@ static inline CGFloat MDCRectHypotenuse(CGRect rect) {
   _dropStartTime = CFAbsoluteTimeGetCurrent();
 }
 
-- (void)evaporateWithCompletion:(MDCInkCompletionBlock)completionBlock {
+- (void)evaporateWithCompletion:(void (^)())completionBlock {
   // Pop the first ripple out of the list and evaporate that.
   CAShapeLayer *ripple = [_ripples firstObject];
   if (!ripple)
@@ -319,7 +319,7 @@ static inline CGFloat MDCRectHypotenuse(CGRect rect) {
   [CATransaction commit];
 }
 
-- (void)evaporateToPoint:(CGPoint)point completion:(MDCInkCompletionBlock)completionBlock {
+- (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock {
   CAShapeLayer *ripple = [_ripples firstObject];
   if (!ripple)
     return;
