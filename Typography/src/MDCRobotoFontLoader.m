@@ -31,6 +31,7 @@
 @property(nonatomic, strong) MDCFontResource *boldItalicFontResource;
 
 @property(nonatomic, strong) NSBundle *baseBundle;
+@property(nonatomic, strong) NSString *bundleFileName;
 
 @end
 
@@ -50,6 +51,7 @@
   if (self) {
     self = [super init];
     _baseBundle = [MDCRobotoFontLoader baseBundle];
+    _bundleFileName = MDCTypographyBundle;
   }
   return self;
 }
@@ -63,8 +65,20 @@
   return sharedInstance;
 }
 
+- (void)setBundleFileName:(NSString *)bundleFileName {
+  if ([bundleFileName isEqualToString:_bundleFileName]) {
+    return;
+  }
+  if (bundleFileName) {
+    _bundleFileName = bundleFileName;
+  } else {
+    _bundleFileName = MDCTypographyBundle;
+  }
+  [self resetFontResources];
+}
+
 - (void)setBaseBundle:(NSBundle *)baseBundle {
-  if (baseBundle == _baseBundle) {
+  if ([baseBundle isEqual:_baseBundle]) {
     return;
   }
   if (baseBundle) {
@@ -72,6 +86,10 @@
   } else {
     _baseBundle = [MDCRobotoFontLoader baseBundle];
   }
+  [self resetFontResources];
+}
+
+- (void)resetFontResources {
   _regularFontResource = nil;
   _lightFontResource = nil;
   _mediumFontResource = nil;
@@ -86,7 +104,7 @@
   if (!_regularFontResource) {
     _regularFontResource = [[MDCFontResource alloc] initWithFontName:MDCTypographyRegularFontName
                                                             filename:MDCTypographyRegularFontFilename
-                                                      bundleFileName:MDCTypographyBundle
+                                                      bundleFileName:_bundleFileName
                                                           baseBundle:_baseBundle];
   }
   return _regularFontResource;
@@ -104,7 +122,7 @@
   if (!_mediumFontResource) {
     _mediumFontResource = [[MDCFontResource alloc] initWithFontName:MDCTypographyMediumFontName
                                                            filename:MDCTypographyMediumFontFilename
-                                                     bundleFileName:MDCTypographyBundle
+                                                     bundleFileName:_bundleFileName
                                                          baseBundle:_baseBundle];
   }
   return _mediumFontResource;
@@ -122,7 +140,7 @@
   if (!_lightFontResource) {
     _lightFontResource = [[MDCFontResource alloc] initWithFontName:MDCTypographyLightFontName
                                                           filename:MDCTypographyLightFontFilename
-                                                    bundleFileName:MDCTypographyBundle
+                                                    bundleFileName:_bundleFileName
                                                         baseBundle:_baseBundle];
   }
   return _lightFontResource;
@@ -140,7 +158,7 @@
   if (!_boldFontResource) {
     _boldFontResource = [[MDCFontResource alloc] initWithFontName:MDCTypographyBoldFontName
                                                          filename:MDCTypographyBoldFontFilename
-                                                   bundleFileName:MDCTypographyBundle
+                                                   bundleFileName:_bundleFileName
                                                        baseBundle:_baseBundle];
   }
   return _boldFontResource;
@@ -158,7 +176,7 @@
   if (!_italicFontResource) {
     _italicFontResource = [[MDCFontResource alloc] initWithFontName:MDCTypographyRegularItalicFontName
                                                            filename:MDCTypographyRegularItalicFontFilename
-                                                     bundleFileName:MDCTypographyBundle
+                                                     bundleFileName:_bundleFileName
                                                          baseBundle:_baseBundle];
   }
   return _italicFontResource;
@@ -176,7 +194,7 @@
   if (!_lightItalicFontResource) {
     _lightItalicFontResource = [[MDCFontResource alloc] initWithFontName:MDCTypographyLightItalicFontName
                                                                 filename:MDCTypographyLightItalicFontFilename
-                                                          bundleFileName:MDCTypographyBundle
+                                                          bundleFileName:_bundleFileName
                                                               baseBundle:_baseBundle];
   }
   return _lightItalicFontResource;
@@ -195,7 +213,7 @@
     _mediumItalicFontResource =
         [[MDCFontResource alloc] initWithFontName:MDCTypographyMediumItalicFontName
                                          filename:MDCTypographyMediumItalicFontFilename
-                                   bundleFileName:MDCTypographyBundle
+                                   bundleFileName:_bundleFileName
                                        baseBundle:_baseBundle];
   }
   return _mediumItalicFontResource;
@@ -213,7 +231,7 @@
   if (!_boldItalicFontResource) {
     _boldItalicFontResource = [[MDCFontResource alloc] initWithFontName:MDCTypographyBoldItalicFontName
                                                                filename:MDCTypographyBoldItalicFontFilename
-                                                         bundleFileName:MDCTypographyBundle
+                                                         bundleFileName:_bundleFileName
                                                              baseBundle:_baseBundle];
   }
   return _boldItalicFontResource;
