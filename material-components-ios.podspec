@@ -43,6 +43,13 @@ Pod::Spec.new do |s|
   #  end
   #
 
+  s.subspec 'Ink' do |ss|
+    ss.public_header_files = 'components/Ink/src/*.h'
+    ss.source_files = 'components/Ink/src/*.{h,m}', 'components/Ink/src/private/*.{h,m}'
+    ss.header_mappings_dir = 'components/Ink/src/*'
+    ss.private_header_files = 'components/Ink/src/private/*.h'
+  end
+
   s.subspec 'ScrollViewDelegateMultiplexer' do |ss|
     ss.public_header_files = 'components/ScrollViewDelegateMultiplexer/src/*.h'
     ss.source_files = 'components/ScrollViewDelegateMultiplexer/src/*.{h,m}'
