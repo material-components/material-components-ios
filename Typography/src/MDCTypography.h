@@ -122,29 +122,6 @@
 /** Returns the recommended opacity of black text for the button font. */
 + (CGFloat)buttonFontOpacity;
 
-#pragma mark - Roboto fonts
-
-/**
- Returns the regular Roboto font at the indicated point size.
-
- @param pointSize The requested point size for the font.
- */
-+ (nonnull UIFont *)robotoRegularWithSize:(CGFloat)pointSize;
-
-/**
- Returns the medium Roboto font at the indicated point size.
-
- @param pointSize The requested point size for the font.
- */
-+ (nonnull UIFont *)robotoMediumWithSize:(CGFloat)pointSize;
-
-/**
- Returns the light Roboto font at the indicated point size.
-
- @param pointSize The requested point size for the font.
- */
-+ (nonnull UIFont *)robotoLightWithSize:(CGFloat)pointSize;
-
 @end
 
 /**

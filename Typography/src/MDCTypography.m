@@ -152,20 +152,6 @@ static id<MDCTypographyFontLoader> sFontLoader = nil;
   return MDCTypographyStandardOpacity;
 }
 
-#pragma mark - Roboto fonts
-
-+ (UIFont *)robotoRegularWithSize:(CGFloat)pointSize {
-  return [[self fontLoader] regularFontOfSize:pointSize];
-}
-
-+ (UIFont *)robotoMediumWithSize:(CGFloat)pointSize {
-  return [[self fontLoader] mediumFontOfSize:pointSize];
-}
-
-+ (UIFont *)robotoLightWithSize:(CGFloat)pointSize {
-  return [[self fontLoader] lightFontOfSize:pointSize];
-}
-
 #pragma mark - Private
 
 + (id<MDCTypographyFontLoader>)defaultFontLoader {

@@ -387,41 +387,4 @@ static const CGFloat kEpsilon = 0.001f;
   XCTAssertEqualObjects(font, [UIFont boldSystemFontOfSize:14]);
 }
 
-#pragma mark - Roboto fonts
-
-- (void)testRobotoRegularWithSize {
-  // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-
-  // When
-  UIFont *font = [MDCTypography robotoRegularWithSize:size];
-
-  // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilon);
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Regular");
-}
-- (void)testRobotoMediumWithSize {
-  // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-
-  // When
-  UIFont *font = [MDCTypography robotoMediumWithSize:size];
-
-  // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilon);
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Medium");
-}
-
-- (void)testRobotoLightWithSize {
-  // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
-
-  // When
-  UIFont *font = [MDCTypography robotoLightWithSize:size];
-
-  // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilon);
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Light");
-}
-
 @end
