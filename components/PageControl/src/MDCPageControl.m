@@ -120,7 +120,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // This view must be mirrored by flipping instead of relayout, because we want to mirror
   // the view itself, not its subviews.
   //  if ([self class] == [MDCPageControl class]) {
-  //    [self goo_flipViewForRTL];
+  //    [self mdc_flipViewForRTL];
   //  }
 }
 
