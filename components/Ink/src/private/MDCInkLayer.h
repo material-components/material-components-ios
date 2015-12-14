@@ -31,6 +31,9 @@
  */
 @interface MDCInkLayer : CALayer
 
+/** Clips the ripple to the bounds of the layer. */
+@property(nonatomic, assign, getter=isBounded) BOOL bounded;
+
 /** Maximum radius of the ink. No maximum if radius is 0 or less. */
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 

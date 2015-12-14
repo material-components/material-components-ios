@@ -22,12 +22,14 @@ typedef void (^MDCInkCompletionBlock)();
 /** A UIView that draws and animates the material design ink effect. */
 @interface MDCInkView : UIView
 
-/** The foreground color of the ink. Default is white with 25% opacity. */
+/** The foreground color of the ink. The default value is defaultInkColor. */
 @property(nonatomic, strong, null_resettable) UIColor *inkColor;
+
+/** Default color used for ink if no color is specified. */
+@property(nonatomic, strong, readonly, nonnull) UIColor *defaultInkColor;
 
 /**
  Maximum radius of the ink. If the radius <= 0 then the hypotenuse of self.bounds is used.
- The default is 150pt.
  */
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 

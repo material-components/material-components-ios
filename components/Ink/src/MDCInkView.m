@@ -48,6 +48,7 @@
   self.userInteractionEnabled = NO;
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+  self.inkColor = self.defaultInkColor;
 }
 
 - (void)setGravitatesInk:(BOOL)gravitatesInk {
@@ -68,6 +69,7 @@
 
 - (void)setClipsRippleToBounds:(BOOL)clipsRippleToBounds {
   self.inkLayer.masksToBounds = clipsRippleToBounds;
+  self.inkLayer.bounded = clipsRippleToBounds;
 }
 
 - (BOOL)clipsRippleToBounds {
@@ -124,6 +126,10 @@
 
 - (void)evaporateToPoint:(CGPoint)point completion:(MDCInkCompletionBlock)completionBlock {
   [self.inkLayer evaporateToPoint:point completion:completionBlock];
+}
+
+- (UIColor *)defaultInkColor {
+  return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
 }
 
 @end

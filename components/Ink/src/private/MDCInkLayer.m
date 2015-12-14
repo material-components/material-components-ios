@@ -18,23 +18,42 @@
 
 #import <UIKit/UIKit.h>
 
-// Default maximum ripple size. (from http://go/qinkdemo)
-const CGFloat kMDCInkMaxRippleRadius = 150;
-// Actual radius of the ripple in the CAShapeLayer and is used
-// to work out the correct scale transform when expanding the ripple.
-const CGFloat kMDCInkActualRippleRadius = 20;
-// The scale at which the ripple first appears.
-const CGFloat kMDCInkRippleInitialScale = 0.01f;
-// An applied opacity to the ripple. Since the alpha in the inkColor, this
-// is left at 1.0.
-const CGFloat kMDCInkRippleInitialOpacity = 1.0f;
+static inline CGPoint MDCInkLayerInterpolatePoint(CGPoint start,
+                                                  CGPoint end,
+                                                  CGFloat offsetPercent) {
+  CGPoint centerOffsetPoint = CGPointMake(start.x + (end.x - start.x) * offsetPercent,
+                                          start.y + (end.y - start.y) * offsetPercent);
+  return centerOffsetPoint;
+}
 
-// Transform names
-static NSString *const kMDCInkLayerAnimationNameRippleSpread = @"RippleSpread";
-static NSString *const kMDCInkLayerAnimationNameRippleCondense = @"RippleCondense";
-static NSString *const kMDCInkLayerAnimationNameRippleFadeOut = @"RippleFadeOut";
-static NSString *const kMDCInkLayerAnimationNameRippleSpreadFurther = @"RippleSpreadFurther";
-static NSString *const kMDCInkLayerAnimationNameBackgroundFade = @"BackgroundFade";
+static inline CGPoint MDCInkLayerRectGetCenter(CGRect rect) {
+  return CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
+}
+
+static inline CGFloat MDCInkLayerRectHypotenuse(CGRect rect) {
+  return hypot(CGRectGetWidth(rect), CGRectGetHeight(rect));
+}
+
+static CGFloat const kMDCInkLayerBackgroundOpacityEnterDuration = 0.6f;
+static CGFloat const kMDCInkLayerBaseOpacityExitDuration = 0.48f;
+static CGFloat const kMDCInkLayerBoundedOpacityExitDuration = 0.4f;
+static CGFloat const kMDCInkLayerBoundedOriginExitDuration = 0.3f;
+static CGFloat const kMDCInkLayerBoundedPositionExitDuration = 0.4f;
+static CGFloat const kMDCInkLayerBoundedRadiusExitDuration = 0.8f;
+static CGFloat const kMDCInkLayerFastEnterDuration = 0.12f;
+static CGFloat const kMDCInkLayerPositionConstantDuration = 0.5f;
+static CGFloat const kMDCInkLayerRadiusGrowthMultiplier = 350.f;
+static CGFloat const kMDCInkLayerUnboundedPositionExitAdjustedDuration = 0.15f;
+static CGFloat const kMDCInkLayerWaveTouchDownAcceleration = 1024.f;
+static CGFloat const kMDCInkLayerWaveTouchUpAcceleration = 3400.f;
+
+static NSString *const kMDCInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
+static NSString *const kMDCInkLayerForegroundOpacityAnim = @"foregroundOpacityAnim";
+static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPositionAnim";
+static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
+static NSString *const kMDCInkLayerOpacity = @"opacity";
+static NSString *const kMDCInkLayerPosition = @"position";
+static NSString *const kMDCInkLayerScale = @"transform.scale";
 
 // State tracking for ink.
 typedef NS_ENUM(NSInteger, MDCInkRippleState) {
@@ -42,25 +61,27 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   kMDCInkRippleSpreading,
 };
 
-static inline CGPoint MDCRectGetCenter(CGRect rect) {
-  return CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
-}
-
-static inline CGFloat MDCRectHypotenuse(CGRect rect) {
-  return hypot(CGRectGetWidth(rect), CGRectGetHeight(rect));
-}
-
 @implementation MDCInkLayer {
-  // All the ripples we're animating.
-  NSMutableArray *_ripples;
+  BOOL _foregroundRippleLayerComplete;
 
-  // Background mask.
-  CALayer *_backgroundFadeLayer;
+  CAKeyframeAnimation *_backgroundOpacityAnim;
+  CAKeyframeAnimation *_foregroundOpacityAnim;
+  CAKeyframeAnimation *_foregroundPositionAnim;
+  CAKeyframeAnimation *_foregroundScaleAnim;
+
+  CAShapeLayer *_rippleLayer;
+  CAShapeLayer *_backgroundRippleLayer;
+  CAShapeLayer *_foregroundRippleLayer;
 
   // Time the drop starts to spread.
   CFAbsoluteTime _dropStartTime;
 
+  CGFloat _maxOpacityLevel;
+  CGFloat _radius;
+  NSTimer *_clearLayerTimer;
+
   MDCInkRippleState _rippleState;
+  void (^_completionBlock)();
 }
 
 - (instancetype)init {
@@ -69,84 +90,51 @@ static inline CGFloat MDCRectHypotenuse(CGRect rect) {
     self.masksToBounds = YES;
     self.backgroundColor = [UIColor clearColor].CGColor;
     _rippleState = kMDCInkRippleNone;
-    _inkColor = [self defaultInkColor];
-    _maxRippleRadius = kMDCInkMaxRippleRadius;
-    _shouldFillBackgroundOnSpread = YES;
     _gravitatesInk = YES;
-    _ripples = [NSMutableArray array];
+    _useCustomInkCenter = NO;
+    _bounded = YES;
 
-    _backgroundFadeLayer = [CALayer layer];
-    _backgroundFadeLayer.bounds = self.bounds;
-    _backgroundFadeLayer.position = MDCRectGetCenter(self.bounds);
-    _backgroundFadeLayer.backgroundColor = _inkColor.CGColor;
-    _backgroundFadeLayer.opacity = 0;
-    [self addSublayer:_backgroundFadeLayer];
+    // The max opacity level is half of the full opacity level. Half of the opacity is for
+    // background ripple and half for the foreground ripple.
+    _maxOpacityLevel = 1.f;
+    _rippleLayer = [CAShapeLayer layer];
+    self.sublayers = nil;
+    [self addSublayer:_rippleLayer];
   }
   return self;
 }
 
 - (void)layoutSublayers {
-  [super layoutSublayers];
-
-  _backgroundFadeLayer.position = MDCRectGetCenter(self.bounds);
-  _backgroundFadeLayer.bounds = self.bounds;
+  _rippleLayer.frame = self.frame;
+  _radius = MDCInkLayerRectHypotenuse(self.bounds) / 2.f;
+  if (_maxRippleRadius > 0) {
+    _radius = _maxRippleRadius;
+  }
+  CGRect rippleRect = CGRectMake(-(_radius * 2.f - self.bounds.size.width) / 2.f,
+                                 -(_radius * 2.f - self.bounds.size.height) / 2.f,
+                                 _radius * 2.f,
+                                 _radius * 2.f);
+  CAShapeLayer *rippleMaskLayer = [CAShapeLayer layer];
+  UIBezierPath *ripplePath = [UIBezierPath bezierPathWithOvalInRect:rippleRect];
+  rippleMaskLayer.path = ripplePath.CGPath;
+  _rippleLayer.mask = rippleMaskLayer;
 }
 
 #pragma mark - Properties
 
 - (void)setInkColor:(UIColor *)inkColor {
-  if (!inkColor) {
-    inkColor = [self defaultInkColor];
-  }
-
   _inkColor = inkColor;
-
-  // Update the background colors.
-  _backgroundFadeLayer.backgroundColor = _inkColor.CGColor;
-  for (CAShapeLayer *ripple in _ripples) {
-    ripple.fillColor = _inkColor.CGColor;
-  }
 }
 
-#pragma mark - Layers
-
-- (CAShapeLayer *)rippleLayer {
-  CGRect circleBounds =
-      CGRectMake(0, 0, kMDCInkActualRippleRadius * 2, kMDCInkActualRippleRadius * 2);
-  CAShapeLayer *circle = [CAShapeLayer layer];
-  circle.bounds = circleBounds;
-  circle.position = MDCRectGetCenter(self.bounds);
-  circle.path = [UIBezierPath bezierPathWithOvalInRect:circleBounds].CGPath;
-  circle.opacity = 0;
-  circle.fillColor = _inkColor.CGColor;
-  return circle;
+- (void)setFillsBackgroundOnSpread:(BOOL)shouldFill {
+  _shouldFillBackgroundOnSpread = shouldFill;
+  if (shouldFill) {
+    CGFloat radius = MDCInkLayerRectHypotenuse([[UIScreen mainScreen] bounds]);
+    _maxRippleRadius = radius;
+  }
 }
 
 #pragma mark - Animation Functions
-
-- (CGFloat)rippleRadius {
-  CGFloat rippleRadius = MDCRectHypotenuse(self.bounds);
-  if (_maxRippleRadius > 0) {
-    return MIN(rippleRadius, _maxRippleRadius);
-  } else {
-    return rippleRadius;
-  }
-}
-
-- (NSTimeInterval)spreadDuration {
-  if (_maxRippleRadius > 0) {
-    return [self rippleRadius] * 0.003;  // 100pt = 0.3ms
-  }
-  return 1.1;
-}
-
-- (NSTimeInterval)evaporateDuration {
-  return 0.3;
-}
-
-- (NSTimeInterval)spreadNearlyDoneDuration {
-  return [self spreadDuration] / 2;
-}
 
 - (CAKeyframeAnimation *)inkSpreadAnimationWithDuration:(NSTimeInterval)duration
                                               fromScale:(CGFloat)fromScale
@@ -201,14 +189,6 @@ static inline CGFloat MDCRectHypotenuse(CGRect rect) {
   return animation;
 }
 
-#pragma mark -
-
-- (void)reset {
-  for (NSUInteger i = 0; i < [_ripples count]; i++) {
-    [self evaporateWithCompletion:nil];
-  }
-}
-
 - (void)spreadFromPoint:(CGPoint)point completion:(void (^)())completionBlock {
   _rippleState = kMDCInkRippleSpreading;
 
@@ -222,178 +202,265 @@ static inline CGFloat MDCRectHypotenuse(CGRect rect) {
   } else {
     self.mask = nil;
   }
-
-  CAShapeLayer *ripple = [self rippleLayer];
-  [self addSublayer:ripple];
-  [_ripples addObject:ripple];
-
-  // Initialize the blast start point.
-  [CATransaction begin];
-  [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-  ripple.position = point;
-  ripple.opacity = kMDCInkRippleInitialOpacity;
-  ripple.transform =
-      CATransform3DMakeScale(kMDCInkRippleInitialScale, kMDCInkRippleInitialScale, 1);
-  [CATransaction commit];
-
-  // Fade the background.
-  if ([_ripples count] < 2) {
-    [self backgroundFadeIn];
-  }
-
-  // Animate the ripple spreading from the initial size to our desired max size.
-  CGFloat scale = [self rippleRadius] / kMDCInkActualRippleRadius;
-  CGPoint layerCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-  if (_useCustomInkCenter) {
-    layerCenter = _customInkCenter;
-  }
-  CAKeyframeAnimation *rippleSpread = [self inkSpreadAnimationWithDuration:[self spreadDuration]
-                                                                 fromScale:kMDCInkRippleInitialScale
-                                                                   toScale:scale
-                                                                fromCenter:point
-                                                                  toCenter:layerCenter];
-  rippleSpread.keyPath = @"transform";
-  ripple.transform = [[rippleSpread.values lastObject] CATransform3DValue];
-
-  [CATransaction begin];
-  [CATransaction setCompletionBlock:^{
-    _dropStartTime = 0;
-    if (completionBlock) {
-      completionBlock();
-    }
-  }];
-  [ripple addAnimation:rippleSpread forKey:kMDCInkLayerAnimationNameRippleSpread];
-  [CATransaction commit];
-
+  [self startBackgroundRipple];
+  [self startForegroundRippleAtPoint:point];
   _dropStartTime = CFAbsoluteTimeGetCurrent();
 }
 
+- (void)startBackgroundRipple {
+  if (_clearLayerTimer) {
+    [_clearLayerTimer invalidate];
+  }
+  _backgroundRippleLayer = [CAShapeLayer layer];
+  _backgroundRippleLayer.fillColor = self.inkColor.CGColor;
+  _backgroundRippleLayer.anchorPoint = CGPointMake(0.5f, 0.5f);
+  _backgroundRippleLayer.masksToBounds = YES;
+  [_rippleLayer addSublayer:_backgroundRippleLayer];
+
+  UIBezierPath *ripplePath =
+      [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0,
+                                                        0,
+                                                        _radius * 2.f,
+                                                        _radius * 2.f)];
+  _backgroundRippleLayer.path = ripplePath.CGPath;
+  CGPoint origin = self.frame.origin;
+  _backgroundRippleLayer.frame =
+      CGRectMake(origin.x - (_radius * 2.f - self.bounds.size.width) / 2.f,
+                 origin.y - (_radius * 2.f - self.bounds.size.height) / 2.f,
+                 _radius * 2.f,
+                 _radius * 2.f);
+  _backgroundOpacityAnim = [self opacityAnimWithValues:@[ @0, @(_maxOpacityLevel) ]
+                                                 times:@[ @0, @1.f ]];
+  _backgroundOpacityAnim.duration = kMDCInkLayerBackgroundOpacityEnterDuration;
+  [_backgroundRippleLayer addAnimation:_backgroundOpacityAnim
+                                forKey:kMDCInkLayerBackgroundOpacityAnim];
+}
+
+- (void)endBackgroundRipple {
+  NSNumber *opacityVal =
+      [_backgroundRippleLayer.presentationLayer valueForKeyPath:kMDCInkLayerOpacity];
+  if (!opacityVal) {
+    opacityVal = [NSNumber numberWithFloat:0];
+  }
+
+  // The end (tap release) animation should continue at the opacity level of the start animation.
+  CGFloat enterDuration = (1 - opacityVal.floatValue / _maxOpacityLevel) *
+                          kMDCInkLayerFastEnterDuration;
+  CGFloat duration = kMDCInkLayerBaseOpacityExitDuration + enterDuration;
+  _backgroundOpacityAnim =
+      [self opacityAnimWithValues:@[ opacityVal, @(_maxOpacityLevel), @0 ]
+                            times:@[ @0, @(enterDuration / duration), @1.f ]];
+  _backgroundOpacityAnim.duration = duration;
+  [_backgroundRippleLayer addAnimation:_backgroundOpacityAnim
+                                forKey:kMDCInkLayerBackgroundOpacityAnim];
+}
+
+- (void)startForegroundRippleAtPoint:(CGPoint)point {
+  _foregroundRippleLayer = [CAShapeLayer layer];
+  _foregroundRippleLayer.fillColor = self.inkColor.CGColor;
+  _foregroundRippleLayer.anchorPoint = CGPointMake(0.5f, 0.5f);
+  [_rippleLayer addSublayer:_foregroundRippleLayer];
+
+  if ([self isBounded]) {
+    // Ripples have a random size element so the ripple effect looks more natural when the
+    // user taps multiple times in a row.
+    CGFloat random = (CGFloat)rand() / RAND_MAX;
+    _radius = (CGFloat)(0.9f + random * 0.1f) * kMDCInkLayerRadiusGrowthMultiplier;
+  }
+  CGRect frame = CGRectMake(0, 0, _radius * 2.f, _radius * 2.f);
+  _foregroundRippleLayer.frame = frame;
+  UIBezierPath *ripplePath =
+      [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0,
+                                                        0,
+                                                        _radius * 2.f,
+                                                        _radius * 2.f)];
+  _foregroundRippleLayer.path = ripplePath.CGPath;
+  _foregroundOpacityAnim = [self opacityAnimWithValues:@[ @1, @(_maxOpacityLevel) ]
+                                                 times:@[ @0, @1.f ]];
+  [_foregroundRippleLayer addAnimation:_foregroundOpacityAnim
+                                forKey:kMDCInkLayerForegroundOpacityAnim];
+
+  _foregroundRippleLayerComplete = NO;
+  CGFloat duration = (CGFloat)sqrt(_radius / kMDCInkLayerWaveTouchDownAcceleration) +
+                     kMDCInkLayerPositionConstantDuration;
+  UIBezierPath *movePath = [UIBezierPath bezierPath];
+
+  // Bounded ripples move slightly towards the center of the tap target. Unbounded ripples
+  // move to the center of the tap target.
+  CGPoint endPoint = MDCInkLayerRectGetCenter(self.frame);
+  CGPoint centerOffsetPoint = MDCInkLayerInterpolatePoint(point, endPoint, 0.3f);
+  if (self.useCustomInkCenter) {
+    endPoint = self.customInkCenter;
+  }
+  [movePath moveToPoint:point];
+  if (_gravitatesInk) {
+    if ([self isBounded]) {
+      [movePath addLineToPoint:centerOffsetPoint];
+    } else {
+      [movePath addLineToPoint:endPoint];
+    }
+  } else {
+    [movePath addLineToPoint:point];
+  }
+
+  CAMediaTimingFunction *timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  _foregroundPositionAnim = [self positionAnimWithPath:movePath.CGPath
+                                              duration:duration
+                                        timingFunction:timingFunction];
+  [_foregroundRippleLayer addAnimation:_foregroundPositionAnim
+                                forKey:kMDCInkLayerForegroundPositionAnim];
+
+  // Bounded ripples have different timing and durations than unbounded ripples.
+  if ([self isBounded]) {
+    _foregroundScaleAnim = [self scaleAnimWithValues:@[ @0 ] times:@[ @0 ]];
+    [_foregroundRippleLayer addAnimation:_foregroundScaleAnim
+                                  forKey:kMDCInkLayerForegroundScaleAnim];
+  } else {
+    _foregroundScaleAnim = [self scaleAnimWithValues:@[ @0, @1.f ] times:@[ @0, @1.f ]];
+    _foregroundScaleAnim.duration = duration;
+    [_foregroundRippleLayer addAnimation:_foregroundScaleAnim
+                                  forKey:kMDCInkLayerForegroundScaleAnim];
+  }
+}
+
+- (void)endForegroundRipple {
+  _foregroundOpacityAnim = [self opacityAnimWithValues:@[ @(_maxOpacityLevel), @0 ]
+                                                 times:@[ @0, @1.f ]];
+  _foregroundOpacityAnim.duration = kMDCInkLayerBoundedOpacityExitDuration;
+  [_foregroundRippleLayer addAnimation:_foregroundOpacityAnim
+                                forKey:kMDCInkLayerForegroundOpacityAnim];
+
+  if (!_foregroundRippleLayerComplete) {
+    UIBezierPath *movePath = [UIBezierPath bezierPath];
+
+    // Bounded ripples move slightly towards the center of the tap target. Unbounded ripples
+    // move to the center of the tap target.
+    CGPoint startPoint = [[_foregroundRippleLayer.presentationLayer
+        valueForKeyPath:kMDCInkLayerPosition] CGPointValue];
+    CGPoint endPoint = MDCInkLayerRectGetCenter(self.frame);
+    CGPoint centerOffsetPoint = MDCInkLayerInterpolatePoint(startPoint, endPoint, 0.3f);
+    if (self.useCustomInkCenter) {
+      endPoint = self.customInkCenter;
+    }
+    if (_gravitatesInk) {
+      [movePath moveToPoint:startPoint];
+      if ([self isBounded]) {
+        [movePath addLineToPoint:centerOffsetPoint];
+      } else {
+        [movePath addLineToPoint:endPoint];
+      }
+    } else {
+      [movePath moveToPoint:startPoint];
+      [movePath addLineToPoint:startPoint];
+    }
+    _foregroundPositionAnim = [self positionAnimWithPath:movePath.CGPath
+                                                duration:kMDCInkLayerBoundedPositionExitDuration
+                                          timingFunction:[self logDecelerateEasing]];
+    [_foregroundRippleLayer addAnimation:_foregroundPositionAnim
+                                  forKey:kMDCInkLayerForegroundPositionAnim];
+  }
+
+  _foregroundScaleAnim.keyTimes = @[ @0, @1.f ];
+  _foregroundScaleAnim.timingFunction = [self logDecelerateEasing];
+
+  if ([self isBounded]) {
+    _foregroundOpacityAnim.duration = kMDCInkLayerBoundedOpacityExitDuration;
+    _foregroundScaleAnim.values = @[ @0, @1.f ];
+    _foregroundScaleAnim.duration = kMDCInkLayerBoundedRadiusExitDuration;
+    _foregroundPositionAnim.duration = kMDCInkLayerBoundedOriginExitDuration;
+  } else {
+    NSNumber *opacityVal =
+        [_foregroundRippleLayer.presentationLayer valueForKeyPath:kMDCInkLayerOpacity];
+    if (!opacityVal) {
+      opacityVal = [NSNumber numberWithFloat:0];
+    }
+    CGFloat normOpacityVal = opacityVal.floatValue / _maxOpacityLevel;
+    CGFloat opacityDuration = normOpacityVal / 3.f;
+    _foregroundOpacityAnim.duration = opacityDuration;
+    NSNumber *scaleVal =
+        [_foregroundRippleLayer.presentationLayer valueForKeyPath:kMDCInkLayerScale];
+    if (!scaleVal) {
+      scaleVal = [NSNumber numberWithFloat:0];
+    }
+    CGFloat unboundedDuration = (CGFloat)sqrt(((1.f - scaleVal.floatValue) * _radius) /
+                                              (kMDCInkLayerWaveTouchDownAcceleration + kMDCInkLayerWaveTouchUpAcceleration)) +
+                                kMDCInkLayerUnboundedPositionExitAdjustedDuration;
+    _foregroundPositionAnim.duration = unboundedDuration;
+    _foregroundScaleAnim.duration = unboundedDuration;
+    _foregroundScaleAnim.values = @[ scaleVal, @1.f ];
+  }
+  [_foregroundRippleLayer addAnimation:_foregroundScaleAnim
+                                forKey:kMDCInkLayerForegroundScaleAnim];
+  _clearLayerTimer =
+      [NSTimer scheduledTimerWithTimeInterval:kMDCInkLayerBoundedRadiusExitDuration
+                                       target:self
+                                     selector:@selector(reset)
+                                     userInfo:nil
+                                      repeats:NO];
+}
+
+- (void)reset {
+  _rippleLayer.sublayers = nil;
+}
+
+- (CAKeyframeAnimation *)opacityAnimWithValues:(NSArray *)values times:(NSArray *)times {
+  CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kMDCInkLayerOpacity];
+  anim.fillMode = kCAFillModeForwards;
+  anim.keyTimes = times;
+  anim.removedOnCompletion = NO;
+  anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  anim.values = values;
+  return anim;
+}
+
+- (CAKeyframeAnimation *)positionAnimWithPath:(CGPathRef)path
+                                     duration:(CGFloat)duration
+                               timingFunction:(CAMediaTimingFunction *)timingFunction {
+  CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kMDCInkLayerPosition];
+  anim.delegate = self;
+  anim.duration = duration;
+  anim.fillMode = kCAFillModeForwards;
+  anim.path = path;
+  anim.removedOnCompletion = NO;
+  anim.timingFunction = timingFunction;
+  return anim;
+}
+
+- (CAKeyframeAnimation *)scaleAnimWithValues:(NSArray *)values times:(NSArray *)times {
+  CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kMDCInkLayerScale];
+  anim.fillMode = kCAFillModeForwards;
+  anim.keyTimes = times;
+  anim.removedOnCompletion = NO;
+  anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  anim.values = values;
+  return anim;
+}
+
 - (void)evaporateWithCompletion:(void (^)())completionBlock {
-  // Pop the first ripple out of the list and evaporate that.
-  CAShapeLayer *ripple = [_ripples firstObject];
-  if (!ripple)
-    return;
-  [_ripples removeObject:ripple];
-
-  // Remove background if this is the last ripple.
-  if ([_ripples count] < 1) {
-    [self backgroundFadeOut];
-  }
-
-  // Spread the ink outwards while fading it out.
-  BOOL completedInkSpread =
-      _shouldFillBackgroundOnSpread &&
-      (CFAbsoluteTimeGetCurrent() - _dropStartTime) > [self spreadNearlyDoneDuration];
-
-  CGFloat doubleScale = 2 * [self rippleRadius] / kMDCInkActualRippleRadius;
-  CATransform3D doubleScaleTransform = CATransform3DMakeScale(doubleScale, doubleScale, 1);
-  CABasicAnimation *rippleExpand = [CABasicAnimation animationWithKeyPath:@"transform"];
-  rippleExpand.fromValue = nil;
-  rippleExpand.toValue = [NSValue valueWithCATransform3D:doubleScaleTransform];
-  if (completedInkSpread) {
-    ripple.transform = doubleScaleTransform;
-  }
-
-  CABasicAnimation *rippleFadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
-  rippleFadeOut.fromValue = nil;
-  rippleFadeOut.toValue = @(0);
-  ripple.opacity = 0;
-
-  [CATransaction begin];
-  [CATransaction setAnimationDuration:[self evaporateDuration]];
-  [CATransaction setAnimationTimingFunction:
-                     [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
-  [CATransaction setCompletionBlock:^{
-    [ripple removeFromSuperlayer];
-    if ([_ripples count] < 1) {
-      _rippleState = kMDCInkRippleNone;
-    }
-    if (completionBlock) {
-      completionBlock();
-    }
-  }];
-  [ripple addAnimation:rippleFadeOut forKey:kMDCInkLayerAnimationNameRippleFadeOut];
-  if (completedInkSpread) {
-    [ripple addAnimation:rippleExpand forKey:kMDCInkLayerAnimationNameRippleSpreadFurther];
-  }
-  [CATransaction commit];
+  [self endBackgroundRipple];
+  [self endForegroundRipple];
+  _completionBlock = completionBlock;
 }
 
 - (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock {
-  CAShapeLayer *ripple = [_ripples firstObject];
-  if (!ripple)
-    return;
-  [_ripples removeObject:ripple];
+  [self endBackgroundRipple];
+  [self endForegroundRipple];
+  _completionBlock = completionBlock;
+}
 
-  if ([_ripples count] < 1) {
-    [self backgroundFadeOut];
-  }
-
-  CGPoint translation = CGPointMake(point.x - ripple.position.x, point.y - ripple.position.y);
-  CATransform3D rippleTransform = CATransform3DIdentity;
-  rippleTransform = CATransform3DTranslate(rippleTransform, translation.x, translation.y, 1);
-  rippleTransform = CATransform3DScale(rippleTransform, 0.2f, 0.2f, 1);
-
-  CABasicAnimation *rippleCondense = [CABasicAnimation animationWithKeyPath:@"transform"];
-  rippleCondense.fromValue = nil;
-  rippleCondense.toValue = [NSValue valueWithCATransform3D:rippleTransform];
-  ripple.transform = rippleTransform;
-
-  CABasicAnimation *rippleFadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
-  rippleFadeOut.fromValue = nil;  // @(kMDCInkRippleInitialOpacity);
-  rippleFadeOut.toValue = @(0);
-  ripple.opacity = 0;
-
-  [CATransaction begin];
-  [CATransaction setAnimationDuration:[self evaporateDuration]];
-  [CATransaction setAnimationTimingFunction:
-                     [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
-  [CATransaction setCompletionBlock:^{
-    [ripple removeFromSuperlayer];
-    if ([_ripples count] < 1) {
-      _rippleState = kMDCInkRippleNone;
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+  if (flag) {
+    _foregroundRippleLayerComplete = YES;
+    if (_completionBlock) {
+      _completionBlock();
     }
-    if (completionBlock) {
-      completionBlock();
-    }
-  }];
-  [ripple addAnimation:rippleCondense forKey:kMDCInkLayerAnimationNameRippleCondense];
-  [ripple addAnimation:rippleFadeOut forKey:kMDCInkLayerAnimationNameRippleFadeOut];
-  [CATransaction commit];
-}
-
-#pragma mark - Background Fading
-
-- (void)backgroundFadeIn {
-  if (_shouldFillBackgroundOnSpread) {
-    CABasicAnimation *backgroundFadeIn = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    backgroundFadeIn.fromValue = @(0);
-    backgroundFadeIn.toValue = @(kMDCInkRippleInitialOpacity);
-    backgroundFadeIn.duration = [self spreadDuration];
-    backgroundFadeIn.timingFunction =
-        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    _backgroundFadeLayer.opacity = kMDCInkRippleInitialOpacity;
-    [_backgroundFadeLayer addAnimation:backgroundFadeIn
-                                forKey:kMDCInkLayerAnimationNameBackgroundFade];
   }
 }
 
-- (void)backgroundFadeOut {
-  if (_shouldFillBackgroundOnSpread) {
-    CABasicAnimation *backgroundFadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    backgroundFadeOut.fromValue = nil;
-    backgroundFadeOut.toValue = @(0);
-    backgroundFadeOut.duration = [self evaporateDuration];
-    backgroundFadeOut.timingFunction =
-        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    _backgroundFadeLayer.opacity = 0;
-    [_backgroundFadeLayer addAnimation:backgroundFadeOut
-                                forKey:kMDCInkLayerAnimationNameBackgroundFade];
-  }
-}
-
-- (UIColor *)defaultInkColor {
-  return [[UIColor alloc] initWithWhite:1 alpha:0.25];
+- (CAMediaTimingFunction *)logDecelerateEasing {
+  // This bezier curve is an approximation of a log curve used in other implementations of ink.
+  return [[CAMediaTimingFunction alloc] initWithControlPoints:0.157f:0.72f:0.386f:0.987f];
 }
 
 @end

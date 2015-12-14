@@ -27,8 +27,6 @@
 
 /**
  Set the distance that causes the recognizer to cancel.
-
- Defaults to 20pt.
  */
 @property(nonatomic, assign) CGFloat dragCancelDistance;
 
