@@ -5,24 +5,20 @@
       location = "group:material-components-ios.podspec"
       assignedFileDataType = "public.ruby-script">
    </FileRef>
-   <Group
-      location = "container:"
-      name = "Xcode 7.1 playgrounds">
-      <FileRef
-         location = "group:ScrollViewDelegateMultiplexer/examples/SVDMultiplexer.playground">
-      </FileRef>
-   </Group>
    <FileRef
-      location = "group:ShadowLayer/examples/MovableShadowedView/MovableShadowedView.xcodeproj">
+      location = "group:components/Ink/examples/InkExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:PageControl/examples/PageControlExample.xcodeproj">
+      location = "group:components/ShadowLayer/examples/MovableShadowedView/MovableShadowedView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/PageControl/examples/PageControlExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:components/ScrollViewDelegateMultiplexer/examples/ScrollViewDelegateMultiplexerExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:SpritedAnimationView/examples/SpritedAnimationViewExample.xcodeproj">
+      location = "group:components/SpritedAnimationView/examples/SpritedAnimationViewExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Typography/examples/TypographyExample/TypographyExample.xcodeproj">
