@@ -16,11 +16,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface PageControlTests : XCTestCase
+@interface ___FILEBASENAMEASIDENTIFIER___ : XCTestCase
 
 @end
 
-@implementation PageControlTests
+@implementation ___FILEBASENAMEASIDENTIFIER___
 
 - (void)setUp {
   [super setUp];
