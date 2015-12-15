@@ -63,9 +63,9 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'ShadowLayer' do |ss|
-    ss.public_header_files = 'ShadowLayer/src/*.h'
-    ss.source_files = 'ShadowLayer/src/*.{h,m}'
-    ss.header_mappings_dir = 'ShadowLayer/src/*'
+    ss.public_header_files = 'components/ShadowLayer/src/*.h'
+    ss.source_files = 'components/ShadowLayer/src/*.{h,m}'
+    ss.header_mappings_dir = 'components/ShadowLayer/src/*'
   end
 
   s.subspec 'SpritedAnimationView' do |ss|
@@ -83,6 +83,25 @@ Pod::Spec.new do |s|
     ss.resource_bundles = {
       'MaterialTypography' => ['Typography/src/MaterialTypography.bundle/*']
     }
+  end
+
+  s.subspec 'private' do |pss|
+
+    pss.subspec 'Color' do |ss|
+      ss.public_header_files = 'components/private/Color/src/*.h'
+      ss.source_files = 'components/private/Color/src/*.{h,m}'
+      ss.header_mappings_dir = 'components/private/Color/src/*'
+    end
+
+    pss.subspec 'ThumbTrack' do |ss|
+      ss.public_header_files = 'components/private/ThumbTrack/src/*.h'
+      ss.source_files = 'components/private/ThumbTrack/src/*.{h,m}'
+      ss.header_mappings_dir = 'components/private/ThumbTrack/src/*'
+      ss.dependency 'material-components-ios/ShadowElevations'
+      ss.dependency 'material-components-ios/ShadowLayer'
+      ss.dependency 'material-components-ios/private/Color'
+    end
+
   end
 
 end
