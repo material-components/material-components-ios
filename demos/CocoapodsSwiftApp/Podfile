@@ -1,0 +1,3 @@
+pod 'material-components-ios', :path => '../../'
+
+use_frameworks!
