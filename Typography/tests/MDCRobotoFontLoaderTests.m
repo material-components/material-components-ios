@@ -39,6 +39,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 @property(nonatomic, strong, null_resettable) NSBundle *baseBundle;
 
 - (instancetype)initInternal;
+@property(nonatomic, assign) BOOL disableSanityChecks;
 
 @end
 
@@ -46,7 +47,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRobotoRegularWithSize {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
@@ -59,7 +60,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRobotoMediumWithSize {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
@@ -72,7 +73,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRobotoLightWithSize {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
@@ -85,7 +86,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRobotoBoldWithSize {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
@@ -98,7 +99,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRobotoItalicWithSize {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
@@ -111,7 +112,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRobotoMediumItalicWithSize {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
@@ -124,7 +125,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRobotoLightItalicWithSize {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
@@ -137,7 +138,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRobotoBoldItalicWithSize {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [MDCRobotoFontLoader sharedInstance];
 
   // When
@@ -150,8 +151,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testLightFallbackSystemFonts {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  fontLoader.disableSanityChecks = YES;
   fontLoader.lightFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -163,8 +165,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testFallbackSystemFonts {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  fontLoader.disableSanityChecks = YES;
   fontLoader.regularFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -176,8 +179,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testMediumFallbackSystemFonts {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  fontLoader.disableSanityChecks = YES;
   fontLoader.mediumFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -189,8 +193,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testBoldFallbackSystemFonts {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  fontLoader.disableSanityChecks = YES;
   fontLoader.boldFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -202,8 +207,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testLightItalicFallbackSystemFonts {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  fontLoader.disableSanityChecks = YES;
   fontLoader.lightItalicFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -215,8 +221,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testItalicFallbackSystemFonts {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  fontLoader.disableSanityChecks = YES;
   fontLoader.italicFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -228,8 +235,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testMediumItalicFallbackSystemFonts {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  fontLoader.disableSanityChecks = YES;
   fontLoader.mediumItalicFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -241,8 +249,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testBoldItalicFallbackSystemFonts {
   // Given
-  CGFloat size = arc4random_uniform(1000) / (arc4random_uniform(10) + 1);
+  CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  fontLoader.disableSanityChecks = YES;
   fontLoader.boldItalicFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -298,6 +307,12 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertNotNil(fontLoader.baseBundle);
+}
+
+#pragma mark private
+
+- (CGFloat)randomNumber {
+  return arc4random_uniform(1000) / (CGFloat)(arc4random_uniform(9) + 1);
 }
 
 @end
