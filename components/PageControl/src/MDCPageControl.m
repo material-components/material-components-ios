@@ -232,6 +232,16 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   CGFloat scrolledPercentage = [self scrolledPercentage:scrollView];
+
+  // Quit early if animated and on last page to prevent undesired scrolling. This
+  // will typically happen during rotation while on last page.
+  if (!scrollView.isTracking &&
+      !scrollView.isDecelerating &&
+      !scrollView.isDragging &&
+      scrolledPercentage == 1) {
+    return;
+  }
+
   if (scrolledPercentage >= 0 && scrolledPercentage <= 1) {
     // Update active indicator position.
     CGFloat transformX = scrolledPercentage * _trackLength;

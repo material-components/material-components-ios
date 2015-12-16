@@ -39,6 +39,7 @@
 
   // Scroll view configuration
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+  _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _scrollView.delegate = self;
   _scrollView.pagingEnabled = YES;
   _scrollView.contentSize = CGSizeMake(boundsWidth * pageColors.count, boundsHeight);
@@ -71,6 +72,8 @@
   [_pageControl addTarget:self
                    action:@selector(didChangePage:)
          forControlEvents:UIControlEventValueChanged];
+  _pageControl.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_pageControl];
 }
 
