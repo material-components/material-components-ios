@@ -21,6 +21,9 @@
       location = "group:components/SpritedAnimationView/examples/SpritedAnimationViewExample.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:components/Slider/Slider.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Typography/examples/TypographyExample/TypographyExample.xcodeproj">
    </FileRef>
 </Workspace>

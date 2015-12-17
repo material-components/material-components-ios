@@ -52,6 +52,18 @@ static inline CGFloat CGHypot(CGFloat x, CGFloat y) {
 #endif
 }
 
+static inline bool CGFloatEqual(CGFloat a, CGFloat b) {
+  const CGFloat constantK = 3;
+#if CGFLOAT_IS_DOUBLE
+  const CGFloat epsilon = DBL_EPSILON;
+  const CGFloat min = DBL_MIN;
+#else
+  const CGFloat epsilon = FLT_EPSILON;
+  const CGFloat min = FLT_MIN;
+#endif
+  return (CGFabs(a - b) < constantK * epsilon * CGFabs(a + b) || CGFabs(a - b) < min);
+}
+
 /**
  Returns the distance between two points.
 
@@ -213,19 +225,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)setMinimumValue:(CGFloat)minimumValue {
-  _minimumValue = minimumValue;
+  _minimumValue = MIN(_maximumValue, minimumValue);
   CGFloat previousValue = _value;
-  if (_value < minimumValue) {
-    _value = minimumValue;
+  if (_value < _minimumValue) {
+    _value = _minimumValue;
   }
   [self updateThumbTrackAnimated:NO previousValue:previousValue completion:NULL];
 }
 
 - (void)setMaximumValue:(CGFloat)maximumValue {
-  _maximumValue = maximumValue;
+  _maximumValue = MAX(_minimumValue, maximumValue);
   CGFloat previousValue = _value;
-  if (_value > maximumValue) {
-    _value = maximumValue;
+  if (_value > _maximumValue) {
+    _value = _maximumValue;
   }
   [self updateThumbTrackAnimated:NO previousValue:previousValue completion:NULL];
 }
@@ -249,6 +261,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       completion:(void (^)())completion {
   CGFloat previousValue = _value;
   CGFloat newValue = MAX(_minimumValue, MIN(value, _maximumValue));
+  newValue = [self closestValueToTargetValue:newValue];
   if (newValue != previousValue &&
       [_delegate respondsToSelector:@selector(thumbTrack:willJumpToValue:)]) {
     [self.delegate thumbTrack:self willJumpToValue:newValue];
@@ -259,6 +272,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _lastDispatchedValue = _value;
   }
   [self updateThumbTrackAnimated:animated previousValue:previousValue completion:completion];
+}
+
+- (void)setNumDiscreteValues:(NSUInteger)numDiscreteValues {
+  _numDiscreteValues = numDiscreteValues;
+  [self setValue:_value];
 }
 
 - (void)setThumbRadius:(CGFloat)thumbRadius {
@@ -292,7 +310,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (CGPoint)thumbPositionForValue:(CGFloat)value {
   CGFloat relValue = [self relativeValueForValue:value];
-  return CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
+  CGPoint position = CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
+  return position;
 }
 
 - (CGFloat)valueForThumbPosition:(CGPoint)position {
@@ -448,7 +467,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)updateViewsAnimated:(BOOL)animated withDuration:(NSTimeInterval)duration {
   // Move thumb position.
-  _thumbView.center = [self thumbPositionForValue:_value];
+  CGPoint point = [self thumbPositionForValue:_value];
+  _thumbView.center = point;
   _trackView.frame =
       CGRectMake(0, self.center.y - (_trackHeight / 2), CGRectGetWidth(self.bounds), _trackHeight);
 
@@ -484,12 +504,18 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (CGFloat)relativeValueForValue:(CGFloat)value {
   value = MAX(_minimumValue, MIN(value, _maximumValue));
+  if (CGFloatEqual(_minimumValue, _maximumValue)) {
+    return _minimumValue;
+  }
   return (value - _minimumValue) / CGFabs(_minimumValue - _maximumValue);
 }
 
 - (CGFloat)closestValueToTargetValue:(CGFloat)targetValue {
   if (_numDiscreteValues < 2) {
     return targetValue;
+  }
+  if (CGFloatEqual(_minimumValue, _maximumValue)) {
+    return _minimumValue;
   }
 
   CGFloat scaledTargetValue = (targetValue - _minimumValue) / (_maximumValue - _minimumValue);
@@ -576,12 +602,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (void)setValueFromThumbPosition:(CGPoint)position isTap:(BOOL)isTap {
   // Having two discrete values is a special case (e.g. the switch) in which any tap just flips the
   // value between the two discrete values, irrespective of the tap location.
-  CGFloat value;
-  if (isTap && _numDiscreteValues == 2) {
-    value = _value < (_minimumValue + _maximumValue) / 2 ? _maximumValue : _minimumValue;
-  } else {
-    value = [self closestValueToTargetValue:[self valueForThumbPosition:position]];
-  }
+  CGFloat value = [self valueForThumbPosition:position];
 
   __weak MDCThumbTrack *weakSelf = self;
   if ([_delegate respondsToSelector:@selector(thumbTrack:willAnimateToValue:)]) {
