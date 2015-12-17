@@ -17,100 +17,101 @@
 #import <UIKit/UIKit.h>
 
 /**
- * MDCSlider description here.
- *
- * @ingroup MaterialSlider
- */
-/**
- * A material slider.
- *
- * Differences between UISlider and MDCSlider:
- *   does not have api to
- *     set right and left icons
- *     set the thumb image
- *     set the right and left track images (if you wanted a custom track)
- *     set the right (background track) color
- *   same features
- *     set color for thumb via @c thumbColor
- *     set color of track via @c trackColor
- *   new features
- *     making the slider a snap to discrete values via @c numberOfDiscreteValues.
- *
- * @see https://www.google.com/design/spec/components/sliders.html for full details.
- *
- * @ingroup Slider
+ A material slider.
+
+ @see https://www.google.com/design/spec/components/sliders.html for full details.
+
+ Differences between UISlider and MDCSlider:
+   Does not have api to
+     set right and left icons
+     set the thumb image
+     set the right and left track images (if you wanted a custom track)
+     set the right (background track) color
+   Same features
+     set color for thumb via @c thumbColor
+     set color of track via @c trackColor
+   New features
+     making the slider a snap to discrete values via @c numberOfDiscreteValues.
+
+ @ingroup Slider
  */
 @interface MDCSlider : UIControl <NSCoding>
 
-/** The color of the cursor (thumb) that indicates the slider's value. Default color is blue. */
-@property(nonatomic, strong, null_resettable) UIColor *thumbColor;
+/**
+ The color of the cursor (thumb) and filled in portion of the track (left side).
 
-/** The color of the track that the thumb moves along.  Default color is blue. */
-@property(nonatomic, strong, null_resettable) UIColor *trackColor;
-
-/** The color of the ink splash when you drag the thumb.
- *
- * The ink splash is anchored to the thumb. Default color is light blue with 50% alpha.
+ Default color is blue.
  */
-@property(nonatomic, strong, null_resettable) UIColor *inkColor;
+@property(nonatomic, strong, null_resettable) UIColor *color;
+
+/*
+ The color of the unfilled track that the cursor moves along (right side).
+
+ Default color is gray.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor;
 
 /**
- * The number of discrete values that the slider can take.
- *
- * If greater than or equal to 2, the thumb will snap to the nearest discrete value when the user lifts their finger or taps. The discrete values are evenly spaced between the @c minimumValue and @c maximumValue. If 0 or 1, the slider's value will not change when the user releases the thumb.
- *
- * The default value is zero.
+ The number of discrete values that the slider can take.
+
+ If greater than or equal to 2, the thumb will snap to the nearest discrete value when the user
+ lifts their finger or taps. The discrete values are evenly spaced between the @c minimumValue and
+ @c maximumValue. If 0 or 1, the slider's value will not change when the user releases the thumb.
+
+ The default value is zero.
  */
 @property(nonatomic, assign) NSUInteger numberOfDiscreteValues;
 
 /**
- * The value of the slider.
- *
- * To animate from the current value to the new value, instead use @see setValue:animated:. The value will be clamped between @c minimumValue and @c maximumValue. Setting the value will not send an action message.
- *
- * The default value of this property is 0.
+ The value of the slider.
+
+ To animate from the current value to the new value, instead use @see setValue:animated:. The value
+ will be clamped between @c minimumValue and @c maximumValue. Setting the value will not send an
+ action message.
+
+ The default value of this property is 0.
  */
 @property(nonatomic, assign) CGFloat value;
 
 /**
- * Set the value of the slider, allowing you to animate the change visually.
- *
- * If animated is YES, the thumb is animated into its new position. Setting the value does not
- * result in an action message being sent.
- *
- * @param value The value to set the slider to.
- * @param animated If YES, the thumb will animate to its new position.
+ Set the value of the slider, allowing you to animate the change visually.
+
+ If animated is YES, the thumb is animated into its new position. Setting the value does not
+ result in an action message being sent.
+
+ @param value The value to set the slider to.
+ @param animated If YES, the thumb will animate to its new position.
  */
 - (void)setValue:(CGFloat)value animated:(BOOL)animated;
 
 /**
- * The minimum value of the slider.
- *
- * If you change the value of this property and the current value of the receiver is below the new
- * minimum, the current value will be adjusted to match the new minimum value.
- *
- * The default value of this property is 0.0.
+ The minimum value of the slider.
+
+ If you change the value of this property and the current value of the receiver is below the new
+ minimum, the current value will be adjusted to match the new minimum value.
+
+ The default value of this property is 0.0.
  */
 @property(nonatomic, assign) CGFloat minimumValue;
 
 /**
- * The maximum value of the slider.
- *
- * If you change the value of this property and the current value of the receiver is above the new
- * maximum, the current value will be adjusted to match the new maximum value.
- *
- * The default value of this property is 1.0.
+ The maximum value of the slider.
+
+ If you change the value of this property and the current value of the receiver is above the new
+ maximum, the current value will be adjusted to match the new maximum value.
+
+ The default value of this property is 1.0.
  */
 @property(nonatomic, assign) CGFloat maximumValue;
 
 /**
- * Indicates  whether changes in the slider's value generate continuous update events.
- *
- * If YES, the slider sends update events continuously to the associated target's action method.
- * If NO, the slider only sends an action event when the user releases the slider's thumb control to
- * set the final value.
- *
- * The default value of this property is YES.
+ Indicates  whether changes in the slider's value generate continuous update events.
+
+ If YES, the slider sends update events continuously to the associated target's action method.
+ If NO, the slider only sends an action event when the user releases the slider's thumb control to
+ set the final value.
+
+ The default value of this property is YES.
  */
 @property(nonatomic, assign, getter=isContinuous) BOOL continuous;
 

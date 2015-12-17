@@ -36,18 +36,15 @@ static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    //    _maximumValue = 1.0f;
-    _inkColor = [[MDCSlider defaultBlue] colorWithAlphaComponent:0.5f];
-
     CGRect trackFrame = CGRectInset(frame, 8.f, 0.f);
 
-    _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:trackFrame onTintColor:[MDCSlider defaultBlue]];
+    _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:trackFrame onTintColor:[[self class] defaultColor]];
     _thumbTrack.delegate = self;
     _thumbTrack.disabledTrackHasThumbGaps = YES;
     _thumbTrack.trackEndsAreInset = YES;
     _thumbTrack.thumbRadius = kSliderThumbRadius;
     _thumbTrack.thumbMaxRippleRadius = kSliderThumbMaxRippleRadius;
-    _thumbTrack.trackOffColor = [MDCSlider defaultTrackOffColor];
+    _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
     [_thumbTrack addTarget:self
                     action:@selector(thumbTrackValueChanged:)
           forControlEvents:UIControlEventValueChanged];
@@ -68,26 +65,22 @@ static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
   return self;
 }
 
-- (void)setInkColor:(UIColor *)inkColor {
-  _inkColor = inkColor ?: [[MDCSlider defaultBlue] colorWithAlphaComponent:0.5f];
-}
-
 #pragma mark - ThumbTrack passthrough methods
 
-- (void)setTrackColor:(UIColor *)trackColor {
-  _thumbTrack.trackOffColor = trackColor ?: [MDCSlider defaultBlue];
+-(void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor {
+  _thumbTrack.trackOffColor = trackBackgroundColor ?: [[self class] defaultTrackOffColor];
   ;
 }
 
-- (UIColor *)trackColor {
+- (UIColor *)trackBackgroundColor {
   return _thumbTrack.trackOffColor;
 }
 
-- (void)setThumbColor:(UIColor *)thumbColor {
-  _thumbTrack.primaryColor = thumbColor ?: [MDCSlider defaultBlue];
+- (void)setColor:(UIColor *)color {
+  _thumbTrack.primaryColor = color ?: [[self class] defaultColor];
 }
 
-- (UIColor *)thumbColor {
+- (UIColor *)color {
   return _thumbTrack.primaryColor;
 }
 
@@ -221,7 +214,7 @@ static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
   [self sendActionsForControlEvents:UIControlEventTouchCancel];
 }
 
-+ (UIColor *)defaultBlue {
++ (UIColor *)defaultColor {
   return [UIColor blueColor];
 }
 

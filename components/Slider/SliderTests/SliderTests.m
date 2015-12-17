@@ -249,7 +249,7 @@ static const CGFloat kEpsilonAccuracy = 0.0001f;
   MDCSlider *slider = [[MDCSlider alloc] init];
 
   // When
-  UIColor *actualColor = slider.thumbColor;
+  UIColor *actualColor = slider.color;
 
   // Then
   UIColor *expectedColor = [self blueColor];
@@ -261,10 +261,10 @@ static const CGFloat kEpsilonAccuracy = 0.0001f;
   MDCSlider *slider = [[MDCSlider alloc] init];
 
   // When
-  slider.thumbColor = nil;
+  slider.color = nil;
 
   // Then
-  UIColor *actualColor = slider.thumbColor;
+  UIColor *actualColor = slider.color;
   UIColor *expectedColor = [self blueColor];
   XCTAssertEqualObjects(actualColor, expectedColor);
 }
@@ -274,7 +274,7 @@ static const CGFloat kEpsilonAccuracy = 0.0001f;
   MDCSlider *slider = [[MDCSlider alloc] init];
 
   // When
-  UIColor *actualColor = slider.trackColor;
+  UIColor *actualColor = slider.trackBackgroundColor;
 
   // Then
   UIColor *expectedColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
@@ -286,36 +286,11 @@ static const CGFloat kEpsilonAccuracy = 0.0001f;
   MDCSlider *slider = [[MDCSlider alloc] init];
 
   // When
-  slider.trackColor = nil;
+  slider.trackBackgroundColor = nil;
 
   // Then
-  UIColor *actualColor = slider.trackColor;
-  UIColor *expectedColor = [self blueColor];
-  XCTAssertEqualObjects(actualColor, expectedColor);
-}
-
-- (void)testInkColor {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-
-  // When
-  UIColor *actualColor = slider.inkColor;
-
-  // Then
-  UIColor *expectedColor = [[self blueColor] colorWithAlphaComponent:0.5f];
-  XCTAssertEqualObjects(actualColor, expectedColor);
-}
-
-- (void)testInkColorNullRestable {
-  // Given
-  MDCSlider *slider = [[MDCSlider alloc] init];
-
-  // When
-  slider.inkColor = nil;
-
-  // Then
-  UIColor *actualColor = slider.inkColor;
-  UIColor *expectedColor = [[self blueColor] colorWithAlphaComponent:0.5f];
+  UIColor *actualColor = slider.trackBackgroundColor;
+  UIColor *expectedColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
   XCTAssertEqualObjects(actualColor, expectedColor);
 }
 
