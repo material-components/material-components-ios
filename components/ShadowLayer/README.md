@@ -1,9 +1,9 @@
 # ShadowLayer
 
-MDCShadow is a Material Design stylized shadow that applies design principles relating to height
+MDCShadow is a material design stylized shadow that applies design principles relating to height
 and light sources to a shadow's projected depth. MDCShadow builds on the notion of how physical
 properties of paper are translated to the screen by simulating paper depth through shadow diffusion.
-MDCShadow has an elevation property that affects shadow depth and strength. The class
+MDCShadow has an elevation property that affects shadow depth and strength. MDCShadow
 automatically handles shadow diffusion based on the shadow's elevation.
 
 MDCShadow provides a Core Animation CALayer that will render a shadow based on its elevation
@@ -12,11 +12,11 @@ MDCShadowLayer.
 
 `elevation` sets the diffusion level of the shadow. The higher the shadow elevation, the more
 diffused the shadow becomes. Elevation uses points as a unit to specify height. Common shadow
-elevations are defined in MDCShadowElevations and range from 0 to 24 points. The shadow diffusion
-effect diminishes as elevations exceed 24 points.
+elevations are defined in [MDCShadowElevations](../ShadowElevations) and range from 0 to 24 points.
+The shadow diffusion effect diminishes as elevations exceed 24 points.
 
-Set `shadowMaskEnabled` to ensure the interior, non-shadow portion of the layer is visible. By
-default this is enabled and the internal portion of the layer is cut out.
+Set `shadowMaskEnabled` to ensure the interior, non-shadow portion of the layer is visible.
+This is enabled by default and the internal portion of the layer is cut out.
 
 ## Requirements
 
@@ -77,5 +77,5 @@ Disable rasterization before animating MDCShadowLayer.
 # ShadowMetrics
 
 MDCShadowMetrics is a series of properties used to set MDCShadow. MDCShadow consists of two distinct
-layers. The overlay of these two layers generates a single Material Design stylized shadow that
+layers. The overlay of these two layers generates a single material design stylized shadow that
 adheres to defined height and light source principles.
