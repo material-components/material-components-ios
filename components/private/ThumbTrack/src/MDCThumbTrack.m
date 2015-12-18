@@ -602,8 +602,15 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (void)setValueFromThumbPosition:(CGPoint)position isTap:(BOOL)isTap {
   // Having two discrete values is a special case (e.g. the switch) in which any tap just flips the
   // value between the two discrete values, irrespective of the tap location.
-  CGFloat value = [self valueForThumbPosition:position];
-
+  CGFloat value;
+  if (isTap && _numDiscreteValues == 2) {
+    // If we are at the maximum then make it the minimum:
+    // For switch like thumb tracks where there is only 2 values we ignore the position of the tap
+    // and toggle between the minimum and maximum values.
+    value = _value < CGFloatEqual(_value, _minimumValue) ? _maximumValue : _minimumValue;
+  } else {
+    value = [self valueForThumbPosition:position];
+  }
   __weak MDCThumbTrack *weakSelf = self;
   if ([_delegate respondsToSelector:@selector(thumbTrack:willAnimateToValue:)]) {
     [_delegate thumbTrack:self willAnimateToValue:value];
