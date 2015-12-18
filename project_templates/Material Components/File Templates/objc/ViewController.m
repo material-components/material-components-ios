@@ -4,10 +4,6 @@ ___GOOGLE_COPYRIGHT___
 
 #import "Material___PACKAGENAMEASIDENTIFIER___.h"
 
-@interface ViewController ()
-
-@end
-
 @implementation ViewController
 
 - (void)viewDidLoad {

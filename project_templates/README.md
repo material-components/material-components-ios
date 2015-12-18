@@ -7,8 +7,8 @@
 Install the templates by running the following command from the root of the
 project_templates folder:
 
-```
-sh install.sh
+```bash
+sh install_template
 ```
 
 This script will copy the entire template contents to the following location:
