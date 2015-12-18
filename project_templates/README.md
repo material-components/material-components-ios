@@ -36,5 +36,5 @@ new project.
 
 #### Step 4: Add your new component ####
 
-You should now have a complete project skeleton ready to run. Some src files have geen generated
-for you to add your Material Component to.
+You should now have a complete project skeleton ready to run. Some src files have been generated
+that you can use or replace with your new Material Component.
