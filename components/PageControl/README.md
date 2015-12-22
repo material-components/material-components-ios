@@ -17,8 +17,8 @@ CGRect frame =
 myPageControl = [[MDCPageControl alloc] initWithFrame:frame];
 myPageControl.numberOfPages = _myPages.count;
 [myPageControl addTarget:self
-               action:@selector(didChangePage:)
-     forControlEvents:UIControlEventValueChanged];
+                  action:@selector(didChangePage:)
+        forControlEvents:UIControlEventValueChanged];
 [self.view addSubview:myPageControl];
 
 #pragma mark - UIScrollViewDelegate
