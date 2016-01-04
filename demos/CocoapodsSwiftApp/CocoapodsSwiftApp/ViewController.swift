@@ -23,12 +23,38 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let label = UILabel()
-    label.font = MDCTypography.body1Font()
-    label.alpha = MDCTypography.body1FontOpacity()
-    label.text = "This is a label"
-    label.sizeToFit()
-    label.center = CGPoint(x: 200, y: 200)
-    self.view.addSubview(label)
+    // Testing build and linking so all we need to do is touch the component objects.
+
+    // MARK: Slider
+    let slider = MDCSlider.init(frame: CGRectMake(0, 0, 100, 27));
+    self.view.addSubview(slider);
+    slider.center = CGPointMake(100, 45);
+
+    // MARK: Typography
+    assert(MDCTypography.subheadFont().isKindOfClass(UIFont), "expecting valid object");
+
+    // MARK: Ink
+    MDCInkTouchController.init(view: self.view)!;
+
+    // MARK: ScrollViewDelegateMultiplexer
+
+    assert(MDCScrollViewDelegateMultiplexer.init().isKindOfClass(MDCScrollViewDelegateMultiplexer),
+      "expecting valid object");
+
+    // MARK: ShadowLayer
+
+    assert(MDCShadowLayer.init().isKindOfClass(MDCShadowLayer), "expecting valid object");
+
+    // MARK: SpritedAnimation
+
+    assert(MDCSpritedAnimationView.init().isKindOfClass(MDCSpritedAnimationView), "expecting valid object");
+
+    // MARK: PageControl
+
+    let pageControl = MDCPageControl.init(frame:CGRectMake(0, 0, 100, 27));
+    pageControl.numberOfPages = 3;
+    self.view.addSubview(pageControl);
+    pageControl.center = CGPointMake(100, 145);
+
   }
 }

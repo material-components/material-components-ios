@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   #
   # ## Optional properties
   #
-  # private_header_files => This should point to your component's Private/ directory if you have any
+  # private_header_files => This should point to your component's private/ directory if you have any
   #                         private headers.
   # resource_bundles     => If your component has a bundle, add a dictionary mapping from the bundle
   #                         name to the bundle path.
@@ -30,11 +30,11 @@ Pod::Spec.new do |s|
   #
   #  s.subspec 'ComponentName' do |ss|
   #    ss.public_header_files = 'components/ComponentName/src/*.h'
-  #    ss.source_files = 'components/ComponentName/src/*.{h,m}', 'components/ComponentName/src/Private/*.{h,m}'
+  #    ss.source_files = 'components/ComponentName/src/*.{h,m}', 'components/ComponentName/src/private/*.{h,m}'
   #    ss.header_mappings_dir = 'components/ComponentName/src/*'
   #
   #    # Only if you have private headers
-  #    ss.private_header_files = 'components/ComponentName/src/Private/*.h'
+  #    ss.private_header_files = 'components/ComponentName/src/private/*.h'
   #
   #    # Only if you have a resource bundle
   #    ss.resource_bundles = {
@@ -48,6 +48,12 @@ Pod::Spec.new do |s|
     ss.source_files = 'components/Ink/src/*.{h,m}', 'components/Ink/src/private/*.{h,m}'
     ss.header_mappings_dir = 'components/Ink/src/*'
     ss.private_header_files = 'components/Ink/src/private/*.h'
+  end
+
+  s.subspec 'PageControl' do |ss|
+    ss.public_header_files = 'components/PageControl/src/*.h'
+    ss.source_files = 'components/PageControl/src/*.{h,m}', 'components/PageControl/src/private/*.{h,m}'
+    ss.header_mappings_dir = 'components/PageControl/src/*'
   end
 
   s.subspec 'ScrollViewDelegateMultiplexer' do |ss|
@@ -66,6 +72,12 @@ Pod::Spec.new do |s|
     ss.public_header_files = 'components/ShadowLayer/src/*.h'
     ss.source_files = 'components/ShadowLayer/src/*.{h,m}'
     ss.header_mappings_dir = 'components/ShadowLayer/src/*'
+  end
+
+  s.subspec 'Slider' do |ss|
+    ss.public_header_files = 'components/Slider/src/*.h'
+    ss.source_files = 'components/Slider/src/*.{h,m}', 'components/Slider/src/private/*.{h,m}'
+    ss.header_mappings_dir = 'components/Slider/src/*'
   end
 
   s.subspec 'SpritedAnimationView' do |ss|
