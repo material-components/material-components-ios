@@ -162,9 +162,6 @@ static const NSInteger kMDCSpriteFrameRateDefault = 60;
   layer.contents = (id)_spriteSheetImage.CGImage;
   layer.bounds = CGRectMake(0, 0, singleFrameWidth, singleFrameWidth);
   layer.contentsRect = CGRectMake(0, 0, 1, _singleFrameWidthInPercent);
-
-  // Remove any animations.
-  [self.spriteLayer removeAllAnimations];
 }
 
 #pragma mark Setters
@@ -193,6 +190,7 @@ static const NSInteger kMDCSpriteFrameRateDefault = 60;
   _spriteSheetImage = [self colorizedSpriteSheet:spriteSheetImage];
 
   [self updateSpriteAnimationLayer];
+  [self.spriteLayer removeAllAnimations];
 }
 
 @end
