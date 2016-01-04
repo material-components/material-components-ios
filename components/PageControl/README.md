@@ -13,7 +13,7 @@ This page control provides an animation effect that keeps a page indicator in sy
 
 #### Example Screenshots
 
-| ![screenshot-1](docs/MDCPageControl_screenshot-1.png =250x) | ![screenshot-2](docs/MDCPageControl_screenshot-2.png =250x)| ![screenshot-3](docs/MDCPageControl_screenshot-3.png =250x) |
+| ![screenshot-1](docs/MDCPageControl_screenshot-1.png) | ![screenshot-2](docs/MDCPageControl_screenshot-2.png)| ![screenshot-3](docs/MDCPageControl_screenshot-3.png) |
 | ------------ | ------------- | ------------ |
 | Page control showing current page in resting state. | Page control showing animated track with current page indicator positioned | along the track.  | Page control showing new current page. |
 
