@@ -41,7 +41,7 @@ Add the page control to a view and set the desired page control properties. This
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  // Scroll view configuration
+  // Scroll view configuration.
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
   _scrollView.delegate = self;
   ...
