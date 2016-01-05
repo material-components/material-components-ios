@@ -1,0 +1,8 @@
+/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
+"MDCSwitchAccessibilityHint" = "Dvaput dodirnite da biste uključili/isključili postavku";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityLabelOn" = "Uključeno";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityLabelOff" = "Isključeno";

@@ -1,0 +1,8 @@
+/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
+"MDCSwitchAccessibilityHint" = "Double tap to toggle setting";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityLabelOn" = "On";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityLabelOff" = "Off";

@@ -1,0 +1,8 @@
+/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
+"MDCSwitchAccessibilityHint" = "Atingeți de două ori pentru a schimba setarea";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityLabelOn" = "Activat";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityLabelOff" = "Dezactivat";

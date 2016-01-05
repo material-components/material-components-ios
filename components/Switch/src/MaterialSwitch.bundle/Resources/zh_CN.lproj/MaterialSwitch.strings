@@ -1,0 +1,8 @@
+/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
+"MDCSwitchAccessibilityHint" = "点按两次即可切换设置";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityLabelOn" = "开";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityLabelOff" = "关";

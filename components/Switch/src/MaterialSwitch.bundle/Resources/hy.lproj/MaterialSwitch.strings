@@ -1,0 +1,8 @@
+/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
+"MDCSwitchAccessibilityHint" = "Կարգավորումները փոխելու համար կրկնակի հպեք";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityLabelOn" = "Միացված է";
+
+/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityLabelOff" = "Անջատված է";
