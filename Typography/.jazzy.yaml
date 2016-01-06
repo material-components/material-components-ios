@@ -1,5 +1,0 @@
-module_name: MaterialTypography
-module_name: src/MaterialTypography.h
-objc_mode: true
-sdk: iphonesimulator
-output: docs/
