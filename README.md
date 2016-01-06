@@ -5,3 +5,5 @@ Material Components’ visual style is based on the
 specification, developed by a team of iOS engineers and UX designers at Google.
 
 This is a test commit. Please ignore.
+
+This is another change in a separate commit. Please also ignore.
