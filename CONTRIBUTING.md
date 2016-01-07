@@ -19,7 +19,7 @@ frustration later on.
 ### Code reviews
 
 All submissions, including submissions by project members, require review. We
-use GitHub pull requests for this purpose.
+allow pull requests to be filed, but we perform code reviews on codereview.cc.
 
 ### The small print
 
