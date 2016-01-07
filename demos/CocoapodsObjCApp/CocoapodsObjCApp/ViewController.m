@@ -16,20 +16,53 @@
 
 #import "ViewController.h"
 
+#import <MaterialPageControl.h>
+#import <MaterialSlider.h>
+#import <MaterialScrollViewDelegateMultiplexer.h>
+#import <MaterialShadowLayer.h>
+#import <MaterialSpritedAnimationView.h>
 #import <MaterialTypography.h>
+#import <MaterialInk.h>
 
 @implementation ViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.view.backgroundColor = [UIColor whiteColor];
 
-  UILabel *label = [UILabel new];
-  label.font = [MDCTypography body1Font];
-  label.alpha = [MDCTypography body1FontOpacity];
-  label.text = @"This is a label";
-  [label sizeToFit];
-  label.center = CGPointMake(200, 200);
-  [self.view addSubview:label];
+  // Testing build and linking so all we need to do is touch the component objects.
+#pragma mark Slider
+
+  MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
+  [self.view addSubview:slider];
+  slider.center = CGPointMake(100, 45);
+
+#pragma mark Typography
+
+  NSAssert([MDCTypography subheadFont], @"expecting valid object");
+
+#pragma mark Ink
+
+  NSAssert([[MDCInkTouchController alloc] initWithView:self.view], @"expecting valid object");
+
+#pragma mark ScrollViewDelegateMultiplexer
+
+  NSAssert([[MDCScrollViewDelegateMultiplexer alloc] init], @"expecting valid object");
+
+#pragma mark ShadowLayer
+
+  NSAssert([[MDCShadowLayer alloc] init], @"expecting valid object");
+
+#pragma mark SpritedAnimation
+
+  NSAssert([[MDCSpritedAnimationView alloc] init], @"expecting valid object");
+
+#pragma mark PageControl
+
+  MDCPageControl *pageControl = [[MDCPageControl alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
+  pageControl.numberOfPages = 3;
+  [self.view addSubview:pageControl];
+  pageControl.center = CGPointMake(100, 145);
 }
 
 @end

@@ -19,9 +19,9 @@
 /**
  * Animation view for loading in sprites.
  *
- * This control provides performance benefits over animating an array of images with a UIImageView.
- * Only a single image composed of individual sprite frames is used, and animation simply consists
- * of updating the layer contentsRect.
+ * This control provides an alternative to animating an array of images with a UIImageView. Only
+ * a single image composed of individual sprite frames is used, and animation simply consists of
+ * updating the layer contentsRect.
  *
  * @ingroup MDCSpritedAnimationView
  */
@@ -72,7 +72,7 @@
  * @return Initialized sprited animation view.
  */
 - (nonnull instancetype)initWithSpriteSheetImage:
-        (nullable UIImage *)spriteSheetImage NS_DESIGNATED_INITIALIZER;
+    (nullable UIImage *)spriteSheetImage NS_DESIGNATED_INITIALIZER;
 
 /** Please use initWithSpriteSheetImage:. */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
