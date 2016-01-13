@@ -18,7 +18,7 @@ import UIKit
 
 import material_components_ios
 
-class ViewController: UIViewController {
+class MDCBuildTestViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,32 +29,30 @@ class ViewController: UIViewController {
     let slider = MDCSlider.init(frame: CGRectMake(0, 0, 100, 27));
     self.view.addSubview(slider);
     slider.center = CGPointMake(100, 45);
+    assert(slider.isKindOfClass(MDCSlider), "Expecting to find a valid object for MDCSlider");
 
     // MARK: Typography
-    assert(MDCTypography.subheadFont().isKindOfClass(UIFont), "expecting valid object");
+    assert(MDCTypography.subheadFont().isKindOfClass(UIFont), "Expecting to find a valid object for MDCTypography");
 
     // MARK: Ink
     MDCInkTouchController.init(view: self.view)!;
 
     // MARK: ScrollViewDelegateMultiplexer
-
     assert(MDCScrollViewDelegateMultiplexer.init().isKindOfClass(MDCScrollViewDelegateMultiplexer),
-      "expecting valid object");
+      "Expecting to find a valid object for MDCScrollViewDelegateMultiplexer");
 
     // MARK: ShadowLayer
-
-    assert(MDCShadowLayer.init().isKindOfClass(MDCShadowLayer), "expecting valid object");
+    assert(MDCShadowLayer.init().isKindOfClass(MDCShadowLayer), "Expecting to find a valid object for MDCShadowLayer");
 
     // MARK: SpritedAnimation
-
-    assert(MDCSpritedAnimationView.init().isKindOfClass(MDCSpritedAnimationView), "expecting valid object");
+    assert(MDCSpritedAnimationView.init().isKindOfClass(MDCSpritedAnimationView), "Expecting to find a valid object for MDCSpritedAnimationView");
 
     // MARK: PageControl
-
     let pageControl = MDCPageControl.init(frame:CGRectMake(0, 0, 100, 27));
     pageControl.numberOfPages = 3;
     self.view.addSubview(pageControl);
     pageControl.center = CGPointMake(100, 145);
+    assert(pageControl.isKindOfClass(MDCPageControl), "Expecting to find a valid object for MDCSpritedAnimationView");
 
   }
 }

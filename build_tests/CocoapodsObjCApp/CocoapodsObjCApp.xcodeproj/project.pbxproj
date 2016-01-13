@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		18D3345942EAEC7D74A23C51 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B3FF76E59043033C3E2895D /* libPods.a */; };
+		208DFFFA1C46E64700746F10 /* MDCBuildTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 208DFFF71C46E64700746F10 /* MDCBuildTestAppDelegate.m */; };
+		208DFFFB1C46E64700746F10 /* MDCBuildTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 208DFFF91C46E64700746F10 /* MDCBuildTestViewController.m */; };
 		6632A5371C066465004AC7CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632A5361C066465004AC7CD /* main.m */; };
-		6632A53A1C066466004AC7CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632A5391C066466004AC7CD /* AppDelegate.m */; };
-		6632A53D1C066466004AC7CD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6632A53C1C066466004AC7CD /* ViewController.m */; };
 		6632A5401C066466004AC7CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6632A53E1C066466004AC7CD /* Main.storyboard */; };
 		6632A5421C066466004AC7CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6632A5411C066466004AC7CD /* Assets.xcassets */; };
 		6632A5451C066466004AC7CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6632A5431C066466004AC7CD /* LaunchScreen.storyboard */; };
@@ -19,12 +19,12 @@
 
 /* Begin PBXFileReference section */
 		0131BD4F52E365CCC9055AB1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		208DFFF61C46E64700746F10 /* MDCBuildTestAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCBuildTestAppDelegate.h; path = ../../classes/objective_c/MDCBuildTestAppDelegate.h; sourceTree = "<group>"; };
+		208DFFF71C46E64700746F10 /* MDCBuildTestAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCBuildTestAppDelegate.m; path = ../../classes/objective_c/MDCBuildTestAppDelegate.m; sourceTree = "<group>"; };
+		208DFFF81C46E64700746F10 /* MDCBuildTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCBuildTestViewController.h; path = ../../classes/objective_c/MDCBuildTestViewController.h; sourceTree = "<group>"; };
+		208DFFF91C46E64700746F10 /* MDCBuildTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCBuildTestViewController.m; path = ../../classes/objective_c/MDCBuildTestViewController.m; sourceTree = "<group>"; };
 		6632A5321C066465004AC7CD /* CocoapodsObjCApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoapodsObjCApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6632A5361C066465004AC7CD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		6632A5381C066466004AC7CD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		6632A5391C066466004AC7CD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		6632A53B1C066466004AC7CD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		6632A53C1C066466004AC7CD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		6632A53F1C066466004AC7CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6632A5411C066466004AC7CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6632A5441C066466004AC7CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -77,10 +77,10 @@
 		6632A5341C066465004AC7CD /* CocoapodsObjCApp */ = {
 			isa = PBXGroup;
 			children = (
-				6632A5381C066466004AC7CD /* AppDelegate.h */,
-				6632A5391C066466004AC7CD /* AppDelegate.m */,
-				6632A53B1C066466004AC7CD /* ViewController.h */,
-				6632A53C1C066466004AC7CD /* ViewController.m */,
+				208DFFF61C46E64700746F10 /* MDCBuildTestAppDelegate.h */,
+				208DFFF71C46E64700746F10 /* MDCBuildTestAppDelegate.m */,
+				208DFFF81C46E64700746F10 /* MDCBuildTestViewController.h */,
+				208DFFF91C46E64700746F10 /* MDCBuildTestViewController.m */,
 				6632A53E1C066466004AC7CD /* Main.storyboard */,
 				6632A5411C066466004AC7CD /* Assets.xcassets */,
 				6632A5431C066466004AC7CD /* LaunchScreen.storyboard */,
@@ -228,8 +228,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6632A53D1C066466004AC7CD /* ViewController.m in Sources */,
-				6632A53A1C066466004AC7CD /* AppDelegate.m in Sources */,
+				208DFFFB1C46E64700746F10 /* MDCBuildTestViewController.m in Sources */,
+				208DFFFA1C46E64700746F10 /* MDCBuildTestAppDelegate.m in Sources */,
 				6632A5371C066465004AC7CD /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

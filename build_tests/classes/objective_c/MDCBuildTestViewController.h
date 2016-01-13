@@ -14,12 +14,7 @@
  limitations under the License.
  */
 
-#import "AppDelegate.h"
+#import <UIKit/UIKit.h>
 
-@implementation AppDelegate
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  return YES;
-}
-
+@interface MDCBuildTestViewController : UIViewController
 @end

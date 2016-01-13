@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import "MDCBuildTestViewController.h"
 
 #import <MaterialPageControl.h>
 #import <MaterialSlider.h>
@@ -24,7 +24,7 @@
 #import <MaterialTypography.h>
 #import <MaterialInk.h>
 
-@implementation ViewController
+@implementation MDCBuildTestViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -36,26 +36,30 @@
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
   [self.view addSubview:slider];
   slider.center = CGPointMake(100, 45);
+  NSAssert(slider, @"Expecting to find a valid object for MDCSlider.");
 
 #pragma mark Typography
 
-  NSAssert([MDCTypography subheadFont], @"expecting valid object");
+  NSAssert([MDCTypography subheadFont], @"Expecting to find a valid object for MDCTypography.");
 
 #pragma mark Ink
 
-  NSAssert([[MDCInkTouchController alloc] initWithView:self.view], @"expecting valid object");
+  NSAssert([[MDCInkTouchController alloc] initWithView:self.view],
+    @"Expecting to find a valid object for MDCInkTouchController.");
 
 #pragma mark ScrollViewDelegateMultiplexer
 
-  NSAssert([[MDCScrollViewDelegateMultiplexer alloc] init], @"expecting valid object");
+  NSAssert([[MDCScrollViewDelegateMultiplexer alloc] init],
+    @"Expecting to find a valid object for slider.");
 
 #pragma mark ShadowLayer
 
-  NSAssert([[MDCShadowLayer alloc] init], @"expecting valid object");
+  NSAssert([[MDCShadowLayer alloc] init], @"Expecting to find a valid object for MDCShadowLayer.");
 
 #pragma mark SpritedAnimation
 
-  NSAssert([[MDCSpritedAnimationView alloc] init], @"expecting valid object");
+  NSAssert([[MDCSpritedAnimationView alloc] init],
+    @"Expecting to find a valid object for MDCSpritedAnimationView.");
 
 #pragma mark PageControl
 
@@ -63,6 +67,8 @@
   pageControl.numberOfPages = 3;
   [self.view addSubview:pageControl];
   pageControl.center = CGPointMake(100, 145);
+  NSAssert(pageControl, @"Expecting to find a valid object for MDCPageControl.");
+
 }
 
 @end

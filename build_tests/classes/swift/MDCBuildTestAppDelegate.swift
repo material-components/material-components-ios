@@ -17,7 +17,7 @@ limitations under the License.
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class MDCBuildTestAppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
