@@ -36,6 +36,20 @@
   [super tearDown];
 }
 
+- (void)testSetOn {
+  MDCSwitch *testSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+  testSwitch.on = YES;
+
+  XCTAssertEqual(testSwitch.on, YES, @"MDCSwitch.on should be YES");
+}
+
+- (void)testSetOff {
+  MDCSwitch *testSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+  testSwitch.on = NO;
+
+  XCTAssertEqual(testSwitch.on, NO, @"MDCSwitch.on should be NO");
+}
+
 - (void)testConstantSize {
   MDCSwitch *testZeroSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
   MDCSwitch *testSmallSwitch = [[MDCSwitch alloc] initWithFrame:CGRectMake(0.0, 0.0, 4.0, 4.0)];
