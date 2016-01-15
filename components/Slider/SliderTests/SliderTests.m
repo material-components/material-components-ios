@@ -21,11 +21,11 @@
 static const NSUInteger kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = 0.0001f;
 
-@interface PageControlTests : XCTestCase
+@interface SliderTests : XCTestCase
 
 @end
 
-@implementation PageControlTests
+@implementation SliderTests
 
 - (void)setUp {
   [super setUp];

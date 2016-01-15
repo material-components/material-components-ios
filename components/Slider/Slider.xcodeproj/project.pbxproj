@@ -11,17 +11,16 @@
 		2017F5BD1C18D43F006F5A99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017F5BC1C18D43F006F5A99 /* AppDelegate.m */; };
 		2017F5C01C18D43F006F5A99 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017F5BF1C18D43F006F5A99 /* ViewController.m */; };
 		2017F5C51C18D43F006F5A99 /* MDCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017F5C41C18D43F006F5A99 /* MDCSlider.m */; };
-		2017F5C71C18D43F006F5A99 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 2017F5C61C18D43F006F5A99 /* README.md */; };
 		2017F5C91C18D43F006F5A99 /* .jazzy.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 2017F5C81C18D43F006F5A99 /* .jazzy.yaml */; };
 		2017F5CB1C18D43F006F5A99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2017F5CA1C18D43F006F5A99 /* Assets.xcassets */; };
 		2017F5CE1C18D43F006F5A99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2017F5CC1C18D43F006F5A99 /* LaunchScreen.storyboard */; };
 		2017F5D91C18D43F006F5A99 /* SliderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017F5D81C18D43F006F5A99 /* SliderTests.m */; };
 		2017F5E41C18D43F006F5A99 /* SliderUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017F5E31C18D43F006F5A99 /* SliderUITests.m */; };
-		202EB8D51C20ABC500DF6E86 /* MDCThumbTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8D21C20ABC500DF6E86 /* MDCThumbTrack.m */; settings = {ASSET_TAGS = (); }; };
-		202EB8D61C20ABC500DF6E86 /* MDCThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8D41C20ABC500DF6E86 /* MDCThumbView.m */; settings = {ASSET_TAGS = (); }; };
-		202EB8DB1C20B53000DF6E86 /* MDCShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8DA1C20B53000DF6E86 /* MDCShadowLayer.m */; settings = {ASSET_TAGS = (); }; };
-		202EB8E01C20B56000DF6E86 /* MDCShadowElevations.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8DF1C20B56000DF6E86 /* MDCShadowElevations.m */; settings = {ASSET_TAGS = (); }; };
-		202EB8E51C20B57D00DF6E86 /* UIColor+MDC.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8E41C20B57D00DF6E86 /* UIColor+MDC.m */; settings = {ASSET_TAGS = (); }; };
+		202EB8D51C20ABC500DF6E86 /* MDCThumbTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8D21C20ABC500DF6E86 /* MDCThumbTrack.m */; };
+		202EB8D61C20ABC500DF6E86 /* MDCThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8D41C20ABC500DF6E86 /* MDCThumbView.m */; };
+		202EB8DB1C20B53000DF6E86 /* MDCShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8DA1C20B53000DF6E86 /* MDCShadowLayer.m */; };
+		202EB8E01C20B56000DF6E86 /* MDCShadowElevations.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8DF1C20B56000DF6E86 /* MDCShadowElevations.m */; };
+		202EB8E51C20B57D00DF6E86 /* UIColor+MDC.m in Sources */ = {isa = PBXBuildFile; fileRef = 202EB8E41C20B57D00DF6E86 /* UIColor+MDC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -362,7 +361,6 @@
 				202EB8D51C20ABC500DF6E86 /* MDCThumbTrack.m in Sources */,
 				202EB8DB1C20B53000DF6E86 /* MDCShadowLayer.m in Sources */,
 				2017F5C51C18D43F006F5A99 /* MDCSlider.m in Sources */,
-				2017F5C71C18D43F006F5A99 /* README.md in Sources */,
 				2017F5BD1C18D43F006F5A99 /* AppDelegate.m in Sources */,
 				202EB8D61C20ABC500DF6E86 /* MDCThumbView.m in Sources */,
 				202EB8E51C20B57D00DF6E86 /* UIColor+MDC.m in Sources */,

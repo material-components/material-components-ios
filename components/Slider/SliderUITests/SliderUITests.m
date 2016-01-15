@@ -16,11 +16,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface PageControlUITests : XCTestCase
+@interface SliderUITests : XCTestCase
 
 @end
 
-@implementation PageControlUITests
+@implementation SliderUITests
 
 - (void)setUp {
   [super setUp];
