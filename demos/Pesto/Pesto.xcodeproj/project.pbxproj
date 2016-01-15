@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE6A9B25D9A958C060ABB21D /* libPods-Pesto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D8C7972AFCDCD5C9447F8E /* libPods-Pesto.a */; };
 		DE29EBD01C482B4C0089346C /* MDCSpritedAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = DE29EBCF1C482B4C0089346C /* MDCSpritedAnimationView.m */; };
 		DE381E1A1C457CEE00019C1D /* PestoCardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DE381E191C457CEE00019C1D /* PestoCardCollectionViewCell.m */; };
 		DE381E401C45A9FB00019C1D /* PestoSideView.m in Sources */ = {isa = PBXBuildFile; fileRef = DE381E3F1C45A9FB00019C1D /* PestoSideView.m */; };
@@ -32,6 +33,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B0D8C7972AFCDCD5C9447F8E /* libPods-Pesto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pesto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD25922DF748FCA11BCF30C4 /* Pods-Pesto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pesto.release.xcconfig"; path = "Pods/Target Support Files/Pods-Pesto/Pods-Pesto.release.xcconfig"; sourceTree = "<group>"; };
+		D36B00D81356A416449940A7 /* Pods-Pesto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pesto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pesto/Pods-Pesto.debug.xcconfig"; sourceTree = "<group>"; };
 		DE29EBCD1C482B4C0089346C /* MaterialSpritedAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialSpritedAnimationView.h; path = Components/MaterialSpritedAnimationView.h; sourceTree = "<group>"; };
 		DE29EBCE1C482B4C0089346C /* MDCSpritedAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCSpritedAnimationView.h; path = Components/MDCSpritedAnimationView.h; sourceTree = "<group>"; };
 		DE29EBCF1C482B4C0089346C /* MDCSpritedAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCSpritedAnimationView.m; path = Components/MDCSpritedAnimationView.m; sourceTree = "<group>"; };
@@ -86,12 +90,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE6A9B25D9A958C060ABB21D /* libPods-Pesto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3223094C29F5C08CCEE42126 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D36B00D81356A416449940A7 /* Pods-Pesto.debug.xcconfig */,
+				BD25922DF748FCA11BCF30C4 /* Pods-Pesto.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DAFCE01AEA03CE3D02550900 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B0D8C7972AFCDCD5C9447F8E /* libPods-Pesto.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DE5EF82E1C3FFD3900D2D4B9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +165,8 @@
 			children = (
 				DEBEDF261C3EF5D5004B614B /* Pesto */,
 				DEBEDF251C3EF5D5004B614B /* Products */,
+				3223094C29F5C08CCEE42126 /* Pods */,
+				DAFCE01AEA03CE3D02550900 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -192,9 +216,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DEBEDF3B1C3EF5D5004B614B /* Build configuration list for PBXNativeTarget "Pesto" */;
 			buildPhases = (
+				CDE92B8D00F0F7A027987FDE /* Check Pods Manifest.lock */,
 				DEBEDF201C3EF5D5004B614B /* Sources */,
 				DEBEDF211C3EF5D5004B614B /* Frameworks */,
 				DEBEDF221C3EF5D5004B614B /* Resources */,
+				B9DCEDAFB70F8E34F906DDD1 /* Embed Pods Frameworks */,
+				A1555531D8666D08E760BE49 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -250,6 +277,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A1555531D8666D08E760BE49 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Pesto/Pods-Pesto-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9DCEDAFB70F8E34F906DDD1 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Pesto/Pods-Pesto-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CDE92B8D00F0F7A027987FDE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DEBEDF201C3EF5D5004B614B /* Sources */ = {
@@ -381,6 +456,7 @@
 		};
 		DEBEDF3C1C3EF5D5004B614B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D36B00D81356A416449940A7 /* Pods-Pesto.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Pesto/Info.plist;
@@ -393,6 +469,7 @@
 		};
 		DEBEDF3D1C3EF5D5004B614B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD25922DF748FCA11BCF30C4 /* Pods-Pesto.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Pesto/Info.plist;
