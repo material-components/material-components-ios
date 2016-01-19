@@ -8,7 +8,6 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialSpritedAnimationView.h"
-#import "MaterialTypography.h"
 
 static CGFloat kPestoViewControllerAnimationDuration = 0.33f;
 static CGFloat kPestoViewControllerDefaultHeaderHeight = 240.f;
@@ -16,6 +15,8 @@ static CGFloat kPestoViewControllerInset = 5.f;
 static CGFloat kPestoViewControllerSmallHeaderHeight = 100.f;
 static NSString *const kPestoDetailViewControllerBackMenu = @"mdc_sprite_menu__arrow_back";
 static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_back__menu";
+static NSString *const kPestoDetailViewControllerBaseURL =
+    @"https://www.gstatic.com/angular/material-adaptive/pesto/";
 
 @interface PestoHeaderView : UIView
 
@@ -68,7 +69,6 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 }
 
 - (void)setupData {
-  _baseURL = @"https://www.gstatic.com/angular/material-adaptive/pesto/";
   _images = @[ @"image2-01.png",
                @"blue-potato.jpg",
                @"image1-01.png",
@@ -164,7 +164,6 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   self.cellSize = CGSizeMake(cellDim, cellDim);
 
   UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1];
-
   _initialCollectionViewHeight =
       self.view.frame.size.height - kPestoViewControllerDefaultHeaderHeight;
 
@@ -367,7 +366,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
                                                 forIndexPath:indexPath];
 
   NSInteger itemNum = indexPath.row;
-  NSString *imageURL = [_baseURL stringByAppendingString:_images[itemNum]];
+  NSString *imageURL = [kPestoDetailViewControllerBaseURL stringByAppendingString:_images[itemNum]];
   cell.title = _titles[itemNum];
   cell.author = _authors[itemNum];
   cell.imageURL = imageURL;

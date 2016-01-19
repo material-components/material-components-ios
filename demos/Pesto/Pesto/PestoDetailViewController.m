@@ -45,7 +45,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 
   CGFloat lightHeight = 0.5f;
   UIView *lineView =
-    [[UIView alloc] initWithFrame:CGRectMake(0, 0, contentView.bounds.size.width, lightHeight)];
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, contentView.bounds.size.width, lightHeight)];
   [lineView.heightAnchor constraintEqualToConstant:lightHeight].active = YES;
   lineView.backgroundColor = [UIColor lightGrayColor];
 
