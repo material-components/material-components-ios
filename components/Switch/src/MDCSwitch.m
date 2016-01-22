@@ -99,11 +99,19 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   // TODO(iangordon): Handle BiDi layouts
 }
 
+- (UIColor *)onTintColor {
+  return _thumbTrack.primaryColor;
+}
+
 - (void)setOnTintColor:(UIColor *)onTintColor {
   if (onTintColor == nil) {
     onTintColor = [[self class] defaultOnTintColor];
   }
   _thumbTrack.primaryColor = onTintColor;
+}
+
+- (UIColor *)offThumbColor {
+  return _thumbTrack.thumbOffColor;
 }
 
 - (void)setOffThumbColor:(UIColor *)offThumbColor {
@@ -113,6 +121,10 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   _thumbTrack.thumbOffColor = offThumbColor;
 }
 
+- (UIColor *)disabledThumbColor {
+  return _thumbTrack.thumbDisabledColor;
+}
+
 - (void)setDisabledThumbColor:(UIColor *)disabledThumbColor {
   if (disabledThumbColor == nil) {
     disabledThumbColor = [MDCSwitch defaultDisabledThumbColor];
@@ -120,11 +132,19 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   _thumbTrack.thumbDisabledColor = disabledThumbColor;
 }
 
+- (UIColor *)offTrackColor {
+  return _thumbTrack.trackOffColor;
+}
+
 - (void)setOffTrackColor:(UIColor *)offTrackColor {
   if (offTrackColor == nil) {
     offTrackColor = [MDCSwitch defaultOffTrackColor];
   }
   _thumbTrack.trackOffColor = offTrackColor;
+}
+
+- (UIColor *)disabledTrackColor {
+  return _thumbTrack.trackDisabledColor;
 }
 
 - (void)setDisabledTrackColor:(UIColor *)disabledTrackColor {
