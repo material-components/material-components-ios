@@ -1,6 +1,8 @@
 # MDC
 
 /docs
+build_tests/CocoapodsObjCApp/CocoapodsObjCApp.xcworkspace
+build_tests/CocoapodsSwiftApp/CocoapodsSwiftApp.xcworkspace
 
 # Xcode
 #

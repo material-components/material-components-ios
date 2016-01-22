@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:components/Switch/Switch.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:material-components-ios.podspec"
       assignedFileDataType = "public.ruby-script">
    </FileRef>
@@ -21,10 +18,13 @@
       location = "group:components/ScrollViewDelegateMultiplexer/examples/ScrollViewDelegateMultiplexerExample.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:components/Slider/Slider.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:components/SpritedAnimationView/examples/SpritedAnimationViewExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:components/Slider/Slider.xcodeproj">
+      location = "group:components/Switch/Switch.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Typography/examples/TypographyExample/TypographyExample.xcodeproj">
