@@ -31,7 +31,7 @@ static inline CGPoint MDCInkLayerRectGetCenter(CGRect rect) {
 }
 
 static inline CGFloat MDCInkLayerRectHypotenuse(CGRect rect) {
-  return hypot(CGRectGetWidth(rect), CGRectGetHeight(rect));
+  return (CGFloat)hypot(CGRectGetWidth(rect), CGRectGetHeight(rect));
 }
 
 static CGFloat const kMDCInkLayerBackgroundOpacityEnterDuration = 0.6f;
