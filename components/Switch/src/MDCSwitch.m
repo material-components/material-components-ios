@@ -297,7 +297,7 @@ static const CGFloat kMDCSwitchLightThemeTrackDisabledAlpha = 0.12f;
 
 + (UIColor *)defaultOffThumbColor {
   // Original MDCSwitchStyleLight Color
-  return [UIColor colorWithWhite:0.980 alpha:1.0];
+  return [UIColor colorWithWhite:0.980f alpha:1];
 }
 
 + (UIColor *)defaultOffTrackColor {
@@ -306,7 +306,7 @@ static const CGFloat kMDCSwitchLightThemeTrackDisabledAlpha = 0.12f;
 
 + (UIColor *)defaultDisabledThumbColor {
   // Original MDCSwitchStyleLight Color
-  return [UIColor colorWithWhite:0.741 alpha:1.0];
+  return [UIColor colorWithWhite:0.741f alpha:1];
 }
 
 + (UIColor *)defaultDisabledTrackColor {
