@@ -25,8 +25,6 @@ and are not resizable.
     forControlEvents:UIControlEventValueChanged];
   _switch.on = YES;  // No UIControlEventValueChanged sent by this property or [setOn:animated:].
   _switch.offThumbTintColor = [UIColor redColor];  // Make the thumb red if it’s turned off.
-
-  [self setNeedsLayout]; // Request that we recalculate layout during the next cycle.
 }
 
 ```
