@@ -89,7 +89,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Switch' do |ss|
     ss.public_header_files = 'components/Switch/src/*.h'
-    ss.source_files = 'components/Slider/src/*.{h,m}'
+    ss.source_files = 'components/Switch/src/*.{h,m}'
     ss.header_mappings_dir = 'components/Switch/src/*'
     ss.resource_bundles = {
       'MaterialSwitch' => ['components/Switch/src/MaterialSwitch.bundle/*']
