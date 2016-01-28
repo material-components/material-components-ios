@@ -78,12 +78,23 @@ Pod::Spec.new do |s|
     ss.public_header_files = 'components/Slider/src/*.h'
     ss.source_files = 'components/Slider/src/*.{h,m}', 'components/Slider/src/private/*.{h,m}'
     ss.header_mappings_dir = 'components/Slider/src/*'
+    ss.dependency 'material-components-ios/private/ThumbTrack'
   end
 
   s.subspec 'SpritedAnimationView' do |ss|
     ss.public_header_files = 'components/SpritedAnimationView/src/*.h'
     ss.source_files = 'components/SpritedAnimationView/src/*.{h,m}'
     ss.header_mappings_dir = 'components/SpritedAnimationView/src/*'
+  end
+
+  s.subspec 'Switch' do |ss|
+    ss.public_header_files = 'components/Switch/src/*.h'
+    ss.source_files = 'components/Slider/src/*.{h,m}'
+    ss.header_mappings_dir = 'components/Switch/src/*'
+    ss.resource_bundles = {
+      'MaterialSwitch' => ['components/Switch/src/MaterialSwitch.bundle/*']
+    }
+    ss.dependency 'material-components-ios/private/ThumbTrack'
   end
 
   s.subspec 'Typography' do |ss|
