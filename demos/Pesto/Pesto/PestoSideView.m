@@ -275,8 +275,10 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
        shouldReceiveTouch:(UITouch *)touch {
-  return [gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
-         ![touch.view isDescendantOfView:_contentView];
+  if ([touch.view isDescendantOfView:_contentView]) {
+    return ![gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]];
+  }
+  return YES;
 }
 
 - (void)panGestureRecognized:(UIPanGestureRecognizer *)recognizer {

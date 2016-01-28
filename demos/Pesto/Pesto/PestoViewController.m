@@ -466,6 +466,8 @@ static NSString *const kPestoDetailViewControllerBaseURL =
   navVC.navigationBar.barTintColor = headerColor;
   navVC.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : white};
   navVC.navigationBar.translucent = NO;
+
+  [sideView hideSideView];
   [self presentViewController:navVC animated:YES completion:nil];
 }
 
