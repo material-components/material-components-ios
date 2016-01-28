@@ -8,6 +8,7 @@ PODS:
     - material-components-ios/ShadowLayer (= 0.1.0)
     - material-components-ios/Slider (= 0.1.0)
     - material-components-ios/SpritedAnimationView (= 0.1.0)
+    - material-components-ios/Switch (= 0.1.0)
     - material-components-ios/Typography (= 0.1.0)
   - material-components-ios/Ink (0.1.0)
   - material-components-ios/PageControl (0.1.0)
@@ -22,8 +23,11 @@ PODS:
   - material-components-ios/ScrollViewDelegateMultiplexer (0.1.0)
   - material-components-ios/ShadowElevations (0.1.0)
   - material-components-ios/ShadowLayer (0.1.0)
-  - material-components-ios/Slider (0.1.0)
+  - material-components-ios/Slider (0.1.0):
+    - material-components-ios/private/ThumbTrack
   - material-components-ios/SpritedAnimationView (0.1.0)
+  - material-components-ios/Switch (0.1.0):
+    - material-components-ios/private/ThumbTrack
   - material-components-ios/Typography (0.1.0)
 
 DEPENDENCIES:
@@ -35,10 +39,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   material-components-ios:
-    :commit: 2fb14e0db60379d78ad1c5cae40634c6faca5b1f
+    :commit: 2774715697b56972fca2de6fbaa201a4196a1a4a
     :git: git@github.com:google/material-components-ios.git
 
 SPEC CHECKSUMS:
-  material-components-ios: 90b3d23cebcb2913875bbab015605ebe103b5ab1
+  material-components-ios: cd31a0e61daead918a6180e2ddb0f8ff4c20eb42
 
 COCOAPODS: 0.39.0

@@ -2,6 +2,7 @@
 #import "PestoDetailViewController.h"
 #import "PestoSideView.h"
 #import "PestoViewController.h"
+#import "PestoSettingsViewController.h"
 
 #import "MaterialInk.h"
 #import "MaterialScrollViewDelegateMultiplexer.h"
@@ -30,28 +31,28 @@ static NSString *const kPestoDetailViewControllerBaseURL =
 
 @end
 
-@interface PestoViewController () <UIScrollViewDelegate>
+@interface PestoViewController () <UIScrollViewDelegate, PestoSideViewDelegate>
 
-@property (nonatomic) CALayer *headerColorLayer;
-@property (nonatomic) CGFloat initialCollectionViewHeight;
-@property (nonatomic) CGFloat scrollOffsetY;
-@property (nonatomic) CGSize cellSize;
-@property (nonatomic) CGSize initialLogoSize;
-@property (nonatomic) MDCInkTouchController *inkTouchController;
-@property (nonatomic) MDCScrollViewDelegateMultiplexer *multiplexer;
-@property (nonatomic) NSCache *imageCache;
-@property (nonatomic) NSArray *icons;
-@property (nonatomic) NSArray *images;
-@property (nonatomic) NSArray *titles;
-@property (nonatomic) NSArray *authors;
-@property (nonatomic) NSString *baseURL;
-@property (nonatomic) UICollectionView *collectionView;
-@property (nonatomic) UIView *collapsedPestoHeaderView;
-@property (nonatomic) UIImageView *logoView;
-@property (nonatomic) UIImageView *logoSmallView;
-@property (nonatomic) UIImageView *zoomableView;
-@property (nonatomic) PestoHeaderView *pestoHeaderView;
-@property (nonatomic) PestoSideView *sideView;
+@property(nonatomic) CALayer *headerColorLayer;
+@property(nonatomic) CGFloat initialCollectionViewHeight;
+@property(nonatomic) CGFloat scrollOffsetY;
+@property(nonatomic) CGSize cellSize;
+@property(nonatomic) CGSize initialLogoSize;
+@property(nonatomic) MDCInkTouchController *inkTouchController;
+@property(nonatomic) MDCScrollViewDelegateMultiplexer *multiplexer;
+@property(nonatomic) NSCache *imageCache;
+@property(nonatomic) NSArray *icons;
+@property(nonatomic) NSArray *images;
+@property(nonatomic) NSArray *titles;
+@property(nonatomic) NSArray *authors;
+@property(nonatomic) NSString *baseURL;
+@property(nonatomic) UICollectionView *collectionView;
+@property(nonatomic) UIView *collapsedPestoHeaderView;
+@property(nonatomic) UIImageView *logoView;
+@property(nonatomic) UIImageView *logoSmallView;
+@property(nonatomic) UIImageView *zoomableView;
+@property(nonatomic) PestoHeaderView *pestoHeaderView;
+@property(nonatomic) PestoSideView *sideView;
 
 @end
 
@@ -63,7 +64,6 @@ static NSString *const kPestoDetailViewControllerBaseURL =
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-
   }
   return self;
 }
@@ -143,7 +143,7 @@ static NSString *const kPestoDetailViewControllerBaseURL =
               @"Veggie",
               @"Meat",
               @"Spicy",
-              @"Veggie"];
+              @"Veggie" ];
 
   _imageCache = [[NSCache alloc] init];
 }
@@ -154,12 +154,15 @@ static NSString *const kPestoDetailViewControllerBaseURL =
 
   self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.view.backgroundColor =
-      [UIColor colorWithRed:0.9f green:0.9f blue:0.9f alpha:1];
-  CGFloat cellDim = floor((self.view.frame.size.width - (2.f * kPestoViewControllerInset)) / 2.f)
-      - (2.f * kPestoViewControllerInset);
+      [UIColor colorWithRed:0.9f
+                      green:0.9f
+                       blue:0.9f
+                      alpha:1.f];
+  CGFloat cellDim = floor((self.view.frame.size.width - (2.f * kPestoViewControllerInset)) / 2.f) -
+                    (2.f * kPestoViewControllerInset);
   if (cellDim > 320) {
-    cellDim = floor((self.view.frame.size.width - (3.f * kPestoViewControllerInset)) / 3.f)
-        - (2.f * kPestoViewControllerInset);
+    cellDim = floor((self.view.frame.size.width - (3.f * kPestoViewControllerInset)) / 3.f) -
+              (2.f * kPestoViewControllerInset);
   }
   self.cellSize = CGSizeMake(cellDim, cellDim);
 
@@ -187,7 +190,7 @@ static NSString *const kPestoDetailViewControllerBaseURL =
 
   _collectionView.delegate = self;
   [_multiplexer addObservingDelegate:self];
-  
+
   CGRect PestoHeaderViewFrame = CGRectMake(0,
                                            0,
                                            self.view.frame.size.width,
@@ -236,6 +239,7 @@ static NSString *const kPestoDetailViewControllerBaseURL =
   _sideView.hidden = YES;
   _sideView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _sideView.delegate = self;
   [self.view addSubview:_sideView];
 }
 
@@ -273,7 +277,7 @@ static NSString *const kPestoDetailViewControllerBaseURL =
   CGRect logoViewFrame =
       CGRectMake((_pestoHeaderView.frame.size.width - logoSize.width) / 2.f,
                  (_pestoHeaderView.frame.size.height - logoSize.height) / 2.f +
-                 (2.f * kPestoViewControllerInset),
+                     (2.f * kPestoViewControllerInset),
                  logoSize.width,
                  logoSize.height);
   _logoView.frame = logoViewFrame;
@@ -284,8 +288,9 @@ static NSString *const kPestoDetailViewControllerBaseURL =
   CGRect logoSmallViewFrame =
       CGRectMake((_pestoHeaderView.frame.size.width - _logoSmallView.frame.size.width) / 2.f,
                  (_pestoHeaderView.frame.size.height -
-                  _logoSmallView.frame.size.height) / 2.f +
-                 (2.f * kPestoViewControllerInset),
+                  _logoSmallView.frame.size.height) /
+                         2.f +
+                     (2.f * kPestoViewControllerInset),
                  _logoSmallView.frame.size.width,
                  _logoSmallView.frame.size.height);
   _logoSmallView.frame = logoSmallViewFrame;
@@ -309,22 +314,24 @@ static NSString *const kPestoDetailViewControllerBaseURL =
 
   if (largeLogoOpacity < 0.33f) {
     [UIView animateWithDuration:kPestoViewControllerAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^ {
-                       _logoView.layer.opacity = 0;
-                       _logoSmallView.layer.opacity = 1.f;
-                     } completion:^(BOOL finished) {
-                     }];
+        delay:0
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+          _logoView.layer.opacity = 0;
+          _logoSmallView.layer.opacity = 1.f;
+        }
+        completion:^(BOOL finished){
+        }];
   } else {
     [UIView animateWithDuration:kPestoViewControllerAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^ {
-                       _logoView.layer.opacity = 1.f;
-                       _logoSmallView.layer.opacity = 0;
-                     } completion:^(BOOL finished) {
-                     }];
+        delay:0
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+          _logoView.layer.opacity = 1.f;
+          _logoSmallView.layer.opacity = 0;
+        }
+        completion:^(BOOL finished){
+        }];
   }
 }
 
@@ -333,7 +340,7 @@ static NSString *const kPestoDetailViewControllerBaseURL =
   dispatch_async(dispatch_get_global_queue(0, 0), ^{
     NSData *imageData = [_imageCache objectForKey:url];
     if (!imageData) {
-      imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:url]];
+      imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
       [_imageCache setObject:imageData forKey:url];
     }
     if (imageData == nil) {
@@ -352,7 +359,7 @@ static NSString *const kPestoDetailViewControllerBaseURL =
   [self adjustFramesWithScrollOffset:_scrollOffsetY];
 }
 
-# pragma mark - UICollectionViewDataSource
+#pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
@@ -395,24 +402,27 @@ static NSString *const kPestoDetailViewControllerBaseURL =
   dispatch_async(dispatch_get_main_queue(), ^{
     [_zoomableView setImage:cell.imageView.image];
     [UIView animateWithDuration:kPestoViewControllerAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^ {
-                       CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
-                       [CATransaction setAnimationTimingFunction:quantumEaseInOut];
-                       _zoomableView.frame = self.view.frame;
-                     } completion:^(BOOL finished) {
-                       [self presentViewController:detailVC animated:NO completion:^() {
-                         _zoomableView.frame = CGRectZero;
-                       }];
-                     }];
+        delay:0
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+          CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
+          [CATransaction setAnimationTimingFunction:quantumEaseInOut];
+          _zoomableView.frame = self.view.frame;
+        }
+        completion:^(BOOL finished) {
+          [self presentViewController:detailVC
+                             animated:NO
+                           completion:^() {
+                             _zoomableView.frame = CGRectZero;
+                           }];
+        }];
   });
 }
 
-# pragma mark - UICollectionViewDelegateFlowLayout
+#pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
+                  layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   return self.cellSize;
 }
@@ -425,7 +435,6 @@ static NSString *const kPestoDetailViewControllerBaseURL =
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-
 }
 
 /** Use MDCAnimationCurve once available. */
@@ -433,6 +442,35 @@ static NSString *const kPestoDetailViewControllerBaseURL =
   // This curve is slow both at the beginning and end.
   // Visualization of curve  http://cubic-bezier.com/#.4,0,.2,1
   return [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:0.2f:1.0f];
+}
+
+#pragma mark - PestoSideViewDelegate
+
+- (void)sideViewDidSelectSettings:(PestoSideView *)sideView {
+  PestoSettingsViewController *settingsVC = [PestoSettingsViewController new];
+  settingsVC.title = @"Settings";
+
+  UIColor *white = [UIColor whiteColor];
+  UIColor *headerColor = [UIColor colorWithCGColor:_headerColorLayer.backgroundColor];
+
+  UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]
+      initWithTitle:@"Done"
+              style:UIBarButtonItemStylePlain
+             target:self
+             action:@selector(closeViewController)];
+  rightBarButton.tintColor = white;
+  settingsVC.navigationItem.rightBarButtonItem = rightBarButton;
+
+  UINavigationController *navVC = [[UINavigationController alloc]
+      initWithRootViewController:settingsVC];
+  navVC.navigationBar.barTintColor = headerColor;
+  navVC.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : white};
+  navVC.navigationBar.translucent = NO;
+  [self presentViewController:navVC animated:YES completion:nil];
+}
+
+- (void)closeViewController {
+  [self dismissViewControllerAnimated:true completion:nil];
 }
 
 @end

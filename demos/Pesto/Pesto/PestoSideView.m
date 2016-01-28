@@ -15,7 +15,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @interface PestoSideViewCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic) NSString *title;
+@property(nonatomic) NSString *title;
 
 @end
 
@@ -24,7 +24,6 @@ static NSString *const kPestoSideViewWidthBaseURL =
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-
   }
   return self;
 }
@@ -50,19 +49,29 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @end
 
+@class PestoSideContentView;
+@protocol PestoSideContentViewDelegate <NSObject>
+
+@optional
+- (void)sideContentView:(PestoSideContentView *)sideContentView
+ didSelectItemWithTitle:(NSString *)title;
+
+@end
+
 @interface PestoSideContentView : UIView <UICollectionViewDataSource,
                                           UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic) NSArray *titles;
-@property (nonatomic) NSCache *imageCache;
-@property (nonatomic) UICollectionView *collectionView;
+@property(nonatomic) NSArray *titles;
+@property(nonatomic) NSCache *imageCache;
+@property(nonatomic) UICollectionView *collectionView;
+@property(weak) id<PestoSideContentViewDelegate> delegate;
 
 @end
 
 @implementation PestoSideContentView
 
 - (void)layoutSubviews {
-  _titles = @[  @"Home", @"Favorite", @"Saved", @"Trending", @"Settings" ];
+  _titles = @[ @"Home", @"Favorite", @"Saved", @"Trending", @"Settings" ];
 
   CGRect avatarRect = CGRectMake(0, 0, kPestoSideViewAvatarDim, kPestoSideViewAvatarDim);
   NSString *imageURL = [kPestoSideViewWidthBaseURL stringByAppendingString:@"avatar.jpg"];
@@ -138,7 +147,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
   dispatch_async(dispatch_get_global_queue(0, 0), ^{
     NSData *imageData = [_imageCache objectForKey:url];
     if (!imageData) {
-      imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:url]];
+      imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
       [_imageCache setObject:imageData forKey:url];
     }
     if (imageData == nil) {
@@ -156,7 +165,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
   return [MDCShadowLayer class];
 }
 
-# pragma mark - UICollectionViewDataSource
+#pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
@@ -174,26 +183,30 @@ static NSString *const kPestoSideViewWidthBaseURL =
   return cell;
 }
 
+#pragma mark - UICollectionViewDelegateFlowLayout
+
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (self.delegate &&
+      [self.delegate respondsToSelector:@selector(sideContentView:didSelectItemWithTitle:)]) {
+    [self.delegate sideContentView:self didSelectItemWithTitle:_titles[[indexPath row]]];
+  }
 }
 
-# pragma mark - UICollectionViewDelegateFlowLayout
-
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
+                  layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   return CGSizeMake(collectionView.bounds.size.width, 40.f);
 }
 
 @end
 
-@interface PestoSideView () <UIGestureRecognizerDelegate>
+@interface PestoSideView () <UIGestureRecognizerDelegate, PestoSideContentViewDelegate>
 
-@property (nonatomic) CGFloat xDelta;
-@property (nonatomic) CGFloat xStart;
-@property (nonatomic) PestoSideContentView *contentView;
-@property (nonatomic) UIButton *dismissButton;
+@property(nonatomic) CGFloat xDelta;
+@property(nonatomic) CGFloat xStart;
+@property(nonatomic) PestoSideContentView *contentView;
+@property(nonatomic) UIButton *dismissButton;
 
 @end
 
@@ -206,12 +219,15 @@ static NSString *const kPestoSideViewWidthBaseURL =
         CGRectMake(-kPestoSideViewWidth, 0, kPestoSideViewWidth, self.frame.size.height);
     _contentView = [[PestoSideContentView alloc] initWithFrame:contentViewFrame];
     _contentView.backgroundColor = [UIColor whiteColor];
+    _contentView.delegate = self;
     [self addSubview:_contentView];
 
     UITapGestureRecognizer *tapRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self
                                                 action:@selector(hideSideView)];
+    tapRecognizer.delegate = self;
     [self addGestureRecognizer:tapRecognizer];
+
     UIPanGestureRecognizer *panRecognizer =
         [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                 action:@selector(panGestureRecognized:)];
@@ -230,29 +246,37 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 - (void)showSideView {
   [UIView animateWithDuration:kPestoSideViewAnimationDuration
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseOut
-                   animations:^ {
-                     _contentView.transform = [PestoSideView showTransform];
-                   } completion:^(BOOL finished) {
-                     
-                   }];
+      delay:0
+      options:UIViewAnimationOptionCurveEaseOut
+      animations:^{
+        _contentView.transform = [PestoSideView showTransform];
+      }
+      completion:^(BOOL finished){
+
+      }];
 }
 
 - (void)hideSideView {
   [UIView animateWithDuration:kPestoSideViewAnimationDuration
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseOut
-                   animations:^ {
-                     _contentView.transform = [PestoSideView hideTransform];
-                   } completion:^(BOOL finished) {
-                     self.hidden = YES;
-                   }];
+      delay:0
+      options:UIViewAnimationOptionCurveEaseOut
+      animations:^{
+        _contentView.transform = [PestoSideView hideTransform];
+      }
+      completion:^(BOOL finished) {
+        self.hidden = YES;
+      }];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
     shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
   return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(UITouch *)touch {
+  return [gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
+         ![touch.view isDescendantOfView:_contentView];
 }
 
 - (void)panGestureRecognized:(UIPanGestureRecognizer *)recognizer {
@@ -286,6 +310,18 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 + (CGAffineTransform)hideTransform {
   return CGAffineTransformIdentity;
+}
+
+#pragma mark - PestoSideContentViewDelegate
+
+- (void)sideContentView:(PestoSideContentView *)sideContentView
+ didSelectItemWithTitle:(NSString *)title {
+  if (self.delegate) {
+    if ([title isEqualToString:@"Settings"] &&
+        [self.delegate respondsToSelector:@selector(sideViewDidSelectSettings:)]) {
+      [self.delegate sideViewDidSelectSettings:self];
+    }
+  }
 }
 
 @end
