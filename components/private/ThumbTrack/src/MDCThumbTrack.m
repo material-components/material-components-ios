@@ -611,19 +611,21 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   } else {
     value = [self valueForThumbPosition:position];
   }
-  __weak MDCThumbTrack *weakSelf = self;
-  if ([_delegate respondsToSelector:@selector(thumbTrack:willAnimateToValue:)]) {
-    [_delegate thumbTrack:self willAnimateToValue:value];
+  __strong typeof(_delegate) strongDelegate = _delegate;
+  if ([strongDelegate respondsToSelector:@selector(thumbTrack:willAnimateToValue:)]) {
+    [strongDelegate thumbTrack:self willAnimateToValue:value];
   }
+  __weak typeof(self) weakSelf = self;
   [self setValue:value
            animated:YES
       userGenerated:YES
          completion:^{
-           MDCThumbTrack *strongSelf = weakSelf;
+           __strong typeof(weakSelf) strongSelf = weakSelf;
+           __strong typeof(strongSelf->_delegate) strongDelegate = strongSelf->_delegate;
            [strongSelf sendDiscreteChangeAction];
-           if (strongSelf && [strongSelf->_delegate
+           if (strongSelf && [strongDelegate
                                  respondsToSelector:@selector(thumbTrack:didAnimateToValue:)]) {
-             [strongSelf->_delegate thumbTrack:weakSelf didAnimateToValue:value];
+             [strongDelegate thumbTrack:strongSelf didAnimateToValue:value];
            }
          }];
 }
