@@ -621,11 +621,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       userGenerated:YES
          completion:^{
            __strong typeof(weakSelf) strongSelf = weakSelf;
-           __strong typeof(strongSelf->_delegate) strongBlockDelegate = strongSelf->_delegate;
+           __strong typeof(strongSelf->_delegate) strongDelegate = strongSelf->_delegate;
            [strongSelf sendDiscreteChangeAction];
-           if (strongSelf && [strongBlockDelegate
+           if (strongSelf && [strongDelegate
                                  respondsToSelector:@selector(thumbTrack:didAnimateToValue:)]) {
-             [strongBlockDelegate thumbTrack:strongSelf didAnimateToValue:value];
+             [strongDelegate thumbTrack:strongSelf didAnimateToValue:value];
            }
          }];
 }
