@@ -1,11 +1,13 @@
 #import "PestoSideView.h"
+#import "PestoAvatarView.h"
+#import "PestoRemoteImageService.h"
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
 static CGFloat kPestoSideViewAnimationDuration = 0.2f;
-static CGFloat kPestoSideViewAvatarDim = 64.f;
+static CGFloat kPestoSideViewAvatarDim = 70.f;
 static CGFloat kPestoSideViewCollectionViewInset = 5.f;
 static CGFloat kPestoSideViewHideThreshhold = 64.f;
 static CGFloat kPestoSideViewUserItemHeight = 200.f;
@@ -74,29 +76,14 @@ static NSString *const kPestoSideViewWidthBaseURL =
   _titles = @[ @"Home", @"Favorite", @"Saved", @"Trending", @"Settings" ];
 
   CGRect avatarRect = CGRectMake(0, 0, kPestoSideViewAvatarDim, kPestoSideViewAvatarDim);
-  NSString *imageURL = [kPestoSideViewWidthBaseURL stringByAppendingString:@"avatar.jpg"];
-  UIImageView *avatar = [self imageViewWithURL:imageURL];
-  avatar.frame = avatarRect;
-  avatar.layer.cornerRadius = avatar.bounds.size.width / 2.f;
-  avatar.center = CGPointMake(self.bounds.size.width / 2.f,
-                              kPestoSideViewUserItemHeight / 2.f - 12.f);
-  avatar.layer.masksToBounds = YES;
-  [self addSubview:avatar];
-
-  CGRect cirlceRect = CGRectMake(-3.f,
-                                 -3.f,
-                                 kPestoSideViewAvatarDim + 6.f,
-                                 kPestoSideViewAvatarDim + 6.f);
-  UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1];
-  UIView *circleView = [[UIView alloc] initWithFrame:avatarRect];
-  CAShapeLayer *circleLayer = [CAShapeLayer layer];
-  [circleLayer setPath:[[UIBezierPath bezierPathWithOvalInRect:cirlceRect] CGPath]];
-  [circleLayer setStrokeColor:teal.CGColor];
-  [circleLayer setFillColor:[UIColor clearColor].CGColor];
-  [circleLayer setLineWidth:2.f];
-  [circleView.layer addSublayer:circleLayer];
-  circleView.center = avatar.center;
-  [self addSubview:circleView];
+  NSURL *avatarURL = [NSURL
+      URLWithString:[kPestoSideViewWidthBaseURL
+                        stringByAppendingString:@"avatar.jpg"]];
+  PestoAvatarView *avatarView = [[PestoAvatarView alloc] initWithFrame:avatarRect];
+  avatarView.avatarImageURL = avatarURL;
+  avatarView.center = CGPointMake(self.bounds.size.width / 2.f,
+                                  kPestoSideViewUserItemHeight / 2.f - 12.f);
+  [self addSubview:avatarView];
 
   CGRect nameRect = CGRectMake(0,
                                110.f,
@@ -140,25 +127,6 @@ static NSString *const kPestoSideViewWidthBaseURL =
   [_collectionView setDataSource:self];
   [_collectionView setDelegate:self];
   _collectionView.delegate = self;
-}
-
-- (UIImageView *)imageViewWithURL:(NSString *)url {
-  UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-  dispatch_async(dispatch_get_global_queue(0, 0), ^{
-    NSData *imageData = [_imageCache objectForKey:url];
-    if (!imageData) {
-      imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
-      [_imageCache setObject:imageData forKey:url];
-    }
-    if (imageData == nil) {
-      return;
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-      UIImage *image = [UIImage imageWithData:imageData];
-      imageView.image = image;
-    });
-  });
-  return imageView;
 }
 
 + (Class)layerClass {
