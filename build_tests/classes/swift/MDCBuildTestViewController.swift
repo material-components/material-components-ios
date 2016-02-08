@@ -54,8 +54,5 @@ class MDCBuildTestViewController: UIViewController {
     pageControl.center = CGPointMake(100, 145);
     assert(pageControl.isKindOfClass(MDCPageControl), "Expecting to find a valid object for MDCSpritedAnimationView");
 
-    // MARK: Buttons
-    assert(MDCButton.init().isKindOfClass(MDCButton), "Expecting to find a valid object for MDCButton");
-
   }
 }

@@ -43,17 +43,6 @@ Pod::Spec.new do |s|
   #  end
   #
 
-  s.subspec 'Buttons' do |ss|
-    ss.public_header_files = 'components/Buttons/src/*.h'
-    ss.source_files = 'components/Buttons/src/*.{h,m}', 'components/Buttons/src/private/*.{h,m}'
-    ss.header_mappings_dir = 'components/Buttons/src/*'
-    ss.private_header_files = 'components/Buttons/src/Private/*.h'
-    ss.dependency 'material-components-ios/Ink'
-    ss.dependency 'material-components-ios/ShadowElevations'
-    ss.dependency 'material-components-ios/ShadowLayer'
-    ss.dependency 'material-components-ios/Typography'
-  end
-
   s.subspec 'Ink' do |ss|
     ss.public_header_files = 'components/Ink/src/*.h'
     ss.source_files = 'components/Ink/src/*.{h,m}', 'components/Ink/src/private/*.{h,m}'
