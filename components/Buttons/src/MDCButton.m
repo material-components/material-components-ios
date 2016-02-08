@@ -54,7 +54,8 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
 }
 
 @interface MDCButton () {
-  NSMutableDictionary *_userElevations;
+  NSMutableDictionary *_userElevations;    // For each UIControlState.
+  NSMutableDictionary *_backgroundColors;  // For each UIControlState.
 
   // Cached accessibility settings.
   NSMutableDictionary *_accessibilityLabelForState;
@@ -64,10 +65,6 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
 @end
 
 @implementation MDCButton
-
-@synthesize enabledBackgroundColor = _enabledBackgroundColor;
-@synthesize disabledBackgroundColorLight = _disabledBackgroundColorLight;
-@synthesize disabledBackgroundColorDark = _disabledBackgroundColorDark;
 
 + (Class)layerClass {
   return [MDCShadowLayer class];
@@ -91,6 +88,7 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
+  _backgroundColors = [NSMutableDictionary dictionary];
   _accessibilityLabelForState = [NSMutableDictionary dictionary];
 
   [self setElevation:MDCShadowElevationNone forState:UIControlStateDisabled];
@@ -128,6 +126,9 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
 
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
+
+  //default background colors
+  [self setBackgroundColor:[UIColor colorWithWhite:158.0 / 255.0 alpha:1] forState:UIControlStateNormal];
 }
 
 - (void)dealloc {
@@ -137,44 +138,6 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   [self removeTarget:self
                 action:@selector(touchDragExit:forEvent:)
       forControlEvents:UIControlEventTouchDragExit];
-}
-
-- (UIColor *)enabledBackgroundColor {
-  if (!_enabledBackgroundColor) {
-    _enabledBackgroundColor = [UIColor colorWithWhite:158.0 / 255.0 alpha:1];
-  }
-  return _enabledBackgroundColor;
-}
-
-- (void)setEnabledBackgroundColor:(UIColor *)enabledBackgroundColor {
-  _enabledBackgroundColor = enabledBackgroundColor;
-  [self updateBackgroundColor];
-}
-
-- (UIColor *)disabledBackgroundColorLight {
-  if (!_disabledBackgroundColorLight) {
-    _disabledBackgroundColorLight = [UIColor colorWithWhite:0.8f alpha:1];
-    ;
-  }
-  return _disabledBackgroundColorLight;
-}
-
-- (void)setDisabledBackgroundColorLight:(UIColor *)disabledBackgroundColorLight {
-  _disabledBackgroundColorLight = disabledBackgroundColorLight;
-  [self updateBackgroundColor];
-}
-
-- (UIColor *)disabledBackgroundColorDark {
-  if (!_disabledBackgroundColorDark) {
-    _disabledBackgroundColorDark = [UIColor colorWithWhite:0.6f alpha:1];
-    ;
-  }
-  return _disabledBackgroundColorDark;
-}
-
-- (void)setDisabledBackgroundColorDark:(UIColor *)disabledBackgroundColorDark {
-  _disabledBackgroundColorDark = disabledBackgroundColorDark;
-  [self updateBackgroundColor];
 }
 
 - (void)setCustomTitleColor:(UIColor *)customTitleColor {
@@ -189,13 +152,6 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   [self updateAlphaAndBackgroundColorAnimated:NO];
 }
 
-- (CGFloat)textBaselineForBounds:(CGRect)bounds {
-  CGRect contentRect = [self contentRectForBounds:bounds];
-  CGRect titleRect = [self titleRectForContentRect:contentRect];
-  CGFloat baseline = CGRectGetMaxY(titleRect) + self.titleLabel.font.descender;
-  return baseline;
-}
-
 - (void)setDisabledAlpha:(CGFloat)disabledAlpha {
   _disabledAlpha = disabledAlpha;
   [self updateAlphaAndBackgroundColorAnimated:NO];
@@ -208,18 +164,19 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   if (self) {
     [self commonInit];
 
-    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
-      self.enabledBackgroundColor =
-          [aDecoder decodeObjectForKey:MDCButtonEnabledBackgroundColorKey];
-    }
-    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorLightKey]) {
-      self.disabledBackgroundColorLight =
-          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorLightKey];
-    }
-    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorDarkKey]) {
-      self.disabledBackgroundColorDark =
-          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorDarkKey];
-    }
+    // TODO(randallli): Add backward compatibility to background colors
+    //    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
+    //      self.enabledBackgroundColor =
+    //          [aDecoder decodeObjectForKey:MDCButtonEnabledBackgroundColorKey];
+    //    }
+    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorLightKey]) {
+    //      self.disabledBackgroundColorLight =
+    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorLightKey];
+    //    }
+    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorDarkKey]) {
+    //      self.disabledBackgroundColorDark =
+    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorDarkKey];
+    //    }
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkColorKey]) {
       self.inkView.inkColor = [aDecoder decodeObjectForKey:MDCButtonInkViewInkColorKey];
     }
@@ -237,6 +194,7 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
       _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
     }
+    // For backward compatibility
     if ([aDecoder containsValueForKey:MDCButtonUserZIndicesKey]) {
       NSMutableDictionary *userZIndices = [aDecoder decodeObjectForKey:MDCButtonUserZIndicesKey];
       NSArray *userZIndicesStates = [userZIndices allKeys];
@@ -253,17 +211,6 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
 
-  if (_enabledBackgroundColor) {
-    [aCoder encodeObject:_enabledBackgroundColor forKey:MDCButtonEnabledBackgroundColorKey];
-  }
-  if (_disabledBackgroundColorLight) {
-    [aCoder encodeObject:_disabledBackgroundColorLight
-                  forKey:MDCButtonDisabledBackgroundColorLightKey];
-  }
-  if (_disabledBackgroundColorDark) {
-    [aCoder encodeObject:_disabledBackgroundColorDark
-                  forKey:MDCButtonDisabledBackgroundColorDarkKey];
-  }
   if (_inkView.inkColor) {
     [aCoder encodeObject:_inkView.inkColor forKey:MDCButtonInkViewInkColorKey];
   }
@@ -347,6 +294,21 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
 }
 
 #pragma mark - Title Uppercasing
+
+- (void)setUppercaseTitle:(BOOL)uppercaseTitle {
+  _uppercaseTitle = uppercaseTitle;
+  if (_uppercaseTitle) {
+    // This ensures existing titles will get upper cased
+    UIControlState allControlStates =
+        (UIControlStateHighlighted | UIControlStateDisabled | UIControlStateSelected);
+    for (UIControlState state; state < allControlStates; ++state) {
+      NSString *title = [self titleForState:state];
+      if (title) {
+        [self setTitle:title forState:state];
+      }
+    }
+  }
+}
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state {
   // Intercept any setting of the title and store a copy in case the accessibilityLabel
@@ -442,6 +404,16 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   return [super accessibilityTraits] | UIAccessibilityTraitButton;
 }
 
+#pragma mark - Ink
+
+- (UIColor *)inkColor {
+  return _inkView.inkColor;
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  _inkView.inkColor = inkColor;
+}
+
 #pragma mark - Shadows
 
 - (MDCShadowLayer *)shadowLayer {
@@ -455,26 +427,35 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   [CATransaction commit];
 }
 
+#pragma mark - BackgroundColor
+
+- (UIColor *)backgroundColorForState:(UIControlState)state {
+  return _backgroundColors[@(state)];
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
+  _backgroundColors[@(state)] = backgroundColor;
+}
+
 #pragma mark - Elevations
 
 - (CGFloat)elevationForState:(UIControlState)state {
-  CGFloat buttonStateDiff = MDCShadowElevationRaisedButtonPressed -
-                            MDCShadowElevationRaisedButtonResting;
   NSNumber *elevation = _userElevations[@(state)];
 
   if (elevation) {
     return [elevation floatValue];
   }
-  switch (state) {
-    case UIControlStateSelected: {
-      if (MDCButtonFloatIsExactlyZero([self elevationForState:UIControlStateNormal])) {
-        return MDCShadowElevationRaisedButtonPressed;
-      } else {
-        return [self elevationForState:UIControlStateNormal] + buttonStateDiff;
-      }
+  if (state & UIControlStateSelected) {
+    CGFloat elevationForNormal = [self elevationForState:UIControlStateNormal];
+    if (MDCButtonFloatIsExactlyZero(elevationForNormal)) {
+      return MDCShadowElevationRaisedButtonPressed;
+    } else {
+      CGFloat pressedDeltaForRaisedButton = MDCShadowElevationRaisedButtonPressed -
+                                            MDCShadowElevationRaisedButtonResting;
+      return elevationForNormal + pressedDeltaForRaisedButton;
     }
-    default:
-      return MDCShadowElevationNone;
+  } else {
+    return MDCShadowElevationNone;
   }
 }
 
@@ -495,6 +476,14 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   [_userElevations removeObjectForKey:@(state)];
 }
 
+- (UIColor *)currentBackgroundColor {
+  UIColor *color = _backgroundColors[@(self.state)];
+  if (color) {
+    return color;
+  }
+  return [self backgroundColorForState:UIControlStateNormal];
+}
+
 #pragma mark - Private methods
 
 /**
@@ -503,8 +492,7 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
  * @note If self.underlyingColor is not set, then this method will return nil.
  */
 - (UIColor *)effectiveBackgroundColor {
-  return ![self isTransparentColor:self.backgroundColor] ? self.backgroundColor
-                                                         : self.underlyingColor;
+  return ![self isTransparentColor:self.currentBackgroundColor] ? self.currentBackgroundColor : self.underlyingColor;
 }
 
 /** Returns YES if the color is not transparent and is a "dark" color. */
@@ -578,16 +566,16 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
 }
 
 - (void)updateBackgroundColor {
-  UIColor *color = nil;
-  if ([self shouldHaveOpaqueBackground]) {
-    if (self.enabled) {
-      color = self.enabledBackgroundColor;
-    } else {
-      color = [self isDarkColor:_underlyingColor] ? _disabledBackgroundColorLight
-                                                  : _disabledBackgroundColorDark;
-    }
-  }
-  self.backgroundColor = color;
+  //  UIColor *color = nil;
+  //  if ([self shouldHaveOpaqueBackground]) {
+  //    if (self.enabled) {
+  ////      color = self.enabledBackgroundColor;
+  //    } else {
+  //      color = [self isDarkColor:_underlyingColor] ? _disabledBackgroundColorLight
+  //                                                  : _disabledBackgroundColorDark;
+  //    }
+  //  }
+  self.backgroundColor = self.currentBackgroundColor;
 }
 
 - (void)updateDisabledTitleColor {

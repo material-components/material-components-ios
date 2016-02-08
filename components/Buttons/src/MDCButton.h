@@ -20,21 +20,34 @@
 @interface MDCButton : UIButton
 
 /**
- * A color used as the button's |backgroundColor| when the button is enabled.
+ * The background color given this UIControl's @c state.
+ * @c setBackgroundColorForState: to set the valid background colors for a given state.
  */
-@property(nonatomic, strong, null_resettable) UIColor *enabledBackgroundColor;
+@property(nullable, nonatomic, readonly, strong) UIColor *currentBackgroundColor;
 
 /**
- * A color used as the button's |backgroundColor| when the button is disabled and the
- * |underlyingColor| is a dark color.
+ * A color used as the button's @c backgroundColor.
+ * If left unset or reset to nil for a given state, then an appropriate default color is used.
  */
-@property(nonatomic, strong, null_resettable) UIColor *disabledBackgroundColorLight;
+- (nonnull UIColor *)backgroundColorForState:(UIControlState)state;
 
 /**
- * A color used as the button's |backgroundColor| when the button is disabled and the
- * |underlyingColor| is a light (or transparent) color.
+ * A color used as the button's @c backgroundColor.
+ *
+ * @param elevation The elevation to set.
+ * @param state The state to set.
  */
-@property(nonatomic, strong, null_resettable) UIColor *disabledBackgroundColorDark;
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
+
+/**
+ The ink color of the button.
+ If left unset or reset to nil an appropriate default color is used.
+ */
+@property(null_resettable, nonatomic, strong) UIColor *inkColor;
+
+///** Please use @c backgroundColorForState: instead. */
+//- (void)setBackgroundColor:(nullable UIColor *)backgroundColor NS_UNAVAILABLE;
+//- (nullable UIColor *)backgroundColor NS_UNAVAILABLE;
 
 /**
  * A custom title color for the non-disabled states. The default is nil, which means that the button
@@ -60,7 +73,7 @@
 @property(nonatomic) BOOL shouldRaiseOnTouch;
 
 /**
- * Converts the button title to uppercase. Changing this property will not update the current
+ * Converts the button title to uppercase. Changing this property to NO will not update the current
  * title string.
  *
  * Default is YES and is recommended whenever possible.
@@ -76,7 +89,7 @@
 @property(nonatomic) UIEdgeInsets hitAreaInsets;
 
 /**
- * The underlying color of the button, set by the button's owner.
+ * This is the color of the view behind the button. It's used by flat buttons to calculate accessible text colors.
  *
  * For Flat buttons, this is the color of both the surrounding area and the button's background.
  * For Raised and Floating buttons, this is the color of view underneath the button.
@@ -124,13 +137,5 @@
  * @param state The control state to reset the elevation.
  */
 - (void)resetElevationForState:(UIControlState)state;
-
-/**
- * Returns the text baseline for a set of button bounds.
- *
- * @param bounds The button bounds. Pass in self.bounds for the current bounds.
- * @return The vertical distance of the baseline from the button's origin.
- */
-- (CGFloat)textBaselineForBounds:(CGRect)bounds;
 
 @end

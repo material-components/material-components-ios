@@ -66,7 +66,7 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
     [_view addGestureRecognizer:_gestureRecognizer];
 
     _defaultInkView = [[MDCInkView alloc] initWithFrame:view.bounds];
-    _defaultInkView.inkColor = [UIColor colorWithWhite:224.0f / 255.0f alpha:0.25f];
+    //    _defaultInkView.inkColor = [UIColor colorWithWhite:224.0f / 255.0f alpha:0.25f];
     _defaultInkView.autoresizingMask =
         UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   }
