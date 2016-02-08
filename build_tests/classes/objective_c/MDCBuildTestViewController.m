@@ -16,13 +16,15 @@
 
 #import "MDCBuildTestViewController.h"
 
+#import <MaterialButtons.h>
+#import <MaterialInk.h>
 #import <MaterialPageControl.h>
 #import <MaterialSlider.h>
 #import <MaterialScrollViewDelegateMultiplexer.h>
+#import <MaterialShadowElevations.h>
 #import <MaterialShadowLayer.h>
 #import <MaterialSpritedAnimationView.h>
 #import <MaterialTypography.h>
-#import <MaterialInk.h>
 
 @implementation MDCBuildTestViewController
 
@@ -30,7 +32,7 @@
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
 
-  // Testing build and linking so all we need to do is touch the component objects.
+// Testing build and linking so all we need to do is touch the component objects.
 #pragma mark Slider
 
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
@@ -45,12 +47,12 @@
 #pragma mark Ink
 
   NSAssert([[MDCInkTouchController alloc] initWithView:self.view],
-    @"Expecting to find a valid object for MDCInkTouchController.");
+           @"Expecting to find a valid object for MDCInkTouchController.");
 
 #pragma mark ScrollViewDelegateMultiplexer
 
   NSAssert([[MDCScrollViewDelegateMultiplexer alloc] init],
-    @"Expecting to find a valid object for slider.");
+           @"Expecting to find a valid object for MDCScrollViewDelegateMultiplexer.");
 
 #pragma mark ShadowLayer
 
@@ -59,7 +61,7 @@
 #pragma mark SpritedAnimation
 
   NSAssert([[MDCSpritedAnimationView alloc] init],
-    @"Expecting to find a valid object for MDCSpritedAnimationView.");
+           @"Expecting to find a valid object for MDCSpritedAnimationView.");
 
 #pragma mark PageControl
 
@@ -69,6 +71,9 @@
   pageControl.center = CGPointMake(100, 145);
   NSAssert(pageControl, @"Expecting to find a valid object for MDCPageControl.");
 
+#pragma mark Buttons
+
+  NSAssert([[MDCButton alloc] init], @"Expecting to find a valid object for MDCButton.");
 }
 
 @end
