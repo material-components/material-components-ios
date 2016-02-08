@@ -53,6 +53,13 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   return (value == 0.f);
 }
 
+static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
+  return [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0
+                         green:((float)((rgbValue & 0x00FF00) >> 8)) / 255.0
+                          blue:((float)((rgbValue & 0x0000FF) >> 0)) / 255.0
+                         alpha:1.0];
+}
+
 @interface MDCButton () {
   NSMutableDictionary *_userElevations;    // For each UIControlState.
   NSMutableDictionary *_backgroundColors;  // For each UIControlState.
@@ -128,7 +135,8 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   self.exclusiveTouch = YES;
 
   //default background colors
-  [self setBackgroundColor:[UIColor colorWithWhite:158.0 / 255.0 alpha:1] forState:UIControlStateNormal];
+  [self setBackgroundColor:MDCColorFromRGB(0x2196F3) forState:UIControlStateNormal];
+  self.inkColor = [MDCColorFromRGB(0x64B5F6) colorWithAlphaComponent:0.25f];
 }
 
 - (void)dealloc {

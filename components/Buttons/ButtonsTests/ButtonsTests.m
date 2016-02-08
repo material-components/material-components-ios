@@ -21,6 +21,13 @@
 static const NSUInteger kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = 0.0001f;
 
+static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
+  return [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0
+                         green:((float)((rgbValue & 0x00FF00) >> 8)) / 255.0
+                          blue:((float)((rgbValue & 0x0000FF) >> 0)) / 255.0
+                         alpha:1.0];
+}
+
 @interface ButtonsTests : XCTestCase
 
 @end
@@ -187,17 +194,21 @@ static const CGFloat kEpsilonAccuracy = 0.0001f;
 
 - (void)testDefaultColors {
   // Given
-  //  MDCButton *button = [[MDCButton alloc] init];
+  MDCButton *button = [[MDCButton alloc] init];
 
   // When
 
   // Then
-  //  XCTAssertEqualObjects([button b], <#expression2, ...#>)
+  // Colors chosen from: https://www.google.com/design/spec/style/color.html#color-color-palette
+  UIColor *blue500 = MDCColorFromRGB(0x2196F3);
+  UIColor *blue300 = MDCColorFromRGB(0x64B5F6);
+  XCTAssertEqualObjects([button currentBackgroundColor], blue500);
+  UIColor *lightBlueInk = [blue300 colorWithAlphaComponent:0.25f];
+  XCTAssertEqualObjects(button.inkColor, lightBlueInk);
 }
 
 /*
  TODO: things to unit test
- - default colors
  (should these even be a thing?)
  - hitAreaInset
  - disabledAlpha
