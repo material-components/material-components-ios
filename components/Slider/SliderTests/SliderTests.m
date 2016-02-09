@@ -294,6 +294,91 @@ static const CGFloat kEpsilonAccuracy = 0.0001f;
   XCTAssertEqualObjects(actualColor, expectedColor);
 }
 
+#pragma mark accessibility
+
+- (void)testAccessibilityValue {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+  CGFloat newValue = [self randomPercent];
+
+  // When
+  slider.value = newValue;
+
+  // Then
+  NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+  numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
+  NSString *expected = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:slider.value]];
+  XCTAssertEqualObjects([slider accessibilityValue], expected);
+}
+
+- (void)testAccessibilityValueWithLargerMax {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+  slider.maximumValue = [self randomNumber];
+  CGFloat newValue = [self randomPercent];
+
+  // When
+  slider.value = newValue;
+
+  // Then
+  NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+  numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
+  CGFloat percent = (slider.value - slider.minimumValue) / (slider.maximumValue - slider.minimumValue);
+  NSString *expected = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:percent]];
+  XCTAssertEqualObjects([slider accessibilityValue], expected);
+}
+
+- (void)testAccessibilityIncrement {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+  slider.value = [self randomPercent] - 0.1f;
+  CGFloat originalValue = slider.value;
+
+  // When
+  [slider accessibilityIncrement];
+
+  // Then
+  XCTAssertEqual(originalValue + 0.1f, slider.value);
+}
+
+- (void)testAccessibilityDecrement {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+  slider.value = [self randomPercent] + 0.1f;
+  CGFloat originalValue = slider.value;
+
+  // When
+  [slider accessibilityDecrement];
+
+  // Then
+  XCTAssertEqual(originalValue - 0.1f, slider.value);
+}
+
+- (void)testAccessibilityIncrementWithLargerMax {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+  slider.maximumValue = [self randomNumber];
+  slider.value = ([self randomPercent] - 0.1f) * slider.maximumValue;
+  CGFloat originalValue = slider.value;
+
+  // When
+  [slider accessibilityIncrement];
+
+  // Then
+  XCTAssertEqual(originalValue + 0.1f * slider.maximumValue, slider.value);
+}
+
+- (void)testAccessibilityTraits {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+  slider.enabled = arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
+
+  // When
+
+  // Then
+  XCTAssertTrue(slider.accessibilityTraits & UIAccessibilityTraitAdjustable);
+}
+
 #pragma mark private test helpers
 
 - (UIColor *)blueColor {
@@ -305,7 +390,7 @@ static const CGFloat kEpsilonAccuracy = 0.0001f;
 }
 
 - (CGFloat)randomPercent {
-  return 1 / (CGFloat)(arc4random_uniform(999) + 1);
+  return (CGFloat)(arc4random_uniform(1001)) / 1000;
 }
 
 @end
