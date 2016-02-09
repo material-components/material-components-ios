@@ -98,13 +98,13 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Typography' do |ss|
-    ss.public_header_files = 'Typography/src/*.h'
-    ss.source_files = 'Typography/src/*.{h,m}', 'Typography/src/Private/*.{h,m}'
-    ss.header_mappings_dir = 'Typography/src/*'
+    ss.public_header_files = 'components/Typography/src/*.h'
+    ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/Private/*.{h,m}'
+    ss.header_mappings_dir = 'components/Typography/src/*'
 
-    ss.private_header_files = 'Typography/src/Private/*.h'
+    ss.private_header_files = 'components/Typography/src/Private/*.h'
     ss.resource_bundles = {
-      'MaterialTypography' => ['Typography/src/MaterialTypography.bundle/*']
+      'MaterialTypography' => ['components/Typography/src/MaterialTypography.bundle/*']
     }
   end
 
