@@ -205,6 +205,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   [self startBackgroundRipple];
   [self startForegroundRippleAtPoint:point];
   _dropStartTime = CFAbsoluteTimeGetCurrent();
+  _completionBlock = completionBlock;
 }
 
 - (void)startBackgroundRipple {
