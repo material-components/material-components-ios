@@ -2,5 +2,6 @@
   "load": ["clang-format-linter"],
   "phabricator.uri" : "http://codereview.cc/",
   "repository.callsign" : "MDC",
-  "arc.land.onto.default" : "develop"
+  "arc.land.onto.default" : "develop",
+  "git.default-relative-commit" : "origin/develop"
 }
