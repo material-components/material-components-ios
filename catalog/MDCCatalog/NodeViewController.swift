@@ -42,6 +42,12 @@ class NodeViewController: UITableViewController {
     super.init(coder: aDecoder)
   }
 
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    self.navigationController?.setNavigationBarHidden(false, animated: animated)
+  }
+
   // MARK: UITableViewDataSource
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
