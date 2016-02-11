@@ -1,5 +1,6 @@
 PODS:
   - material-components-ios (0.1.0):
+    - material-components-ios/FlexibleHeader (= 0.1.0)
     - material-components-ios/Ink (= 0.1.0)
     - material-components-ios/PageControl (= 0.1.0)
     - material-components-ios/private (= 0.1.0)
@@ -11,6 +12,7 @@ PODS:
     - material-components-ios/Switch (= 0.1.0)
     - material-components-ios/Typography (= 0.1.0)
   - material-components-ios-catalog (0.1.0)
+  - material-components-ios/FlexibleHeader (0.1.0)
   - material-components-ios/Ink (0.1.0)
   - material-components-ios/PageControl (0.1.0)
   - material-components-ios/private (0.1.0):
@@ -42,7 +44,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  material-components-ios: b1e1bc101fe89ed301cdfeb479597d90b1fcf911
+  material-components-ios: 463b80af2a7388584df19727b09f00f9ec43e4b1
   material-components-ios-catalog: 9e0e0b97321c38c0335293b8355d838071614f78
 
 COCOAPODS: 0.39.0
