@@ -124,7 +124,7 @@ Pod::Spec.new do |s|
       ss.dependency 'material-components-ios/ShadowLayer'
       ss.dependency 'material-components-ios/private/Color'
     end
-
+    
   end
 
 end

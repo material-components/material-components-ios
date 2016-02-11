@@ -14,11 +14,16 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-#import "AppDelegate.h"
+#import "Reflection.h"
 
-int main(int argc, char *argv[]) {
-  @autoreleasepool {
-    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-  }
+@protocol CatalogNode <NSObject>
+- (NSArray<NSString *> *)catalogHierarchy;
+@end
+
+NSArray<NSString *> *CatalogHierarchyFromClass(Class aClass) {
+  return [aClass performSelector:@selector(catalogHierarchy)];
+}
+
+UIViewController *ViewControllerFromClass(Class aClass) {
+  return [[aClass alloc] initWithNibName:nil bundle:nil];
 }

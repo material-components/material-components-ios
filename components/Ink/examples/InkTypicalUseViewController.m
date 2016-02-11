@@ -14,16 +14,21 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import "InkTypicalUseViewController.h"
 
 #import "MaterialInk.h"
 
-@interface ViewController () <MDCInkTouchControllerDelegate>
+@interface InkTypicalUseViewController () <MDCInkTouchControllerDelegate>
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController2;
 @end
 
-@implementation ViewController
+@implementation InkTypicalUseViewController
+
+// TODO: Support other categorizational methods.
++ (NSArray *)catalogHierarchy {
+  return @[ @"Ink", @"Typical use" ];
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];

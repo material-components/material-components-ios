@@ -1,5 +1,0 @@
-module_name: InkExample
-umbrella_header: src/MaterialInkExample.h
-objc_mode: true
-sdk: iphonesimulator
-output: docs/
