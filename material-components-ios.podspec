@@ -54,6 +54,13 @@ Pod::Spec.new do |s|
     ss.dependency 'material-components-ios/Typography'
   end
 
+  s.subspec 'FlexibleHeader' do |ss|
+    ss.public_header_files = 'components/FlexibleHeader/src/*.h'
+    ss.source_files = 'components/FlexibleHeader/src/*.{h,m}', 'components/FlexibleHeader/src/private/*.{h,m}'
+    ss.header_mappings_dir = 'components/FlexibleHeader/src/*'
+    ss.private_header_files = 'components/FlexibleHeader/src/private/*.h'
+  end
+
   s.subspec 'Ink' do |ss|
     ss.public_header_files = 'components/Ink/src/*.h'
     ss.source_files = 'components/Ink/src/*.{h,m}', 'components/Ink/src/private/*.{h,m}'
@@ -109,13 +116,13 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Typography' do |ss|
-    ss.public_header_files = 'Typography/src/*.h'
-    ss.source_files = 'Typography/src/*.{h,m}', 'Typography/src/Private/*.{h,m}'
-    ss.header_mappings_dir = 'Typography/src/*'
+    ss.public_header_files = 'components/Typography/src/*.h'
+    ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/Private/*.{h,m}'
+    ss.header_mappings_dir = 'components/Typography/src/*'
 
-    ss.private_header_files = 'Typography/src/Private/*.h'
+    ss.private_header_files = 'components/Typography/src/Private/*.h'
     ss.resource_bundles = {
-      'MaterialTypography' => ['Typography/src/MaterialTypography.bundle/*']
+      'MaterialTypography' => ['components/Typography/src/MaterialTypography.bundle/*']
     }
   end
 
@@ -135,7 +142,7 @@ Pod::Spec.new do |s|
       ss.dependency 'material-components-ios/ShadowLayer'
       ss.dependency 'material-components-ios/private/Color'
     end
-
+    
   end
 
 end

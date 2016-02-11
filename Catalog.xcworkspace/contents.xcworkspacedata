@@ -30,6 +30,6 @@
       location = "group:components/Switch/Switch.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Typography/examples/TypographyExample/TypographyExample.xcodeproj">
+      location = "group:components/Typography/examples/TypographyExample/TypographyExample.xcodeproj">
    </FileRef>
 </Workspace>

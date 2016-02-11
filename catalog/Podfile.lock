@@ -1,0 +1,50 @@
+PODS:
+  - material-components-ios (0.1.0):
+    - material-components-ios/FlexibleHeader (= 0.1.0)
+    - material-components-ios/Ink (= 0.1.0)
+    - material-components-ios/PageControl (= 0.1.0)
+    - material-components-ios/private (= 0.1.0)
+    - material-components-ios/ScrollViewDelegateMultiplexer (= 0.1.0)
+    - material-components-ios/ShadowElevations (= 0.1.0)
+    - material-components-ios/ShadowLayer (= 0.1.0)
+    - material-components-ios/Slider (= 0.1.0)
+    - material-components-ios/SpritedAnimationView (= 0.1.0)
+    - material-components-ios/Switch (= 0.1.0)
+    - material-components-ios/Typography (= 0.1.0)
+  - material-components-ios-catalog (0.1.0)
+  - material-components-ios/FlexibleHeader (0.1.0)
+  - material-components-ios/Ink (0.1.0)
+  - material-components-ios/PageControl (0.1.0)
+  - material-components-ios/private (0.1.0):
+    - material-components-ios/private/Color (= 0.1.0)
+    - material-components-ios/private/ThumbTrack (= 0.1.0)
+  - material-components-ios/private/Color (0.1.0)
+  - material-components-ios/private/ThumbTrack (0.1.0):
+    - material-components-ios/private/Color
+    - material-components-ios/ShadowElevations
+    - material-components-ios/ShadowLayer
+  - material-components-ios/ScrollViewDelegateMultiplexer (0.1.0)
+  - material-components-ios/ShadowElevations (0.1.0)
+  - material-components-ios/ShadowLayer (0.1.0)
+  - material-components-ios/Slider (0.1.0):
+    - material-components-ios/private/ThumbTrack
+  - material-components-ios/SpritedAnimationView (0.1.0)
+  - material-components-ios/Switch (0.1.0):
+    - material-components-ios/private/ThumbTrack
+  - material-components-ios/Typography (0.1.0)
+
+DEPENDENCIES:
+  - material-components-ios (from `../`)
+  - material-components-ios-catalog (from `../`)
+
+EXTERNAL SOURCES:
+  material-components-ios:
+    :path: ../
+  material-components-ios-catalog:
+    :path: ../
+
+SPEC CHECKSUMS:
+  material-components-ios: 463b80af2a7388584df19727b09f00f9ec43e4b1
+  material-components-ios-catalog: 9e0e0b97321c38c0335293b8355d838071614f78
+
+COCOAPODS: 0.39.0

@@ -23,7 +23,7 @@ static const CGFloat kSliderFrameHeight = 27.0f;
 static const CGFloat kSliderMinTouchSize = 48.0f;
 static const CGFloat kSliderThumbRadius = 6.0f;
 static const CGFloat kSliderThumbMaxRippleRadius = 16.0f;
-static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's increment.
+static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
 static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
 @interface MDCSlider () <MDCThumbTrackDelegate>
@@ -67,7 +67,7 @@ static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
 #pragma mark - ThumbTrack passthrough methods
 
--(void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor {
+- (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor {
   _thumbTrack.trackOffColor = trackBackgroundColor ?: [[self class] defaultTrackOffColor];
   ;
 }
@@ -165,10 +165,19 @@ static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 }
 
 - (NSString *)accessibilityValue {
-  return [NSString stringWithFormat:@"%0.1f", self.value];
+  static dispatch_once_t onceToken;
+  static NSNumberFormatter *numberFormatter;
+  dispatch_once(&onceToken, ^{
+    numberFormatter = [[NSNumberFormatter alloc] init];
+    numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
+  });
+  CGFloat percentage = (self.value - self.minimumValue) / (self.maximumValue - self.minimumValue);
+  return [numberFormatter stringFromNumber:@(percentage)];
 }
 
 - (UIAccessibilityTraits)accessibilityTraits {
+  // Adding UIAccessibilityTraitAdjustable also causes an iOS accessibility hint to be spoken:
+  // "Swipe up or down with one finger to adjust the value."
   UIAccessibilityTraits traits = super.accessibilityTraits | UIAccessibilityTraitAdjustable;
   if (!self.enabled) {
     traits |= UIAccessibilityTraitNotEnabled;
