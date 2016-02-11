@@ -14,19 +14,26 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-#import "MDCPageControl.h"
+#import "MaterialScrollViewDelegateMultiplexer.h"
+#import "ObservingPageControl.h"
+
+@interface SVDMTypicalUseViewController : UIViewController <UIScrollViewDelegate>
+@end
 
 #define RGBCOLOR(r, g, b) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
 #define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
 
-@interface ViewController () <UIScrollViewDelegate>
-@end
-
-@implementation ViewController {
+@implementation SVDMTypicalUseViewController {
   UIScrollView *_scrollView;
-  MDCPageControl *_pageControl;
+  UIPageControl *_pageControl;
+
+  MDCScrollViewDelegateMultiplexer *_multiplexer;
+}
+
++ (NSArray *)catalogHierarchy {
+  return @[ @"UIScrollViewDelegate multiplexer", @"Typical use" ];
 }
 
 - (void)viewDidLoad {
@@ -38,13 +45,12 @@
   NSArray *pageColors = @[ HEXCOLOR(0x81D4FA), HEXCOLOR(0x80CBC4), HEXCOLOR(0xFFCC80) ];
 
   // Scroll view configuration
+
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-  _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _scrollView.delegate = self;
   _scrollView.pagingEnabled = YES;
   _scrollView.contentSize = CGSizeMake(boundsWidth * pageColors.count, boundsHeight);
-  _scrollView.showsHorizontalScrollIndicator = NO;
-  [self.view addSubview:_scrollView];
+  _scrollView.minimumZoomScale = 0.5;
+  _scrollView.maximumZoomScale = 6.0;
 
   // Add pages to scrollView.
   for (NSInteger i = 0; i < pageColors.count; i++) {
@@ -58,42 +64,51 @@
     [_scrollView addSubview:page];
   }
 
-  // Page control configuration.
-  _pageControl = [[MDCPageControl alloc] init];
-  _pageControl.numberOfPages = pageColors.count;
+  // Page control configuration
 
+  ObservingPageControl *pageControl = [[ObservingPageControl alloc] init];
+  pageControl.numberOfPages = pageColors.count;
+
+  pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0 alpha:0.2];
+  pageControl.currentPageIndicatorTintColor = [UIColor colorWithWhite:0 alpha:0.8];
+
+  CGSize pageControlSize = [pageControl sizeThatFits:self.view.bounds.size];
   // We want the page control to span the bottom of the screen.
-  CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
-  _pageControl.frame = CGRectMake(0,
-                                  boundsHeight - pageControlSize.height,
-                                  boundsWidth,
-                                  pageControlSize.height);
+  pageControlSize.width = self.view.bounds.size.width;
+  pageControl.frame = CGRectMake(0,
+                                 self.view.bounds.size.height - pageControlSize.height,
+                                 self.view.bounds.size.width,
+                                 pageControlSize.height);
+  [pageControl addTarget:self
+                  action:@selector(didChangePage:)
+        forControlEvents:UIControlEventValueChanged];
+  pageControl.defersCurrentPageDisplay = YES;
+  _pageControl = pageControl;
 
-  [_pageControl addTarget:self
-                   action:@selector(didChangePage:)
-         forControlEvents:UIControlEventValueChanged];
-  _pageControl.autoresizingMask =
-      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
-  [self.view addSubview:_pageControl];
+  // Add subviews
+
+  [self.view addSubview:_scrollView];
+  [self.view addSubview:pageControl];
+
+  // Create scrollView delegate multiplexer and register observers
+
+  _multiplexer = [[MDCScrollViewDelegateMultiplexer alloc] init];
+  _scrollView.delegate = _multiplexer;
+  [_multiplexer addObservingDelegate:self];
+  [_multiplexer addObservingDelegate:pageControl];
 }
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  [_pageControl scrollViewDidScroll:scrollView];
-}
-
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  [_pageControl scrollViewDidEndDecelerating:scrollView];
-}
+  NSLog(@"%@", NSStringFromSelector(_cmd));
 
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-  [_pageControl scrollViewDidEndScrollingAnimation:scrollView];
+  [_pageControl updateCurrentPageDisplay];
 }
 
 #pragma mark - User events
 
-- (void)didChangePage:(MDCPageControl *)sender {
+- (void)didChangePage:(UIPageControl *)sender {
   CGPoint offset = _scrollView.contentOffset;
   offset.x = sender.currentPage * _scrollView.bounds.size.width;
   [_scrollView setContentOffset:offset animated:YES];

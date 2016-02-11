@@ -14,9 +14,12 @@
  limitations under the License.
  */
 
-#import "InkTypicalUseViewController.h"
+#import <UIKit/UIKit.h>
 
 #import "MaterialInk.h"
+
+@interface InkTypicalUseViewController : UIViewController
+@end
 
 @interface InkTypicalUseViewController () <MDCInkTouchControllerDelegate>
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
