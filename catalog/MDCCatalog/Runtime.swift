@@ -42,7 +42,6 @@ func getAllClasses() -> [AnyClass] {
 func classesRespondingToSelector(selector: Selector) -> [AnyClass] {
   return getAllClasses().filter {
     let className = NSStringFromClass($0)
-    NSLog("%@", className);
     if className == "SwiftObject" || className == "Object" || className.hasPrefix("Swift.") ||
           className.hasPrefix("_") || className.hasPrefix("JS") || className == "NSLeafProxy" ||
           className == "FigIrisAutoTrimmerMotionSampleExport" {
