@@ -60,7 +60,7 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
   XCTAssertEqualObjects(button.currentTitle, originalTitle);
 }
 
-- (void)testUppercaseTitleNOChangedToYes {
+- (void)testUppercaseTitleNoChangedToYes {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
   NSString *originalTitle = @"some Text";
@@ -74,7 +74,7 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
   XCTAssertEqualObjects(button.currentTitle, [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
 }
 
-- (void)testSetEnabledAnimatedNO {
+- (void)testSetEnabledAnimatedNo {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
 
@@ -123,9 +123,11 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
 
     // Then
     if (controlState & UIControlStateSelected) {
-      XCTAssertNotEqualWithAccuracy([button elevationForState:controlState], MDCShadowElevationNone, kEpsilonAccuracy);
+      XCTAssertNotEqualWithAccuracy([button elevationForState:controlState], MDCShadowElevationNone,
+                                    kEpsilonAccuracy);
     } else {
-      XCTAssertEqualWithAccuracy([button elevationForState:controlState], MDCShadowElevationNone, kEpsilonAccuracy);
+      XCTAssertEqualWithAccuracy([button elevationForState:controlState], MDCShadowElevationNone,
+                                 kEpsilonAccuracy);
     }
   }
 }
@@ -155,7 +157,7 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
     button.highlighted = (controlState & UIControlStateHighlighted) == UIControlStateHighlighted;
     button.selected = (controlState & UIControlStateSelected) == UIControlStateSelected;
     button.enabled = (controlState & UIControlStateDisabled) != UIControlStateDisabled;
-    NSLog(@"controlstate:%i", button.state);
+    NSLog(@"controlstate:%lu", (unsigned long)button.state);
 
     // Then
     XCTAssertEqual(button.state, controlState);
@@ -225,7 +227,8 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
     return UIControlStateSelected;  // Test selected the second most.
   }
   // Everything else including overlapping states.
-  return arc4random_uniform(UIControlStateDisabled | UIControlStateHighlighted | UIControlStateSelected + 1);
+  return arc4random_uniform(UIControlStateDisabled | UIControlStateHighlighted |
+                            UIControlStateSelected + 1);
   //  UIButton *button = [[UIButton alloc] init];
   //  button.enabled = arc4random_uniform(2);
   //  button.highlighted = arc4random_uniform(2);
@@ -371,7 +374,8 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
     button.enabled = (controlState & UIControlStateDisabled) != UIControlStateDisabled;
 
     // Then
-    NSLog(@"controlstate:%i==%i highlight:%i enabled:%i selected:%i", controlState, button.state, button.highlighted, button.enabled, button.selected);
+    NSLog(@"controlstate:%lu==%lu highlight:%i enabled:%i selected:%i", (unsigned long)controlState,
+          (unsigned long)button.state, button.highlighted, button.enabled, button.selected);
     XCTAssertEqual(button.state, controlState);
   }
 }

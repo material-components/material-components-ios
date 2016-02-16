@@ -309,7 +309,7 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
     // This ensures existing titles will get upper cased
     UIControlState allControlStates =
         (UIControlStateHighlighted | UIControlStateDisabled | UIControlStateSelected);
-    for (UIControlState state; state < allControlStates; ++state) {
+    for (UIControlState state = 0; state < allControlStates; ++state) {
       NSString *title = [self titleForState:state];
       if (title) {
         [self setTitle:title forState:state];
