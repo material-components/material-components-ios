@@ -35,6 +35,7 @@
 
  @ingroup Slider
  */
+IB_DESIGNABLE
 @interface MDCSlider : UIControl <NSCoding>
 
 /**
