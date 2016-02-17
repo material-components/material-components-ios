@@ -14,7 +14,6 @@
 		550804531C52EEED00C1CA9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 550804521C52EEED00C1CA9F /* Assets.xcassets */; };
 		550804561C52EEED00C1CA9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 550804541C52EEED00C1CA9F /* LaunchScreen.storyboard */; };
 		550804611C52EEED00C1CA9F /* ButtonsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 550804601C52EEED00C1CA9F /* ButtonsTests.m */; };
-		5508046C1C52EEED00C1CA9F /* ButtonsUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508046B1C52EEED00C1CA9F /* ButtonsUITests.m */; };
 		550804811C52FD3700C1CA9F /* MDCFlatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508047C1C52FD3700C1CA9F /* MDCFlatButton.m */; };
 		550804841C52FD3700C1CA9F /* MDCFloatingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508047E1C52FD3700C1CA9F /* MDCFloatingButton.m */; };
 		550804871C52FD3700C1CA9F /* MDCRaisedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 550804801C52FD3700C1CA9F /* MDCRaisedButton.m */; };
@@ -33,13 +32,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		5508045D1C52EEED00C1CA9F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 550804371C52EEED00C1CA9F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5508043E1C52EEED00C1CA9F;
-			remoteInfo = Buttons;
-		};
-		550804681C52EEED00C1CA9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 550804371C52EEED00C1CA9F /* Project object */;
 			proxyType = 1;
@@ -66,9 +58,6 @@
 		5508045C1C52EEED00C1CA9F /* ButtonsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ButtonsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		550804601C52EEED00C1CA9F /* ButtonsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonsTests.m; sourceTree = "<group>"; };
 		550804621C52EEED00C1CA9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		550804671C52EEED00C1CA9F /* ButtonsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ButtonsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5508046B1C52EEED00C1CA9F /* ButtonsUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonsUITests.m; sourceTree = "<group>"; };
-		5508046D1C52EEED00C1CA9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5508047B1C52FD3700C1CA9F /* MDCFlatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCFlatButton.h; path = ../src/MDCFlatButton.h; sourceTree = "<group>"; };
 		5508047C1C52FD3700C1CA9F /* MDCFlatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCFlatButton.m; path = ../src/MDCFlatButton.m; sourceTree = "<group>"; };
 		5508047D1C52FD3700C1CA9F /* MDCFloatingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCFloatingButton.h; path = ../src/MDCFloatingButton.h; sourceTree = "<group>"; };
@@ -118,13 +107,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		550804641C52EEED00C1CA9F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -133,7 +115,6 @@
 			children = (
 				550804411C52EEED00C1CA9F /* Buttons */,
 				5508045F1C52EEED00C1CA9F /* ButtonsTests */,
-				5508046A1C52EEED00C1CA9F /* ButtonsUITests */,
 				550804401C52EEED00C1CA9F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -143,7 +124,6 @@
 			children = (
 				5508043F1C52EEED00C1CA9F /* Buttons.app */,
 				5508045C1C52EEED00C1CA9F /* ButtonsTests.xctest */,
-				550804671C52EEED00C1CA9F /* ButtonsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -202,15 +182,6 @@
 				550804621C52EEED00C1CA9F /* Info.plist */,
 			);
 			path = ButtonsTests;
-			sourceTree = "<group>";
-		};
-		5508046A1C52EEED00C1CA9F /* ButtonsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				5508046B1C52EEED00C1CA9F /* ButtonsUITests.m */,
-				5508046D1C52EEED00C1CA9F /* Info.plist */,
-			);
-			path = ButtonsUITests;
 			sourceTree = "<group>";
 		};
 		5508048C1C5300C600C1CA9F /* Private */ = {
@@ -333,24 +304,6 @@
 			productReference = 5508045C1C52EEED00C1CA9F /* ButtonsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		550804661C52EEED00C1CA9F /* ButtonsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 550804761C52EEED00C1CA9F /* Build configuration list for PBXNativeTarget "ButtonsUITests" */;
-			buildPhases = (
-				550804631C52EEED00C1CA9F /* Sources */,
-				550804641C52EEED00C1CA9F /* Frameworks */,
-				550804651C52EEED00C1CA9F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				550804691C52EEED00C1CA9F /* PBXTargetDependency */,
-			);
-			name = ButtonsUITests;
-			productName = ButtonsUITests;
-			productReference = 550804671C52EEED00C1CA9F /* ButtonsUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -364,10 +317,6 @@
 						CreatedOnToolsVersion = 7.2;
 					};
 					5508045B1C52EEED00C1CA9F = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 5508043E1C52EEED00C1CA9F;
-					};
-					550804661C52EEED00C1CA9F = {
 						CreatedOnToolsVersion = 7.2;
 						TestTargetID = 5508043E1C52EEED00C1CA9F;
 					};
@@ -388,7 +337,6 @@
 			targets = (
 				5508043E1C52EEED00C1CA9F /* Buttons */,
 				5508045B1C52EEED00C1CA9F /* ButtonsTests */,
-				550804661C52EEED00C1CA9F /* ButtonsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -405,13 +353,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5508045A1C52EEED00C1CA9F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		550804651C52EEED00C1CA9F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -453,14 +394,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		550804631C52EEED00C1CA9F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5508046C1C52EEED00C1CA9F /* ButtonsUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -468,11 +401,6 @@
 			isa = PBXTargetDependency;
 			target = 5508043E1C52EEED00C1CA9F /* Buttons */;
 			targetProxy = 5508045D1C52EEED00C1CA9F /* PBXContainerItemProxy */;
-		};
-		550804691C52EEED00C1CA9F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5508043E1C52EEED00C1CA9F /* Buttons */;
-			targetProxy = 550804681C52EEED00C1CA9F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -626,30 +554,6 @@
 			};
 			name = Release;
 		};
-		550804771C52EEED00C1CA9F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = ButtonsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.ButtonsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = Buttons;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		550804781C52EEED00C1CA9F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = ButtonsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.ButtonsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = Buttons;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -676,15 +580,6 @@
 			buildConfigurations = (
 				550804741C52EEED00C1CA9F /* Debug */,
 				550804751C52EEED00C1CA9F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		550804761C52EEED00C1CA9F /* Build configuration list for PBXNativeTarget "ButtonsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				550804771C52EEED00C1CA9F /* Debug */,
-				550804781C52EEED00C1CA9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
