@@ -64,6 +64,20 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  */
 @interface MDCFlexibleHeaderView : UIView
 
+#pragma mark Custom shadow
+
+/**
+ * Custom shadow shown under flexible header content.
+ */
+@property(nonatomic, retain, nullable) CALayer *shadowLayer;
+
+#pragma mark Accessing the header's views
+
+/**
+ * Content for the flexible header should be added to the content view.
+ */
+@property(nonatomic, retain, nullable) UIView *contentView;
+
 #pragma mark UIScrollViewDelegate events
 
 /**
@@ -231,6 +245,13 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  scrollPhaseValue instead.
  */
 @property(nonatomic, readonly) CGFloat scrollPhasePercentage;
+
+/**
+ * The intensity strength of the shadow being displayed under the flexible header. Use this property
+ * to check what the intensity of a custom shadow should be depending on a scroll position. Valid
+ * values range from 0 to 1. Where 0 is no shadow is visible and 1 is the shadow is fully visible.
+ */
+@property(nonatomic, readonly) CGFloat shadowIntensity;
 
 #pragma mark Bounding Dimensions
 

@@ -28,6 +28,7 @@ CG_EXTERN CGSize MDCSwitchSizeThatFits(CGSize size);
  *
  */
 NS_CLASS_AVAILABLE_IOS(7_0)
+IB_DESIGNABLE
 @interface MDCSwitch : UIControl <NSCoding>
 
 // TODO(iangordon): Unify our Color handling over all of our components

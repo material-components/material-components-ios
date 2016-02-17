@@ -27,7 +27,7 @@
                                 <rect key="frame" x="276" y="63" width="51" height="31"/>
                             </switch>
                         </subviews>
-                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="6y5-Bf-Aj4" firstAttribute="top" secondItem="eWK-42-F2X" secondAttribute="bottom" constant="8" id="7iu-1j-2cK"/>
                             <constraint firstItem="eWK-42-F2X" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="Ovn-uT-lwy"/>
