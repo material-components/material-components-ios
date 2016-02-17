@@ -17,37 +17,41 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+/**
+ A Material flat, raised or floating button.
+ 
+ All buttons display animated ink splashes when the user interacts with the button.
+ 
+ The title color of the button set to have an accessible contrast ratio with the button's
+ background color. To ensure this works for flat buttons (with transparent background), the caller
+ is responsible for setting (and updating, if necessary) the button's underlyingColor property.
+ 
+ All buttons set the exclusiveTouch property to YES by default, which prevents users from
+ simultaneously interacting with a button and other UI elements.
+ 
+ @see http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
+ */
 @interface MDCButton : UIButton
 
 /**
- * The background color given this UIControl's @c state.
- * @c setBackgroundColorForState: to set the valid background colors for a given state.
- */
-@property(nullable, nonatomic, readonly, strong) UIColor *currentBackgroundColor;
+ A color used as the button's @c backgroundColor.
+ The default value is nil, which results in a transparent background color.
 
-/**
- * A color used as the button's @c backgroundColor.
- * If left unset or reset to nil for a given state, then an appropriate default color is used.
+ @param state The state.
+ @return The background color.
  */
 - (nonnull UIColor *)backgroundColorForState:(UIControlState)state;
 
 /**
- * A color used as the button's @c backgroundColor.
- *
- * @param elevation The elevation to set.
- * @param state The state to set.
+ A color used as the button's @c backgroundColor.
+
+ @param backgroundColor The background color.
+ @param state The state.
  */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
 
-/**
- The ink color of the button.
- If left unset or reset to nil an appropriate default color is used.
- */
+/** The ink color of the button. */
 @property(null_resettable, nonatomic, strong) UIColor *inkColor;
-
-///** Please use @c backgroundColorForState: instead. */
-//- (void)setBackgroundColor:(nullable UIColor *)backgroundColor NS_UNAVAILABLE;
-//- (nullable UIColor *)backgroundColor NS_UNAVAILABLE;
 
 /**
  * A custom title color for the non-disabled states. The default is nil, which means that the button

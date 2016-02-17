@@ -41,19 +41,22 @@ static NSString *const MDCButtonUnderlyingColorKey = @"MDCButtonUnderlyingColorK
 static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey";
 
 // MDCButtonUserZIndicesKey provides backward compatibility with old z-index shadows values.
+// TODO: Remove from MDC, it is only useful for internal clients.
 static NSString *const MDCButtonUserZIndicesKey = @"MDCButtonUserZIndicesKey";
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
 // http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
 static const CGFloat MDCButtonDisabledAlpha = 0.1f;
+static const uint32_t MDCButtonDefaultBackgroundColor = 0x2196F3;
 
 // Checks whether the provided floating point number is exactly zero.
 static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
   return (value == 0.f);
 }
 
-static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
+// Creates a UIColor from a 24-bit RGB color encoded as an integer.
+static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0
                          green:((float)((rgbValue & 0x00FF00) >> 8)) / 255.0
                           blue:((float)((rgbValue & 0x0000FF) >> 0)) / 255.0
@@ -134,9 +137,11 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 
-  //default background colors
-  [self setBackgroundColor:MDCColorFromRGB(0x2196F3) forState:UIControlStateNormal];
-  self.inkColor = [MDCColorFromRGB(0x64B5F6) colorWithAlphaComponent:0.25f];
+  // Default background colors.
+  [self setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
+                  forState:UIControlStateNormal];
+
+  self.inkColor = [UIColor colorWithWhite:1 alpha:CGColorGetAlpha(self.inkView.inkColor.CGColor)];
 }
 
 - (void)dealloc {
@@ -455,6 +460,8 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
   }
   if (state & UIControlStateSelected) {
     CGFloat elevationForNormal = [self elevationForState:UIControlStateNormal];
+    // TODO(ajsecord): Why is this using the raised button values for all buttons?
+    // This should just be a factor of 2, I believe.
     if (MDCButtonFloatIsExactlyZero(elevationForNormal)) {
       return MDCShadowElevationRaisedButtonPressed;
     } else {
@@ -482,7 +489,10 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
 
 - (void)resetElevationForState:(UIControlState)state {
   [_userElevations removeObjectForKey:@(state)];
+  [self shadowLayer].elevation = [self elevationForState:self.state];
 }
+
+#pragma mark - Private methods
 
 - (UIColor *)currentBackgroundColor {
   UIColor *color = _backgroundColors[@(self.state)];
@@ -491,8 +501,6 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
   }
   return [self backgroundColorForState:UIControlStateNormal];
 }
-
-#pragma mark - Private methods
 
 /**
  * The background color that a user would see for this button. If self.backgroundColor is not

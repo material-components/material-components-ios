@@ -24,7 +24,6 @@
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
 
-  // Load your Material Component here.
   MDCRaisedButton *raisedButton = [MDCRaisedButton new];
   [raisedButton setTitle:@"Raised Button" forState:UIControlStateNormal];
   [raisedButton sizeToFit];
@@ -82,7 +81,7 @@
 }
 
 - (void)didTap:(id)sender {
-  NSLog(@"Did tap %@!", NSStringFromClass([sender class]));
+  NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
 }
 
 @end

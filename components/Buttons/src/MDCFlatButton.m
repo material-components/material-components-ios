@@ -31,6 +31,7 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
   if (self) {
     self.shouldRaiseOnTouch = NO;
     self.backgroundColor = nil;
+    self.inkColor = [UIColor colorWithWhite:0 alpha:CGColorGetAlpha(self.inkColor.CGColor)];
   }
   return self;
 }

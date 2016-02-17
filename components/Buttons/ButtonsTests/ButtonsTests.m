@@ -161,7 +161,7 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
 
     // Then
     XCTAssertEqual(button.state, controlState);
-    XCTAssertEqualObjects(button.currentBackgroundColor, color);
+    XCTAssertEqualObjects([button backgroundColorForState:button.state], color);
   }
 }
 
@@ -179,7 +179,7 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
 
   // Then
   XCTAssertEqual(button.state, controlState);
-  XCTAssertEqualObjects(button.currentBackgroundColor, color);
+  XCTAssertEqualObjects([button backgroundColorForState:button.state], color);
 }
 
 - (void)testInkColors {
@@ -204,7 +204,7 @@ static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
   // Colors chosen from: https://www.google.com/design/spec/style/color.html#color-color-palette
   UIColor *blue500 = MDCColorFromRGB(0x2196F3);
   UIColor *blue300 = MDCColorFromRGB(0x64B5F6);
-  XCTAssertEqualObjects([button currentBackgroundColor], blue500);
+  XCTAssertEqualObjects([button backgroundColorForState:button.state], blue500);
   UIColor *lightBlueInk = [blue300 colorWithAlphaComponent:0.25f];
   XCTAssertEqualObjects(button.inkColor, lightBlueInk);
 }
