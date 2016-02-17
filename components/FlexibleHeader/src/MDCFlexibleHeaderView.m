@@ -96,6 +96,10 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
   MDCStatusBarShifter *_statusBarShifter;
 
+  // Layers for header shadows.
+  CALayer *_defaultShadowLayer;
+  CALayer *_customShadowLayer;
+
 #if DEBUG
   // Keeps track of whether the client called ...WillEndDraggingWithVelocity:...
   BOOL _didAdjustTargetContentOffset;
@@ -147,7 +151,27 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
     _canOverExtend = YES;
 
+    _defaultShadowLayer = [CALayer layer];
+    _defaultShadowLayer.shadowColor = [[UIColor blackColor] CGColor];
+    _defaultShadowLayer.shadowOffset = CGSizeMake(0, 1.f);
+    _defaultShadowLayer.shadowRadius = 4.f;
+    _defaultShadowLayer.shadowOpacity = 0;
+    _defaultShadowLayer.hidden = YES;
+    [self.layer addSublayer:_defaultShadowLayer];
+
+    // Allow for custom shadows to be used.
+    _customShadowLayer = [CALayer layer];
+    _customShadowLayer.hidden = YES;
+    [self.layer addSublayer:_customShadowLayer];
+
+    _contentView = [[UIView alloc] initWithFrame:self.bounds];
+    _contentView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    [super addSubview:_contentView];
+
     self.backgroundColor = [UIColor lightGrayColor];
+    _defaultShadowLayer.backgroundColor = self.backgroundColor.CGColor;
+
     self.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.layer.shadowOffset = CGSizeMake(0, 1);
     self.layer.shadowRadius = 4.f;
@@ -161,6 +185,27 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [self fhv_accumulatorDidChange];
 }
 
+- (void)setShadowLayer:(CALayer *)shadowLayer {
+  // If there is a custom shadow make sure the shadow on self.layer is not visible.
+  self.layer.shadowOpacity = 0;
+  CALayer *oldShadowLayer = _shadowLayer;
+  if (shadowLayer == _shadowLayer) {
+    return;
+  }
+  _shadowLayer = shadowLayer;
+  [oldShadowLayer removeFromSuperlayer];
+  if (shadowLayer) {
+    // When a custom shadow is being used hide the default shadow.
+    _defaultShadowLayer.hidden = YES;
+    _customShadowLayer.hidden = NO;
+    [_customShadowLayer addSublayer:_shadowLayer];
+  } else {
+    _defaultShadowLayer.hidden = NO;
+    _customShadowLayer.hidden = YES;
+    _shadowLayer = nil;
+  }
+}
+
 #pragma mark - UIView
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -171,6 +216,12 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [super layoutSubviews];
 
   [self fhv_updateShadowPath];
+  BOOL disableActions = [CATransaction disableActions];
+  [CATransaction setDisableActions:YES];
+  _defaultShadowLayer.frame = self.bounds;
+  _customShadowLayer.frame = self.bounds;
+  _shadowLayer.frame = self.bounds;
+  [CATransaction setDisableActions:disableActions];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -424,7 +475,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator);
 
-  float shadowScale;
+  float shadowIntensity;
   if (self.hidesStatusBarWhenCollapsed) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
     // weakest strength.
@@ -433,22 +484,27 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     if (self.isInFrontOfInfiniteContent) {
       // When in front of infinite content we only care to hide the shadow when our header is
       // off-screen.
-      shadowScale = MAX(0, MIN(1, accumulator / kShadowScaleLength));
+      shadowIntensity = MAX(0, MIN(1, accumulator / kShadowScaleLength));
 
     } else {
       // When over non-infinite content we also want to hide the shadow when we're anchored to the
       // top of our content.
-      shadowScale = MAX(0, MIN(1, MIN(accumulator, frameBottomEdge) / kShadowScaleLength));
+      shadowIntensity = MAX(0, MIN(1, MIN(accumulator, frameBottomEdge) / kShadowScaleLength));
     }
 
   } else if (self.isInFrontOfInfiniteContent) {
-    shadowScale = 1;
+    shadowIntensity = 1;
 
   } else {
     // Adjust the opacity as the bottom edge of the header increasingly overlaps the contents
-    shadowScale = frameBottomEdge / kShadowScaleLength;
+    shadowIntensity = frameBottomEdge / kShadowScaleLength;
   }
-  self.layer.shadowOpacity = _visibleShadowOpacity * shadowScale;
+  if (_defaultShadowLayer.hidden && _customShadowLayer.hidden) {
+    self.layer.shadowOpacity = _visibleShadowOpacity * shadowIntensity;
+  } else {
+    _defaultShadowLayer.shadowOpacity = _visibleShadowOpacity * shadowIntensity;
+  }
+  _shadowIntensity = shadowIntensity;
 
   [_statusBarShifter setOffset:boundedAccumulator];
 
