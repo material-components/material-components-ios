@@ -29,6 +29,15 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
   MDCFloatingButtonShapeMini
 };
 
+/**
+ * A "floating" MDCButton.
+ *
+ * Floating action buttons are circular, float a considerable amount above their parent, have
+ * their own background color, and also raise briefly when touched. Floating action buttons should
+ * only be used rarely, for the main action of a screen.
+ *
+ * @see http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
+ */
 @interface MDCFloatingButton : MDCButton
 
 /**

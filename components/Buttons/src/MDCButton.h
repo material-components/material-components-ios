@@ -29,7 +29,7 @@
  All buttons set the exclusiveTouch property to YES by default, which prevents users from
  simultaneously interacting with a button and other UI elements.
  
- @see http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
+ @see http://www.google.com/design/spec/components/buttons.html
  */
 @interface MDCButton : UIButton
 
