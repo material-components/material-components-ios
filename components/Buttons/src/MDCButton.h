@@ -93,13 +93,14 @@
 @property(nonatomic) UIEdgeInsets hitAreaInsets;
 
 /**
- * This is the color of the view behind the button. It's used by flat buttons to calculate accessible text colors.
+ * The color of the view behind the button, used to calculate accessible text colors.
  *
- * For Flat buttons, this is the color of both the surrounding area and the button's background.
- * For Raised and Floating buttons, this is the color of view underneath the button.
+ * For flat buttons with the default transparent background, this is the color of the surrounding
+ * area (and thus the button's background). For all other buttons, this is the color of view
+ * underneath the button.
  *
- * The default is nil, but if left unset, Raised/Floating buttons will have possibly-incorrect
- * disabled state, and flat buttons will additionally have incorrect text colors.
+ * The default is nil.  If left unset, buttons will likely have an incorrect appearance when
+ * disabled. Additionally, flat buttons will have incorrect text colors.
  */
 @property(nonatomic, strong, nullable) UIColor *underlyingColor;
 

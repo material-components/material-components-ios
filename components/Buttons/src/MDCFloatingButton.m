@@ -110,4 +110,10 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
   }
 }
 
+- (CGFloat)defaultElevationForState:(UIControlState)state {
+  return (state & UIControlStateSelected) == UIControlStateSelected ?
+      MDCShadowElevationFABPressed :
+      MDCShadowElevationFABResting;
+}
+
 @end

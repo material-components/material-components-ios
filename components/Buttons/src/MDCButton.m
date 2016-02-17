@@ -454,24 +454,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _userElevations[@(state)];
-
-  if (elevation) {
-    return [elevation floatValue];
-  }
-  if (state & UIControlStateSelected) {
-    CGFloat elevationForNormal = [self elevationForState:UIControlStateNormal];
-    // TODO(ajsecord): Why is this using the raised button values for all buttons?
-    // This should just be a factor of 2, I believe.
-    if (MDCButtonFloatIsExactlyZero(elevationForNormal)) {
-      return MDCShadowElevationRaisedButtonPressed;
-    } else {
-      CGFloat pressedDeltaForRaisedButton = MDCShadowElevationRaisedButtonPressed -
-                                            MDCShadowElevationRaisedButtonResting;
-      return elevationForNormal + pressedDeltaForRaisedButton;
-    }
-  } else {
-    return MDCShadowElevationNone;
-  }
+  return elevation ? [elevation floatValue] : [self defaultElevationForState:state];
 }
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
@@ -561,6 +544,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
   return UIEdgeInsetsMake(8, 16, 8, 16);
+}
+
+- (CGFloat)defaultElevationForState:(UIControlState)state {
+  return 0;
 }
 
 - (BOOL)shouldHaveOpaqueBackground {
