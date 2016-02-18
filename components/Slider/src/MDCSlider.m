@@ -36,33 +36,45 @@ static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    CGRect trackFrame = CGRectInset(frame, 8.f, 0.f);
-
-    _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:trackFrame onTintColor:[[self class] defaultColor]];
-    _thumbTrack.delegate = self;
-    _thumbTrack.disabledTrackHasThumbGaps = YES;
-    _thumbTrack.trackEndsAreInset = YES;
-    _thumbTrack.thumbRadius = kSliderThumbRadius;
-    _thumbTrack.thumbMaxRippleRadius = kSliderThumbMaxRippleRadius;
-    _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
-    [_thumbTrack addTarget:self
-                    action:@selector(thumbTrackValueChanged:)
-          forControlEvents:UIControlEventValueChanged];
-    [_thumbTrack addTarget:self
-                    action:@selector(thumbTrackTouchDown:)
-          forControlEvents:UIControlEventTouchDown];
-    [_thumbTrack addTarget:self
-                    action:@selector(thumbTrackTouchUpInside:)
-          forControlEvents:UIControlEventTouchUpInside];
-    [_thumbTrack addTarget:self
-                    action:@selector(thumbTrackTouchUpOutside:)
-          forControlEvents:UIControlEventTouchUpOutside];
-    [_thumbTrack addTarget:self
-                    action:@selector(thumbTrackTouchCanceled:)
-          forControlEvents:UIControlEventTouchCancel];
-    [self addSubview:_thumbTrack];
+    [self commonInit];
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonInit];
+  }
+  return self;
+}
+
+- (void)commonInit {
+  CGRect trackFrame = CGRectInset(self.frame, 8.f, 0.f);
+
+  _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:trackFrame onTintColor:[[self class] defaultColor]];
+  _thumbTrack.delegate = self;
+  _thumbTrack.disabledTrackHasThumbGaps = YES;
+  _thumbTrack.trackEndsAreInset = YES;
+  _thumbTrack.thumbRadius = kSliderThumbRadius;
+  _thumbTrack.thumbMaxRippleRadius = kSliderThumbMaxRippleRadius;
+  _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
+  [_thumbTrack addTarget:self
+                  action:@selector(thumbTrackValueChanged:)
+        forControlEvents:UIControlEventValueChanged];
+  [_thumbTrack addTarget:self
+                  action:@selector(thumbTrackTouchDown:)
+        forControlEvents:UIControlEventTouchDown];
+  [_thumbTrack addTarget:self
+                  action:@selector(thumbTrackTouchUpInside:)
+        forControlEvents:UIControlEventTouchUpInside];
+  [_thumbTrack addTarget:self
+                  action:@selector(thumbTrackTouchUpOutside:)
+        forControlEvents:UIControlEventTouchUpOutside];
+  [_thumbTrack addTarget:self
+                  action:@selector(thumbTrackTouchCanceled:)
+        forControlEvents:UIControlEventTouchCancel];
+  [self addSubview:_thumbTrack];
 }
 
 #pragma mark - ThumbTrack passthrough methods
