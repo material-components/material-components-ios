@@ -59,6 +59,32 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1.0];
 }
 
+static NSAttributedString *capitalizeAttributedString(NSAttributedString *string) {
+  // Store the attributes.
+  NSMutableArray *attributes = [NSMutableArray array];
+  [string enumerateAttributesInRange:NSMakeRange(0, [string length])
+                             options:0
+                          usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+                            [attributes addObject:@{
+                                                    @"attrs" : attrs,
+                                                    @"range" : [NSValue valueWithRange:range]
+                                                    }];
+                          }];
+
+  // Make the string uppercase.
+  NSString *uppercaseString = [[string string] uppercaseStringWithLocale:[NSLocale currentLocale]];
+
+  // Apply the text and attributes to a mutable copy of the title attributed string.
+  NSMutableAttributedString *mutableString = [string mutableCopy];
+  [mutableString replaceCharactersInRange:NSMakeRange(0, [string length])
+                               withString:uppercaseString];
+  for (NSDictionary *attribute in attributes) {
+    [mutableString setAttributes:attribute[@"attrs"] range:[attribute[@"range"] rangeValue]];
+  }
+
+  return [mutableString copy];
+}
+
 @interface MDCButton () {
   NSMutableDictionary *_userElevations;    // For each UIControlState.
   NSMutableDictionary *_backgroundColors;  // For each UIControlState.
@@ -293,13 +319,18 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (void)setShouldCapitalizeTitle:(BOOL)shouldCapitalizeTitle {
   _shouldCapitalizeTitle = shouldCapitalizeTitle;
   if (_shouldCapitalizeTitle) {
-    // This ensures existing titles will get upper cased
-    UIControlState allControlStates =
-        (UIControlStateHighlighted | UIControlStateDisabled | UIControlStateSelected);
-    for (UIControlState state = 0; state < allControlStates; ++state) {
+    // This ensures existing titles will get capitalized.
+    UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
+        UIControlStateDisabled | UIControlStateSelected;
+    for (UIControlState state = 0; state <= allControlStates; ++state) {
       NSString *title = [self titleForState:state];
       if (title) {
-        [self setTitle:title forState:state];
+        [self setTitle:[title uppercaseStringWithLocale:[NSLocale currentLocale]] forState:state];
+      }
+
+      NSAttributedString *attributedTitle = [self attributedTitleForState:state];
+      if (attributedTitle) {
+        [self setAttributedTitle:capitalizeAttributedString(attributedTitle) forState:state];
       }
     }
   }
@@ -330,29 +361,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   }
 
   if (_shouldCapitalizeTitle) {
-    // Store the attributes.
-    NSMutableArray *attributes = [NSMutableArray array];
-    [title enumerateAttributesInRange:NSMakeRange(0, [title length])
-                              options:0
-                           usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-                             [attributes addObject:@{
-                               @"attrs" : attrs,
-                               @"range" : [NSValue valueWithRange:range]
-                             }];
-                           }];
-
-    // Make the title text uppercase.
-    NSString *uppercaseTitle = [[title string] uppercaseStringWithLocale:[NSLocale currentLocale]];
-
-    // Apply the text and attributes to a mutable copy of the title attributed string.
-    NSMutableAttributedString *mutableTitle = [title mutableCopy];
-    [mutableTitle replaceCharactersInRange:NSMakeRange(0, [title length])
-                                withString:uppercaseTitle];
-    for (NSDictionary *attribute in attributes) {
-      [mutableTitle setAttributes:attribute[@"attrs"] range:[attribute[@"range"] rangeValue]];
-    }
-
-    title = [mutableTitle copy];
+    title = capitalizeAttributedString(title);
   }
   [super setAttributedTitle:title forState:state];
 }
