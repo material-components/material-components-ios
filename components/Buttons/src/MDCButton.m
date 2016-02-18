@@ -89,6 +89,62 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonInit];
+
+    // TODO(randallli): Add backward compatibility to background colors
+    //    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
+    //      self.enabledBackgroundColor =
+    //          [aDecoder decodeObjectForKey:MDCButtonEnabledBackgroundColorKey];
+    //    }
+    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorLightKey]) {
+    //      self.disabledBackgroundColorLight =
+    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorLightKey];
+    //    }
+    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorDarkKey]) {
+    //      self.disabledBackgroundColorDark =
+    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorDarkKey];
+    //    }
+    if ([aDecoder containsValueForKey:MDCButtonInkViewInkColorKey]) {
+      self.inkView.inkColor = [aDecoder decodeObjectForKey:MDCButtonInkViewInkColorKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonShouldRaiseOnTouchKey]) {
+      self.shouldRaiseOnTouch = [aDecoder decodeBoolForKey:MDCButtonShouldRaiseOnTouchKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonShouldCapitalizeTitleKey]) {
+      self.shouldCapitalizeTitle = [aDecoder decodeBoolForKey:MDCButtonShouldCapitalizeTitleKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorKey]) {
+      self.underlyingColor = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
+      _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
+    }
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+
+  if (_inkView.inkColor) {
+    [aCoder encodeObject:_inkView.inkColor forKey:MDCButtonInkViewInkColorKey];
+  }
+
+  [aCoder encodeBool:_shouldRaiseOnTouch forKey:MDCButtonShouldRaiseOnTouchKey];
+  [aCoder encodeBool:_shouldCapitalizeTitle forKey:MDCButtonShouldCapitalizeTitleKey];
+  if (_underlyingColor) {
+    [aCoder encodeObject:_underlyingColor forKey:MDCButtonUnderlyingColorKey];
+  }
+  [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
+}
+
 - (void)commonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
@@ -162,64 +218,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   [self updateAlphaAndBackgroundColorAnimated:NO];
 }
 
-#pragma mark - NSCoding
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    [self commonInit];
-
-    // TODO(randallli): Add backward compatibility to background colors
-    //    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
-    //      self.enabledBackgroundColor =
-    //          [aDecoder decodeObjectForKey:MDCButtonEnabledBackgroundColorKey];
-    //    }
-    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorLightKey]) {
-    //      self.disabledBackgroundColorLight =
-    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorLightKey];
-    //    }
-    //    if ([aDecoder containsValueForKey:MDCButtonDisabledBackgroundColorDarkKey]) {
-    //      self.disabledBackgroundColorDark =
-    //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorDarkKey];
-    //    }
-    if ([aDecoder containsValueForKey:MDCButtonInkViewInkColorKey]) {
-      self.inkView.inkColor = [aDecoder decodeObjectForKey:MDCButtonInkViewInkColorKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCButtonShouldRaiseOnTouchKey]) {
-      self.shouldRaiseOnTouch = [aDecoder decodeBoolForKey:MDCButtonShouldRaiseOnTouchKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCButtonShouldCapitalizeTitleKey]) {
-      self.shouldCapitalizeTitle = [aDecoder decodeBoolForKey:MDCButtonShouldCapitalizeTitleKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorKey]) {
-      self.underlyingColor = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
-      _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
-    }
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-
-  if (_inkView.inkColor) {
-    [aCoder encodeObject:_inkView.inkColor forKey:MDCButtonInkViewInkColorKey];
-  }
-
-  [aCoder encodeBool:_shouldRaiseOnTouch forKey:MDCButtonShouldRaiseOnTouchKey];
-  [aCoder encodeBool:_shouldCapitalizeTitle forKey:MDCButtonShouldCapitalizeTitleKey];
-  if (_underlyingColor) {
-    [aCoder encodeObject:_underlyingColor forKey:MDCButtonUnderlyingColorKey];
-  }
-  [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
-}
-
 #pragma mark - UIView
 
 - (void)layoutSubviews {
@@ -260,7 +258,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   if (inside) {
     [_inkView evaporateWithCompletion:nil];
     if (_shouldRaiseOnTouch) {
-      [self moveButtonToHeightForState:UIControlStateNormal];
+      [self animateButtonToHeightForState:UIControlStateNormal];
     }
   } else {
     [self evaporateInkToPoint:location];
@@ -417,7 +415,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return (MDCShadowLayer *)self.layer;
 }
 
-- (void)moveButtonToHeightForState:(UIControlState)state {
+- (void)animateButtonToHeightForState:(UIControlState)state {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCButtonAnimationDuration];
   [self shadowLayer].elevation = [self elevationForState:state];
@@ -504,7 +502,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (void)handleBeginTouches:(NSSet *)touches {
   [_inkView spreadFromPoint:[self locationFromTouches:touches] completion:nil];
   if (_shouldRaiseOnTouch) {
-    [self moveButtonToHeightForState:UIControlStateSelected];
+    [self animateButtonToHeightForState:UIControlStateSelected];
   }
 }
 
@@ -516,7 +514,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (void)evaporateInkToPoint:(CGPoint)toPoint {
   [_inkView evaporateToPoint:toPoint completion:nil];
   if (_shouldRaiseOnTouch) {
-    [self moveButtonToHeightForState:UIControlStateNormal];
+    [self animateButtonToHeightForState:UIControlStateNormal];
   }
 }
 
