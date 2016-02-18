@@ -119,8 +119,9 @@
  *
  * The default values are particular to each subclass of MDCButton.
  * The default value for UIControlStateNormal is 0. The default value for UIControlStateSelected is
- * twice greater than the value of UIControlStateNormal. The default values for all other states is
- * the value of UIControlStateNormal.
+ * twice greater than the value of UIControlStateNormal (which might have been set to value other
+ * than zero by the caller). The default values for all other states is the value of
+ * UIControlStateNormal.
  *
  * @param state The control state to retrieve the elevation.
  * @return The elevation for the requested state.
