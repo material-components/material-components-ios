@@ -454,7 +454,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _userElevations[@(state)];
-  return elevation ? [elevation floatValue] : [self defaultElevationForState:state];
+  return elevation ? (CGFloat)[elevation doubleValue] : [self defaultElevationForState:state];
 }
 
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state {
