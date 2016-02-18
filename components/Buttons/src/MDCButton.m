@@ -142,12 +142,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)dealloc {
-  [self removeTarget:self
-                action:@selector(touchDragEnter:forEvent:)
-      forControlEvents:UIControlEventTouchDragEnter];
-  [self removeTarget:self
-                action:@selector(touchDragExit:forEvent:)
-      forControlEvents:UIControlEventTouchDragExit];
+  [self removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
 }
 
 - (void)setCustomTitleColor:(UIColor *)customTitleColor {
