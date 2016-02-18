@@ -55,6 +55,15 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
   return YES;
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration {
+  CGRect headerFrame = _flexHeaderContainerVC.headerViewController.headerView.bounds;
+  _logoView.center = CGPointMake(headerFrame.size.width / 2.f,
+                                 headerFrame.size.height / 2.f);
+  _logoSmallView.center = CGPointMake(headerFrame.size.width / 2.f,
+                                      headerFrame.size.height / 2.f);
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
