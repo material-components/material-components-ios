@@ -18,6 +18,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 @interface PestoSideViewCollectionViewCell : UICollectionViewCell
 
 @property(nonatomic) NSString *title;
+@property(nonatomic) UIColor *titleColor;
 
 @end
 
@@ -26,6 +27,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.titleColor = [UIColor lightGrayColor];
   }
   return self;
 }
@@ -37,6 +39,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
   UILabel *title = [[UILabel alloc] initWithFrame:self.bounds];
   title.text = _title;
   title.font = [MDCTypography body1Font];
+  title.textColor = _titleColor;
   title.textAlignment = NSTextAlignmentCenter;
   [self addSubview:title];
 }
@@ -147,6 +150,10 @@ static NSString *const kPestoSideViewWidthBaseURL =
                                                 forIndexPath:indexPath];
   NSInteger itemNum = indexPath.row;
   cell.title = _titles[itemNum];
+  // Show settings item as enabled.
+  if ([cell.title isEqualToString:@"Settings"]) {
+    cell.titleColor = [UIColor blackColor];
+  }
   [cell setNeedsLayout];
   return cell;
 }

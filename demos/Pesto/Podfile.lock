@@ -1,5 +1,6 @@
 PODS:
   - material-components-ios (0.1.0):
+    - material-components-ios/FlexibleHeader (= 0.1.0)
     - material-components-ios/Ink (= 0.1.0)
     - material-components-ios/PageControl (= 0.1.0)
     - material-components-ios/private (= 0.1.0)
@@ -10,6 +11,7 @@ PODS:
     - material-components-ios/SpritedAnimationView (= 0.1.0)
     - material-components-ios/Switch (= 0.1.0)
     - material-components-ios/Typography (= 0.1.0)
+  - material-components-ios/FlexibleHeader (0.1.0)
   - material-components-ios/Ink (0.1.0)
   - material-components-ios/PageControl (0.1.0)
   - material-components-ios/private (0.1.0):
@@ -31,18 +33,13 @@ PODS:
   - material-components-ios/Typography (0.1.0)
 
 DEPENDENCIES:
-  - material-components-ios (from `git@github.com:google/material-components-ios.git`)
+  - material-components-ios (from `../../`)
 
 EXTERNAL SOURCES:
   material-components-ios:
-    :git: git@github.com:google/material-components-ios.git
-
-CHECKOUT OPTIONS:
-  material-components-ios:
-    :commit: 2774715697b56972fca2de6fbaa201a4196a1a4a
-    :git: git@github.com:google/material-components-ios.git
+    :path: ../../
 
 SPEC CHECKSUMS:
-  material-components-ios: cd31a0e61daead918a6180e2ddb0f8ff4c20eb42
+  material-components-ios: 463b80af2a7388584df19727b09f00f9ec43e4b1
 
 COCOAPODS: 0.39.0

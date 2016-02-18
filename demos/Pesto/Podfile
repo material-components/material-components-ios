@@ -1,4 +1,4 @@
 target 'Pesto' do
-  pod 'material-components-ios', :git => 'git@github.com:google/material-components-ios.git'
+  pod 'material-components-ios', :path => '../../'
 end
 
