@@ -437,6 +437,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
   _backgroundColors[@(state)] = backgroundColor;
+  [self updateAlphaAndBackgroundColorAnimated:NO];
 }
 
 #pragma mark - Elevations
