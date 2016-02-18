@@ -25,14 +25,6 @@
 
 @implementation MDCRaisedButton
 
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-  if (self) {
-    [self setElevation:MDCShadowElevationRaisedButtonResting forState:UIControlStateNormal];
-  }
-  return self;
-}
-
 #pragma mark - Subclassing
 
 - (CGFloat)defaultElevationForState:(UIControlState)state {

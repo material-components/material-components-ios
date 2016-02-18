@@ -40,7 +40,7 @@
  @param state The state.
  @return The background color.
  */
-- (nonnull UIColor *)backgroundColorForState:(UIControlState)state;
+- (nullable UIColor *)backgroundColorForState:(UIControlState)state;
 
 /**
  A color used as the button's @c backgroundColor.
@@ -51,7 +51,7 @@
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
 
 /** The ink color of the button. */
-@property(null_resettable, nonatomic, strong) UIColor *inkColor;
+@property(nonatomic, strong, null_resettable) UIColor *inkColor;
 
 /**
  * A custom title color for the non-disabled states. The default is nil, which means that the button
@@ -77,12 +77,12 @@
 @property(nonatomic) BOOL shouldRaiseOnTouch;
 
 /**
- * Converts the button title to uppercase. Changing this property to NO will not update the current
- * title string.
+ * If true, converts the button title to uppercase. Changing this property to NO will not update the
+ * current title string.
  *
  * Default is YES and is recommended whenever possible.
  */
-@property(nonatomic, getter=isUppercaseTitle) BOOL uppercaseTitle;
+@property(nonatomic) BOOL shouldCapitalizeTitle;
 
 /**
  * Allows the button to detect touches outside of its bounds. A negative value indicates an
@@ -117,6 +117,7 @@
 /**
  * Returns the elevation for a particular control state.
  *
+ * The default values are particular to each subclass of MDCButton.
  * The default value for UIControlStateNormal is 0. The default value for UIControlStateSelected is
  * twice greater than the value of UIControlStateNormal. The default values for all other states is
  * the value of UIControlStateNormal.

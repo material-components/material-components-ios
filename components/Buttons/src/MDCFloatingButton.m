@@ -51,7 +51,6 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
   self = [super initWithFrame:frame];
   if (self) {
     _shape = shape;
-    [self setElevation:MDCShadowElevationRaisedButtonResting forState:UIControlStateNormal];
   }
   return self;
 }

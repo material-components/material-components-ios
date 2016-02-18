@@ -24,13 +24,6 @@
 // values.
 static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1;
 
-static inline UIColor *MDCColorFromRGB(NSInteger rgbValue) {
-  return [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0
-                         green:((float)((rgbValue & 0x00FF00) >> 8)) / 255.0
-                          blue:((float)((rgbValue & 0x0000FF) >> 0)) / 255.0
-                         alpha:1.0];
-}
-
 static CGFloat randomNumber() {
   return arc4random_uniform(100) / (CGFloat)10;
 }
@@ -78,7 +71,7 @@ static UIColor *randomColor() {
   NSString *originalTitle = @"some Text";
 
   // When
-  button.uppercaseTitle = YES;
+  button.shouldCapitalizeTitle = YES;
   [button setTitle:originalTitle forState:UIControlStateNormal];
 
   // Then
@@ -91,7 +84,7 @@ static UIColor *randomColor() {
   NSString *originalTitle = @"some Text";
 
   // When
-  button.uppercaseTitle = NO;
+  button.shouldCapitalizeTitle = NO;
   [button setTitle:originalTitle forState:UIControlStateNormal];
 
   // Then
@@ -104,9 +97,9 @@ static UIColor *randomColor() {
   NSString *originalTitle = @"some Text";
 
   // When
-  button.uppercaseTitle = NO;
+  button.shouldCapitalizeTitle = NO;
   [button setTitle:originalTitle forState:UIControlStateNormal];
-  button.uppercaseTitle = YES;
+  button.shouldCapitalizeTitle = YES;
 
   // Then
   XCTAssertEqualObjects(button.currentTitle, [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
@@ -159,6 +152,34 @@ static UIColor *randomColor() {
     // Then
     XCTAssertEqual([button elevationForState:controlState], defaultValue);
   }
+}
+
+- (void)testDefaultElevationsForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // When
+
+  // Then
+  XCTAssertEqual([button elevationForState:UIControlStateNormal], 0);
+  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], 0);
+  XCTAssertEqual([button elevationForState:UIControlStateDisabled], 0);
+  XCTAssertEqual([button elevationForState:UIControlStateSelected], 1);
+}
+
+- (void)testDefaultElevationRelationships {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat normalElevation = randomNumber();
+
+  // When
+  [button setElevation:normalElevation forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqual([button elevationForState:UIControlStateNormal], normalElevation);
+  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], normalElevation);
+  XCTAssertEqual([button elevationForState:UIControlStateDisabled], normalElevation);
+  XCTAssertEqual([button elevationForState:UIControlStateSelected], 2 * normalElevation);
 }
 
 - (void)testBackgroundColorForState {

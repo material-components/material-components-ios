@@ -36,13 +36,9 @@ static NSString *const MDCButtonDisabledBackgroundColorDarkKey =
     @"MDCButtonDisabledBackgroundColorDarkKey";
 static NSString *const MDCButtonInkViewInkColorKey = @"MDCButtonInkViewInkColorKey";
 static NSString *const MDCButtonShouldRaiseOnTouchKey = @"MDCButtonShouldRaiseOnTouchKey";
-static NSString *const MDCButtonUppercaseTitleKey = @"MDCButtonUppercaseTitleKey";
+static NSString *const MDCButtonShouldCapitalizeTitleKey = @"MDCButtonShouldCapitalizeTitleKey";
 static NSString *const MDCButtonUnderlyingColorKey = @"MDCButtonUnderlyingColorKey";
 static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey";
-
-// MDCButtonUserZIndicesKey provides backward compatibility with old z-index shadows values.
-// TODO: Remove from MDC, it is only useful for internal clients.
-static NSString *const MDCButtonUserZIndicesKey = @"MDCButtonUserZIndicesKey";
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
@@ -96,12 +92,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (void)commonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
-  _uppercaseTitle = YES;
+  _shouldCapitalizeTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
   _backgroundColors = [NSMutableDictionary dictionary];
   _accessibilityLabelForState = [NSMutableDictionary dictionary];
-
-  [self setElevation:MDCShadowElevationNone forState:UIControlStateDisabled];
 
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
@@ -111,12 +105,15 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   self.titleLabel.font = [MDCTypography buttonFont];
   [self updateTitleColor];
   [self updateDisabledTitleColor];
+  [self updateAlphaAndBackgroundColorAnimated:NO];
 
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
 
-  self.layer.shadowPath = [self boundingPath].CGPath;
-  self.layer.shadowColor = [UIColor blackColor].CGColor;
+  MDCShadowLayer *shadowLayer = [self shadowLayer];
+  shadowLayer.shadowPath = [self boundingPath].CGPath;
+  shadowLayer.shadowColor = [UIColor blackColor].CGColor;
+  shadowLayer.elevation = [self elevationForState:self.state];
 
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
@@ -197,25 +194,17 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     if ([aDecoder containsValueForKey:MDCButtonShouldRaiseOnTouchKey]) {
       self.shouldRaiseOnTouch = [aDecoder decodeBoolForKey:MDCButtonShouldRaiseOnTouchKey];
     }
-    if ([aDecoder containsValueForKey:MDCButtonUppercaseTitleKey]) {
-      self.uppercaseTitle = [aDecoder decodeBoolForKey:MDCButtonUppercaseTitleKey];
+
+    if ([aDecoder containsValueForKey:MDCButtonShouldCapitalizeTitleKey]) {
+      self.shouldCapitalizeTitle = [aDecoder decodeBoolForKey:MDCButtonShouldCapitalizeTitleKey];
     }
+
     if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorKey]) {
       self.underlyingColor = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
       _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
-    }
-    // For backward compatibility
-    if ([aDecoder containsValueForKey:MDCButtonUserZIndicesKey]) {
-      NSMutableDictionary *userZIndices = [aDecoder decodeObjectForKey:MDCButtonUserZIndicesKey];
-      NSArray *userZIndicesStates = [userZIndices allKeys];
-      for (NSNumber *stateNum in userZIndicesStates) {
-        NSNumber *zIndex = userZIndices[stateNum];
-        CGFloat elevation = (float)pow(2.f, [zIndex floatValue]);
-        [_userElevations setObject:@(elevation) forKey:stateNum];
-      }
     }
   }
   return self;
@@ -229,7 +218,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   }
 
   [aCoder encodeBool:_shouldRaiseOnTouch forKey:MDCButtonShouldRaiseOnTouchKey];
-  [aCoder encodeBool:_uppercaseTitle forKey:MDCButtonUppercaseTitleKey];
+  [aCoder encodeBool:_shouldCapitalizeTitle forKey:MDCButtonShouldCapitalizeTitleKey];
   if (_underlyingColor) {
     [aCoder encodeObject:_underlyingColor forKey:MDCButtonUnderlyingColorKey];
   }
@@ -308,9 +297,9 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 #pragma mark - Title Uppercasing
 
-- (void)setUppercaseTitle:(BOOL)uppercaseTitle {
-  _uppercaseTitle = uppercaseTitle;
-  if (_uppercaseTitle) {
+- (void)setShouldCapitalizeTitle:(BOOL)shouldCapitalizeTitle {
+  _shouldCapitalizeTitle = shouldCapitalizeTitle;
+  if (_shouldCapitalizeTitle) {
     // This ensures existing titles will get upper cased
     UIControlState allControlStates =
         (UIControlStateHighlighted | UIControlStateDisabled | UIControlStateSelected);
@@ -332,7 +321,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     [_accessibilityLabelForState removeObjectForKey:@(state)];
   }
 
-  if (_uppercaseTitle) {
+  if (_shouldCapitalizeTitle) {
     title = [title uppercaseStringWithLocale:[NSLocale currentLocale]];
   }
   [super setTitle:title forState:state];
@@ -347,7 +336,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     [_accessibilityLabelForState removeObjectForKey:@(state)];
   }
 
-  if (_uppercaseTitle) {
+  if (_shouldCapitalizeTitle) {
     // Store the attributes.
     NSMutableArray *attributes = [NSMutableArray array];
     [title enumerateAttributesInRange:NSMakeRange(0, [title length])
@@ -386,7 +375,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (NSString *)accessibilityLabel {
-  if (!_uppercaseTitle) {
+  if (!_shouldCapitalizeTitle) {
     return [super accessibilityLabel];
   }
 
@@ -463,6 +452,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
   // The elevation of the normal state controls whether this button is flat or not, and flat buttons
   // have different background color requirements than raised buttons.
+  // TODO(ajsecord): Move to MDCFlatButton and update this comment.
   if (state == UIControlStateNormal) {
     [self updateAlphaAndBackgroundColorAnimated:NO];
     [self updateTitleColor];
@@ -547,7 +537,16 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (CGFloat)defaultElevationForState:(UIControlState)state {
-  return 0;
+  if (state == UIControlStateNormal) {
+    return 0;
+  }
+
+  if ((state & UIControlStateSelected) == UIControlStateSelected) {
+    CGFloat normalElevation = [self elevationForState:UIControlStateNormal];
+    return normalElevation > 0 ? 2 * normalElevation : 1;
+  }
+
+  return [self elevationForState:UIControlStateNormal];
 }
 
 - (BOOL)shouldHaveOpaqueBackground {
