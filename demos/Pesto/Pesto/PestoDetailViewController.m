@@ -22,7 +22,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  UIView *contentView = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 48.0f, 36.0f)];
+  UIView *contentView = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 24.f, 24.f)];
   contentView.autoresizingMask =
   UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:contentView];
@@ -139,7 +139,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 
   UIImage *spriteImage = [UIImage imageNamed:kPestoDetailViewControllerBackMenu];
   _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
-  _animationView.frame = CGRectMake(20, 30, 30, 30);
+  _animationView.frame = CGRectMake(16.f, 16.f, 24.f, 24.f);
   _animationView.tintColor = [UIColor whiteColor];
   [self.view addSubview:_animationView];
 

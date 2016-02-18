@@ -1,5 +1,5 @@
 #import "PestoAppDelegate.h"
-#import "PestoViewController.h"
+#import "PestoFlexibleHeaderContainerViewController.h"
 
 @interface PestoAppDelegate ()
 
@@ -7,16 +7,16 @@
 
 @implementation PestoAppDelegate
 
-
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  self.window.backgroundColor = [UIColor whiteColor];
-  [self.window makeKeyAndVisible];
+  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
 
-  PestoViewController *pestoVC = [[PestoViewController alloc] init];
-  [self.window setRootViewController:pestoVC];
+  PestoFlexibleHeaderContainerViewController *flexHeadContainerVC =
+      [[PestoFlexibleHeaderContainerViewController alloc] init];
+
+  [self.window setRootViewController:flexHeadContainerVC];
+  [self.window makeKeyAndVisible];
 
   return YES;
 }
