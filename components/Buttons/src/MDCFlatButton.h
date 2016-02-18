@@ -20,19 +20,19 @@
 
 /**
  A "flat" MDCButton.
- 
+
  Flat buttons should be considered the default button. They do not have its own background color
  and do not raise when touched. This type of button should be used in most situations requiring a
  button. For layouts with many UI elements in which a flat button might get visually lost,
  consider using a MDCRaisedButton instead.
- 
+
  @see http://www.google.com/design/spec/components/buttons.html#buttons-flat-buttons
  */
 @interface MDCFlatButton : MDCButton
 
 /**
  Use an opaque background color (default is NO).
- 
+
  Flat buttons normally have a transparent background and blend seamlessly with their underlying
  color, but occasionally a flat button with an opaque background will be required. Consider using
  a raised button instead if possible.

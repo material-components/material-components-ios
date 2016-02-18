@@ -18,11 +18,11 @@
 
 /**
  A "raised" MDCButton.
- 
+
  Raised buttons have their own background color, float above their parent slightly, and raise
  briefly when touched. Raised buttons should be used when flat buttons would get lost among other
  UI elements on the screen.
- 
+
  @see http://www.google.com/design/spec/components/buttons.html#buttons-raised-buttons
  */
 @interface MDCRaisedButton : MDCButton

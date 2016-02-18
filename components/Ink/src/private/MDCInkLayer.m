@@ -243,14 +243,20 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   if (!opacityVal) {
     opacityVal = [NSNumber numberWithFloat:0];
   }
-
-  // The end (tap release) animation should continue at the opacity level of the start animation.
-  CGFloat enterDuration = (1 - opacityVal.floatValue / _maxOpacityLevel) *
-                          kMDCInkLayerFastEnterDuration;
-  CGFloat duration = kMDCInkLayerBaseOpacityExitDuration + enterDuration;
-  _backgroundOpacityAnim =
-      [self opacityAnimWithValues:@[ opacityVal, @(_maxOpacityLevel), @0 ]
-                            times:@[ @0, @(enterDuration / duration), @1.f ]];
+  CGFloat duration = kMDCInkLayerBaseOpacityExitDuration;
+  if ([self isBounded]) {
+    // The end (tap release) animation should continue at the opacity level of the start animation.
+    CGFloat enterDuration = (1 - opacityVal.floatValue / _maxOpacityLevel) *
+                            kMDCInkLayerFastEnterDuration;
+    duration += enterDuration;
+    _backgroundOpacityAnim =
+        [self opacityAnimWithValues:@[ opacityVal, @(_maxOpacityLevel), @0 ]
+                              times:@[ @0, @(enterDuration / duration), @1.f ]];
+  } else {
+    _backgroundOpacityAnim =
+        [self opacityAnimWithValues:@[ opacityVal, @0 ]
+                              times:@[ @0, @1.f ]];
+  }
   _backgroundOpacityAnim.duration = duration;
   [_backgroundRippleLayer addAnimation:_backgroundOpacityAnim
                                 forKey:kMDCInkLayerBackgroundOpacityAnim];

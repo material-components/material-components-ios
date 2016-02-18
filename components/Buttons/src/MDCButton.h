@@ -19,16 +19,16 @@
 
 /**
  A Material flat, raised or floating button.
- 
+
  All buttons display animated ink splashes when the user interacts with the button.
- 
+
  The title color of the button set to have an accessible contrast ratio with the button's
  background color. To ensure this works for flat buttons (with transparent background), the caller
  is responsible for setting (and updating, if necessary) the button's underlyingColor property.
- 
+
  All buttons set the exclusiveTouch property to YES by default, which prevents users from
  simultaneously interacting with a button and other UI elements.
- 
+
  @see http://www.google.com/design/spec/components/buttons.html
  */
 @interface MDCButton : UIButton
