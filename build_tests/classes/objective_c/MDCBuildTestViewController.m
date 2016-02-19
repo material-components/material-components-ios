@@ -19,10 +19,10 @@
 #import <MaterialButtons.h>
 #import <MaterialInk.h>
 #import <MaterialPageControl.h>
-#import <MaterialSlider.h>
 #import <MaterialScrollViewDelegateMultiplexer.h>
 #import <MaterialShadowElevations.h>
 #import <MaterialShadowLayer.h>
+#import <MaterialSlider.h>
 #import <MaterialSpritedAnimationView.h>
 #import <MaterialTypography.h>
 
