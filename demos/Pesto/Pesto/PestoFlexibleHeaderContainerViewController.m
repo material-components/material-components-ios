@@ -29,10 +29,11 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
                                                sectionInset,
                                                sectionInset,
                                                sectionInset)];
-  _collectionViewController =
+  PestoCollectionViewController *collectionVC =
       [[PestoCollectionViewController alloc] initWithCollectionViewLayout:layout];
-  self = [super initWithContentViewController:_collectionViewController];
+  self = [super initWithContentViewController:collectionVC];
   if (self) {
+    _collectionViewController = collectionVC;
     _collectionViewController.flexHeaderContainerVC = self;
     _collectionViewController.delegate = self;
     [self setNeedsStatusBarAppearanceUpdate];

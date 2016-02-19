@@ -159,6 +159,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
   [self loadImage];
 }
 
