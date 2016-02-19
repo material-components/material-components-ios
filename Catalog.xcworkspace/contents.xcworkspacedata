@@ -6,6 +6,9 @@
       assignedFileDataType = "public.ruby-script">
    </FileRef>
    <FileRef
+      location = "group:components/Buttons/Buttons.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:components/Ink/examples/InkExample.xcodeproj">
    </FileRef>
    <FileRef
