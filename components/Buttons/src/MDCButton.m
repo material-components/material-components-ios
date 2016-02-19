@@ -44,6 +44,8 @@ static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
 // http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
 static const CGFloat MDCButtonDisabledAlpha = 0.1f;
+
+// Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x2196F3;
 
 // Checks whether the provided floating point number is exactly zero.
