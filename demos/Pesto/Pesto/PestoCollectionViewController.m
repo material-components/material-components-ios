@@ -3,6 +3,9 @@
 #import "PestoData.h"
 #import "PestoRemoteImageService.h"
 
+#import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
+
 static CGFloat kPestoCollectionViewControllerAnimationDuration = 0.33f;
 static CGFloat kPestoCollectionViewControllerDefaultHeaderHeight = 240.f;
 static CGFloat kPestoCollectionViewControllerInset = 5.f;
@@ -40,6 +43,12 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
   headerView.maximumHeight = kPestoCollectionViewControllerDefaultHeaderHeight;
   headerView.minimumHeight = kPestoCollectionViewControllerSmallHeaderHeight;
   [headerView.contentView addSubview:[self pestoHeaderView]];
+
+  // Use a custom shadow under the flexible header.
+  MDCShadowLayer *shadowLayer = [MDCShadowLayer layer];
+  shadowLayer.shadowMaskEnabled = NO;
+  [shadowLayer setElevation:MDCShadowElevationNone];
+  headerView.shadowLayer = shadowLayer;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -158,6 +167,11 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
                      }];
   }
   _logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, _logoScale, _logoScale);
+
+  MDCFlexibleHeaderView *headerView = _flexHeaderContainerVC.headerViewController.headerView;
+  MDCShadowLayer *shadowLayer = (MDCShadowLayer *)headerView.shadowLayer;
+  CGFloat elevation = MDCShadowElevationAppBar * headerView.shadowIntensity;
+  [shadowLayer setElevation:elevation];
 }
 
 #pragma mark - Private methods
