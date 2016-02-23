@@ -19,8 +19,6 @@ Pod::Spec.new do |s|
   #
   # ## Optional properties
   #
-  # private_header_files => This should point to your component's private/ directory if you have any
-  #                         private headers.
   # resource_bundles     => If your component has a bundle, add a dictionary mapping from the bundle
   #                         name to the bundle path.
   #
@@ -33,9 +31,6 @@ Pod::Spec.new do |s|
   #    ss.source_files = 'components/ComponentName/src/*.{h,m}', 'components/ComponentName/src/private/*.{h,m}'
   #    ss.header_mappings_dir = 'components/ComponentName/src/*'
   #
-  #    # Only if you have private headers
-  #    ss.private_header_files = 'components/ComponentName/src/private/*.h'
-  #
   #    # Only if you have a resource bundle
   #    ss.resource_bundles = {
   #      'MaterialComponentName' => ['components/ComponentName/MaterialComponentName.bundle/*']
@@ -45,9 +40,8 @@ Pod::Spec.new do |s|
 
   s.subspec 'Buttons' do |ss|
     ss.public_header_files = 'components/Buttons/src/*.h'
-    ss.source_files = 'components/Buttons/src/*.{h,m}', 'components/Buttons/src/private/*.{h,m}'
+    ss.source_files = 'components/Buttons/src/*.{h,m}', 'components/Buttons/src/Private/*.{h,m}'
     ss.header_mappings_dir = 'components/Buttons/src/*'
-    ss.private_header_files = 'components/Buttons/src/Private/*.h'
     ss.dependency 'material-components-ios/Ink'
     ss.dependency 'material-components-ios/ShadowElevations'
     ss.dependency 'material-components-ios/ShadowLayer'
@@ -58,14 +52,12 @@ Pod::Spec.new do |s|
     ss.public_header_files = 'components/FlexibleHeader/src/*.h'
     ss.source_files = 'components/FlexibleHeader/src/*.{h,m}', 'components/FlexibleHeader/src/private/*.{h,m}'
     ss.header_mappings_dir = 'components/FlexibleHeader/src/*'
-    ss.private_header_files = 'components/FlexibleHeader/src/private/*.h'
   end
 
   s.subspec 'Ink' do |ss|
     ss.public_header_files = 'components/Ink/src/*.h'
     ss.source_files = 'components/Ink/src/*.{h,m}', 'components/Ink/src/private/*.{h,m}'
     ss.header_mappings_dir = 'components/Ink/src/*'
-    ss.private_header_files = 'components/Ink/src/private/*.h'
   end
 
   s.subspec 'PageControl' do |ss|
@@ -120,7 +112,6 @@ Pod::Spec.new do |s|
     ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/Private/*.{h,m}'
     ss.header_mappings_dir = 'components/Typography/src/*'
 
-    ss.private_header_files = 'components/Typography/src/Private/*.h'
     ss.resource_bundles = {
       'MaterialTypography' => ['components/Typography/src/MaterialTypography.bundle/*']
     }
