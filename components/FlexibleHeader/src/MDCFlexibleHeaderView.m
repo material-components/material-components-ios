@@ -464,6 +464,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
 - (void)fhv_accumulatorDidChange {
   if (!_trackingScrollView) {
+    // Set the shadow opacity directly.
+    self.layer.shadowOpacity = _visibleShadowOpacity;
+
     return;
   }
 
@@ -698,7 +701,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (void)statusBarShifter:(MDCStatusBarShifter *)statusBarShifter
-  wantsSnapshotViewAdded:(UIView *)view {
+    wantsSnapshotViewAdded:(UIView *)view {
   [self addSubview:view];
 }
 
@@ -735,10 +738,23 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   void (^animate)() = ^{
     [self fhv_updateLayout];
   };
+  void (^completion)(BOOL) = ^(BOOL finished) {
+    if (!finished) {
+      return;
+    }
+
+    // When the tracking scroll view is cleared we need a shadow update.
+    if (!_trackingScrollView) {
+      [self fhv_accumulatorDidChange];
+    }
+  };
   if (wasTrackingScrollView) {
-    [UIView animateWithDuration:kTrackingScrollViewDidChangeAnimationDuration animations:animate];
+    [UIView animateWithDuration:kTrackingScrollViewDidChangeAnimationDuration
+                     animations:animate
+                     completion:completion];
   } else {
     animate();
+    completion(YES);
   }
 }
 
@@ -776,7 +792,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   if (_behavior == behavior) {
     return;
   }
-  BOOL needsShiftOnScreen = (_behavior != MDCFlexibleHeaderShiftBehaviorDisabled && behavior == MDCFlexibleHeaderShiftBehaviorDisabled);
+  BOOL needsShiftOnScreen = (_behavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
+                             behavior == MDCFlexibleHeaderShiftBehaviorDisabled);
   _behavior = behavior;
 
   _statusBarShifter.enabled = self.hidesStatusBarWhenCollapsed;
