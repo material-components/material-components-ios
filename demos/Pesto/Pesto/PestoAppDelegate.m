@@ -1,5 +1,5 @@
 #import "PestoAppDelegate.h"
-#import "PestoViewController.h"
+#import "PestoFlexibleHeaderContainerViewController.h"
 
 @interface PestoAppDelegate ()
 
@@ -7,16 +7,21 @@
 
 @implementation PestoAppDelegate
 
-
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  self.window.backgroundColor = [UIColor whiteColor];
-  [self.window makeKeyAndVisible];
+  // setStatusBarHidden:withAnimation: was deprecated in iOS 9.
+  // Silence the related warning.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
+#pragma clang diagnostic pop
 
-  PestoViewController *pestoVC = [[PestoViewController alloc] init];
-  [self.window setRootViewController:pestoVC];
+  PestoFlexibleHeaderContainerViewController *flexHeadContainerVC =
+      [[PestoFlexibleHeaderContainerViewController alloc] init];
+
+  [self.window setRootViewController:flexHeadContainerVC];
+  [self.window makeKeyAndVisible];
 
   return YES;
 }

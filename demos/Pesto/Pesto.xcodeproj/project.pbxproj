@@ -11,12 +11,14 @@
 		C91F6A501C63A80F00EB4BA8 /* PestoRemoteImageService.m in Sources */ = {isa = PBXBuildFile; fileRef = C91F6A4F1C63A80F00EB4BA8 /* PestoRemoteImageService.m */; };
 		C9A8552B1C4EDFAA003CADF7 /* PestoSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A8552A1C4EDFAA003CADF7 /* PestoSettingsViewController.m */; };
 		CE6A9B25D9A958C060ABB21D /* libPods-Pesto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D8C7972AFCDCD5C9447F8E /* libPods-Pesto.a */; };
+		DE3620651C73A0850026DF5D /* PestoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3620641C73A0850026DF5D /* PestoCollectionViewController.m */; };
 		DE381E1A1C457CEE00019C1D /* PestoCardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DE381E191C457CEE00019C1D /* PestoCardCollectionViewCell.m */; };
 		DE381E401C45A9FB00019C1D /* PestoSideView.m in Sources */ = {isa = PBXBuildFile; fileRef = DE381E3F1C45A9FB00019C1D /* PestoSideView.m */; };
 		DE5EF8671C404E0E00D2D4B9 /* PestoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5EF8661C404E0E00D2D4B9 /* PestoDetailViewController.m */; };
+		DEA791031C751D0D006301CC /* PestoData.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA791021C751D0D006301CC /* PestoData.m */; };
+		DEA791051C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA791041C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m */; };
 		DEBEDF291C3EF5D5004B614B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DEBEDF281C3EF5D5004B614B /* main.m */; };
 		DEBEDF2C1C3EF5D5004B614B /* PestoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DEBEDF2B1C3EF5D5004B614B /* PestoAppDelegate.m */; };
-		DEBEDF2F1C3EF5D5004B614B /* PestoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEBEDF2E1C3EF5D5004B614B /* PestoViewController.m */; };
 		DEBEDF321C3EF5D5004B614B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF301C3EF5D5004B614B /* Main.storyboard */; };
 		DEBEDF341C3EF5D5004B614B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF331C3EF5D5004B614B /* Assets.xcassets */; };
 		DEBEDF371C3EF5D5004B614B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF351C3EF5D5004B614B /* LaunchScreen.storyboard */; };
@@ -32,18 +34,22 @@
 		C9A855291C4EDFAA003CADF7 /* PestoSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PestoSettingsViewController.h; sourceTree = "<group>"; };
 		C9A8552A1C4EDFAA003CADF7 /* PestoSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoSettingsViewController.m; sourceTree = "<group>"; };
 		D36B00D81356A416449940A7 /* Pods-Pesto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pesto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pesto/Pods-Pesto.debug.xcconfig"; sourceTree = "<group>"; };
+		DE3620631C73A0710026DF5D /* PestoCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoCollectionViewController.h; sourceTree = "<group>"; };
+		DE3620641C73A0850026DF5D /* PestoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoCollectionViewController.m; sourceTree = "<group>"; };
 		DE381E181C457CE300019C1D /* PestoCardCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoCardCollectionViewCell.h; sourceTree = "<group>"; };
 		DE381E191C457CEE00019C1D /* PestoCardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoCardCollectionViewCell.m; sourceTree = "<group>"; };
 		DE381E3E1C45A9FB00019C1D /* PestoSideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PestoSideView.h; sourceTree = "<group>"; };
 		DE381E3F1C45A9FB00019C1D /* PestoSideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoSideView.m; sourceTree = "<group>"; };
 		DE5EF8651C404DFD00D2D4B9 /* PestoDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoDetailViewController.h; sourceTree = "<group>"; };
 		DE5EF8661C404E0E00D2D4B9 /* PestoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoDetailViewController.m; sourceTree = "<group>"; };
+		DEA791011C751D00006301CC /* PestoData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoData.h; sourceTree = "<group>"; };
+		DEA791021C751D0D006301CC /* PestoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoData.m; sourceTree = "<group>"; };
+		DEA791041C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoFlexibleHeaderContainerViewController.m; sourceTree = "<group>"; };
+		DEA791061C752B74006301CC /* PestoFlexibleHeaderContainerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoFlexibleHeaderContainerViewController.h; sourceTree = "<group>"; };
 		DEBEDF241C3EF5D5004B614B /* Pesto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pesto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEBEDF281C3EF5D5004B614B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DEBEDF2A1C3EF5D5004B614B /* PestoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoAppDelegate.h; sourceTree = "<group>"; };
 		DEBEDF2B1C3EF5D5004B614B /* PestoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PestoAppDelegate.m; sourceTree = "<group>"; };
-		DEBEDF2D1C3EF5D5004B614B /* PestoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoViewController.h; sourceTree = "<group>"; };
-		DEBEDF2E1C3EF5D5004B614B /* PestoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PestoViewController.m; sourceTree = "<group>"; };
 		DEBEDF311C3EF5D5004B614B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DEBEDF331C3EF5D5004B614B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEBEDF361C3EF5D5004B614B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -106,20 +112,24 @@
 				DEBEDF301C3EF5D5004B614B /* Main.storyboard */,
 				DEBEDF2A1C3EF5D5004B614B /* PestoAppDelegate.h */,
 				DEBEDF2B1C3EF5D5004B614B /* PestoAppDelegate.m */,
-				DE381E181C457CE300019C1D /* PestoCardCollectionViewCell.h */,
-				DE381E191C457CEE00019C1D /* PestoCardCollectionViewCell.m */,
-				DE5EF8651C404DFD00D2D4B9 /* PestoDetailViewController.h */,
-				DE5EF8661C404E0E00D2D4B9 /* PestoDetailViewController.m */,
-				DE381E3E1C45A9FB00019C1D /* PestoSideView.h */,
-				DE381E3F1C45A9FB00019C1D /* PestoSideView.m */,
-				DEBEDF2D1C3EF5D5004B614B /* PestoViewController.h */,
-				DEBEDF2E1C3EF5D5004B614B /* PestoViewController.m */,
-				C9A855291C4EDFAA003CADF7 /* PestoSettingsViewController.h */,
-				C9A8552A1C4EDFAA003CADF7 /* PestoSettingsViewController.m */,
 				C91F6A481C62BC0400EB4BA8 /* PestoAvatarView.h */,
 				C91F6A491C62BC0400EB4BA8 /* PestoAvatarView.m */,
+				DE381E181C457CE300019C1D /* PestoCardCollectionViewCell.h */,
+				DE381E191C457CEE00019C1D /* PestoCardCollectionViewCell.m */,
+				DE3620631C73A0710026DF5D /* PestoCollectionViewController.h */,
+				DE3620641C73A0850026DF5D /* PestoCollectionViewController.m */,
+				DEA791011C751D00006301CC /* PestoData.h */,
+				DEA791021C751D0D006301CC /* PestoData.m */,
+				DE5EF8651C404DFD00D2D4B9 /* PestoDetailViewController.h */,
+				DE5EF8661C404E0E00D2D4B9 /* PestoDetailViewController.m */,
+				DEA791061C752B74006301CC /* PestoFlexibleHeaderContainerViewController.h */,
+				DEA791041C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m */,
 				C91F6A4E1C63A80F00EB4BA8 /* PestoRemoteImageService.h */,
 				C91F6A4F1C63A80F00EB4BA8 /* PestoRemoteImageService.m */,
+				C9A855291C4EDFAA003CADF7 /* PestoSettingsViewController.h */,
+				C9A8552A1C4EDFAA003CADF7 /* PestoSettingsViewController.m */,
+				DE381E3E1C45A9FB00019C1D /* PestoSideView.h */,
+				DE381E3F1C45A9FB00019C1D /* PestoSideView.m */,
 				DEBEDF271C3EF5D5004B614B /* Supporting Files */,
 			);
 			path = Pesto;
@@ -254,15 +264,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE3620651C73A0850026DF5D /* PestoCollectionViewController.m in Sources */,
 				C91F6A501C63A80F00EB4BA8 /* PestoRemoteImageService.m in Sources */,
+				DEA791051C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m in Sources */,
 				C9A8552B1C4EDFAA003CADF7 /* PestoSettingsViewController.m in Sources */,
 				C91F6A4A1C62BC0400EB4BA8 /* PestoAvatarView.m in Sources */,
-				DEBEDF2F1C3EF5D5004B614B /* PestoViewController.m in Sources */,
 				DE381E1A1C457CEE00019C1D /* PestoCardCollectionViewCell.m in Sources */,
 				DE5EF8671C404E0E00D2D4B9 /* PestoDetailViewController.m in Sources */,
 				DEBEDF2C1C3EF5D5004B614B /* PestoAppDelegate.m in Sources */,
 				DE381E401C45A9FB00019C1D /* PestoSideView.m in Sources */,
 				DEBEDF291C3EF5D5004B614B /* main.m in Sources */,
+				DEA791031C751D0D006301CC /* PestoData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

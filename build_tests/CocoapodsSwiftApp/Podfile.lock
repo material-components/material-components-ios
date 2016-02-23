@@ -1,5 +1,7 @@
 PODS:
   - material-components-ios (0.1.0):
+    - material-components-ios/Buttons (= 0.1.0)
+    - material-components-ios/FlexibleHeader (= 0.1.0)
     - material-components-ios/Ink (= 0.1.0)
     - material-components-ios/PageControl (= 0.1.0)
     - material-components-ios/private (= 0.1.0)
@@ -10,6 +12,12 @@ PODS:
     - material-components-ios/SpritedAnimationView (= 0.1.0)
     - material-components-ios/Switch (= 0.1.0)
     - material-components-ios/Typography (= 0.1.0)
+  - material-components-ios/Buttons (0.1.0):
+    - material-components-ios/Ink
+    - material-components-ios/ShadowElevations
+    - material-components-ios/ShadowLayer
+    - material-components-ios/Typography
+  - material-components-ios/FlexibleHeader (0.1.0)
   - material-components-ios/Ink (0.1.0)
   - material-components-ios/PageControl (0.1.0)
   - material-components-ios/private (0.1.0):
@@ -38,6 +46,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  material-components-ios: b1e1bc101fe89ed301cdfeb479597d90b1fcf911
+  material-components-ios: ceb1a78b45aa87ce45d8d52eff3451392e57a920
 
 COCOAPODS: 0.39.0

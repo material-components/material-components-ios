@@ -28,23 +28,24 @@ CG_EXTERN CGSize MDCSwitchSizeThatFits(CGSize size);
  *
  */
 NS_CLASS_AVAILABLE_IOS(7_0)
+IB_DESIGNABLE
 @interface MDCSwitch : UIControl <NSCoding>
 
 // TODO(iangordon): Unify our Color handling over all of our components
 /** The color of the thumb and track in the on position. */
-@property(null_resettable, nonatomic, strong) IBInspectable UIColor *onTintColor;
+@property(null_resettable, nonatomic, strong) UIColor *onTintColor UI_APPEARANCE_SELECTOR;
 
 /** The color of the thumb in the off position. */
-@property(null_resettable, nonatomic, strong) IBInspectable UIColor *offThumbColor;
+@property(null_resettable, nonatomic, strong) UIColor *offThumbColor UI_APPEARANCE_SELECTOR;
 
 /** The color of the track in the off position. */
-@property(null_resettable, nonatomic, strong) IBInspectable UIColor *offTrackColor;
+@property(null_resettable, nonatomic, strong) UIColor *offTrackColor UI_APPEARANCE_SELECTOR;
 
 /** The color of the thumb when disabled. */
-@property(null_resettable, nonatomic, strong) IBInspectable UIColor *disabledThumbColor;
+@property(null_resettable, nonatomic, strong) UIColor *disabledThumbColor UI_APPEARANCE_SELECTOR;
 
 /** The color of the track when disabled. */
-@property(null_resettable, nonatomic, strong) IBInspectable UIColor *disabledTrackColor;
+@property(null_resettable, nonatomic, strong) UIColor *disabledTrackColor UI_APPEARANCE_SELECTOR;
 
 /**
  * Boolean value that determines the off/on state of the switch.

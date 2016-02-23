@@ -52,7 +52,7 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   if (color == nil) {
     color = [MDCSwitch defaultOnTintColor];
   }
-  _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:self.frame onTintColor:color];
+  _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:color];
   [_thumbTrack addTarget:self
                   action:@selector(thumbTrackValueChanged:)
         forControlEvents:UIControlEventValueChanged];
