@@ -80,14 +80,12 @@
 - (void)prepareForReuse {
   [super prepareForReuse];
 
-  for (UIView *subview in [self.contentView subviews]) {
-    [subview removeFromSuperview];
-  }
-
   _author = nil;
   _icon = nil;
   _imageURL = nil;
   _title = nil;
+  _image = nil;
+  _imageView.image = nil;
 }
 
 + (Class)layerClass {
