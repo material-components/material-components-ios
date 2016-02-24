@@ -6,6 +6,12 @@
 
 ##### Bug Fixes
 
+## 0.2.1
+
+##### Bug Fixes
+
+* Bumped CocoaPod version numbers. [Adrian Secord](https://github.com/ajsecord)
+
 ## 0.2.0
 
 ##### Enhancements
