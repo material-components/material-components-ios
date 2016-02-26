@@ -1,2 +1,2 @@
 pod 'material-components-ios-catalog', :path => '../'
-pod 'material-components-ios', :path => '../'
+pod 'MaterialComponents', :path => '../'

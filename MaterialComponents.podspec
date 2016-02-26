@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "material-components-ios"
+  s.name         = "MaterialComponents"
   s.version      = "0.2.1"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
@@ -42,10 +42,10 @@ Pod::Spec.new do |s|
     ss.public_header_files = 'components/Buttons/src/*.h'
     ss.source_files = 'components/Buttons/src/*.{h,m}', 'components/Buttons/src/Private/*.{h,m}'
     ss.header_mappings_dir = 'components/Buttons/src/*'
-    ss.dependency 'material-components-ios/Ink'
-    ss.dependency 'material-components-ios/ShadowElevations'
-    ss.dependency 'material-components-ios/ShadowLayer'
-    ss.dependency 'material-components-ios/Typography'
+    ss.dependency 'MaterialComponents/Ink'
+    ss.dependency 'MaterialComponents/ShadowElevations'
+    ss.dependency 'MaterialComponents/ShadowLayer'
+    ss.dependency 'MaterialComponents/Typography'
   end
 
   s.subspec 'FlexibleHeader' do |ss|
@@ -88,7 +88,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = 'components/Slider/src/*.h'
     ss.source_files = 'components/Slider/src/*.{h,m}', 'components/Slider/src/private/*.{h,m}'
     ss.header_mappings_dir = 'components/Slider/src/*'
-    ss.dependency 'material-components-ios/private/ThumbTrack'
+    ss.dependency 'MaterialComponents/private/ThumbTrack'
   end
 
   s.subspec 'SpritedAnimationView' do |ss|
@@ -104,7 +104,7 @@ Pod::Spec.new do |s|
     ss.resource_bundles = {
       'MaterialSwitch' => ['components/Switch/src/MaterialSwitch.bundle/*']
     }
-    ss.dependency 'material-components-ios/private/ThumbTrack'
+    ss.dependency 'MaterialComponents/private/ThumbTrack'
   end
 
   s.subspec 'Typography' do |ss|
@@ -129,9 +129,9 @@ Pod::Spec.new do |s|
       ss.public_header_files = 'components/private/ThumbTrack/src/*.h'
       ss.source_files = 'components/private/ThumbTrack/src/*.{h,m}'
       ss.header_mappings_dir = 'components/private/ThumbTrack/src/*'
-      ss.dependency 'material-components-ios/ShadowElevations'
-      ss.dependency 'material-components-ios/ShadowLayer'
-      ss.dependency 'material-components-ios/private/Color'
+      ss.dependency 'MaterialComponents/ShadowElevations'
+      ss.dependency 'MaterialComponents/ShadowLayer'
+      ss.dependency 'MaterialComponents/private/Color'
     end
     
   end

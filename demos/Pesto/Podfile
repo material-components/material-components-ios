@@ -1,4 +1,4 @@
 target 'Pesto' do
-  pod 'material-components-ios', :path => '../../'
+  pod 'MaterialComponents', :path => '../../'
 end
 
