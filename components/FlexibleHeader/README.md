@@ -8,7 +8,7 @@ UIScrollViewDelegate events.
 To add the Flexible Header to your Xcode project using CocoaPods, add the following to your
 `Podfile`:
 
-    pod 'material-components-ios-catalog/FlexibleHeader'
+    pod 'material-components-ios/FlexibleHeader'
 
 Then, run the following command:
 
@@ -18,7 +18,7 @@ Then, run the following command:
 
 Most view controllers own their own header in a material app. These headers are flexible, provide
 navigation information and actions, and often display high quality photography that complements the
-underlying content. Flexible Header was designed with the these expectations in mind.
+underlying content. Flexible Header was designed with these expectations in mind.
 
 This deviates from the typical UIKit convention of having a UINavigationController that owns and
 manages a single UINavigationBar. The benefits of this deviation are:
