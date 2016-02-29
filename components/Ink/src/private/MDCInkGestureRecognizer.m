@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "private/MDCInkGestureRecognizer.h"
+#import "MDCInkGestureRecognizer.h"
 
 #import <UIKit/UIGestureRecognizerSubclass.h>
 

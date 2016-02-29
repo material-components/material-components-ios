@@ -2,7 +2,7 @@
 #error "This file requires ARC support."
 #endif
 
-#import "private/MDCStatusBarShifter.h"
+#import "MDCStatusBarShifter.h"
 
 static CGFloat kStatusBarExpectedHeight = 20;
 static NSTimeInterval kStatusBarBecomesInvalidAnimationDuration = 0.2;

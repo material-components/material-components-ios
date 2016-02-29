@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "private/MDCInkLayer.h"
+#import "MDCInkLayer.h"
 
 #import <UIKit/UIKit.h>
 
