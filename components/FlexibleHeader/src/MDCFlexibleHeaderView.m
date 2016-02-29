@@ -195,12 +195,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [self fhv_accumulatorDidChange];
 }
 
-- (void)setShadowLayer:(CALayer *)shadowLayer {
-  [self setShadowLayer:shadowLayer intensityDidChangeBlock:nil];
-}
-
-- (void)setShadowLayer:(CALayer *)shadowLayer
-    intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
+- (void)fhv_setShadowLayer:(CALayer *)shadowLayer
+   intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
   _shadowIntensityChangeBlock = block;
 
   // If there is a custom shadow make sure the shadow on self.layer is not visible.
@@ -221,6 +217,15 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _customShadowLayer.hidden = YES;
     _shadowLayer = nil;
   }
+}
+
+- (void)setShadowLayer:(CALayer *)shadowLayer {
+  [self fhv_setShadowLayer:shadowLayer intensityDidChangeBlock:nil];
+}
+
+- (void)setShadowLayer:(CALayer *)shadowLayer
+    intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
+  [self fhv_setShadowLayer:shadowLayer intensityDidChangeBlock:block];
 }
 
 #pragma mark - UIView
