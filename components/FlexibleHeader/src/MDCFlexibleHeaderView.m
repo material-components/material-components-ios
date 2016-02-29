@@ -237,6 +237,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _defaultShadowLayer.frame = self.bounds;
   _customShadowLayer.frame = self.bounds;
   _shadowLayer.frame = self.bounds;
+  [_defaultShadowLayer layoutIfNeeded];
+  [_customShadowLayer layoutIfNeeded];
+  [_shadowLayer layoutIfNeeded];
   [CATransaction setDisableActions:disableActions];
 }
 
@@ -720,7 +723,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (void)statusBarShifter:(MDCStatusBarShifter *)statusBarShifter
-    wantsSnapshotViewAdded:(UIView *)view {
+  wantsSnapshotViewAdded:(UIView *)view {
   [self addSubview:view];
 }
 
