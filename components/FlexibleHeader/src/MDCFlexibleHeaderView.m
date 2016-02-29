@@ -106,7 +106,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   // Layers for header shadows.
   CALayer *_defaultShadowLayer;
   CALayer *_customShadowLayer;
-  
+
   // The block executed when shadow intensity changes.
   MDCFlexibleHeaderShadowIntensityChangeBlock _shadowIntensityChangeBlock;
 
@@ -196,6 +196,13 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (void)setShadowLayer:(CALayer *)shadowLayer {
+  [self setShadowLayer:shadowLayer intensityDidChangeBlock:nil];
+}
+
+- (void)setShadowLayer:(CALayer *)shadowLayer
+    intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
+  _shadowIntensityChangeBlock = block;
+
   // If there is a custom shadow make sure the shadow on self.layer is not visible.
   self.layer.shadowOpacity = 0;
   CALayer *oldShadowLayer = _shadowLayer;
@@ -214,12 +221,6 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _customShadowLayer.hidden = YES;
     _shadowLayer = nil;
   }
-}
-
-- (void)setShadowLayer:(CALayer *)shadowLayer
-    intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
-  [self setShadowLayer:shadowLayer];
-  _shadowIntensityChangeBlock = block;
 }
 
 #pragma mark - UIView
