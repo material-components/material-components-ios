@@ -43,7 +43,14 @@ static const CGFloat kMaxAnchorLength = 175;
 static const CGFloat kMinimumVisibleProportion = 0.25;
 
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
+
 @property(nonatomic) CGPoint contentOffset;
+
+// The intensity strength of the shadow being displayed under the flexible header. Use this property
+// to check what the intensity of a custom shadow should be depending on a scroll position. Valid
+// values range from 0 to 1. Where 0 is no shadow is visible and 1 is the shadow is fully visible.
+@property(nonatomic, readonly) CGFloat shadowIntensity;
+
 @end
 
 // All injections into the content and scroll indicator insets are tracked here. It's super
@@ -99,6 +106,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   // Layers for header shadows.
   CALayer *_defaultShadowLayer;
   CALayer *_customShadowLayer;
+  
+  // The block executed when shadow intensity changes.
+  MDCFlexibleHeaderShadowIntensityChangeBlock _shadowIntensityChangeBlock;
 
 #if DEBUG
   // Keeps track of whether the client called ...WillEndDraggingWithVelocity:...
@@ -204,6 +214,12 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _customShadowLayer.hidden = YES;
     _shadowLayer = nil;
   }
+}
+
+- (void)setShadowLayer:(CALayer *)shadowLayer
+    intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
+  [self setShadowLayer:shadowLayer];
+  _shadowIntensityChangeBlock = block;
 }
 
 #pragma mark - UIView
@@ -508,6 +524,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _defaultShadowLayer.shadowOpacity = _visibleShadowOpacity * shadowIntensity;
   }
   _shadowIntensity = shadowIntensity;
+  if (_shadowIntensityChangeBlock) {
+    _shadowIntensityChangeBlock(_shadowLayer, _shadowIntensity);
+  }
 
   [_statusBarShifter setOffset:boundedAccumulator];
 
