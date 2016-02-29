@@ -8,11 +8,10 @@
       location = "group:Podfile">
    </FileRef>
    <FileRef
-      location = "group:../material-components-ios.podspec"
-      assignedFileDataType = "public.ruby-script">
+      location = "group:../material-components-ios-catalog.podspec">
    </FileRef>
    <FileRef
-      location = "group:../material-components-ios-catalog.podspec">
+      location = "group:../MaterialComponents.podspec">
    </FileRef>
    <FileRef
       location = "group:MDCCatalog.xcodeproj">
