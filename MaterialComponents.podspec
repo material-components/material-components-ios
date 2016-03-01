@@ -54,6 +54,12 @@ Pod::Spec.new do |s|
     ss.header_mappings_dir = 'components/FlexibleHeader/src/*'
   end
 
+  s.subspec 'HeaderStackView' do |ss|
+    ss.public_header_files = 'components/HeaderStackView/src/*.h'
+    ss.source_files = 'components/HeaderStackView/src/*.{h,m}'
+    ss.header_mappings_dir = 'components/HeaderStackView/src/*'
+  end
+
   s.subspec 'Ink' do |ss|
     ss.public_header_files = 'components/Ink/src/*.h'
     ss.source_files = 'components/Ink/src/*.{h,m}', 'components/Ink/src/private/*.{h,m}'
