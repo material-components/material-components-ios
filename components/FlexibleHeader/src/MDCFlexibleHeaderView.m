@@ -1,3 +1,19 @@
+/*
+ Copyright 2015-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -106,7 +122,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   // Layers for header shadows.
   CALayer *_defaultShadowLayer;
   CALayer *_customShadowLayer;
-  
+
   // The block executed when shadow intensity changes.
   MDCFlexibleHeaderShadowIntensityChangeBlock _shadowIntensityChangeBlock;
 
@@ -195,7 +211,10 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [self fhv_accumulatorDidChange];
 }
 
-- (void)setShadowLayer:(CALayer *)shadowLayer {
+- (void)fhv_setShadowLayer:(CALayer *)shadowLayer
+   intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
+  _shadowIntensityChangeBlock = block;
+
   // If there is a custom shadow make sure the shadow on self.layer is not visible.
   self.layer.shadowOpacity = 0;
   CALayer *oldShadowLayer = _shadowLayer;
@@ -216,10 +235,13 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   }
 }
 
+- (void)setShadowLayer:(CALayer *)shadowLayer {
+  [self fhv_setShadowLayer:shadowLayer intensityDidChangeBlock:nil];
+}
+
 - (void)setShadowLayer:(CALayer *)shadowLayer
     intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
-  [self setShadowLayer:shadowLayer];
-  _shadowIntensityChangeBlock = block;
+  [self fhv_setShadowLayer:shadowLayer intensityDidChangeBlock:block];
 }
 
 #pragma mark - UIView

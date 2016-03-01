@@ -4,7 +4,11 @@
 
 ##### Enhancements
 
+- New API: MDCFlexibleHeaderView::setShadowLayer:intensityDidChangeBlock:. [Jeff Verkoeyen](https://github.com/jverkoey)
+
 ##### Bug Fixes
+
+- Fixed issue where MDCShadowLayer would ghost behind the MDCFlexibleHeaderView. [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ## 0.2.1
 
