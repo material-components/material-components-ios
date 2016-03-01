@@ -21,6 +21,17 @@
 static const NSUInteger kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = 0.0001f;
 
+// Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
+static const uint32_t MDCBlueColor = 0x2196F3;
+
+// Creates a UIColor from a 24-bit RGB color encoded as an integer.
+static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
+  return [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0
+                         green:((float)((rgbValue & 0x00FF00) >> 8)) / 255.0
+                          blue:((float)((rgbValue & 0x0000FF) >> 0)) / 255.0
+                         alpha:1.0];
+}
+
 @interface SliderTests : XCTestCase
 
 @end
@@ -382,7 +393,7 @@ static const CGFloat kEpsilonAccuracy = 0.0001f;
 #pragma mark private test helpers
 
 - (UIColor *)blueColor {
-  return [UIColor blueColor];
+  return MDCColorFromRGB(MDCBlueColor);
 }
 
 - (CGFloat)randomNumber {
