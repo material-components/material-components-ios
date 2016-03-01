@@ -38,19 +38,24 @@ PODS:
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Typography (0.2.1)
   - MaterialComponentsCatalog (0.2.1)
+  - MaterialComponentsUnitTests (0.2.1)
 
 DEPENDENCIES:
   - MaterialComponents (from `../`)
   - MaterialComponentsCatalog (from `../`)
+  - MaterialComponentsUnitTests (from `../`)
 
 EXTERNAL SOURCES:
   MaterialComponents:
     :path: ../
   MaterialComponentsCatalog:
     :path: ../
+  MaterialComponentsUnitTests:
+    :path: ../
 
 SPEC CHECKSUMS:
   MaterialComponents: 7f67c24e56c5ccc0065af42355156d14e325f17d
   MaterialComponentsCatalog: 4448d7784f774c824dbc0718d7e0674e1d09cc42
+  MaterialComponentsUnitTests: 822ee1c039caaf9d7a377085c8f62599c2a5b35a
 
 COCOAPODS: 0.39.0

@@ -11,13 +11,19 @@
       location = "group:Podfile">
    </FileRef>
    <FileRef
-      location = "group:../material-components-ios-catalog.podspec">
-   </FileRef>
-   <FileRef
       location = "group:../MaterialComponents.podspec">
    </FileRef>
    <FileRef
+      location = "group:../MaterialComponentsCatalog.podspec">
+   </FileRef>
+   <FileRef
+      location = "group:../MaterialComponentsUnitTests.podspec">
+   </FileRef>
+   <FileRef
       location = "group:MDCCatalog.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MDCUnitTests.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

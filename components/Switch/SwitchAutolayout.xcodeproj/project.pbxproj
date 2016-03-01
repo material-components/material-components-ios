@@ -13,8 +13,6 @@
 		4010D8E31C6B9EAE00AEF7D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4010D8E11C6B9EAE00AEF7D2 /* Main.storyboard */; };
 		4010D8E51C6B9EAE00AEF7D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4010D8E41C6B9EAE00AEF7D2 /* Assets.xcassets */; };
 		4010D8E81C6B9EAE00AEF7D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4010D8E61C6B9EAE00AEF7D2 /* LaunchScreen.storyboard */; };
-		4010D8F31C6B9EAE00AEF7D2 /* SwitchAutolayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4010D8F21C6B9EAE00AEF7D2 /* SwitchAutolayoutTests.m */; };
-		4010D8FE1C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4010D8FD1C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests.m */; };
 		404542B11C6BDB3E0015E3BD /* MDCThumbTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 404542AE1C6BDB3E0015E3BD /* MDCThumbTrack.m */; };
 		404542B21C6BDB3E0015E3BD /* MDCThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 404542B01C6BDB3E0015E3BD /* MDCThumbView.m */; };
 		404542B61C6BDB4E0015E3BD /* UIColor+MDC.m in Sources */ = {isa = PBXBuildFile; fileRef = 404542B51C6BDB4E0015E3BD /* UIColor+MDC.m */; };
@@ -23,23 +21,6 @@
 		404542C31C6BDB770015E3BD /* MaterialSwitch.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 404542BF1C6BDB770015E3BD /* MaterialSwitch.bundle */; };
 		404542C41C6BDB770015E3BD /* MDCSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 404542C21C6BDB770015E3BD /* MDCSwitch.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		4010D8EF1C6B9EAE00AEF7D2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4010D8CD1C6B9EAE00AEF7D2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4010D8D41C6B9EAE00AEF7D2;
-			remoteInfo = SwitchAutolayout;
-		};
-		4010D8FA1C6B9EAE00AEF7D2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4010D8CD1C6B9EAE00AEF7D2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4010D8D41C6B9EAE00AEF7D2;
-			remoteInfo = SwitchAutolayout;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4010D8D51C6B9EAE00AEF7D2 /* SwitchAutolayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwitchAutolayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,12 +33,6 @@
 		4010D8E41C6B9EAE00AEF7D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4010D8E71C6B9EAE00AEF7D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4010D8E91C6B9EAE00AEF7D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4010D8EE1C6B9EAE00AEF7D2 /* SwitchAutolayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwitchAutolayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4010D8F21C6B9EAE00AEF7D2 /* SwitchAutolayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwitchAutolayoutTests.m; sourceTree = "<group>"; };
-		4010D8F41C6B9EAE00AEF7D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4010D8F91C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwitchAutolayoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4010D8FD1C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwitchAutolayoutUITests.m; sourceTree = "<group>"; };
-		4010D8FF1C6B9EAE00AEF7D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		404542AC1C6BDB3E0015E3BD /* MaterialThumbTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialThumbTrack.h; path = ../../private/ThumbTrack/src/MaterialThumbTrack.h; sourceTree = "<group>"; };
 		404542AD1C6BDB3E0015E3BD /* MDCThumbTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCThumbTrack.h; path = ../../private/ThumbTrack/src/MDCThumbTrack.h; sourceTree = "<group>"; };
 		404542AE1C6BDB3E0015E3BD /* MDCThumbTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCThumbTrack.m; path = ../../private/ThumbTrack/src/MDCThumbTrack.m; sourceTree = "<group>"; };
@@ -86,20 +61,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4010D8EB1C6B9EAE00AEF7D2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4010D8F61C6B9EAE00AEF7D2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -107,8 +68,6 @@
 			isa = PBXGroup;
 			children = (
 				4010D8D71C6B9EAE00AEF7D2 /* SwitchAutolayout */,
-				4010D8F11C6B9EAE00AEF7D2 /* SwitchAutolayoutTests */,
-				4010D8FC1C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests */,
 				4010D8D61C6B9EAE00AEF7D2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -117,8 +76,6 @@
 			isa = PBXGroup;
 			children = (
 				4010D8D51C6B9EAE00AEF7D2 /* SwitchAutolayout.app */,
-				4010D8EE1C6B9EAE00AEF7D2 /* SwitchAutolayoutTests.xctest */,
-				4010D8F91C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,24 +103,6 @@
 				4010D8D91C6B9EAE00AEF7D2 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		4010D8F11C6B9EAE00AEF7D2 /* SwitchAutolayoutTests */ = {
-			isa = PBXGroup;
-			children = (
-				4010D8F21C6B9EAE00AEF7D2 /* SwitchAutolayoutTests.m */,
-				4010D8F41C6B9EAE00AEF7D2 /* Info.plist */,
-			);
-			path = SwitchAutolayoutTests;
-			sourceTree = "<group>";
-		};
-		4010D8FC1C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests */ = {
-			isa = PBXGroup;
-			children = (
-				4010D8FD1C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests.m */,
-				4010D8FF1C6B9EAE00AEF7D2 /* Info.plist */,
-			);
-			path = SwitchAutolayoutUITests;
 			sourceTree = "<group>";
 		};
 		4010D90B1C6BA1D800AEF7D2 /* Material Components */ = {
@@ -251,42 +190,6 @@
 			productReference = 4010D8D51C6B9EAE00AEF7D2 /* SwitchAutolayout.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4010D8ED1C6B9EAE00AEF7D2 /* SwitchAutolayoutTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4010D9051C6B9EAE00AEF7D2 /* Build configuration list for PBXNativeTarget "SwitchAutolayoutTests" */;
-			buildPhases = (
-				4010D8EA1C6B9EAE00AEF7D2 /* Sources */,
-				4010D8EB1C6B9EAE00AEF7D2 /* Frameworks */,
-				4010D8EC1C6B9EAE00AEF7D2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4010D8F01C6B9EAE00AEF7D2 /* PBXTargetDependency */,
-			);
-			name = SwitchAutolayoutTests;
-			productName = SwitchAutolayoutTests;
-			productReference = 4010D8EE1C6B9EAE00AEF7D2 /* SwitchAutolayoutTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		4010D8F81C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4010D9081C6B9EAE00AEF7D2 /* Build configuration list for PBXNativeTarget "SwitchAutolayoutUITests" */;
-			buildPhases = (
-				4010D8F51C6B9EAE00AEF7D2 /* Sources */,
-				4010D8F61C6B9EAE00AEF7D2 /* Frameworks */,
-				4010D8F71C6B9EAE00AEF7D2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4010D8FB1C6B9EAE00AEF7D2 /* PBXTargetDependency */,
-			);
-			name = SwitchAutolayoutUITests;
-			productName = SwitchAutolayoutUITests;
-			productReference = 4010D8F91C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -298,14 +201,6 @@
 				TargetAttributes = {
 					4010D8D41C6B9EAE00AEF7D2 = {
 						CreatedOnToolsVersion = 7.2;
-					};
-					4010D8ED1C6B9EAE00AEF7D2 = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 4010D8D41C6B9EAE00AEF7D2;
-					};
-					4010D8F81C6B9EAE00AEF7D2 = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 4010D8D41C6B9EAE00AEF7D2;
 					};
 				};
 			};
@@ -323,8 +218,6 @@
 			projectRoot = "";
 			targets = (
 				4010D8D41C6B9EAE00AEF7D2 /* SwitchAutolayout */,
-				4010D8ED1C6B9EAE00AEF7D2 /* SwitchAutolayoutTests */,
-				4010D8F81C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -338,20 +231,6 @@
 				4010D8E51C6B9EAE00AEF7D2 /* Assets.xcassets in Resources */,
 				404542C31C6BDB770015E3BD /* MaterialSwitch.bundle in Resources */,
 				4010D8E31C6B9EAE00AEF7D2 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4010D8EC1C6B9EAE00AEF7D2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4010D8F71C6B9EAE00AEF7D2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,36 +253,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4010D8EA1C6B9EAE00AEF7D2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4010D8F31C6B9EAE00AEF7D2 /* SwitchAutolayoutTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4010D8F51C6B9EAE00AEF7D2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4010D8FE1C6B9EAE00AEF7D2 /* SwitchAutolayoutUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4010D8F01C6B9EAE00AEF7D2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4010D8D41C6B9EAE00AEF7D2 /* SwitchAutolayout */;
-			targetProxy = 4010D8EF1C6B9EAE00AEF7D2 /* PBXContainerItemProxy */;
-		};
-		4010D8FB1C6B9EAE00AEF7D2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4010D8D41C6B9EAE00AEF7D2 /* SwitchAutolayout */;
-			targetProxy = 4010D8FA1C6B9EAE00AEF7D2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4010D8E11C6B9EAE00AEF7D2 /* Main.storyboard */ = {
@@ -527,54 +377,6 @@
 			};
 			name = Release;
 		};
-		4010D9061C6B9EAE00AEF7D2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = SwitchAutolayoutTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.SwitchAutolayoutTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwitchAutolayout.app/SwitchAutolayout";
-			};
-			name = Debug;
-		};
-		4010D9071C6B9EAE00AEF7D2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = SwitchAutolayoutTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.SwitchAutolayoutTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwitchAutolayout.app/SwitchAutolayout";
-			};
-			name = Release;
-		};
-		4010D9091C6B9EAE00AEF7D2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = SwitchAutolayoutUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.SwitchAutolayoutUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = SwitchAutolayout;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		4010D90A1C6B9EAE00AEF7D2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = SwitchAutolayoutUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.SwitchAutolayoutUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = SwitchAutolayout;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -592,24 +394,6 @@
 			buildConfigurations = (
 				4010D9031C6B9EAE00AEF7D2 /* Debug */,
 				4010D9041C6B9EAE00AEF7D2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4010D9051C6B9EAE00AEF7D2 /* Build configuration list for PBXNativeTarget "SwitchAutolayoutTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4010D9061C6B9EAE00AEF7D2 /* Debug */,
-				4010D9071C6B9EAE00AEF7D2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4010D9081C6B9EAE00AEF7D2 /* Build configuration list for PBXNativeTarget "SwitchAutolayoutUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4010D9091C6B9EAE00AEF7D2 /* Debug */,
-				4010D90A1C6B9EAE00AEF7D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

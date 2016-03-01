@@ -1,2 +1,14 @@
-pod 'MaterialComponentsCatalog’, :path => '../'
-pod 'MaterialComponents', :path => '../'
+workspace 'MDCCatalog.xcworkspace'
+xcodeproj 'MDCCatalog.xcodeproj'
+
+target "MDCCatalog" do
+  xcodeproj 'MDCCatalog.xcodeproj'
+  pod 'MaterialComponentsCatalog', :path => '../'
+  pod 'MaterialComponents', :path => '../'
+end
+
+target "MDCUnitTests" do
+  xcodeproj 'MDCUnitTests.xcodeproj'
+  pod 'MaterialComponentsUnitTests', :path => '../'
+  pod 'MaterialComponents', :path => '../'
+end
