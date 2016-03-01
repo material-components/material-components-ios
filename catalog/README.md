@@ -7,10 +7,9 @@ most up-to-date paths.
 
 At runtime, the app enumerates all instances of UIViewController that respond to the
 `+catalogHierarchy` class method. This method is expected to return an array of strings that define
-the "breadcrumbs" for the view controller in the app.
-
-The app uses the aggregate of these breadcrumbs to build a navigation tree, with each node either
-representing a specific UIViewController (an example) or a list of other nodes.
+the "breadcrumbs" for how to navigate from the root view controller to that view controller in the
+catalog app. Other view controllers could define matching strings if they by convention should be
+grouped together.
 
 ## Building the app
 
@@ -32,8 +31,8 @@ Let's build a hypothetical example for the "Ink" component.
 The first step is to create a source file. This can be either a .m or a .swift; whichever you
 prefer. Place this source file in the component's `examples/` directory, like so:
 
-> View controller names must be globally-unique across every component's example set. An easy way to
-> ensure this is to prefix the controller with the name of the component.
+> View controller names must be globally-unique across every component's example set. An easy way
+> to ensure this is to prefix the controller with the name of the component.
 
     components/Ink/examples/InkDemoViewController.m
 
