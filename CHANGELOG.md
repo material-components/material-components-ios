@@ -1,4 +1,5 @@
 ## Master
+## Develop
 
 ##### Breaking
 
@@ -7,6 +8,7 @@
 * New API: MDCFlexibleHeaderView::setShadowLayer:intensityDidChangeBlock:. [Jeff Verkoeyen](https://github.com/jverkoey)
 * New API: MDCHeaderStackView. [Jeff Verkoeyen](https://github.com/jverkoey)
 * [MDCSlider] Changed default color [Randall Li](https://github.com/randallli)
+* [MDCSlider] Readme.md copy edits. [Randall Li](https://github.com/randallli)
 * [MDCSwitch] Readme.md copy edits. [Randall Li](https://github.com/randallli)
 
 ##### Bug Fixes
