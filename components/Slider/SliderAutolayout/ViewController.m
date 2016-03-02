@@ -35,11 +35,25 @@
   _materialSlider.enabled = YES;
   _vanillaSlider.enabled = _materialSlider.enabled;
   _enabledSwitch.on = _materialSlider.enabled;
+  _materialSlider.value = _vanillaSlider.value;
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)materialSliderDidChange:(id)sender {
+  NSLog(@"Material Slider : %.2f", self.materialSlider.value);
+
+  self.vanillaSlider.value = self.materialSlider.value;
+}
+
+
+- (IBAction)vanillaSliderDidChange:(id)sender {
+  NSLog(@"Vanilla Slider : %.2f", self.vanillaSlider.value);
+
+  self.materialSlider.value = self.vanillaSlider.value;
 }
 
 - (IBAction)toggleSwitchesEnabled:(id)sender {
