@@ -5,14 +5,10 @@ target "MDCCatalog" do
   xcodeproj 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsCatalog', :path => '../'
   pod 'MaterialComponents', :path => '../'
-
-  use_frameworks!
 end
 
 target "MDCUnitTests" do
   xcodeproj 'MDCUnitTests.xcodeproj'
   pod 'MaterialComponentsUnitTests', :path => '../'
   pod 'MaterialComponents', :path => '../'
-
-  use_frameworks!
 end

@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import "TypographySimpleExampleViewController.h"
 #import "MaterialTypography.h"
 
-@implementation ViewController
+@implementation TypographySimpleExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -32,6 +32,10 @@
   [label sizeToFit];
   label.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
   [self.view addSubview:label];
+}
+
++ (NSArray *)catalogHierarchy {
+  return @[ @"Typography", @"Readme demo" ];
 }
 
 @end

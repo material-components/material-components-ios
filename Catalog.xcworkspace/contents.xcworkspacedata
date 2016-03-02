@@ -9,16 +9,7 @@
       location = "group:components/Buttons/Buttons.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:components/Ink/examples/InkExample.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:components/ShadowLayer/examples/MovableShadowedView/MovableShadowedView.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:components/PageControl/examples/PageControlExample.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:components/ScrollViewDelegateMultiplexer/examples/ScrollViewDelegateMultiplexerExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:components/Slider/Slider.xcodeproj">
@@ -28,8 +19,5 @@
    </FileRef>
    <FileRef
       location = "group:components/Switch/Switch.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:components/Typography/examples/TypographyExample/TypographyExample.xcodeproj">
    </FileRef>
 </Workspace>
