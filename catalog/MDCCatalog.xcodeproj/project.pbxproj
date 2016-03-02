@@ -524,7 +524,7 @@ fi
 				<key>GCC_WARN_UNUSED_VARIABLE</key>
 				<string>YES</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>9.2</string>
+				<string>7.0</string>
 				<key>MTL_ENABLE_DEBUG_INFO</key>
 				<string>YES</string>
 				<key>ONLY_ACTIVE_ARCH</key>
@@ -600,7 +600,7 @@ fi
 				<key>GCC_WARN_UNUSED_VARIABLE</key>
 				<string>YES</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>9.2</string>
+				<string>7.0</string>
 				<key>MTL_ENABLE_DEBUG_INFO</key>
 				<string>NO</string>
 				<key>SDKROOT</key>
@@ -642,7 +642,7 @@ fi
 				<key>INFOPLIST_FILE</key>
 				<string>MDCCatalog/Info.plist</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>9.2</string>
+				<string>7.0</string>
 				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<string>$(inherited) @executable_path/Frameworks</string>
 				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
@@ -672,7 +672,7 @@ fi
 				<key>INFOPLIST_FILE</key>
 				<string>MDCCatalog/Info.plist</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>9.2</string>
+				<string>7.0</string>
 				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<string>$(inherited) @executable_path/Frameworks</string>
 				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
