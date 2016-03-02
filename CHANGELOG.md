@@ -10,6 +10,7 @@
 * [MDCSlider] Changed default color [Randall Li](https://github.com/randallli)
 * [MDCSlider] Readme.md copy edits. [Randall Li](https://github.com/randallli)
 * [MDCSwitch] Readme.md copy edits. [Randall Li](https://github.com/randallli)
+* [MDCTypograpy:example] Refactored to be compatible with catalog by convention [Randall Li](https://github.com/randallli)
 
 ##### Bug Fixes
 
