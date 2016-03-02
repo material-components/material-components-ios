@@ -16,7 +16,12 @@
 
 #import "ViewController.h"
 
+#import "MDCSlider.h"
+
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet MDCSlider *materialSlider;
+@property (weak, nonatomic) IBOutlet UISlider *vanillaSlider;
+@property (weak, nonatomic) IBOutlet UISwitch *enabledSwitch;
 
 @end
 
@@ -25,11 +30,22 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view, typically from a nib.
+
+  // Ensure a consistent starting state
+  _materialSlider.enabled = YES;
+  _vanillaSlider.enabled = _materialSlider.enabled;
+  _enabledSwitch.on = _materialSlider.enabled;
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)toggleSwitchesEnabled:(id)sender {
+  BOOL newEnabledState = !self.materialSlider.enabled;
+  self.materialSlider.enabled = newEnabledState;
+  self.vanillaSlider.enabled = newEnabledState;
 }
 
 @end
