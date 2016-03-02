@@ -16,10 +16,29 @@
 
 #import "ViewController.h"
 
+#import "MDCSwitch.h"
+
 @interface ViewController ()
+
+@property (weak, nonatomic) IBOutlet MDCSwitch *materialSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *vanillaSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *enableButton;
 
 @end
 
 @implementation ViewController
+
+- (IBAction)disableEnableToggle:(id)sender {
+  BOOL controlsAreEnabled = _materialSwitch.enabled;
+  _materialSwitch.enabled = !controlsAreEnabled;
+  _vanillaSwitch.enabled = !controlsAreEnabled;
+  if (_materialSwitch.enabled) {
+    [_enableButton setTitle:@"Disable Switches" forState:UIControlStateNormal];
+    NSLog(@".enabled = YES");
+  } else {
+    [_enableButton setTitle:@"Enable Switches" forState:UIControlStateNormal];
+    NSLog(@".enabled = NO");
+  }
+}
 
 @end

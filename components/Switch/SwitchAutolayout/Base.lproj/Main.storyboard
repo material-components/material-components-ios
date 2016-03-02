@@ -23,18 +23,54 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="on" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AqX-8b-Ipg">
+                                <rect key="frame" x="242" y="215" width="117" height="30"/>
+                                <state key="normal" title="Disable Switches"/>
+                                <connections>
+                                    <action selector="disableEnableToggle:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sEC-ap-1od"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MDCSwitch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQu-E7-iwm">
+                                <rect key="frame" x="255" y="63" width="90" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="3nO-ic-fC0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UISwitch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A60-Fh-eIX">
+                                <rect key="frame" x="266" y="156" width="68" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Pah-e7-3xC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6y5-Bf-Aj4">
-                                <rect key="frame" x="276" y="63" width="51" height="31"/>
+                                <rect key="frame" x="276" y="117" width="51" height="31"/>
                             </switch>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="6y5-Bf-Aj4" firstAttribute="top" secondItem="eWK-42-F2X" secondAttribute="bottom" constant="8" id="7iu-1j-2cK"/>
-                            <constraint firstItem="eWK-42-F2X" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="Ovn-uT-lwy"/>
-                            <constraint firstItem="eWK-42-F2X" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kPy-pi-Jwf"/>
-                            <constraint firstItem="6y5-Bf-Aj4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pDH-Rk-Xpk"/>
+                            <constraint firstItem="lQu-E7-iwm" firstAttribute="top" secondItem="eWK-42-F2X" secondAttribute="bottom" constant="8" symbolic="YES" id="3r5-np-HVE"/>
+                            <constraint firstItem="A60-Fh-eIX" firstAttribute="top" secondItem="6y5-Bf-Aj4" secondAttribute="bottom" constant="8" symbolic="YES" id="IOH-eE-cKI"/>
+                            <constraint firstItem="A60-Fh-eIX" firstAttribute="centerX" secondItem="AqX-8b-Ipg" secondAttribute="centerX" id="Nqr-gx-k1u"/>
+                            <constraint firstItem="lQu-E7-iwm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Z0A-8g-PTo"/>
+                            <constraint firstItem="6y5-Bf-Aj4" firstAttribute="centerX" secondItem="lQu-E7-iwm" secondAttribute="centerX" id="e6V-DM-oKv"/>
+                            <constraint firstItem="AqX-8b-Ipg" firstAttribute="top" secondItem="A60-Fh-eIX" secondAttribute="bottom" constant="38" id="ikC-85-GLS"/>
+                            <constraint firstItem="6y5-Bf-Aj4" firstAttribute="centerX" secondItem="A60-Fh-eIX" secondAttribute="centerX" id="nnM-9I-hjT"/>
+                            <constraint firstItem="6y5-Bf-Aj4" firstAttribute="top" secondItem="lQu-E7-iwm" secondAttribute="bottom" constant="33" id="rCA-d9-cBc"/>
+                            <constraint firstItem="eWK-42-F2X" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="tfE-x1-ff3"/>
+                            <constraint firstItem="lQu-E7-iwm" firstAttribute="centerX" secondItem="eWK-42-F2X" secondAttribute="centerX" id="vS8-m4-VsS"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="enableButton" destination="AqX-8b-Ipg" id="cgD-Co-E7i"/>
+                        <outlet property="materialSwitch" destination="eWK-42-F2X" id="tZL-cg-yIx"/>
+                        <outlet property="vanillaSwitch" destination="6y5-Bf-Aj4" id="pIN-7K-keU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
