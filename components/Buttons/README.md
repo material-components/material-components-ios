@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Buttons"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # Buttons
 
 Buttons is a collection of material buttons, including a flat button, a raised button and a floating

@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Slider"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # Slider
 
 Slider is a Material styled slider.
