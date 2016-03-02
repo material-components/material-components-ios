@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:material-components-ios.podspec"
+      assignedFileDataType = "public.ruby-script">
+   </FileRef>
+   <FileRef
+      location = "group:components/Buttons/Buttons.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/Ink/examples/InkExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/ShadowLayer/examples/MovableShadowedView/MovableShadowedView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/PageControl/examples/PageControlExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/ScrollViewDelegateMultiplexer/examples/ScrollViewDelegateMultiplexerExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/Slider/Slider.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/SpritedAnimationView/examples/SpritedAnimationViewExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/Switch/Switch.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/Typography/examples/TypographyExample/TypographyExample.xcodeproj">
+   </FileRef>
+</Workspace>
