@@ -1,51 +1,53 @@
 PODS:
-  - material-components-ios (0.1.0):
-    - material-components-ios/Buttons (= 0.1.0)
-    - material-components-ios/FlexibleHeader (= 0.1.0)
-    - material-components-ios/Ink (= 0.1.0)
-    - material-components-ios/PageControl (= 0.1.0)
-    - material-components-ios/private (= 0.1.0)
-    - material-components-ios/ScrollViewDelegateMultiplexer (= 0.1.0)
-    - material-components-ios/ShadowElevations (= 0.1.0)
-    - material-components-ios/ShadowLayer (= 0.1.0)
-    - material-components-ios/Slider (= 0.1.0)
-    - material-components-ios/SpritedAnimationView (= 0.1.0)
-    - material-components-ios/Switch (= 0.1.0)
-    - material-components-ios/Typography (= 0.1.0)
-  - material-components-ios/Buttons (0.1.0):
-    - material-components-ios/Ink
-    - material-components-ios/ShadowElevations
-    - material-components-ios/ShadowLayer
-    - material-components-ios/Typography
-  - material-components-ios/FlexibleHeader (0.1.0)
-  - material-components-ios/Ink (0.1.0)
-  - material-components-ios/PageControl (0.1.0)
-  - material-components-ios/private (0.1.0):
-    - material-components-ios/private/Color (= 0.1.0)
-    - material-components-ios/private/ThumbTrack (= 0.1.0)
-  - material-components-ios/private/Color (0.1.0)
-  - material-components-ios/private/ThumbTrack (0.1.0):
-    - material-components-ios/private/Color
-    - material-components-ios/ShadowElevations
-    - material-components-ios/ShadowLayer
-  - material-components-ios/ScrollViewDelegateMultiplexer (0.1.0)
-  - material-components-ios/ShadowElevations (0.1.0)
-  - material-components-ios/ShadowLayer (0.1.0)
-  - material-components-ios/Slider (0.1.0):
-    - material-components-ios/private/ThumbTrack
-  - material-components-ios/SpritedAnimationView (0.1.0)
-  - material-components-ios/Switch (0.1.0):
-    - material-components-ios/private/ThumbTrack
-  - material-components-ios/Typography (0.1.0)
+  - MaterialComponents (0.2.1):
+    - MaterialComponents/Buttons (= 0.2.1)
+    - MaterialComponents/FlexibleHeader (= 0.2.1)
+    - MaterialComponents/HeaderStackView (= 0.2.1)
+    - MaterialComponents/Ink (= 0.2.1)
+    - MaterialComponents/PageControl (= 0.2.1)
+    - MaterialComponents/private (= 0.2.1)
+    - MaterialComponents/ScrollViewDelegateMultiplexer (= 0.2.1)
+    - MaterialComponents/ShadowElevations (= 0.2.1)
+    - MaterialComponents/ShadowLayer (= 0.2.1)
+    - MaterialComponents/Slider (= 0.2.1)
+    - MaterialComponents/SpritedAnimationView (= 0.2.1)
+    - MaterialComponents/Switch (= 0.2.1)
+    - MaterialComponents/Typography (= 0.2.1)
+  - MaterialComponents/Buttons (0.2.1):
+    - MaterialComponents/Ink
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+  - MaterialComponents/FlexibleHeader (0.2.1)
+  - MaterialComponents/HeaderStackView (0.2.1)
+  - MaterialComponents/Ink (0.2.1)
+  - MaterialComponents/PageControl (0.2.1)
+  - MaterialComponents/private (0.2.1):
+    - MaterialComponents/private/Color (= 0.2.1)
+    - MaterialComponents/private/ThumbTrack (= 0.2.1)
+  - MaterialComponents/private/Color (0.2.1)
+  - MaterialComponents/private/ThumbTrack (0.2.1):
+    - MaterialComponents/private/Color
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+  - MaterialComponents/ScrollViewDelegateMultiplexer (0.2.1)
+  - MaterialComponents/ShadowElevations (0.2.1)
+  - MaterialComponents/ShadowLayer (0.2.1)
+  - MaterialComponents/Slider (0.2.1):
+    - MaterialComponents/private/ThumbTrack
+  - MaterialComponents/SpritedAnimationView (0.2.1)
+  - MaterialComponents/Switch (0.2.1):
+    - MaterialComponents/private/ThumbTrack
+  - MaterialComponents/Typography (0.2.1)
 
 DEPENDENCIES:
-  - material-components-ios (from `../../`)
+  - MaterialComponents (from `../../`)
 
 EXTERNAL SOURCES:
-  material-components-ios:
-    :path: ../../
+  MaterialComponents:
+    :path: "../../"
 
 SPEC CHECKSUMS:
-  material-components-ios: f33e758249f349e95a3c3212680c5cc9d1574cb6
+  MaterialComponents: 40b1233b63e7ad6e966d789c62a473868f725365
 
 COCOAPODS: 0.39.0
