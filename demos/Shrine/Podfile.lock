@@ -1,0 +1,51 @@
+PODS:
+  - material-components-ios (0.1.0):
+    - material-components-ios/Buttons (= 0.1.0)
+    - material-components-ios/FlexibleHeader (= 0.1.0)
+    - material-components-ios/Ink (= 0.1.0)
+    - material-components-ios/PageControl (= 0.1.0)
+    - material-components-ios/private (= 0.1.0)
+    - material-components-ios/ScrollViewDelegateMultiplexer (= 0.1.0)
+    - material-components-ios/ShadowElevations (= 0.1.0)
+    - material-components-ios/ShadowLayer (= 0.1.0)
+    - material-components-ios/Slider (= 0.1.0)
+    - material-components-ios/SpritedAnimationView (= 0.1.0)
+    - material-components-ios/Switch (= 0.1.0)
+    - material-components-ios/Typography (= 0.1.0)
+  - material-components-ios/Buttons (0.1.0):
+    - material-components-ios/Ink
+    - material-components-ios/ShadowElevations
+    - material-components-ios/ShadowLayer
+    - material-components-ios/Typography
+  - material-components-ios/FlexibleHeader (0.1.0)
+  - material-components-ios/Ink (0.1.0)
+  - material-components-ios/PageControl (0.1.0)
+  - material-components-ios/private (0.1.0):
+    - material-components-ios/private/Color (= 0.1.0)
+    - material-components-ios/private/ThumbTrack (= 0.1.0)
+  - material-components-ios/private/Color (0.1.0)
+  - material-components-ios/private/ThumbTrack (0.1.0):
+    - material-components-ios/private/Color
+    - material-components-ios/ShadowElevations
+    - material-components-ios/ShadowLayer
+  - material-components-ios/ScrollViewDelegateMultiplexer (0.1.0)
+  - material-components-ios/ShadowElevations (0.1.0)
+  - material-components-ios/ShadowLayer (0.1.0)
+  - material-components-ios/Slider (0.1.0):
+    - material-components-ios/private/ThumbTrack
+  - material-components-ios/SpritedAnimationView (0.1.0)
+  - material-components-ios/Switch (0.1.0):
+    - material-components-ios/private/ThumbTrack
+  - material-components-ios/Typography (0.1.0)
+
+DEPENDENCIES:
+  - material-components-ios (from `../../`)
+
+EXTERNAL SOURCES:
+  material-components-ios:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  material-components-ios: f33e758249f349e95a3c3212680c5cc9d1574cb6
+
+COCOAPODS: 0.39.0
