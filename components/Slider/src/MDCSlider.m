@@ -213,6 +213,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat newValue = self.value + kSliderAccessibilityIncrement * range;
     [_thumbTrack setValue:newValue animated:NO userGenerated:YES completion:NULL];
+
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
 }
 
@@ -221,6 +223,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat newValue = self.value - kSliderAccessibilityIncrement * range;
     [_thumbTrack setValue:newValue animated:NO userGenerated:YES completion:NULL];
+
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
 }
 
