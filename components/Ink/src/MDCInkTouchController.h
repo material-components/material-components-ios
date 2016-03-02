@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCInkGestureRecognizer;
 @class MDCInkTouchController;
 @class MDCInkView;
 @protocol MDCInkTouchControllerDelegate;
@@ -43,9 +42,6 @@
 
 /** Delegate to extend the behavior of the touch control. */
 @property(nonatomic, weak, nullable) id<MDCInkTouchControllerDelegate> delegate;
-
-/** Gesture recognizer used to bind touch events to ink. */
-@property(nonatomic, strong, nonnull) MDCInkGestureRecognizer *gestureRecognizer;
 
 /** If YES, the gesture recognizer should delay the start of ink spread. Default is NO. */
 @property(nonatomic, assign) BOOL delaysInkSpread;
