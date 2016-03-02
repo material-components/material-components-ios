@@ -1,12 +1,22 @@
 import UIKit
 
+class ShrineCellContentView: UIView {
+   override func layoutSubviews() {
+    super.layoutSubviews()
+  }
+}
+
 class ShrineCollectionViewCell: UICollectionViewCell {
 
-  internal var title:String = "Title"
-  internal var shopTitle:String = "Shop title"
-  internal var price:String = "$100"
+  internal var title:String = ""
+  internal var shopTitle:String = ""
+  internal var price:String = ""
   internal var imageView:UIImageView = UIImageView()
   internal var avatar:UIImageView = UIImageView()
+
+  private var label = UILabel()
+  private var labelAvatar = UILabel()
+  private var labelDesc = UILabel()
 
   required init(coder: NSCoder) {
     super.init(coder: coder)!
@@ -31,7 +41,7 @@ class ShrineCollectionViewCell: UICollectionViewCell {
       self.bounds.height - imagePad * 2)
     self.addSubview(imageView)
 
-    let label = UILabel(frame: CGRectMake(10, 10, 0, 0))
+    label.frame = CGRectMake(10, 10, 0, 0)
     label.font = UIFont(name: "AbrilFatface-Regular", size: 14)
     label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
     label.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -44,7 +54,6 @@ class ShrineCollectionViewCell: UICollectionViewCell {
       value:paragraphStyle,
       range:NSMakeRange(0, attrString.length))
     label.attributedText = attrString
-
     label.sizeToFit();
     self.addSubview(label)
 
@@ -58,7 +67,6 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     avatar.layer.masksToBounds = true
     self.addSubview(avatar)
 
-    let labelAvatar = UILabel(frame: CGRectZero)
     labelAvatar.lineBreakMode = NSLineBreakMode.ByWordWrapping
     labelAvatar.textColor = UIColor.grayColor()
     labelAvatar.numberOfLines = 1
@@ -78,7 +86,6 @@ class ShrineCollectionViewCell: UICollectionViewCell {
       labelAvatar.frame.height)
     self.addSubview(labelAvatar)
 
-    let labelDesc = UILabel(frame: CGRectZero)
     labelDesc.lineBreakMode = NSLineBreakMode.ByWordWrapping
     labelDesc.numberOfLines = 2
     labelDesc.font = UIFont(name: "Helvetica-Bold", size: 12)
@@ -96,6 +103,20 @@ class ShrineCollectionViewCell: UICollectionViewCell {
       labelDesc.frame.width,
       labelDesc.frame.height)
     self.addSubview(labelDesc)
+  }
+
+  override func prepareForReuse() {
+    super.prepareForReuse()
+
+    for view:UIView in self.subviews {
+      view.removeFromSuperview()
+    }
+
+    title = ""
+    shopTitle = ""
+    price = ""
+    imageView.image = nil
+    avatar.image = nil
   }
 
 }

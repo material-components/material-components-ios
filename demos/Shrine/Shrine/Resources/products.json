@@ -45,6 +45,16 @@
                "price": "$150",
                "description": "This backpack by Bags ‘n’ stuff can hold just about anything: a laptop, a pen, a protractor, notebooks, small animals, plugs for your devices, sunglasses, gym clothes, shoes, gloves, two kittens, and even lunch!"
                }, {
+               "title": "Sunglasses",
+               "image": "sunnies.png",
+               "price": "$100",
+               "description": "Be an optimist. Carry Sunglasses with you at all times. All Tints and Shades products come with polarized lenses and super duper UV protection so you can look at the sun for however long you want. Sunglasses make you look cool, wear them."
+               }, {
+               "title": "Red Lipstick Set",
+               "image": "lipstick.png",
+               "price": "$25",
+               "description": "Trying to find the perfect shade to match your mood? Try no longer. Red Lipstick Set by StickLips has you covered for those nights when you need to get out, or even if you’re just headed to work."
+               }, {
                "title": "Dipped Brush",
                "image": "brush.png",
                "price": "$15",
@@ -77,6 +87,12 @@
             { "avatar": "peter-carlsson.png",
             "shop": "Peter's shop",
             "description": "Peter makes great stuff for awesome people like you. Super cool and extra awesome all of his shop’s goods are handmade with love. Custom orders are available upon request if you need something extra special." },
+            { "avatar": "peter-carlsson.png",
+            "shop": "Peter's shop",
+            "description": "Peter makes great stuff for awesome people like you. Super cool and extra awesome all of his shop’s goods are handmade with love. Custom orders are available upon request if you need something extra special." },
+            { "avatar": "16c477b.jpg",
+            "shop": "Stella's shop",
+            "description": "Stella sells awesome stuff at lovely prices. made by hand and sometimes by machine, but always with love and care. Custom orders are available upon request if you need something extra special." },
             { "avatar": "16c477b.jpg",
             "shop": "Stella's shop",
             "description": "Stella sells awesome stuff at lovely prices. made by hand and sometimes by machine, but always with love and care. Custom orders are available upon request if you need something extra special." }

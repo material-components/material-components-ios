@@ -7,13 +7,18 @@ class ShrineDetailView: UIView {
   internal var imageName:String = "popsicle.png"
   private var remoteImageService = RemoteImageService()
 
+  private var label = UILabel()
+  private var labelDesc = UILabel()
+  private var floatingButton = MDCFloatingButton()
+  private var imageView = UIImageView()
+
   override func layoutSubviews() {
     super.layoutSubviews()
     self.backgroundColor = UIColor.whiteColor()
 
     let labelPadding:CGFloat = 50
-    let imageView = UIImageView(frame: CGRectMake(labelPadding, labelPadding,
-      self.frame.size.width - 2 * labelPadding, 220))
+    imageView.frame = CGRectMake(labelPadding, labelPadding,
+      self.frame.size.width - 2 * labelPadding, 220)
     imageView.contentMode = UIViewContentMode.ScaleAspectFit
     imageView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
     self.addSubview(imageView)
@@ -25,12 +30,11 @@ class ShrineDetailView: UIView {
       }
       dispatch_async(dispatch_get_main_queue(), {
         let image = UIImage(data: imageData)
-        imageView.image = image;
-        imageView.setNeedsDisplay()
+        self.imageView.image = image;
+        self.imageView.setNeedsDisplay()
       })
     })
 
-    let label = UILabel(frame: CGRectZero)
     label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
     label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
     label.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -46,9 +50,9 @@ class ShrineDetailView: UIView {
     label.sizeToFit();
     label.frame = CGRectMake(labelPadding,
       280, label.frame.size.width, label.frame.size.height)
+    label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     self.addSubview(label)
 
-    let labelDesc = UILabel(frame: CGRectZero)
     labelDesc.lineBreakMode = NSLineBreakMode.ByWordWrapping
     labelDesc.numberOfLines = 5
     labelDesc.font = UIFont(name: "Helvetica", size: 14)
@@ -63,7 +67,16 @@ class ShrineDetailView: UIView {
     labelDesc.frame = CGRectMake(labelPadding,
       360, self.frame.size.width - 2 * labelPadding, 160)
     labelDesc.sizeToFit()
+    labelDesc.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     self.addSubview(labelDesc)
+
+    floatingButton.setTitle("+", forState: UIControlState.Normal)
+    floatingButton.backgroundColor =
+      UIColor(red: 22 / 255, green: 240 / 255, blue: 240 / 255, alpha: 1)
+    floatingButton.sizeToFit()
+    floatingButton.frame = CGRectMake(self.frame.width - floatingButton.frame.width - labelPadding,
+      500, floatingButton.frame.width, floatingButton.frame.height)
+    self.addSubview(floatingButton)
   }
 
 }
@@ -79,11 +92,17 @@ class ShrineDetailViewController: UIViewController {
     detailView.title = productTitle
     detailView.desc = desc
     detailView.imageName = imageName
+    detailView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     self.view.addSubview(detailView)
 
-    let dismissBtn = UIButton(frame: CGRectMake(10,30,50,30))
+    let dismissBtn = MDCFlatButton()
     dismissBtn.setTitle("Back", forState: UIControlState.Normal)
-    dismissBtn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+    dismissBtn.customTitleColor = UIColor.grayColor()
+    dismissBtn.sizeToFit()
+    dismissBtn.frame = CGRectMake(8,
+      24,
+      dismissBtn.frame.width,
+      dismissBtn.frame.height)
     dismissBtn.addTarget(self, action: "dismissDetails", forControlEvents: .TouchUpInside)
     self.view.addSubview(dismissBtn)
   }

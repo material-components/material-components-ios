@@ -1,5 +1,58 @@
 import UIKit
 
+class ShrineHeaderContentView: UIView {
+
+  private var logo = UIImage(named: "ShrineLogo")
+  private var logoImageView = UIImageView()
+  private var label = UILabel()
+  private var labelDesc = UILabel()
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+
+    self.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    logoImageView.image = logo
+    logoImageView.center = CGPointMake(self.frame.size.width / 2, 48)
+    self.addSubview(logoImageView)
+
+    label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
+    label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
+    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    label.numberOfLines = 2
+
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineHeightMultiple = 0.75
+    let attrString = NSMutableAttributedString(string: "Green \ncomfort chair")
+    attrString.addAttribute(NSParagraphStyleAttributeName,
+      value:paragraphStyle,
+      range:NSMakeRange(0, attrString.length))
+    label.attributedText = attrString
+    label.sizeToFit();
+    label.frame = CGRectMake(self.frame.width - label.frame.size.width - 20,
+      100, label.frame.size.width, label.frame.size.height)
+    label.autoresizingMask = UIViewAutoresizing.FlexibleWidth
+    self.addSubview(label)
+
+    labelDesc.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    labelDesc.numberOfLines = 2
+    labelDesc.font = UIFont(name: "Helvetica", size: 10)
+    labelDesc.textColor = UIColor(white: 0.54, alpha: 1)
+    let descParagraphStyle = NSMutableParagraphStyle()
+    descParagraphStyle.lineHeightMultiple = 1.2
+    let descAttrString = NSMutableAttributedString(
+      string: "Leave the tunnel and the rain is fallin \namazing things happen when you wait")
+    descAttrString.addAttribute(NSParagraphStyleAttributeName,
+      value:descParagraphStyle,
+      range:NSMakeRange(0, descAttrString.length))
+    labelDesc.attributedText = descAttrString
+    labelDesc.sizeToFit();
+    labelDesc.frame = CGRectMake(self.frame.width - labelDesc.frame.size.width - 20,
+      190, labelDesc.frame.size.width, labelDesc.frame.size.height)
+    labelDesc.autoresizingMask = UIViewAutoresizing.FlexibleWidth
+    self.addSubview(labelDesc)
+  }
+}
+
 class ShrineCollectionViewController: UICollectionViewController {
 
   internal var headerViewController:MDCFlexibleHeaderViewController!
@@ -97,10 +150,11 @@ class ShrineCollectionViewController: UICollectionViewController {
   internal func setupHeaderView() {
     let headerView = headerViewController.headerView
     headerView.trackingScrollView = collectionView
-    headerView.maximumHeight = 320;
+    headerView.maximumHeight = 280;
     headerView.minimumHeight = 240;
     headerView.contentView?.backgroundColor = UIColor.whiteColor()
     headerView.contentView?.layer.masksToBounds = true
+    headerView.contentView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
     let contentViewFrame = headerView.contentView?.frame
     let adjustedFrame = CGRectMake(-160,
@@ -125,46 +179,8 @@ class ShrineCollectionViewController: UICollectionViewController {
       })
     })
 
-    let logo = UIImage(named: "ShrineLogo")
-    let logoImageView = UIImageView(image: logo)
-    logoImageView.center = CGPointMake((contentViewFrame?.size.width)! / 2, 48)
-    headerView.contentView?.addSubview(logoImageView)
-
-    let label = UILabel(frame: CGRectZero)
-    label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
-    label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
-    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-    label.numberOfLines = 2
-
-    let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineHeightMultiple = 0.75
-    let attrString = NSMutableAttributedString(string: "Green \ncomfort chair")
-    attrString.addAttribute(NSParagraphStyleAttributeName,
-      value:paragraphStyle,
-      range:NSMakeRange(0, attrString.length))
-    label.attributedText = attrString
-    label.sizeToFit();
-    label.frame = CGRectMake(headerView.frame.width - label.frame.size.width - 20,
-      100, label.frame.size.width, label.frame.size.height)
-    headerView.contentView?.addSubview(label)
-
-    let labelDesc = UILabel(frame: CGRectZero)
-    labelDesc.lineBreakMode = NSLineBreakMode.ByWordWrapping
-    labelDesc.numberOfLines = 2
-    labelDesc.font = UIFont(name: "Helvetica", size: 10)
-    labelDesc.textColor = UIColor(white: 0.54, alpha: 1)
-    let descParagraphStyle = NSMutableParagraphStyle()
-    descParagraphStyle.lineHeightMultiple = 1.2
-    let descAttrString = NSMutableAttributedString(
-      string: "Leave the tunnel and the rain is fallin \namazing things happen when you wait")
-    descAttrString.addAttribute(NSParagraphStyleAttributeName,
-      value:descParagraphStyle,
-      range:NSMakeRange(0, descAttrString.length))
-    labelDesc.attributedText = descAttrString
-    labelDesc.sizeToFit();
-    labelDesc.frame = CGRectMake(headerView.frame.width - labelDesc.frame.size.width - 20,
-      190, labelDesc.frame.size.width, labelDesc.frame.size.height)
-    headerView.contentView?.addSubview(labelDesc)
+    let contentView = ShrineHeaderContentView(frame:(headerView.contentView?.frame)!)
+    headerView.contentView?.addSubview(contentView)
   }
 
 }
