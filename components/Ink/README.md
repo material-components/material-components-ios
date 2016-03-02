@@ -37,7 +37,7 @@ The `MDCInkTouchControllerDelegate` gives you control over aspects of the
 ink/touch relationship, such as how the ink view is created, where it is
 inserted in view hierarchy, etc. For example, to temporarily disable ink
 touches, the following code uses the delegate's
-`inkTouchControllerShouldProcessInkTouches:` method:
+`inkTouchController:shouldProcessInkTouchesAtTouchLocation:` method:
 
 ```objective-c
 @interface MyDelegate <MDCInkTouchControllerDelegate>
@@ -45,8 +45,8 @@ touches, the following code uses the delegate's
 
 @implementation MyDelegate
 
-- (BOOL)inkTouchControllerShouldProcessInkTouches:
-    (MDCInkTouchController *)inkTouchController {
+- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
   return [self checkIfWeShouldDisplayInk];
 }
 

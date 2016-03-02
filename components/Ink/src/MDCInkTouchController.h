@@ -141,9 +141,8 @@
 
  @see cancelInkTouchProcessing
  */
-- (BOOL)inkTouchControllerShouldProcessInkTouches:
-            (nonnull MDCInkTouchController *)inkTouchController
-                                  atTouchLocation:(CGPoint)location;
+- (BOOL)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location;
 
 /**
  Notifies the receiver that the ink touch controller did process an ink view at the
