@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import "ButtonsSimpleExampleViewController.h"
 
 #import "MaterialButtons.h"
 
-@implementation ViewController
+@implementation ButtonsSimpleExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -82,6 +82,10 @@
 
 - (void)didTap:(id)sender {
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
+}
+
++ (NSArray *)catalogHierarchy {
+  return @[ @"Buttons", @"3 kinds of buttons" ];
 }
 
 @end
