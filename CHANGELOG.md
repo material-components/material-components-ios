@@ -5,10 +5,18 @@
 ##### Bug Fixes
 
 ## 1.0.0
+
 ##### Breaking
 
 * [MDCFlexibleHeaderView] Removed `shadowIntensity` property, use setShadowLayer:intensityDidChangeBlock: instead. [Jeff Verkoeyen](https://github.com/jverkoey)
 * [MDCInkTouchControllerDelegate] Renamed `inkTouchControllerShouldProcessInkTouches:` to `inkTouchController:shouldProcessInkTouchesAtTouchLocation:`. [Chris Cox](https://github.com/chriscox)
+
+##### Deprecations
+
+* MDCFlexibleHeaderParentViewController, +[MDCFlexibleHeaderViewController addToParent], and
+  -[MDCFlexibleHeaderViewController addFlexibleHeaderViewToParentViewControllerView]. These APIs
+  are being deprecated in favor of the eventual equivalent AppBar convenience APIs. In the meantime
+  the FlexibleHeader will need to be instantiated and configured like a typical UIViewController.
 
 ##### Enhancements
 

@@ -61,7 +61,7 @@
  The flexible header view controller's view will be added as a subview to the associated parent
  view object.
  */
-- (void)addFlexibleHeaderViewToParentViewControllerView;
+- (void)addFlexibleHeaderViewToParentViewControllerView __deprecated;
 
 @end
 
@@ -101,21 +101,24 @@
  A view controller may conform to this protocol in order to utilize the configureParent: helper
  method on MDCFlexibleHeaderViewController.
  */
-@protocol MDCFlexibleHeaderParentViewController <NSObject>
+// clang-format off
+__deprecated
+@protocol MDCFlexibleHeaderParentViewController<NSObject>
 
 /**
  The header view controller instance that was added as a child view controller to the receiver.
  */
-@property(nonatomic, strong, nullable) MDCFlexibleHeaderViewController *headerViewController;
+@property(nonatomic, strong, nullable) MDCFlexibleHeaderViewController *headerViewController __deprecated;
 
 @end
 
-@interface MDCFlexibleHeaderViewController (Installation)
+@interface MDCFlexibleHeaderViewController(Installation)
 
 /**
  Creates an instance of MDCFlexibleHeaderViewController, adds it as a child to the parent view
  controller, and assigns the instance to the headerViewController property.
  */
-+ (void)addToParent:(nonnull id<MDCFlexibleHeaderParentViewController>)parent;
++ (void)addToParent:(nonnull id<MDCFlexibleHeaderParentViewController>)parent __deprecated;
 
 @end
+    // clang-format on
