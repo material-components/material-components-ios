@@ -19,6 +19,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @property(nonatomic) NSString *title;
 @property(nonatomic) UIColor *titleColor;
+@property(nonatomic) UILabel *titleLabel;
 
 @end
 
@@ -28,28 +29,29 @@ static NSString *const kPestoSideViewWidthBaseURL =
   self = [super initWithFrame:frame];
   if (self) {
     self.titleColor = [UIColor lightGrayColor];
+    self.backgroundColor = [UIColor whiteColor];
+    _titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
+    _titleLabel.font = [MDCTypography body1Font];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.textColor = self.titleColor;
+    [self addSubview:_titleLabel];
   }
   return self;
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-
-  self.backgroundColor = [UIColor whiteColor];
-  UILabel *title = [[UILabel alloc] initWithFrame:self.bounds];
-  title.text = _title;
-  title.font = [MDCTypography body1Font];
-  title.textColor = _titleColor;
-  title.textAlignment = NSTextAlignmentCenter;
-  [self addSubview:title];
-}
-
 - (void)prepareForReuse {
   [super prepareForReuse];
+  _titleLabel.text = nil;
+}
 
-  for (UIView *subview in [self.contentView subviews]) {
-    [subview removeFromSuperview];
-  }
+- (void)setTitle:(NSString *)title {
+  _title = title;
+  _titleLabel.text = title;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+  _titleColor = titleColor;
+  _titleLabel.textColor = titleColor;
 }
 
 @end
@@ -75,13 +77,18 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @implementation PestoSideContentView
 
-- (void)layoutSubviews {
-  _titles = @[ @"Home", @"Favorite", @"Saved", @"Trending", @"Settings" ];
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonInit];
+  }
+  return self;
+}
 
+- (void)commonInit {
   CGRect avatarRect = CGRectMake(0, 0, kPestoSideViewAvatarDim, kPestoSideViewAvatarDim);
-  NSURL *avatarURL = [NSURL
-      URLWithString:[kPestoSideViewWidthBaseURL
-                        stringByAppendingString:@"avatar.jpg"]];
+  NSURL *avatarURL = [NSURL URLWithString:[kPestoSideViewWidthBaseURL
+                                              stringByAppendingString:@"avatar.jpg"]];
   PestoAvatarView *avatarView = [[PestoAvatarView alloc] initWithFrame:avatarRect];
   avatarView.avatarImageURL = avatarURL;
   avatarView.center = CGPointMake(self.bounds.size.width / 2.f,
@@ -108,6 +115,8 @@ static NSString *const kPestoSideViewWidthBaseURL =
   lineView.backgroundColor = [UIColor lightGrayColor];
   [self addSubview:lineView];
 
+  _titles = @[ @"Home", @"Favorite", @"Saved", @"Trending", @"Settings" ];
+
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 0;
   [layout setSectionInset:UIEdgeInsetsMake(kPestoSideViewCollectionViewInset,
@@ -123,7 +132,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
   _collectionView.contentSize = _collectionView.bounds.size;
   _collectionView.backgroundColor = [UIColor whiteColor];
   _collectionView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:_collectionView];
   [_collectionView registerClass:[PestoSideViewCollectionViewCell class]
       forCellWithReuseIdentifier:@"PestoSideViewCollectionViewCell"];
