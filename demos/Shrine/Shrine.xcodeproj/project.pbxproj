@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		2665BDBFD6F42B19B3B61192 /* libPods-Shrine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D180A261B9BB43A253618934 /* libPods-Shrine.a */; };
 		DE064E731C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */; };
+		DE34DEB91C88A13400E04B65 /* ShrineInkOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE34DEB81C88A13400E04B65 /* ShrineInkOverlay.swift */; };
 		DE3CFD831C84FE0B006BACA7 /* products.json in Resources */ = {isa = PBXBuildFile; fileRef = DE3CFD821C84FE0B006BACA7 /* products.json */; };
 		DE3CFD851C873A07006BACA7 /* ShrineDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3CFD841C873A07006BACA7 /* ShrineDetailViewController.swift */; };
 		DE5D2A481C81068100C9C650 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5D2A471C81068100C9C650 /* AppDelegate.swift */; };
-		DE5D2A4A1C81068100C9C650 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5D2A491C81068100C9C650 /* ViewController.swift */; };
 		DE5D2A4D1C81068100C9C650 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE5D2A4B1C81068100C9C650 /* Main.storyboard */; };
 		DE5D2A4F1C81068100C9C650 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE5D2A4E1C81068100C9C650 /* Assets.xcassets */; };
 		DE5D2A521C81068100C9C650 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE5D2A501C81068100C9C650 /* LaunchScreen.storyboard */; };
@@ -28,11 +28,11 @@
 		CFB1C7A97606A3396EC257A4 /* Pods-Shrine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.release.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.release.xcconfig"; sourceTree = "<group>"; };
 		D180A261B9BB43A253618934 /* libPods-Shrine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Shrine.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineFlexibleHeaderContainerViewController.swift; sourceTree = "<group>"; };
+		DE34DEB81C88A13400E04B65 /* ShrineInkOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineInkOverlay.swift; sourceTree = "<group>"; };
 		DE3CFD821C84FE0B006BACA7 /* products.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = products.json; path = Shrine/Resources/products.json; sourceTree = "<group>"; };
 		DE3CFD841C873A07006BACA7 /* ShrineDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineDetailViewController.swift; sourceTree = "<group>"; };
 		DE5D2A441C81068100C9C650 /* Shrine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shrine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE5D2A471C81068100C9C650 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DE5D2A491C81068100C9C650 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DE5D2A4C1C81068100C9C650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DE5D2A4E1C81068100C9C650 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE5D2A511C81068100C9C650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -99,9 +99,9 @@
 				DE5D2A591C81092D00C9C650 /* ShrineCollectionViewCell.swift */,
 				DE5D2A5B1C810E6600C9C650 /* ShrineCollectionViewController.swift */,
 				DE6887F21C84FCD40074A8C5 /* ShrineData.swift */,
-				DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */,
 				DE3CFD841C873A07006BACA7 /* ShrineDetailViewController.swift */,
-				DE5D2A491C81068100C9C650 /* ViewController.swift */,
+				DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */,
+				DE34DEB81C88A13400E04B65 /* ShrineInkOverlay.swift */,
 			);
 			path = Shrine;
 			sourceTree = "<group>";
@@ -248,7 +248,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE5D2A4A1C81068100C9C650 /* ViewController.swift in Sources */,
 				DE3CFD851C873A07006BACA7 /* ShrineDetailViewController.swift in Sources */,
 				DE5D2A5A1C81092D00C9C650 /* ShrineCollectionViewCell.swift in Sources */,
 				DE5D2A481C81068100C9C650 /* AppDelegate.swift in Sources */,
@@ -256,6 +255,7 @@
 				DE064E731C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift in Sources */,
 				DE6887F31C84FCD40074A8C5 /* ShrineData.swift in Sources */,
 				DE6887F11C849F7F0074A8C5 /* RemoteImageService.m in Sources */,
+				DE34DEB91C88A13400E04B65 /* ShrineInkOverlay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

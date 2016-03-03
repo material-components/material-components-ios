@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C51D32C2E45715C88DF28CF /* libPods-MDCUnitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0266FB26857A7BA3DF19348B /* libPods-MDCUnitTests.a */; };
 		669946631C87557B0073B529 /* XcodeCrashFix7.2.1.m in Sources */ = {isa = PBXBuildFile; fileRef = 669946621C87557B0073B529 /* XcodeCrashFix7.2.1.m */; };
-		DE0B319032DE54C36C537502 /* libPods-MDCUnitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9292A01E2ADF780867E6D4A2 /* libPods-MDCUnitTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0266FB26857A7BA3DF19348B /* libPods-MDCUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		669946621C87557B0073B529 /* XcodeCrashFix7.2.1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XcodeCrashFix7.2.1.m; sourceTree = "<group>"; };
 		66CB712C1C853DB30099B932 /* MDCUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDCUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66CB71301C853DB30099B932 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		73643F3276FA40743AE18C21 /* Pods-MDCUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCUnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9292A01E2ADF780867E6D4A2 /* libPods-MDCUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE8E9D1D6E9864521E49532 /* Pods-MDCUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -25,7 +25,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE0B319032DE54C36C537502 /* libPods-MDCUnitTests.a in Frameworks */,
+				5C51D32C2E45715C88DF28CF /* libPods-MDCUnitTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,7 +35,7 @@
 		3A8A70EB5115908FAE02255F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9292A01E2ADF780867E6D4A2 /* libPods-MDCUnitTests.a */,
+				0266FB26857A7BA3DF19348B /* libPods-MDCUnitTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -2,11 +2,10 @@ import UIKit
 
 class ShrineDetailView: UIView {
 
-  internal var title:String = "Title"
-  internal var desc:String = "Description"
-  internal var imageName:String = "popsicle.png"
+  var title = ""
+  var desc = ""
+  var imageName = "popsicle.png"
   private var remoteImageService = RemoteImageService()
-
   private var label = UILabel()
   private var labelDesc = UILabel()
   private var floatingButton = MDCFloatingButton()
@@ -37,7 +36,7 @@ class ShrineDetailView: UIView {
 
     label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
     label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
-    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    label.lineBreakMode = .ByWordWrapping
     label.numberOfLines = 2
 
     let paragraphStyle = NSMutableParagraphStyle()
@@ -53,7 +52,7 @@ class ShrineDetailView: UIView {
     label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     self.addSubview(label)
 
-    labelDesc.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    labelDesc.lineBreakMode = .ByWordWrapping
     labelDesc.numberOfLines = 5
     labelDesc.font = UIFont(name: "Helvetica", size: 14)
     labelDesc.textColor = UIColor(white: 0.54, alpha: 1)
@@ -83,9 +82,9 @@ class ShrineDetailView: UIView {
 
 class ShrineDetailViewController: UIViewController {
 
-  internal var productTitle:String = "Title"
-  internal var desc:String = "Description"
-  internal var imageName:String = "popsicle.png"
+  var productTitle = ""
+  var desc = ""
+  var imageName = "popsicle.png"
 
   override func viewDidLoad() {
     let detailView = ShrineDetailView(frame: self.view.frame)

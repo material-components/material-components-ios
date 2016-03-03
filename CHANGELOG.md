@@ -1,27 +1,17 @@
-## In progress since last release
+## Master
+## Develop
 
 ##### Breaking
-##### Enhancements
-
-* [MDCButton] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
-
-##### Bug Fixes
-
-## 1.0.0
-##### Breaking
-
-* [MDCFlexibleHeaderView] Removed `shadowIntensity` property, use setShadowLayer:intensityDidChangeBlock: instead. [Jeff Verkoeyen](https://github.com/jverkoey)
-* [MDCInkTouchControllerDelegate] Renamed `inkTouchControllerShouldProcessInkTouches:` to `inkTouchController:shouldProcessInkTouchesAtTouchLocation:`. [Chris Cox](https://github.com/chriscox)
 
 ##### Enhancements
 
-* [MDCFlexibleHeaderView] Added setShadowLayer:intensityDidChangeBlock:. [Jeff Verkoeyen](https://github.com/jverkoey)
-* [MDCHeaderStackView] Added MDCHeaderStackView. [Jeff Verkoeyen](https://github.com/jverkoey)
-* [MDCSlider] Changed default color. [Randall Li](https://github.com/randallli)
+* New API: MDCFlexibleHeaderView::setShadowLayer:intensityDidChangeBlock:. [Jeff Verkoeyen](https://github.com/jverkoey)
+* New API: MDCHeaderStackView. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [MDCSlider] Changed default color [Randall Li](https://github.com/randallli)
 * [MDCSlider] Readme.md copy edits. [Randall Li](https://github.com/randallli)
 * [MDCSwitch] Readme.md copy edits. [Randall Li](https://github.com/randallli)
-* [MDCTypograpy:example] Refactored to be compatible with catalog by convention [Randall Li](https://github.com/randallli)
-* [Shrine] First pass at a new Swift demo app, "Shrine". [Junius Gunaratne](https://github.com/jgunaratne)
+* [MDCTypograpy] Refactored example to be compatible with catalog by convention [Randall Li](https://github.com/randallli)
+* [MDCButton] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
 
 ##### Bug Fixes
 

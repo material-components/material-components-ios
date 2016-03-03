@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		52973B5731D0DDA38A64BDD6 /* libPods-MDCCatalog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B06B8C1D2A4B2E1EADF6CA /* libPods-MDCCatalog.a */; };
 		664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B61C6BA62A001ADBF8 /* AppDelegate.swift */; };
 		664524B91C6BA62A001ADBF8 /* NodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* NodeViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
 		664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */; };
 		665A34DC1C6BD01900962055 /* Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 665A34DB1C6BD01900962055 /* Reflection.m */; };
 		665A34E01C6BDB4600962055 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A34DF1C6BDB4600962055 /* Runtime.swift */; };
+		CD147913CB24A8C017131249 /* libPods-MDCCatalog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 273439433C53779E60B81F19 /* libPods-MDCCatalog.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +21,7 @@
 		0D185DDA19244A33A78863F7 /* Pods-MDCCatalog-MDCCatalogUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalogUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalogUnitTests/Pods-MDCCatalog-MDCCatalogUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		0F092FBA334F9A6817C4B9ED /* Pods-MDCCatalog-MDCCatalogUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalogUnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalogUnitTests/Pods-MDCCatalog-MDCCatalogUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		12970BE3EA0028A12E1427AD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		273439433C53779E60B81F19 /* libPods-MDCCatalog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39A3426A088E725ED84D45D4 /* Pods-MDCCatalog-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalog/Pods-MDCCatalog-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		51A574C94F29C2B3F2198B9E /* libPods-MDCCatalog-MDCCatalogUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog-MDCCatalogUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5434D10FB7D7598D60B5F56C /* Pods-MDCCatalogUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalogUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalogUnitTests/Pods-MDCCatalogUnitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -38,7 +39,6 @@
 		8206EEC8F0212B48C4AC4C01 /* libPods-MDCCatalogUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalogUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		878DC2619FAA226EA1A1849A /* libPods-MDCCatalog-MDCCatalog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog-MDCCatalog.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2985B007C0718CB5E2511B3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3B06B8C1D2A4B2E1EADF6CA /* libPods-MDCCatalog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFBFBC9BA56EED442714E5F3 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		DEFF1C057348FFB1866CD023 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FBDDFF6A49F084B665BA398A /* Pods-MDCCatalog-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalog/Pods-MDCCatalog-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52973B5731D0DDA38A64BDD6 /* libPods-MDCCatalog.a in Frameworks */,
+				CD147913CB24A8C017131249 /* libPods-MDCCatalog.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +130,7 @@
 				8206EEC8F0212B48C4AC4C01 /* libPods-MDCCatalogUnitTests.a */,
 				51A574C94F29C2B3F2198B9E /* libPods-MDCCatalog-MDCCatalogUnitTests.a */,
 				878DC2619FAA226EA1A1849A /* libPods-MDCCatalog-MDCCatalog.a */,
-				B3B06B8C1D2A4B2E1EADF6CA /* libPods-MDCCatalog.a */,
+				273439433C53779E60B81F19 /* libPods-MDCCatalog.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
