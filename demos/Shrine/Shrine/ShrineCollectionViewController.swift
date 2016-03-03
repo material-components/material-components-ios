@@ -7,8 +7,9 @@ class ShrineHeaderContentView: UIView {
   private var label = UILabel()
   private var labelDesc = UILabel()
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  override func layoutSubviews() {
+    super.layoutSubviews()
+
     self.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     logoImageView.image = logo
     logoImageView.center = CGPointMake(self.frame.size.width / 2, 48)
@@ -16,7 +17,7 @@ class ShrineHeaderContentView: UIView {
 
     label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
     label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
-    label.lineBreakMode = .ByWordWrapping
+    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
     label.numberOfLines = 2
 
     let paragraphStyle = NSMutableParagraphStyle()
@@ -32,7 +33,7 @@ class ShrineHeaderContentView: UIView {
     label.autoresizingMask = UIViewAutoresizing.FlexibleWidth
     self.addSubview(label)
 
-    labelDesc.lineBreakMode = .ByWordWrapping
+    labelDesc.lineBreakMode = NSLineBreakMode.ByWordWrapping
     labelDesc.numberOfLines = 2
     labelDesc.font = UIFont(name: "Helvetica", size: 10)
     labelDesc.textColor = UIColor(white: 0.54, alpha: 1)
@@ -50,22 +51,13 @@ class ShrineHeaderContentView: UIView {
     labelDesc.autoresizingMask = UIViewAutoresizing.FlexibleWidth
     self.addSubview(labelDesc)
   }
-
-  required init(coder: NSCoder) {
-    super.init(coder: coder)!
-  }
-
-  override func layoutSubviews() {
-    super.layoutSubviews()
-  }
 }
 
 class ShrineCollectionViewController: UICollectionViewController {
 
-  var headerViewController:MDCFlexibleHeaderViewController!
-  var remoteImageService = RemoteImageService()
-  private let shrineData:ShrineData
-  private var shrineInkOverlay = ShrineInkOverlay()
+  internal var headerViewController:MDCFlexibleHeaderViewController!
+  internal var remoteImageService = RemoteImageService()
+  private var shrineData:ShrineData
 
   override init(collectionViewLayout layout: UICollectionViewLayout) {
     self.shrineData = ShrineData()
@@ -77,6 +69,16 @@ class ShrineCollectionViewController: UICollectionViewController {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    // Do any additional setup after loading the view, typically from a nib.
+  }
+
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
   }
 
   override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -143,10 +145,9 @@ class ShrineCollectionViewController: UICollectionViewController {
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
     headerViewController.scrollViewDidScroll(scrollView);
-    shrineInkOverlay.frame = (headerViewController.headerView.contentView?.frame)!
   }
 
-  func setupHeaderView() {
+  internal func setupHeaderView() {
     let headerView = headerViewController.headerView
     headerView.trackingScrollView = collectionView
     headerView.maximumHeight = 280;
@@ -180,9 +181,6 @@ class ShrineCollectionViewController: UICollectionViewController {
 
     let contentView = ShrineHeaderContentView(frame:(headerView.contentView?.frame)!)
     headerView.contentView?.addSubview(contentView)
-
-    shrineInkOverlay = ShrineInkOverlay(frame: contentView.bounds)
-    contentView.addSubview(shrineInkOverlay)
   }
 
 }
