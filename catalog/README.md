@@ -62,3 +62,18 @@ To add the example to the Catalog app, simply run pod install in the catalog/ di
     catalog/ $ pod install
 
 Build and run and you'll see your example listed in the app's hierarchy.
+
+## Using storyboards
+
+If you want your example to use a storyboard you need the view controller class to specify that storyboard. You do this by implementing the CatalogStoryboardViewController protocol like so:
+
+    + (NSString *)catalogStoryboardName {
+      return @"SliderAutolayoutExample";
+    }
+
+Place this source file in the component's `examples/` directory, like so:
+
+> Storyboard names must be globally-unique across every component's example set. An easy way
+> to ensure this is to prefix the controller with the name of the component.
+
+    components/Slider/examples/SliderAutolayoutExample.storyboard

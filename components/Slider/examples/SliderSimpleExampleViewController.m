@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import "SliderSimpleExampleViewController.h"
 
 #import "MaterialSlider.h"
 
-@implementation ViewController
+@implementation SliderSimpleExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -57,4 +57,11 @@
   MDCSlider *slider = sender;
   NSLog(@"did change %@ value: %f", NSStringFromClass([sender class]), slider.value);
 }
+
+#pragma mark catalg by convention
+
++ (NSArray *)catalogHierarchy {
+  return @[ @"Slider", @"MDCSlider vs UISlider" ];
+}
+
 @end

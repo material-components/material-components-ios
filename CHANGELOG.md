@@ -4,6 +4,11 @@
 ##### Enhancements
 
 * [MDCButton] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
+* [MDCCatalog] Catalog by convention grabs storyboard resources. [Randall Li](https://github.com/randallli)
+* [MDCSlider] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
+* [Conventions] Moved all docs assets into a `docs/assets` directory per component by
+  convention. Issue [#130](https://github.com/google/material-components-ios/issues/130) filed by
+  [peterfriese](https://github.com/peterfriese). Closed by [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ##### Bug Fixes
 

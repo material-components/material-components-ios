@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Typography"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # Typography
 
 The Typography component provides methods for displaying text in [material styles]
@@ -22,13 +28,13 @@ label.alpha = [MDCTypography titleFontOpacity];
 [self.view addSubview:label];
 ```
 ## Font sizes
-![type size](gfx/style_typography_styles_scale.png "shows the various font
+![type size](docs/assets/style_typography_styles_scale.png "shows the various font
 sizes")
 Source: [Typography style spec]
 (https://www.google.com/design/spec/style/typography.html#typography-styles)
 
 ## Font opacities
-![type opacity](gfx/style_typography_styles_contrast.png "shows the various font
+![type opacity](docs/assets/style_typography_styles_contrast.png "shows the various font
 opacities")
 Source: [Typography opacity spec]
 (https://www.google.com/design/spec/style/typography.html#typography-other-typographic-guidelines)

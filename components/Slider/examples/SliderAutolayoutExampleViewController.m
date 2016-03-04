@@ -14,18 +14,18 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import "SliderAutolayoutExampleViewController.h"
 
 #import "MDCSlider.h"
 
-@interface ViewController ()
+@interface SliderAutolayoutExampleViewController ()
 @property (weak, nonatomic) IBOutlet MDCSlider *materialSlider;
 @property (weak, nonatomic) IBOutlet UISlider *vanillaSlider;
 @property (weak, nonatomic) IBOutlet UISwitch *enabledSwitch;
 
 @end
 
-@implementation ViewController
+@implementation SliderAutolayoutExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -60,6 +60,17 @@
   BOOL newEnabledState = !self.materialSlider.enabled;
   self.materialSlider.enabled = newEnabledState;
   self.vanillaSlider.enabled = newEnabledState;
+}
+
+
+#pragma mark catalg by convention
+
++ (NSArray *)catalogHierarchy {
+  return @[ @"Slider", @"MDCSlider vs UISlider with autolayou" ];
+}
+
++ (NSString *)catalogStoryboardName {
+  return @"SliderAutolayoutExample";
 }
 
 @end

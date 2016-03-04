@@ -23,15 +23,21 @@
 #import "MDCFlexibleHeaderView.h"
 #import "MDCFlexibleHeaderViewController.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @interface MDCFlexibleHeaderContainerViewController () <MDCFlexibleHeaderParentViewController>
 @end
+#pragma clang diagnostic pop
 
 @implementation MDCFlexibleHeaderContainerViewController
 
 - (instancetype)initWithContentViewController:(UIViewController *)contentViewController {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [MDCFlexibleHeaderViewController addToParent:self];
+#pragma clang diagnostic pop
 
     self.contentViewController = contentViewController;
   }
@@ -52,7 +58,10 @@
   [self.view addSubview:self.contentViewController.view];
   [self.contentViewController didMoveToParentViewController:self];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [self.headerViewController addFlexibleHeaderViewToParentViewControllerView];
+#pragma clang diagnostic pop
 }
 
 - (BOOL)prefersStatusBarHidden {

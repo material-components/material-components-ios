@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Flexible header"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # Flexible header
 
 The flexible header component is a container view whose height and vertical offset react to
