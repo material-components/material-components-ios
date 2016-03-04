@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Switch"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # Switch
 
 A material design on/off switch.

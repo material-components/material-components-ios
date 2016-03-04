@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "ShadowLayer"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # ShadowLayer
 
 MDCShadow is a material design stylized shadow that applies design principles relating to height

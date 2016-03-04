@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "PageControl"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # PageControl
 
 This control is designed to be a drop-in replacement for `UIPageControl`, but adhering to the material design specifications for animation and layout. The API methods are the same as a `UIPageControl`, however with the addition of a few key methods required to achieve the desired animation of the control.
