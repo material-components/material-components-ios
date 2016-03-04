@@ -11,6 +11,7 @@
   convention. Issue [#130](https://github.com/google/material-components-ios/issues/130) filed by
   [peterfriese](https://github.com/peterfriese). Closed by [Jeff Verkoeyen](https://github.com/jverkoey)
 * [Catalog] Add support for Swift examples and unit tests [Jeff Verkoeyen](https://github.com/jverkoey)
+* [Catalog] Sorts titles alphabetically. Also fixes title typo in sliders. [Chris Cox](https://github.com/chriscox)
 
 ##### Bug Fixes
 
