@@ -16,6 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface SliderSimpleExampleViewController : UIViewController
 
 @end
