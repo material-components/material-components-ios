@@ -45,11 +45,8 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
 @end
 #endif
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
 @end
-#pragma clang diagnostic pop
 
 @implementation MDCFlexibleHeaderViewController
 
@@ -188,38 +185,6 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];
-}
-
-#pragma mark - Public
-
-- (void)addFlexibleHeaderViewToParentViewControllerView {
-  if (self.view.superview == self.parentViewController.view) {
-    return;
-  }
-
-  // Enforce the header's desire to fully cover the width of its parent view.
-  CGRect frame = self.view.frame;
-  frame.origin.x = 0;
-  frame.size.width = self.parentViewController.view.bounds.size.width;
-  self.view.frame = frame;
-
-  [self.parentViewController.view addSubview:self.view];
-  [self didMoveToParentViewController:self.parentViewController];
-}
-
-@end
-
-@implementation MDCFlexibleHeaderViewController (Installation)
-
-+ (void)addToParent:(id<MDCFlexibleHeaderParentViewController>)parent {
-  if (parent.headerViewController) {
-    return;
-  }
-  MDCFlexibleHeaderViewController *hvc = [MDCFlexibleHeaderViewController new];
-  parent.headerViewController = hvc;
-  if ([parent isKindOfClass:[UIViewController class]]) {
-    [(UIViewController *)parent addChildViewController:hvc];
-  }
 }
 
 @end

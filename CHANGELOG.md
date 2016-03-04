@@ -1,6 +1,11 @@
 ## In progress since last release
 
 ##### Breaking
+
+* [FlexibleHeader] Removed `-[MDCFlexibleHeaderViewController addFlexibleHeaderViewToParentViewControllerView]`,
+  `MDCFlexibleHeaderParentViewController`, and `+[MDCFlexibleHeaderViewController addToParent:]`. These methods
+  were marked deprecated in 1.0.0. [Jeff Verkoeyen](https://github.com/jverkoey)
+
 ##### Enhancements
 * [Catalog] Use single asset for component icons. [Junius Gunaratne](https://github.com/jgunaratne)
 * [Catalog] Style catalog component screen and change to collection view. [Junius Gunaratne](https://github.com/jgunaratne)

@@ -55,14 +55,6 @@
 /** Calculates the status bar style based on the header view's background color. */
 - (UIStatusBarStyle)preferredStatusBarStyle;
 
-/**
- Informs the flexible header view controller that its parent view controller's view has loaded.
-
- The flexible header view controller's view will be added as a subview to the associated parent
- view object.
- */
-- (void)addFlexibleHeaderViewToParentViewControllerView __deprecated;
-
 @end
 
 /**
@@ -82,43 +74,3 @@
     flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 @end
-
-#pragma mark Integration convenience
-
-// Use the following process to easily integrate with the header component.
-//
-// 1. Conform to MDCFlexibleHeaderParentViewController on the view controller that should have a
-//    header and synthesize the required property.
-//    @synthesize headerViewController;
-//
-// 2. From your view controller's init- method, create the header view controller by calling:
-//    [MDCFlexibleHeaderViewController addToParent:self];
-//
-// 3. At the end of your view controller's viewDidLoad call:
-//    [self.headerViewController addFlexibleHeaderViewToParentViewControllerView];
-
-/**
- A view controller may conform to this protocol in order to utilize the configureParent: helper
- method on MDCFlexibleHeaderViewController.
- */
-// clang-format off
-__deprecated
-@protocol MDCFlexibleHeaderParentViewController<NSObject>
-
-/**
- The header view controller instance that was added as a child view controller to the receiver.
- */
-@property(nonatomic, strong, nullable) MDCFlexibleHeaderViewController *headerViewController __deprecated;
-
-@end
-
-@interface MDCFlexibleHeaderViewController(Installation)
-
-/**
- Creates an instance of MDCFlexibleHeaderViewController, adds it as a child to the parent view
- controller, and assigns the instance to the headerViewController property.
- */
-+ (void)addToParent:(nonnull id<MDCFlexibleHeaderParentViewController>)parent __deprecated;
-
-@end
-    // clang-format on
