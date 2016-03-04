@@ -10,6 +10,7 @@
 * [Conventions] Moved all docs assets into a `docs/assets` directory per component by
   convention. Issue [#130](https://github.com/google/material-components-ios/issues/130) filed by
   [peterfriese](https://github.com/peterfriese). Closed by [Jeff Verkoeyen](https://github.com/jverkoey)
+* [Catalog] Add support for Swift examples and unit tests [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ##### Bug Fixes
 
