@@ -43,6 +43,7 @@
   NSURL *fontURL = [NSURL fileURLWithPath:fontPath isDirectory:NO];
   if (!fontURL) {
     NSLog(@"Failed to locate '%@' in bundle at path '%@'.", filename, fontsBundlePath);
+    return nil;
   }
   return [self initWithName:fontName URL:fontURL];
 }

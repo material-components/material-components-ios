@@ -13,8 +13,6 @@
 		4009831B1C77B67B001A945B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 400983191C77B67B001A945B /* Main.storyboard */; };
 		4009831D1C77B67B001A945B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4009831C1C77B67B001A945B /* Assets.xcassets */; };
 		400983201C77B67B001A945B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4009831E1C77B67B001A945B /* LaunchScreen.storyboard */; };
-		4009832B1C77B67B001A945B /* SliderAutolayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4009832A1C77B67B001A945B /* SliderAutolayoutTests.m */; };
-		400983361C77B67B001A945B /* SliderAutolayoutUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 400983351C77B67B001A945B /* SliderAutolayoutUITests.m */; };
 		4009834B1C77BA59001A945B /* MDCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4009834A1C77BA59001A945B /* MDCSlider.m */; };
 		4009834F1C77BA86001A945B /* UIColor+MDC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4009834E1C77BA86001A945B /* UIColor+MDC.m */; };
 		400983551C77BA96001A945B /* MDCThumbTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 400983521C77BA96001A945B /* MDCThumbTrack.m */; };
@@ -22,23 +20,6 @@
 		4009835A1C77BAA6001A945B /* MDCShadowElevations.m in Sources */ = {isa = PBXBuildFile; fileRef = 400983591C77BAA6001A945B /* MDCShadowElevations.m */; };
 		4009835E1C77BAB3001A945B /* MDCShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4009835D1C77BAB3001A945B /* MDCShadowLayer.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		400983271C77B67B001A945B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 400983051C77B67B001A945B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4009830C1C77B67B001A945B;
-			remoteInfo = SliderAutolayout;
-		};
-		400983321C77B67B001A945B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 400983051C77B67B001A945B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4009830C1C77B67B001A945B;
-			remoteInfo = SliderAutolayout;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4009830D1C77B67B001A945B /* SliderAutolayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SliderAutolayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,12 +32,6 @@
 		4009831C1C77B67B001A945B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4009831F1C77B67B001A945B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		400983211C77B67B001A945B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		400983261C77B67B001A945B /* SliderAutolayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SliderAutolayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4009832A1C77B67B001A945B /* SliderAutolayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SliderAutolayoutTests.m; sourceTree = "<group>"; };
-		4009832C1C77B67B001A945B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		400983311C77B67B001A945B /* SliderAutolayoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SliderAutolayoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		400983351C77B67B001A945B /* SliderAutolayoutUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SliderAutolayoutUITests.m; sourceTree = "<group>"; };
-		400983371C77B67B001A945B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		400983481C77BA59001A945B /* MaterialSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialSlider.h; path = src/MaterialSlider.h; sourceTree = SOURCE_ROOT; };
 		400983491C77BA59001A945B /* MDCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCSlider.h; path = src/MDCSlider.h; sourceTree = SOURCE_ROOT; };
 		4009834A1C77BA59001A945B /* MDCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCSlider.m; path = src/MDCSlider.m; sourceTree = SOURCE_ROOT; };
@@ -84,20 +59,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		400983231C77B67B001A945B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4009832E1C77B67B001A945B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -105,8 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				4009830F1C77B67B001A945B /* SliderAutolayout */,
-				400983291C77B67B001A945B /* SliderAutolayoutTests */,
-				400983341C77B67B001A945B /* SliderAutolayoutUITests */,
 				4009830E1C77B67B001A945B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -115,8 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				4009830D1C77B67B001A945B /* SliderAutolayout.app */,
-				400983261C77B67B001A945B /* SliderAutolayoutTests.xctest */,
-				400983311C77B67B001A945B /* SliderAutolayoutUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -144,24 +101,6 @@
 				400983111C77B67B001A945B /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		400983291C77B67B001A945B /* SliderAutolayoutTests */ = {
-			isa = PBXGroup;
-			children = (
-				4009832A1C77B67B001A945B /* SliderAutolayoutTests.m */,
-				4009832C1C77B67B001A945B /* Info.plist */,
-			);
-			path = SliderAutolayoutTests;
-			sourceTree = "<group>";
-		};
-		400983341C77B67B001A945B /* SliderAutolayoutUITests */ = {
-			isa = PBXGroup;
-			children = (
-				400983351C77B67B001A945B /* SliderAutolayoutUITests.m */,
-				400983371C77B67B001A945B /* Info.plist */,
-			);
-			path = SliderAutolayoutUITests;
 			sourceTree = "<group>";
 		};
 		400983431C77B89C001A945B /* Material Components */ = {
@@ -240,42 +179,6 @@
 			productReference = 4009830D1C77B67B001A945B /* SliderAutolayout.app */;
 			productType = "com.apple.product-type.application";
 		};
-		400983251C77B67B001A945B /* SliderAutolayoutTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4009833D1C77B67B001A945B /* Build configuration list for PBXNativeTarget "SliderAutolayoutTests" */;
-			buildPhases = (
-				400983221C77B67B001A945B /* Sources */,
-				400983231C77B67B001A945B /* Frameworks */,
-				400983241C77B67B001A945B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				400983281C77B67B001A945B /* PBXTargetDependency */,
-			);
-			name = SliderAutolayoutTests;
-			productName = SliderAutolayoutTests;
-			productReference = 400983261C77B67B001A945B /* SliderAutolayoutTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		400983301C77B67B001A945B /* SliderAutolayoutUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 400983401C77B67B001A945B /* Build configuration list for PBXNativeTarget "SliderAutolayoutUITests" */;
-			buildPhases = (
-				4009832D1C77B67B001A945B /* Sources */,
-				4009832E1C77B67B001A945B /* Frameworks */,
-				4009832F1C77B67B001A945B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				400983331C77B67B001A945B /* PBXTargetDependency */,
-			);
-			name = SliderAutolayoutUITests;
-			productName = SliderAutolayoutUITests;
-			productReference = 400983311C77B67B001A945B /* SliderAutolayoutUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -287,14 +190,6 @@
 				TargetAttributes = {
 					4009830C1C77B67B001A945B = {
 						CreatedOnToolsVersion = 7.2;
-					};
-					400983251C77B67B001A945B = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 4009830C1C77B67B001A945B;
-					};
-					400983301C77B67B001A945B = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 4009830C1C77B67B001A945B;
 					};
 				};
 			};
@@ -312,8 +207,6 @@
 			projectRoot = "";
 			targets = (
 				4009830C1C77B67B001A945B /* SliderAutolayout */,
-				400983251C77B67B001A945B /* SliderAutolayoutTests */,
-				400983301C77B67B001A945B /* SliderAutolayoutUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -326,20 +219,6 @@
 				400983201C77B67B001A945B /* LaunchScreen.storyboard in Resources */,
 				4009831D1C77B67B001A945B /* Assets.xcassets in Resources */,
 				4009831B1C77B67B001A945B /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		400983241C77B67B001A945B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4009832F1C77B67B001A945B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,36 +241,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		400983221C77B67B001A945B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4009832B1C77B67B001A945B /* SliderAutolayoutTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4009832D1C77B67B001A945B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				400983361C77B67B001A945B /* SliderAutolayoutUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		400983281C77B67B001A945B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4009830C1C77B67B001A945B /* SliderAutolayout */;
-			targetProxy = 400983271C77B67B001A945B /* PBXContainerItemProxy */;
-		};
-		400983331C77B67B001A945B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4009830C1C77B67B001A945B /* SliderAutolayout */;
-			targetProxy = 400983321C77B67B001A945B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		400983191C77B67B001A945B /* Main.storyboard */ = {
@@ -517,54 +367,6 @@
 			};
 			name = Release;
 		};
-		4009833E1C77B67B001A945B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = SliderAutolayoutTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.SliderAutolayoutTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SliderAutolayout.app/SliderAutolayout";
-			};
-			name = Debug;
-		};
-		4009833F1C77B67B001A945B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = SliderAutolayoutTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.SliderAutolayoutTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SliderAutolayout.app/SliderAutolayout";
-			};
-			name = Release;
-		};
-		400983411C77B67B001A945B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = SliderAutolayoutUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.SliderAutolayoutUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = SliderAutolayout;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		400983421C77B67B001A945B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = SliderAutolayoutUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.SliderAutolayoutUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = SliderAutolayout;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -582,24 +384,6 @@
 			buildConfigurations = (
 				4009833B1C77B67B001A945B /* Debug */,
 				4009833C1C77B67B001A945B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4009833D1C77B67B001A945B /* Build configuration list for PBXNativeTarget "SliderAutolayoutTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4009833E1C77B67B001A945B /* Debug */,
-				4009833F1C77B67B001A945B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		400983401C77B67B001A945B /* Build configuration list for PBXNativeTarget "SliderAutolayoutUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				400983411C77B67B001A945B /* Debug */,
-				400983421C77B67B001A945B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

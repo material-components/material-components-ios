@@ -1,6 +1,6 @@
 # Slider
 
-Slider is a Material styled slider.
+The MDCSlider object is a material design-styled control used to select a value from a continuous or discrete set a values.
 
 See the [Slider spec](https://www.google.com/design/spec/components/sliders.html) for more details.
 
@@ -31,20 +31,20 @@ See the [Slider spec](https://www.google.com/design/spec/components/sliders.html
 }
 ```
 
-### Differences between UISlider and MDCSlider:
+### The differences between the UISlider class and the MDCSlider class:
 
-####  Does not have api to
+Does not have api to:
 
 *    set right and left icons
 *    set the thumb image
-*    set the right and left track images (if you wanted a custom track)
+*    set the right and left track images (for a custom track)
 *    set the right (background track) color
 
-####  Same features
+Same features:
 
 *    set color for thumb via @c thumbColor
 *    set color of track via @c trackColor
 
-####  New features
+New features:
 
 *    making the slider a snap to discrete values via property numberOfDiscreteValues.

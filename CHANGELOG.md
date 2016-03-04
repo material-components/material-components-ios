@@ -1,10 +1,36 @@
-## Master
+## In progress since last release
+
+##### Breaking
+##### Enhancements
+##### Bug Fixes
+
+## 1.0.0
 
 ##### Breaking
 
+* [MDCFlexibleHeaderView] Removed `shadowIntensity` property, use setShadowLayer:intensityDidChangeBlock: instead. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [MDCInkTouchControllerDelegate] Renamed `inkTouchControllerShouldProcessInkTouches:` to `inkTouchController:shouldProcessInkTouchesAtTouchLocation:`. [Chris Cox](https://github.com/chriscox)
+
+##### Deprecations
+
+* MDCFlexibleHeaderParentViewController, +[MDCFlexibleHeaderViewController addToParent], and
+  -[MDCFlexibleHeaderViewController addFlexibleHeaderViewToParentViewControllerView]. These APIs
+  are being deprecated in favor of the eventual equivalent AppBar convenience APIs. In the meantime
+  the FlexibleHeader will need to be instantiated and configured like a typical UIViewController.
+
 ##### Enhancements
 
+* [MDCFlexibleHeaderView] Added setShadowLayer:intensityDidChangeBlock:. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [MDCHeaderStackView] Added MDCHeaderStackView. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [MDCSlider] Changed default color. [Randall Li](https://github.com/randallli)
+* [MDCSlider] Readme.md copy edits. [Randall Li](https://github.com/randallli)
+* [MDCSwitch] Readme.md copy edits. [Randall Li](https://github.com/randallli)
+* [MDCTypograpy:example] Refactored to be compatible with catalog by convention [Randall Li](https://github.com/randallli)
+* [Shrine] First pass at a new Swift demo app, "Shrine". [Junius Gunaratne](https://github.com/jgunaratne)
+
 ##### Bug Fixes
+
+* Fixed issue where MDCShadowLayer would ghost behind the MDCFlexibleHeaderView. [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ## 0.2.1
 

@@ -1,56 +1,63 @@
 PODS:
-  - material-components-ios (0.2.1):
-    - material-components-ios/Buttons (= 0.2.1)
-    - material-components-ios/FlexibleHeader (= 0.2.1)
-    - material-components-ios/Ink (= 0.2.1)
-    - material-components-ios/PageControl (= 0.2.1)
-    - material-components-ios/private (= 0.2.1)
-    - material-components-ios/ScrollViewDelegateMultiplexer (= 0.2.1)
-    - material-components-ios/ShadowElevations (= 0.2.1)
-    - material-components-ios/ShadowLayer (= 0.2.1)
-    - material-components-ios/Slider (= 0.2.1)
-    - material-components-ios/SpritedAnimationView (= 0.2.1)
-    - material-components-ios/Switch (= 0.2.1)
-    - material-components-ios/Typography (= 0.2.1)
-  - material-components-ios-catalog (0.2.1)
-  - material-components-ios/Buttons (0.2.1):
-    - material-components-ios/Ink
-    - material-components-ios/ShadowElevations
-    - material-components-ios/ShadowLayer
-    - material-components-ios/Typography
-  - material-components-ios/FlexibleHeader (0.2.1)
-  - material-components-ios/Ink (0.2.1)
-  - material-components-ios/PageControl (0.2.1)
-  - material-components-ios/private (0.2.1):
-    - material-components-ios/private/Color (= 0.2.1)
-    - material-components-ios/private/ThumbTrack (= 0.2.1)
-  - material-components-ios/private/Color (0.2.1)
-  - material-components-ios/private/ThumbTrack (0.2.1):
-    - material-components-ios/private/Color
-    - material-components-ios/ShadowElevations
-    - material-components-ios/ShadowLayer
-  - material-components-ios/ScrollViewDelegateMultiplexer (0.2.1)
-  - material-components-ios/ShadowElevations (0.2.1)
-  - material-components-ios/ShadowLayer (0.2.1)
-  - material-components-ios/Slider (0.2.1):
-    - material-components-ios/private/ThumbTrack
-  - material-components-ios/SpritedAnimationView (0.2.1)
-  - material-components-ios/Switch (0.2.1):
-    - material-components-ios/private/ThumbTrack
-  - material-components-ios/Typography (0.2.1)
+  - MaterialComponents (1.0.0):
+    - MaterialComponents/Buttons (= 1.0.0)
+    - MaterialComponents/FlexibleHeader (= 1.0.0)
+    - MaterialComponents/HeaderStackView (= 1.0.0)
+    - MaterialComponents/Ink (= 1.0.0)
+    - MaterialComponents/PageControl (= 1.0.0)
+    - MaterialComponents/private (= 1.0.0)
+    - MaterialComponents/ScrollViewDelegateMultiplexer (= 1.0.0)
+    - MaterialComponents/ShadowElevations (= 1.0.0)
+    - MaterialComponents/ShadowLayer (= 1.0.0)
+    - MaterialComponents/Slider (= 1.0.0)
+    - MaterialComponents/SpritedAnimationView (= 1.0.0)
+    - MaterialComponents/Switch (= 1.0.0)
+    - MaterialComponents/Typography (= 1.0.0)
+  - MaterialComponents/Buttons (1.0.0):
+    - MaterialComponents/Ink
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+  - MaterialComponents/FlexibleHeader (1.0.0)
+  - MaterialComponents/HeaderStackView (1.0.0)
+  - MaterialComponents/Ink (1.0.0)
+  - MaterialComponents/PageControl (1.0.0)
+  - MaterialComponents/private (1.0.0):
+    - MaterialComponents/private/Color (= 1.0.0)
+    - MaterialComponents/private/ThumbTrack (= 1.0.0)
+  - MaterialComponents/private/Color (1.0.0)
+  - MaterialComponents/private/ThumbTrack (1.0.0):
+    - MaterialComponents/private/Color
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+  - MaterialComponents/ScrollViewDelegateMultiplexer (1.0.0)
+  - MaterialComponents/ShadowElevations (1.0.0)
+  - MaterialComponents/ShadowLayer (1.0.0)
+  - MaterialComponents/Slider (1.0.0):
+    - MaterialComponents/private/ThumbTrack
+  - MaterialComponents/SpritedAnimationView (1.0.0)
+  - MaterialComponents/Switch (1.0.0):
+    - MaterialComponents/private/ThumbTrack
+  - MaterialComponents/Typography (1.0.0)
+  - MaterialComponentsCatalog (1.0.0)
+  - MaterialComponentsUnitTests (1.0.0)
 
 DEPENDENCIES:
-  - material-components-ios (from `../`)
-  - material-components-ios-catalog (from `../`)
+  - MaterialComponents (from `../`)
+  - MaterialComponentsCatalog (from `../`)
+  - MaterialComponentsUnitTests (from `../`)
 
 EXTERNAL SOURCES:
-  material-components-ios:
+  MaterialComponents:
     :path: ../
-  material-components-ios-catalog:
+  MaterialComponentsCatalog:
+    :path: ../
+  MaterialComponentsUnitTests:
     :path: ../
 
 SPEC CHECKSUMS:
-  material-components-ios: b50d9c7d943980c8f9918da0101b0364aade4413
-  material-components-ios-catalog: 0641ffef40b562087afa35bf9634cd1a8020bd32
+  MaterialComponents: 049b75aa69d6790c9ed2ee6e2f54d7294c65429d
+  MaterialComponentsCatalog: 2f0e7bae9ebf7ba0dca2699996d4103a8224901f
+  MaterialComponentsUnitTests: 4fb216eb24e8b239d5fb2b874ad210460d322fd2
 
 COCOAPODS: 0.39.0

@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCInkGestureRecognizer;
 @class MDCInkTouchController;
 @class MDCInkView;
 @protocol MDCInkTouchControllerDelegate;
@@ -133,10 +132,13 @@
  from being displayed, and returning NO in the middle of a gesture will cancel that gesture and
  evaporate the ink.
 
+ @param inkTouchController The ink touch controller.
+ @param location The touch location relative to the inkTouchController view.
+
  @see cancelInkTouchProcessing
  */
-- (BOOL)inkTouchControllerShouldProcessInkTouches:
-    (nonnull MDCInkTouchController *)inkTouchController;
+- (BOOL)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location;
 
 /**
  Notifies the receiver that the ink touch controller did process an ink view at the

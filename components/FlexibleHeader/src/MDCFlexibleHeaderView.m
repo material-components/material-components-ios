@@ -1,3 +1,19 @@
+/*
+ Copyright 2015-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -43,7 +59,14 @@ static const CGFloat kMaxAnchorLength = 175;
 static const CGFloat kMinimumVisibleProportion = 0.25;
 
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
+
 @property(nonatomic) CGPoint contentOffset;
+
+// The intensity strength of the shadow being displayed under the flexible header. Use this property
+// to check what the intensity of a custom shadow should be depending on a scroll position. Valid
+// values range from 0 to 1. Where 0 is no shadow is visible and 1 is the shadow is fully visible.
+@property(nonatomic, readonly) CGFloat shadowIntensity;
+
 @end
 
 // All injections into the content and scroll indicator insets are tracked here. It's super
@@ -99,6 +122,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   // Layers for header shadows.
   CALayer *_defaultShadowLayer;
   CALayer *_customShadowLayer;
+
+  // The block executed when shadow intensity changes.
+  MDCFlexibleHeaderShadowIntensityChangeBlock _shadowIntensityChangeBlock;
 
 #if DEBUG
   // Keeps track of whether the client called ...WillEndDraggingWithVelocity:...
@@ -185,7 +211,10 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [self fhv_accumulatorDidChange];
 }
 
-- (void)setShadowLayer:(CALayer *)shadowLayer {
+- (void)fhv_setShadowLayer:(CALayer *)shadowLayer
+   intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
+  _shadowIntensityChangeBlock = block;
+
   // If there is a custom shadow make sure the shadow on self.layer is not visible.
   self.layer.shadowOpacity = 0;
   CALayer *oldShadowLayer = _shadowLayer;
@@ -206,6 +235,15 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   }
 }
 
+- (void)setShadowLayer:(CALayer *)shadowLayer {
+  [self fhv_setShadowLayer:shadowLayer intensityDidChangeBlock:nil];
+}
+
+- (void)setShadowLayer:(CALayer *)shadowLayer
+    intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
+  [self fhv_setShadowLayer:shadowLayer intensityDidChangeBlock:block];
+}
+
 #pragma mark - UIView
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -221,6 +259,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _defaultShadowLayer.frame = self.bounds;
   _customShadowLayer.frame = self.bounds;
   _shadowLayer.frame = self.bounds;
+  [_defaultShadowLayer layoutIfNeeded];
+  [_customShadowLayer layoutIfNeeded];
+  [_shadowLayer layoutIfNeeded];
   [CATransaction setDisableActions:disableActions];
 }
 
@@ -508,6 +549,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _defaultShadowLayer.shadowOpacity = _visibleShadowOpacity * shadowIntensity;
   }
   _shadowIntensity = shadowIntensity;
+  if (_shadowIntensityChangeBlock) {
+    _shadowIntensityChangeBlock(_shadowLayer, _shadowIntensity);
+  }
 
   [_statusBarShifter setOffset:boundedAccumulator];
 
@@ -701,7 +745,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (void)statusBarShifter:(MDCStatusBarShifter *)statusBarShifter
-    wantsSnapshotViewAdded:(UIView *)view {
+  wantsSnapshotViewAdded:(UIView *)view {
   [self addSubview:view];
 }
 

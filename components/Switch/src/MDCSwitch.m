@@ -83,9 +83,8 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
 
   // Setup accessibility.
   self.isAccessibilityElement = YES;
-  self.accessibilityTraits = UIAccessibilityTraitButton;
-  self.accessibilityHint = [[self class] a11yHintString];
-  [self updateAccessibilityValueWithToggleState:NO];
+  self.accessibilityTraits = [super accessibilityTraits] | UIAccessibilityTraitButton;
+  [self updateAccessibilityValues];
 
   [self setNeedsLayout];
 }
@@ -191,6 +190,8 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   _thumbTrack.enabled = enabled;
+
+  [self updateAccessibilityValues];
 }
 
 #pragma mark - Update Switch
@@ -203,8 +204,9 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   _on = on;
 
   CGFloat value = _on ? _thumbTrack.maximumValue : _thumbTrack.minimumValue;
-  [self updateAccessibilityValueWithToggleState:_on];
   [_thumbTrack setValue:value animated:animated userGenerated:NO completion:NULL];
+
+  [self updateAccessibilityValues];
 }
 
 #pragma mark - Private Methods
@@ -212,18 +214,29 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
 #pragma mark MDCThumbTrackDelegate
 
 - (void)thumbTrack:(MDCThumbTrack *)thumbTrack willJumpToValue:(CGFloat)value {
-  BOOL toggleState = [self toggleStateFromThumbTrack:thumbTrack withValue:value];
-  [self updateAccessibilityValueWithToggleState:toggleState];
+  [self toggleStateFromThumbTrack:thumbTrack withValue:value];
+  [self updateAccessibilityValues];
 }
 
 /**
  * Updates the accessibility value of the switch given a toggle state.
  * @param toggleState A value for the state of the switch.
  */
-- (void)updateAccessibilityValueWithToggleState:(BOOL)toggleState {
+- (void)updateAccessibilityValues {
   // Set accessibility value similar to native UISwitch.
-  self.accessibilityValue =
-      toggleState ? [[self class] a11yLabelOnString] : [[self class] a11yLabelOffString];
+  if (self.on) {
+    self.accessibilityValue = [[self class] a11yLabelOnString];
+  } else {
+    self.accessibilityValue = [[self class] a11yLabelOffString];
+  }
+
+  if (self.enabled) {
+    self.accessibilityTraits &= ~UIAccessibilityTraitNotEnabled;
+    self.accessibilityHint = [[self class] a11yHintString];
+  } else {
+    self.accessibilityTraits |= UIAccessibilityTraitNotEnabled;
+    self.accessibilityHint = nil;
+  }
 }
 
 /**
@@ -245,7 +258,7 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
     _on = toggleState;
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
-  [self updateAccessibilityValueWithToggleState:toggleState];
+  [self updateAccessibilityValues];
 }
 
 #pragma mark - Animation tracking

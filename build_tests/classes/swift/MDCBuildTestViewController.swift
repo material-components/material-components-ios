@@ -16,7 +16,7 @@ limitations under the License.
 
 import UIKit
 
-import material_components_ios
+import MaterialComponents
 
 class MDCBuildTestViewController: UIViewController {
 

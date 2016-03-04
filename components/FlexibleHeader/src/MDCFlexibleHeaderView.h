@@ -1,6 +1,24 @@
+/*
+ Copyright 2015-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import <UIKit/UIKit.h>
 
 typedef void (^MDCFlexibleHeaderChangeContentInsetsBlock)(void);
+typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(CALayer *__nonnull shadowLayer,
+                                                            CGFloat intensity);
 
 /**
  The possible translation (shift) behaviors of a flexible header view.
@@ -77,6 +95,12 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  * Content for the flexible header should be added to the content view.
  */
 @property(nonatomic, retain, nullable) UIView *contentView;
+
+/**
+ * Sets a custom shadow layer and a block that should be executed when shadow intensity changes.
+ */
+- (void)setShadowLayer:(nonnull CALayer *)shadowLayer
+    intensityDidChangeBlock:(nonnull MDCFlexibleHeaderShadowIntensityChangeBlock)block;
 
 #pragma mark UIScrollViewDelegate events
 
@@ -245,13 +269,6 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  scrollPhaseValue instead.
  */
 @property(nonatomic, readonly) CGFloat scrollPhasePercentage;
-
-/**
- * The intensity strength of the shadow being displayed under the flexible header. Use this property
- * to check what the intensity of a custom shadow should be depending on a scroll position. Valid
- * values range from 0 to 1. Where 0 is no shadow is visible and 1 is the shadow is fully visible.
- */
-@property(nonatomic, readonly) CGFloat shadowIntensity;
 
 #pragma mark Bounding Dimensions
 

@@ -1,3 +1,19 @@
+/*
+ Copyright 2015-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import <UIKit/UIKit.h>
 
 @class MDCFlexibleHeaderView;
@@ -45,7 +61,7 @@
  The flexible header view controller's view will be added as a subview to the associated parent
  view object.
  */
-- (void)addFlexibleHeaderViewToParentViewControllerView;
+- (void)addFlexibleHeaderViewToParentViewControllerView __deprecated;
 
 @end
 
@@ -85,21 +101,24 @@
  A view controller may conform to this protocol in order to utilize the configureParent: helper
  method on MDCFlexibleHeaderViewController.
  */
-@protocol MDCFlexibleHeaderParentViewController <NSObject>
+// clang-format off
+__deprecated
+@protocol MDCFlexibleHeaderParentViewController<NSObject>
 
 /**
  The header view controller instance that was added as a child view controller to the receiver.
  */
-@property(nonatomic, strong, nullable) MDCFlexibleHeaderViewController *headerViewController;
+@property(nonatomic, strong, nullable) MDCFlexibleHeaderViewController *headerViewController __deprecated;
 
 @end
 
-@interface MDCFlexibleHeaderViewController (Installation)
+@interface MDCFlexibleHeaderViewController(Installation)
 
 /**
  Creates an instance of MDCFlexibleHeaderViewController, adds it as a child to the parent view
  controller, and assigns the instance to the headerViewController property.
  */
-+ (void)addToParent:(nonnull id<MDCFlexibleHeaderParentViewController>)parent;
++ (void)addToParent:(nonnull id<MDCFlexibleHeaderParentViewController>)parent __deprecated;
 
 @end
+    // clang-format on

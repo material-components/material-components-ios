@@ -46,9 +46,11 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 
   // Use a custom shadow under the flexible header.
   MDCShadowLayer *shadowLayer = [MDCShadowLayer layer];
-  shadowLayer.shadowMaskEnabled = NO;
-  [shadowLayer setElevation:MDCShadowElevationNone];
-  headerView.shadowLayer = shadowLayer;
+  [headerView setShadowLayer:shadowLayer intensityDidChangeBlock:^(CALayer *layer,
+                                                                   CGFloat intensity) {
+    CGFloat elevation = MDCShadowElevationAppBar * intensity;
+    [(MDCShadowLayer *)layer setElevation:elevation];
+  }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -167,11 +169,6 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
                      }];
   }
   _logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, _logoScale, _logoScale);
-
-  MDCFlexibleHeaderView *headerView = _flexHeaderContainerVC.headerViewController.headerView;
-  MDCShadowLayer *shadowLayer = (MDCShadowLayer *)headerView.shadowLayer;
-  CGFloat elevation = MDCShadowElevationAppBar * headerView.shadowIntensity;
-  [shadowLayer setElevation:elevation];
 }
 
 #pragma mark - Private methods

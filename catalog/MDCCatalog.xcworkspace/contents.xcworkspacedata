@@ -2,20 +2,28 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../CHANGELOG.md">
+   </FileRef>
+   <FileRef
       location = "group:README.md">
    </FileRef>
    <FileRef
       location = "group:Podfile">
    </FileRef>
    <FileRef
-      location = "group:../material-components-ios.podspec"
-      assignedFileDataType = "public.ruby-script">
+      location = "group:../MaterialComponents.podspec">
    </FileRef>
    <FileRef
-      location = "group:../material-components-ios-catalog.podspec">
+      location = "group:../MaterialComponentsCatalog.podspec">
+   </FileRef>
+   <FileRef
+      location = "group:../MaterialComponentsUnitTests.podspec">
    </FileRef>
    <FileRef
       location = "group:MDCCatalog.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MDCUnitTests.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

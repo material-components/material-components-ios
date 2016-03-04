@@ -26,6 +26,17 @@ static const CGFloat kSliderThumbMaxRippleRadius = 16.0f;
 static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
 static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
+// Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
+static const uint32_t MDCBlueColor = 0x2196F3;
+
+// Creates a UIColor from a 24-bit RGB color encoded as an integer.
+static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
+  return [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0
+                         green:((float)((rgbValue & 0x00FF00) >> 8)) / 255.0
+                          blue:((float)((rgbValue & 0x0000FF) >> 0)) / 255.0
+                         alpha:1.0];
+}
+
 @interface MDCSlider () <MDCThumbTrackDelegate>
 @end
 
@@ -202,6 +213,8 @@ static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat newValue = self.value + kSliderAccessibilityIncrement * range;
     [_thumbTrack setValue:newValue animated:NO userGenerated:YES completion:NULL];
+
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
 }
 
@@ -210,6 +223,8 @@ static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat newValue = self.value - kSliderAccessibilityIncrement * range;
     [_thumbTrack setValue:newValue animated:NO userGenerated:YES completion:NULL];
+
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
 }
 
@@ -236,7 +251,7 @@ static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 }
 
 + (UIColor *)defaultColor {
-  return [UIColor blueColor];
+  return MDCColorFromRGB(MDCBlueColor);
 }
 
 + (UIColor *)defaultTrackOffColor {
