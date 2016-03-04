@@ -2,7 +2,7 @@
 
 ##### Breaking
 ##### Enhancements
-
+* [Shrine] Adding PageControl to demo app for scrolling through products. [Junius Gunaratne](https://github.com/jgunaratne)
 * [MDCButton] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
 * Catalog by convention: Support duplicate hierarchy entries. [Randall Li](https://github.com/randallli)
 * [MDCCatalog] Catalog by convention grabs storyboard resources. [Randall Li](https://github.com/randallli)
