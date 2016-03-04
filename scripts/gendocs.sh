@@ -56,6 +56,10 @@ for d in components/*/.jazzy.yaml; do
 
   pushd $folder >> /dev/null
   jazzy --output $REPO_ROOT_DIR/docs/$component >> /dev/null 2> /dev/null
+	# copy assets
+	cp -R docs/assets/ $REPO_ROOT_DIR/docs/$component/assets >> /dev/null 2> /dev/null
+	# adjust path to assets in generated files
+	sed -i '' 's/docs\///g' $REPO_ROOT_DIR/docs/$component/*.html
   popd >> /dev/null
 
   echo -n "\"$component\"" >> docs/index.json
