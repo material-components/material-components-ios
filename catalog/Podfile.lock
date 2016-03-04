@@ -57,7 +57,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MaterialComponents: 049b75aa69d6790c9ed2ee6e2f54d7294c65429d
-  MaterialComponentsCatalog: 2f0e7bae9ebf7ba0dca2699996d4103a8224901f
+  MaterialComponentsCatalog: 69d932b04be9b2c91e9da390809aacf192f73cef
   MaterialComponentsUnitTests: 4fb216eb24e8b239d5fb2b874ad210460d322fd2
 
 COCOAPODS: 0.39.0

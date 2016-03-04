@@ -4,6 +4,7 @@
 ##### Enhancements
 
 * [MDCButton] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
+* [MDCCatalog] Catalog by convention grabs storyboard resources. [Randall Li](https://github.com/randallli)
 * [MDCSlider] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
 
 ##### Bug Fixes
