@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Ink"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # Ink
 
 The Ink component provides a

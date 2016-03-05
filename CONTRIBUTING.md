@@ -1,5 +1,32 @@
 Want to contribute? Great! First, read this page (including the small print at the end).
 
+## Conventions
+
+This repository follows a file layout convention that ensures consistency and
+predictability across all of our components. The convention for a given
+component is as follows:
+
+    components/ComponentName/
+      README.md
+      docs/                 <- In-depth technical documentation.
+        TechnicalDoc1.md    <- Docs are written in Markdown.
+        assets/             <- All documentation assets live here.
+          image.png         <- Pngs, movs, gifs, etc...
+      examples/             <- Examples added here show up in the [Catalog](catalog/README.md).
+        Example.swift       <- Examples can be Swift,
+        Example.m           <-                        or Objective-C
+      src/                  <- All component source lives here
+        MaterialComponent.h <- Every component must have an umbrella header
+        MDCObject.h         <- Component source must be written in Objective-C.
+        MDCObject.m
+      tests/                <- All tests here will show up in the [Catalog](catalog/README.md).
+        unit/               <- All unit tests must go here.
+          SomeAPITest.swift <- Unit tests can be Swift,
+          AnotherTest.m     <-                          or Objective-C.
+
+Note that all directories are **lower-cased** except the component's root
+directory.
+
 ### Before you contribute
 
 Before we can use your code, you must sign the

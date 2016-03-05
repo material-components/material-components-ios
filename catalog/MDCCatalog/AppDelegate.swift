@@ -34,8 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
       // Walk and build the tree
       var node = tree
-      for name in hierarchy {
-        if let child = node.map[name] {
+      for (index, name) in hierarchy.enumerate() {
+        let isLeafNode = index == hierarchy.count - 1
+        if let child = node.map[name] where !isLeafNode {
           node = child // Walk the node
           continue
         }

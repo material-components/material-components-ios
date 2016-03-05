@@ -2,19 +2,15 @@ import UIKit
 
 class ShrineData {
 
-  internal var imageNames:NSMutableArray = NSMutableArray()
-  internal var titles:NSMutableArray = NSMutableArray()
-  internal var descriptions:NSMutableArray = NSMutableArray()
-  internal var prices:NSMutableArray = NSMutableArray()
-  internal var avatars:NSMutableArray = NSMutableArray()
-  internal var shopTitles:NSMutableArray = NSMutableArray()
-  static internal var baseURL:String = "https://www.gstatic.com/angular/material-adaptive/shrine/"
+  var imageNames = NSMutableArray()
+  var titles = NSMutableArray()
+  var descriptions = NSMutableArray()
+  var prices = NSMutableArray()
+  var avatars = NSMutableArray()
+  var shopTitles = NSMutableArray()
+  static var baseURL = "https://www.gstatic.com/angular/material-adaptive/shrine/"
 
-  init() {
-
-  }
-
-  internal func readJSON() {
+  func readJSON() {
 
     let filePath = NSBundle.mainBundle().pathForResource("products", ofType: "json")
     var json: NSDictionary!

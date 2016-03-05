@@ -1,4 +1,6 @@
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
+#import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
+#import "MDCPageControl.h"
 #import "RemoteImageService.h"
