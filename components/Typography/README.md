@@ -20,7 +20,7 @@ The Typography component provides methods for displaying text in [material style
 #import "MaterialTypography.h"
 
 UILabel *label = [[UILabel alloc] init];
-label.text = @"The quick brown fox";
+label.text = @"This is a title";
 label.font = [MDCTypography titleFont];
 label.alpha = [MDCTypography titleFontOpacity];
 
@@ -30,7 +30,7 @@ label.alpha = [MDCTypography titleFontOpacity];
 
 ```swift
 let label = UILabel()
-label.text = "The quick brown fox"
+label.text = "This is a title"
 label.font = MDCTypography.titleFont()
 label.alpha = MDCTypography.titleFontOpacity()
 
