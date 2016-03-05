@@ -1,8 +1,8 @@
-## In progress since last release
+## 1.0.1
 
-##### Breaking
 ##### Enhancements
-##### Bug Fixes
+
+* [Switch] Removed internal docs that were pretending to be public docs. [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ## 1.0.0
 
