@@ -13,6 +13,7 @@
 * [Catalog] Add support for Swift examples and unit tests [Jeff Verkoeyen](https://github.com/jverkoey)
 * [Catalog] Sorts titles alphabetically. Also fixes title typo in sliders. [Chris Cox](https://github.com/chriscox)
 * [CONTRIBUTING] Document our file system conventions in CONTRIBUTING.md. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [Documentation] Added Swift example for Typography. [Peter Friese](https://github.com/peterfriese)
 
 ##### Bug Fixes
 
