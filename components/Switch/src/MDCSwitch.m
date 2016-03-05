@@ -218,10 +218,6 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   [self updateAccessibilityValues];
 }
 
-/**
- * Updates the accessibility value of the switch given a toggle state.
- * @param toggleState A value for the state of the switch.
- */
 - (void)updateAccessibilityValues {
   // Set accessibility value similar to native UISwitch.
   if (self.on) {
@@ -239,11 +235,6 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   }
 }
 
-/**
- * Returns the toggle state of the switch given a possible slider @c value on the @c thumbTrack.
- * @param thumbTrack The contained @c MDCThumbTrack object.
- * @param value The value of the slider in @c thumbTrack.
- */
 - (BOOL)toggleStateFromThumbTrack:(MDCThumbTrack *)thumbTrack withValue:(CGFloat)value {
   // TODO(ajsecord): When the track supports multiple discrete locations, get the location directly.
   BOOL allSignsPointToYes = value >= (thumbTrack.minimumValue + thumbTrack.maximumValue) / 2;
