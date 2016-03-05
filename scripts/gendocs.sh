@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 JAZZY_VERSION=`jazzy --version`
 if [[ $? != 0 ]]; then
 	echo "Cannot find jazzy.  To install try:"
@@ -26,7 +25,6 @@ REPO_NAME="material-components-ios"
 
 ORIGINAL_WORKING_DIR=`pwd`
 
-#if [[ ! REPO_NAME =~ ORIGINAL_WORKING_DIR ]]; then
 if [[ ! $ORIGINAL_WORKING_DIR =~ $REPO_NAME ]]; then
 	echo "Cannot find repo $REPO_NAME in $ORIGINAL_WORKING_DIR"
 	exit 1
@@ -39,34 +37,36 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd $REPO_ROOT_DIR >> /dev/null
 
 mkdir -p docs
-echo -n "[" > docs/index.json
 
 first=true
 
 # Enumerate all documentable folders
-for d in components/*/.jazzy.yaml; do
-  if [ "$first" = false ]; then
-    echo -n "," >> docs/index.json
-  fi
-
+for d in components/*/README.md; do
   folder=$(dirname $d)
   component=$(basename $folder)
 
   echo "Generating docs for $component..."
 
   pushd $folder >> /dev/null
-  jazzy --output $REPO_ROOT_DIR/docs/$component >> /dev/null 2> /dev/null
+
+  jazzy \
+    --output $REPO_ROOT_DIR/docs/$component \
+    --module $component \
+    --umbrella-header src/Material$component.h \
+    --objc \
+    --sdk iphonesimulator \
+    >> /dev/null 2> /dev/null
+
 	# copy assets
 	cp -R docs/assets/ $REPO_ROOT_DIR/docs/$component/assets >> /dev/null 2> /dev/null
 	# adjust path to assets in generated files
 	sed -i '' 's/docs\///g' $REPO_ROOT_DIR/docs/$component/*.html
+
   popd >> /dev/null
 
   echo -n "\"$component\"" >> docs/index.json
 
   first=false
 done
-
-echo -n "]" >> docs/index.json
 
 popd >> /dev/null

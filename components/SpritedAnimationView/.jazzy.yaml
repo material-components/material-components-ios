@@ -1,5 +1,0 @@
-module_name: SpritedAnimationView
-module_name: src/SpritedAnimationView.h
-objc_mode: true
-sdk: iphonesimulator
-output: docs/

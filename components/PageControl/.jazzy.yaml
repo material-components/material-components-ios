@@ -1,5 +1,0 @@
-module_name: MaterialPageControl
-umbrella_header: src/MaterialPageControl.h
-objc_mode: true
-sdk: iphonesimulator
-output: docs/
