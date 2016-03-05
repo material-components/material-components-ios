@@ -21,6 +21,8 @@
 
 ##### Bug Fixes
 
+* [scripts/gendocs.sh] Ensure that doc assets show up in jazzy output. [peterfriese](https://github.com/peterfriese)
+
 ## 1.0.0
 
 ##### Breaking
