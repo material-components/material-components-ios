@@ -2,13 +2,17 @@
 
 ##### Breaking
 ##### Enhancements
-
+* [Shrine] Adding PageControl to demo app for scrolling through products. [Junius Gunaratne](https://github.com/jgunaratne)
 * [MDCButton] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
+* Catalog by convention: Support duplicate hierarchy entries. [Randall Li](https://github.com/randallli)
 * [MDCCatalog] Catalog by convention grabs storyboard resources. [Randall Li](https://github.com/randallli)
 * [MDCSlider] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
 * [Conventions] Moved all docs assets into a `docs/assets` directory per component by
   convention. Issue [#130](https://github.com/google/material-components-ios/issues/130) filed by
   [peterfriese](https://github.com/peterfriese). Closed by [Jeff Verkoeyen](https://github.com/jverkoey)
+* [Catalog] Add support for Swift examples and unit tests [Jeff Verkoeyen](https://github.com/jverkoey)
+* [Catalog] Sorts titles alphabetically. Also fixes title typo in sliders. [Chris Cox](https://github.com/chriscox)
+* [CONTRIBUTING] Document our file system conventions in CONTRIBUTING.md. [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ##### Bug Fixes
 

@@ -66,7 +66,7 @@
 #pragma mark catalg by convention
 
 + (NSArray *)catalogHierarchy {
-  return @[ @"Slider", @"MDCSlider vs UISlider with autolayou" ];
+  return @[ @"Slider", @"MDCSlider vs UISlider with autolayout" ];
 }
 
 + (NSString *)catalogStoryboardName {

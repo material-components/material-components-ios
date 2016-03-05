@@ -39,7 +39,8 @@ PODS:
   - MaterialComponents/Switch (1.0.0):
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Typography (1.0.0)
-  - MaterialComponentsCatalog (1.0.0)
+  - MaterialComponentsCatalog (1.0.0):
+    - MaterialComponents
   - MaterialComponentsUnitTests (1.0.0)
 
 DEPENDENCIES:
@@ -57,7 +58,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MaterialComponents: 049b75aa69d6790c9ed2ee6e2f54d7294c65429d
-  MaterialComponentsCatalog: 69d932b04be9b2c91e9da390809aacf192f73cef
+  MaterialComponentsCatalog: 3b0b6ef37b48ca7bd6387cb9c974f45f6cfb61e7
   MaterialComponentsUnitTests: 4fb216eb24e8b239d5fb2b874ad210460d322fd2
 
 COCOAPODS: 0.39.0
