@@ -10,4 +10,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'components/*/tests/unit/*.{h,m,swift}'
   s.framework    = 'XCTest'
+  s.dependency 'MaterialComponents'
 end
