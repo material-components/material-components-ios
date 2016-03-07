@@ -14,19 +14,19 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import "SwitchAutolayoutExampleViewController.h"
 
 #import "MDCSwitch.h"
 
-@interface ViewController ()
+@interface SwitchAutolayoutExampleViewController ()
 
-@property (weak, nonatomic) IBOutlet MDCSwitch *materialSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *vanillaSwitch;
-@property (weak, nonatomic) IBOutlet UIButton *enableButton;
+@property(weak, nonatomic) IBOutlet MDCSwitch *materialSwitch;
+@property(weak, nonatomic) IBOutlet UISwitch *vanillaSwitch;
+@property(weak, nonatomic) IBOutlet UIButton *enableButton;
 
 @end
 
-@implementation ViewController
+@implementation SwitchAutolayoutExampleViewController
 
 - (IBAction)disableEnableToggle:(id)sender {
   BOOL controlsAreEnabled = _materialSwitch.enabled;
@@ -39,6 +39,16 @@
     [_enableButton setTitle:@"Enable Switches" forState:UIControlStateNormal];
     NSLog(@".enabled = NO");
   }
+}
+
+#pragma mark catalg by convention
+
++ (NSArray *)catalogHierarchy {
+  return @[ @"Switch", @"MDCSwitch vs UISwitch with autolayout" ];
+}
+
++ (NSString *)catalogStoryboardName {
+  return @"SwitchAutolayoutExample";
 }
 
 @end

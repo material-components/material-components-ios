@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import "SwitchSimpleExampleViewController.h"
 
 #import "MaterialSwitch.h"
 
-@implementation ViewController
+@implementation SwitchSimpleExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -63,6 +63,12 @@
 - (void)didChangeSliderValue:(id)sender {
   UISwitch *slider = sender;
   NSLog(@"did change %@ value: %d", NSStringFromClass([sender class]), slider.isOn);
+}
+
+#pragma mark catalg by convention
+
++ (NSArray *)catalogHierarchy {
+  return @[ @"Switch", @"MDCSwitch vs UISwitch" ];
 }
 
 @end

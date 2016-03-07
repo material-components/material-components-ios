@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2016-present Google Inc. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,18 +14,8 @@
  limitations under the License.
  */
 
-#import "AppDelegate.h"
+#import <UIKit/UIKit.h>
 
-#import "ViewController.h"
-
-@implementation AppDelegate
-
-- (BOOL)application:(UIApplication *)application
-    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  self.window.rootViewController = [[ViewController alloc] init];
-  [self.window makeKeyAndVisible];
-  return YES;
-}
+@interface SwitchAutolayoutExampleViewController : UIViewController
 
 @end

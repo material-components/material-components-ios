@@ -30,7 +30,9 @@ NSArray<NSString *> *CatalogHierarchyFromClass(Class aClass) {
 
 UIViewController *ViewControllerFromClass(Class aClass) {
   if ([aClass respondsToSelector:@selector(catalogStoryboardName)]) {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[aClass catalogStoryboardName] bundle:nil];
+    NSString *storyboardName = [aClass catalogStoryboardName];
+    NSBundle *bundle = [NSBundle bundleForClass:aClass];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:bundle];
     return [storyboard instantiateInitialViewController];
   }
   return [[aClass alloc] initWithNibName:nil bundle:nil];

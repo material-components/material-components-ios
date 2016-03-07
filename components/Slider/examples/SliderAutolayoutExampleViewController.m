@@ -62,7 +62,6 @@
   self.vanillaSlider.enabled = newEnabledState;
 }
 
-
 #pragma mark catalg by convention
 
 + (NSArray *)catalogHierarchy {
