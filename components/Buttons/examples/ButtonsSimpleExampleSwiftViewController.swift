@@ -59,7 +59,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
   }
   
   func tap(sender: AnyObject) {
-    print("You touched me.")
+    print("\(sender.dynamicType) was tapped.")
   }
   
   class func catalogHierarchy() -> [String] {
