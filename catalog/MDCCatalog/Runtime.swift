@@ -20,6 +20,7 @@ import Foundation
  Returns a list of all classes available to the runtime.
 
  TODO(featherless): Verify that this works with Swift classes as well.
+ [peterfriese]: It does.
  */
 func getAllClasses() -> [AnyClass] {
   let numberOfClasses = Int(objc_getClassList(nil, 0))
