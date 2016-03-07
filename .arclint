@@ -32,6 +32,10 @@
       "type": "spelling",
       "include": "(\\.(m|h|mm|md)$)",
       "exclude": "(/Pods/)"
+    },
+    "jazzy": {
+      "type": "jazzy",
+      "include": "(components/.*\\.(h|swift)$)"
     }
   }
 }

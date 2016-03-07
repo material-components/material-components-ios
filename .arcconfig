@@ -1,8 +1,9 @@
 {
   "load": [
     "scripts/external/clang-format-linter",
-    "scripts/external/arc-xcode-test-engine",
-    "scripts/external/arc-proselint"
+    "scripts/external/arc-jazzy-linter",
+    "scripts/external/arc-proselint",
+    "scripts/external/arc-xcode-test-engine"
   ],
   "phabricator.uri" : "http://codereview.cc/",
   "repository.callsign" : "MDC",

@@ -7,3 +7,6 @@
 [submodule "scripts/external/arc-proselint"]
 	path = scripts/external/arc-proselint
 	url = git@github.com:google/arc-proselint.git
+[submodule "scripts/external/arc-jazzy-linter"]
+	path = scripts/external/arc-jazzy-linter
+	url = git@github.com:google/arc-jazzy-linter.git
