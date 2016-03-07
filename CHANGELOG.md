@@ -19,6 +19,7 @@
 * [Documentation] Added Swift example for Typography. [Peter Friese](https://github.com/peterfriese)
 * [Switch] Removed internal docs that were pretending to be public docs. [Jeff Verkoeyen](https://github.com/jverkoey)
 * [Samples] Added Swift sample for buttons. [Peter Friese](https://github.com/peterfriese)
+* [Ink] Replace rand() with arc4random() to avoid a static analyzer warning. [Ian Gordon](https://github.com/ianegordon)
 
 ##### Bug Fixes
 
