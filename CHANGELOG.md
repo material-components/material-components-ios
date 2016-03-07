@@ -4,6 +4,12 @@
 
 * [Switch] Removed internal docs that were pretending to be public docs. [Jeff Verkoeyen](https://github.com/jverkoey)
 
+## 1.0.1
+
+##### Enhancements
+
+* [Switch] Removed internal docs that were pretending to be public docs. [Jeff Verkoeyen](https://github.com/jverkoey)
+
 ## 1.0.0
 
 ##### Breaking
