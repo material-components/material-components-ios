@@ -132,7 +132,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
   _collectionView.contentSize = _collectionView.bounds.size;
   _collectionView.backgroundColor = [UIColor whiteColor];
   _collectionView.autoresizingMask =
-  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:_collectionView];
   [_collectionView registerClass:[PestoSideViewCollectionViewCell class]
       forCellWithReuseIdentifier:@"PestoSideViewCollectionViewCell"];

@@ -13,11 +13,11 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 
 @interface PestoCollectionViewController ()
 
-@property (nonatomic) CGFloat logoScale;
-@property (nonatomic) UIView *logoSmallView;
-@property (nonatomic) UIView *logoView;
-@property (nonatomic) PestoData *pestoData;
-@property (nonatomic) PestoRemoteImageService *imageService;
+@property(nonatomic) CGFloat logoScale;
+@property(nonatomic) UIView *logoSmallView;
+@property(nonatomic) UIView *logoView;
+@property(nonatomic) PestoData *pestoData;
+@property(nonatomic) PestoRemoteImageService *imageService;
 
 @end
 
@@ -46,11 +46,12 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 
   // Use a custom shadow under the flexible header.
   MDCShadowLayer *shadowLayer = [MDCShadowLayer layer];
-  [headerView setShadowLayer:shadowLayer intensityDidChangeBlock:^(CALayer *layer,
-                                                                   CGFloat intensity) {
-    CGFloat elevation = MDCShadowElevationAppBar * intensity;
-    [(MDCShadowLayer *)layer setElevation:elevation];
-  }];
+  [headerView setShadowLayer:shadowLayer
+      intensityDidChangeBlock:^(CALayer *layer,
+                                CGFloat intensity) {
+        CGFloat elevation = MDCShadowElevationAppBar * intensity;
+        [(MDCShadowLayer *)layer setElevation:elevation];
+      }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -99,7 +100,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 }
 
 - (void)updateImageViewWithURL:(NSURL *)imageURL
-                                   cell:(PestoCardCollectionViewCell *)cell {
+                          cell:(PestoCardCollectionViewCell *)cell {
   [_imageService fetchImageDataFromURL:imageURL
                             completion:^(NSData *imageData) {
                               if (!imageData) {
@@ -126,11 +127,11 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
   PestoCardCollectionViewCell *cell =
       (PestoCardCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-  [self.delegate didSelectCell:cell completion:^{
-  }];
+  [self.delegate didSelectCell:cell
+                    completion:^{
+                    }];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -149,24 +150,24 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
   if (_logoScale < 0.5f) {
     _logoScale = 0.5f;
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                       _logoView.layer.opacity = 0;
-                       _logoSmallView.layer.opacity = 1.f;
-                     }
-                     completion:^(BOOL finished){
-                     }];
+        delay:0
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+          _logoView.layer.opacity = 0;
+          _logoSmallView.layer.opacity = 1.f;
+        }
+        completion:^(BOOL finished){
+        }];
   } else {
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                       _logoView.layer.opacity = 1.f;
-                       _logoSmallView.layer.opacity = 0;
-                     }
-                     completion:^(BOOL finished){
-                     }];
+        delay:0
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+          _logoView.layer.opacity = 1.f;
+          _logoSmallView.layer.opacity = 0;
+        }
+        completion:^(BOOL finished){
+        }];
   }
   _logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, _logoScale, _logoScale);
 }
@@ -185,7 +186,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
   UIImage *image = [UIImage imageNamed:@"PestoLogoLarge"];
   _logoView = [[UIImageView alloc] initWithImage:image];
   _logoView.contentMode = UIViewContentModeScaleAspectFill;
-  _logoView.center = CGPointMake(pestoHeaderView.frame.size.width  / 2,
+  _logoView.center = CGPointMake(pestoHeaderView.frame.size.width / 2,
                                  pestoHeaderView.frame.size.height / 2);
   [pestoHeaderView addSubview:_logoView];
 
@@ -199,12 +200,13 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 }
 
 - (CGSize)cellSize {
-  CGFloat cellDim = floor((self.view.frame.size.width - (2.f * kPestoCollectionViewControllerInset))
-                          / 2.f) - (2.f * kPestoCollectionViewControllerInset);
+  static const CGFloat margins = (2.f * kPestoCollectionViewControllerInset);
+  CGFloat cellDim = floor((self.view.frame.size.width - margins) / 2.f) - margins);
   if (cellDim > 320) {
     cellDim = floor((self.view.frame.size.width -
-                     (3.f * kPestoCollectionViewControllerInset)) / 3.f) -
-                     (2.f * kPestoCollectionViewControllerInset);
+                     (3.f * kPestoCollectionViewControllerInset)) /
+                    3.f) -
+              (2.f * kPestoCollectionViewControllerInset);
   }
   self.cellSize = CGSizeMake(cellDim, cellDim);
   return CGSizeMake(cellDim, cellDim);

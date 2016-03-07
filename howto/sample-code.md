@@ -26,16 +26,16 @@ pod 'Material component, '>= 2.5.0' #Simple format for command line code
 The following code will be rendered in switchable code snippet
 
 <div class="material-code-render">
-	<textarea data-mode="text/x-objectivec" data-language="Objective-C">
-	  MDCButton* flatButton = [MDCFlatButton button];
-		[flatButton setTitle:@"Tap Me" forState:UIControlStateNormal];
-		[flatButton addTarget:self action:@selector(tap:) forControlEvents:UIControlEventTouchUpInside];
-		[self.view addSubView:flatButton];
-	</textarea>
-	<textarea data-mode="text/x-swift" data-language="Swift">
-	  var flatButton = MDCFlatButton.button()
-		flatButton.setTitle("Tap Me", forState: .Normal)
-		flatButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
-		self.view.addSubview(flatButton)
-	</textarea>
-</div> 
+  <textarea data-mode="text/x-objectivec" data-language="Objective-C">
+    MDCButton* flatButton = [MDCFlatButton button];
+    [flatButton setTitle:@"Tap Me" forState:UIControlStateNormal];
+    [flatButton addTarget:self action:@selector(tap:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubView:flatButton];
+  </textarea>
+  <textarea data-mode="text/x-swift" data-language="Swift">
+    var flatButton = MDCFlatButton.button()
+    flatButton.setTitle("Tap Me", forState: .Normal)
+    flatButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+    self.view.addSubview(flatButton)
+  </textarea>
+</div>

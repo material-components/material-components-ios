@@ -19,9 +19,9 @@
 #import "MDCSlider.h"
 
 @interface SliderAutolayoutExampleViewController ()
-@property (weak, nonatomic) IBOutlet MDCSlider *materialSlider;
-@property (weak, nonatomic) IBOutlet UISlider *vanillaSlider;
-@property (weak, nonatomic) IBOutlet UISwitch *enabledSwitch;
+@property(weak, nonatomic) IBOutlet MDCSlider *materialSlider;
+@property(weak, nonatomic) IBOutlet UISlider *vanillaSlider;
+@property(weak, nonatomic) IBOutlet UISwitch *enabledSwitch;
 
 @end
 
@@ -48,7 +48,6 @@
 
   self.vanillaSlider.value = self.materialSlider.value;
 }
-
 
 - (IBAction)vanillaSliderDidChange:(id)sender {
   NSLog(@"Vanilla Slider : %.2f", self.vanillaSlider.value);

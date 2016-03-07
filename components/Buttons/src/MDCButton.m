@@ -68,9 +68,9 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
                              options:0
                           usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
                             [attributes addObject:@{
-                                                    @"attrs" : attrs,
-                                                    @"range" : [NSValue valueWithRange:range]
-                                                    }];
+                              @"attrs" : attrs,
+                              @"range" : [NSValue valueWithRange:range]
+                            }];
                           }];
 
   // Make the string uppercase.
@@ -323,7 +323,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   if (_shouldCapitalizeTitle) {
     // This ensures existing titles will get capitalized.
     UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
-        UIControlStateDisabled | UIControlStateSelected;
+                                      UIControlStateDisabled | UIControlStateSelected;
     for (UIControlState state = 0; state <= allControlStates; ++state) {
       NSString *title = [self titleForState:state];
       if (title) {

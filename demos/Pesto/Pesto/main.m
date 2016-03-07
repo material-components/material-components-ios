@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "PestoAppDelegate.h"
 
-int main(int argc, char * argv[]) {
+int main(int argc, char *argv[]) {
   @autoreleasepool {
-      return UIApplicationMain(argc, argv, nil, NSStringFromClass([PestoAppDelegate class]));
+    return UIApplicationMain(argc, argv, nil, NSStringFromClass([PestoAppDelegate class]));
   }
 }
