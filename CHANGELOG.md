@@ -22,6 +22,7 @@
 * [Switch] Removed internal docs that were pretending to be public docs. [Jeff Verkoeyen](https://github.com/jverkoey)
 * [Ink] Replace rand() with arc4random() to avoid a static analyzer warning. [Ian Gordon](https://github.com/ianegordon)
 * Enable line length warnings in arc lint. [Jeff Verkoeyen](https://github.com/jverkoey)
+* Added script to run pod install on all pods. [Randall Li](https://github.com/randallli)
 * [Jazzy] scripts/gendocs.sh now infers Jazzy arguments by convention. [Jeff Verkoeyen](https://github.com/jverkoey)
 * Enforced lint with `arc lint --everything`.
 
