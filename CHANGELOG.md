@@ -25,6 +25,12 @@
 
 * [scripts/gendocs.sh] Ensure that doc assets show up in jazzy output. [peterfriese](https://github.com/peterfriese)
 
+## 1.0.1
+
+##### Enhancements
+
+* [Switch] Removed internal docs that were pretending to be public docs. [Jeff Verkoeyen](https://github.com/jverkoey)
+
 ## 1.0.0
 
 ##### Breaking
