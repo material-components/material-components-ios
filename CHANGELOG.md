@@ -7,14 +7,21 @@
 * Catalog by convention: Support duplicate hierarchy entries. [Randall Li](https://github.com/randallli)
 * [MDCCatalog] Catalog by convention grabs storyboard resources. [Randall Li](https://github.com/randallli)
 * [MDCSlider] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
+* [gh-pages] Minor tiding of the preview script for gh-pages. [Jeff Verkoeyen](https://github.com/jverkoey)
 * [Conventions] Moved all docs assets into a `docs/assets` directory per component by
   convention. Issue [#130](https://github.com/google/material-components-ios/issues/130) filed by
   [peterfriese](https://github.com/peterfriese). Closed by [Jeff Verkoeyen](https://github.com/jverkoey)
 * [Catalog] Add support for Swift examples and unit tests [Jeff Verkoeyen](https://github.com/jverkoey)
 * [Catalog] Sorts titles alphabetically. Also fixes title typo in sliders. [Chris Cox](https://github.com/chriscox)
+* MaterialComponentsUnitTests.podspec depends on MaterialComponents. [Jeff Verkoeyen](https://github.com/jverkoey)
 * [CONTRIBUTING] Document our file system conventions in CONTRIBUTING.md. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [CONTRIBUTING] Document our pull request expectations in CONTRIBUTING.md. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [Documentation] Added Swift example for Typography. [Peter Friese](https://github.com/peterfriese)
+* [Switch] Removed internal docs that were pretending to be public docs. [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ##### Bug Fixes
+
+* [scripts/gendocs.sh] Ensure that doc assets show up in jazzy output. [peterfriese](https://github.com/peterfriese)
 
 ## 1.0.0
 

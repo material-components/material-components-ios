@@ -22,31 +22,68 @@ if [[ $? != 0 ]]; then
 	exit 1
 fi
 
+GH_PAGES_BRANCH="gh-pages-prelaunch"
+
 # Switching to the root folder of mdc
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $DIR/..
+cd "$DIR/.."
+ROOT_DIR="$(pwd)"
 
-# # If gh-pages doesn't exist, clone the repository into gh-pages folder
-# if [ !-d ./gp-pages ]; then
-# 	# Getting the link for github repository
-# 	GITHUB_REMOTE=`git remote -v | grep "fetch" | sed -e 's/origin.//' | sed -e 's/.(fetch)//'`
-# 	git clone $GITHUB_REMOTE gp-pages
-# fi
+# If gh-pages doesn't exist, clone the repository into gh-pages folder
+if [ ! -d $ROOT_DIR/gh-pages ]; then
+	# Getting the link for github repository
+	GITHUB_REMOTE=`git remote -v | grep "origin" | grep "fetch" \
+    | sed -e 's/origin.//' | sed -e 's/.(fetch)//'`
+	git clone -b $GH_PAGES_BRANCH --single-branch $GITHUB_REMOTE gh-pages
+fi
 
-# # Switch to gh-pages folder and pull latest update
-# cd gp-pages
-# git checkout gh-pages
-# git pull
-# cd - > /dev/null
+# Switch to gh-pages folder and pull latest update
+cd $ROOT_DIR/gh-pages
+git checkout $GH_PAGES_BRANCH
+git pull origin $GH_PAGES_BRANCH
+cd $ROOT_DIR
 
-# Sweap over components folder, grab each README.md file and copy them into ./gh-pages/_posts as folder name
+# Ensure that the _posts directory exists.
+mkdir -p "$ROOT_DIR/gh-pages/_posts"
+
+# Sweep the components folder, grab each README.md file and copy them into
+# ./gh-pages/_posts as folder name
 for component in $(ls ./components); do
-	cd components/$component
+	cd $ROOT_DIR/components/$component
 	if [ -f ./README.md ]; then
-		cp README.md ../../gh-pages/_posts/2016-03-01-$component.md
+		cp README.md $ROOT_DIR/gh-pages/_posts/2016-03-01-$component.md
 	fi
-	cd - > /dev/null
-done ;
+	cd $ROOT_DIR
+done
 
-# # run ```jekyll serve``` inside that folder and prompt user to view the local version at localhost:4000
-cd gh-pages && jekyll serve
+# Enumerate all documentable folders
+for directory in "$ROOT_DIR"/components/*/README.md; do
+  folder=$(dirname $directory)
+  component=$(basename $folder)
+
+  echo "Generating docs for $component..."
+
+  cd "$folder"
+
+  jazzy_output="$ROOT_DIR/gh-pages/apidocs/$component"
+
+  jazzy \
+    --output "$jazzy_output" \
+    --theme "$ROOT_DIR/gh-pages/_jazzy/theme" \
+    --module $component \
+    --umbrella-header src/Material$component.h \
+    --objc \
+    --sdk iphonesimulator \
+    >> /dev/null 2> /dev/null
+
+  # copy assets
+  cp -R "$ROOT_DIR/docs/assets/" "$jazzy_output/assets" >> /dev/null 2> /dev/null
+  # adjust path to assets in generated files
+  sed -i '' 's/docs\///g' $jazzy_output/*.html
+
+  cd $ROOT_DIR
+done
+
+# run ```jekyll serve``` inside that folder and prompt user to view the local
+# version at localhost:4000
+cd $ROOT_DIR/gh-pages && jekyll serve

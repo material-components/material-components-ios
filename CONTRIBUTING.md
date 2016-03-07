@@ -1,6 +1,29 @@
 Want to contribute? Great! First, read this page (including the small print at the end).
 
-## Conventions
+## Pull requests
+
+Pull requests can be hard to review if they try to tackle too many things
+at once. Phabricator's "[Writing Reviewable Code](https://secure.phabricator.com/book/phabflavor/article/writing_reviewable_code/)"
+provides a set of guidelines that help increase the likelihood of your
+pull request getting merged.
+
+In short (slightly modified from the original article):
+
+- A pull request should be as small as possible, but no smaller.
+- The smallest a pull request can be is a single cohesive idea: don't
+  make pull requests so small that they are meaningless on their own.
+- Turn large pull requests into small pull requests by dividing large
+  problems into smaller problems and solving the small problems one at
+  a time.
+- Write sensible pull request descriptions.
+
+Our additions:
+
+- A pull request should affect as few components as possible.
+- Pull requests must include a modification to the CHANGELOG.md summarizing the
+  change.
+
+### Conventions
 
 This repository follows a file layout convention that ensures consistency and
 predictability across all of our components. The convention for a given

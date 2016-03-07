@@ -16,17 +16,28 @@ The Typography component provides methods for displaying text in [material style
 
 ## Usage
 
-```objectivec
+```objective-c
 #import "MaterialTypography.h"
 
 UILabel *label = [[UILabel alloc] init];
-label.text = @"This is sometext";
+label.text = @"This is a title";
 label.font = [MDCTypography titleFont];
 label.alpha = [MDCTypography titleFontOpacity];
 
 [label sizeToFit];
 [self.view addSubview:label];
 ```
+
+```swift
+let label = UILabel()
+label.text = "This is a title"
+label.font = MDCTypography.titleFont()
+label.alpha = MDCTypography.titleFontOpacity()
+
+label.sizeToFit()
+self.view.addSubview(label)
+```
+
 ## Font sizes
 ![type size](docs/assets/style_typography_styles_scale.png "shows the various font
 sizes")
