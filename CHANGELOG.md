@@ -2,6 +2,7 @@
 
 ##### Breaking
 ##### Enhancements
+* [Catalog] Use single asset for component icons. [Junius Gunaratne](https://github.com/jgunaratne)
 * [Catalog] Style catalog component screen and change to collection view. [Junius Gunaratne](https://github.com/jgunaratne)
 * [Shrine] Adding PageControl to demo app for scrolling through products. [Junius Gunaratne](https://github.com/jgunaratne)
 * [MDCButton] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
