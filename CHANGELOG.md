@@ -33,6 +33,8 @@
 ##### Bug Fixes
 
 * [scripts/gendocs.sh] Ensure that doc assets show up in jazzy output. [peterfriese](https://github.com/peterfriese)
+* [Various] Fixed floating-point conversion warnings with Xcode 6 release mode.
+  [ajsecord](https://github.com/ajsecord)
 
 ## 1.0.1
 
