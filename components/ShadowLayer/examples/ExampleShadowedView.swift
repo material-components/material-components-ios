@@ -16,7 +16,9 @@ limitations under the License.
 
 import UIKit
 
-class ShadowedView: UIView {
+import MaterialComponents.MaterialShadowLayer
+
+class ExampleShadowedView: UIView {
 
   override class func layerClass() -> AnyClass {
     return MDCShadowLayer.self

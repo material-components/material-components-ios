@@ -25,6 +25,8 @@
 * Added script to run pod install on all pods. [Randall Li](https://github.com/randallli)
 * [Jazzy] scripts/gendocs.sh now infers Jazzy arguments by convention. [Jeff Verkoeyen](https://github.com/jverkoey)
 * Enforced lint with `arc lint --everything`.
+* [MDCShadowLayer] Refactored example to be compatible with catalog by convention
+  [Randall Li](https://github.com/randallli)
 
 ##### Bug Fixes
 

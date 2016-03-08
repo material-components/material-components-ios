@@ -20,9 +20,9 @@ import UIKit
 // A gesture recognizer allows the user to adjust the elevation of the
 // shadowed view by pressing it, and move it by dragging it.
 
-class ViewController: UIViewController {
+class ShadowDragSquareExampleViewController: UIViewController {
 
-  @IBOutlet weak var blueView: ShadowedView!
+  @IBOutlet weak var blueView: ExampleShadowedView!
 
   // The elevation of the view affects the size of its shadow.
   // The following elevations indicate to the user if the view
@@ -67,6 +67,16 @@ class ViewController: UIViewController {
 
       movingViewOffset = CGPointZero
     }
+  }
+
+  // MARK: catalog by convention
+
+  class func catalogHierarchy() -> Array<String> {
+    return [ "Shadows", "Drag square"]
+  }
+
+  class func catalogStoryboardName() -> String {
+    return "ShadowDragSquareExample"
   }
 
 }
