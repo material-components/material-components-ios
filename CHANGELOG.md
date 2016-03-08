@@ -34,6 +34,9 @@
 ##### Bug Fixes
 
 * [scripts/gendocs.sh] Ensure that doc assets show up in jazzy output. [peterfriese](https://github.com/peterfriese)
+* [MDCSlider] Fixed to [issue](https://github.com/google/material-components-ios/issues/128) that
+  was causing the slider to disappear when disabled. [Randall Li](https://github.com/randallli)
+||||||| merged common ancestors
 * [Various] Fixed floating-point conversion warnings with Xcode 6 release mode.
   [ajsecord](https://github.com/ajsecord)
 

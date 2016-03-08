@@ -70,6 +70,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.thumbRadius = kSliderThumbRadius;
   _thumbTrack.thumbMaxRippleRadius = kSliderThumbMaxRippleRadius;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
+  _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
+  _thumbTrack.trackDisabledColor = [[self class] defaultDisabledColor];
   [_thumbTrack addTarget:self
                   action:@selector(thumbTrackValueChanged:)
         forControlEvents:UIControlEventValueChanged];
@@ -255,6 +257,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 + (UIColor *)defaultTrackOffColor {
+  return [[UIColor blackColor] colorWithAlphaComponent:kSliderLightThemeTrackAlpha];
+}
+
++ (UIColor *)defaultDisabledColor {
   return [[UIColor blackColor] colorWithAlphaComponent:kSliderLightThemeTrackAlpha];
 }
 
