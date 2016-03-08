@@ -38,6 +38,7 @@
 * [MDCShadowLayer] Refactored example to be compatible with catalog by convention
   [Randall Li](https://github.com/randallli)
 * Fix build breakage in MDCCatalog.
+* [FlexibleHeader] Removed redundant APIs from MDCFlexibleHeaderContainerViewController. [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ##### Bug Fixes
 

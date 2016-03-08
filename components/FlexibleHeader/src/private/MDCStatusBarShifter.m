@@ -64,21 +64,12 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   [_replicaInvalidatorTimer invalidate];
 }
 
-- (instancetype)initInternal {
+- (instancetype)init {
   self = [super init];
   if (self) {
     _enabled = YES;
   }
   return self;
-}
-
-- (instancetype)init {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
-}
-
-+ (instancetype) new {
-  return [[self alloc] initInternal];
 }
 
 #pragma mark - Private
