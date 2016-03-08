@@ -33,7 +33,7 @@
 }
 
 + (NSArray *)catalogHierarchy {
-  return @[ @"UIScrollViewDelegate multiplexer", @"Typical use" ];
+  return @[ @"ScrollViewDelegate Multiplexer", @"Typical use" ];
 }
 
 - (void)viewDidLoad {

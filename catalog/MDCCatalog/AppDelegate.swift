@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  func application(application: UIApplication, didFinishLaunchingWithOptions
+    launchOptions: [NSObject: AnyObject]?) -> Bool {
     self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
     let classList = classesRespondingToSelector("catalogHierarchy")
@@ -49,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       node.viewController = c
     }
 
-    let rootNodeViewController = NodeViewController(node: tree)
+    let rootNodeViewController = MDCCatalogHeaderContainerController(node: tree)
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
 
     // In the event that an example view controller hides the navigation bar we generally want to
