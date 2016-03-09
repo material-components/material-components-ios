@@ -33,6 +33,7 @@
 * [Jazzy] scripts/gendocs.sh now infers Jazzy arguments by convention. [Jeff Verkoeyen](https://github.com/jverkoey)
 * [Samples] Added Swift sample for buttons. [Peter Friese](https://github.com/peterfriese)
 * Enforced lint with `arc lint --everything`.
+* [Typography] Add CoreText dependency.
 * [MDCShadowLayer] Refactored example to be compatible with catalog by convention
   [Randall Li](https://github.com/randallli)
 * Fix build breakage in MDCCatalog.

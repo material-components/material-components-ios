@@ -117,6 +117,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = 'components/Typography/src/*.h'
     ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/Private/*.{h,m}'
     ss.header_mappings_dir = 'components/Typography/src/*'
+    ss.framework = 'CoreText'
 
     ss.resource_bundles = {
       'MaterialTypography' => ['components/Typography/src/MaterialTypography.bundle/*']
