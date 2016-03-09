@@ -40,7 +40,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Buttons' do |ss|
     ss.public_header_files = 'components/Buttons/src/*.h'
-    ss.source_files = 'components/Buttons/src/*.{h,m}', 'components/Buttons/src/Private/*.{h,m}'
+    ss.source_files = 'components/Buttons/src/*.{h,m}', 'components/Buttons/src/private/*.{h,m}'
     ss.header_mappings_dir = 'components/Buttons/src/*'
     ss.dependency 'MaterialComponents/Ink'
     ss.dependency 'MaterialComponents/ShadowElevations'
@@ -118,7 +118,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Typography' do |ss|
     ss.public_header_files = 'components/Typography/src/*.h'
-    ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/Private/*.{h,m}'
+    ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/private/*.{h,m}'
     ss.header_mappings_dir = 'components/Typography/src/*'
     ss.framework = 'CoreText'
 
