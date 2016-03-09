@@ -70,6 +70,9 @@ Pod::Spec.new do |s|
     ss.public_header_files = 'components/PageControl/src/*.h'
     ss.source_files = 'components/PageControl/src/*.{h,m}', 'components/PageControl/src/private/*.{h,m}'
     ss.header_mappings_dir = 'components/PageControl/src/*'
+    ss.resource_bundles = {
+      'MaterialPageControl' => ['components/PageControl/src/MaterialPageControl.bundle/*']
+    }
   end
 
   s.subspec 'ScrollViewDelegateMultiplexer' do |ss|
