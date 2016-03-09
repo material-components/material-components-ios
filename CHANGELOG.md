@@ -41,6 +41,7 @@
   [Randall Li](https://github.com/randallli)
 * Fix build breakage in MDCCatalog.
 * [FlexibleHeader] Removed redundant APIs from MDCFlexibleHeaderContainerViewController. [Jeff Verkoeyen](https://github.com/jverkoey)
+* Increasing our warnings coverage. [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ##### Bug Fixes
 
