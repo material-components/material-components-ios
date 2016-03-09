@@ -16,5 +16,5 @@
 
 #import "Reflection.h"
 
-#import "MaterialFlexibleHeader.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialFlexibleHeader.h>
+#import <MaterialComponents/MaterialTypography.h>

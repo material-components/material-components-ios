@@ -35,6 +35,7 @@
 * Enforced lint with `arc lint --everything`.
 * [MDCShadowLayer] Refactored example to be compatible with catalog by convention
   [Randall Li](https://github.com/randallli)
+* Fix build breakage in MDCCatalog.
 
 ##### Bug Fixes
 
