@@ -14,16 +14,21 @@
  limitations under the License.
  */
 
-#import "ViewController.h"
+#import "SpritedAnimationViewTypicalUseViewController.h"
 
 #import "MaterialSpritedAnimationView.h"
 
 static NSString *const kSpriteChecked = @"mdc_sprite_check__hide";
 static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
 
-@implementation ViewController {
+@implementation SpritedAnimationViewTypicalUseViewController {
   MDCSpritedAnimationView *_animationView;
   BOOL _checked;
+}
+
+// TODO: Support other categorizational methods.
++ (NSArray *)catalogHierarchy {
+  return @[ @"Sprited Animation View", @"Typical use" ];
 }
 
 - (void)viewDidLoad {
@@ -32,8 +37,10 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
   _checked = YES;
   self.view.backgroundColor = [UIColor whiteColor];
 
-  // Sprited animation view.
-  UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked];
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked
+                                    inBundle:bundle
+               compatibleWithTraitCollection:nil];
   _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
   _animationView.frame = CGRectMake(0, 0, 30, 30);
   _animationView.center = self.view.center;
@@ -62,7 +69,10 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
 
     // When animation completes, toggle image.
     _checked = !_checked;
-    UIImage *spriteImage = [UIImage imageNamed:_checked ? kSpriteChecked : kSpriteUnchecked];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    UIImage *spriteImage = [UIImage imageNamed:_checked ? kSpriteChecked : kSpriteUnchecked
+                                      inBundle:bundle
+                 compatibleWithTraitCollection:nil];
     _animationView.spriteSheetImage = spriteImage;
 
     recognizer.enabled = YES;
