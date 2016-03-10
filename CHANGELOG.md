@@ -19,6 +19,7 @@
   were marked deprecated in 1.0.0. [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ##### Enhancements
+* [Pesto] Update network image request methods, improve collection view cell layout [Junius Gunaratne](https://github.com/jgunaratne)
 * [Shrine] Fix crash when trying to load images when network is down. [Junius Gunaratne](http://github.com/jgunaratne)
 * [Catalog] Use single asset for component icons. [Junius Gunaratne](https://github.com/jgunaratne)
 * [Catalog] Style catalog component screen and change to collection view. [Junius Gunaratne](https://github.com/jgunaratne)

@@ -5,11 +5,12 @@
 @interface PestoCardCollectionViewCell : UICollectionViewCell <MDCInkTouchControllerDelegate>
 
 @property(nonatomic) MDCInkTouchController *inkTouchController;
-@property(nonatomic) NSString *author;
-@property(nonatomic) NSString *icon;
-@property(nonatomic) NSString *imageURL;
 @property(nonatomic) NSString *title;
 @property(nonatomic) UIImage *image;
-@property(nonatomic) UIImageView *imageView;
+
+- (void)populateContentWithTitle:(NSString *)title
+                          author:(NSString *)author
+                        imageURL:(NSURL *)imageURL
+                        iconName:(NSString *)iconName;
 
 @end

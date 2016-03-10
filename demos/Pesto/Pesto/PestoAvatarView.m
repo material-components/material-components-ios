@@ -44,17 +44,15 @@ static CGFloat kPestoAvatarViewCircleLineWidth = 2.f;
 
 - (void)setAvatarImageURL:(NSURL *)avatarImageURL {
   _avatarImageURL = avatarImageURL;
-  [[PestoRemoteImageService sharedService]
-      fetchImageDataFromURL:_avatarImageURL
-                 completion:^(NSData *imageData) {
-                   if (!imageData) {
-                     return;
-                   }
-                   dispatch_async(dispatch_get_main_queue(), ^{
-                     UIImage *image = [UIImage imageWithData:imageData];
-                     _imageView.image = image;
-                   });
-                 }];
+
+  __weak __typeof__(self) weakSelf = self;
+  PestoRemoteImageService *imageService = [PestoRemoteImageService sharedService];
+  [imageService fetchImageAndThumbnailFromURL:_avatarImageURL
+                                   completion:^(UIImage *image, UIImage *thumbnailImage) {
+                                     dispatch_sync(dispatch_get_main_queue(), ^{
+                                       weakSelf.imageView.image = image;
+                                     });
+                                   }];
 }
 
 @end
