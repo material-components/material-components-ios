@@ -6,6 +6,14 @@
 
 ##### Bug Fixes
 
+## 2.0.2
+
+##### Breaking
+
+##### Enhancements
+
+##### Bug Fixes
+
 ## 2.0.1
 
 ##### Breaking
