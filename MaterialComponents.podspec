@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "1.0.1"
+  s.version      = "2.0.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
@@ -143,7 +143,7 @@ Pod::Spec.new do |s|
       ss.dependency 'MaterialComponents/ShadowLayer'
       ss.dependency 'MaterialComponents/private/Color'
     end
-    
+
   end
 
 end
