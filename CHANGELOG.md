@@ -2,6 +2,9 @@
 
 ##### Breaking
 ##### Enhancements
+
+* [FlexibleHeader] Add tests for basic tracking scroll view contract.
+
 ##### Bug Fixes
 
 ## 2.0.0
