@@ -1,4 +1,4 @@
-## In progress since last release
+## 2.0.0
 
 ##### Breaking
 ##### Enhancements
@@ -12,52 +12,68 @@
   were marked deprecated in 1.0.0. [Jeff Verkoeyen](https://github.com/jverkoey)
 
 ##### Enhancements
-* [Shrine] Fix crash when trying to load images when network is down. [Junius Gunaratne](http://github.com/jgunaratne)
-* [Catalog] Use single asset for component icons. [Junius Gunaratne](https://github.com/jgunaratne)
-* [Catalog] Style catalog component screen and change to collection view. [Junius Gunaratne](https://github.com/jgunaratne)
-* [Shrine] Adding PageControl to demo app for scrolling through products. [Junius Gunaratne](https://github.com/jgunaratne)
-* [MDCButton] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
-* Catalog by convention: Support duplicate hierarchy entries. [Randall Li](https://github.com/randallli)
-* [MDCCatalog] Catalog by convention grabs storyboard resources. [Randall Li](https://github.com/randallli)
-* [MDCSwitch] Refactored example to be compatible with catalog by convention
-  [Randall Li](https://github.com/randallli)
-* [MDCSlider] Refactored example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
-* [gh-pages] Minor tiding of the preview script for gh-pages. [Jeff Verkoeyen](https://github.com/jverkoey)
+* Components
+  * [Slider] default color updated to nicer blue.
+  * [Ink] Replace rand() with arc4random() to avoid a static analyzer warning. [Ian Gordon](https://github.com/ianegordon)
+  * [FlexibleHeader] Removed redundant APIs from MDCFlexibleHeaderContainerViewController. [Jeff Verkoeyen](https://github.com/jverkoey)
+  * Rename Private directories to private. (Jeff Verkoeyen)
+
+* Documentation
+  * [Button] Readme copy edits
 * [Conventions] Moved all docs assets into a `docs/assets` directory per component by
   convention. Issue [#130](https://github.com/google/material-components-ios/issues/130) filed by
   [peterfriese](https://github.com/peterfriese). Closed by [Jeff Verkoeyen](https://github.com/jverkoey)
-* [Catalog] Add support for Swift examples and unit tests [Jeff Verkoeyen](https://github.com/jverkoey)
-* [Catalog] Sorts titles alphabetically. Also fixes title typo in sliders. [Chris Cox](https://github.com/chriscox)
-* [PageControl] Add missing ss.resource_bundles to the podspec.
-* MaterialComponentsUnitTests.podspec depends on MaterialComponents. [Jeff Verkoeyen](https://github.com/jverkoey)
 * [CONTRIBUTING] Document our file system conventions in CONTRIBUTING.md. [Jeff Verkoeyen](https://github.com/jverkoey)
 * [CONTRIBUTING] Document our pull request expectations in CONTRIBUTING.md. [Jeff Verkoeyen](https://github.com/jverkoey)
-* [Documentation] Added Swift example for Typography. [Peter Friese](https://github.com/peterfriese)
 * [Switch] Removed internal docs that were pretending to be public docs. [Jeff Verkoeyen](https://github.com/jverkoey)
-* [Ink] Replace rand() with arc4random() to avoid a static analyzer warning. [Ian Gordon](https://github.com/ianegordon)
+
+* Catalog
+  * Use single asset for component icons. [Junius Gunaratne](https://github.com/jgunaratne)
+  * Style catalog component screen and change to collection view. [Junius Gunaratne](https://github.com/jgunaratne)
+  * Sorts titles alphabetically. Also fixes title typo in sliders. [Chris Cox](https://github.com/chriscox)
+  * Catalog by convention grabs storyboard resources. [Randall Li](https://github.com/randallli)
+  * Increasing our warnings coverage. [Jeff Verkoeyen](https://github.com/jverkoey)
+  * Support duplicate hierarchy entries. [Randall Li](https://github.com/randallli)
+  * Add support for Swift examples and unit tests [Jeff Verkoeyen](https://github.com/jverkoey)
+  * Added Swift sample for buttons. [Peter Friese](https://github.com/peterfriese)
+  * Refactored Button example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
+  * Refactored Slider example to be compatibile with catalog by convention [Randall Li](https://github.com/randallli)
+  * Refactored ShadowLayer example to be compatible with catalog by convention
+  [Randall Li](https://github.com/randallli)
+  * Refactored Switch example to be compatible with catalog by convention
+  [Randall Li](https://github.com/randallli)
+  * Added Swift example for Typography. [Peter Friese](https://github.com/peterfriese)
+
+* Demos
+  * Shrine
+    * Adding PageControl to demo app for scrolling through products. [Junius Gunaratne](https://github.com/jgunaratne)
+    * Fix crash when trying to load images when network is down. [Junius Gunaratne](http://github.com/jgunaratne)
+* Misc
+  * [Jazzy] scripts/gendocs.sh now infers Jazzy arguments by convention. [Jeff Verkoeyen](https://github.com/jverkoey)
+  * [gh-pages] Minor tiding of the preview script for gh-pages. [Jeff Verkoeyen](https://github.com/jverkoey)
+   Enforced lint with `arc lint --everything`.
 * Enable line length warnings in arc lint. [Jeff Verkoeyen](https://github.com/jverkoey)
 * Added script to run pod install on all pods. [Randall Li](https://github.com/randallli)
-* [Jazzy] scripts/gendocs.sh now infers Jazzy arguments by convention. [Jeff Verkoeyen](https://github.com/jverkoey)
-* [Samples] Added Swift sample for buttons. [Peter Friese](https://github.com/peterfriese)
-* Enforced lint with `arc lint --everything`.
-* [Typography] Add CoreText dependency.
-* [MDCShadowLayer] Refactored example to be compatible with catalog by convention
-  [Randall Li](https://github.com/randallli)
-* [MDCSlider] fixed disabled state so it has the mask around the thumb.
-  [Randall Li](https://github.com/randallli)
 * Fix build breakage in MDCCatalog.
 * [FlexibleHeader] Removed redundant APIs from MDCFlexibleHeaderContainerViewController. [Jeff Verkoeyen](https://github.com/jverkoey)
 * Increasing our warnings coverage. [Jeff Verkoeyen](https://github.com/jverkoey)
 * Ensure that all private directory references are lower-cased. [Jeff Verkoeyen](https://github.com/jverkoey)
+
 
 ##### Bug Fixes
 
 * [scripts/gendocs.sh] Ensure that doc assets show up in jazzy output. [peterfriese](https://github.com/peterfriese)
 * [MDCSlider] Fixed to [issue](https://github.com/google/material-components-ios/issues/128) that
   was causing the slider to disappear when disabled. [Randall Li](https://github.com/randallli)
-||||||| merged common ancestors
+* Ensure that all private directory references are lower-cased. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [MDCSlider] fixed disabled state so it has the mask around the thumb.
+  [Randall Li](https://github.com/randallli)
+* MaterialComponentsUnitTests.podspec depends on MaterialComponents. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [PageControl] Add missing ss.resource_bundles to the podspec.
 * [Various] Fixed floating-point conversion warnings with Xcode 6 release mode.
   [ajsecord](https://github.com/ajsecord)
+* [Typography] Add CoreText dependency.
+
 
 ## 1.0.1
 
