@@ -60,16 +60,13 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     imageView.autoresizingMask = .FlexibleHeight
     firstPage.addSubview(imageView)
     let url = NSURL(string: ShrineData.baseURL + "chair.png")
-    remoteImageService.fetchImageDataFromURL(url, completion: {(imageData:NSData!) in
-      if (imageData == nil) {
-        return;
-      }
+    remoteImageService.fetchImageAndThumbnailFromURL(url) { (image:UIImage!,
+      thumbnailImage:UIImage!) -> Void in
       dispatch_async(dispatch_get_main_queue(), {
-        let image = UIImage(data: imageData)
         imageView.image = image;
         imageView.setNeedsDisplay()
       })
-    })
+    }
 
     let fontAbril = UIFont(name: "AbrilFatface-Regular", size: 36)
     let fontHelvetica = UIFont(name: "Helvetica", size: 10)
@@ -114,16 +111,13 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     imageView2.autoresizingMask = .FlexibleHeight
     secondPage.addSubview(imageView2)
     let url2 = NSURL(string: ShrineData.baseURL + "backpack.png")
-    remoteImageService.fetchImageDataFromURL(url2, completion: {(imageData:NSData!) in
-      if (imageData == nil) {
-        return;
-      }
+    remoteImageService.fetchImageAndThumbnailFromURL(url2) { (image:UIImage!,
+      thumbnailImage:UIImage!) -> Void in
       dispatch_async(dispatch_get_main_queue(), {
-        let image = UIImage(data: imageData)
         imageView2.image = image;
         imageView2.setNeedsDisplay()
       })
-    })
+    }
 
     let label2 = UILabel()
     label2.font = fontAbril
@@ -164,16 +158,13 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     imageView3.autoresizingMask = .FlexibleHeight
     thirdPage.addSubview(imageView3)
     let url3 = NSURL(string: ShrineData.baseURL + "heels.png")
-    remoteImageService.fetchImageDataFromURL(url3, completion: {(imageData:NSData!) in
-      if (imageData == nil) {
-        return;
-      }
+    remoteImageService.fetchImageAndThumbnailFromURL(url3) { (image:UIImage!,
+      thumbnailImage:UIImage!) -> Void in
       dispatch_async(dispatch_get_main_queue(), {
-        let image = UIImage(data: imageData)
         imageView3.image = image;
         imageView3.setNeedsDisplay()
       })
-    })
+    }
 
     let label3 = UILabel()
     label3.font = fontAbril
