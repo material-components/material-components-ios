@@ -28,7 +28,7 @@
 
 // TODO: Support other categorizational methods.
 + (NSArray *)catalogHierarchy {
-  return @[ @"Header stack view", @"Typical use" ];
+  return @[ @"Header Stack View", @"Typical use" ];
 }
 
 - (void)viewDidLoad {

@@ -20,7 +20,7 @@
 
 #import "MDCFloatingButton.h"
 
-#import "Private/MDCButton+Subclassing.h"
+#import "private/MDCButton+Subclassing.h"
 #import "MaterialShadowElevations.h"
 
 static const CGFloat MDCFloatingButtonDefaultDimension = 56.0f;
@@ -110,9 +110,9 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 }
 
 - (CGFloat)defaultElevationForState:(UIControlState)state {
-  return (state & UIControlStateSelected) == UIControlStateSelected ?
-      MDCShadowElevationFABPressed :
-      MDCShadowElevationFABResting;
+  return (((state & UIControlStateSelected) == UIControlStateSelected)
+              ? MDCShadowElevationFABPressed
+              : MDCShadowElevationFABResting);
 }
 
 @end

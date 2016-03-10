@@ -327,6 +327,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (enabled) {
     [self setPrimaryColor:_primaryColor];
   }
+  [self updateTrackMask];
   [self updateColorsAnimated:NO withDuration:0.0f];
 }
 

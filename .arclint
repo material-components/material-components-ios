@@ -10,9 +10,9 @@
       "include": "(\\.(m|h|mm|md|swift)$)",
       "exclude": "(/Pods/)",
       "severity": {
-        "3": "disabled",
         "5": "disabled"
-      }
+      },
+      "text.max-line-length": 100
     },
     "chmod": {
       "type": "chmod",

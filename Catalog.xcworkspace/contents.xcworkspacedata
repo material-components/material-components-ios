@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:components/ShadowLayer/examples/MovableShadowedView/MovableShadowedView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/Slider/Slider.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/SpritedAnimationView/examples/SpritedAnimationViewExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:components/Switch/Switch.xcodeproj">
+   </FileRef>
+</Workspace>

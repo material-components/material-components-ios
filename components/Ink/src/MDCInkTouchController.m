@@ -23,6 +23,7 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
 
 @interface MDCInkTouchController ()
 @property(nonatomic) MDCInkView *defaultInkView;
+@property(nonatomic) MDCInkGestureRecognizer *gestureRecognizer;
 @property(nonatomic) BOOL shouldRespondToTouch;
 @property(nonatomic) CGPoint previousLocation;
 @end
@@ -181,9 +182,9 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
   if ([_delegate respondsToSelector:
-                     @selector(inkTouchControllerShouldProcessInkTouches:atTouchLocation:)]) {
+                     @selector(inkTouchController:shouldProcessInkTouchesAtTouchLocation:)]) {
     CGPoint touchLocation = [gestureRecognizer locationInView:_view];
-    return [_delegate inkTouchControllerShouldProcessInkTouches:self atTouchLocation:touchLocation];
+    return [_delegate inkTouchController:self shouldProcessInkTouchesAtTouchLocation:touchLocation];
   }
   return YES;
 }

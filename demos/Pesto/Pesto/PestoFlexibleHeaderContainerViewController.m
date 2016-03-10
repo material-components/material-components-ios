@@ -25,10 +25,10 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 0;
   CGFloat sectionInset = kPestoViewControllerInset * 2.f;
-      [layout setSectionInset:UIEdgeInsetsMake(sectionInset,
-                                               sectionInset,
-                                               sectionInset,
-                                               sectionInset)];
+  [layout setSectionInset:UIEdgeInsetsMake(sectionInset,
+                                           sectionInset,
+                                           sectionInset,
+                                           sectionInset)];
   PestoCollectionViewController *collectionVC =
       [[PestoCollectionViewController alloc] initWithCollectionViewLayout:layout];
   self = [super initWithContentViewController:collectionVC];
@@ -95,26 +95,26 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   dispatch_async(dispatch_get_main_queue(), ^{
     [_zoomableView setImage:cell.image];
     [UIView animateWithDuration:kPestoFlexibleHeaderContainerViewControllerAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                       CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
-                       [CATransaction setAnimationTimingFunction:quantumEaseInOut];
-                       _zoomableView.frame = self.view.frame;
-                     }
-                     completion:^(BOOL finished) {
-                       PestoDetailViewController *detailVC =
-                           [[PestoDetailViewController alloc] init];
-                       detailVC.image = cell.image;
-                       detailVC.imageURL = cell.imageURL;
-                       detailVC.title = cell.title;
-                       [self presentViewController:detailVC
-                                          animated:NO
-                                        completion:^() {
-                                          _zoomableView.frame = CGRectZero;
-                                          completionBlock();
-                                        }];
-                     }];
+        delay:0
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+          CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
+          [CATransaction setAnimationTimingFunction:quantumEaseInOut];
+          _zoomableView.frame = self.view.frame;
+        }
+        completion:^(BOOL finished) {
+          PestoDetailViewController *detailVC =
+              [[PestoDetailViewController alloc] init];
+          detailVC.image = cell.image;
+          detailVC.imageURL = cell.imageURL;
+          detailVC.title = cell.title;
+          [self presentViewController:detailVC
+                             animated:NO
+                           completion:^() {
+                             _zoomableView.frame = CGRectZero;
+                             completionBlock();
+                           }];
+        }];
   });
 }
 
@@ -127,15 +127,15 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   UIColor *white = [UIColor whiteColor];
   UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1.f];
   UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]
-                                     initWithTitle:@"Done"
-                                     style:UIBarButtonItemStylePlain
-                                     target:self
-                                     action:@selector(closeViewController)];
+      initWithTitle:@"Done"
+              style:UIBarButtonItemStylePlain
+             target:self
+             action:@selector(closeViewController)];
   rightBarButton.tintColor = white;
   settingsVC.navigationItem.rightBarButtonItem = rightBarButton;
-  
+
   UINavigationController *navVC = [[UINavigationController alloc]
-                                   initWithRootViewController:settingsVC];
+      initWithRootViewController:settingsVC];
   navVC.navigationBar.barTintColor = teal;
   navVC.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : white};
   navVC.navigationBar.translucent = NO;

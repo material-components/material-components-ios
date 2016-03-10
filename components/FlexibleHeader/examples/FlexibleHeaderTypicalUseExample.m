@@ -18,12 +18,12 @@
 
 #import "MaterialFlexibleHeader.h"
 
-@interface FlexibleHeaderTypicalUseViewController : UITableViewController <MDCFlexibleHeaderParentViewController>
+@interface FlexibleHeaderTypicalUseViewController : UITableViewController
 @end
 
-@implementation FlexibleHeaderTypicalUseViewController
-
-@synthesize headerViewController;
+@implementation FlexibleHeaderTypicalUseViewController {
+  MDCFlexibleHeaderViewController *_fhvc;
+}
 
 // TODO: Support other categorizational methods.
 + (NSArray *)catalogHierarchy {
@@ -33,7 +33,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    [MDCFlexibleHeaderViewController addToParent:self];
+    _fhvc = [MDCFlexibleHeaderViewController new];
+    [self addChildViewController:_fhvc];
   }
   return self;
 }
@@ -46,14 +47,17 @@
                                                   style:UIBarButtonItemStyleDone
                                                  target:self
                                                  action:@selector(didTapButton:)] ];
-  bar.frame = self.headerViewController.headerView.bounds;
+  bar.frame = _fhvc.headerView.bounds;
   bar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  [self.headerViewController.headerView addSubview:bar];
+  [_fhvc.headerView addSubview:bar];
 
-  self.headerViewController.headerView.trackingScrollView = self.tableView;
-  self.tableView.delegate = self.headerViewController;
+  _fhvc.headerView.trackingScrollView = self.tableView;
+  self.tableView.delegate = _fhvc;
 
-  [self.headerViewController addFlexibleHeaderViewToParentViewControllerView];
+  _fhvc.view.frame = self.view.bounds;
+  [self.view addSubview:_fhvc.view];
+
+  [_fhvc didMoveToParentViewController:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -69,7 +73,7 @@
 // We must propagate the header's prefersStatusBarHidden value up so that the status bar's
 // visibility can be affected.
 - (BOOL)prefersStatusBarHidden {
-  return [self.headerViewController prefersStatusBarHidden];
+  return [_fhvc prefersStatusBarHidden];
 }
 
 #pragma mark - UITableViewDataSource

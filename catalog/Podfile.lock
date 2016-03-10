@@ -1,46 +1,48 @@
 PODS:
-  - MaterialComponents (0.2.1):
-    - MaterialComponents/Buttons (= 0.2.1)
-    - MaterialComponents/FlexibleHeader (= 0.2.1)
-    - MaterialComponents/HeaderStackView (= 0.2.1)
-    - MaterialComponents/Ink (= 0.2.1)
-    - MaterialComponents/PageControl (= 0.2.1)
-    - MaterialComponents/private (= 0.2.1)
-    - MaterialComponents/ScrollViewDelegateMultiplexer (= 0.2.1)
-    - MaterialComponents/ShadowElevations (= 0.2.1)
-    - MaterialComponents/ShadowLayer (= 0.2.1)
-    - MaterialComponents/Slider (= 0.2.1)
-    - MaterialComponents/SpritedAnimationView (= 0.2.1)
-    - MaterialComponents/Switch (= 0.2.1)
-    - MaterialComponents/Typography (= 0.2.1)
-  - MaterialComponents/Buttons (0.2.1):
+  - MaterialComponents (1.0.1):
+    - MaterialComponents/Buttons (= 1.0.1)
+    - MaterialComponents/FlexibleHeader (= 1.0.1)
+    - MaterialComponents/HeaderStackView (= 1.0.1)
+    - MaterialComponents/Ink (= 1.0.1)
+    - MaterialComponents/PageControl (= 1.0.1)
+    - MaterialComponents/private (= 1.0.1)
+    - MaterialComponents/ScrollViewDelegateMultiplexer (= 1.0.1)
+    - MaterialComponents/ShadowElevations (= 1.0.1)
+    - MaterialComponents/ShadowLayer (= 1.0.1)
+    - MaterialComponents/Slider (= 1.0.1)
+    - MaterialComponents/SpritedAnimationView (= 1.0.1)
+    - MaterialComponents/Switch (= 1.0.1)
+    - MaterialComponents/Typography (= 1.0.1)
+  - MaterialComponents/Buttons (1.0.1):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/FlexibleHeader (0.2.1)
-  - MaterialComponents/HeaderStackView (0.2.1)
-  - MaterialComponents/Ink (0.2.1)
-  - MaterialComponents/PageControl (0.2.1)
-  - MaterialComponents/private (0.2.1):
-    - MaterialComponents/private/Color (= 0.2.1)
-    - MaterialComponents/private/ThumbTrack (= 0.2.1)
-  - MaterialComponents/private/Color (0.2.1)
-  - MaterialComponents/private/ThumbTrack (0.2.1):
+  - MaterialComponents/FlexibleHeader (1.0.1)
+  - MaterialComponents/HeaderStackView (1.0.1)
+  - MaterialComponents/Ink (1.0.1)
+  - MaterialComponents/PageControl (1.0.1)
+  - MaterialComponents/private (1.0.1):
+    - MaterialComponents/private/Color (= 1.0.1)
+    - MaterialComponents/private/ThumbTrack (= 1.0.1)
+  - MaterialComponents/private/Color (1.0.1)
+  - MaterialComponents/private/ThumbTrack (1.0.1):
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/ScrollViewDelegateMultiplexer (0.2.1)
-  - MaterialComponents/ShadowElevations (0.2.1)
-  - MaterialComponents/ShadowLayer (0.2.1)
-  - MaterialComponents/Slider (0.2.1):
+  - MaterialComponents/ScrollViewDelegateMultiplexer (1.0.1)
+  - MaterialComponents/ShadowElevations (1.0.1)
+  - MaterialComponents/ShadowLayer (1.0.1)
+  - MaterialComponents/Slider (1.0.1):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/SpritedAnimationView (0.2.1)
-  - MaterialComponents/Switch (0.2.1):
+  - MaterialComponents/SpritedAnimationView (1.0.1)
+  - MaterialComponents/Switch (1.0.1):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (0.2.1)
-  - MaterialComponentsCatalog (0.2.1)
-  - MaterialComponentsUnitTests (0.2.1)
+  - MaterialComponents/Typography (1.0.1)
+  - MaterialComponentsCatalog (1.0.1):
+    - MaterialComponents
+  - MaterialComponentsUnitTests (1.0.1):
+    - MaterialComponents
 
 DEPENDENCIES:
   - MaterialComponents (from `../`)
@@ -56,8 +58,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 40b1233b63e7ad6e966d789c62a473868f725365
-  MaterialComponentsCatalog: 4448d7784f774c824dbc0718d7e0674e1d09cc42
-  MaterialComponentsUnitTests: 822ee1c039caaf9d7a377085c8f62599c2a5b35a
+  MaterialComponents: 4dffdf2c4cefc321fa74ffd2c4f3181477aa4be4
+  MaterialComponentsCatalog: 32c8b324650beeaa8747befa6149b0756a67ed99
+  MaterialComponentsUnitTests: 9819abfa78e0aa889f6742b406485842cade54db
 
 COCOAPODS: 0.39.0

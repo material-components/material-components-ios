@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "SpritedAnimationView"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # SpritedAnimationView
 
 This control provides an alternative to animating an array of images with an `UIImageView`. Only a

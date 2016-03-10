@@ -1,0 +1,67 @@
+#import "RemoteImageService.h"
+
+@interface RemoteImageService ()
+
+@property(nonatomic) NSCache *cache;
+
+@end
+
+@implementation RemoteImageService
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _cache = [[NSCache alloc] init];
+    _thumbnailCache = [[NSCache alloc] init];
+  }
+  return self;
+}
+
+- (void)fetchImageDataFromURL:(NSURL *)url completion:(void (^)(NSData *))completion {
+  [self fetchImageDataFromURL:url priority:DISPATCH_QUEUE_PRIORITY_DEFAULT completion:completion];
+}
+
+- (void)fetchImageDataFromURL:(NSURL *)url priority:(dispatch_queue_priority_t)priority
+                   completion:(void (^)(NSData *))completion {
+  dispatch_async(dispatch_get_global_queue(priority, 0), ^{
+    NSData *imageData = [_cache objectForKey:url];
+    if (!imageData) {
+      imageData = [[NSData alloc] initWithContentsOfURL:url];
+      if (imageData == nil) {
+        return;
+      }
+      [_cache setObject:imageData forKey:url];
+      UIImage *thumbnailImage = [self createThumbnailWithImageData:imageData];
+      [_thumbnailCache setObject:thumbnailImage forKey:url];
+    }
+    completion(imageData);
+  });
+}
+
+- (UIImage *)createThumbnailWithImageData:(NSData *)imageData {
+  UIImage *image = [UIImage imageWithData:imageData];
+  CGFloat scaleFactor = 0.2f;
+  CGSize scaledSize = CGSizeMake(image.size.width * scaleFactor, image.size.height * scaleFactor);
+  UIImage *thumbnailImage = [RemoteImageService imageWithImage:image scaledToSize:scaledSize];
+  return thumbnailImage;
+}
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+  UIGraphicsBeginImageContextWithOptions(newSize, NO, 0);
+  [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+  UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return newImage;
+}
+
++ (instancetype)sharedService {
+  static RemoteImageService *instance = nil;
+  static dispatch_once_t onceToken = 0;
+  dispatch_once(&onceToken, ^{
+    instance = [[RemoteImageService alloc] init];
+  });
+
+  return instance;
+}
+
+@end

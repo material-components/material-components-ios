@@ -23,15 +23,13 @@
 #import "MDCFlexibleHeaderView.h"
 #import "MDCFlexibleHeaderViewController.h"
 
-@interface MDCFlexibleHeaderContainerViewController () <MDCFlexibleHeaderParentViewController>
-@end
-
 @implementation MDCFlexibleHeaderContainerViewController
 
 - (instancetype)initWithContentViewController:(UIViewController *)contentViewController {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
-    [MDCFlexibleHeaderViewController addToParent:self];
+    _headerViewController = [MDCFlexibleHeaderViewController new];
+    [self addChildViewController:_headerViewController];
 
     self.contentViewController = contentViewController;
   }
@@ -52,7 +50,13 @@
   [self.view addSubview:self.contentViewController.view];
   [self.contentViewController didMoveToParentViewController:self];
 
-  [self.headerViewController addFlexibleHeaderViewToParentViewControllerView];
+  // Enforce the header's desire to fully cover the width of its parent view.
+  CGRect frame = self.view.frame;
+  frame.origin.x = 0;
+  frame.size.width = self.view.bounds.size.width;
+  self.headerViewController.view.frame = self.view.bounds;
+  [self.view addSubview:self.headerViewController.view];
+  [self.headerViewController didMoveToParentViewController:self];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -64,10 +68,6 @@
 }
 
 #pragma mark - Public
-
-- (void)setHeaderViewController:(MDCFlexibleHeaderViewController *)headerViewController {
-  _headerViewController = headerViewController;
-}
 
 - (void)setContentViewController:(UIViewController *)contentViewController {
   if (_contentViewController == contentViewController) {

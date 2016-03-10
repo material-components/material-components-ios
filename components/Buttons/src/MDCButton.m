@@ -24,7 +24,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
-#import "Private/MDCButton+Subclassing.h"
+#import "private/MDCButton+Subclassing.h"
 
 // TODO(ajsecord): Animate title color when animating between enabled/disabled states.
 // Non-trivial: http://corecocoa.wordpress.com/2011/10/04/animatable-text-color-of-uilabel/
@@ -55,10 +55,10 @@ static inline BOOL MDCButtonFloatIsExactlyZero(CGFloat value) {
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0
-                         green:((float)((rgbValue & 0x00FF00) >> 8)) / 255.0
-                          blue:((float)((rgbValue & 0x0000FF) >> 0)) / 255.0
-                         alpha:1.0];
+  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
+                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
+                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
+                         alpha:1];
 }
 
 static NSAttributedString *capitalizeAttributedString(NSAttributedString *string) {
@@ -68,9 +68,9 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
                              options:0
                           usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
                             [attributes addObject:@{
-                                                    @"attrs" : attrs,
-                                                    @"range" : [NSValue valueWithRange:range]
-                                                    }];
+                              @"attrs" : attrs,
+                              @"range" : [NSValue valueWithRange:range]
+                            }];
                           }];
 
   // Make the string uppercase.
@@ -323,7 +323,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   if (_shouldCapitalizeTitle) {
     // This ensures existing titles will get capitalized.
     UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
-        UIControlStateDisabled | UIControlStateSelected;
+                                      UIControlStateDisabled | UIControlStateSelected;
     for (UIControlState state = 0; state <= allControlStates; ++state) {
       NSString *title = [self titleForState:state];
       if (title) {

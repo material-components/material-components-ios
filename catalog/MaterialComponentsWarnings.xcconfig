@@ -1,0 +1,1 @@
+WARNING_CFLAGS = $(inherit) -Wall -Wcast-align -Wconversion -Werror -Wextra -Wimplicit-atomic-properties -Wmissing-prototypes -Wno-error=deprecated -Wno-error=deprecated-implementations -Wno-sign-conversion -Wno-unused-parameter -Woverlength-strings -Wshadow -Wstrict-selector-match -Wundeclared-selector -Wunreachable-code

@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "ScrollViewDelegateMultiplexer"
+date:   2016-03-01 20:15:01 -0500
+categories: documentation
+---
 # ScrollViewDelegateMultiplexer
 
 This class acts as a proxy object for UIScrollViewDelegate events and forwards all received

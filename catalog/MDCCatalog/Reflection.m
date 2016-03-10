@@ -20,10 +20,20 @@
 - (NSArray<NSString *> *)catalogHierarchy;
 @end
 
+@protocol CatalogStoryboardViewController <NSObject>
+- (NSString *)catalogStoryboardName;
+@end
+
 NSArray<NSString *> *CatalogHierarchyFromClass(Class aClass) {
   return [aClass performSelector:@selector(catalogHierarchy)];
 }
 
 UIViewController *ViewControllerFromClass(Class aClass) {
+  if ([aClass respondsToSelector:@selector(catalogStoryboardName)]) {
+    NSString *storyboardName = [aClass catalogStoryboardName];
+    NSBundle *bundle = [NSBundle bundleForClass:aClass];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:bundle];
+    return [storyboard instantiateInitialViewController];
+  }
   return [[aClass alloc] initWithNibName:nil bundle:nil];
 }
