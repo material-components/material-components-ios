@@ -20,21 +20,27 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" customClass="MDCRaisedButton">
                                 <rect key="frame" x="407" y="28" width="173" height="30"/>
-                                <state key="normal" title="Storyboard"/>
+                                <state key="normal" title="Storyboard">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="JuO-kL-5tW"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDu-tK-SwC" customClass="MDCFloatingButton">
                                 <rect key="frame" x="478" y="104" width="30" height="30"/>
-                                <state key="normal" title="-"/>
+                                <state key="normal" title="-">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="FTx-qa-X3A"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Dc-Q4-b6Z" customClass="MDCFlatButton">
                                 <rect key="frame" x="407" y="66" width="173" height="30"/>
-                                <state key="normal" title="Storyboard"/>
+                                <state key="normal" title="Storyboard">
+                                    <color key="titleColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="D3j-iL-WdR"/>
                                 </connections>
