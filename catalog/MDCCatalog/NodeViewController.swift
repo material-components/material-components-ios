@@ -44,8 +44,12 @@ class NodeViewController: UITableViewController {
 
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
+
+    // Sort alphabetically.
+    self.node.children = self.node.children.sort {
+      $0.title < $1.title
+    }
   }
 
   // MARK: UITableViewDataSource

@@ -22,15 +22,9 @@
  * The status bar shifter is responsible for the management of the status bar's offset as a header
  * view is shifting off-screen.
  *
- * This is a class cluster. To create a status bar shifter you must use +new. Attempting to directly
- * alloc/init an instance of this class will result in an exception.
- *
  * This class is not intended to be subclassed.
  */
 @interface MDCStatusBarShifter : NSObject
-
-// Creates the best possible status bar shifter given the current runtime.
-+ (instancetype) new;
 
 #pragma mark Shifting the status bar
 

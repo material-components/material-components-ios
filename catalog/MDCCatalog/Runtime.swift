@@ -16,11 +16,7 @@ limitations under the License.
 
 import Foundation
 
-/**
- Returns a list of all classes available to the runtime.
-
- TODO(featherless): Verify that this works with Swift classes as well.
- */
+/** Returns a list of all classes available to the runtime. */
 func getAllClasses() -> [AnyClass] {
   let numberOfClasses = Int(objc_getClassList(nil, 0))
   let allClasses = UnsafeMutablePointer<AnyClass?>.alloc(numberOfClasses)

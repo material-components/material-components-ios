@@ -271,7 +271,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   if ([self isBounded]) {
     // Ripples have a random size element so the ripple effect looks more natural when the
     // user taps multiple times in a row.
-    CGFloat random = (CGFloat)rand() / RAND_MAX;
+    CGFloat random = (CGFloat)arc4random() / ULONG_MAX;
     _radius = (CGFloat)(0.9f + random * 0.1f) * kMDCInkLayerRadiusGrowthMultiplier;
   }
   CGRect frame = CGRectMake(0, 0, _radius * 2.f, _radius * 2.f);

@@ -15,3 +15,6 @@
  */
 
 #import "Reflection.h"
+
+#import <MaterialComponents/MaterialFlexibleHeader.h>
+#import <MaterialComponents/MaterialTypography.h>

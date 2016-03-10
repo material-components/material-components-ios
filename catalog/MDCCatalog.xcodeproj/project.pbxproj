@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		52973B5731D0DDA38A64BDD6 /* libPods-MDCCatalog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B06B8C1D2A4B2E1EADF6CA /* libPods-MDCCatalog.a */; };
+		22F173D236D54720CF0F3357 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B8F1AA8D28612EA405B5C1A /* Pods_MDCCatalog.framework */; };
 		664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B61C6BA62A001ADBF8 /* AppDelegate.swift */; };
 		664524B91C6BA62A001ADBF8 /* NodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* NodeViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
 		664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */; };
 		665A34DC1C6BD01900962055 /* Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 665A34DB1C6BD01900962055 /* Reflection.m */; };
 		665A34E01C6BDB4600962055 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A34DF1C6BDB4600962055 /* Runtime.swift */; };
+		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
+		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
+		DEF64EA61C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA51C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +24,7 @@
 		0D185DDA19244A33A78863F7 /* Pods-MDCCatalog-MDCCatalogUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalogUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalogUnitTests/Pods-MDCCatalog-MDCCatalogUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		0F092FBA334F9A6817C4B9ED /* Pods-MDCCatalog-MDCCatalogUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalogUnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalogUnitTests/Pods-MDCCatalog-MDCCatalogUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		12970BE3EA0028A12E1427AD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		1B8F1AA8D28612EA405B5C1A /* Pods_MDCCatalog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCCatalog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39A3426A088E725ED84D45D4 /* Pods-MDCCatalog-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalog/Pods-MDCCatalog-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		51A574C94F29C2B3F2198B9E /* libPods-MDCCatalog-MDCCatalogUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog-MDCCatalogUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5434D10FB7D7598D60B5F56C /* Pods-MDCCatalogUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalogUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalogUnitTests/Pods-MDCCatalogUnitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -38,8 +42,10 @@
 		8206EEC8F0212B48C4AC4C01 /* libPods-MDCCatalogUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalogUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		878DC2619FAA226EA1A1849A /* libPods-MDCCatalog-MDCCatalog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog-MDCCatalog.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2985B007C0718CB5E2511B3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3B06B8C1D2A4B2E1EADF6CA /* libPods-MDCCatalog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFBFBC9BA56EED442714E5F3 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
+		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
+		DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
+		DEF64EA51C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogHeaderContainerController.swift; sourceTree = "<group>"; };
 		DEFF1C057348FFB1866CD023 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FBDDFF6A49F084B665BA398A /* Pods-MDCCatalog-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalog/Pods-MDCCatalog-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -49,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52973B5731D0DDA38A64BDD6 /* libPods-MDCCatalog.a in Frameworks */,
+				22F173D236D54720CF0F3357 /* Pods_MDCCatalog.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,8 +83,11 @@
 		664524B51C6BA62A001ADBF8 /* MDCCatalog */ = {
 			isa = PBXGroup;
 			children = (
-				665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */,
 				664524B61C6BA62A001ADBF8 /* AppDelegate.swift */,
+				665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */,
+				DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */,
+				DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */,
+				DEF64EA51C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift */,
 				664524B81C6BA62A001ADBF8 /* NodeViewController.swift */,
 				665A34DD1C6BDADA00962055 /* Reflection */,
 				665A34DE1C6BDAE700962055 /* Resources */,
@@ -130,7 +139,7 @@
 				8206EEC8F0212B48C4AC4C01 /* libPods-MDCCatalogUnitTests.a */,
 				51A574C94F29C2B3F2198B9E /* libPods-MDCCatalog-MDCCatalogUnitTests.a */,
 				878DC2619FAA226EA1A1849A /* libPods-MDCCatalog-MDCCatalog.a */,
-				B3B06B8C1D2A4B2E1EADF6CA /* libPods-MDCCatalog.a */,
+				1B8F1AA8D28612EA405B5C1A /* Pods_MDCCatalog.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -257,9 +266,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				665A34E01C6BDB4600962055 /* Runtime.swift in Sources */,
+				DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */,
 				665A34DC1C6BD01900962055 /* Reflection.m in Sources */,
 				664524B91C6BA62A001ADBF8 /* NodeViewController.swift in Sources */,
 				664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */,
+				DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */,
+				DEF64EA61C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

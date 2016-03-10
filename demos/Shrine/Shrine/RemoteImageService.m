@@ -25,15 +25,14 @@
                    completion:(void (^)(NSData *))completion {
   dispatch_async(dispatch_get_global_queue(priority, 0), ^{
     NSData *imageData = [_cache objectForKey:url];
-
     if (!imageData) {
       imageData = [[NSData alloc] initWithContentsOfURL:url];
+      if (imageData == nil) {
+        return;
+      }
       [_cache setObject:imageData forKey:url];
       UIImage *thumbnailImage = [self createThumbnailWithImageData:imageData];
       [_thumbnailCache setObject:thumbnailImage forKey:url];
-    }
-    if (imageData == nil) {
-      return;
     }
     completion(imageData);
   });

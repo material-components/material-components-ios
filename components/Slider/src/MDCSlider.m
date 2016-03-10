@@ -31,10 +31,10 @@ static const uint32_t MDCBlueColor = 0x2196F3;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0
-                         green:((float)((rgbValue & 0x00FF00) >> 8)) / 255.0
-                          blue:((float)((rgbValue & 0x0000FF) >> 0)) / 255.0
-                         alpha:1.0];
+  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
+                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
+                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
+                         alpha:1];
 }
 
 @interface MDCSlider () <MDCThumbTrackDelegate>
@@ -70,6 +70,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.thumbRadius = kSliderThumbRadius;
   _thumbTrack.thumbMaxRippleRadius = kSliderThumbMaxRippleRadius;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
+  _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
+  _thumbTrack.trackDisabledColor = [[self class] defaultDisabledColor];
   [_thumbTrack addTarget:self
                   action:@selector(thumbTrackValueChanged:)
         forControlEvents:UIControlEventValueChanged];
@@ -255,6 +257,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 + (UIColor *)defaultTrackOffColor {
+  return [[UIColor blackColor] colorWithAlphaComponent:kSliderLightThemeTrackAlpha];
+}
+
++ (UIColor *)defaultDisabledColor {
   return [[UIColor blackColor] colorWithAlphaComponent:kSliderLightThemeTrackAlpha];
 }
 

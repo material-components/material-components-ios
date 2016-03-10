@@ -30,7 +30,7 @@
 }
 
 + (NSArray *)catalogHierarchy {
-  return @[ @"Page control", @"Typical use" ];
+  return @[ @"Page Control", @"Typical use" ];
 }
 
 - (void)viewDidLoad {

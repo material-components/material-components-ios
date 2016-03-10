@@ -2,13 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:material-components-ios.podspec"
-      assignedFileDataType = "public.ruby-script">
-   </FileRef>
-   <FileRef
-      location = "group:components/Buttons/Buttons.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:components/ShadowLayer/examples/MovableShadowedView/MovableShadowedView.xcodeproj">
    </FileRef>
    <FileRef

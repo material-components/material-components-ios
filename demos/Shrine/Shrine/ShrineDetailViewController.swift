@@ -1,12 +1,11 @@
 import UIKit
 
-class ShrineDetailView: UIView {
+class ShrineDetailView: UIScrollView {
 
-  internal var title:String = "Title"
-  internal var desc:String = "Description"
-  internal var imageName:String = "popsicle.png"
+  var title = ""
+  var desc = ""
+  var imageName = "popsicle.png"
   private var remoteImageService = RemoteImageService()
-
   private var label = UILabel()
   private var labelDesc = UILabel()
   private var floatingButton = MDCFloatingButton()
@@ -15,6 +14,8 @@ class ShrineDetailView: UIView {
   override func layoutSubviews() {
     super.layoutSubviews()
     self.backgroundColor = UIColor.whiteColor()
+    let minContentHeight = CGFloat(640)
+    self.contentSize = CGSizeMake(self.frame.width, minContentHeight)
 
     let labelPadding:CGFloat = 50
     imageView.frame = CGRectMake(labelPadding, labelPadding,
@@ -37,7 +38,7 @@ class ShrineDetailView: UIView {
 
     label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
     label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
-    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    label.lineBreakMode = .ByWordWrapping
     label.numberOfLines = 2
 
     let paragraphStyle = NSMutableParagraphStyle()
@@ -53,7 +54,7 @@ class ShrineDetailView: UIView {
     label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     self.addSubview(label)
 
-    labelDesc.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    labelDesc.lineBreakMode = .ByWordWrapping
     labelDesc.numberOfLines = 5
     labelDesc.font = UIFont(name: "Helvetica", size: 14)
     labelDesc.textColor = UIColor(white: 0.54, alpha: 1)
@@ -83,9 +84,9 @@ class ShrineDetailView: UIView {
 
 class ShrineDetailViewController: UIViewController {
 
-  internal var productTitle:String = "Title"
-  internal var desc:String = "Description"
-  internal var imageName:String = "popsicle.png"
+  var productTitle = ""
+  var desc = ""
+  var imageName = "popsicle.png"
 
   override func viewDidLoad() {
     let detailView = ShrineDetailView(frame: self.view.frame)
@@ -99,10 +100,7 @@ class ShrineDetailViewController: UIViewController {
     dismissBtn.setTitle("Back", forState: UIControlState.Normal)
     dismissBtn.customTitleColor = UIColor.grayColor()
     dismissBtn.sizeToFit()
-    dismissBtn.frame = CGRectMake(8,
-      24,
-      dismissBtn.frame.width,
-      dismissBtn.frame.height)
+    dismissBtn.frame = CGRectMake(8, 28, dismissBtn.frame.width, dismissBtn.frame.height)
     dismissBtn.addTarget(self, action: "dismissDetails", forControlEvents: .TouchUpInside)
     self.view.addSubview(dismissBtn)
   }
