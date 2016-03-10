@@ -94,35 +94,13 @@ Pull requests will be reviewed in [Phabricator's Differential code review tool](
 ### Coding Style
 Material Components uses the [Google style guide for Objective-C code](https://google.github.io/styleguide/objcguide.xml)—the code in your pull requests should follow the style guide. To save time in review, you can use [clang-format](http://clang.llvm.org/docs/ClangFormat.html) to automatically format your code before making the pull request. 
 
+## License
+
+Material Components for iOS is licensed under the
+[Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0).
+
 ### Signing the CLA
 Please sign our Contributor License Agreement (CLA) before sending pull requests. For any code changes to be accepted, the CLA must be signed. It's a quick process, we promise!
 - For individuals we have a [simple click-through form](http://code.google.com/legal/individual-cla-v1.0.html).
 - For corporations we'll need you to print, sign and one of scan+email, fax or mail [the form.
 ](http://code.google.com/legal/corporate-cla-v1.0.html)
-
-## License
-Apache License
-
-Version 2.0, January 2004
-
-[http://www.apache.org/licenses](http://www.apache.org/licenses)
-
-[https://github.com/google/material-components-ios/blob/develop/LICENSE](https://github.com/google/material-components-ios/blob/develop/LICENSE)
-
-Copyright and License in Source Code
-
-All source files hosted on Material Components for iOS GitHub repo must contain a comment block at the top of the file declaring the license and copyright that applies. This text may be part of a larger header. The wording for the license and copyright portion must be copied as follows, with the appropriate years applied:
-
-```
-// This source file is part of the Material Components for iOS open source project 
-// 
-// Copyright (c) 2016 Google Inc. and the Material Components for iOS project authors 
-// Licensed under Apache License v2.0 
-// 
-// See LICENSE.txt for license information 
-// See CONTRIBUTORS.txt for the list of Swift project authors
-```
-
-Each contributor is responsible for adding their name or company name to the CONTRIBUTORS.txt file at the project’s root and maintaining the contact information.
-
-
