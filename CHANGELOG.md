@@ -1,7 +1,9 @@
-## 2.0.0
+## In progress since last release
 
 ##### Breaking
 ##### Enhancements
+  * Removed unused files: podfile.lock
+
 ##### Bug Fixes
 
 ## 2.0.0
