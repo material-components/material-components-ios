@@ -11,6 +11,7 @@
 ##### Breaking
 
 ##### Enhancements
+* Renamed the Private folders to privateWasCapitalPrivate.
 
 ##### Bug Fixes
 

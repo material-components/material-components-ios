@@ -48,6 +48,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 427d9148084def35e32278cfc5503e42368f604f
+  MaterialComponents: 9d854282d525f91e7419845561d1e37be627eb29
 
 COCOAPODS: 0.39.0

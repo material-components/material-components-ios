@@ -58,7 +58,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 427d9148084def35e32278cfc5503e42368f604f
+  MaterialComponents: 9d854282d525f91e7419845561d1e37be627eb29
   MaterialComponentsCatalog: 4f3484c5de7b62bc6795bb9c1d7c420c408eff47
   MaterialComponentsUnitTests: acb10bb4d58a1cf2d96a37d1ae95a0421b365806
 
