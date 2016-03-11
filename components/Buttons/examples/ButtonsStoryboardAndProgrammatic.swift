@@ -52,7 +52,6 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
     storyboardFlat.sizeToFit()
     storyboardFloating.sizeToFit()
 
-    raisedButton.setElevation(4, forState: .Normal)
     raisedButton.setTitle("Programmatic", forState: .Normal)
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false

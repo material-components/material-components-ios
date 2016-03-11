@@ -112,7 +112,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInit];
+    [self commonButtonInit];
   }
   return self;
 }
@@ -120,8 +120,6 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonInit];
-
     // TODO(randallli): Add backward compatibility to background colors
     //    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
     //      self.enabledBackgroundColor =
@@ -154,6 +152,8 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
       _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
     }
+
+    [self commonButtonInit];
   }
   return self;
 }
@@ -173,7 +173,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
 }
 
-- (void)commonInit {
+- (void)commonButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
   _shouldCapitalizeTitle = YES;
@@ -223,6 +223,11 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
                   forState:UIControlStateNormal];
 
   self.inkColor = [UIColor colorWithWhite:1 alpha:CGColorGetAlpha(self.inkView.inkColor.CGColor)];
+
+  // Uppercase all titles
+  if (_shouldCapitalizeTitle) {
+    [self uppercaseAllTitles];
+  }
 }
 
 - (void)dealloc {
@@ -321,19 +326,23 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 - (void)setShouldCapitalizeTitle:(BOOL)shouldCapitalizeTitle {
   _shouldCapitalizeTitle = shouldCapitalizeTitle;
   if (_shouldCapitalizeTitle) {
-    // This ensures existing titles will get capitalized.
-    UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
-                                      UIControlStateDisabled | UIControlStateSelected;
-    for (UIControlState state = 0; state <= allControlStates; ++state) {
-      NSString *title = [self titleForState:state];
-      if (title) {
-        [self setTitle:[title uppercaseStringWithLocale:[NSLocale currentLocale]] forState:state];
-      }
+    [self uppercaseAllTitles];
+  }
+}
 
-      NSAttributedString *attributedTitle = [self attributedTitleForState:state];
-      if (attributedTitle) {
-        [self setAttributedTitle:capitalizeAttributedString(attributedTitle) forState:state];
-      }
+- (void)uppercaseAllTitles {
+  // This ensures existing titles will get capitalized.
+  UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
+  UIControlStateDisabled | UIControlStateSelected;
+  for (UIControlState state = 0; state <= allControlStates; ++state) {
+    NSString *title = [self titleForState:state];
+    if (title) {
+      [self setTitle:[title uppercaseStringWithLocale:[NSLocale currentLocale]] forState:state];
+    }
+
+    NSAttributedString *attributedTitle = [self attributedTitleForState:state];
+    if (attributedTitle) {
+      [self setAttributedTitle:capitalizeAttributedString(attributedTitle) forState:state];
     }
   }
 }
