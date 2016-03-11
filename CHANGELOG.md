@@ -1,13 +1,21 @@
 ## In progress since last release
 
 ##### Breaking
-##### Enhancements
 
+##### Enhancements
 * [FlexibleHeader] Add tests for basic tracking scroll view contract.
 * Moved all example resources into a examples/resources/ directory by convention.
 * [FlexibleHeader] Add sizeThatFits contract tests.
 * Touching up the community.md doc.
 * Editing pass at community.md.
+
+##### Bug Fixes
+
+## 2.0.1
+
+##### Breaking
+##### Enhancements
+  * Removed unused files: podfile.lock
 
 ##### Bug Fixes
 
