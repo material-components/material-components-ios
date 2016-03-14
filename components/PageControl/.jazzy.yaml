@@ -1,0 +1,4 @@
+module_name: PageControl
+umbrella_header: src/MaterialPageControl.h
+objc_mode: true
+sdk: iphonesimulator

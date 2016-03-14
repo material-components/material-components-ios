@@ -38,35 +38,20 @@ pushd $REPO_ROOT_DIR >> /dev/null
 
 mkdir -p docs
 
-first=true
-
 # Enumerate all documentable folders
-for d in components/*/README.md; do
+for d in components/*/.jazzy.yaml; do
   folder=$(dirname $d)
   component=$(basename $folder)
 
   echo "Generating docs for $component..."
 
   pushd $folder >> /dev/null
-
-  jazzy \
-    --output $REPO_ROOT_DIR/docs/$component \
-    --module $component \
-    --umbrella-header src/Material$component.h \
-    --objc \
-    --sdk iphonesimulator \
-    >> /dev/null 2> /dev/null
-
+  jazzy --output $REPO_ROOT_DIR/docs/$component >> /dev/null 2> /dev/null
 	# copy assets
 	cp -R docs/assets/ $REPO_ROOT_DIR/docs/$component/assets >> /dev/null 2> /dev/null
 	# adjust path to assets in generated files
 	sed -i '' 's/docs\///g' $REPO_ROOT_DIR/docs/$component/*.html
-
   popd >> /dev/null
-
-  echo -n "\"$component\"" >> docs/index.json
-
-  first=false
 done
 
 popd >> /dev/null
