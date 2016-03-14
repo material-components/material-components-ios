@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "Private/MDCTypography+Constants.h"
+#import "privateWasCapitalPrivate/MDCTypography+Constants.h"
 
 #ifndef GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
 #define GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE @"MaterialTypography.bundle"
