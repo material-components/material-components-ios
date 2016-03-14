@@ -17,9 +17,11 @@ target "MDCUnitTests" do
   use_frameworks!
 end
 
-post_install do
+post_install do |installer|
+  pod_dir = File.dirname(installer.pods_project.path)
+
   mdc_xcconfigs = [
-    "./Pods/Target Support Files/MaterialComponents/MaterialComponents.xcconfig",
+    "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.xcconfig",
   ]
 
   mdc_xcconfigs.each do |mdc_xcconfig|
