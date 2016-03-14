@@ -18,8 +18,8 @@
 
 #import "MaterialSpritedAnimationView.h"
 
-static NSString *const kSpriteChecked = @"mdc_sprite_check__hide";
-static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
+static NSString *const kSpriteList = @"mdc_sprite_list__grid";
+static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
 
 @implementation SpritedAnimationViewTypicalUseViewController {
   MDCSpritedAnimationView *_animationView;
@@ -38,7 +38,7 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
   self.view.backgroundColor = [UIColor whiteColor];
 
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked
+  UIImage *spriteImage = [UIImage imageNamed:kSpriteList
                                     inBundle:bundle
                compatibleWithTraitCollection:nil];
   _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
@@ -49,7 +49,7 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
 
   // Add label with tap instructions.
   UILabel *label = [[UILabel alloc] initWithFrame:CGRectOffset(self.view.bounds, 0, 30)];
-  label.text = @"Tap anywhere to animate checkmark.";
+  label.text = @"Tap anywhere to animate icon.";
   label.textColor = [UIColor colorWithWhite:0 alpha:0.8];
   label.textAlignment = NSTextAlignmentCenter;
   [self.view addSubview:label];
@@ -70,7 +70,7 @@ static NSString *const kSpriteUnchecked = @"mdc_sprite_check__show";
     // When animation completes, toggle image.
     _checked = !_checked;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    UIImage *spriteImage = [UIImage imageNamed:_checked ? kSpriteChecked : kSpriteUnchecked
+    UIImage *spriteImage = [UIImage imageNamed:_checked ? kSpriteList : kSpriteGrid
                                       inBundle:bundle
                  compatibleWithTraitCollection:nil];
     _animationView.spriteSheetImage = spriteImage;
