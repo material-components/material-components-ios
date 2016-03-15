@@ -23,7 +23,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
 
 @implementation SpritedAnimationViewTypicalUseViewController {
   MDCSpritedAnimationView *_animationView;
-  BOOL _checked;
+  BOOL _toggle;
 }
 
 // TODO: Support other categorizational methods.
@@ -34,7 +34,6 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _checked = YES;
   self.view.backgroundColor = [UIColor whiteColor];
 
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
@@ -68,9 +67,9 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
   [_animationView startAnimatingWithCompletion:^{
 
     // When animation completes, toggle image.
-    _checked = !_checked;
+    _toggle = !_toggle;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    UIImage *spriteImage = [UIImage imageNamed:_checked ? kSpriteList : kSpriteGrid
+    UIImage *spriteImage = [UIImage imageNamed:_toggle ? kSpriteGrid : kSpriteList
                                       inBundle:bundle
                  compatibleWithTraitCollection:nil];
     _animationView.spriteSheetImage = spriteImage;
