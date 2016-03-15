@@ -19,60 +19,56 @@
 
 #import "MDCButton.h"
 
-/**
- * Shapes for material Floating buttons.
- *
- * @ingroup MDCButtons
- */
+/** Shapes for material Floating buttons. */
 typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
   MDCFloatingButtonShapeDefault,
   MDCFloatingButtonShapeMini
 };
 
 /**
- * A "floating" MDCButton.
- *
- * Floating action buttons are circular, float a considerable amount above their parent, have
- * their own background color, and also raise briefly when touched. Floating action buttons should
- * only be used rarely, for the main action of a screen.
- *
- * @see http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
+ A "floating" MDCButton.
+
+ Floating action buttons are circular, float a considerable amount above their parent, have
+ their own background color, and also raise briefly when touched. Floating action buttons should
+ only be used rarely, for the main action of a screen.
+
+ @see http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
  */
 @interface MDCFloatingButton : MDCButton
 
 /**
- * Returns a MDCFloatingButton with default colors and the given |shape|.
- *
- * @param shape Button shape.
- * @return Button with shape.
+ Returns a MDCFloatingButton with default colors and the given |shape|.
+
+ @param shape Button shape.
+ @return Button with shape.
  */
 + (nonnull instancetype)buttonWithShape:(MDCFloatingButtonShape)shape;
 
 /**
- * @return The default floating button size dimension.
+ @return The default floating button size dimension.
  */
 + (CGFloat)defaultDimension;
 
 /**
- * @return The mini floating button size dimension.
+ @return The mini floating button size dimension.
  */
 + (CGFloat)miniDimension;
 
 /**
- * Initializes self to a button with the given |shape|.
- *
- * @param frame Button frame.
- * @param shape Button shape.
- * @return Button with shape.
+ Initializes self to a button with the given |shape|.
+
+ @param frame Button frame.
+ @param shape Button shape.
+ @return Button with shape.
  */
 - (nonnull instancetype)initWithFrame:(CGRect)frame shape:(MDCFloatingButtonShape)shape
     NS_DESIGNATED_INITIALIZER;
 
 /**
- * Initializes self to a button with the MDCFloatingButtonShapeDefault shape.
- *
- * @param frame Button frame.
- * @return Button with MDCFloatingButtonShapeDefault shape.
+ Initializes self to a button with the MDCFloatingButtonShapeDefault shape.
+
+ @param frame Button frame.
+ @return Button with MDCFloatingButtonShapeDefault shape.
  */
 - (nonnull instancetype)initWithFrame:(CGRect)frame;
 
