@@ -1,0 +1,62 @@
+title: Material Components for iOS
+email: material-components-ios-discuss@googlegroups.com
+description: > # this means to ignore newlines until "baseurl:"
+  Material Design Components for iOS
+basepath: "" # blank if hosted at site root, /subdirectory if hosted in "subdirectory" folder
+url: "https://material-components-ios.github.io"
+twitter_username: googledesign
+permalink: :title
+
+
+# Build settings
+markdown: kramdown
+
+# Kramdown settings
+kramdown:
+  # Don't use a highlighter.
+  # This will output raw code blocks that can be
+  # highlighted in javascript with CodeMirror.
+  syntax_highlighter: none
+
+#kramdown:
+#  #parse_block_html: true
+#  syntax_highlighter: rouge
+#  syntax_highlighter_opts:
+#    tab_width: 4
+#    line_numbers: true
+#    css: style
+
+# Build target
+exclude: [build.sh]
+
+defaults:
+#layout specification
+- scope:
+    path: ''
+  values:
+    layout: detail
+# - scope:
+#     path: index
+#   value:
+#     layout: homepage
+# - scope:
+#     path: howto/index
+#   values:
+#     layout: landing
+# - scope:
+#     path: components/index
+#   values:
+#     layout: landing
+#category specification
+- scope:
+    path: howto
+  values:
+    categories: howto
+- scope:
+    path: components
+  values:
+    categories: components
+- scope:
+    path: community
+  values:
+    categories: community

@@ -1,0 +1,14 @@
+<header>
+  <div class="logo"><a href="{{ site.github.url }}/">{{ site.title }}</a></div>
+</header>
+<nav class="tabs">
+  <div class="button {% if page.collection == 'howto' %}active{% endif %}">
+  	<a href="/howto">How To</a>
+  </div>
+  <div class="button {% if page.collection == 'components' %}active{% endif %}">
+  	<a href="/components">Documentation</a>
+  </div>
+  <div class="button {% if page.title == 'Community' %}active{% endif %}">
+  	<a href="/community">Community</a>
+  </div>
+</nav>

@@ -1,0 +1,12 @@
+<nav id="sidenav">
+  <ul>
+	  {% case page.categories %}
+	  {% when 'components' %}
+	  	{% include nav_components.html %}
+	  {% when 'howto' %}
+	  	{% include nav_howto.html %}
+		{% when 'community' %}
+			{% include nav_community.html %}
+		{% endcase %}
+  </ul>
+</nav>

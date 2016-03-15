@@ -1,0 +1,146 @@
+// Globals used in this file
+$code-background-color: $grey-100;
+$code-divider-color: $grey-400;
+$code-font-family: Roboto Mono;
+$code-text-color: $text-color;
+$code-text-size: 12px;
+$code-text-weight: 500;
+$code-lineheight: 20px;
+
+.code-text-style {
+  font-family: $code-font-family;
+  font-weight: $code-text-weight;
+  font-size: $code-text-size;
+  line-height: $code-lineheight;
+  color: $code-text-color
+}
+
+
+.CodeMirror {
+  height: auto;
+  margin: 24px 0;
+  background: $code-background-color;
+  border: none;
+  @extend .code-text-style;
+}
+
+// Override the standard codemirror margins
+// when inside the multicode container
+.material-code-render .CodeMirror{
+  position: absolute;
+  visibility: hidden;
+  width: 100%;
+  margin: 0px;
+
+  &.active {
+    visibility: visible;
+  }
+}
+
+.CodeMirror-scroll {
+  max-height: 300px;
+}
+
+// The box containing code text inside the codemirror shell
+.CodeMirror-code {
+  // Margin above and below source code text, within scroll box.
+  margin: 12px 0;
+}
+
+// Text and border for line number area
+.CodeMirror-gutters {
+  border: none;
+  @extend .code-text-style;
+}
+
+// Add period and left padding to line numbers
+.material-code-render .CodeMirror-linenumber {
+  padding: 0 24px 0 16px;
+  &:after {
+    content: '';
+  }
+}
+
+// Padding between code lines and their line number
+pre.CodeMirror-line {
+  padding-left: 24px;
+}
+// Padding is already present in editors with line-numbers
+.material-code-render.line-numbers pre.CodeMirror-line {
+  padding-left: 0;
+}
+
+
+// Syntax highlight colors
+.CodeMirror {
+  .cm-string {
+    color: rgb(245, 127, 23);  //orange
+  }
+  .cm-keyword {
+    color: rgb(0, 184, 212);  //blue
+  }
+  .cm-def {
+    color: $indigo-500;
+  }
+  .cm-userpath {
+    color: $grey-800;
+  }
+  .cm-comment {
+    color: rgba(0 ,0 ,0, 0.4);
+  }
+}
+
+// Styles for the multi-code container
+.material-code-render {
+  position: relative;
+  background: $code-background-color;
+  margin: 24px 0 24px 0;
+
+  h3 {
+    display: none;
+  }
+
+  .language {
+    padding: 16px 0 16px 24px;
+    border-bottom: 1px solid $code-divider-color;
+    font-family: Roboto;
+    font-weight: 400;
+    line-height: 24px;
+
+    .radio {
+      margin-right: 24px;
+
+      input[type=radio] {
+        display: none;
+      }
+      .source-radio {
+        height: 24px;
+        width: 24px;
+        vertical-align: bottom;
+        margin-right: 8px;
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+        background-position: center;
+
+        &.checked {
+          background-image: url(/images/radio-checked.svg);
+          display: none;
+        }
+        &.unchecked {
+          background-image: url(/images/radio-unchecked.svg);
+          opacity: 0.54;
+          display: inline-block;
+        }
+      }
+      input[type=radio]:checked+.icons .source-radio{
+        &.checked {
+          display: inline-block;
+        }
+        &.unchecked {
+          display: none;
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,108 @@
+#homepage {
+
+  #main_content {
+    section {
+      margin-top: 72px;
+    }
+  }
+
+  #heroimg {
+    float: right;
+    margin: 0;
+    padding: 0;
+    margin-right: -48px;
+    margin-left: -16px;
+
+    img {
+      width: 350px;
+      height: 614px;
+    }
+
+    @include condensed_hero {
+      float: none;
+      margin: 0 auto;
+      text-align: center;
+
+      img {
+        width: 245px;
+        height: 430px;
+      }
+    }
+  }
+
+  .jumplink {
+    display: block;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    position: relative;
+    top: -100px;
+    a {
+      display: block;
+    }
+  }
+
+  .title {
+    padding-top: 184px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 34px;
+    line-height: 40px;
+    font-weight: 300;
+    color: $hero-color;
+
+    @include condensed_hero {
+      clear: both;
+      padding-top: 14px;
+      font-size: 24px;
+      line-height: 32px;
+    }
+  }
+
+  .subhead {
+    font-size: 16px;
+    line-height: 28px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 8px;
+
+    @include condensed_hero {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 24px;
+      margin-top: 6px;
+    }
+  }
+
+  .button-getstarted {
+    margin-top: 40px;
+
+    a {
+      border: 1px solid $hero-color;
+      color: $hero-color;
+      text-transform: uppercase;
+      font-size: 14px;
+      line-height: 36px;
+      padding: 0 16px;
+      border-radius: 2px;
+      display: inline-block;
+
+      &:hover {
+        box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12), 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    @include condensed_hero {
+      margin-top: 32px;
+    }
+  }
+  .button-getstarted::after {
+    content: "";
+    clear: both;
+    line-height: 0;
+    height: 0;
+    display: block;
+    margin-bottom: 80px;
+  }
+}

@@ -1,0 +1,7 @@
+{% for item in site.data.navigation.community %}
+<li>
+  <a href="{{ item.url | prepend: site.github.url }}">
+    <img class="sidebar-icon" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="30" height="30">{{ item.name }}
+  </a>
+</li>
+{% endfor %}

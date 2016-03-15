@@ -1,0 +1,45 @@
+
+.step-sequence>h2 {
+  margin-top: 0;
+}
+
+.step-sequence>li {
+  border: 0;
+  padding: 0 0 64px 48px;
+  margin: 0;
+  border-left: 1px solid rgba(0,0,0,0.2);
+  counter-increment: step-counter;
+  list-style-type: none;
+}
+
+ol.step-sequence {
+  counter-reset: step-counter;
+  margin: 4px 0 0 0;
+  padding: 0;
+
+  @include content_narrow_width {
+    // left align edge of circle to content
+    // by default the left stripe is aligned to content
+    padding-left: 16px;
+  }
+}
+
+.step-sequence>li:last-child {
+  border-left: 1px solid rgba(0,0,0,0);
+}
+
+.step-sequence>li::before {
+  content: counter(step-counter);
+  display: block;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  margin-bottom: -34px;
+  left: -65px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background-color: #fff;
+  border-radius: 32px;
+  text-align: center;
+  line-height: 32px;
+}
+

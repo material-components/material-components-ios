@@ -1,0 +1,130 @@
+
+//
+// Define all color constants here
+//
+$white: #fff;
+$black: #000;
+$grey-100: #F5F5F5;
+$grey-300: #e0e0e0;
+$grey-400: #bdbdbd;
+$grey-600: #757575;
+$grey-800: #424242;
+$black-54: rgba(0, 0, 0, 0.54);
+$light-blue-500: #03A9F4;
+$teal-400: #26A69A;
+$green-a700: #00C853;
+$indigo-500: #3F51B5;
+
+//
+// Globals
+//
+$accent-color: $light-blue-500;
+$fonts: Roboto, sans-serif;
+$background-color: $white;
+$text-color: $black-54;
+$anchor-color: $accent-color;
+$hero-color: $accent-color;
+$nav-color: $black-54;
+$logo-color: $black-54;
+$footer-background-color: $grey-100;
+//
+// Breakpoint and critical width constants used by layout mixins
+//
+
+// Header changes from collapsed to large
+$breakpoint-small-header: 726px;
+
+// Hero and title use condensed copy width (avoids widows)
+$breakpoint-hero-condensed: 726px;
+
+// Content on non-sidenav pages becomes adaptive
+$breakpoint-content-adaptive: 976px; //832 width + 64*2margin + 16(scroll bar)
+$breakpoint-content-narrow: 880px;
+
+// TODO - would prefer to specify these based on
+//        page changes instead of device format
+$mobile: 680px;
+$condensed: 1024px;
+$desktopsmall: 1280px;
+
+
+//
+// Useful css3 effect mixins for cross-browser support
+//
+@mixin box-shadow($shadows) {
+  -moz-box-shadow: $shadows;
+  -webkit-box-shadow: $shadows;
+  box-shadow: $shadows;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin transition($animation){
+  -webkit-transition: $animation;
+  -moz-transition: $animation;
+  -o-transition: $animation;
+  transition: $animation;
+}
+@mixin transform($transform){
+  -ms-transform: $transform;
+  -moz-transform: $transform;
+  -webkit-transform: $transform;
+  transform: $transform;
+}
+
+//
+// Layout media query mixins for overriding defaults
+//
+
+@mixin collapsed_header() {
+  @media only screen and (max-width: $breakpoint-small-header) {
+    @content;
+  }
+}
+
+@mixin condensed_hero() {
+  @media only screen and (max-width: $breakpoint-hero-condensed) {
+    @content;
+  }
+}
+
+@mixin content_adaptive_width() {
+  @media only screen and (min-width: $breakpoint-content-narrow + 1) and (max-width: $breakpoint-content-adaptive) {
+    @content;
+  }
+}
+
+@mixin content_narrow_width() {
+  @media only screen and (max-width: $breakpoint-content-narrow) {
+    @content;
+  }
+}
+
+@mixin mobile() {
+  @media only screen and (max-width: $mobile) {
+      @content;
+  }
+}
+
+@mixin condensed() {
+  @media only screen and (max-width: $condensed) {
+      @content;
+  }
+}
+
+@mixin desktopsmall() {
+  @media only screen and (min-width: $condensed + 1) and (max-width: $desktopsmall) {
+      @content;
+  }
+}
+
+@mixin desktop() {
+  @media only screen and (min-width: $desktopsmall + 1) {
+      @content;
+  }
+}

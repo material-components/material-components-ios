@@ -1,0 +1,64 @@
+howto:
+  - name: Quick start
+    url: quick-start
+    markdown: howto/quick-start.md
+  - name: Beginner Guide
+    url: beginner-guide
+    markdown: howto/beginner-guide.md
+  - name: Intermediate Guide
+    url: intermediate-guide
+    markdown: howto/intermediate-guide.md
+  - name: Advanced Guide
+    url: advanced-guide
+    markdown: howto/advanced-guide.md
+  - name: Sample Code
+    url: sample-code
+    markdown: howto/sample-code.md
+community:
+  - name: Community Engagement
+    url: "#engagement"
+  - name: Community Structure
+    url: "#structure"
+  - name: Code of Conduct
+    url: "#code-of-conduct"
+  - name: Question
+    url: "#question"
+  - name: Found an Issue
+    url: "#issue"
+  - name: Feature Request
+    url: "#feature-request"
+components:
+  - name: Typography
+    url: typography
+    markdown: Typography/README.md
+  - name: Ink
+    url: ink
+    markdown: Ink/README.md
+  - name: Shadow
+    url: shadowlayer
+    markdown: Shadow/README.md
+  - name: PageControl
+    url: pagecontrol
+    markdown: PageControl/README.md
+  - name: ScrollViewDelegateMultiplexer
+    url: scrollviewdelegatemultiplexer
+    markdown: ScrollViewDelegateMultiplexer/README.md
+  - name: SpritedAnimationView
+    url: spritedanimationview
+    markdown: SpritedAnimationView/README.md
+  - name: Switch
+    url: switch
+    markdown: Switch/README.md
+  - name: Slider
+    url: slider
+    markdown: Slider/README.md
+  - name: ShadowElevations
+    url: shadowelevations
+    markdown: ShadowElevations/README.md
+  - name: Buttons
+    url: buttons
+    markdown: Buttons/README.md
+  - name: FlexibleHeader
+    url: flexibleheader
+    markdown: FlexibleHeader/README.md
+      

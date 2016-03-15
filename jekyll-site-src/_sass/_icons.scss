@@ -1,0 +1,86 @@
+
+.icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  padding: 24px;
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+  background-position: center;
+}
+
+.icon-anchor {
+  width: 48px;
+  height: 48px;
+  line-height: 0;
+  display: inline-block;
+}
+.icon-anchor:hover .icon {
+  opacity: 1;
+}
+
+.icon.twitter {
+  background-image: url(/images/icon-twitter.svg);
+  opacity: 0.54;
+}
+.icon.googleplus {
+  background-image: url(/images/icon-googleplus.svg);
+  opacity: 0.54;
+}
+.icon.youtube {
+  background-image: url(/images/icon-youtube.svg);
+  opacity: 0.54;
+}
+
+
+// The icon wrapping list style
+ul.icon-list>li {
+  float: left;
+  width: 50%;
+  &>p {
+    position: relative;
+    line-height: 24px;
+    padding-left: 54px;
+    background: transparent;
+    &::before {
+      content: '';
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      left: 0px;
+      top: -4px;
+      border: 1px solid rgb(0,0,0);
+      border-radius: 50%;
+      background-color: transparent;
+      background-repeat: no-repeat;
+      background-size: 20px 20px;
+      background-position: center;
+      opacity: 0.54;
+      @include transform(translate3d(0,0,0));
+    }
+    &.icon-guide:before {
+      background-image: url('/images/icon-guide.svg');
+    }
+    &.icon-api:before {
+      background-image: url('/images/icon-api.svg');
+    }
+    &.icon-sample:before {
+      background-image: url('/images/icon-sample.svg');
+    }
+  }
+  @include mobile {
+    width: 100%;
+    // &>p {
+    //   padding-left: 0px;
+    //   line-height: 20px;
+    //   &::before {
+    //     display: none;
+    //   }
+    // }
+  }
+}
+ul.icon-list:after {
+  content:'';
+  display: block;
+  clear: both;
+}
