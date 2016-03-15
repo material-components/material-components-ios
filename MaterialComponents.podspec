@@ -48,6 +48,12 @@ Pod::Spec.new do |s|
     ss.dependency 'MaterialComponents/Typography'
   end
 
+  s.subspec 'ButtonBar' do |ss|
+    ss.public_header_files = 'components/ButtonBar/src/*.h'
+    ss.source_files = 'components/ButtonBar/src/*.{h,m}', 'components/ButtonBar/src/private/*.{h,m}'
+    ss.header_mappings_dir = 'components/ButtonBar/src/*'
+  end
+
   s.subspec 'FlexibleHeader' do |ss|
     ss.public_header_files = 'components/FlexibleHeader/src/*.h'
     ss.source_files = 'components/FlexibleHeader/src/*.{h,m}', 'components/FlexibleHeader/src/private/*.{h,m}'
