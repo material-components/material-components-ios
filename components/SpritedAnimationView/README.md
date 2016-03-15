@@ -45,7 +45,7 @@ animation completes for each state, and be replaced with the other sprite image.
 
 | List Sprite Sheet | Grid Sprite Sheet |
 | :---------------------------: | :---------------------------: |
-| ![List Icon](examples/SpritedAnimationViewExample/Assets.xcassets/mdc_sprite_list__grid.imageset/mdc_sprite_list__grid.png) | ![Grid Icon](examples/SpritedAnimationViewExample/Assets.xcassets/mdc_sprite_grid__list.imageset/mdc_sprite_grid__list.png) |
+| ![List Icon](examples/resources/SpritedAnimationView.xcassets/mdc_sprite_list__grid.imageset/mdc_sprite_list__grid.png) | ![Grid Icon](examples/resources/SpritedAnimationView.xcassets/mdc_sprite_grid__list.imageset/mdc_sprite_grid__list.png) |
 
 #### Two-state example
 
