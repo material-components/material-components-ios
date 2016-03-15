@@ -77,6 +77,14 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   return self;
 }
 
+- (void)setupRipple {
+  self.fillColor = self.color.CGColor;
+  CGFloat dim = self.radius * 2.f;
+  self.frame = CGRectMake(0, 0, dim, dim);
+  UIBezierPath *ripplePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, dim, dim)];
+  self.path = ripplePath.CGPath;
+}
+
 - (void)enter {
   _rippleState = kMDCInkRippleSpreading;
   [_inkLayer addSublayer:self];
@@ -137,7 +145,6 @@ static CGFloat const kMDCInkLayerPositionConstantDuration = 0.5f;
 static CGFloat const kMDCInkLayerRadiusGrowthMultiplier = 350.f;
 static CGFloat const kMDCInkLayerWaveTouchDownAcceleration = 1024.f;
 static CGFloat const kMDCInkLayerWaveTouchUpAcceleration = 3400.f;
-
 static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 static NSString *const kMDCInkLayerForegroundOpacityAnim = @"foregroundOpacityAnim";
 static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPositionAnim";
@@ -148,19 +155,9 @@ static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPosition
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundOpacityAnim;
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundPositionAnim;
 
-- (void)setupRipple;
-
 @end
 
 @implementation MDCInkLayerForegroundRipple
-
-- (void)setupRipple {
-  self.fillColor = self.color.CGColor;
-  CGFloat dim = self.radius * 2.f;
-  self.frame = CGRectMake(0, 0, dim, dim);
-  UIBezierPath *ripplePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, dim, dim)];
-  self.path = ripplePath.CGPath;
-}
 
 - (void)enter {
   [super enter];
@@ -262,28 +259,18 @@ static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPosition
 
 @end
 
-static NSString *const kMDCInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
 static CGFloat const kMDCInkLayerBackgroundOpacityEnterDuration = 0.6f;
 static CGFloat const kMDCInkLayerBaseOpacityExitDuration = 0.48f;
 static CGFloat const kMDCInkLayerFastEnterDuration = 0.12f;
+static NSString *const kMDCInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
 
 @interface MDCInkLayerBackgroundRipple : MDCInkLayerRipple
 
 @property(nonatomic, strong) CAKeyframeAnimation *backgroundOpacityAnim;
 
-- (void)setupRipple;
-
 @end
 
 @implementation MDCInkLayerBackgroundRipple
-
-- (void)setupRipple {
-  self.fillColor = self.color.CGColor;
-  CGFloat dim = self.radius * 2.f;
-  self.frame = CGRectMake(0, 0, dim, dim);
-  UIBezierPath *ripplePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, dim, dim)];
-  self.path = ripplePath.CGPath;
-}
 
 - (void)enter {
   [super enter];
@@ -419,6 +406,7 @@ static CGFloat const kMDCInkLayerFastEnterDuration = 0.12f;
 
 - (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock {
   _evaporateToPointCompletionBlock = completionBlock;
+  _foregroundRipple.point = point;
   [self reset];
 }
 
