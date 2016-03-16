@@ -47,9 +47,9 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'ButtonBar' do |ss|
-    ss.public_header_files = 'components/#{ss.base_name}/src/*.h'
-    ss.source_files = 'components/#{ss.base_name}/src/*.{h,m}', 'components/#{ss.base_name}/src/private/*.{h,m}'
-    ss.header_mappings_dir = 'components/#{ss.base_name}/src/*'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
   end
 
   s.subspec "FlexibleHeader" do |ss|
@@ -116,7 +116,7 @@ Pod::Spec.new do |s|
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
     ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/Switch/src/Material#{ss.base_name}.bundle/*"]
+      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
     }
 
     ss.dependency "MaterialComponents/private/ThumbTrack"
