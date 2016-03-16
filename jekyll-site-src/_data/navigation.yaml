@@ -25,16 +25,16 @@ community:
     url: "community/#structure"
     class: toplevel
   - name: Code of Conduct
-    url: "community/#code-of-conduct"
+    url: "community/#conduct"
     class: toplevel
   - name: Questions
-    url: "community/#questions"
+    url: "community/#haveaquestion"
     class: toplevel
   - name: Found an Issue
-    url: "community/#issue"
+    url: "community/#foundissue"
     class: toplevel
   - name: Feature Request
-    url: "community/#feature-request"
+    url: "community/#featurerequest"
     class: toplevel
 components:
   - name: Components
