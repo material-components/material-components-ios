@@ -1,39 +1,46 @@
 
-.icon {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  padding: 24px;
-  background-repeat: no-repeat;
-  background-size: 24px 24px;
-  background-position: center;
-}
+// The footer icons
+footer {
+  .icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    padding: 24px;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: center;
+  }
 
-.icon-anchor {
-  width: 48px;
-  height: 48px;
-  line-height: 0;
-  display: inline-block;
-}
-.icon-anchor:hover .icon {
-  opacity: 1;
-}
+  .icon-anchor {
+    width: 48px;
+    height: 48px;
+    line-height: 0;
+    display: inline-block;
+  }
+  .icon-anchor:hover .icon {
+    opacity: 1;
+  }
 
-.icon.twitter {
-  background-image: url(/images/icon-twitter.svg);
-  opacity: 0.54;
-}
-.icon.googleplus {
-  background-image: url(/images/icon-googleplus.svg);
-  opacity: 0.54;
-}
-.icon.youtube {
-  background-image: url(/images/icon-youtube.svg);
-  opacity: 0.54;
-}
+  .icon.twitter {
+    background-image: url(/images/icon-twitter.svg);
+    opacity: 0.54;
+  }
+  .icon.googleplus {
+    background-image: url(/images/icon-googleplus.svg);
+    opacity: 0.54;
+  }
+  .icon.youtube {
+    background-image: url(/images/icon-youtube.svg);
+    opacity: 0.54;
+  }
 
+}
 
 // The icon wrapping list style
+ul.icon-list {
+  margin-top: 32px;
+}
+
 ul.icon-list>li {
   float: left;
   width: 45%;
@@ -86,6 +93,64 @@ ul.icon-list:after {
   display: block;
   clear: both;
 }
-#homepage ul.icon-list {
-  margin-top: 37px;
+
+// Icons attached to heading text
+h1.icon,
+h2.icon {
+
+  &:before {
+    display: block;
+    content: '';
+    width: 32px;
+    height: 32px;
+    margin: 40px 0 28px 0;
+    border: 1px solid rgb(0,0,0);
+    border-radius: 50%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
+    opacity: 0.54;
+    @include transform(translate3d(0,0,0));
+  }
 }
+
+h1.icon {
+  &:before {
+    margin: 116px 0 28px 0;
+  }
+}
+
+p.icon-link {
+  position: relative;
+  line-height: 24px;
+  margin: 64px 0 28px 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    left: 0px;
+    top: -4px;
+    border: 1px solid rgb(0,0,0);
+    border-radius: 50%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
+    opacity: 0.54;
+    @include transform(translate3d(0,0,0));
+  }
+
+  a {
+    color: $text-color;
+    padding-left: 54px;
+    display: inline-block;
+    position: relative;
+  }
+  a:hover {
+    color: $anchor-color;
+  }
+}
+

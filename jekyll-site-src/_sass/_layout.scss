@@ -115,14 +115,16 @@ nav.tabs {
   }
 
 
-  .icon {
-    width: 48px;
-    height: 48px;
-    border: 1px solid rgba(0,0,0,.2);
-    border-radius: 48px;
-    float: left;
-    margin: 0 24px 16px 0;
-  }
+  //.icon {
+  //  width: 48px;
+  //  height: 48px;
+  //  border: 1px solid rgba(0,0,0,.2);
+  //  border-radius: 48px;
+  //  float: left;
+  //  margin: 0 24px 16px 0;
+  //}
+
+
   h2 {
     float: left;
   }
@@ -131,6 +133,7 @@ nav.tabs {
   }
 
   @include condensed {
+    display: none;
     //position: relative;
     //left: initial;
     //right: initial;
