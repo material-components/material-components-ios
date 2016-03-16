@@ -24,7 +24,7 @@ header {
 
   @include collapsed_header {
     position: absolute;
-    height: 96px;
+    height: 112px;
   }
 }
 
@@ -35,23 +35,24 @@ nav.tabs {
   top: 0;
   right: 0;
   z-index:101;
+  font-size: 0;
+  line-height: 0;
 
-  .button {
+  a {
     display: inline-block;
-    line-height: 16px;
-    text-transform: uppercase;
     padding: 24px 24px 22px 24px;
+    line-height: 16px;
+    font-size: 14px;
+    text-transform: uppercase;
     margin: 0;
     cursor: pointer;
-    &:hover {
-      border-bottom: 2px solid $anchor-color;
-    }
-    &.active {
-      border-bottom: 2px solid $anchor-color;
-    }
+    color: $nav-color;
 
-    a {
-      color: $nav-color;
+    &:hover {
+      border-bottom: 2px solid $tab-hover-color;
+    }
+    &.active, &.active:hover {
+      border-bottom: 2px solid $tab-active-color;
     }
   }
 
@@ -60,17 +61,12 @@ nav.tabs {
     text-align: left;
     z-index: 101;
     top: 48px;
-    left: 8px;
+    left: 0px;
+    white-space: nowrap;
+    overflow-x: auto;
 
-
-    .button {
-      padding: 16px 16px 14px 16px;
-      font-size: 12px;
-
-      &:hover {
-        border-bottom: 0;
-        color: $accent-color;
-      }
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 }
@@ -85,10 +81,10 @@ nav.tabs {
   overflow-y: auto;
   z-index: 99;
 
-  ul li {
+  li {
     line-height: 16px;
     margin-top: 32px;
-    margin-left: 24px;
+    margin-left: 72px;
 
     .sidebar-icon {
       display: none;
@@ -111,10 +107,13 @@ nav.tabs {
     }
   }
 
-  li ul li {
-    color: $text-color;
-    margin-left: 40px;
+  li.section {
+    margin-left: 24px;
+    a {
+      color: $black;
+    }
   }
+
 
   .icon {
     width: 48px;
@@ -185,7 +184,7 @@ body {
   overflow-x: hidden;
 
   section {
-    margin-top: 128px;
+    margin-top: 72px;
     max-width: 832px;
     margin-left: auto;
     margin-right: auto;
@@ -203,6 +202,10 @@ body {
     @include content_narrow_width {
       margin-left: 24px;
       margin-right: 24px;
+    }
+
+    @include collapsed_header {
+      margin-top: 96px;
     }
 
   }

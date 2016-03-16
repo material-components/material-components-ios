@@ -1,64 +1,75 @@
 howto:
+  - name: Developer Guide
+    url: howto/
+    class: section
   - name: Quick start
-    url: quick-start
+    url: howto/quick-start/
     markdown: howto/quick-start.md
   - name: Beginner Guide
-    url: beginner-guide
+    url: howto/beginner-guide/
     markdown: howto/beginner-guide.md
   - name: Intermediate Guide
-    url: intermediate-guide
+    url: howto/intermediate-guide/
     markdown: howto/intermediate-guide.md
   - name: Advanced Guide
-    url: advanced-guide
+    url: howto/advanced-guide/
     markdown: howto/advanced-guide.md
   - name: Sample Code
-    url: sample-code
+    url: howto/sample-code/
     markdown: howto/sample-code.md
 community:
+  - name: Community Guidelines
+    url: community/
+    class: section
   - name: Community Engagement
-    url: "#engagement"
+    url: "community/#engagement"
   - name: Community Structure
-    url: "#structure"
+    url: "community/#structure"
   - name: Code of Conduct
-    url: "#code-of-conduct"
+    url: "community/#code-of-conduct"
   - name: Question
-    url: "#question"
+    url: "community/#question"
   - name: Found an Issue
-    url: "#issue"
+    url: "community/#issue"
   - name: Feature Request
-    url: "#feature-request"
+    url: "community/#feature-request"
 components:
+  - name: Components
+    url: components/
+    class: section
   - name: Typography
-    url: typography
+    url: components/typography/
     markdown: Typography/README.md
   - name: Ink
-    url: ink
+    url: components/ink/
     markdown: Ink/README.md
   - name: Shadow
-    url: shadowlayer
+    url: components/shadowlayer/
     markdown: Shadow/README.md
   - name: PageControl
-    url: pagecontrol
+    url: components/pagecontrol/
     markdown: PageControl/README.md
   - name: ScrollViewDelegateMultiplexer
-    url: scrollviewdelegatemultiplexer
+    url: components/scrollviewdelegatemultiplexer/
     markdown: ScrollViewDelegateMultiplexer/README.md
   - name: SpritedAnimationView
-    url: spritedanimationview
+    url: components/spritedanimationview/
     markdown: SpritedAnimationView/README.md
   - name: Switch
-    url: switch
+    url: components/switch/
     markdown: Switch/README.md
   - name: Slider
-    url: slider
+    url: components/slider/
     markdown: Slider/README.md
   - name: ShadowElevations
-    url: shadowelevations
+    url: components/shadowelevations/
     markdown: ShadowElevations/README.md
   - name: Buttons
-    url: buttons
+    url: components/buttons/
     markdown: Buttons/README.md
   - name: FlexibleHeader
-    url: flexibleheader
+    url: components/flexibleheader/
     markdown: FlexibleHeader/README.md
-      
+  - name: API Docs
+    url: apidocs/
+    class: section
