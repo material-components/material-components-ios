@@ -20,7 +20,7 @@ Then, run the following command:
 
     $ pod install
 
-## Design considerations
+## Software design considerations
 
 Classic UIKit applications use the UINavigationBar provided by a UINavigationController to display
 navigation stack-related information, such as a title, left and right bar button items, and
