@@ -27,12 +27,18 @@ cd "$DIR/.."
 ROOT_DIR="$(pwd)"
 
 # # If site-source doesn't exist, clone the repository into site-source folder
-[ -d ./$SITE_SOURCE_FOLDER ] || git clone $GITHUB_REMOTE $SITE_SOURCE_FOLDER
-cd $SITE_SOURCE_FOLDER
-git checkout $SITE_SOURCE_BRANCH
-git pull $SITE_SOURCE_BRANCH
-cd ..
+if [[ -d ./$SITE_SOURCE_FOLDER ]]; then
+	cd $SITE_SOURCE_FOLDER
+	git checkout $SITE_SOURCE_BRANCH
+	git pull
+	cd ..
+else
+	git clone $GITHUB_REMOTE $SITE_SOURCE_FOLDER
+	cd $SITE_SOURCE_FOLDER
+	git checkout -b $SITE_SOURCE_BRANCH origin/$SITE_SOURCE_BRANCH
+	cd ..
+fi
 
 # Build site
-$ROOT_DIR/$SITE_SOURCE/build.sh
+$ROOT_DIR/$SITE_SOURCE_FOLDER/build.sh
 
