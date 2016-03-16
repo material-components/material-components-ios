@@ -11,6 +11,15 @@
 
 ##### Bug Fixes
 
+## 2.0.2
+
+##### Breaking
+
+##### Enhancements
+* Renamed the Private folders to privateWasCapitalPrivate.
+
+##### Bug Fixes
+
 ## 2.0.1
 
 ##### Breaking

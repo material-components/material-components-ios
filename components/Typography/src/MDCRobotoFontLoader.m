@@ -17,7 +17,7 @@
 #import "MDCRobotoFontLoader.h"
 
 #import "MDCFontResource.h"
-#import "Private/MDCTypography+Constants.h"
+#import "privateWasCapitalPrivate/MDCTypography+Constants.h"
 
 @interface MDCRobotoFontLoader ()
 @property(nonatomic, strong) MDCFontResource *lightFontResource;

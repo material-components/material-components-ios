@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "2.0.1"
+  s.version      = "2.0.2"
   s.authors      = { "Apple platform engineering at Google" => "appleplatforms@google.com" }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
@@ -36,15 +36,14 @@ Pod::Spec.new do |s|
   #  end
   #
 
-  s.subspec "Buttons" do |ss|
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/Private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
-
-    ss.dependency "MaterialComponents/Ink"
-    ss.dependency "MaterialComponents/ShadowElevations"
-    ss.dependency "MaterialComponents/ShadowLayer"
-    ss.dependency "MaterialComponents/Typography"
+  s.subspec 'Buttons' do |ss|
+    ss.public_header_files = 'components/Buttons/src/*.h'
+    ss.source_files = 'components/Buttons/src/*.{h,m}', 'components/Buttons/src/privateWasCapitalPrivate/*.{h,m}'
+    ss.header_mappings_dir = 'components/Buttons/src/*'
+    ss.dependency 'MaterialComponents/Ink'
+    ss.dependency 'MaterialComponents/ShadowElevations'
+    ss.dependency 'MaterialComponents/ShadowLayer'
+    ss.dependency 'MaterialComponents/Typography'
   end
 
   s.subspec 'ButtonBar' do |ss|
@@ -123,10 +122,12 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/ThumbTrack"
   end
 
-  s.subspec "Typography" do |ss|
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/Private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+  s.subspec 'Typography' do |ss|
+    ss.public_header_files = 'components/Typography/src/*.h'
+    ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/privateWasCapitalPrivate/*.{h,m}'
+    ss.header_mappings_dir = 'components/Typography/src/*'
+    ss.framework = 'CoreText'
+
     ss.resource_bundles = {
       "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
     }
