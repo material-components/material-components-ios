@@ -44,8 +44,10 @@ for directory in "$ROOT_DIR"/components/*/README.md; do
   component=$(basename $folder)
   echo "Copy docs for $component..."
   cd "$folder"
-  mkdir "$ROOT_DIR"/site-source/jekyll-site-src/components/"$component"
+  [ -d "$ROOT_DIR"/site-source/jekyll-site-src/components/"$component" ] ||
+    mkdir "$ROOT_DIR"/site-source/jekyll-site-src/components/"$component"
   cp README.md "$ROOT_DIR"/site-source/jekyll-site-src/components/$component/index.md >> /dev/null 2> /dev/null
+  [ -d docs ] && cp -r docs "$ROOT_DIR"/site-source/jekyll-site-src/components/$component
   cd $ROOT_DIR
 done
 
