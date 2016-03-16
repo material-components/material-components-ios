@@ -1,5 +1,6 @@
 PODS:
   - MaterialComponents (2.0.2):
+    - MaterialComponents/ButtonBar (= 2.0.2)
     - MaterialComponents/Buttons (= 2.0.2)
     - MaterialComponents/FlexibleHeader (= 2.0.2)
     - MaterialComponents/HeaderStackView (= 2.0.2)
@@ -13,6 +14,7 @@ PODS:
     - MaterialComponents/SpritedAnimationView (= 2.0.2)
     - MaterialComponents/Switch (= 2.0.2)
     - MaterialComponents/Typography (= 2.0.2)
+  - MaterialComponents/ButtonBar (2.0.2)
   - MaterialComponents/Buttons (2.0.2):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
@@ -58,8 +60,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 9d854282d525f91e7419845561d1e37be627eb29
-  MaterialComponentsCatalog: 4f3484c5de7b62bc6795bb9c1d7c420c408eff47
+  MaterialComponents: 448f52320c1ff70c931330a75b82b762662756ea
+  MaterialComponentsCatalog: f1e77eed4380403b0019f0af79106f8b7d9023b4
   MaterialComponentsUnitTests: acb10bb4d58a1cf2d96a37d1ae95a0421b365806
 
 COCOAPODS: 0.39.0
