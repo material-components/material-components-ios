@@ -42,15 +42,27 @@ ul.icon-list {
 }
 
 ul.icon-list>li {
-  float: left;
-  width: 45%;
-  padding-right: 5%;
+  display: inline-block;
+  width: 320px;
+  padding-right: 24px;
   height: 56px;
+
   &>p {
     position: relative;
     line-height: 24px;
-    padding-left: 54px;
     background: transparent;
+
+    a {
+      display: inline-block;
+      position: relative;
+      padding-left: 54px;
+      color: $text-color;
+
+      &:hover {
+        color: $anchor-color;
+      }
+    }
+
     &::before {
       content: '';
       position: absolute;
@@ -94,33 +106,7 @@ ul.icon-list:after {
   clear: both;
 }
 
-// Icons attached to heading text
-h1.icon,
-h2.icon {
-
-  &:before {
-    display: block;
-    content: '';
-    width: 32px;
-    height: 32px;
-    margin: 40px 0 28px 0;
-    border: 1px solid rgb(0,0,0);
-    border-radius: 50%;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: center;
-    opacity: 0.54;
-    @include transform(translate3d(0,0,0));
-  }
-}
-
-h1.icon {
-  &:before {
-    margin: 116px 0 28px 0;
-  }
-}
-
+// icon-link works like the list format, but can be attached to a single link item.
 p.icon-link {
   position: relative;
   line-height: 24px;
@@ -148,9 +134,45 @@ p.icon-link {
     padding-left: 54px;
     display: inline-block;
     position: relative;
+
+    &:hover {
+      color: $anchor-color;
+    }
   }
   a:hover {
     color: $anchor-color;
+  }
+}
+
+
+
+
+
+
+// Icons attached to heading text
+h1.icon,
+h2.icon {
+
+  &:before {
+    display: block;
+    content: '';
+    width: 32px;
+    height: 32px;
+    margin: 40px 0 28px 0;
+    border: 1px solid rgb(0,0,0);
+    border-radius: 50%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
+    opacity: 0.54;
+    @include transform(translate3d(0,0,0));
+  }
+}
+
+h1.icon {
+  &:before {
+    margin: 116px 0 28px 0;
   }
 }
 
