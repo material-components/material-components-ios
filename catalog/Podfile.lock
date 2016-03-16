@@ -5,6 +5,7 @@ PODS:
     - MaterialComponents/FlexibleHeader (= 2.0.2)
     - MaterialComponents/HeaderStackView (= 2.0.2)
     - MaterialComponents/Ink (= 2.0.2)
+    - MaterialComponents/NavigationBar (= 2.0.2)
     - MaterialComponents/PageControl (= 2.0.2)
     - MaterialComponents/private (= 2.0.2)
     - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.0.2)
@@ -23,6 +24,8 @@ PODS:
   - MaterialComponents/FlexibleHeader (2.0.2)
   - MaterialComponents/HeaderStackView (2.0.2)
   - MaterialComponents/Ink (2.0.2)
+  - MaterialComponents/NavigationBar (2.0.2):
+    - MaterialComponents/ButtonBar
   - MaterialComponents/PageControl (2.0.2)
   - MaterialComponents/private (2.0.2):
     - MaterialComponents/private/Color (= 2.0.2)
@@ -60,7 +63,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 448f52320c1ff70c931330a75b82b762662756ea
+  MaterialComponents: ef448b6adbb65846d63b2422ec1e896d101b5110
   MaterialComponentsCatalog: f1e77eed4380403b0019f0af79106f8b7d9023b4
   MaterialComponentsUnitTests: acb10bb4d58a1cf2d96a37d1ae95a0421b365806
 
