@@ -25,15 +25,12 @@
  A Material App Bar consists of a flexible view with a shadow, a navigation bar, and space for
  flexible content such as a photo.
 
- TODO(featherless): This implementation currently only consists of the flexible view. Add the
- navigation bar APIs in the future as those APIs are formalized.
-
  Learn more at the [Material spec](https://www.google.com/design/spec/patterns/scrolling-techniques.html)
 
  This protocol must be implemented by a UIViewController class.
 
  A view controller must conform to this protocol in order to use
- MDCAppBarInitializePropertiesOfParent and MDCAppBarAddViews. The combination of these APIs is
+ MDCAppBarPrepareParent and MDCAppBarAddViews. The combination of these APIs is
  commonly referred to as "injection". This contrasts with the alternative "wrapping" API,
  MDCAppBarContainerViewController.
  */
