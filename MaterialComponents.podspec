@@ -36,6 +36,22 @@ Pod::Spec.new do |s|
   #  end
   #
 
+  s.subspec 'AppBar' do |ss|
+    ss.public_header_files = 'components/AppBar/src/*.h'
+    ss.source_files = 'components/AppBar/src/*.{h,m}', 'components/AppBar/src/private/*.{h,m}'
+    ss.header_mappings_dir = 'components/AppBar/src/*'
+
+    # Navigation bar contents
+    ss.dependency 'MaterialComponents/HeaderStackView'
+    ss.dependency 'MaterialComponents/NavigationBar'
+    ss.dependency 'MaterialComponents/Typography'
+    
+    # Flexible header + shadow
+    ss.dependency 'MaterialComponents/FlexibleHeader'
+    ss.dependency 'MaterialComponents/ShadowElevations'
+    ss.dependency 'MaterialComponents/ShadowLayer'
+  end
+
   s.subspec 'Buttons' do |ss|
     ss.public_header_files = 'components/Buttons/src/*.h'
     ss.source_files = 'components/Buttons/src/*.{h,m}', 'components/Buttons/src/privateWasCapitalPrivate/*.{h,m}'
