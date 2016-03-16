@@ -16,6 +16,7 @@ ol.step-sequence {
   counter-reset: step-counter;
   margin: 56px 0 0 0;
   padding: 0;
+  list-style-type: none;
 
   @include content_narrow_width {
     // left align edge of circle to content

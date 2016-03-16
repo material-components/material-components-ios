@@ -39,13 +39,18 @@ footer {
 // The icon wrapping list style
 ul.icon-list {
   margin-top: 32px;
+  list-style-type: none;
+  padding-left: 0;
 }
 
 ul.icon-list>li {
   display: inline-block;
-  width: 320px;
+  vertical-align: baseline;
+  min-width: 280px;
+  width: 45%;
   padding-right: 24px;
   height: 56px;
+  margin: 0;
 
   &>p {
     position: relative;

@@ -81,6 +81,11 @@ nav.tabs {
   overflow-y: auto;
   z-index: 99;
 
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
   li {
     line-height: 16px;
     margin-top: 32px;
@@ -259,6 +264,10 @@ body {
 */
 }
 
+ul.nobullet {
+  list-style-type: none;
+  padding-left: 0;
+}
 
 .jumplink {
   display: block;

@@ -34,17 +34,23 @@ p {
 }
 
 ul {
-  list-style-type: none;
+  list-style-type: disc;
+  list-style-position: outside;
   border: 0;
-  padding: 0;
-  margin: 0;
+  padding: 0 0 0 1em;
+  margin: 4px 0 32px 0;
 }
+
 li {
   border: 0;
   padding: 0;
-  margin: 0;
+  margin: 4px 0 8px 0;
   font-size: 14px;
   font-weight: 500;
+}
+
+li > ul {
+  padding-left: 1em;
 }
 
 h1 {
