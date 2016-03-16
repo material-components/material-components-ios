@@ -36,7 +36,9 @@
 // The icon wrapping list style
 ul.icon-list>li {
   float: left;
-  width: 50%;
+  width: 45%;
+  padding-right: 5%;
+  height: 56px;
   &>p {
     position: relative;
     line-height: 24px;
@@ -83,4 +85,7 @@ ul.icon-list:after {
   content:'';
   display: block;
   clear: both;
+}
+#homepage ul.icon-list {
+  margin-top: 37px;
 }
