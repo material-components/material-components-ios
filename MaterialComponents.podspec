@@ -36,33 +36,34 @@ Pod::Spec.new do |s|
   #  end
   #
 
-  s.subspec 'AppBar' do |ss|
-    ss.public_header_files = 'components/AppBar/src/*.h'
-    ss.source_files = 'components/AppBar/src/*.{h,m}', 'components/AppBar/src/private/*.{h,m}'
-    ss.header_mappings_dir = 'components/AppBar/src/*'
+  s.subspec "AppBar" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
 
     # Navigation bar contents
-    ss.dependency 'MaterialComponents/HeaderStackView'
-    ss.dependency 'MaterialComponents/NavigationBar'
-    ss.dependency 'MaterialComponents/Typography'
+    ss.dependency "MaterialComponents/HeaderStackView"
+    ss.dependency "MaterialComponents/NavigationBar"
+    ss.dependency "MaterialComponents/Typography"
     
     # Flexible header + shadow
-    ss.dependency 'MaterialComponents/FlexibleHeader'
-    ss.dependency 'MaterialComponents/ShadowElevations'
-    ss.dependency 'MaterialComponents/ShadowLayer'
+    ss.dependency "MaterialComponents/FlexibleHeader"
+    ss.dependency "MaterialComponents/ShadowElevations"
+    ss.dependency "MaterialComponents/ShadowLayer"
   end
 
-  s.subspec 'Buttons' do |ss|
-    ss.public_header_files = 'components/Buttons/src/*.h'
-    ss.source_files = 'components/Buttons/src/*.{h,m}', 'components/Buttons/src/privateWasCapitalPrivate/*.{h,m}'
-    ss.header_mappings_dir = 'components/Buttons/src/*'
-    ss.dependency 'MaterialComponents/Ink'
-    ss.dependency 'MaterialComponents/ShadowElevations'
-    ss.dependency 'MaterialComponents/ShadowLayer'
-    ss.dependency 'MaterialComponents/Typography'
+  s.subspec "Buttons" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/privateWasCapitalPrivate/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+
+    ss.dependency "MaterialComponents/Ink"
+    ss.dependency "MaterialComponents/ShadowElevations"
+    ss.dependency "MaterialComponents/ShadowLayer"
+    ss.dependency "MaterialComponents/Typography"
   end
 
-  s.subspec 'ButtonBar' do |ss|
+  s.subspec "ButtonBar" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
@@ -147,11 +148,11 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/ThumbTrack"
   end
 
-  s.subspec 'Typography' do |ss|
-    ss.public_header_files = 'components/Typography/src/*.h'
-    ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/privateWasCapitalPrivate/*.{h,m}'
-    ss.header_mappings_dir = 'components/Typography/src/*'
-    ss.framework = 'CoreText'
+  s.subspec "Typography" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/privateWasCapitalPrivate/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.framework = "CoreText"
 
     ss.resource_bundles = {
       "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
