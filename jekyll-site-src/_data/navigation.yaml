@@ -1,42 +1,45 @@
 howto:
-  - name: Developer Guide
-    url: howto/
-    class: section
-  - name: Quick start
-    url: howto/quick-start/
-    markdown: howto/quick-start.md
-  - name: Beginner Guide
-    url: howto/beginner-guide/
-    markdown: howto/beginner-guide.md
-  - name: Intermediate Guide
-    url: howto/intermediate-guide/
-    markdown: howto/intermediate-guide.md
-  - name: Advanced Guide
-    url: howto/advanced-guide/
-    markdown: howto/advanced-guide.md
+  - name: Quick Start
+    url: howto/#quick-start
+    class: toplevel
+  - name: Detailed Guides
+    url: howto/#detailed-guides
+    class: toplevel
+  - name: Lorem Hello World
+    url: howto/hello-world/
+    markdown: howto/hello-world.md
+  - name: Lorem Navigation Basics
+    url: howto/navigation-basics/
+    markdown: howto/navigation-basics.md
   - name: Sample Code
-    url: howto/sample-code/
-    markdown: howto/sample-code.md
+    url: howto/#sample-code
+    class: toplevel
 community:
   - name: Community Guidelines
-    url: community/
-    class: section
+    url: "community/#guidelines"
+    class: toplevel
   - name: Community Engagement
     url: "community/#engagement"
+    class: toplevel
   - name: Community Structure
     url: "community/#structure"
+    class: toplevel
   - name: Code of Conduct
     url: "community/#code-of-conduct"
-  - name: Question
-    url: "community/#question"
+    class: toplevel
+  - name: Questions
+    url: "community/#questions"
+    class: toplevel
   - name: Found an Issue
     url: "community/#issue"
+    class: toplevel
   - name: Feature Request
     url: "community/#feature-request"
+    class: toplevel
 components:
   - name: Components
-    url: components/
-    class: section
+    url: components/#components
+    class: toplevel
   - name: Typography
     url: components/typography/
     markdown: Typography/README.md
@@ -71,5 +74,5 @@ components:
     url: components/flexibleheader/
     markdown: FlexibleHeader/README.md
   - name: API Docs
-    url: apidocs/
-    class: section
+    url: components/#apidocs
+    class: toplevel

@@ -1,6 +1,11 @@
 #homepage {
 
 
+  #main_content {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   #heroimg {
     float: right;
     margin: 0;
@@ -22,19 +27,6 @@
         width: 245px;
         height: 430px;
       }
-    }
-  }
-
-  .jumplink {
-    display: block;
-    height: 0;
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    position: relative;
-    top: -100px;
-    a {
-      display: block;
     }
   }
 
@@ -96,6 +88,6 @@
     line-height: 0;
     height: 0;
     display: block;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
   }
 }

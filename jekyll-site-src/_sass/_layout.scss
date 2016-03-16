@@ -98,18 +98,21 @@ nav.tabs {
       color: $text-color;
     }
     a:hover {
-      color: $black;
+      color: $text-color;
     }
     &.active {
       a {
-        color: $black;
+        color: $anchor-color;
       }
     }
   }
 
-  li.section {
+  li.toplevel {
     margin-left: 24px;
-    a {
+
+    a,
+    a:hover,
+    a:active {
       color: $black;
     }
   }
@@ -179,12 +182,16 @@ body {
 
 
 #main_content {
+  // 344 from left, with 16px overbleed for numbered lists that straddle edge.
+  margin-left: 328px;
+  padding-left: 16px;
+
   padding-top: 64px;
   position: relative;
   z-index:90;
   margin-right: 48px;
-  margin-left: 48px;
   overflow-x: hidden;
+
 
   section {
     margin-top: 72px;
@@ -216,6 +223,13 @@ body {
   &.hassidenav {
   }
 
+  @include condensed {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    max-width: initial;
+  }
+
 
 
 /*
@@ -245,20 +259,17 @@ body {
 */
 }
 
-body {
-  #main_content {
-    margin-left: 344px;
 
-    @include condensed {
-      margin-left: 0px;
-      margin-right: 0px;
-      max-width: initial;
-    }
-  }
-
-  &#homepage #main_content {
-    margin-left: 0;
-    margin-right: 0;
+.jumplink {
+  display: block;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  position: relative;
+  top: -100px;
+  a {
+    display: block;
   }
 }
 
