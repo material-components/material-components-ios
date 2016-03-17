@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "2.0.2"
-  s.authors      = { "Apple platform engineering at Google" => "appleplatforms@google.com" }
+  s.version      = "2.0.3"
+  s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
   s.license      = "Apache 2.0"
@@ -54,7 +54,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Buttons" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/privateWasCapitalPrivate/*.{h,m}"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
 
     ss.dependency "MaterialComponents/Ink"
@@ -150,7 +150,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Typography" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/privateWasCapitalPrivate/*.{h,m}"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
     ss.framework = "CoreText"
 
