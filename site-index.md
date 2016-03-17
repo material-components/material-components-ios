@@ -77,7 +77,7 @@ Create beautiful apps with&nbsp;Material&nbsp;Design
 
     Choose from Objective-C or Swift:
 
-    <div class="material-code-render" markdown="1">
+    <!--<div class="material-code-render" markdown="1">-->
     ### Objective-C
 
     ~~~ objc
@@ -127,18 +127,18 @@ Create beautiful apps with&nbsp;Material&nbsp;Design
 
     }
     ~~~
-    </div>
+    <!--</div>-->
 
 5.  ## What's next?
 
-    - Read the [Development Guide](http://www.google.com)
-        <!--{: .icon-guide }-->
+    - [Read the Development Guide](http://www.google.com)
+      <!--{: .icon-guide }-->
 
-    - View the full [iOS API](http://www.google.com)
-        <!--{: .icon-api }-->
+    - [View the full iOS API](http://www.google.com)
+      <!--{: .icon-api }-->
 
-    - Explore our [code samples](http://www.google.com)
-        <!--{: .icon-sample }-->
+    - [Explore our code samples](http://www.google.com)
+      <!--{: .icon-sample }-->
     <!--{: .icon-list }-->
 <!--{: .step-sequence }-->
 

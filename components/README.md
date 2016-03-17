@@ -1,39 +1,56 @@
 ---
-title:  "Components Documentation"
+title:  "Material Components Documentation"
 layout: landing
+section: documentation
 ---
-This is the landing page for component
 
-# Title
+# Component Documentation
 
-## Subtitle
+Material Components is a collection of standalone, production-quality user
+interface components for iOS. These components implement Google's
+[Material Design](http://www.google.com/design/spec/material-design/introduction.html) specification
+and are developed by a team of iOS engineers and UX designers at Google.
 
-This is a paragraph with a [link](http://www.google.com).
+TODO: Copy for above paragraph.
 
-- bullet point 1
-- bullet point 2
-- bullet point 3
+TODO: Choose links below.
 
 
-The following code will be rendered in simple format
+- [Development Guide](http://www.google.com)
+  <!--{: .icon-guide }-->
 
-```
-pod 'Material component, '>= 2.5.0' #Simple format for command line code
-```
+- [API Documentation](http://www.google.com)
+  <!--{: .icon-api }-->
 
-The following code will be rendered in switchable code snippet
+- [Code Samples](http://www.google.com)
+  <!--{: .icon-sample }-->
 
-<div class="material-code-render">
-	<textarea data-mode="text/x-objectivec" data-language="Objective-C">
-	  MDCButton* flatButton = [MDCFlatButton button];
-		[flatButton setTitle:@"Tap Me" forState:UIControlStateNormal];
-		[flatButton addTarget:self action:@selector(tap:) forControlEvents:UIControlEventTouchUpInside];
-		[self.view addSubView:flatButton];
-	</textarea>
-	<textarea data-mode="text/x-swift" data-language="Swift">
-	  var flatButton = MDCFlatButton.button()
-		flatButton.setTitle("Tap Me", forState: .Normal)
-		flatButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
-		self.view.addSubview(flatButton)
-	</textarea>
-</div> 
+- [Stack Overflow](http://www.google.com)
+  <!--{: .icon-stackoverflow }-->
+<!--{: .icon-list }-->
+
+- - -
+
+<a name="components"></a>
+<!--{: .jumplink }-->
+
+## Components
+
+[Typography](Typography/)
+<!--{: .icon-link }-->
+
+Methods for displaying text in [material styles](https://www.google.com/design/spec/style/typography.html), focusing on fonts and their opacity.
+
+
+[Ink](/Ink/)
+<!--{: .icon-link }-->
+
+Provides a [radial action](https://www.google.com/design/spec/animation/responsive-interaction.html#responsive-interaction-material-response) in the form of a visual ripple of ink expanding outward from the user’s touch.
+
+
+[Shadow](/Shadow/)
+<!--{: .icon-link }-->
+
+A Material Design [shadow](https://www.google.com/design/spec/what-is-material/elevation-shadows.html#elevation-shadows-shadows) that applies design principles relating to height and light sources to a shadow’s projected depth.
+
+
