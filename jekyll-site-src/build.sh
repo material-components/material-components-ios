@@ -67,7 +67,7 @@ mv "$ROOT_DIR"/site-source/jekyll-site-src/howto/README.md "$ROOT_DIR"/site-sour
 # UNCOMMENT LIQUID TAGS FROM MARKDOWN
 #grep -rl '<!--{.*}-->' ./ | xargs sed -i '' 's/<!--{\(.*\)}-->/{\1}/g'
 GREP_LIQUID_TAGS="grep -rl --include='*\.md' '<!--[{<].*[>}]-->'"
-SED_LIQUID_TAGS="sed -i '' 's/<!--\([{<]\)\(.*\)\([>}]\)-->/\1\2\3/g'"
+SED_LIQUID_TAGS="sed -i '' 's/<!--\([{<]\)\([^>]*\)\([>}]\)-->/\1\2\3/g'"
 eval "$SED_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/index.md"
 eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/howto | xargs $SED_LIQUID_TAGS"
 eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/community | xargs $SED_LIQUID_TAGS"

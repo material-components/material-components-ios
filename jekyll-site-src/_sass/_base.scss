@@ -121,8 +121,8 @@ table.table-3-column {
     width: 100%;
     th, td {
       width: 33.33%;
-      img {
-        max-width: 100%;
+      @include mobile {
+        width: 100%;
       }
     }
   }

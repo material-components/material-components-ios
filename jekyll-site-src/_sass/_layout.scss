@@ -373,4 +373,24 @@ footer {
     }
   }
 }
-
+.screenshot-demo {
+  width: 207px;
+  height: 420px;
+  padding: 48px 10px;
+  box-sizing: border-box;
+  background-image: url('/images/iphone-container.png');
+  background-repeat: no-repeat;
+}
+.video-demo {
+  video {
+    width: 207px;
+    height: 420px;
+    padding: 48px 10px;
+    box-sizing: border-box;
+    background-image: url('/images/iphone-container.png');
+    background-repeat: no-repeat;
+  }
+  a {
+    display: none;
+  }
+}
