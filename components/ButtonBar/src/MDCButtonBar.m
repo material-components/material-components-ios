@@ -64,9 +64,9 @@ static NSString *const kEnabledSelector = @"enabled";
   CGFloat baseline = CGRectGetMaxY(titleRect) + button.titleLabel.font.descender;
   CGFloat buttonBaseline = button.frame.origin.y + baseline;
 
-  button.frame = CGRectIntegral(CGRectOffset(button.frame,
-                                             0,
-                                             _buttonTitleBaseline - buttonBaseline));
+  UIEdgeInsets insets = button.titleEdgeInsets;
+  insets.top += _buttonTitleBaseline - buttonBaseline;
+  button.titleEdgeInsets = insets;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size shouldLayout:(BOOL)shouldLayout {
