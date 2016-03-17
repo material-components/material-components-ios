@@ -20,7 +20,7 @@
 
 #import "MDCFlatButton.h"
 
-#import "privateWasCapitalPrivate/MDCButton+Subclassing.h"
+#import "private/MDCButton+Subclassing.h"
 
 static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaqueBackground";
 

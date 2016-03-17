@@ -18,7 +18,7 @@
 
 #import "MDCFontResource.h"
 #import "MDCRobotoFontLoader.h"
-#import "privateWasCapitalPrivate/MDCTypography+Constants.h"
+#import "private/MDCTypography+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
