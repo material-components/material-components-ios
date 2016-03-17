@@ -19,6 +19,7 @@ header {
 
     a {
       color: $logo-color;
+      font-weight: 500;
     }
   }
 
@@ -43,6 +44,7 @@ nav.tabs {
     padding: 24px 24px 22px 24px;
     line-height: 16px;
     font-size: 14px;
+    font-weight: 500;
     text-transform: uppercase;
     margin: 0;
     cursor: pointer;
@@ -90,6 +92,7 @@ nav.tabs {
     line-height: 16px;
     margin-top: 32px;
     margin-left: 72px;
+    font-weight: 500;
 
     .sidebar-icon {
       display: none;
@@ -199,6 +202,7 @@ body {
 
 
   section {
+    position: relative;
     margin-top: 72px;
     max-width: 832px;
     margin-left: auto;
@@ -211,8 +215,7 @@ body {
 
     // Force auto_id anchors to sit below floating nav
     h1[id],
-    h2[id],
-    h3[id] {
+    h2[id] {
 
       &::before {
         display: block;
@@ -220,7 +223,7 @@ body {
         height: 0;
         line-height: 0;
         margin-top: -100px;
-        padding-top: 100px;
+        padding-top: 64px;
       }
     }
 

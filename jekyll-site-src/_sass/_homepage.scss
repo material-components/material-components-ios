@@ -47,9 +47,9 @@
   }
 
   .subhead {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 28px;
-    font-weight: 500;
+    font-weight: 400;
     margin-top: 8px;
 
     @include condensed_hero {
@@ -69,6 +69,7 @@
       text-transform: uppercase;
       font-size: 14px;
       line-height: 36px;
+      font-weight: 500;
       padding: 0 16px;
       border-radius: 2px;
       display: inline-block;

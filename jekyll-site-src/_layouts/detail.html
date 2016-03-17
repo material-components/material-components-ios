@@ -1,8 +1,23 @@
----
-layout: default
----
-<article class="detail" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="post-content" itemprop="articleBody">
-    {{ content }}
-  </div>
-</article>
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body class="{{ page.layout }} {{ page.section }}">
+
+    {% include header.html %}
+    {% include sidebar.html %}
+
+    <div id="main_content">
+      <section>
+        {{ content }}
+      </section>
+    </div>
+
+    {% include footer.html %}
+
+    <div style="display:none;">
+    {% include frontend_templates.html %}
+    </div>
+  </body>
+</html>

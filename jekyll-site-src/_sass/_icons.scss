@@ -61,6 +61,7 @@ ul.icon-list>li {
       display: inline-block;
       position: relative;
       padding-left: 54px;
+      font-weight: 500;
       color: $text-color;
 
       &:hover {
@@ -139,6 +140,7 @@ p.icon-link {
     padding-left: 54px;
     display: inline-block;
     position: relative;
+    font-weight: 500;
 
     &:hover {
       color: $anchor-color;
