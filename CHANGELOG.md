@@ -3,6 +3,15 @@
 ##### Breaking
 
 ##### Enhancements
+ * Renamed the privateWasCapitalPrivate folders to private.
+
+##### Bug Fixes
+
+## 2.0.3
+
+##### Breaking
+
+##### Enhancements
 
 ##### Bug Fixes
 
