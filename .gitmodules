@@ -1,0 +1,6 @@
+[submodule "scripts/external/arc-xcode-test-engine"]
+	path = scripts/external/arc-xcode-test-engine
+	url = git@github.com:google/arc-xcode-test-engine.git
+[submodule "scripts/external/clang-format-linter"]
+	path = scripts/external/clang-format-linter
+	url = git@github.com:vhbit/clang-format-linter.git
