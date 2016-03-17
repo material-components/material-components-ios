@@ -209,6 +209,21 @@ body {
     p {
     }
 
+    // Force auto_id anchors to sit below floating nav
+    h1[id],
+    h2[id],
+    h3[id] {
+
+      &::before {
+        display: block;
+        content: '';
+        height: 0;
+        line-height: 0;
+        margin-top: -100px;
+        padding-top: 100px;
+      }
+    }
+
     @include content_adaptive_width {
       margin-left: 64px;
       margin-right: 64px;
@@ -236,38 +251,13 @@ body {
   }
 
 
-
-/*
-  @include desktop {
-    section {
-    }
-  }
-
-  @include condensed {
-    margin-left: 0px;
-    margin-right: 0px;
-    max-width: initial;
-
-    section {
-      margin-left: 64px;
-      margin-right: 64px;
-    }
-  }
-
-  @include mobile {
-    padding-top: 80px;
-    section {
-      margin-left: 24px;
-      margin-right: 24px;
-    }
-  }
-*/
 }
 
 ul.nobullet {
   list-style-type: none;
   padding-left: 0;
 }
+
 
 .jumplink {
   display: block;

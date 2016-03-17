@@ -75,3 +75,9 @@ hr {
   padding: 0;
   border-bottom: 1px solid rgba(0,0,0,0.2);
 }
+
+strong,
+b {
+  font-weight: inherit;
+  color: $black;
+}

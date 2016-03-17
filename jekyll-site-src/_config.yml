@@ -17,7 +17,7 @@ kramdown:
   # This will output raw code blocks that can be
   # highlighted in javascript with CodeMirror.
   syntax_highlighter: none
-  auto_ids: false
+  auto_ids: true
 
 #kramdown:
 #  #parse_block_html: true

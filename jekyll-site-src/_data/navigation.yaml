@@ -15,26 +15,35 @@ howto:
     url: howto/#sample-code
     class: toplevel
 community:
-  - name: Community Guidelines
-    url: "community/#guidelines"
-    class: toplevel
-  - name: Community Engagement
-    url: "community/#engagement"
-    class: toplevel
   - name: Community Structure
-    url: "community/#structure"
+    url: "community/#community-structure"
     class: toplevel
   - name: Code of Conduct
-    url: "community/#conduct"
+    url: "community/#code-of-conduct"
     class: toplevel
   - name: Questions
-    url: "community/#haveaquestion"
+    url: "community/#questions"
     class: toplevel
   - name: Found an Issue
-    url: "community/#foundissue"
+    url: "community/#found-an-issue"
     class: toplevel
   - name: Feature Request
-    url: "community/#featurerequest"
+    url: "community/#feature-request"
+    class: toplevel
+  - name: Submitting an Issue
+    url: "community/#submitting-an-issue"
+    class: toplevel
+  - name: Submitting a Pull Request
+    url: "community/#submitting-a-pull-request"
+    class: toplevel
+  - name: Coding Style
+    url: "community/#coding-style"
+    class: toplevel
+  - name: Contributor License Agreement
+    url: "community/#contributor-license-agreement"
+    class: toplevel
+  - name: License
+    url: "community/#license"
     class: toplevel
 components:
   - name: Components
