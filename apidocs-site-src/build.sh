@@ -31,7 +31,7 @@ ROOT_DIR="$(pwd)"
 # Enumerate all documentable folders
 for directory in "$ROOT_DIR"/components/*/README.md; do
   folder=$(dirname $directory)
-  component=$(basename $folder)
+  component="$(echo $(basename $folder) | tr '[A-Z]' '[a-z]')"
 
   echo "Generating api reference for $component..."
 

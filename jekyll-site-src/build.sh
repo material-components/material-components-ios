@@ -41,7 +41,7 @@ cp "$ROOT_DIR"/site-index.md "$ROOT_DIR"/site-source/jekyll-site-src/index.md
 cp "$ROOT_DIR"/components/README.md "$ROOT_DIR"/site-source/jekyll-site-src/components/index.md
 for directory in "$ROOT_DIR"/components/*/README.md; do
 	folder=$(dirname $directory)
-  component=$(basename $folder)
+  component="$(echo $(basename $folder) | tr '[A-Z]' '[a-z]')"
   echo "Copy docs for $component..."
   cd "$folder"
   [ -d "$ROOT_DIR"/site-source/jekyll-site-src/components/"$component" ] ||
