@@ -2,17 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "pesto_small_logo-1.pdf",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "pesto_small_logo-2.pdf",
-      "scale" : "3x"
+      "filename" : "pesto_logo_small.pdf"
     }
   ],
   "info" : {

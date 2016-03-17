@@ -5,8 +5,8 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kPestoCardPadding = 10.f;
-static const CGFloat kPestoCardIconSize = 50.f;
+static const CGFloat kPestoCardPadding = 15.f;
+static const CGFloat kPestoCardIconSize = 72.f;
 
 @interface PestoCardCollectionViewCell ()
 
@@ -38,7 +38,10 @@ static const CGFloat kPestoCardIconSize = 50.f;
 
 - (void)commonInit {
   self.cellView = [[UIView alloc] initWithFrame:self.bounds];
+  self.cellView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.cellView.backgroundColor = [UIColor whiteColor];
+  self.cellView.clipsToBounds = YES;
 
   MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.layer;
   shadowLayer.shadowMaskEnabled = NO;
@@ -51,10 +54,11 @@ static const CGFloat kPestoCardIconSize = 50.f;
   self.thumbnailImageView = [[UIImageView alloc] initWithFrame:imageViewRect];
   self.thumbnailImageView.backgroundColor = [UIColor lightGrayColor];
   self.thumbnailImageView.contentMode = UIViewContentModeScaleAspectFill;
+  self.thumbnailImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   self.thumbnailImageView.clipsToBounds = YES;
   [_cellView addSubview:_thumbnailImageView];
 
-  CGRect iconImageViewFrame = CGRectMake(self.frame.size.width - kPestoCardIconSize,
+  CGRect iconImageViewFrame = CGRectMake(0,
                                          self.frame.size.height - kPestoCardIconSize,
                                          kPestoCardIconSize,
                                          kPestoCardIconSize);
@@ -66,16 +70,16 @@ static const CGFloat kPestoCardIconSize = 50.f;
   self.authorLabel.font = [MDCTypography captionFont];
   self.authorLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1];
   self.authorLabel.frame =
-      CGRectMake(kPestoCardPadding,
-                 self.frame.size.width - self.authorLabel.font.pointSize - kPestoCardPadding - 1.f,
+      CGRectMake(kPestoCardIconSize,
+                 self.frame.size.height - self.authorLabel.font.pointSize - kPestoCardPadding,
                  self.frame.size.width - iconImageViewFrame.size.width,
                  self.authorLabel.font.pointSize + 2.f);
   [_cellView addSubview:_authorLabel];
 
   self.titleLabel = [[UILabel alloc] init];
-  self.titleLabel.font = [MDCTypography body1Font];
+  self.titleLabel.font = [MDCTypography headlineFont];
   self.titleLabel.frame =
-      CGRectMake(kPestoCardPadding,
+      CGRectMake(kPestoCardIconSize,
                  self.authorLabel.frame.origin.y - self.titleLabel.font.pointSize -
                      kPestoCardPadding / 2.f,
                  self.frame.size.width - iconImageViewFrame.size.width,
@@ -98,6 +102,7 @@ static const CGFloat kPestoCardIconSize = 50.f;
   _title = title;
   _titleLabel.text = title;
   _authorLabel.text = author;
+  _iconImageName = iconName;
 
   UIImage *icon = [UIImage imageNamed:iconName];
   _iconImageView.image = icon;

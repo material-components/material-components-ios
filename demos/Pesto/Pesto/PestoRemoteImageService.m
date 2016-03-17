@@ -70,7 +70,7 @@
 }
 
 - (UIImage *)createThumbnailWithImage:(UIImage *)image {
-  CGFloat scaleFactor = 0.2f;
+  CGFloat scaleFactor = 0.4f;
   CGSize scaledSize = CGSizeMake(image.size.width * scaleFactor, image.size.height * scaleFactor);
   UIImage *thumbnailImage = [PestoRemoteImageService imageWithImage:image scaledToSize:scaledSize];
   return thumbnailImage;

@@ -8,7 +8,7 @@
 static CGFloat kPestoCollectionViewControllerAnimationDuration = 0.33f;
 static CGFloat kPestoCollectionViewControllerDefaultHeaderHeight = 240.f;
 static CGFloat kPestoCollectionViewControllerInset = 5.f;
-static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
+static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 
 @interface PestoCollectionViewController ()
 
@@ -51,10 +51,6 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
       }];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-}
-
 - (NSInteger)collectionView:(UICollectionView *)view
      numberOfItemsInSection:(NSInteger)section {
   return [self.pestoData.imageFileNames count];
@@ -66,10 +62,22 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                          duration:(NSTimeInterval)duration {
+  [self.collectionView.collectionViewLayout invalidateLayout];
+  [self centerHeader];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self.collectionView.collectionViewLayout invalidateLayout];
+  [self centerHeader];
+}
+
+- (void)centerHeader {
+  CGFloat width = [UIScreen mainScreen].bounds.size.width;
   CGRect headerFrame = _flexHeaderContainerVC.headerViewController.headerView.bounds;
-  _logoView.center = CGPointMake(headerFrame.size.width / 2.f,
+  _logoView.center = CGPointMake(width / 2.f,
                                  headerFrame.size.height / 2.f);
-  _logoSmallView.center = CGPointMake(headerFrame.size.width / 2.f,
+  _logoSmallView.center = CGPointMake(width / 2.f,
                                       headerFrame.size.height / 2.f);
 }
 
@@ -88,6 +96,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
   NSString *title = self.pestoData.titles[itemNum];
   NSString *author = self.pestoData.authors[itemNum];
   NSString *iconName = self.pestoData.iconNames[itemNum];
+  cell.descText = self.pestoData.descriptions[itemNum];
   [cell populateContentWithTitle:title author:author imageURL:imageURL iconName:iconName];
 
   return cell;
@@ -162,8 +171,8 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
   UIImage *image = [UIImage imageNamed:@"PestoLogoLarge"];
   _logoView = [[UIImageView alloc] initWithImage:image];
   _logoView.contentMode = UIViewContentModeScaleAspectFill;
-  _logoView.center = CGPointMake(pestoHeaderView.frame.size.width / 2,
-                                 pestoHeaderView.frame.size.height / 2);
+  _logoView.center = CGPointMake(pestoHeaderView.frame.size.width / 2.f,
+                                 pestoHeaderView.frame.size.height / 2.f);
   [pestoHeaderView addSubview:_logoView];
 
   UIImage *logoSmallImage = [UIImage imageNamed:@"PestoLogoSmall"];
@@ -177,15 +186,20 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 
 - (CGSize)cellSize {
   CGFloat margins = (2.f * kPestoCollectionViewControllerInset);
-  CGFloat cellDim = floor((self.view.frame.size.width - margins) / 2.f) - margins;
-  if (cellDim > 320) {
+  CGFloat cellDim = self.view.frame.size.width - margins * 2.f;
+  CGFloat maxCellWidth = 400.f;
+  if (cellDim > maxCellWidth && cellDim < maxCellWidth * 2.f) {
+    cellDim = floor((self.view.frame.size.width -
+                     (2.f * kPestoCollectionViewControllerInset)) /
+                    2.f) -
+              (2.f * kPestoCollectionViewControllerInset);
+  } else if (cellDim >= maxCellWidth * 2.f) {
     cellDim = floor((self.view.frame.size.width -
                      (3.f * kPestoCollectionViewControllerInset)) /
                     3.f) -
               (2.f * kPestoCollectionViewControllerInset);
   }
-  self.cellSize = CGSizeMake(cellDim, cellDim);
-  return CGSizeMake(cellDim, cellDim);
+  return CGSizeMake(cellDim, 300.f);
 }
 
 @end
