@@ -1,7 +1,6 @@
 #import "PestoCollectionViewController.h"
 #import "PestoCardCollectionViewCell.h"
 #import "PestoData.h"
-#import "PestoRemoteImageService.h"
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
@@ -17,7 +16,6 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 @property(nonatomic) UIView *logoSmallView;
 @property(nonatomic) UIView *logoView;
 @property(nonatomic) PestoData *pestoData;
-@property(nonatomic) PestoRemoteImageService *imageService;
 
 @end
 
@@ -30,7 +28,6 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
     [self.collectionView registerClass:[PestoCardCollectionViewCell class]
             forCellWithReuseIdentifier:@"PestoCardCollectionViewCell"];
     self.pestoData = [[PestoData alloc] init];
-    self.imageService = [PestoRemoteImageService sharedService];
     [self setNeedsStatusBarAppearanceUpdate];
   }
   return self;
@@ -88,33 +85,12 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
   NSString *imageURLString =
       [baseURL stringByAppendingString:self.pestoData.imageFileNames[itemNum]];
   NSURL *imageURL = [NSURL URLWithString:imageURLString];
-
-  cell.title = self.pestoData.titles[itemNum];
-  cell.author = self.pestoData.authors[itemNum];
-  cell.imageURL = imageURLString;
-  cell.icon = self.pestoData.iconNames[itemNum];
-  [self updateImageViewWithURL:imageURL cell:cell];
-  [cell setNeedsLayout];
+  NSString *title = self.pestoData.titles[itemNum];
+  NSString *author = self.pestoData.authors[itemNum];
+  NSString *iconName = self.pestoData.iconNames[itemNum];
+  [cell populateContentWithTitle:title author:author imageURL:imageURL iconName:iconName];
 
   return cell;
-}
-
-- (void)updateImageViewWithURL:(NSURL *)imageURL
-                          cell:(PestoCardCollectionViewCell *)cell {
-  [_imageService fetchImageDataFromURL:imageURL
-                            completion:^(NSData *imageData) {
-                              if (!imageData) {
-                                return;
-                              }
-                              dispatch_async(dispatch_get_main_queue(), ^{
-                                UIImage *image = [UIImage imageWithData:imageData];
-                                UIImage *thumbnailImage =
-                                    [_imageService.thumbnailCache objectForKey:imageURL];
-                                cell.image = image;
-                                cell.imageView.image = thumbnailImage;
-                                [cell setNeedsLayout];
-                              });
-                            }];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -200,8 +176,8 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 120.f;
 }
 
 - (CGSize)cellSize {
-  static const CGFloat margins = (2.f * kPestoCollectionViewControllerInset);
-  CGFloat cellDim = floor((self.view.frame.size.width - margins) / 2.f) - margins);
+  CGFloat margins = (2.f * kPestoCollectionViewControllerInset);
+  CGFloat cellDim = floor((self.view.frame.size.width - margins) / 2.f) - margins;
   if (cellDim > 320) {
     cellDim = floor((self.view.frame.size.width -
                      (3.f * kPestoCollectionViewControllerInset)) /

@@ -3,6 +3,11 @@
 ##### Breaking
 
 ##### Enhancements
+* [FlexibleHeader] Add tests for basic tracking scroll view contract.
+* Moved all example resources into a examples/resources/ directory by convention.
+* [FlexibleHeader] Add sizeThatFits contract tests.
+* Touching up the community.md doc.
+* Editing pass at community.md.
 
 ##### Bug Fixes
 

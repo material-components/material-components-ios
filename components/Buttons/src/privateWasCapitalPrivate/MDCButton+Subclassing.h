@@ -20,46 +20,32 @@
 
 @interface MDCButton (Subclassing)
 
-/**
- * Access to the ink view layer. Mainly used for subclasses to override ink properties.
- */
+/** Access to the ink view layer. Mainly used for subclasses to override ink properties. */
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 
-/**
- * Whether the background color should be opaque.
- */
+/** Whether the background color should be opaque. */
 - (BOOL)shouldHaveOpaqueBackground;
 
-/**
- * Updates the background color based on the button's current configuration.
- */
+/** Updates the background color based on the button's current configuration. */
 - (void)updateBackgroundColor;
 
 /**
- * Should the button raise when touched?
- *
- * Default is YES.
+ Should the button raise when touched?
+
+ Default is YES.
  */
 @property(nonatomic) BOOL shouldRaiseOnTouch;
 
-/**
- * The bounding path of the button. The shadow will follow that path.
- */
+/** The bounding path of the button. The shadow will follow that path. */
 - (nonnull UIBezierPath *)boundingPath;
 
-/**
- * The corner radius of the button. The shadow will follow that path.
- */
+/** The corner radius of the button. The shadow will follow that path. */
 - (CGFloat)cornerRadius;
 
-/**
- * The default content edge insets of the button. They are set at initialization time.
- */
+/** The default content edge insets of the button. They are set at initialization time. */
 - (UIEdgeInsets)defaultContentEdgeInsets;
 
-/**
- The default elevation for a particular button state (if not set by the calling code).
- */
+/** The default elevation for a particular button state (if not set by the calling code). */
 - (CGFloat)defaultElevationForState:(UIControlState)state;
 
 @end

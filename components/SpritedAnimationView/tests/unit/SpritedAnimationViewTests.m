@@ -18,7 +18,7 @@
 
 #import "MaterialSpritedAnimationView.h"
 
-static NSString *const kSpriteChecked = @"mdc_sprite_check__hide";
+static NSString *const kSpriteList = @"mdc_sprite_list__grid";
 static NSString *const kExpectationDescription = @"animatingWithCompletion";
 
 @interface SpritedAnimationViewTests : XCTestCase
@@ -37,7 +37,7 @@ static NSString *const kExpectationDescription = @"animatingWithCompletion";
 
 - (void)testAnimationCompletion {
   // Sprited animation view.
-  UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked];
+  UIImage *spriteImage = [UIImage imageNamed:kSpriteList];
   MDCSpritedAnimationView *animationView =
       [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
 
@@ -63,7 +63,7 @@ static NSString *const kExpectationDescription = @"animatingWithCompletion";
                            [self startMeasuring];
 
                            // Sprited animation view.
-                           UIImage *spriteImage = [UIImage imageNamed:kSpriteChecked];
+                           UIImage *spriteImage = [UIImage imageNamed:kSpriteList];
                            MDCSpritedAnimationView *animationView =
                                [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
 

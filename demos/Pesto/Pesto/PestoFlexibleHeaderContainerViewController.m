@@ -91,7 +91,6 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
                  cell.frame.origin.y - _collectionViewController.scrollOffsetY,
                  cell.frame.size.width,
                  cell.frame.size.height - 50.f);
-
   dispatch_async(dispatch_get_main_queue(), ^{
     [_zoomableView setImage:cell.image];
     [UIView animateWithDuration:kPestoFlexibleHeaderContainerViewControllerAnimationDuration
@@ -106,7 +105,6 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
           PestoDetailViewController *detailVC =
               [[PestoDetailViewController alloc] init];
           detailVC.image = cell.image;
-          detailVC.imageURL = cell.imageURL;
           detailVC.title = cell.title;
           [self presentViewController:detailVC
                              animated:NO

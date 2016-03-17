@@ -14,29 +14,34 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 @interface PestoRecipeCardView : UIView
 
 @property(nonatomic) NSString *title;
+@property(nonatomic) UILabel *titleLabel;
 
 @end
 
 @implementation PestoRecipeCardView
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonInit];
+  }
+  return self;
+}
 
+- (void)commonInit {
   UIView *contentView = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 24.f, 24.f)];
   contentView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:contentView];
 
-  UILabel *title = [[UILabel alloc] init];
-  title.text = _title;
-  title.font = [MDCTypography headlineFont];
-  [title sizeToFit];
+  _titleLabel = [[UILabel alloc] init];
+  _titleLabel.font = [MDCTypography headlineFont];
 
   CGRect textViewFrame = CGRectMake(0, 0, contentView.bounds.size.width, 100.f);
   UITextView *desc = [[UITextView alloc] initWithFrame:textViewFrame];
   desc.text = @"This beautiful sprouts receipe is the most glorious side dish on a cold winters\
- night. Construct it with bacon or fake-on, but always make sure the sprouts are deliciously\
- seasonsed and appropriately sautéed.";
+  night. Construct it with bacon or fake-on, but always make sure the sprouts are deliciously\
+  seasonsed and appropriately sautéed.";
   desc.font = [MDCTypography captionFont];
   desc.textColor = [UIColor colorWithWhite:[MDCTypography captionFontOpacity] alpha:1];
   desc.editable = NO;
@@ -72,7 +77,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   stackView.translatesAutoresizingMaskIntoConstraints = NO;
   [contentView addSubview:stackView];
 
-  [stackView addArrangedSubview:title];
+  [stackView addArrangedSubview:_titleLabel];
   [stackView addArrangedSubview:desc];
   [stackView addArrangedSubview:lineView];
   [stackView addArrangedSubview:ingredients];
@@ -84,6 +89,13 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   [stackView.bottomAnchor constraintEqualToAnchor:contentView.bottomAnchor].active = YES;
   [stackView.rightAnchor constraintEqualToAnchor:contentView.rightAnchor].active = YES;
   [stackView.widthAnchor constraintEqualToAnchor:contentView.widthAnchor].active = YES;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  _titleLabel.text = _title;
+  [_titleLabel sizeToFit];
 }
 
 @end

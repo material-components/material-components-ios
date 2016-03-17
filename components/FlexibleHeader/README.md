@@ -14,25 +14,37 @@ UIScrollViewDelegate events.
 To add the Flexible Header to your Xcode project using CocoaPods, add the following to your
 `Podfile`:
 
-    pod 'material-components-ios/FlexibleHeader'
+    pod 'MaterialComponents/FlexibleHeader'
 
 Then, run the following command:
 
     $ pod install
 
-## Design considerations
+## Software design considerations
 
-Most view controllers own their own header in a material app. These headers are flexible, provide
-navigation information and actions, and often display high quality photography that complements the
-underlying content. Flexible Header was designed with these expectations in mind.
+Classic UIKit applications use the UINavigationBar provided by a UINavigationController to display
+navigation stack-related information, such as a title, left and right bar button items, and
+optionally a custom title view. There is a singular UINavigationBar shared amongst all of the
+UINavigationController's children.
 
-This deviates from the typical UIKit convention of having a UINavigationController that owns and
-manages a single UINavigationBar. The benefits of this deviation are:
+The Flexible Header component deviates from this pattern: each UIViewController is expected to own
+its own Flexible Header view instance.
 
-- It is easier to build custom transitions from one view controller.
-- Questions such as "what happens whe the header is 50pt tall and we push a view controller wanting
-  a 20pt tall header?" are no longer part of the discussion. With UINavigationBar — or any shared
-  navigation bar for that matter — resolving this leads to difficult architectural trade offs.
+This has several technical advantages:
+
+- Allows transitions between two view controllers to own the navigation bar transition as well.
+- Each view controller is distinctly responsible for its customizations of the Flexible Header.
+
+It also has some technical disadvantages:
+
+- View controllers that do not use features of the Flexible Header will find it a burden to
+  implement the same scaffolding each time.
+
+### Easing the common case
+
+TODO(featherless): Discuss UINavigationControllerDelegate solution.
+TODO(featherless): Discuss subclassing solution.
+TODO(featherless): Discuss configurator API solution.
 
 ### What's inside
 
@@ -41,51 +53,32 @@ and lead from this to the "Integration" section.
 
 ## Integration
 
-TODO(featherless): Go over this section with an editing comb.
+### Step 1: Create an instance of a header view controller
 
-TODO(featherless): Discuss injection. Compare this to UITableViewController and how it federates
-access to UITableView.
-
-    @interface MyViewController () <MDCFlexibleHeaderParentViewController>
-
-This protocol defines a flexible header view property which you will need to synthesize.
-
-    @implementation MyViewController
-
-    @synthesize headerViewController;
-
-In order to populate the property, call the `addToParent:` method.
+    @implementation FlexibleHeaderTypicalUseViewController {
+      MDCFlexibleHeaderViewController *_fhvc;
+    }
 
     - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
       self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
       if (self) {
-        [MDCFlexibleHeaderViewController addToParent:self];
-        ...
+        _fhvc = [MDCFlexibleHeaderViewController new];
+        [self addChildViewController:_fhvc];
+      }
+      return self;
+    }
 
-Within your viewDidLoad you can now create and initialize any subviews that you'd like to add to
-your header view.
+### Step 2: Add the header view to your view controller's view
 
     - (void)viewDidLoad {
       [super viewDidLoad];
-      ...
 
-      // Create custom views here.
-      UIView *myCustomView = [UIView new];
-      myCustomView.frame = self.headerViewController.headerView.bounds;
-      myCustomView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
-                                       | UIViewAutoresizingFlexibleHeight);
-      [self.headerViewController.headerView addSubview:myCustomView];
-
-      [self.headerViewController addFlexibleHeaderViewToParentViewControllerView];
+      _fhvc.view.frame = self.view.bounds;
+      [self.view addSubview:_fhvc.view];
+      [_fhvc didMoveToParentViewController:self];
     }
 
-Note that any views added to the flexible header view should set their autoresizing masks to
-flexible width and height so that they expand/contract along with the header view.
-
-TODO(featherless): Include "manual" example of using the standard UIKit APIs to add the
-view/controller.
-
-### A note on subclasses
+#### A note on subclasses
 
 A subclass of your view controller may add additional views in their viewDidLoad, potentially
 resulting in the header being covered by the new views. It is the responsibility of the subclass to
@@ -93,7 +86,16 @@ take the z-index into account:
 
 [self.view insertSubview:myCustomView belowSubview:self.headerViewController.headerView];
 
-### Usage with UINavigationController**
+### Step 3: Forward relevant UIViewController APIs
+
+Setting childViewControllerForStatusBarHidden allows the Flexible Header to control the status bar
+visibility in reaction to scroll events.
+
+    - (UIViewController *)childViewControllerForStatusBarHidden {
+      return _fhvc;
+    }
+
+## Usage with UINavigationController**
 
 You may use an instance of UINavigationController to push and pop view controllers that are managing
 their own header view controller. UINavigationController does have its own navigation bar, so be

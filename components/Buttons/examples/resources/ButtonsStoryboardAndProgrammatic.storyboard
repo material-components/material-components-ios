@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rmZ-Mt-scB">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Buttons Storyboard And Programmatic Controller-->
+        <scene sceneID="4Dd-I6-MBs">
+            <objects>
+                <viewController id="rmZ-Mt-scB" customClass="ButtonsStoryboardAndProgrammaticController" customModule="MaterialComponentsCatalog" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dkA-v6-Opi"/>
+                        <viewControllerLayoutGuide type="bottom" id="QjK-x9-gr9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dz8-vM-Ak5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" customClass="MDCRaisedButton">
+                                <rect key="frame" x="407" y="28" width="173" height="30"/>
+                                <state key="normal" title="Storyboard">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="JuO-kL-5tW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDu-tK-SwC" customClass="MDCFloatingButton">
+                                <rect key="frame" x="478" y="104" width="30" height="30"/>
+                                <state key="normal" title="-">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="FTx-qa-X3A"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Dc-Q4-b6Z" customClass="MDCFlatButton">
+                                <rect key="frame" x="407" y="66" width="173" height="30"/>
+                                <state key="normal" title="Storyboard">
+                                    <color key="titleColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="D3j-iL-WdR"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="1Dc-Q4-b6Z" firstAttribute="top" secondItem="ixI-3k-a3r" secondAttribute="bottom" constant="22" id="BnU-WV-iZC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ixI-3k-a3r" secondAttribute="trailing" id="Gt7-Bm-l2M"/>
+                            <constraint firstItem="BDu-tK-SwC" firstAttribute="top" secondItem="1Dc-Q4-b6Z" secondAttribute="bottom" constant="22" id="JzA-Sk-491"/>
+                            <constraint firstItem="1Dc-Q4-b6Z" firstAttribute="centerX" secondItem="BDu-tK-SwC" secondAttribute="centerX" id="PhP-TV-oLS"/>
+                            <constraint firstItem="ixI-3k-a3r" firstAttribute="centerX" secondItem="1Dc-Q4-b6Z" secondAttribute="centerX" id="WwS-8J-IZN"/>
+                            <constraint firstItem="ixI-3k-a3r" firstAttribute="top" secondItem="dkA-v6-Opi" secondAttribute="bottom" constant="22" id="mIM-Ub-zl9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="storyboardFlat" destination="1Dc-Q4-b6Z" id="PPS-Ra-xp6"/>
+                        <outlet property="storyboardFloating" destination="BDu-tK-SwC" id="2oe-Ay-yiB"/>
+                        <outlet property="storyboardRaised" destination="ixI-3k-a3r" id="B6n-k5-xTo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LO5-z8-Ix6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="443" y="468"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,9 +1,11 @@
 PODS:
   - MaterialComponents (2.0.2):
+    - MaterialComponents/ButtonBar (= 2.0.2)
     - MaterialComponents/Buttons (= 2.0.2)
     - MaterialComponents/FlexibleHeader (= 2.0.2)
     - MaterialComponents/HeaderStackView (= 2.0.2)
     - MaterialComponents/Ink (= 2.0.2)
+    - MaterialComponents/NavigationBar (= 2.0.2)
     - MaterialComponents/PageControl (= 2.0.2)
     - MaterialComponents/private (= 2.0.2)
     - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.0.2)
@@ -13,6 +15,7 @@ PODS:
     - MaterialComponents/SpritedAnimationView (= 2.0.2)
     - MaterialComponents/Switch (= 2.0.2)
     - MaterialComponents/Typography (= 2.0.2)
+  - MaterialComponents/ButtonBar (2.0.2)
   - MaterialComponents/Buttons (2.0.2):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
@@ -21,6 +24,8 @@ PODS:
   - MaterialComponents/FlexibleHeader (2.0.2)
   - MaterialComponents/HeaderStackView (2.0.2)
   - MaterialComponents/Ink (2.0.2)
+  - MaterialComponents/NavigationBar (2.0.2):
+    - MaterialComponents/ButtonBar
   - MaterialComponents/PageControl (2.0.2)
   - MaterialComponents/private (2.0.2):
     - MaterialComponents/private/Color (= 2.0.2)
@@ -58,8 +63,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 9d854282d525f91e7419845561d1e37be627eb29
-  MaterialComponentsCatalog: 4f3484c5de7b62bc6795bb9c1d7c420c408eff47
+  MaterialComponents: ef448b6adbb65846d63b2422ec1e896d101b5110
+  MaterialComponentsCatalog: f1e77eed4380403b0019f0af79106f8b7d9023b4
   MaterialComponentsUnitTests: acb10bb4d58a1cf2d96a37d1ae95a0421b365806
 
 COCOAPODS: 0.39.0

@@ -68,6 +68,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   self = [super init];
   if (self) {
     _enabled = YES;
+    _snapshottingEnabled = YES;
   }
   return self;
 }
@@ -126,6 +127,14 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   // While disabled, can't leave the real status bar state.
   if (!_enabled && _snapshotState == MDCStatusBarShifterStateRealStatusBar) {
     return;
+  }
+
+  // If snapshotting is disabled, then can't go from real => snapshot, but must jump to invalid
+  // state.
+  if (!_snapshottingEnabled &&
+      _snapshotState == MDCStatusBarShifterStateRealStatusBar &&
+      snapshotState == MDCStatusBarShifterStateIsSnapshot) {
+    snapshotState = MDCStatusBarShifterStateInvalidSnapshot;
   }
 
   [_replicaInvalidatorTimer invalidate];

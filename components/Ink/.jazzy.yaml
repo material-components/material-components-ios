@@ -1,0 +1,4 @@
+module_name: Ink
+umbrella_header: src/MaterialInk.h
+objc_mode: true
+sdk: iphonesimulator

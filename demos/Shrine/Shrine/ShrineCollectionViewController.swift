@@ -36,29 +36,25 @@ class ShrineCollectionViewController: UICollectionViewController {
     let imageName = self.shrineData.imageNames[itemNum] as! String
     let urlString:String = ShrineData.baseURL + imageName
     let url = NSURL(string: urlString)
-    remoteImageService.fetchImageDataFromURL(url, completion: {(imageData:NSData!) in
-      if (imageData == nil) {
-        return;
-      }
+    remoteImageService.fetchImageAndThumbnailFromURL(url) { (image:UIImage!,
+      thumbnailImage:UIImage!) -> Void in
       dispatch_async(dispatch_get_main_queue(), {
-        let image = UIImage(data: imageData)
-        cell.imageView.image = image;
+        cell.imageView.image = thumbnailImage
         cell.imageView.setNeedsDisplay()
       })
-    })
+    }
+
     let avatarName = self.shrineData.avatars[itemNum] as! String
     let avatarURLString:String = ShrineData.baseURL + avatarName
     let avatarURL = NSURL(string: avatarURLString)
-    remoteImageService.fetchImageDataFromURL(avatarURL, completion: {(imageData:NSData!) in
-      if (imageData == nil) {
-        return;
-      }
+    remoteImageService.fetchImageAndThumbnailFromURL(avatarURL) { (image:UIImage!,
+      thumbnailImage:UIImage!) -> Void in
       dispatch_async(dispatch_get_main_queue(), {
-        let image = UIImage(data: imageData)
-        cell.avatar.image = image;
+        cell.avatar.image = image
         cell.avatar.setNeedsDisplay()
       })
-    })
+    }
+
     return cell
   }
 

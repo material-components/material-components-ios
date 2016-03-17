@@ -1,7 +1,21 @@
 {
-  "load": ["clang-format-linter"],
+  "load": [
+    "clang-format-linter",
+    "arc-xcode-test-engine"
+  ],
   "phabricator.uri" : "http://codereview.cc/",
   "repository.callsign" : "MDC",
   "arc.land.onto.default" : "develop",
-  "git.default-relative-commit" : "origin/develop"
+  "git.default-relative-commit" : "origin/develop",
+  "unit.xcode": {
+    "build": {
+      "workspace": "catalog/MDCCatalog.xcworkspace",
+      "scheme": "MDCUnitTests",
+      "configuration": "Debug",
+      "destination": "platform=iOS Simulator,name=iPhone 6S"
+    },
+    "coverage": {
+      "product": "MaterialComponents.framework/MaterialComponents"
+    }
+  }
 }
