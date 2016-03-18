@@ -21,7 +21,7 @@ class ShrineDetailView: UIScrollView {
     imageView.frame = CGRectMake(labelPadding, labelPadding,
       self.frame.size.width - 2 * labelPadding, 220)
     imageView.contentMode = UIViewContentMode.ScaleAspectFit
-    imageView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
+    imageView.autoresizingMask = .FlexibleHeight
     self.addSubview(imageView)
     let urlString:String = ShrineData.baseURL + imageName
     let url = NSURL(string: urlString)
