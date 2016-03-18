@@ -41,7 +41,9 @@ cp "$ROOT_DIR"/site-index.md "$ROOT_DIR"/site-source/jekyll-site-src/index.md
 cp "$ROOT_DIR"/components/README.md "$ROOT_DIR"/site-source/jekyll-site-src/components/index.md
 for directory in "$ROOT_DIR"/components/*/README.md; do
 	folder=$(dirname $directory)
-  component="$(echo $(basename $folder) | tr '[A-Z]' '[a-z]')"
+  #no longer using lowercase directory
+  #component="$(echo $(basename $folder) | tr '[A-Z]' '[a-z]')"
+  component=$(basename $folder)
   echo "Copy docs for $component..."
   cd "$folder"
   [ -d "$ROOT_DIR"/site-source/jekyll-site-src/components/"$component" ] ||
@@ -67,11 +69,12 @@ mv "$ROOT_DIR"/site-source/jekyll-site-src/howto/README.md "$ROOT_DIR"/site-sour
 # UNCOMMENT LIQUID TAGS FROM MARKDOWN
 #grep -rl '<!--{.*}-->' ./ | xargs sed -i '' 's/<!--{\(.*\)}-->/{\1}/g'
 GREP_LIQUID_TAGS="grep -rl --include='*\.md' '<!--[{<].*[>}]-->'"
-SED_LIQUID_TAGS="sed -i '' 's/<!--\([{<]\)\([^>]*\)\([>}]\)-->/\1\2\3/g'"
-eval "$SED_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/index.md"
-eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/howto | xargs $SED_LIQUID_TAGS"
-eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/community | xargs $SED_LIQUID_TAGS"
-eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/components | xargs $SED_LIQUID_TAGS"
+#SED_LIQUID_TAGS="sed -i '' 's/<!--\([{<]\)\([^>]*\)\([>}]\)-->/\1\2\3/g'"
+PERLSUB_LIQUID_TAGS="perl -pi -e 's/<!--([{<])(.*?)([>}])-->/\1\2\3/g'"
+eval "$PERLSUB_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/index.md"
+eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/howto | xargs $PERLSUB_LIQUID_TAGS"
+eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/community | xargs $PERLSUB_LIQUID_TAGS"
+eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/components | xargs $PERLSUB_LIQUID_TAGS"
 
 # Do Jekyll build
 cd "$ROOT_DIR"/site-source/jekyll-site-src

@@ -50,37 +50,37 @@ components:
     url: /components/#components
     class: toplevel
   - name: Typography
-    url: /components/typography/
+    url: /components/Typography/
     markdown: Typography/README.md
   - name: Ink
-    url: /components/ink/
+    url: /components/Ink/
     markdown: Ink/README.md
   - name: ShadowLayer
-    url: /components/shadowlayer/
+    url: /components/ShadowLayer/
     markdown: ShadowLayer/README.md
   - name: PageControl
-    url: /components/pagecontrol/
+    url: /components/PageControl/
     markdown: PageControl/README.md
   - name: ScrollViewDelegateMultiplexer
-    url: /components/scrollviewdelegatemultiplexer/
+    url: /components/ScrollViewDelegateMultiplexer/
     markdown: ScrollViewDelegateMultiplexer/README.md
   - name: SpritedAnimationView
-    url: /components/spritedanimationview/
+    url: /components/SpritedAnimationView/
     markdown: SpritedAnimationView/README.md
   - name: Switch
-    url: /components/switch/
+    url: /components/Switch/
     markdown: Switch/README.md
   - name: Slider
-    url: /components/slider/
+    url: /components/Slider/
     markdown: Slider/README.md
   - name: ShadowElevations
-    url: /components/shadowelevations/
+    url: /components/ShadowelEvations/
     markdown: ShadowElevations/README.md
   - name: Buttons
-    url: /components/buttons/
+    url: /components/Buttons/
     markdown: Buttons/README.md
   - name: FlexibleHeader
-    url: /components/flexibleheader/
+    url: /components/FlexibleHeader/
     markdown: FlexibleHeader/README.md
   - name: API Docs
     url: /components/#apidocs
