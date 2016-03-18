@@ -3,13 +3,70 @@
 ##### Breaking
 
 ##### Enhancements
-* [FlexibleHeader] Add tests for basic tracking scroll view contract.
-* Moved all example resources into a examples/resources/ directory by convention.
-* [FlexibleHeader] Add sizeThatFits contract tests.
-* Touching up the community.md doc.
-* Editing pass at community.md.
 
 ##### Bug Fixes
+
+## 2.1.0
+
+##### Enhancements
+
+* [AppBar] Introducing the App Bar component. (Jeff Verkoeyen)
+* [Arcanist] Adds scripts/install_arc.sh, which installs or updates arc and our project-specific dependencies. (Adrian Secord)
+* [Arcanist] Updated Arcanist config to use submodules. (Adrian Secord)
+* [ButtonBar] Add ButtonBar component. (Jeff Verkoeyen)
+* [ButtonBar] Add ButtonBar readme. (Jeff Verkoeyen)
+* [Buttons] Add Flatbutton commonInit (Ian Gordon)
+* [Buttons] Add storyboard sample (Ian Gordon)
+* [Buttons] Clean up API documentation style. (Jeff Verkoeyen)
+* [Catalog] Adds localizable strings to catalog. Allows changing language in scheme for debugging. Closes #166. (Chris Cox)
+* [Catalog] Moving assets into catalog by convention. (Jeff Verkoeyen)
+* [CocoaPods] Allow pod install to be run from anywhere for the catalog. (Jeff Verkoeyen)
+* [CocoaPods] Standardizing the podspec format. (Jeff Verkoeyen)
+* [CocoaPods] Variables for podspec. (Jeff Verkoeyen)
+* [Examples] Moved all example resources into a examples/resources/ directory by convention. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [FlexibleHeader] Add headerIsTranslucent API. (Jeff Verkoeyen)
+* [FlexibleHeader] Add sizeThatFits contract tests. (Jeff Verkoeyen)
+* [FlexibleHeader] Prefer use of childViewControllerForStatusBarHidden. (Jeff Verkoeyen)
+* [FlexibleHeader] Add tests for basic tracking scroll view contract. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [HeaderStackView] Add HeaderStackView README. (Jeff Verkoeyen)
+* [NavigationBar] Add NavigationBar component. (Jeff Verkoeyen)
+* [Pesto] Update layout after design review with UX, fix rotation issues (Junius Gunaratne)
+* [Pesto] Update network image request methods, improve collection view cell layout (Junius Gunaratne)
+* [Scripts] Add generate_jazzy_yamls script. (Jeff Verkoeyen)
+* [Scripts] Added 'bump version' script and updated pod_install_all. (Adrian Secord)
+* [Shrine] Layout updates after UX design review, make sure rotation works correctly (Junius Gunaratne)
+* [Shrine] Use improved network image class from Pesto (Junius Gunaratne)
+* [Testing] Add support for xcode unit tests to arc unit. (Jeff Verkoeyen)
+
+##### Bug Fixes
+
+* [AppBar] Minor changes to MDCAppBar documentation. (Jeff Verkoeyen)
+* [Buttons] Adjust the title insets of text buttons, not the frame. (Jeff Verkoeyen)
+* [Buttons] Fix uppercasing (Ian Gordon)
+* [Buttons] Fixes a bug with contentEdgeInsets for MDCFloatingButtonShapeMini. (Matt Rubin)
+* [Catalog] Remove the root catalog workspace. (Jeff Verkoeyen)
+* [CocoaPods] Minor fixes to Podspec for ButtonBar and Switch. (Jeff Verkoeyen)
+* [CocoaPods] Ran pod install on all Podfiles (randallli)
+* [CocoaPods] Update Podfile.lock (Ian Gordon)
+* [FlexibleHeader] Cleaning up the README.md. (Jeff Verkoeyen)
+* [FlexibleHeader] Minor wording consistency in FlexibleHeader readme. (Jeff Verkoeyen)
+* [HeaderStackView] Generated missing HeaderStackView .jazzy.yaml. (Jeff Verkoeyen)
+* [Ink] Fix animation, split foreground and background ripple into independent classes (Junius Gunaratne)
+* [Ink] Set evaporate point so ink expands from correct point on gesture cancel (Junius Gunaratne)
+* [Other] Remove the project templates directory. (Jeff Verkoeyen)
+* [PageController] Fix FP conversion warning (Ian Gordon)
+* [Site] Add landing page placeholder markdown files & update build-site.sh (Yiran Mao)
+* [Site] Continued work on markdown doc formatting. (Jason Striegel)
+* [Site] Editing pass at community.md. (Jeff Verkoeyen)
+* [Site] Fixed section regarding our license. (Jeff Verkoeyen)
+* [Site] Formatting for icon list markdown. (Jason Striegel)
+* [Site] Initial import of site build structure. (Jason Striegel)
+* [Site] Preliminary additions of the components checklist. (Jeff Verkoeyen)
+* [Site] Update community.md (Katy Kasmai)
+* [Site] Updates to the community.md doc. [Jeff Verkoeyen](https://github.com/jverkoey)
+* [SpritedAnimationView] Replaces example checkmark icon with grid/list icon. Closes #151. (Chris Cox)
+* [SpritedAnimationView] Updates readme image assets to new URL (Chris Cox)
+* [SpritedAnimationView] Updates readme, test, and example with grid/list icon. (Chris Cox)
 
 ## 2.0.4
 
