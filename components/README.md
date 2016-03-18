@@ -36,21 +36,41 @@ TODO: Choose links below.
 
 ## Components
 
-[Typography](Typography/)
-<!--{: .icon-link }-->
+- [**Typography**
+  Text styles for Material Design fonts and opacities.
+  ](typography/)
 
-Methods for displaying text in [material styles](https://www.google.com/design/spec/style/typography.html), focusing on fonts and their opacity.
+- [**Ink**
+  A visual ripple of ink expanding outward from the user’s touch.
+  ](ink/)
 
+- [**ShadowLayer**
+  A shadow which uses Material Design principles for visualizing depth.
+  ](shadowlayer/)
 
-[Ink](/Ink/)
-<!--{: .icon-link }-->
+- [**PageControl**
+  A drop-in Material Design replacement for UIPageControl.
+  ](pagecontrol/)
 
-Provides a [radial action](https://www.google.com/design/spec/animation/responsive-interaction.html#responsive-interaction-material-response) in the form of a visual ripple of ink expanding outward from the user’s touch.
+- [**SpritedAnimationView**
+  An alternative to animating an array of images with an UIImageView.
+  ](spritedanimationview/)
 
+- [**Switch**
+  A Material Design on/off switch with an interface similar to UISwitch.
+  ](switch/)
 
-[Shadow](/Shadow/)
-<!--{: .icon-link }-->
+- [**Slider**
+  A Material Design control for selecting from a range of values.
+  ](slider/)
 
-A Material Design [shadow](https://www.google.com/design/spec/what-is-material/elevation-shadows.html#elevation-shadows-shadows) that applies design principles relating to height and light sources to a shadow’s projected depth.
+- [**Buttons**
+  Material Design buttons, including a flat button, a raised button and a floating action button.
+  ](buttons/)
+
+- [**FlexibleHeader**
+  A container view whose height and vertical offset react to UIScrollViewDelegate events.
+  ](flexibleheader/)
+<!--{: .icon-list .large-format }-->
 
 
