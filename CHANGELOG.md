@@ -3,7 +3,15 @@
 ##### Breaking
 
 ##### Enhancements
- * Renamed the privateWasCapitalPrivate folders to private.
+
+##### Bug Fixes
+
+## 2.0.4
+
+##### Breaking
+
+##### Enhancements
+ * Fixed the reference to the private folder of Typography in podspec.
 
 ##### Bug Fixes
 
@@ -12,6 +20,7 @@
 ##### Breaking
 
 ##### Enhancements
+ * Renamed the privateWasCapitalPrivate folders to private.
 
 ##### Bug Fixes
 

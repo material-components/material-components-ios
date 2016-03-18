@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "2.0.3"
+  s.version      = "2.0.4"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
@@ -118,7 +118,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Typography' do |ss|
     ss.public_header_files = 'components/Typography/src/*.h'
-    ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/Private/*.{h,m}'
+    ss.source_files = 'components/Typography/src/*.{h,m}', 'components/Typography/src/private/*.{h,m}'
     ss.header_mappings_dir = 'components/Typography/src/*'
     ss.framework = 'CoreText'
 
