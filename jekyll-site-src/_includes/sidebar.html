@@ -1,12 +1,23 @@
+{% case page.categories %}
+{% when 'components' %}
+  {% assign navdata = site.data.navigation.components %}
+{% when 'howto' %}
+  {% assign navdata = site.data.navigation.howto %}
+{% when 'community' %}
+  {% assign navdata = site.data.navigation.community %}
+{% endcase %}
 <nav id="sidenav">
   <ul>
-	  {% case page.categories %}
-	  {% when 'components' %}
-	  	{% include nav_components.html %}
-	  {% when 'howto' %}
-	  	{% include nav_howto.html %}
-		{% when 'community' %}
-			{% include nav_community.html %}
-		{% endcase %}
+    {% for item in navdata %}
+      {% assign lcpage = page.url | downcase %}
+      {% assign lcitem = item.url | downcase %}
+      {% assign activepage = "" %}
+      {% if lcpage == lcitem %}
+        {% assign activepage = "active" %}
+      {% endif %}
+    <li class="{{ item.class }} {{ activepage }}">
+      <a href="{{ site.basepath | prepend: site.github.url }}{{ item.url }}">{{ item.name }}</a>
+    </li>
+    {% endfor %}
   </ul>
 </nav>

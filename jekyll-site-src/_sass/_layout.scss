@@ -200,10 +200,13 @@ body {
   margin-right: 48px;
   overflow-x: hidden;
 
+  @include collapsed_header {
+    padding-top: 112px;
+  }
 
   section {
     position: relative;
-    margin-top: 72px;
+    padding-top: 64px;
     max-width: 832px;
     margin-left: auto;
     margin-right: auto;
@@ -223,7 +226,7 @@ body {
         height: 0;
         line-height: 0;
         margin-top: -100px;
-        padding-top: 64px;
+        padding-top: 100px;
       }
     }
 
@@ -237,9 +240,6 @@ body {
       margin-right: 24px;
     }
 
-    @include collapsed_header {
-      margin-top: 96px;
-    }
 
   }
 

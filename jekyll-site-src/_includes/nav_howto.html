@@ -1,7 +1,0 @@
-{% for item in site.data.navigation.howto %}
-<li class="{{ item.class }}">
-  <a href="{{ site.basepath | prepend: site.github.url }}/{{ item.url }}">
-    <img class="sidebar-icon" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="30" height="30">{{ item.name }}
-  </a>
-</li>
-{% endfor %}

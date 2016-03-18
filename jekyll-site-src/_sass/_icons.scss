@@ -41,24 +41,45 @@ ul.icon-list {
   margin-top: 32px;
   list-style-type: none;
   padding-left: 0;
-}
+  line-height: 0;
+  font-size: 0;
 
-ul.icon-list>li {
-  display: inline-block;
-  vertical-align: baseline;
-  min-width: 280px;
-  width: 45%;
-  padding-right: 24px;
-  height: 56px;
-  margin: 0;
-
-  &>p {
-    position: relative;
-    line-height: 24px;
-    background: transparent;
+  &.large-format > li {
+    height: auto;
+    padding-bottom: 24px;
 
     a {
-      display: inline-block;
+      &::before {
+        top: 20px;
+      }
+    }
+  }
+
+  & > li {
+    display: inline-block;
+    vertical-align: top;
+    max-width: 400px;
+    width: 50%;
+    height: 56px;
+    margin: 0;
+    line-height: 24px;
+
+
+    // Sometimes these are wrapped in a p, sometimes not.
+    // We're using the anchor as the block container of truth.
+    & > p {
+      margin: 0;
+      padding: 0;
+      line-height: inherit;
+    }
+
+
+
+    a {
+      padding-right: 48px;
+      position: relative;
+      background: transparent;
+      display: block;
       position: relative;
       padding-left: 54px;
       font-weight: 500;
@@ -67,92 +88,65 @@ ul.icon-list>li {
       &:hover {
         color: $anchor-color;
       }
+
+      // convention is to use strong to separate link title in
+      // icon links containing descriptive copy
+      strong {
+        display: block;
+        color: inherit;
+        font-weight: 600;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        left: 0px;
+        top: -4px;
+        border: 1px solid rgb(0,0,0);
+        border-radius: 50%;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-size: 20px 20px;
+        background-position: center;
+        opacity: 0.54;
+        @include transform(translate3d(0,0,0));
+      }
     }
 
-    &::before {
-      content: '';
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      left: 0px;
-      top: -4px;
-      border: 1px solid rgb(0,0,0);
-      border-radius: 50%;
-      background-color: transparent;
-      background-repeat: no-repeat;
-      background-size: 20px 20px;
-      background-position: center;
-      opacity: 0.54;
-      @include transform(translate3d(0,0,0));
+    @include mobile {
+      width: 100%;
+      // &>p {
+      //   padding-left: 0px;
+      //   line-height: 20px;
+      //   &::before {
+      //     display: none;
+      //   }
+      // }
     }
-    &.icon-guide:before {
+
+
+    .icon-guide a::before {
       background-image: url('/images/icon-guide.svg');
     }
-    &.icon-api:before {
+    .icon-api a::before {
       background-image: url('/images/icon-api.svg');
     }
-    &.icon-sample:before {
+    .icon-sample a::before {
       background-image: url('/images/icon-sample.svg');
     }
+
   }
-  @include mobile {
-    width: 100%;
-    // &>p {
-    //   padding-left: 0px;
-    //   line-height: 20px;
-    //   &::before {
-    //     display: none;
-    //   }
-    // }
-  }
+}
+
+ul.icon-list>li {
 }
 ul.icon-list:after {
   content:'';
   display: block;
   clear: both;
 }
-
-// icon-link works like the list format, but can be attached to a single link item.
-p.icon-link {
-  position: relative;
-  line-height: 24px;
-  margin: 64px 0 28px 0;
-
-  &::before {
-    content: '';
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    left: 0px;
-    top: -4px;
-    border: 1px solid rgb(0,0,0);
-    border-radius: 50%;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: center;
-    opacity: 0.54;
-    @include transform(translate3d(0,0,0));
-  }
-
-  a {
-    color: $text-color;
-    padding-left: 54px;
-    display: inline-block;
-    position: relative;
-    font-weight: 500;
-
-    &:hover {
-      color: $anchor-color;
-    }
-  }
-  a:hover {
-    color: $anchor-color;
-  }
-}
-
-
-
 
 
 
