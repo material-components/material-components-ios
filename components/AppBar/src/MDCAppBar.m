@@ -28,6 +28,9 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
+static NSString *const kBundleName = @"MaterialAppBar";
+static NSString *const kBackIconName = @"arrow_back";
+
 static NSString *const kBarStackKey = @"barStack";
 static NSString *const kStatusBarHeightKey = @"statusBarHeight";
 static const CGFloat kStatusBarHeight = 20;
@@ -98,12 +101,29 @@ static const CGFloat kStatusBarHeight = 20;
   }
   UIBarButtonItem *backBarButtonItem = previousViewControler.navigationItem.backBarButtonItem;
   if (!backBarButtonItem) {
-    backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+    NSBundle *baseBundle = [[self class] baseBundle];
+    NSString *bundlePath = [baseBundle pathForResource:kBundleName ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString *path = [bundle pathForResource:kBackIconName ofType:@"png"];
+    UIImage *backButtonImage = [UIImage imageWithContentsOfFile:path];
+    backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
                                                          style:UIBarButtonItemStyleDone
                                                         target:self
                                                         action:@selector(didTapBackButton:)];
   }
   return backBarButtonItem;
+}
+
++ (NSBundle *)baseBundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    // We may not be included by the main bundle, but rather by an embedded framework, so figure out
+    // to which bundle our code is compiled, and use that as the starting point for bundle loading.
+    bundle = [NSBundle bundleForClass:[self class]];
+  });
+
+  return bundle;
 }
 
 - (void)viewDidLoad {
