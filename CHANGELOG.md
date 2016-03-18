@@ -11,6 +11,15 @@
 
 ##### Bug Fixes
 
+## 2.0.4
+
+##### Breaking
+
+##### Enhancements
+ * Fixed the reference to the private folder of Typography in podspec.
+
+##### Bug Fixes
+
 ## 2.0.3
 
 ##### Breaking
