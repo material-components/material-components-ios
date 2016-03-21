@@ -5,6 +5,7 @@
 
 static CGFloat kPestoDetailAnimationDelay = 0.1f;
 static CGFloat kPestoDetailAnimationDuration = 0.33f;
+static CGFloat kPestoDetailBottomSheetBackgroundHeight = 320.f;
 static CGFloat kPestoDetailBottomSheetHeightPortrait = 380.f;
 static CGFloat kPestoDetailBottomSheetHeightLandscape = 300.f;
 static NSString *const kPestoDetailBackMenu = @"mdc_sprite_menu__arrow_back";
@@ -36,20 +37,30 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
   mainView.backgroundColor = [UIColor clearColor];
   [self.view addSubview:mainView];
 
-  _imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+  CGRect imageViewFrame = CGRectMake(0,
+                                     0,
+                                     self.view.frame.size.width,
+                                     kPestoDetailBottomSheetBackgroundHeight);
+  _imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
   _imageView.contentMode = UIViewContentModeScaleAspectFill;
   _imageView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   [self.view addSubview:_imageView];
 
-  CGRect bottomFrame = CGRectMake(0,
-                                  self.view.frame.size.height,
-                                  self.view.frame.size.width,
-                                  self.bottomSheetHeight);
+  CGRect bottomFrame =
+      CGRectMake(0,
+                 kPestoDetailBottomSheetBackgroundHeight,
+                 self.view.frame.size.width,
+                 self.view.frame.size.height - kPestoDetailBottomSheetBackgroundHeight);
+  UIView *bottomViewBackground = [[UIView alloc] initWithFrame:bottomFrame];
+  bottomViewBackground.backgroundColor = [UIColor whiteColor];
+  [self.view addSubview:bottomViewBackground];
+  _bottomView.frame = bottomFrame;
   _bottomView = [[PestoRecipeCardView alloc] initWithFrame:bottomFrame];
   _bottomView.title = self.title;
   _bottomView.iconImageName = self.iconImageName;
   _bottomView.descText = self.descText;
+  _bottomView.alpha = 0;
   [self.view addSubview:_bottomView];
 
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -59,12 +70,7 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
         animations:^{
           CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
           [CATransaction setAnimationTimingFunction:quantumEaseInOut];
-          CGRect bottomFrameEnd =
-              CGRectMake(0,
-                         self.view.frame.size.height - self.bottomSheetHeight,
-                         self.view.frame.size.width,
-                         self.bottomSheetHeight);
-          _bottomView.frame = bottomFrameEnd;
+          _bottomView.alpha = 1;
         }
         completion:^(BOOL finished){
         }];
