@@ -42,6 +42,7 @@ Pod::Spec.new do |s|
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
 
     # Navigation bar contents
+    ss.dependency "MaterialComponents/Buttons"
     ss.dependency "MaterialComponents/HeaderStackView"
     ss.dependency "MaterialComponents/NavigationBar"
     ss.dependency "MaterialComponents/Typography"
