@@ -10,6 +10,7 @@
 * Editing pass at community.md.
 
 ##### Bug Fixes
+ * Added 'nonatomic' attribute to <PestoCollectionViewControllerDelegate> @property 'delegate' in PestoCollectionViewController.h.
 
 ## 2.0.4
 
