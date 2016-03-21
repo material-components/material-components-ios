@@ -63,9 +63,9 @@ _This code of conduct was adapted from the following sources:_
 ## Questions?
 If you have questions about how to use Material Components iOS, please direct these to
 
-1. Our [Google Group mailing list](https://groups.google.com/forum/#!forum/material-components-ios-discuss),
-2. The [materialcomponentsios tag on StackOverflow](http://stackoverflow.com/questions/tagged/materialcomponentsios), or
-3. Our [Slack discussion channel](http://googleoss.slack.com).
+- Our [Google Group mailing list](https://groups.google.com/forum/#!forum/material-components-ios-discuss),
+- The [materialcomponentsios tag on StackOverflow](http://stackoverflow.com/questions/tagged/materialcomponentsios), or
+- Our [Slack discussion channel](http://googleoss.slack.com).
 
 ## Found an Issue?
 If you find a bug in the source code or a mistake in the documentation, you can help us by [submitting an issue](https://github.com/google/material-components-ios/issues) to our GitHub repository. Even better: submit a fix as a pull request!
