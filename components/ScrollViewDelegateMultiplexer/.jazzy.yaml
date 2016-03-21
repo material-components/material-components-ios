@@ -1,0 +1,4 @@
+module_name: ScrollViewDelegateMultiplexer
+umbrella_header: src/MaterialScrollViewDelegateMultiplexer.h
+objc_mode: true
+sdk: iphonesimulator

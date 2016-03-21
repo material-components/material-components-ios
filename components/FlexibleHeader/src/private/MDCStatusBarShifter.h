@@ -36,6 +36,8 @@
  */
 - (void)setOffset:(CGFloat)offset;
 
+#pragma mark Configuring behavior
+
 /**
  * Whether or not the status bar shifter is enabled.
  *
@@ -43,6 +45,14 @@
  * will move the status bar to a reasonable location.
  */
 @property(nonatomic, getter=isEnabled) BOOL enabled;
+
+/**
+ * A Boolean value indicating whether this class should use snapshotting when rendering the status
+ * bar shift.
+ *
+ * Defaults to YES.
+ */
+@property(nonatomic, getter=isSnapshottingEnabled) BOOL snapshottingEnabled;
 
 #pragma mark Responding to state changes
 

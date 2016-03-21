@@ -41,11 +41,11 @@ separate sprite sheets. One showing an animation from state A to state B, then a
 showing state B going back to state A. This way, the sprite sheet can be swapped out after the
 animation completes for each state, and be replaced with the other sprite image.
 
-#### Two sample sprite sheets (showing Hide and Show states)
+#### Two sample sprite sheets (showing List and Grid icon states)
 
-| Checkmark Sprite Sheet (Hide) | Checkmark Sprite Sheet (Show) |
+| List Sprite Sheet | Grid Sprite Sheet |
 | :---------------------------: | :---------------------------: |
-| ![Checkmark Hide](examples/SpritedAnimationViewExample/Assets.xcassets/mdc_sprite_check__hide.imageset/mdc_sprite_check__hide.png) | ![Checkmark Show](examples/SpritedAnimationViewExample/Assets.xcassets/mdc_sprite_check__show.imageset/mdc_sprite_check__show.png) |
+| ![List Icon](examples/resources/SpritedAnimationView.xcassets/mdc_sprite_list__grid.imageset/mdc_sprite_list__grid.png) | ![Grid Icon](examples/resources/SpritedAnimationView.xcassets/mdc_sprite_grid__list.imageset/mdc_sprite_grid__list.png) |
 
 #### Two-state example
 
@@ -54,9 +54,9 @@ animation completes for each state, and be replaced with the other sprite image.
 [_animationView startAnimatingWithCompletion:^{
 
   // When animation completes, toggle image.
-  _checked = !_checked;
+  _toggle = !_toggle;
   UIImage *spriteImage =
-      [UIImage imageNamed:_checked ? kSpriteCheckedImage : kSpriteUncheckedImage];
+      [UIImage imageNamed:_toggle ? kSpriteGridImage : kSpriteListImage];
   _animationView.spriteSheetImage = spriteImage;
 }];
 ```

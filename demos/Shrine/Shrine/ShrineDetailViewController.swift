@@ -21,20 +21,17 @@ class ShrineDetailView: UIScrollView {
     imageView.frame = CGRectMake(labelPadding, labelPadding,
       self.frame.size.width - 2 * labelPadding, 220)
     imageView.contentMode = UIViewContentMode.ScaleAspectFit
-    imageView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
+    imageView.autoresizingMask = .FlexibleHeight
     self.addSubview(imageView)
     let urlString:String = ShrineData.baseURL + imageName
     let url = NSURL(string: urlString)
-    remoteImageService.fetchImageDataFromURL(url, completion: {(imageData:NSData!) in
-      if (imageData == nil) {
-        return;
-      }
+    remoteImageService.fetchImageAndThumbnailFromURL(url) { (image:UIImage!,
+      thumbnailImage:UIImage!) -> Void in
       dispatch_async(dispatch_get_main_queue(), {
-        let image = UIImage(data: imageData)
-        self.imageView.image = image;
+        self.imageView.image = image
         self.imageView.setNeedsDisplay()
       })
-    })
+    }
 
     label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
     label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)

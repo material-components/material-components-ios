@@ -1026,6 +1026,14 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   }
 }
 
+- (void)setContentIsTranslucent:(BOOL)contentIsTranslucent {
+  _contentIsTranslucent = contentIsTranslucent;
+
+  // Translucent content means that the status bar shifter should not use snapshotting. Otherwise,
+  // stale visual content under the status bar region may be snapshotted.
+  _statusBarShifter.snapshottingEnabled = !contentIsTranslucent;
+}
+
 @end
 
 @implementation MDCFlexibleHeaderScrollViewInfo

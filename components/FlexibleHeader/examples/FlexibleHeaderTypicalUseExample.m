@@ -70,10 +70,8 @@
   [self.navigationController popViewControllerAnimated:YES];
 }
 
-// We must propagate the header's prefersStatusBarHidden value up so that the status bar's
-// visibility can be affected.
-- (BOOL)prefersStatusBarHidden {
-  return [_fhvc prefersStatusBarHidden];
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return _fhvc;
 }
 
 #pragma mark - UITableViewDataSource

@@ -3,10 +3,11 @@
 #import "PestoDetailViewController.h"
 #import "PestoSettingsViewController.h"
 #import "PestoSideView.h"
+
 #import "MaterialSpritedAnimationView.h"
 
-static CGFloat kPestoFlexibleHeaderContainerViewControllerAnimationDuration = 0.33f;
-static CGFloat kPestoViewControllerInset = 5.f;
+static CGFloat kPestoAnimationDuration = 0.33f;
+static CGFloat kPestoInset = 5.f;
 static NSString *const kPestoDetailViewControllerBackMenu = @"mdc_sprite_menu__arrow_back";
 static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_back__menu";
 
@@ -24,7 +25,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 - (instancetype)init {
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 0;
-  CGFloat sectionInset = kPestoViewControllerInset * 2.f;
+  CGFloat sectionInset = kPestoInset * 2.f;
   [layout setSectionInset:UIEdgeInsetsMake(sectionInset,
                                            sectionInset,
                                            sectionInset,
@@ -46,7 +47,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 
   UIImage *spriteImage = [UIImage imageNamed:kPestoDetailViewControllerBackMenu];
   MDCSpritedAnimationView *animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
-  animationView.frame = CGRectMake(16.f, 16.f, 24.f, 24.f);
+  animationView.frame = CGRectMake(20.f, 20.f, 24.f, 24.f);
   animationView.tintColor = [UIColor whiteColor];
   [self.view addSubview:animationView];
 
@@ -91,10 +92,9 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
                  cell.frame.origin.y - _collectionViewController.scrollOffsetY,
                  cell.frame.size.width,
                  cell.frame.size.height - 50.f);
-
   dispatch_async(dispatch_get_main_queue(), ^{
     [_zoomableView setImage:cell.image];
-    [UIView animateWithDuration:kPestoFlexibleHeaderContainerViewControllerAnimationDuration
+    [UIView animateWithDuration:kPestoAnimationDuration
         delay:0
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
@@ -106,8 +106,9 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
           PestoDetailViewController *detailVC =
               [[PestoDetailViewController alloc] init];
           detailVC.image = cell.image;
-          detailVC.imageURL = cell.imageURL;
           detailVC.title = cell.title;
+          detailVC.iconImageName = cell.iconImageName;
+          detailVC.descText = cell.descText;
           [self presentViewController:detailVC
                              animated:NO
                            completion:^() {

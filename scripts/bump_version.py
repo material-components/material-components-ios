@@ -1,0 +1,160 @@
+#!/usr/bin/python
+#
+# Copyright 2016-present Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""Sets version numbers and updates version-dependent metadata.
+"""
+
+from __future__ import print_function
+
+import argparse
+import manage_pods
+import re
+import os
+import subprocess
+import sys
+
+
+def find_podspecs(directory):
+  """Return a list of *.podspec files on disk.
+
+  Args:
+    directory: Path to the directory to recursively search.
+
+  Returns:
+    A list of file paths.
+  """
+  paths = []
+  for dirpath, unused_dirnames, filenames in os.walk(directory):
+    podspecs = [f for f in filenames if f.endswith('.podspec')]
+    paths += [os.path.join(dirpath, f) for f in podspecs]
+
+  return paths
+
+
+def update_podspec_contents(verbose_printer, contents, version):
+  """Update the contents of a podspec with a new version.
+
+  Args:
+    verbose_printer: A printing function for verbose messages.
+    contents: The contents of a podspec as a string.
+    version: The new version.
+
+  Returns:
+    The updated contents string.
+  """
+  # Strings like 
+  #   .version      = "2.0.0"
+  #   .version = "1.2.3.absc"
+  #   .version="my dog has fleas"
+  contents = re.sub(r'\.version([\s]*)=([\s]*)"[^"]+"',
+                    r'.version\1=\2"%s"' % version, 
+                    contents)
+  return contents
+
+
+def update_podspec_file(verbose_printer, path, version):
+  """Update a podspec file on disk with a new version.
+
+  Args:
+    verbose_printer: A printing function for verbose messages.
+    path: The path to the podspec file.
+    version: The new version.
+  """
+  verbose_printer('Updating %s to version %s.' % (path, version))
+
+  try:
+    with open(path, 'r') as f:
+      contents = f.read();
+  except:
+    print('Could not read podspec "%s", aborting.' % path, file=sys.stderr)
+    raise
+
+  new_contents = update_podspec_contents(verbose_printer, contents, version) 
+
+  try:
+    with open(path, 'w') as f:
+      f.write(new_contents)
+  except:
+    print('Could not write podspec "%s", aborting.' % path, file=sys.stderr)
+    raise
+  
+
+def create_argument_parser():
+  """Create an ArgumentParser for this script.
+  
+  Returns:
+    An ArgumentParser object.
+  """
+  parser = argparse.ArgumentParser(description=('Sets version numbers and '
+                                                'updates version-dependent '
+                                                'metadata.'))
+  parser.add_argument('version', help='the new version number.')
+
+  parser.add_argument('--verbose', '-v', dest='verbose', action='store_true',
+                      help='print more information about actions being taken.',
+                      default=False)
+
+  parser.add_argument('--dir', dest='directory',
+                      help='do all work in this directory.',
+                      default='.')
+
+  parser.add_argument('--skip_pod_install', action='store_true',
+                      help=('skip running `pod install` on all Podfiles.'),
+                      default=False) 
+  parser.add_argument('--fast_pod_install', action='store_true',
+                      help=('skip updating the pod repos when running `pod '
+                            'install`.'),
+                      default=False) 
+  return parser
+
+
+def print_nothing(unused_message):
+  """Prints nothing.
+
+  Args:
+    unused_message: A message to not print.
+  """
+  pass
+
+
+def main():
+  parser = create_argument_parser()
+  args = parser.parse_args()
+
+  # Set up print functions for messages to the user.
+  if args.verbose:
+    verbose_printer = lambda x: print(x, file=sys.stdout)
+  else:
+    verbose_printer = print_nothing
+
+  stderr_printer = lambda x: print(x, file=sys.stderr)
+
+  # Find all podspecs files.
+  podspecs = find_podspecs(args.directory)
+  if not podspecs:
+    stderr_printer('Could not find any .podspec files starting from directory '
+                   '"%s", aborting.' % args.directory)
+    sys.exit(-1)
+
+  # Update the version numbers in each podspec.
+  for p in podspecs:
+    update_podspec_file(verbose_printer, p, args.version)
+
+  # Update all pod files.
+  manage_pods.update_all_podfile_dirs(args.directory, args.fast_pod_install)
+
+if __name__ == '__main__':
+  main()

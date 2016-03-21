@@ -3,7 +3,6 @@ import UIKit
 class ShrineCollectionViewController: UICollectionViewController {
 
   var headerViewController:MDCFlexibleHeaderViewController!
-  var remoteImageService = RemoteImageService()
   private let shrineData:ShrineData
 
   override init(collectionViewLayout layout: UICollectionViewLayout) {
@@ -29,44 +28,23 @@ class ShrineCollectionViewController: UICollectionViewController {
   override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ShrineCollectionViewCell", forIndexPath: indexPath) as! ShrineCollectionViewCell
     let itemNum:NSInteger = indexPath.row;
-    cell.title = self.shrineData.titles[itemNum] as! String
-    cell.shopTitle = self.shrineData.shopTitles[itemNum] as! String
-    cell.price = self.shrineData.prices[itemNum] as! String
 
+    let title = self.shrineData.titles[itemNum] as! String
     let imageName = self.shrineData.imageNames[itemNum] as! String
-    let urlString:String = ShrineData.baseURL + imageName
-    let url = NSURL(string: urlString)
-    remoteImageService.fetchImageDataFromURL(url, completion: {(imageData:NSData!) in
-      if (imageData == nil) {
-        return;
-      }
-      dispatch_async(dispatch_get_main_queue(), {
-        let image = UIImage(data: imageData)
-        cell.imageView.image = image;
-        cell.imageView.setNeedsDisplay()
-      })
-    })
-    let avatarName = self.shrineData.avatars[itemNum] as! String
-    let avatarURLString:String = ShrineData.baseURL + avatarName
-    let avatarURL = NSURL(string: avatarURLString)
-    remoteImageService.fetchImageDataFromURL(avatarURL, completion: {(imageData:NSData!) in
-      if (imageData == nil) {
-        return;
-      }
-      dispatch_async(dispatch_get_main_queue(), {
-        let image = UIImage(data: imageData)
-        cell.avatar.image = image;
-        cell.avatar.setNeedsDisplay()
-      })
-    })
+    let avatar = self.shrineData.avatars[itemNum] as! String
+    let shopTitle = self.shrineData.shopTitles[itemNum] as! String
+    let price = self.shrineData.prices[itemNum] as! String
+    cell.populateCell(title, imageName:imageName, avatar:avatar, shopTitle:shopTitle, price:price)
+
     return cell
   }
 
   func collectionView(collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-      let cellDim = floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5);
-      return CGSizeMake(cellDim, cellDim);
+      let cellWidth = floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5);
+      let cellHeight = cellWidth * 1.2
+      return CGSizeMake(cellWidth, cellHeight);
   }
 
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -84,10 +62,32 @@ class ShrineCollectionViewController: UICollectionViewController {
     headerViewController.scrollViewDidScroll(scrollView);
   }
 
+  func sizeHeaderView() {
+    let headerView = headerViewController.headerView
+    let bounds = UIScreen.mainScreen().bounds
+    if (bounds.size.width < bounds.size.height) {
+      headerView.maximumHeight = 360;
+      headerView.minimumHeight = 240;
+    } else {
+      headerView.maximumHeight = 240;
+      headerView.minimumHeight = 240;
+    }
+  }
+
+  override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation:UIInterfaceOrientation, duration: NSTimeInterval) {
+    sizeHeaderView()
+    collectionView?.collectionViewLayout.invalidateLayout()
+  }
+
+  override func viewWillAppear(animated: Bool) {
+    sizeHeaderView()
+    collectionView?.collectionViewLayout.invalidateLayout()
+  }
+
   func setupHeaderView() {
     let headerView = headerViewController.headerView
     headerView.trackingScrollView = collectionView
-    headerView.maximumHeight = 280;
+    headerView.maximumHeight = 360;
     headerView.minimumHeight = 240;
     headerView.contentView?.backgroundColor = UIColor.whiteColor()
     headerView.contentView?.layer.masksToBounds = true

@@ -22,6 +22,7 @@
 		DEBEDF321C3EF5D5004B614B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF301C3EF5D5004B614B /* Main.storyboard */; };
 		DEBEDF341C3EF5D5004B614B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF331C3EF5D5004B614B /* Assets.xcassets */; };
 		DEBEDF371C3EF5D5004B614B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF351C3EF5D5004B614B /* LaunchScreen.storyboard */; };
+		DEE21BC11C9AF56E0024CB5C /* PestoRecipeCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE21BC01C9AF56E0024CB5C /* PestoRecipeCardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,8 @@
 		DEBEDF331C3EF5D5004B614B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEBEDF361C3EF5D5004B614B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEBEDF381C3EF5D5004B614B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DEE21BBF1C9AF5610024CB5C /* PestoRecipeCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoRecipeCardView.h; sourceTree = "<group>"; };
+		DEE21BC01C9AF56E0024CB5C /* PestoRecipeCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoRecipeCardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +127,8 @@
 				DE5EF8661C404E0E00D2D4B9 /* PestoDetailViewController.m */,
 				DEA791061C752B74006301CC /* PestoFlexibleHeaderContainerViewController.h */,
 				DEA791041C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m */,
+				DEE21BBF1C9AF5610024CB5C /* PestoRecipeCardView.h */,
+				DEE21BC01C9AF56E0024CB5C /* PestoRecipeCardView.m */,
 				C91F6A4E1C63A80F00EB4BA8 /* PestoRemoteImageService.h */,
 				C91F6A4F1C63A80F00EB4BA8 /* PestoRemoteImageService.m */,
 				C9A855291C4EDFAA003CADF7 /* PestoSettingsViewController.h */,
@@ -268,6 +273,7 @@
 				C91F6A501C63A80F00EB4BA8 /* PestoRemoteImageService.m in Sources */,
 				DEA791051C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m in Sources */,
 				C9A8552B1C4EDFAA003CADF7 /* PestoSettingsViewController.m in Sources */,
+				DEE21BC11C9AF56E0024CB5C /* PestoRecipeCardView.m in Sources */,
 				C91F6A4A1C62BC0400EB4BA8 /* PestoAvatarView.m in Sources */,
 				DE381E1A1C457CEE00019C1D /* PestoCardCollectionViewCell.m in Sources */,
 				DE5EF8671C404E0E00D2D4B9 /* PestoDetailViewController.m in Sources */,

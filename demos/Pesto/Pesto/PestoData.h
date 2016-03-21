@@ -8,5 +8,6 @@ CG_EXTERN NSString *const PestoDataBaseURL;
 @property(nonatomic) NSArray *iconNames;
 @property(nonatomic) NSArray *imageFileNames;
 @property(nonatomic) NSArray *titles;
+@property(nonatomic) NSArray *descriptions;
 
 @end

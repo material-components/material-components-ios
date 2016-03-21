@@ -1,0 +1,4 @@
+module_name: NavigationBar
+umbrella_header: src/MaterialNavigationBar.h
+objc_mode: true
+sdk: iphonesimulator

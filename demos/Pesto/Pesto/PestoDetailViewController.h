@@ -2,8 +2,9 @@
 
 @interface PestoDetailViewController : UIViewController
 
-@property(nonatomic) NSString *imageURL;
 @property(nonatomic) UIImage *image;
+@property(nonatomic) NSString *iconImageName;
+@property(nonatomic) NSString *descText;
 
 - (void)loadImage;
 

@@ -339,6 +339,16 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  */
 @property(nonatomic) BOOL sharedWithManyScrollViews;
 
+#pragma mark Configuring Status Bar Behaviors
+
+/**
+ Whether this header view's content is translucent/transparent. Provides a hint to status bar
+ rendering, to correctly display contents scrolling under the status bar as it shifts on/off screen.
+
+ Default: NO
+ */
+@property(nonatomic) BOOL contentIsTranslucent;
+
 #pragma mark Header View Delegate
 
 /** The delegate for this header view. */

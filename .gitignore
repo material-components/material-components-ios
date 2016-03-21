@@ -62,3 +62,5 @@ fastlane/screenshots
 
 # material component site
 /gh-pages
+/site-source
+

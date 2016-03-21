@@ -1,44 +1,58 @@
 PODS:
-  - MaterialComponents (2.0.2):
-    - MaterialComponents/Buttons (= 2.0.2)
-    - MaterialComponents/FlexibleHeader (= 2.0.2)
-    - MaterialComponents/HeaderStackView (= 2.0.2)
-    - MaterialComponents/Ink (= 2.0.2)
-    - MaterialComponents/PageControl (= 2.0.2)
-    - MaterialComponents/private (= 2.0.2)
-    - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.0.2)
-    - MaterialComponents/ShadowElevations (= 2.0.2)
-    - MaterialComponents/ShadowLayer (= 2.0.2)
-    - MaterialComponents/Slider (= 2.0.2)
-    - MaterialComponents/SpritedAnimationView (= 2.0.2)
-    - MaterialComponents/Switch (= 2.0.2)
-    - MaterialComponents/Typography (= 2.0.2)
-  - MaterialComponents/Buttons (2.0.2):
+  - MaterialComponents (2.1.0):
+    - MaterialComponents/AppBar (= 2.1.0)
+    - MaterialComponents/ButtonBar (= 2.1.0)
+    - MaterialComponents/Buttons (= 2.1.0)
+    - MaterialComponents/FlexibleHeader (= 2.1.0)
+    - MaterialComponents/HeaderStackView (= 2.1.0)
+    - MaterialComponents/Ink (= 2.1.0)
+    - MaterialComponents/NavigationBar (= 2.1.0)
+    - MaterialComponents/PageControl (= 2.1.0)
+    - MaterialComponents/private (= 2.1.0)
+    - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.1.0)
+    - MaterialComponents/ShadowElevations (= 2.1.0)
+    - MaterialComponents/ShadowLayer (= 2.1.0)
+    - MaterialComponents/Slider (= 2.1.0)
+    - MaterialComponents/SpritedAnimationView (= 2.1.0)
+    - MaterialComponents/Switch (= 2.1.0)
+    - MaterialComponents/Typography (= 2.1.0)
+  - MaterialComponents/AppBar (2.1.0):
+    - MaterialComponents/FlexibleHeader
+    - MaterialComponents/HeaderStackView
+    - MaterialComponents/NavigationBar
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+  - MaterialComponents/ButtonBar (2.1.0)
+  - MaterialComponents/Buttons (2.1.0):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/FlexibleHeader (2.0.2)
-  - MaterialComponents/HeaderStackView (2.0.2)
-  - MaterialComponents/Ink (2.0.2)
-  - MaterialComponents/PageControl (2.0.2)
-  - MaterialComponents/private (2.0.2):
-    - MaterialComponents/private/Color (= 2.0.2)
-    - MaterialComponents/private/ThumbTrack (= 2.0.2)
-  - MaterialComponents/private/Color (2.0.2)
-  - MaterialComponents/private/ThumbTrack (2.0.2):
+  - MaterialComponents/FlexibleHeader (2.1.0)
+  - MaterialComponents/HeaderStackView (2.1.0)
+  - MaterialComponents/Ink (2.1.0)
+  - MaterialComponents/NavigationBar (2.1.0):
+    - MaterialComponents/ButtonBar
+    - MaterialComponents/Typography
+  - MaterialComponents/PageControl (2.1.0)
+  - MaterialComponents/private (2.1.0):
+    - MaterialComponents/private/Color (= 2.1.0)
+    - MaterialComponents/private/ThumbTrack (= 2.1.0)
+  - MaterialComponents/private/Color (2.1.0)
+  - MaterialComponents/private/ThumbTrack (2.1.0):
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/ScrollViewDelegateMultiplexer (2.0.2)
-  - MaterialComponents/ShadowElevations (2.0.2)
-  - MaterialComponents/ShadowLayer (2.0.2)
-  - MaterialComponents/Slider (2.0.2):
+  - MaterialComponents/ScrollViewDelegateMultiplexer (2.1.0)
+  - MaterialComponents/ShadowElevations (2.1.0)
+  - MaterialComponents/ShadowLayer (2.1.0)
+  - MaterialComponents/Slider (2.1.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/SpritedAnimationView (2.0.2)
-  - MaterialComponents/Switch (2.0.2):
+  - MaterialComponents/SpritedAnimationView (2.1.0)
+  - MaterialComponents/Switch (2.1.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (2.0.2)
+  - MaterialComponents/Typography (2.1.0)
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
@@ -48,6 +62,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: cde11be06370c3c0422c182b0cf83ebe1a3fb158
+  MaterialComponents: 325e36b679b804988d7da12434215a760af85b06
 
 COCOAPODS: 0.39.0

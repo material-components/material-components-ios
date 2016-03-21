@@ -70,7 +70,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   self = [super initWithFrame:frame];
   if (self) {
     CGFloat radius = kMDCPageControlIndicatorRadius;
-    CGFloat topEdge = (floor(CGRectGetHeight(self.bounds) - (radius * 2)) / 2);
+    CGFloat topEdge = (CGFloat)(floor(CGRectGetHeight(self.bounds) - (radius * 2)) / 2);
     CGRect containerFrame = CGRectMake(0, topEdge, CGRectGetWidth(self.bounds), radius * 2);
     _containerView = [[UIView alloc] initWithFrame:containerFrame];
 

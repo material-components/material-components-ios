@@ -2,7 +2,10 @@
 
 @interface PestoRemoteImageService ()
 
-@property(nonatomic) NSCache *cache;
+@property(nonatomic) NSCache *dataCache;
+@property(nonatomic) NSCache *imageCache;
+@property(nonatomic) NSCache *thumbnailImageCache;
+@property(nonatomic) NSMutableDictionary *networkImageRequested;
 
 @end
 
@@ -11,36 +14,63 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _cache = [[NSCache alloc] init];
-    _thumbnailCache = [[NSCache alloc] init];
+    self.dataCache = [[NSCache alloc] init];
+    self.imageCache = [[NSCache alloc] init];
+    self.thumbnailImageCache = [[NSCache alloc] init];
+    self.networkImageRequested = [NSMutableDictionary dictionary];
   }
   return self;
 }
 
-- (void)fetchImageDataFromURL:(NSURL *)url completion:(void (^)(NSData *))completion {
-  [self fetchImageDataFromURL:url priority:DISPATCH_QUEUE_PRIORITY_DEFAULT completion:completion];
+- (UIImage *)fetchImageFromURL:(NSURL *)url {
+  UIImage *image = [_imageCache objectForKey:url];
+  if (image) {
+    return image;
+  }
+
+  // Prevent the same image from being requested again if a network request is in progress.
+  if ([_networkImageRequested objectForKey:url.absoluteString] != nil) {
+    return nil;
+  }
+  [_networkImageRequested setValue:url forKey:url.absoluteString];
+  NSData *imageData = [[NSData alloc] initWithContentsOfURL:url];
+  if (!imageData) {
+    return nil;
+  }
+  if (imageData) {
+    [_dataCache setObject:imageData forKey:url];
+  } else {
+    return nil;
+  }
+  image = [UIImage imageWithData:imageData];
+  [_imageCache setObject:image forKey:url];
+  return image;
 }
 
-- (void)fetchImageDataFromURL:(NSURL *)url priority:(dispatch_queue_priority_t)priority
-                   completion:(void (^)(NSData *))completion {
-  dispatch_async(dispatch_get_global_queue(priority, 0), ^{
-    NSData *imageData = [_cache objectForKey:url];
-    if (!imageData) {
-      imageData = [[NSData alloc] initWithContentsOfURL:url];
-      [_cache setObject:imageData forKey:url];
-      UIImage *thumbnailImage = [self createThumbnailWithImageData:imageData];
-      [_thumbnailCache setObject:thumbnailImage forKey:url];
+- (UIImage *)fetchThumbnailImageFromURL:(NSURL *)url {
+  UIImage *thumbnailImage = [_thumbnailImageCache objectForKey:url];
+  if (thumbnailImage == nil) {
+    UIImage *image = [self fetchImageFromURL:url];
+    if (!image) {
+      return nil;
     }
-    if (imageData == nil) {
-      return;
-    }
-    completion(imageData);
+    thumbnailImage = [self createThumbnailWithImage:image];
+    [_thumbnailImageCache setObject:thumbnailImage forKey:url];
+  }
+  return thumbnailImage;
+}
+
+- (void)fetchImageAndThumbnailFromURL:(NSURL *)url
+                           completion:(void (^)(UIImage *, UIImage *))completion {
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    UIImage *image = [self fetchImageFromURL:url];
+    UIImage *thumbnailImage = [self fetchThumbnailImageFromURL:url];
+    completion(image, thumbnailImage);
   });
 }
 
-- (UIImage *)createThumbnailWithImageData:(NSData *)imageData {
-  UIImage *image = [UIImage imageWithData:imageData];
-  CGFloat scaleFactor = 0.2f;
+- (UIImage *)createThumbnailWithImage:(UIImage *)image {
+  CGFloat scaleFactor = 0.4f;
   CGSize scaledSize = CGSizeMake(image.size.width * scaleFactor, image.size.height * scaleFactor);
   UIImage *thumbnailImage = [PestoRemoteImageService imageWithImage:image scaledToSize:scaledSize];
   return thumbnailImage;

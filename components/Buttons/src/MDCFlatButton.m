@@ -29,19 +29,10 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    self.shouldRaiseOnTouch = NO;
-    self.backgroundColor = nil;
-    self.inkColor = [UIColor colorWithWhite:0 alpha:CGColorGetAlpha(self.inkColor.CGColor)];
+    [self commonInit];
   }
   return self;
 }
-
-- (void)setHasOpaqueBackground:(BOOL)hasOpaqueBackground {
-  _hasOpaqueBackground = hasOpaqueBackground;
-  [self updateBackgroundColor];
-}
-
-#pragma mark - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
@@ -49,8 +40,15 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
     if ([aDecoder containsValueForKey:MDCFlatButtonHasOpaqueBackground]) {
       self.hasOpaqueBackground = [aDecoder decodeBoolForKey:MDCFlatButtonHasOpaqueBackground];
     }
+    [self commonInit];
   }
   return self;
+}
+
+- (void)commonInit {
+  self.shouldRaiseOnTouch = NO;
+  self.backgroundColor = nil;
+  self.inkColor = [UIColor colorWithWhite:0 alpha:CGColorGetAlpha(self.inkColor.CGColor)];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -60,7 +58,13 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
 
 #pragma mark - MDCButton Subclassing
 
+- (void)setHasOpaqueBackground:(BOOL)hasOpaqueBackground {
+  _hasOpaqueBackground = hasOpaqueBackground;
+  [self updateBackgroundColor];
+}
+
 - (BOOL)shouldHaveOpaqueBackground {
   return [super shouldHaveOpaqueBackground] || self.hasOpaqueBackground;
 }
+
 @end

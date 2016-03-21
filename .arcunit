@@ -1,0 +1,9 @@
+{
+  "engines": {
+    "xcode": {
+      "type": "xcode-test-engine",
+      "include": "(\\.(m|h|mm|swift)$)",
+      "exclude": "(/Pods/)"
+    }
+  }
+}

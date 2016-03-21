@@ -1,5 +1,0 @@
-module_name: ___PACKAGENAMEASIDENTIFIER___
-umbrella_header: src/Material___PACKAGENAMEASIDENTIFIER___.h
-objc_mode: true
-sdk: iphonesimulator
-output: docs/

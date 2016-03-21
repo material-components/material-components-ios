@@ -1,8 +1,23 @@
 #import "PestoCardCollectionViewCell.h"
+#import "PestoRemoteImageService.h"
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+
+static const CGFloat kPestoCardPadding = 15.f;
+static const CGFloat kPestoCardIconSize = 72.f;
+
+@interface PestoCardCollectionViewCell ()
+
+@property(nonatomic) UIImageView *iconImageView;
+@property(nonatomic) UIImageView *thumbnailImageView;
+@property(nonatomic) UILabel *authorLabel;
+@property(nonatomic) UILabel *titleLabel;
+@property(nonatomic) UIView *cellView;
+@property(nonatomic) PestoRemoteImageService *imageService;
+
+@end
 
 @implementation PestoCardCollectionViewCell
 
@@ -10,54 +25,66 @@
   self = [super initWithFrame:frame];
   if (self) {
     self.backgroundColor = [UIColor clearColor];
-    self.title = @"Title";
-    self.author = @"Author";
+    self.imageService = [PestoRemoteImageService sharedService];
+    [self commonInit];
   }
   return self;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+  [self addSubview:_cellView];
+}
 
-  UIView *cellView = [[UIView alloc] initWithFrame:self.bounds];
-  cellView.backgroundColor = [UIColor whiteColor];
-  [self addSubview:cellView];
+- (void)commonInit {
+  self.cellView = [[UIView alloc] initWithFrame:self.bounds];
+  self.cellView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  self.cellView.backgroundColor = [UIColor whiteColor];
+  self.cellView.clipsToBounds = YES;
 
   MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.layer;
   shadowLayer.shadowMaskEnabled = NO;
   [shadowLayer setElevation:MDCShadowElevationCardResting];
 
-  CGRect imageViewRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width - 50.f);
-  if (!_imageView) {
-    _imageView = [[UIImageView alloc] initWithFrame:imageViewRect];
-  }
-  _imageView.frame = imageViewRect;
-  _imageView.backgroundColor = [UIColor lightGrayColor];
-  _imageView.contentMode = UIViewContentModeScaleAspectFill;
-  _imageView.clipsToBounds = YES;
-  [self addSubview:_imageView];
+  CGRect imageViewRect = CGRectMake(0,
+                                    0,
+                                    self.frame.size.width,
+                                    self.frame.size.height - kPestoCardIconSize);
+  self.thumbnailImageView = [[UIImageView alloc] initWithFrame:imageViewRect];
+  self.thumbnailImageView.backgroundColor = [UIColor lightGrayColor];
+  self.thumbnailImageView.contentMode = UIViewContentModeScaleAspectFill;
+  self.thumbnailImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  self.thumbnailImageView.clipsToBounds = YES;
+  [_cellView addSubview:_thumbnailImageView];
 
-  UILabel *label = [[UILabel alloc] init];
-  label.text = _title;
-  label.font = [MDCTypography body1Font];
-  label.textColor = [UIColor colorWithWhite:0.2f alpha:1];
-  [label sizeToFit];
-  label.frame = CGRectMake(10.f,
-                           self.frame.size.height - label.frame.size.height - 24.f,
-                           label.frame.size.width,
-                           label.frame.size.height);
-  [cellView addSubview:label];
+  CGRect iconImageViewFrame = CGRectMake(0,
+                                         self.frame.size.height - kPestoCardIconSize,
+                                         kPestoCardIconSize,
+                                         kPestoCardIconSize);
+  self.iconImageView = [[UIImageView alloc] initWithFrame:iconImageViewFrame];
+  self.iconImageView.contentMode = UIViewContentModeCenter;
+  [_cellView addSubview:_iconImageView];
 
-  UILabel *labelAuthor = [[UILabel alloc] init];
-  labelAuthor.text = _author;
-  labelAuthor.font = [MDCTypography captionFont];
-  labelAuthor.textColor = [UIColor colorWithWhite:0.5f alpha:1];
-  [labelAuthor sizeToFit];
-  labelAuthor.frame = CGRectMake(10.f,
-                                 self.frame.size.height - labelAuthor.frame.size.height - 8.f,
-                                 labelAuthor.frame.size.width,
-                                 labelAuthor.frame.size.height);
-  [cellView addSubview:labelAuthor];
+  self.authorLabel = [[UILabel alloc] init];
+  self.authorLabel.font = [MDCTypography captionFont];
+  self.authorLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1];
+  self.authorLabel.frame =
+      CGRectMake(kPestoCardIconSize,
+                 self.frame.size.height - self.authorLabel.font.pointSize - kPestoCardPadding,
+                 self.frame.size.width - iconImageViewFrame.size.width,
+                 self.authorLabel.font.pointSize + 2.f);
+  [_cellView addSubview:_authorLabel];
+
+  self.titleLabel = [[UILabel alloc] init];
+  self.titleLabel.font = [MDCTypography headlineFont];
+  self.titleLabel.frame =
+      CGRectMake(kPestoCardIconSize,
+                 self.authorLabel.frame.origin.y - self.titleLabel.font.pointSize -
+                     kPestoCardPadding / 2.f,
+                 self.frame.size.width - iconImageViewFrame.size.width,
+                 self.titleLabel.font.pointSize + 2.f);
+  [_cellView addSubview:_titleLabel];
 
   UIView *inkView = [[UIView alloc] initWithFrame:self.bounds];
   inkView.backgroundColor = [UIColor clearColor];
@@ -66,26 +93,34 @@
   _inkTouchController = [[MDCInkTouchController alloc] initWithView:inkView];
   _inkTouchController.delegate = self;
   [_inkTouchController addInkView];
+}
 
-  UIImage *icon = [UIImage imageNamed:_icon];
-  UIImageView *iconImageView = [[UIImageView alloc] initWithImage:icon];
-  iconImageView.frame =
-      CGRectMake(cellView.frame.size.width - iconImageView.frame.size.width - 6.f,
-                 cellView.frame.size.height - iconImageView.frame.size.height - 12.f,
-                 iconImageView.frame.size.width,
-                 iconImageView.frame.size.height);
-  [cellView addSubview:iconImageView];
+- (void)populateContentWithTitle:(NSString *)title
+                          author:(NSString *)author
+                        imageURL:(NSURL *)imageURL
+                        iconName:(NSString *)iconName {
+  _title = title;
+  _titleLabel.text = title;
+  _authorLabel.text = author;
+  _iconImageName = iconName;
+
+  UIImage *icon = [UIImage imageNamed:iconName];
+  _iconImageView.image = icon;
+  __weak __typeof__(self) weakSelf = self;
+  [_imageService fetchImageAndThumbnailFromURL:imageURL
+                                    completion:^(UIImage *image, UIImage *thumbnailImage) {
+                                      [weakSelf setImage:image];
+                                      dispatch_sync(dispatch_get_main_queue(), ^{
+                                        [weakSelf.thumbnailImageView setImage:thumbnailImage];
+                                      });
+                                    }];
 }
 
 - (void)prepareForReuse {
   [super prepareForReuse];
-
-  _author = nil;
-  _icon = nil;
-  _imageURL = nil;
   _title = nil;
   _image = nil;
-  _imageView.image = nil;
+  [_thumbnailImageView setImage:nil];
 }
 
 + (Class)layerClass {
