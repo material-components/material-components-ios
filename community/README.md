@@ -9,9 +9,27 @@ section: community
 
 Material Components for iOS is intended to be a full open source project that accepts contributions from community members. We can work together to optimize Material Design on iOS.
 
+- [Github Issues](http://www.google.com)
+  <!--{: .icon-sample }-->
+
+- [Stack Overflow](http://www.google.com)
+  <!--{: .icon-stackoverflow }-->
+<!--{: .icon-list }-->
+
+
+
+
+- - -
+
 ## Community Structure
 
 Members of the Core Team are engineers from Google, Inc. responsible for the strategic direction of Material components and appointment of technical leaders from the community. The Core Team will work with the community to accept contributions in line with the [Material Design spec](http://www.google.com/design/spec).
+
+
+
+
+
+- - -
 
 ## Core team
 - Alastair Tse - Tech Lead - [altse@google.com] (mailto:altse@google.com) 
@@ -22,6 +40,12 @@ Members of the Core Team are engineers from Google, Inc. responsible for the str
 - Ian Gordon - Software Engineer - [iangordon@google.com] (mailto:iangordon@google.com)
 - Randall Li - Software Engineer - [randallli@google.com] (mailto:randallli@google.com)
 - Junius Gunaratne - UX Engineer - [junius@google.com] (mailto:junius@google.com)
+
+
+
+
+
+- - -
 
 ## Code of Conduct
 As contributors and maintainers of the project, we pledge to respect everyone who contributes through posting issues, updating documentation, submitting pull requests, providing feedback in comments and any other related activities.
@@ -60,6 +84,12 @@ _This code of conduct was adapted from the following sources:_
 - [Material design lite](https://github.com/google/material-design-lite/blob/master/CONTRIBUTING.md), Apache Licensed.
 
 
+
+
+
+
+- - -
+
 ## Questions?
 If you have questions about how to use Material Components iOS, please direct these to
 
@@ -67,14 +97,32 @@ If you have questions about how to use Material Components iOS, please direct th
 - The [materialcomponentsios tag on StackOverflow](http://stackoverflow.com/questions/tagged/materialcomponentsios), or
 - Our [Slack discussion channel](http://googleoss.slack.com).
 
+
+
+
+
+- - -
+
 ## Found an Issue?
 If you find a bug in the source code or a mistake in the documentation, you can help us by [submitting an issue](https://github.com/google/material-components-ios/issues) to our GitHub repository. Even better: submit a fix as a pull request!
+
+
+
+
+
+- - -
 
 ## Feature Request?
 You can request a new feature by [submitting an issue](https://github.com/google/material-components-ios/issues) to our GitHub repository. If you would like to implement a new feature then consider what kind of change it is:
 - Major changes that you wish to contribute to the project should be discussed first on our [dev mailing list](https://groups.google.com/forum/#!forum/material-components-ios-discuss) so that we can better coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is successfully accepted into the project.
 - Small changes can be crafted and submitted to the GitHub Repository as a Pull Request.
 
+
+
+
+
+
+- - -
 
 ## Submitting an Issue
 
@@ -89,11 +137,23 @@ Before you submit your issue [search the archive](https://github.com/google/mate
 
 Here is a great example of a well defined issue: [https://github.com/angular/angular.js/issues/5069](https://github.com/angular/angular.js/issues/5069)
 
+
+
+
+
+- - -
+
 ## Signing the CLA
 Please sign our Contributor License Agreement (CLA) before sending pull requests. For any code changes to be accepted, the CLA must be signed. It's a quick process, we promise!
 - For individuals we have a [simple click-through form](http://code.google.com/legal/individual-cla-v1.0.html).
 - For corporations we'll need you to print, sign and one of scan+email, fax or mail [the form.
 ](http://code.google.com/legal/corporate-cla-v1.0.html)
+
+
+
+
+
+- - -
 
 ## Submitting a Pull Request
 For major changes, it's worthwhile discussing the idea on our [mailing list](https://groups.google.com/forum/#!forum/material-components-ios-discuss)—that way you'll get early feedback on your idea and find out if the approach has been tried before or if someone else is working on it. [Search our GitHub](https://github.com/google/material-components-ios/issues) issues to see if anyone has proposed the idea before, too. Feature requests and bug fixes should be tracked with issues, so file one early on and assign it to yourself.
@@ -102,9 +162,21 @@ Once you have code that is ready to share, please create a pull request against 
 
 Pull requests will be reviewed in [Phabricator's Differential code review tool](http://codereview.cc) instead of directly in GitHub. When you submit your pull request, a bot will reply with a link to the code review discussion. If you haven't done so before, create a new account on Phabricator and join the discussion of your changes.
 
+
+
+
+
+- - -
+
 ## Coding Style
 
 We have deferred all conversations about coding style to [clang-format](http://clang.llvm.org/docs/ClangFormat.html) and it is an automated part of our work flow. We follow the [Google style guide](https://google.github.io/styleguide/objcguide.xml). We recommend running clang format on your changes before sending a pull request.
+
+
+
+
+
+- - -
 
 ## License
 Apache License
