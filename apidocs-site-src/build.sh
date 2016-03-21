@@ -31,12 +31,14 @@ ROOT_DIR="$(pwd)"
 # Enumerate all documentable folders
 for directory in "$ROOT_DIR"/components/*/README.md; do
   folder=$(dirname $directory)
-  component="$(echo $(basename $folder) | tr '[A-Z]' '[a-z]')"
+  #no longer using lowercase directory
+  #component="$(echo $(basename $folder) | tr '[A-Z]' '[a-z]')"
+  component=$(basename $folder)
 
   echo "Generating api reference for $component..."
 
   cd "$folder"
-  
+
   jazzy_output="$ROOT_DIR/site-source/jekyll-site-src/apidocs/$component"
 
   jazzy \
