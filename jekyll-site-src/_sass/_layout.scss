@@ -230,6 +230,47 @@ body {
       }
     }
 
+
+    .intro {
+      font-size: 17px;
+      line-height: 32px;
+    }
+
+    .ios-screenshot {
+      line-height: 0;
+      font-size: 0;
+      margin: 0;
+      padding: 0;
+
+      img {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        width: 280px;
+      }
+
+      &.right {
+        float: right;
+        margin-left: 48px;
+        margin-bottom: 64px;
+
+      }
+
+      @include collapsed_header() {
+        margin: 48px auto;
+
+        &.right {
+          margin: 48px auto;
+          float: none;
+        }
+
+        img {
+          display: block;
+          margin: 0 auto;
+        }
+      }
+
+
+    }
+
     @include content_adaptive_width {
       margin-left: 64px;
       margin-right: 64px;

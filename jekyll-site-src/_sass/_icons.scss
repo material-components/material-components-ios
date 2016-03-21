@@ -47,6 +47,7 @@ ul.icon-list {
   &.large-format > li {
     height: auto;
     padding-bottom: 24px;
+    font-weight: 400;
 
     a {
       &::before {
@@ -63,6 +64,8 @@ ul.icon-list {
     height: 56px;
     margin: 0;
     line-height: 24px;
+    font-size: 14px;
+    font-weight: 500;
 
 
     // Sometimes these are wrapped in a p, sometimes not.
@@ -82,7 +85,6 @@ ul.icon-list {
       display: block;
       position: relative;
       padding-left: 54px;
-      font-weight: 500;
       color: $text-color;
 
       &:hover {
@@ -94,7 +96,7 @@ ul.icon-list {
       strong {
         display: block;
         color: inherit;
-        font-weight: 600;
+        font-weight: 500;
       }
 
       &::before {
@@ -145,7 +147,7 @@ ul.icon-list>li {
 ul.icon-list:after {
   content:'';
   display: block;
-  clear: both;
+  clear: left;
 }
 
 

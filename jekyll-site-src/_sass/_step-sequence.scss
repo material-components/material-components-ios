@@ -1,6 +1,10 @@
 
-.step-sequence>h2 {
+#main_content section .step-sequence h2 {
   margin-top: 0;
+
+  &::before {
+    margin-top: -132px;
+  }
 }
 
 .step-sequence>li {
