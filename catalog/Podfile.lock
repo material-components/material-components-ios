@@ -17,6 +17,7 @@ PODS:
     - MaterialComponents/Switch (= 2.1.0)
     - MaterialComponents/Typography (= 2.1.0)
   - MaterialComponents/AppBar (2.1.0):
+    - MaterialComponents/Buttons
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -72,7 +73,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 325e36b679b804988d7da12434215a760af85b06
+  MaterialComponents: 370db80edc13e24d5edf7e34ddd7f304e7005458
   MaterialComponentsCatalog: 324ac07746f6fbf8ff34af8d4a328a3dfd567b2d
   MaterialComponentsUnitTests: 60c2725c7c58643b29b56af334a22da8646b7e47
 
