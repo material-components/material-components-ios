@@ -38,39 +38,39 @@ TODO: Choose links below.
 
 - [**Typography**
   Text styles for Material Design fonts and opacities.
-  ](typography/)
+  ](Typography/)
 
 - [**Ink**
   A visual ripple of ink expanding outward from the user’s touch.
-  ](ink/)
+  ](Ink/)
 
 - [**ShadowLayer**
   A shadow which uses Material Design principles for visualizing depth.
-  ](shadowlayer/)
+  ](ShadowLayer/)
 
 - [**PageControl**
   A drop-in Material Design replacement for UIPageControl.
-  ](pagecontrol/)
+  ](PageControl/)
 
 - [**SpritedAnimationView**
   An alternative to animating an array of images with an UIImageView.
-  ](spritedanimationview/)
+  ](SpritedAnimationView/)
 
 - [**Switch**
   A Material Design on/off switch with an interface similar to UISwitch.
-  ](switch/)
+  ](Switch/)
 
 - [**Slider**
   A Material Design control for selecting from a range of values.
-  ](slider/)
+  ](Slider/)
 
 - [**Buttons**
   Material Design buttons, including a flat button, a raised button and a floating action button.
-  ](buttons/)
+  ](Buttons/)
 
 - [**FlexibleHeader**
   A container view whose height and vertical offset react to UIScrollViewDelegate events.
-  ](flexibleheader/)
+  ](FlexibleHeader/)
 <!--{: .icon-list .large-format }-->
 
 
