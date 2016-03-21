@@ -13,7 +13,7 @@
 
 @interface PestoCollectionViewController : UICollectionViewController
 
-@property(weak) id<PestoCollectionViewControllerDelegate> delegate;
+@property(nonatomic, weak) id<PestoCollectionViewControllerDelegate> delegate;
 @property(nonatomic) CGFloat scrollOffsetY;
 @property(nonatomic) CGSize cellSize;
 @property(nonatomic) MDCFlexibleHeaderContainerViewController *flexHeaderContainerVC;
