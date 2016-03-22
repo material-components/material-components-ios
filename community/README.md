@@ -74,13 +74,12 @@ _This code of conduct was adapted from the following sources:_
 - - -
 
 ## Questions?
-If you have questions about how to use Material Components for iOS, please direct these to
+If you have questions about how to use Material Components for iOS:
 
-- Our [Google Group mailing list](https://groups.google.com/forum/#!forum/material-components-ios-discuss),
-- The [mdcios tag on StackOverflow](http://stackoverflow.com/questions/tagged/mdcios), or
-- Our [Slack discussion channel](http://googleoss.slack.com).
-
-
+- Please post questions to StackOverflow with the tag `mdcios`.
+- Search previous questions that have been answered by visiting [Stack Overflow](http://stackoverflow.com/questions/tagged/mdcios).
+- Join us on our [Slack discussion channel](https://googleoss.slack.com/messages/mdc-ios/) for more
+direct discussions with the team.
 
 
 
