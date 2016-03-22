@@ -1,5 +1,5 @@
 ---
-title:  "Typography"
+title:  "Buttons"
 layout: detail
 section: documentation
 ---

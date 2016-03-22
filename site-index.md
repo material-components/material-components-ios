@@ -9,7 +9,7 @@ layout: "homepage"
 # Material Components for&nbsp;iOS
 <!--{: .title }-->
 
-Create beautiful apps with&nbsp;Material&nbsp;Design
+Create beautiful apps with&nbsp;Material&nbsp;Design.
 <!--{: .subhead }-->
 
 [Get Started](#quickstart)
@@ -40,7 +40,7 @@ Create beautiful apps with&nbsp;Material&nbsp;Design
 
     ~~~ bash
     $ cd your-project-directory
-    xxx: your-project-directory $ pod init
+    your-project-directory $ pod init
     ~~~
 
 3.  ## Edit Podfile

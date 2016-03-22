@@ -1,18 +1,54 @@
+---
+title:  "App Bar"
+layout: detail
+section: documentation
+---
 # App Bar
 
 The App Bar is a flexible navigation bar-like component that provides a variety of helpful tools for
-setting up a typical Material navigation experience. Learn more at the
-[Material spec](https://www.google.com/design/spec/patterns/scrolling-techniques.html).
+setting up a typical Material navigation experience.
+<!--{: .intro :}-->
 
-## Installation with CocoaPods
+### Design Specifications
+
+- [App Bar Structure](https://www.google.com/design/spec/layout/structure.html#structure-app-bar)
+- [Scrolling Techniques](https://www.google.com/design/spec/patterns/scrolling-techniques.html)
+<!--{: .icon-list }-->
+
+### API Documentation
+
+- [MDCAppBarContainerViewController](/apidocs/AppBar/Classes/MDCAppBarContainerViewController.html)
+- [MDCAppBarParenting](/apidocs/AppBar/Protocols/MDCAppBarParenting.html)
+<!--{: .icon-list }-->
+
+
+
+- - -
+
+## Installation
+
+### Requirements
+
+- Xcode 7.0 or higher.
+- iOS SDK version 7.0 or higher.
+
+### Installation with CocoaPods
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-    pod 'MaterialComponents/AppBar'
+~~~ bash
+pod 'MaterialComponents/AppBar'
+~~~
 
 Then, run the following command:
 
-    $ pod install
+~~~ bash
+$ pod install
+~~~
+
+
+
+- - -
 
 ## Usage
 
@@ -30,38 +66,46 @@ Conforming to this protocol allows your view controller to hold a strong referen
 properties. This makes it possible for the App Bar component to provide convenience APIs for
 initializing and configuring the various App Bar parts.
 
-    @interface MyViewController () <MDCAppBarParentViewController>
-    @end
+~~~ objc
+@interface MyViewController () <MDCAppBarParentViewController>
+@end
+~~~
 
 Step 2: Synthesize the required properties of the MDCAppBarParentViewController protocol.
 
-    @implementation MyViewController
+~~~ objc
+@implementation MyViewController
 
-    @synthesize navigationBar;
-    @synthesize headerStackView;
-    @synthesize headerViewController;
+@synthesize navigationBar;
+@synthesize headerStackView;
+@synthesize headerViewController;
+~~~
 
 Step 3: At the earliest possible moment — usually an init method - initialize your view
 controller's App Bar.
 
-    - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-      self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-      if (self) {
-        [MDCAppBar addToParent:self];
-      }
-      return self;
-    }
+~~~ objc
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    [MDCAppBar addToParent:self];
+  }
+  return self;
+}
+~~~
 
 Step 4: Inform the App Bar that your view controller's view has loaded. Ideally you will do this
 last in order to ensure that the App Bar's view is above all of your other views.
 
-    - (void)viewDidLoad {
-      [super viewDidLoad];
+~~~ objc
+- (void)viewDidLoad {
+  [super viewDidLoad];
 
-      ...
+  ...
 
-      [MDCAppBar parentViewDidLoad:self];
-    }
+  [MDCAppBar parentViewDidLoad:self];
+}
+~~~
 
 ### App Bar + UINavigationController
 
@@ -73,22 +117,28 @@ controller with an App Bar.
 One way to do this is to add the following to the `viewWillAppear:` of any view controller that
 has an App Bar:
 
-    - (void)viewWillAppear:(BOOL)animated {
-      [super viewWillAppear:animated];
+~~~ objc
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
 
-      [self.navigationController setNavigationBarHidden:YES animated:animated];
-    }
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+~~~
 
 And to add the following to view controllers that don't have an app bar:
 
-    - (void)viewWillAppear:(BOOL)animated {
-      [super viewWillAppear:animated];
+~~~ objc
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
 
-      [self.navigationController setNavigationBarHidden:NO animated:animated];
-    }
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+~~~
 
 If all of your view controllers use the App Bar in a given UINavigationController then you can
 simply hide the navigationBar when you create the navigation controller:
 
-    UINavigationController *navigationController = ...;
-    [navigationController setNavigationBarHidden:NO animated:NO];
+~~~ objc
+UINavigationController *navigationController = ...;
+[navigationController setNavigationBarHidden:NO animated:NO];
+~~~
