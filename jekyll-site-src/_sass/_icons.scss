@@ -128,56 +128,67 @@ ul.icon-list {
       // }
     }
 
-
-    .icon-guide a::before {
-      background-image: url('/images/icon-guide.svg');
+    .icon-stackoverflow a::before {
+      background-image: url(https://www.gstatic.com/images/icons/material/system/svg/help_24px.svg);
     }
-    .icon-api a::before {
-      background-image: url('/images/icon-api.svg');
+    .icon-github a::before {
+      background-image: url(https://www.gstatic.com/images/icons/material/system/svg/help_24px.svg);
+    }
+    .icon-guide a::before {
+      background-image: url(https://www.gstatic.com/images/icons/material/system/svg/class_24px.svg);
     }
     .icon-sample a::before {
-      background-image: url('/images/icon-sample.svg');
+      background-image: url(https://www.gstatic.com/images/icons/material/system/svg/help_24px.svg);
     }
-    .icon-AppBar a::before {
+    .icon-components a::before {
+      background-image: url(https://www.gstatic.com/images/icons/material/system/svg/list_24px.svg);
+    }
+    .icon-api a::before {
+      background-image: url(https://www.gstatic.com/images/icons/material/system/svg/help_24px.svg);
+    }
+    .icon-community a::before {
+      background-image: url(https://www.gstatic.com/images/icons/material/system/svg/people_24px.svg);
+    }
+    .icon-appbar a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/view_module_24px.svg);
     }
-    .icon-ButtonBar a::before {
+    .icon-buttonbar a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/touch_app_24px.svg);
     }
-    .icon-Buttons a::before {
+    .icon-buttons a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/call_to_action_24px.svg);
     }
-    .icon-Collections a::before {
+    .icon-collections a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/view_module_24px.svg);
     }
-    .icon-FlexibleHeader a::before {
+    .icon-flexibleheader a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/image_aspect_ratio_24px.svg);
     }
-    .icon-HeaderStackView a::before {
+    .icon-headerstackview a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/view_day_24px.svg);
     }
-    .icon-Ink a::before {
+    .icon-ink a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/opacity_24px.svg);
     }
-    .icon-NavigationBar a::before {
+    .icon-navigationbar a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/help_24px.svg);
     }
-    .icon-PageControl a::before {
+    .icon-pagecontrol a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/filter_none_24px.svg);
     }
-    .icon-ShadowElevations a::before {
+    .icon-shadowelevations a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/flip_to_front_24px.svg);
     }
-    .icon-ShadowLayer a::before {
+    .icon-shadowlayer a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/wb_iridescent_24px.svg);
     }
-    .icon-Slider a::before {
+    .icon-slider a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/tune_24px.svg);
     }
-    .icon-Switch a::before {
+    .icon-switch a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/help_24px.svg);
     }
-    .icon-Typography a::before {
+    .icon-typography a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/text_fields_24px.svg);
     }
   }
