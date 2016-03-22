@@ -13,17 +13,17 @@ action button.
 <!--{: .intro }-->
 
 
-### Design Specifications
+### Material Design Specifications
 
-- [Buttons](http://www.google.com/design/spec/components/buttons.html)
+- [Buttons](http://www.google.com/design/spec/components/buttons.html)<!--{:target="_blank"}-->
 <!--{: .icon-list }-->
 
 ### API Documentation
 
-- [MDCButton](/apidocs/Buttons/Classes/MDCButton.html)
-- [MDCFlatButton](/apidocs/Buttons/Classes/MDCFlatButton.html)
-- [MDCFloatingButton](/apidocs/Buttons/Classes/MDCFloatingButton.html)
-- [MDCRaisedButton](/apidocs/Buttons/Classes/MDCRaisedButton.html)
+- [MDCButton](/apidocs/Buttons/Classes/MDCButton.html)<!--{:target="_blank"}-->
+- [MDCFlatButton](/apidocs/Buttons/Classes/MDCFlatButton.html)<!--{:target="_blank"}-->
+- [MDCFloatingButton](/apidocs/Buttons/Classes/MDCFloatingButton.html)<!--{:target="_blank"}-->
+- [MDCRaisedButton](/apidocs/Buttons/Classes/MDCRaisedButton.html)<!--{:target="_blank"}-->
 <!--{: .icon-list }-->
 
 - - -

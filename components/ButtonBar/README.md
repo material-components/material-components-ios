@@ -9,7 +9,7 @@ The Button Bar component is a view that facilitates the creation and layout of a
 horizontally-aligned list of buttons.
 <!--{: .intro }-->
 
-### Design Specifications
+### Material Design Specifications
 
 - [TODO Spec Link](https://www.google.com/design/spec/)<!--{:target="_blank"}-->
 <!--{: .icon-list }-->
