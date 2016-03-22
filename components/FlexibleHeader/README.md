@@ -1,25 +1,56 @@
 ---
-layout: post
-title:  "Flexible header"
-date:   2016-03-01 20:15:01 -0500
-categories: documentation
+title:  "Flexible Header"
+layout: detail
+section: documentation
 ---
-# Flexible header
+# Flexible Header
 
 The Flexible Header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
+<!--{: .intro }-->
 
-## Installation with CocoaPods
+### Material Design Specifications
+
+- [Scrolling Techniques](https://www.google.com/design/spec/patterns/scrolling-techniques.html)<!--{:target="_blank"}-->
+<!--{: .icon-list }-->
+
+
+### API Documentation
+
+- [MDCFlexibleHeaderContainerViewController](/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderContainerViewController.html)<!--{:target="_blank"}-->
+- [MDCFlexibleHeaderView](/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderView.html)<!--{:target="_blank"}-->
+- [MDCFlexibleHeaderViewController](/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderViewController.html)<!--{:target="_blank"}-->
+- [MDCFlexibleHeaderViewDelegate](/apidocs/FlexibleHeader/Protocols/MDCFlexibleHeaderViewDelegate.html)<!--{:target="_blank"}-->
+- [MDCFlexibleHeaderViewLayoutDelegate](/apidocs/FlexibleHeader/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html)<!--{:target="_blank"}-->
+<!--{: .icon-list }-->
+
+
+- - -
+
+## Installation
+
+### Requirements
+
+- Xcode 7.0 or higher.
+- iOS SDK version 7.0 or higher.
+
+### Installation with CocoaPods
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-    pod 'MaterialComponents/FlexibleHeader'
+~~~ bash
+pod 'MaterialComponents/FlexibleHeader'
+~~~
 
 Then, run the following command:
 
-    $ pod install
+~~~ bash
+$ pod install
+~~~
 
-## Overview
+- - -
+
+## Usage
 
 Classic UIKit applications use the UINavigationBar provided by a UINavigationController to display
 navigation stack-related information, such as a title, left and right bar button items, and
@@ -50,32 +81,43 @@ TODO(featherless): Discuss configurator API solution.
 TODO(featherless): Discuss the three classes in this component, their relationship to one another,
 and lead from this to the "Integration" section.
 
+
+
+- - -
+
 ## Integration
 
 ### Step 1: Create an instance of a header view controller
 
-    @implementation FlexibleHeaderTypicalUseViewController {
-      MDCFlexibleHeaderViewController *_fhvc;
-    }
 
-    - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-      self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-      if (self) {
-        _fhvc = [MDCFlexibleHeaderViewController new];
-        [self addChildViewController:_fhvc];
-      }
-      return self;
-    }
+~~~ objc
+@implementation FlexibleHeaderTypicalUseViewController {
+  MDCFlexibleHeaderViewController *_fhvc;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    _fhvc = [MDCFlexibleHeaderViewController new];
+    [self addChildViewController:_fhvc];
+  }
+  return self;
+}
+~~~
+
 
 ### Step 2: Add the header view to your view controller's view
 
-    - (void)viewDidLoad {
-      [super viewDidLoad];
+~~~ objc
+- (void)viewDidLoad {
+  [super viewDidLoad];
 
-      _fhvc.view.frame = self.view.bounds;
-      [self.view addSubview:_fhvc.view];
-      [_fhvc didMoveToParentViewController:self];
-    }
+  _fhvc.view.frame = self.view.bounds;
+  [self.view addSubview:_fhvc.view];
+  [_fhvc didMoveToParentViewController:self];
+}
+~~~
+
 
 #### A note on subclasses
 
@@ -83,16 +125,25 @@ A subclass of your view controller may add additional views in their viewDidLoad
 resulting in the header being covered by the new views. It is the responsibility of the subclass to
 take the z-index into account:
 
+~~~ objc
 [self.view insertSubview:myCustomView belowSubview:self.headerViewController.headerView];
+~~~
 
 ### Step 3: Forward relevant UIViewController APIs
 
 Setting childViewControllerForStatusBarHidden allows the Flexible Header to control the status bar
 visibility in reaction to scroll events.
 
-    - (UIViewController *)childViewControllerForStatusBarHidden {
-      return _fhvc;
-    }
+
+~~~ objc
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return _fhvc;
+}
+~~~
+
+
+
+- - -
 
 ## Usage with UINavigationController**
 
@@ -103,6 +154,9 @@ headers, or on the `viewWillAppear:` method).
 
 Do **not** forget to do this if you support app state restoration, or your app will launch with
 double navigation bars.
+
+
+- - -
 
 ## Tracking a scroll view
 
@@ -115,7 +169,11 @@ To track a scroll view please follow these steps:
 
 In your viewDidLoad, set the `trackingScrollView` property on the header view:
 
-    self.headerViewController.headerView.trackingScrollView = scrollView;
+
+~~~ objc
+self.headerViewController.headerView.trackingScrollView = scrollView;
+~~~
+
 
 `scrollView` might be a table view, collection view, or a plain UIScrollView.
 
@@ -128,46 +186,60 @@ There are two ways to forward scroll events.
 You may use this approach if you do not need to implement any of the delegate's methods yourself
 **and your scroll view is not a collection view**.
 
-    scrollView.delegate = self.headerViewController;
+
+~~~ objc
+scrollView.delegate = self.headerViewController;
+~~~
+
 
 **Forward the UIScrollViewDelegate methods to the header view**
 
 If you need to implement any of the UIScrollViewDelegate methods yourself then you will need to
 manually forward the following methods to the flexible header view.
 
-    #pragma mark - UIScrollViewDelegate
 
-    - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-      if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-        [self.headerViewController.headerView trackingScrollViewDidScroll];
-      }
-    }
+~~~ objc
+#pragma mark - UIScrollViewDelegate
 
-    - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-      if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-        [self.headerViewController.headerView trackingScrollViewDidEndDecelerating];
-      }
-    }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
 
-    - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-      if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-        [self.headerViewController.headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
-      }
-    }
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  }
+}
 
-    - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
-                         withVelocity:(CGPoint)velocity
-                  targetContentOffset:(inout CGPoint *)targetContentOffset {
-      if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-        [self.headerViewController.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                                                        targetContentOffset:targetContentOffset];
-      }
-    }
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                                                    targetContentOffset:targetContentOffset];
+  }
+}
+~~~
+
 
 ### Step 3: Implement childViewControllerForStatusBarHidden
 
 In order to affect the status bar's visibility you must query the header view controller.
 
-    - (UIViewController *)childViewControllerForStatusBarHidden {
-      return self.headerViewController;
-    }
+
+~~~ objc
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return self.headerViewController;
+}
+~~~
+
+
+
