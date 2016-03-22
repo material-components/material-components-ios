@@ -37,12 +37,12 @@ TODO: Choose links below.
 ## Components
 
 - [**AppBar**
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  A flexible navigation bar, designed to provide a typical Material navigation experience.
   ](AppBar/)
   <!--{: .icon-appbar }-->
 
 - [**ButtonBar**
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  A view that facilitates the creation and layout of a horizontally-aligned list of buttons.
   ](ButtonBar/)
   <!--{: .icon-buttonbar }-->
 
@@ -52,7 +52,7 @@ TODO: Choose links below.
   <!--{: .icon-buttons }-->
 
 - [**Collections**
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  TODO Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
   ](Collections/)
   <!--{: .icon-collections }-->
 
@@ -62,7 +62,7 @@ TODO: Choose links below.
   <!--{: .icon-flexibleheader }-->
 
 - [**HeaderStackView**
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  A view that coordinates the layout of two vertically-stacked bar views.
   ](HeaderStackView/)
   <!--{: .icon-headerstackview }-->
 
@@ -72,17 +72,17 @@ TODO: Choose links below.
   <!--{: .icon-ink }-->
 
 - [**NavigationBar**
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  A view composed of a left and right Button Bar and either a title label or a custom title view.
   ](NavigationBar/)
   <!--{: .icon-navigationbar }-->
 
 - [**PageControl**
-  A drop-in Material Design replacement for UIPageControl.
+  A drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout.
   ](PageControl/)
   <!--{: .icon-pagecontrol }-->
 
 - [**ShadowElevations**
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  Provides the most commonly-used elevations specified in Material Design.
   ](ShadowElevations/)
   <!--{: .icon-shadowelevations }-->
 
