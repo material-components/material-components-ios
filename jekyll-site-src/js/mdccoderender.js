@@ -21,6 +21,10 @@ MDCCodeRender = (function(){
     ruby: {
       language: 'Ruby',
       mode: 'text/x-ruby'
+    },
+    text: {
+      language: 'Text',
+      mode: 'text/plain'
     }
   };
   var mobileSized = false;
