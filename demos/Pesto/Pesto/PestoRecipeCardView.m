@@ -26,15 +26,15 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
   if (self) {
     CGFloat leftWidth = kPestoDetailSplitWidth;
     CGFloat height = frame.size.height;
-    self.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 1.f, leftWidth, height)];
-    [self.leftView addSubview:leftView];
-    [self addSubview:self.leftView];
+    _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 1.f, leftWidth, height)];
+    [_leftView addSubview:leftView];
+    [self addSubview:_leftView];
     CGRect rightFrame = CGRectMake(leftWidth, 0, self.frame.size.width - leftWidth, height);
-    self.rightView = [[UIView alloc] initWithFrame:rightFrame];
-    [self.rightView addSubview:rightView];
-    self.rightView.autoresizingMask =
+    _rightView = [[UIView alloc] initWithFrame:rightFrame];
+    [_rightView addSubview:rightView];
+    _rightView.autoresizingMask =
         UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self addSubview:self.rightView];
+    [self addSubview:_rightView];
   }
   return self;
 }
@@ -215,7 +215,7 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
 
 - (void)setTitle:(NSString *)title {
   _title = title;
-  _titleLabel.text = _title;
+  self.titleLabel.text = _title;
 }
 
 - (void)setIconImageName:(NSString *)iconImageName {
@@ -233,11 +233,11 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
   [descAttrString addAttribute:NSParagraphStyleAttributeName
                          value:descParagraphStyle
                          range:NSMakeRange(0, descAttrString.length)];
-  _labelDesc.attributedText = descAttrString;
-  _labelDesc.frame = CGRectMake(0,
-                                0,
-                                _contentViewFrame.size.width - kPestoDetailSplitWidth,
-                                kPestoDetailDescTextHeight);
+  self.labelDesc.attributedText = descAttrString;
+  self.labelDesc.frame = CGRectMake(0,
+                                    0,
+                                    self.contentViewFrame.size.width - kPestoDetailSplitWidth,
+                                    kPestoDetailDescTextHeight);
 }
 
 @end

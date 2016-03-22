@@ -16,13 +16,12 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
 @property(nonatomic) CGFloat bottomSheetHeight;
 @property(nonatomic) PestoRecipeCardView *bottomView;
 @property(nonatomic) UIImageView *imageView;
+@property(nonatomic) BOOL showMenuIcon;
+@property(nonatomic) MDCSpritedAnimationView *animationView;
 
 @end
 
-@implementation PestoDetailViewController {
-  BOOL _showMenuIcon;
-  MDCSpritedAnimationView *_animationView;
-}
+@implementation PestoDetailViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -41,11 +40,11 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
                                      0,
                                      self.view.frame.size.width,
                                      kPestoDetailBottomSheetBackgroundHeight);
-  _imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
-  _imageView.contentMode = UIViewContentModeScaleAspectFill;
-  _imageView.autoresizingMask =
+  self.imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+  self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+  self.imageView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  [self.view addSubview:_imageView];
+  [self.view addSubview:self.imageView];
 
   CGRect bottomFrame =
       CGRectMake(0,
@@ -55,13 +54,13 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
   UIView *bottomViewBackground = [[UIView alloc] initWithFrame:bottomFrame];
   bottomViewBackground.backgroundColor = [UIColor whiteColor];
   [self.view addSubview:bottomViewBackground];
-  _bottomView.frame = bottomFrame;
-  _bottomView = [[PestoRecipeCardView alloc] initWithFrame:bottomFrame];
-  _bottomView.title = self.title;
-  _bottomView.iconImageName = self.iconImageName;
-  _bottomView.descText = self.descText;
-  _bottomView.alpha = 0;
-  [self.view addSubview:_bottomView];
+  self.bottomView.frame = bottomFrame;
+  self.bottomView = [[PestoRecipeCardView alloc] initWithFrame:bottomFrame];
+  self.bottomView.title = self.title;
+  self.bottomView.iconImageName = self.iconImageName;
+  self.bottomView.descText = self.descText;
+  self.bottomView.alpha = 0;
+  [self.view addSubview:self.bottomView];
 
   dispatch_async(dispatch_get_main_queue(), ^{
     [UIView animateWithDuration:kPestoDetailAnimationDuration
@@ -70,24 +69,24 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
         animations:^{
           CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
           [CATransaction setAnimationTimingFunction:quantumEaseInOut];
-          _bottomView.alpha = 1;
+          self.bottomView.alpha = 1;
         }
         completion:^(BOOL finished){
         }];
   });
 
   UIImage *spriteImage = [UIImage imageNamed:kPestoDetailBackMenu];
-  _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
-  _animationView.frame = CGRectMake(20.f, 20.f, 24.f, 24.f);
-  _animationView.tintColor = [UIColor whiteColor];
-  [self.view addSubview:_animationView];
+  self.animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
+  self.animationView.frame = CGRectMake(20.f, 20.f, 24.f, 24.f);
+  self.animationView.tintColor = [UIColor whiteColor];
+  [self.view addSubview:self.animationView];
 
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
                                kPestoDetailAnimationDuration * NSEC_PER_SEC),
                  dispatch_get_main_queue(), ^{
-                   [_animationView startAnimatingWithCompletion:^{
+                   [self.animationView startAnimatingWithCompletion:^{
                      UIImage *spriteImage = [UIImage imageNamed:kPestoDetailMenuBack];
-                     _animationView.spriteSheetImage = spriteImage;
+                     self.animationView.spriteSheetImage = spriteImage;
                    }];
                  });
 
@@ -95,8 +94,8 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
       [[UITapGestureRecognizer alloc] initWithTarget:self
                                               action:@selector(tapDetected)];
   tap.numberOfTapsRequired = 1;
-  _animationView.userInteractionEnabled = YES;
-  [_animationView addGestureRecognizer:tap];
+  self.animationView.userInteractionEnabled = YES;
+  [self.animationView addGestureRecognizer:tap];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -116,24 +115,24 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
                  self.view.frame.size.height - self.bottomSheetHeight,
                  self.view.frame.size.width,
                  self.bottomSheetHeight);
-  _bottomView.frame = bottomFrame;
+  self.bottomView.frame = bottomFrame;
 }
 
 - (void)loadImage {
   dispatch_async(dispatch_get_main_queue(), ^{
-    [_imageView setImage:_image];
+    [self.imageView setImage:self.image];
   });
 }
 
 - (void)tapDetected {
-  [_animationView startAnimatingWithCompletion:^{
-    _showMenuIcon = !_showMenuIcon;
-    NSString *imageName = (_showMenuIcon
+  [self.animationView startAnimatingWithCompletion:^{
+    self.showMenuIcon = !self.showMenuIcon;
+    NSString *imageName = (self.showMenuIcon
                                ? kPestoDetailMenuBack
                                : kPestoDetailBackMenu);
     UIImage *spriteImage = [UIImage imageNamed:imageName];
-    _animationView.spriteSheetImage = spriteImage;
-    _animationView.hidden = YES;
+    self.animationView.spriteSheetImage = spriteImage;
+    self.animationView.hidden = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
   }];
 }

@@ -47,7 +47,8 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   [super viewDidLoad];
 
   UIImage *spriteImage = [UIImage imageNamed:kPestoDetailViewControllerBackMenu];
-  MDCSpritedAnimationView *animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
+  MDCSpritedAnimationView *animationView = [[MDCSpritedAnimationView alloc]
+      initWithSpriteSheetImage:spriteImage];
   animationView.frame = CGRectMake(20.f, 20.f, 24.f, 24.f);
   animationView.tintColor = [UIColor whiteColor];
   [self.view addSubview:animationView];
@@ -56,21 +57,21 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   [self.view addSubview:button];
   [button addTarget:self action:@selector(showMenu) forControlEvents:UIControlEventTouchUpInside];
 
-  _sideView = [[PestoSideView alloc] initWithFrame:self.view.bounds];
-  _sideView.hidden = YES;
-  _sideView.autoresizingMask =
+  self.sideView = [[PestoSideView alloc] initWithFrame:self.view.bounds];
+  self.sideView.hidden = YES;
+  self.sideView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _sideView.delegate = self;
-  [self.view addSubview:_sideView];
+  self.sideView.delegate = self;
+  [self.view addSubview:self.sideView];
 
-  _zoomableCardView = [[UIView alloc] initWithFrame:CGRectZero];
-  _zoomableCardView.backgroundColor = [UIColor whiteColor];
-  [self.view addSubview:_zoomableCardView];
+  self.zoomableCardView = [[UIView alloc] initWithFrame:CGRectZero];
+  self.zoomableCardView.backgroundColor = [UIColor whiteColor];
+  [self.view addSubview:self.zoomableCardView];
 
-  _zoomableView = [[UIImageView alloc] initWithFrame:CGRectZero];
-  _zoomableView.backgroundColor = [UIColor lightGrayColor];
-  _zoomableView.contentMode = UIViewContentModeScaleAspectFill;
-  [self.view addSubview:_zoomableView];
+  self.zoomableView = [[UIImageView alloc] initWithFrame:CGRectZero];
+  self.zoomableView.backgroundColor = [UIColor lightGrayColor];
+  self.zoomableView.contentMode = UIViewContentModeScaleAspectFill;
+  [self.view addSubview:self.zoomableView];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -78,8 +79,8 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 }
 
 - (void)showMenu {
-  _sideView.hidden = NO;
-  [_sideView showSideView];
+  self.sideView.hidden = NO;
+  [self.sideView showSideView];
 }
 
 /** Use MDCAnimationCurve once available. */
@@ -92,18 +93,18 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 #pragma mark - PestoCollectionViewControllerDelegate
 
 - (void)didSelectCell:(PestoCardCollectionViewCell *)cell completion:(void (^)())completionBlock {
-  _zoomableView.frame =
+  self.zoomableView.frame =
       CGRectMake(cell.frame.origin.x,
-                 cell.frame.origin.y - _collectionViewController.scrollOffsetY,
+                 cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
                  cell.frame.size.width,
                  cell.frame.size.height - 50.f);
-  _zoomableCardView.frame =
+  self.zoomableCardView.frame =
       CGRectMake(cell.frame.origin.x,
-                 cell.frame.origin.y - _collectionViewController.scrollOffsetY,
+                 cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
                  cell.frame.size.width,
                  cell.frame.size.height);
   dispatch_async(dispatch_get_main_queue(), ^{
-    [_zoomableView setImage:cell.image];
+    [self.zoomableView setImage:cell.image];
     [UIView animateWithDuration:kPestoAnimationDuration
         delay:0
         options:UIViewAnimationOptionCurveEaseOut
@@ -111,8 +112,8 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
           CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
           [CATransaction setAnimationTimingFunction:quantumEaseInOut];
           CGRect zoomFrame = CGRectMake(0, 0, self.view.bounds.size.width, 320);
-          _zoomableView.frame = zoomFrame;
-          _zoomableCardView.frame = self.view.bounds;
+          self.zoomableView.frame = zoomFrame;
+          self.zoomableCardView.frame = self.view.bounds;
         }
         completion:^(BOOL finished) {
           PestoDetailViewController *detailVC =
@@ -124,8 +125,8 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
           [self presentViewController:detailVC
                              animated:NO
                            completion:^() {
-                             _zoomableView.frame = CGRectZero;
-                             _zoomableCardView.frame = CGRectZero;
+                             self.zoomableView.frame = CGRectZero;
+                             self.zoomableCardView.frame = CGRectZero;
                              completionBlock();
                            }];
         }];

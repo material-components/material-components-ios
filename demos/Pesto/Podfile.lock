@@ -1,0 +1,68 @@
+PODS:
+  - MaterialComponents (2.0.4):
+    - MaterialComponents/AppBar (= 2.0.4)
+    - MaterialComponents/ButtonBar (= 2.0.4)
+    - MaterialComponents/Buttons (= 2.0.4)
+    - MaterialComponents/FlexibleHeader (= 2.0.4)
+    - MaterialComponents/HeaderStackView (= 2.0.4)
+    - MaterialComponents/Ink (= 2.0.4)
+    - MaterialComponents/NavigationBar (= 2.0.4)
+    - MaterialComponents/PageControl (= 2.0.4)
+    - MaterialComponents/private (= 2.0.4)
+    - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.0.4)
+    - MaterialComponents/ShadowElevations (= 2.0.4)
+    - MaterialComponents/ShadowLayer (= 2.0.4)
+    - MaterialComponents/Slider (= 2.0.4)
+    - MaterialComponents/SpritedAnimationView (= 2.0.4)
+    - MaterialComponents/Switch (= 2.0.4)
+    - MaterialComponents/Typography (= 2.0.4)
+  - MaterialComponents/AppBar (2.0.4):
+    - MaterialComponents/Buttons
+    - MaterialComponents/FlexibleHeader
+    - MaterialComponents/HeaderStackView
+    - MaterialComponents/NavigationBar
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+  - MaterialComponents/ButtonBar (2.0.4)
+  - MaterialComponents/Buttons (2.0.4):
+    - MaterialComponents/Ink
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+  - MaterialComponents/FlexibleHeader (2.0.4)
+  - MaterialComponents/HeaderStackView (2.0.4)
+  - MaterialComponents/Ink (2.0.4)
+  - MaterialComponents/NavigationBar (2.0.4):
+    - MaterialComponents/ButtonBar
+    - MaterialComponents/Typography
+  - MaterialComponents/PageControl (2.0.4)
+  - MaterialComponents/private (2.0.4):
+    - MaterialComponents/private/Color (= 2.0.4)
+    - MaterialComponents/private/ThumbTrack (= 2.0.4)
+  - MaterialComponents/private/Color (2.0.4)
+  - MaterialComponents/private/ThumbTrack (2.0.4):
+    - MaterialComponents/private/Color
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+  - MaterialComponents/ScrollViewDelegateMultiplexer (2.0.4)
+  - MaterialComponents/ShadowElevations (2.0.4)
+  - MaterialComponents/ShadowLayer (2.0.4)
+  - MaterialComponents/Slider (2.0.4):
+    - MaterialComponents/private/ThumbTrack
+  - MaterialComponents/SpritedAnimationView (2.0.4)
+  - MaterialComponents/Switch (2.0.4):
+    - MaterialComponents/private/ThumbTrack
+  - MaterialComponents/Typography (2.0.4)
+
+DEPENDENCIES:
+  - MaterialComponents (from `../../`)
+
+EXTERNAL SOURCES:
+  MaterialComponents:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  MaterialComponents: 3a8e9a69fb23f8893948923a32e4e0f6bbccd5b4
+
+COCOAPODS: 0.39.0

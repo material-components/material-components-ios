@@ -27,7 +27,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.collectionView registerClass:[PestoCardCollectionViewCell class]
             forCellWithReuseIdentifier:@"PestoCardCollectionViewCell"];
-    self.pestoData = [[PestoData alloc] init];
+    _pestoData = [[PestoData alloc] init];
     [self setNeedsStatusBarAppearanceUpdate];
   }
   return self;
@@ -74,11 +74,11 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 
 - (void)centerHeader {
   CGFloat width = [UIScreen mainScreen].bounds.size.width;
-  CGRect headerFrame = _flexHeaderContainerVC.headerViewController.headerView.bounds;
-  _logoView.center = CGPointMake(width / 2.f,
-                                 headerFrame.size.height / 2.f);
-  _logoSmallView.center = CGPointMake(width / 2.f,
-                                      headerFrame.size.height / 2.f);
+  CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
+  self.logoView.center = CGPointMake(width / 2.f,
+                                     headerFrame.size.height / 2.f);
+  self.logoSmallView.center = CGPointMake(width / 2.f,
+                                          headerFrame.size.height / 2.f);
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -105,8 +105,8 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   return self.cellSize;
 }
 
@@ -122,24 +122,24 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  _scrollOffsetY = scrollView.contentOffset.y;
-  [_flexHeaderContainerVC.headerViewController scrollViewDidScroll:scrollView];
-  CGRect headerFrame = _flexHeaderContainerVC.headerViewController.headerView.bounds;
-  _logoView.center = CGPointMake(headerFrame.size.width / 2.f,
-                                 headerFrame.size.height / 2.f);
-  _logoSmallView.center = CGPointMake(headerFrame.size.width / 2.f,
-                                      headerFrame.size.height / 2.f);
+  self.scrollOffsetY = scrollView.contentOffset.y;
+  [self.flexHeaderContainerVC.headerViewController scrollViewDidScroll:scrollView];
+  CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
+  self.logoView.center = CGPointMake(headerFrame.size.width / 2.f,
+                                     headerFrame.size.height / 2.f);
+  self.logoSmallView.center = CGPointMake(headerFrame.size.width / 2.f,
+                                          headerFrame.size.height / 2.f);
 
-  _logoScale = scrollView.contentOffset.y / -kPestoCollectionViewControllerDefaultHeaderHeight;
+  self.logoScale = scrollView.contentOffset.y / -kPestoCollectionViewControllerDefaultHeaderHeight;
 
-  if (_logoScale < 0.5f) {
-    _logoScale = 0.5f;
+  if (self.logoScale < 0.5f) {
+    self.logoScale = 0.5f;
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
         delay:0
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
-          _logoView.layer.opacity = 0;
-          _logoSmallView.layer.opacity = 1.f;
+          self.logoView.layer.opacity = 0;
+          self.logoSmallView.layer.opacity = 1.f;
         }
         completion:^(BOOL finished){
         }];
@@ -148,13 +148,14 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
         delay:0
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
-          _logoView.layer.opacity = 1.f;
-          _logoSmallView.layer.opacity = 0;
+          self.logoView.layer.opacity = 1.f;
+          self.logoSmallView.layer.opacity = 0;
         }
         completion:^(BOOL finished){
         }];
   }
-  _logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, _logoScale, _logoScale);
+  self.logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, self.logoScale,
+                                                   self.logoScale);
 }
 
 #pragma mark - Private methods

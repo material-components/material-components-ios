@@ -46,7 +46,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
 - (void)setOn:(BOOL)on {
   _on = on;
-  _switchView.on = on;
+  self.switchView.on = on;
 }
 
 @end
@@ -85,16 +85,16 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   [super layoutSubviews];
   CGFloat borderBottomYPos = CGRectGetMaxY(self.contentView.bounds) -
                              kPestoSettingsTableViewHeaderSeparatorWidth;
-  _separator.frame = CGRectMake(0,
-                                borderBottomYPos,
-                                CGRectGetWidth(self.contentView.bounds),
-                                kPestoSettingsTableViewHeaderSeparatorWidth);
+  self.separator.frame = CGRectMake(0,
+                                    borderBottomYPos,
+                                    CGRectGetWidth(self.contentView.bounds),
+                                    kPestoSettingsTableViewHeaderSeparatorWidth);
   self.backgroundView.frame = self.bounds;
 }
 
 - (void)setSeparatorColor:(UIColor *)separatorColor {
   _separatorColor = separatorColor;
-  _separator.backgroundColor = _separatorColor.CGColor;
+  self.separator.backgroundColor = self.separatorColor.CGColor;
 }
 
 @end
@@ -115,35 +115,35 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  _dummySettingHeaders = @[ @"Account", @"Notification" ];
-  _dummySettingTitles = @[ @[ @"Public Profile", @"Subscribe to Daily Digest" ],
-                           @[ @"Get email notifications", @"Get text notifications" ] ];
-  _dummySettingVals = @[ @[ @YES, @NO ], @[ @NO, @YES ] ];
+  self.dummySettingHeaders = @[ @"Account", @"Notification" ];
+  self.dummySettingTitles = @[ @[ @"Public Profile", @"Subscribe to Daily Digest" ],
+                               @[ @"Get email notifications", @"Get text notifications" ] ];
+  self.dummySettingVals = @[ @[ @YES, @NO ], @[ @NO, @YES ] ];
 
   CGRect settingsTableViewFrame =
       CGRectMake(0,
                  kPestoSettingsTableViewOffsetTop,
                  self.view.bounds.size.width,
                  self.view.bounds.size.height - kPestoSettingsTableViewOffsetTop);
-  _settingsTableView = [[UITableView alloc] initWithFrame:settingsTableViewFrame
-                                                    style:UITableViewStylePlain];
-  _settingsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  _settingsTableView.allowsSelection = NO;
-  _settingsTableView.backgroundColor = self.view.backgroundColor;
-  _settingsTableView.dataSource = self;
-  _settingsTableView.delegate = self;
-  _settingsTableView.separatorColor = [[self class] tableViewSeparatorColor];
+  self.settingsTableView = [[UITableView alloc] initWithFrame:settingsTableViewFrame
+                                                        style:UITableViewStylePlain];
+  self.settingsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  self.settingsTableView.allowsSelection = NO;
+  self.settingsTableView.backgroundColor = self.view.backgroundColor;
+  self.settingsTableView.dataSource = self;
+  self.settingsTableView.delegate = self;
+  self.settingsTableView.separatorColor = [[self class] tableViewSeparatorColor];
   // Ensure empty rows are not shown.
-  _settingsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+  self.settingsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
-  [_settingsTableView registerClass:[PestoSettingsTableViewCell class]
-             forCellReuseIdentifier:kPestoSettingsTableViewCellReuseIdentifier];
-  [_settingsTableView registerClass:[PestoSettingsTableViewHeaderView class]
+  [self.settingsTableView registerClass:[PestoSettingsTableViewCell class]
+                 forCellReuseIdentifier:kPestoSettingsTableViewCellReuseIdentifier];
+  [self.settingsTableView registerClass:[PestoSettingsTableViewHeaderView class]
       forHeaderFooterViewReuseIdentifier:kPestoSettingsTableViewHeaderViewReuseIdentifier];
 
-  [_settingsTableView reloadData];
+  [self.settingsTableView reloadData];
 
-  [self.view addSubview:_settingsTableView];
+  [self.view addSubview:self.settingsTableView];
 }
 
 + (UIColor *)tableViewSeparatorColor {
@@ -153,21 +153,21 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return [_dummySettingHeaders count];
+  return [self.dummySettingHeaders count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [(NSArray *)_dummySettingTitles[section] count];
+  return [(NSArray *)self.dummySettingTitles[section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  NSString *settingLabel = _dummySettingTitles[indexPath.section][indexPath.row];
+  NSString *settingLabel = self.dummySettingTitles[indexPath.section][indexPath.row];
   PestoSettingsTableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:kPestoSettingsTableViewCellReuseIdentifier
                                       forIndexPath:indexPath];
   cell.labelText = settingLabel;
-  cell.on = [_dummySettingVals[indexPath.section][indexPath.row] boolValue];
+  cell.on = [self.dummySettingVals[indexPath.section][indexPath.row] boolValue];
 
   return cell;
 }
@@ -188,7 +188,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell
-forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
   if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
     [cell setSeparatorInset:UIEdgeInsetsZero];
   }

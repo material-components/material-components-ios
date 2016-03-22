@@ -39,7 +39,7 @@ static CGFloat kPestoAvatarViewCircleLineWidth = 2.f;
 }
 
 - (void)layoutSubviews {
-  _imageView.layer.cornerRadius = _imageView.bounds.size.width / 2.f;
+  self.imageView.layer.cornerRadius = self.imageView.bounds.size.width / 2.f;
 }
 
 - (void)setAvatarImageURL:(NSURL *)avatarImageURL {
