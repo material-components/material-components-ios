@@ -9,7 +9,7 @@
 
 .step-sequence>li {
   border: 0;
-  padding: 0 0 64px 48px;
+  padding: 0 0 48px 48px;
   margin: 0;
   border-left: 1px solid rgba(0,0,0,0.2);
   counter-increment: step-counter;
@@ -31,6 +31,7 @@ ol.step-sequence {
 
 .step-sequence>li:last-child {
   border-left: 1px solid rgba(0,0,0,0);
+  padding-bottom: 0;
 }
 
 .step-sequence>li::before {

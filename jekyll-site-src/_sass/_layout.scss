@@ -206,6 +206,7 @@ body {
   section {
     position: relative;
     padding-top: 64px;
+    padding-bottom: 64px;
     max-width: 832px;
     margin-left: auto;
     margin-right: auto;
@@ -317,7 +318,7 @@ ul.nobullet {
 
 
 footer {
-  margin-top: 128px;
+  margin-top: 64px;
   position: relative;
   z-index: 91;
 
