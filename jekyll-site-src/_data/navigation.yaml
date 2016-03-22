@@ -49,39 +49,48 @@ components:
   - name: Components
     url: /components/#components
     class: toplevel
-  - name: Typography
-    url: /components/Typography/
-    markdown: Typography/README.md
-  - name: Ink
-    url: /components/Ink/
-    markdown: Ink/README.md
-  - name: ShadowLayer
-    url: /components/ShadowLayer/
-    markdown: ShadowLayer/README.md
-  - name: PageControl
-    url: /components/PageControl/
-    markdown: PageControl/README.md
-  - name: ScrollViewDelegateMultiplexer
-    url: /components/ScrollViewDelegateMultiplexer/
-    markdown: ScrollViewDelegateMultiplexer/README.md
-  - name: SpritedAnimationView
-    url: /components/SpritedAnimationView/
-    markdown: SpritedAnimationView/README.md
-  - name: Switch
-    url: /components/Switch/
-    markdown: Switch/README.md
-  - name: Slider
-    url: /components/Slider/
-    markdown: Slider/README.md
-  - name: ShadowElevations
-    url: /components/ShadowelEvations/
-    markdown: ShadowElevations/README.md
+  - name: AppBar
+    url: /components/AppBar/
+    markdown: AppBar/README.md
+  - name: ButtonBar
+    url: /components/ButtonBar/
+    markdown: ButtonBar/README.md
   - name: Buttons
     url: /components/Buttons/
     markdown: Buttons/README.md
+  - name: Collections
+    url: /components/Collections/
+    markdown: Collections/README.md
   - name: FlexibleHeader
     url: /components/FlexibleHeader/
     markdown: FlexibleHeader/README.md
+  - name: HeaderStackView
+    url: /components/HeaderStackView/
+    markdown: HeaderStackView/README.md
+  - name: Ink
+    url: /components/Ink/
+    markdown: Ink/README.md
+  - name: NavigationBar
+    url: /components/NavigationBar/
+    markdown: NavigationBar/README.md
+  - name: PageControl
+    url: /components/PageControl/
+    markdown: PageControl/README.md
+  - name: ShadowElevations
+    url: /components/ShadowElevations/
+    markdown: ShadowElevations/README.md
+  - name: ShadowLayer
+    url: /components/ShadowLayer/
+    markdown: ShadowLayer/README.md
+  - name: Slider
+    url: /components/Slider/
+    markdown: Slider/README.md
+  - name: Switch
+    url: /components/Switch/
+    markdown: Switch/README.md
+  - name: Typography
+    url: /components/Typography/
+    markdown: Typography/README.md
   - name: API Docs
     url: /components/#apidocs
     class: toplevel
