@@ -6,13 +6,12 @@ categories: documentation
 ---
 # Flexible header
 
-The flexible header component is a container view whose height and vertical offset react to
+The Flexible Header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
 
 ## Installation with CocoaPods
 
-To add the Flexible Header to your Xcode project using CocoaPods, add the following to your
-`Podfile`:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
     pod 'MaterialComponents/FlexibleHeader'
 
@@ -20,15 +19,15 @@ Then, run the following command:
 
     $ pod install
 
-## Software design considerations
+## Overview
 
 Classic UIKit applications use the UINavigationBar provided by a UINavigationController to display
 navigation stack-related information, such as a title, left and right bar button items, and
-optionally a custom title view. There is a singular UINavigationBar shared amongst all of the
-UINavigationController's children.
+optionally a custom title view. In this case there is a single UINavigationBar shared amongst all of
+the UINavigationController's children.
 
-The Flexible Header component deviates from this pattern: each UIViewController is expected to own
-its own Flexible Header view instance.
+The Flexible Header component deviates from this pattern: UIViewControllers arre expected to own
+their own Flexible Header view instance.
 
 This has several technical advantages:
 
@@ -165,10 +164,10 @@ manually forward the following methods to the flexible header view.
       }
     }
 
-### Step 3: Implement prefersStatusBarHidden and query the flexible header view controller
+### Step 3: Implement childViewControllerForStatusBarHidden
 
-In order to affect the status bar's visiblity you must query the header view controller.
+In order to affect the status bar's visibility you must query the header view controller.
 
-    - (BOOL)prefersStatusBarHidden {
-      return self.headerViewController.prefersStatusBarHidden;
+    - (UIViewController *)childViewControllerForStatusBarHidden {
+      return self.headerViewController;
     }
