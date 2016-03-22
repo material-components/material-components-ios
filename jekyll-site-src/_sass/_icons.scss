@@ -128,6 +128,10 @@ ul.icon-list {
       // }
     }
 
+    a[target='_blank']::before {
+      background-image: url(https://www.gstatic.com/images/icons/material/system/svg/open_in_new_24px.svg);
+    }
+
     .icon-stackoverflow a::before {
       background-image: url(https://www.gstatic.com/images/icons/material/system/svg/help_24px.svg);
     }
