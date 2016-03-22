@@ -77,7 +77,7 @@ _This code of conduct was adapted from the following sources:_
 If you have questions about how to use Material Components iOS, please direct these to
 
 - Our [Google Group mailing list](https://groups.google.com/forum/#!forum/material-components-ios-discuss),
-- The [materialcomponentsios tag on StackOverflow](http://stackoverflow.com/questions/tagged/materialcomponentsios), or
+- The [mdcios tag on StackOverflow](http://stackoverflow.com/questions/tagged/materialcomponentsios), or
 - Our [Slack discussion channel](http://googleoss.slack.com).
 
 
