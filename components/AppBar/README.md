@@ -7,21 +7,18 @@ section: documentation
 
 The App Bar is a flexible navigation bar-like component designed to provide a typical Material
 navigation experience.
-
-Learn more at the
-[Material spec](https://www.google.com/design/spec/patterns/scrolling-techniques.html).
 <!--{: .intro :}-->
 
-### Design Specifications
+### Material Design Specifications
 
-- [App Bar Structure](https://www.google.com/design/spec/layout/structure.html#structure-app-bar)
-- [Scrolling Techniques](https://www.google.com/design/spec/patterns/scrolling-techniques.html)
+- [App Bar Structure](https://www.google.com/design/spec/layout/structure.html#structure-app-bar)<!--{:target="_blank"}-->
+- [Scrolling Techniques](https://www.google.com/design/spec/patterns/scrolling-techniques.html)<!--{:target="_blank"}-->
 <!--{: .icon-list }-->
 
 ### API Documentation
 
-- [MDCAppBarContainerViewController](/apidocs/AppBar/Classes/MDCAppBarContainerViewController.html)
-- [MDCAppBarParenting](/apidocs/AppBar/Protocols/MDCAppBarParenting.html)
+- [MDCAppBarContainerViewController](/apidocs/AppBar/Classes/MDCAppBarContainerViewController.html)<!--{:target="_blank"}-->
+- [MDCAppBarParenting](/apidocs/AppBar/Protocols/MDCAppBarParenting.html)<!--{:target="_blank"}-->
 <!--{: .icon-list }-->
 
 
