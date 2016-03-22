@@ -153,21 +153,24 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return [self.dummySettingHeaders count];
+  return (NSInteger)[self.dummySettingHeaders count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [(NSArray *)self.dummySettingTitles[section] count];
+  return (NSInteger)[(NSArray *)self.dummySettingTitles[(NSUInteger)section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  NSString *settingLabel = self.dummySettingTitles[indexPath.section][indexPath.row];
+  NSString *settingLabel =
+      self.dummySettingTitles[(NSUInteger)indexPath.section][(NSUInteger)indexPath.row];
+
   PestoSettingsTableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:kPestoSettingsTableViewCellReuseIdentifier
                                       forIndexPath:indexPath];
   cell.labelText = settingLabel;
-  cell.on = [self.dummySettingVals[indexPath.section][indexPath.row] boolValue];
+  cell.on =
+      [self.dummySettingVals[(NSUInteger)indexPath.section][(NSUInteger)indexPath.row] boolValue];
 
   return cell;
 }
@@ -178,7 +181,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   NSString *reuseId = kPestoSettingsTableViewHeaderViewReuseIdentifier;
   PestoSettingsTableViewHeaderView *header =
       [tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseId];
-  header.textLabel.text = _dummySettingHeaders[section];
+  header.textLabel.text = _dummySettingHeaders[(NSUInteger)section];
   header.separatorColor = [[self class] tableViewSeparatorColor];
   return header;
 }

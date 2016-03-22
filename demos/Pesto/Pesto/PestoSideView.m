@@ -149,7 +149,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return self.titles.count;
+  return (NSInteger)self.titles.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -158,7 +158,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"PestoSideViewCollectionViewCell"
                                                 forIndexPath:indexPath];
   NSInteger itemNum = indexPath.row;
-  cell.title = self.titles[itemNum];
+  cell.title = self.titles[(NSUInteger)itemNum];
   // Show settings item as enabled.
   if ([cell.title isEqualToString:@"Settings"]) {
     cell.titleColor = [UIColor blackColor];
@@ -173,7 +173,8 @@ static NSString *const kPestoSideViewWidthBaseURL =
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   if (self.delegate &&
       [self.delegate respondsToSelector:@selector(sideContentView:didSelectItemWithTitle:)]) {
-    [self.delegate sideContentView:self didSelectItemWithTitle:_titles[[indexPath row]]];
+    [self.delegate sideContentView:self
+            didSelectItemWithTitle:_titles[(NSUInteger)[indexPath row]]];
   }
 }
 

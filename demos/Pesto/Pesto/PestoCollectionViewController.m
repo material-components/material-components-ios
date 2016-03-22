@@ -53,7 +53,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 
 - (NSInteger)collectionView:(UICollectionView *)view
      numberOfItemsInSection:(NSInteger)section {
-  return [self.pestoData.imageFileNames count];
+  return (NSInteger)[self.pestoData.imageFileNames count];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -88,7 +88,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   PestoCardCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"PestoCardCollectionViewCell"
                                                 forIndexPath:indexPath];
-  NSInteger itemNum = indexPath.row;
+  NSUInteger itemNum = (NSUInteger)indexPath.row;
   NSString *baseURL = PestoDataBaseURL;
   NSString *imageURLString =
       [baseURL stringByAppendingString:self.pestoData.imageFileNames[itemNum]];
