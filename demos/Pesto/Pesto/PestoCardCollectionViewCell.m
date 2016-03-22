@@ -64,11 +64,12 @@ static const CGFloat kPestoCardIconSize = 72.f;
                                          kPestoCardIconSize);
   self.iconImageView = [[UIImageView alloc] initWithFrame:iconImageViewFrame];
   self.iconImageView.contentMode = UIViewContentModeCenter;
+  self.iconImageView.alpha = 0.87f;
   [_cellView addSubview:_iconImageView];
 
   self.authorLabel = [[UILabel alloc] init];
   self.authorLabel.font = [MDCTypography captionFont];
-  self.authorLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1];
+  self.authorLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1.f];
   self.authorLabel.frame =
       CGRectMake(kPestoCardIconSize,
                  self.frame.size.height - self.authorLabel.font.pointSize - kPestoCardPadding,
@@ -78,6 +79,7 @@ static const CGFloat kPestoCardIconSize = 72.f;
 
   self.titleLabel = [[UILabel alloc] init];
   self.titleLabel.font = [MDCTypography headlineFont];
+  self.titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
   self.titleLabel.frame =
       CGRectMake(kPestoCardIconSize,
                  self.authorLabel.frame.origin.y - self.titleLabel.font.pointSize -

@@ -4,6 +4,7 @@ class ShrineCollectionViewController: UICollectionViewController {
 
   var headerViewController:MDCFlexibleHeaderViewController!
   private let shrineData:ShrineData
+  private var headerContentView = ShrineHeaderContentView(frame: CGRectZero)
 
   override init(collectionViewLayout layout: UICollectionViewLayout) {
     self.shrineData = ShrineData()
@@ -60,17 +61,33 @@ class ShrineCollectionViewController: UICollectionViewController {
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
     headerViewController.scrollViewDidScroll(scrollView);
+    let scrollOffsetY = scrollView.contentOffset.y;
+    let duration = 0.5
+    let options = UIViewKeyframeAnimationOptions.CalculationModeLinear
+    if (scrollOffsetY > -240) {
+      UIView.animateKeyframesWithDuration(duration, delay: 0, options: options, animations: { () -> Void in
+        self.headerContentView.scrollView.alpha = 0
+        self.headerContentView.pageControl.alpha = 0
+        }, completion: { (bool) -> Void in
+      })
+    } else {
+      UIView.animateKeyframesWithDuration(duration, delay: 0, options: options, animations: { () -> Void in
+        self.headerContentView.scrollView.alpha = 1
+        self.headerContentView.pageControl.alpha = 1
+        }, completion: { (bool) -> Void in
+      })
+    }
   }
 
   func sizeHeaderView() {
     let headerView = headerViewController.headerView
     let bounds = UIScreen.mainScreen().bounds
     if (bounds.size.width < bounds.size.height) {
-      headerView.maximumHeight = 360;
-      headerView.minimumHeight = 240;
+      headerView.maximumHeight = 440;
+      headerView.minimumHeight = 72;
     } else {
-      headerView.maximumHeight = 240;
-      headerView.minimumHeight = 240;
+      headerView.maximumHeight = 72;
+      headerView.minimumHeight = 72;
     }
   }
 
@@ -87,15 +104,15 @@ class ShrineCollectionViewController: UICollectionViewController {
   func setupHeaderView() {
     let headerView = headerViewController.headerView
     headerView.trackingScrollView = collectionView
-    headerView.maximumHeight = 360;
-    headerView.minimumHeight = 240;
+    headerView.maximumHeight = 440;
+    headerView.minimumHeight = 72;
     headerView.contentView?.backgroundColor = UIColor.whiteColor()
     headerView.contentView?.layer.masksToBounds = true
     headerView.contentView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
-    let contentView = ShrineHeaderContentView(frame:(headerView.contentView?.frame)!)
-    contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    headerView.contentView?.addSubview(contentView)
+    headerContentView.frame = (headerView.contentView?.frame)!
+    headerContentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    headerView.contentView?.addSubview(headerContentView)
   }
 
 }

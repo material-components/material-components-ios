@@ -86,12 +86,14 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
 
   UIImage *image = [UIImage imageNamed:@"Timer"];
   _iconImageView = [[UIImageView alloc] initWithImage:image];
+  _iconImageView.alpha = 0.87f;
   _iconImageView.frame = CGRectMake(0,
                                     0,
                                     _iconImageView.frame.size.width,
                                     _iconImageView.frame.size.height);
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography display1Font];
+  _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
   _titleLabel.frame = CGRectMake(0,
                                  0,
                                  _contentViewFrame.size.width - kPestoDetailSplitWidth,
