@@ -36,41 +36,75 @@ TODO: Choose links below.
 
 ## Components
 
-- [**Typography**
-  Text styles for Material Design fonts and opacities.
-  ](Typography/)
+- [**AppBar**
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  ](AppBar/)
+  <!--{: .icon-appbar }-->
 
-- [**Ink**
-  A visual ripple of ink expanding outward from the user’s touch.
-  ](Ink/)
-
-- [**ShadowLayer**
-  A shadow which uses Material Design principles for visualizing depth.
-  ](ShadowLayer/)
-
-- [**PageControl**
-  A drop-in Material Design replacement for UIPageControl.
-  ](PageControl/)
-
-- [**SpritedAnimationView**
-  An alternative to animating an array of images with an UIImageView.
-  ](SpritedAnimationView/)
-
-- [**Switch**
-  A Material Design on/off switch with an interface similar to UISwitch.
-  ](Switch/)
-
-- [**Slider**
-  A Material Design control for selecting from a range of values.
-  ](Slider/)
+- [**ButtonBar**
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  ](ButtonBar/)
+  <!--{: .icon-buttonbar }-->
 
 - [**Buttons**
   Material Design buttons, including a flat button, a raised button and a floating action button.
   ](Buttons/)
+  <!--{: .icon-buttons }-->
+
+- [**Collections**
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  ](Collections/)
+  <!--{: .icon-collections }-->
 
 - [**FlexibleHeader**
   A container view whose height and vertical offset react to UIScrollViewDelegate events.
   ](FlexibleHeader/)
+  <!--{: .icon-flexibleheader }-->
+
+- [**HeaderStackView**
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  ](HeaderStackView/)
+  <!--{: .icon-headerstackview }-->
+
+- [**Ink**
+  A visual ripple of ink expanding outward from the user’s touch.
+  ](Ink/)
+  <!--{: .icon-ink }-->
+
+- [**NavigationBar**
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  ](NavigationBar/)
+  <!--{: .icon-navigationbar }-->
+
+- [**PageControl**
+  A drop-in Material Design replacement for UIPageControl.
+  ](PageControl/)
+  <!--{: .icon-pagecontrol }-->
+
+- [**ShadowElevations**
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  ](ShadowElevations/)
+  <!--{: .icon-shadowelevations }-->
+
+- [**ShadowLayer**
+  A shadow which uses Material Design principles for visualizing depth.
+  ](ShadowLayer/)
+  <!--{: .icon-shadowlayer }-->
+
+- [**Slider**
+  A Material Design control for selecting from a range of values.
+  ](Slider/)
+  <!--{: .icon-slider }-->
+
+- [**Switch**
+  A Material Design on/off switch with an interface similar to UISwitch.
+  ](Switch/)
+  <!--{: .icon-switch }-->
+
+- [**Typography**
+  Text styles for Material Design fonts and opacities.
+  ](Typography/)
+  <!--{: .icon-typography }-->
 <!--{: .icon-list .large-format }-->
 
 
