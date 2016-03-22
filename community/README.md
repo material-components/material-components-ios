@@ -23,24 +23,7 @@ Material Components for iOS is intended to be a full open source project that ac
 
 ## Community Structure
 
-Members of the Core Team are engineers from Google, Inc. responsible for the strategic direction of Material components and appointment of technical leaders from the community. The Core Team will work with the community to accept contributions in line with the [Material Design spec](http://www.google.com/design/spec).
-
-
-
-
-
-- - -
-
-## Core team
-- Alastair Tse - Tech Lead - [altse@google.com] (mailto:altse@google.com) 
-- Adrian Secord - Tech Lead - [ajsecord@google.com] (mailto:ajsecord@google.com)
-- Katy Kasmai - Engineering Program Manager - [katykasmai@google.com] (mailto:katykasmai@google.com)
-- Chris Cox - UX Engineer - [cjcox@google.com] (mailto:cjcox@google.com) 
-- Jeff Verkoeyen - Software Designer - [featherless@google.com] (mailto:featherless@google.com)
-- Ian Gordon - Software Engineer - [iangordon@google.com] (mailto:iangordon@google.com)
-- Randall Li - Software Engineer - [randallli@google.com] (mailto:randallli@google.com)
-- Junius Gunaratne - UX Engineer - [junius@google.com] (mailto:junius@google.com)
-
+Members of the core team are engineers from Google, Inc. responsible for the strategic direction of Material Components and appointment of technical leaders from the community. The Core Team will work with the community to accept contributions in line with the [Material Design spec](http://www.google.com/design/spec). You can reach members of the core team on our [Slack discussion channel](http://googleoss.slack.com).
 
 
 
