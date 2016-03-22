@@ -12,7 +12,7 @@
 
 @interface PestoSideView : UIView
 
-@property(weak) id<PestoSideViewDelegate> delegate;
+@property(weak, nonatomic) id<PestoSideViewDelegate> delegate;
 
 - (void)showSideView;
 

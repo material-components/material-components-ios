@@ -71,7 +71,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 @property(nonatomic) NSArray *titles;
 @property(nonatomic) NSCache *imageCache;
 @property(nonatomic) UICollectionView *collectionView;
-@property(weak) id<PestoSideContentViewDelegate> delegate;
+@property(weak, nonatomic) id<PestoSideContentViewDelegate> delegate;
 
 @end
 
