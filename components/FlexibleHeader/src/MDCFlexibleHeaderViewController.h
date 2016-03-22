@@ -35,7 +35,7 @@
 
  scrollView.delegate = headerViewController;
  */
-@interface MDCFlexibleHeaderViewController : UIViewController <UIScrollViewDelegate>
+@interface MDCFlexibleHeaderViewController : UIViewController <UIScrollViewDelegate, UITableViewDelegate>
 
 /** The flexible header view instance that this controller manages. */
 @property(nonatomic, strong, nonnull, readonly) MDCFlexibleHeaderView *headerView;
