@@ -74,10 +74,9 @@ nav.tabs {
 }
 
 #sidenav {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 64px;
-  bottom: 0;
   width: 296px;
   overflow-x: hidden;
   overflow-y: auto;
