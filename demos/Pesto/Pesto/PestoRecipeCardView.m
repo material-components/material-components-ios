@@ -214,17 +214,17 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
 }
 
 - (void)setTitle:(NSString *)title {
-  _title = title;
+  _title = [title copy];
   self.titleLabel.text = _title;
 }
 
 - (void)setIconImageName:(NSString *)iconImageName {
-  _iconImageName = iconImageName;
+  _iconImageName = [iconImageName copy];
   _iconImageView.image = [UIImage imageNamed:_iconImageName];
 }
 
 - (void)setDescText:(NSString *)descText {
-  _descText = descText;
+  _descText = [descText copy];
 
   NSMutableParagraphStyle *descParagraphStyle = [[NSMutableParagraphStyle alloc] init];
   descParagraphStyle.lineHeightMultiple = 1.2f;

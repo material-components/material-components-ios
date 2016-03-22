@@ -17,7 +17,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @interface PestoSideViewCollectionViewCell : UICollectionViewCell
 
-@property(nonatomic) NSString *title;
+@property(nonatomic, copy) NSString *title;
 @property(nonatomic) UIColor *titleColor;
 @property(nonatomic) UILabel *titleLabel;
 

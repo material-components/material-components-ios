@@ -13,7 +13,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
 @interface PestoSettingsTableViewCell : UITableViewCell
 
-@property(nonatomic) NSString *labelText;
+@property(nonatomic, copy) NSString *labelText;
 @property(nonatomic) BOOL on;
 
 @end
@@ -40,7 +40,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 }
 
 - (void)setLabelText:(NSString *)labelText {
-  _labelText = labelText;
+  _labelText = [labelText copy];
   self.textLabel.text = _labelText;
 }
 
