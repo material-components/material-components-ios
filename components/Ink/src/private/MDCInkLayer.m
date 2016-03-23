@@ -145,8 +145,9 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 static CGFloat const kMDCInkLayerForegroundBoundedOpacityExitDuration = 0.4f;
 static CGFloat const kMDCInkLayerForegroundBoundedPositionExitDuration = 0.3f;
 static CGFloat const kMDCInkLayerForegroundBoundedRadiusExitDuration = 0.8f;
-static CGFloat const kMDCInkLayerForegroundBoundedScaleDelay = 0.08f;
 static CGFloat const kMDCInkLayerForegroundRadiusGrowthMultiplier = 350.f;
+static CGFloat const kMDCInkLayerForegroundUnboundedEnterDelay = 0.08f;
+static CGFloat const kMDCInkLayerForegroundUnboundedOpacityEnterDuration = 0.12f;
 static CGFloat const kMDCInkLayerForegroundWaveTouchDownAcceleration = 1024.f;
 static CGFloat const kMDCInkLayerForegroundWaveTouchUpAcceleration = 3400.f;
 static NSString *const kMDCInkLayerForegroundOpacityAnim = @"foregroundOpacityAnim";
@@ -177,11 +178,12 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundScaleAnim = [self scaleAnimWithValues:@[ @0 ] times:@[ @0 ]];
   } else {
     _foregroundOpacityAnim = [self opacityAnimWithValues:@[ @0, @1 ] times:@[ @0, @1 ]];
+    _foregroundOpacityAnim.duration = kMDCInkLayerForegroundUnboundedOpacityEnterDuration;
 
     CGFloat duration = (CGFloat)sqrt(self.radius / kMDCInkLayerForegroundWaveTouchDownAcceleration);
     _foregroundScaleAnim =
         [self scaleAnimWithValues:@[ @0, @1 ]
-                            times:@[ @(kMDCInkLayerForegroundBoundedScaleDelay), @1 ]];
+                            times:@[ @(kMDCInkLayerForegroundUnboundedEnterDelay), @1 ]];
     _foregroundScaleAnim.duration = duration;
 
     CGFloat xOffset = self.targetFrame.origin.x - self.inkLayer.frame.origin.x;
@@ -199,6 +201,7 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundPositionAnim = [self positionAnimWithPath:movePath.CGPath
                                                 duration:duration
                                           timingFunction:linearTimingFunction];
+    _foregroundPositionAnim.keyTimes = @[ @(kMDCInkLayerForegroundUnboundedEnterDelay), @1 ];
     [self addAnimation:_foregroundPositionAnim forKey:kMDCInkLayerForegroundPositionAnim];
   }
   [self addAnimation:_foregroundOpacityAnim forKey:kMDCInkLayerForegroundOpacityAnim];
