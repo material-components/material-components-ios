@@ -133,7 +133,7 @@ for directory in $ICONS_COMPONENT_PATH/icons/*/; do
     iss.subspec "$icon_name" do |ss|
       ss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/*.{h,m}"
       ss.resource_bundles = {
-        "MaterialIcon+$icon_name" => [
+        "MaterialIcon_$icon_name" => [
           "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/MaterialIcon+$icon_name.bundle/**/*.png",
           "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/MaterialIcon+$icon_name.bundle/*.xcassets"
         ]
@@ -206,7 +206,7 @@ EOL
 
 #import "MDCIcons+BundleLoader.h"
 
-static NSString *const kBundleName = @"MaterialIcon+$icon_name";
+static NSString *const kBundleName = @"MaterialIcon_$icon_name";
 static NSString *const kIconName = @"$icon_name";
 
 @implementation MDCIcons ($icon_name)

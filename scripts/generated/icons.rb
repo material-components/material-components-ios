@@ -9,7 +9,7 @@ def registerIcons(s)
     iss.subspec "ic_arrow_back" do |ss|
       ss.source_files = "components/private/Icons/icons/ic_arrow_back/src/*.{h,m}"
       ss.resource_bundles = {
-        "MaterialIcon+ic_arrow_back" => [
+        "MaterialIcon_ic_arrow_back" => [
           "components/private/Icons/icons/ic_arrow_back/MaterialIcon+ic_arrow_back.bundle/**/*.png",
           "components/private/Icons/icons/ic_arrow_back/MaterialIcon+ic_arrow_back.bundle/*.xcassets"
         ]
