@@ -3,7 +3,7 @@
 def registerIcons(s)
 
   s.subspec "Icons" do |iss|
-    iss.source_files = "components/private/Icons/src/*.{h,m}"
+    iss.source_files = "components/private/Icons/src/*.{h,m}", "components/private/Icons/src/private/*.{h,m}"
 
 
     iss.subspec "ic_arrow_back" do |ss|
