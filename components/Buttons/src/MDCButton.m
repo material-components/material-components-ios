@@ -333,7 +333,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 - (void)uppercaseAllTitles {
   // This ensures existing titles will get capitalized.
   UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
-  UIControlStateDisabled | UIControlStateSelected;
+                                    UIControlStateDisabled | UIControlStateSelected;
   for (UIControlState state = 0; state <= allControlStates; ++state) {
     NSString *title = [self titleForState:state];
     if (title) {
