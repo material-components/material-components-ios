@@ -11,14 +11,16 @@ horizontally-aligned list of buttons.
 
 ### Material Design Specifications
 
-- [TODO Spec Link](https://www.google.com/design/spec/)<!--{:target="_blank"}-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-link"><a href="https://www.google.com/design/spec/">TODO</a></li>
+</ul>
 
 ### API Documentation
 
-- [MDCButtonBar](/apidocs/ButtonBar/Classes/MDCButtonBar.html)<!--{:target="_blank"}-->
-- [MDCButtonBarDelegate](/apidocs/ButtonBar/Protocols/MDCButtonBarDelegate.html)<!--{:target="_blank"}-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-link"><a href="/apidocs/ButtonBar/Classes/MDCButtonBar.html">MDCButtonBar</a></li>
+  <li class="icon-link"><a href="/apidocs/ButtonBar/Protocols/MDCButtonBarDelegate.html">MDCButtonBarDelegate</a></li>
+</ul>
 
 
 - - -

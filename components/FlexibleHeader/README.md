@@ -11,18 +11,22 @@ UIScrollViewDelegate events.
 
 ### Material Design Specifications
 
-- [Scrolling Techniques](https://www.google.com/design/spec/patterns/scrolling-techniques.html)<!--{:target="_blank"}-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-link"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+</ul>
+
 
 
 ### API Documentation
 
-- [MDCFlexibleHeaderContainerViewController](/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderContainerViewController.html)<!--{:target="_blank"}-->
-- [MDCFlexibleHeaderView](/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderView.html)<!--{:target="_blank"}-->
-- [MDCFlexibleHeaderViewController](/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderViewController.html)<!--{:target="_blank"}-->
-- [MDCFlexibleHeaderViewDelegate](/apidocs/FlexibleHeader/Protocols/MDCFlexibleHeaderViewDelegate.html)<!--{:target="_blank"}-->
-- [MDCFlexibleHeaderViewLayoutDelegate](/apidocs/FlexibleHeader/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html)<!--{:target="_blank"}-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
+  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
+</ul>
+
 
 
 - - -

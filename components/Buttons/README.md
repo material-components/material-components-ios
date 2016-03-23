@@ -15,16 +15,19 @@ action button.
 
 ### Material Design Specifications
 
-- [Buttons](http://www.google.com/design/spec/components/buttons.html)<!--{:target="_blank"}-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-link"><a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a></li>
+</ul>
 
 ### API Documentation
 
-- [MDCButton](/apidocs/Buttons/Classes/MDCButton.html)<!--{:target="_blank"}-->
-- [MDCFlatButton](/apidocs/Buttons/Classes/MDCFlatButton.html)<!--{:target="_blank"}-->
-- [MDCFloatingButton](/apidocs/Buttons/Classes/MDCFloatingButton.html)<!--{:target="_blank"}-->
-- [MDCRaisedButton](/apidocs/Buttons/Classes/MDCRaisedButton.html)<!--{:target="_blank"}-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCButton.html">MDCButton</a></li>
+  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
+  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
+  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCRaisedButton.html">MDCRaisedButton</a></li>
+</ul>
+
 
 - - -
 
