@@ -1,22 +1,22 @@
 PODS:
-  - MaterialComponents (2.1.0):
-    - MaterialComponents/AppBar (= 2.1.0)
-    - MaterialComponents/ButtonBar (= 2.1.0)
-    - MaterialComponents/Buttons (= 2.1.0)
-    - MaterialComponents/FlexibleHeader (= 2.1.0)
-    - MaterialComponents/HeaderStackView (= 2.1.0)
-    - MaterialComponents/Ink (= 2.1.0)
-    - MaterialComponents/NavigationBar (= 2.1.0)
-    - MaterialComponents/PageControl (= 2.1.0)
-    - MaterialComponents/private (= 2.1.0)
-    - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.1.0)
-    - MaterialComponents/ShadowElevations (= 2.1.0)
-    - MaterialComponents/ShadowLayer (= 2.1.0)
-    - MaterialComponents/Slider (= 2.1.0)
-    - MaterialComponents/SpritedAnimationView (= 2.1.0)
-    - MaterialComponents/Switch (= 2.1.0)
-    - MaterialComponents/Typography (= 2.1.0)
-  - MaterialComponents/AppBar (2.1.0):
+  - MaterialComponents (2.1.1):
+    - MaterialComponents/AppBar (= 2.1.1)
+    - MaterialComponents/ButtonBar (= 2.1.1)
+    - MaterialComponents/Buttons (= 2.1.1)
+    - MaterialComponents/FlexibleHeader (= 2.1.1)
+    - MaterialComponents/HeaderStackView (= 2.1.1)
+    - MaterialComponents/Ink (= 2.1.1)
+    - MaterialComponents/NavigationBar (= 2.1.1)
+    - MaterialComponents/PageControl (= 2.1.1)
+    - MaterialComponents/private (= 2.1.1)
+    - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.1.1)
+    - MaterialComponents/ShadowElevations (= 2.1.1)
+    - MaterialComponents/ShadowLayer (= 2.1.1)
+    - MaterialComponents/Slider (= 2.1.1)
+    - MaterialComponents/SpritedAnimationView (= 2.1.1)
+    - MaterialComponents/Switch (= 2.1.1)
+    - MaterialComponents/Typography (= 2.1.1)
+  - MaterialComponents/AppBar (2.1.1):
     - MaterialComponents/Buttons
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
@@ -25,43 +25,43 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (2.1.0)
-  - MaterialComponents/Buttons (2.1.0):
+  - MaterialComponents/ButtonBar (2.1.1)
+  - MaterialComponents/Buttons (2.1.1):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/FlexibleHeader (2.1.0)
-  - MaterialComponents/HeaderStackView (2.1.0)
-  - MaterialComponents/Ink (2.1.0)
-  - MaterialComponents/NavigationBar (2.1.0):
+  - MaterialComponents/FlexibleHeader (2.1.1)
+  - MaterialComponents/HeaderStackView (2.1.1)
+  - MaterialComponents/Ink (2.1.1)
+  - MaterialComponents/NavigationBar (2.1.1):
     - MaterialComponents/ButtonBar
     - MaterialComponents/Typography
-  - MaterialComponents/PageControl (2.1.0)
-  - MaterialComponents/private (2.1.0):
-    - MaterialComponents/private/Color (= 2.1.0)
-    - MaterialComponents/private/Icons (= 2.1.0)
-    - MaterialComponents/private/ThumbTrack (= 2.1.0)
-  - MaterialComponents/private/Color (2.1.0)
-  - MaterialComponents/private/Icons (2.1.0):
-    - MaterialComponents/private/Icons/ic_arrow_back (= 2.1.0)
-  - MaterialComponents/private/Icons/ic_arrow_back (2.1.0)
-  - MaterialComponents/private/ThumbTrack (2.1.0):
+  - MaterialComponents/PageControl (2.1.1)
+  - MaterialComponents/private (2.1.1):
+    - MaterialComponents/private/Color (= 2.1.1)
+    - MaterialComponents/private/Icons (= 2.1.1)
+    - MaterialComponents/private/ThumbTrack (= 2.1.1)
+  - MaterialComponents/private/Color (2.1.1)
+  - MaterialComponents/private/Icons (2.1.1):
+    - MaterialComponents/private/Icons/ic_arrow_back (= 2.1.1)
+  - MaterialComponents/private/Icons/ic_arrow_back (2.1.1)
+  - MaterialComponents/private/ThumbTrack (2.1.1):
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/ScrollViewDelegateMultiplexer (2.1.0)
-  - MaterialComponents/ShadowElevations (2.1.0)
-  - MaterialComponents/ShadowLayer (2.1.0)
-  - MaterialComponents/Slider (2.1.0):
+  - MaterialComponents/ScrollViewDelegateMultiplexer (2.1.1)
+  - MaterialComponents/ShadowElevations (2.1.1)
+  - MaterialComponents/ShadowLayer (2.1.1)
+  - MaterialComponents/Slider (2.1.1):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/SpritedAnimationView (2.1.0)
-  - MaterialComponents/Switch (2.1.0):
+  - MaterialComponents/SpritedAnimationView (2.1.1)
+  - MaterialComponents/Switch (2.1.1):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (2.1.0)
-  - MaterialComponentsCatalog (2.1.0):
+  - MaterialComponents/Typography (2.1.1)
+  - MaterialComponentsCatalog (2.1.1):
     - MaterialComponents
-  - MaterialComponentsUnitTests (2.1.0):
+  - MaterialComponentsUnitTests (2.1.1):
     - MaterialComponents
 
 DEPENDENCIES:
@@ -78,8 +78,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 35b62b4b93b87122b842f99ccfb39728511b9904
-  MaterialComponentsCatalog: 324ac07746f6fbf8ff34af8d4a328a3dfd567b2d
-  MaterialComponentsUnitTests: 60c2725c7c58643b29b56af334a22da8646b7e47
+  MaterialComponents: 4a7b0438bd6974a7b0df951b53c26a48951b60d7
+  MaterialComponentsCatalog: f20a70ba3612ba3a449e6bc4bee8da4eef3a7885
+  MaterialComponentsUnitTests: a7f5e41c4e8a708fc315eeaeff0dc0f2da40299b
 
 COCOAPODS: 0.39.0
