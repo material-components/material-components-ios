@@ -6,6 +6,41 @@
 
 ##### Bug Fixes
 
+## 2.1.1
+
+##### Enhancements
+
+###### Code
+* [AppBar] Add App Bar builder API. (Jeff Verkoeyen)
+* [AppBar] Fix compiler warnings about formatting NSIntegers. (Adrian Secord)
+* [FlexibleHeader] MDCFlexibleHeaderViewController conforms to * UITableViewDelegate. (Jeff Verkoeyen)
+* [Ink] Updated the ink example to include smaller shapes. (Adrian Secord)
+* [Ink] Visual adjustments to ink ripple (Junius Gunaratne)
+* [NavigationBar] Add back button icon. (Jeff Verkoeyen)
+
+###### Examples
+* [Demos] Updates to header behavior and minor layout changes after UX review (* Junius Gunaratne)
+* [Pesto] Adding 'nonatomic' attribute to all delegates (Will Larche)
+* [Pesto] Corrections for build warnings (Will Larche)
+* [Pesto] making string and URL propertys 'copy' (Will Larche)
+* [Pesto] Style update: @property ivars (larche)
+* [Pesto] Update card zoom animation to be more Material Design like (Junius * Gunaratne)
+
+###### Docs and site
+* [Docs] Minor touchups to FlexibleHeader readme. (Jeff Verkoeyen)
+* [Docs] Minor updates to AppBar readme. (Jeff Verkoeyen)
+* [Docs] Updated community/README.md (Katy Kasmai)
+* [FlexibleHeader] README.md formatting. (Jason Striegel)
+* [Site] AppBar jump links to open in new tab. (Jason Striegel)
+* [Site] Buttons jump link formatting. (Jason Striegel)
+* [Site] Corrected links and formatting. (Jason Striegel)
+* [Site] Formatting markdown structure for site. (Jason Striegel)
+* [Site] Jump link styling for ButtonBar README. (Jason Striegel)
+* [Site] New formatting for Buttons documentation. (Jason Striegel)
+* [Site] Removing defunct placeholder documents. (Jason Striegel)
+* [Site] Replacing lorem with description content, where possible. (Jason * Striegel)
+* [Site] Update component landing page's nav list (Yiran Mao)
+
 ## 2.1.0
 
 ##### Enhancements
