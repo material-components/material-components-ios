@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "2.1.0"
+  s.version      = "2.1.1"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
@@ -41,7 +41,12 @@ Pod::Spec.new do |s|
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
 
+    ss.resource_bundles = {
+      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/Images.xcassets/*/*.png"]
+    }
+
     # Navigation bar contents
+    ss.dependency "MaterialComponents/Buttons"
     ss.dependency "MaterialComponents/HeaderStackView"
     ss.dependency "MaterialComponents/NavigationBar"
     ss.dependency "MaterialComponents/Typography"

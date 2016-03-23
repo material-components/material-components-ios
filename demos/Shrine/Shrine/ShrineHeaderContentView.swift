@@ -4,10 +4,10 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
   var remoteImageService = RemoteImageService()
 
+  var pageControl = MDCPageControl()
+  var scrollView = UIScrollView()
   private let logoImageView = UIImageView(image: UIImage(named: "ShrineLogo"))
   private var pages = NSMutableArray()
-  private var pageControl = MDCPageControl()
-  private var scrollView = UIScrollView()
   private var label = UILabel()
   private var labelDesc = UILabel()
   private var label2 = UILabel()
@@ -23,7 +23,14 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+    commonInit()
+  }
 
+  required init(coder: NSCoder) {
+    super.init(coder: coder)!
+  }
+
+  func commonInit() {
     let boundsWidth = CGRectGetWidth(self.bounds)
     let boundsHeight = CGRectGetHeight(self.bounds)
     scrollView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
@@ -56,10 +63,6 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     self.addSubview(logoImageView)
   }
 
-  required init(coder: NSCoder) {
-    super.init(coder: coder)!
-  }
-
   func addPageContent() {
     let firstPage = pages[0]
     let secondPage = pages[1]
@@ -77,7 +80,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     }
 
     let fontAbril = UIFont(name: "AbrilFatface-Regular", size: 36)
-    let fontHelvetica = UIFont(name: "Helvetica", size: 10)
+    let fontHelvetica = UIFont(name: "Helvetica", size: 14)
     let textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
     let cyanBoxColor = UIColor(red: 0.19, green: 0.94, blue: 0.94, alpha: 1)
     let descColor = UIColor(white: 0.54, alpha: 1)
@@ -201,7 +204,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
       70, labelWidth, label.frame.size.height)
 
     let labelDescWidth = CGFloat(200)
-    let labelDescWidthFrame = CGRectMake(self.frame.size.width - labelDescWidth,
+    let labelDescWidthFrame = CGRectMake(self.frame.size.width - labelDescWidth - 10,
       170, labelDescWidth, 40)
 
     label.frame = labelWidthFrame
@@ -211,7 +214,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     label3.frame = labelWidthFrame
     labelDesc3.frame = labelDescWidthFrame
 
-    let cyanBoxFrame = CGRectMake(self.frame.size.width - 200, 160, 100, 8)
+    let cyanBoxFrame = CGRectMake(self.frame.size.width - 210, 160, 100, 8)
     cyanBox.frame = cyanBoxFrame
     cyanBox2.frame = cyanBoxFrame
     cyanBox3.frame = cyanBoxFrame

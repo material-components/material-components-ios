@@ -18,12 +18,36 @@
 
 #import "MaterialInk.h"
 
+// A set of UILabels in an variety of shapes to tap on.
+//
+// Something like:
+//
+// .----.----.----.----.  .----.
+// .                   .  .    .
+// .                   .  .    .
+// .                   .  .    .
+// .                   .  .    .
+// .                   .  .    .
+// .                   .  .    .
+// .                   .  .    .
+//  ----.----.----.----    ----
+//
+// .----.----.----.----.  .----.
+// .                   .  .    .
+// .                   .  .    .
+//  ----.----.----.----    ----
+@interface ExampleShapes : UIView
+@property(nonatomic) CGFloat padding;
+@property(nonatomic) CGFloat ratio;
+@property(nonatomic, strong) UIColor *shapeColor;
+@property(nonatomic, copy) NSString *title;
+@end
+
 @interface InkTypicalUseViewController : UIViewController
 @end
 
 @interface InkTypicalUseViewController () <MDCInkTouchControllerDelegate>
-@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
-@property(nonatomic, strong) MDCInkTouchController *inkTouchController2;
+@property(nonatomic, strong) NSMutableArray *inkTouchControllers;  // MDCInkTouchControllers.
 @end
 
 @implementation InkTypicalUseViewController
@@ -37,43 +61,39 @@
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1.f];
+  _inkTouchControllers = [[NSMutableArray alloc] init];
 
-  CGRect customFrame = CGRectMake(0, 0, 256, 144);
-  UIView *customView = [[UIView alloc] initWithFrame:customFrame];
-  customView.center = CGPointMake(self.view.center.x, self.view.center.y - customFrame.size.height);
-  customView.backgroundColor = [UIColor whiteColor];
-  [self.view addSubview:customView];
+  CGRect customFrame = CGRectMake(0, 0, 200, 200);
+  CGFloat spacing = 16;
+  ExampleShapes *boundedShapes = [[ExampleShapes alloc] initWithFrame:customFrame];
+  boundedShapes.title = @"Bounded";
+  boundedShapes.center = CGPointMake(self.view.center.x,
+                                     self.view.center.y -
+                                         (spacing / 2 + customFrame.size.height / 2));
+  boundedShapes.shapeColor = [UIColor whiteColor];
+  for (UIView *view in boundedShapes.subviews) {
+    MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:view];
+    inkTouchController.delegate = self;
+    [inkTouchController addInkView];
+    [_inkTouchControllers addObject:inkTouchController];
+  }
+  [self.view addSubview:boundedShapes];
 
-  UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-  label.text = @"Tap here (bounded ink)";
-  label.textColor = [UIColor grayColor];
-  label.frame = customFrame;
-  label.textAlignment = NSTextAlignmentCenter;
-  [customView addSubview:label];
-
-  _inkTouchController = [[MDCInkTouchController alloc] initWithView:customView];
-  _inkTouchController.delegate = self;
-  [_inkTouchController addInkView];
-
-  UIView *customView2 = [[UIView alloc] initWithFrame:customFrame];
-  customView2.center = CGPointMake(self.view.center.x,
-                                   self.view.center.y + customFrame.size.height);
-  customView2.backgroundColor = [UIColor whiteColor];
-  [self.view addSubview:customView2];
-
-  UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectZero];
-  label2.text = @"Tap here (unbounded ink)";
-  label2.textColor = [UIColor grayColor];
-  label2.frame = customFrame;
-  label2.textAlignment = NSTextAlignmentCenter;
-  [customView2 addSubview:label2];
-
-  _inkTouchController2 = [[MDCInkTouchController alloc] initWithView:customView2];
-  _inkTouchController2.delegate = self;
-  [_inkTouchController2 addInkView];
-  [_inkTouchController2.inkView setInkColor:[UIColor colorWithRed:1.f green:0 blue:0 alpha:0.2f]];
-  _inkTouchController2.inkView.clipsRippleToBounds = NO;
-  _inkTouchController2.inkView.maxRippleRadius = 180.f;
+  ExampleShapes *unboundedShapes = [[ExampleShapes alloc] initWithFrame:customFrame];
+  unboundedShapes.title = @"Unbounded";
+  unboundedShapes.center = CGPointMake(self.view.center.x,
+                                       self.view.center.y +
+                                           (spacing / 2 + customFrame.size.height / 2));
+  unboundedShapes.shapeColor = [UIColor whiteColor];
+  for (UIView *view in unboundedShapes.subviews) {
+    MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:view];
+    inkTouchController.delegate = self;
+    [inkTouchController addInkView];
+    [inkTouchController.inkView setInkColor:[UIColor colorWithRed:1.f green:0 blue:0 alpha:0.2f]];
+    inkTouchController.inkView.clipsRippleToBounds = NO;
+    [_inkTouchControllers addObject:inkTouchController];
+  }
+  [self.view addSubview:unboundedShapes];
 }
 
 #pragma mark - Private
@@ -85,6 +105,100 @@
         inkTouchController,
         inkView,
         NSStringFromCGPoint(location));
+}
+
+@end
+
+@interface ExampleShapes ()
+@property(nonatomic, strong) UILabel *titleLabel;
+@end
+
+@implementation ExampleShapes
+
+- (id)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _padding = 8;
+    _ratio = 4;
+
+    for (int i = 0; i < 4; ++i) {
+      UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+      [self addSubview:view];
+
+      if (i == 0) {
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [view addSubview:_titleLabel];
+      }
+    }
+  }
+  return self;
+}
+
+- (void)setShapeColor:(UIColor *)shapeColor {
+  if ([_shapeColor isEqual:shapeColor]) {
+    return;
+  }
+
+  for (UIView *view in self.subviews) {
+    view.backgroundColor = shapeColor;
+  }
+}
+
+- (NSString *)title {
+  return _titleLabel.text;
+}
+
+- (void)setTitle:(NSString *)title {
+  _titleLabel.text = title;
+}
+
+- (void)layoutSubviews {
+  CGFloat totalLength = MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+
+  // There are two shapes in each direction, so three margins total.
+  CGFloat available = totalLength - 3 * self.padding;
+  if (available <= 0) {
+    return;
+  }
+
+  // Construct the shape with the right size but at (0,0) and transform later.
+  CGFloat shortLength = available / (1 + self.ratio);
+  CGFloat longLength = self.ratio * shortLength;
+
+  CGRect bigSquareFrame = CGRectMake(0, 0, longLength, longLength);
+
+  CGRect vertFrame = CGRectMake(CGRectGetMaxX(bigSquareFrame) + self.padding,
+                                0,
+                                shortLength,
+                                longLength);
+
+  CGRect horzFrame = CGRectMake(0,
+                                CGRectGetMaxY(bigSquareFrame) + self.padding,
+                                longLength,
+                                shortLength);
+
+  CGRect smallSquareFrame = CGRectMake(CGRectGetMaxX(bigSquareFrame) + self.padding,
+                                       CGRectGetMaxY(bigSquareFrame) + self.padding,
+                                       shortLength,
+                                       shortLength);
+
+  // Offset the frames so they have the correct leading padding.
+  CGRect frames[] = {bigSquareFrame, vertFrame, horzFrame, smallSquareFrame};
+  for (int i = 0; i < 4; ++i) {
+    frames[i] = CGRectOffset(frames[i], self.padding, self.padding);
+  }
+
+  NSArray *subviews = self.subviews;
+  NSAssert(subviews.count == 4, @"");
+  for (int i = 0; i < 4; ++i) {
+    UIView *view = subviews[i];
+    view.frame = frames[i];
+    if (i == 0) {
+      _titleLabel.frame = CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height);
+      _titleLabel.textAlignment = NSTextAlignmentCenter;
+      _titleLabel.textColor = [UIColor grayColor];
+    }
+  }
 }
 
 @end

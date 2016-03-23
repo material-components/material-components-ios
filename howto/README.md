@@ -52,7 +52,7 @@ TODO: Choose links below.
 
     ~~~ bash
     $ cd your-project-directory
-    xxx: your-project-directory $ pod init
+    your-project-directory $ pod init
     ~~~
 
 3.  ## Edit Podfile

@@ -26,15 +26,15 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
   if (self) {
     CGFloat leftWidth = kPestoDetailSplitWidth;
     CGFloat height = frame.size.height;
-    self.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 1.f, leftWidth, height)];
-    [self.leftView addSubview:leftView];
-    [self addSubview:self.leftView];
+    _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 1.f, leftWidth, height)];
+    [_leftView addSubview:leftView];
+    [self addSubview:_leftView];
     CGRect rightFrame = CGRectMake(leftWidth, 0, self.frame.size.width - leftWidth, height);
-    self.rightView = [[UIView alloc] initWithFrame:rightFrame];
-    [self.rightView addSubview:rightView];
-    self.rightView.autoresizingMask =
+    _rightView = [[UIView alloc] initWithFrame:rightFrame];
+    [_rightView addSubview:rightView];
+    _rightView.autoresizingMask =
         UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self addSubview:self.rightView];
+    [self addSubview:_rightView];
   }
   return self;
 }
@@ -86,12 +86,14 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
 
   UIImage *image = [UIImage imageNamed:@"Timer"];
   _iconImageView = [[UIImageView alloc] initWithImage:image];
+  _iconImageView.alpha = 0.87f;
   _iconImageView.frame = CGRectMake(0,
                                     0,
                                     _iconImageView.frame.size.width,
                                     _iconImageView.frame.size.height);
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography display1Font];
+  _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
   _titleLabel.frame = CGRectMake(0,
                                  0,
                                  _contentViewFrame.size.width - kPestoDetailSplitWidth,
@@ -212,17 +214,17 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
 }
 
 - (void)setTitle:(NSString *)title {
-  _title = title;
-  _titleLabel.text = _title;
+  _title = [title copy];
+  self.titleLabel.text = _title;
 }
 
 - (void)setIconImageName:(NSString *)iconImageName {
-  _iconImageName = iconImageName;
+  _iconImageName = [iconImageName copy];
   _iconImageView.image = [UIImage imageNamed:_iconImageName];
 }
 
 - (void)setDescText:(NSString *)descText {
-  _descText = descText;
+  _descText = [descText copy];
 
   NSMutableParagraphStyle *descParagraphStyle = [[NSMutableParagraphStyle alloc] init];
   descParagraphStyle.lineHeightMultiple = 1.2f;
@@ -231,11 +233,11 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
   [descAttrString addAttribute:NSParagraphStyleAttributeName
                          value:descParagraphStyle
                          range:NSMakeRange(0, descAttrString.length)];
-  _labelDesc.attributedText = descAttrString;
-  _labelDesc.frame = CGRectMake(0,
-                                0,
-                                _contentViewFrame.size.width - kPestoDetailSplitWidth,
-                                kPestoDetailDescTextHeight);
+  self.labelDesc.attributedText = descAttrString;
+  self.labelDesc.frame = CGRectMake(0,
+                                    0,
+                                    self.contentViewFrame.size.width - kPestoDetailSplitWidth,
+                                    kPestoDetailDescTextHeight);
 }
 
 @end

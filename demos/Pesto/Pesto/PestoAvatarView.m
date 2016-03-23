@@ -39,11 +39,11 @@ static CGFloat kPestoAvatarViewCircleLineWidth = 2.f;
 }
 
 - (void)layoutSubviews {
-  _imageView.layer.cornerRadius = _imageView.bounds.size.width / 2.f;
+  self.imageView.layer.cornerRadius = self.imageView.bounds.size.width / 2.f;
 }
 
 - (void)setAvatarImageURL:(NSURL *)avatarImageURL {
-  _avatarImageURL = avatarImageURL;
+  _avatarImageURL = [avatarImageURL copy];
 
   __weak __typeof__(self) weakSelf = self;
   PestoRemoteImageService *imageService = [PestoRemoteImageService sharedService];

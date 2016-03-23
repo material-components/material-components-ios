@@ -35,11 +35,11 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     labelAvatar.lineBreakMode = .ByWordWrapping
     labelAvatar.textColor = UIColor.grayColor()
     labelAvatar.numberOfLines = 1
-    labelAvatar.font = UIFont(name: "Helvetica", size: 9)
+    labelAvatar.font = UIFont(name: "Helvetica", size: 14)
     cellContent.addSubview(labelAvatar)
 
     labelPrice.lineBreakMode = .ByWordWrapping
-    labelPrice.font = UIFont(name: "Helvetica-Bold", size: 12)
+    labelPrice.font = UIFont(name: "Helvetica-Bold", size: 16)
     cellContent.addSubview(labelPrice)
 
     shrineInkOverlay.frame = self.bounds
@@ -70,9 +70,9 @@ class ShrineCollectionViewCell: UICollectionViewCell {
       avatarDim,
       avatarDim)
     labelAvatar.frame = CGRectMake(15 + avatarDim,
-      self.frame.size.height - 26,
+      self.frame.size.height - 30,
       self.frame.size.width,
-      10)
+      14)
     labelPrice.sizeToFit()
     labelPrice.frame = CGRectMake(self.frame.size.width - labelPrice.frame.size.width - 10,
       10,

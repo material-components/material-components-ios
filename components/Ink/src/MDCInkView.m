@@ -129,7 +129,7 @@
 }
 
 - (UIColor *)defaultInkColor {
-  return [[UIColor alloc] initWithWhite:0 alpha:0.12f];
+  return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
 }
 
 @end

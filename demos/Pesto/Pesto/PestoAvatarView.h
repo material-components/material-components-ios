@@ -2,6 +2,6 @@
 
 @interface PestoAvatarView : UIView
 
-@property(nonatomic) NSURL *avatarImageURL;
+@property(nonatomic, copy) NSURL *avatarImageURL;
 
 @end
