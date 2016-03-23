@@ -33,6 +33,13 @@ p {
   padding: 0;
 }
 
+ol {
+  list-style-position: outside;
+  border: 0;
+  padding: 0 0 0 1em;
+  margin: 4px 0 16px 0;
+}
+
 ul {
   list-style-type: disc;
   list-style-position: outside;
@@ -46,7 +53,8 @@ li {
   padding: 0;
 }
 
-li > ul {
+li > uli,
+li > ol {
   padding-left: 1em;
 }
 
