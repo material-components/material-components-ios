@@ -63,6 +63,24 @@ class NodeViewController: UITableViewController, MDCAppBarParenting {
     }
   }
 
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+
+    if !self.isMovingFromParentViewController() {
+      var isPushingHeaderViewController = false
+      for childVc in self.navigationController!.topViewController!.childViewControllers {
+        if childVc.isKindOfClass(MDCFlexibleHeaderViewController.self) {
+          isPushingHeaderViewController = true
+          break
+        }
+      }
+      if !isPushingHeaderViewController {
+        // Unhide the navigation bar then.
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+      }
+    }
+  }
+
   // MARK: UIScrollViewDelegate
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -121,6 +139,5 @@ class NodeViewController: UITableViewController, MDCAppBarParenting {
       vc = NodeViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
-    self.navigationController?.setNavigationBarHidden(false, animated: true)
   }
 }

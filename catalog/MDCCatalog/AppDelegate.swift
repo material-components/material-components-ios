@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       node.viewController = c
     }
 
-    let rootNodeViewController = MDCCatalogHeaderContainerController(node: tree)
+    let rootNodeViewController = MDCCatalogComponentsController(node: tree)
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
 
     // In the event that an example view controller hides the navigation bar we generally want to

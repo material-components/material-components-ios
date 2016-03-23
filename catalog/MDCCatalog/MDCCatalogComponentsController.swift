@@ -20,25 +20,86 @@ import MaterialComponents
 class MDCCatalogComponentsController: UICollectionViewController {
 
   let node: Node
-  var headerViewController:MDCFlexibleHeaderViewController!
+
+  var headerViewController: MDCFlexibleHeaderViewController
+
   let imageNames = NSMutableArray()
 
-  init(collectionViewLayout layout: UICollectionViewLayout, node: Node) {
+  init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: Node) {
     self.node = node
+
+    let spacing = CGFloat(1)
+    let layout = UICollectionViewFlowLayout();
+    let sectionInset:CGFloat = spacing
+    layout.sectionInset = UIEdgeInsetsMake(sectionInset, sectionInset, sectionInset, sectionInset)
+    layout.minimumInteritemSpacing = spacing
+    layout.minimumLineSpacing = spacing
+
+    self.headerViewController = MDCFlexibleHeaderViewController()
+
     super.init(collectionViewLayout: layout)
+
+    self.title = "Material Design Components"
+
+    self.addChildViewController(self.headerViewController)
+
+    self.headerViewController.headerView.maximumHeight = 128
+    self.headerViewController.headerView.minimumHeight = 72
+
     self.collectionView?.registerClass(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
     self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
+  }
+
+  convenience init(node: Node) {
+    self.init(collectionViewLayout: UICollectionViewLayout(), node: node)
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    let containerView = UIView(frame: self.headerViewController.headerView.bounds)
+    containerView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+
+    let titleLabel = UILabel()
+    titleLabel.text = self.title!.uppercaseString
+    titleLabel.textColor = UIColor(white: 0.46, alpha: 1)
+    titleLabel.font = MDCTypography.titleFont()
+    titleLabel.sizeToFit()
+
+    let titleInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
+    let titleSize = titleLabel.sizeThatFits(containerView.bounds.size)
+    titleLabel.frame = CGRect(
+      x: titleInsets.left,
+      y: containerView.bounds.size.height - titleSize.height - titleInsets.bottom,
+      width: containerView.bounds.size.width,
+      height: titleSize.height)
+    titleLabel.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
+
+    containerView.addSubview(titleLabel)
+
+    self.headerViewController.headerView.addSubview(containerView)
+
+    self.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
+    self.headerViewController.headerView.trackingScrollView = self.collectionView
+
+    self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
+      let shadowLayer = layer as! MDCShadowLayer
+      shadowLayer.elevation = intensity * MDCShadowElevationAppBar
+    }
+
+    self.view.addSubview(self.headerViewController.view)
+    self.headerViewController.didMoveToParentViewController(self)
+  }
+
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-    collectionView?.collectionViewLayout.invalidateLayout()
-    self.navigationController?.navigationBar.hidden = true
+
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
 
     // Sort alphabetically.
     self.node.children = self.node.children.sort {
@@ -49,33 +110,6 @@ class MDCCatalogComponentsController: UICollectionViewController {
   override func willAnimateRotationToInterfaceOrientation(
     toInterfaceOrientation:UIInterfaceOrientation, duration: NSTimeInterval) {
     collectionView?.collectionViewLayout.invalidateLayout()
-  }
-
-  func setupHeader() {
-    let headerView = headerViewController.headerView
-    headerView.trackingScrollView = self.collectionView
-    headerView.maximumHeight = 128;
-    headerView.minimumHeight = 72;
-    headerView.contentView?.backgroundColor = UIColor.whiteColor()
-    headerView.contentView?.layer.masksToBounds = true
-    headerView.contentView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-
-    let contentView = UIView(frame:(headerView.contentView?.frame)!)
-    contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-
-    let label = UILabel()
-    let title = "Material Design Components"
-    label.text = title.uppercaseString
-    label.textColor = UIColor(white: 0.46, alpha: 1)
-    label.font = MDCTypography.titleFont()
-    label.sizeToFit()
-    let labelPad = CGFloat(16)
-    label.frame = CGRectMake(labelPad, contentView.frame.height - label.frame.height - labelPad,
-      label.frame.width, label.frame.height)
-    label.autoresizingMask = .FlexibleTopMargin
-    contentView.addSubview(label)
-
-    headerView.contentView?.addSubview(contentView)
   }
 
   override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -124,14 +158,43 @@ class MDCCatalogComponentsController: UICollectionViewController {
     } else {
       vc = NodeViewController(node: node)
     }
-    self.navigationController?.navigationBar.hidden = false
     self.navigationController?.pushViewController(vc, animated: true)
   }
+}
 
-  // MARK: UIScrollViewDelegate
+// UIScrollViewDelegate
+extension MDCCatalogComponentsController {
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
-    headerViewController.scrollViewDidScroll(scrollView);
+    if scrollView == self.headerViewController.headerView.trackingScrollView {
+      self.headerViewController.headerView.trackingScrollViewDidScroll()
+    }
   }
 
+  override func scrollViewDidEndDragging(
+      scrollView: UIScrollView,
+      willDecelerate decelerate: Bool) {
+    let headerView = self.headerViewController.headerView
+    if scrollView == headerView.trackingScrollView {
+      headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+    }
+  }
+
+  override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    if scrollView == self.headerViewController.headerView.trackingScrollView {
+      self.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
+    }
+  }
+
+  override func scrollViewWillEndDragging(
+      scrollView: UIScrollView,
+      withVelocity velocity: CGPoint,
+      targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    let headerView = self.headerViewController.headerView
+    if scrollView == headerView.trackingScrollView {
+      headerView.trackingScrollViewWillEndDraggingWithVelocity(
+        velocity,
+        targetContentOffset: targetContentOffset)
+    }
+  }
 }
