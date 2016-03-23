@@ -11,15 +11,17 @@ navigation experience.
 
 ### Material Design Specifications
 
-- [App Bar Structure](https://www.google.com/design/spec/layout/structure.html#structure-app-bar)<!--{:target="_blank"}-->
-- [Scrolling Techniques](https://www.google.com/design/spec/patterns/scrolling-techniques.html)<!--{:target="_blank"}-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-link"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar Structure</a></li>
+  <li class="icon-link"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+</ul>
 
 ### API Documentation
 
-- [MDCAppBarContainerViewController](/apidocs/AppBar/Classes/MDCAppBarContainerViewController.html)<!--{:target="_blank"}-->
-- [MDCAppBarParenting](/apidocs/AppBar/Protocols/MDCAppBarParenting.html)<!--{:target="_blank"}-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-link"><a href="/apidocs/AppBar/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
+  <li class="icon-link"><a href="/apidocs/AppBar/Protocols/MDCAppBarParenting.html">MDCAppBarParenting</a></li>
+</ul>
 
 
 
