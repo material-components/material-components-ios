@@ -21,6 +21,7 @@ PODS:
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
+    - MaterialComponents/private/Icons/ic_arrow_back
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
@@ -39,8 +40,12 @@ PODS:
   - MaterialComponents/PageControl (2.1.0)
   - MaterialComponents/private (2.1.0):
     - MaterialComponents/private/Color (= 2.1.0)
+    - MaterialComponents/private/Icons (= 2.1.0)
     - MaterialComponents/private/ThumbTrack (= 2.1.0)
   - MaterialComponents/private/Color (2.1.0)
+  - MaterialComponents/private/Icons (2.1.0):
+    - MaterialComponents/private/Icons/ic_arrow_back (= 2.1.0)
+  - MaterialComponents/private/Icons/ic_arrow_back (2.1.0)
   - MaterialComponents/private/ThumbTrack (2.1.0):
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
@@ -73,7 +78,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 370db80edc13e24d5edf7e34ddd7f304e7005458
+  MaterialComponents: 35b62b4b93b87122b842f99ccfb39728511b9904
   MaterialComponentsCatalog: 324ac07746f6fbf8ff34af8d4a328a3dfd567b2d
   MaterialComponentsUnitTests: 60c2725c7c58643b29b56af334a22da8646b7e47
 

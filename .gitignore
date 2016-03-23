@@ -3,6 +3,7 @@
 /docs
 build_tests/CocoapodsObjCApp/CocoapodsObjCApp.xcworkspace
 build_tests/CocoapodsSwiftApp/CocoapodsSwiftApp.xcworkspace
+scripts/external/material-design-icons/
 
 # Xcode
 #
