@@ -21,16 +21,6 @@ class MDCCatalogComponentsController: UICollectionViewController {
 
   let node: Node
   var headerViewController:MDCFlexibleHeaderViewController!
-  var colorCyan = UIColor.init(red: 0 / 255, green: 167 / 255, blue: 247 / 255, alpha: 1)
-  var colorDeepPurple = UIColor.init(red: 103 / 255, green: 52 / 255, blue: 186 / 255, alpha: 1)
-  var colorGreen = UIColor.init(red: 0 / 255, green: 158 / 255, blue: 85 / 255, alpha: 1)
-  var colorPink = UIColor.init(red: 236 / 255, green: 21 / 255, blue: 97 / 255, alpha: 1)
-  var colorIndigo = UIColor.init(red: 62 / 255, green: 78 / 255, blue: 184 / 255, alpha: 1)
-  var colorTeal = UIColor.init(red: 0 / 255, green: 151 / 255, blue: 136 / 255, alpha: 1)
-  var colorPurple = UIColor.init(red: 157 / 255, green: 28 / 255, blue: 178 / 255, alpha: 1)
-  var colorGray = UIColor.init(red: 158 / 255, green: 158 / 255, blue: 158 / 255, alpha: 1)
-  var colorOrange = UIColor.init(red: 255 / 255, green: 153 / 255, blue: 0 / 255, alpha: 1)
-  let colors = NSMutableArray()
   let imageNames = NSMutableArray()
 
   init(collectionViewLayout layout: UICollectionViewLayout, node: Node) {
@@ -38,9 +28,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
     super.init(collectionViewLayout: layout)
     self.collectionView?.registerClass(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
-    self.collectionView?.backgroundColor = UIColor.whiteColor()
-    colors.addObjectsFromArray([ colorDeepPurple, colorGreen, colorPink, colorIndigo, colorTeal,
-      colorPurple, colorGray, colorOrange ])
+    self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -49,6 +37,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
 
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+    collectionView?.collectionViewLayout.invalidateLayout()
     self.navigationController?.navigationBar.hidden = true
 
     // Sort alphabetically.
@@ -57,12 +46,17 @@ class MDCCatalogComponentsController: UICollectionViewController {
     }
   }
 
+  override func willAnimateRotationToInterfaceOrientation(
+    toInterfaceOrientation:UIInterfaceOrientation, duration: NSTimeInterval) {
+    collectionView?.collectionViewLayout.invalidateLayout()
+  }
+
   func setupHeader() {
     let headerView = headerViewController.headerView
     headerView.trackingScrollView = self.collectionView
-    headerView.maximumHeight = 200;
+    headerView.maximumHeight = 128;
     headerView.minimumHeight = 72;
-    headerView.contentView?.backgroundColor = colorCyan
+    headerView.contentView?.backgroundColor = UIColor.whiteColor()
     headerView.contentView?.layer.masksToBounds = true
     headerView.contentView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
@@ -70,8 +64,9 @@ class MDCCatalogComponentsController: UICollectionViewController {
     contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
     let label = UILabel()
-    label.text = "Material Design Components"
-    label.textColor = UIColor.whiteColor()
+    let title = "Material Design Components"
+    label.text = title.uppercaseString
+    label.textColor = UIColor(white: 0.46, alpha: 1)
     label.font = MDCTypography.titleFont()
     label.sizeToFit()
     let labelPad = CGFloat(16)
@@ -81,12 +76,6 @@ class MDCCatalogComponentsController: UICollectionViewController {
     contentView.addSubview(label)
 
     headerView.contentView?.addSubview(contentView)
-  }
-
-  func getColorNumber(n: CGFloat) -> Int {
-    let colorLength = CGFloat(colors.count)
-    let colorN = (n / colorLength - floor(n / colorLength)) * colorLength
-    return Int(colorN)
   }
 
   override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -104,13 +93,9 @@ class MDCCatalogComponentsController: UICollectionViewController {
     cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MDCCatalogCollectionViewCell",
       forIndexPath: indexPath) as! MDCCatalogCollectionViewCell
-    let itemNum = CGFloat(indexPath.row);
-    let colorNumber = getColorNumber(itemNum)
-    let backgroundColor = colors[colorNumber] as! UIColor
-    cell.backgroundColor = backgroundColor
+    cell.backgroundColor = UIColor.whiteColor()
 
-    // Use button star icon for default image.
-    let imageName = "Button"
+    let imageName = "Misc"
     var image = UIImage(named: imageName)
     let componentName = self.node.children[indexPath.row].title
     let componentImage: UIImage? = UIImage(named: componentName)
@@ -125,9 +110,9 @@ class MDCCatalogComponentsController: UICollectionViewController {
   func collectionView(collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-      let pad = CGFloat(2)
-      let cellDim = (self.view.frame.size.width - 3 * pad) / 2
-      return CGSizeMake(cellDim, cellDim);
+      let pad = CGFloat(1)
+      let cellWidth = (self.view.frame.size.width - 3 * pad) / 2
+      return CGSizeMake(cellWidth, cellWidth * 0.8);
   }
 
   override func collectionView(collectionView: UICollectionView,

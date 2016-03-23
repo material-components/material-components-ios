@@ -20,7 +20,7 @@ import MaterialComponents
 class MDCCatalogHeaderContainerController: MDCFlexibleHeaderContainerViewController {
 
   init(node: Node) {
-    let spacing = CGFloat(2)
+    let spacing = CGFloat(1)
     let layout = UICollectionViewFlowLayout();
     let sectionInset:CGFloat = spacing
     layout.sectionInset = UIEdgeInsetsMake(sectionInset, sectionInset, sectionInset, sectionInset)

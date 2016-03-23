@@ -29,7 +29,7 @@
 
 // TODO: Support other categorizational methods.
 + (NSArray *)catalogHierarchy {
-  return @[ @"App bar", @"Typical use" ];
+  return @[ @"App Bar", @"Typical use" ];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {

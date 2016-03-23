@@ -25,10 +25,11 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    imageView.alpha = 0.5
+    imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    imageView.contentMode = .ScaleAspectFill;
     self.addSubview(imageView)
-    label.textColor = UIColor.whiteColor()
-    label.font = MDCTypography.subheadFont()
+    label.textColor = UIColor(white: 0.2, alpha: 1)
+    label.font = MDCTypography.captionFont()
     self.addSubview(label)
     self.clipsToBounds = true
   }
@@ -43,26 +44,21 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   override func layoutSubviews() {
     super.layoutSubviews()
+    label.sizeToFit()
+    label.frame = CGRectMake(pad, frame.height - label.frame.height - pad,
+                             frame.width - pad * 2, label.frame.height)
+    imageView.frame = self.bounds
   }
 
   override func prepareForReuse() {
     super.prepareForReuse()
-
     label.text = ""
     imageView.image = nil
   }
 
   func populateView(componentName: String, image: UIImage) {
     label.text = componentName
-    label.sizeToFit()
-    label.frame = CGRectMake(pad, frame.height - label.frame.height - pad,
-      frame.width - pad * 2, label.frame.height)
-
     imageView.image = image
-    imageView.sizeToFit()
-    imageView.frame = CGRectMake((frame.width - imageView.frame.width) / 2,
-      (frame.height - imageView.frame.height) / 2 - pad,
-      imageView.frame.width, imageView.frame.height)
   }
 
 }
