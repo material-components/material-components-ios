@@ -46,8 +46,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.headerViewController.headerView.trackingScrollView = self.tableView;
   self.tableView.delegate = self.headerViewController;
+
+  self.headerViewController.headerView.trackingScrollView = self.tableView;
 
   MDCAppBarAddViews(self);
 }
@@ -58,45 +59,8 @@
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
-- (void)didTapButton:(id)button {
-  [self.navigationController popViewControllerAnimated:YES];
-}
-
-// We must propagate the header's prefersStatusBarHidden value up so that the status bar's
-// visibility can be affected.
-- (BOOL)prefersStatusBarHidden {
-  return [self.headerViewController prefersStatusBarHidden];
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-    [self.headerViewController.headerView trackingScrollViewDidScroll];
-  }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-    [self.headerViewController.headerView trackingScrollViewDidEndDecelerating];
-  }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-    MDCFlexibleHeaderView *headerView = self.headerViewController.headerView;
-    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
-  }
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
-                     withVelocity:(CGPoint)velocity
-              targetContentOffset:(inout CGPoint *)targetContentOffset {
-  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-    MDCFlexibleHeaderView *headerView = self.headerViewController.headerView;
-    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                          targetContentOffset:targetContentOffset];
-  }
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return self.headerViewController;
 }
 
 #pragma mark - UITableViewDataSource
