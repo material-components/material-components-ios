@@ -18,7 +18,7 @@ import XCTest
 import MaterialComponents
 
 // Tests confirming contract with a tracking scroll view that isn't scrolling
-class FlexibleHeaderTrackingScrollViewTests: XCTestCase {
+class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
 
   // Implicitly unwrapped to indicate the contract of creating these values in setUp and make our
   // accessors cleaner in tests.
@@ -38,6 +38,8 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase {
     scrollView = UIScrollView()
     scrollView.contentSize = CGSize(width: originalFrame.size.width, height: 1000)
     scrollView.frame = CGRect(x: 0, y: 0, width: originalFrame.size.width, height: 250)
+
+    scrollView.delegate = self
 
     view.trackingScrollView = scrollView
   }
@@ -136,5 +138,36 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase {
     view.changeContentInsets { } // no-op
 
     XCTAssertEqual(beforeFrame, view.frame)
+  }
+
+  // MARK: UIScrollViewDelegate
+
+  func scrollViewDidScroll(scrollView: UIScrollView) {
+    if view.trackingScrollView == scrollView {
+      view.trackingScrollViewDidScroll()
+    }
+  }
+
+  func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if view.trackingScrollView == scrollView {
+      view.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+    }
+  }
+
+  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    if view.trackingScrollView == scrollView {
+      view.trackingScrollViewDidEndDecelerating()
+    }
+  }
+
+  func scrollViewWillEndDragging(
+      scrollView: UIScrollView,
+      withVelocity velocity: CGPoint,
+      targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    if view.trackingScrollView == scrollView {
+      view.trackingScrollViewWillEndDraggingWithVelocity(
+        velocity,
+        targetContentOffset: targetContentOffset)
+    }
   }
 }

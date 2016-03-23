@@ -760,6 +760,14 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [_trackingScrollView.panGestureRecognizer removeTarget:self
                                                   action:@selector(fhv_scrollViewDidPan:)];
   [trackingScrollView.panGestureRecognizer addTarget:self action:@selector(fhv_scrollViewDidPan:)];
+
+  // Verify existence of a delegate.
+  NSAssert(!trackingScrollView || trackingScrollView.delegate,
+           @"The provided tracking scroll view %@ has no delegate. Without a delegate, %@ will not"
+           @" be able to react to scroll events and may perform incorrectly."
+           @" This assertion will only fire in debug builds.",
+           NSStringFromClass([trackingScrollView class]),
+           NSStringFromClass([self class]));
 #endif
 
   // If this header is shared by many scroll views then we leave the insets when switching the
