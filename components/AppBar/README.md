@@ -273,7 +273,7 @@ self.navigationController?.setNavigationBarHidden(false, animated: false)
 
 ## Examples
 
-### UINavigatonItem and the App Bar
+### UINavigationItem and the App Bar
 
 The App Bar's Navigation Bar registers KVO listeners on the parent view controller's
 `navigationItem`. All of the typical properties including UIViewController's `title` property will
