@@ -37,7 +37,7 @@ horizontally-aligned list of buttons.
 To add the Buttons component to your Xcode project using CocoaPods, add the following to your PodFile:
 
 ~~~ bash
-pod 'MaterialComponents/ButtonBar'
+$ pod 'MaterialComponents/ButtonBar'
 ~~~
 
 Then, run the following command:

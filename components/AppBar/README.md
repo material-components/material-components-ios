@@ -37,7 +37,7 @@ experience.
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
-pod 'MaterialComponents/AppBar'
+$ pod 'MaterialComponents/AppBar'
 ~~~
 
 Then, run the following command:
@@ -141,7 +141,6 @@ Step 3: **Initialize your view controller's App Bar**.
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective-C
-
 ~~~ objc
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -170,7 +169,6 @@ ensure that the App Bar's view is above all of your other views.
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective-C
-
 ~~~ objc
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -208,7 +206,6 @@ predictable fashion during pushes and pops.
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective-C
-
 ~~~ objc
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -231,7 +228,6 @@ Add the following to view controllers that don't have an app bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective-C
-
 ~~~ objc
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -257,7 +253,6 @@ simply hide the navigationBar when you create the navigation controller:
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective-C
-
 ~~~ objc
 UINavigationController *navigationController = ...;
 [navigationController setNavigationBarHidden:NO animated:NO];
@@ -280,7 +275,6 @@ controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective-C
-
 ~~~ objc
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.headerViewController;

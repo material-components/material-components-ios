@@ -43,7 +43,7 @@ UIScrollViewDelegate events.
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
-pod 'MaterialComponents/FlexibleHeader'
+$ pod 'MaterialComponents/FlexibleHeader'
 ~~~
 
 Then, run the following command:

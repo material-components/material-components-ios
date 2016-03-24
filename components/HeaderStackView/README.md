@@ -37,7 +37,7 @@ bar views.
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
-pod 'MaterialComponents/HeaderStackView'
+$ pod 'MaterialComponents/HeaderStackView'
 ~~~
 
 Then, run the following command:

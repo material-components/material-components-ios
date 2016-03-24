@@ -63,7 +63,7 @@ main action of a screen.
 To add the Buttons component to your Xcode project using CocoaPods, add the following to your PodFile:
 
 ~~~ bash
-pod 'MaterialComponents/Buttons'
+$ pod 'MaterialComponents/Buttons'
 ~~~
 
 Then, run the following command:

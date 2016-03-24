@@ -38,13 +38,13 @@ label or a custom title view.
 To add the NavigationBar component to your Xcode project using CocoaPods, add the following to your PodFile:
 
 ~~~ bash
-pod 'MaterialComponents/NavigationBar'
+$ pod 'MaterialComponents/NavigationBar'
 ~~~
 
 Then, run the following command:
 
 ~~~ bash
-pod install
+$ pod install
 ~~~
 
 
