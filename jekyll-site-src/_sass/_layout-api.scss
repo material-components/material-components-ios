@@ -1,0 +1,14 @@
+// Overrides to default Jazzy layout CSS
+
+nav {
+  a,
+  a:link,
+  a:visited {
+    color: $text-color;
+  }
+}
+
+.breadcrumbs {
+  font-size: inherit;
+  line-height: inherit;
+}
