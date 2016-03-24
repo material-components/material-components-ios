@@ -88,9 +88,3 @@
 }
 
 @end
-
-// clang-format off
-__deprecated_msg("Use MDCFontDiskLoader instead.")
-@interface MDCFontResource : MDCFontDiskLoader
-@end
-                                 // clang-format on
