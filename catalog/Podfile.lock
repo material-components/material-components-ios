@@ -1,24 +1,24 @@
 PODS:
-  - MaterialComponents (2.1.1):
-    - MaterialComponents/AppBar (= 2.1.1)
-    - MaterialComponents/ButtonBar (= 2.1.1)
-    - MaterialComponents/Buttons (= 2.1.1)
-    - MaterialComponents/FlexibleHeader (= 2.1.1)
-    - MaterialComponents/FontDiskLoader (= 2.1.1)
-    - MaterialComponents/HeaderStackView (= 2.1.1)
-    - MaterialComponents/Ink (= 2.1.1)
-    - MaterialComponents/NavigationBar (= 2.1.1)
-    - MaterialComponents/PageControl (= 2.1.1)
-    - MaterialComponents/private (= 2.1.1)
-    - MaterialComponents/RobotoFontLoader (= 2.1.1)
-    - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.1.1)
-    - MaterialComponents/ShadowElevations (= 2.1.1)
-    - MaterialComponents/ShadowLayer (= 2.1.1)
-    - MaterialComponents/Slider (= 2.1.1)
-    - MaterialComponents/SpritedAnimationView (= 2.1.1)
-    - MaterialComponents/Switch (= 2.1.1)
-    - MaterialComponents/Typography (= 2.1.1)
-  - MaterialComponents/AppBar (2.1.1):
+  - MaterialComponents (2.2.0):
+    - MaterialComponents/AppBar (= 2.2.0)
+    - MaterialComponents/ButtonBar (= 2.2.0)
+    - MaterialComponents/Buttons (= 2.2.0)
+    - MaterialComponents/FlexibleHeader (= 2.2.0)
+    - MaterialComponents/FontDiskLoader (= 2.2.0)
+    - MaterialComponents/HeaderStackView (= 2.2.0)
+    - MaterialComponents/Ink (= 2.2.0)
+    - MaterialComponents/NavigationBar (= 2.2.0)
+    - MaterialComponents/PageControl (= 2.2.0)
+    - MaterialComponents/private (= 2.2.0)
+    - MaterialComponents/RobotoFontLoader (= 2.2.0)
+    - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.2.0)
+    - MaterialComponents/ShadowElevations (= 2.2.0)
+    - MaterialComponents/ShadowLayer (= 2.2.0)
+    - MaterialComponents/Slider (= 2.2.0)
+    - MaterialComponents/SpritedAnimationView (= 2.2.0)
+    - MaterialComponents/Switch (= 2.2.0)
+    - MaterialComponents/Typography (= 2.2.0)
+  - MaterialComponents/AppBar (2.2.0):
     - MaterialComponents/Buttons
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
@@ -27,47 +27,47 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (2.1.1)
-  - MaterialComponents/Buttons (2.1.1):
+  - MaterialComponents/ButtonBar (2.2.0)
+  - MaterialComponents/Buttons (2.2.0):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/FlexibleHeader (2.1.1)
-  - MaterialComponents/FontDiskLoader (2.1.1)
-  - MaterialComponents/HeaderStackView (2.1.1)
-  - MaterialComponents/Ink (2.1.1)
-  - MaterialComponents/NavigationBar (2.1.1):
+  - MaterialComponents/FlexibleHeader (2.2.0)
+  - MaterialComponents/FontDiskLoader (2.2.0)
+  - MaterialComponents/HeaderStackView (2.2.0)
+  - MaterialComponents/Ink (2.2.0)
+  - MaterialComponents/NavigationBar (2.2.0):
     - MaterialComponents/ButtonBar
     - MaterialComponents/Typography
-  - MaterialComponents/PageControl (2.1.1)
-  - MaterialComponents/private (2.1.1):
-    - MaterialComponents/private/Color (= 2.1.1)
-    - MaterialComponents/private/Icons (= 2.1.1)
-    - MaterialComponents/private/ThumbTrack (= 2.1.1)
-  - MaterialComponents/private/Color (2.1.1)
-  - MaterialComponents/private/Icons (2.1.1):
-    - MaterialComponents/private/Icons/ic_arrow_back (= 2.1.1)
-  - MaterialComponents/private/Icons/ic_arrow_back (2.1.1)
-  - MaterialComponents/private/ThumbTrack (2.1.1):
+  - MaterialComponents/PageControl (2.2.0)
+  - MaterialComponents/private (2.2.0):
+    - MaterialComponents/private/Color (= 2.2.0)
+    - MaterialComponents/private/Icons (= 2.2.0)
+    - MaterialComponents/private/ThumbTrack (= 2.2.0)
+  - MaterialComponents/private/Color (2.2.0)
+  - MaterialComponents/private/Icons (2.2.0):
+    - MaterialComponents/private/Icons/ic_arrow_back (= 2.2.0)
+  - MaterialComponents/private/Icons/ic_arrow_back (2.2.0)
+  - MaterialComponents/private/ThumbTrack (2.2.0):
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/RobotoFontLoader (2.1.1):
+  - MaterialComponents/RobotoFontLoader (2.2.0):
     - MaterialComponents/FontDiskLoader
-  - MaterialComponents/ScrollViewDelegateMultiplexer (2.1.1)
-  - MaterialComponents/ShadowElevations (2.1.1)
-  - MaterialComponents/ShadowLayer (2.1.1)
-  - MaterialComponents/Slider (2.1.1):
+  - MaterialComponents/ScrollViewDelegateMultiplexer (2.2.0)
+  - MaterialComponents/ShadowElevations (2.2.0)
+  - MaterialComponents/ShadowLayer (2.2.0)
+  - MaterialComponents/Slider (2.2.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/SpritedAnimationView (2.1.1)
-  - MaterialComponents/Switch (2.1.1):
+  - MaterialComponents/SpritedAnimationView (2.2.0)
+  - MaterialComponents/Switch (2.2.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (2.1.1):
+  - MaterialComponents/Typography (2.2.0):
     - MaterialComponents/RobotoFontLoader
-  - MaterialComponentsCatalog (2.1.1):
+  - MaterialComponentsCatalog (2.2.0):
     - MaterialComponents
-  - MaterialComponentsUnitTests (2.1.1):
+  - MaterialComponentsUnitTests (2.2.0):
     - MaterialComponents
 
 DEPENDENCIES:
@@ -84,8 +84,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 165e4d604f43ba658b1a3feef396ea9b49bf2fba
-  MaterialComponentsCatalog: f20a70ba3612ba3a449e6bc4bee8da4eef3a7885
-  MaterialComponentsUnitTests: a7f5e41c4e8a708fc315eeaeff0dc0f2da40299b
+  MaterialComponents: 6fcfefa1051ef2fc9992a69b48106d985a5648ab
+  MaterialComponentsCatalog: beba6bad324c22fa117c86b14266e9e77ef22f12
+  MaterialComponentsUnitTests: ba4acacfed6dbde0327479bb08e66ac5e426058c
 
 COCOAPODS: 0.39.0
