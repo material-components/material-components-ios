@@ -3,10 +3,11 @@
 def registerIcons(s)
 
   s.subspec "Icons" do |iss|
-    iss.public_header_files = "components/private/Icons/src/*.h"
-    iss.source_files = "components/private/Icons/src/*.{h,m}", "components/private/Icons/src/private/*.{h,m}"
-    iss.header_mappings_dir = "components/private/Icons/src/*"
-
+    iss.subspec "Base" do |ss|
+      ss.public_header_files = "components/private/Icons/src/*.h"
+      ss.source_files = "components/private/Icons/src/*.{h,m}", "components/private/Icons/src/private/*.{h,m}"
+      ss.header_mappings_dir = "components/private/Icons/src/*"
+    end
 
     iss.subspec "ic_arrow_back" do |ss|
       ss.public_header_files = "components/private/Icons/icons/ic_arrow_back/src/*.h"
@@ -18,6 +19,7 @@ def registerIcons(s)
           "components/private/Icons/icons/ic_arrow_back/src/MaterialIcon+ic_arrow_back.bundle/*.xcassets"
         ]
       }
+      ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
     end
   end
 end
