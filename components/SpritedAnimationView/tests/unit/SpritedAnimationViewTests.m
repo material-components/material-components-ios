@@ -55,31 +55,4 @@ static NSString *const kExpectationDescription = @"animatingWithCompletion";
                                }];
 }
 
-- (void)testAnimationPerformance {
-  NSArray *metrics = [[self class] defaultPerformanceMetrics];
-  [self measureMetrics:metrics
-      automaticallyStartMeasuring:NO
-                         forBlock:^{
-                           [self startMeasuring];
-
-                           // Sprited animation view.
-                           UIImage *spriteImage = [UIImage imageNamed:kSpriteList];
-                           MDCSpritedAnimationView *animationView =
-                               [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
-
-                           // Create expectation.
-                           XCTestExpectation *expectation = [self expectationWithDescription:kExpectationDescription];
-
-                           // Fulfill expectation after completion of animation.
-                           [animationView startAnimatingWithCompletion:^{
-                             [expectation fulfill];
-                           }];
-
-                           [self waitForExpectationsWithTimeout:1.0
-                                                        handler:^(NSError *error) {
-                                                          [self stopMeasuring];
-                                                        }];
-                         }];
-}
-
 @end
