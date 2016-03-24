@@ -18,34 +18,30 @@
 
 #import "MaterialAppBar.h"
 
-static UIColor *colorWithHex(int hexColor) {
-  return [UIColor colorWithRed:((hexColor >> 16) & 0xFF) / 255.0f
-                         green:((hexColor >> 8) & 0xFF) / 255.0f
-                          blue:(hexColor & 0xFF) / 255.0f
-                         alpha:1];
-}
-
+// Step 1: Your view controller must conform to MDCAppBarParenting.
 @interface AppBarTypicalUseExample : UITableViewController <MDCAppBarParenting>
 @end
 
 @implementation AppBarTypicalUseExample
 
+// Step 2: Synthesize the required properties.
 @synthesize navigationBar;
 @synthesize headerStackView;
 @synthesize headerViewController;
 
-// TODO: Support other categorizational methods.
-+ (NSArray *)catalogHierarchy {
-  return @[ @"App Bar", @"Typical use" ];
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    self.title = @"Hello";
+    self.title = @"Typical use";
+
+    // Step 3: Initialize the App Bar's parent.
     MDCAppBarPrepareParent(self);
 
-    self.headerViewController.headerView.backgroundColor = colorWithHex(0x39A4DD);
+    UIColor *color = [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
+                                     green:(CGFloat)0xA4 / (CGFloat)255
+                                      blue:(CGFloat)0xDD / (CGFloat)255
+                                     alpha:1];
+    self.headerViewController.headerView.backgroundColor = color;
   }
   return self;
 }
@@ -53,24 +49,44 @@ static UIColor *colorWithHex(int hexColor) {
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.tableView.delegate = self.headerViewController;
-
+  // Recommended step: Set the tracking scroll view.
   self.headerViewController.headerView.trackingScrollView = self.tableView;
 
+  // Optional step: If you do not need to implement any delegate methods, you can use the
+  //                headerViewController as the delegate.
+  self.tableView.delegate = self.headerViewController;
+
+  // Step 4: Register the App Bar views.
   MDCAppBarAddViews(self);
+}
+
+// Optional step: If you allow the header view to hide the status bar you must implement this
+//                method and return the headerViewController.
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return self.headerViewController;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+  // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
+  // we always hide the navigation bar when we're about to appear.
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
-- (UIViewController *)childViewControllerForStatusBarHidden {
-  return self.headerViewController;
+@end
+
+@implementation AppBarTypicalUseExample (CatalogByConvention)
+
++ (NSArray *)catalogHierarchy {
+  return @[ @"App Bar", @"Typical use" ];
 }
 
-#pragma mark - UITableViewDataSource
+@end
+
+#pragma mark - Typical application code (not Material-specific)
+
+@implementation AppBarTypicalUseExample (UITableViewDataSource)
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   return 50;

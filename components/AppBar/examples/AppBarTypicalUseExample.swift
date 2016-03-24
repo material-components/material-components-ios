@@ -17,8 +17,10 @@ limitations under the License.
 import Foundation
 import MaterialComponents
 
+// Step 1: Your view controller must conform to MDCAppBarParenting.
 class AppBarTypicalUseSwiftExample: UITableViewController, MDCAppBarParenting {
 
+  // Step 2: Define the required properties.
   var headerStackView: MDCHeaderStackView?
   var navigationBar: MDCNavigationBar?
   var headerViewController: MDCFlexibleHeaderViewController?
@@ -26,7 +28,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController, MDCAppBarParenting {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Hello"
+    self.title = "Typical use"
+
+    // Step 3: Initialize the App Bar's parent.
     MDCAppBarPrepareParent(self)
 
     let color = UIColor(
@@ -44,42 +48,57 @@ class AppBarTypicalUseSwiftExample: UITableViewController, MDCAppBarParenting {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.tableView.delegate = self.headerViewController!
+    // Recommended step: Set the tracking scroll view.
     self.headerViewController!.headerView.trackingScrollView = self.tableView
 
+    // Optional step: If you do not need to implement any delegate methods, you can use the
+    //                headerViewController as the delegate.
+    self.tableView.delegate = self.headerViewController!
+
+    // Step 4: Register the App Bar views.
     MDCAppBarAddViews(self)
+  }
+
+  // Optional step: If you allow the header view to hide the status bar you must implement this
+  //                method and return the headerViewController.
+  override func childViewControllerForStatusBarHidden() -> UIViewController? {
+    return self.headerViewController
   }
 
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
+    // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
+    // we always hide the navigation bar when we're about to appear.
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
+}
 
-  override func childViewControllerForStatusBarHidden() -> UIViewController? {
-    return self.headerViewController
+// MARK: Catalog by convention
+extension AppBarTypicalUseSwiftExample {
+  class func catalogHierarchy() -> [String] {
+    return ["App Bar", "Swift", "Typical use"]
   }
+}
 
-  // MARK: UITableViewDataSource
+// MARK: - Typical application code (not Material-specific)
+
+// MARK: UITableViewDataSource
+extension AppBarTypicalUseSwiftExample {
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 50
   }
 
   override func tableView(
-      tableView: UITableView,
-      cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    var cell = self.tableView.dequeueReusableCellWithIdentifier("cell")
-    if cell == nil {
-      cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-    }
-    cell!.textLabel!.text = "\(indexPath.row)"
-    return cell!
+    tableView: UITableView,
+    cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+      var cell = self.tableView.dequeueReusableCellWithIdentifier("cell")
+      if cell == nil {
+        cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+      }
+      cell!.textLabel!.text = "\(indexPath.row)"
+      return cell!
   }
 
-  // MARK: Catalog by convention
-
-  class func catalogHierarchy() -> [String] {
-    return ["App Bar", "Swift", "Typical use"]
-  }
 }
