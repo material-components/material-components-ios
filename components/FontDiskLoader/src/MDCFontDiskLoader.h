@@ -17,12 +17,12 @@
 #import <UIKit/UIKit.h>
 
 /** Register and load a custom font resource. */
-@interface MDCFontResource : NSObject
+@interface MDCFontDiskLoader : NSObject
 
 #pragma mark Creating a font resource
 
 /**
- Designated initializer for the MDCFontResource.
+ Designated initializer for the MDCFontDiskLoader.
 
  @param fontName The font's name as it is defined in the resource file.
  @param fontURL The url location of the font on the file system.
@@ -31,7 +31,7 @@
                                  URL:(nonnull NSURL *)fontURL NS_DESIGNATED_INITIALIZER;
 
 /**
- Convenience initializer for the MDCFontResource.
+ Convenience initializer for the MDCFontDiskLoader.
 
  @param fontName The font's name as it is defined in the ttf file.
  @param filename The name of the font file. For example a *.ttf file.

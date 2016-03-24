@@ -16,9 +16,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCFontResource.h"
+#import "MDCFontDiskLoader.h"
 #import "MDCRobotoFontLoader.h"
-#import "private/MDCTypography+Constants.h"
+#import "private/MDCRoboto+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
@@ -26,15 +26,15 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 @end
 
 @interface MDCRobotoFontLoader (Testing)
-@property(nonatomic, strong) MDCFontResource *lightFontResource;
-@property(nonatomic, strong) MDCFontResource *regularFontResource;
-@property(nonatomic, strong) MDCFontResource *mediumFontResource;
-@property(nonatomic, strong) MDCFontResource *boldFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *lightFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *regularFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *mediumFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *boldFontResource;
 
-@property(nonatomic, strong) MDCFontResource *lightItalicFontResource;
-@property(nonatomic, strong) MDCFontResource *italicFontResource;
-@property(nonatomic, strong) MDCFontResource *mediumItalicFontResource;
-@property(nonatomic, strong) MDCFontResource *boldItalicFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *lightItalicFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *italicFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *mediumItalicFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *boldItalicFontResource;
 
 @property(nonatomic, strong, null_resettable) NSBundle *baseBundle;
 
@@ -55,7 +55,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, MDCTypographyRegularFontName);
+  XCTAssertEqualObjects(font.fontName, MDCRobotoRegularFontName);
 }
 
 - (void)testRobotoMediumWithSize {
@@ -68,7 +68,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, MDCTypographyMediumFontName);
+  XCTAssertEqualObjects(font.fontName, MDCRobotoMediumFontName);
 }
 
 - (void)testRobotoLightWithSize {
@@ -81,7 +81,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, MDCTypographyLightFontName);
+  XCTAssertEqualObjects(font.fontName, MDCRobotoLightFontName);
 }
 
 - (void)testRobotoBoldWithSize {
@@ -94,7 +94,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, MDCTypographyBoldFontName);
+  XCTAssertEqualObjects(font.fontName, MDCRobotoBoldFontName);
 }
 
 - (void)testRobotoItalicWithSize {
@@ -107,7 +107,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, MDCTypographyRegularItalicFontName);
+  XCTAssertEqualObjects(font.fontName, MDCRobotoRegularItalicFontName);
 }
 
 - (void)testRobotoMediumItalicWithSize {
@@ -120,7 +120,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, MDCTypographyMediumItalicFontName);
+  XCTAssertEqualObjects(font.fontName, MDCRobotoMediumItalicFontName);
 }
 
 - (void)testRobotoLightItalicWithSize {
@@ -133,7 +133,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, MDCTypographyLightItalicFontName);
+  XCTAssertEqualObjects(font.fontName, MDCRobotoLightItalicFontName);
 }
 
 - (void)testRobotoBoldItalicWithSize {
@@ -146,7 +146,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, size, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, MDCTypographyBoldItalicFontName);
+  XCTAssertEqualObjects(font.fontName, MDCRobotoBoldItalicFontName);
 }
 
 - (void)testLightFallbackSystemFonts {
@@ -291,8 +291,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   for (NSUInteger index = 0; index < existingFontResources.count; ++index) {
-    MDCFontResource *exisitngFontResource = existingFontResources[index];
-    MDCFontResource *newFontResource = newFontResources[index];
+    MDCFontDiskLoader *exisitngFontResource = existingFontResources[index];
+    MDCFontDiskLoader *newFontResource = newFontResources[index];
     XCTAssertNotEqualObjects(exisitngFontResource, newFontResource);
     XCTAssertTrue([newFontResource.fontURL.path containsString:[testBundle bundlePath]]);
   }

@@ -14,4 +14,10 @@
  limitations under the License.
  */
 
-#import "MDCTypography.h"
+#import <Availability.h>
+
+#if !defined(__IPHONE_4_1) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_4_1)
+#error "This component only supports iOS 4.1 and above."
+#endif
+
+#import "MDCFontDiskLoader.h"

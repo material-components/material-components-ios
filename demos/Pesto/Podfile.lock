@@ -4,11 +4,13 @@ PODS:
     - MaterialComponents/ButtonBar (= 2.1.1)
     - MaterialComponents/Buttons (= 2.1.1)
     - MaterialComponents/FlexibleHeader (= 2.1.1)
+    - MaterialComponents/FontDiskLoader (= 2.1.1)
     - MaterialComponents/HeaderStackView (= 2.1.1)
     - MaterialComponents/Ink (= 2.1.1)
     - MaterialComponents/NavigationBar (= 2.1.1)
     - MaterialComponents/PageControl (= 2.1.1)
     - MaterialComponents/private (= 2.1.1)
+    - MaterialComponents/RobotoFontLoader (= 2.1.1)
     - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.1.1)
     - MaterialComponents/ShadowElevations (= 2.1.1)
     - MaterialComponents/ShadowLayer (= 2.1.1)
@@ -32,6 +34,7 @@ PODS:
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
   - MaterialComponents/FlexibleHeader (2.1.1)
+  - MaterialComponents/FontDiskLoader (2.1.1)
   - MaterialComponents/HeaderStackView (2.1.1)
   - MaterialComponents/Ink (2.1.1)
   - MaterialComponents/NavigationBar (2.1.1):
@@ -50,6 +53,9 @@ PODS:
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
+  - MaterialComponents/RobotoFontLoader (2.1.1):
+    - MaterialComponents/FontDiskLoader
+    - MaterialComponents/Typography
   - MaterialComponents/ScrollViewDelegateMultiplexer (2.1.1)
   - MaterialComponents/ShadowElevations (2.1.1)
   - MaterialComponents/ShadowLayer (2.1.1)
@@ -68,6 +74,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 4a7b0438bd6974a7b0df951b53c26a48951b60d7
+  MaterialComponents: 99aef08cedfe31e1efbb0c41ea25d5743a5b51b8
 
 COCOAPODS: 0.39.0

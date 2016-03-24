@@ -16,14 +16,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTypography.h"
-
 /**
  The MDCRobotoFontLoader class provides a shared mechanism through which the Roboto fonts can
  be loaded and customized.
+
+ TODO: Make MDCRobotoFontLoader conform to the <MDCTypographyFontLoading>. This was intended to be a
+ strong dependency but is weak during the deprecation period.
  */
-// TODO:(b/24810716) Move into separate target so that font assets can be excluded.
-@interface MDCRobotoFontLoader : NSObject <MDCTypographyFontLoader>
+@interface MDCRobotoFontLoader : NSObject
 
 #pragma mark Accessing the font loader
 

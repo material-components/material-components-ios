@@ -80,6 +80,14 @@ Pod::Spec.new do |s|
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
   end
 
+  s.subspec "FontDiskLoader" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+
+    ss.framework = "CoreText"
+  end
+
   s.subspec "HeaderStackView" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
@@ -108,6 +116,22 @@ Pod::Spec.new do |s|
     ss.resource_bundles = {
       "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
     }
+  end
+
+  s.subspec "RobotoFontLoader" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+
+    # Only if you have a resource bundle
+    ss.resource_bundles = {
+      "Material#{ss.base_name}" => ["components/#{ss.base_name}/Material#{ss.base_name}.bundle/*"]
+    }
+
+    ss.dependency "MaterialComponents/FontDiskLoader"
+    # TODO: Make MDCRobotoFontLoader conform to the <MDCTypographyFontLoading>. This was intended to be a
+    # strong dependancy but is weak during the deprecation period.
+    # ss.dependency "MaterialComponents/Typography"
   end
 
   s.subspec "ScrollViewDelegateMultiplexer" do |ss|
@@ -157,12 +181,8 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
-    ss.framework = "CoreText"
 
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-    }
-    ss.framework = "CoreText"
+    ss.dependency "MaterialComponents/RobotoFontLoader" # This dependancy is part of a deprecation.
   end
 
   s.subspec "private" do |pss|

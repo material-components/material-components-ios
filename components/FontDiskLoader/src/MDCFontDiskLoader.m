@@ -14,15 +14,15 @@
  limitations under the License.
  */
 
-#import "MDCFontResource.h"
+#import "MDCFontDiskLoader.h"
 
 #import <CoreText/CoreText.h>
 
-@interface MDCFontResource ()
+@interface MDCFontDiskLoader ()
 @property(nonatomic, strong) NSURL *fontURL;
 @end
 
-@implementation MDCFontResource
+@implementation MDCFontDiskLoader
 
 - (instancetype)initWithName:(NSString *)fontName URL:(NSURL *)fontURL {
   self = [super init];
@@ -55,6 +55,11 @@
   if (_hasFailedRegistration) {
     return NO;
   }
+  if (![[NSFileManager defaultManager] fileExistsAtPath:[self.fontURL path]]) {
+    _hasFailedRegistration = YES;
+    NSLog(@"Failed to load font: file not found at %@", self.fontURL);
+    return NO;
+  }
   CFErrorRef error = NULL;
   _isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
                                                    kCTFontManagerScopeProcess,
@@ -83,3 +88,9 @@
 }
 
 @end
+
+// clang-format off
+__deprecated_msg("Use MDCFontDiskLoader instead.")
+@interface MDCFontResource : MDCFontDiskLoader
+@end
+                                 // clang-format on

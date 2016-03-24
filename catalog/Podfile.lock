@@ -4,11 +4,13 @@ PODS:
     - MaterialComponents/ButtonBar (= 2.1.1)
     - MaterialComponents/Buttons (= 2.1.1)
     - MaterialComponents/FlexibleHeader (= 2.1.1)
+    - MaterialComponents/FontDiskLoader (= 2.1.1)
     - MaterialComponents/HeaderStackView (= 2.1.1)
     - MaterialComponents/Ink (= 2.1.1)
     - MaterialComponents/NavigationBar (= 2.1.1)
     - MaterialComponents/PageControl (= 2.1.1)
     - MaterialComponents/private (= 2.1.1)
+    - MaterialComponents/RobotoFontLoader (= 2.1.1)
     - MaterialComponents/ScrollViewDelegateMultiplexer (= 2.1.1)
     - MaterialComponents/ShadowElevations (= 2.1.1)
     - MaterialComponents/ShadowLayer (= 2.1.1)
@@ -32,6 +34,7 @@ PODS:
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
   - MaterialComponents/FlexibleHeader (2.1.1)
+  - MaterialComponents/FontDiskLoader (2.1.1)
   - MaterialComponents/HeaderStackView (2.1.1)
   - MaterialComponents/Ink (2.1.1)
   - MaterialComponents/NavigationBar (2.1.1):
@@ -50,6 +53,8 @@ PODS:
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
+  - MaterialComponents/RobotoFontLoader (2.1.1):
+    - MaterialComponents/FontDiskLoader
   - MaterialComponents/ScrollViewDelegateMultiplexer (2.1.1)
   - MaterialComponents/ShadowElevations (2.1.1)
   - MaterialComponents/ShadowLayer (2.1.1)
@@ -58,7 +63,8 @@ PODS:
   - MaterialComponents/SpritedAnimationView (2.1.1)
   - MaterialComponents/Switch (2.1.1):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (2.1.1)
+  - MaterialComponents/Typography (2.1.1):
+    - MaterialComponents/RobotoFontLoader
   - MaterialComponentsCatalog (2.1.1):
     - MaterialComponents
   - MaterialComponentsUnitTests (2.1.1):
@@ -78,7 +84,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 4a7b0438bd6974a7b0df951b53c26a48951b60d7
+  MaterialComponents: 165e4d604f43ba658b1a3feef396ea9b49bf2fba
   MaterialComponentsCatalog: f20a70ba3612ba3a449e6bc4bee8da4eef3a7885
   MaterialComponentsUnitTests: a7f5e41c4e8a708fc315eeaeff0dc0f2da40299b
 
