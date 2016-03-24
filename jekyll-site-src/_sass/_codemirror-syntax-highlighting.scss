@@ -1,18 +1,16 @@
 // Globals used in this file
-$code-background-color: $grey-100;
-$code-divider-color: $grey-400;
+$code-background-color: $grey-50;
+$code-divider-color: rgba(0, 0, 0, 0.1);
 $code-font-family: Roboto Mono;
-$code-text-color: $text-color;
+$code-text-color: $black-54;
 $code-text-size: 12px;
 $code-text-weight: 500;
 $code-lineheight: 20px;
 
 // Highlight colors, avoid any blue-green colors
 $brown-200: #BCAAA4;
-$orange-500: #FF9800;
-$amber-500: #FFC107;
-$red-500: #F44336;
-$purple-500: #9C27B0;
+$brown-400: #8D6E63;
+$pink-900: #880E4F;
 
 .code-text-style {
   font-family: $code-font-family;
@@ -80,17 +78,11 @@ pre.CodeMirror-line {
 
 // Syntax highlight colors
 .CodeMirror {
-  .cm-string, .cm-atom {
-    color: $purple-500;
+  .cm-keyword, .cm-variable-3 {
+    color: $pink-900;
   }
-  .cm-keyword {
-    color: $red-500;
-  }
-  .cm-def, .cm-variable-3 {
-    color: $orange-500;
-  }
-  .cm-userpath {
-    color: $amber-500;
+  .cm-def, .cm-userpath, .cm-string, .cm-atom {
+    color: $brown-400;
   }
   .cm-comment {
     color: $brown-200;
@@ -113,6 +105,7 @@ pre.CodeMirror-line {
     font-family: Roboto;
     font-weight: 400;
     line-height: 24px;
+    color: $code-text-color;
 
     .radio {
       margin-right: 24px;
