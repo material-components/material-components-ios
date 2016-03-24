@@ -31,8 +31,8 @@ class AppBarTypicalUseSwiftExample: UITableViewController, MDCAppBarParenting {
 
     let color = UIColor(
       red: CGFloat(0x39) / CGFloat(255),
-      green: CGFloat(0xA4) / CGFloat(255.0),
-      blue: CGFloat(0xDD) / CGFloat(255.0),
+      green: CGFloat(0xA4) / CGFloat(255),
+      blue: CGFloat(0xDD) / CGFloat(255),
       alpha: 1)
     self.headerViewController!.headerView.backgroundColor = color
   }

@@ -18,8 +18,12 @@
 
 #import "MaterialAppBar.h"
 
-#define RGBCOLOR(r, g, b) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
-#define HEXCOLOR(hex) RGBCOLOR(((hex >> 16) & 0xFF), ((hex >> 8) & 0xFF), ((hex)&0xFF))
+static UIColor *colorWithHex(int hexColor) {
+  return [UIColor colorWithRed:((hexColor >> 16) & 0xFF) / 255.0f
+                         green:((hexColor >> 8) & 0xFF) / 255.0f
+                          blue:(hexColor & 0xFF) / 255.0f
+                         alpha:1];
+}
 
 @interface AppBarTypicalUseExample : UITableViewController <MDCAppBarParenting>
 @end
@@ -41,7 +45,7 @@
     self.title = @"Hello";
     MDCAppBarPrepareParent(self);
 
-    self.headerViewController.headerView.backgroundColor = HEXCOLOR(0x39A4DD);
+    self.headerViewController.headerView.backgroundColor = colorWithHex(0x39A4DD);
   }
   return self;
 }
