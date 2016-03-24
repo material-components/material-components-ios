@@ -85,7 +85,9 @@ cat > "$GENERATED_ICONS_SCRIPT_PATH" <<EOL
 def registerIcons(s)
 
   s.subspec "Icons" do |iss|
-    iss.source_files = "components/private/Icons/src/*.{h,m}", "components/private/Icons/src/private/*.{h,m}"
+    iss.public_header_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.h"
+    iss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.{h,m}", "$ICONS_COMPONENT_RELATIVE_PATH/src/private/*.{h,m}"
+    iss.header_mappings_dir = "$ICONS_COMPONENT_RELATIVE_PATH/src/*"
 
 EOL
 
@@ -131,7 +133,9 @@ for directory in $ICONS_COMPONENT_PATH/icons/*/; do
   cat >> "$GENERATED_ICONS_SCRIPT_PATH" <<EOL
 
     iss.subspec "$icon_name" do |ss|
+      ss.public_header_files = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/*.h"
       ss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/*.{h,m}"
+      ss.header_mappings_dir = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/*"
       ss.resource_bundles = {
         "MaterialIcon_$icon_name" => [
           "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/MaterialIcon+$icon_name.bundle/**/*.png",
