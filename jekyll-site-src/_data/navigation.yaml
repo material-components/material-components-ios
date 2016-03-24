@@ -91,6 +91,4 @@ components:
   - name: Typography
     url: /components/Typography/
     markdown: Typography/README.md
-  - name: API Docs
-    url: /components/#apidocs
-    class: toplevel
+

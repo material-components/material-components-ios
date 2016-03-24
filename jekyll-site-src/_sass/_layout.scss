@@ -236,22 +236,49 @@ body {
       line-height: 32px;
     }
 
-    .ios-screenshot {
+    .clear-after {
+      &::after {
+        display: block;
+        clear: both;
+        content: '';
+        line-height: 0;
+        font-size: 0;
+        height: 0;
+      }
+    }
+
+    p.ios-screenshot,
+    div.ios-animation {
       line-height: 0;
       font-size: 0;
       margin: 0;
       padding: 0;
 
+      a {
+        display: none;
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 24px;
+        margin: 4px 0 16px 0;
+      }
+
       img {
         border: 1px solid rgba(0, 0, 0, 0.1);
         width: 280px;
+        margin-bottom: 64px;
+      }
+
+      video {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        width: 280px;
+        margin-bottom: 64px;
       }
 
       &.right {
         float: right;
         margin-left: 48px;
-        margin-bottom: 64px;
-
       }
 
       @include collapsed_header() {
@@ -266,9 +293,11 @@ body {
           display: block;
           margin: 0 auto;
         }
+        video {
+          display: block;
+          margin: 0 auto;
+        }
       }
-
-
     }
 
     @include content_adaptive_width {
@@ -412,26 +441,5 @@ footer {
         margin-right: 6px;
       }
     }
-  }
-}
-.screenshot-demo {
-  width: 207px;
-  height: 420px;
-  padding: 48px 10px;
-  box-sizing: border-box;
-  background-image: url('/images/iphone-container.png');
-  background-repeat: no-repeat;
-}
-.video-demo {
-  video {
-    width: 207px;
-    height: 420px;
-    padding: 48px 10px;
-    box-sizing: border-box;
-    background-image: url('/images/iphone-container.png');
-    background-repeat: no-repeat;
-  }
-  a {
-    display: none;
   }
 }
