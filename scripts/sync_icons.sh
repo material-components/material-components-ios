@@ -87,7 +87,7 @@ def registerIcons(s)
   s.subspec "Icons" do |iss|
     iss.subspec "Base" do |ss|
       ss.public_header_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.h"
-      ss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.{h,m}", "$ICONS_COMPONENT_RELATIVE_PATH/src/private/*.{h,m}"
+      ss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.{h,m}"
       ss.header_mappings_dir = "$ICONS_COMPONENT_RELATIVE_PATH/src/*"
     end
 EOL

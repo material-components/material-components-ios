@@ -5,7 +5,7 @@ def registerIcons(s)
   s.subspec "Icons" do |iss|
     iss.subspec "Base" do |ss|
       ss.public_header_files = "components/private/Icons/src/*.h"
-      ss.source_files = "components/private/Icons/src/*.{h,m}", "components/private/Icons/src/private/*.{h,m}"
+      ss.source_files = "components/private/Icons/src/*.{h,m}"
       ss.header_mappings_dir = "components/private/Icons/src/*"
     end
 
