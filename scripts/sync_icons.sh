@@ -31,12 +31,12 @@
 # This script will generate the scaffolding required to add these icons to an app.
 #
 #     components/private/Icons/icons/ic_arrow_back/
-#       ic_arrow_back.bundle/
 #       src/
+#         ic_arrow_back.bundle/
 #         MaterialIcons+ic_arrow_back.h
 #     components/private/Icons/icons/ic_menu/
-#       ic_menu.bundle/
 #       src/
+#         ic_menu.bundle/
 #         MaterialIcons+ic_menu.h
 #
 
@@ -103,7 +103,7 @@ for directory in $ICONS_COMPONENT_PATH/icons/*/; do
     continue
   fi
 
-  assets_path="$directory/MaterialIcon+$icon_name.bundle/$icon_name.xcassets"
+  assets_path="$directory/src/MaterialIcon+$icon_name.bundle/$icon_name.xcassets"
 
   echo -n "copying..."
 
@@ -134,8 +134,8 @@ for directory in $ICONS_COMPONENT_PATH/icons/*/; do
       ss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcon_$icon_name" => [
-          "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/MaterialIcon+$icon_name.bundle/**/*.png",
-          "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/MaterialIcon+$icon_name.bundle/*.xcassets"
+          "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/MaterialIcon+$icon_name.bundle/**/*.png",
+          "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/MaterialIcon+$icon_name.bundle/*.xcassets"
         ]
       }
     end
