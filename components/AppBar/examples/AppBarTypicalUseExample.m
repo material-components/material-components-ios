@@ -66,6 +66,12 @@
   return self.headerViewController;
 }
 
+// Optional step: The Header View Controller does basic inspection of the header view's background
+//                color to identify whether the status bar should be light or dark-themed.
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.headerViewController;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
