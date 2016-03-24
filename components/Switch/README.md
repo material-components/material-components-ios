@@ -1,23 +1,61 @@
 ---
-layout: post
 title:  "Switch"
-date:   2016-03-01 20:15:01 -0500
-categories: documentation
+layout: detail
+section: documentation
 ---
+
 # Switch
 
-A material design on/off switch.
+Switch provides an Material Design on/off switch control with an interface similar to UISwitch. Note that `MDCSwitch` objects have an intrinsic size and are not resizable.
+<!--{: .intro }-->
 
-It has an interface similar to UISwitch. Note that MDCSwitch objects have an intrinsic size and are not resizable.
+### Design Specifications
 
-## Requirements
+<ul class="icon-list">
+  <li class="icon-link"><a href="https://www.google.com/design/spec/components/selection-controls.html#selection-controls-switch">Switch Selection Control</a></li>
+</ul>
+
+### API Documentation
+
+<ul class="icon-list">
+  <li class="icon-link"><a href="/apidocs/Switch/Classes/MDCSwitch.html">MDCSwitch</a></li>
+  <li class="icon-link"><a href="/apidocs/Switch/Functions.html">Global Functions</a></li>
+</ul>
+
+
+- - -
+
+## Installation
+
+### Requirements
 
 - Xcode 7.0 or higher.
 - iOS SDK version 7.0 or higher.
 
+### Installation with CocoaPods
+
+To add the Switch component to your Xcode project using CocoaPods, add the following to your PodFile:
+
+~~~ bash
+$ pod 'MaterialComponents/Switch'
+~~~
+
+Then, run the following command:
+
+~~~ bash
+$ pod install
+~~~
+
+
+- - -
+
+
+
 ## Usage
 
-```objectivec
+<!--<div class="material-code-render" markdown="1">-->
+### Objective C
+~~~ objc
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -33,4 +71,7 @@ It has an interface similar to UISwitch. Note that MDCSwitch objects have an int
 - (void)didChangeSliderValue:(id)sender {
   ...
 }
-```
+
+~~~
+<!--</div>-->
+
