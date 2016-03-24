@@ -16,7 +16,7 @@
 
 #import "MDCIcons.h"
 
-#import "private/MDCIcons+BundleLoader.h"
+#import "MDCIcons+BundleLoader.h"
 
 @implementation MDCIcons
 
