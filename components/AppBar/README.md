@@ -197,13 +197,14 @@ ensure that the App Bar's view is above all of your other views.
 
 ### App Bar + UINavigationController
 
-When pushing view controllers that have App Bars onto UINavigationController you'll may notice that
-two navigation bars are visible: the stock UINavigationBar and the App Bar's bars. To avoid this, we
+When pushing view controllers that have App Bars onto UINavigationController you may notice that two
+navigation bars are visible: the stock UINavigationBar and the App Bar's navigation bar. We
 recommend hiding the UINavigationController's `navigationBar` whenever you're presenting a view
 controller with an App Bar.
 
-One way to do this is to add the following to the `viewWillAppear:` of any view controller that
-has an App Bar:
+One way to do this is to change the navigation bar visibility during either `viewWillAppear:` or
+`viewWillDisappear:`. This allows UINavigationController to animate the UINavigationBar in a
+predictable fashion during pushes and pops.
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective-C
@@ -226,7 +227,7 @@ has an App Bar:
 ~~~
 <!--</div>-->
 
-And add the following to view controllers that don't have an app bar:
+Add the following to view controllers that don't have an app bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective-C
@@ -272,7 +273,17 @@ self.navigationController?.setNavigationBarHidden(false, animated: false)
 
 ## Examples
 
-TODO: Discuss navigationItem integration.
+### UINavigatonItem and the App Bar
+
+The App Bar's Navigation Bar registers KVO listeners on the parent view controller's
+`navigationItem`. All of the typical properties including UIViewController's `title` property will
+affect the Navigation Bar as you'd expect, with the following exceptions:
+
+- None of the `animated:` method varients are supported because they do not implement KVO events.
+  Use of these methods will result in the Navigation Bar becoming out of sync with the
+  navigationItem properties.
+- `prompt` is not presently supported. TODO(featherless): File issue.
+
 TODO: Discuss adding background images.
 TODO: Discuss touch event forwarding.
 
