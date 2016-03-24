@@ -6,6 +6,35 @@
 
 ##### Bug Fixes
 
+## 2.2.0
+
+##### Enhancements
+
+[AppBar Example] Addressing code style feedback from D326. (Jeff Verkoeyen)
+[AppBar] Add typical Swift usage example. (Jeff Verkoeyen)
+[AppBar] Add UINavigatonItem section. (Jeff Verkoeyen)
+[AppBar] readme updates. (Jeff Verkoeyen)
+[AppBar] Remove unnecessary code from the ObjC example. (Jeff Verkoeyen)
+[AppBar] Standardize and document the examples in preparation for upcoming examples. (Jeff Verkoeyen)
+[AppBar] Use the catalog's blue color in the examples. (Jeff Verkoeyen)
+[Button] Change ink color on buttons to improve visibility of ink (Junius Gunaratne)
+[Catalog] Miscellaneous cleanup and fixes to the Catalog. (Jeff Verkoeyen)
+[Catalog] Update catalog home screen to new light themed design (Junius Gunaratne)
+[Docs] Navigationbar initial markdown formatting. (Jason Striegel)
+[FlexibleHeader] Assert that the tracking scroll view has a delegate. (Jeff Verkoeyen)
+[FlexibleHeader] Only call sizeToFit on the flexible header view when it does not have a tracking scroll view. (Jeff Verkoeyen)
+[FlexibleHeader] Poke the header into laying out its content when the view controller has been fully registered. (Jeff Verkoeyen)
+[FontDiskLoader] Revived old class, MDCFontResource, and marked it deprecated. (randallli)
+[Icons] Add private/ directory to Icons target. (Jeff Verkoeyen)
+[Icons] Added component (Jeff Verkoeyen)
+[Icons] Bundles can't have plusses in their names. (Jeff Verkoeyen)
+[Ink] markdown formatting. (Jason Striegel)
+[Ink] Minor tweaks to ink for more consistency with other platforms (Junius Gunaratne)
+[Site] Remove alternate remotes from build-site remote determination. (Jeff Verkoeyen)
+[Site] Updates to top links and markdown formatting. (Jason Striegel)
+[Site] Using HTML markup for lists to avoid github comment issue. (Jason Striegel)
+[Typography] Moved the FontLoader and FontResource into their own components. (randallli)
+
 ## 2.1.1
 
 ##### Enhancements
