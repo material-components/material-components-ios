@@ -85,10 +85,11 @@ cat > "$GENERATED_ICONS_SCRIPT_PATH" <<EOL
 def registerIcons(s)
 
   s.subspec "Icons" do |iss|
-    iss.public_header_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.h"
-    iss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.{h,m}", "$ICONS_COMPONENT_RELATIVE_PATH/src/private/*.{h,m}"
-    iss.header_mappings_dir = "$ICONS_COMPONENT_RELATIVE_PATH/src/*"
-
+    iss.subspec "Base" do |ss|
+      ss.public_header_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.h"
+      ss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.{h,m}", "$ICONS_COMPONENT_RELATIVE_PATH/src/private/*.{h,m}"
+      ss.header_mappings_dir = "$ICONS_COMPONENT_RELATIVE_PATH/src/*"
+    end
 EOL
 
 # Enumerate all desired icons...
@@ -142,6 +143,7 @@ for directory in $ICONS_COMPONENT_PATH/icons/*/; do
           "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/MaterialIcon+$icon_name.bundle/*.xcassets"
         ]
       }
+      ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
     end
 EOL
 
