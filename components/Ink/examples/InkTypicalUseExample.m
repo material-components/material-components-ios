@@ -60,7 +60,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1.f];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
   _inkTouchControllers = [[NSMutableArray alloc] init];
 
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
@@ -89,7 +89,8 @@
     MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:view];
     inkTouchController.delegate = self;
     [inkTouchController addInkView];
-    [inkTouchController.inkView setInkColor:[UIColor colorWithRed:1.f green:0 blue:0 alpha:0.2f]];
+    UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
+    [inkTouchController.inkView setInkColor:blueColor];
     inkTouchController.inkView.clipsRippleToBounds = NO;
     [_inkTouchControllers addObject:inkTouchController];
   }
