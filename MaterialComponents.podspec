@@ -125,7 +125,7 @@ Pod::Spec.new do |s|
 
     # Only if you have a resource bundle
     ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/Material#{ss.base_name}.bundle/*"]
+      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
     }
 
     ss.dependency "MaterialComponents/FontDiskLoader"
