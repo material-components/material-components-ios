@@ -79,6 +79,8 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
   // If there is no tracking scroll view then we have to poke the header into sizing itself.
   if (!_headerView.trackingScrollView) {
     [_headerView sizeToFit];
+  } else {
+    [_headerView trackingScrollViewDidScroll];
   }
 }
 
