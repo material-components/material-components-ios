@@ -39,7 +39,7 @@ for directory in "$ROOT_DIR"/components/*/README.md; do
 
   cd "$folder"
 
-  jazzy_output="$ROOT_DIR/site-source/jekyll-site-src/apidocs/$component"
+  jazzy_output="$ROOT_DIR/site-source/jekyll-site-src/components/$component/apidocs"
 
   jazzy \
     --output "$jazzy_output" \
@@ -54,8 +54,9 @@ for directory in "$ROOT_DIR"/components/*/README.md; do
   cp -R "$ROOT_DIR/docs/assets/" "$jazzy_output/assets" >> /dev/null 2> /dev/null
   # adjust path to assets in generated files
   sed -i '' 's/docs\///g' $jazzy_output/*.html
-
+  rm -r $jazzy_output/index.html $jazzy_output/docsets
   cd $ROOT_DIR
 done
+
 
 
