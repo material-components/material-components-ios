@@ -31,17 +31,13 @@ static const CGFloat kPestoCardIconSize = 72.f;
   return self;
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  [self addSubview:self.cellView];
-}
-
 - (void)commonInit {
   _cellView = [[UIView alloc] initWithFrame:self.bounds];
   _cellView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _cellView.backgroundColor = [UIColor whiteColor];
   _cellView.clipsToBounds = YES;
+  [self addSubview:_cellView];
 
   MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.layer;
   shadowLayer.shadowMaskEnabled = NO;

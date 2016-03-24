@@ -19,6 +19,7 @@
 
   PestoFlexibleHeaderContainerViewController *flexHeadContainerVC =
       [[PestoFlexibleHeaderContainerViewController alloc] init];
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
   [self.window setRootViewController:flexHeadContainerVC];
   [self.window makeKeyAndVisible];

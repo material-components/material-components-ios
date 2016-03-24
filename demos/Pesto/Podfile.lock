@@ -47,15 +47,17 @@ PODS:
     - MaterialComponents/private/ThumbTrack (= 2.1.1)
   - MaterialComponents/private/Color (2.1.1)
   - MaterialComponents/private/Icons (2.1.1):
+    - MaterialComponents/private/Icons/Base (= 2.1.1)
     - MaterialComponents/private/Icons/ic_arrow_back (= 2.1.1)
-  - MaterialComponents/private/Icons/ic_arrow_back (2.1.1)
+  - MaterialComponents/private/Icons/Base (2.1.1)
+  - MaterialComponents/private/Icons/ic_arrow_back (2.1.1):
+    - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/ThumbTrack (2.1.1):
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
   - MaterialComponents/RobotoFontLoader (2.1.1):
     - MaterialComponents/FontDiskLoader
-    - MaterialComponents/Typography
   - MaterialComponents/ScrollViewDelegateMultiplexer (2.1.1)
   - MaterialComponents/ShadowElevations (2.1.1)
   - MaterialComponents/ShadowLayer (2.1.1)
@@ -64,7 +66,8 @@ PODS:
   - MaterialComponents/SpritedAnimationView (2.1.1)
   - MaterialComponents/Switch (2.1.1):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (2.1.1)
+  - MaterialComponents/Typography (2.1.1):
+    - MaterialComponents/RobotoFontLoader
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
@@ -74,6 +77,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 99aef08cedfe31e1efbb0c41ea25d5743a5b51b8
+  MaterialComponents: 204c35b5fba1f55b3f4b264f45744f2bd8b92c87
 
 COCOAPODS: 0.39.0

@@ -54,7 +54,7 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
   UIView *bottomViewBackground = [[UIView alloc] initWithFrame:bottomFrame];
   bottomViewBackground.backgroundColor = [UIColor whiteColor];
   [self.view addSubview:bottomViewBackground];
-  self.bottomView.frame = bottomFrame;
+
   self.bottomView = [[PestoRecipeCardView alloc] initWithFrame:bottomFrame];
   self.bottomView.title = self.title;
   self.bottomView.iconImageName = self.iconImageName;
@@ -75,9 +75,8 @@ static NSString *const kPestoDetailMenuBack = @"mdc_sprite_arrow_back__menu";
         }];
   });
 
-  UIImage *spriteImageMenuToArrow = [UIImage imageNamed:kPestoDetailBackMenu];
-  self.animationView = [[MDCSpritedAnimationView alloc]
-      initWithSpriteSheetImage:spriteImageMenuToArrow];
+  UIImage *spriteImage = [UIImage imageNamed:kPestoDetailBackMenu];
+  self.animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
   self.animationView.frame = CGRectMake(20.f, 20.f, 24.f, 24.f);
   self.animationView.tintColor = [UIColor whiteColor];
   [self.view addSubview:self.animationView];

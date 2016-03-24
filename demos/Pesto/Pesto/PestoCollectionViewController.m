@@ -26,7 +26,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   if (self) {
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.collectionView registerClass:[PestoCardCollectionViewCell class]
-            forCellWithReuseIdentifier:@"PestoCardCollectionViewCell"];
+            forCellWithReuseIdentifier:NSStringFromClass([PestoCardCollectionViewCell class])];
     _pestoData = [[PestoData alloc] init];
     [self setNeedsStatusBarAppearanceUpdate];
   }
@@ -85,9 +85,9 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  PestoCardCollectionViewCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:@"PestoCardCollectionViewCell"
-                                                forIndexPath:indexPath];
+  PestoCardCollectionViewCell *cell = [collectionView
+      dequeueReusableCellWithReuseIdentifier:NSStringFromClass([PestoCardCollectionViewCell class])
+                                forIndexPath:indexPath];
   NSUInteger itemNum = (NSUInteger)indexPath.row;
   NSString *baseURL = PestoDataBaseURL;
   NSString *imageURLString =
@@ -163,7 +163,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 - (UIView *)pestoHeaderView {
   CGRect headerFrame = _flexHeaderContainerVC.headerViewController.headerView.bounds;
   UIView *pestoHeaderView = [[UIView alloc] initWithFrame:headerFrame];
-  UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1];
+  UIColor *teal = [UIColor colorWithRed:0.f green:0.67f blue:0.55f alpha:1.f];
   pestoHeaderView.backgroundColor = teal;
   pestoHeaderView.layer.masksToBounds = YES;
   pestoHeaderView.autoresizingMask =
@@ -190,14 +190,14 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   CGFloat cellDim = self.view.frame.size.width - margins * 2.f;
   CGFloat maxCellWidth = 400.f;
   if (cellDim > maxCellWidth && cellDim < maxCellWidth * 2.f) {
-    cellDim = floor((self.view.frame.size.width -
-                     (2.f * kPestoCollectionViewControllerInset)) /
-                    2.f) -
+    cellDim = (CGFloat)floor(((double)self.view.frame.size.width -
+                              (2.0 * kPestoCollectionViewControllerInset)) /
+                             2.0) -
               (2.f * kPestoCollectionViewControllerInset);
   } else if (cellDim >= maxCellWidth * 2.f) {
-    cellDim = floor((self.view.frame.size.width -
-                     (3.f * kPestoCollectionViewControllerInset)) /
-                    3.f) -
+    cellDim = (CGFloat)floor(((double)self.view.frame.size.width -
+                              (3.0 * kPestoCollectionViewControllerInset)) /
+                             3.0) -
               (2.f * kPestoCollectionViewControllerInset);
   }
   return CGSizeMake(cellDim, 300.f);

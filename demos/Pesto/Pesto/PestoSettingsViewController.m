@@ -147,7 +147,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 }
 
 + (UIColor *)tableViewSeparatorColor {
-  return [UIColor colorWithWhite:0.f alpha:0.1f];
+  return [UIColor colorWithWhite:0 alpha:0.1f];
 }
 
 #pragma mark - UITableViewDataSource
@@ -187,7 +187,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  return 50.f;
+  return 50;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell

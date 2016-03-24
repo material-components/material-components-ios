@@ -106,12 +106,12 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   dispatch_async(dispatch_get_main_queue(), ^{
     [self.zoomableView setImage:cell.image];
     [UIView animateWithDuration:kPestoAnimationDuration
-        delay:0
+        delay:0.0
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
           CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
           [CATransaction setAnimationTimingFunction:quantumEaseInOut];
-          CGRect zoomFrame = CGRectMake(0, 0, self.view.bounds.size.width, 320);
+          CGRect zoomFrame = CGRectMake(0, 0, self.view.bounds.size.width, 320.f);
           self.zoomableView.frame = zoomFrame;
           self.zoomableCardView.frame = self.view.bounds;
         }

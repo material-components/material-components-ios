@@ -5,15 +5,16 @@
 #import "MaterialSpritedAnimationView.h"
 #import "MaterialTypography.h"
 
-static CGFloat kPestoDetailBottomSheetHeightPortrait = 380.f;
-static CGFloat kPestoDetailDescTextHeight = 140.f;
-static CGFloat kPestoDetailPadding = 28.f;
-static CGFloat kPestoDetailSplitWidth = 64.f;
+static CGFloat kPestoDetailBottomSheetHeightPortrait = 380;
+static CGFloat kPestoDetailDescTextHeight = 140;
+static CGFloat kPestoDetailPadding = 28;
+static CGFloat kPestoDetailSplitWidth = 64;
 
 @interface PestoSplitView : UIView
 
 @property(nonatomic) UIView *leftView;
 @property(nonatomic) UIView *rightView;
+@property(nonatomic) CGSize originalSize;
 
 @end
 
@@ -24,9 +25,11 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
                     rightView:(UIView *)rightView {
   self = [super initWithFrame:frame];
   if (self) {
+    _originalSize = frame.size;
+
     CGFloat leftWidth = kPestoDetailSplitWidth;
     CGFloat height = frame.size.height;
-    _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 1.f, leftWidth, height)];
+    _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, leftWidth, height)];
     [_leftView addSubview:leftView];
     [self addSubview:_leftView];
     CGRect rightFrame = CGRectMake(leftWidth, 0, self.frame.size.width - leftWidth, height);
@@ -40,7 +43,7 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
 }
 
 - (CGSize)intrinsicContentSize {
-  return self.bounds.size;
+  return self.originalSize;
 }
 
 @end
