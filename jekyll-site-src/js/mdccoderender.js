@@ -2,6 +2,10 @@ MDCCodeRender = (function(){
   'use strict';
 	var rendererIndex = 0;
   var kramdownToCodeMirrorMap = {
+    default: {
+      language: 'Objective-C',
+      mode: 'text/x-objectivec'
+    },
     objc: {
       language: 'Objective-C',
       mode: 'text/x-objectivec'
@@ -56,7 +60,8 @@ MDCCodeRender = (function(){
       source.parentNode.removeChild(source);
       return;
     }
-    var kramdownLang = source.classList[0].replace('language-', '');
+    var kramdownLang = source.classList.length == 0? 'default' :
+      source.classList[0].replace('language-', '');
     var language = kramdownToCodeMirrorMap[kramdownLang].language;
     var mode = kramdownToCodeMirrorMap[kramdownLang].mode;
     var cm = CodeMirror(function(elt) {
