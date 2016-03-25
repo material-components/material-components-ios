@@ -39,8 +39,6 @@
      myScrollView.delegate = _multiplexer;
      [_multiplexer addObservingDelegate:myControl];
      [_multiplexer addObservingDelegate:anotherControl];
-
- @ingroup MaterialScrollViewDelegateMultiplexer
  */
 @interface MDCScrollViewDelegateMultiplexer : NSObject <UIScrollViewDelegate>
 
@@ -74,8 +72,6 @@
  Since it is possible that multiple delegates may respond to UIScrollViewDelegate methods that
  provide return values, this protocol allows the receiver to select the specific value to return
  from an array of those responding result values.
-
- @ingroup MaterialScrollViewDelegateMultiplexer
  */
 @protocol MDCScrollViewDelegateCombining <NSObject>
 @optional

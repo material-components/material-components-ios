@@ -21,7 +21,6 @@
  This shape layer provides a circular indicator denoting a page in a page control.
 
  @internal
- @ingroup MaterialPageControl
  */
 @interface MDCPageControlIndicator : CAShapeLayer
 

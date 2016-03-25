@@ -23,7 +23,6 @@
  end points are updated.
 
  @internal
- @ingroup MaterialPageControl
  */
 @interface MDCPageControlTrackLayer : CAShapeLayer
 

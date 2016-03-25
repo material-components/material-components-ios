@@ -23,8 +23,6 @@
  material design specifications for animation and layout.
 
  The UIControlEventValueChanged control event is sent when the user changes the current page.
-
- @ingroup MaterialPageControl
  */
 @interface MDCPageControl : UIControl
 

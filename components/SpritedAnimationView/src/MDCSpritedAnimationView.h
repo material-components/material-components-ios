@@ -22,8 +22,6 @@
  This control provides an alternative to animating an array of images with a UIImageView. Only
  a single image composed of individual sprite frames is used, and animation simply consists of
  updating the layer contentsRect.
-
- @ingroup MDCSpritedAnimationView
  */
 @interface MDCSpritedAnimationView : UIView
 
