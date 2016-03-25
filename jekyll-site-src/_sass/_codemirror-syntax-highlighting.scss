@@ -55,6 +55,7 @@ $pink-900: #880E4F;
 // Text and border for line number area
 .CodeMirror-gutters {
   border: none;
+  background-color: $grey-50;
   @extend .code-text-style;
 }
 
@@ -95,7 +96,7 @@ pre.CodeMirror-line {
   background: $code-background-color;
   margin: 24px 0 24px 0;
 
-  h3 {
+  h4 {
     display: none;
   }
 
