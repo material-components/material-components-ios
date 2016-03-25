@@ -1,3 +1,19 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import "PestoSideView.h"
 #import "PestoAvatarView.h"
 #import "PestoRemoteImageService.h"
@@ -61,7 +77,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @optional
 - (void)sideContentView:(PestoSideContentView *)sideContentView
-    didSelectItemWithTitle:(NSString *)title;
+ didSelectItemWithTitle:(NSString *)title;
 
 @end
 
@@ -179,8 +195,8 @@ static NSString *const kPestoSideViewWidthBaseURL =
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGFloat sizeOffset = 0;
   if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
     sizeOffset += [(UICollectionViewFlowLayout *)collectionViewLayout sectionInset].left +
@@ -307,7 +323,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 #pragma mark - PestoSideContentViewDelegate
 
 - (void)sideContentView:(PestoSideContentView *)sideContentView
-    didSelectItemWithTitle:(NSString *)title {
+ didSelectItemWithTitle:(NSString *)title {
   if (self.delegate) {
     if ([title isEqualToString:@"Settings"] &&
         [self.delegate respondsToSelector:@selector(sideViewDidSelectSettings:)]) {
