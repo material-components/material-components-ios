@@ -77,9 +77,3 @@
 - (nullable UIFont *)fontOfSize:(CGFloat)fontSize;
 
 @end
-
-// clang-format off
-__deprecated_msg("Use MDCFontDiskLoader instead")
-@interface MDCFontResource : MDCFontDiskLoader
-@end
-// clang-format om
