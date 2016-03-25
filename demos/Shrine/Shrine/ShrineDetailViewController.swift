@@ -34,7 +34,7 @@ class ShrineDetailView: UIScrollView {
     }
 
     label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
-    label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
+    label.textColor = UIColor(red: 0.039, green: 0.192, blue: 0.259, alpha: 1)
     label.lineBreakMode = .ByWordWrapping
     label.numberOfLines = 2
 
@@ -70,7 +70,7 @@ class ShrineDetailView: UIScrollView {
 
     floatingButton.setTitle("+", forState: UIControlState.Normal)
     floatingButton.backgroundColor =
-      UIColor(red: 22 / 255, green: 240 / 255, blue: 240 / 255, alpha: 1)
+      UIColor(red: 0.086, green: 0.941, blue: 0.941, alpha: 1)
     floatingButton.sizeToFit()
     floatingButton.frame = CGRectMake(self.frame.width - floatingButton.frame.width - labelPadding,
       500, floatingButton.frame.width, floatingButton.frame.height)
@@ -98,7 +98,8 @@ class ShrineDetailViewController: UIViewController {
     dismissBtn.customTitleColor = UIColor.grayColor()
     dismissBtn.sizeToFit()
     dismissBtn.frame = CGRectMake(8, 28, dismissBtn.frame.width, dismissBtn.frame.height)
-    dismissBtn.addTarget(self, action: "dismissDetails", forControlEvents: .TouchUpInside)
+    dismissBtn.addTarget(self, action: #selector(ShrineDetailViewController.dismissDetails),
+                         forControlEvents: .TouchUpInside)
     self.view.addSubview(dismissBtn)
   }
 

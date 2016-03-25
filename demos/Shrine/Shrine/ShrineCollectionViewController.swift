@@ -22,11 +22,13 @@ class ShrineCollectionViewController: UICollectionViewController {
     return 1
   }
 
-  override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  override func collectionView(collectionView: UICollectionView,
+                               numberOfItemsInSection section: Int) -> Int {
     return self.shrineData.titles.count
   }
 
-  override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  override func collectionView(collectionView: UICollectionView,
+                               cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ShrineCollectionViewCell", forIndexPath: indexPath) as! ShrineCollectionViewCell
     let itemNum:NSInteger = indexPath.row;
 
@@ -48,7 +50,8 @@ class ShrineCollectionViewController: UICollectionViewController {
       return CGSizeMake(cellWidth, cellHeight);
   }
 
-  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+  override func collectionView(collectionView: UICollectionView,
+                               didSelectItemAtIndexPath indexPath: NSIndexPath) {
     let itemNum:NSInteger = indexPath.row;
 
     let detailVC = ShrineDetailViewController()
@@ -63,18 +66,19 @@ class ShrineCollectionViewController: UICollectionViewController {
     headerViewController.scrollViewDidScroll(scrollView);
     let scrollOffsetY = scrollView.contentOffset.y;
     let duration = 0.5
-    let options = UIViewKeyframeAnimationOptions.CalculationModeLinear
     if (scrollOffsetY > -240) {
-      UIView.animateKeyframesWithDuration(duration, delay: 0, options: options, animations: { () -> Void in
+      UIView.animateWithDuration(duration, animations: {
         self.headerContentView.scrollView.alpha = 0
         self.headerContentView.pageControl.alpha = 0
-        }, completion: { (bool) -> Void in
+        self.headerContentView.logoImageView.alpha = 0
+        self.headerContentView.logoTextImageView.alpha = 1
       })
     } else {
-      UIView.animateKeyframesWithDuration(duration, delay: 0, options: options, animations: { () -> Void in
+      UIView.animateWithDuration(duration, animations: {
         self.headerContentView.scrollView.alpha = 1
         self.headerContentView.pageControl.alpha = 1
-        }, completion: { (bool) -> Void in
+        self.headerContentView.logoImageView.alpha = 1
+        self.headerContentView.logoTextImageView.alpha = 0
       })
     }
   }

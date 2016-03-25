@@ -72,7 +72,7 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     labelAvatar.frame = CGRectMake(15 + avatarDim,
       self.frame.size.height - 30,
       self.frame.size.width,
-      14)
+      16)
     labelPrice.sizeToFit()
     labelPrice.frame = CGRectMake(self.frame.size.width - labelPrice.frame.size.width - 10,
       10,
