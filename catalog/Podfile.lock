@@ -53,6 +53,7 @@ PODS:
   - MaterialComponents/private/Icons/ic_arrow_back (2.1.1):
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/ThumbTrack (2.1.1):
+    - MaterialComponents/Ink
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
@@ -87,7 +88,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 6e04984a60318ee6ed9a5424860cb1e0fe863834
+  MaterialComponents: b8da2ce0264e9771263b9d97b375b8765b307a5d
   MaterialComponentsCatalog: f20a70ba3612ba3a449e6bc4bee8da4eef3a7885
   MaterialComponentsUnitTests: a7f5e41c4e8a708fc315eeaeff0dc0f2da40299b
 

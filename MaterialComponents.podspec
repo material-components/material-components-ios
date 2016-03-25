@@ -201,6 +201,7 @@ Pod::Spec.new do |s|
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src/*"
 
+      ss.dependency "MaterialComponents/Ink"
       ss.dependency "MaterialComponents/ShadowElevations"
       ss.dependency "MaterialComponents/ShadowLayer"
       ss.dependency "MaterialComponents/private/Color"
