@@ -100,6 +100,7 @@ static const CGFloat kStatusBarHeight = 20;
   UIBarButtonItem *backBarButtonItem = previousViewControler.navigationItem.backBarButtonItem;
   if (!backBarButtonItem) {
     UIImage *backButtonImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_arrow_back]];
+    backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
                                                          style:UIBarButtonItemStyleDone
                                                         target:self
