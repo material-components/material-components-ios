@@ -11,11 +11,11 @@
 
 - Install Jazzy
 
-    [sudo] gem install jazzy
+        [sudo] gem install jazzy
 
 - Install Jekyll(Github Ver.)
 
-    [sudo] gem install github-pages
+        [sudo] gem install github-pages
 
  
 ### Site generation
