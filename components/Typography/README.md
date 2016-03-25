@@ -70,7 +70,7 @@ label.alpha = [MDCTypography titleFontOpacity];
 
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
 let label = UILabel()
 label.text = "This is a title"

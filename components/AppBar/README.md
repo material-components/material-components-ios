@@ -99,14 +99,14 @@ properties. As we'll see in a moment, this allows the App Bar to configure your 
 helper methods.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+####Objective-C
 
 ~~~ objc
 @interface MyViewController () <MDCAppBarParenting>
 @end
 ~~~
 
-### Swift
+####Swift
 ~~~ swift
 class MyViewController: UITableViewController, MDCAppBarParenting
 ~~~
@@ -117,7 +117,7 @@ class MyViewController: UITableViewController, MDCAppBarParenting
 Step 2: **Synthesize the required properties of the MDCAppBarParenting protocol**.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 @implementation MyViewController
@@ -127,7 +127,7 @@ Step 2: **Synthesize the required properties of the MDCAppBarParenting protocol*
 @synthesize headerViewController;
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
   var headerStackView: MDCHeaderStackView?
   var navigationBar: MDCNavigationBar?
@@ -140,7 +140,7 @@ Step 2: **Synthesize the required properties of the MDCAppBarParenting protocol*
 Step 3: **Initialize your view controller's App Bar**.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 ~~~ objc
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -151,7 +151,7 @@ Step 3: **Initialize your view controller's App Bar**.
 }
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -168,7 +168,7 @@ Ideally you will do this after all views have been added to your controller's vi
 ensure that the App Bar's view is above all of your other views.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 ~~~ objc
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -180,7 +180,7 @@ ensure that the App Bar's view is above all of your other views.
 }
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -205,7 +205,7 @@ One way to do this is to change the navigation bar visibility during either `vie
 predictable fashion during pushes and pops.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 ~~~ objc
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -214,7 +214,7 @@ predictable fashion during pushes and pops.
 }
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
@@ -227,7 +227,7 @@ predictable fashion during pushes and pops.
 Add the following to view controllers that don't have an app bar:
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 ~~~ objc
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -236,7 +236,7 @@ Add the following to view controllers that don't have an app bar:
 }
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
@@ -252,13 +252,13 @@ If all of your view controllers use the App Bar in a given UINavigationControlle
 simply hide the navigationBar when you create the navigation controller:
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 ~~~ objc
 UINavigationController *navigationController = ...;
 [navigationController setNavigationBarHidden:NO animated:NO];
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
 self.navigationController?.setNavigationBarHidden(false, animated: false)
 ~~~
@@ -274,14 +274,14 @@ update your status bar style, implement `childViewControllerForStatusBarStyle` i
 controller.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 ~~~ objc
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.headerViewController;
 }
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
   override func childViewControllerForStatusBarStyle() -> UIViewController? {
     return self.headerViewController

@@ -78,7 +78,7 @@ Create beautiful apps with&nbsp;Material&nbsp;Design.
     Choose from Objective-C or Swift:
 
     <!--<div class="material-code-render" markdown="1">-->
-    ### Objective-C
+    #### Objective-C
 
     ~~~ objc
     #import "MaterialButtons.h"
@@ -105,7 +105,7 @@ Create beautiful apps with&nbsp;Material&nbsp;Design.
     @end
     ~~~
 
-    ### Swift
+    #### Swift
 
     ~~~swift
     import material_components_ios

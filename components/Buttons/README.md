@@ -106,7 +106,7 @@ simultaneously interacting with a button and other UI elements.
 ### Create a Flat Button
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 MDCFlatButton *flatButton = [MDCFlatButton new];
@@ -119,7 +119,7 @@ MDCFlatButton *flatButton = [MDCFlatButton new];
 [self.view addSubview:flatButton];
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
 let flatButton = MDCFlatButton()
 flatButton.customTitleColor = UIColor.grayColor()
@@ -138,7 +138,7 @@ Create a Raised button and change its default elevation.
 The default elevation for _raised buttons_ in resting state is 2 dp.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 MDCRaisedButton *raisedButton = [MDCRaisedButton new];
@@ -150,7 +150,7 @@ MDCRaisedButton *raisedButton = [MDCRaisedButton new];
 [self.view addSubview:raisedButton];
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
 let raisedButton = MDCRaisedButton()
 // See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
@@ -168,7 +168,7 @@ self.view.addSubview(raisedButton)
 ### Create a Floating Action Button
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 MDCFloatingButton *floatingButton = [MDCFloatingButton new];
@@ -180,7 +180,7 @@ MDCFloatingButton *floatingButton = [MDCFloatingButton new];
 [self.view addSubview:floatingButton];
 ~~~
 
-### Swift
+#### Swift
 
 ~~~ swift
 let floatingButton = MDCFloatingButton()

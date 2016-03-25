@@ -90,7 +90,7 @@ TODO: Choose links below.
     Choose from Objective-C or Swift:
 
     <!--<div class="material-code-render" markdown="1">-->
-    ### Objective-C
+    #### Objective-C
 
     ~~~ objc
     #import "MaterialButtons.h"
@@ -117,7 +117,7 @@ TODO: Choose links below.
     @end
     ~~~
 
-    ### Swift
+    #### Swift
 
     ~~~swift
     import material_components_ios
