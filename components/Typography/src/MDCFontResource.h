@@ -14,6 +14,10 @@
  limitations under the License.
  */
 
-#import "MDCTypography.h"
-#import "MDCFontResource.h"
-#import "MDCRobotoFontLoader.h"
+#import "MaterialFontDiskLoader.h"
+
+// clang-format off
+__deprecated_msg("Use MDCFontDiskLoader instead")
+@interface MDCFontResource : MDCFontDiskLoader
+@end
+// clang-format om
