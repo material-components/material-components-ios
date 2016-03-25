@@ -91,7 +91,7 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
 }
 
 - (void)cancelInkTouchProcessing {
-  [_inkView evaporateWithCompletion:nil];
+  [_inkView cancelAllAnimationsAnimated:YES];
 }
 
 - (void)handleInkGesture:(MDCInkGestureRecognizer *)recognizer {
@@ -115,9 +115,8 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
       dispatch_time_t delayTime =
           dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC * kMDCInkTouchDelayInterval));
       dispatch_after(_delaysInkSpread ? delayTime : 0, dispatch_get_main_queue(), ^(void) {
-        [self spreadInkFromPoint:[recognizer locationInView:_inkView]
-                   touchLocation:touchLocation
-                      completion:nil];
+        [self touchBeganAtPoint:[recognizer locationInView:_inkView]
+                  touchLocation:touchLocation];
       });
       break;
     }
@@ -132,17 +131,12 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
       }
       break;
     }
+    case UIGestureRecognizerStateCancelled:
     case UIGestureRecognizerStateRecognized:
-    case UIGestureRecognizerStateFailed: {
-      [_inkView evaporateWithCompletion:nil];
+    case UIGestureRecognizerStateFailed:
+      [_inkView cancelAllAnimationsAnimated:YES];
       _shouldRespondToTouch = NO;
       break;
-    }
-    case UIGestureRecognizerStateCancelled: {
-      [_inkView evaporateToPoint:[recognizer locationInView:_inkView] completion:nil];
-      _shouldRespondToTouch = NO;
-      break;
-    }
   }
 
   if (_shouldRespondToTouch) {
@@ -159,11 +153,10 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
   recognizer.enabled = YES;
 }
 
-- (void)spreadInkFromPoint:(CGPoint)point
-             touchLocation:(CGPoint)touchLocation
-                completion:(MDCInkCompletionBlock)completionBlock {
+- (void)touchBeganAtPoint:(CGPoint)point
+            touchLocation:(CGPoint)touchLocation {
   if (_shouldRespondToTouch) {
-    [_inkView spreadFromPoint:point completion:completionBlock];
+    [_inkView startTouchBeganAnimationAtPoint:point completion:nil];
     if ([_delegate
             respondsToSelector:@selector(inkTouchController:didProcessInkView:atTouchLocation:)]) {
       [_delegate inkTouchController:self didProcessInkView:_inkView atTouchLocation:touchLocation];

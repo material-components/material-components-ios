@@ -31,7 +31,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInit];
+    [self commonMDCInkViewInit];
   }
   return self;
 }
@@ -39,41 +39,30 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonInit];
+    [self commonMDCInkViewInit];
   }
   return self;
 }
 
-- (void)commonInit {
+- (void)commonMDCInkViewInit {
   self.userInteractionEnabled = NO;
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   self.inkColor = self.defaultInkColor;
 }
 
-- (void)setGravitatesInk:(BOOL)gravitatesInk {
-  self.inkLayer.gravitatesInk = gravitatesInk;
-}
-
-- (BOOL)gravitatesInk {
-  return self.inkLayer.gravitatesInk;
-}
-
-- (void)setFillsBackgroundOnSpread:(BOOL)shouldFill {
-  self.inkLayer.shouldFillBackgroundOnSpread = shouldFill;
-}
-
-- (BOOL)fillsBackgroundOnSpread {
-  return self.inkLayer.shouldFillBackgroundOnSpread;
-}
-
-- (void)setClipsRippleToBounds:(BOOL)clipsRippleToBounds {
-  self.inkLayer.masksToBounds = clipsRippleToBounds;
-  self.inkLayer.bounded = clipsRippleToBounds;
-}
-
-- (BOOL)clipsRippleToBounds {
-  return self.inkLayer.masksToBounds;
+- (void)setInkStyle:(MDCInkStyle)inkStyle {
+  _inkStyle = inkStyle;
+  switch (inkStyle) {
+    case MDCInkStyleBounded:
+      self.inkLayer.masksToBounds = YES;
+      self.inkLayer.bounded = YES;
+      break;
+    case MDCInkStyleUnbounded:
+      self.inkLayer.masksToBounds = NO;
+      self.inkLayer.bounded = NO;
+      break;
+  }
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
@@ -112,24 +101,64 @@
   return (MDCInkLayer *)self.layer;
 }
 
-- (void)reset {
-  [self.inkLayer reset];
-}
-
-- (void)spreadFromPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock {
+- (void)startTouchBeganAnimationAtPoint:(CGPoint)point
+                             completion:(MDCInkCompletionBlock)completionBlock {
   [self.inkLayer spreadFromPoint:point completion:completionBlock];
 }
 
-- (void)evaporateWithCompletion:(MDCInkCompletionBlock)completionBlock {
+- (void)startTouchEndedAnimationAtPoint:(CGPoint)point
+                             completion:(MDCInkCompletionBlock)completionBlock {
   [self.inkLayer evaporateWithCompletion:completionBlock];
 }
 
-- (void)evaporateToPoint:(CGPoint)point completion:(MDCInkCompletionBlock)completionBlock {
-  [self.inkLayer evaporateToPoint:point completion:completionBlock];
+- (void)cancelAllAnimationsAnimated:(BOOL)animated {
+  [self.inkLayer reset];
 }
 
 - (UIColor *)defaultInkColor {
   return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
+}
+
+#pragma mark - Deprecated
+
+- (BOOL)fillsBackgroundOnSpread {
+  return self.inkStyle == MDCInkStyleBounded ? YES : NO;
+}
+
+- (void)setFillsBackgroundOnSpread:(BOOL)fillsBackgroundOnSpread {
+  self.inkStyle = fillsBackgroundOnSpread ? MDCInkStyleBounded : MDCInkStyleUnbounded;
+}
+
+- (BOOL)clipsRippleToBounds {
+  return self.inkStyle == MDCInkStyleBounded ? YES : NO;
+}
+
+- (void)setClipsRippleToBounds:(BOOL)clipsRippleToBounds {
+  self.inkStyle = clipsRippleToBounds ? MDCInkStyleBounded : MDCInkStyleUnbounded;
+}
+
+- (BOOL)gravitatesInk {
+  return NO;
+}
+
+- (void)setGravitatesInk:(BOOL)gravitatesInk {
+}
+
+- (void)reset {
+  [self cancelAllAnimationsAnimated:YES];
+}
+
+- (void)spreadFromPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock {
+  [self startTouchBeganAnimationAtPoint:point completion:completionBlock];
+}
+
+- (void)evaporateWithCompletion:(nullable MDCInkCompletionBlock)completionBlock {
+  // Note the point is currently ignored.
+  [self startTouchEndedAnimationAtPoint:CGPointZero completion:completionBlock];
+}
+
+- (void)evaporateToPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock {
+  [self startTouchEndedAnimationAtPoint:point completion:completionBlock];
 }
 
 @end
