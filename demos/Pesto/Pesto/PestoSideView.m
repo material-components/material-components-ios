@@ -181,7 +181,12 @@ static NSString *const kPestoSideViewWidthBaseURL =
 - (CGSize)collectionView:(UICollectionView *)collectionView
                     layout:(UICollectionViewLayout *)collectionViewLayout
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  return CGSizeMake(collectionView.bounds.size.width, 40.f);
+  CGFloat sizeOffset = 0;
+  if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
+    sizeOffset += [(UICollectionViewFlowLayout *)collectionViewLayout sectionInset].left +
+                  [(UICollectionViewFlowLayout *)collectionViewLayout sectionInset].right;
+  }
+  return CGSizeMake(collectionView.bounds.size.width - sizeOffset, 40.f);
 }
 
 @end
