@@ -66,7 +66,6 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   _thumbTrack.thumbView.hasShadow = YES;
   _thumbTrack.panningAllowedOnEntireControl = YES;
   _thumbTrack.tapsAllowedOnThumb = YES;
-  _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.delegate = self;
   [self addSubview:_thumbTrack];
 

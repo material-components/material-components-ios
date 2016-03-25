@@ -16,6 +16,7 @@
 
 #import "MDCThumbTrack.h"
 
+#import "MaterialInk.h"
 #import "MDCThumbView.h"
 #import "UIColor+MDC.h"
 
@@ -76,9 +77,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return CGHypot(point1.x - point2.x, point1.y - point2.y);
 }
 
-// TODO(iangordon): Re-enable Ink
-//@interface MDCThumbTrack () <QTMInkTouchControllerDelegate>
-//@end
+@interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
+@end
 
 @implementation MDCThumbTrack {
   UIPanGestureRecognizer *_panRecognizer;
@@ -88,8 +88,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   UIColor *_thumbOnColor;
   UIColor *_trackOnColor;
   UIColor *_clearColor;
-  // TODO(iangordon): Re-enable Ink
-  //  QTMInkTouchController *_touchController;
+  MDCInkTouchController *_touchController;
   UIView *_trackView;
   CAShapeLayer *_trackMaskLayer;
   CALayer *_trackOnLayer;
@@ -142,14 +141,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _panRecognizer.cancelsTouchesInView = NO;
     [self updatePanRecognizerTarget];
 
-    // TODO(iangordon): Re-enable Ink
-    //    // Set up ink layer.
-    //    _touchController = [[QTMInkTouchController alloc] initWithTouchableView:_thumbView
-    //                                                       backgroundColorGroup:colorGroup
-    //                                                                   delegate:nil];
-    //    _touchController.inkView.clipsRippleToBounds = NO;
-    //    _touchController.inkView.fillsBackgroundOnSpread = NO;
-    //    _touchController.delegate = self;
+    // Set up ink layer.
+    _touchController = [[MDCInkTouchController alloc] initWithView:_thumbView];
+    _touchController.delegate = self;
+
+    [_touchController addInkView];
+
+    _touchController.inkView.inkStyle = MDCInkStyleUnbounded;
 
     // Set colors.
     if (onTintColor == nil) {
@@ -187,8 +185,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
           ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha]
           : primaryColor;
 
-  // TODO(iangordon): Remove ColorGroup support
-  //  [_touchController.inkView setBackgroundColorGroup:colorGroup];
+  [_touchController.inkView setInkColor:[primaryColor colorWithAlphaComponent:kTrackOnAlpha]];
   [self updateColorsAnimated:NO withDuration:0.0f];
 }
 
@@ -288,14 +285,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self setNeedsLayout];
 }
 
-// TODO(iangordon): Re-enable Ink
-//- (CGFloat)thumbMaxRippleRadius {
-//  return _touchController.inkView.maxRippleRadius;
-//}
-//
-//- (void)setThumbMaxRippleRadius:(CGFloat)thumbMaxRippleRadius {
-//  _touchController.inkView.maxRippleRadius = thumbMaxRippleRadius;
-//}
+- (CGFloat)thumbMaxRippleRadius {
+  return _touchController.inkView.maxRippleRadius;
+}
+
+- (void)setThumbMaxRippleRadius:(CGFloat)thumbMaxRippleRadius {
+  _touchController.inkView.maxRippleRadius = thumbMaxRippleRadius;
+}
 
 - (CGPoint)thumbPosition {
   return _thumbView.center;
@@ -331,12 +327,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self updateColorsAnimated:NO withDuration:0.0f];
 }
 
-// TODO(iangordon): Re-enable Ink
-//#pragma mark - QTMInkTouchControllerDelegate
-//
-//- (BOOL)shouldInkTouchControllerProcessInkTouches:(QTMInkTouchController *)inkTouchController {
-//  return _shouldDisplayInk;
-//}
+#pragma mark - MDCInkTouchControllerDelegate
+
+- (BOOL)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
+  return _shouldDisplayInk;
+}
 
 #pragma mark - Private
 
