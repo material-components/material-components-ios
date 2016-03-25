@@ -36,7 +36,7 @@ static const float kDefaultVisibleShadowOpacity = 0.4f;
 
 // This length defines the moment at which the shadow will be fully visible as the header shifts
 // on-screen.
-static const float kShadowScaleLength = 8;
+static const CGFloat kShadowScaleLength = 8;
 
 // Duration of the UIKit animation that occurs when changing the tracking scroll view.
 static const NSTimeInterval kTrackingScrollViewDidChangeAnimationDuration = 0.2;
@@ -511,7 +511,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     return;
   }
 
-  float frameBottomEdge;
+  CGFloat frameBottomEdge;
 
   CGRect frame = self.frame;
 
@@ -525,12 +525,12 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator);
 
-  float shadowIntensity;
+  CGFloat shadowIntensity;
   if (self.hidesStatusBarWhenCollapsed) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
     // weakest strength.
-    float accumulator =
-        MAX(0, MIN(kShadowScaleLength, (float)(_minimumHeight - boundedAccumulator)));
+    CGFloat accumulator =
+        MAX(0, MIN(kShadowScaleLength, _minimumHeight - boundedAccumulator));
     if (self.isInFrontOfInfiniteContent) {
       // When in front of infinite content we only care to hide the shadow when our header is
       // off-screen.
@@ -550,9 +550,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     shadowIntensity = frameBottomEdge / kShadowScaleLength;
   }
   if (_defaultShadowLayer.hidden && _customShadowLayer.hidden) {
-    self.layer.shadowOpacity = _visibleShadowOpacity * shadowIntensity;
+    self.layer.shadowOpacity = (float)(_visibleShadowOpacity * shadowIntensity);
   } else {
-    _defaultShadowLayer.shadowOpacity = _visibleShadowOpacity * shadowIntensity;
+    _defaultShadowLayer.shadowOpacity = (float)(_visibleShadowOpacity * shadowIntensity);
   }
   _shadowIntensity = shadowIntensity;
   if (_shadowIntensityChangeBlock) {
