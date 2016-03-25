@@ -8,8 +8,8 @@ section: documentation
 ![Raised, Flat, and Floating Action Buttons](docs/assets/buttons_screenshot.png)
 <!--{: .ios-screenshot .right }-->
 
-Buttons is a collection of material buttons, including a flat button, a raised button and a floating
-action button.
+Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
+floating action button.
 <!--{: .intro }-->
 
 
@@ -22,10 +22,10 @@ action button.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCButton.html">MDCButton</a></li>
   <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
   <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
   <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCRaisedButton.html">MDCRaisedButton</a></li>
+  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCButton.html">MDCButton</a></li>
 </ul>
 
 
@@ -46,6 +46,9 @@ UI elements on the screen.
 The _floating action_ button is circular, floats a considerable amount above its parent, has its own
 background color, and also raises briefly when touched. Only use a floating action button for the
 main action of a screen.
+
+Flat button, raised button and floating action buttons all inherit from the same MDCButton class.
+You should not directly instantiate an MDCButton object.
 
 - - -
 
