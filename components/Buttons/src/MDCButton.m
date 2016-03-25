@@ -490,9 +490,9 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 }
 
 /**
- * The background color that a user would see for this button. If self.backgroundColor is not
- * transparent, then returns that. Otherwise, returns self.underlyingColor.
- * @note If self.underlyingColor is not set, then this method will return nil.
+ The background color that a user would see for this button. If self.backgroundColor is not
+ transparent, then returns that. Otherwise, returns self.underlyingColor.
+ @note If self.underlyingColor is not set, then this method will return nil.
  */
 - (UIColor *)effectiveBackgroundColor {
   return ![self isTransparentColor:self.currentBackgroundColor] ? self.currentBackgroundColor : self.underlyingColor;

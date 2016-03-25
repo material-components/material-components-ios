@@ -139,8 +139,8 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
 @interface MDCButtonBar (Builder)
 
 /**
- * Finds the corresponding UIBarButtonItem and calls its target/action with the item as the first
- * parameter.
+ Finds the corresponding UIBarButtonItem and calls its target/action with the item as the first
+ parameter.
  */
 - (void)didTapButton:(UIButton *)button event:(UIEvent *)event;
 

@@ -19,38 +19,38 @@
 @protocol MDCStatusBarShifterDelegate;
 
 /**
- * The status bar shifter is responsible for the management of the status bar's offset as a header
- * view is shifting off-screen.
- *
- * This class is not intended to be subclassed.
+ The status bar shifter is responsible for the management of the status bar's offset as a header
+ view is shifting off-screen.
+
+ This class is not intended to be subclassed.
  */
 @interface MDCStatusBarShifter : NSObject
 
 #pragma mark Shifting the status bar
 
 /**
- * Provides the status bar shifter with the current desired y offset of the status bar.
- *
- * A value of 0 means the status bar is unshifted. Values > 0 shift the status bar by that amount
- * off-screen. Negative values are treated as zero.
+ Provides the status bar shifter with the current desired y offset of the status bar.
+
+ A value of 0 means the status bar is unshifted. Values > 0 shift the status bar by that amount
+ off-screen. Negative values are treated as zero.
  */
 - (void)setOffset:(CGFloat)offset;
 
 #pragma mark Configuring behavior
 
 /**
- * Whether or not the status bar shifter is enabled.
- *
- * If the status bar shifter is disabled midway through shifting the status bar then the shifter
- * will move the status bar to a reasonable location.
+ Whether or not the status bar shifter is enabled.
+
+ If the status bar shifter is disabled midway through shifting the status bar then the shifter
+ will move the status bar to a reasonable location.
  */
 @property(nonatomic, getter=isEnabled) BOOL enabled;
 
 /**
- * A Boolean value indicating whether this class should use snapshotting when rendering the status
- * bar shift.
- *
- * Defaults to YES.
+ A Boolean value indicating whether this class should use snapshotting when rendering the status
+ bar shift.
+
+ Defaults to YES.
  */
 @property(nonatomic, getter=isSnapshottingEnabled) BOOL snapshottingEnabled;
 
@@ -61,21 +61,21 @@
 #pragma mark Introspection
 
 /**
- * A Boolean value indicating whether the receiver is able to shift the status bar.
- *
- * There are certain scenarios where the status bar shifter won't try to adjust the frame of the
- * status bar. For example, if the status bar is showing the tap-to-return-to-call effect. In these
- * cases this method returns NO.
+ A Boolean value indicating whether the receiver is able to shift the status bar.
+
+ There are certain scenarios where the status bar shifter won't try to adjust the frame of the
+ status bar. For example, if the status bar is showing the tap-to-return-to-call effect. In these
+ cases this method returns NO.
  */
 - (BOOL)canUpdateStatusBarFrame;
 
 #pragma mark UIViewController events
 
 /**
- * A Boolean value indicating whether the true status bar should be hidden.
- *
- * The implementor of MDCStatusBarShifterDelegate should use this to inform UIKit of the expected
- * status bar visibility via UIViewController::prefersStatusBarHidden.
+ A Boolean value indicating whether the true status bar should be hidden.
+
+ The implementor of MDCStatusBarShifterDelegate should use this to inform UIKit of the expected
+ status bar visibility via UIViewController::prefersStatusBarHidden.
  */
 - (BOOL)prefersStatusBarHidden;
 
@@ -88,8 +88,8 @@
 @end
 
 /**
- * The MDCStatusBarShifterDelegate protocol allows a delegate to react to changes in the status bar
- * shifter's state.
+ The MDCStatusBarShifterDelegate protocol allows a delegate to react to changes in the status bar
+ shifter's state.
  */
 @protocol MDCStatusBarShifterDelegate <NSObject>
 @required
@@ -98,10 +98,10 @@
 - (void)statusBarShifterNeedsStatusBarAppearanceUpdate:(MDCStatusBarShifter *)statusBarShifter;
 
 /**
- * Informs the receiver that a snapshot view would like to be added to a view hierarchy.
- *
- * The receiver is expected to add `view` as a subview. The superview should be shifting off-screen,
- * which will cause the snapshot view to shift off-screen as well.
+ Informs the receiver that a snapshot view would like to be added to a view hierarchy.
+
+ The receiver is expected to add `view` as a subview. The superview should be shifting off-screen,
+ which will cause the snapshot view to shift off-screen as well.
  */
 - (void)statusBarShifter:(MDCStatusBarShifter *)statusBarShifter
   wantsSnapshotViewAdded:(UIView *)view;
