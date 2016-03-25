@@ -112,6 +112,7 @@ static CGFloat kPestoDetailSplitWidth = 64;
                                     _iconImageView.frame.size.height);
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography display1Font];
+  _titleLabel.alpha = [MDCTypography display1FontOpacity];
   _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
   _titleLabel.frame = CGRectMake(0,
                                  0,
@@ -121,52 +122,64 @@ static CGFloat kPestoDetailSplitWidth = 64;
   _labelDesc.lineBreakMode = NSLineBreakByWordWrapping;
   _labelDesc.numberOfLines = 8;
   _labelDesc.font = [MDCTypography body1Font];
+  _labelDesc.alpha = [MDCTypography body1FontOpacity];
   _labelDesc.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
   UIFont *bodyFont = [MDCTypography body1Font];
+  CGFloat bodyFontOpacity = [MDCTypography body1FontOpacity];
   _ingredient1 = [[UILabel alloc] init];
   _ingredient1.text = @"Mozzarella cheese";
   _ingredient1.font = bodyFont;
+  _ingredient1.alpha = bodyFontOpacity;
   [_ingredient1 sizeToFit];
 
   _ingredient2 = [[UILabel alloc] init];
   _ingredient2.text = @"Toasts";
   _ingredient2.font = bodyFont;
+  _ingredient2.alpha = bodyFontOpacity;
   [_ingredient2 sizeToFit];
 
   _ingredient3 = [[UILabel alloc] init];
   _ingredient3.text = @"Homemade pesto";
   _ingredient3.font = bodyFont;
+  _ingredient3.alpha = bodyFontOpacity;
   [_ingredient3 sizeToFit];
 
   _ingredient4 = [[UILabel alloc] init];
   _ingredient4.text = @"Freshly ground pepper";
   _ingredient4.font = bodyFont;
+  _ingredient4.alpha = bodyFontOpacity;
   [_ingredient4 sizeToFit];
 
   UIColor *teal = [UIColor colorWithRed:0.09f green:0.54f blue:0.44f alpha:1.f];
+  UIFont *captionFont = [MDCTypography captionFont];
+  CGFloat captionFontOpacity = [MDCTypography captionFontOpacity];
 
   _amount1 = [[UILabel alloc] init];
   _amount1.text = @"6 pieces";
-  _amount1.font = [MDCTypography captionFont];
+  _amount1.font = captionFont;
+  _amount1.alpha = captionFontOpacity;
   _amount1.textColor = teal;
   [_amount1 sizeToFit];
 
   _amount2 = [[UILabel alloc] init];
   _amount2.text = @"6 pieces";
-  _amount2.font = [MDCTypography captionFont];
+  _amount2.font = captionFont;
+  _amount2.alpha = captionFontOpacity;
   _amount2.textColor = teal;
   [_amount2 sizeToFit];
 
   _amount3 = [[UILabel alloc] init];
   _amount3.text = @"2/3 cup";
-  _amount3.font = [MDCTypography captionFont];
+  _amount3.font = captionFont;
+  _amount3.alpha = captionFontOpacity;
   _amount3.textColor = teal;
   [_amount3 sizeToFit];
 
   _amount4 = [[UILabel alloc] init];
   _amount4.text = @"1 tbsp";
-  _amount4.font = [MDCTypography captionFont];
+  _amount4.font = captionFont;
+  _amount4.alpha = captionFontOpacity;
   _amount4.textColor = teal;
   [_amount4 sizeToFit];
 

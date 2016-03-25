@@ -81,6 +81,7 @@ static const CGFloat kPestoCardIconSize = 72.f;
 
   _authorLabel = [[UILabel alloc] init];
   _authorLabel.font = [MDCTypography captionFont];
+  _authorLabel.alpha = [MDCTypography captionFontOpacity];
   _authorLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1.f];
   _authorLabel.frame =
       CGRectMake(kPestoCardIconSize,
@@ -91,6 +92,7 @@ static const CGFloat kPestoCardIconSize = 72.f;
 
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography headlineFont];
+  _titleLabel.alpha = [MDCTypography headlineFontOpacity];
   _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
   _titleLabel.frame =
       CGRectMake(kPestoCardIconSize,

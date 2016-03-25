@@ -48,6 +48,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
     self.backgroundColor = [UIColor whiteColor];
     _titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
     _titleLabel.font = [MDCTypography body1Font];
+    _titleLabel.alpha = [MDCTypography body1FontOpacity];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.textColor = _titleColor;
     [self addSubview:_titleLabel];
@@ -77,7 +78,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @optional
 - (void)sideContentView:(PestoSideContentView *)sideContentView
- didSelectItemWithTitle:(NSString *)title;
+    didSelectItemWithTitle:(NSString *)title;
 
 @end
 
@@ -118,6 +119,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
   UILabel *name = [[UILabel alloc] initWithFrame:nameRect];
   name.text = @"Jonathan";
   name.font = [MDCTypography titleFont];
+  name.alpha = [MDCTypography titleFontOpacity];
   name.textAlignment = NSTextAlignmentCenter;
   [self addSubview:name];
 
@@ -195,8 +197,8 @@ static NSString *const kPestoSideViewWidthBaseURL =
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGFloat sizeOffset = 0;
   if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
     sizeOffset += [(UICollectionViewFlowLayout *)collectionViewLayout sectionInset].left +
@@ -323,7 +325,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 #pragma mark - PestoSideContentViewDelegate
 
 - (void)sideContentView:(PestoSideContentView *)sideContentView
- didSelectItemWithTitle:(NSString *)title {
+    didSelectItemWithTitle:(NSString *)title {
   if (self.delegate) {
     if ([title isEqualToString:@"Settings"] &&
         [self.delegate respondsToSelector:@selector(sideViewDidSelectSettings:)]) {
