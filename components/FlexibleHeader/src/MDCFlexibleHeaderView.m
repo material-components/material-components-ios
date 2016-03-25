@@ -511,10 +511,16 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     return;
   }
 
-  CGRect frame = self.frame;
-  CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
+  float frameBottomEdge;
 
-  float frameBottomEdge = (float)(CGRectGetMaxY(frame) + offsetWithoutInset);
+  CGRect frame = self.frame;
+
+  // Calculate the frame's bottom edge in visual relation to the tracking scroll view.
+  CGRect projectedFrame = [self convertRect:self.bounds toView:self.trackingScrollView.superview];
+  frameBottomEdge = (float)CGRectGetMaxY(projectedFrame);
+
+  CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
+  frameBottomEdge = (float)(frameBottomEdge + offsetWithoutInset);
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
 
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator);
