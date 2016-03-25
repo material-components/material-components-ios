@@ -22,7 +22,7 @@
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
-@interface MDCRobotoFontLoaderTests : XCTestCase
+@interface RobotoFontLoaderTests : XCTestCase
 @end
 
 @interface MDCRobotoFontLoader (Testing)
@@ -43,7 +43,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 @end
 
-@implementation MDCRobotoFontLoaderTests
+@implementation RobotoFontLoaderTests
 
 - (void)testRobotoRegularWithSize {
   // Given

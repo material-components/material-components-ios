@@ -22,10 +22,10 @@
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
-@interface MDCFontDiskLoaderTests : XCTestCase
+@interface FontDiskLoaderTests : XCTestCase
 @end
 
-@implementation MDCFontDiskLoaderTests
+@implementation FontDiskLoaderTests
 
 - (MDCFontDiskLoader *)validResource {
   NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];

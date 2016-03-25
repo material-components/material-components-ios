@@ -26,10 +26,10 @@ static const CGFloat kEpsilon = 0.001f;
 @end
 
 /** These tests have set the fontloader because it is a singleton. */
-@interface MDCTypographyTests : XCTestCase
+@interface TypographyTests : XCTestCase
 @end
 
-@implementation MDCTypographyTests
+@implementation TypographyTests
 
 - (void)testFontLoaderIsRoboto {
   // Given
@@ -43,14 +43,14 @@ static const CGFloat kEpsilon = 0.001f;
 @end
 
 /** These tests have set the fontloader because it is a singleton. */
-@interface MDCTypographyFontLoaderSetTest : XCTestCase
+@interface TypographyFontLoaderSetTest : XCTestCase
 @end
 
 @interface MDCRobotoFontLoader (Testing)
 - (instancetype)initInternal;
 @end
 
-@implementation MDCTypographyFontLoaderSetTest
+@implementation TypographyFontLoaderSetTest
 
 - (void)tearDown {
   // Since we are using a singleton we need to restore the custom fontLoader back for other tests
