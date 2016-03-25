@@ -99,14 +99,6 @@ static const CGFloat kPestoCardIconSize = 72.f;
                  self.frame.size.width - iconImageViewFrame.size.width,
                  _titleLabel.font.pointSize + 2.f);
   [_cellView addSubview:_titleLabel];
-
-  UIView *inkView = [[UIView alloc] initWithFrame:self.bounds];
-  inkView.backgroundColor = [UIColor clearColor];
-  [self addSubview:inkView];
-
-  _inkTouchController = [[MDCInkTouchController alloc] initWithView:inkView];
-  _inkTouchController.delegate = self;
-  [_inkTouchController addInkView];
 }
 
 - (void)populateContentWithTitle:(NSString *)title

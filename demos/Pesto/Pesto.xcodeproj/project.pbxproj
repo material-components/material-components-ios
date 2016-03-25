@@ -90,9 +90,9 @@
 			isa = PBXGroup;
 			children = (
 				DEBEDF261C3EF5D5004B614B /* Pesto */,
-				DEBEDF251C3EF5D5004B614B /* Products */,
-				3223094C29F5C08CCEE42126 /* Pods */,
 				DAFCE01AEA03CE3D02550900 /* Frameworks */,
+				3223094C29F5C08CCEE42126 /* Pods */,
+				DEBEDF251C3EF5D5004B614B /* Products */,
 			);
 			sourceTree = "<group>";
 		};

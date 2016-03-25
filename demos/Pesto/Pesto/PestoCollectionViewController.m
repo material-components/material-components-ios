@@ -18,6 +18,7 @@
 #import "PestoCardCollectionViewCell.h"
 #import "PestoData.h"
 
+#import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 
@@ -29,9 +30,10 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 @interface PestoCollectionViewController ()
 
 @property(nonatomic) CGFloat logoScale;
+@property(nonatomic) MDCInkTouchController *inkTouchController;
+@property(nonatomic) PestoData *pestoData;
 @property(nonatomic) UIView *logoSmallView;
 @property(nonatomic) UIView *logoView;
-@property(nonatomic) PestoData *pestoData;
 
 @end
 
@@ -197,6 +199,9 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   _logoSmallView.contentMode = UIViewContentModeScaleAspectFill;
   _logoSmallView.layer.opacity = 0;
   [pestoHeaderView addSubview:_logoSmallView];
+
+  _inkTouchController = [[MDCInkTouchController alloc] initWithView:pestoHeaderView];
+  [_inkTouchController addInkView];
 
   return pestoHeaderView;
 }

@@ -16,11 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialInk.h"
+@interface PestoCardCollectionViewCell : UICollectionViewCell
 
-@interface PestoCardCollectionViewCell : UICollectionViewCell <MDCInkTouchControllerDelegate>
-
-@property(nonatomic) MDCInkTouchController *inkTouchController;
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, copy) NSString *iconImageName;
 @property(nonatomic, copy) NSString *descText;
