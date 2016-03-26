@@ -44,12 +44,16 @@ static const CGFloat kStatusBarHeight = 20;
 @implementation MDCAppBarViewController
 
 - (MDCHeaderStackView *)headerStackView {
-  [self loadViewIfNeeded];
+  if (![self isViewLoaded]) {
+    [self loadView];
+  }
   return _headerStackView;
 }
 
 - (MDCNavigationBar *)navigationBar {
-  [self loadViewIfNeeded];
+  if (![self isViewLoaded]) {
+    [self loadView];
+  }
   return _navigationBar;
 }
 
