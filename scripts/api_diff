@@ -1,0 +1,151 @@
+#!/bin/bash
+#
+# Copyright 2016-present Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+old_commit=""
+new_commit=""
+verbose=0
+
+usage() {
+  echo "Usage: $0 -o [old commit] -n [new commit]]"
+  echo
+  echo "Example usage: $0 -o v2.0.0 -n develop"
+}
+
+while getopts "h?vo:n:" opt; do
+  case "$opt" in
+  h|\?)
+      usage
+      exit 0
+      ;;
+  v)  verbose=1
+      ;;
+  o)  old_commit=$(git rev-parse $OPTARG)
+      ;;
+  n)  new_commit=$(git rev-parse $OPTARG)
+      ;;
+  esac
+done
+
+if [[ -z "$old_commit" || -z "$new_commit" ]]; then
+  usage
+  exit 0
+fi
+
+validate_commit() {
+  git cat-file -t $1 >> /dev/null 2> /dev/null || { echo "$1 is not a valid commit."; exit 1; }
+}
+
+validate_commit $old_commit
+validate_commit $new_commit
+
+# Compute directories relative to the script's known location in scripts/
+SCRIPTS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+REPO_ROOT_PATH="$( cd "$( dirname $SCRIPTS_PATH )" && pwd )"
+
+# Where to fetch the objc-diff repo from
+OBJC_DIFF_REPO_URL="https://github.com/mattstevens/objc-diff.git"
+
+# Where to install the objc-diff repo
+OBJC_DIFF_REPO_PATH="$SCRIPTS_PATH/external/objc-diff"
+OBJC_DIFF_BINARY_RELATIVE_PATH="build/Release/objc-diff"
+OBJC_DIFF_BINARY_PATH=$OBJC_DIFF_REPO_PATH/$OBJC_DIFF_BINARY_RELATIVE_PATH
+
+SYSROOT="$(xcode-select --print-path)/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk"
+
+echo "Fetching objc-diff..."
+
+# Runs git commands in the objc-diff repository directory.
+git_objc_diff() {
+  pushd $OBJC_DIFF_REPO_PATH >> /dev/null
+  git "$@"
+  popd >> /dev/null
+}
+
+# Clone/update the objc-diff repo
+if [ ! -d "$OBJC_DIFF_REPO_PATH" ]; then
+  git clone "$OBJC_DIFF_REPO_URL" "$OBJC_DIFF_REPO_PATH" || { echo "Failed to clone."; exit 1; }
+else
+  git_objc_diff fetch || { echo "Failed to update objc-diff."; exit 1; }
+fi
+
+# Build objc-diff binary
+xcodebuild build -project $OBJC_DIFF_REPO_PATH/OCDiff.xcodeproj -target OCDiff -configuration Release
+
+# Verify objc-diff binary existence
+if [ ! -f "$OBJC_DIFF_BINARY_PATH" ]; then
+  echo "Unable to find objc-diff at $OBJC_DIFF_BINARY_PATH"
+  exit 1
+fi
+
+objc_diff() {
+  "$OBJC_DIFF_BINARY_PATH" "$@"
+}
+
+TMP_PATH=$(mktemp -d)
+
+OLD_ROOT_PATH="$TMP_PATH/old"
+NEW_ROOT_PATH="$TMP_PATH/new"
+
+# prep_repo <path> <commit>
+prep_repo() {
+  if [ ! -d "$1" ]; then
+    git clone "$REPO_ROOT_PATH" "$1" || { echo "Failed to clone."; exit 1; }
+  fi
+  pushd $1 >> /dev/null
+  git remote add github git@github.com:google/material-components-ios.git
+  git fetch || { echo "Failed to update repo."; exit 1; }
+  git checkout "$2" --quiet
+  popd >> /dev/null
+}
+
+prep_repo $OLD_ROOT_PATH $old_commit
+prep_repo $NEW_ROOT_PATH $new_commit
+
+old_header_search_paths=""
+new_header_search_paths=""
+for d in $NEW_ROOT_PATH/components/*/src; do
+  folder=$(dirname $d)
+  component=$(basename $folder)
+  old_header_search_paths="$old_header_search_paths --oldargs -I$OLD_ROOT_PATH/components/$component/src/ "
+  new_header_search_paths="$new_header_search_paths --newargs -I$NEW_ROOT_PATH/components/$component/src/ "
+done
+
+for d in $NEW_ROOT_PATH/components/*/src; do
+  folder=$(dirname $d)
+  component=$(basename $folder)
+
+  echo
+  echo "### $component"
+  echo
+
+  if [ ! -d "$OLD_ROOT_PATH/components/$component/src" ]; then
+    echo "**New component.**"
+    continue
+  fi
+
+  objc_diff \
+    --xml \
+    --sdk iphonesimulator \
+    --old "$OLD_ROOT_PATH/components/$component/src" \
+    --new "$NEW_ROOT_PATH/components/$component/src" \
+    $old_header_search_paths \
+    $new_header_search_paths | $SCRIPTS_PATH/objc_diff_xml_to_md $old_commit $new_commit components/$component/src
+done
+
+if [ ! -z "$TMP_PATH" ]; then
+  echo "Cleaning up..."
+  rm -rf $TMP_PATH
+fi

@@ -1,0 +1,115 @@
+#!/usr/bin/php
+<?php
+
+$xml = file_get_contents('php://stdin');
+
+define(BASE_URL, 'https://github.com/google/material-components-ios');
+
+$structure = simplexml_load_string($xml);
+
+// http://stackoverflow.com/a/10473026
+function startsWith($haystack, $needle) {
+  return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
+}
+
+$typeToSymbol = array(
+  'removal' => '[deleted]',
+  'addition' => '[new]',
+  'modification' => '[modified]'
+);
+
+$typeToPastTenseVerb = array(
+  'removal' => 'removed',
+  'addition' => 'added',
+  'modification' => 'modified'
+);
+
+$typeToCommit = array(
+  'removal' => $argv[1],
+  'addition' => $argv[2],
+  'modification' => $argv[1]
+);
+
+$output = array();
+
+function getModificationWithType($modifications, $type) {
+  foreach ($modifications as $modification) {
+    if ($modification->type == $type) {
+      return $modification;
+    }
+  }
+  return false;
+}
+
+if (!empty($structure)) {
+  foreach ($structure->difference as $delta) {
+    if (startsWith($delta->path, '..') || startsWith(strtolower($delta->path), 'private')) {
+      // Ignore source not in this component and source that is private
+      continue;
+    }
+
+    $type = $typeToSymbol[strval($delta->type)];
+    $verb = $typeToPastTenseVerb[strval($delta->type)];
+    $commit = $typeToCommit[strval($delta->type)];
+    $url = BASE_URL."/blob/$commit/".$argv[3].'/'.$delta->path.'#L'.$delta->lineNumber;
+    
+    $link = "[`".$delta->name."`]($url)";
+    
+    $lines = array();
+
+    if ($delta->type == 'modification') {
+      $modifications = $delta->modifications->modification;
+      $types = array();
+      foreach ($modifications as $modification) {
+        $types []= $modification->type;
+      }
+
+      $didOutputLines = false;
+
+      if (count(array_diff($types, array('availability', 'deprecationMessage'))) == 0) {
+        $availability = getModificationWithType($modifications, 'availability');
+        $message = getModificationWithType($modifications, 'deprecationMessage');
+        if ($availability->currentValue == 'Deprecated') {
+          $lines []= "- [deprecated] $link.";
+          $lines []= "*$message->currentValue*";
+          $didOutputLines = true;
+        }
+      }
+
+      if (!$didOutputLines) {
+        $lines []= "- $type $link";
+        $lines []= "";
+        $lines []= "| From | To | Kind |";
+        $lines []= "|:---- |:-- |:---- |";
+
+        foreach ($modifications as $modification) {
+          $lines []= "| ". $modification->previousValue ." | ". $modification->currentValue ." | ".$modification->type ." |";
+        }
+        $lines []= "";
+      }
+
+    } else {
+      $lines = array("- $type $link");
+    }
+
+    $output []= $lines;
+  }
+}
+
+if (empty($output)) {
+  echo "No public API changes detected.\n";
+  exit(0);
+}
+
+$firstlines = array();
+foreach ($output as $lines) {
+  $firstlines []= $lines[0];
+}
+
+array_multisort($output, $firstlines);
+
+foreach ($output as $lines) {
+  echo implode("\n", $lines)."\n";
+}
+
+?>
