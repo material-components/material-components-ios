@@ -16,7 +16,7 @@ from community members. We can work together to optimize Material Design on iOS.
 - [Github Issues](https://github.com/google/material-components-ios/issues)
   <!--{: .icon-igithub }-->
 
-- [Stack Overflow "mdcios"](http://stackoverflow.com/questions/tagged/mdcios)
+- [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
   <!--{: .icon-stackoverflow }-->
 <!--{: .icon-list }-->
 
@@ -46,7 +46,7 @@ comments and any other related activities.
 
 Communication through any of our Material Design channels
 ([GitHub](http://github.com/google/material-components-ios), [Stack
-Overflow](http://stackoverflow.com/questions/tagged/mdcios),
+Overflow](http://stackoverflow.com/questions/tagged/material-components-ios),
 [Google+](http://plus.google.com/+googledesign), [Twitter](https://twitter.com/googledesign), etc.)
 must be constructive and never resort to personal attacks, trolling, public or private harassment,
 insults, or other unprofessional conduct.
@@ -110,9 +110,9 @@ _This code of conduct was adapted from the following sources:_
 
 If you have questions about how to use Material Components for iOS:
 
-- Please post questions to Stack Overflow with the tag `mdcios`.
+- Please post questions to Stack Overflow with the tag `material-components-ios`.
 - Search previous questions that have been answered by visiting [Stack
-  Overflow](http://stackoverflow.com/questions/tagged/mdcios).
+  Overflow](http://stackoverflow.com/questions/tagged/material-components-ios).
 - Join us on our [Slack discussion channel](https://googleoss.slack.com/messages/mdc-ios/) for more
   direct discussions with the team.
 
