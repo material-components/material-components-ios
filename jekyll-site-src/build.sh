@@ -23,28 +23,24 @@ if [[ $? != 0 ]]; then
 	exit 1
 fi
 
+
 # Switching to the root folder of mdc
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/../.."
 ROOT_DIR="$(pwd)"
 
 
-
 # COPY ALL SOURCE MARKDOWN
-
-# Home page
+# 1. Home page
 cp "$ROOT_DIR"/site-index.md "$ROOT_DIR"/site-source/jekyll-site-src/index.md
-
-# Copy and rename components README.md files
+# 2. Copy and rename components README.md files
 [ -d "$ROOT_DIR"/site-source/jekyll-site-src/components ] ||
 	mkdir "$ROOT_DIR"/site-source/jekyll-site-src/components
 cp "$ROOT_DIR"/components/README.md "$ROOT_DIR"/site-source/jekyll-site-src/components/index.md
 for directory in "$ROOT_DIR"/components/*/README.md; do
 	folder=$(dirname $directory)
-  #no longer using lowercase directory
-  #component="$(echo $(basename $folder) | tr '[A-Z]' '[a-z]')"
   component=$(basename $folder)
-  echo "Copy docs for $component..."
+  # echo "Copy docs for $component..."
   cd "$folder"
   [ -d "$ROOT_DIR"/site-source/jekyll-site-src/components/"$component" ] ||
     mkdir "$ROOT_DIR"/site-source/jekyll-site-src/components/"$component"
@@ -52,14 +48,12 @@ for directory in "$ROOT_DIR"/components/*/README.md; do
   [ -d docs ] && cp -r docs "$ROOT_DIR"/site-source/jekyll-site-src/components/$component
   cd $ROOT_DIR
 done
-
-# Copy all community markdown files
+# 3. Copy all community markdown files
 [ -d "$ROOT_DIR"/site-source/jekyll-site-src/community ] ||
 	mkdir "$ROOT_DIR"/site-source/jekyll-site-src/community
 cp "$ROOT_DIR"/community/* "$ROOT_DIR"/site-source/jekyll-site-src/community >> /dev/null 2> /dev/null
 mv "$ROOT_DIR"/site-source/jekyll-site-src/community/README.md "$ROOT_DIR"/site-source/jekyll-site-src/community/index.md
-
-# Copy all howto files
+# 4. Copy all howto files
 [ -d "$ROOT_DIR"/site-source/jekyll-site-src/howto ] ||
 	mkdir "$ROOT_DIR"/site-source/jekyll-site-src/howto
 cp "$ROOT_DIR"/howto/* "$ROOT_DIR"/site-source/jekyll-site-src/howto >> /dev/null 2> /dev/null
@@ -76,20 +70,24 @@ eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/howto | xargs $PER
 eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/community | xargs $PERLSUB_LIQUID_TAGS"
 eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/components | xargs $PERLSUB_LIQUID_TAGS"
 
-# Do Jekyll build
-cd "$ROOT_DIR"/site-source/jekyll-site-src
 
-if [[ $1 == 'production' ]]; then
-	# checkout gh-pages branch and push?
-	# # If gh-pages doesn't exist, clone the repository into gh-pages folder
-	# [ -d ./$SITE_BUILD ] || git clone $GITHUB_REMOTE $SITE_BUILD
-	# cd $SITE_BUILD
-	# git checkout $SITE_BUILD
-	# git pull $SITE_BUILD
-	# cd ..
-  jekyll_output="$ROOT_DIR/gh-pages"
-else
-  jekyll_output="$ROOT_DIR/site-source/site-build"
+# Build/Preview
+jekyll_output="$ROOT_DIR/site-source/site-build"
+# Clear the exsiting folder
+if [ -d $jekyll_output ]; then
+  rm -r $jekyll_output/*
 fi
 
-jekyll serve --destination $jekyll_output
+# Determine build mode: preview/build
+if [[ $1 == '--no-preview' ]]; then
+	preview=false
+else
+	preview=true
+fi
+# Build site
+cd "$ROOT_DIR"/site-source/jekyll-site-src
+if $preview ; then
+	jekyll serve --destination $jekyll_output
+else
+	jekyll build --destination $jekyll_output
+fi
