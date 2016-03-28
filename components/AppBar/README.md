@@ -94,8 +94,6 @@ The result of following these steps will be that:
 3. you have access to the Navigation Bar and Header Stack View views via the corresponding
    properties.
 
-- - -
-
 Step 1: **Make your view controller conform to MDCAppBarParenting**.
 
 Conforming to this protocol allows your view controller to hold a strong reference to the App Bar
@@ -115,8 +113,6 @@ helper methods.
 class MyViewController: UITableViewController, MDCAppBarParenting
 ~~~
 <!--</div>-->
-
-- - -
 
 Step 2: **Synthesize the required properties of the MDCAppBarParenting protocol**.
 
@@ -138,8 +134,6 @@ var navigationBar: MDCNavigationBar?
 var headerViewController: MDCFlexibleHeaderViewController?
 ~~~
 <!--</div>-->
-
-- - -
 
 Step 3: **Initialize your view controller's App Bar**.
 
@@ -164,8 +158,6 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
   MDCAppBarPrepareParent(self)
 ~~~
 <!--</div>-->
-
-- - -
 
 Step 4: **Inform the App Bar that your view controller's view has loaded**.
 
