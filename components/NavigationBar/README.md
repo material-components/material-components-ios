@@ -69,8 +69,6 @@ with a few exceptions outlined below.
 
 To begin observing a UINavigationItem instance you must call `observeNavigationItem:`.
 
-> A navigation bar instance can only observe one navigation item instance at a time.
-
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 ~~~ objc

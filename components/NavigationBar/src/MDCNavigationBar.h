@@ -75,6 +75,9 @@
  Only one navigation item instance can be observed at a time. Observing a second navigation item
  will stop observation of the first navigation item.
 
+ Once execution returns from this method the receiver's state will match that of the newly-observed
+ navigation item.
+
  The observed navigation item is strongly held.
  */
 - (void)observeNavigationItem:(nonnull UINavigationItem *)navigationItem;
