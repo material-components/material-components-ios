@@ -16,7 +16,7 @@
 
 # Checking pre-requsits for folders
 # Getting the link for github repository
-GITHUB_REMOTE=`git remote -v | grep "fetch" | sed -e 's/origin.//' | sed -e 's/.(fetch)//'`
+GITHUB_REMOTE=`git remote -v | grep "fetch" | sed -e 's/origin.//' | sed -e 's/.(fetch)//' | grep -v "\t"`
 SITE_SOURCE_BRANCH="site-source"
 SITE_SOURCE_FOLDER=$SITE_SOURCE_BRANCH
 SITE_BUILD="gh-pages"
@@ -33,7 +33,7 @@ if [[ -d ./$SITE_SOURCE_FOLDER ]]; then
 	git pull
 	cd ..
 else
-	git clone $GITHUB_REMOTE $SITE_SOURCE_FOLDER
+	git clone $GITHUB_REMOTE $SITE_SOURCE_FOLDER || { echo "Failed to clone."; exit 1; }
 	cd $SITE_SOURCE_FOLDER
 	git checkout -b $SITE_SOURCE_BRANCH origin/$SITE_SOURCE_BRANCH
 	cd ..

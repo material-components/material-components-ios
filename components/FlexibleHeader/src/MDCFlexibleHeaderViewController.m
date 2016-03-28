@@ -75,7 +75,13 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
 - (void)didMoveToParentViewController:(UIViewController *)parent {
   [super didMoveToParentViewController:parent];
 
-  [_headerView sizeToFit];
+  // The header depends on the tracking scroll view to know how tall it should be.
+  // If there is no tracking scroll view then we have to poke the header into sizing itself.
+  if (!_headerView.trackingScrollView) {
+    [_headerView sizeToFit];
+  } else {
+    [_headerView trackingScrollViewDidScroll];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

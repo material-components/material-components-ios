@@ -17,7 +17,6 @@
 		665A34E01C6BDB4600962055 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A34DF1C6BDB4600962055 /* Runtime.swift */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
-		DEF64EA61C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA51C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,7 +79,6 @@
 		BFBFBC9BA56EED442714E5F3 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
 		DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
-		DEF64EA51C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogHeaderContainerController.swift; sourceTree = "<group>"; };
 		DEFF1C057348FFB1866CD023 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FBDDFF6A49F084B665BA398A /* Pods-MDCCatalog-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalog/Pods-MDCCatalog-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,7 +128,6 @@
 				665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */,
 				DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */,
 				DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */,
-				DEF64EA51C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift */,
 				664524B81C6BA62A001ADBF8 /* NodeViewController.swift */,
 				665A34DD1C6BDADA00962055 /* Reflection */,
 				665A34DE1C6BDAE700962055 /* Resources */,
@@ -349,7 +346,6 @@
 				664524B91C6BA62A001ADBF8 /* NodeViewController.swift in Sources */,
 				664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */,
 				DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */,
-				DEF64EA61C8DEFC7007C4EA0 /* MDCCatalogHeaderContainerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,13 +23,11 @@
 #import "MDCAppBarContainerViewController.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
+#import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
-
-static NSString *const kBundleName = @"MaterialAppBar";
-static NSString *const kBackIconName = @"arrow_back";
 
 static NSString *const kBarStackKey = @"barStack";
 static NSString *const kStatusBarHeightKey = @"statusBarHeight";
@@ -101,11 +99,7 @@ static const CGFloat kStatusBarHeight = 20;
   }
   UIBarButtonItem *backBarButtonItem = previousViewControler.navigationItem.backBarButtonItem;
   if (!backBarButtonItem) {
-    NSBundle *baseBundle = [[self class] baseBundle];
-    NSString *bundlePath = [baseBundle pathForResource:kBundleName ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    NSString *path = [bundle pathForResource:kBackIconName ofType:@"png"];
-    UIImage *backButtonImage = [UIImage imageWithContentsOfFile:path];
+    UIImage *backButtonImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_arrow_back]];
     backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
                                                          style:UIBarButtonItemStyleDone
                                                         target:self

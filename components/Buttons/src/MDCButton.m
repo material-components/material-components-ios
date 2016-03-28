@@ -222,7 +222,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   [self setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
                   forState:UIControlStateNormal];
 
-  self.inkColor = [UIColor colorWithWhite:1 alpha:CGColorGetAlpha(self.inkView.inkColor.CGColor)];
+  self.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 
   // Uppercase all titles
   if (_shouldCapitalizeTitle) {

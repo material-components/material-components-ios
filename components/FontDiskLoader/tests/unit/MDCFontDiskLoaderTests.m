@@ -16,50 +16,50 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCFontResource.h"
+#import "MDCFontDiskLoader.h"
 #import "MDCRobotoFontLoader.h"
-#import "private/MDCTypography+Constants.h"
+#import "private/MDCRoboto+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
-@interface MDCFontResourceTests : XCTestCase
+@interface MDCFontDiskLoaderTests : XCTestCase
 @end
 
-@implementation MDCFontResourceTests
+@implementation MDCFontDiskLoaderTests
 
-- (MDCFontResource *)validResource {
+- (MDCFontDiskLoader *)validResource {
   NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
-  return [[MDCFontResource alloc] initWithFontName:MDCTypographyRegularFontName
-                                          filename:MDCTypographyRegularFontFilename
-                                    bundleFileName:MDCTypographyBundle
-                                        baseBundle:bundle];
+  return [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
+                                            filename:MDCRobotoRegularFontFilename
+                                      bundleFileName:MDCRobotoBundle
+                                          baseBundle:bundle];
 }
 
-- (MDCFontResource *)invalidResource {
+- (MDCFontDiskLoader *)invalidResource {
   NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
-  return [[MDCFontResource alloc] initWithFontName:MDCTypographyRegularFontName
-                                          filename:@"some invalid filename"
-                                    bundleFileName:MDCTypographyBundle
-                                        baseBundle:bundle];
+  return [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
+                                            filename:@"some invalid filename"
+                                      bundleFileName:MDCRobotoBundle
+                                          baseBundle:bundle];
 }
 
 - (void)testCreatesAFontURL {
   // Given
-  MDCFontResource *resource = [self validResource];
+  MDCFontDiskLoader *resource = [self validResource];
 
   // When
 
   // Then
   XCTAssertNotNil(resource.fontURL, @"expecting font url to be valid");
-  XCTAssertTrue([[resource.fontURL path] containsString:MDCTypographyRegularFontFilename],
+  XCTAssertTrue([[resource.fontURL path] containsString:MDCRobotoRegularFontFilename],
                 @"expecting font to be correct");
-  XCTAssertTrue([[resource.fontURL path] containsString:MDCTypographyBundle],
+  XCTAssertTrue([[resource.fontURL path] containsString:MDCRobotoBundle],
                 @"expecting font to be correct");
 }
 
 - (void)testRegisterFont {
   // Given
-  MDCFontResource *resource = [self validResource];
+  MDCFontDiskLoader *resource = [self validResource];
 
   // When
   [resource registerFont];
@@ -70,7 +70,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testRegisterFontFailure {
   // Given
-  MDCFontResource *resource = [self invalidResource];
+  MDCFontDiskLoader *resource = [self invalidResource];
 
   // When
   [resource registerFont];
@@ -81,7 +81,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testProvidesACustomFont {
   // Given
-  MDCFontResource *resource = [self validResource];
+  MDCFontDiskLoader *resource = [self validResource];
   CGFloat randomSize = arc4random() * 100 / CGFLOAT_MAX;
 
   // When
@@ -90,12 +90,12 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   // Then
   XCTAssertNotNil(font);
   XCTAssertEqualWithAccuracy(font.pointSize, randomSize, kEpsilonAccuracy);
-  XCTAssertEqualObjects(font.fontName, MDCTypographyRegularFontName);
+  XCTAssertEqualObjects(font.fontName, MDCRobotoRegularFontName);
 }
 
 - (void)testReturnNilWhenTheCustomFontCanNotBeFound {
   // Given
-  MDCFontResource *resource = [self validResource];
+  MDCFontDiskLoader *resource = [self validResource];
   resource.fontName = @"some invalid font name";
   CGFloat randomSize = arc4random() * 100 / CGFLOAT_MAX;
 
