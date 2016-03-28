@@ -109,7 +109,8 @@ pre.CodeMirror-line {
     color: $code-text-color;
 
     .radio {
-      margin-right: 24px;
+      margin-right: 16px;
+      padding: 8px 8px 8px 0;
 
       input[type=radio] {
         display: none;

@@ -139,12 +139,15 @@ MDCCodeRender = (function(){
       var languageSpan = radioLabel.querySelector('.language-name');
       languageSpan.innerText = label;
 
-      radioLabel.querySelector('.source-radio.unchecked')
-        .addEventListener('click', function(e) {
-          selectedLanguage.set(this.parentNode.previousElementSibling.value);
-          var evt = document.createEvent("HTMLEvents");
-          evt.initEvent("selectLangChange", false, true);
-          document.dispatchEvent(evt);
+      radioLabel.addEventListener('click', function(e) {
+        var lang = this.querySelector('.radio-input').value;
+        if(selectedLanguage.get() == lang) {
+          return false;
+        }
+        selectedLanguage.set(this.querySelector('.radio-input').value);
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("selectLangChange", false, true);
+        document.dispatchEvent(evt);
       });
       return radioLabel;
     }
