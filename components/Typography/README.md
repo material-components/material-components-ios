@@ -105,7 +105,9 @@ settings in the Material Design specifications.
 ### Create a Title Label
 
 <!--<div class="material-code-render" markdown="1">-->
+
 #### Objective C
+
 ~~~ objc
 #import "MaterialTypography.h"
 
@@ -122,6 +124,7 @@ label.alpha = [MDCTypography titleFontOpacity];
 ~~~
 
 #### Swift
+
 ~~~ swift
 let label = UILabel()
 label.text = "This is a title"
@@ -138,7 +141,9 @@ self.view.addSubview(label)
 ### Create a Display 1 Label
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective C
+
+#### Objective
+
 ~~~ objc
 #import "MaterialTypography.h"
 
@@ -155,6 +160,7 @@ label.alpha = [MDCTypography display1FontOpacity];
 ~~~
 
 #### Swift
+
 ~~~ swift
 let label = UILabel()
 label.text = "Display 1"
@@ -173,6 +179,7 @@ self.view.addSubview(label)
 <!--<div class="material-code-render" markdown="1">-->
 
 #### Objective C
+
 ~~~ objc
 #import "MaterialTypography.h"
 
@@ -185,6 +192,7 @@ self.label.alpha = [MDCTypography captionFontOpacity];
 ~~~
 
 #### Swift
+
 ~~~ swift
 self.label.font = MDCTypography.captionFont()
 self.label.alpha = MDCTypography.captionFontOpacity()
