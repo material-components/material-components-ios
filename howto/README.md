@@ -39,50 +39,48 @@ buttons and collection view.
 
 ### Setting up a new project
 
-1.  ## Create a new project
+#### Create a new project
 
-    Create a new Xcode project and initialize CocoaPods for this project. For more information, see Quickstart on details.
+Create a new Xcode project and initialize CocoaPods for this project. For more information, see Quickstart on details.
 
-    (Maybe we can let them clone an existing set up project?)
+(Maybe we can let them clone an existing set up project?)
 
-2.  ## Swift initialization
+#### Swift initialization
 
-    For Swift based projects, because Material Components is in Objective-C, a bridging header needs
-    to be created and referenced.
+For Swift based projects, because Material Components is in Objective-C, a bridging header needs
+to be created and referenced.
 
-    Create a file called "BridgingHeaders.h" and reference this in the Xcode project configuration.
+Create a file called "BridgingHeaders.h" and reference this in the Xcode project configuration.
 
-    [TODO: Add image of where this is in the Xcode project configuration]
+[TODO: Add image of where this is in the Xcode project configuration]
 
-    In the file, add the following lines.
+In the file, add the following lines.
 
-    ```
-    #import "MaterialFlexibleHeader.h"
-    #import "MaterialAppBar.h"
-    ```
+```
+#import "MaterialFlexibleHeader.h"
+#import "MaterialAppBar.h"
+```
 
-3.  ## Creating the UI programmatically.
+#### Creating the UI programmatically.
 
-    The easiest way to use Material Components is to create the UI programmatically rather than
-    using Storyboards. This gives us full flexibility in how to put together the components.
+The easiest way to use Material Components is to create the UI programmatically rather than
+using Storyboards. This gives us full flexibility in how to put together the components.
 
-    To modify the new project to simply:
+To modify the new project to simply:
 
-    1. Remove the Main.storyboard.
-    2. In the Xcode Project settings, delete the "Main" value in the Storyboard setting.
-    3. Removing ViewController.swift
-    4. Implement creating a UIWindow in AppDelegate.swift.
+1. Remove the Main.storyboard.
+2. In the Xcode Project settings, delete the "Main" value in the Storyboard setting.
+3. Removing ViewController.swift
+4. Implement creating a UIWindow in AppDelegate.swift.
 
-4.  ## Add some Material Icons
+#### Add some Material Icons
 
-    Our following examples will have some icons we would like to use. So simply download
-    the list of imagesets of Material icons [TODO] and drag them in to the Asset.xcassets.
+Our following examples will have some icons we would like to use. So simply download
+the list of imagesets of Material icons [TODO] and drag them in to the Asset.xcassets.
 
+#### Setting up CocoaPods
 
-4. ## Setting up CocoaPods
-
-    Refer to the quickstart for more details.
-
+Refer to the quickstart for more details.
 
 
 ### Using the header component
