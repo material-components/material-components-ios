@@ -213,7 +213,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.2f;
+  return 0.2;
 }
 
 #pragma mark - PestoSideViewDelegate
