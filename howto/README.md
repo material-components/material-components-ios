@@ -77,7 +77,7 @@ Material Components is written in Objective-C and is completely usable from Swif
 
 Now the project is ready for adding in the first Material component.
 
-### Using the header component
+### Material Headers
 
 Material components has two ways that allow you to integrate a header bar that behaves in a similar fashion to UINavigationController's UINavigationBar that allows deep customization and behaviors that implement the Material design guidance on scrolling.
 
