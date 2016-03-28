@@ -324,6 +324,7 @@ override func viewDidLoad() {
 
   // Setup the FlexibleHeader as a delegate
   headerViewController.headerView.trackingScrollView = scrollView
+  headerViewController.headerView.behavior = .Enabled
   scrollView.delegate = headerViewController
 }
 ```
@@ -391,18 +392,223 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-
 ### Material Collection Views
 
 In previous examples, we used a scroll view rather than any content. In Material Components, there
-is a sophisticated collection view addition that we've added which implements many of the Material design styled layout and animations.
+is a sophisticated collection view addition that we've added which implements many of the Material
+design styled layout and transitions.
 
-Using this is very similar to using a regular UICollectionView.
+In order for styling to be done in a compartmentalized way, MDCCollectionViewController has an
+abstraction called MDCCollectionViewModel. The model is an implementation of the
+UICollectionViewDataSource. The model implements storage for a model objects that contain the
+data for rendering the cells.
 
 
-### Material buttons
+Apps can use the MDCCollectionViewController without the model API and still get the same styling,
+but there is more plumbing that needs to be implemented. In some cases, working without the model
+API is required if more fine grained control is required.
 
-If there's an action that
+The following steps will use the MDCCollectionViewModel to build up a simple collection view
+
+#### Using the MDCCollectionViewController
+
+MDCCollectionViewController is a subclass of the UICollectionViewController and can be used in place
+of a UIViewController base class. Using this is the easiest way to get started with Material collection views.
+
+```
+class ViewControllerWithAppBar : MDCCollectionViewController, MDCAppBarParenting {
+
+}
+```
+
+The collection view will replace the scroll view that was in the App Bar example earlier. In place of
+the scroll view, a model is initialized:
+
+```
+override func viewDidLoad() {
+  super.viewDidLoad()
+
+  // Initialize the collection view.
+  let thisCollectionView = collectionView as UICollectionView!
+  thisCollectionView.mdc_styleController.cellStyle = .Grouped
+  thisCollectionView.frame = view.bounds
+  thisCollectionView.delegate = self
+  view.addSubview(collectionView!)
+
+  // Setup the collection view as the scroll view for the App Bar header to track.
+  headerViewController?.headerView.trackingScrollView = thisCollectionView
+
+  // Setup the model.
+  model = MDCCollectionViewModel(delegate: self)
+  model.setHeader(MDCCellModel.objectWithHeader("Inbox".blackout()), forSection: 0)
+  // Add 100 rows.
+  for 0..100 {
+    model.addItem(MDCCellModel.objectWithTitle("Hello there".blackout()), toSection: 0)
+  }
+
+  // ...
+  MDCAppBarAddViews(self)  
+}
+```
+
+Unlike with the simple example with the App Bar above, the UICollectionViewController is the
+delegate for the UICollectionView, we cannot just do a simple delegate assignment like we did
+with the App Bar to forward scroll view events.
+
+Instead, we need to manually forward four additional UIScrollViewDelegate methods to
+the MDCFlexibleHeaderView to preserve our collapsing header functionality.
+
+```
+
+  override func childViewControllerForStatusBarHidden() -> UIViewController {
+    return headerViewController!
+  }
+
+  // UIScrollViewDelegate
+  override func scrollViewDidScroll(scrollView: UIScrollView) {
+    headerViewController?.headerView.trackingScrollViewDidScroll()
+  }
+
+  override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    headerViewController?.headerView.trackingScrollViewDidEndDecelerating()
+  }
+
+  override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    headerViewController?.headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+  }
+
+  override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    headerViewController?.headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity, targetContentOffset: targetContentOffset)
+  }
+```
+
+If these are omitted, the header will continue to work, but there will not be any collapsing and expanding behavior.
+
+If you prefer to use not use the model, see the Material Collection View component documentation for
+more detail. This component also handles editing and moving of rows, which is also covered in the component documentation.
+
+#### Handling taps on a row
+
+The final step is to handle taps on a row. It is very similar to the normal UICollectionViewDelegate
+way of doing things
+
+```
+override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+  super.collectionView(collectionView, didSelectItemAtIndexPath: indexPath)
+  let vc = ViewControllerWithCollections(nibName: nil, bundle: nil)
+  self.navigationController?.pushViewController(vc, animated: true)
+}
+```
+
+#### Bonus: Custom cells
+
+[TODO]
+
+
+### Material Buttons
+
+Material Components has several styled buttons depending on where they are placed. For Floating Action Buttons (spec),
+the Material Buttons component has a class called MDCShapedButton that allows for creating a simple
+rounded button that contains an icon.
+
+To add this to the Abstract app, the button should be initialized at viewDidLoad and then
+added to the view controller's root view so it stays floated in the corner.
+
+```
+override func viewDidLoad() {
+
+  button = MDCFloatingButton(shape: .Default)
+  button!.sizeToFit()
+  var buttonFrame = button!.frame
+  buttonFrame.origin.x = view.bounds.size.width - buttonFrame.size.width - 24
+  buttonFrame.origin.y = view.bounds.size.height - buttonFrame.size.height - 24
+  button!.setBackgroundColor(UIColor(red: 1.0, green: 0.562, blue: 0, alpha:1.0), forState: .Normal)
+  button!.frame = buttonFrame
+  button!.setImage(UIImage(named: "ic_add")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
+  button!.tintColor = UIColor.whiteColor()
+  button!.alpha = 0
+  button!.addTarget(self,
+                    action: #selector(ViewControllerWithCollections.add(_:)),
+                    forControlEvents: .TouchUpInside)
+}
+
+override func viewDidAppear {
+  super.viewDidAppear()
+  weak var weakButton = button
+  UIView.animateWithDuration(0.2, animations: {
+    weakButton!.alpha = 1
+  })
+}
+
+```
+
+When the floating action button is tapped on, the `add:` selector is called and it will add a
+row to the collection view. Collection views can animate any changes using MDCCollectionViewModel.performBatchOperations
+
+```
+func add(target: AnyObject) {
+  weak var weakModel = model
+  model.performBatchUpdates({
+    weakModel?.insertItem(
+      MDCCellModel.objectWithTitle("I got added".blackout(),
+      subtitle: "More text".blackout()),
+      atIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+    },
+    withCollectionView: collectionView,
+    completion: nil)
+}
+```
+
+#### Bonus : Proper view controller transitions
+
+One odd artifact with this app is the floating action button animates with the rest of the view
+controller. The intention of the design is it floats on top of all the views, but for convenience
+we've added it to the view controller.
+
+Rather, when a view controller transition happens, the floating action button should be removed
+from the view hierarchy and animated in when the view controller appears.
+
+Fading in to the view controller:
+
+```
+ override func viewDidAppear(animated: Bool) {
+   weak var weakButton = button
+   UIView.animateWithDuration(0.2, animations: {
+     weakButton!.alpha = 1
+   })
+ }
+```
+
+Fading out when the view controller changes, replace the `collectionView:didSelectItemAtIndexPath`
+to pushViewController with an animation to FAB.
+
+```
+override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+  super.collectionView(collectionView, didSelectItemAtIndexPath: indexPath)
+  let vc = ViewControllerWithCollections(nibName: nil, bundle: nil)
+
+  weak var weakButton = button
+  weak var weakSelf = self
+  UIView.animateWithDuration(0.2, animations: {
+    weakButton!.alpha = 0
+    }) { (completed) in
+      weakSelf?.navigationController?.pushViewController(vc, animated: true)
+  }
+}
+
+```
+
+#### Next steps
+
+This tutorial has taken you through implementing a basic Material Design style app with some of our
+components. There are a lot more components that are not covered which are covered in our component
+documentation.
+
+Also see our examples and catalog apps that are in the project to show how to use some of the more
+advanced features.
+
+
+
 
 
 
