@@ -46,6 +46,8 @@ case $target in
 	all)
 	  $DIR/apidocs-site-src/build.sh
   ;;
+  site)
+  ;;
   components:*)
 		components=$(echo $target | sed 's/^components://' | tr "," "\n")
 		for component in $components
@@ -55,6 +57,7 @@ case $target in
 	;;
   *)
 		echo "Invalid build options. Only all,site,components:c1,c2 available. Default to all."
+    exit 1
   ;;
 esac
 
@@ -77,6 +80,7 @@ else
 	    ;;
 	    *)
 				echo "Invalid build options. Only site-dev, develop, production available."
+        exit 1
       ;;
 		esac
 	fi
