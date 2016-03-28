@@ -305,9 +305,16 @@ affect the Navigation Bar as you'd expect, with the following exceptions:
 - None of the `animated:` method varients are supported because they do not implement KVO events.
   Use of these methods will result in the Navigation Bar becoming out of sync with the
   navigationItem properties.
-- `prompt` is not presently supported. TODO(featherless): File issue.
+- `prompt` is not presently supported. https://github.com/google/material-components-ios/issues/230.
 
-TODO: Discuss adding background images.
+- - -
+
+### Background images
+
+The App Bar is a place where you can showcase photography and imagery. To do so you'll take
+advantage of the Flexible Header APIs for registering custom content views. Learn more by reading
+the Flexible Header section on "[Background images](../FlexibleHeader/#background-images)".
+
 TODO: Discuss touch event forwarding.
 
 TODO: Discuss known limitiations. Discuss interactive background image (behind the stack view).
