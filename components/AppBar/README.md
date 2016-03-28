@@ -311,9 +311,11 @@ affect the Navigation Bar as you'd expect, with the following exceptions:
 
 ### Background images
 
-The App Bar is a place where you can showcase photography and imagery. To do so you'll take
-advantage of the Flexible Header APIs for registering custom content views. Learn more by reading
-the Flexible Header section on "[Background images](../FlexibleHeader/#background-images)".
+Showcase photography and imagery in your App Bar by adding image views to the App Bar's Flexible
+Header.
+
+Learn more by reading the Flexible Header section on
+[Background images](../FlexibleHeader/#background-images).
 
 TODO: Discuss touch event forwarding.
 
