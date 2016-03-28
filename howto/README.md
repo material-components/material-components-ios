@@ -28,60 +28,54 @@ TODO: Choose links below.
 - - -
 
 
-## Creating a Material design iOS app
+## Creating a simple Material Design iOS app
 
 This guide will take you through the steps of creating your first Material design iOS app
 and give you a starting point for using our flexible headers and collection views.
 
-In this tutorial, we'll create a fake app called Abstract which brings together the main
-components available in the material design components such as the app bar, flexible header,
-buttons and collection view.
+In this tutorial, we'll create an example app called Abstract which brings together the main components available in the Material Components collection such as the App Bar, Flexible Header, Collection View and Buttons.
 
-### Setting up a new project
+### Setting up
 
-#### Create a new project
-
-Create a new Xcode project and initialize CocoaPods for this project. For more information, see Quickstart on details.
-
-(Maybe we can let them clone an existing set up project?)
-
-#### Swift initialization
-
-For Swift based projects, because Material Components is in Objective-C, a bridging header needs
-to be created and referenced.
-
-Create a file called "BridgingHeaders.h" and reference this in the Xcode project configuration.
-
-[TODO: Add image of where this is in the Xcode project configuration]
-
-In the file, add the following lines.
+To get started, download this skeleton new project which we will set up with Material Components.
 
 ```
-#import "MaterialFlexibleHeader.h"
+git clone ...
+```
+
+This project is similar to a new project create using Xcode's new project template except with a small number of changes:
+
+1. Removes the Main.storyboard and references to it in favor of programmatically creating the UI.
+2. Adds a bridging header (BridgingHeader.h) and the Xcode configuration for it.
+3. Adds a simple String class extension for creating sample text.
+4. Adds two icons (search and add) from [Material Icons](https://github.io/google/material-icons)
+5. Creates a new MainViewController.swift.
+
+#### 1. Add Material Components through CocoaPods
+
+The first step is to add Material Components through CocoaPods. The [Material Components quickstart](https://materialcomponents.org/) has detailed instructions, but in short, create a Podfile in the root of the example with the following contents:
+
+```
+target 'Abstract' do
+  pod 'MaterialComponents'
+end
+```
+
+Run `pod install` in that directory and open up `Abstract.xcworkspace`.
+
+#### 2. Bridging for Swift
+
+Material Components is written in Objective-C and is completely usable from Swift. In order to make the classes visible to Swift, the headers need to be added to the `BridgingHeaders.h`. Open up `BridgingHeaders.h` and add the following lines.
+
+
+```
 #import "MaterialAppBar.h"
+#import "MaterialButtons.h"
+#import "MaterialCollections.h"
+#import "MaterialFlexibleHeader.h"
 ```
 
-#### Creating the UI programmatically.
-
-The easiest way to use Material Components is to create the UI programmatically rather than
-using Storyboards. This gives us full flexibility in how to put together the components.
-
-To modify the new project to simply:
-
-1. Remove the Main.storyboard.
-2. In the Xcode Project settings, delete the "Main" value in the Storyboard setting.
-3. Removing ViewController.swift
-4. Implement creating a UIWindow in AppDelegate.swift.
-
-#### Add some Material Icons
-
-Our following examples will have some icons we would like to use. So simply download
-the list of imagesets of Material icons [TODO] and drag them in to the Asset.xcassets.
-
-#### Setting up CocoaPods
-
-Refer to the quickstart for more details.
-
+Now the project is ready for adding in the first Material component.
 
 ### Using the header component
 
