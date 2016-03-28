@@ -1,14 +1,80 @@
 // Overrides to default Jazzy layout CSS
-
-nav {
-  a,
-  a:link,
-  a:visited {
-    color: $text-color;
-  }
+header.header {
+	height: 64px;
+	padding: 0px;
+	.header-col.header-col--primary {
+		position: absolute;
+		top: 24px;
+		padding: 0px 24px;
+		font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+	}
 }
 
 .breadcrumbs {
-  font-size: inherit;
+	font-size: inherit;
   line-height: inherit;
+	padding: 8px 24px;
 }
+
+nav {
+	@include condensed {
+		border-top: 1px solid #ddd;
+	}
+	.nav-group-name {
+		padding-left: 24px;
+		.nav-group-name-link {
+			font-weight: 500;
+		}
+	}
+	a, a:link, a:visited {
+    color: $text-color;
+  }
+}
+section.section {
+	border-bottom: none;
+	.section-content {
+		padding: 32px 0 0 0;
+		h1 {
+			margin: 0;
+			margin-bottom: 24px;
+			word-break: break-all;
+		}
+	}
+}
+
+code {
+	font-family: $fonts;
+	font-weight: 400;
+	color: $black-54;
+	font-size: 12px;
+}
+
+html, body {
+	height: 100%;
+	.content-wrapper {
+		min-height: 100%;
+		margin-top: -105px;
+		margin-bottom: -56px;
+		padding-top: 105px;
+		&:after {
+			content: "";
+			display: block;
+		}
+	}
+	.content-wrapper:before {
+		height: 105px;
+	}
+	header.header {
+		height: 64px;
+	}
+	section.footer, .content-wrapper:after {
+		position: relative;
+		height: 56px;
+		z-index: 100;
+		order: 3;
+	}
+}
+
+
