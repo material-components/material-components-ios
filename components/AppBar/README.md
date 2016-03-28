@@ -94,8 +94,6 @@ The result of following these steps will be that:
 3. you have access to the Navigation Bar and Header Stack View views via the corresponding
    properties.
 
-- - -
-
 Step 1: **Make your view controller conform to MDCAppBarParenting**.
 
 Conforming to this protocol allows your view controller to hold a strong reference to the App Bar
@@ -115,8 +113,6 @@ helper methods.
 class MyViewController: UITableViewController, MDCAppBarParenting
 ~~~
 <!--</div>-->
-
-- - -
 
 Step 2: **Synthesize the required properties of the MDCAppBarParenting protocol**.
 
@@ -138,8 +134,6 @@ var navigationBar: MDCNavigationBar?
 var headerViewController: MDCFlexibleHeaderViewController?
 ~~~
 <!--</div>-->
-
-- - -
 
 Step 3: **Initialize your view controller's App Bar**.
 
@@ -164,8 +158,6 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
   MDCAppBarPrepareParent(self)
 ~~~
 <!--</div>-->
-
-- - -
 
 Step 4: **Inform the App Bar that your view controller's view has loaded**.
 
@@ -196,124 +188,37 @@ override func viewDidLoad() {
 ~~~
 <!--</div>-->
 
-- - -
+### App Bar & UINavigationController
 
-### App Bar + UINavigationController
-
-When pushing view controllers that have App Bars onto UINavigationController you may notice that two
-navigation bars are visible: the stock UINavigationBar and the App Bar's navigation bar. We
-recommend hiding the UINavigationController's `navigationBar` whenever you're presenting a view
-controller with an App Bar.
-
-One way to do this is to change the navigation bar visibility during either `viewWillAppear:` or
-`viewWillDisappear:`. This allows UINavigationController to animate the UINavigationBar in a
-predictable fashion during pushes and pops.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-~~~
-
-#### Swift
-~~~ swift
-override func viewWillAppear(animated: Bool) {
-  super.viewWillAppear(animated)
-
-  self.navigationController?.setNavigationBarHidden(true, animated: animated)
-}
-~~~
-<!--</div>-->
-
-Add the following to view controllers that don't have an app bar:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
-~~~
-
-#### Swift
-~~~ swift
-override func viewWillAppear(animated: Bool) {
-  super.viewWillAppear(animated)
-
-  self.navigationController?.setNavigationBarHidden(false, animated: animated)
-}
-~~~
-<!--</div>-->
-
-- - -
-
-If all of your view controllers use the App Bar in a given UINavigationController then you can
-simply hide the navigationBar when you create the navigation controller:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-UINavigationController *navigationController = ...;
-[navigationController setNavigationBarHidden:NO animated:NO];
-~~~
-
-#### Swift
-~~~ swift
-self.navigationController?.setNavigationBarHidden(false, animated: false)
-~~~
-<!--</div>-->
-
-- - -
+A view controller with an App Bar pushed onto a UINavigationController will look odd due to the
+presence of two navigation bars: one provided by App Bar and another provided by
+UINavigationController. The Flexible Header section on
+[interacting with UINavigationController](../FlexibleHeader/#interacting-with-uinavigationcontroller)
+provides recommendations for hiding the navigation bar appropriately in this situation.
 
 ### Status bar style
 
-The MDCHeaderViewController class is able to recommend a status bar style by inspecting the
-background color of the Flexible Header's view. If you'd like to use this logic to automatically
-update your status bar style, implement `childViewControllerForStatusBarStyle` in your app's view
-controller.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-- (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.headerViewController;
-}
-~~~
-
-#### Swift
-~~~ swift
-override func childViewControllerForStatusBarStyle() -> UIViewController? {
-  return self.headerViewController
-}
-~~~
-<!--</div>-->
-
-- - -
+The Flexible Header component provides facilities for inferring the status bar style based on the
+Flexible Header view's background color. Learn more by reading the section on
+[Status bar style](../FlexibleHeader/#status-bar-style).
 
 ### UINavigationItem and the App Bar
 
-The App Bar's Navigation Bar registers KVO listeners on the parent view controller's
-`navigationItem`. All of the typical properties including UIViewController's `title` property will
-affect the Navigation Bar as you'd expect, with the following exceptions:
+The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
+`navigationBar` once you call `MDCAppBarAddViews`.
 
-- None of the `animated:` method varients are supported because they do not implement KVO events.
-  Use of these methods will result in the Navigation Bar becoming out of sync with the
-  navigationItem properties.
-- `prompt` is not presently supported. https://github.com/google/material-components-ios/issues/230.
-
-- - -
+Learn more by reading the Navigation Bar section on
+[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
+Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
+supported.
 
 ### Background images
 
-The App Bar is a place where you can showcase photography and imagery. To do so you'll take
-advantage of the Flexible Header APIs for registering custom content views. Learn more by reading
-the Flexible Header section on "[Background images](../FlexibleHeader/#background-images)".
+Showcase photography and imagery in your App Bar by adding image views to the App Bar's Flexible
+Header.
+
+Learn more by reading the Flexible Header section on
+[Background images](../FlexibleHeader/#background-images).
 
 TODO: Discuss touch event forwarding.
 

@@ -32,7 +32,8 @@ This component provides the most commonly-used Material Design elevations.
 
 ### Installation with CocoaPods
 
-To add the ShadowElevations component to your Xcode project using CocoaPods, add the following to your PodFile:
+To add the ShadowElevations component to your Xcode project using CocoaPods, add the following to
+your PodFile:
 
 ~~~ bash
 $ pod 'MaterialComponents/ShadowElevations'

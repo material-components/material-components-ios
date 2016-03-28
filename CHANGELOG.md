@@ -79,14 +79,16 @@
 ##### Enhancements
 
 * [AppBar] Introducing the App Bar component. (Jeff Verkoeyen)
-* [Arcanist] Adds scripts/install_arc.sh, which installs or updates arc and our project-specific dependencies. (Adrian Secord)
+* [Arcanist] Adds scripts/install_arc.sh, which installs or updates arc and our project-specific
+  dependencies. (Adrian Secord)
 * [Arcanist] Updated Arcanist config to use submodules. (Adrian Secord)
 * [ButtonBar] Add ButtonBar component. (Jeff Verkoeyen)
 * [ButtonBar] Add ButtonBar readme. (Jeff Verkoeyen)
 * [Buttons] Add Flatbutton commonInit (Ian Gordon)
 * [Buttons] Add storyboard sample (Ian Gordon)
 * [Buttons] Clean up API documentation style. (Jeff Verkoeyen)
-* [Catalog] Adds localizable strings to catalog. Allows changing language in scheme for debugging. Closes #166. (Chris Cox)
+* [Catalog] Adds localizable strings to catalog. Allows changing language in scheme for debugging.
+  Closes #166. (Chris Cox)
 * [Catalog] Moving assets into catalog by convention. (Jeff Verkoeyen)
 * [CocoaPods] Allow pod install to be run from anywhere for the catalog. (Jeff Verkoeyen)
 * [CocoaPods] Standardizing the podspec format. (Jeff Verkoeyen)

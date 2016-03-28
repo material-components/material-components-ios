@@ -19,20 +19,20 @@
 @protocol MDCButtonBarDelegate;
 
 /**
- This protocol defines all of the KVO properties on UINavigationItem that can be listened to by
+ This protocol defines all of the properties on UINavigationItem that can be listened to by
  MDCNavigationBar.
  */
-@protocol MDCUINavigationItemKVO <NSObject>
+@protocol MDCUINavigationItemObservables <NSObject>
 @required
 
-@property(nonatomic, copy) NSString *title;
-@property(nonatomic, copy) NSArray *leftBarButtonItems;
-@property(nonatomic, copy) NSArray *rightBarButtonItems;
-@property(nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
-@property(nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
+@property(nonatomic, copy, nullable) NSString *title;
+@property(nonatomic, copy, nullable) NSArray *leftBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray *rightBarButtonItems;
+@property(nonatomic, strong, nullable) UIBarButtonItem *leftBarButtonItem;
+@property(nonatomic, strong, nullable) UIBarButtonItem *rightBarButtonItem;
 @property(nonatomic) BOOL hidesBackButton;
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
-@property(nonatomic, strong) UIView *titleView;
+@property(nonatomic, strong, nullable) UIView *titleView;
 
 @end
 
@@ -43,7 +43,7 @@
  This view is not designed to have subviews added to it except via through its declared
  properties (e.g. titleView).
  */
-@interface MDCNavigationBar : UIView <MDCUINavigationItemKVO>
+@interface MDCNavigationBar : UIView <MDCUINavigationItemObservables>
 
 #pragma mark Behavior
 
@@ -56,27 +56,44 @@
  You may wish to create a container view that is able to manage subview layout if your
  situation requires it.
  */
-@property(nonatomic, strong) UIView *titleView;
+@property(nonatomic, strong, nullable) UIView *titleView;
 
 /** The delegate to be provided to the left button bar instance. */
-@property(nonatomic, weak) id<MDCButtonBarDelegate> leftButtonBarDelegate;
+@property(nonatomic, weak, nullable) id<MDCButtonBarDelegate> leftButtonBarDelegate;
 
 /** The delegate to be provided to the right button bar instance. */
-@property(nonatomic, weak) id<MDCButtonBarDelegate> rightButtonBarDelegate;
+@property(nonatomic, weak, nullable) id<MDCButtonBarDelegate> rightButtonBarDelegate;
 
 /** The back button to be displayed, if any. */
-@property(nonatomic, strong) UIBarButtonItem *backItem;
+@property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
 
 #pragma mark Observing UINavigationItem instances
 
 /**
  Begin observing changes to the provided navigation item.
 
+ Only one navigation item instance can be observed at a time. Observing a second navigation item
+ will stop observation of the first navigation item.
+
+ Once execution returns from this method the receiver's state will match that of the newly-observed
+ navigation item.
+
  The observed navigation item is strongly held.
  */
-- (void)observeNavigationItem:(UINavigationItem *)navigationItem;
+- (void)observeNavigationItem:(nonnull UINavigationItem *)navigationItem;
 
-/** Stop observing changes to the previously-observed navigation item. */
+/**
+ Stop observing changes to the previously-observed navigation item.
+
+ Does nothing if no navigation item is being observed.
+ */
 - (void)unobserveNavigationItem;
 
 @end
+
+// clang-format off
+/** @see MDCUINavigationItemObservables */
+__deprecated_msg("Please use MDCUINavigationItemObservables instead.")
+@protocol MDCUINavigationItemKVO <MDCUINavigationItemObservables>
+@end
+    // clang-format on
