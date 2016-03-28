@@ -94,7 +94,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 /**
  Content for the flexible header should be added to the content view.
  */
-@property(nonatomic, retain, nullable) UIView *contentView;
+@property(nonatomic, retain, nonnull, readonly) UIView *contentView;
 
 /**
  Sets a custom shadow layer and a block that should be executed when shadow intensity changes.
