@@ -62,7 +62,7 @@ The provided view hierarchy looks like so:
     <MDCFlexibleHeaderView>
        | <CALayer>
        |    | <MDCShadowLayer>
-       | <UIView>
+       | <UIView> <- headerView.contentView
        |    | <MDCHeaderStackView>
        |    |    | <MDCNavigationBar>
 
