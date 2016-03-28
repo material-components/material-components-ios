@@ -247,6 +247,8 @@ In order to affect the status bar's visibility you must query the header view co
 
 ### Background images
 
+This example shows how to add a custom background image view to a Flexible Header.
+
 You can create and add a UIImageView subview to the Flexible Header view's content view:
 
 <!--<div class="material-code-render" markdown="1">-->
