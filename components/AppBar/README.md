@@ -196,80 +196,13 @@ override func viewDidLoad() {
 ~~~
 <!--</div>-->
 
-- - -
+### App Bar & UINavigationController
 
-### App Bar + UINavigationController
-
-When pushing view controllers that have App Bars onto UINavigationController you may notice that two
-navigation bars are visible: the stock UINavigationBar and the App Bar's navigation bar. We
-recommend hiding the UINavigationController's `navigationBar` whenever you're presenting a view
-controller with an App Bar.
-
-One way to do this is to change the navigation bar visibility during either `viewWillAppear:` or
-`viewWillDisappear:`. This allows UINavigationController to animate the UINavigationBar in a
-predictable fashion during pushes and pops.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-~~~
-
-#### Swift
-~~~ swift
-override func viewWillAppear(animated: Bool) {
-  super.viewWillAppear(animated)
-
-  self.navigationController?.setNavigationBarHidden(true, animated: animated)
-}
-~~~
-<!--</div>-->
-
-Add the following to view controllers that don't have an app bar:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
-~~~
-
-#### Swift
-~~~ swift
-override func viewWillAppear(animated: Bool) {
-  super.viewWillAppear(animated)
-
-  self.navigationController?.setNavigationBarHidden(false, animated: animated)
-}
-~~~
-<!--</div>-->
-
-- - -
-
-If all of your view controllers use the App Bar in a given UINavigationController then you can
-simply hide the navigationBar when you create the navigation controller:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-UINavigationController *navigationController = ...;
-[navigationController setNavigationBarHidden:NO animated:NO];
-~~~
-
-#### Swift
-~~~ swift
-self.navigationController?.setNavigationBarHidden(false, animated: false)
-~~~
-<!--</div>-->
-
-- - -
+A view controller with an App Bar pushed onto a UINavigationController will look odd due to the
+presence of two navigation bars: one provided by App Bar and another provided by
+UINavigationController. The Flexible Header section on
+[interacting with UINavigationController](../FlexibleHeader/#interacting-with-uinavigationcontroller)
+provides recommendations for hiding the navigation bar appropriately in this situation.
 
 ### Status bar style
 

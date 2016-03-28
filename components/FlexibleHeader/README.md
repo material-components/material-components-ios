@@ -145,23 +145,6 @@ visibility in reaction to scroll events.
 }
 ~~~
 
-
-
-- - -
-
-## Usage with UINavigationController**
-
-You may use an instance of UINavigationController to push and pop view controllers that are managing
-their own header view controller. UINavigationController does have its own navigation bar, so be
-sure to set `navigationBarHidden` to YES either all the time (if all of your view controllers have
-headers, or on the `viewWillAppear:` method).
-
-Do **not** forget to do this if you support app state restoration, or your app will launch with
-double navigation bars.
-
-
-- - -
-
 ## Tracking a scroll view
 
 In most situations you will want the header to track a UIScrollView's scrolling behavior. This
@@ -244,6 +227,76 @@ In order to affect the status bar's visibility you must query the header view co
   return self.headerViewController;
 }
 ~~~
+
+### Interacting with UINavigationController
+
+Push a view controller with a Flexible Header onto UINavigationController and you may find that
+the existing UINavigationBar is undesired. The most obvious example occurs when your Flexible Header
+has its own navigation bar.
+
+If this is the case then we recommend hiding the UINavigationController's `navigationBar` during
+UIViewController appearance events: `viewWillAppear:` or `viewWillDisappear:`. Changing the
+navigation bar's visibility during these events gives the highest likelihood of your navigation bar
+animating in/out in a reasonable manner.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+~~~
+
+#### Swift
+~~~ swift
+override func viewWillAppear(animated: Bool) {
+  super.viewWillAppear(animated)
+
+  self.navigationController?.setNavigationBarHidden(true, animated: animated)
+}
+~~~
+<!--</div>-->
+
+Add the following to view controllers that don't have an app bar:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+~~~
+
+#### Swift
+~~~ swift
+override func viewWillAppear(animated: Bool) {
+  super.viewWillAppear(animated)
+
+  self.navigationController?.setNavigationBarHidden(false, animated: animated)
+}
+~~~
+<!--</div>-->
+
+If all of your view controllers use the App Bar in a given UINavigationController then you can
+simply hide the navigationBar when you create the navigation controller. **Don't forget to do this
+at app restoration time!**
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+UINavigationController *navigationController = ...;
+[navigationController setNavigationBarHidden:NO animated:NO];
+~~~
+
+#### Swift
+~~~ swift
+navigationController.setNavigationBarHidden(false, animated: false)
+~~~
+<!--</div>-->
 
 ### Status bar style
 
