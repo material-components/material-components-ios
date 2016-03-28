@@ -74,6 +74,10 @@ doing so if the App Bar is limiting your ability to build something. In such a c
 also [filing an issue](https://github.com/google/material-components-ios/issues/new) so that we can
 identify whether your use case is something we can directly support.
 
+
+
+- - -
+
 ## Usage
 
 ### Add the App Bar to a view controller
@@ -99,14 +103,14 @@ properties. As we'll see in a moment, this allows the App Bar to configure your 
 helper methods.
 
 <!--<div class="material-code-render" markdown="1">-->
-####Objective-C
+#### Objective-C
 
 ~~~ objc
 @interface MyViewController () <MDCAppBarParenting>
 @end
 ~~~
 
-####Swift
+#### Swift
 ~~~ swift
 class MyViewController: UITableViewController, MDCAppBarParenting
 ~~~
@@ -129,9 +133,9 @@ Step 2: **Synthesize the required properties of the MDCAppBarParenting protocol*
 
 #### Swift
 ~~~ swift
-  var headerStackView: MDCHeaderStackView?
-  var navigationBar: MDCNavigationBar?
-  var headerViewController: MDCFlexibleHeaderViewController?
+var headerStackView: MDCHeaderStackView?
+var navigationBar: MDCNavigationBar?
+var headerViewController: MDCFlexibleHeaderViewController?
 ~~~
 <!--</div>-->
 
@@ -141,6 +145,7 @@ Step 3: **Initialize your view controller's App Bar**.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
+
 ~~~ objc
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -153,10 +158,10 @@ Step 3: **Initialize your view controller's App Bar**.
 
 #### Swift
 ~~~ swift
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    MDCAppBarPrepareParent(self)
+  MDCAppBarPrepareParent(self)
 ~~~
 <!--</div>-->
 
@@ -182,12 +187,12 @@ ensure that the App Bar's view is above all of your other views.
 
 #### Swift
 ~~~ swift
-  override func viewDidLoad() {
-    super.viewDidLoad()
+override func viewDidLoad() {
+  super.viewDidLoad()
 
-    // After all other views have been registered.
-    MDCAppBarAddViews(self)
-  }
+  // After all other views have been registered.
+  MDCAppBarAddViews(self)
+}
 ~~~
 <!--</div>-->
 
@@ -216,11 +221,11 @@ predictable fashion during pushes and pops.
 
 #### Swift
 ~~~ swift
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
+override func viewWillAppear(animated: Bool) {
+  super.viewWillAppear(animated)
 
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
+  self.navigationController?.setNavigationBarHidden(true, animated: animated)
+}
 ~~~
 <!--</div>-->
 
@@ -238,11 +243,11 @@ Add the following to view controllers that don't have an app bar:
 
 #### Swift
 ~~~ swift
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
+override func viewWillAppear(animated: Bool) {
+  super.viewWillAppear(animated)
 
-    self.navigationController?.setNavigationBarHidden(false, animated: animated)
-  }
+  self.navigationController?.setNavigationBarHidden(false, animated: animated)
+}
 ~~~
 <!--</div>-->
 
@@ -283,9 +288,9 @@ controller.
 
 #### Swift
 ~~~ swift
-  override func childViewControllerForStatusBarStyle() -> UIViewController? {
-    return self.headerViewController
-  }
+override func childViewControllerForStatusBarStyle() -> UIViewController? {
+  return self.headerViewController
+}
 ~~~
 <!--</div>-->
 

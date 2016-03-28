@@ -98,12 +98,14 @@ settings in the Material Design specifications.
                                 opacities")
 <!--{: .illustration }-->
 
+- - -
+
 ## Examples
 
 ### Create a Title Label
-### Objective C
-<!--<div class="material-code-render" markdown="1">-->
 
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective C
 ~~~ objc
 #import "MaterialTypography.h"
 
@@ -134,9 +136,9 @@ self.view.addSubview(label)
 <!--</div>-->
 
 ### Create a Display 1 Label
-### Objective C
-<!--<div class="material-code-render" markdown="1">-->
 
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective C
 ~~~ objc
 #import "MaterialTypography.h"
 
@@ -152,7 +154,7 @@ label.alpha = [MDCTypography display1FontOpacity];
 
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
 let label = UILabel()
 label.text = "Display 1"
@@ -167,9 +169,10 @@ self.view.addSubview(label)
 <!--</div>-->
 
 ### Set an Existing Label as a Caption Label
-### Objective C
+
 <!--<div class="material-code-render" markdown="1">-->
 
+#### Objective C
 ~~~ objc
 #import "MaterialTypography.h"
 
@@ -181,7 +184,7 @@ self.label.alpha = [MDCTypography captionFontOpacity];
 [self.label sizeToFit];
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
 self.label.font = MDCTypography.captionFont()
 self.label.alpha = MDCTypography.captionFontOpacity()
@@ -192,8 +195,13 @@ self.label.sizeToFit()
 ~~~
 <!--</div>-->
 
+
+- - -
+
 ## Advanced Usage
 
 ### Custom Fonts
 Material Typography allows you to set your own font to replace Roboto and Noto. For more
 information see [FontDiskLoader](https://github.com/google/material-components-ios/tree/develop/components/FontDiskLoader).
+
+
