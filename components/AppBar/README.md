@@ -273,26 +273,9 @@ self.navigationController?.setNavigationBarHidden(false, animated: false)
 
 ### Status bar style
 
-The MDCHeaderViewController class is able to recommend a status bar style by inspecting the
-background color of the Flexible Header's view. If you'd like to use this logic to automatically
-update your status bar style, implement `childViewControllerForStatusBarStyle` in your app's view
-controller.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-- (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.headerViewController;
-}
-~~~
-
-#### Swift
-~~~ swift
-override func childViewControllerForStatusBarStyle() -> UIViewController? {
-  return self.headerViewController
-}
-~~~
-<!--</div>-->
+The Flexible Header component provides facilities for inferring the status bar style based on the
+Flexible Header view's background color. Learn more by reading the section on
+[Status bar style](../FlexibleHeader/#status-bar-style).
 
 ### UINavigationItem and the App Bar
 

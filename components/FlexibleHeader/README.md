@@ -245,6 +245,29 @@ In order to affect the status bar's visibility you must query the header view co
 }
 ~~~
 
+### Status bar style
+
+MDCHeaderViewController instances are able to recommend a status bar style by inspecting the
+background color of the MDCFlexibleHeaderView. If you'd like to use this logic to automatically
+update your status bar style, implement `childViewControllerForStatusBarStyle` in your app's view
+controller.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.headerViewController;
+}
+~~~
+
+#### Swift
+~~~ swift
+override func childViewControllerForStatusBarStyle() -> UIViewController? {
+  return self.headerViewController
+}
+~~~
+<!--</div>-->
+
 ### Background images
 
 This example shows how to add a custom background image view to a Flexible Header.
