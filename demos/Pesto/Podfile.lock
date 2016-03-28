@@ -47,8 +47,11 @@ PODS:
     - MaterialComponents/private/ThumbTrack (= 2.2.0)
   - MaterialComponents/private/Color (2.2.0)
   - MaterialComponents/private/Icons (2.2.0):
+    - MaterialComponents/private/Icons/Base (= 2.2.0)
     - MaterialComponents/private/Icons/ic_arrow_back (= 2.2.0)
-  - MaterialComponents/private/Icons/ic_arrow_back (2.2.0)
+  - MaterialComponents/private/Icons/Base (2.2.0)
+  - MaterialComponents/private/Icons/ic_arrow_back (2.2.0):
+    - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/ThumbTrack (2.2.0):
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
@@ -74,6 +77,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 6fcfefa1051ef2fc9992a69b48106d985a5648ab
+  MaterialComponents: 9fdb2668f6d8d8318f4cd814db1c7933dd5096f8
 
 COCOAPODS: 0.39.0
