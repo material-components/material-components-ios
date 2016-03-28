@@ -54,7 +54,7 @@ $ pod install
 
 ## Usage
 
-### Observing UINavigation item
+### Observing UINavigationItem instances
 
 MDCNavigationBar can observe changes made to a navigation item property much like how a
 UINavigationBar does. This feature is the recommended way to populate the navigation bar's

@@ -300,8 +300,9 @@ The App Bar begins mirroring the state of your view controller's `navigationItem
 `navigationBar` once you call `MDCAppBarAddViews`.
 
 Learn more by reading the Navigation Bar section on
-[Observing UINavigation item](../NavigationBar/#observing-uinavigation-item). Notably: read the
-section on "Exceptions" to understand which UINavigationItem are **not** supported.
+[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
+Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
+supported.
 
 ### Background images
 
