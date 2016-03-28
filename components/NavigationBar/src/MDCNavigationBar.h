@@ -19,10 +19,10 @@
 @protocol MDCButtonBarDelegate;
 
 /**
- This protocol defines all of the KVO properties on UINavigationItem that can be listened to by
+ This protocol defines all of the properties on UINavigationItem that can be listened to by
  MDCNavigationBar.
  */
-@protocol MDCUINavigationItemKVO <NSObject>
+@protocol MDCUINavigationItemObservables <NSObject>
 @required
 
 @property(nonatomic, copy, nullable) NSString *title;
@@ -43,7 +43,7 @@
  This view is not designed to have subviews added to it except via through its declared
  properties (e.g. titleView).
  */
-@interface MDCNavigationBar : UIView <MDCUINavigationItemKVO>
+@interface MDCNavigationBar : UIView <MDCUINavigationItemObservables>
 
 #pragma mark Behavior
 
@@ -87,3 +87,10 @@
 - (void)unobserveNavigationItem;
 
 @end
+
+// clang-format off
+/** @see MDCUINavigationItemObservables */
+__deprecated_msg("Please use MDCUINavigationItemObservables instead.")
+@protocol MDCUINavigationItemKVO <MDCUINavigationItemObservables>
+@end
+    // clang-format on

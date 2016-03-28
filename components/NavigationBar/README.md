@@ -19,7 +19,7 @@ label or a custom title view.
 
 <ul class="icon-list">
   <li class="icon-link"><a href="/apidocs/NavigationBar/Classes/MDCNavigationBar.html">MDCNavigationBar</a></li>
-  <li class="icon-link"><a href="/apidocs/NavigationBar/Protocols/MDCUINavigationItemKVO.html">MDCUINavigationItemKVO</a></li>
+  <li class="icon-link"><a href="/apidocs/NavigationBar/Protocols/MDCUINavigationItemObservables.html">MDCUINavigationItemObservables</a></li>
 </ul>
 
 
@@ -62,8 +62,8 @@ properties because it allows your view controllers to continue using `navigation
 with a few exceptions outlined below.
 
 > If you intend to use UINavigationItem observation it is recommended that you do not directly set
-> the navigation bar properties outlined in `MDCUINavigationItemKVO`. Instead, treat the observed
-> `navigationItem` object as the single source of truth for your navigationBar's state.
+> the navigation bar properties outlined in `MDCUINavigationItemObservables`. Instead, treat the
+> observed `navigationItem` object as the single source of truth for your navigationBar's state.
 
 #### Starting observation
 

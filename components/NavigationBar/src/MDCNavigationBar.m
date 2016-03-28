@@ -46,7 +46,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   dispatch_once(&onceToken, ^{
     NSMutableArray *keyPaths = [NSMutableArray array];
 
-    Protocol *headerProtocol = @protocol(MDCUINavigationItemKVO);
+    Protocol *headerProtocol = @protocol(MDCUINavigationItemObservables);
     unsigned int count = 0;
     objc_property_t *propertyList = protocol_copyPropertyList(headerProtocol, &count);
     if (propertyList) {
