@@ -258,17 +258,27 @@ body {
 
       tr {
         vertical-align: middle;
-
-        &:first-child {
-          background-color: $grey-50;
-          font-weight: 500;
-          color: $grey-600;
-        }
       }
+
 
       td {
         padding: 12px 24px 12px 24px;
         border: 1px solid $grey-100;
+      }
+
+      thead {
+        tr {
+          background-color: $grey-50;
+          font-weight: 500;
+          color: $grey-600;
+          text-align: left;
+        }
+
+        th {
+          padding: 12px 24px 12px 24px;
+          border: 1px solid $grey-100;
+          font-weight: inherit;
+        }
       }
 
     }
