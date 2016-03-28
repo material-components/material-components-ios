@@ -72,11 +72,18 @@
 /**
  Begin observing changes to the provided navigation item.
 
+ Only one navigation item instance can be observed at a time. Observing a second navigation item
+ will stop observation of the first navigation item.
+
  The observed navigation item is strongly held.
  */
 - (void)observeNavigationItem:(UINavigationItem *)navigationItem;
 
-/** Stop observing changes to the previously-observed navigation item. */
+/**
+ Stop observing changes to the previously-observed navigation item.
+
+ Does nothing if no navigation item is being observed.
+ */
 - (void)unobserveNavigationItem;
 
 @end
