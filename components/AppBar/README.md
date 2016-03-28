@@ -294,20 +294,14 @@ override func childViewControllerForStatusBarStyle() -> UIViewController? {
 ~~~
 <!--</div>-->
 
-- - -
-
 ### UINavigationItem and the App Bar
 
-The App Bar's Navigation Bar registers KVO listeners on the parent view controller's
-`navigationItem`. All of the typical properties including UIViewController's `title` property will
-affect the Navigation Bar as you'd expect, with the following exceptions:
+The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
+`navigationBar` once you call `MDCAppBarAddViews`.
 
-- None of the `animated:` method varients are supported because they do not implement KVO events.
-  Use of these methods will result in the Navigation Bar becoming out of sync with the
-  navigationItem properties.
-- `prompt` is not presently supported. https://github.com/google/material-components-ios/issues/230.
-
-- - -
+Learn more by reading the Navigation Bar section on
+[Observing UINavigation item](../NavigationBar/#observing-uinavigation-item). Notably: read the
+section on "Exceptions" to understand which UINavigationItem are **not** supported.
 
 ### Background images
 

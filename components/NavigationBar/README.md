@@ -54,4 +54,57 @@ $ pod install
 
 ## Usage
 
+### Observing UINavigation item
+
+MDCNavigationBar can observe changes made to a navigation item property much like how a
+UINavigationBar does. This feature is the recommended way to populate the navigation bar's
+properties because it allows your view controllers to continue using `navigationItem` as expected,
+with a few exceptions outlined below.
+
+> If you intend to use UINavigationItem observation it is recommended that you do not directly set
+> the navigation bar properties outlined in `MDCUINavigationItemKVO`. Instead, treat the observed
+> `navigationItem` object as the single source of truth for your navigationBar's state.
+
+#### Starting observation
+
+To begin observing a UINavigationItem instance you must call `observeNavigationItem:`.
+
+> A navigation bar instance can only observe one navigation item instance at a time.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+[navigationBar observeNavigationItem:viewController.navigationItem];
+~~~
+
+#### Swift
+~~~ swift
+navigationBar.observeNavigationItem(viewController.navigationItem)
+~~~
+<!--</div>-->
+
+#### Stopping observation
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+[navigationBar unobserveNavigationItem];
+~~~
+
+#### Swift
+~~~ swift
+navigationBar.unobserveNavigationItem()
+~~~
+<!--</div>-->
+
+#### Exceptions
+
+All of the typical properties including UIViewController's `title` property will affect the
+Navigation Bar as you'd expect, with the following exceptions:
+
+- None of the `animated:` method varients are supported because they do not implement KVO events.
+  Use of these methods will result in the Navigation Bar becoming out of sync with the
+  navigationItem properties.
+- `prompt` is not presently supported. https://github.com/google/material-components-ios/issues/230.
+
 TODO(featherless): Describe the most common integration steps.
