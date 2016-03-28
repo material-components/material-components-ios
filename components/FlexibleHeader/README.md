@@ -270,7 +270,7 @@ let headerView = self.headerViewController!.headerView
 let imageView = ...
 imageView.frame = headerView.bounds
 imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-headerView.contentView!.insertSubview(imageView, atIndex: 0)
+headerView.contentView.insertSubview(imageView, atIndex: 0)
 
 imageView.contentMode = .ScaleAspectFill
 imageView.clipsToBounds = true
