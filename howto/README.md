@@ -393,6 +393,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 ```
 
 
+### Material Collection Views
+
+In previous examples, we used a scroll view rather than any content. In Material Components, there
+is a sophisticated collection view addition that we've added which implements many of the Material design styled layout and animations.
+
+Using this is very similar to using a regular UICollectionView.
+
+
+### Material buttons
+
+If there's an action that
+
+
+
 
 
 
