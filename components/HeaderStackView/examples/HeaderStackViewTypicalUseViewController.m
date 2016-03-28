@@ -36,8 +36,9 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
+  UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
   _stackView = [MDCHeaderStackView new];
-  _stackView.backgroundColor = [UIColor blueColor];
+  _stackView.backgroundColor = blueColor;
 
   UINavigationBar *topBar = [UINavigationBar new];
   [topBar pushNavigationItem:self.navigationItem animated:NO];

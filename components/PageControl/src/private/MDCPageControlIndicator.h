@@ -18,10 +18,9 @@
 #import <UIKit/UIKit.h>
 
 /**
- * This shape layer provides a circular indicator denoting a page in a page control.
- *
- * @internal
- * @ingroup MaterialPageControl
+ This shape layer provides a circular indicator denoting a page in a page control.
+
+ @internal
  */
 @interface MDCPageControlIndicator : CAShapeLayer
 
@@ -29,10 +28,10 @@
 @property(nonatomic, strong) UIColor *color;
 
 /**
- * Default initializer.
- *
- * @param center The layer position for this indicator.
- * @param radius The radius of this indicator circle.
+ Default initializer.
+
+ @param center The layer position for this indicator.
+ @param radius The radius of this indicator circle.
  */
 - (instancetype)initWithCenter:(CGPoint)center radius:(CGFloat)radius;
 
@@ -40,9 +39,9 @@
 - (void)revealIndicator;
 
 /**
- * Updates the indicator transform.x property along the track by the designated percentage.
- *
- * @param transformX The transform.x value.
+ Updates the indicator transform.x property along the track by the designated percentage.
+
+ @param transformX The transform.x value.
  */
 - (void)updateIndicatorTransformX:(CGFloat)transformX;
 

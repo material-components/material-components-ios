@@ -1,3 +1,19 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import "PestoRemoteImageService.h"
 
 @interface PestoRemoteImageService ()
@@ -14,48 +30,48 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.dataCache = [[NSCache alloc] init];
-    self.imageCache = [[NSCache alloc] init];
-    self.thumbnailImageCache = [[NSCache alloc] init];
-    self.networkImageRequested = [NSMutableDictionary dictionary];
+    _dataCache = [[NSCache alloc] init];
+    _imageCache = [[NSCache alloc] init];
+    _thumbnailImageCache = [[NSCache alloc] init];
+    _networkImageRequested = [NSMutableDictionary dictionary];
   }
   return self;
 }
 
 - (UIImage *)fetchImageFromURL:(NSURL *)url {
-  UIImage *image = [_imageCache objectForKey:url];
+  UIImage *image = [self.imageCache objectForKey:url];
   if (image) {
     return image;
   }
 
   // Prevent the same image from being requested again if a network request is in progress.
-  if ([_networkImageRequested objectForKey:url.absoluteString] != nil) {
+  if ([self.networkImageRequested objectForKey:url.absoluteString] != nil) {
     return nil;
   }
-  [_networkImageRequested setValue:url forKey:url.absoluteString];
+  [self.networkImageRequested setValue:url forKey:url.absoluteString];
   NSData *imageData = [[NSData alloc] initWithContentsOfURL:url];
   if (!imageData) {
     return nil;
   }
   if (imageData) {
-    [_dataCache setObject:imageData forKey:url];
+    [self.dataCache setObject:imageData forKey:url];
   } else {
     return nil;
   }
   image = [UIImage imageWithData:imageData];
-  [_imageCache setObject:image forKey:url];
+  [self.imageCache setObject:image forKey:url];
   return image;
 }
 
 - (UIImage *)fetchThumbnailImageFromURL:(NSURL *)url {
-  UIImage *thumbnailImage = [_thumbnailImageCache objectForKey:url];
+  UIImage *thumbnailImage = [self.thumbnailImageCache objectForKey:url];
   if (thumbnailImage == nil) {
     UIImage *image = [self fetchImageFromURL:url];
     if (!image) {
       return nil;
     }
     thumbnailImage = [self createThumbnailWithImage:image];
-    [_thumbnailImageCache setObject:thumbnailImage forKey:url];
+    [self.thumbnailImageCache setObject:thumbnailImage forKey:url];
   }
   return thumbnailImage;
 }

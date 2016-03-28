@@ -3,6 +3,7 @@
 /docs
 build_tests/CocoapodsObjCApp/CocoapodsObjCApp.xcworkspace
 build_tests/CocoapodsSwiftApp/CocoapodsSwiftApp.xcworkspace
+scripts/external/material-design-icons/
 
 # Xcode
 #
@@ -31,6 +32,9 @@ xcuserdata
 
 ## OS X System files
 .DS_Store
+
+## Temporary swap files
+*.swp
 
 ## Obj-C/Swift specific
 *.hmap

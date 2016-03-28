@@ -1,3 +1,19 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import "PestoSideView.h"
 #import "PestoAvatarView.h"
 #import "PestoRemoteImageService.h"
@@ -17,7 +33,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @interface PestoSideViewCollectionViewCell : UICollectionViewCell
 
-@property(nonatomic) NSString *title;
+@property(nonatomic, copy) NSString *title;
 @property(nonatomic) UIColor *titleColor;
 @property(nonatomic) UILabel *titleLabel;
 
@@ -28,12 +44,13 @@ static NSString *const kPestoSideViewWidthBaseURL =
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    self.titleColor = [UIColor lightGrayColor];
+    _titleColor = [UIColor lightGrayColor];
     self.backgroundColor = [UIColor whiteColor];
     _titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
     _titleLabel.font = [MDCTypography body1Font];
+    _titleLabel.alpha = [MDCTypography body1FontOpacity];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-    _titleLabel.textColor = self.titleColor;
+    _titleLabel.textColor = _titleColor;
     [self addSubview:_titleLabel];
   }
   return self;
@@ -41,17 +58,17 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 - (void)prepareForReuse {
   [super prepareForReuse];
-  _titleLabel.text = nil;
+  self.titleLabel.text = nil;
 }
 
 - (void)setTitle:(NSString *)title {
   _title = title;
-  _titleLabel.text = title;
+  self.titleLabel.text = title;
 }
 
 - (void)setTitleColor:(UIColor *)titleColor {
   _titleColor = titleColor;
-  _titleLabel.textColor = titleColor;
+  self.titleLabel.textColor = _titleColor;
 }
 
 @end
@@ -61,7 +78,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @optional
 - (void)sideContentView:(PestoSideContentView *)sideContentView
- didSelectItemWithTitle:(NSString *)title;
+    didSelectItemWithTitle:(NSString *)title;
 
 @end
 
@@ -71,7 +88,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 @property(nonatomic) NSArray *titles;
 @property(nonatomic) NSCache *imageCache;
 @property(nonatomic) UICollectionView *collectionView;
-@property(weak) id<PestoSideContentViewDelegate> delegate;
+@property(weak, nonatomic) id<PestoSideContentViewDelegate> delegate;
 
 @end
 
@@ -102,6 +119,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
   UILabel *name = [[UILabel alloc] initWithFrame:nameRect];
   name.text = @"Jonathan";
   name.font = [MDCTypography titleFont];
+  name.alpha = [MDCTypography titleFontOpacity];
   name.textAlignment = NSTextAlignmentCenter;
   [self addSubview:name];
 
@@ -149,7 +167,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return _titles.count;
+  return (NSInteger)self.titles.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -158,7 +176,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"PestoSideViewCollectionViewCell"
                                                 forIndexPath:indexPath];
   NSInteger itemNum = indexPath.row;
-  cell.title = _titles[itemNum];
+  cell.title = self.titles[(NSUInteger)itemNum];
   // Show settings item as enabled.
   if ([cell.title isEqualToString:@"Settings"]) {
     cell.titleColor = [UIColor blackColor];
@@ -173,14 +191,20 @@ static NSString *const kPestoSideViewWidthBaseURL =
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   if (self.delegate &&
       [self.delegate respondsToSelector:@selector(sideContentView:didSelectItemWithTitle:)]) {
-    [self.delegate sideContentView:self didSelectItemWithTitle:_titles[[indexPath row]]];
+    [self.delegate sideContentView:self
+            didSelectItemWithTitle:_titles[(NSUInteger)[indexPath row]]];
   }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  return CGSizeMake(collectionView.bounds.size.width, 40.f);
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+  CGFloat sizeOffset = 0;
+  if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
+    sizeOffset += [(UICollectionViewFlowLayout *)collectionViewLayout sectionInset].left +
+                  [(UICollectionViewFlowLayout *)collectionViewLayout sectionInset].right;
+  }
+  return CGSizeMake(collectionView.bounds.size.width - sizeOffset, 40.f);
 }
 
 @end
@@ -233,7 +257,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
       delay:0
       options:UIViewAnimationOptionCurveEaseOut
       animations:^{
-        _contentView.transform = [PestoSideView showTransform];
+        self.contentView.transform = [PestoSideView showTransform];
       }
       completion:^(BOOL finished){
 
@@ -245,7 +269,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
       delay:0
       options:UIViewAnimationOptionCurveEaseOut
       animations:^{
-        _contentView.transform = [PestoSideView hideTransform];
+        self.contentView.transform = [PestoSideView hideTransform];
       }
       completion:^(BOOL finished) {
         self.hidden = YES;
@@ -259,7 +283,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
        shouldReceiveTouch:(UITouch *)touch {
-  if ([touch.view isDescendantOfView:_contentView]) {
+  if ([touch.view isDescendantOfView:self.contentView]) {
     return ![gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]];
   }
   return YES;
@@ -270,17 +294,17 @@ static NSString *const kPestoSideViewWidthBaseURL =
   CGFloat xCoordinate = tappedPoint.x;
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan:
-      _xStart = xCoordinate;
+      self.xStart = xCoordinate;
       break;
     case UIGestureRecognizerStateChanged:
-      _xDelta = kPestoSideViewWidth - (_xStart - xCoordinate);
-      if (_xDelta > kPestoSideViewWidth) {
-        _xDelta = kPestoSideViewWidth;
+      self.xDelta = kPestoSideViewWidth - (self.xStart - xCoordinate);
+      if (self.xDelta > kPestoSideViewWidth) {
+        self.xDelta = kPestoSideViewWidth;
       }
-      _contentView.transform = CGAffineTransformMakeTranslation(_xDelta, 0);
+      self.contentView.transform = CGAffineTransformMakeTranslation(self.xDelta, 0);
       break;
     case UIGestureRecognizerStateEnded:
-      if (_xDelta > kPestoSideViewWidth - kPestoSideViewHideThreshhold) {
+      if (self.xDelta > kPestoSideViewWidth - kPestoSideViewHideThreshhold) {
         [self showSideView];
       } else {
         [self hideSideView];
@@ -301,7 +325,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
 #pragma mark - PestoSideContentViewDelegate
 
 - (void)sideContentView:(PestoSideContentView *)sideContentView
- didSelectItemWithTitle:(NSString *)title {
+    didSelectItemWithTitle:(NSString *)title {
   if (self.delegate) {
     if ([title isEqualToString:@"Settings"] &&
         [self.delegate respondsToSelector:@selector(sideViewDidSelectSettings:)]) {

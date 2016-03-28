@@ -1,10 +1,26 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 import UIKit
 
 class ShrineCollectionViewController: UICollectionViewController {
 
   var headerViewController:MDCFlexibleHeaderViewController!
-  var remoteImageService = RemoteImageService()
   private let shrineData:ShrineData
+  private var headerContentView = ShrineHeaderContentView(frame: CGRectZero)
 
   override init(collectionViewLayout layout: UICollectionViewLayout) {
     self.shrineData = ShrineData()
@@ -22,38 +38,22 @@ class ShrineCollectionViewController: UICollectionViewController {
     return 1
   }
 
-  override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  override func collectionView(collectionView: UICollectionView,
+                               numberOfItemsInSection section: Int) -> Int {
     return self.shrineData.titles.count
   }
 
-  override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  override func collectionView(collectionView: UICollectionView,
+                               cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ShrineCollectionViewCell", forIndexPath: indexPath) as! ShrineCollectionViewCell
     let itemNum:NSInteger = indexPath.row;
-    cell.title = self.shrineData.titles[itemNum] as! String
-    cell.shopTitle = self.shrineData.shopTitles[itemNum] as! String
-    cell.price = self.shrineData.prices[itemNum] as! String
 
+    let title = self.shrineData.titles[itemNum] as! String
     let imageName = self.shrineData.imageNames[itemNum] as! String
-    let urlString:String = ShrineData.baseURL + imageName
-    let url = NSURL(string: urlString)
-    remoteImageService.fetchImageAndThumbnailFromURL(url) { (image:UIImage!,
-      thumbnailImage:UIImage!) -> Void in
-      dispatch_async(dispatch_get_main_queue(), {
-        cell.imageView.image = thumbnailImage
-        cell.imageView.setNeedsDisplay()
-      })
-    }
-
-    let avatarName = self.shrineData.avatars[itemNum] as! String
-    let avatarURLString:String = ShrineData.baseURL + avatarName
-    let avatarURL = NSURL(string: avatarURLString)
-    remoteImageService.fetchImageAndThumbnailFromURL(avatarURL) { (image:UIImage!,
-      thumbnailImage:UIImage!) -> Void in
-      dispatch_async(dispatch_get_main_queue(), {
-        cell.avatar.image = image
-        cell.avatar.setNeedsDisplay()
-      })
-    }
+    let avatar = self.shrineData.avatars[itemNum] as! String
+    let shopTitle = self.shrineData.shopTitles[itemNum] as! String
+    let price = self.shrineData.prices[itemNum] as! String
+    cell.populateCell(title, imageName:imageName, avatar:avatar, shopTitle:shopTitle, price:price)
 
     return cell
   }
@@ -61,11 +61,13 @@ class ShrineCollectionViewController: UICollectionViewController {
   func collectionView(collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-      let cellDim = floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5);
-      return CGSizeMake(cellDim, cellDim);
+      let cellWidth = floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5);
+      let cellHeight = cellWidth * 1.2
+      return CGSizeMake(cellWidth, cellHeight);
   }
 
-  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+  override func collectionView(collectionView: UICollectionView,
+                               didSelectItemAtIndexPath indexPath: NSIndexPath) {
     let itemNum:NSInteger = indexPath.row;
 
     let detailVC = ShrineDetailViewController()
@@ -78,20 +80,59 @@ class ShrineCollectionViewController: UICollectionViewController {
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
     headerViewController.scrollViewDidScroll(scrollView);
+    let scrollOffsetY = scrollView.contentOffset.y;
+    let duration = 0.5
+    if (scrollOffsetY > -240) {
+      UIView.animateWithDuration(duration, animations: {
+        self.headerContentView.scrollView.alpha = 0
+        self.headerContentView.pageControl.alpha = 0
+        self.headerContentView.logoImageView.alpha = 0
+        self.headerContentView.logoTextImageView.alpha = 1
+      })
+    } else {
+      UIView.animateWithDuration(duration, animations: {
+        self.headerContentView.scrollView.alpha = 1
+        self.headerContentView.pageControl.alpha = 1
+        self.headerContentView.logoImageView.alpha = 1
+        self.headerContentView.logoTextImageView.alpha = 0
+      })
+    }
+  }
+
+  func sizeHeaderView() {
+    let headerView = headerViewController.headerView
+    let bounds = UIScreen.mainScreen().bounds
+    if (bounds.size.width < bounds.size.height) {
+      headerView.maximumHeight = 440;
+      headerView.minimumHeight = 72;
+    } else {
+      headerView.maximumHeight = 72;
+      headerView.minimumHeight = 72;
+    }
+  }
+
+  override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation:UIInterfaceOrientation, duration: NSTimeInterval) {
+    sizeHeaderView()
+    collectionView?.collectionViewLayout.invalidateLayout()
+  }
+
+  override func viewWillAppear(animated: Bool) {
+    sizeHeaderView()
+    collectionView?.collectionViewLayout.invalidateLayout()
   }
 
   func setupHeaderView() {
     let headerView = headerViewController.headerView
     headerView.trackingScrollView = collectionView
-    headerView.maximumHeight = 280;
-    headerView.minimumHeight = 240;
+    headerView.maximumHeight = 440;
+    headerView.minimumHeight = 72;
     headerView.contentView?.backgroundColor = UIColor.whiteColor()
     headerView.contentView?.layer.masksToBounds = true
     headerView.contentView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
-    let contentView = ShrineHeaderContentView(frame:(headerView.contentView?.frame)!)
-    contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    headerView.contentView?.addSubview(contentView)
+    headerContentView.frame = (headerView.contentView?.frame)!
+    headerContentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    headerView.contentView?.addSubview(headerContentView)
   }
 
 }

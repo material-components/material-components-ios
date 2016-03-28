@@ -26,6 +26,11 @@ static inline CGPoint MDCInkLayerInterpolatePoint(CGPoint start,
   return centerOffsetPoint;
 }
 
+static inline CGFloat MDCInkLayerRandom() {
+  const uint32_t max_value = 10000;
+  return (CGFloat)arc4random_uniform(max_value + 1) / max_value;
+}
+
 static inline CGPoint MDCInkLayerRectGetCenter(CGRect rect) {
   return CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
 }
@@ -72,7 +77,6 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   self = [super init];
   if (self) {
     _rippleState = kMDCInkRippleNone;
-    _color = [UIColor colorWithWhite:0 alpha:0.06f];
   }
   return self;
 }
@@ -138,42 +142,48 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @end
 
-static CGFloat const kMDCInkLayerBoundedPositionExitDuration = 0.4f;
-static CGFloat const kMDCInkLayerBoundedOpacityExitDuration = 0.4f;
-static CGFloat const kMDCInkLayerUnboundedExitAdjustedDuration = 0.15f;
-static CGFloat const kMDCInkLayerPositionConstantDuration = 0.5f;
-static CGFloat const kMDCInkLayerRadiusGrowthMultiplier = 350.f;
-static CGFloat const kMDCInkLayerWaveTouchDownAcceleration = 1024.f;
-static CGFloat const kMDCInkLayerWaveTouchUpAcceleration = 3400.f;
-static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
+static CGFloat const kMDCInkLayerForegroundBoundedOpacityExitDuration = 0.4f;
+static CGFloat const kMDCInkLayerForegroundBoundedPositionExitDuration = 0.3f;
+static CGFloat const kMDCInkLayerForegroundBoundedRadiusExitDuration = 0.8f;
+static CGFloat const kMDCInkLayerForegroundRadiusGrowthMultiplier = 350.f;
+static CGFloat const kMDCInkLayerForegroundUnboundedEnterDelay = 0.08f;
+static CGFloat const kMDCInkLayerForegroundUnboundedOpacityEnterDuration = 0.12f;
+static CGFloat const kMDCInkLayerForegroundWaveTouchDownAcceleration = 1024.f;
+static CGFloat const kMDCInkLayerForegroundWaveTouchUpAcceleration = 3400.f;
 static NSString *const kMDCInkLayerForegroundOpacityAnim = @"foregroundOpacityAnim";
 static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPositionAnim";
+static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 @interface MDCInkLayerForegroundRipple : MDCInkLayerRipple
 
-@property(nonatomic, strong) CAKeyframeAnimation *foregroundScaleAnim;
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundOpacityAnim;
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundPositionAnim;
+@property(nonatomic, strong) CAKeyframeAnimation *foregroundScaleAnim;
 
 @end
 
 @implementation MDCInkLayerForegroundRipple
 
+- (void)setupRipple {
+  CGFloat random = MDCInkLayerRandom();
+  self.radius = (CGFloat)(0.9f + random * 0.1f) * kMDCInkLayerForegroundRadiusGrowthMultiplier;
+  [super setupRipple];
+}
+
 - (void)enter {
   [super enter];
 
   if (self.bounded) {
-    CGFloat random = (CGFloat)arc4random() / ULONG_MAX;
-    self.radius = (CGFloat)(0.9f + random * 0.1f) * kMDCInkLayerRadiusGrowthMultiplier;
-
     _foregroundOpacityAnim = [self opacityAnimWithValues:@[ @0 ] times:@[ @0 ]];
     _foregroundScaleAnim = [self scaleAnimWithValues:@[ @0 ] times:@[ @0 ]];
   } else {
     _foregroundOpacityAnim = [self opacityAnimWithValues:@[ @0, @1 ] times:@[ @0, @1 ]];
+    _foregroundOpacityAnim.duration = kMDCInkLayerForegroundUnboundedOpacityEnterDuration;
 
-    CGFloat duration = (CGFloat)sqrt(self.radius / kMDCInkLayerWaveTouchDownAcceleration) +
-                       kMDCInkLayerPositionConstantDuration;
-    _foregroundScaleAnim = [self scaleAnimWithValues:@[ @0, @1 ] times:@[ @0, @1 ]];
+    CGFloat duration = (CGFloat)sqrt(self.radius / kMDCInkLayerForegroundWaveTouchDownAcceleration);
+    _foregroundScaleAnim =
+        [self scaleAnimWithValues:@[ @0, @1 ]
+                            times:@[ @(kMDCInkLayerForegroundUnboundedEnterDelay), @1 ]];
     _foregroundScaleAnim.duration = duration;
 
     CGFloat xOffset = self.targetFrame.origin.x - self.inkLayer.frame.origin.x;
@@ -186,9 +196,12 @@ static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPosition
     [movePath moveToPoint:startPoint];
     [movePath addLineToPoint:endPoint];
 
+    CAMediaTimingFunction *linearTimingFunction =
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     _foregroundPositionAnim = [self positionAnimWithPath:movePath.CGPath
                                                 duration:duration
-                                          timingFunction:[self logDecelerateEasing]];
+                                          timingFunction:linearTimingFunction];
+    _foregroundPositionAnim.keyTimes = @[ @(kMDCInkLayerForegroundUnboundedEnterDelay), @1 ];
     [self addAnimation:_foregroundPositionAnim forKey:kMDCInkLayerForegroundPositionAnim];
   }
   [self addAnimation:_foregroundOpacityAnim forKey:kMDCInkLayerForegroundOpacityAnim];
@@ -200,8 +213,7 @@ static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPosition
 
   if (self.bounded) {
     _foregroundOpacityAnim.values = @[ @1, @0 ];
-    _foregroundScaleAnim.values = @[ @0, @1 ];
-    _foregroundScaleAnim.keyTimes = @[ @0, @1 ];
+    _foregroundOpacityAnim.duration = kMDCInkLayerForegroundBoundedOpacityExitDuration;
 
     // Bounded ripples move slightly towards the center of the tap target. Unbounded ripples
     // move to the center of the tap target.
@@ -215,25 +227,28 @@ static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPosition
     startPoint = CGPointMake(self.point.x + xOffset, self.point.y + yOffset);
     CGPoint endPoint = MDCInkLayerRectGetCenter(self.targetFrame);
     endPoint = CGPointMake(endPoint.x + xOffset, endPoint.y + yOffset);
-    CGPoint centerOffsetPoint = MDCInkLayerInterpolatePoint(startPoint, endPoint, 0.7f);
+    CGPoint centerOffsetPoint = MDCInkLayerInterpolatePoint(startPoint, endPoint, 0.3f);
     UIBezierPath *movePath = [UIBezierPath bezierPath];
     [movePath moveToPoint:startPoint];
     [movePath addLineToPoint:centerOffsetPoint];
 
-    _foregroundPositionAnim = [self positionAnimWithPath:movePath.CGPath
-                                                duration:kMDCInkLayerBoundedPositionExitDuration
-                                          timingFunction:[self logDecelerateEasing]];
-    _foregroundOpacityAnim.duration = kMDCInkLayerBoundedOpacityExitDuration;
-    [self addAnimation:_foregroundPositionAnim forKey:kMDCInkLayerForegroundPositionAnim];
+    _foregroundPositionAnim =
+        [self positionAnimWithPath:movePath.CGPath
+                          duration:kMDCInkLayerForegroundBoundedPositionExitDuration
+                    timingFunction:[self logDecelerateEasing]];
+    _foregroundScaleAnim.values = @[ @0, @1 ];
+    _foregroundScaleAnim.keyTimes = @[ @0, @1 ];
+    _foregroundScaleAnim.duration = kMDCInkLayerForegroundBoundedRadiusExitDuration;
   } else {
-    _foregroundOpacityAnim.values = @[ @1, @0 ];
     NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kMDCInkLayerOpacity];
     if (!opacityVal) {
       opacityVal = [NSNumber numberWithFloat:0];
     }
+    CGFloat adjustedDuration = kMDCInkLayerForegroundBoundedPositionExitDuration;
     CGFloat normOpacityVal = opacityVal.floatValue;
     CGFloat opacityDuration = normOpacityVal / 3.f;
-    _foregroundOpacityAnim.duration = opacityDuration + kMDCInkLayerUnboundedExitAdjustedDuration;
+    _foregroundOpacityAnim.values = @[ opacityVal, @0 ];
+    _foregroundOpacityAnim.duration = opacityDuration + adjustedDuration;
 
     NSNumber *scaleVal = [self.presentationLayer valueForKeyPath:kMDCInkLayerScale];
     if (!scaleVal) {
@@ -241,10 +256,11 @@ static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPosition
     }
     CGFloat unboundedDuration =
         (CGFloat)sqrt(((1.f - scaleVal.floatValue) * self.radius) /
-                      (kMDCInkLayerWaveTouchDownAcceleration +
-                       kMDCInkLayerWaveTouchUpAcceleration));
-    _foregroundScaleAnim.duration = unboundedDuration;
+                      (kMDCInkLayerForegroundWaveTouchDownAcceleration +
+                       kMDCInkLayerForegroundWaveTouchUpAcceleration));
+    _foregroundPositionAnim.duration = unboundedDuration + adjustedDuration;
     _foregroundScaleAnim.values = @[ scaleVal, @1 ];
+    _foregroundScaleAnim.duration = unboundedDuration + adjustedDuration;
   }
 
   _foregroundOpacityAnim.keyTimes = @[ @0, @1 ];
@@ -253,15 +269,22 @@ static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPosition
   } else {
     _foregroundOpacityAnim.delegate = self;
   }
+
+  _foregroundOpacityAnim.timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  _foregroundPositionAnim.timingFunction = [self logDecelerateEasing];
+  _foregroundScaleAnim.timingFunction = [self logDecelerateEasing];
+
   [self addAnimation:_foregroundOpacityAnim forKey:kMDCInkLayerForegroundOpacityAnim];
+  [self addAnimation:_foregroundPositionAnim forKey:kMDCInkLayerForegroundPositionAnim];
   [self addAnimation:_foregroundScaleAnim forKey:kMDCInkLayerForegroundScaleAnim];
 }
 
 @end
 
 static CGFloat const kMDCInkLayerBackgroundOpacityEnterDuration = 0.6f;
-static CGFloat const kMDCInkLayerBaseOpacityExitDuration = 0.48f;
-static CGFloat const kMDCInkLayerFastEnterDuration = 0.12f;
+static CGFloat const kMDCInkLayerBackgroundBaseOpacityExitDuration = 0.48f;
+static CGFloat const kMDCInkLayerBackgroundFastEnterDuration = 0.12f;
 static NSString *const kMDCInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
 
 @interface MDCInkLayerBackgroundRipple : MDCInkLayerRipple
@@ -285,10 +308,11 @@ static NSString *const kMDCInkLayerBackgroundOpacityAnim = @"backgroundOpacityAn
   if (!opacityVal) {
     opacityVal = [NSNumber numberWithFloat:0];
   }
-  CGFloat duration = kMDCInkLayerBaseOpacityExitDuration;
+  CGFloat duration = kMDCInkLayerBackgroundBaseOpacityExitDuration;
   if (self.bounded) {
     // The end (tap release) animation should continue at the opacity level of the start animation.
-    CGFloat enterDuration = (1 - opacityVal.floatValue / 1) * kMDCInkLayerFastEnterDuration;
+    CGFloat enterDuration =
+        (1 - opacityVal.floatValue / 1) * kMDCInkLayerBackgroundFastEnterDuration;
     duration += enterDuration;
     _backgroundOpacityAnim =
         [self opacityAnimWithValues:@[ opacityVal, @1, @0 ]

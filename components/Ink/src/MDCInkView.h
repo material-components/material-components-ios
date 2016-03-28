@@ -19,8 +19,39 @@
 /** Completion block signature for all ink animations. */
 typedef void (^MDCInkCompletionBlock)();
 
-/** A UIView that draws and animates the material design ink effect. */
+/** Ink styles. */
+typedef NS_ENUM(NSInteger, MDCInkStyle) {
+  MDCInkStyleBounded,  /** Ink is clipped to the view's bounds. */
+  MDCInkStyleUnbounded /** Ink is not clipped to the view's bounds. */
+};
+
+/**
+ A UIView that draws and animates the material design ink effect for touch interactions.
+
+ There are two kinds of ink:
+
+ Bounded ink: Ink that spreads from a point and is contained in the bounds of a UI element such as a
+ button. The ink is visually clipped to the bounds of the UI element. Bounded ink is the most
+ commonly-used ink in the system. Examples include basic material buttons, list menu items, and tile
+ grids.
+
+ Unbounded ink: Ink that spreads out from a point "on top" of other UI elements. It typically
+ reaches a maximum circle radius and then fades, unclipped by other UI elements. Typically used
+ when interacting with small UI elements such as navigation bar icons or slider "thumb" controls.
+ Examples include overflow menus, icon toggle buttons, and phone dialer keys.
+
+ Note that the two kinds of ink are designed to have different animation parameters, that is,
+ bounded ink isn't just clipped unbounded ink. Whether the ink is bounded or not depends on the kind
+ of UI element the user is interacting with.
+ */
 @interface MDCInkView : UIView
+
+/**
+ The style of ink for this view. Defaults to MDCInkStyleBounded.
+
+ Changes only affect subsequent animations, not animations in progress.
+ */
+@property(nonatomic, assign) MDCInkStyle inkStyle;
 
 /** The foreground color of the ink. The default value is defaultInkColor. */
 @property(nonatomic, strong, null_resettable) UIColor *inkColor;
@@ -29,22 +60,10 @@ typedef void (^MDCInkCompletionBlock)();
 @property(nonatomic, strong, readonly, nonnull) UIColor *defaultInkColor;
 
 /**
- Maximum radius of the ink. If the radius <= 0 then the hypotenuse of self.bounds is used.
+ Maximum radius of the ink. If the radius <= 0 then half the length of the diagonal of self.bounds
+ is used.
  */
 @property(nonatomic, assign) CGFloat maxRippleRadius;
-
-/**
- Should fill background on spreading.
-
- Set to YES if using the ink in borderless views. Default is YES.
- */
-@property(nonatomic, assign) BOOL fillsBackgroundOnSpread;
-
-/** Whether to clip ink ripple to bounds. Defaults to YES. */
-@property(nonatomic, assign) BOOL clipsRippleToBounds;
-
-/** Gravitate ink to the center of the view. Default is YES. */
-@property(nonatomic, assign) BOOL gravitatesInk;
 
 /**
  Use a custom center for the ink splash. If YES, then customInkCenter is used, otherwise the
@@ -60,39 +79,47 @@ typedef void (^MDCInkCompletionBlock)();
 @property(nonatomic, assign) CGPoint customInkCenter;
 
 /**
- Reset any ink applied to the view without animation. See evaporateWithCompletion: and
- evaporateToPoint:completion: for animated versions.
- */
-- (void)reset;
+ Start the first part of the "press and release" animation at a particular point.
 
-/**
- Spreads the ink over the whole view.
+ The "press and release" animation begins by fading in the ink ripple when this method is called.
 
- Can be called multiple times which will result in multiple ink splashes. Each splash will exist
- until one of the evaporate* methods are called.
-
+ @param point The user interaction position in the view’s coordinate system.
  @param completionBlock Block called after the completion of the animation.
- @param point Point from which the ink spreads in the view’s coordinate system.
  */
-- (void)spreadFromPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock;
+- (void)startTouchBeganAnimationAtPoint:(CGPoint)point
+                             completion:(nullable MDCInkCompletionBlock)completionBlock;
 
 /**
- Dissipate the last ink splash; should be called on touch up.
+ Start the second part of the "press and release" animation at a particular point.
 
- If there are multiple ripples at once, the oldest ripple will be evaporated.
+ The "press and release" animation ends by completing the ink ripple expansion while fading out when
+ this method is called.
 
- @param completionBlock Block called after the completion of the evaporation.
+ @param point The user interaction position in the view’s coordinate system.
+ @param completionBlock Block called after the completion of the animation.
  */
-- (void)evaporateWithCompletion:(nullable MDCInkCompletionBlock)completionBlock;
+- (void)startTouchEndedAnimationAtPoint:(CGPoint)point
+                             completion:(nullable MDCInkCompletionBlock)completionBlock;
 
 /**
- Dissipates the last ink splash while condensing down to a point. Used for touch exit or cancel.
+ Cancel all animations.
 
- If there are multiple ripples, the oldest ripple will be evaporated.
-
- @param point Evaporate the ink towards the point.
- @param completionBlock Block called after the completion of the evaporation.
+ @param animated If false, remove the animations immediately.
  */
-- (void)evaporateToPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock;
+- (void)cancelAllAnimationsAnimated:(BOOL)animated;
 
+#pragma mark - Deprecated
+
+@property(nonatomic, assign) BOOL fillsBackgroundOnSpread
+    __deprecated_msg("Use MDCInkViewStyle instead.");
+@property(nonatomic, assign) BOOL clipsRippleToBounds
+    __deprecated_msg("Use MDCInkViewStyle instead.");
+@property(nonatomic, assign) BOOL gravitatesInk __deprecated_msg("No replacement available.");
+- (void)reset __deprecated_msg("Use cancelAllAnimationsAnimated: intead.");
+- (void)spreadFromPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock
+    __deprecated_msg("Use startTouchBeganAnimationAtPoint:completion: instead.");
+- (void)evaporateWithCompletion:(nullable MDCInkCompletionBlock)completionBlock
+    __deprecated_msg("Use startTouchEndedAnimationAtPoint:completion: instead.");
+- (void)evaporateToPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock
+    __deprecated_msg("Use startTouchEndedAnimationAtPoint:completion: instead.");
 @end

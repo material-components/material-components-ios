@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import UIKit
+import MaterialComponents
 
 class Node {
   let title: String
@@ -28,13 +29,18 @@ class Node {
   }
 }
 
-class NodeViewController: UITableViewController {
+class NodeViewController: UITableViewController, MDCAppBarParenting {
+  var navigationBar: MDCNavigationBar?
+  var headerStackView: MDCHeaderStackView?
+  var headerViewController: MDCFlexibleHeaderViewController?
   let node: Node
 
   init(node: Node) {
     self.node = node
     super.init(nibName: nil, bundle: nil)
     self.title = self.node.title
+    MDCAppBarPrepareParent(self)
+    self.headerViewController!.headerView.backgroundColor = UIColor.whiteColor()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -42,13 +48,67 @@ class NodeViewController: UITableViewController {
     super.init(coder: aDecoder)
   }
 
+  override func viewDidLoad() {
+    self.headerViewController!.headerView.trackingScrollView = self.tableView
+    MDCAppBarAddViews(self);
+  }
+
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
 
     // Sort alphabetically.
     self.node.children = self.node.children.sort {
       $0.title < $1.title
+    }
+  }
+
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+
+    if !self.isMovingFromParentViewController() {
+      var isPushingHeaderViewController = false
+      for childVc in self.navigationController!.topViewController!.childViewControllers {
+        if childVc.isKindOfClass(MDCFlexibleHeaderViewController.self) {
+          isPushingHeaderViewController = true
+          break
+        }
+      }
+      if !isPushingHeaderViewController {
+        // Unhide the navigation bar then.
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+      }
+    }
+  }
+
+  // MARK: UIScrollViewDelegate
+
+  override func scrollViewDidScroll(scrollView: UIScrollView) {
+    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
+      self.headerViewController!.headerView.trackingScrollViewDidScroll()
+    }
+  }
+
+  override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
+      self.headerViewController!.headerView.trackingScrollViewDidEndDecelerating()
+    }
+  }
+
+  override func scrollViewDidEndDragging(scrollView: UIScrollView,
+                                         willDecelerate decelerate: Bool) {
+    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
+      let headerView = self.headerViewController!.headerView
+      headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+    }
+  }
+
+  override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint,
+                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
+      let headerView = self.headerViewController!.headerView
+      headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity,
+          targetContentOffset: targetContentOffset)
     }
   }
 
@@ -58,7 +118,8 @@ class NodeViewController: UITableViewController {
     return node.children.count
   }
 
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->
+    UITableViewCell {
     var cell = tableView.dequeueReusableCellWithIdentifier("cell")
     if cell == nil {
       cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")

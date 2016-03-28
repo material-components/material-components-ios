@@ -1,9 +1,26 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import "PestoSettingsViewController.h"
 
+#import "MaterialAppBar.h"
 #import "MaterialSwitch.h"
 #import "MaterialTypography.h"
 
-static CGFloat kPestoSettingsTableViewOffsetTop = 10.f;
+static CGFloat kPestoSettingsTableViewOffsetTop = 0.f;
 
 static NSString *const kPestoSettingsTableViewCellReuseIdentifier = @"PestoSettingsTableViewCell";
 static NSString *const kPestoSettingsTableViewHeaderViewReuseIdentifier =
@@ -13,7 +30,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
 @interface PestoSettingsTableViewCell : UITableViewCell
 
-@property(nonatomic) NSString *labelText;
+@property(nonatomic, copy) NSString *labelText;
 @property(nonatomic) BOOL on;
 
 @end
@@ -40,13 +57,13 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 }
 
 - (void)setLabelText:(NSString *)labelText {
-  _labelText = labelText;
+  _labelText = [labelText copy];
   self.textLabel.text = _labelText;
 }
 
 - (void)setOn:(BOOL)on {
   _on = on;
-  _switchView.on = on;
+  self.switchView.on = on;
 }
 
 @end
@@ -85,21 +102,21 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   [super layoutSubviews];
   CGFloat borderBottomYPos = CGRectGetMaxY(self.contentView.bounds) -
                              kPestoSettingsTableViewHeaderSeparatorWidth;
-  _separator.frame = CGRectMake(0,
-                                borderBottomYPos,
-                                CGRectGetWidth(self.contentView.bounds),
-                                kPestoSettingsTableViewHeaderSeparatorWidth);
+  self.separator.frame = CGRectMake(0,
+                                    borderBottomYPos,
+                                    CGRectGetWidth(self.contentView.bounds),
+                                    kPestoSettingsTableViewHeaderSeparatorWidth);
   self.backgroundView.frame = self.bounds;
 }
 
 - (void)setSeparatorColor:(UIColor *)separatorColor {
   _separatorColor = separatorColor;
-  _separator.backgroundColor = _separatorColor.CGColor;
+  self.separator.backgroundColor = self.separatorColor.CGColor;
 }
 
 @end
 
-@interface PestoSettingsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface PestoSettingsViewController () <UITableViewDataSource, UITableViewDelegate, MDCAppBarParenting>
 
 @property(nonatomic) NSArray *dummySettingHeaders;
 @property(nonatomic) NSArray *dummySettingTitles;
@@ -110,64 +127,91 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
 @implementation PestoSettingsViewController
 
+#pragma mark - MDCAppBarParenting properties
+
+@synthesize navigationBar;
+@synthesize headerStackView;
+@synthesize headerViewController;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    MDCAppBarPrepareParent(self);
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  _dummySettingHeaders = @[ @"Account", @"Notification" ];
-  _dummySettingTitles = @[ @[ @"Public Profile", @"Subscribe to Daily Digest" ],
-                           @[ @"Get email notifications", @"Get text notifications" ] ];
-  _dummySettingVals = @[ @[ @YES, @NO ], @[ @NO, @YES ] ];
+  self.dummySettingHeaders = @[ @"Account", @"Notification" ];
+  self.dummySettingTitles = @[ @[ @"Public Profile", @"Subscribe to Daily Digest" ],
+                               @[ @"Get email notifications", @"Get text notifications" ] ];
+  self.dummySettingVals = @[ @[ @YES, @NO ], @[ @NO, @YES ] ];
 
   CGRect settingsTableViewFrame =
       CGRectMake(0,
                  kPestoSettingsTableViewOffsetTop,
                  self.view.bounds.size.width,
                  self.view.bounds.size.height - kPestoSettingsTableViewOffsetTop);
-  _settingsTableView = [[UITableView alloc] initWithFrame:settingsTableViewFrame
-                                                    style:UITableViewStylePlain];
-  _settingsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  _settingsTableView.allowsSelection = NO;
-  _settingsTableView.backgroundColor = self.view.backgroundColor;
-  _settingsTableView.dataSource = self;
-  _settingsTableView.delegate = self;
-  _settingsTableView.separatorColor = [[self class] tableViewSeparatorColor];
+  self.settingsTableView = [[UITableView alloc] initWithFrame:settingsTableViewFrame
+                                                        style:UITableViewStylePlain];
+  self.settingsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  self.settingsTableView.allowsSelection = NO;
+  self.settingsTableView.backgroundColor = self.view.backgroundColor;
+  self.settingsTableView.dataSource = self;
+  self.settingsTableView.delegate = self;
+  self.settingsTableView.separatorColor = [[self class] tableViewSeparatorColor];
   // Ensure empty rows are not shown.
-  _settingsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+  self.settingsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
-  [_settingsTableView registerClass:[PestoSettingsTableViewCell class]
-             forCellReuseIdentifier:kPestoSettingsTableViewCellReuseIdentifier];
-  [_settingsTableView registerClass:[PestoSettingsTableViewHeaderView class]
+  [self.settingsTableView registerClass:[PestoSettingsTableViewCell class]
+                 forCellReuseIdentifier:kPestoSettingsTableViewCellReuseIdentifier];
+  [self.settingsTableView registerClass:[PestoSettingsTableViewHeaderView class]
       forHeaderFooterViewReuseIdentifier:kPestoSettingsTableViewHeaderViewReuseIdentifier];
 
-  [_settingsTableView reloadData];
+  [self.settingsTableView reloadData];
 
-  [self.view addSubview:_settingsTableView];
+  [self.view addSubview:self.settingsTableView];
+
+  MDCAppBarAddViews(self);
+  UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1.f];
+  self.headerViewController.view.backgroundColor = teal;
+  self.headerViewController.headerView.trackingScrollView = self.settingsTableView;
+  self.headerViewController.headerView.tintColor = [UIColor whiteColor];
+
+  // This app has a forced-hidden status bar. The headerView needs to compensate.
+  self.headerViewController.headerView.maximumHeight -= 20;
+  self.headerViewController.headerView.minimumHeight -= 20;
 }
 
 + (UIColor *)tableViewSeparatorColor {
-  return [UIColor colorWithWhite:0.f alpha:0.1f];
+  return [UIColor colorWithWhite:0 alpha:0.1f];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return [_dummySettingHeaders count];
+  return (NSInteger)[self.dummySettingHeaders count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [(NSArray *)_dummySettingTitles[section] count];
+  return (NSInteger)[(NSArray *)self.dummySettingTitles[(NSUInteger)section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  NSString *settingLabel = _dummySettingTitles[indexPath.section][indexPath.row];
+  NSString *settingLabel =
+      self.dummySettingTitles[(NSUInteger)indexPath.section][(NSUInteger)indexPath.row];
+
   PestoSettingsTableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:kPestoSettingsTableViewCellReuseIdentifier
                                       forIndexPath:indexPath];
   cell.labelText = settingLabel;
-  cell.on = [_dummySettingVals[indexPath.section][indexPath.row] boolValue];
+  cell.on =
+      [self.dummySettingVals[(NSUInteger)indexPath.section][(NSUInteger)indexPath.row] boolValue];
 
   return cell;
 }
@@ -178,17 +222,17 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   NSString *reuseId = kPestoSettingsTableViewHeaderViewReuseIdentifier;
   PestoSettingsTableViewHeaderView *header =
       [tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseId];
-  header.textLabel.text = _dummySettingHeaders[section];
+  header.textLabel.text = _dummySettingHeaders[(NSUInteger)section];
   header.separatorColor = [[self class] tableViewSeparatorColor];
   return header;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  return 50.f;
+  return 50;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell
-forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
   if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
     [cell setSeparatorInset:UIEdgeInsetsZero];
   }
@@ -199,4 +243,34 @@ forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
   }
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView
+        trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView
+        trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                  targetContentOffset:targetContentOffset];
+  }
+}
 @end

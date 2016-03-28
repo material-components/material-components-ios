@@ -71,10 +71,10 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 /**
- * Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
- * and UINavigationItem.titleView are normally transferred to UINavigationController but we plan to
- * steal them away. In order to avoid crashing during KVO updates, we steal the view away and
- * replace it with a sandbag view.
+ Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
+ and UINavigationItem.titleView are normally transferred to UINavigationController but we plan to
+ steal them away. In order to avoid crashing during KVO updates, we steal the view away and
+ replace it with a sandbag view.
  */
 @interface MDCNavigationBarSandbagView : UIView
 @end

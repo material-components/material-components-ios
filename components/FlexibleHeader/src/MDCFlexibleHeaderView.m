@@ -36,7 +36,7 @@ static const float kDefaultVisibleShadowOpacity = 0.4f;
 
 // This length defines the moment at which the shadow will be fully visible as the header shifts
 // on-screen.
-static const float kShadowScaleLength = 8;
+static const CGFloat kShadowScaleLength = 8;
 
 // Duration of the UIKit animation that occurs when changing the tracking scroll view.
 static const NSTimeInterval kTrackingScrollViewDidChangeAnimationDuration = 0.2;
@@ -511,20 +511,26 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     return;
   }
 
-  CGRect frame = self.frame;
-  CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
+  CGFloat frameBottomEdge;
 
-  float frameBottomEdge = (float)(CGRectGetMaxY(frame) + offsetWithoutInset);
+  CGRect frame = self.frame;
+
+  // Calculate the frame's bottom edge in visual relation to the tracking scroll view.
+  CGRect projectedFrame = [self convertRect:self.bounds toView:self.trackingScrollView.superview];
+  frameBottomEdge = (float)CGRectGetMaxY(projectedFrame);
+
+  CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
+  frameBottomEdge = (float)(frameBottomEdge + offsetWithoutInset);
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
 
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator);
 
-  float shadowIntensity;
+  CGFloat shadowIntensity;
   if (self.hidesStatusBarWhenCollapsed) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
     // weakest strength.
-    float accumulator =
-        MAX(0, MIN(kShadowScaleLength, (float)(_minimumHeight - boundedAccumulator)));
+    CGFloat accumulator =
+        MAX(0, MIN(kShadowScaleLength, _minimumHeight - boundedAccumulator));
     if (self.isInFrontOfInfiniteContent) {
       // When in front of infinite content we only care to hide the shadow when our header is
       // off-screen.
@@ -544,9 +550,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     shadowIntensity = frameBottomEdge / kShadowScaleLength;
   }
   if (_defaultShadowLayer.hidden && _customShadowLayer.hidden) {
-    self.layer.shadowOpacity = _visibleShadowOpacity * shadowIntensity;
+    self.layer.shadowOpacity = (float)(_visibleShadowOpacity * shadowIntensity);
   } else {
-    _defaultShadowLayer.shadowOpacity = _visibleShadowOpacity * shadowIntensity;
+    _defaultShadowLayer.shadowOpacity = (float)(_visibleShadowOpacity * shadowIntensity);
   }
   _shadowIntensity = shadowIntensity;
   if (_shadowIntensityChangeBlock) {
@@ -760,7 +766,17 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [_trackingScrollView.panGestureRecognizer removeTarget:self
                                                   action:@selector(fhv_scrollViewDidPan:)];
   [trackingScrollView.panGestureRecognizer addTarget:self action:@selector(fhv_scrollViewDidPan:)];
-#endif
+
+#if 0   // TODO(featherless): https://github.com/google/material-components-ios/issues/214
+  // Verify existence of a delegate.
+  NSAssert(!trackingScrollView || trackingScrollView.delegate,
+           @"The provided tracking scroll view %@ has no delegate. Without a delegate, %@ will not"
+           @" be able to react to scroll events and may perform incorrectly."
+           @" This assertion will only fire in debug builds.",
+           NSStringFromClass([trackingScrollView class]),
+           NSStringFromClass([self class]));
+#endif  // #if 0
+#endif  // #if DEBUG
 
   // If this header is shared by many scroll views then we leave the insets when switching the
   // tracking scroll view.

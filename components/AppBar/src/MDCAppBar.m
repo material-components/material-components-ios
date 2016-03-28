@@ -20,6 +20,10 @@
 
 #import "MDCAppBar.h"
 
+#import "MDCAppBarContainerViewController.h"
+#import "private/MDCAppBarButtonBarBuilder.h"
+
+#import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
@@ -31,6 +35,7 @@ static const CGFloat kStatusBarHeight = 20;
 
 @interface MDCAppBarViewController : UIViewController
 
+@property(nonatomic, strong) MDCAppBarButtonBarBuilder *buttonItemBuilder;
 @property(nonatomic, strong) MDCHeaderStackView *headerStackView;
 @property(nonatomic, strong) MDCNavigationBar *navigationBar;
 
@@ -39,17 +44,91 @@ static const CGFloat kStatusBarHeight = 20;
 @implementation MDCAppBarViewController
 
 - (MDCHeaderStackView *)headerStackView {
-  [self loadViewIfNeeded];
+  if (![self isViewLoaded]) {
+    [self loadView];
+  }
   return _headerStackView;
 }
 
 - (MDCNavigationBar *)navigationBar {
-  [self loadViewIfNeeded];
+  if (![self isViewLoaded]) {
+    [self loadView];
+  }
   return _navigationBar;
+}
+
+- (UIViewController *)flexibleHeaderParentViewController {
+  NSAssert([self.parentViewController isKindOfClass:[MDCFlexibleHeaderViewController class]],
+           @"Expected the parent of %@ to be a type of %@",
+           NSStringFromClass([self class]),
+           NSStringFromClass([MDCFlexibleHeaderViewController class]));
+  return self.parentViewController.parentViewController;
+}
+
+- (UIBarButtonItem *)backButtonItem {
+  UIViewController *fhvParent = self.flexibleHeaderParentViewController;
+  UINavigationController *navigationController = fhvParent.navigationController;
+
+  NSArray *viewControllerStack = navigationController.viewControllers;
+
+  // This will be zero if there is no navigation controller, so a view controller which is not
+  // inside a navigation controller will be treated the same as a view controller at the root of a
+  // navigation controller
+  NSUInteger index = [viewControllerStack indexOfObject:fhvParent];
+
+  UIViewController *iterator = fhvParent;
+
+  // In complex cases it might actually be a parent of |fhvParent| which is on the nav stack.
+  while (index == NSNotFound && iterator && ![iterator isEqual:navigationController]) {
+    iterator = iterator.parentViewController;
+    index = [viewControllerStack indexOfObject:iterator];
+  }
+
+  if (index == NSNotFound) {
+    NSCAssert(NO, @"View controller not present in its own navigation controller.");
+    // This is not something which should ever happen, but just in case.
+    return nil;
+  }
+  if (index == 0) {
+    // The view controller is at the root of a navigation stack (or not in one).
+    return nil;
+  }
+  UIViewController *previousViewControler = navigationController.viewControllers[index - 1];
+  if ([previousViewControler isKindOfClass:[MDCAppBarContainerViewController class]]) {
+    // Special case: if the previous view controller is a container controller, use its content
+    // view controller.
+    MDCAppBarContainerViewController *chvc =
+        (MDCAppBarContainerViewController *)previousViewControler;
+    previousViewControler = chvc.contentViewController;
+  }
+  UIBarButtonItem *backBarButtonItem = previousViewControler.navigationItem.backBarButtonItem;
+  if (!backBarButtonItem) {
+    UIImage *backButtonImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_arrow_back]];
+    backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
+                                                         style:UIBarButtonItemStyleDone
+                                                        target:self
+                                                        action:@selector(didTapBackButton:)];
+  }
+  return backBarButtonItem;
+}
+
++ (NSBundle *)baseBundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    // We may not be included by the main bundle, but rather by an embedded framework, so figure out
+    // to which bundle our code is compiled, and use that as the starting point for bundle loading.
+    bundle = [NSBundle bundleForClass:[self class]];
+  });
+
+  return bundle;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  self.buttonItemBuilder = [MDCAppBarButtonBarBuilder new];
 
   self.headerStackView = [[MDCHeaderStackView alloc] initWithFrame:self.view.bounds];
   self.headerStackView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -57,7 +136,8 @@ static const CGFloat kStatusBarHeight = 20;
   self.navigationBar = [MDCNavigationBar new];
   self.headerStackView.topBar = self.navigationBar;
 
-  // TODO(featherless): Provide a leftButtonBarDelegate/rightButtonBarDelegate.
+  self.navigationBar.leftButtonBarDelegate = self.buttonItemBuilder;
+  self.navigationBar.rightButtonBarDelegate = self.buttonItemBuilder;
 
   [self.view addSubview:self.headerStackView];
 
@@ -83,6 +163,26 @@ static const CGFloat kStatusBarHeight = 20;
                                               metrics:@{ kStatusBarHeightKey : @(kStatusBarHeight) }
                                                 views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:verticalConstraints];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  UIBarButtonItem *backBarButtonItem = [self backButtonItem];
+  if (backBarButtonItem && !self.navigationBar.backItem) {
+    self.navigationBar.backItem = backBarButtonItem;
+  }
+}
+
+#pragma mark User actions
+
+- (void)didTapBackButton:(id)sender {
+  UIViewController *pvc = self.flexibleHeaderParentViewController;
+  if (pvc.navigationController && pvc.navigationController.viewControllers.count > 1) {
+    [pvc.navigationController popViewControllerAnimated:YES];
+  } else {
+    [pvc dismissViewControllerAnimated:YES completion:nil];
+  }
 }
 
 @end

@@ -17,59 +17,57 @@
 #import <UIKit/UIKit.h>
 
 /**
- * Animation view for loading in sprites.
- *
- * This control provides an alternative to animating an array of images with a UIImageView. Only
- * a single image composed of individual sprite frames is used, and animation simply consists of
- * updating the layer contentsRect.
- *
- * @ingroup MDCSpritedAnimationView
+ Animation view for loading in sprites.
+
+ This control provides an alternative to animating an array of images with a UIImageView. Only
+ a single image composed of individual sprite frames is used, and animation simply consists of
+ updating the layer contentsRect.
  */
 @interface MDCSpritedAnimationView : UIView
 
 /**
- * Optional tint color of the icon.
- *
- * If set to non-nil, the sprite sheet will be treated as an alpha mask and the color will be
- * applied.
+ Optional tint color of the icon.
+
+ If set to non-nil, the sprite sheet will be treated as an alpha mask and the color will be
+ applied.
  */
 @property(nonatomic, strong, nullable) UIColor *tintColor;
 
 /**
- * An image composed of a single column of individual sprite frames.
- *
- * Each sprite frame is assumed to be square.
+ An image composed of a single column of individual sprite frames.
+
+ Each sprite frame is assumed to be square.
  */
 @property(nonatomic, strong, nullable) UIImage *spriteSheetImage;
 
 /**
- * Framerate of the sprite playback in number of frames per second.
- *
- * Default is 60 frames per second.
+ Framerate of the sprite playback in number of frames per second.
+
+ Default is 60 frames per second.
  */
 @property(nonatomic, assign) NSInteger frameRate;
 
 /**
- * Number of times to repeat the animation.
- *
- * Setting to 0 means infinite. Default is 1.
+ Number of times to repeat the animation.
+
+ Setting to 0 means infinite. Default is 1.
  */
 @property(nonatomic, assign) NSInteger animationRepeatCount;
 
 /**
- * Returns whether the animation is playing.
- *
- * @return YES if the the sprite animation is playing.
+ Returns whether the animation is playing.
+
+ @return YES if the the sprite animation is playing.
  */
 @property(nonatomic, readonly, getter=isAnimating) BOOL animating;
 
 /**
- * Creates an animated sprite view.
- *
- * Designated initializer.
- *
- * @param spriteSheetImage A vertical sprite sheet of square images.
- * @return Initialized sprited animation view.
+ Creates an animated sprite view.
+
+ Designated initializer.
+
+ @param spriteSheetImage A vertical sprite sheet of square images.
+ @return Initialized sprited animation view.
  */
 - (nonnull instancetype)initWithSpriteSheetImage:
     (nullable UIImage *)spriteSheetImage NS_DESIGNATED_INITIALIZER;
@@ -78,11 +76,11 @@
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /**
- * Start the animation.
- *
- * Does nothing if the animation is already playing.
- *
- * @param completion Block called when transition completes.
+ Start the animation.
+
+ Does nothing if the animation is already playing.
+
+ @param completion Block called when transition completes.
  */
 - (void)startAnimatingWithCompletion:(nullable void (^)())completion;
 

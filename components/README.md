@@ -36,41 +36,75 @@ TODO: Choose links below.
 
 ## Components
 
-- [**Typography**
-  Text styles for Material Design fonts and opacities.
-  ](typography/)
+- [**AppBar**
+  A flexible navigation bar, designed to provide a typical Material navigation experience.
+  ](AppBar/)
+  <!--{: .icon-appbar }-->
 
-- [**Ink**
-  A visual ripple of ink expanding outward from the user’s touch.
-  ](ink/)
-
-- [**ShadowLayer**
-  A shadow which uses Material Design principles for visualizing depth.
-  ](shadowlayer/)
-
-- [**PageControl**
-  A drop-in Material Design replacement for UIPageControl.
-  ](pagecontrol/)
-
-- [**SpritedAnimationView**
-  An alternative to animating an array of images with an UIImageView.
-  ](spritedanimationview/)
-
-- [**Switch**
-  A Material Design on/off switch with an interface similar to UISwitch.
-  ](switch/)
-
-- [**Slider**
-  A Material Design control for selecting from a range of values.
-  ](slider/)
+- [**ButtonBar**
+  A view that facilitates the creation and layout of a horizontally-aligned list of buttons.
+  ](ButtonBar/)
+  <!--{: .icon-buttonbar }-->
 
 - [**Buttons**
   Material Design buttons, including a flat button, a raised button and a floating action button.
-  ](buttons/)
+  ](Buttons/)
+  <!--{: .icon-buttons }-->
+
+- [**Collections**
+  TODO Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  ](Collections/)
+  <!--{: .icon-collections }-->
 
 - [**FlexibleHeader**
   A container view whose height and vertical offset react to UIScrollViewDelegate events.
-  ](flexibleheader/)
+  ](FlexibleHeader/)
+  <!--{: .icon-flexibleheader }-->
+
+- [**HeaderStackView**
+  A view that coordinates the layout of two vertically-stacked bar views.
+  ](HeaderStackView/)
+  <!--{: .icon-headerstackview }-->
+
+- [**Ink**
+  A visual ripple of ink expanding outward from the user’s touch.
+  ](Ink/)
+  <!--{: .icon-ink }-->
+
+- [**NavigationBar**
+  A view composed of a left and right Button Bar and either a title label or a custom title view.
+  ](NavigationBar/)
+  <!--{: .icon-navigationbar }-->
+
+- [**PageControl**
+  A drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout.
+  ](PageControl/)
+  <!--{: .icon-pagecontrol }-->
+
+- [**ShadowElevations**
+  Provides the most commonly-used elevations specified in Material Design.
+  ](ShadowElevations/)
+  <!--{: .icon-shadowelevations }-->
+
+- [**ShadowLayer**
+  A shadow which uses Material Design principles for visualizing depth.
+  ](ShadowLayer/)
+  <!--{: .icon-shadowlayer }-->
+
+- [**Slider**
+  A Material Design control for selecting from a range of values.
+  ](Slider/)
+  <!--{: .icon-slider }-->
+
+- [**Switch**
+  A Material Design on/off switch with an interface similar to UISwitch.
+  ](Switch/)
+  <!--{: .icon-switch }-->
+
+- [**Typography**
+  Text styles for Material Design fonts and opacities.
+  ](Typography/)
+  <!--{: .icon-typography }-->
 <!--{: .icon-list .large-format }-->
 
 

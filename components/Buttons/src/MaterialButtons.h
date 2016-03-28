@@ -14,10 +14,6 @@
  limitations under the License.
  */
 
-/**
- Note: This component is currently work in progress
- */
-
 #import "MDCButton.h"
 #import "MDCFlatButton.h"
 #import "MDCFloatingButton.h"

@@ -1,7 +1,24 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import "PestoCollectionViewController.h"
 #import "PestoCardCollectionViewCell.h"
 #import "PestoData.h"
 
+#import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 
@@ -13,9 +30,10 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 @interface PestoCollectionViewController ()
 
 @property(nonatomic) CGFloat logoScale;
+@property(nonatomic) MDCInkTouchController *inkTouchController;
+@property(nonatomic) PestoData *pestoData;
 @property(nonatomic) UIView *logoSmallView;
 @property(nonatomic) UIView *logoView;
-@property(nonatomic) PestoData *pestoData;
 
 @end
 
@@ -26,8 +44,8 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   if (self) {
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.collectionView registerClass:[PestoCardCollectionViewCell class]
-            forCellWithReuseIdentifier:@"PestoCardCollectionViewCell"];
-    self.pestoData = [[PestoData alloc] init];
+            forCellWithReuseIdentifier:NSStringFromClass([PestoCardCollectionViewCell class])];
+    _pestoData = [[PestoData alloc] init];
     [self setNeedsStatusBarAppearanceUpdate];
   }
   return self;
@@ -53,7 +71,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 
 - (NSInteger)collectionView:(UICollectionView *)view
      numberOfItemsInSection:(NSInteger)section {
-  return [self.pestoData.imageFileNames count];
+  return (NSInteger)[self.pestoData.imageFileNames count];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -74,21 +92,21 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 
 - (void)centerHeader {
   CGFloat width = [UIScreen mainScreen].bounds.size.width;
-  CGRect headerFrame = _flexHeaderContainerVC.headerViewController.headerView.bounds;
-  _logoView.center = CGPointMake(width / 2.f,
-                                 headerFrame.size.height / 2.f);
-  _logoSmallView.center = CGPointMake(width / 2.f,
-                                      headerFrame.size.height / 2.f);
+  CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
+  self.logoView.center = CGPointMake(width / 2.f,
+                                     headerFrame.size.height / 2.f);
+  self.logoSmallView.center = CGPointMake(width / 2.f,
+                                          headerFrame.size.height / 2.f);
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  PestoCardCollectionViewCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:@"PestoCardCollectionViewCell"
-                                                forIndexPath:indexPath];
-  NSInteger itemNum = indexPath.row;
+  PestoCardCollectionViewCell *cell = [collectionView
+      dequeueReusableCellWithReuseIdentifier:NSStringFromClass([PestoCardCollectionViewCell class])
+                                forIndexPath:indexPath];
+  NSUInteger itemNum = (NSUInteger)indexPath.row;
   NSString *baseURL = PestoDataBaseURL;
   NSString *imageURLString =
       [baseURL stringByAppendingString:self.pestoData.imageFileNames[itemNum]];
@@ -122,24 +140,24 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  _scrollOffsetY = scrollView.contentOffset.y;
-  [_flexHeaderContainerVC.headerViewController scrollViewDidScroll:scrollView];
-  CGRect headerFrame = _flexHeaderContainerVC.headerViewController.headerView.bounds;
-  _logoView.center = CGPointMake(headerFrame.size.width / 2.f,
-                                 headerFrame.size.height / 2.f);
-  _logoSmallView.center = CGPointMake(headerFrame.size.width / 2.f,
-                                      headerFrame.size.height / 2.f);
+  self.scrollOffsetY = scrollView.contentOffset.y;
+  [self.flexHeaderContainerVC.headerViewController scrollViewDidScroll:scrollView];
+  CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
+  self.logoView.center = CGPointMake(headerFrame.size.width / 2.f,
+                                     headerFrame.size.height / 2.f);
+  self.logoSmallView.center = CGPointMake(headerFrame.size.width / 2.f,
+                                          headerFrame.size.height / 2.f);
 
-  _logoScale = scrollView.contentOffset.y / -kPestoCollectionViewControllerDefaultHeaderHeight;
+  self.logoScale = scrollView.contentOffset.y / -kPestoCollectionViewControllerDefaultHeaderHeight;
 
-  if (_logoScale < 0.5f) {
-    _logoScale = 0.5f;
+  if (self.logoScale < 0.5f) {
+    self.logoScale = 0.5f;
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
         delay:0
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
-          _logoView.layer.opacity = 0;
-          _logoSmallView.layer.opacity = 1.f;
+          self.logoView.layer.opacity = 0;
+          self.logoSmallView.layer.opacity = 1.f;
         }
         completion:^(BOOL finished){
         }];
@@ -148,13 +166,14 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
         delay:0
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
-          _logoView.layer.opacity = 1.f;
-          _logoSmallView.layer.opacity = 0;
+          self.logoView.layer.opacity = 1.f;
+          self.logoSmallView.layer.opacity = 0;
         }
         completion:^(BOOL finished){
         }];
   }
-  _logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, _logoScale, _logoScale);
+  self.logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, self.logoScale,
+                                                   self.logoScale);
 }
 
 #pragma mark - Private methods
@@ -162,7 +181,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 - (UIView *)pestoHeaderView {
   CGRect headerFrame = _flexHeaderContainerVC.headerViewController.headerView.bounds;
   UIView *pestoHeaderView = [[UIView alloc] initWithFrame:headerFrame];
-  UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1];
+  UIColor *teal = [UIColor colorWithRed:0.f green:0.67f blue:0.55f alpha:1.f];
   pestoHeaderView.backgroundColor = teal;
   pestoHeaderView.layer.masksToBounds = YES;
   pestoHeaderView.autoresizingMask =
@@ -181,6 +200,9 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   _logoSmallView.layer.opacity = 0;
   [pestoHeaderView addSubview:_logoSmallView];
 
+  _inkTouchController = [[MDCInkTouchController alloc] initWithView:pestoHeaderView];
+  [_inkTouchController addInkView];
+
   return pestoHeaderView;
 }
 
@@ -189,14 +211,14 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   CGFloat cellDim = self.view.frame.size.width - margins * 2.f;
   CGFloat maxCellWidth = 400.f;
   if (cellDim > maxCellWidth && cellDim < maxCellWidth * 2.f) {
-    cellDim = floor((self.view.frame.size.width -
-                     (2.f * kPestoCollectionViewControllerInset)) /
-                    2.f) -
+    cellDim = (CGFloat)floor(((double)self.view.frame.size.width -
+                              (2.0 * kPestoCollectionViewControllerInset)) /
+                             2.0) -
               (2.f * kPestoCollectionViewControllerInset);
   } else if (cellDim >= maxCellWidth * 2.f) {
-    cellDim = floor((self.view.frame.size.width -
-                     (3.f * kPestoCollectionViewControllerInset)) /
-                    3.f) -
+    cellDim = (CGFloat)floor(((double)self.view.frame.size.width -
+                              (3.0 * kPestoCollectionViewControllerInset)) /
+                             3.0) -
               (2.f * kPestoCollectionViewControllerInset);
   }
   return CGSizeMake(cellDim, 300.f);

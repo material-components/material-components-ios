@@ -43,7 +43,8 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
   _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
   _animationView.frame = CGRectMake(0, 0, 30, 30);
   _animationView.center = self.view.center;
-  _animationView.tintColor = [UIColor blueColor];
+  UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  _animationView.tintColor = blueColor;
   [self.view addSubview:_animationView];
 
   // Add label with tap instructions.

@@ -24,7 +24,7 @@
 
  @see https://www.google.com/design/spec/style/typography.html#typography-styles
  */
-@protocol MDCTypographyFontLoader <NSObject>
+@protocol MDCTypographyFontLoading <NSObject>
 @required
 
 /** Asks the receiver to return a font with a light weight. */
@@ -50,7 +50,7 @@
 #pragma mark - Custom font loader
 
 /** Set the font loader in order to use a non-Roboto or non-system font. */
-+ (void)setFontLoader:(nonnull id<MDCTypographyFontLoader>)fontLoader;
++ (void)setFontLoader:(nonnull id<MDCTypographyFontLoading>)fontLoader;
 
 #pragma mark - Display fonts (extra large fonts)
 
@@ -133,5 +133,11 @@
  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
  ```
  */
-@interface MDCSystemFontLoader : NSObject <MDCTypographyFontLoader>
+@interface MDCSystemFontLoader : NSObject <MDCTypographyFontLoading>
 @end
+
+// clang-format off
+__deprecated_msg("Use MDCTypographyFontLoading instead")
+@protocol MDCTypographyFontLoader <MDCTypographyFontLoading>
+@end
+    // clang-format on
