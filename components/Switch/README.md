@@ -6,7 +6,8 @@ section: documentation
 
 # Switch
 
-Switch provides an Material Design on/off switch control with an interface similar to UISwitch. Note that `MDCSwitch` objects have an intrinsic size and are not resizable.
+Switch provides an Material Design on/off switch control with an interface similar to UISwitch. Note
+that `MDCSwitch` objects have an intrinsic size and are not resizable.
 <!--{: .intro }-->
 
 ### Design Specifications
@@ -34,7 +35,8 @@ Switch provides an Material Design on/off switch control with an interface simil
 
 ### Installation with CocoaPods
 
-To add the Switch component to your Xcode project using CocoaPods, add the following to your PodFile:
+To add the Switch component to your Xcode project using CocoaPods, add the following to your
+PodFile:
 
 ~~~ bash
 $ pod 'MaterialComponents/Switch'

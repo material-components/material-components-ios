@@ -3,7 +3,8 @@ Want to contribute? Great! First, read this page (including the small print at t
 ## Pull requests
 
 Pull requests can be hard to review if they try to tackle too many things
-at once. Phabricator's "[Writing Reviewable Code](https://secure.phabricator.com/book/phabflavor/article/writing_reviewable_code/)"
+at once. Phabricator's
+"[Writing Reviewable Code](https://secure.phabricator.com/book/phabflavor/article/writing_reviewable_code/)"
 provides a set of guidelines that help increase the likelihood of your
 pull request getting merged.
 
@@ -74,7 +75,8 @@ allow pull requests to be filed, but we perform code reviews on codereview.cc.
 ### The small print
 
 Contributions made by corporations are covered by a different agreement than
-the one above, the [Software Grant and Corporate Contributor License Agreement](https://cla.developers.google.com/about/google-corporate).
+the one above, the
+[Software Grant and Corporate Contributor License Agreement](https://cla.developers.google.com/about/google-corporate).
 
 # Component checklist
 

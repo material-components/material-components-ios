@@ -14,9 +14,9 @@ elevation.
 
 ### MDCShadowLayer
 
-`MDCShadowLayer` provides a Core Animation `CALayer` that will render a shadow based on its elevation
-property. `UIViews` can easily utilize this by overriding their layerClass method to return
-`MDCShadowLayer`.
+`MDCShadowLayer` provides a Core Animation `CALayer` that will render a shadow based on its
+elevation property. `UIViews` can easily utilize this by overriding their layerClass method to
+return `MDCShadowLayer`.
 
 `elevation` sets the diffusion level of the shadow. The higher the shadow elevation, the more
 diffused the shadow becomes. Elevation uses points as a unit to specify height. Common shadow
@@ -58,7 +58,8 @@ shadow that adheres to defined height and light source principles.
 
 ### Installation with CocoaPods
 
-To add the ShadowLayer component to your Xcode project using CocoaPods, add the following to your PodFile:
+To add the ShadowLayer component to your Xcode project using CocoaPods, add the following to your
+PodFile:
 
 ~~~ bash
 $ pod 'MaterialComponents/ShadowLayer'

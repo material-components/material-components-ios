@@ -6,7 +6,8 @@ section: howto
 
 # Using Material Components
 
-Lorem. Introduction to our howtos, guides, and samples. Need to pick the right links to go below here.
+Lorem. Introduction to our howtos, guides, and samples. Need to pick the right links to go below
+here.
 
 TODO: Copy for above paragraph.
 

@@ -5,7 +5,9 @@ section: documentation
 ---
 # Slider
 
-The `MDCSlider` object is a Material Design control used to select a value from a continuous range or discrete set of values.
+The `MDCSlider` object is a Material Design control used to select a value from a continuous range
+or discrete set of values.
+
 <!--{: .intro }-->
 
 ### Design Specifications
@@ -32,7 +34,8 @@ The `MDCSlider` object is a Material Design control used to select a value from 
 
 ### Installation with CocoaPods
 
-To add the Slider component to your Xcode project using CocoaPods, add the following to your PodFile:
+To add the Slider component to your Xcode project using CocoaPods, add the following to your
+PodFile:
 
 ~~~ bash
 $ pod 'MaterialComponents/Slider'

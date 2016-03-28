@@ -90,11 +90,15 @@ Page control showing new current page.
 
 ## Usage
 
-Integrating the page control requires two steps. First, add a page control with companion scroll view, and second, forward the scroll view delegate methods to the page control.
+Integrating the page control requires two steps. First, add a page control with companion scroll
+view, and second, forward the scroll view delegate methods to the page control.
 
 ### Step 1: Add the page control to a view
 
-Add the page control to a view and set the desired page control properties. This step is done similarly to a native `UIPageControl`. In addition, provide a tap gesture handler for the control to to fire off the `UIControlEventValueChanged` events in which the scroll view would typically be notified of page changes.
+Add the page control to a view and set the desired page control properties. This step is done
+similarly to a native `UIPageControl`. In addition, provide a tap gesture handler for the control to
+to fire off the `UIControlEventValueChanged` events in which the scroll view would typically be
+notified of page changes.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
@@ -139,7 +143,11 @@ Add the page control to a view and set the desired page control properties. This
 
 ### Step 2: Forwarding the required scroll view delegate methods
 
-This page control is designed to be used in conjunction with a scroll view. To achieve the desired page control animation effects, there are three scroll view delegate methods that must be forwarded to the page control (`-scrollViewDidScroll`, `-scrollViewDidEndDecelerating`, and `-scrollViewDidEndScrollingAnimation`). This allows the page control to keep in sync with the scrolling movement of the designated scroll view.
+This page control is designed to be used in conjunction with a scroll view. To achieve the desired
+page control animation effects, there are three scroll view delegate methods that must be forwarded
+to the page control (`-scrollViewDidScroll`, `-scrollViewDidEndDecelerating`, and
+`-scrollViewDidEndScrollingAnimation`). This allows the page control to keep in sync with the
+scrolling movement of the designated scroll view.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
