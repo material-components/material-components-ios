@@ -96,7 +96,9 @@ pre.CodeMirror-line {
   background: $code-background-color;
   margin: 24px 0 24px 0;
 
-  h4 {
+  // Hide any headings that were used for annotating code
+  // in the github version of markdown.
+  h3, h4 {
     display: none;
   }
 
