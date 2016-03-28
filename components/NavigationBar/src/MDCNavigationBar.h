@@ -25,14 +25,14 @@
 @protocol MDCUINavigationItemKVO <NSObject>
 @required
 
-@property(nonatomic, copy) NSString *title;
-@property(nonatomic, copy) NSArray *leftBarButtonItems;
-@property(nonatomic, copy) NSArray *rightBarButtonItems;
-@property(nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
-@property(nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
+@property(nonatomic, copy, nullable) NSString *title;
+@property(nonatomic, copy, nullable) NSArray *leftBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray *rightBarButtonItems;
+@property(nonatomic, strong, nullable) UIBarButtonItem *leftBarButtonItem;
+@property(nonatomic, strong, nullable) UIBarButtonItem *rightBarButtonItem;
 @property(nonatomic) BOOL hidesBackButton;
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
-@property(nonatomic, strong) UIView *titleView;
+@property(nonatomic, strong, nullable) UIView *titleView;
 
 @end
 
@@ -56,16 +56,16 @@
  You may wish to create a container view that is able to manage subview layout if your
  situation requires it.
  */
-@property(nonatomic, strong) UIView *titleView;
+@property(nonatomic, strong, nullable) UIView *titleView;
 
 /** The delegate to be provided to the left button bar instance. */
-@property(nonatomic, weak) id<MDCButtonBarDelegate> leftButtonBarDelegate;
+@property(nonatomic, weak, nullable) id<MDCButtonBarDelegate> leftButtonBarDelegate;
 
 /** The delegate to be provided to the right button bar instance. */
-@property(nonatomic, weak) id<MDCButtonBarDelegate> rightButtonBarDelegate;
+@property(nonatomic, weak, nullable) id<MDCButtonBarDelegate> rightButtonBarDelegate;
 
 /** The back button to be displayed, if any. */
-@property(nonatomic, strong) UIBarButtonItem *backItem;
+@property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
 
 #pragma mark Observing UINavigationItem instances
 
@@ -77,7 +77,7 @@
 
  The observed navigation item is strongly held.
  */
-- (void)observeNavigationItem:(UINavigationItem *)navigationItem;
+- (void)observeNavigationItem:(nonnull UINavigationItem *)navigationItem;
 
 /**
  Stop observing changes to the previously-observed navigation item.
