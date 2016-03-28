@@ -16,10 +16,11 @@
 
 #import "PestoSettingsViewController.h"
 
+#import "MaterialAppBar.h"
 #import "MaterialSwitch.h"
 #import "MaterialTypography.h"
 
-static CGFloat kPestoSettingsTableViewOffsetTop = 10.f;
+static CGFloat kPestoSettingsTableViewOffsetTop = 0.f;
 
 static NSString *const kPestoSettingsTableViewCellReuseIdentifier = @"PestoSettingsTableViewCell";
 static NSString *const kPestoSettingsTableViewHeaderViewReuseIdentifier =
@@ -115,7 +116,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
 @end
 
-@interface PestoSettingsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface PestoSettingsViewController () <UITableViewDataSource, UITableViewDelegate, MDCAppBarParenting>
 
 @property(nonatomic) NSArray *dummySettingHeaders;
 @property(nonatomic) NSArray *dummySettingTitles;
@@ -125,6 +126,20 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 @end
 
 @implementation PestoSettingsViewController
+
+#pragma mark - MDCAppBarParenting properties
+
+@synthesize navigationBar;
+@synthesize headerStackView;
+@synthesize headerViewController;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    MDCAppBarPrepareParent(self);
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -160,6 +175,16 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   [self.settingsTableView reloadData];
 
   [self.view addSubview:self.settingsTableView];
+
+  MDCAppBarAddViews(self);
+  UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1.f];
+  self.headerViewController.view.backgroundColor = teal;
+  self.headerViewController.headerView.trackingScrollView = self.settingsTableView;
+  self.headerViewController.headerView.tintColor = [UIColor whiteColor];
+
+  // This app has a forced-hidden status bar. The headerView needs to compensate.
+  self.headerViewController.headerView.maximumHeight -= 20;
+  self.headerViewController.headerView.minimumHeight -= 20;
 }
 
 + (UIColor *)tableViewSeparatorColor {
@@ -218,4 +243,34 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   }
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView
+        trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView
+        trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                  targetContentOffset:targetContentOffset];
+  }
+}
 @end

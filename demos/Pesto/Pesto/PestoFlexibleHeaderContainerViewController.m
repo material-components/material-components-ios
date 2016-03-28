@@ -170,6 +170,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   navVC.navigationBar.barTintColor = teal;
   navVC.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : white};
   navVC.navigationBar.translucent = NO;
+  navVC.navigationBarHidden = YES;
 
   [sideView hideSideView];
   [self presentViewController:navVC animated:YES completion:nil];
