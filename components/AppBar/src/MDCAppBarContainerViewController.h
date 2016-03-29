@@ -54,7 +54,7 @@
 - (nullable instancetype)init NS_UNAVAILABLE;
 
 /** The header view controller owned by this container view controller. */
-@property(nonatomic, strong, nonnull, readonly) MDCFlexibleHeaderViewController *headerViewController;
+- (nonnull MDCFlexibleHeaderViewController *)headerViewController;
 
 /** The content view controller to be displayed behind the header. */
 @property(nonatomic, strong, nonnull, readonly) UIViewController *contentViewController;
