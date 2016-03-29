@@ -47,7 +47,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInit];
+    [self commonMDCSliderInit];
   }
   return self;
 }
@@ -55,12 +55,12 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonInit];
+    [self commonMDCSliderInit];
   }
   return self;
 }
 
-- (void)commonInit {
+- (void)commonMDCSliderInit {
   CGRect trackFrame = CGRectInset(self.frame, 8.f, 0.f);
 
   _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:trackFrame onTintColor:[[self class] defaultColor]];
