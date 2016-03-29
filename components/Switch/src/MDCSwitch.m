@@ -34,7 +34,7 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInitWithColor:nil];
+    [self commonMDCSwitchInitWithColor:nil];
   }
   return self;
 }
@@ -43,12 +43,12 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   self = [super initWithCoder:aDecoder];
   if (self) {
     // TODO(iangordon): Get color from Storyboard / XIB
-    [self commonInitWithColor:nil];
+    [self commonMDCSwitchInitWithColor:nil];
   }
   return self;
 }
 
-- (void)commonInitWithColor:(UIColor *)color {
+- (void)commonMDCSwitchInitWithColor:(UIColor *)color {
   if (color == nil) {
     color = [MDCSwitch defaultOnTintColor];
   }
