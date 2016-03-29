@@ -220,6 +220,12 @@ Header.
 Learn more by reading the Flexible Header section on
 [Background images](../FlexibleHeader/#background-images).
 
-TODO: Discuss touch event forwarding.
+### Touch forwarding
+
+The App Bar enables touch forwarding for the headerStackView and the navigationBar instances. Touch
+events made to those views (not their subviews) will be forwarded to the tracking scroll view.
+
+Learn more by reading the Flexible Header section on
+[Touch forwarding](../FlexibleHeader/#touch-forwarding).
 
 TODO: Discuss known limitiations. Discuss interactive background image (behind the stack view).

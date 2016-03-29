@@ -362,4 +362,39 @@ Notes:
 - Enable `clipsToBounds` in order to ensure that your image view does not bleed past the bounds of
   the header view. The header view's `clipsToBounds` is disabled by default.
 
+### Touch forwarding
 
+The Flexible Header allows you to forward touch events to the tracking scroll view. This provides
+the illusion that the Flexible Header is part of the tracking scroll view.
+
+#### Starting touch forwarding
+
+To start touch forwarding you must call `forwardTouchEventsForView:` with each view:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+[headerView forwardTouchEventsForView:someContentView];
+~~~
+
+#### Swift
+~~~ swift
+headerView.forwardTouchEventsForView(someContentView)
+~~~
+<!--</div>-->
+
+#### Stopping touch forwarding
+
+To stop touch forwarding you must call `forwardTouchEventsForView:` with each view:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+[headerView stopForwardingTouchEventsForView:someContentView];
+~~~
+
+#### Swift
+~~~ swift
+headerView.stopForwardingTouchEventsForView(someContentView)
+~~~
+<!--</div>-->
