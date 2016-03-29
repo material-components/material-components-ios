@@ -66,7 +66,7 @@ class MDCCatalogBar: UIView {
     exitLabel.textAlignment = .Right
     addSubview(exitLabel)
 
-    let tap = UITapGestureRecognizer(target: self, action: #selector(MDCCatalogBar.exitPressed))
+    let tap = UITapGestureRecognizer(target: self, action: "exitPressed")
     addGestureRecognizer(tap)
   }
 
