@@ -79,22 +79,30 @@
   }
   [self.view addSubview:boundedShapes];
 
-  ExampleShapes *unboundedShapes = [[ExampleShapes alloc] initWithFrame:customFrame];
-  unboundedShapes.title = @"Unbounded";
-  unboundedShapes.center = CGPointMake(self.view.center.x,
-                                       self.view.center.y +
-                                           (spacing / 2 + customFrame.size.height / 2));
-  unboundedShapes.shapeColor = [UIColor whiteColor];
-  for (UIView *view in unboundedShapes.subviews) {
-    MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:view];
-    inkTouchController.delegate = self;
-    [inkTouchController addInkView];
-    UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
-    [inkTouchController.inkView setInkColor:blueColor];
-    inkTouchController.inkView.inkStyle = MDCInkStyleUnbounded;
-    [_inkTouchControllers addObject:inkTouchController];
-  }
-  [self.view addSubview:unboundedShapes];
+  CGRect unboundedFrame = CGRectMake(spacing / 2,
+                                     spacing / 2,
+                                     customFrame.size.width - spacing,
+                                     customFrame.size.height - spacing);
+  UIView *unboundedShape = [[UIView alloc] initWithFrame:unboundedFrame];
+  unboundedShape.center = CGPointMake(self.view.center.x,
+                                      self.view.center.y +
+                                          (spacing / 2 + customFrame.size.height / 2));
+  unboundedShape.backgroundColor = [UIColor whiteColor];
+  MDCInkTouchController *inkTouchController =
+      [[MDCInkTouchController alloc] initWithView:unboundedShape];
+  inkTouchController.delegate = self;
+  [inkTouchController addInkView];
+  UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
+  [inkTouchController.inkView setInkColor:blueColor];
+  inkTouchController.inkView.inkStyle = MDCInkStyleUnbounded;
+  [_inkTouchControllers addObject:inkTouchController];
+  [self.view addSubview:unboundedShape];
+
+  UILabel *unboundedTitleLabel = [[UILabel alloc] initWithFrame:unboundedShape.bounds];
+  unboundedTitleLabel.text = @"Unbounded";
+  unboundedTitleLabel.textAlignment = NSTextAlignmentCenter;
+  unboundedTitleLabel.textColor = [UIColor grayColor];
+  [unboundedShape addSubview:unboundedTitleLabel];
 }
 
 #pragma mark - Private
