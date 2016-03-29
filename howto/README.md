@@ -14,17 +14,17 @@ TODO: Copy for above paragraph.
 TODO: Choose links below.
 
 - [Development Guide](http://www.google.com)
-  {: .icon-guide }
+  <!--{: .icon-guide }-->
 
 - [API Documentation](http://www.google.com)
-  {: .icon-api }
+  <!--{: .icon-api }-->
 
 - [Code Samples](http://www.google.com)
-  {: .icon-sample }
+  <!--{: .icon-sample }-->
 
 - [Stack Overflow](http://www.google.com)
-  {: .icon-stackoverflow }
-{: .icon-list }
+  <!--{: .icon-stackoverflow }-->
+<!--{: .icon-list }-->
 
 - - -
 
@@ -603,7 +603,7 @@ advanced features.
 - [**Lorem Navigation Basics**
   A brief introduction to structuring your app and navigating between views.
   ](/howto/lorem-navigation-basics/)
-{: .icon-list .large-format }
+<!--{: .icon-list .large-format }-->
 
 
 
@@ -615,4 +615,4 @@ advanced features.
 - [**Pesto**
   A simple recipe app, which incorporates a flexible header, a grid list, cards, and a detail view.
   ](https://www.google.com/)
-{: .icon-list .large-format }
+<!--{: .icon-list .large-format }-->
