@@ -64,10 +64,10 @@ You should not directly instantiate an MDCButton object.
 ### Installation with CocoaPods
 
 To add the Buttons component to your Xcode project using CocoaPods, add the following to your
-PodFile:
+Podfile:
 
-~~~ bash
-$ pod 'MaterialComponents/Buttons'
+~~~
+pod 'MaterialComponents/Buttons'
 ~~~
 
 Then, run the following command:
