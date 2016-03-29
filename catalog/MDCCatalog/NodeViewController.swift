@@ -29,7 +29,7 @@ class Node {
   }
 }
 
-class NodeViewController: UITableViewController, MDCAppBarParenting {
+class NodeViewController: UITableViewController, MDCAppBarParenting, MDCCatalogBarDelegate {
   var navigationBar: MDCNavigationBar?
   var headerStackView: MDCHeaderStackView?
   var headerViewController: MDCFlexibleHeaderViewController?
@@ -60,24 +60,6 @@ class NodeViewController: UITableViewController, MDCAppBarParenting {
     // Sort alphabetically.
     self.node.children = self.node.children.sort {
       $0.title < $1.title
-    }
-  }
-
-  override func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-
-    if !self.isMovingFromParentViewController() {
-      var isPushingHeaderViewController = false
-      for childVc in self.navigationController!.topViewController!.childViewControllers {
-        if childVc.isKindOfClass(MDCFlexibleHeaderViewController.self) {
-          isPushingHeaderViewController = true
-          break
-        }
-      }
-      if !isPushingHeaderViewController {
-        // Unhide the navigation bar then.
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-      }
     }
   }
 
@@ -134,10 +116,45 @@ class NodeViewController: UITableViewController, MDCAppBarParenting {
     let node = self.node.children[indexPath.row]
     var vc: UIViewController
     if let vClass = node.viewController {
-      vc = ViewControllerFromClass(vClass)
+      let contentVC = ViewControllerFromClass(vClass)
+      let catalogBar = MDCCatalogBar(frame: CGRectZero)
+      vc = wrapVCWithCatalogBarVC(catalogBar, viewController: contentVC)
+      catalogBar.title = node.title
+      catalogBar.catalogBarDelegate = self
     } else {
       vc = NodeViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
   }
+
+  // MARK: MDCCatalogBarDelegate
+
+  func didPressExit() {
+    self.navigationController?.popViewControllerAnimated(true)
+  }
+
+  // MARK: Private methods
+
+  private func wrapVCWithCatalogBarVC(catalogBar: MDCCatalogBar,
+                                      viewController: UIViewController) -> UIViewController {
+    let catalogBarHeight = CGFloat(52)
+    let wrapperVC = UIViewController()
+    viewController.view.frame =
+      CGRectMake(0,
+                 0,
+                 wrapperVC.view.bounds.size.width,
+                 wrapperVC.view.bounds.size.height - catalogBarHeight);
+    let catalogBarRect = CGRectMake(0,
+                                    viewController.view.frame.size.height,
+                                    viewController.view.frame.size.width,
+                                    catalogBarHeight);
+    catalogBar.frame = catalogBarRect;
+    wrapperVC.addChildViewController(viewController)
+    wrapperVC.view.addSubview(viewController.view)
+    viewController.didMoveToParentViewController(wrapperVC)
+    wrapperVC.view.addSubview(catalogBar)
+
+    return wrapperVC
+  }
+
 }
