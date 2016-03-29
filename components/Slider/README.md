@@ -5,9 +5,11 @@ section: documentation
 ---
 # Slider
 
+![Slider](docs/assets/slider_screenshot.png)
+<!--{: .ios-screenshot .right }-->
+
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
-
 <!--{: .intro }-->
 
 ### Design Specifications

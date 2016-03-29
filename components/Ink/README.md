@@ -5,6 +5,9 @@ section: documentation
 ---
 # Ink
 
+![Ink](docs/assets/ink_screenshot.png)
+<!--{: .ios-screenshot .right }-->
+
 The Ink component provides a radial action in the form of a visual ripple of ink expanding
 outward from the user's touch.
 <!--{: .intro }-->

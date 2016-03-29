@@ -5,6 +5,9 @@ section: documentation
 ---
 # App Bar
 
+![App Bar](docs/assets/appbar_screenshot.png)
+<!--{: .ios-screenshot .right }-->
+
 The App Bar is a flexible navigation bar designed to provide a typical Material navigation
 experience.
 <!--{: .intro :}-->

@@ -6,6 +6,9 @@ section: documentation
 
 # Switch
 
+![Switch](docs/assets/switch_screenshot.png)
+<!--{: .ios-screenshot .right }-->
+
 Switch provides an Material Design on/off switch control with an interface similar to UISwitch. Note
 that `MDCSwitch` objects have an intrinsic size and are not resizable.
 <!--{: .intro }-->

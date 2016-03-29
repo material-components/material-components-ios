@@ -6,11 +6,15 @@ section: documentation
 
 # Shadow Layer
 
+![Shadow Layer](docs/assets/shadows_screenshot.png)
+<!--{: .ios-screenshot .right }-->
+
 Shadow Layer implements the Material Design specifications for elevation and shadows.
 By simulating the physical properties of paper, elevation and light source, shadows give
 visual depth to components. Shadow Layer provides an elevation property which affects
 a shadow's depth and strength, automatically handling shadow diffusion based on the shadow's
 elevation.
+<!--{: .intro }-->
 
 ### MDCShadowLayer
 

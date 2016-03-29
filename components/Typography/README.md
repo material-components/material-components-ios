@@ -5,6 +5,9 @@ section: documentation
 ---
 # Typography
 
+![Typography](docs/assets/typography_screenshot.png)
+<!--{: .ios-screenshot .right }-->
+
 The Typography component provides methods for displaying text using the type sizes and opacities
 from the Material Design specifications.
 <!--{: .intro }-->

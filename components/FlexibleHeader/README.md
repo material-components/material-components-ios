@@ -5,6 +5,9 @@ section: documentation
 ---
 # Flexible Header
 
+![Flexible Header](docs/assets/flexibleheader_screenshot.png)
+<!--{: .ios-screenshot .right }-->
+
 The Flexible Header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
 <!--{: .intro }-->
