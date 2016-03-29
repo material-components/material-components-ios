@@ -6,3 +6,4 @@ For the coming months, the Material Components iOS team is focused on developing
 - ProgressBar
 
 For suggestions, please [file a GitHub issue](https://github.com/google/material-components-ios/issues).
+
