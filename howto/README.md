@@ -44,13 +44,13 @@ This tutorial will take you through building an example app called Abstractor an
 
 Material Components for iOS can be integrated like any other shared code library on iOS. The preferred method of integration is through CocoaPods.
 
-To help get started quickly, [download](https://materialcomponents.org/Abstractor-20160401.zip) or clone this skeleton new project which the rest of the tutorial will use.
+To help get started quickly, `git clone` this skeleton new project which the rest of the tutorial will use.
 
 ```
 git clone https://github.com/google/material-components-ios-example/
 ```
 
-This project is similar to a new project create using Xcode's new project template except with a small number of changes:
+This project is similar to a new project created using Xcode's new project template except with a small number of changes:
 
 1. Removes the Main.storyboard and references to it in favor of programmatically creating the UI.
 2. Adds a bridging header (BridgingHeader.h) and the Xcode configuration for it.
