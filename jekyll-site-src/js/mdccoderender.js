@@ -153,15 +153,19 @@ MDCCodeRender = (function(){
     }
 
     var sources = renderer.querySelectorAll('pre code');
+    var availableLanguage = [];
     // Before generate:
     // 1. Take care of invalid code snippet case.
-    for(var i = 0; sources & i < sources.length; i++) {
+    for(var i = 0; sources && i < sources.length; i++) {
       var source = sources[i];
       var kramdownLang = source.classList.length == 0? '' :
         source.classList[0].replace('language-', '');
       var language = kramdownToCodeMirrorMap[kramdownLang].language;
       if(_complexRendererAllowedLang.indexOf[language] === -1) {
         source.parentNode.removeChild(source);
+      }
+      else {
+        availableLanguage.push(language);
       }
     }
     // 2. Take care of non code snippet case after invalid snippets are deleted.
@@ -195,6 +199,8 @@ MDCCodeRender = (function(){
     // 4. Listen to selectLangChange event and change code snippet in display.
 		radioForm.addEventListener('selectLangChange', function() {
 			var targetLanguage = selectedLanguage.get();
+      targetLanguage = availableLanguage.indexOf(targetLanguage) == -1 ?
+                       availableLanguage[0] : targetLanguage;
       radioForm.querySelector('.radio-input[value="' +
                               targetLanguage + '"]').checked = true;
 			renderer.querySelector('.CodeMirror.active').classList.remove('active');
@@ -207,6 +213,8 @@ MDCCodeRender = (function(){
     // After Generation:
 		// Initialize with targetLanguage
     var targetLanguage = selectedLanguage.get();
+    targetLanguage = availableLanguage.indexOf(targetLanguage) == -1 ?
+                     availableLanguage[0] : targetLanguage;
 		radioForm.querySelector('.radio-input[value="' +
                              targetLanguage + '"]').checked = true;
 		cmMap[targetLanguage].display.wrapper.classList.add('active');
