@@ -126,13 +126,13 @@ class ShrineCollectionViewController: UICollectionViewController {
     headerView.trackingScrollView = collectionView
     headerView.maximumHeight = 440;
     headerView.minimumHeight = 72;
-    headerView.contentView?.backgroundColor = UIColor.whiteColor()
-    headerView.contentView?.layer.masksToBounds = true
-    headerView.contentView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    headerView.contentView.backgroundColor = UIColor.whiteColor()
+    headerView.contentView.layer.masksToBounds = true
+    headerView.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
-    headerContentView.frame = (headerView.contentView?.frame)!
+    headerContentView.frame = (headerView.contentView.frame)
     headerContentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    headerView.contentView?.addSubview(headerContentView)
+    headerView.contentView.addSubview(headerContentView)
   }
 
 }
