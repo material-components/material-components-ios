@@ -224,6 +224,8 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  Forwards any tap events made to the provided view on to the tracking scroll view.
 
  Views will only forward their taps if they are a subview of this header view and are interactive.
+
+ Touch forwarding does not apply to subviews of the provided view.
  */
 - (void)forwardTouchEventsForView:(nonnull UIView *)view;
 
