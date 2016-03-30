@@ -40,7 +40,7 @@ Pod::Spec.new do |s|
 
   s.subspec "AppBar" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
 
     # Navigation bar contents
@@ -70,7 +70,7 @@ Pod::Spec.new do |s|
 
   s.subspec "ButtonBar" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
   end
 

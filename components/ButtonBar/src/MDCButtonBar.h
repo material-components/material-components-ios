@@ -70,12 +70,6 @@
  */
 @property(nonatomic, copy) NSArray *buttonItems;
 
-/** The delegate creates button views from UIBarButtonItem instances. */
-@property(nonatomic, weak) id<MDCButtonBarDelegate> delegate;
-
-/** Tells the receiver to rebuild its button views. */
-- (void)reloadButtonViews;
-
 #pragma mark Configuring Layout
 
 /**
@@ -130,6 +124,19 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
 
 @end
 
+// clang-format off
+@interface MDCButtonBar ()
+
+/** The delegate creates button views from UIBarButtonItem instances. */
+@property(nonatomic, weak) id<MDCButtonBarDelegate> delegate
+__deprecated_msg("This API will be removed in an upcoming release. It now has a default value.");
+
+/** Tells the receiver to rebuild its button views. */
+- (void)reloadButtonViews
+__deprecated_msg("This API will be removed in an upcoming release.");
+
+@end
+
 /**
  Target selector for buttons created from UIBarButtonItems.
 
@@ -142,6 +149,9 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
  Finds the corresponding UIBarButtonItem and calls its target/action with the item as the first
  parameter.
  */
-- (void)didTapButton:(UIButton *)button event:(UIEvent *)event;
+- (void)didTapButton:(UIButton *)button event:(UIEvent *)event
+__deprecated_msg("This API will be removed in an upcoming release.");
 
 @end
+
+// clang-format on

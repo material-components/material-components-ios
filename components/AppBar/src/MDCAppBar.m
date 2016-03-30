@@ -21,7 +21,6 @@
 #import "MDCAppBar.h"
 
 #import "MDCAppBarContainerViewController.h"
-#import "private/MDCAppBarButtonBarBuilder.h"
 
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialFlexibleHeader.h"
@@ -35,7 +34,6 @@ static const CGFloat kStatusBarHeight = 20;
 
 @interface MDCAppBarViewController : UIViewController
 
-@property(nonatomic, strong) MDCAppBarButtonBarBuilder *buttonItemBuilder;
 @property(nonatomic, strong) MDCHeaderStackView *headerStackView;
 @property(nonatomic, strong) MDCNavigationBar *navigationBar;
 
@@ -128,16 +126,11 @@ static const CGFloat kStatusBarHeight = 20;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.buttonItemBuilder = [MDCAppBarButtonBarBuilder new];
-
   self.headerStackView = [[MDCHeaderStackView alloc] initWithFrame:self.view.bounds];
   self.headerStackView.translatesAutoresizingMaskIntoConstraints = NO;
 
   self.navigationBar = [MDCNavigationBar new];
   self.headerStackView.topBar = self.navigationBar;
-
-  self.navigationBar.leftButtonBarDelegate = self.buttonItemBuilder;
-  self.navigationBar.rightButtonBarDelegate = self.buttonItemBuilder;
 
   [self.view addSubview:self.headerStackView];
 

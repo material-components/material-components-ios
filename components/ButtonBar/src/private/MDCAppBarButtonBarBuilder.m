@@ -56,7 +56,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 @interface UIBarButtonItem (MDCHeaderInternal)
 
 // Internal version of the standard -customView property. When an item is pushed onto a
-// MDCNavigationController stack, any -customView object is moved over to this property. This
+// UINavigationController stack, any -customView object is moved over to this property. This
 // prevents UINavigationController from adding the customView to its own view hierarchy.
 @property(nonatomic, strong, setter=mdc_setCustomView:) UIView *mdc_customView;
 

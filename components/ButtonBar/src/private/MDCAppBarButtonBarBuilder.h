@@ -16,7 +16,7 @@
 
 #import "MaterialButtonBar.h"
 
-/** MDCBarButtonItemBuilder is an implementation of the GoogleKit button item factory. */
+/** MDCBarButtonItemBuilder is an implementation of a Material button item factory. */
 @interface MDCAppBarButtonBarBuilder : NSObject <MDCButtonBarDelegate>
 
 /** The title color for the bar button items. */

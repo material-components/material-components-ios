@@ -20,6 +20,8 @@
 
 #import "MDCButtonBar.h"
 
+#import "private/MDCAppBarButtonBarBuilder.h"
+
 static const CGFloat kDefaultHeight = 56;
 static const CGFloat kDefaultPadHeight = 64;
 
@@ -32,6 +34,8 @@ static NSString *const kEnabledSelector = @"enabled";
 @implementation MDCButtonBar {
   id _buttonItemsLock;
   NSArray *_buttonViews;
+
+  MDCAppBarButtonBarBuilder *_defaultBuilder;
 }
 
 - (void)dealloc {
@@ -40,6 +44,13 @@ static NSString *const kEnabledSelector = @"enabled";
 
 - (void)commonInit {
   _buttonItemsLock = [NSObject new];
+
+  _defaultBuilder = [MDCAppBarButtonBarBuilder new];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  self.delegate = _defaultBuilder;
+#pragma clang diagnostic pop
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -304,7 +315,10 @@ static NSString *const kEnabledSelector = @"enabled";
       }
     }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [self reloadButtonViews];
+#pragma clang diagnostic pop
   }
 }
 
@@ -314,7 +328,10 @@ static NSString *const kEnabledSelector = @"enabled";
   }
   _delegate = delegate;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [self reloadButtonViews];
+#pragma clang diagnostic pop
 }
 
 - (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
@@ -324,7 +341,10 @@ static NSString *const kEnabledSelector = @"enabled";
   _layoutDirection = layoutDirection;
 
   if (_delegate) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [self reloadButtonViews];
+#pragma clang diagnostic pop
   }
 }
 
