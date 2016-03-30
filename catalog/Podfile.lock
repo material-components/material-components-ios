@@ -19,7 +19,6 @@ PODS:
     - MaterialComponents/Switch (= 2.2.0)
     - MaterialComponents/Typography (= 2.2.0)
   - MaterialComponents/AppBar (2.2.0):
-    - MaterialComponents/Buttons
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -27,7 +26,8 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (2.2.0)
+  - MaterialComponents/ButtonBar (2.2.0):
+    - MaterialComponents/Buttons
   - MaterialComponents/Buttons (2.2.0):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
@@ -88,7 +88,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: d42795ac6770f79794f00fab268e66bff79c8b7a
+  MaterialComponents: 3f527b25b51e368a59431d92d7f52bffefb73f78
   MaterialComponentsCatalog: beba6bad324c22fa117c86b14266e9e77ef22f12
   MaterialComponentsUnitTests: ba4acacfed6dbde0327479bb08e66ac5e426058c
 
