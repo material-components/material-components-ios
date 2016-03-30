@@ -7,17 +7,17 @@
   {% assign navdata = site.data.navigation.community %}
 {% endcase %}
 <nav id="sidenav">
-  <ul>
-    {% for item in navdata %}
-      {% assign lcpage = page.url | downcase %}
-      {% assign lcitem = item.url | downcase %}
-      {% assign activepage = "" %}
-      {% if lcpage == lcitem %}
-        {% assign activepage = "active" %}
-      {% endif %}
+  <ul>{%
+    for item in navdata %}{%
+      assign lcpage = page.url | downcase %}{%
+      assign lcitem = item.url | downcase %}{%
+      assign activepage = "" %}{%
+      if lcpage == lcitem %}{%
+        assign activepage = "active" %}{%
+      endif %}
     <li class="{{ item.class }} {{ activepage }}">
       <a href="{{ site.basepath | prepend: site.github.url }}{{ item.url }}">{{ item.name }}</a>
-    </li>
-    {% endfor %}
+    </li>{%
+    endfor %}
   </ul>
 </nav>

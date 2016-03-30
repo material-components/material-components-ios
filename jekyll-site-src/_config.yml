@@ -1,11 +1,12 @@
 title: Material Components for iOS
-email: material-components-ios-discuss@googlegroups.com
-description: > # this means to ignore newlines until "baseurl:"
-  Material Design Components for iOS
+description: > # this means to ignore newlines
+  Material Components for iOS is a set of user interface components that help iOS app developers build Material Design apps.
 basepath: "" # blank if hosted at site root, /subdirectory if hosted in "subdirectory" folder
-url: "https://material-components-ios.github.io"
-twitter_username: googledesign
+# temporarily disabled
+# url: "http://www.materialcomponents.org"
+url: ""
 permalink: :title
+analytics_id: "UA-51798601-9"
 
 
 # Build settings

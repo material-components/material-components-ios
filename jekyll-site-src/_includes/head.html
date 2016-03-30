@@ -1,19 +1,36 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" >
-  <title>{{ site.title | escape }}</title>
-  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" >
+  <title>{% if page.title and page.title != site.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
+
+  <meta itemprop="name" content="{% if page.title and page.title != site.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}" />
+  <meta itemprop="image" content="{{ site.url }}/images/social.png" />
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="{% if page.title and page.title != site.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}" />
+  <meta property="og:image" content="{{ site.url }}/images/social.png" />
+  <meta property="og:site_name" content="{{ site.title | escape }}" />
+  <meta property="article:section" content="{% if page.title %}{{ page.title | escape }}{% endif %}" />
 
   <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500|Material+Icons' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="{{ site.github.url }}/thirdparty/codemirror/lib/codemirror.css">
-  <link rel="stylesheet" href="{{ site.github.url }}/css/main.css">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.github.url }}">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.github.url }}">
-  <script src="{{ site.github.url }}/thirdparty/codemirror/lib/codemirror.js"></script>
-  <script src="{{ site.github.url }}/thirdparty/codemirror/mode/clike/clike.js"></script>
-  <script src="{{ site.github.url }}/thirdparty/codemirror/mode/swift/swift.js"></script>
-  <script src="{{ site.github.url }}/thirdparty/codemirror/mode/shell/shell.js"></script>
-  <script src="{{ site.github.url }}/thirdparty/codemirror/mode/ruby/ruby.js"></script>
-  <script src='{{ site.github.url }}/js/mdccoderender.js'></script>
+  <link rel="stylesheet" href="{{ site.url }}/thirdparty/codemirror/lib/codemirror.css">
+  <link rel="stylesheet" href="{{ site.url }}/css/main.css">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
+  <script src="{{ site.url }}/thirdparty/codemirror/lib/codemirror.js"></script>
+  <script src="{{ site.url }}/thirdparty/codemirror/mode/clike/clike.js"></script>
+  <script src="{{ site.url }}/thirdparty/codemirror/mode/swift/swift.js"></script>
+  <script src="{{ site.url }}/thirdparty/codemirror/mode/shell/shell.js"></script>
+  <script src="{{ site.url }}/thirdparty/codemirror/mode/ruby/ruby.js"></script>
+  <script src='{{ site.url }}/js/mdccoderender.js'></script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '{{ site.analytics_id }}', 'auto');
+    ga('send', 'pageview');
+  </script>
 </head>
