@@ -37,14 +37,14 @@
   self.view.backgroundColor = [UIColor whiteColor];
 
   UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
-  _stackView = [MDCHeaderStackView new];
+  _stackView = [[MDCHeaderStackView alloc] init];
   _stackView.backgroundColor = blueColor;
 
-  UINavigationBar *topBar = [UINavigationBar new];
+  UINavigationBar *topBar = [[UINavigationBar alloc] init];
   [topBar pushNavigationItem:self.navigationItem animated:NO];
   _stackView.topBar = topBar;
 
-  UIToolbar *bottomBar = [UIToolbar new];
+  UIToolbar *bottomBar = [[UIToolbar alloc] init];
   bottomBar.items =
       @[ [[UIBarButtonItem alloc] initWithTitle:@"Toggle"
                                           style:UIBarButtonItemStylePlain

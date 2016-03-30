@@ -24,7 +24,7 @@
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
 
-  MDCRaisedButton *raisedButton = [MDCRaisedButton new];
+  MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
   [raisedButton setTitle:@"Raised Button" forState:UIControlStateNormal];
   [raisedButton sizeToFit];
   [raisedButton addTarget:self
@@ -33,7 +33,7 @@
   raisedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:raisedButton];
 
-  MDCFlatButton *flatButton = [MDCFlatButton new];
+  MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
   [flatButton setTitle:@"Flat Button" forState:UIControlStateNormal];
   [flatButton setCustomTitleColor:[UIColor grayColor]];
   [flatButton sizeToFit];
@@ -43,7 +43,7 @@
   flatButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:flatButton];
 
-  MDCFloatingButton *floatingButton = [MDCFloatingButton new];
+  MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
   [floatingButton setTitle:@"+" forState:UIControlStateNormal];
   [floatingButton sizeToFit];
   [floatingButton addTarget:self

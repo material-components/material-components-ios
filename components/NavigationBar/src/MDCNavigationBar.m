@@ -114,14 +114,14 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)commonInit {
-  _observedNavigationItemLock = [NSObject new];
+  _observedNavigationItemLock = [[NSObject alloc] init];
 
-  _titleLabel = [UILabel new];
+  _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography titleFont];
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
 
-  _leftButtonBar = [MDCButtonBar new];
-  _rightButtonBar = [MDCButtonBar new];
+  _leftButtonBar = [[MDCButtonBar alloc] init];
+  _rightButtonBar = [[MDCButtonBar alloc] init];
 
   [self addSubview:_titleLabel];
   [self addSubview:_leftButtonBar];
@@ -356,7 +356,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 
   // Swap in the sandbag (so that UINavigationController won't steal our view)
   if (titleView) {
-    _observedNavigationItem.titleView = [MDCNavigationBarSandbagView new];
+    _observedNavigationItem.titleView = [[MDCNavigationBarSandbagView alloc] init];
   } else if (_observedNavigationItem.titleView) {
     _observedNavigationItem.titleView = nil;
   }

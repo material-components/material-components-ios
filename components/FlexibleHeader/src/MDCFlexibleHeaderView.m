@@ -159,7 +159,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _statusBarShifter = [MDCStatusBarShifter new];
+    _statusBarShifter = [[MDCStatusBarShifter alloc] init];
     _statusBarShifter.delegate = self;
 
     NSPointerFunctionsOptions options =
@@ -326,7 +326,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
   MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
   if (!info) {
-    info = [MDCFlexibleHeaderScrollViewInfo new];
+    info = [[MDCFlexibleHeaderScrollViewInfo alloc] init];
     [_trackedScrollViews setObject:info forKey:scrollView];
     if (_trackingScrollView == scrollView) {
       _trackingInfo = info;

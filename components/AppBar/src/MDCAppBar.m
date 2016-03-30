@@ -129,7 +129,7 @@ static const CGFloat kStatusBarHeight = 20;
   self.headerStackView = [[MDCHeaderStackView alloc] initWithFrame:self.view.bounds];
   self.headerStackView.translatesAutoresizingMaskIntoConstraints = NO;
 
-  self.navigationBar = [MDCNavigationBar new];
+  self.navigationBar = [[MDCNavigationBar alloc] init];
   self.headerStackView.topBar = self.navigationBar;
 
   [self.view addSubview:self.headerStackView];
@@ -184,7 +184,7 @@ void MDCAppBarPrepareParent(id<MDCAppBarParenting> parent) {
   if (parent.headerViewController) {
     return;
   }
-  MDCFlexibleHeaderViewController *hvc = [MDCFlexibleHeaderViewController new];
+  MDCFlexibleHeaderViewController *hvc = [[MDCFlexibleHeaderViewController alloc] init];
   parent.headerViewController = hvc;
 
   MDCFlexibleHeaderView *headerView = parent.headerViewController.headerView;
@@ -196,10 +196,10 @@ void MDCAppBarPrepareParent(id<MDCAppBarParenting> parent) {
     CGFloat elevation = MDCShadowElevationAppBar * intensity;
     [(MDCShadowLayer *)shadowLayer setElevation:elevation];
   };
-  [headerView setShadowLayer:[MDCShadowLayer new] intensityDidChangeBlock:intensityBlock];
+  [headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
 
   // Header stack view + navigation bar
-  MDCAppBarViewController *appBarViewController = [MDCAppBarViewController new];
+  MDCAppBarViewController *appBarViewController = [[MDCAppBarViewController alloc] init];
   [hvc addChildViewController:appBarViewController];
   [hvc.view addSubview:appBarViewController.view];
   [appBarViewController didMoveToParentViewController:hvc];

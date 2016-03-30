@@ -33,7 +33,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _fhvc = [MDCFlexibleHeaderViewController new];
+    _fhvc = [[MDCFlexibleHeaderViewController alloc] init];
     [self addChildViewController:_fhvc];
   }
   return self;
@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  UIToolbar *bar = [UIToolbar new];
+  UIToolbar *bar = [[UIToolbar alloc] init];
   bar.items = @[ [[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                   style:UIBarButtonItemStyleDone
                                                  target:self

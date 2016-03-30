@@ -92,7 +92,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
            NSStringFromClass([MDCButtonBar class]));
 #endif
 
-  MDCButtonBarButton *button = [MDCButtonBarButton new];
+  MDCButtonBarButton *button = [[MDCButtonBarButton alloc] init];
   [button setBackgroundColor:nil forState:UIControlStateNormal];
   button.disabledAlpha = kDisabledButtonAlpha;
 

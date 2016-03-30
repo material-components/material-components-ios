@@ -28,7 +28,7 @@
 - (instancetype)initWithContentViewController:(UIViewController *)contentViewController {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
-    _headerViewController = [MDCFlexibleHeaderViewController new];
+    _headerViewController = [[MDCFlexibleHeaderViewController alloc] init];
     [self addChildViewController:_headerViewController];
 
     self.contentViewController = contentViewController;

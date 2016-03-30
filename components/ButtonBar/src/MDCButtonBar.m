@@ -43,9 +43,9 @@ static NSString *const kEnabledSelector = @"enabled";
 }
 
 - (void)commonInit {
-  _buttonItemsLock = [NSObject new];
+  _buttonItemsLock = [[NSObject alloc] init];
 
-  _defaultBuilder = [MDCAppBarButtonBarBuilder new];
+  _defaultBuilder = [[MDCAppBarButtonBarBuilder alloc] init];
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
