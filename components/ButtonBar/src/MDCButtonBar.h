@@ -35,13 +35,12 @@
 #pragma mark Button Items
 
 /**
- The UIBarButtonItem objects that will be used to populate the button views in this bar.
+ An array of UIBarButtonItem objects that will be used to populate the button views in this bar.
 
- Setting a new array of button items will immediately recreate all visible buttons by
- calling @c reloadButtonsViews.
+ Setting a new array of items will result in immediate recreation of the button views.
 
- Once set, the receiver will watch changes to the UIBarButtonItem properties and apply
- them to the created button views.
+ Once set, changes made to the UIBarButtonItem properties will be observed and applied to the
+ created button views.
 
  ### Item target/action method signature
 
@@ -68,7 +67,7 @@
 
  - (void)didTap:(UIBarButtonItem *)item event:(UIEvent *)event button:(UIButton *)button;
  */
-@property(nonatomic, copy) NSArray *buttonItems;
+@property(nonatomic, copy) NSArray *items;
 
 #pragma mark Configuring Layout
 
@@ -126,6 +125,10 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
 
 // clang-format off
 @interface MDCButtonBar ()
+
+/** @see items */
+@property(nonatomic, copy) NSArray *buttonItems
+__deprecated_msg("Use items instead.");
 
 /** The delegate creates button views from UIBarButtonItem instances. */
 @property(nonatomic, weak) id<MDCButtonBarDelegate> delegate

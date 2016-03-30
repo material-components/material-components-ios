@@ -380,13 +380,13 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 - (void)setLeftBarButtonItems:(NSArray *)leftBarButtonItems {
   _leftBarButtonItems = [leftBarButtonItems copy];
-  _leftButtonBar.buttonItems = [self mdc_buttonItemsForLeftBar];
+  _leftButtonBar.items = [self mdc_buttonItemsForLeftBar];
   [self setNeedsLayout];
 }
 
 - (void)setRightBarButtonItems:(NSArray *)rightBarButtonItems {
   _rightBarButtonItems = [rightBarButtonItems copy];
-  _rightButtonBar.buttonItems = rightBarButtonItems;
+  _rightButtonBar.items = rightBarButtonItems;
   [self setNeedsLayout];
 }
 
@@ -419,7 +419,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
     return;
   }
   _backItem = backItem;
-  _leftButtonBar.buttonItems = [self mdc_buttonItemsForLeftBar];
+  _leftButtonBar.items = [self mdc_buttonItemsForLeftBar];
   [self setNeedsLayout];
 }
 
@@ -428,7 +428,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
     return;
   }
   _hidesBackButton = hidesBackButton;
-  _leftButtonBar.buttonItems = [self mdc_buttonItemsForLeftBar];
+  _leftButtonBar.items = [self mdc_buttonItemsForLeftBar];
   [self setNeedsLayout];
 }
 
@@ -437,7 +437,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
     return;
   }
   _leftItemsSupplementBackButton = leftItemsSupplementBackButton;
-  _leftButtonBar.buttonItems = [self mdc_buttonItemsForLeftBar];
+  _leftButtonBar.items = [self mdc_buttonItemsForLeftBar];
   [self setNeedsLayout];
 }
 
