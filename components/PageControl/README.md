@@ -2,11 +2,12 @@
 title:  "Page Control"
 layout: detail
 section: documentation
+excerpt: "Page Control is a drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout."
 ---
 # Page Control
 
 
-<!--<div class="ios-animation right" markdown="1">-->  
+<!--<div class="ios-animation right" markdown="1">-->
   <!--<video src="docs/assets/MDCPageControl_video.mp4" autoplay loop></video>-->
   [![ScreenShot](docs/assets/MDCPageControl_screenshot-1.png)](docs/assets/MDCPageControl_video.mp4)
 <!--</div>-->

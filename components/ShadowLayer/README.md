@@ -2,6 +2,7 @@
 title:  "Shadow Layer"
 layout: detail
 section: documentation
+excerpt: "The Shadow Layer component implements the Material Design specifications for elevation and shadows."
 ---
 
 # Shadow Layer

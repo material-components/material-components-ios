@@ -2,6 +2,7 @@
 title:  "Header Stack View"
 layout: detail
 section: documentation
+excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically-stacked bar views."
 ---
 # Header Stack View
 

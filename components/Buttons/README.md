@@ -2,6 +2,7 @@
 title:  "Buttons"
 layout: detail
 section: documentation
+excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
 ---
 # Buttons
 

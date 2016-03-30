@@ -37,7 +37,7 @@ TODO: Choose links below.
 ## Components
 
 - [**AppBar**
-  A flexible navigation bar, designed to provide a typical Material navigation experience.
+  A flexible navigation bar, designed to provide a typical Material Design navigation experience.
   ](AppBar/)
   <!--{: .icon-appbar }-->
 

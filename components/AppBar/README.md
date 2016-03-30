@@ -2,14 +2,15 @@
 title:  "App Bar"
 layout: detail
 section: documentation
+excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
 ---
 # App Bar
 
 ![App Bar](docs/assets/appbar_screenshot.png)
 <!--{: .ios-screenshot .right }-->
 
-The App Bar is a flexible navigation bar designed to provide a typical Material navigation
-experience.
+The App Bar is a flexible navigation bar designed to provide a typical Material Design
+navigation experience.
 <!--{: .intro :}-->
 
 ### Material Design Specifications

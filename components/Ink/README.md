@@ -2,6 +2,7 @@
 title:  "Ink"
 layout: detail
 section: documentation
+excerpt: "The Ink component provides a radial action in the form of a visual ripple of ink expanding outward from the user's touch."
 ---
 # Ink
 
