@@ -117,10 +117,8 @@ class NodeViewController: UITableViewController, MDCAppBarParenting, MDCCatalogB
     var vc: UIViewController
     if let vClass = node.viewController {
       let contentVC = ViewControllerFromClass(vClass)
-      let catalogBar = MDCCatalogBar(frame: CGRectZero)
-      vc = wrapVCWithCatalogBarVC(catalogBar, viewController: contentVC)
-      catalogBar.title = node.title
-      catalogBar.catalogBarDelegate = self
+      vc = MDCCatalogBarViewController(contentViewController: contentVC, title: node.title,
+        delegate: self)
     } else {
       vc = NodeViewController(node: node)
     }
@@ -131,30 +129,6 @@ class NodeViewController: UITableViewController, MDCAppBarParenting, MDCCatalogB
 
   func didPressExit() {
     self.navigationController?.popViewControllerAnimated(true)
-  }
-
-  // MARK: Private methods
-
-  private func wrapVCWithCatalogBarVC(catalogBar: MDCCatalogBar,
-                                      viewController: UIViewController) -> UIViewController {
-    let catalogBarHeight = CGFloat(52)
-    let wrapperVC = UIViewController()
-    viewController.view.frame =
-      CGRectMake(0,
-                 0,
-                 wrapperVC.view.bounds.size.width,
-                 wrapperVC.view.bounds.size.height - catalogBarHeight);
-    let catalogBarRect = CGRectMake(0,
-                                    viewController.view.frame.size.height,
-                                    viewController.view.frame.size.width,
-                                    catalogBarHeight);
-    catalogBar.frame = catalogBarRect;
-    wrapperVC.addChildViewController(viewController)
-    wrapperVC.view.addSubview(viewController.view)
-    viewController.didMoveToParentViewController(wrapperVC)
-    wrapperVC.view.addSubview(catalogBar)
-
-    return wrapperVC
   }
 
 }

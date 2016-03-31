@@ -23,7 +23,7 @@ protocol MDCCatalogBarDelegate {
 
 class MDCCatalogBar: UIView {
 
-  var catalogBarDelegate: MDCCatalogBarDelegate?
+  var delegate: MDCCatalogBarDelegate?
   var titleString = "Component"
   let descriptionLabel = UILabel()
   let exitLabel = UILabel()
@@ -71,7 +71,7 @@ class MDCCatalogBar: UIView {
   }
 
   func exitPressed() {
-    catalogBarDelegate?.didPressExit()
+    delegate?.didPressExit()
   }
 
 }
