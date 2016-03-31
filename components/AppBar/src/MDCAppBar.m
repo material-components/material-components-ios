@@ -39,6 +39,63 @@ static const CGFloat kStatusBarHeight = 20;
 
 @end
 
+@implementation MDCAppBar
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _headerViewController = [[MDCFlexibleHeaderViewController alloc] init];
+
+    MDCFlexibleHeaderView *headerView = _headerViewController.headerView;
+
+    // Shadow layer
+
+    MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock = ^(CALayer *_Nonnull shadowLayer,
+                                                                   CGFloat intensity) {
+      CGFloat elevation = MDCShadowElevationAppBar * intensity;
+      [(MDCShadowLayer *)shadowLayer setElevation:elevation];
+    };
+    [headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
+
+    // Header stack view + navigation bar
+    MDCAppBarViewController *appBarViewController = [[MDCAppBarViewController alloc] init];
+    [_headerViewController addChildViewController:appBarViewController];
+    [_headerViewController.view addSubview:appBarViewController.view];
+    [appBarViewController didMoveToParentViewController:_headerViewController];
+
+    [headerView forwardTouchEventsForView:appBarViewController.headerStackView];
+    [headerView forwardTouchEventsForView:appBarViewController.navigationBar];
+
+    _headerStackView = appBarViewController.headerStackView;
+    _navigationBar = appBarViewController.navigationBar;
+  }
+  return self;
+}
+
+- (void)addHeaderViewControllerToParentViewController:(nonnull UIViewController *)parentViewController {
+  [parentViewController addChildViewController:_headerViewController];
+}
+
+- (void)addSubviewsToParent {
+  MDCFlexibleHeaderViewController *fhvc = self.headerViewController;
+  if (fhvc.view.superview == fhvc.parentViewController.view) {
+    return;
+  }
+
+  // Enforce the header's desire to fully cover the width of its parent view.
+  CGRect frame = fhvc.view.frame;
+  frame.origin.x = 0;
+  frame.size.width = fhvc.parentViewController.view.bounds.size.width;
+  fhvc.view.frame = frame;
+
+  [fhvc.parentViewController.view addSubview:fhvc.view];
+  [fhvc didMoveToParentViewController:fhvc.parentViewController];
+
+  [self.navigationBar observeNavigationItem:fhvc.parentViewController.navigationItem];
+}
+
+@end
+
 @implementation MDCAppBarViewController
 
 - (MDCHeaderStackView *)headerStackView {
@@ -184,35 +241,16 @@ void MDCAppBarPrepareParent(id<MDCAppBarParenting> parent) {
   if (parent.headerViewController) {
     return;
   }
-  MDCFlexibleHeaderViewController *hvc = [[MDCFlexibleHeaderViewController alloc] init];
-  parent.headerViewController = hvc;
+  NSCAssert([parent isKindOfClass:[UIViewController class]], @"Parent must be a subclass of %@",
+            NSStringFromClass([UIViewController class]));
 
-  MDCFlexibleHeaderView *headerView = parent.headerViewController.headerView;
+  MDCAppBar *appBar = [[MDCAppBar alloc] init];
 
-  // Shadow layer
+  [appBar addHeaderViewControllerToParentViewController:(UIViewController *)parent];
 
-  MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock = ^(CALayer *_Nonnull shadowLayer,
-                                                                 CGFloat intensity) {
-    CGFloat elevation = MDCShadowElevationAppBar * intensity;
-    [(MDCShadowLayer *)shadowLayer setElevation:elevation];
-  };
-  [headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
-
-  // Header stack view + navigation bar
-  MDCAppBarViewController *appBarViewController = [[MDCAppBarViewController alloc] init];
-  [hvc addChildViewController:appBarViewController];
-  [hvc.view addSubview:appBarViewController.view];
-  [appBarViewController didMoveToParentViewController:hvc];
-
-  [headerView forwardTouchEventsForView:appBarViewController.headerStackView];
-  [headerView forwardTouchEventsForView:appBarViewController.navigationBar];
-
-  parent.headerStackView = appBarViewController.headerStackView;
-  parent.navigationBar = appBarViewController.navigationBar;
-
-  if ([parent isKindOfClass:[UIViewController class]]) {
-    [(UIViewController *)parent addChildViewController:hvc];
-  }
+  parent.headerViewController = appBar.headerViewController;
+  parent.headerStackView = appBar.headerStackView;
+  parent.navigationBar = appBar.navigationBar;
 }
 
 void MDCAppBarAddViews(id<MDCAppBarParenting> parent) {

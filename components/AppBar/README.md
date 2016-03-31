@@ -98,57 +98,24 @@ The result of following these steps will be that:
 3. you have access to the Navigation Bar and Header Stack View views via the corresponding
    properties.
 
-Step 1: **Make your view controller conform to MDCAppBarParenting**.
+Step 1: **Create an instance of MDCAppBar**.
 
-Conforming to this protocol allows your view controller to hold a strong reference to the App Bar
-properties. As we'll see in a moment, this allows the App Bar to configure your view controller with
-helper methods.
+You must also add the `headerViewController` as a child view controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
-@interface MyViewController () <MDCAppBarParenting>
+@interface MyViewController ()
+@property(nonatomic, strong, nonnull) MDCAppBar *appBar;
 @end
-~~~
 
-#### Swift
-~~~ swift
-class MyViewController: UITableViewController, MDCAppBarParenting
-~~~
-<!--</div>-->
-
-Step 2: **Synthesize the required properties of the MDCAppBarParenting protocol**.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-@implementation MyViewController
-
-@synthesize navigationBar;
-@synthesize headerStackView;
-@synthesize headerViewController;
-~~~
-
-#### Swift
-~~~ swift
-var headerStackView: MDCHeaderStackView?
-var navigationBar: MDCNavigationBar?
-var headerViewController: MDCFlexibleHeaderViewController?
-~~~
-<!--</div>-->
-
-Step 3: **Initialize your view controller's App Bar**.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    MDCAppBarPrepareParent(self);
+    _appBar = [[MDCAppBar alloc] init];
+
+    [self addChildViewController:_appBar.headerViewController];
   }
   return self;
 }
@@ -156,14 +123,17 @@ Step 3: **Initialize your view controller's App Bar**.
 
 #### Swift
 ~~~ swift
+let appBar = MDCAppBar()
+
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
   super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-  MDCAppBarPrepareParent(self)
+  self.addChildViewController(appBar.headerViewController)
+}
 ~~~
 <!--</div>-->
 
-Step 4: **Inform the App Bar that your view controller's view has loaded**.
+Step 2: **Inform the App Bar that your view controller's view has loaded**.
 
 Ideally you will do this after all views have been added to your controller's view in order to
 ensure that the App Bar's Flexible Header is in front of all other views.
@@ -177,7 +147,7 @@ ensure that the App Bar's Flexible Header is in front of all other views.
   ...
 
   // After all other views have been registered.
-  MDCAppBarAddViews(self);
+  [self.appBar addSubviewsToParent];
 }
 ~~~
 
@@ -187,7 +157,7 @@ override func viewDidLoad() {
   super.viewDidLoad()
 
   // After all other views have been registered.
-  MDCAppBarAddViews(self)
+  appBar.addSubviewsToParent()
 }
 ~~~
 <!--</div>-->

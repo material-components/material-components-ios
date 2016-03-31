@@ -17,10 +17,8 @@ limitations under the License.
 import UIKit
 import MaterialComponents
 
-class MDCCatalogTypicalExampleViewController: UIViewController, MDCAppBarParenting {
-  var navigationBar: MDCNavigationBar?
-  var headerStackView: MDCHeaderStackView?
-  var headerViewController: MDCFlexibleHeaderViewController?
+class MDCCatalogTypicalExampleViewController: UIViewController {
+  let appBar = MDCAppBar()
   var contentViewController = UIViewController()
 
   init(contentViewController: UIViewController, title: String) {
@@ -29,9 +27,10 @@ class MDCCatalogTypicalExampleViewController: UIViewController, MDCAppBarParenti
     self.addChildViewController(contentViewController)
     self.title = title
 
-    MDCAppBarPrepareParent(self)
-    self.headerViewController!.headerView.backgroundColor = UIColor.whiteColor()
-    let headerContentView = self.headerViewController!.headerView;
+    self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
+
+    let headerContentView = appBar.headerViewController.headerView;
     let lineFrame = CGRectMake(0, headerContentView.frame.height, headerContentView.frame.width, 1)
     let line = UIView(frame: lineFrame)
     line.backgroundColor = UIColor(white: 0.72, alpha: 1)
@@ -44,7 +43,7 @@ class MDCCatalogTypicalExampleViewController: UIViewController, MDCAppBarParenti
   }
 
   override func viewDidLoad() {
-    let headerHeight = self.headerViewController!.headerView.minimumHeight
+    let headerHeight = appBar.headerViewController.headerView.minimumHeight
     self.view.addSubview(contentViewController.view)
     contentViewController.didMoveToParentViewController(self)
     contentViewController.view.frame =
@@ -53,7 +52,8 @@ class MDCCatalogTypicalExampleViewController: UIViewController, MDCAppBarParenti
         self.view.bounds.size.width,
         self.view.bounds.size.height - headerHeight);
     contentViewController.view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    MDCAppBarAddViews(self);
+
+    appBar.addSubviewsToParent()
   }
 
 }

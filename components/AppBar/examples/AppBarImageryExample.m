@@ -18,27 +18,24 @@
 
 #import "MaterialAppBar.h"
 
-@interface AppBarImageryExample : UITableViewController <MDCAppBarParenting>
+@interface AppBarImageryExample : UITableViewController
+@property(nonatomic, strong) MDCAppBar *appBar;
 @end
 
 @implementation AppBarImageryExample
-
-@synthesize navigationBar;
-@synthesize headerStackView;
-@synthesize headerViewController;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   // Create our custom image view and add it to the header view.
   UIImageView *imageView = [[UIImageView alloc] initWithImage:[self headerBackgroundImage]];
-  imageView.frame = self.headerViewController.headerView.bounds;
+  imageView.frame = self.appBar.headerViewController.headerView.bounds;
 
   // Ensure that the image view resizes in reaction to the header view bounds changing.
   imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   // Ensure that the image view is below other App Bar views (headerStackView).
-  [self.headerViewController.headerView insertSubview:imageView atIndex:0];
+  [self.appBar.headerViewController.headerView insertSubview:imageView atIndex:0];
 
   // Scales up the image while the header is over-extending.
   imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -48,15 +45,16 @@
 
   // We want navigation bar + status bar tint color to be white, so we set tint color here and
   // implement -preferredStatusBarStyle.
-  self.headerViewController.headerView.tintColor = [UIColor whiteColor];
+  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
 
   // Allow the header to show more of the image.
-  self.headerViewController.headerView.maximumHeight = 200;
+  self.appBar.headerViewController.headerView.maximumHeight = 200;
 
   // Typical use
-  self.headerViewController.headerView.trackingScrollView = self.tableView;
-  self.tableView.delegate = self.headerViewController;
-  MDCAppBarAddViews(self);
+  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  self.tableView.delegate = self.appBar.headerViewController;
+
+  [self.appBar addSubviewsToParent];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -78,9 +76,11 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
+    _appBar = [[MDCAppBar alloc] init];
+
     self.title = @"Imagery";
 
-    MDCAppBarPrepareParent(self);
+    [self addChildViewController:_appBar.headerViewController];
   }
   return self;
 }

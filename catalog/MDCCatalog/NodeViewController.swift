@@ -17,18 +17,17 @@ limitations under the License.
 import UIKit
 import MaterialComponents
 
-class NodeViewController: CBCNodeListViewController, MDCAppBarParenting {
-  var navigationBar: MDCNavigationBar?
-  var headerStackView: MDCHeaderStackView?
-  var headerViewController: MDCFlexibleHeaderViewController?
+class NodeViewController: CBCNodeListViewController {
+  let appBar = MDCAppBar()
 
   override init(node: CBCNode) {
     super.init(node: node)
 
-    MDCAppBarPrepareParent(self)
-    self.headerViewController!.headerView.backgroundColor = UIColor.whiteColor()
+    self.addChildViewController(appBar.headerViewController)
 
-    let headerContentView = self.headerViewController!.headerView;
+    appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
+
+    let headerContentView = appBar.headerViewController.headerView
     let lineFrame = CGRectMake(0, headerContentView.frame.height, headerContentView.frame.width, 1)
     let line = UIView(frame: lineFrame)
     line.backgroundColor = UIColor(white: 0.72, alpha: 1)
@@ -42,9 +41,9 @@ class NodeViewController: CBCNodeListViewController, MDCAppBarParenting {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
-    self.headerViewController!.headerView.trackingScrollView = self.tableView
-    MDCAppBarAddViews(self);
+    appBar.addSubviewsToParent()
   }
 
   override func viewWillAppear(animated: Bool) {
@@ -56,30 +55,30 @@ class NodeViewController: CBCNodeListViewController, MDCAppBarParenting {
   // MARK: UIScrollViewDelegate
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
-    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
-      self.headerViewController!.headerView.trackingScrollViewDidScroll()
+    if (scrollView == appBar.headerViewController.headerView.trackingScrollView) {
+      appBar.headerViewController.headerView.trackingScrollViewDidScroll()
     }
   }
 
   override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
-      self.headerViewController!.headerView.trackingScrollViewDidEndDecelerating()
+    if (scrollView == appBar.headerViewController.headerView.trackingScrollView) {
+      appBar.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
     }
   }
 
   override func scrollViewDidEndDragging(scrollView: UIScrollView,
-    willDecelerate decelerate: Bool) {
-      if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
-        let headerView = self.headerViewController!.headerView
-        headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
-      }
+                                         willDecelerate decelerate: Bool) {
+    if (scrollView == appBar.headerViewController.headerView.trackingScrollView) {
+      let headerView = appBar.headerViewController.headerView
+      headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+    }
   }
 
   override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint,
-    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-      if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
-        let headerView = self.headerViewController!.headerView
-        headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity,
+                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    if (scrollView == appBar.headerViewController.headerView.trackingScrollView) {
+      let headerView = appBar.headerViewController.headerView
+      headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity,
           targetContentOffset: targetContentOffset)
       }
   }

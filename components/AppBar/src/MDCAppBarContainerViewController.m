@@ -24,20 +24,16 @@
 
 #import "MaterialFlexibleHeader.h"
 
-@interface MDCAppBarContainerViewController () <MDCAppBarParenting>
-@end
-
-@implementation MDCAppBarContainerViewController
-
-// Create explicit ivar because we're overriding the public getter API and implementing getter.
-@synthesize headerStackView;
-@synthesize navigationBar;
-@synthesize headerViewController = _headerViewController;
+@implementation MDCAppBarContainerViewController {
+  MDCAppBar *_appBar;
+}
 
 - (instancetype)initWithContentViewController:(UIViewController *)contentViewController {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
-    MDCAppBarPrepareParent(self);
+    _appBar = [[MDCAppBar alloc] init];
+
+    [self addChildViewController:_appBar.headerViewController];
 
     self.contentViewController = contentViewController;
   }
@@ -65,7 +61,7 @@
   [self.view addSubview:self.contentViewController.view];
   [self.contentViewController didMoveToParentViewController:self];
 
-  MDCAppBarAddViews(self);
+  [_appBar addSubviewsToParent];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -79,7 +75,7 @@
 #pragma mark - Public
 
 - (MDCFlexibleHeaderViewController *)headerViewController {
-  return _headerViewController;
+  return _appBar.headerViewController;
 }
 
 - (void)setContentViewController:(UIViewController *)contentViewController {

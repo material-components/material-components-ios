@@ -17,15 +17,13 @@ limitations under the License.
 import Foundation
 import MaterialComponents
 
-class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
-  var headerStackView: MDCHeaderStackView?
-  var navigationBar: MDCNavigationBar?
-  var headerViewController: MDCFlexibleHeaderViewController?
+class AppBarImagerySwiftExample: UITableViewController {
+  let appBar = MDCAppBar()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let headerView = self.headerViewController!.headerView
+    let headerView = appBar.headerViewController.headerView
 
     // Create our custom image view and add it to the header view.
     let imageView = UIImageView(image: self.headerBackgroundImage())
@@ -51,8 +49,9 @@ class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
     headerView.maximumHeight = 200
 
     headerView.trackingScrollView = self.tableView
-    self.tableView.delegate = self.headerViewController!
-    MDCAppBarAddViews(self)
+    self.tableView.delegate = appBar.headerViewController
+
+    appBar.addSubviewsToParent()
   }
 
   override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -66,7 +65,8 @@ class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
     self.title = "Imagery"
-    MDCAppBarPrepareParent(self)
+
+    self.addChildViewController(appBar.headerViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
