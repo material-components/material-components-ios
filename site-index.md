@@ -131,13 +131,13 @@ Create beautiful apps with&nbsp;Material&nbsp;Design.
 
 5.  ## What's next?
 
-    - [Read the Development Guide](http://www.google.com)
+    - [Read the Development Guide](/howto/)
       <!--{: .icon-guide }-->
 
-    - [View the full documentation](http://www.google.com)
+    - [View the Component Documentation](/components/)
       <!--{: .icon-components }-->
 
-    - [Explore our code samples](http://www.google.com)
+    - [Explore our Code Samples](/howto/#sample-code)
       <!--{: .icon-sample }-->
     <!--{: .icon-list }-->
 <!--{: .step-sequence }-->
