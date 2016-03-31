@@ -66,6 +66,25 @@
         }
       }
     }
+    function renderLineHighlight() {
+      var highlight = source.parentNode.dataset.highlight.split(',');
+      for (var i = 0; i < highlight.length; i++) {
+        highlight[i] = highlight[i].trim();
+        var rangeRegexp = /(\d)-(\d)/;
+        var found = highlight[i].match(rangeRegexp);
+        if (found !== null) {
+          var start = parseInt(found[1]) - 1;
+          var end = parseInt(found[2])
+          for (var j = start; j < end; j++) {
+            cm.getDoc().addLineClass(j, 'wrap', 'hll');
+          }
+        }
+        else {
+          var lineno = parseInt(highlight[i]) - 1;
+          cm.getDoc().addLineClass(lineno, 'wrap', 'hll');
+        }
+      }
+    }
     var kramdownLang = source.classList.length == 0 ?
         _defaultLang : source.classList[0].replace('language-', '');
     var language = kramdownToCodeMirrorMap[kramdownLang].language;
@@ -82,6 +101,10 @@
     // If the language is Shell, this piece of logic process user path properly
     if (language === 'Shell') {
       shellFilter();
+    }
+    // If line highlight is specified, add line highlight class to those lines
+    if (source.parentNode.dataset.highlight) {
+      renderLineHighlight();
     }
     return {
       language: language,

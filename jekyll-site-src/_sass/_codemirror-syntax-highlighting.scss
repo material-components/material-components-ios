@@ -90,6 +90,12 @@ pre.CodeMirror-line {
   }
 }
 
+.CodeMirror .hll {
+  .CodeMirror-linenumber.CodeMirror-gutter-elt,  .CodeMirror-line {
+    background-color: #EEEEEE;
+  }
+}
+
 // Styles for the multi-code container
 .material-code-render {
   position: relative;
