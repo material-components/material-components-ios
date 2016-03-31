@@ -166,7 +166,7 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
 Step 4: **Inform the App Bar that your view controller's view has loaded**.
 
 Ideally you will do this after all views have been added to your controller's view in order to
-ensure that the App Bar's view is above all of your other views.
+ensure that the App Bar's Flexible Header is in front of all other views.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
@@ -191,6 +191,12 @@ override func viewDidLoad() {
 }
 ~~~
 <!--</div>-->
+
+### Tracking a scroll view
+
+The App Bar's flexible nature is made possible due to the Flexible Header's ability to respond to
+interactions with a scroll view. Learn how to set up this scroll view tracking by reading the
+Flexible Header section on [Tracking a scroll view](../FlexibleHeader/#tracking-a-scroll-view).
 
 ### App Bar & UINavigationController
 
