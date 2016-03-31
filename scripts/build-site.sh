@@ -16,12 +16,22 @@
 
 # Validate arguments options
 args=$*
+deploy=false
+update=true
 while test $# -gt 0; do
 	case $1 in
-		"-b" | "--build" | "-d" | "--deploy")
+		"-b" | "--build")
+      shift 2
+    ;;
+    "-d" | "--deploy")
+      deploy=true
       shift 2
     ;;
     "--no-preview")
+      shift 1
+    ;;
+    "--ignore-update")
+      update=false
       shift 1
     ;;
     "-h" | "--help")
@@ -31,6 +41,8 @@ while test $# -gt 0; do
       echo "-b, --build=TARGET        Specify target to build."
       echo "                          Target values in all, site, components:c1,c2."
       echo "                          Default to all."
+      echo "--ignore-update           (Optional) Build without pull site-source branch."
+      echo "                          Forced to pull before deploy."
       echo "--no-preview              (Optional) Build without host when specified."
       echo "-d, --deploy=DESTINATION  (Optional) Specify destination to deploy."
       echo "                          Destination values in site-dev, develop, production."
@@ -43,6 +55,11 @@ while test $# -gt 0; do
     ;;
   esac
 done
+
+# Force pull latest code before deploy
+if $deploy ; then
+  update=true
+fi 
 
 # Checking pre-requsits for folders
 # Getting the link for github repository
@@ -57,11 +74,21 @@ ROOT_DIR="$(pwd)"
 
 # # If site-source doesn't exist, clone the repository into site-source folder
 if [[ -d ./$SITE_SOURCE_FOLDER ]]; then
-	echo "Update site folder..."
-	cd $SITE_SOURCE_FOLDER
-	git checkout $SITE_SOURCE_BRANCH >> /dev/null 2> /dev/null
-	git pull >> /dev/null 2> /dev/null
-	cd ..
+  if $update ; then
+  	echo "Update site folder..."
+  	cd $SITE_SOURCE_FOLDER
+  	git checkout $SITE_SOURCE_BRANCH >> /dev/null 2> /dev/null
+  	git pull >> /dev/null 2> /dev/null
+  	cd ..
+  else
+    echo -e "\033[31m*********************************************************************"
+    echo -e "\033[31m*****                                                           *****"
+    echo -e "\033[31m*****    Caution: Build Site without pull the latest change!    *****"
+    echo -e "\033[31m*****  You are at risk for deverging from the correct preview.  *****"
+    echo -e "\033[31m*****                                                           *****"
+    echo -e "\033[31m*********************************************************************"
+    echo -e "\033[0m"
+  fi
 else
 	echo "Set up site folder..."
 	git clone $GITHUB_REMOTE $SITE_SOURCE_FOLDER || { echo "Failed to clone."; exit 1; }
