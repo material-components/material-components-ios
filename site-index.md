@@ -9,7 +9,7 @@ layout: "homepage"
 # Material Components for&nbsp;iOS
 <!--{: .title }-->
 
-Create beautiful apps with&nbsp;Material&nbsp;Design.
+An easy way to create apps with&nbsp;Material&nbsp;Design.
 <!--{: .subhead }-->
 
 [Get Started](#quickstart)
