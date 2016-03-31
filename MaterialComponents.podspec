@@ -130,7 +130,7 @@ Pod::Spec.new do |s|
     }
 
     ss.dependency "MaterialComponents/FontDiskLoader"
-    # TODO: Make MDCRobotoFontLoader conform to the <MDCTypographyFontLoading>. This was intended to be a
+    # TODO: https://github.com/google/material-components-ios/issues/74 This was intended to be a
     # strong dependancy but is weak during the deprecation period.
     # ss.dependency "MaterialComponents/Typography"
   end

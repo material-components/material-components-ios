@@ -22,7 +22,7 @@
 static const CGFloat kEpsilon = 0.001f;
 
 @interface MDCTypography (Testing)
-+ (id<MDCTypographyFontLoader>)fontLoader;
++ (id<MDCTypographyFontLoading>)fontLoader;
 @end
 
 /** These tests have set the fontloader because it is a singleton. */
@@ -35,7 +35,7 @@ static const CGFloat kEpsilon = 0.001f;
   // Given
 
   // When
-  id<MDCTypographyFontLoader> fontLoader = [MDCTypography fontLoader];
+  id<MDCTypographyFontLoading> fontLoader = [MDCTypography fontLoader];
 
   // Then
   XCTAssertTrue([fontLoader isKindOfClass:[MDCRobotoFontLoader class]]);
