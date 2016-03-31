@@ -1,20 +1,41 @@
 howto:
-  - name: Quick Start
-    url: /howto/#quick-start
+  # NOTE
+  # we can use page-relative anchor links here, because it's all local to this page.
+  # this prevents page reload, which causes all the code containers to resize.
+  - name: Development Guide
+    url: /howto/
     class: toplevel
-  - name: Detailed Guides
-    url: /howto/#detailed-guides
+  - name: Getting Started
+    url: "#getting-started"
     class: toplevel
-  - name: Lorem Hello World
-    url: /howto/hello-world/
-    markdown: howto/hello-world.md
-  - name: Lorem Navigation Basics
-    url: /howto/navigation-basics/
-    markdown: howto/navigation-basics.md
+  - name: Material Headers
+    url: "#material-headers"
+    class: toplevel
+  - name: Starting with App Bar
+    url: "#starting-with-app-bar"
+    class: toplevel
+  - name: Flexible Header
+    url: "#flexible-header"
+    class: toplevel
+  - name: Material Collection Views
+    url: "#material-collection-views"
+    class: toplevel
+  - name: Material Buttons
+    url: "#material-buttons"
+    class: toplevel
+  - name: View Controller Transitions
+    url: "#bonus--proper-view-controller-transitions"
+    class: toplevel
+  - name: Next Steps
+    url: "#next-steps"
+    class: toplevel
   - name: Sample Code
-    url: /howto/#sample-code
+    url: "#sample-code"
     class: toplevel
 community:
+  - name: Community
+    url: "/community/"
+    class: toplevel
   - name: Community Structure
     url: "/community/#community-structure"
     class: toplevel
@@ -47,48 +68,48 @@ community:
     class: toplevel
 components:
   - name: Components
-    url: /components/#components
+    url: "/components/"
     class: toplevel
   - name: AppBar
-    url: /components/AppBar/
+    url: "/components/AppBar/"
     markdown: AppBar/README.md
   - name: ButtonBar
-    url: /components/ButtonBar/
+    url: "/components/ButtonBar/"
     markdown: ButtonBar/README.md
   - name: Buttons
-    url: /components/Buttons/
+    url: "/components/Buttons/"
     markdown: Buttons/README.md
   - name: Collections
-    url: /components/Collections/
+    url: "/components/Collections/"
     markdown: Collections/README.md
   - name: FlexibleHeader
-    url: /components/FlexibleHeader/
+    url: "/components/FlexibleHeader/"
     markdown: FlexibleHeader/README.md
   - name: HeaderStackView
-    url: /components/HeaderStackView/
+    url: "/components/HeaderStackView/"
     markdown: HeaderStackView/README.md
   - name: Ink
-    url: /components/Ink/
+    url: "/components/Ink/"
     markdown: Ink/README.md
   - name: NavigationBar
-    url: /components/NavigationBar/
+    url: "/components/NavigationBar/"
     markdown: NavigationBar/README.md
   - name: PageControl
-    url: /components/PageControl/
+    url: "/components/PageControl/"
     markdown: PageControl/README.md
   - name: ShadowElevations
-    url: /components/ShadowElevations/
+    url: "/components/ShadowElevations/"
     markdown: ShadowElevations/README.md
   - name: ShadowLayer
-    url: /components/ShadowLayer/
+    url: "/components/ShadowLayer/"
     markdown: ShadowLayer/README.md
   - name: Slider
-    url: /components/Slider/
+    url: "/components/Slider/"
     markdown: Slider/README.md
   - name: Switch
-    url: /components/Switch/
+    url: "/components/Switch/"
     markdown: Switch/README.md
   - name: Typography
-    url: /components/Typography/
+    url: "/components/Typography/"
     markdown: Typography/README.md
 
