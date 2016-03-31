@@ -56,12 +56,15 @@ class NodeViewController: UITableViewController, MDCAppBarParenting {
   }
 
   override func viewDidLoad() {
+    super.viewDidLoad()
+
     self.headerViewController!.headerView.trackingScrollView = self.tableView
     MDCAppBarAddViews(self);
   }
 
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
 
     // Sort alphabetically.
