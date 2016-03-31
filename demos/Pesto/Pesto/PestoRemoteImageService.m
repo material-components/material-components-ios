@@ -21,7 +21,7 @@
 @property(nonatomic) NSCache *dataCache;
 @property(nonatomic) NSCache *imageCache;
 @property(nonatomic) NSCache *thumbnailImageCache;
-@property(nonatomic) NSMutableDictionary *networkImageRequested;
+@property(nonatomic) NSCache *networkImageRequested;
 
 @end
 
@@ -33,7 +33,7 @@
     _dataCache = [[NSCache alloc] init];
     _imageCache = [[NSCache alloc] init];
     _thumbnailImageCache = [[NSCache alloc] init];
-    _networkImageRequested = [NSMutableDictionary dictionary];
+    _networkImageRequested = [[NSCache alloc] init];
   }
   return self;
 }
@@ -42,13 +42,15 @@
   UIImage *image = [self.imageCache objectForKey:url];
   if (image) {
     return image;
+  } else {
+    // Prevent the same image from being requested again if a network request is in progress.
+    if ([self.networkImageRequested objectForKey:url.absoluteString] != nil) {
+      return nil;
+    } else {
+      [self.networkImageRequested setObject:url forKey:url.absoluteString];
+    }
   }
 
-  // Prevent the same image from being requested again if a network request is in progress.
-  if ([self.networkImageRequested objectForKey:url.absoluteString] != nil) {
-    return nil;
-  }
-  [self.networkImageRequested setValue:url forKey:url.absoluteString];
   NSData *imageData = [[NSData alloc] initWithContentsOfURL:url];
   if (!imageData) {
     return nil;
@@ -58,7 +60,7 @@
   } else {
     return nil;
   }
-  image = [UIImage imageWithData:imageData];
+  image = [[UIImage alloc] initWithData:imageData];
   [self.imageCache setObject:image forKey:url];
   return image;
 }
