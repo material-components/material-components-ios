@@ -88,7 +88,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
   }
 
   class func catalogHierarchy() -> [String] {
-    return ["Buttons", "3 kinds of buttons (Swift)"]
+    return ["Buttons", "Buttons (Swift)"]
   }
 
 }
