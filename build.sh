@@ -33,6 +33,9 @@ while [ $# -gt 0 ]; do
       destination=$2
       shift 2
     ;;
+    *)
+      shift 1
+    ;;
   esac
 done
 # If deploy option is on, no preview and build all
