@@ -134,8 +134,8 @@ Create beautiful apps with&nbsp;Material&nbsp;Design.
     - [Read the Development Guide](http://www.google.com)
       <!--{: .icon-guide }-->
 
-    - [View the full iOS API](http://www.google.com)
-      <!--{: .icon-api }-->
+    - [View the full documentation](http://www.google.com)
+      <!--{: .icon-components }-->
 
     - [Explore our code samples](http://www.google.com)
       <!--{: .icon-sample }-->

@@ -17,7 +17,7 @@ TODO: Choose links below.
   <!--{: .icon-guide }-->
 
 - [API Documentation](http://www.google.com)
-  <!--{: .icon-api }-->
+  <!--{: .icon-components }-->
 
 - [Code Samples](http://www.google.com)
   <!--{: .icon-sample }-->
@@ -615,4 +615,10 @@ advanced features.
 - [**Pesto**
   A simple recipe app, which incorporates a flexible header, a grid list, cards, and a detail view.
   ](https://www.google.com/)
+  <!--{: .icon-pesto }-->
+
+- [**Pesto**
+  Lorem Hello World for shine introduction
+  ](https://www.google.com/)
+  <!--{: .icon-shrine }-->
 <!--{: .icon-list .large-format }-->

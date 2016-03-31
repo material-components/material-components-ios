@@ -20,7 +20,7 @@ TODO: Choose links below.
   <!--{: .icon-guide }-->
 
 - [API Documentation](http://www.google.com)
-  <!--{: .icon-api }-->
+  <!--{: .icon-components }-->
 
 - [Code Samples](http://www.google.com)
   <!--{: .icon-sample }-->
