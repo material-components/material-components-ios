@@ -41,6 +41,13 @@ class NodeViewController: UITableViewController, MDCAppBarParenting, MDCCatalogB
     self.title = self.node.title
     MDCAppBarPrepareParent(self)
     self.headerViewController!.headerView.backgroundColor = UIColor.whiteColor()
+
+    let headerContentView = self.headerViewController!.headerView.contentView;
+    let lineFrame = CGRectMake(0, headerContentView.frame.height, headerContentView.frame.width, 1)
+    let line = UIView(frame: lineFrame)
+    line.backgroundColor = UIColor(white: 0.72, alpha: 1)
+    line.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
+    headerContentView.addSubview(line)
   }
 
   required init?(coder aDecoder: NSCoder) {
