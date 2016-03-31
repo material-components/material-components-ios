@@ -89,6 +89,12 @@
  */
 @property(nonatomic) CGFloat buttonTitleBaseline;
 
+/**
+ Returns a height adhering to the Material spec for Bars and a width that is able to accommodate
+ every item present in the `items` property. The provided size is ignored.
+ */
+- (CGSize)sizeThatFits:(CGSize)size;
+
 @end
 
 typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
