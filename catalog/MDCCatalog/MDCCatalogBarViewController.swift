@@ -57,4 +57,11 @@ class MDCCatalogBarViewController: UIViewController {
     contentViewController.view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
   }
 
+  override func childViewControllerForStatusBarHidden() -> UIViewController? {
+    return contentViewController
+  }
+
+  override func childViewControllerForStatusBarStyle() -> UIViewController? {
+    return contentViewController
+  }
 }
