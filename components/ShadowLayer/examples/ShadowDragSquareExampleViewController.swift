@@ -71,7 +71,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
 
   // MARK: catalog by convention
 
-  class func catalogHierarchy() -> Array<String> {
+  class func catalogBreadcrumbs() -> Array<String> {
     return [ "Shadows", "Drag square"]
   }
 

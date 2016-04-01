@@ -85,7 +85,7 @@
 
 @implementation ButtonBarTypicalUseExample (CatalogByConvention)
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Button Bar", @"Typical use" ];
 }
 

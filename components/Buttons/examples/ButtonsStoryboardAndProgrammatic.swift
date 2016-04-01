@@ -19,7 +19,7 @@ import MaterialComponents
 
 class ButtonsStoryboardAndProgrammaticController: UIViewController {
 
-  class func catalogHierarchy() -> [String] {
+  class func catalogBreadcrumbs() -> [String] {
     return ["Buttons", "Storyboard and Programmatic"]
   }
 

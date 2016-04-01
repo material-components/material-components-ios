@@ -13,7 +13,7 @@
 
 @implementation FlexibleHeaderTypicalUseViewController (CatalogByConvention)
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Flexible Header", @"Typical use" ];
 }
 

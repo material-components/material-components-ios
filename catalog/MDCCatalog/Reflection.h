@@ -17,5 +17,5 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-extern NSArray<NSString *> *CatalogHierarchyFromClass(Class aClass);
+extern NSArray<NSString *> *CatalogBreadcrumbsFromClass(Class aClass);
 extern UIViewController *ViewControllerFromClass(Class aClass);

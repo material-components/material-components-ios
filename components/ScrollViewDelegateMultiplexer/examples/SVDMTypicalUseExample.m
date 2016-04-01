@@ -32,7 +32,7 @@
   MDCScrollViewDelegateMultiplexer *_multiplexer;
 }
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"ScrollViewDelegate Multiplexer", @"Typical use" ];
 }
 

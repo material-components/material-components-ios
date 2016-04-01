@@ -29,7 +29,7 @@
   MDCPageControl *_pageControl;
 }
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Page Control", @"Typical use" ];
 }
 

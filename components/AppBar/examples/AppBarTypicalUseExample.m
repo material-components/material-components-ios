@@ -84,7 +84,7 @@
 
 @implementation AppBarTypicalUseExample (CatalogByConvention)
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"App Bar", @"Typical use" ];
 }
 

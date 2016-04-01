@@ -82,7 +82,7 @@ class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
 
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
-  class func catalogHierarchy() -> [String] {
+  class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Swift", "Imagery"]
   }
   func catalogShouldHideNavigation() -> Bool {

@@ -80,7 +80,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
 // MARK: Catalog by convention
 extension ButtonBarTypicalUseSwiftExample {
-  class func catalogHierarchy() -> [String] {
+  class func catalogBreadcrumbs() -> [String] {
     return ["Button Bar", "Swift", "Typical use"]
   }
 }

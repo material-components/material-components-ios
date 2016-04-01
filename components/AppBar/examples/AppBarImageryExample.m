@@ -94,7 +94,7 @@
 
 @implementation AppBarImageryExample (CatalogByConvention)
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"App Bar", @"Imagery" ];
 }
 

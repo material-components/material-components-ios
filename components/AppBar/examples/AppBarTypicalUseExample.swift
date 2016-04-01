@@ -82,7 +82,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController, MDCAppBarParenting {
 
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
-  class func catalogHierarchy() -> [String] {
+  class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Swift", "Typical use"]
   }
   func catalogShouldHideNavigation() -> Bool {

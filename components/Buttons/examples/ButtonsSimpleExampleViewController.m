@@ -109,7 +109,7 @@
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
 }
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Buttons", @"Button Types and States" ];
 }
 

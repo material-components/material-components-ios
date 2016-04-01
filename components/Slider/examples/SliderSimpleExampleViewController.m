@@ -60,7 +60,7 @@
 
 #pragma mark catalg by convention
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Slider", @"MDCSlider vs UISlider" ];
 }
 

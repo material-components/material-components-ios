@@ -25,13 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     launchOptions: [NSObject: AnyObject]?) -> Bool {
     self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    let classList = classesRespondingToSelector("catalogHierarchy")
+    let classList = classesRespondingToSelector("catalogBreadcrumbs")
 
     // Build the catalog tree.
 
     let tree = Node(title: "Root")
     for c in classList {
-      let hierarchy = CatalogHierarchyFromClass(c)
+      let hierarchy = CatalogBreadcrumbsFromClass(c)
 
       // Walk and build the tree
       var node = tree

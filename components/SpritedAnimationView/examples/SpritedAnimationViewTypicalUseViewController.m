@@ -27,7 +27,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
 }
 
 // TODO: Support other categorizational methods.
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Sprited Animation View", @"Typical use" ];
 }
 

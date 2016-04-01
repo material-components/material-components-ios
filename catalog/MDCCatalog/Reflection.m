@@ -17,15 +17,15 @@
 #import "Reflection.h"
 
 @protocol CatalogNode <NSObject>
-- (NSArray<NSString *> *)catalogHierarchy;
+- (NSArray<NSString *> *)catalogBreadcrumbs;
 @end
 
 @protocol CatalogStoryboardViewController <NSObject>
 - (NSString *)catalogStoryboardName;
 @end
 
-NSArray<NSString *> *CatalogHierarchyFromClass(Class aClass) {
-  return [aClass performSelector:@selector(catalogHierarchy)];
+NSArray<NSString *> *CatalogBreadcrumbsFromClass(Class aClass) {
+  return [aClass performSelector:@selector(catalogBreadcrumbs)];
 }
 
 UIViewController *ViewControllerFromClass(Class aClass) {

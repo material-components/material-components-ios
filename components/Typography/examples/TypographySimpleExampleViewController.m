@@ -34,7 +34,7 @@
   [self.view addSubview:label];
 }
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Typography", @"Readme demo" ];
 }
 
