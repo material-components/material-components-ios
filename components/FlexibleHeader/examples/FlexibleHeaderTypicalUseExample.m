@@ -18,75 +18,82 @@
 
 #import "MaterialFlexibleHeader.h"
 
-@interface FlexibleHeaderTypicalUseViewController : UITableViewController
+#import "FlexibleHeaderTypicalUseSupplemental.h"
+
+@interface FlexibleHeaderTypicalUseViewController ()
+
+@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
+
 @end
 
-@implementation FlexibleHeaderTypicalUseViewController {
-  MDCFlexibleHeaderViewController *_fhvc;
-}
+@implementation FlexibleHeaderTypicalUseViewController
 
-// TODO: Support other categorizational methods.
-+ (NSArray *)catalogHierarchy {
-  return @[ @"Flexible Header", @"Typical use" ];
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _fhvc = [[MDCFlexibleHeaderViewController alloc] init];
-    [self addChildViewController:_fhvc];
+    [self commonMDCFlexibleHeaderViewControllerInit];
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCFlexibleHeaderViewControllerInit];
+  }
+  return self;
+}
+
+- (void)commonMDCFlexibleHeaderViewControllerInit {
+  _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+  [self addChildViewController:_fhvc];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  UIToolbar *bar = [[UIToolbar alloc] init];
-  bar.items = @[ [[UIBarButtonItem alloc] initWithTitle:@"Back"
-                                                  style:UIBarButtonItemStyleDone
-                                                 target:self
-                                                 action:@selector(didTapButton:)] ];
-  bar.frame = _fhvc.headerView.bounds;
-  bar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  [_fhvc.headerView addSubview:bar];
+  self.scrollView = [[UIScrollView alloc] init];
+  [self.view addSubview:self.scrollView];
 
-  _fhvc.headerView.trackingScrollView = self.tableView;
-  self.tableView.delegate = _fhvc;
+  // If a tableView was being used instead of a scrollView, you would set the trackingScrollView
+  // to be that tableView and either set the MDCFlexibleHeaderViewController to be the
+  // UITableViewDelegate or forward the UIScrollViewDelegate methods to
+  // MDCFlexibleHeaderViewController from the UITableViewDelegate.
+  self.scrollView.delegate = self.fhvc;
+  self.fhvc.headerView.trackingScrollView = self.scrollView;
 
-  _fhvc.view.frame = self.view.bounds;
-  [self.view addSubview:_fhvc.view];
+  self.fhvc.view.frame = self.view.bounds;
 
-  [_fhvc didMoveToParentViewController:self];
+  [self.view addSubview:self.fhvc.view];
+
+  [self.fhvc didMoveToParentViewController:self];
+
+  // Light blue 500
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithRed:0.012
+                                                         green:0.663
+                                                          blue:0.957
+                                                         alpha:1];
+
+  [self setupExampleViews];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+  // If the MDCFlexibleHeaderViewController's view is not going to replace a navigation bar,
+  // comment this line:
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
-- (void)didTapButton:(id)button {
-  [self.navigationController popViewControllerAnimated:YES];
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
 }
 
+// This method must be implemented for MDCFlexibleHeaderViewController's
+// MDCFlexibleHeaderView to properly support MDCFlexibleHeaderShiftBehavior should you choose
+// to customize it.
 - (UIViewController *)childViewControllerForStatusBarHidden {
-  return _fhvc;
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return 50;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
-  if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-  }
-  cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
-  return cell;
+  return self.fhvc;
 }
 
 @end
