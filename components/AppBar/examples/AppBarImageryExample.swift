@@ -35,7 +35,7 @@ class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
     imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
     // Ensure that the image view is below other App Bar views (headerStackView).
-    headerView.contentView.insertSubview(imageView, atIndex: 0)
+    headerView.insertSubview(imageView, atIndex: 0)
 
     // Scales up the image while the header is over-extending.
     imageView.contentMode = .ScaleAspectFill

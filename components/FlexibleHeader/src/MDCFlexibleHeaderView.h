@@ -89,13 +89,6 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  */
 @property(nonatomic, retain, nullable) CALayer *shadowLayer;
 
-#pragma mark Accessing the header's views
-
-/**
- Content for the flexible header should be added to the content view.
- */
-@property(nonatomic, retain, nonnull, readonly) UIView *contentView;
-
 /**
  Sets a custom shadow layer and a block that should be executed when shadow intensity changes.
  */
@@ -382,3 +375,17 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 - (void)flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)headerView;
 
 @end
+
+// clang-format off
+@interface MDCFlexibleHeaderView ()
+
+#pragma mark Accessing the header's views
+
+/**
+ Content for the flexible header should be added to the content view.
+ */
+@property(nonatomic, retain, nonnull, readonly) UIView *contentView
+__deprecated_msg("Please register views directly to the flexible header.");
+
+@end
+// clang-format on

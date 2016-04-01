@@ -31,7 +31,7 @@ class MDCCatalogTypicalExampleViewController: UIViewController, MDCAppBarParenti
 
     MDCAppBarPrepareParent(self)
     self.headerViewController!.headerView.backgroundColor = UIColor.whiteColor()
-    let headerContentView = self.headerViewController!.headerView.contentView;
+    let headerContentView = self.headerViewController!.headerView;
     let lineFrame = CGRectMake(0, headerContentView.frame.height, headerContentView.frame.width, 1)
     let line = UIView(frame: lineFrame)
     line.backgroundColor = UIColor(white: 0.72, alpha: 1)

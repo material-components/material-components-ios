@@ -38,7 +38,7 @@
   imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   // Ensure that the image view is below other App Bar views (headerStackView).
-  [self.headerViewController.headerView.contentView insertSubview:imageView atIndex:0];
+  [self.headerViewController.headerView insertSubview:imageView atIndex:0];
 
   // Scales up the image while the header is over-extending.
   imageView.contentMode = UIViewContentModeScaleAspectFill;
