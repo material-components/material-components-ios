@@ -33,7 +33,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 @implementation MDCTypography
 
-#pragma mark - Custom font loader
+#pragma mark - Font loader access
 
 + (void)setFontLoader:(id<MDCTypographyFontLoading>)fontLoader {
   sFontLoader = fontLoader;

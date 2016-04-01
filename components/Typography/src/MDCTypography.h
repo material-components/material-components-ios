@@ -47,10 +47,13 @@
  */
 @interface MDCTypography : NSObject
 
-#pragma mark - Custom font loader
+#pragma mark - Font loader access
 
 /** Set the font loader in order to use a non-Roboto or non-system font. */
 + (void)setFontLoader:(nonnull id<MDCTypographyFontLoading>)fontLoader;
+
+/** Get the current font loader. */
++ (nonnull id<MDCTypographyFontLoading>)fontLoader;
 
 #pragma mark - Display fonts (extra large fonts)
 
