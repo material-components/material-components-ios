@@ -36,6 +36,10 @@
   return self;
 }
 
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {

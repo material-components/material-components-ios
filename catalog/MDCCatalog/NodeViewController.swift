@@ -29,7 +29,7 @@ class Node {
   }
 }
 
-class NodeViewController: UITableViewController, MDCAppBarParenting, MDCCatalogBarDelegate {
+class NodeViewController: UITableViewController, MDCAppBarParenting {
   var navigationBar: MDCNavigationBar?
   var headerStackView: MDCHeaderStackView?
   var headerViewController: MDCFlexibleHeaderViewController?
@@ -124,8 +124,12 @@ class NodeViewController: UITableViewController, MDCAppBarParenting, MDCCatalogB
     var vc: UIViewController
     if let vClass = node.viewController {
       let contentVC = ViewControllerFromClass(vClass)
-      vc = MDCCatalogBarViewController(contentViewController: contentVC, title: node.title,
-        delegate: self)
+      if (contentVC.respondsToSelector((Selector("catalogShouldHideNavigation")))) {
+        vc = contentVC
+      } else {
+        vc = MDCCatalogTypicalExampleViewController(contentViewController: contentVC,
+          title: node.title)
+      }
     } else {
       vc = NodeViewController(node: node)
     }

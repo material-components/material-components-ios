@@ -88,6 +88,10 @@
   return @[ @"App Bar", @"Typical use" ];
 }
 
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
+}
+
 @end
 
 #pragma mark - Typical application code (not Material-specific)

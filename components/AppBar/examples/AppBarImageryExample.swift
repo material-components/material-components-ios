@@ -85,6 +85,9 @@ extension AppBarImagerySwiftExample {
   class func catalogHierarchy() -> [String] {
     return ["App Bar", "Swift", "Imagery"]
   }
+  func catalogShouldHideNavigation() -> Bool {
+    return true
+  }
 }
 
 // MARK: - Typical application code (not Material-specific)

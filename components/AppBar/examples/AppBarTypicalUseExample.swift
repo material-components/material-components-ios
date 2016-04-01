@@ -85,6 +85,9 @@ extension AppBarTypicalUseSwiftExample {
   class func catalogHierarchy() -> [String] {
     return ["App Bar", "Swift", "Typical use"]
   }
+  func catalogShouldHideNavigation() -> Bool {
+    return true
+  }
 }
 
 // MARK: - Typical application code (not Material-specific)
