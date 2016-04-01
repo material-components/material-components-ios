@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/google/material-components-ios.git", :tag => s.version.to_s }
   s.platform     = :ios, '7.0'
   s.requires_arc = true
-  s.source_files = 'components/*/examples/*.{h,m,swift}'
+  s.source_files = 'components/*/examples/*.{h,m,swift}', 'components/*/examples/supplemental/*.{h,m,swift}'
   s.resources = ['components/*/examples/resources/*']
   s.dependency 'MaterialComponents'
 end
