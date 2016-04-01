@@ -45,8 +45,8 @@
 
   NSArray *items = @[ actionItem, secondActionItem ];
 
-  // Set the title text attributes before assigning to buttonBar.items.
-  // See TODO(featherless): link to bug tracking title text attribute observation support.
+  // Set the title text attributes before assigning to buttonBar.items
+  // because of https://github.com/google/material-components-ios/issues/277
   for (UIBarButtonItem *item in items) {
     [item setTitleTextAttributes:[self itemTitleTextAttributes] forState:UIControlStateNormal];
   }

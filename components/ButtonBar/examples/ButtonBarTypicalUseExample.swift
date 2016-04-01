@@ -44,8 +44,8 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
     let items = [actionItem, secondActionItem]
 
-    // Set the title text attributes before assigning to buttonBar.items.
-    // See TODO(featherless): link to bug tracking title text attribute observation support.
+    // Set the title text attributes before assigning to buttonBar.items
+    // because of https://github.com/google/material-components-ios/issues/277
     for item in items {
       item.setTitleTextAttributes(self.itemTitleTextAttributes(), forState: .Normal)
     }
@@ -66,7 +66,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     print("Did tap action item: \(sender)")
   }
 
-  // MARK: - Typical application code (not Material-specific)
+  // MARK: Typical application code (not Material-specific)
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
@@ -78,6 +78,15 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
   }
 }
 
+// MARK: Catalog by convention
+extension ButtonBarTypicalUseSwiftExample {
+  class func catalogHierarchy() -> [String] {
+    return ["Button Bar", "Swift", "Typical use"]
+  }
+}
+
+// MARK: - Typical application code (not Material-specific)
+
 extension ButtonBarTypicalUseSwiftExample {
   func buttonBarBackgroundColor() -> UIColor {
     return UIColor(red: 0.012, green: 0.663, blue: 0.957, alpha: 0.2);
@@ -86,12 +95,5 @@ extension ButtonBarTypicalUseSwiftExample {
   func itemTitleTextAttributes () -> [String:AnyObject] {
     let textColor = UIColor(white: 0, alpha: 0.8)
     return [NSForegroundColorAttributeName:textColor];
-  }
-}
-
-// MARK: Catalog by convention
-extension ButtonBarTypicalUseSwiftExample {
-  class func catalogHierarchy() -> [String] {
-    return ["Button Bar", "Swift", "Typical use"]
   }
 }
