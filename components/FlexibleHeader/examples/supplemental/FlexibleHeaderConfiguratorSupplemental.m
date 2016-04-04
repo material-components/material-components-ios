@@ -212,7 +212,7 @@
 
   NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints =
       [NSMutableArray array];
-
+  // clang-format off
   [arrayOfConstraints addObjectsFromArray:
    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[overExtendSwitch]"
                                            options:NSLayoutFormatAlignAllCenterX
@@ -308,7 +308,7 @@
                         options:0
                         metrics:nil
                           views:viewBindings]];
-
+  // clang-format on
   [self addConstraints:arrayOfConstraints];
 }
 @end
