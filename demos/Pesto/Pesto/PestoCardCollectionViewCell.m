@@ -1,3 +1,19 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import "PestoCardCollectionViewCell.h"
 #import "PestoRemoteImageService.h"
 
@@ -31,17 +47,13 @@ static const CGFloat kPestoCardIconSize = 72.f;
   return self;
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  [self addSubview:self.cellView];
-}
-
 - (void)commonInit {
   _cellView = [[UIView alloc] initWithFrame:self.bounds];
   _cellView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _cellView.backgroundColor = [UIColor whiteColor];
   _cellView.clipsToBounds = YES;
+  [self addSubview:_cellView];
 
   MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.layer;
   shadowLayer.shadowMaskEnabled = NO;
@@ -69,6 +81,7 @@ static const CGFloat kPestoCardIconSize = 72.f;
 
   _authorLabel = [[UILabel alloc] init];
   _authorLabel.font = [MDCTypography captionFont];
+  _authorLabel.alpha = [MDCTypography captionFontOpacity];
   _authorLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1.f];
   _authorLabel.frame =
       CGRectMake(kPestoCardIconSize,
@@ -79,6 +92,7 @@ static const CGFloat kPestoCardIconSize = 72.f;
 
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography headlineFont];
+  _titleLabel.alpha = [MDCTypography headlineFontOpacity];
   _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
   _titleLabel.frame =
       CGRectMake(kPestoCardIconSize,
@@ -87,14 +101,6 @@ static const CGFloat kPestoCardIconSize = 72.f;
                  self.frame.size.width - iconImageViewFrame.size.width,
                  _titleLabel.font.pointSize + 2.f);
   [_cellView addSubview:_titleLabel];
-
-  UIView *inkView = [[UIView alloc] initWithFrame:self.bounds];
-  inkView.backgroundColor = [UIColor clearColor];
-  [self addSubview:inkView];
-
-  _inkTouchController = [[MDCInkTouchController alloc] initWithView:inkView];
-  _inkTouchController.delegate = self;
-  [_inkTouchController addInkView];
 }
 
 - (void)populateContentWithTitle:(NSString *)title

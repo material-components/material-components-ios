@@ -2,8 +2,12 @@
 title:  "Ink"
 layout: detail
 section: documentation
+excerpt: "The Ink component provides a radial action in the form of a visual ripple of ink expanding outward from the user's touch."
 ---
 # Ink
+
+![Ink](docs/assets/ink_screenshot.png)
+<!--{: .ios-screenshot .right }-->
 
 The Ink component provides a radial action in the form of a visual ripple of ink expanding
 outward from the user's touch.
@@ -38,7 +42,7 @@ outward from the user's touch.
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
-pod 'MaterialComponents/Ink'
+$ pod 'MaterialComponents/Ink'
 ~~~
 
 Then, run the following command:
@@ -67,7 +71,7 @@ The simplest method of using ink in your views is to use a
 `MDCInkTouchController`:
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 ~~~ objc
 UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [myButton setTitle:@"Tap me" forState:UIControlStateNormal];
@@ -86,7 +90,7 @@ touches, the following code uses the delegate's
 `inkTouchController:shouldProcessInkTouchesAtTouchLocation:` method:
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 ~~~ objc
 @interface MyDelegate <MDCInkTouchControllerDelegate>
 @end
@@ -119,7 +123,7 @@ Alternatively, you can use MCDInkView directly to display ink ripples using your
 own touch processing:
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 ~~~ objc
 MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
 MDCInkView *inkView = [[MDCInkView alloc] init];

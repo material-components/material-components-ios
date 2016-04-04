@@ -21,11 +21,11 @@
 CG_EXTERN CGSize MDCSwitchSizeThatFits(CGSize size);
 
 /**
- * A material design on/off switch UIControl.
- *
- * It has an interface similar to UISwitch. Note that MDCSwitch objects have an intrinsic size
- * and are not resizable.
- *
+ A material design on/off switch UIControl.
+
+ It has an interface similar to UISwitch. Note that MDCSwitch objects have an intrinsic size
+ and are not resizable.
+
  */
 NS_CLASS_AVAILABLE_IOS(7_0)
 IB_DESIGNABLE
@@ -48,37 +48,37 @@ IB_DESIGNABLE
 @property(null_resettable, nonatomic, strong) UIColor *disabledTrackColor UI_APPEARANCE_SELECTOR;
 
 /**
- * Boolean value that determines the off/on state of the switch.
- *
- * This property allows you to retrieve and set (without animation) a value determining whether the
- * MDCSwitch object is on or off.
+ Boolean value that determines the off/on state of the switch.
+
+ This property allows you to retrieve and set (without animation) a value determining whether the
+ MDCSwitch object is on or off.
  */
 @property(nonatomic, getter=isOn) IBInspectable BOOL on;
 
 /**
- * Returns an initialized switch object.
- *
- * @param frame A rectangle defining the frame of the MDCSwitch object. The size components of this
- * rectangle are ignored.
- *
- * @return An initialized MDCSwitch object.
+ Returns an initialized switch object.
+
+ @param frame A rectangle defining the frame of the MDCSwitch object. The size components of this
+ rectangle are ignored.
+
+ @return An initialized MDCSwitch object.
  */
 - (nonnull instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
 
 /**
- * Returns a switch object initialized from data in a given unarchiver.
- *
- * @return An initialized MDCSwitch object or nil if the object could not be initialized.
+ Returns a switch object initialized from data in a given unarchiver.
+
+ @return An initialized MDCSwitch object or nil if the object could not be initialized.
  */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 /**
- * Set the state of the switch, optionally with animation.
- *
- * @param on State to set the switch to.
- * @param animated Whether to animate the transition.
- *
- * Calling this method does not result in an action message being sent.
+ Set the state of the switch, optionally with animation.
+
+ @param on State to set the switch to.
+ @param animated Whether to animate the transition.
+
+ Calling this method does not result in an action message being sent.
  */
 - (void)setOn:(BOOL)on animated:(BOOL)animated;
 

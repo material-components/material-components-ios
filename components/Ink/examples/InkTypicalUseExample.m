@@ -60,7 +60,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1.f];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
   _inkTouchControllers = [[NSMutableArray alloc] init];
 
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
@@ -79,21 +79,30 @@
   }
   [self.view addSubview:boundedShapes];
 
-  ExampleShapes *unboundedShapes = [[ExampleShapes alloc] initWithFrame:customFrame];
-  unboundedShapes.title = @"Unbounded";
-  unboundedShapes.center = CGPointMake(self.view.center.x,
-                                       self.view.center.y +
-                                           (spacing / 2 + customFrame.size.height / 2));
-  unboundedShapes.shapeColor = [UIColor whiteColor];
-  for (UIView *view in unboundedShapes.subviews) {
-    MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:view];
-    inkTouchController.delegate = self;
-    [inkTouchController addInkView];
-    [inkTouchController.inkView setInkColor:[UIColor colorWithRed:1.f green:0 blue:0 alpha:0.2f]];
-    inkTouchController.inkView.clipsRippleToBounds = NO;
-    [_inkTouchControllers addObject:inkTouchController];
-  }
-  [self.view addSubview:unboundedShapes];
+  CGRect unboundedFrame = CGRectMake(spacing / 2,
+                                     spacing / 2,
+                                     customFrame.size.width - spacing,
+                                     customFrame.size.height - spacing);
+  UIView *unboundedShape = [[UIView alloc] initWithFrame:unboundedFrame];
+  unboundedShape.center = CGPointMake(self.view.center.x,
+                                      self.view.center.y +
+                                          (spacing / 2 + customFrame.size.height / 2));
+  unboundedShape.backgroundColor = [UIColor whiteColor];
+  MDCInkTouchController *inkTouchController =
+      [[MDCInkTouchController alloc] initWithView:unboundedShape];
+  inkTouchController.delegate = self;
+  [inkTouchController addInkView];
+  UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
+  [inkTouchController.inkView setInkColor:blueColor];
+  inkTouchController.inkView.inkStyle = MDCInkStyleUnbounded;
+  [_inkTouchControllers addObject:inkTouchController];
+  [self.view addSubview:unboundedShape];
+
+  UILabel *unboundedTitleLabel = [[UILabel alloc] initWithFrame:unboundedShape.bounds];
+  unboundedTitleLabel.text = @"Unbounded";
+  unboundedTitleLabel.textAlignment = NSTextAlignmentCenter;
+  unboundedTitleLabel.textColor = [UIColor grayColor];
+  [unboundedShape addSubview:unboundedTitleLabel];
 }
 
 #pragma mark - Private

@@ -17,52 +17,50 @@
 #import <UIKit/UIKit.h>
 
 /**
- * A material page control.
- *
- * This control is designed to be a drop-in replacement for UIPageControl, but adhering to the
- * material design specifications for animation and layout.
- *
- * The UIControlEventValueChanged control event is sent when the user changes the current page.
- *
- * @ingroup MaterialPageControl
+ A material page control.
+
+ This control is designed to be a drop-in replacement for UIPageControl, but adhering to the
+ material design specifications for animation and layout.
+
+ The UIControlEventValueChanged control event is sent when the user changes the current page.
  */
 @interface MDCPageControl : UIControl
 
 #pragma mark Managing the page
 
 /**
- * The number of page indicators in the control.
- *
- * Negative values are clamped to 0.
- *
- * The default value is 0.
+ The number of page indicators in the control.
+
+ Negative values are clamped to 0.
+
+ The default value is 0.
  */
 @property(nonatomic) NSInteger numberOfPages;
 
 /**
- * The current page indicator of the control.
- *
- * See setCurrentPage:animated: for animated version.
- *
- * Values outside the possible range are clamped within [0, numberOfPages-1].
- *
- * The default value is 0.
+ The current page indicator of the control.
+
+ See setCurrentPage:animated: for animated version.
+
+ Values outside the possible range are clamped within [0, numberOfPages-1].
+
+ The default value is 0.
  */
 @property(nonatomic) NSInteger currentPage;
 
 /**
- * Sets the current page indicator of the control.
- *
- * @param currentPage Index of the desired page indicator. Values outside the possible range are
- *                    clamped within [0, numberOfPages-1].
- * @param animated    YES the change will be animated; otherwise, NO.
+ Sets the current page indicator of the control.
+
+ @param currentPage Index of the desired page indicator. Values outside the possible range are
+                    clamped within [0, numberOfPages-1].
+ @param animated    YES the change will be animated; otherwise, NO.
  */
 - (void)setCurrentPage:(NSInteger)currentPage animated:(BOOL)animated;
 
 /**
- * A Boolean value that controls whether the page control is hidden when there is only one page.
- *
- * The default value is NO.
+ A Boolean value that controls whether the page control is hidden when there is only one page.
+
+ The default value is NO.
  */
 @property(nonatomic) BOOL hidesForSinglePage;
 
@@ -77,28 +75,28 @@
 #pragma mark Configuring the page behavior
 
 /**
- * A Boolean value that controls when the current page is displayed.
- *
- * If enabled, user interactions that cause the current page to change will not be visually
- * reflected until -updateCurrentPageDisplay is called.
- *
- * The default value is NO.
+ A Boolean value that controls when the current page is displayed.
+
+ If enabled, user interactions that cause the current page to change will not be visually
+ reflected until -updateCurrentPageDisplay is called.
+
+ The default value is NO.
  */
 @property(nonatomic) BOOL defersCurrentPageDisplay;
 
 /**
- * Updates the page indicator to the current page.
- *
- * This method is ignored if defersCurrentPageDisplay is NO.
+ Updates the page indicator to the current page.
+
+ This method is ignored if defersCurrentPageDisplay is NO.
  */
 - (void)updateCurrentPageDisplay;
 
 #pragma mark Resizing the control
 
 /**
- * Returns the size required to accommodate the given number of pages.
- *
- * @param pageCount The number of pages for which an estimated size should be returned.
+ Returns the size required to accommodate the given number of pages.
+
+ @param pageCount The number of pages for which an estimated size should be returned.
  */
 - (CGSize)sizeForNumberOfPages:(NSInteger)pageCount;
 

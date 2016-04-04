@@ -19,7 +19,6 @@
 		DEA791051C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA791041C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m */; };
 		DEBEDF291C3EF5D5004B614B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DEBEDF281C3EF5D5004B614B /* main.m */; };
 		DEBEDF2C1C3EF5D5004B614B /* PestoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DEBEDF2B1C3EF5D5004B614B /* PestoAppDelegate.m */; };
-		DEBEDF321C3EF5D5004B614B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF301C3EF5D5004B614B /* Main.storyboard */; };
 		DEBEDF341C3EF5D5004B614B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF331C3EF5D5004B614B /* Assets.xcassets */; };
 		DEBEDF371C3EF5D5004B614B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF351C3EF5D5004B614B /* LaunchScreen.storyboard */; };
 		DEE21BC11C9AF56E0024CB5C /* PestoRecipeCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE21BC01C9AF56E0024CB5C /* PestoRecipeCardView.m */; };
@@ -51,7 +50,6 @@
 		DEBEDF281C3EF5D5004B614B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DEBEDF2A1C3EF5D5004B614B /* PestoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoAppDelegate.h; sourceTree = "<group>"; };
 		DEBEDF2B1C3EF5D5004B614B /* PestoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PestoAppDelegate.m; sourceTree = "<group>"; };
-		DEBEDF311C3EF5D5004B614B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DEBEDF331C3EF5D5004B614B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEBEDF361C3EF5D5004B614B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEBEDF381C3EF5D5004B614B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,9 +90,9 @@
 			isa = PBXGroup;
 			children = (
 				DEBEDF261C3EF5D5004B614B /* Pesto */,
-				DEBEDF251C3EF5D5004B614B /* Products */,
-				3223094C29F5C08CCEE42126 /* Pods */,
 				DAFCE01AEA03CE3D02550900 /* Frameworks */,
+				3223094C29F5C08CCEE42126 /* Pods */,
+				DEBEDF251C3EF5D5004B614B /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,7 +110,6 @@
 				DEBEDF331C3EF5D5004B614B /* Assets.xcassets */,
 				DEBEDF381C3EF5D5004B614B /* Info.plist */,
 				DEBEDF351C3EF5D5004B614B /* LaunchScreen.storyboard */,
-				DEBEDF301C3EF5D5004B614B /* Main.storyboard */,
 				DEBEDF2A1C3EF5D5004B614B /* PestoAppDelegate.h */,
 				DEBEDF2B1C3EF5D5004B614B /* PestoAppDelegate.m */,
 				C91F6A481C62BC0400EB4BA8 /* PestoAvatarView.h */,
@@ -210,7 +207,6 @@
 			files = (
 				DEBEDF371C3EF5D5004B614B /* LaunchScreen.storyboard in Resources */,
 				DEBEDF341C3EF5D5004B614B /* Assets.xcassets in Resources */,
-				DEBEDF321C3EF5D5004B614B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,14 +283,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		DEBEDF301C3EF5D5004B614B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DEBEDF311C3EF5D5004B614B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DEBEDF351C3EF5D5004B614B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -405,6 +393,7 @@
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				INFOPLIST_FILE = Pesto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.Pesto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -431,6 +420,7 @@
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				INFOPLIST_FILE = Pesto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.Pesto;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -56,7 +56,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 @interface UIBarButtonItem (MDCHeaderInternal)
 
 // Internal version of the standard -customView property. When an item is pushed onto a
-// MDCNavigationController stack, any -customView object is moved over to this property. This
+// UINavigationController stack, any -customView object is moved over to this property. This
 // prevents UINavigationController from adding the customView to its own view hierarchy.
 @property(nonatomic, strong, setter=mdc_setCustomView:) UIView *mdc_customView;
 
@@ -92,7 +92,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
            NSStringFromClass([MDCButtonBar class]));
 #endif
 
-  MDCButtonBarButton *button = [MDCButtonBarButton new];
+  MDCButtonBarButton *button = [[MDCButtonBarButton alloc] init];
   [button setBackgroundColor:nil forState:UIControlStateNormal];
   button.disabledAlpha = kDisabledButtonAlpha;
 
@@ -110,7 +110,6 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   button.tag = buttonItem.tag;
 
   button.customTitleColor = self.buttonTitleColor;
-  [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
   [button setUnderlyingColor:self.buttonUnderlyingColor];
 
   [self updateButton:button withItem:buttonItem barMetrics:UIBarMetricsDefault];

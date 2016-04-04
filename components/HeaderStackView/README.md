@@ -2,8 +2,12 @@
 title:  "Header Stack View"
 layout: detail
 section: documentation
+excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically-stacked bar views."
 ---
 # Header Stack View
+
+![Header Stack View](docs/assets/headerstackview_screenshot.png)
+<!--{: .ios-screenshot .right }-->
 
 The Header Stack View component is a view that coordinates the layout of two vertically-stacked
 bar views.
@@ -37,7 +41,7 @@ bar views.
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
-pod 'MaterialComponents/HeaderStackView'
+$ pod 'MaterialComponents/HeaderStackView'
 ~~~
 
 Then, run the following command:

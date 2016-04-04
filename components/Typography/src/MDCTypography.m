@@ -27,7 +27,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 // This protocal is not intended for actual use. It allows us to weakly reference MDCRoboto with
 // less warnings. @c defaultFontLoader
 @protocol MDCRobotoFontLoaderWeakLink
-/** Shared singleton instance. */
+// Shared singleton instance.
 + (nonnull instancetype)sharedInstance;
 @end
 
@@ -90,72 +90,58 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 #pragma mark - Common UI fonts.
 
-/** Returns the headline font. */
 + (UIFont *)headlineFont {
   return [[self fontLoader] regularFontOfSize:24];
 }
 
-/** Returns the recommended opacity of black text for the headline font. */
 + (CGFloat)headlineFontOpacity {
   return MDCTypographyStandardOpacity;
 }
 
-/** Returns the title font. */
 + (UIFont *)titleFont {
   return [[self fontLoader] mediumFontOfSize:20];
 }
 
-/** Returns the recommended opacity of black text for the title font. */
 + (CGFloat)titleFontOpacity {
   return MDCTypographyStandardOpacity;
 }
 
-/** Returns the subhead font. (subtitle) */
 + (UIFont *)subheadFont {
   return [[self fontLoader] regularFontOfSize:16];
 }
 
-/** Returns the recommended opacity of black text for the subhead font. */
 + (CGFloat)subheadFontOpacity {
   return MDCTypographyStandardOpacity;
 }
 
-/** Returns the body 2 text font. (bold text) */
 + (UIFont *)body2Font {
   return [[self fontLoader] mediumFontOfSize:14];
 }
 
-/** Returns the recommended opacity of black text for the body 2 font. */
 + (CGFloat)body2FontOpacity {
   return MDCTypographyStandardOpacity;
 }
 
-/** Returns the body 1 text font. (normal text) */
 + (UIFont *)body1Font {
   return [[self fontLoader] regularFontOfSize:14];
 }
 
-/** Returns the recommended opacity of black text for the body 1 font. */
 + (CGFloat)body1FontOpacity {
   return MDCTypographyStandardOpacity;
 }
 
-/** Returns the caption font. (a small font for image captions) */
 + (UIFont *)captionFont {
   return [[self fontLoader] regularFontOfSize:12];
 }
 
-/** Returns the recommended opacity of black text for the caption font. */
 + (CGFloat)captionFontOpacity {
   return MDCTypographySecondaryOpacity;
 }
 
-/** Returns a font for buttons. */
 + (UIFont *)buttonFont {
   return [[self fontLoader] mediumFontOfSize:14];
 }
 
-/** Returns the recommended opacity of black text for the button font. */
 + (CGFloat)buttonFontOpacity {
   return MDCTypographyStandardOpacity;
 }

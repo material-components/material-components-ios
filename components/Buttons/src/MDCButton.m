@@ -286,15 +286,11 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   [super touchesEnded:touches withEvent:event];
 
   CGPoint location = [self locationFromTouches:touches];
+  [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
 
   BOOL inside = CGRectContainsPoint(self.bounds, location);
-  if (inside) {
-    [_inkView evaporateWithCompletion:nil];
-    if (_shouldRaiseOnTouch) {
-      [self animateButtonToHeightForState:UIControlStateNormal];
-    }
-  } else {
-    [self evaporateInkToPoint:location];
+  if (inside && _shouldRaiseOnTouch) {
+    [self animateButtonToHeightForState:UIControlStateNormal];
   }
 }
 
@@ -490,9 +486,9 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 }
 
 /**
- * The background color that a user would see for this button. If self.backgroundColor is not
- * transparent, then returns that. Otherwise, returns self.underlyingColor.
- * @note If self.underlyingColor is not set, then this method will return nil.
+ The background color that a user would see for this button. If self.backgroundColor is not
+ transparent, then returns that. Otherwise, returns self.underlyingColor.
+ @note If self.underlyingColor is not set, then this method will return nil.
  */
 - (UIColor *)effectiveBackgroundColor {
   return ![self isTransparentColor:self.currentBackgroundColor] ? self.currentBackgroundColor : self.underlyingColor;
@@ -520,7 +516,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 }
 
 - (void)handleBeginTouches:(NSSet *)touches {
-  [_inkView spreadFromPoint:[self locationFromTouches:touches] completion:nil];
+  [_inkView startTouchBeganAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
   if (_shouldRaiseOnTouch) {
     [self animateButtonToHeightForState:UIControlStateSelected];
   }
@@ -532,7 +528,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 }
 
 - (void)evaporateInkToPoint:(CGPoint)toPoint {
-  [_inkView evaporateToPoint:toPoint completion:nil];
+  [_inkView startTouchEndedAnimationAtPoint:toPoint completion:nil];
   if (_shouldRaiseOnTouch) {
     [self animateButtonToHeightForState:UIControlStateNormal];
   }

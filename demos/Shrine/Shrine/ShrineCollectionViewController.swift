@@ -1,3 +1,19 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 import UIKit
 
 class ShrineCollectionViewController: UICollectionViewController {
@@ -22,11 +38,13 @@ class ShrineCollectionViewController: UICollectionViewController {
     return 1
   }
 
-  override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  override func collectionView(collectionView: UICollectionView,
+                               numberOfItemsInSection section: Int) -> Int {
     return self.shrineData.titles.count
   }
 
-  override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  override func collectionView(collectionView: UICollectionView,
+                               cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ShrineCollectionViewCell", forIndexPath: indexPath) as! ShrineCollectionViewCell
     let itemNum:NSInteger = indexPath.row;
 
@@ -48,7 +66,8 @@ class ShrineCollectionViewController: UICollectionViewController {
       return CGSizeMake(cellWidth, cellHeight);
   }
 
-  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+  override func collectionView(collectionView: UICollectionView,
+                               didSelectItemAtIndexPath indexPath: NSIndexPath) {
     let itemNum:NSInteger = indexPath.row;
 
     let detailVC = ShrineDetailViewController()
@@ -63,18 +82,19 @@ class ShrineCollectionViewController: UICollectionViewController {
     headerViewController.scrollViewDidScroll(scrollView);
     let scrollOffsetY = scrollView.contentOffset.y;
     let duration = 0.5
-    let options = UIViewKeyframeAnimationOptions.CalculationModeLinear
     if (scrollOffsetY > -240) {
-      UIView.animateKeyframesWithDuration(duration, delay: 0, options: options, animations: { () -> Void in
+      UIView.animateWithDuration(duration, animations: {
         self.headerContentView.scrollView.alpha = 0
         self.headerContentView.pageControl.alpha = 0
-        }, completion: { (bool) -> Void in
+        self.headerContentView.logoImageView.alpha = 0
+        self.headerContentView.logoTextImageView.alpha = 1
       })
     } else {
-      UIView.animateKeyframesWithDuration(duration, delay: 0, options: options, animations: { () -> Void in
+      UIView.animateWithDuration(duration, animations: {
         self.headerContentView.scrollView.alpha = 1
         self.headerContentView.pageControl.alpha = 1
-        }, completion: { (bool) -> Void in
+        self.headerContentView.logoImageView.alpha = 1
+        self.headerContentView.logoTextImageView.alpha = 0
       })
     }
   }
@@ -106,13 +126,13 @@ class ShrineCollectionViewController: UICollectionViewController {
     headerView.trackingScrollView = collectionView
     headerView.maximumHeight = 440;
     headerView.minimumHeight = 72;
-    headerView.contentView?.backgroundColor = UIColor.whiteColor()
-    headerView.contentView?.layer.masksToBounds = true
-    headerView.contentView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    headerView.contentView.backgroundColor = UIColor.whiteColor()
+    headerView.contentView.layer.masksToBounds = true
+    headerView.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
-    headerContentView.frame = (headerView.contentView?.frame)!
+    headerContentView.frame = (headerView.contentView.frame)
     headerContentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    headerView.contentView?.addSubview(headerContentView)
+    headerView.contentView.addSubview(headerContentView)
   }
 
 }

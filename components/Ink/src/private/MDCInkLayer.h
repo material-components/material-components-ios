@@ -47,18 +47,6 @@
 @property(nonatomic, readonly, assign) NSTimeInterval evaporateDuration;
 
 /**
- Should fill background on spreading.
-
- Turn off if using it in borderless views/buttons. Default to on.
- */
-@property(nonatomic, assign) BOOL shouldFillBackgroundOnSpread;
-
-/**
- Gravitate ink blast to the center of the view.
- */
-@property(nonatomic, assign) BOOL gravitatesInk;
-
-/**
  Set to YES if the ink layer should be using a custom center.
  */
 @property(nonatomic, assign) BOOL useCustomInkCenter;

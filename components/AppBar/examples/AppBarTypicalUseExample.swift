@@ -65,6 +65,12 @@ class AppBarTypicalUseSwiftExample: UITableViewController, MDCAppBarParenting {
     return self.headerViewController
   }
 
+  // Optional step: The Header View Controller does basic inspection of the header view's background
+  //                color to identify whether the status bar should be light or dark-themed.
+  override func childViewControllerForStatusBarStyle() -> UIViewController? {
+    return self.headerViewController
+  }
+
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 

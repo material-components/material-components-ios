@@ -32,8 +32,6 @@
      set color of track via @c trackColor
    New features
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
-
- @ingroup Slider
  */
 IB_DESIGNABLE
 @interface MDCSlider : UIControl <NSCoding>

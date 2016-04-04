@@ -16,6 +16,7 @@
 		665A34DC1C6BD01900962055 /* Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 665A34DB1C6BD01900962055 /* Reflection.m */; };
 		665A34E01C6BDB4600962055 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A34DF1C6BDB4600962055 /* Runtime.swift */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
+		DEEC11E51CA9AC3A00A15FC8 /* MDCCatalogBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEC11E41CA9AC3A00A15FC8 /* MDCCatalogBar.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 		A2985B007C0718CB5E2511B3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFBFBC9BA56EED442714E5F3 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
+		DEEC11E41CA9AC3A00A15FC8 /* MDCCatalogBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogBar.swift; sourceTree = "<group>"; };
 		DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
 		DEFF1C057348FFB1866CD023 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FBDDFF6A49F084B665BA398A /* Pods-MDCCatalog-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalog/Pods-MDCCatalog-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			children = (
 				664524B61C6BA62A001ADBF8 /* AppDelegate.swift */,
 				665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */,
+				DEEC11E41CA9AC3A00A15FC8 /* MDCCatalogBar.swift */,
 				DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */,
 				DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */,
 				664524B81C6BA62A001ADBF8 /* NodeViewController.swift */,
@@ -341,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				665A34E01C6BDB4600962055 /* Runtime.swift in Sources */,
+				DEEC11E51CA9AC3A00A15FC8 /* MDCCatalogBar.swift in Sources */,
 				DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */,
 				665A34DC1C6BD01900962055 /* Reflection.m in Sources */,
 				664524B91C6BA62A001ADBF8 /* NodeViewController.swift in Sources */,
@@ -494,7 +498,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MDCCatalog/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -510,7 +514,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MDCCatalog/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalog;
 				PRODUCT_NAME = "$(TARGET_NAME)";

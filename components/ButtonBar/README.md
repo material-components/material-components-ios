@@ -2,6 +2,7 @@
 title:  "Button Bar"
 layout: detail
 section: documentation
+excerpt: "The Button Bar component is a view that facilitates the creation and layout of a horizontally-aligned list of buttons."
 ---
 # Button Bar
 
@@ -37,7 +38,7 @@ horizontally-aligned list of buttons.
 To add the Buttons component to your Xcode project using CocoaPods, add the following to your PodFile:
 
 ~~~ bash
-pod 'MaterialComponents/ButtonBar'
+$ pod 'MaterialComponents/ButtonBar'
 ~~~
 
 Then, run the following command:
@@ -72,13 +73,13 @@ TODO(featherless): Describe common complete scenarios here.
 ### Example Do a Thing
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 // Obj C Version
 ~~~
 
-### Swift
+#### Swift
 
 ~~~ swift
 // Swift Version

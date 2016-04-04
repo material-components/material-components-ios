@@ -16,10 +16,6 @@
 
 #import "private/MDCRoboto+Constants.h"
 
-#ifndef GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
-#define GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE @"MaterialRobotoFontLoader.bundle"
-#endif  // GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE
-
 NSString *const MDCRobotoRegularFontName = @"Roboto-Regular";
 NSString *const MDCRobotoRegularItalicFontName = @"Roboto-Italic";
 NSString *const MDCRobotoBoldFontName = @"Roboto-Bold";
@@ -38,4 +34,4 @@ NSString *const MDCRobotoMediumItalicFontFilename = @"Roboto-MediumItalic.ttf";
 NSString *const MDCRobotoLightFontFilename = @"Roboto-Light.ttf";
 NSString *const MDCRobotoLightItalicFontFilename = @"Roboto-LightItalic.ttf";
 
-NSString *const MDCRobotoBundle = GOOGLEKIT_QUANTUM_TYPOGRAPHY_BUNDLE;
+NSString *const MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";

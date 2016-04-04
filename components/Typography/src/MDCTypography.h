@@ -130,7 +130,7 @@
  #### Example
 
  ```
- [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+ [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
  ```
  */
 @interface MDCSystemFontLoader : NSObject <MDCTypographyFontLoading>

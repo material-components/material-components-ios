@@ -1,3 +1,19 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 import UIKit
 
 class ShrineDetailView: UIScrollView {
@@ -34,7 +50,7 @@ class ShrineDetailView: UIScrollView {
     }
 
     label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
-    label.textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
+    label.textColor = UIColor(red: 0.039, green: 0.192, blue: 0.259, alpha: 1)
     label.lineBreakMode = .ByWordWrapping
     label.numberOfLines = 2
 
@@ -70,7 +86,7 @@ class ShrineDetailView: UIScrollView {
 
     floatingButton.setTitle("+", forState: UIControlState.Normal)
     floatingButton.backgroundColor =
-      UIColor(red: 22 / 255, green: 240 / 255, blue: 240 / 255, alpha: 1)
+      UIColor(red: 0.086, green: 0.941, blue: 0.941, alpha: 1)
     floatingButton.sizeToFit()
     floatingButton.frame = CGRectMake(self.frame.width - floatingButton.frame.width - labelPadding,
       500, floatingButton.frame.width, floatingButton.frame.height)
@@ -98,7 +114,8 @@ class ShrineDetailViewController: UIViewController {
     dismissBtn.customTitleColor = UIColor.grayColor()
     dismissBtn.sizeToFit()
     dismissBtn.frame = CGRectMake(8, 28, dismissBtn.frame.width, dismissBtn.frame.height)
-    dismissBtn.addTarget(self, action: "dismissDetails", forControlEvents: .TouchUpInside)
+    dismissBtn.addTarget(self, action: "dismissDetails",
+                         forControlEvents: .TouchUpInside)
     self.view.addSubview(dismissBtn)
   }
 

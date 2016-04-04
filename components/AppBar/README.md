@@ -2,11 +2,15 @@
 title:  "App Bar"
 layout: detail
 section: documentation
+excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
 ---
 # App Bar
 
-The App Bar is a flexible navigation bar designed to provide a typical Material navigation
-experience.
+![App Bar](docs/assets/appbar_screenshot.png)
+<!--{: .ios-screenshot .right }-->
+
+The App Bar is a flexible navigation bar designed to provide a typical Material Design
+navigation experience.
 <!--{: .intro :}-->
 
 ### Material Design Specifications
@@ -37,7 +41,7 @@ experience.
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
-pod 'MaterialComponents/AppBar'
+$ pod 'MaterialComponents/AppBar'
 ~~~
 
 Then, run the following command:
@@ -62,7 +66,7 @@ The provided view hierarchy looks like so:
     <MDCFlexibleHeaderView>
        | <CALayer>
        |    | <MDCShadowLayer>
-       | <UIView>
+       | <UIView> <- headerView.contentView
        |    | <MDCHeaderStackView>
        |    |    | <MDCNavigationBar>
 
@@ -73,6 +77,10 @@ Note that it is possible to create each of the above components yourself, though
 doing so if the App Bar is limiting your ability to build something. In such a case we recommend
 also [filing an issue](https://github.com/google/material-components-ios/issues/new) so that we can
 identify whether your use case is something we can directly support.
+
+
+
+- - -
 
 ## Usage
 
@@ -90,8 +98,6 @@ The result of following these steps will be that:
 3. you have access to the Navigation Bar and Header Stack View views via the corresponding
    properties.
 
-- - -
-
 Step 1: **Make your view controller conform to MDCAppBarParenting**.
 
 Conforming to this protocol allows your view controller to hold a strong reference to the App Bar
@@ -99,25 +105,23 @@ properties. As we'll see in a moment, this allows the App Bar to configure your 
 helper methods.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 @interface MyViewController () <MDCAppBarParenting>
 @end
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
 class MyViewController: UITableViewController, MDCAppBarParenting
 ~~~
 <!--</div>-->
 
-- - -
-
 Step 2: **Synthesize the required properties of the MDCAppBarParenting protocol**.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 @implementation MyViewController
@@ -127,20 +131,18 @@ Step 2: **Synthesize the required properties of the MDCAppBarParenting protocol*
 @synthesize headerViewController;
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
-  var headerStackView: MDCHeaderStackView?
-  var navigationBar: MDCNavigationBar?
-  var headerViewController: MDCFlexibleHeaderViewController?
+var headerStackView: MDCHeaderStackView?
+var navigationBar: MDCNavigationBar?
+var headerViewController: MDCFlexibleHeaderViewController?
 ~~~
 <!--</div>-->
-
-- - -
 
 Step 3: **Initialize your view controller's App Bar**.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -152,16 +154,14 @@ Step 3: **Initialize your view controller's App Bar**.
 }
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    MDCAppBarPrepareParent(self)
+  MDCAppBarPrepareParent(self)
 ~~~
 <!--</div>-->
-
-- - -
 
 Step 4: **Inform the App Bar that your view controller's view has loaded**.
 
@@ -169,8 +169,7 @@ Ideally you will do this after all views have been added to your controller's vi
 ensure that the App Bar's view is above all of your other views.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
-
+#### Objective-C
 ~~~ objc
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -182,109 +181,74 @@ ensure that the App Bar's view is above all of your other views.
 }
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
-  override func viewDidLoad() {
-    super.viewDidLoad()
+override func viewDidLoad() {
+  super.viewDidLoad()
 
-    // After all other views have been registered.
-    MDCAppBarAddViews(self)
-  }
-~~~
-<!--</div>-->
-
-- - -
-
-### App Bar + UINavigationController
-
-When pushing view controllers that have App Bars onto UINavigationController you may notice that two
-navigation bars are visible: the stock UINavigationBar and the App Bar's navigation bar. We
-recommend hiding the UINavigationController's `navigationBar` whenever you're presenting a view
-controller with an App Bar.
-
-One way to do this is to change the navigation bar visibility during either `viewWillAppear:` or
-`viewWillDisappear:`. This allows UINavigationController to animate the UINavigationBar in a
-predictable fashion during pushes and pops.
-
-<!--<div class="material-code-render" markdown="1">-->
-### Objective-C
-
-~~~ objc
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
+  // After all other views have been registered.
+  MDCAppBarAddViews(self)
 }
 ~~~
-
-### Swift
-~~~ swift
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-~~~
 <!--</div>-->
 
-Add the following to view controllers that don't have an app bar:
+### App Bar & UINavigationController
 
-<!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+A view controller with an App Bar pushed onto a UINavigationController will look odd due to the
+presence of two navigation bars: one provided by App Bar and another provided by
+UINavigationController. The Flexible Header section on
+[interacting with UINavigationController](../FlexibleHeader/#interacting-with-uinavigationcontroller)
+provides recommendations for hiding the navigation bar appropriately in this situation.
 
-~~~ objc
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
+### Status bar style
 
-  [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
-~~~
+The Flexible Header component provides facilities for inferring the status bar style based on the
+Flexible Header view's background color. Learn more by reading the section on
+[Status bar style](../FlexibleHeader/#status-bar-style).
 
-### Swift
-~~~ swift
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
+### UINavigationItem and the App Bar
 
-    self.navigationController?.setNavigationBarHidden(false, animated: animated)
-  }
-~~~
-<!--</div>-->
+The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
+`navigationBar` once you call `MDCAppBarAddViews`.
 
-- - -
+Learn more by reading the Navigation Bar section on
+[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
+Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
+supported.
 
-If all of your view controllers use the App Bar in a given UINavigationController then you can
-simply hide the navigationBar when you create the navigation controller:
+### Background images
 
-<!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+Showcase photography and imagery in your App Bar by adding image views to the App Bar's Flexible
+Header.
 
-~~~ objc
-UINavigationController *navigationController = ...;
-[navigationController setNavigationBarHidden:NO animated:NO];
-~~~
+Learn more by reading the Flexible Header section on
+[Background images](../FlexibleHeader/#background-images).
 
-### Swift
-~~~ swift
-self.navigationController?.setNavigationBarHidden(false, animated: false)
-~~~
-<!--</div>-->
+### Touch forwarding
 
-- - -
+The App Bar enables touch forwarding for the headerStackView and the navigationBar instances. Touch
+events made to those views (not their subviews) will be forwarded to the tracking scroll view.
 
-## Examples
+Learn more by reading the Flexible Header section on
+[Touch forwarding](../FlexibleHeader/#touch-forwarding).
 
-### UINavigatonItem and the App Bar
+### Interacting with background views
 
-The App Bar's Navigation Bar registers KVO listeners on the parent view controller's
-`navigationItem`. All of the typical properties including UIViewController's `title` property will
-affect the Navigation Bar as you'd expect, with the following exceptions:
+Scenario: you've added a background image to your App Bar and you'd now like to be able to tap the
+background image.
 
-- None of the `animated:` method varients are supported because they do not implement KVO events.
-  Use of these methods will result in the Navigation Bar becoming out of sync with the
-  navigationItem properties.
-- `prompt` is not presently supported. TODO(featherless): File issue.
+This is not trivial to do with the App Bar APIs due to considerations being discussed in
+[Issue #184](https://github.com/google/material-components-ios/issues/184).
 
-TODO: Discuss adding background images.
-TODO: Discuss touch event forwarding.
+The heart of the limitation is that we're using a view (`headerStackView) to lay out the Navigation
+Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
+end up eating all of your touch events.
 
-TODO: Discuss known limitiations. Discuss interactive background image (behind the stack view).
+Until [Issue #184](https://github.com/google/material-components-ios/issues/184) is resolved, our
+recommendation for building interactive background views is the following:
+
+1. Do not use the App Bar component.
+2. Create your own Flexible Header. Learn more by reading the Flexible Header
+   [Usage](../FlexibleHeader/#usage) docs.
+3. Add your views to this flexible header instance.
+4. Create a Navigation Bar if you need one. Treat it like any other custom view.

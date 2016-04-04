@@ -46,7 +46,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   dispatch_once(&onceToken, ^{
     NSMutableArray *keyPaths = [NSMutableArray array];
 
-    Protocol *headerProtocol = @protocol(MDCUINavigationItemKVO);
+    Protocol *headerProtocol = @protocol(MDCUINavigationItemObservables);
     unsigned int count = 0;
     objc_property_t *propertyList = protocol_copyPropertyList(headerProtocol, &count);
     if (propertyList) {
@@ -71,10 +71,10 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 /**
- * Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
- * and UINavigationItem.titleView are normally transferred to UINavigationController but we plan to
- * steal them away. In order to avoid crashing during KVO updates, we steal the view away and
- * replace it with a sandbag view.
+ Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
+ and UINavigationItem.titleView are normally transferred to UINavigationController but we plan to
+ steal them away. In order to avoid crashing during KVO updates, we steal the view away and
+ replace it with a sandbag view.
  */
 @interface MDCNavigationBarSandbagView : UIView
 @end
@@ -114,14 +114,14 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)commonInit {
-  _observedNavigationItemLock = [NSObject new];
+  _observedNavigationItemLock = [[NSObject alloc] init];
 
-  _titleLabel = [UILabel new];
+  _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography titleFont];
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
 
-  _leftButtonBar = [MDCButtonBar new];
-  _rightButtonBar = [MDCButtonBar new];
+  _leftButtonBar = [[MDCButtonBar alloc] init];
+  _rightButtonBar = [[MDCButtonBar alloc] init];
 
   [self addSubview:_titleLabel];
   [self addSubview:_leftButtonBar];
@@ -356,7 +356,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 
   // Swap in the sandbag (so that UINavigationController won't steal our view)
   if (titleView) {
-    _observedNavigationItem.titleView = [MDCNavigationBarSandbagView new];
+    _observedNavigationItem.titleView = [[MDCNavigationBarSandbagView alloc] init];
   } else if (_observedNavigationItem.titleView) {
     _observedNavigationItem.titleView = nil;
   }
@@ -380,13 +380,13 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 - (void)setLeftBarButtonItems:(NSArray *)leftBarButtonItems {
   _leftBarButtonItems = [leftBarButtonItems copy];
-  _leftButtonBar.buttonItems = [self mdc_buttonItemsForLeftBar];
+  _leftButtonBar.items = [self mdc_buttonItemsForLeftBar];
   [self setNeedsLayout];
 }
 
 - (void)setRightBarButtonItems:(NSArray *)rightBarButtonItems {
   _rightBarButtonItems = [rightBarButtonItems copy];
-  _rightButtonBar.buttonItems = rightBarButtonItems;
+  _rightButtonBar.items = rightBarButtonItems;
   [self setNeedsLayout];
 }
 
@@ -419,7 +419,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
     return;
   }
   _backItem = backItem;
-  _leftButtonBar.buttonItems = [self mdc_buttonItemsForLeftBar];
+  _leftButtonBar.items = [self mdc_buttonItemsForLeftBar];
   [self setNeedsLayout];
 }
 
@@ -428,7 +428,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
     return;
   }
   _hidesBackButton = hidesBackButton;
-  _leftButtonBar.buttonItems = [self mdc_buttonItemsForLeftBar];
+  _leftButtonBar.items = [self mdc_buttonItemsForLeftBar];
   [self setNeedsLayout];
 }
 
@@ -437,7 +437,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
     return;
   }
   _leftItemsSupplementBackButton = leftItemsSupplementBackButton;
-  _leftButtonBar.buttonItems = [self mdc_buttonItemsForLeftBar];
+  _leftButtonBar.items = [self mdc_buttonItemsForLeftBar];
   [self setNeedsLayout];
 }
 

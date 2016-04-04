@@ -33,6 +33,9 @@ xcuserdata
 ## OS X System files
 .DS_Store
 
+## Temporary swap files
+*.swp
+
 ## Obj-C/Swift specific
 *.hmap
 *.ipa

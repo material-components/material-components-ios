@@ -1,3 +1,19 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 import UIKit
 
 class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
@@ -6,7 +22,8 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
   var pageControl = MDCPageControl()
   var scrollView = UIScrollView()
-  private let logoImageView = UIImageView(image: UIImage(named: "ShrineLogo"))
+  var logoImageView = UIImageView(image: UIImage(named: "ShrineLogo"))
+  var logoTextImageView = UIImageView(image: UIImage(named: "ShrineTextLogo"))
   private var pages = NSMutableArray()
   private var label = UILabel()
   private var labelDesc = UILabel()
@@ -57,10 +74,13 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
       boundsHeight - pageControlSize.height,
       boundsWidth,
       pageControlSize.height)
+    pageControl.addTarget(self, action: "didChangePage:",
+                          forControlEvents: UIControlEvents.ValueChanged)
     self.addSubview(pageControl)
 
     addPageContent()
     self.addSubview(logoImageView)
+    self.addSubview(logoTextImageView)
   }
 
   func addPageContent() {
@@ -198,14 +218,15 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     let scrollViewOffsetX = CGFloat(pageControl.currentPage) * boundsWidth
     scrollView.setContentOffset(CGPointMake(scrollViewOffsetX, 0), animated: false)
     logoImageView.center = CGPointMake((self.frame.size.width) / 2, 44)
+    logoTextImageView.center = CGPointMake((self.frame.size.width) / 2, 44)
 
     let labelWidth = CGFloat(250)
     let labelWidthFrame = CGRectMake(self.frame.size.width - labelWidth,
-      70, labelWidth, label.frame.size.height)
+      90, labelWidth, label.frame.size.height)
 
     let labelDescWidth = CGFloat(200)
     let labelDescWidthFrame = CGRectMake(self.frame.size.width - labelDescWidth - 10,
-      170, labelDescWidth, 40)
+      190, labelDescWidth, 40)
 
     label.frame = labelWidthFrame
     labelDesc.frame = labelDescWidthFrame
@@ -214,7 +235,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     label3.frame = labelWidthFrame
     labelDesc3.frame = labelDescWidthFrame
 
-    let cyanBoxFrame = CGRectMake(self.frame.size.width - 210, 160, 100, 8)
+    let cyanBoxFrame = CGRectMake(self.frame.size.width - 210, 180, 100, 8)
     cyanBox.frame = cyanBoxFrame
     cyanBox2.frame = cyanBoxFrame
     cyanBox3.frame = cyanBoxFrame
@@ -243,6 +264,12 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
   func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
     pageControl.scrollViewDidEndScrollingAnimation(scrollView)
+  }
+
+  func didChangePage(sender: MDCPageControl) {
+    var offset = scrollView.contentOffset
+    offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width
+    scrollView.setContentOffset(offset, animated: true)
   }
 
 }

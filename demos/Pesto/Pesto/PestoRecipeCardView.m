@@ -1,3 +1,19 @@
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #import "PestoRecipeCardView.h"
 
 #import "MaterialShadowElevations.h"
@@ -5,15 +21,16 @@
 #import "MaterialSpritedAnimationView.h"
 #import "MaterialTypography.h"
 
-static CGFloat kPestoDetailBottomSheetHeightPortrait = 380.f;
-static CGFloat kPestoDetailDescTextHeight = 140.f;
-static CGFloat kPestoDetailPadding = 28.f;
-static CGFloat kPestoDetailSplitWidth = 64.f;
+static CGFloat kPestoDetailBottomSheetHeightPortrait = 380;
+static CGFloat kPestoDetailDescTextHeight = 140;
+static CGFloat kPestoDetailPadding = 28;
+static CGFloat kPestoDetailSplitWidth = 64;
 
 @interface PestoSplitView : UIView
 
 @property(nonatomic) UIView *leftView;
 @property(nonatomic) UIView *rightView;
+@property(nonatomic) CGSize originalSize;
 
 @end
 
@@ -24,9 +41,11 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
                     rightView:(UIView *)rightView {
   self = [super initWithFrame:frame];
   if (self) {
+    _originalSize = frame.size;
+
     CGFloat leftWidth = kPestoDetailSplitWidth;
     CGFloat height = frame.size.height;
-    _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 1.f, leftWidth, height)];
+    _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, leftWidth, height)];
     [_leftView addSubview:leftView];
     [self addSubview:_leftView];
     CGRect rightFrame = CGRectMake(leftWidth, 0, self.frame.size.width - leftWidth, height);
@@ -40,7 +59,7 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
 }
 
 - (CGSize)intrinsicContentSize {
-  return self.bounds.size;
+  return self.originalSize;
 }
 
 @end
@@ -93,6 +112,7 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
                                     _iconImageView.frame.size.height);
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography display1Font];
+  _titleLabel.alpha = [MDCTypography display1FontOpacity];
   _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
   _titleLabel.frame = CGRectMake(0,
                                  0,
@@ -102,52 +122,64 @@ static CGFloat kPestoDetailSplitWidth = 64.f;
   _labelDesc.lineBreakMode = NSLineBreakByWordWrapping;
   _labelDesc.numberOfLines = 8;
   _labelDesc.font = [MDCTypography body1Font];
+  _labelDesc.alpha = [MDCTypography body1FontOpacity];
   _labelDesc.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
   UIFont *bodyFont = [MDCTypography body1Font];
+  CGFloat bodyFontOpacity = [MDCTypography body1FontOpacity];
   _ingredient1 = [[UILabel alloc] init];
   _ingredient1.text = @"Mozzarella cheese";
   _ingredient1.font = bodyFont;
+  _ingredient1.alpha = bodyFontOpacity;
   [_ingredient1 sizeToFit];
 
   _ingredient2 = [[UILabel alloc] init];
   _ingredient2.text = @"Toasts";
   _ingredient2.font = bodyFont;
+  _ingredient2.alpha = bodyFontOpacity;
   [_ingredient2 sizeToFit];
 
   _ingredient3 = [[UILabel alloc] init];
   _ingredient3.text = @"Homemade pesto";
   _ingredient3.font = bodyFont;
+  _ingredient3.alpha = bodyFontOpacity;
   [_ingredient3 sizeToFit];
 
   _ingredient4 = [[UILabel alloc] init];
   _ingredient4.text = @"Freshly ground pepper";
   _ingredient4.font = bodyFont;
+  _ingredient4.alpha = bodyFontOpacity;
   [_ingredient4 sizeToFit];
 
   UIColor *teal = [UIColor colorWithRed:0.09f green:0.54f blue:0.44f alpha:1.f];
+  UIFont *captionFont = [MDCTypography captionFont];
+  CGFloat captionFontOpacity = [MDCTypography captionFontOpacity];
 
   _amount1 = [[UILabel alloc] init];
   _amount1.text = @"6 pieces";
-  _amount1.font = [MDCTypography captionFont];
+  _amount1.font = captionFont;
+  _amount1.alpha = captionFontOpacity;
   _amount1.textColor = teal;
   [_amount1 sizeToFit];
 
   _amount2 = [[UILabel alloc] init];
   _amount2.text = @"6 pieces";
-  _amount2.font = [MDCTypography captionFont];
+  _amount2.font = captionFont;
+  _amount2.alpha = captionFontOpacity;
   _amount2.textColor = teal;
   [_amount2 sizeToFit];
 
   _amount3 = [[UILabel alloc] init];
   _amount3.text = @"2/3 cup";
-  _amount3.font = [MDCTypography captionFont];
+  _amount3.font = captionFont;
+  _amount3.alpha = captionFontOpacity;
   _amount3.textColor = teal;
   [_amount3 sizeToFit];
 
   _amount4 = [[UILabel alloc] init];
   _amount4.text = @"1 tbsp";
-  _amount4.font = [MDCTypography captionFont];
+  _amount4.font = captionFont;
+  _amount4.alpha = captionFontOpacity;
   _amount4.textColor = teal;
   [_amount4 sizeToFit];
 

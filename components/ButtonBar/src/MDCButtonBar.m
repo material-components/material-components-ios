@@ -20,6 +20,8 @@
 
 #import "MDCButtonBar.h"
 
+#import "private/MDCAppBarButtonBarBuilder.h"
+
 static const CGFloat kDefaultHeight = 56;
 static const CGFloat kDefaultPadHeight = 64;
 
@@ -32,14 +34,23 @@ static NSString *const kEnabledSelector = @"enabled";
 @implementation MDCButtonBar {
   id _buttonItemsLock;
   NSArray *_buttonViews;
+
+  MDCAppBarButtonBarBuilder *_defaultBuilder;
 }
 
 - (void)dealloc {
-  self.buttonItems = nil;
+  self.items = nil;
 }
 
 - (void)commonInit {
-  _buttonItemsLock = [NSObject new];
+  _buttonItemsLock = [[NSObject alloc] init];
+
+  _defaultBuilder = [[MDCAppBarButtonBarBuilder alloc] init];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  self.delegate = _defaultBuilder;
+#pragma clang diagnostic pop
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -176,7 +187,7 @@ static NSString *const kEnabledSelector = @"enabled";
   if (context == kKVOContextMDCButtonBar) {
     void (^mainThreadWork)(void) = ^{
       @synchronized(_buttonItemsLock) {
-        NSUInteger itemIndex = [_buttonItems indexOfObject:object];
+        NSUInteger itemIndex = [_items indexOfObject:object];
         if (itemIndex == NSNotFound || itemIndex > [_buttonViews count]) {
           return;
         }
@@ -275,9 +286,17 @@ static NSString *const kEnabledSelector = @"enabled";
 
 #pragma mark - Public
 
+- (NSArray *)buttonItems {
+  return self.items;
+}
+
 - (void)setButtonItems:(NSArray *)buttonItems {
+  self.items = buttonItems;
+}
+
+- (void)setItems:(NSArray *)items {
   @synchronized(_buttonItemsLock) {
-    if (_buttonItems == buttonItems || [_buttonItems isEqualToArray:buttonItems]) {
+    if (_items == items || [_items isEqualToArray:items]) {
       return;
     }
 
@@ -286,16 +305,16 @@ static NSString *const kEnabledSelector = @"enabled";
                            NSStringFromSelector(@selector(image)) ];
 
     // Remove old observers
-    for (UIBarButtonItem *item in _buttonItems) {
+    for (UIBarButtonItem *item in _items) {
       for (NSString *keyPath in keyPaths) {
         [item removeObserver:self forKeyPath:keyPath context:kKVOContextMDCButtonBar];
       }
     }
 
-    _buttonItems = [buttonItems copy];
+    _items = [items copy];
 
     // Register new observers
-    for (UIBarButtonItem *item in _buttonItems) {
+    for (UIBarButtonItem *item in _items) {
       for (NSString *keyPath in keyPaths) {
         [item addObserver:self
                forKeyPath:keyPath
@@ -304,7 +323,10 @@ static NSString *const kEnabledSelector = @"enabled";
       }
     }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [self reloadButtonViews];
+#pragma clang diagnostic pop
   }
 }
 
@@ -314,7 +336,10 @@ static NSString *const kEnabledSelector = @"enabled";
   }
   _delegate = delegate;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [self reloadButtonViews];
+#pragma clang diagnostic pop
 }
 
 - (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
@@ -324,7 +349,10 @@ static NSString *const kEnabledSelector = @"enabled";
   _layoutDirection = layoutDirection;
 
   if (_delegate) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [self reloadButtonViews];
+#pragma clang diagnostic pop
   }
 }
 
@@ -339,7 +367,7 @@ static NSString *const kEnabledSelector = @"enabled";
   for (UIView *view in _buttonViews) {
     [view removeFromSuperview];
   }
-  _buttonViews = [self viewsForItems:_buttonItems];
+  _buttonViews = [self viewsForItems:_items];
 
   [self setNeedsLayout];
 }

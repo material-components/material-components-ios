@@ -156,6 +156,8 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 @interface MDCInkLayerForegroundRipple : MDCInkLayerRipple
 
+@property(nonatomic, assign) BOOL useCustomInkCenter;
+@property(nonatomic, assign) CGPoint customInkCenter;
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundOpacityAnim;
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundPositionAnim;
 @property(nonatomic, strong) CAKeyframeAnimation *foregroundScaleAnim;
@@ -192,6 +194,9 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     UIBezierPath *movePath = [UIBezierPath bezierPath];
     CGPoint startPoint = CGPointMake(self.point.x + xOffset, self.point.y + yOffset);
     CGPoint endPoint = MDCInkLayerRectGetCenter(self.targetFrame);
+    if (self.useCustomInkCenter) {
+      endPoint = self.customInkCenter;
+    }
     endPoint = CGPointMake(endPoint.x + xOffset, endPoint.y + yOffset);
     [movePath moveToPoint:startPoint];
     [movePath addLineToPoint:endPoint];
@@ -226,6 +231,9 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
     startPoint = CGPointMake(self.point.x + xOffset, self.point.y + yOffset);
     CGPoint endPoint = MDCInkLayerRectGetCenter(self.targetFrame);
+    if (self.useCustomInkCenter) {
+      endPoint = self.customInkCenter;
+    }
     endPoint = CGPointMake(endPoint.x + xOffset, endPoint.y + yOffset);
     CGPoint centerOffsetPoint = MDCInkLayerInterpolatePoint(startPoint, endPoint, 0.3f);
     UIBezierPath *movePath = [UIBezierPath bezierPath];
@@ -415,6 +423,8 @@ static NSString *const kMDCInkLayerBackgroundOpacityAnim = @"backgroundOpacityAn
   _foregroundRipple.radius = radius;
   _foregroundRipple.bounded = self.bounded;
   _foregroundRipple.animationDelegate = self;
+  _foregroundRipple.useCustomInkCenter = self.useCustomInkCenter;
+  _foregroundRipple.customInkCenter = self.customInkCenter;
   [_foregroundRipple setupRipple];
 
   [_backgroundRipple enter];

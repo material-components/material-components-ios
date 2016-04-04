@@ -26,10 +26,10 @@ static const CGFloat kEpsilon = 0.001f;
 @end
 
 /** These tests have set the fontloader because it is a singleton. */
-@interface MDCTypographyTests : XCTestCase
+@interface TypographyTests : XCTestCase
 @end
 
-@implementation MDCTypographyTests
+@implementation TypographyTests
 
 - (void)testFontLoaderIsRoboto {
   // Given
@@ -43,14 +43,14 @@ static const CGFloat kEpsilon = 0.001f;
 @end
 
 /** These tests have set the fontloader because it is a singleton. */
-@interface MDCTypographyFontLoaderSetTest : XCTestCase
+@interface TypographyFontLoaderSetTest : XCTestCase
 @end
 
 @interface MDCRobotoFontLoader (Testing)
 - (instancetype)initInternal;
 @end
 
-@implementation MDCTypographyFontLoaderSetTest
+@implementation TypographyFontLoaderSetTest
 
 - (void)tearDown {
   // Since we are using a singleton we need to restore the custom fontLoader back for other tests
@@ -271,7 +271,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontDisplay4Font {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography display4Font];
@@ -281,7 +281,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontDisplay3Font {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography display3Font];
@@ -291,7 +291,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontDisplay2Font {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography display2Font];
@@ -302,7 +302,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontDisplay1Font {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography display1Font];
@@ -313,7 +313,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontHeadlineFont {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography headlineFont];
@@ -324,7 +324,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontTitleFont {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography titleFont];
@@ -335,7 +335,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontSubheadFont {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography subheadFont];
@@ -346,7 +346,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontBody2Font {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography body2Font];
@@ -357,7 +357,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontBody1Font {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography body1Font];
@@ -367,7 +367,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontCaptionFont {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography captionFont];
@@ -378,7 +378,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)testSystemFontButtonFont {
   // Given
-  [MDCTypography setFontLoader:[MDCSystemFontLoader new]];
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 
   // When
   UIFont *font = [MDCTypography buttonFont];

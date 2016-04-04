@@ -29,9 +29,10 @@
 
 @implementation MDCAppBarContainerViewController
 
+// Create explicit ivar because we're overriding the public getter API and implementing getter.
 @synthesize headerStackView;
 @synthesize navigationBar;
-@synthesize headerViewController;
+@synthesize headerViewController = _headerViewController;
 
 - (instancetype)initWithContentViewController:(UIViewController *)contentViewController {
   self = [super initWithNibName:nil bundle:nil];
@@ -76,6 +77,10 @@
 }
 
 #pragma mark - Public
+
+- (MDCFlexibleHeaderViewController *)headerViewController {
+  return _headerViewController;
+}
 
 - (void)setContentViewController:(UIViewController *)contentViewController {
   if (_contentViewController == contentViewController) {

@@ -2,14 +2,15 @@
 title:  "Buttons"
 layout: detail
 section: documentation
+excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
 ---
 # Buttons
 
 ![Raised, Flat, and Floating Action Buttons](docs/assets/buttons_screenshot.png)
 <!--{: .ios-screenshot .right }-->
 
-Buttons is a collection of material buttons, including a flat button, a raised button and a floating
-action button.
+Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
+floating action button.
 <!--{: .intro }-->
 
 
@@ -22,10 +23,10 @@ action button.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCButton.html">MDCButton</a></li>
   <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
   <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
   <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCRaisedButton.html">MDCRaisedButton</a></li>
+  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCButton.html">MDCButton</a></li>
 </ul>
 
 
@@ -47,6 +48,9 @@ The _floating action_ button is circular, floats a considerable amount above its
 background color, and also raises briefly when touched. Only use a floating action button for the
 main action of a screen.
 
+Flat button, raised button and floating action buttons all inherit from the same MDCButton class.
+You should not directly instantiate an MDCButton object.
+
 - - -
 
 
@@ -60,9 +64,10 @@ main action of a screen.
 
 ### Installation with CocoaPods
 
-To add the Buttons component to your Xcode project using CocoaPods, add the following to your PodFile:
+To add the Buttons component to your Xcode project using CocoaPods, add the following to your
+Podfile:
 
-~~~ bash
+~~~
 pod 'MaterialComponents/Buttons'
 ~~~
 
@@ -106,7 +111,7 @@ simultaneously interacting with a button and other UI elements.
 ### Create a Flat Button
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 MDCFlatButton *flatButton = [MDCFlatButton new];
@@ -119,7 +124,7 @@ MDCFlatButton *flatButton = [MDCFlatButton new];
 [self.view addSubview:flatButton];
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
 let flatButton = MDCFlatButton()
 flatButton.customTitleColor = UIColor.grayColor()
@@ -138,7 +143,7 @@ Create a Raised button and change its default elevation.
 The default elevation for _raised buttons_ in resting state is 2 dp.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 MDCRaisedButton *raisedButton = [MDCRaisedButton new];
@@ -150,7 +155,7 @@ MDCRaisedButton *raisedButton = [MDCRaisedButton new];
 [self.view addSubview:raisedButton];
 ~~~
 
-### Swift
+#### Swift
 ~~~ swift
 let raisedButton = MDCRaisedButton()
 // See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
@@ -168,7 +173,7 @@ self.view.addSubview(raisedButton)
 ### Create a Floating Action Button
 
 <!--<div class="material-code-render" markdown="1">-->
-### Objective-C
+#### Objective-C
 
 ~~~ objc
 MDCFloatingButton *floatingButton = [MDCFloatingButton new];
@@ -180,7 +185,7 @@ MDCFloatingButton *floatingButton = [MDCFloatingButton new];
 [self.view addSubview:floatingButton];
 ~~~
 
-### Swift
+#### Swift
 
 ~~~ swift
 let floatingButton = MDCFloatingButton()
