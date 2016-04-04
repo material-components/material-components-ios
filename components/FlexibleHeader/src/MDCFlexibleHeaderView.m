@@ -1059,7 +1059,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     [self fhv_startDisplayLink];
   } else {
     // Add offscreen accumulation equal to this header view's size.
-    _shiftOffscreenAccumulator = self.frame.size.height;
+    _shiftOffscreenAccumulator = self.fhv_accumulatorMax;
     [self fhv_commitAccumulatorToFrame];
   }
 }    
