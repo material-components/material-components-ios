@@ -157,26 +157,6 @@ ensure that the Flexible Header is in front of all other views.
 ~~~
 <!--</div>-->
 
-Step 3: **Forward relevant UIViewController APIs**.
-
-Implement `childViewControllerForStatusBarHidden` and return the MDCFlexibleHeaderViewController
-instance. This will allow the Flexible Header to control status bar visibility in reaction to scroll
-view delegate events.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-- (UIViewController *)childViewControllerForStatusBarHidden {
-  return _headerViewController;
-}
-~~~
-
-#### Swift
-~~~ swift
-~~~
-<!--</div>-->
-
 ### Tracking a scroll view
 
 The Flexible Header can be provided with tracking scroll view. This allows the Flexible Header to
@@ -294,17 +274,26 @@ headerViewController.headerView.behavior = .Enabled
 > information.
 
 It is also possible to hide the status bar when shifting the Flexible Header off-screen. Enable this
-behavior by setting the `EnabledWithStatusBar` behavior.
+behavior by setting the `EnabledWithStatusBar` behavior and implementing
+`childViewControllerForStatusBarHidden` on the parent view controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 ~~~ objc
 headerViewController.headerView.behavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return _headerViewController;
+}
 ~~~
 
 #### Swift
 ~~~ swift
 headerViewController.headerView.behavior = .EnabledWithStatusBar
+
+override func childViewControllerForStatusBarHidden() -> UIViewController? {
+  return headerViewController
+}
 ~~~
 <!--</div>-->
 
