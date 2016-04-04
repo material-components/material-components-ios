@@ -14,7 +14,7 @@ layout: detail
 section: documentation
 excerpt: "TODO: Single sentence description of the component."
 ---
-# App Bar
+# TODO: ComponentName
 
 ![TODO: ComponentName](docs/assets/screenshot.png)
 <!--{: .ios-screenshot .right }-->
