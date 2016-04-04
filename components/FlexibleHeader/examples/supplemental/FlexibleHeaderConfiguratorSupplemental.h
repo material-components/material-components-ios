@@ -6,6 +6,7 @@
 #import <UIKit/UIKit.h>
 
 @class ExampleConfigurationsView;
+@class MDCFlexibleHeaderViewController;
 
 @interface FlexibleHeaderConfiguratorExample : UIViewController
 

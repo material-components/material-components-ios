@@ -3,11 +3,9 @@
  instructions. It is not necessary to import this file to implement any Material Design Components.
  */
 
-#import <Foundation/Foundation.h>
+#import "FlexibleHeaderConfiguratorSupplemental.h"
 
 #import "MaterialFlexibleHeader.h"
-
-#import "FlexibleHeaderConfiguratorSupplemental.h"
 
 @implementation FlexibleHeaderConfiguratorExample (CatalogByConvention)
 
