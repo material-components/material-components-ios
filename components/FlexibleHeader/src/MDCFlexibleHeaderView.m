@@ -1052,6 +1052,18 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   }
 }
 
+- (void)shiftHeaderOffScreenAnimated:(BOOL)animated {
+  _wantsToBeHidden = YES;
+
+  if (animated) {
+    [self fhv_startDisplayLink];
+  } else {
+    // Add offscreen accumulation equal to this header view's size.
+    _shiftOffscreenAccumulator = self.fhv_accumulatorMax;
+    [self fhv_commitAccumulatorToFrame];
+  }
+}
+
 - (void)setContentIsTranslucent:(BOOL)contentIsTranslucent {
   _contentIsTranslucent = contentIsTranslucent;
 
