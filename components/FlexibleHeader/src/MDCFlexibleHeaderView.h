@@ -149,6 +149,9 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 /** Asks the receiver to bring the header on-screen if it's currently off-screen. */
 - (void)shiftHeaderOnScreenAnimated:(BOOL)animated;
 
+/** Asks the receiver to take the header off-screen if it's currently on-screen. */
+- (void)shiftHeaderOffScreenAnimated:(BOOL)animated;
+
 #pragma mark UIKit Hooks
 
 // All of these UIKit hooks must be called from the view controller that owns this header view.
