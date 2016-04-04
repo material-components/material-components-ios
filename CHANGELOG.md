@@ -11,6 +11,9 @@
 ##### Breaking
 
 [ButtonBar] Add Buttons dependency and remove Buttons dependency from AppBar. (Jeff Verkoeyen)
+[FlexibleHeader] contentView is now nonnull and readonly. (Jeff Verkoeyen)
+[Ink] Changed MDCInkView API to better reflect the modern ink behavior (breaking). (Adrian Secord)
+[NavigationBar] Rename MDCUINavigationItemKVO to MDCUINavigationItemObservables. (Jeff Verkoeyen)
 
 ##### Enhancements
 
@@ -44,7 +47,6 @@
 [AppBar|FlexibleHeader] Move UINav section from App Bar to Flexible Header. (Jeff Verkoeyen)
 [AppBar|FlexibleHeader] Move section on status bar style from App Bar to Flexible Header. (Jeff Verkoeyen)
 [NavigationBar] Document that the navigationBar's state syncs with navigationItem on observation. (Jeff Verkoeyen)
-[NavigationBar] Rename MDCUINavigationItemKVO to MDCUINavigationItemObservables. (Jeff Verkoeyen)
 [AppBar|NavigationBar] Minor typos in navigation item section title. (Jeff Verkoeyen)
 [CONTRIBUTING] Fix typo. (Jeff Verkoeyen)
 [CONTRIBUTING] Cleaning up the checklist. (Jeff Verkoeyen)
@@ -61,7 +63,6 @@
 [community] Change Stack Overflow tag to 'material-components-ios'. (Jeff Verkoeyen)
 [AppBar] Replace iOS 9 APIs with older APIs. (Jeff Verkoeyen)
 [AppBar] Add imagery example. (Jeff Verkoeyen)
-[FlexibleHeader] contentView is now nonnull and readonly. (Jeff Verkoeyen)
 [Demos] Pesto: Adding AppBar to Settings (Will Larche)
 [Typography] Corrections to markdown in readme.md (Will Larche)
 [Typography ReadMe] First pass at updated content (Will Larche)
@@ -72,7 +73,6 @@
 [MDCButton] Documentation updates (Ian Gordon)
 [Site] Update code snippet markdown h3 to h4 and corresponding css styles (Yiran Mao)
 [Testing] Unit test target must be 8.0 in order to build Swift unit tests. (Jeff Verkoeyen)
-[Ink] Changed MDCInkView API to better reflect the modern ink behavior (breaking). (Adrian Secord)
 [Other] Fixes block comments globally. (Adrian Secord)
 [FlexibleHeader] Prefer CGFloat when calculating shadow intensity. (Jeff Verkoeyen)
 [Demos] Adding Font Opacities for all labels in Pesto (Will Larche)
