@@ -11,6 +11,8 @@
 ##### Breaking
 
 [FlexibleHeader] contentView is now nonnull and readonly. (Jeff Verkoeyen)
+Swift code will need to change `contentView!` to `contentView`. This will be made apparent at build time.
+
 
 ##### Enhancements
 
