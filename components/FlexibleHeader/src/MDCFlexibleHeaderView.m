@@ -696,8 +696,18 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _didAdjustTargetContentOffset = NO;
 #endif
 
+  // We generally expect the tracking scroll view to be a sibling to the flexible header, but there
+  // are cases where this assumption is always incorrect.
+  //
+  // Notably, UITableViewController's .view _is_ the tableView, so there is no way to add a flexible
+  // header other than as a subview to the scroll view. This is the most common case to which the
+  // following logic has been written.
   if (self.superview == self.trackingScrollView) {
     self.transform = CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
+
+    if (self.superview.subviews.lastObject != self) {
+      [self.superview bringSubviewToFront:self];
+    }
   }
 
   // While the interface orientation is rotating we don't respond to any adjustments to the content
