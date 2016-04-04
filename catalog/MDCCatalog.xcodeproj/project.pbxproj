@@ -13,8 +13,8 @@
 		664524B91C6BA62A001ADBF8 /* NodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* NodeViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
 		664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */; };
-		665A34DC1C6BD01900962055 /* Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 665A34DB1C6BD01900962055 /* Reflection.m */; };
-		665A34E01C6BDB4600962055 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A34DF1C6BDB4600962055 /* Runtime.swift */; };
+		666CA70D1CAEBCA9001B1884 /* CBCNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */; };
+		666CA70E1CAEBCA9001B1884 /* CBCRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 666CA70C1CAEBCA9001B1884 /* CBCRuntime.m */; };
 		DE0B35471CAC16F2002C7357 /* MDCCatalogBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B35461CAC16F2002C7357 /* MDCCatalogBarViewController.swift */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DE3799581CAD9AB00036D5B0 /* MDCCatalogTypicalExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3799571CAD9AB00036D5B0 /* MDCCatalogTypicalExampleViewController.swift */; };
@@ -72,9 +72,12 @@
 		664524C01C6BA62A001ADBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		664524C21C6BA62A001ADBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDCCatalog-Bridging-Header.h"; sourceTree = "<group>"; };
-		665A34DA1C6BD01900962055 /* Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reflection.h; sourceTree = "<group>"; };
-		665A34DB1C6BD01900962055 /* Reflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reflection.m; sourceTree = "<group>"; };
-		665A34DF1C6BDB4600962055 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
+		666CA7071CAEBCA9001B1884 /* CatalogByConvention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogByConvention.h; sourceTree = "<group>"; };
+		666CA7081CAEBCA9001B1884 /* CBCCatalogExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCCatalogExample.h; sourceTree = "<group>"; };
+		666CA7091CAEBCA9001B1884 /* CBCNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCNodeViewController.h; sourceTree = "<group>"; };
+		666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCNodeViewController.m; sourceTree = "<group>"; };
+		666CA70B1CAEBCA9001B1884 /* CBCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCRuntime.h; sourceTree = "<group>"; };
+		666CA70C1CAEBCA9001B1884 /* CBCRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCRuntime.m; sourceTree = "<group>"; };
 		7385A3AD61219974D1545BD4 /* Pods-MDCCatalogUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalogUnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalogUnitTests/Pods-MDCCatalogUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8206EEC8F0212B48C4AC4C01 /* libPods-MDCCatalogUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalogUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		878DC2619FAA226EA1A1849A /* libPods-MDCCatalog-MDCCatalog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog-MDCCatalog.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				664524B51C6BA62A001ADBF8 /* MDCCatalog */,
+				666CA7061CAEBC98001B1884 /* CatalogByConvention */,
 				664524B41C6BA62A001ADBF8 /* Products */,
 				A65F8103997AAC196ACA7AFD /* Pods */,
 				EFED36ECE9B28D2E7995FF4F /* Frameworks */,
@@ -138,20 +142,9 @@
 				DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */,
 				DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */,
 				664524B81C6BA62A001ADBF8 /* NodeViewController.swift */,
-				665A34DD1C6BDADA00962055 /* Reflection */,
 				665A34DE1C6BDAE700962055 /* Resources */,
 			);
 			path = MDCCatalog;
-			sourceTree = "<group>";
-		};
-		665A34DD1C6BDADA00962055 /* Reflection */ = {
-			isa = PBXGroup;
-			children = (
-				665A34DA1C6BD01900962055 /* Reflection.h */,
-				665A34DB1C6BD01900962055 /* Reflection.m */,
-				665A34DF1C6BDB4600962055 /* Runtime.swift */,
-			);
-			name = Reflection;
 			sourceTree = "<group>";
 		};
 		665A34DE1C6BDAE700962055 /* Resources */ = {
@@ -163,6 +156,20 @@
 				664524C21C6BA62A001ADBF8 /* Info.plist */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		666CA7061CAEBC98001B1884 /* CatalogByConvention */ = {
+			isa = PBXGroup;
+			children = (
+				666CA7071CAEBCA9001B1884 /* CatalogByConvention.h */,
+				666CA7081CAEBCA9001B1884 /* CBCCatalogExample.h */,
+				666CA7091CAEBCA9001B1884 /* CBCNodeViewController.h */,
+				666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */,
+				666CA70B1CAEBCA9001B1884 /* CBCRuntime.h */,
+				666CA70C1CAEBCA9001B1884 /* CBCRuntime.m */,
+			);
+			name = CatalogByConvention;
+			path = CatalogByConvention/src;
 			sourceTree = "<group>";
 		};
 		A65F8103997AAC196ACA7AFD /* Pods */ = {
@@ -349,10 +356,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				665A34E01C6BDB4600962055 /* Runtime.swift in Sources */,
+				666CA70E1CAEBCA9001B1884 /* CBCRuntime.m in Sources */,
+				666CA70D1CAEBCA9001B1884 /* CBCNodeViewController.m in Sources */,
 				DEEC11E51CA9AC3A00A15FC8 /* MDCCatalogBar.swift in Sources */,
 				DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */,
-				665A34DC1C6BD01900962055 /* Reflection.m in Sources */,
 				664524B91C6BA62A001ADBF8 /* NodeViewController.swift in Sources */,
 				DE3799581CAD9AB00036D5B0 /* MDCCatalogTypicalExampleViewController.swift in Sources */,
 				DE0B35471CAC16F2002C7357 /* MDCCatalogBarViewController.swift in Sources */,

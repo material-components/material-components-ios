@@ -14,7 +14,4 @@
  limitations under the License.
  */
 
-#import "Reflection.h"
-
-#import <MaterialComponents/MaterialFlexibleHeader.h>
-#import <MaterialComponents/MaterialTypography.h>
+#import "CatalogByConvention.h"

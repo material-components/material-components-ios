@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2016-present Google Inc. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,8 +14,4 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
-extern NSArray<NSString *> *CatalogBreadcrumbsFromClass(Class aClass);
-extern UIViewController *ViewControllerFromClass(Class aClass);
+#import "CBCNodeViewController.h"

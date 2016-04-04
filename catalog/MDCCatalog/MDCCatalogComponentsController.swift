@@ -19,13 +19,13 @@ import MaterialComponents
 
 class MDCCatalogComponentsController: UICollectionViewController {
 
-  let node: Node
+  let node: CBCNode
 
   var headerViewController: MDCFlexibleHeaderViewController
 
   let imageNames = NSMutableArray()
 
-  init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: Node) {
+  init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
 
     let spacing = CGFloat(1)
@@ -51,7 +51,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
     self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
   }
 
-  convenience init(node: Node) {
+  convenience init(node: CBCNode) {
     self.init(collectionViewLayout: UICollectionViewLayout(), node: node)
   }
 
@@ -100,11 +100,6 @@ class MDCCatalogComponentsController: UICollectionViewController {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
-
-    // Sort alphabetically.
-    self.node.children = self.node.children.sort {
-      $0.title < $1.title
-    }
   }
 
   override func willAnimateRotationToInterfaceOrientation(
@@ -153,8 +148,8 @@ class MDCCatalogComponentsController: UICollectionViewController {
     didSelectItemAtIndexPath indexPath: NSIndexPath) {
     let node = self.node.children[indexPath.row]
     var vc: UIViewController
-    if let vClass = node.viewController {
-      vc = ViewControllerFromClass(vClass)
+    if node.isExample() {
+      vc = node.createExampleViewController()
     } else {
       vc = NodeViewController(node: node)
     }
