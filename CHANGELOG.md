@@ -10,14 +10,12 @@
 
 ##### Breaking
 
-[ButtonBar] Add Buttons dependency and remove Buttons dependency from AppBar. (Jeff Verkoeyen)
 [FlexibleHeader] contentView is now nonnull and readonly. (Jeff Verkoeyen)
-[Ink] Changed MDCInkView API to better reflect the modern ink behavior (breaking). (Adrian Secord)
-[NavigationBar] Rename MDCUINavigationItemKVO to MDCUINavigationItemObservables. (Jeff Verkoeyen)
 
 ##### Enhancements
 
 [ButtonBar] Rename buttonItems API to items. (Jeff Verkoeyen)
+[ButtonBar] Add Buttons dependency and remove Buttons dependency from AppBar. (Jeff Verkoeyen)
 [Site] Adding excerpts to component docs metadata. (Jason Striegel)
 [RobotoFontLoader] Removed #define that should not have made it public. (randallli)
 [Demos] Fix compilation errors for Xcode 7.2 (Junius Gunaratne)
@@ -42,11 +40,13 @@
 [AppBar|FlexibleHeader] Add section on touch forwarding. (Jeff Verkoeyen)
 [FlexibleHeader] Clarify that touch forwarding does not apply to subviews. (Jeff Verkoeyen)
 [AppBar] Call out the content view in the view hierarchy. (Jeff Verkoeyen)
+[NavigationBar] Add nullability annotations. (Jeff Verkoeyen)
 [Documentation] Fixed pod install instructions for Buttons/README.md. (Adrian Secord)
 [AppBar] Remove excess horizontal rules. (Jeff Verkoeyen)
 [AppBar|FlexibleHeader] Move UINav section from App Bar to Flexible Header. (Jeff Verkoeyen)
 [AppBar|FlexibleHeader] Move section on status bar style from App Bar to Flexible Header. (Jeff Verkoeyen)
 [NavigationBar] Document that the navigationBar's state syncs with navigationItem on observation. (Jeff Verkoeyen)
+[NavigationBar] Rename MDCUINavigationItemKVO to MDCUINavigationItemObservables. (Jeff Verkoeyen)
 [AppBar|NavigationBar] Minor typos in navigation item section title. (Jeff Verkoeyen)
 [CONTRIBUTING] Fix typo. (Jeff Verkoeyen)
 [CONTRIBUTING] Cleaning up the checklist. (Jeff Verkoeyen)
@@ -56,7 +56,6 @@
 [AppBar|NavigationBar] Added section on observing UINavigationItem. (Jeff Verkoeyen)
 [AppBar] Minor grammatical rearrangements in README. (Jeff Verkoeyen)
 [FlexibleHeader] Explain what the imagery usage example section is. (Jeff Verkoeyen)
-[NavigationBar] Add nullability annotations. (Jeff Verkoeyen)
 [NavigationBar] Adding more specific documentation. (Jeff Verkoeyen)
 [Docs] Cleanup pass for Markdown style (100 chars). (Adrian Secord)
 [Sample] Pesto: Marking target 'Requires Full Screen' (Will Larche)
@@ -73,6 +72,7 @@
 [MDCButton] Documentation updates (Ian Gordon)
 [Site] Update code snippet markdown h3 to h4 and corresponding css styles (Yiran Mao)
 [Testing] Unit test target must be 8.0 in order to build Swift unit tests. (Jeff Verkoeyen)
+[Ink] Changed MDCInkView API to better reflect the modern ink behavior (breaking). (Adrian Secord)
 [Other] Fixes block comments globally. (Adrian Secord)
 [FlexibleHeader] Prefer CGFloat when calculating shadow intensity. (Jeff Verkoeyen)
 [Demos] Adding Font Opacities for all labels in Pesto (Will Larche)
