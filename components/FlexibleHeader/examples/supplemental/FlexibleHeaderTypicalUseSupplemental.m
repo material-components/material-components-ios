@@ -7,6 +7,8 @@
 
 #import "FlexibleHeaderTypicalUseSupplemental.h"
 
+#pragma mark - FlexibleHeaderTypicalUseViewController
+
 @interface ExampleInstructionsView : UIView
 
 @end
@@ -17,6 +19,9 @@
   return @[ @"Flexible Header", @"Typical use" ];
 }
 
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
+}
 @end
 
 @implementation FlexibleHeaderTypicalUseViewController (Rotation)
@@ -95,9 +100,9 @@
 
 - (CGSize)textSizeForRect:(CGRect)frame {
   return [[self instructionsString]
-             boundingRectWithSize:frame.size
-                          options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                          context:nil]
+    boundingRectWithSize:frame.size
+                 options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                 context:nil]
       .size;
 }
 
@@ -107,14 +112,14 @@
   [style setLineBreakMode:NSLineBreakByWordWrapping];
 
   NSDictionary *instructionAttributes1 =
-      @{NSFontAttributeName : [UIFont systemFontOfSize:20.f],
+      @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline],
         NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
                                                          green:0.459
                                                           blue:0.459
                                                          alpha:0.87f],
         NSParagraphStyleAttributeName : style};
   NSDictionary *instructionAttributes2 =
-      @{NSFontAttributeName : [UIFont systemFontOfSize:16.f],
+      @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline],
         NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
                                                          green:0.459
                                                           blue:0.459
