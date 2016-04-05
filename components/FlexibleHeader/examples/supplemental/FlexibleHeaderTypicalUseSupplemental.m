@@ -9,7 +9,7 @@
 
 #pragma mark - FlexibleHeaderTypicalUseViewController
 
-@interface ExampleInstructionsView : UIView
+@interface ExampleInstructionsViewFlexibleHeaderTypicalUse : UIView
 
 @end
 
@@ -53,7 +53,7 @@
 
   [self.view addConstraints:arrayOfConstraints];
 
-  self.exampleView = [[ExampleInstructionsView alloc]
+  self.exampleView = [[ExampleInstructionsViewFlexibleHeaderTypicalUse alloc]
       initWithFrame:self.scrollView.bounds];
   [self.scrollView addSubview:self.exampleView];
 
@@ -83,7 +83,7 @@
 
 @end
 
-@implementation ExampleInstructionsView
+@implementation ExampleInstructionsViewFlexibleHeaderTypicalUse
 
 - (void)drawRect:(CGRect)rect {
   [[UIColor whiteColor] setFill];

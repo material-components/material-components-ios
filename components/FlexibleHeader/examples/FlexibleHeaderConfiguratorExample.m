@@ -53,6 +53,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.view.backgroundColor = [UIColor whiteColor];
 
   self.scrollView = [[UIScrollView alloc] init];
   [self.view addSubview:self.scrollView];

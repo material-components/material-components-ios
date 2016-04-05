@@ -5,11 +5,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class ExampleInstructionsView;
+@class ExampleInstructionsViewFlexibleHeaderTypicalUse;
 
 @interface FlexibleHeaderTypicalUseViewController : UIViewController
 
-@property(nonatomic) ExampleInstructionsView *exampleView;
+@property(nonatomic) ExampleInstructionsViewFlexibleHeaderTypicalUse *exampleView;
 @property(nonatomic) UIScrollView *scrollView;
 
 @end
