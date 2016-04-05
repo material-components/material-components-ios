@@ -102,5 +102,3 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](Typography/)
   <!--{: .icon-typography }-->
 <!--{: .icon-list .large-format }-->
-
-

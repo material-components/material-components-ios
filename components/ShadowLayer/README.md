@@ -156,4 +156,3 @@ self.layer.rasterizationScale = [UIScreen mainScreen].scale;
 <!--</div>-->
 
 Disable rasterization before animating MDCShadowLayer.
-

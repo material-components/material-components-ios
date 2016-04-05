@@ -263,5 +263,3 @@ specific language governing permissions and limitations under the License.
 
 Each contributor is responsible for adding their name or company name to the CONTRIBUTORS.txt file
 at the project’s root and maintaining the contact information.
-
-

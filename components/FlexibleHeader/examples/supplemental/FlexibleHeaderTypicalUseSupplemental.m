@@ -100,9 +100,9 @@
 
 - (CGSize)textSizeForRect:(CGRect)frame {
   return [[self instructionsString]
-    boundingRectWithSize:frame.size
-                 options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                 context:nil]
+             boundingRectWithSize:frame.size
+                          options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                          context:nil]
       .size;
 }
 

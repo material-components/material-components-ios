@@ -141,6 +141,3 @@ An easy way to create apps with&nbsp;Material&nbsp;Design.
       <!--{: .icon-sample }-->
     <!--{: .icon-list }-->
 <!--{: .step-sequence }-->
-
-
-

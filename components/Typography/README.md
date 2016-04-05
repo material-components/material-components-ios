@@ -216,5 +216,3 @@ self.label.sizeToFit()
 Material Typography allows you to set your own font to replace Roboto and Noto. For more
 information see
 [FontDiskLoader](https://github.com/google/material-components-ios/tree/develop/components/FontDiskLoader).
-
-

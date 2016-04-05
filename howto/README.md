@@ -90,9 +90,9 @@ In the Abstractor project, there is a view controller already created called Mai
 
 Modify the MainViewController.swift by adding a UIScrollView. Make the following changes to the MainViewController:
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 class MainViewController : UIViewController {
@@ -115,9 +115,9 @@ This snippet is basic UIKit code to create a scroll view, setting the size of th
 
 To actually add the App Bar, we need to give the view controller a protocol to conform to, and override the initializers:
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 class MainViewController : UIViewController, MDCAppBarParenting {
@@ -164,9 +164,9 @@ At this point, the app will add a grey header bar at the top of the view, but th
 
 The MDCFlexibleHeaderViewController that was now exposed as a property of our view controller doesn't know about the scroll view and therefore it cannot adjust any scroll view insets the scroll view needs to render below the bar. To rectify this, simply tell the headerView in the MDCFlexibleHeaderViewController about the scroll view in viewDidLoad():
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 class MainViewController : UIViewController, MDCAppBarParenting {
@@ -190,9 +190,9 @@ Now the scroll view correctly aligns to the bottom of the header bar. Notice tha
 
 The status bar is not hiding yet, and the reason is by default UIViewController does not hide the status bar. In order for  `headerViewController` to assume control of the status bar, override the method `childViewControllerForStatusBarHidden` to use the headerViewController as the childViewController (see the FlexibleHeader component documentation for more details):
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 class MainViewController : UIViewController, MDCAppBarParenting {
@@ -211,9 +211,9 @@ To complete the integration, let's set a proper color and some items on to the h
 
 To set the color of the header, we can directly manipulate the headerView in viewDidLoad:
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 class MainViewController : UIViewController, MDCAppBarParenting {
@@ -237,9 +237,9 @@ class MainViewController : UIViewController, MDCAppBarParenting {
 
 And finally put some buttons in to the header bar.
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 class MainViewController : UIViewController, MDCAppBarParenting {
@@ -283,9 +283,9 @@ Observant developers would already have noticed that App Bar uses Flexible Heade
 
 The first thing to do is to create a custom view that will be placed inside the FlexibleHeader. This can be in conjunction with the App Bar or completed without. Notice in the previous steps, another property we added is the `MDCNavigationBar` that provides the logic to layout the single line button bar.
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 class CustomHeaderView : UIView {
@@ -327,9 +327,9 @@ logic locks the titleLabel to the bottom of the header while the iconView stays 
 
 Integrating the Flexible Header is about the same amount of work as App Bar:
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 class MainViewController : UIViewController, MDCFlexibleHeaderViewLayoutDelegate {
@@ -345,9 +345,9 @@ class MainViewController : UIViewController, MDCFlexibleHeaderViewLayoutDelegate
 Override the initialize to add the MDCFlexibleHeaderViewController to the view controller
 as a childViewController replacing the previous `MDCAppBArPrepareParent`:
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -369,9 +369,9 @@ Initialize the customHeaderView and connect the headerViewController's headerVie
 the UIViewController's hierarchy. This replaces `MDCAppBarAddViews` was doing
 except this is not creating any observing of the UINavigationItem.
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 override func viewDidLoad() {
@@ -401,9 +401,9 @@ One final thing that is added is to add this viewController as the layoutDelegat
 us to listen for events when the header is resized. And we can implement a very simple way to
 update the header view contents when the layout is changed.
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 // MDCFlexibleHeaderViewLayoutDelegate
@@ -443,9 +443,9 @@ The following steps will use the MDCCollectionViewModel to build up a simple col
 MDCCollectionViewController is a subclass of the UICollectionViewController and can be used in place
 of a UIViewController base class. Using this is the easiest way to get started with Material collection views.
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 class MainViewController : MDCCollectionViewController, MDCAppBarParenting {
@@ -458,9 +458,9 @@ class MainViewController : MDCCollectionViewController, MDCAppBarParenting {
 The collection view will replace the scroll view that was in the App Bar example earlier. In place of
 the scroll view, a model is initialized:
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 override func viewDidLoad() {
@@ -500,9 +500,9 @@ with the App Bar to forward scroll view events.
 Instead, we need to manually forward four additional UIScrollViewDelegate methods to
 the MDCFlexibleHeaderView to preserve our collapsing header functionality.
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 
@@ -540,9 +540,9 @@ more detail. This component also handles editing and moving of rows, which is al
 The final step is to handle taps on a row. It is very similar to the normal UICollectionViewDelegate
 way of doing things
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -570,9 +570,9 @@ rounded button that contains an icon.
 To add this to the Abstract app, the button should be initialized at viewDidLoad and then
 added to the view controller's root view so it stays floated in the corner.
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 override func viewDidLoad() {
@@ -607,9 +607,9 @@ override func viewDidAppear {
 When the floating action button is tapped on, the `add:` selector is called and it will add a
 row to the collection view. Collection views can animate any changes using MDCCollectionViewModel.performBatchOperations
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 func add(target: AnyObject) {
@@ -641,9 +641,9 @@ from the view hierarchy and animated in when the view controller appears.
 
 Fading in to the view controller:
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
  override func viewDidAppear(animated: Bool) {
@@ -659,9 +659,9 @@ Fading in to the view controller:
 Fading out when the view controller changes, replace the `collectionView:didSelectItemAtIndexPath`
 to pushViewController with an animation to FAB.
 
-<!--<div class="material-code-render" markdown="1">--> 
+<!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C 
+#### Objective-C
 
 ~~~ objc
 override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -714,5 +714,3 @@ advanced features.
   ](https://github.com/google/material-components-ios/tree/master/demos/Shrine)
   <!--{: .icon-shrine }-->
 <!--{: .icon-list .large-format }-->
-
-

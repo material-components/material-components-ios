@@ -99,5 +99,3 @@ Same features:
 New features:
 
 - making the slider a snap to discrete values via property numberOfDiscreteValues.
-
-
