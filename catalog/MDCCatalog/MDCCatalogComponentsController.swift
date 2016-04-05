@@ -141,7 +141,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
     sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
       let pad = CGFloat(1)
       let cellWidth = (self.view.frame.size.width - 3 * pad) / 2
-      return CGSizeMake(cellWidth, cellWidth * 0.8);
+      return CGSizeMake(cellWidth, cellWidth * 0.825);
   }
 
   override func collectionView(collectionView: UICollectionView,
@@ -192,4 +192,5 @@ extension MDCCatalogComponentsController {
         targetContentOffset: targetContentOffset)
     }
   }
+
 }

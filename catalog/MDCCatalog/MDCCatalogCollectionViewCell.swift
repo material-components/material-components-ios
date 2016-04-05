@@ -19,19 +19,20 @@ import MaterialComponents
 
 class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
-  var imageView = UIImageView()
   var label = UILabel()
   let pad = CGFloat(14)
+  let tile = MDCCatalogTile(frame: CGRectZero)
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    imageView.contentMode = .ScaleAspectFill;
-    self.addSubview(imageView)
     label.textColor = UIColor(white: 0.2, alpha: 1)
     label.font = MDCTypography.captionFont()
     self.addSubview(label)
     self.clipsToBounds = true
+
+    tile.frame = self.bounds
+    tile.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+    self.addSubview(tile)
   }
 
   required init(coder: NSCoder) {
@@ -47,18 +48,16 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     label.sizeToFit()
     label.frame = CGRectMake(pad, frame.height - label.frame.height - pad,
                              frame.width - pad * 2, label.frame.height)
-    imageView.frame = self.bounds
   }
 
   override func prepareForReuse() {
     super.prepareForReuse()
     label.text = ""
-    imageView.image = nil
   }
 
   func populateView(componentName: String, image: UIImage) {
     label.text = componentName
-    imageView.image = image
+    tile.componentName = componentName
   }
 
 }
