@@ -216,6 +216,13 @@ body {
     p {
     }
 
+    h1[id]:before, h2[id]:before, h3[id]:before, h4[id]:before {
+      display: block;
+      content: ' ';
+      margin-top: -76px;  // fixed header height + 12px for readability
+      padding-top: 76px;
+      visibility: hidden;
+    }
     // Force auto_id anchors to sit below floating nav
     h1[id],
     h2[id] {

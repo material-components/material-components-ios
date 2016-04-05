@@ -269,5 +269,9 @@
         complexrenders[i].querySelector('.language').dispatchEvent(evt);
       }
     });
+    // scroll to targeted anchor after code renderer completes.
+    if(window.location.hash) {
+      window.location.href = window.location.hash;
+    }
   });
 })();
