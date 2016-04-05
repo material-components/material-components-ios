@@ -391,7 +391,7 @@ __deprecated_msg("Use shiftBehavior instead.");
 /**
  Content for the flexible header should be added to the content view.
  */
-@property(nonatomic, retain, nonnull, readonly) UIView *contentView
+@property(nonatomic, retain, nonnull) UIView *contentView
 __deprecated_msg("Please register views directly to the flexible header.");
 
 @end
