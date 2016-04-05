@@ -31,6 +31,9 @@
 /** Shared singleton instance. */
 + (nonnull instancetype)sharedInstance;
 
+/** This is a singleton: Use sharedInstance instead. */
+- (nonnull instancetype)init __deprecated_msg("This is a singleton: Use sharedInstance instead");
+
 #pragma mark Non-italic fonts
 
 /**
