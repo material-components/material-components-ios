@@ -8,7 +8,7 @@
   'use strict';
   // A Boolean value to control line numbers generation. Device width smaller
   // than 600px will be considered as mobile device.
-  var _mobileSized = false;
+  // var _mobileSized = false;
   // Default language setting when no value is provided by kramdown.
   var _defaultLang = 'objc';
   // A Map between kramdown language name and codeMirror name.
@@ -80,8 +80,8 @@
           }
         }
         else {
-          var lineno = parseInt(highlight[i]) - 1;
-          cm.getDoc().addLineClass(lineno, 'wrap', 'hll');
+          var highlightline = parseInt(highlight[i]) - 1;
+          cm.getDoc().addLineClass(highlightline, 'wrap', 'hll');
         }
       }
     }
@@ -203,14 +203,15 @@
     radioForm.classList.add('language');
     var cmMap = {};
     var radioName = 'MaterialCodeRenderer' + id;
-    var useLineNumbers = !_mobileSized;
-    if (useLineNumbers) {
-      renderer.classList.add('line-numbers');
-    }
+    // var useLineNumbers = !_mobileSized;
+    // if (useLineNumbers) {
+    //   renderer.classList.add('line-numbers');
+    // }
     // 2. Convert code snippet to code mirror
     for (var i = 0; i < sources.length; i++) {
       var source = sources[i];
-      var simpleRender = renderSimpleCodeRenderer(source, useLineNumbers);
+      // deactivate lineno for all code renderers.
+      var simpleRender = renderSimpleCodeRenderer(source, false);
       var radioEl = new MaterialRadioButton(radioName, simpleRender.language);
       var clientHeight = simpleRender.cm.getScrollInfo().clientHeight;
       maxHeight = maxHeight < clientHeight ? clientHeight : maxHeight;
@@ -245,9 +246,9 @@
 
 
   window.addEventListener('load', function() {
-    if (document.body.clientWidth < 600) {
-      _mobileSized = true;
-    }
+    // if (document.body.clientWidth < 600) {
+    //   _mobileSized = true;
+    // }
     // First: renders material code wrapper
     var complexrenders = document.querySelectorAll('.material-code-render');
     for (var i = 0; i < complexrenders.length; i++) {
