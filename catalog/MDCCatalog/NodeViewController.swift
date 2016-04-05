@@ -55,20 +55,20 @@ class NodeViewController: CBCNodeListViewController {
   // MARK: UIScrollViewDelegate
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
-    if (scrollView == appBar.headerViewController.headerView.trackingScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
       appBar.headerViewController.headerView.trackingScrollViewDidScroll()
     }
   }
 
   override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-    if (scrollView == appBar.headerViewController.headerView.trackingScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
       appBar.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
     }
   }
 
   override func scrollViewDidEndDragging(scrollView: UIScrollView,
                                          willDecelerate decelerate: Bool) {
-    if (scrollView == appBar.headerViewController.headerView.trackingScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
       let headerView = appBar.headerViewController.headerView
       headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
     }
@@ -76,11 +76,13 @@ class NodeViewController: CBCNodeListViewController {
 
   override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint,
                                           targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    if (scrollView == appBar.headerViewController.headerView.trackingScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
       let headerView = appBar.headerViewController.headerView
-      headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity,
-          targetContentOffset: targetContentOffset)
-      }
+      headerView.trackingScrollViewWillEndDraggingWithVelocity(
+        velocity,
+        targetContentOffset: targetContentOffset
+      )
+    }
   }
 
   // MARK: UITableViewDelegate
@@ -90,7 +92,7 @@ class NodeViewController: CBCNodeListViewController {
     var vc: UIViewController
     if node.isExample() {
       let contentVC = node.createExampleViewController()
-      if (contentVC.respondsToSelector((Selector("catalogShouldHideNavigation")))) {
+      if contentVC.respondsToSelector("catalogShouldHideNavigation") {
         vc = contentVC
       } else {
         vc = MDCCatalogTypicalExampleViewController(contentViewController: contentVC,

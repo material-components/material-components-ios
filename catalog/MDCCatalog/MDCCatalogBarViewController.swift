@@ -19,7 +19,7 @@ import MaterialComponents
 
 class MDCCatalogBarViewController: UIViewController {
 
-  internal let catalogBar = MDCCatalogBar(frame: CGRectZero)
+  internal let catalogBar = MDCCatalogBar(frame: CGRect())
   var contentViewController = UIViewController()
 
   init(contentViewController: UIViewController, title: String, delegate: MDCCatalogBarDelegate) {
@@ -42,18 +42,21 @@ class MDCCatalogBarViewController: UIViewController {
     contentViewController.didMoveToParentViewController(self)
 
     let catalogBarHeight = CGFloat(52)
-    let catalogBarRect = CGRectMake(0,
-      self.view.frame.size.height - catalogBarHeight,
-      self.view.frame.size.width,
-      catalogBarHeight);
+    let catalogBarRect = CGRect(
+      x: 0,
+      y: self.view.frame.size.height - catalogBarHeight,
+      width: self.view.frame.size.width,
+      height: catalogBarHeight
+    )
     catalogBar.frame = catalogBarRect
     catalogBar.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
 
-    contentViewController.view.frame =
-      CGRectMake(0,
-        0,
-        self.view.bounds.size.width,
-        self.view.bounds.size.height - catalogBarHeight);
+    contentViewController.view.frame = CGRect(
+      x: 0,
+      y: 0,
+      width: self.view.bounds.size.width,
+      height: self.view.bounds.size.height - catalogBarHeight
+    )
     contentViewController.view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
   }
 

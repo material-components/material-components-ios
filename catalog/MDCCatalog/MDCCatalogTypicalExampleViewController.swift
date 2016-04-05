@@ -30,7 +30,7 @@ class MDCCatalogTypicalExampleViewController: UIViewController {
     self.addChildViewController(appBar.headerViewController)
     appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
 
-    let headerContentView = appBar.headerViewController.headerView;
+    let headerContentView = appBar.headerViewController.headerView
     let lineFrame = CGRectMake(0, headerContentView.frame.height, headerContentView.frame.width, 1)
     let line = UIView(frame: lineFrame)
     line.backgroundColor = UIColor(white: 0.72, alpha: 1)
@@ -50,7 +50,7 @@ class MDCCatalogTypicalExampleViewController: UIViewController {
       CGRectMake(0,
         headerHeight,
         self.view.bounds.size.width,
-        self.view.bounds.size.height - headerHeight);
+        self.view.bounds.size.height - headerHeight)
     contentViewController.view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
     appBar.addSubviewsToParent()

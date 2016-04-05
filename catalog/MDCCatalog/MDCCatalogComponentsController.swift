@@ -29,7 +29,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
     self.node = node
 
     let spacing = CGFloat(1)
-    let layout = UICollectionViewFlowLayout();
+    let layout = UICollectionViewFlowLayout()
     let sectionInset:CGFloat = spacing
     layout.sectionInset = UIEdgeInsetsMake(sectionInset, sectionInset, sectionInset, sectionInset)
     layout.minimumInteritemSpacing = spacing
@@ -88,8 +88,8 @@ class MDCCatalogComponentsController: UICollectionViewController {
     self.headerViewController.headerView.trackingScrollView = self.collectionView
 
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
-      let shadowLayer = layer as! MDCShadowLayer
-      shadowLayer.elevation = intensity * MDCShadowElevationAppBar
+      let shadowLayer = layer as? MDCShadowLayer
+      shadowLayer!.elevation = intensity * MDCShadowElevationAppBar
     }
 
     self.view.addSubview(self.headerViewController.view)
@@ -103,7 +103,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
   }
 
   override func willAnimateRotationToInterfaceOrientation(
-    toInterfaceOrientation:UIInterfaceOrientation, duration: NSTimeInterval) {
+    toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
     collectionView?.collectionViewLayout.invalidateLayout()
   }
 
@@ -121,7 +121,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
   override func collectionView(collectionView: UICollectionView,
     cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MDCCatalogCollectionViewCell",
-      forIndexPath: indexPath) as! MDCCatalogCollectionViewCell
+      forIndexPath: indexPath)
     cell.backgroundColor = UIColor.whiteColor()
 
     let imageName = "Misc"
@@ -131,7 +131,9 @@ class MDCCatalogComponentsController: UICollectionViewController {
     if componentImage != nil {
       image = componentImage
     }
-    cell.populateView(componentName, image: image!)
+    if let catalogCell = cell as? MDCCatalogCollectionViewCell {
+      catalogCell.populateView(componentName, image: image!)
+    }
 
     return cell
   }
@@ -139,9 +141,9 @@ class MDCCatalogComponentsController: UICollectionViewController {
   func collectionView(collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-      let pad = CGFloat(1)
-      let cellWidth = (self.view.frame.size.width - 3 * pad) / 2
-      return CGSizeMake(cellWidth, cellWidth * 0.825);
+    let pad = CGFloat(1)
+    let cellWidth = (self.view.frame.size.width - 3 * pad) / 2
+    return CGSize(width: cellWidth, height: cellWidth * 0.825)
   }
 
   override func collectionView(collectionView: UICollectionView,

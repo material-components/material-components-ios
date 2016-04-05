@@ -50,7 +50,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
       item.setTitleTextAttributes(self.itemTitleTextAttributes(), forState: .Normal)
     }
 
-    buttonBar.items = items;
+    buttonBar.items = items
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
     let size = buttonBar.sizeThatFits(self.view.bounds.size)
@@ -89,11 +89,11 @@ extension ButtonBarTypicalUseSwiftExample {
 
 extension ButtonBarTypicalUseSwiftExample {
   func buttonBarBackgroundColor() -> UIColor {
-    return UIColor(red: 0.012, green: 0.663, blue: 0.957, alpha: 0.2);
+    return UIColor(red: 0.012, green: 0.663, blue: 0.957, alpha: 0.2)
   }
 
   func itemTitleTextAttributes () -> [String:AnyObject] {
     let textColor = UIColor(white: 0, alpha: 0.8)
-    return [NSForegroundColorAttributeName:textColor];
+    return [NSForegroundColorAttributeName:textColor]
   }
 }

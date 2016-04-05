@@ -39,15 +39,19 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     super.init(coder: coder)!
   }
 
-  override func applyLayoutAttributes(layoutAttributes : UICollectionViewLayoutAttributes) {
+  override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
     super.applyLayoutAttributes(layoutAttributes)
   }
 
   override func layoutSubviews() {
     super.layoutSubviews()
     label.sizeToFit()
-    label.frame = CGRectMake(pad, frame.height - label.frame.height - pad,
-                             frame.width - pad * 2, label.frame.height)
+    label.frame = CGRect(
+      x: pad,
+      y: frame.height - label.frame.height - pad,
+      width: frame.width - pad * 2,
+      height: label.frame.height
+    )
   }
 
   override func prepareForReuse() {
