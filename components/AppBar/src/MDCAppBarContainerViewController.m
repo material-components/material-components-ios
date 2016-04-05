@@ -98,13 +98,12 @@
   _contentViewController = contentViewController;
 
   [self addChildViewController:contentViewController];
-  if ([self isViewLoaded]) {
-    [self.view insertSubview:contentViewController.view
-                belowSubview:self.appBar.headerViewController.headerView];
-    [contentViewController didMoveToParentViewController:self];
 
-    [_appBar.navigationBar observeNavigationItem:_contentViewController.navigationItem];
-  }
+  NSAssert(![self isViewLoaded],
+           @"View should not have been loaded at this point."
+           @" Verify that the view is not being accessed anywhere in %@ or %@.",
+           NSStringFromSelector(_cmd),
+           NSStringFromSelector(@selector(initWithContentViewController:)));
 }
 
 @end
