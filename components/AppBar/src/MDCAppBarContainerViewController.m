@@ -62,6 +62,8 @@
   [self.contentViewController didMoveToParentViewController:self];
 
   [_appBar addSubviewsToParent];
+
+  [_appBar.navigationBar observeNavigationItem:_contentViewController.navigationItem];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -100,6 +102,8 @@
     [self.view insertSubview:contentViewController.view
                 belowSubview:self.appBar.headerViewController.headerView];
     [contentViewController didMoveToParentViewController:self];
+
+    [_appBar.navigationBar observeNavigationItem:_contentViewController.navigationItem];
   }
 }
 
