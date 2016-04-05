@@ -211,24 +211,16 @@ body {
     margin-left: auto;
     margin-right: auto;
 
-    h2 {
-    }
-    p {
-    }
-
-    h1[id]:before, h2[id]:before, h3[id]:before, h4[id]:before {
-      display: block;
-      content: ' ';
-      margin-top: -76px;  // fixed header height + 12px for readability
-      padding-top: 76px;
-      visibility: hidden;
-    }
     // Force auto_id anchors to sit below floating nav
+    // 100px accommodates the fixed header height (64), plus a bit of buffer
     h1[id],
-    h2[id] {
+    h2[id],
+    h3[id],
+    h4[id] {
 
       &::before {
         display: block;
+        visibility: hidden;
         content: '';
         height: 0;
         line-height: 0;
