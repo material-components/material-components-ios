@@ -587,7 +587,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   //                                                  : _disabledBackgroundColorDark;
   //    }
   //  }
-  self.backgroundColor = self.currentBackgroundColor;
+  super.backgroundColor = self.currentBackgroundColor;
 }
 
 - (void)updateDisabledTitleColor {
