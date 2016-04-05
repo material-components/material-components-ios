@@ -7,57 +7,64 @@ This guide provides the essential recommendations for writing component README.m
 This is the basic template for a component's README.md. Parts that you, the writer, are expected to
 fill out have been marked with `TODO` statements.
 
-~~~
----
-title:  "TODO: ComponentName"
-layout: detail
-section: documentation
-excerpt: "TODO: Single sentence description of the component."
----
-# TODO: ComponentName
 
-![TODO: ComponentName](docs/assets/screenshot.png)
-<!--{: .ios-screenshot .right }-->
+    ---
+    title:  "TODO: ComponentName"
+    layout: detail
+    section: documentation
+    excerpt: "TODO: Single sentence description of the component."
+    ---
+    # TODO: ComponentName
 
-TODO: Single sentence description of the component.
-<!--{: .intro :}-->
+    ![TODO: ComponentName](docs/assets/screenshot.png)
+    <!--{: .ios-screenshot .right }-->
 
-### Material Design Specifications
+    TODO: Single sentence description of the component.
+    <!--{: .intro :}-->
 
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/<TODO: link to spec>">TODO: link to spec</a></li>
-</ul>
+    ### Material Design Specifications
 
-### API Documentation
+    <ul class="icon-list">
+      <li class="icon-link">
+        <a href="https://www.google.com/design/spec/<TODO: link to spec>">
+          TODO: link to spec
+        </a>
+      </li>
+    </ul>
 
-<ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/<ComponentName>/Classes/<TODO: API name>.html">TODO: API name</a></li>
-</ul>
+    ### API Documentation
 
-- - -
+    <ul class="icon-list">
+      <li class="icon-link">
+        <a href="/apidocs/<ComponentName>/Classes/<TODO: API name>.html">
+          TODO: API name
+        </a>
+      </li>
+    </ul>
 
-## Installation
+    - - -
 
-### Requirements
+    ## Installation
 
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
+    ### Requirements
 
-### Installation with CocoaPods
+    - Xcode 7.0 or higher.
+    - iOS SDK version 7.0 or higher.
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+    ### Installation with CocoaPods
 
-~~~
-pod 'MaterialComponents/TODO: ComponentName'
-~~~
+    To add this component to your Xcode project using CocoaPods, add the
+    following to your `Podfile`:
 
-Then, run the following command:
+    ~~~
+    pod 'MaterialComponents/TODO: ComponentName'
+    ~~~
 
-~~~ bash
-$ pod install
-~~~
+    Then, run the following command:
 
-
+    ~~~ bash
+    $ pod install
+    ~~~
 
 - - -
 
