@@ -276,7 +276,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 #pragma mark Behaviors
 
 /** The behavior of the header in response to the user interacting with the tracking scroll view. */
-@property(nonatomic) MDCFlexibleHeaderShiftBehavior behavior;
+@property(nonatomic) MDCFlexibleHeaderShiftBehavior shiftBehavior;
 
 /**
  Whether or not the header view is allowed to expand past its maximum height when the tracking
@@ -381,6 +381,10 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 
 // clang-format off
 @interface MDCFlexibleHeaderView ()
+
+/** @see shiftBehavior */
+@property(nonatomic) MDCFlexibleHeaderShiftBehavior behavior
+__deprecated_msg("Use shiftBehavior instead.");
 
 #pragma mark Accessing the header's views
 

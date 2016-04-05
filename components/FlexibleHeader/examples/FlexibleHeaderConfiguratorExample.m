@@ -159,11 +159,11 @@
   } else if (sender == self.exampleView.shiftSwitch) {
     if (!self.exampleView.shiftSwitch.isOn) {
       self.exampleView.shiftStatusBarSwitch.on = NO;
-      self.fhvc.headerView.behavior = MDCFlexibleHeaderShiftBehaviorDisabled;
+      self.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorDisabled;
     } else {
-      if (self.fhvc.headerView.behavior != MDCFlexibleHeaderShiftBehaviorEnabled ||
-          self.fhvc.headerView.behavior != MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
-        self.fhvc.headerView.behavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+      if (self.fhvc.headerView.shiftBehavior != MDCFlexibleHeaderShiftBehaviorEnabled ||
+          self.fhvc.headerView.shiftBehavior != MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
+        self.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
       }
     }
   } else if (sender == self.exampleView.shiftStatusBarSwitch) {
@@ -171,7 +171,7 @@
       self.exampleView.shiftSwitch.on = YES;
     }
 
-    self.fhvc.headerView.behavior =
+    self.fhvc.headerView.shiftBehavior =
         sender.isOn ? MDCFlexibleHeaderShiftBehaviorEnabled : MDCFlexibleHeaderShiftBehaviorDisabled;
   } else if (sender == self.exampleView.infiniteContentSwitch) {
     self.fhvc.headerView.inFrontOfInfiniteContent = sender.isOn;

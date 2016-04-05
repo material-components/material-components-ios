@@ -90,9 +90,9 @@
 
   self.exampleView.overExtendSwitch.on = fhvc.headerView.canOverExtend;
   self.exampleView.shiftSwitch.on =
-      fhvc.headerView.behavior != MDCFlexibleHeaderShiftBehaviorDisabled;
+      fhvc.headerView.shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled;
   self.exampleView.shiftStatusBarSwitch.on =
-      fhvc.headerView.behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+      fhvc.headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
   self.exampleView.infiniteContentSwitch.on = fhvc.headerView.inFrontOfInfiniteContent;
 
   self.exampleView.minHeightSlider.value = fhvc.headerView.minimumHeight;
