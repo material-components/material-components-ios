@@ -65,17 +65,17 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
-  return self.headerViewController.prefersStatusBarHidden;
+  return self.appBar.headerViewController.prefersStatusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  return self.headerViewController.preferredStatusBarStyle;
+  return self.appBar.headerViewController.preferredStatusBarStyle;
 }
 
 #pragma mark - Public
 
 - (MDCFlexibleHeaderViewController *)headerViewController {
-  return _appBar.headerViewController;
+  return self.appBar.headerViewController;
 }
 
 - (void)setContentViewController:(UIViewController *)contentViewController {
@@ -98,7 +98,7 @@
   [self addChildViewController:contentViewController];
   if ([self isViewLoaded]) {
     [self.view insertSubview:contentViewController.view
-                belowSubview:self.headerViewController.headerView];
+                belowSubview:self.appBar.headerViewController.headerView];
     [contentViewController didMoveToParentViewController:self];
   }
 }
