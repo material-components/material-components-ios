@@ -31,7 +31,7 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
-$ pod 'MaterialComponents/ButtonBar'
+pod 'MaterialComponents/ButtonBar'
 ~~~
 
 Then, run the following command:

@@ -40,7 +40,7 @@ To add the NavigationBar component to your Xcode project using CocoaPods, add th
 PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/NavigationBar'
+pod 'MaterialComponents/NavigationBar'
 ~~~
 
 Then, run the following command:

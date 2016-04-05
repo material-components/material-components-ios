@@ -42,7 +42,7 @@ outward from the user's touch.
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
-$ pod 'MaterialComponents/Ink'
+pod 'MaterialComponents/Ink'
 ~~~
 
 Then, run the following command:

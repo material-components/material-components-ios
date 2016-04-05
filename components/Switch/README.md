@@ -43,7 +43,7 @@ To add the Switch component to your Xcode project using CocoaPods, add the follo
 PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/Switch'
+pod 'MaterialComponents/Switch'
 ~~~
 
 Then, run the following command:

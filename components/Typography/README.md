@@ -45,7 +45,7 @@ To add the Typography component to your Xcode project using CocoaPods, add the f
 PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/Typography'
+pod 'MaterialComponents/Typography'
 ~~~
 
 Then, run the following command:

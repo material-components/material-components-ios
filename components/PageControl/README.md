@@ -41,7 +41,7 @@ desired animation of the control.
 To add the PageControl component to your Xcode project using CocoaPods, add the following to your PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/PageControl'
+pod 'MaterialComponents/PageControl'
 ~~~
 
 Then, run the following command:

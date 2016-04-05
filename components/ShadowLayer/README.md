@@ -67,7 +67,7 @@ To add the ShadowLayer component to your Xcode project using CocoaPods, add the 
 PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/ShadowLayer'
+pod 'MaterialComponents/ShadowLayer'
 ~~~
 
 Then, run the following command:
