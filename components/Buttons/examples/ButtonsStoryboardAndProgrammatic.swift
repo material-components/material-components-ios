@@ -46,10 +46,6 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    storyboardRaised.sizeToFit()
-    storyboardFlat.sizeToFit()
-    storyboardFloating.sizeToFit()
-
     raisedButton.setTitle("Programmatic", forState: .Normal)
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +87,7 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
       toItem: self.view,
       attribute: .Top,
       multiplier: 1.0,
-      constant: 86.0))
+      constant: 22.0))
 
     self.view.addConstraints(
       NSLayoutConstraint.constraintsWithVisualFormat("V:[raised]-22-[flat]-22-[floating]",
