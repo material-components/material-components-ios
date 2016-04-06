@@ -52,9 +52,8 @@ if (!empty($structure)) {
     $verb = $typeToPastTenseVerb[strval($delta->type)];
     $commit = $typeToCommit[strval($delta->type)];
     $url = BASE_URL."/blob/$commit/".$argv[3].'/'.$delta->path.'#L'.$delta->lineNumber;
-    
     $link = "[`".$delta->name."`]($url)";
-    
+
     $lines = array();
 
     if ($delta->type == 'modification') {
@@ -64,13 +63,16 @@ if (!empty($structure)) {
         $types []= $modification->type;
       }
 
+      $oldurl = BASE_URL."/blob/".$argv[1]."/".$argv[3].'/'.$delta->path.'#L'.$delta->lineNumber;
+      $newurl = BASE_URL."/blob/".$argv[2]."/".$argv[3].'/'.$delta->path.'#L'.$delta->lineNumber;
+
       $didOutputLines = false;
 
       if (count(array_diff($types, array('availability', 'deprecationMessage'))) == 0) {
         $availability = getModificationWithType($modifications, 'availability');
         $message = getModificationWithType($modifications, 'deprecationMessage');
         if ($availability->currentValue == 'Deprecated') {
-          $lines []= "- [deprecated] $link.";
+          $lines []= "- [deprecated] [`".$delta->name."`]($newurl).";
           $lines []= "*$message->currentValue*";
           $didOutputLines = true;
         }
