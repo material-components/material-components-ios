@@ -95,7 +95,7 @@
       value: source.innerText.trim(),
       mode: mode,
       lineNumbers: lineno || false,
-      readOnly: 'nocursor'
+      readOnly: 'true'
     });
 
     // If the language is Shell, this piece of logic process user path properly
