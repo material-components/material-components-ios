@@ -18,6 +18,6 @@
 #
 # This is not required for anyone but core team members.
 
-if [ ! pip --version >/dev/null 2>&1 ]; then
+if [ ! $(pip --version >/dev/null 2>&1) ]; then
   sudo easy_install pip
 fi
