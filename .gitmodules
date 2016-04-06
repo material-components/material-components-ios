@@ -4,3 +4,6 @@
 [submodule "scripts/external/clang-format-linter"]
 	path = scripts/external/clang-format-linter
 	url = git@github.com:vhbit/clang-format-linter.git
+[submodule "scripts/external/arc-proselint"]
+	path = scripts/external/arc-proselint
+	url = git@github.com:google/material-components-ios.git

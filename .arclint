@@ -18,6 +18,16 @@
       "type": "chmod",
       "exclude": "(/Pods/)"
     },
+    "prose": {
+      "type": "prose",
+      "include": "(\\.(md)$)",
+      "exclude": "(/Pods/)",
+      "severity": {
+        "typography.symbols.curly_quotes": "disabled",
+        "typography.symbols.ellipsis": "disabled",
+        "leonard.exclamation.30ppm": "disabled"
+      }
+    },
     "spelling": {
       "type": "spelling",
       "include": "(\\.(m|h|mm|md)$)",
