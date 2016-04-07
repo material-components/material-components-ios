@@ -29,7 +29,7 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInit];
+    [self commonMDCFlatButtonInit];
   }
   return self;
 }
@@ -40,12 +40,12 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
     if ([aDecoder containsValueForKey:MDCFlatButtonHasOpaqueBackground]) {
       self.hasOpaqueBackground = [aDecoder decodeBoolForKey:MDCFlatButtonHasOpaqueBackground];
     }
-    [self commonInit];
+    [self commonMDCFlatButtonInit];
   }
   return self;
 }
 
-- (void)commonInit {
+- (void)commonMDCFlatButtonInit {
   self.shouldRaiseOnTouch = NO;
   [self setBackgroundColor:nil forState:UIControlStateNormal];
   self.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];

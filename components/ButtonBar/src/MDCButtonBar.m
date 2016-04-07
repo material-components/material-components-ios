@@ -42,7 +42,7 @@ static NSString *const kEnabledSelector = @"enabled";
   self.items = nil;
 }
 
-- (void)commonInit {
+- (void)commonMDCButtonBarInit {
   _buttonItemsLock = [[NSObject alloc] init];
 
   _defaultBuilder = [[MDCAppBarButtonBarBuilder alloc] init];
@@ -56,7 +56,7 @@ static NSString *const kEnabledSelector = @"enabled";
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInit];
+    [self commonMDCButtonBarInit];
   }
   return self;
 }
@@ -64,7 +64,7 @@ static NSString *const kEnabledSelector = @"enabled";
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    [self commonInit];
+    [self commonMDCButtonBarInit];
   }
   return self;
 }
