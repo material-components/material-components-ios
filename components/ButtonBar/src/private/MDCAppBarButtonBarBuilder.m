@@ -94,6 +94,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
   MDCButtonBarButton *button = [[MDCButtonBarButton alloc] init];
   [button setBackgroundColor:nil forState:UIControlStateNormal];
+  button.inkStyle = MDCInkStyleUnbounded;
   button.disabledAlpha = kDisabledButtonAlpha;
 
   button.exclusiveTouch = YES;
@@ -110,7 +111,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   button.tag = buttonItem.tag;
 
   button.customTitleColor = self.buttonTitleColor;
-  [button setUnderlyingColor:self.buttonUnderlyingColor];
+  [button setUnderlyingColorHint:self.buttonUnderlyingColor];
 
   [self updateButton:button withItem:buttonItem barMetrics:UIBarMetricsDefault];
 
@@ -235,6 +236,11 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   fitSize.width = MAX(kMinimumItemWidth, fitSize.width);
 
   return fitSize;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.inkMaxRippleRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
 }
 
 @end

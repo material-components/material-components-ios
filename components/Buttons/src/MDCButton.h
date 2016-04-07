@@ -17,6 +17,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "MaterialInk.h"
+
 /**
  A Material flat, raised or floating button.
 
@@ -51,8 +53,17 @@
  */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
 
+/** The ink style of the button. */
+@property(nonatomic, assign) MDCInkStyle inkStyle;
+
 /** The ink color of the button. */
 @property(nonatomic, strong, null_resettable) UIColor *inkColor;
+
+/*
+ Maximum radius of the button's ink. If the radius <= 0 then half the length of the diagonal of
+ self.bounds is used.
+ */
+@property(nonatomic, assign) CGFloat inkMaxRippleRadius;
 
 /**
  A custom title color for the non-disabled states. The default is nil, which means that the button

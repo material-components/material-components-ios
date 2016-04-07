@@ -34,7 +34,10 @@ static NSString *const MDCButtonDisabledBackgroundColorLightKey =
     @"MDCButtonDisabledBackgroundColorLightKey";
 static NSString *const MDCButtonDisabledBackgroundColorDarkKey =
     @"MDCButtonDisabledBackgroundColorDarkKey";
+static NSString *const MDCButtonInkViewInkStyleKey = @"MDCButtonInkViewInkStyleKey";
 static NSString *const MDCButtonInkViewInkColorKey = @"MDCButtonInkViewInkColorKey";
+static NSString *const MDCButtonInkViewInkMaxRippleRadiusKey =
+    @"MDCButtonInkViewInkMaxRippleRadiusKey";
 static NSString *const MDCButtonShouldRaiseOnTouchKey = @"MDCButtonShouldRaiseOnTouchKey";
 // Previous value kept for backwards compatibility.
 static NSString *const MDCButtonUppercaseTitleKey = @"MDCButtonShouldCapitalizeTitleKey";
@@ -135,8 +138,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     //      self.disabledBackgroundColorDark =
     //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorDarkKey];
     //    }
+    if ([aDecoder containsValueForKey:MDCButtonInkViewInkStyleKey]) {
+      self.inkView.inkStyle = [aDecoder decodeIntegerForKey:MDCButtonInkViewInkStyleKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkColorKey]) {
       self.inkView.inkColor = [aDecoder decodeObjectForKey:MDCButtonInkViewInkColorKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonInkViewInkMaxRippleRadiusKey]) {
+      self.inkView.maxRippleRadius =
+          [aDecoder decodeDoubleForKey:MDCButtonInkViewInkMaxRippleRadiusKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonShouldRaiseOnTouchKey]) {
@@ -163,10 +175,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
 
+  [aCoder encodeInteger:_inkView.inkStyle forKey:MDCButtonInkViewInkStyleKey];
   if (_inkView.inkColor) {
     [aCoder encodeObject:_inkView.inkColor forKey:MDCButtonInkViewInkColorKey];
   }
 
+  [aCoder encodeDouble:_inkView.maxRippleRadius forKey:MDCButtonInkViewInkMaxRippleRadiusKey];
   [aCoder encodeBool:_shouldRaiseOnTouch forKey:MDCButtonShouldRaiseOnTouchKey];
   [aCoder encodeBool:_uppercaseTitle forKey:MDCButtonUppercaseTitleKey];
   if (_underlyingColorHint) {
@@ -203,8 +217,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-
-  _inkView.maxRippleRadius = 0;
   [self insertSubview:_inkView belowSubview:self.imageView];
 
   // UIButton has a drag enter/exit boundary that is outside of the frame of the button itself.
@@ -419,12 +431,28 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - Ink
 
+- (MDCInkStyle)inkStyle {
+  return _inkView.inkStyle;
+}
+
+- (void)setInkStyle:(MDCInkStyle)inkStyle {
+  _inkView.inkStyle = inkStyle;
+}
+
 - (UIColor *)inkColor {
   return _inkView.inkColor;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
   _inkView.inkColor = inkColor;
+}
+
+- (CGFloat)inkMaxRippleRadius {
+  return _inkView.maxRippleRadius;
+}
+
+- (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {
+  _inkView.maxRippleRadius = inkMaxRippleRadius;
 }
 
 #pragma mark - Shadows
