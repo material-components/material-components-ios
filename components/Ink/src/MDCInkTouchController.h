@@ -37,8 +37,10 @@
 /** Weak reference to the view that responds to touch events. */
 @property(nonatomic, weak, readonly, nullable) UIView *view;
 
-/** View containing the ink effect. Valid after addInkView has been called. */
-@property(nonatomic, strong, readonly, nonnull) MDCInkView *inkView;
+/**
+ The ink view for clients who do not create their own ink views via the delegate.
+ */
+@property(nonatomic, strong, readonly, nonnull) MDCInkView *defaultInkView;
 
 /** Delegate to extend the behavior of the touch control. */
 @property(nonatomic, weak, nullable) id<MDCInkTouchControllerDelegate> delegate;
@@ -77,14 +79,15 @@
 - (nullable instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
 /**
- Creates and adds the ink view to the view hierarchy.
+ Adds the ink view to the view hierarchy.
 
- By default, a new instance of MDCInkView is created. If the delegate responds to
- inkTouchController:inkViewAtTouchLocation:, then the controller will not create an ink view and
- the following insertion step is skipped.
+ By default, @c defaultInkView is inserted into the view hierarchy. However, callers can bypass this
+ behavior by providing a delegate that responds to @c inkTouchController:inkViewAtTouchLocation: and
+ provides its own ink view. In that case the controller will not use @c defaultInkView and the
+ following insertion step is also skipped.
 
- By default, the ink view is added as a subview of self.view. If the delegate responds to
- inkTouchController:insertInkView:intoView:, then that method is called instead to do the
+ By default, the ink view is added as a subview of @c self.view. If the delegate responds to
+ @c inkTouchController:insertInkView:intoView:, then that method is called instead to do the
  insertion.
  */
 - (void)addInkView;
@@ -96,6 +99,26 @@
  for reuse, etc.
  */
 - (void)cancelInkTouchProcessing;
+
+/**
+ Returns the ink view at a particular touch location.
+
+ If the delegate responds to @c inkTouchController:inkViewAtLocation: then this method queries it.
+ Otherwise, if @c addInkView has been called and @c location is in the bounds of
+ @c self.defaultView, then that view is returned. If none of these conditions are met, @c nil is
+ returned.
+
+ @param location The query location in the coordinates of @c self.view.
+ @return The ink view at the touch location, or nil.
+*/
+- (MDCInkView *__nullable)inkViewAtTouchLocation:(CGPoint)location;
+
+#pragma mark - Deprecations
+
+@property(nonatomic, strong, readonly, nonnull) MDCInkView *inkView
+    __deprecated_msg("To configure ink views before display, use defaultInkView or your delegate's "
+                     "inkTouchController:inkViewAtTouchLocation:. To find an ink view at a "
+                     "particular location, use inkViewAtTouchLocation: instead.");
 
 @end
 
@@ -109,6 +132,10 @@
  If this method is not implemented, the ink view is added as a subview of the view when the
  controller's addInkView method is called. Delegates can choose to insert the ink view below the
  contents as a background view.
+
+ @param inkTouchController The ink touch controller.
+ @param inkView The ink view.
+ @param view The view to add the ink view to.
  */
 - (void)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
              insertInkView:(nonnull UIView *)inkView
@@ -119,7 +146,11 @@
 
  If the delegate implements this method, the controller will not create an ink view of its own and
  inkTouchController:insertInkView:intoView: will not be called. This method allows the delegate
- to control the creation (or reuse) of ink views.
+ to control the creation and reuse of ink views.
+
+ @param inkTouchController The ink touch controller.
+ @param location The touch location in the coords of @c inkTouchController.view.
+ @return An ink view to use at the touch location.
  */
 - (nonnull MDCInkView *)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
                     inkViewAtTouchLocation:(CGPoint)location;
@@ -134,6 +165,7 @@
 
  @param inkTouchController The ink touch controller.
  @param location The touch location relative to the inkTouchController view.
+ @return YES if the controller should process touches at @c location.
 
  @see cancelInkTouchProcessing
  */
@@ -151,4 +183,5 @@
 - (void)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
          didProcessInkView:(nonnull MDCInkView *)inkView
            atTouchLocation:(CGPoint)location;
+
 @end

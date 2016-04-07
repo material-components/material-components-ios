@@ -102,8 +102,8 @@
   inkTouchController.delegate = self;
   [inkTouchController addInkView];
   UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
-  [inkTouchController.inkView setInkColor:blueColor];
-  inkTouchController.inkView.inkStyle = MDCInkStyleUnbounded;
+  inkTouchController.defaultInkView.inkColor = blueColor;
+  inkTouchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
   [_inkTouchControllers addObject:inkTouchController];
   [self.view addSubview:unboundedShape];
 

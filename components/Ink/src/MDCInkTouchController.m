@@ -22,10 +22,11 @@
 static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
 
 @interface MDCInkTouchController ()
-@property(nonatomic) MDCInkView *defaultInkView;
-@property(nonatomic) MDCInkGestureRecognizer *gestureRecognizer;
-@property(nonatomic) BOOL shouldRespondToTouch;
-@property(nonatomic) CGPoint previousLocation;
+@property(nonatomic, strong) MDCInkView *addedInkView;
+@property(nonatomic, strong) MDCInkView *defaultInkView;
+@property(nonatomic, strong) MDCInkGestureRecognizer *gestureRecognizer;
+@property(nonatomic, assign) BOOL shouldRespondToTouch;
+@property(nonatomic, assign) CGPoint previousLocation;
 @end
 
 @implementation MDCInkTouchController
@@ -80,18 +81,31 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
 
 - (void)addInkView {
   if (![_delegate respondsToSelector:@selector(inkTouchController:inkViewAtTouchLocation:)]) {
-    _inkView = _defaultInkView;
+    _addedInkView = _defaultInkView;
 
     if ([_delegate respondsToSelector:@selector(inkTouchController:insertInkView:intoView:)]) {
-      [_delegate inkTouchController:self insertInkView:_inkView intoView:_view];
+      [_delegate inkTouchController:self insertInkView:_addedInkView intoView:_view];
     } else {
-      [_view addSubview:_inkView];
+      [_view addSubview:_addedInkView];
     }
   }
 }
 
 - (void)cancelInkTouchProcessing {
-  [_inkView cancelAllAnimationsAnimated:YES];
+  [_addedInkView cancelAllAnimationsAnimated:YES];
+}
+
+- (MDCInkView *__nullable)inkViewAtTouchLocation:(CGPoint)location {
+  MDCInkView *inkView;
+  if ([_delegate respondsToSelector:@selector(inkTouchController:inkViewAtTouchLocation:)]) {
+    inkView = [_delegate inkTouchController:self inkViewAtTouchLocation:location];
+  } else {
+    CGPoint locationInInkCoords = [self.view convertPoint:location toView:_addedInkView];
+    if ([_addedInkView pointInside:locationInInkCoords withEvent:nil]) {
+      inkView = _addedInkView;
+    }
+  }
+  return inkView;
 }
 
 - (void)handleInkGesture:(MDCInkGestureRecognizer *)recognizer {
@@ -100,22 +114,22 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
       if ([_delegate respondsToSelector:@selector(inkTouchController:inkViewAtTouchLocation:)]) {
-        _inkView = [_delegate inkTouchController:self inkViewAtTouchLocation:touchLocation];
-        if (!_inkView) {
+        _addedInkView = [_delegate inkTouchController:self inkViewAtTouchLocation:touchLocation];
+        if (!_addedInkView) {
           return [self cancelInkGestureWithRecognizer:recognizer];
         }
-        NSAssert([_inkView isDescendantOfView:_view],
+        NSAssert([_addedInkView isDescendantOfView:_view],
                  @"Ink view %@ returned by inkTouchController:inkViewAtTouchLocation: must be a "
                   "subview of base view %@",
-                 _inkView, _view);
-        recognizer.targetBounds = [_inkView convertRect:_inkView.bounds toView:_view];
+                 _addedInkView, _view);
+        recognizer.targetBounds = [_addedInkView convertRect:_addedInkView.bounds toView:_view];
       }
 
       _shouldRespondToTouch = YES;
       dispatch_time_t delayTime =
           dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC * kMDCInkTouchDelayInterval));
       dispatch_after(_delaysInkSpread ? delayTime : 0, dispatch_get_main_queue(), ^(void) {
-        [self touchBeganAtPoint:[recognizer locationInView:_inkView]
+        [self touchBeganAtPoint:[recognizer locationInView:_addedInkView]
                   touchLocation:touchLocation];
       });
       break;
@@ -134,7 +148,7 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
     case UIGestureRecognizerStateCancelled:
     case UIGestureRecognizerStateRecognized:
     case UIGestureRecognizerStateFailed:
-      [_inkView cancelAllAnimationsAnimated:YES];
+      [_addedInkView cancelAllAnimationsAnimated:YES];
       _shouldRespondToTouch = NO;
       break;
   }
@@ -156,10 +170,12 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
 - (void)touchBeganAtPoint:(CGPoint)point
             touchLocation:(CGPoint)touchLocation {
   if (_shouldRespondToTouch) {
-    [_inkView startTouchBeganAnimationAtPoint:point completion:nil];
+    [_addedInkView startTouchBeganAnimationAtPoint:point completion:nil];
     if ([_delegate
             respondsToSelector:@selector(inkTouchController:didProcessInkView:atTouchLocation:)]) {
-      [_delegate inkTouchController:self didProcessInkView:_inkView atTouchLocation:touchLocation];
+      [_delegate inkTouchController:self
+                  didProcessInkView:_addedInkView
+                    atTouchLocation:touchLocation];
     }
     _shouldRespondToTouch = NO;
   }
@@ -180,6 +196,12 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
     return [_delegate inkTouchController:self shouldProcessInkTouchesAtTouchLocation:touchLocation];
   }
   return YES;
+}
+
+#pragma mark - Deprecations
+
+- (MDCInkView *)inkView {
+  return _defaultInkView;
 }
 
 @end

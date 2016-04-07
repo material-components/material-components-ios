@@ -147,7 +147,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
     [_touchController addInkView];
 
-    _touchController.inkView.inkStyle = MDCInkStyleUnbounded;
+    _touchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
 
     // Set colors.
     if (onTintColor == nil) {
@@ -185,7 +185,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
           ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha]
           : primaryColor;
 
-  [_touchController.inkView setInkColor:[primaryColor colorWithAlphaComponent:kTrackOnAlpha]];
+  _touchController.defaultInkView.inkColor = [primaryColor colorWithAlphaComponent:kTrackOnAlpha];
   [self updateColorsAnimated:NO withDuration:0.0f];
 }
 
@@ -286,11 +286,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (CGFloat)thumbMaxRippleRadius {
-  return _touchController.inkView.maxRippleRadius;
+  return _touchController.defaultInkView.maxRippleRadius;
 }
 
 - (void)setThumbMaxRippleRadius:(CGFloat)thumbMaxRippleRadius {
-  _touchController.inkView.maxRippleRadius = thumbMaxRippleRadius;
+  _touchController.defaultInkView.maxRippleRadius = thumbMaxRippleRadius;
 }
 
 - (CGPoint)thumbPosition {
