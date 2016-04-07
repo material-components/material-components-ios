@@ -65,7 +65,7 @@
 // Typical image loading.
 - (UIImage *)headerBackgroundImage {
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  NSString *imagePath = [bundle pathForResource:@"dinosaur" ofType:@"jpg"];
+  NSString *imagePath = [bundle pathForResource:@"mdc_theme" ofType:@"png"];
   return [UIImage imageWithContentsOfFile:imagePath];
 }
 

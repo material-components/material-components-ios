@@ -75,7 +75,7 @@ class AppBarImagerySwiftExample: UITableViewController {
 
   func headerBackgroundImage() -> UIImage {
     let bundle = NSBundle(forClass: AppBarImagerySwiftExample.self)
-    let imagePath = bundle.pathForResource("dinosaur", ofType: "jpg")!
+    let imagePath = bundle.pathForResource("mdc_theme", ofType: "png")!
     return UIImage(contentsOfFile: imagePath)!
   }
 }
