@@ -21,7 +21,7 @@
 
 #import "MDCIcons+BundleLoader.h"
 
-static NSString *const kBundleName = @"MaterialIcon_ic_arrow_back";
+static NSString *const kBundleName = @"MaterialIcon+ic_arrow_back";
 static NSString *const kIconName = @"ic_arrow_back";
 
 @implementation MDCIcons (ic_arrow_back)
