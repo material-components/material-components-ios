@@ -82,7 +82,10 @@ UIViewController *CBCViewControllerFromClass(Class aClass) {
     NSString *storyboardName = [aClass catalogStoryboardName];
     NSBundle *bundle = [NSBundle bundleForClass:aClass];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:bundle];
-    return [storyboard instantiateInitialViewController];
+    NSCAssert(storyboard, @"expecting a storyboard to exist at %@", storyboardName);
+    UIViewController *vc = [storyboard instantiateInitialViewController];
+    NSCAssert(vc, @"expecting a initialViewController in the storyboard %@", storyboardName);
+    return vc;
   }
   return [[aClass alloc] initWithNibName:nil bundle:nil];
 }

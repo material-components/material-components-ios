@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahQ-9a-AUz">
-                                <rect key="frame" x="190" y="273" width="220" height="96"/>
+                                <rect key="frame" x="190" y="272" width="220" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="b10-EO-2Wu"/>
                                     <constraint firstAttribute="height" constant="96" id="x1I-6M-qHl"/>
@@ -29,7 +29,7 @@ Material Components</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGa-Ax-miB" customClass="MDCSwitch">
-                                <rect key="frame" x="282" y="223" width="36" height="27"/>
+                                <rect key="frame" x="276" y="220" width="48" height="32"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="7fW-ts-xXI"/>

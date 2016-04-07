@@ -23,6 +23,7 @@ class MDCCatalogTypicalExampleViewController: UIViewController {
 
   init(contentViewController: UIViewController, title: String) {
     super.init(nibName: nil, bundle: nil)
+    assert(contentViewController.view != nil, "expecting a valid contentViewController")
     self.contentViewController = contentViewController
     self.addChildViewController(contentViewController)
     self.title = title
