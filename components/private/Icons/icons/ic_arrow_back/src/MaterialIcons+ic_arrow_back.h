@@ -21,7 +21,7 @@
 
 @interface MDCIcons (ic_arrow_back)
 
-/** Returns the path for the ic_arrow_back image contained in MaterialIcon+ic_arrow_back.bundle. */
+/** Returns the path for the ic_arrow_back image contained in MaterialIcons_ic_arrow_back.bundle. */
 + (nonnull NSString *)pathFor_ic_arrow_back;
 
 @end

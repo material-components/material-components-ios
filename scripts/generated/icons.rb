@@ -14,9 +14,9 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_arrow_back/src/*.{h,m}"
       ss.header_mappings_dir = "components/private/Icons/icons/ic_arrow_back/src/*"
       ss.resource_bundles = {
-        "MaterialIcon_ic_arrow_back" => [
-          "components/private/Icons/icons/ic_arrow_back/src/MaterialIcon+ic_arrow_back.bundle/**/*.png",
-          "components/private/Icons/icons/ic_arrow_back/src/MaterialIcon+ic_arrow_back.bundle/*.xcassets"
+        "MaterialIcons_ic_arrow_back" => [
+          "components/private/Icons/icons/ic_arrow_back/src/MaterialIcons_ic_arrow_back.bundle/**/*.png",
+          "components/private/Icons/icons/ic_arrow_back/src/MaterialIcons_ic_arrow_back.bundle/*.xcassets"
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"

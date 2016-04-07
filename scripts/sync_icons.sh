@@ -32,11 +32,11 @@
 #
 #     components/private/Icons/icons/ic_arrow_back/
 #       src/
-#         ic_arrow_back.bundle/
+#         MaterialIcons_ic_arrow_back.bundle/
 #         MaterialIcons+ic_arrow_back.h
 #     components/private/Icons/icons/ic_menu/
 #       src/
-#         ic_menu.bundle/
+#         MaterialIcons_ic_menu.bundle/
 #         MaterialIcons+ic_menu.h
 #
 
@@ -106,7 +106,7 @@ for directory in $ICONS_COMPONENT_PATH/icons/*/; do
     continue
   fi
 
-  assets_path="$directory/src/MaterialIcon+$icon_name.bundle/$icon_name.xcassets"
+  assets_path="$directory/src/MaterialIcons_$icon_name.bundle/$icon_name.xcassets"
 
   echo -n "copying..."
 
@@ -138,9 +138,9 @@ for directory in $ICONS_COMPONENT_PATH/icons/*/; do
       ss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/*.{h,m}"
       ss.header_mappings_dir = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/*"
       ss.resource_bundles = {
-        "MaterialIcon_$icon_name" => [
-          "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/MaterialIcon+$icon_name.bundle/**/*.png",
-          "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/MaterialIcon+$icon_name.bundle/*.xcassets"
+        "MaterialIcons_$icon_name" => [
+          "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/MaterialIcons_$icon_name.bundle/**/*.png",
+          "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/MaterialIcons_$icon_name.bundle/*.xcassets"
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -182,7 +182,7 @@ EOL
 
 @interface MDCIcons ($icon_name)
 
-/** Returns the path for the $icon_name image contained in MaterialIcon+$icon_name.bundle. */
+/** Returns the path for the $icon_name image contained in MaterialIcons_$icon_name.bundle. */
 + (nonnull NSString *)pathFor_$icon_name;
 
 @end
@@ -212,7 +212,7 @@ EOL
 
 #import "MDCIcons+BundleLoader.h"
 
-static NSString *const kBundleName = @"MaterialIcon_$icon_name";
+static NSString *const kBundleName = @"MaterialIcons_$icon_name";
 static NSString *const kIconName = @"$icon_name";
 
 @implementation MDCIcons ($icon_name)
