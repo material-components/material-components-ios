@@ -87,7 +87,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 /**
  Custom shadow shown under flexible header content.
  */
-@property(nonatomic, retain, nullable) CALayer *shadowLayer;
+@property(nonatomic, strong, nullable) CALayer *shadowLayer;
 
 /**
  Sets a custom shadow layer and a block that should be executed when shadow intensity changes.
@@ -391,7 +391,7 @@ __deprecated_msg("Use shiftBehavior instead.");
 /**
  Content for the flexible header should be added to the content view.
  */
-@property(nonatomic, retain, nonnull) UIView *contentView
+@property(nonatomic, strong, nonnull) UIView *contentView
 __deprecated_msg("Please register views directly to the flexible header.");
 
 @end
