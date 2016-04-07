@@ -34,8 +34,7 @@
 @interface MDCButton : UIButton
 
 /**
- A color used as the button's @c backgroundColor.
- The default value is nil, which results in a transparent background color.
+ A color used as the button's @c backgroundColor for @c state.
 
  @param state The state.
  @return The background color.
@@ -45,14 +44,12 @@
 /**
  A color used as the button's @c backgroundColor.
 
+ If left unset or reset to nil for a given state, then a default blue color is used.
+
  @param backgroundColor The background color.
  @param state The state.
  */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
-
-/** Use @c setBackgroundColor:forState: instead. */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
-    __deprecated_msg("Use setBackgroundColor:forState: instead.");
 
 /** The ink color of the button. */
 @property(nonatomic, strong, null_resettable) UIColor *inkColor;
@@ -69,16 +66,9 @@
 
 /**
  The alpha value that will be applied when the button is disabled. Most clients can leave this as
- the default value to get a semitransparent button automatically.
+ the default value to get a semi-transparent button automatically.
  */
 @property(nonatomic) CGFloat disabledAlpha;
-
-/**
- Should the button raise when touched?
-
- Default is YES. Prefer using the factory methods to configure this based on the button type.
- */
-@property(nonatomic) BOOL shouldRaiseOnTouch;
 
 /**
  If true, converts the button title to uppercase. Changing this property to NO will not update the
@@ -86,9 +76,11 @@
 
  Default is YES and is recommended whenever possible.
  */
-@property(nonatomic) BOOL shouldCapitalizeTitle;
+@property(nonatomic, getter=isUppercaseTitle) BOOL uppercaseTitle;
 
 /**
+ Insets to apply to the button’s hit area.
+
  Allows the button to detect touches outside of its bounds. A negative value indicates an
  extension past the bounds.
 
@@ -97,23 +89,20 @@
 @property(nonatomic) UIEdgeInsets hitAreaInsets;
 
 /**
- The color of the view behind the button, used to calculate accessible text colors.
+ The apparent background color as seen by the user, i.e. the color of the view behind the button.
 
- For flat buttons with the default transparent background, this is the color of the surrounding
- area (and thus the button's background). For all other buttons, this is the color of view
- underneath the button.
+ The underlying color hint is used by buttons to calculate accessible title text colors when in
+ states with transparent background colors. The hint is used whenever the button changes state such
+ that the background color changes, for example, setting the background color or disabling the
+ button.
+
+ For flat buttons, this is the color of both the surrounding area and the button's background.
+ For raised and floating buttons, this is the color of view underneath the button.
 
  The default is nil.  If left unset, buttons will likely have an incorrect appearance when
- disabled. Additionally, flat buttons will have incorrect text colors.
+ disabled. Additionally, flat buttons might have text colors with low accessibility.
  */
-@property(nonatomic, strong, nullable) UIColor *underlyingColor;
-
-/**
- From UIButton's documentation: "If you subclass UIButton, this method does not return an instance
- of your subclass. If you want to create an instance of a specific subclass, you must alloc/init
- the button directly."
- */
-+ (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
+@property(nonatomic, strong, nullable) UIColor *underlyingColorHint;
 
 /** Sets the enabled state with optional animation. */
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated;
@@ -121,11 +110,8 @@
 /**
  Returns the elevation for a particular control state.
 
- The default values are particular to each subclass of MDCButton.
- The default value for UIControlStateNormal is 0. The default value for UIControlStateSelected is
- twice greater than the value of UIControlStateNormal (which might have been set to value other
- than zero by the caller). The default values for all other states is the value of
- UIControlStateNormal.
+ The default values depend on the kind of button, for example, flat buttons in the
+ UIControlStateNormal state have zero elevation.
 
  @param state The control state to retrieve the elevation.
  @return The elevation for the requested state.
@@ -148,5 +134,27 @@
  @param state The control state to reset the elevation.
  */
 - (void)resetElevationForState:(UIControlState)state;
+
+#pragma mark - UIButton changes
+
+/**
+ From UIButton's documentation: "If you subclass UIButton, this method does not return an instance
+ of your subclass. If you want to create an instance of a specific subclass, you must alloc/init
+ the button directly."
+ */
++ (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
+
+#pragma mark - Deprecated
+
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
+    __deprecated_msg("Use setBackgroundColor:forState: instead.");
+
+@property(nonatomic) BOOL shouldRaiseOnTouch
+    __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO");
+
+@property(nonatomic) BOOL shouldCapitalizeTitle __deprecated_msg("Use uppercaseTitle instead.");
+
+@property(nonatomic, strong, nullable) UIColor *underlyingColor
+    __deprecated_msg("Use underlyingColorHint instead.");
 
 @end

@@ -71,7 +71,7 @@ static UIColor *randomColor() {
   NSString *originalTitle = @"some Text";
 
   // When
-  button.shouldCapitalizeTitle = YES;
+  button.uppercaseTitle = YES;
   [button setTitle:originalTitle forState:UIControlStateNormal];
 
   // Then
@@ -84,7 +84,7 @@ static UIColor *randomColor() {
   NSString *originalTitle = @"some Text";
 
   // When
-  button.shouldCapitalizeTitle = NO;
+  button.uppercaseTitle = NO;
   [button setTitle:originalTitle forState:UIControlStateNormal];
 
   // Then
@@ -97,9 +97,9 @@ static UIColor *randomColor() {
   NSString *originalTitle = @"some Text";
 
   // When
-  button.shouldCapitalizeTitle = NO;
+  button.uppercaseTitle = NO;
   [button setTitle:originalTitle forState:UIControlStateNormal];
-  button.shouldCapitalizeTitle = YES;
+  button.uppercaseTitle = YES;
 
   // Then
   XCTAssertEqualObjects(button.currentTitle, [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
