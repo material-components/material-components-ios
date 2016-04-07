@@ -61,6 +61,24 @@ Button Bar supports a subset of UIBarButtonItem's properties. Learn more by read
 
 ## Usage
 
+### Importing
+
+Before using Button Bar, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialButtonBar.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
+
 Create an instance of MDCButtonBar and provide it with an array of UIBarButtonItems.
 
 <!--<div class="material-code-render" markdown="1">-->

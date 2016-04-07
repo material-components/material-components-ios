@@ -72,6 +72,23 @@ UIBarButtonItem properties.
 
 ## Usage
 
+### Importing
+
+Before using Navigation Bar, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialNavgiationBar.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 ### Observing UINavigationItem instances
 
 MDCNavigationBar can observe changes made to a navigation item property much like how a

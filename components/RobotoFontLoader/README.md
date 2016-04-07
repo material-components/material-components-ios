@@ -53,7 +53,24 @@ Then, run the following command:
 $ pod install
 ~~~
 
-- - -
+## Usage
+
+### Importing
+
+Before using Roboto Font Loader, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialRobotoFontLoader.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
 
 ## Advanced Usage
 ### Typography's weak dependency

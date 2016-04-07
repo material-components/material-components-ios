@@ -91,6 +91,23 @@ Page control showing new current page.
 
 ## Usage
 
+### Importing
+
+Before using Page Control, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialPageControl.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 Integrating the page control requires two steps. First, add a page control with companion scroll
 view, and second, forward the scroll view delegate methods to the page control.
 

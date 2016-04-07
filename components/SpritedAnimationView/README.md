@@ -67,6 +67,23 @@ animation completes for each state, and be replaced with the other sprite image.
 
 ## Usage
 
+### Importing
+
+Before using Sprited Animation View, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialSpritedAnimationView.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 Integrating the `spritedAnimationView` is somewhat similar to adding an `UIImageView` to a view.
 
 ```objectivec

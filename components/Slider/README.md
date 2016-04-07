@@ -56,6 +56,23 @@ $ pod install
 
 ## Usage
 
+### Importing
+
+Before using Slider, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialSlider.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 <!--<div class="material-code-render" markdown="1">-->
 
 ### Objective C

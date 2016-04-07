@@ -56,6 +56,23 @@ $ pod install
 
 ## Usage
 
+### Importing
+
+Before using Ink, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialInk.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 The Ink component exposes two interfaces that you can use to add material-like
 feedback to the user:
 

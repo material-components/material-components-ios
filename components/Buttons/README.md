@@ -83,6 +83,23 @@ $ pod install
 
 ## Usage
 
+### Importing
+
+Before using Ink, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialInk.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 ### Ink splash animation
 All buttons display animated ink splashes when the user interacts with the button.
 

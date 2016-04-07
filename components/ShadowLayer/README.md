@@ -81,6 +81,24 @@ $ pod install
 
 ## Usage
 
+### Importing
+
+Before using Shadow Layer, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialShadowLayer.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
+
 Example of a custom button based on UIButton with Material Design shadows:
 
 <!--<div class="material-code-render" markdown="1">-->

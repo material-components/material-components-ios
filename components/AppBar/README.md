@@ -84,6 +84,23 @@ identify whether your use case is something we can directly support.
 
 ## Usage
 
+### Importing
+
+Before using App Bar, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialAppBar.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 ### Add the App Bar to a view controller
 
 Each view controller in your app that intends to use an App Bar will follow these instructions.

@@ -65,6 +65,24 @@ The top bar is typically a navigation bar. The bottom bar, when provided, is typ
 
 ## Usage
 
+### Importing
+
+Before using Header Stack View, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialHeaderStackView.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
+
 Header Stack View provides MDCHeaderStackView, which is a UIView subclass.
 
 <!--<div class="material-code-render" markdown="1">-->

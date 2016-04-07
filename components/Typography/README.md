@@ -59,6 +59,23 @@ $ pod install
 
 ## Usage
 
+### Importing
+
+Before using Typography, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialTypography.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 ### Font
 Select a font most appropriate to its usage and set it as your label's font. All fonts are returned
 from class methods beginning with the font's Material Design type style and ending with 'Font'.

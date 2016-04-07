@@ -51,6 +51,23 @@ $ pod install
 
 ## Usage
 
+### Importing
+
+Before using Shadow Elevations, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialShadowElevations.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 <!--<div class="material-code-render" markdown="1">-->
 
 #### Swift

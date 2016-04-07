@@ -94,6 +94,23 @@ It also has some technical disadvantages:
 
 ## Usage
 
+### Importing
+
+Before using Flexible Header, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialFlexibleHeader.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 ### Add the Flexible Header to a view controller
 
 Each view controller in your app that intends to manage its own Flexible Header will follow these
