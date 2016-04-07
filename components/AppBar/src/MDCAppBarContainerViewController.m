@@ -24,20 +24,16 @@
 
 #import "MaterialFlexibleHeader.h"
 
-@interface MDCAppBarContainerViewController () <MDCAppBarParenting>
-@end
-
-@implementation MDCAppBarContainerViewController
-
-// Create explicit ivar because we're overriding the public getter API and implementing getter.
-@synthesize headerStackView;
-@synthesize navigationBar;
-@synthesize headerViewController = _headerViewController;
+@implementation MDCAppBarContainerViewController {
+  MDCAppBar *_appBar;
+}
 
 - (instancetype)initWithContentViewController:(UIViewController *)contentViewController {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
-    MDCAppBarPrepareParent(self);
+    _appBar = [[MDCAppBar alloc] init];
+
+    [self addChildViewController:_appBar.headerViewController];
 
     self.contentViewController = contentViewController;
   }
@@ -65,21 +61,23 @@
   [self.view addSubview:self.contentViewController.view];
   [self.contentViewController didMoveToParentViewController:self];
 
-  MDCAppBarAddViews(self);
+  [_appBar addSubviewsToParent];
+
+  [_appBar.navigationBar observeNavigationItem:_contentViewController.navigationItem];
 }
 
 - (BOOL)prefersStatusBarHidden {
-  return self.headerViewController.prefersStatusBarHidden;
+  return self.appBar.headerViewController.prefersStatusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  return self.headerViewController.preferredStatusBarStyle;
+  return self.appBar.headerViewController.preferredStatusBarStyle;
 }
 
 #pragma mark - Public
 
 - (MDCFlexibleHeaderViewController *)headerViewController {
-  return _headerViewController;
+  return self.appBar.headerViewController;
 }
 
 - (void)setContentViewController:(UIViewController *)contentViewController {
@@ -100,11 +98,12 @@
   _contentViewController = contentViewController;
 
   [self addChildViewController:contentViewController];
-  if ([self isViewLoaded]) {
-    [self.view insertSubview:contentViewController.view
-                belowSubview:self.headerViewController.headerView];
-    [contentViewController didMoveToParentViewController:self];
-  }
+
+  NSAssert(![self isViewLoaded],
+           @"View should not have been loaded at this point."
+           @" Verify that the view is not being accessed anywhere in %@ or %@.",
+           NSStringFromSelector(_cmd),
+           NSStringFromSelector(@selector(initWithContentViewController:)));
 }
 
 @end

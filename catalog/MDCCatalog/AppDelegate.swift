@@ -21,34 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions
-    launchOptions: [NSObject: AnyObject]?) -> Bool {
+  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    let classList = classesRespondingToSelector("catalogHierarchy")
-
-    // Build the catalog tree.
-
-    let tree = Node(title: "Root")
-    for c in classList {
-      let hierarchy = CatalogHierarchyFromClass(c)
-
-      // Walk and build the tree
-      var node = tree
-      for (index, name) in hierarchy.enumerate() {
-        let isLeafNode = index == hierarchy.count - 1
-        if let child = node.map[name] where !isLeafNode {
-          node = child // Walk the node
-          continue
-        }
-        // Create the node
-        let child = Node(title: name)
-        node.map[name] = child
-        node.children.append(child)
-        node = child // Walk the node
-      }
-      node.viewController = c
-    }
+    let tree = CBCCreateNavigationTree()
 
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)

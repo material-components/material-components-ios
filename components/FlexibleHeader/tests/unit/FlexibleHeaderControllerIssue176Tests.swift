@@ -41,9 +41,6 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
     // NOTE: No tracking scroll view
 
-    // Poke the header to update its frame
-    fhvc.headerView.trackingScrollViewDidScroll()
-
     fhvc.didMoveToParentViewController(parentVc)
 
     XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.minimumHeight)
@@ -54,9 +51,6 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
     self.registerToParentViewController(parentVc)
 
     fhvc.headerView.trackingScrollView = parentVc.tableView
-
-    // Poke the header to update its frame
-    fhvc.headerView.trackingScrollViewDidScroll()
 
     fhvc.didMoveToParentViewController(parentVc)
 

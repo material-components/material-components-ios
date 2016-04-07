@@ -40,7 +40,7 @@ To add the NavigationBar component to your Xcode project using CocoaPods, add th
 PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/NavigationBar'
+pod 'MaterialComponents/NavigationBar'
 ~~~
 
 Then, run the following command:
@@ -48,6 +48,23 @@ Then, run the following command:
 ~~~ bash
 $ pod install
 ~~~
+
+
+
+- - -
+
+## Overview
+
+Navigation Bar is designed to be a drop-in replacement for UINavigationBar.
+
+The MDCNavigationBar class is a composition of two [Button Bars](../ButtonBar) and a title label or
+title view. The left and right Button Bars are provided with the navigation item's corresponding bar
+button items.
+
+Read the Button Bar section on
+[UIBarButtonItem properties](../ButtonBar/#uibarbuttonitem-properties) to learn more about supported
+UIBarButtonItem properties.
+
 
 
 

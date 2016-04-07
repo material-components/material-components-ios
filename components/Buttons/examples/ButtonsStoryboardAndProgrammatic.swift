@@ -19,7 +19,7 @@ import MaterialComponents
 
 class ButtonsStoryboardAndProgrammaticController: UIViewController {
 
-  class func catalogHierarchy() -> [String] {
+  class func catalogBreadcrumbs() -> [String] {
     return ["Buttons", "Storyboard and Programmatic"]
   }
 
@@ -45,8 +45,6 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-//    self.view.backgroundColor = UIColor.whiteColor()
 
     storyboardRaised.sizeToFit()
     storyboardFlat.sizeToFit()

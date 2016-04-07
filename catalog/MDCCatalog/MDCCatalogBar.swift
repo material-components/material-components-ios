@@ -23,12 +23,12 @@ protocol MDCCatalogBarDelegate {
 
 class MDCCatalogBar: UIView {
 
-  var catalogBarDelegate: MDCCatalogBarDelegate?
+  var delegate: MDCCatalogBarDelegate?
   var titleString = "Component"
   let descriptionLabel = UILabel()
   let exitLabel = UILabel()
 
-  internal var title:String {
+  internal var title: String {
     get {
       return titleString
     }
@@ -48,8 +48,18 @@ class MDCCatalogBar: UIView {
   }
 
   override func layoutSubviews() {
-    descriptionLabel.frame = CGRectMake(20, 0, self.frame.size.width - 120, self.frame.size.height)
-    exitLabel.frame = CGRectMake(self.frame.size.width - 100, 0, 80, self.frame.size.height)
+    descriptionLabel.frame = CGRect(
+      x: 20,
+      y: 0,
+      width: self.frame.size.width - 120,
+      height: self.frame.size.height
+    )
+    exitLabel.frame = CGRect(
+      x: self.frame.size.width - 100,
+      y: 0,
+      width: 80,
+      height: self.frame.size.height
+    )
   }
 
   func commonMDCCatalogBarInit() {
@@ -61,7 +71,7 @@ class MDCCatalogBar: UIView {
 
     let blueColor = UIColor(red:0.012, green:0.663, blue:0.957, alpha:1)
     exitLabel.text = "Exit Demo".uppercaseString
-    exitLabel.textColor = blueColor;
+    exitLabel.textColor = blueColor
     exitLabel.font = MDCTypography.buttonFont()
     exitLabel.textAlignment = .Right
     addSubview(exitLabel)
@@ -71,7 +81,7 @@ class MDCCatalogBar: UIView {
   }
 
   func exitPressed() {
-    catalogBarDelegate?.didPressExit()
+    delegate?.didPressExit()
   }
 
 }

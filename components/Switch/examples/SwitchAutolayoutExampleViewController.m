@@ -43,7 +43,7 @@
 
 #pragma mark catalg by convention
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Switch", @"MDCSwitch vs UISwitch with autolayout" ];
 }
 

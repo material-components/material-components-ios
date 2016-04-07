@@ -87,8 +87,8 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     print("\(sender.dynamicType) was tapped.")
   }
 
-  class func catalogHierarchy() -> [String] {
-    return ["Buttons", "3 kinds of buttons (Swift)"]
+  class func catalogBreadcrumbs() -> [String] {
+    return ["Buttons", "Buttons (Swift)"]
   }
 
 }

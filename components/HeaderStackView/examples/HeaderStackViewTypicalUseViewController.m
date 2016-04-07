@@ -27,7 +27,7 @@
 }
 
 // TODO: Support other categorizational methods.
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Header Stack View", @"Typical use" ];
 }
 

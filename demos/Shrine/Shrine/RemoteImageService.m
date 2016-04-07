@@ -5,7 +5,7 @@
 @property(nonatomic) NSCache *dataCache;
 @property(nonatomic) NSCache *imageCache;
 @property(nonatomic) NSCache *thumbnailImageCache;
-@property(nonatomic) NSMutableDictionary *networkImageRequested;
+@property(nonatomic) NSCache *networkImageRequested;
 
 @end
 
@@ -14,48 +14,50 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.dataCache = [[NSCache alloc] init];
-    self.imageCache = [[NSCache alloc] init];
-    self.thumbnailImageCache = [[NSCache alloc] init];
-    self.networkImageRequested = [NSMutableDictionary dictionary];
+    _dataCache = [[NSCache alloc] init];
+    _imageCache = [[NSCache alloc] init];
+    _thumbnailImageCache = [[NSCache alloc] init];
+    _networkImageRequested = [[NSCache alloc] init];
   }
   return self;
 }
 
 - (UIImage *)fetchImageFromURL:(NSURL *)url {
-  UIImage *image = [_imageCache objectForKey:url];
+  UIImage *image = [self.imageCache objectForKey:url];
   if (image) {
     return image;
+  } else {
+    // Prevent the same image from being requested again if a network request is in progress.
+    if ([self.networkImageRequested objectForKey:url.absoluteString] != nil) {
+      return nil;
+    } else {
+      [self.networkImageRequested setObject:url forKey:url.absoluteString];
+    }
   }
 
-  // Prevent the same image from being requested again if a network request is in progress.
-  if ([_networkImageRequested objectForKey:url.absoluteString] != nil) {
-    return nil;
-  }
-  [_networkImageRequested setValue:url forKey:url.absoluteString];
   NSData *imageData = [[NSData alloc] initWithContentsOfURL:url];
   if (!imageData) {
     return nil;
   }
   if (imageData) {
-    [_dataCache setObject:imageData forKey:url];
+    [self.dataCache setObject:imageData forKey:url];
   } else {
     return nil;
   }
-  image = [UIImage imageWithData:imageData];
-  [_imageCache setObject:image forKey:url];
+  image = [[UIImage alloc] initWithData:imageData];
+  [self.imageCache setObject:image forKey:url];
   return image;
 }
 
 - (UIImage *)fetchThumbnailImageFromURL:(NSURL *)url {
-  UIImage *thumbnailImage = [_thumbnailImageCache objectForKey:url];
+  UIImage *thumbnailImage = [self.thumbnailImageCache objectForKey:url];
   if (thumbnailImage == nil) {
     UIImage *image = [self fetchImageFromURL:url];
     if (!image) {
       return nil;
     }
     thumbnailImage = [self createThumbnailWithImage:image];
-    [_thumbnailImageCache setObject:thumbnailImage forKey:url];
+    [self.thumbnailImageCache setObject:thumbnailImage forKey:url];
   }
   return thumbnailImage;
 }

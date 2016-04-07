@@ -53,7 +53,7 @@
 @implementation InkTypicalUseViewController
 
 // TODO: Support other categorizational methods.
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Ink", @"Typical use" ];
 }
 

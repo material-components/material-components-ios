@@ -116,8 +116,9 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
 @end
 
-@interface PestoSettingsViewController () <UITableViewDataSource, UITableViewDelegate, MDCAppBarParenting>
+@interface PestoSettingsViewController () <UITableViewDataSource, UITableViewDelegate>
 
+@property(nonatomic) MDCAppBar *appBar;
 @property(nonatomic) NSArray *dummySettingHeaders;
 @property(nonatomic) NSArray *dummySettingTitles;
 @property(nonatomic) NSArray *dummySettingVals;
@@ -127,16 +128,12 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
 @implementation PestoSettingsViewController
 
-#pragma mark - MDCAppBarParenting properties
-
-@synthesize navigationBar;
-@synthesize headerStackView;
-@synthesize headerViewController;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    MDCAppBarPrepareParent(self);
+    _appBar = [[MDCAppBar alloc] init];
+
+    [self addChildViewController:_appBar.headerViewController];
   }
   return self;
 }
@@ -176,15 +173,15 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
   [self.view addSubview:self.settingsTableView];
 
-  MDCAppBarAddViews(self);
+  [self.appBar addSubviewsToParent];
   UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1.f];
-  self.headerViewController.view.backgroundColor = teal;
-  self.headerViewController.headerView.trackingScrollView = self.settingsTableView;
-  self.headerViewController.headerView.tintColor = [UIColor whiteColor];
+  self.appBar.headerViewController.view.backgroundColor = teal;
+  self.appBar.headerViewController.headerView.trackingScrollView = self.settingsTableView;
+  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
 
   // This app has a forced-hidden status bar. The headerView needs to compensate.
-  self.headerViewController.headerView.maximumHeight -= 20;
-  self.headerViewController.headerView.minimumHeight -= 20;
+  self.appBar.headerViewController.headerView.maximumHeight -= 20;
+  self.appBar.headerViewController.headerView.minimumHeight -= 20;
 }
 
 + (UIColor *)tableViewSeparatorColor {
@@ -232,7 +229,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell
-    forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
   if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
     [cell setSeparatorInset:UIEdgeInsetsZero];
   }
@@ -246,20 +243,20 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-    [self.headerViewController.headerView trackingScrollViewDidScroll];
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidScroll];
   }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-    [self.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDecelerating];
   }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-    [self.headerViewController.headerView
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView
         trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
   }
 }
@@ -267,8 +264,8 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
                      withVelocity:(CGPoint)velocity
               targetContentOffset:(inout CGPoint *)targetContentOffset {
-  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
-    [self.headerViewController.headerView
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView
         trackingScrollViewWillEndDraggingWithVelocity:velocity
                                   targetContentOffset:targetContentOffset];
   }

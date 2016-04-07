@@ -19,17 +19,17 @@ import MaterialComponents
 
 class MDCCatalogComponentsController: UICollectionViewController {
 
-  let node: Node
+  let node: CBCNode
 
   var headerViewController: MDCFlexibleHeaderViewController
 
   let imageNames = NSMutableArray()
 
-  init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: Node) {
+  init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
 
     let spacing = CGFloat(1)
-    let layout = UICollectionViewFlowLayout();
+    let layout = UICollectionViewFlowLayout()
     let sectionInset:CGFloat = spacing
     layout.sectionInset = UIEdgeInsetsMake(sectionInset, sectionInset, sectionInset, sectionInset)
     layout.minimumInteritemSpacing = spacing
@@ -51,7 +51,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
     self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
   }
 
-  convenience init(node: Node) {
+  convenience init(node: CBCNode) {
     self.init(collectionViewLayout: UICollectionViewLayout(), node: node)
   }
 
@@ -88,8 +88,8 @@ class MDCCatalogComponentsController: UICollectionViewController {
     self.headerViewController.headerView.trackingScrollView = self.collectionView
 
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
-      let shadowLayer = layer as! MDCShadowLayer
-      shadowLayer.elevation = intensity * MDCShadowElevationAppBar
+      let shadowLayer = layer as? MDCShadowLayer
+      shadowLayer!.elevation = intensity * MDCShadowElevationAppBar
     }
 
     self.view.addSubview(self.headerViewController.view)
@@ -100,15 +100,10 @@ class MDCCatalogComponentsController: UICollectionViewController {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
-
-    // Sort alphabetically.
-    self.node.children = self.node.children.sort {
-      $0.title < $1.title
-    }
   }
 
   override func willAnimateRotationToInterfaceOrientation(
-    toInterfaceOrientation:UIInterfaceOrientation, duration: NSTimeInterval) {
+    toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
     collectionView?.collectionViewLayout.invalidateLayout()
   }
 
@@ -126,7 +121,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
   override func collectionView(collectionView: UICollectionView,
     cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MDCCatalogCollectionViewCell",
-      forIndexPath: indexPath) as! MDCCatalogCollectionViewCell
+      forIndexPath: indexPath)
     cell.backgroundColor = UIColor.whiteColor()
 
     let imageName = "Misc"
@@ -136,7 +131,9 @@ class MDCCatalogComponentsController: UICollectionViewController {
     if componentImage != nil {
       image = componentImage
     }
-    cell.populateView(componentName, image: image!)
+    if let catalogCell = cell as? MDCCatalogCollectionViewCell {
+      catalogCell.populateView(componentName, image: image!)
+    }
 
     return cell
   }
@@ -144,17 +141,17 @@ class MDCCatalogComponentsController: UICollectionViewController {
   func collectionView(collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-      let pad = CGFloat(1)
-      let cellWidth = (self.view.frame.size.width - 3 * pad) / 2
-      return CGSizeMake(cellWidth, cellWidth * 0.8);
+    let pad = CGFloat(1)
+    let cellWidth = (self.view.frame.size.width - 3 * pad) / 2
+    return CGSize(width: cellWidth, height: cellWidth * 0.825)
   }
 
   override func collectionView(collectionView: UICollectionView,
     didSelectItemAtIndexPath indexPath: NSIndexPath) {
     let node = self.node.children[indexPath.row]
     var vc: UIViewController
-    if let vClass = node.viewController {
-      vc = ViewControllerFromClass(vClass)
+    if node.isExample() {
+      vc = node.createExampleViewController()
     } else {
       vc = NodeViewController(node: node)
     }
@@ -197,4 +194,5 @@ extension MDCCatalogComponentsController {
         targetContentOffset: targetContentOffset)
     }
   }
+
 }

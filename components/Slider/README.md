@@ -41,7 +41,7 @@ To add the Slider component to your Xcode project using CocoaPods, add the follo
 PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/Slider'
+pod 'MaterialComponents/Slider'
 ~~~
 
 Then, run the following command:
@@ -99,5 +99,3 @@ Same features:
 New features:
 
 - making the slider a snap to discrete values via property numberOfDiscreteValues.
-
-

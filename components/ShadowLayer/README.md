@@ -67,7 +67,7 @@ To add the ShadowLayer component to your Xcode project using CocoaPods, add the 
 PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/ShadowLayer'
+pod 'MaterialComponents/ShadowLayer'
 ~~~
 
 Then, run the following command:
@@ -156,4 +156,3 @@ self.layer.rasterizationScale = [UIScreen mainScreen].scale;
 <!--</div>-->
 
 Disable rasterization before animating MDCShadowLayer.
-

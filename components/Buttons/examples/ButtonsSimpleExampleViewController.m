@@ -33,6 +33,16 @@
   raisedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:raisedButton];
 
+  MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
+  [disabledRaisedButton setTitle:@"Disabled Raised" forState:UIControlStateNormal];
+  [disabledRaisedButton sizeToFit];
+  [disabledRaisedButton addTarget:self
+                           action:@selector(didTap:)
+                 forControlEvents:UIControlEventTouchUpInside];
+  [disabledRaisedButton setEnabled:NO];
+  disabledRaisedButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:disabledRaisedButton];
+
   MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
   [flatButton setTitle:@"Flat Button" forState:UIControlStateNormal];
   [flatButton setCustomTitleColor:[UIColor grayColor]];
@@ -42,6 +52,17 @@
        forControlEvents:UIControlEventTouchUpInside];
   flatButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:flatButton];
+
+  MDCFlatButton *disabledFlatButton = [[MDCFlatButton alloc] init];
+  [disabledFlatButton setTitle:@"Disabled Flat" forState:UIControlStateNormal];
+  [disabledFlatButton setCustomTitleColor:[UIColor grayColor]];
+  [disabledFlatButton sizeToFit];
+  [disabledFlatButton addTarget:self
+                         action:@selector(didTap:)
+               forControlEvents:UIControlEventTouchUpInside];
+  [disabledFlatButton setEnabled:NO];
+  disabledFlatButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:disabledFlatButton];
 
   MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
   [floatingButton setTitle:@"+" forState:UIControlStateNormal];
@@ -54,9 +75,13 @@
 
   NSDictionary *views = @{
     @"raised" : raisedButton,
+    @"disabledRaised" : disabledRaisedButton,
     @"flat" : flatButton,
+    @"disabledFlat" : disabledFlatButton,
     @"floating" : floatingButton,
   };
+  NSString *layoutConstraints =
+      @"V:[raised]-20-[disabledRaised]-40-[flat]-20-[disabledFlat]-40-[floating]";
   [self.view addConstraint:
                  [NSLayoutConstraint constraintWithItem:flatButton
                                               attribute:NSLayoutAttributeCenterX
@@ -74,7 +99,7 @@
                                              multiplier:1.f
                                                constant:0.f]];
   [self.view addConstraints:
-                 [NSLayoutConstraint constraintsWithVisualFormat:@"V:[raised]-40-[flat]-40-[floating]"
+                 [NSLayoutConstraint constraintsWithVisualFormat:layoutConstraints
                                                          options:NSLayoutFormatAlignAllCenterX
                                                          metrics:nil
                                                            views:views]];
@@ -84,8 +109,8 @@
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
 }
 
-+ (NSArray *)catalogHierarchy {
-  return @[ @"Buttons", @"3 kinds of buttons" ];
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Buttons", @"Button Types and States" ];
 }
 
 @end

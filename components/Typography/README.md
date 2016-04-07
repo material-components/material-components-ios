@@ -45,7 +45,7 @@ To add the Typography component to your Xcode project using CocoaPods, add the f
 PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/Typography'
+pod 'MaterialComponents/Typography'
 ~~~
 
 Then, run the following command:
@@ -213,8 +213,22 @@ self.label.sizeToFit()
 ## Advanced Usage
 
 ### Custom Fonts
-Material Typography allows you to set your own font to replace Roboto and Noto. For more
-information see
-[FontDiskLoader](https://github.com/google/material-components-ios/tree/develop/components/FontDiskLoader).
+Material Components iOS allows you to set your own font instead of Roboto. Since
+all of the other Material Component font requests funnel through the Typography
+component, it is possible to switch the font used by all of Material Components.
+Use `setFontLoader:` to specify a font loader with your own fonts. It should
+conform to the `MDCTypographyFontLoading` protocol which has APIs for
+`regularFontOfSize:`, `mediumFontOfSize:`, and `lightFontOfSize:` which are need
+for material typography styles.
 
+#### The default FontLoaer
+If no font loader has been set Typography attempts to use the Material
+[RobotoFontLoader](https://github.com/google/material-components-ios/tree/develop/components/FontDiskLoader)
+which results in Roboto fonts being used when text styles are requested.
 
+If your Podfile.lock has:
+~~~ bash
+MaterialComponents/RobotoFontLoader
+~~~
+Then one of your specs depends on RobotoFontLoader and the Roboto will be used
+if no font loader has been set.

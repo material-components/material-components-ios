@@ -17,97 +17,72 @@ limitations under the License.
 import UIKit
 import MaterialComponents
 
-class Node {
-  let title: String
-  var children = [Node]()
-  var map = [String:Node]()
+class NodeViewController: CBCNodeListViewController {
+  let appBar = MDCAppBar()
 
-  var viewController: AnyClass?
+  override init(node: CBCNode) {
+    super.init(node: node)
 
-  init(title: String) {
-    self.title = title
-  }
-}
+    self.addChildViewController(appBar.headerViewController)
 
-class NodeViewController: UITableViewController, MDCAppBarParenting, MDCCatalogBarDelegate {
-  var navigationBar: MDCNavigationBar?
-  var headerStackView: MDCHeaderStackView?
-  var headerViewController: MDCFlexibleHeaderViewController?
-  let node: Node
+    appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
 
-  init(node: Node) {
-    self.node = node
-    super.init(nibName: nil, bundle: nil)
-    self.title = self.node.title
-    MDCAppBarPrepareParent(self)
-    self.headerViewController!.headerView.backgroundColor = UIColor.whiteColor()
+    let headerContentView = appBar.headerViewController.headerView
+    let lineFrame = CGRectMake(0, headerContentView.frame.height, headerContentView.frame.width, 1)
+    let line = UIView(frame: lineFrame)
+    line.backgroundColor = UIColor(white: 0.72, alpha: 1)
+    line.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
+    headerContentView.addSubview(line)
   }
 
   required init?(coder aDecoder: NSCoder) {
-    self.node = Node(title: "Invalid node")
-    super.init(coder: aDecoder)
+    fatalError("init(coder:) has not been implemented")
   }
 
   override func viewDidLoad() {
-    self.headerViewController!.headerView.trackingScrollView = self.tableView
-    MDCAppBarAddViews(self);
+    super.viewDidLoad()
+    appBar.headerViewController.headerView.trackingScrollView = self.tableView
+
+    appBar.addSubviewsToParent()
   }
 
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
 
-    // Sort alphabetically.
-    self.node.children = self.node.children.sort {
-      $0.title < $1.title
-    }
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
   // MARK: UIScrollViewDelegate
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
-    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
-      self.headerViewController!.headerView.trackingScrollViewDidScroll()
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollViewDidScroll()
     }
   }
 
   override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
-      self.headerViewController!.headerView.trackingScrollViewDidEndDecelerating()
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
     }
   }
 
   override func scrollViewDidEndDragging(scrollView: UIScrollView,
                                          willDecelerate decelerate: Bool) {
-    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
-      let headerView = self.headerViewController!.headerView
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      let headerView = appBar.headerViewController.headerView
       headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
     }
   }
 
   override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint,
                                           targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    if (scrollView == self.headerViewController!.headerView.trackingScrollView) {
-      let headerView = self.headerViewController!.headerView
-      headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity,
-          targetContentOffset: targetContentOffset)
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      let headerView = appBar.headerViewController.headerView
+      headerView.trackingScrollViewWillEndDraggingWithVelocity(
+        velocity,
+        targetContentOffset: targetContentOffset
+      )
     }
-  }
-
-  // MARK: UITableViewDataSource
-
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return node.children.count
-  }
-
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->
-    UITableViewCell {
-    var cell = tableView.dequeueReusableCellWithIdentifier("cell")
-    if cell == nil {
-      cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-    }
-    cell?.textLabel?.text = self.node.children[indexPath.row].title
-    return cell!
   }
 
   // MARK: UITableViewDelegate
@@ -115,46 +90,17 @@ class NodeViewController: UITableViewController, MDCAppBarParenting, MDCCatalogB
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     let node = self.node.children[indexPath.row]
     var vc: UIViewController
-    if let vClass = node.viewController {
-      let contentVC = ViewControllerFromClass(vClass)
-      let catalogBar = MDCCatalogBar(frame: CGRectZero)
-      vc = wrapVCWithCatalogBarVC(catalogBar, viewController: contentVC)
-      catalogBar.title = node.title
-      catalogBar.catalogBarDelegate = self
+    if node.isExample() {
+      let contentVC = node.createExampleViewController()
+      if contentVC.respondsToSelector("catalogShouldHideNavigation") {
+        vc = contentVC
+      } else {
+        vc = MDCCatalogTypicalExampleViewController(contentViewController: contentVC,
+          title: node.title)
+      }
     } else {
       vc = NodeViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
   }
-
-  // MARK: MDCCatalogBarDelegate
-
-  func didPressExit() {
-    self.navigationController?.popViewControllerAnimated(true)
-  }
-
-  // MARK: Private methods
-
-  private func wrapVCWithCatalogBarVC(catalogBar: MDCCatalogBar,
-                                      viewController: UIViewController) -> UIViewController {
-    let catalogBarHeight = CGFloat(52)
-    let wrapperVC = UIViewController()
-    viewController.view.frame =
-      CGRectMake(0,
-                 0,
-                 wrapperVC.view.bounds.size.width,
-                 wrapperVC.view.bounds.size.height - catalogBarHeight);
-    let catalogBarRect = CGRectMake(0,
-                                    viewController.view.frame.size.height,
-                                    viewController.view.frame.size.width,
-                                    catalogBarHeight);
-    catalogBar.frame = catalogBarRect;
-    wrapperVC.addChildViewController(viewController)
-    wrapperVC.view.addSubview(viewController.view)
-    viewController.didMoveToParentViewController(wrapperVC)
-    wrapperVC.view.addSubview(catalogBar)
-
-    return wrapperVC
-  }
-
 }

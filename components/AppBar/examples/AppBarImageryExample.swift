@@ -17,15 +17,13 @@ limitations under the License.
 import Foundation
 import MaterialComponents
 
-class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
-  var headerStackView: MDCHeaderStackView?
-  var navigationBar: MDCNavigationBar?
-  var headerViewController: MDCFlexibleHeaderViewController?
+class AppBarImagerySwiftExample: UITableViewController {
+  let appBar = MDCAppBar()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let headerView = self.headerViewController!.headerView
+    let headerView = appBar.headerViewController.headerView
 
     // Create our custom image view and add it to the header view.
     let imageView = UIImageView(image: self.headerBackgroundImage())
@@ -35,7 +33,7 @@ class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
     imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
     // Ensure that the image view is below other App Bar views (headerStackView).
-    headerView.contentView.insertSubview(imageView, atIndex: 0)
+    headerView.insertSubview(imageView, atIndex: 0)
 
     // Scales up the image while the header is over-extending.
     imageView.contentMode = .ScaleAspectFill
@@ -51,8 +49,9 @@ class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
     headerView.maximumHeight = 200
 
     headerView.trackingScrollView = self.tableView
-    self.tableView.delegate = self.headerViewController!
-    MDCAppBarAddViews(self)
+    self.tableView.delegate = appBar.headerViewController
+
+    appBar.addSubviewsToParent()
   }
 
   override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -66,7 +65,8 @@ class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
     self.title = "Imagery"
-    MDCAppBarPrepareParent(self)
+
+    self.addChildViewController(appBar.headerViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -82,8 +82,11 @@ class AppBarImagerySwiftExample: UITableViewController, MDCAppBarParenting {
 
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
-  class func catalogHierarchy() -> [String] {
+  class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Swift", "Imagery"]
+  }
+  func catalogShouldHideNavigation() -> Bool {
+    return true
   }
 }
 

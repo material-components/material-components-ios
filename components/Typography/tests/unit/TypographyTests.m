@@ -22,7 +22,7 @@
 static const CGFloat kEpsilon = 0.001f;
 
 @interface MDCTypography (Testing)
-+ (id<MDCTypographyFontLoader>)fontLoader;
++ (id<MDCTypographyFontLoading>)fontLoader;
 @end
 
 /** These tests have set the fontloader because it is a singleton. */
@@ -35,7 +35,7 @@ static const CGFloat kEpsilon = 0.001f;
   // Given
 
   // When
-  id<MDCTypographyFontLoader> fontLoader = [MDCTypography fontLoader];
+  id<MDCTypographyFontLoading> fontLoader = [MDCTypography fontLoader];
 
   // Then
   XCTAssertTrue([fontLoader isKindOfClass:[MDCRobotoFontLoader class]]);
@@ -54,7 +54,9 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)tearDown {
   // Since we are using a singleton we need to restore the custom fontLoader back for other tests
-  [MDCTypography setFontLoader:[MDCRobotoFontLoader sharedInstance]];
+  // TODO: https://github.com/google/material-components-ios/issues/74 remove `(id)` which silences
+  // build warning
+  [MDCTypography setFontLoader:(id)[MDCRobotoFontLoader sharedInstance]];
 }
 
 #pragma mark - Font opacity

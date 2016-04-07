@@ -13,7 +13,7 @@ excerpt: "Page Control is a drop-in Material Design replacement for UIPageContro
 <!--</div>-->
 
 
-This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience 
+This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
 influenced by Material Design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
@@ -41,7 +41,7 @@ desired animation of the control.
 To add the PageControl component to your Xcode project using CocoaPods, add the following to your PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/PageControl'
+pod 'MaterialComponents/PageControl'
 ~~~
 
 Then, run the following command:
@@ -56,7 +56,7 @@ $ pod install
 ## Differences From UIPageControl
 
 This page control provides an animation effect that keeps a page indicator in sync with the
-scrolling of a designated scroll view. This is in contrast to a native `UIPageControl`, which 
+scrolling of a designated scroll view. This is in contrast to a native `UIPageControl`, which
 shows the current page indicator without any animated transitions between changes.
 
 As the user scrolls, a track will be drawn with animation from the current indicator position

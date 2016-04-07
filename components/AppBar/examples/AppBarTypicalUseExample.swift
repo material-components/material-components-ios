@@ -17,28 +17,25 @@ limitations under the License.
 import Foundation
 import MaterialComponents
 
-// Step 1: Your view controller must conform to MDCAppBarParenting.
-class AppBarTypicalUseSwiftExample: UITableViewController, MDCAppBarParenting {
+class AppBarTypicalUseSwiftExample: UITableViewController {
 
-  // Step 2: Define the required properties.
-  var headerStackView: MDCHeaderStackView?
-  var navigationBar: MDCNavigationBar?
-  var headerViewController: MDCFlexibleHeaderViewController?
+  // Step 1: Create and initialize an App Bar.
+  let appBar = MDCAppBar()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
     self.title = "Typical use"
 
-    // Step 3: Initialize the App Bar's parent.
-    MDCAppBarPrepareParent(self)
+    // Step 2: Add the headerViewController as a child.
+    self.addChildViewController(appBar.headerViewController)
 
     let color = UIColor(
       red: CGFloat(0x39) / CGFloat(255),
       green: CGFloat(0xA4) / CGFloat(255),
       blue: CGFloat(0xDD) / CGFloat(255),
       alpha: 1)
-    self.headerViewController!.headerView.backgroundColor = color
+    appBar.headerViewController.headerView.backgroundColor = color
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -49,26 +46,26 @@ class AppBarTypicalUseSwiftExample: UITableViewController, MDCAppBarParenting {
     super.viewDidLoad()
 
     // Recommended step: Set the tracking scroll view.
-    self.headerViewController!.headerView.trackingScrollView = self.tableView
+    appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     // Optional step: If you do not need to implement any delegate methods, you can use the
     //                headerViewController as the delegate.
-    self.tableView.delegate = self.headerViewController!
+    self.tableView.delegate = appBar.headerViewController
 
-    // Step 4: Register the App Bar views.
-    MDCAppBarAddViews(self)
+    // Step 3: Register the App Bar views.
+    appBar.addSubviewsToParent()
   }
 
   // Optional step: If you allow the header view to hide the status bar you must implement this
   //                method and return the headerViewController.
   override func childViewControllerForStatusBarHidden() -> UIViewController? {
-    return self.headerViewController
+    return appBar.headerViewController
   }
 
   // Optional step: The Header View Controller does basic inspection of the header view's background
   //                color to identify whether the status bar should be light or dark-themed.
   override func childViewControllerForStatusBarStyle() -> UIViewController? {
-    return self.headerViewController
+    return appBar.headerViewController
   }
 
   override func viewWillAppear(animated: Bool) {
@@ -82,8 +79,11 @@ class AppBarTypicalUseSwiftExample: UITableViewController, MDCAppBarParenting {
 
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
-  class func catalogHierarchy() -> [String] {
+  class func catalogBreadcrumbs() -> [String] {
     return ["App Bar", "Swift", "Typical use"]
+  }
+  func catalogShouldHideNavigation() -> Bool {
+    return true
   }
 }
 

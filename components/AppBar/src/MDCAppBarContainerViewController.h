@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCAppBar;
 @class MDCFlexibleHeaderViewController;
 
 /**
@@ -53,10 +54,20 @@
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 - (nullable instancetype)init NS_UNAVAILABLE;
 
-/** The header view controller owned by this container view controller. */
-- (nonnull MDCFlexibleHeaderViewController *)headerViewController;
+/** The App Bar views that will be presented in front of the contentViewController's view. */
+@property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
 
 /** The content view controller to be displayed behind the header. */
 @property(nonatomic, strong, nonnull, readonly) UIViewController *contentViewController;
 
 @end
+
+// clang-format off
+@interface MDCAppBarContainerViewController ()
+
+/** @see appBar.headerViewController */
+- (nonnull MDCFlexibleHeaderViewController *)headerViewController
+__deprecated_msg("Use appBar.headerViewController instead.");
+
+@end
+// clang-format on

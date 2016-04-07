@@ -20,7 +20,8 @@
  The MDCRobotoFontLoader class provides a shared mechanism through which the Roboto fonts can
  be loaded and customized.
 
- TODO: Make MDCRobotoFontLoader conform to the <MDCTypographyFontLoading>. This was intended to be a
+ TODO: https://github.com/google/material-components-ios/issues/74
+ Make MDCRobotoFontLoader conform to the <MDCTypographyFontLoading>. This was intended to be a
  strong dependency but is weak during the deprecation period.
  */
 @interface MDCRobotoFontLoader : NSObject
@@ -29,6 +30,9 @@
 
 /** Shared singleton instance. */
 + (nonnull instancetype)sharedInstance;
+
+/** This is a singleton: Use sharedInstance instead. */
+- (nonnull instancetype)init __deprecated_msg("This is a singleton: Use sharedInstance instead");
 
 #pragma mark Non-italic fonts
 

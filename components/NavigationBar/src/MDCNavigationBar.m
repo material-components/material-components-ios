@@ -23,8 +23,8 @@
 #import "MaterialButtonBar.h"
 #import "MaterialTypography.h"
 
-#import <tgmath.h>
 #import <objc/runtime.h>
+#import <tgmath.h>
 
 #undef ceil
 #define ceil(__x) __tg_ceil(__tg_promote1((__x))(__x))
@@ -228,9 +228,14 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  CGSize intrinsicContentSize = [self intrinsicContentSize];
+  return CGSizeMake(size.width, intrinsicContentSize.height);
+}
+
+- (CGSize)intrinsicContentSize {
   const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
   CGFloat height = (isPad ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight);
-  return CGSizeMake(size.width, height);
+  return CGSizeMake(self.superview.superview.bounds.size.width, height);
 }
 
 #pragma mark - Private

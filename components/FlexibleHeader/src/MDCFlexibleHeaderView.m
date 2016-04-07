@@ -142,7 +142,6 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 @synthesize trackingScrollView = _trackingScrollView;
 @synthesize minimumHeight = _minimumHeight;
 @synthesize maximumHeight = _maximumHeight;
-@synthesize behavior = _behavior;
 @synthesize canOverExtend = _canOverExtend;
 @synthesize inFrontOfInfiniteContent = _inFrontOfInfiniteContent;
 @synthesize sharedWithManyScrollViews = _sharedWithManyScrollViews;
@@ -374,8 +373,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 #pragma mark Logical short forms
 
 - (BOOL)fhv_canShiftOffscreen {
-  return ((_behavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
-           _behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) &&
+  return ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
+           _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) &&
           !_trackingScrollView.pagingEnabled);
 }
 
@@ -696,8 +695,18 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _didAdjustTargetContentOffset = NO;
 #endif
 
+  // We generally expect the tracking scroll view to be a sibling to the flexible header, but there
+  // are cases where this assumption is always incorrect.
+  //
+  // Notably, UITableViewController's .view _is_ the tableView, so there is no way to add a flexible
+  // header other than as a subview to the scroll view. This is the most common case to which the
+  // following logic has been written.
   if (self.superview == self.trackingScrollView) {
     self.transform = CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
+
+    if (self.superview.subviews.lastObject != self) {
+      [self.superview bringSubviewToFront:self];
+    }
   }
 
   // While the interface orientation is rotating we don't respond to any adjustments to the content
@@ -844,17 +853,17 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (BOOL)hidesStatusBarWhenCollapsed {
-  return (_behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar &&
+  return (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar &&
           !_trackingScrollView.pagingEnabled);
 }
 
-- (void)setBehavior:(MDCFlexibleHeaderShiftBehavior)behavior {
-  if (_behavior == behavior) {
+- (void)setShiftBehavior:(MDCFlexibleHeaderShiftBehavior)shiftBehavior {
+  if (_shiftBehavior == shiftBehavior) {
     return;
   }
-  BOOL needsShiftOnScreen = (_behavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
-                             behavior == MDCFlexibleHeaderShiftBehaviorDisabled);
-  _behavior = behavior;
+  BOOL needsShiftOnScreen = (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
+                             shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled);
+  _shiftBehavior = shiftBehavior;
 
   _statusBarShifter.enabled = self.hidesStatusBarWhenCollapsed;
 
@@ -862,6 +871,14 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _wantsToBeHidden = NO;
     [self fhv_startDisplayLink];
   }
+}
+
+- (void)setBehavior:(MDCFlexibleHeaderShiftBehavior)behavior {
+  self.shiftBehavior = behavior;
+}
+
+- (MDCFlexibleHeaderShiftBehavior)behavior {
+  return self.shiftBehavior;
 }
 
 - (void)changeContentInsets:(MDCFlexibleHeaderChangeContentInsetsBlock)block {
@@ -1038,6 +1055,18 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   } else {
     // Remove any offscreen accumulation.
     _shiftOffscreenAccumulator = 0;
+    [self fhv_commitAccumulatorToFrame];
+  }
+}
+
+- (void)shiftHeaderOffScreenAnimated:(BOOL)animated {
+  _wantsToBeHidden = YES;
+
+  if (animated) {
+    [self fhv_startDisplayLink];
+  } else {
+    // Add offscreen accumulation equal to this header view's size.
+    _shiftOffscreenAccumulator = self.fhv_accumulatorMax;
     [self fhv_commitAccumulatorToFrame];
   }
 }

@@ -50,6 +50,10 @@
  */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state;
 
+/** Use @c setBackgroundColor:forState: instead. */
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
+    __deprecated_msg("Use setBackgroundColor:forState: instead.");
+
 /** The ink color of the button. */
 @property(nonatomic, strong, null_resettable) UIColor *inkColor;
 

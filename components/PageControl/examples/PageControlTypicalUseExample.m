@@ -29,7 +29,7 @@
   MDCPageControl *_pageControl;
 }
 
-+ (NSArray *)catalogHierarchy {
++ (NSArray *)catalogBreadcrumbs {
   return @[ @"Page Control", @"Typical use" ];
 }
 
@@ -39,7 +39,7 @@
   CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
-  NSArray *pageColors = @[ HEXCOLOR(0x81D4FA), HEXCOLOR(0x80CBC4), HEXCOLOR(0xFFCC80) ];
+  NSArray *pageColors = @[ HEXCOLOR(0x55C4f5), HEXCOLOR(0x35B7F3), HEXCOLOR(0x1EAAF1) ];
 
   // Scroll view configuration
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];

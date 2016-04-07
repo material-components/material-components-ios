@@ -231,16 +231,12 @@ static const float kMDCAmbientShadowOpacity = 0.08f;
 }
 
 - (void)setElevation:(CGFloat)elevation {
-  [self setElevation:elevation animationDuration:0];
-}
-
-- (void)setElevation:(CGFloat)elevation animationDuration:(NSTimeInterval)duration {
   _elevation = elevation;
   MDCShadowMetrics *shadowMetrics = [MDCShadowMetrics metricsWithElevation:elevation];
-  [self setMetrics:shadowMetrics animationDuration:duration];
+  [self setMetrics:shadowMetrics];
 }
 
-- (void)setMetrics:(MDCShadowMetrics *)shadowMetrics animationDuration:(NSTimeInterval)duration {
+- (void)setMetrics:(MDCShadowMetrics *)shadowMetrics {
   CABasicAnimation *topOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
   topOffsetAnimation.fromValue = nil;
   topOffsetAnimation.toValue = [NSValue valueWithCGSize:shadowMetrics.topShadowOffset];
@@ -268,11 +264,9 @@ static const float kMDCAmbientShadowOpacity = 0.08f;
 
   // Group all animations together.
   CAAnimationGroup *topAnimations = [CAAnimationGroup animation];
-  topAnimations.duration = duration;
   topAnimations.animations = @[ topOffsetAnimation, topRadiusAnimation, topOpacityAnimation ];
 
   CAAnimationGroup *bottomAnimations = [CAAnimationGroup animation];
-  bottomAnimations.duration = duration;
   bottomAnimations.animations =
       @[ bottomOffsetAnimation, bottomRadiusAnimation, bottomOpacityAnimation ];
 

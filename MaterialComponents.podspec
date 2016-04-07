@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "3.0.0"
+  s.version      = "3.1.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
@@ -130,7 +130,7 @@ Pod::Spec.new do |s|
     }
 
     ss.dependency "MaterialComponents/FontDiskLoader"
-    # TODO: Make MDCRobotoFontLoader conform to the <MDCTypographyFontLoading>. This was intended to be a
+    # TODO: https://github.com/google/material-components-ios/issues/74 This was intended to be a
     # strong dependancy but is weak during the deprecation period.
     # ss.dependency "MaterialComponents/Typography"
   end

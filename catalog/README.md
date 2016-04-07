@@ -6,10 +6,10 @@ catalog adds all Material components. It also adds any example source that match
 most up-to-date paths.
 
 At runtime, the app enumerates all instances of UIViewController that respond to the
-`+catalogHierarchy` class method. This method is expected to return an array of strings that define
-the "breadcrumbs" for how to navigate from the root view controller to that view controller in the
-catalog app. Other view controllers could define matching strings if they by convention should be
-grouped together.
+`+catalogBreadcrumbs` class method. This method is expected to return an array of strings that
+define the "breadcrumbs" for how to navigate from the root view controller to that view controller
+in the catalog app. Other view controllers could define matching strings if they by convention
+should be grouped together.
 
 ## Building the app
 
@@ -48,14 +48,14 @@ You can now create the view controller class.
     @implementation InkDemoViewController
 
     // TODO: Support other categorizational methods.
-    + (NSArray *)catalogHierarchy {
+    + (NSArray *)catalogBreadcrumbs {
       return @[ @"Ink", @"README demo" ];
     }
 
     @end
 
-The `catalogHierarchy` method is the mechanism by which you define *where* the example lives in the
-catalog app. It is easiest to think of the values as a list of breadcrumbs.
+The `catalogBreadcrumbs` method is the mechanism by which you define *where* the example lives in
+the catalog app. It is easiest to think of the values as a list of breadcrumbs.
 
 To add the example to the Catalog app, simply run pod install in the catalog/ directory again:
 

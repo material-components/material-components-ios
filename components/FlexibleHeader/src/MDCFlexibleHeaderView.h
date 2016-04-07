@@ -89,13 +89,6 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  */
 @property(nonatomic, retain, nullable) CALayer *shadowLayer;
 
-#pragma mark Accessing the header's views
-
-/**
- Content for the flexible header should be added to the content view.
- */
-@property(nonatomic, retain, nonnull) UIView *contentView;
-
 /**
  Sets a custom shadow layer and a block that should be executed when shadow intensity changes.
  */
@@ -155,6 +148,9 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 
 /** Asks the receiver to bring the header on-screen if it's currently off-screen. */
 - (void)shiftHeaderOnScreenAnimated:(BOOL)animated;
+
+/** Asks the receiver to take the header off-screen if it's currently on-screen. */
+- (void)shiftHeaderOffScreenAnimated:(BOOL)animated;
 
 #pragma mark UIKit Hooks
 
@@ -280,7 +276,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 #pragma mark Behaviors
 
 /** The behavior of the header in response to the user interacting with the tracking scroll view. */
-@property(nonatomic) MDCFlexibleHeaderShiftBehavior behavior;
+@property(nonatomic) MDCFlexibleHeaderShiftBehavior shiftBehavior;
 
 /**
  Whether or not the header view is allowed to expand past its maximum height when the tracking
@@ -382,3 +378,21 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 - (void)flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)headerView;
 
 @end
+
+// clang-format off
+@interface MDCFlexibleHeaderView ()
+
+/** @see shiftBehavior */
+@property(nonatomic) MDCFlexibleHeaderShiftBehavior behavior
+__deprecated_msg("Use shiftBehavior instead.");
+
+#pragma mark Accessing the header's views
+
+/**
+ Content for the flexible header should be added to the content view.
+ */
+@property(nonatomic, retain, nonnull) UIView *contentView
+__deprecated_msg("Please register views directly to the flexible header.");
+
+@end
+// clang-format on

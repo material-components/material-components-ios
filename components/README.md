@@ -11,22 +11,18 @@ interface components for iOS. These components implement Google's
 [Material Design](http://www.google.com/design/spec/material-design/introduction.html) specification
 and are developed by a team of iOS engineers and UX designers at Google.
 
-TODO: Copy for above paragraph.
 
-TODO: Choose links below.
-
-
-- [Development Guide](http://www.google.com)
+- [Development Guide](/howto/)
   <!--{: .icon-guide }-->
 
-- [API Documentation](http://www.google.com)
-  <!--{: .icon-api }-->
-
-- [Code Samples](http://www.google.com)
+- [Code Samples](/howto/#sample-code)
   <!--{: .icon-sample }-->
 
-- [Stack Overflow](http://www.google.com)
+- [Stack Overflow](http://stackoverflow.com/questions/tagged/material-components-ios)
   <!--{: .icon-stackoverflow }-->
+
+- [Github](https://github.com/google/material-components-ios/)
+  <!--{: .icon-github }-->
 <!--{: .icon-list }-->
 
 - - -
@@ -106,5 +102,3 @@ TODO: Choose links below.
   ](Typography/)
   <!--{: .icon-typography }-->
 <!--{: .icon-list .large-format }-->
-
-

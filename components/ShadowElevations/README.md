@@ -37,7 +37,7 @@ To add the ShadowElevations component to your Xcode project using CocoaPods, add
 your PodFile:
 
 ~~~ bash
-$ pod 'MaterialComponents/ShadowElevations'
+pod 'MaterialComponents/ShadowElevations'
 ~~~
 
 Then, run the following command:

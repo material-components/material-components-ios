@@ -14,7 +14,7 @@ from community members. We can work together to optimize Material Design on iOS.
   <!--{: .icon-slack }-->
 
 - [Github Issues](https://github.com/google/material-components-ios/issues)
-  <!--{: .icon-igithub }-->
+  <!--{: .icon-github }-->
 
 - [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
   <!--{: .icon-stackoverflow }-->
@@ -263,5 +263,3 @@ specific language governing permissions and limitations under the License.
 
 Each contributor is responsible for adding their name or company name to the CONTRIBUTORS.txt file
 at the project’s root and maintaining the contact information.
-
-
