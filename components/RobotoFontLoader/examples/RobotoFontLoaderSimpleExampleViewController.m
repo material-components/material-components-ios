@@ -23,6 +23,9 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view, typically from a nib.
   self.view.backgroundColor = [UIColor whiteColor];
+  UIViewAutoresizing flexibleMargins =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
+      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 
   // Consider using the named styles provided by the Typography component instead of specific font
   // sizes. See https://github.com/google/material-components-ios/tree/develop/components/Typography
@@ -31,6 +34,7 @@
   label.font = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
 
   [label sizeToFit];
+  label.autoresizingMask = flexibleMargins;
   label.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
   [self.view addSubview:label];
 }
