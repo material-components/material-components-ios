@@ -148,7 +148,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkMaxRippleRadiusKey]) {
       self.inkView.maxRippleRadius =
-          [aDecoder decodeDoubleForKey:MDCButtonInkViewInkMaxRippleRadiusKey];
+          (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonInkViewInkMaxRippleRadiusKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonShouldRaiseOnTouchKey]) {
