@@ -1,4 +1,4 @@
-# release-candidate
+# 3.1.0
 
 ## API diffs
 
