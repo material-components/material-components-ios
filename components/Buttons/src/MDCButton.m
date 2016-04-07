@@ -125,6 +125,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
+    [self commonButtonInit];
+
     // TODO(randallli): Add backward compatibility to background colors
     //    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
     //      self.enabledBackgroundColor =
@@ -166,8 +168,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
       _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
     }
-
-    [self commonButtonInit];
   }
   return self;
 }
