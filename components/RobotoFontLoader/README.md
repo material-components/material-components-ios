@@ -6,7 +6,7 @@ excerpt: "The Roboto Font Loader lazy loads the Robot font."
 ---
 # Roboto Font Loader
 
-The Roboto Font Loader lazy loads the Robot font.
+The Roboto Font Loader lazy loads the Roboto font.
 <!--{: .intro :}-->
 
 ### Material Design Specifications
