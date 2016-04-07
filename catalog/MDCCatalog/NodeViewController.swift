@@ -168,7 +168,8 @@ class NodeViewController: CBCNodeListViewController {
         tableView.frame.size.width - 40,
         (MDCTypography.captionFont().lineHeight) * 3)
       textView.autoresizingMask = .FlexibleWidth
-      textView.contentInset = UIEdgeInsetsMake(-8, -5, -8, -5);
+      textView.contentInset = UIEdgeInsetsMake(-8, -5, -8, -5)
+      textView.editable = false
       sectionViewFrame = CGRectMake(0, 0, tableView.frame.size.width, descriptionSectionHeight)
       sectionView.frame = sectionViewFrame
       sectionView.addSubview(textView)
