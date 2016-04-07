@@ -95,6 +95,132 @@ No public API changes detected.
 
 - [new] [`+[MDCTypography fontLoader]`](https://github.com/google/material-components-ios/blob/042d650d09fd51dd7e570e0adfb924c555c4c6ea/components/Typography/src/MDCTypography.h#L56)
 
+## Component changes
+
+### AppBar
+
+* [Add container tests.](https://github.com/google/material-components-ios/commit/f87efd019a0760e67fbe73b7cf4cf6806c0e5dec) (Jeff Verkoeyen)
+* [Add parenting tests.](https://github.com/google/material-components-ios/commit/4820321787267e262abaa7b26ff8e61849d6bd15) (Jeff Verkoeyen)
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+* [Expose MDCAppBar APIs in the container view controller.](https://github.com/google/material-components-ios/commit/21d4ea8a0d7ad288860919b16d1dcab45f38dfab) (Jeff Verkoeyen)
+* [MDCAppBarContainerViewController now observes the content view controller's navigationItem.](https://github.com/google/material-components-ios/commit/3a39cb0811115f45cca6316c572af1ba01870fa0) (Jeff Verkoeyen)
+* [Remove unnecessary logic in setContentViewController:](https://github.com/google/material-components-ios/commit/e0aca65b97c0eda55adcba7b9faed59beb77fc2c) (Jeff Verkoeyen)
+* [Simplify creation/registration mechanisms.](https://github.com/google/material-components-ios/commit/adcc69b0eeb835a58e383359c66b805e92577cc4) (Jeff Verkoeyen)
+* [[Catalog] Change nav to use top AppBar instead of bottom CatalogBar](https://github.com/google/material-components-ios/commit/692287aee468245446e059fe9401937127f88b81) (Junius Gunaratne)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+* [[FlexibleHeader] Deprecate the contentView API.](https://github.com/google/material-components-ios/commit/627e238850c6f89d944e40285542a3748b8a4a3f) (Jeff Verkoeyen)
+* [[FlexibleHeader] Flesh out the README.md.](https://github.com/google/material-components-ios/commit/794cbc964c6d87c9838ad07883d4478031a4173f) (Jeff Verkoeyen)
+
+### ButtonBar
+
+* [Add essential README content.](https://github.com/google/material-components-ios/commit/56142f28418dfd42d9e58c182b62acc05cf82508) (Jeff Verkoeyen)
+* [Add typical use example.](https://github.com/google/material-components-ios/commit/3ae43a1567c73d1fa2cf47f2598cdf9c74ac6c0f) (Jeff Verkoeyen)
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+* [Document sizeThatFits: behavior.](https://github.com/google/material-components-ios/commit/f086f125a5e957a06727261c46ade108cce0ba78) (Jeff Verkoeyen)
+* [First pass at resolving swiftlint warnings.](https://github.com/google/material-components-ios/commit/4b435d3e9ef542937152bc8976311e274601b7bf) (Jeff Verkoeyen)
+* [Minor documentation touchups in examples.](https://github.com/google/material-components-ios/commit/3b8b1f94ab92462812a027b6219c4ad7fcc055f1) (Jeff Verkoeyen)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### Buttons
+
+* [Ran `arc lint --everything --apply-patches`](https://github.com/google/material-components-ios/commit/18434799b306c31f61f1f858b1f3d392d7e209dc) (Jeff Verkoeyen)
+* [[Button demos] Add disabled button states to demos, change storyboard bg color](https://github.com/google/material-components-ios/commit/36ba8b0197604f03d5c1b0adcc648618811c54f7) (Junius Gunaratne)
+* [[Button] Marking setBackgroundColor __deprecated in preperation for NS_UNAVAILABLE](https://github.com/google/material-components-ios/commit/c99b5d0014eee336949165b473b6202eb0e8eea6) (randallli)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### FlexibleHeader
+
+* [Add missing header imports.](https://github.com/google/material-components-ios/commit/8236e1aa16a40e53adfb56475f20973ec807987e) (Jeff Verkoeyen)
+* [Add scroll view did scroll tests.](https://github.com/google/material-components-ios/commit/c70aabb96c11445c313c455ec39fc9f0d55a26fd) (Jeff Verkoeyen)
+* [Added nav bar example and small fix to flexible header examples.](https://github.com/google/material-components-ios/commit/b0312ed1adec0b4a278236f7a161d44974671498) (Will Larche)
+* [Barebones Flexible Header: New styling and content](https://github.com/google/material-components-ios/commit/958b94fcef5fbc57aca795b0ee4a6de8dd252eb5) (Will Larche)
+* [Deprecate the contentView API.](https://github.com/google/material-components-ios/commit/627e238850c6f89d944e40285542a3748b8a4a3f) (Jeff Verkoeyen)
+* [Document when to implement childViewControllerForStatusBarHidden.](https://github.com/google/material-components-ios/commit/78cdc1364d41d842123d3b6b9c30f52dcebbe920) (Jeff Verkoeyen)
+* [Ensure that the header is always front-most when being a child of the trackingScrollView.](https://github.com/google/material-components-ios/commit/275e881333bcf1c752a6629b0d3b309e65ace9bc) (Jeff Verkoeyen)
+* [Flesh out the README.md.](https://github.com/google/material-components-ios/commit/794cbc964c6d87c9838ad07883d4478031a4173f) (Jeff Verkoeyen)
+* [Functionality to hide header](https://github.com/google/material-components-ios/commit/91e6468fe80a5113936a5d08b46e4d46e5d364a0) (keefertaylor)
+* [Ran `arc lint --everything --apply-patches`](https://github.com/google/material-components-ios/commit/18434799b306c31f61f1f858b1f3d392d7e209dc) (Jeff Verkoeyen)
+* [Remove unnecessary lines from the tests.](https://github.com/google/material-components-ios/commit/873865a8027cc38f2201aa0f5cf6e98d3667863b) (Jeff Verkoeyen)
+* [Rename behavior to shiftBehavior.](https://github.com/google/material-components-ios/commit/d23456c3d734955cb75cf27143466153b2dd1b3c) (Jeff Verkoeyen)
+* [The New Configurator (Flexible Header View Example)](https://github.com/google/material-components-ios/commit/d3c3389ba032a5792a74d923454268357dc562a4) (Will Larche)
+* [Turning off clang format for a portion of code.](https://github.com/google/material-components-ios/commit/491bfb57faedf7d98634353adfca48e731548b96) (Will Larche)
+* [[Catalog] Change nav to use top AppBar instead of bottom CatalogBar](https://github.com/google/material-components-ios/commit/692287aee468245446e059fe9401937127f88b81) (Junius Gunaratne)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### HeaderStackView
+
+* [Fleshing out the README.md.](https://github.com/google/material-components-ios/commit/be002a2f9f6ca099e3b764abd9d68e8abb584991) (Jeff Verkoeyen)
+* [Ran `arc lint --everything --apply-patches`](https://github.com/google/material-components-ios/commit/18434799b306c31f61f1f858b1f3d392d7e209dc) (Jeff Verkoeyen)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### Ink
+
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### NavigationBar
+
+* [Add overview section to the README.md.](https://github.com/google/material-components-ios/commit/9794b46731cde62bce33e2d54669a657e151e4d9) (Jeff Verkoeyen)
+* [Added intrinsicContentSize support.](https://github.com/google/material-components-ios/commit/c5cf080b3e2fc5cfd40357901d39f3ea3db04beb) (Will Larche)
+* [Added nav bar example and small fix to flexible header examples.](https://github.com/google/material-components-ios/commit/b0312ed1adec0b4a278236f7a161d44974671498) (Will Larche)
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+
+### PageControl
+
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+* [Ran `arc lint --everything --apply-patches`](https://github.com/google/material-components-ios/commit/18434799b306c31f61f1f858b1f3d392d7e209dc) (Jeff Verkoeyen)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+* [[Catalog] Use blue design colors for page control demo](https://github.com/google/material-components-ios/commit/9c6a523430843749590610e556db9e3cfd701340) (Junius Gunaratne)
+
+### RobotoFontLoader
+
+* [Created Roboto Font Loader readme file.](https://github.com/google/material-components-ios/commit/5c78d68e0822f4cb81c190c5c33b6f1dfd30a760) (randallli)
+* [Deprecating init in preperation for marking it NS_UNAVAILABLE](https://github.com/google/material-components-ios/commit/60ef07c1af90c6cc38e9427aecb9bddb27b2896a) (randallli)
+* [[Typography] Fixed warnings in unit tests](https://github.com/google/material-components-ios/commit/3735825360b97415499d529fdea092bab050abe9) (randallli)
+
+### ScrollViewDelegateMultiplexer
+
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### ShadowElevations
+
+* [Add shadow elevations demo to catalog](https://github.com/google/material-components-ios/commit/f4f89c2145b18df34a81a9f91944e3618c29120e) (Junius Gunaratne)
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+
+### ShadowLayer
+
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+* [Ran `arc lint --everything --apply-patches`](https://github.com/google/material-components-ios/commit/18434799b306c31f61f1f858b1f3d392d7e209dc) (Jeff Verkoeyen)
+* [Removed vestigial duration in elevation-setting methods.](https://github.com/google/material-components-ios/commit/cc64a2cf6ecd54e18471c28a1ae078e6b8e06487) (Adrian Secord)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### Slider
+
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+* [Ran `arc lint --everything --apply-patches`](https://github.com/google/material-components-ios/commit/18434799b306c31f61f1f858b1f3d392d7e209dc) (Jeff Verkoeyen)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### SpritedAnimationView
+
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### Switch
+
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+* [Ran `arc lint --everything --apply-patches`](https://github.com/google/material-components-ios/commit/18434799b306c31f61f1f858b1f3d392d7e209dc) (Jeff Verkoeyen)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
+### Typography
+
+* [Adjusted readme.md and custom fonts section.](https://github.com/google/material-components-ios/commit/8054ada89ed06227a58d7e0197e63c0cc0b13225) (randallli)
+* [Changed "$ pod" strings in documentation files.](https://github.com/google/material-components-ios/commit/7cf9f64caeadea1b310864133a2dbcbfad297848) (Adrian Secord)
+* [Fixed warnings in unit tests](https://github.com/google/material-components-ios/commit/3735825360b97415499d529fdea092bab050abe9) (randallli)
+* [Public promotion of fontLoader getter](https://github.com/google/material-components-ios/commit/b278e131f978aecb54db314e398c106a4e680985) (randallli)
+* [Ran `arc lint --everything --apply-patches`](https://github.com/google/material-components-ios/commit/18434799b306c31f61f1f858b1f3d392d7e209dc) (Jeff Verkoeyen)
+* [Suppress unit test warning](https://github.com/google/material-components-ios/commit/02e085ed42cff940b9121b68b458749f8ff2c769) (randallli)
+* [[Catalog] Add typography styles demo to catalog](https://github.com/google/material-components-ios/commit/420b1ef7edc7764a08d0e19607b3f8ce3a3afac9) (Junius Gunaratne)
+* [[Catalog] Rename catalogHierarchy to catalogBreadcrumbs.](https://github.com/google/material-components-ios/commit/61a895c5b18f538df45fa4c762220d0357b3d37a) (Jeff Verkoeyen)
+
 ## 3.0.0
 
 ##### Breaking
