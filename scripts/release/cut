@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# Copyright 2016-present Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Creates a release-candidate branch, creates a release section in CHANGELOG.md, and outputs an
+# email to be sent to the community to stdout.
+
+if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
+	git fetch
+	git checkout -b release-candidate origin/develop
+  git push origin release-candidate
+else
+  echo "Release already cut."
+fi
+
+# Prepare the CHANGELOG for updates.
+if ! grep "## release-candidate" CHANGELOG.md >> /dev/null; then
+  echo -e "## release-candidate\n" | cat - CHANGELOG.md > /tmp/out && mv /tmp/out CHANGELOG.md
+fi
+
+RELEASE_SHA=$(git merge-base --fork-point release-candidate origin/develop)
+
+today=$(date +'%B %d, %Y')
+
+echo
+echo "If you have not already, please send the following email:"
+echo
+echo "To: material-components-ios-discuss@googlegroups.com"
+echo "Subject: State of $today release"
+echo "Body:"
+echo "I am about to cut the release for $today."
+echo
+echo "The release is being cut at $RELEASE_SHA."
+echo "View this SHA on GitHub at https://github.com/google/material-components-ios/commit/$RELEASE_SHA"
+echo
+echo "We encourage clients to test out this release before it lands. To do so, check out the"
+echo "release-candidate branch like so:"
+echo
+echo "    git fetch"
+echo "    git checkout origin/release-candidate"
+echo

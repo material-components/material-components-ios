@@ -1,0 +1,30 @@
+# Hotfixing
+
+Hotfixes are changes made to the master branch or a previous release in order to resolve a critical
+bug that may have been detected post-release. Hotfixes are essentially [releases](releasing.md) that
+happen off-schedule.
+
+We only support the latest tagged release on `origin/master`.
+
+TODO: Discuss how many releases back we actively support.
+https://github.com/google/material-components-ios/issues/294
+
+### Create a hotfix branch
+
+A hotfix branch is like a release branch, but its scope is limited specifically to the fix. In other
+words, the hotfix branch must start from `origin/master`.
+
+    git fetch
+    git checkout -b hotfix-X.Y.Z origin/master
+    git push origin hotfix-X.Y.Z
+
+### Do the work
+
+    arc feature fixname origin/hotfix-X.Y.Z
+    arc diff
+    arc land --onto hotfix-X.Y.Z
+
+### Follow the releasing process
+
+Start at [Test the release branch](releasing.md#test-the-release-branch) and cut the hotfix release
+as though it were a normal release.
