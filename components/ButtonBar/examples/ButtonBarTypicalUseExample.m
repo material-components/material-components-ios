@@ -86,7 +86,16 @@
 @implementation ButtonBarTypicalUseExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Button Bar", @"Typical use" ];
+  return @[ @"Button Bar", @"Button Bar" ];
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
++ (NSString *)catalogDescription {
+  return @"The Button Bar is a view that represents a list of UIBarButtonItems as"
+          " horizontally-aligned buttons.";
 }
 
 @end

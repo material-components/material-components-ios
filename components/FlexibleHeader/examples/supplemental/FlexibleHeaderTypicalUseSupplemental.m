@@ -22,6 +22,16 @@
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }
+
++ (NSString *)catalogDescription {
+  return @"The Flexible Header is a container view whose height and vertical offset react to"
+          " UIScrollViewDelegate events.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
 @end
 
 @implementation FlexibleHeaderTypicalUseViewController (Rotation)
@@ -113,18 +123,18 @@
 
   NSDictionary *instructionAttributes1 =
       @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline],
-        NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
-                                                         green:0.459
-                                                          blue:0.459
-                                                         alpha:0.87f],
-        NSParagraphStyleAttributeName : style};
+      NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
+                                                       green:0.459
+                                                        blue:0.459
+                                                       alpha:0.87f],
+      NSParagraphStyleAttributeName : style};
   NSDictionary *instructionAttributes2 =
       @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline],
-        NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
-                                                         green:0.459
-                                                          blue:0.459
-                                                         alpha:0.87f],
-        NSParagraphStyleAttributeName : style};
+      NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
+                                                       green:0.459
+                                                        blue:0.459
+                                                       alpha:0.87f],
+      NSParagraphStyleAttributeName : style};
 
   NSString *instructionText1 = @"PULL DOWN\n\nMDCFlexibleHeaderViewController\nallows the\
   blue area to stretch\nwhen scrolled down.\n\n\n\n\n\n";

@@ -30,7 +30,16 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Page Control", @"Typical use" ];
+  return @[ @"Page Control", @"Page Control" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"This control is designed to be a drop-in replacement for UIPageControl, with a user"
+          " experience influenced by Material Design.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 - (void)viewDidLoad {

@@ -20,7 +20,7 @@ import MaterialComponents
 class ButtonsStoryboardAndProgrammaticController: UIViewController {
 
   class func catalogBreadcrumbs() -> [String] {
-    return ["Buttons", "Storyboard and Programmatic"]
+    return ["Buttons", "Buttons (Swift and Storyboard)"]
   }
 
   class func catalogStoryboardName() -> String {

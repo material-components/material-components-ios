@@ -30,7 +30,7 @@
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
 
-  self.title = @"Navigation Bar Example";
+  self.title = @"Navigation Bar";
 
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self.navBar observeNavigationItem:self.navigationItem];

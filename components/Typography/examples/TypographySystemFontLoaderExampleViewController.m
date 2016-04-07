@@ -59,7 +59,7 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Typography", @"set Font Loader" ];
+  return @[ @"Typography", @"Set Font Loader" ];
 }
 
 + (NSString *)catalogStoryboardName {

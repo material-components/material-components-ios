@@ -68,8 +68,13 @@
 }
 
 - (UIViewController *)createExampleViewController {
-  NSAssert(_exampleClass != nil, @"This is node has no associated example.");
+  NSAssert(_exampleClass != nil, @"This node has no associated example.");
   return CBCViewControllerFromClass(_exampleClass);
+}
+
+- (NSString *)createExampleDescription {
+  NSAssert(_exampleClass != nil, @"This node has no associated example.");
+  return CBCDescriptionFromClass(_exampleClass);
 }
 
 @end
@@ -80,7 +85,7 @@
   NSAssert(!_node.isExample,
            @"%@ cannot represent example nodes.", NSStringFromClass([self class]));
 
-  self = [super initWithStyle:UITableViewStylePlain];
+  self = [super initWithStyle:UITableViewStyleGrouped];
   if (self) {
     _node = node;
 

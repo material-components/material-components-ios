@@ -33,7 +33,7 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"ScrollViewDelegate Multiplexer", @"Typical use" ];
+  return @[ @"Scroll View Delegate Multiplexer", @"Scroll View Delegate Multiplexer" ];
 }
 
 - (void)viewDidLoad {

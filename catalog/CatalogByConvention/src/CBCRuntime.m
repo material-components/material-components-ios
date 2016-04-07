@@ -89,3 +89,11 @@ UIViewController *CBCViewControllerFromClass(Class aClass) {
   }
   return [[aClass alloc] initWithNibName:nil bundle:nil];
 }
+
+NSString *CBCDescriptionFromClass(Class aClass) {
+  if ([aClass respondsToSelector:@selector(catalogDescription)]) {
+    NSString *catalogDescription = [aClass catalogDescription];
+    return catalogDescription;
+  }
+  return nil;
+}

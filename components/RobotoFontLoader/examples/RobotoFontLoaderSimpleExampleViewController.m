@@ -40,7 +40,7 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"RobotoFontLoader", @"Readme demo" ];
+  return @[ @"Roboto Font Loader", @"Roboto Font Loader" ];
 }
 
 @end

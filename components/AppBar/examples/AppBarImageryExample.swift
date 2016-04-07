@@ -64,7 +64,7 @@ class AppBarImagerySwiftExample: UITableViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Imagery"
+    self.title = "Imagery (Swift)"
 
     self.addChildViewController(appBar.headerViewController)
   }
@@ -83,7 +83,7 @@ class AppBarImagerySwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Swift", "Imagery"]
+    return ["App Bar", "Imagery (Swift)"]
   }
   func catalogShouldHideNavigation() -> Bool {
     return true

@@ -34,7 +34,7 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    self.title = @"Typical use";
+    self.title = @"App Bar";
 
     UIColor *color = [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
                                      green:(CGFloat)0xA4 / (CGFloat)255
@@ -84,7 +84,16 @@
 @implementation AppBarTypicalUseExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"Typical use" ];
+  return @[ @"App Bar", @"App Bar" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"The App Bar is a flexible navigation bar designed to provide a typical Material Design"
+          " navigation experience.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 - (BOOL)catalogShouldHideNavigation {

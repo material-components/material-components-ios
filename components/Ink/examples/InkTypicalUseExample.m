@@ -54,7 +54,16 @@
 
 // TODO: Support other categorizational methods.
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Ink", @"Typical use" ];
+  return @[ @"Ink", @"Ink" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"The Ink component provides a radial action in the form of a visual ripple of ink"
+          " expanding outward from the user's touch.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 - (void)viewDidLoad {

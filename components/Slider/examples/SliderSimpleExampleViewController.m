@@ -61,7 +61,16 @@
 #pragma mark catalg by convention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Slider", @"MDCSlider vs UISlider" ];
+  return @[ @"Slider", @"Slider" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"The MDCSlider object is a Material Design control used to select a value from a"
+          " continuous range or discrete set of values.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 @end

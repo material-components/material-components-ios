@@ -67,8 +67,8 @@ class MDCCatalogTile: UIView {
       MDCCatalogTileDataNavBar.drawTile(frame: centeredFrame)
     case "Page Control":
       MDCCatalogTileDataPageControl.drawTile(frame: centeredFrame)
-    case "Shadows":
-      MDCCatalogTileDataShadow.drawTile(frame: centeredFrame)
+    case "Shadow Layer":
+      MDCCatalogTileDataShadowLayer.drawTile(frame: centeredFrame)
     case "Slider":
       MDCCatalogTileDataSlider.drawTile(frame: centeredFrame)
     case "Sprited Animation View":

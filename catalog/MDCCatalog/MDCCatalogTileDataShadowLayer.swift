@@ -17,7 +17,7 @@ limitations under the License.
 import UIKit
 import MaterialComponents
 
-class MDCCatalogTileDataShadow: NSObject {
+class MDCCatalogTileDataShadowLayer: NSObject {
 
   static func drawTile(frame frame: CGRect = CGRect(x: 0, y: 0, width: 188, height: 155)) {
 

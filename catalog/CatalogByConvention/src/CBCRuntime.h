@@ -41,3 +41,6 @@ FOUNDATION_EXTERN NSArray<Class> *CBCClassesRespondingToSelector(NSArray<Class> 
  -instantiateInitialViewController on the UIStoryboard instance.
  */
 FOUNDATION_EXTERN UIViewController *CBCViewControllerFromClass(Class aClass);
+
+/** Create a description from the provided class. **/
+FOUNDATION_EXTERN NSString *CBCDescriptionFromClass(Class aClass);

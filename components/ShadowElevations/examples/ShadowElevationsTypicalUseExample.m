@@ -137,10 +137,18 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
   [self.view addSubview:_shadowsView];
 }
 
-#pragma mark catalg by convention
+#pragma mark catalog by convention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Shadow Elevations", @"Typical use" ];
+  return @[ @"Shadow Elevations", @"Shadow Elevations" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"This component provides the most commonly-used Material Design elevations.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 @end

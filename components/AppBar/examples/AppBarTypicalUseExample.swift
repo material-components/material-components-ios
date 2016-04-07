@@ -25,7 +25,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Typical use"
+    self.title = "App Bar (Swift)"
 
     // Step 2: Add the headerViewController as a child.
     self.addChildViewController(appBar.headerViewController)
@@ -80,7 +80,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Swift", "Typical use"]
+    return ["App Bar", "Basic (Swift)"]
   }
   func catalogShouldHideNavigation() -> Bool {
     return true

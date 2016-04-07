@@ -218,7 +218,16 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Buttons", @"Button Types and States" ];
+  return @[ @"Buttons", @"Buttons" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"Buttons is a collection of Material Design buttons, including a flat button, a raised"
+          " button and a floating action button.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 @end

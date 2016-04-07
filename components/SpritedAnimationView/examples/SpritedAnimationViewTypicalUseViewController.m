@@ -28,7 +28,16 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
 
 // TODO: Support other categorizational methods.
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Sprited Animation View", @"Typical use" ];
+  return @[ @"Sprited Animation View", @"Sprited Animation View" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"This control provides an alternative to animating an array of images with an"
+          " UIImageView.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 - (void)viewDidLoad {

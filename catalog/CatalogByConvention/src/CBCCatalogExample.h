@@ -33,4 +33,9 @@
  */
 - (NSString *)catalogStoryboardName;
 
+/**
+ Return a description of the example to be shown.
+ */
+- (NSString *)catalogDescription;
+
 @end

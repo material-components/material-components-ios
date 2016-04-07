@@ -28,7 +28,16 @@
 
 // TODO: Support other categorizational methods.
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Header Stack View", @"Typical use" ];
+  return @[ @"Header Stack View", @"Header Stack View" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"The Header Stack View component is a view that coordinates the layout of two"
+          " vertically-stacked bar views.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 - (void)viewDidLoad {
