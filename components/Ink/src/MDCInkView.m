@@ -119,46 +119,4 @@
   return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
 }
 
-#pragma mark - Deprecated
-
-- (BOOL)fillsBackgroundOnSpread {
-  return self.inkStyle == MDCInkStyleBounded ? YES : NO;
-}
-
-- (void)setFillsBackgroundOnSpread:(BOOL)fillsBackgroundOnSpread {
-  self.inkStyle = fillsBackgroundOnSpread ? MDCInkStyleBounded : MDCInkStyleUnbounded;
-}
-
-- (BOOL)clipsRippleToBounds {
-  return self.inkStyle == MDCInkStyleBounded ? YES : NO;
-}
-
-- (void)setClipsRippleToBounds:(BOOL)clipsRippleToBounds {
-  self.inkStyle = clipsRippleToBounds ? MDCInkStyleBounded : MDCInkStyleUnbounded;
-}
-
-- (BOOL)gravitatesInk {
-  return NO;
-}
-
-- (void)setGravitatesInk:(BOOL)gravitatesInk {
-}
-
-- (void)reset {
-  [self cancelAllAnimationsAnimated:YES];
-}
-
-- (void)spreadFromPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock {
-  [self startTouchBeganAnimationAtPoint:point completion:completionBlock];
-}
-
-- (void)evaporateWithCompletion:(nullable MDCInkCompletionBlock)completionBlock {
-  // Note the point is currently ignored.
-  [self startTouchEndedAnimationAtPoint:CGPointZero completion:completionBlock];
-}
-
-- (void)evaporateToPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock {
-  [self startTouchEndedAnimationAtPoint:point completion:completionBlock];
-}
-
 @end

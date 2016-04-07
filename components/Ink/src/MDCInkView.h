@@ -108,18 +108,4 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  */
 - (void)cancelAllAnimationsAnimated:(BOOL)animated;
 
-#pragma mark - Deprecated
-
-@property(nonatomic, assign) BOOL fillsBackgroundOnSpread
-    __deprecated_msg("Use MDCInkViewStyle instead.");
-@property(nonatomic, assign) BOOL clipsRippleToBounds
-    __deprecated_msg("Use MDCInkViewStyle instead.");
-@property(nonatomic, assign) BOOL gravitatesInk __deprecated_msg("No replacement available.");
-- (void)reset __deprecated_msg("Use cancelAllAnimationsAnimated: intead.");
-- (void)spreadFromPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock
-    __deprecated_msg("Use startTouchBeganAnimationAtPoint:completion: instead.");
-- (void)evaporateWithCompletion:(nullable MDCInkCompletionBlock)completionBlock
-    __deprecated_msg("Use startTouchEndedAnimationAtPoint:completion: instead.");
-- (void)evaporateToPoint:(CGPoint)point completion:(nullable MDCInkCompletionBlock)completionBlock
-    __deprecated_msg("Use startTouchEndedAnimationAtPoint:completion: instead.");
 @end
