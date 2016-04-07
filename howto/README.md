@@ -92,9 +92,9 @@ Modify the MainViewController.swift by adding a UIScrollView. Make the following
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 class MainViewController : UIViewController {
   var scrollView: UIScrollView?
 
@@ -117,9 +117,9 @@ To actually add the App Bar, we need to give the view controller a protocol to c
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 class MainViewController : UIViewController, MDCAppBarParenting {
   var scrollView: UIScrollView?
 
@@ -166,9 +166,9 @@ The MDCFlexibleHeaderViewController that was now exposed as a property of our vi
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 class MainViewController : UIViewController, MDCAppBarParenting {
   // ...
   override func viewDidLoad() {
@@ -192,9 +192,9 @@ The status bar is not hiding yet, and the reason is by default UIViewController 
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 class MainViewController : UIViewController, MDCAppBarParenting {
   // ...
   override func childViewControllerForStatusBarHidden() -> UIViewController {
@@ -213,9 +213,9 @@ To set the color of the header, we can directly manipulate the headerView in vie
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 class MainViewController : UIViewController, MDCAppBarParenting {
   // ...
   override func viewDidLoad() {
@@ -239,9 +239,9 @@ And finally put some buttons in to the header bar.
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 class MainViewController : UIViewController, MDCAppBarParenting {
   override func viewDidLoad() {
     // ...
@@ -285,9 +285,9 @@ The first thing to do is to create a custom view that will be placed inside the 
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 class CustomHeaderView : UIView {
   var titleLabel = UILabel()
   var iconView = UIImageView()
@@ -329,9 +329,9 @@ Integrating the Flexible Header is about the same amount of work as App Bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 class MainViewController : UIViewController, MDCFlexibleHeaderViewLayoutDelegate {
   var headerViewController: MDCFlexibleHeaderViewController
   var customHeaderView = CustomHeaderView()
@@ -347,9 +347,9 @@ as a childViewController replacing the previous `MDCAppBArPrepareParent`:
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
    headerViewController = MDCFlexibleHeaderViewController()
    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -371,9 +371,9 @@ except this is not creating any observing of the UINavigationItem.
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -403,9 +403,9 @@ update the header view contents when the layout is changed.
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 // MDCFlexibleHeaderViewLayoutDelegate
  func flexibleHeaderViewController(flexibleHeaderViewController: MDCFlexibleHeaderViewController,
                                    flexibleHeaderViewFrameDidChange headerView: MDCFlexibleHeaderView) {
@@ -445,9 +445,9 @@ of a UIViewController base class. Using this is the easiest way to get started w
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 class MainViewController : MDCCollectionViewController, MDCAppBarParenting {
 
 }
@@ -460,9 +460,9 @@ the scroll view, a model is initialized:
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -502,9 +502,9 @@ the MDCFlexibleHeaderView to preserve our collapsing header functionality.
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 
   override func childViewControllerForStatusBarHidden() -> UIViewController {
     return headerViewController!
@@ -542,9 +542,9 @@ way of doing things
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
   super.collectionView(collectionView, didSelectItemAtIndexPath: indexPath)
   let vc = ViewControllerWithCollections(nibName: nil, bundle: nil)
@@ -572,9 +572,9 @@ added to the view controller's root view so it stays floated in the corner.
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 override func viewDidLoad() {
 
   button = MDCFloatingButton(shape: .Default)
@@ -609,9 +609,9 @@ row to the collection view. Collection views can animate any changes using MDCCo
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 func add(target: AnyObject) {
   weak var weakModel = model
   model.performBatchUpdates({
@@ -643,9 +643,9 @@ Fading in to the view controller:
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
  override func viewDidAppear(animated: Bool) {
    weak var weakButton = button
    UIView.animateWithDuration(0.2, animations: {
@@ -661,9 +661,9 @@ to pushViewController with an animation to FAB.
 
 <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
+#### Swift
 
-~~~ objc
+~~~ swift
 override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
   super.collectionView(collectionView, didSelectItemAtIndexPath: indexPath)
   let vc = ViewControllerWithCollections(nibName: nil, bundle: nil)
