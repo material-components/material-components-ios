@@ -25,10 +25,10 @@ floating action button.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCRaisedButton.html">MDCRaisedButton</a></li>
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCButton.html">MDCButton</a></li>
+  <li class="icon-link"><a href="/components/Buttons/apidocs/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
+  <li class="icon-link"><a href="/components/Buttons/apidocs/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
+  <li class="icon-link"><a href="/components/Buttons/apidocs/Classes/MDCRaisedButton.html">MDCRaisedButton</a></li>
+  <li class="icon-link"><a href="/components/Buttons/apidocs/Classes/MDCButton.html">MDCButton</a></li>
 </ul>
 
 

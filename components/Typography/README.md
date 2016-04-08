@@ -22,11 +22,11 @@ from the Material Design specifications.
 ### API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="/apidocs/Typography/Classes/MDCFontResource.html">MDCFontResource</a></li>
-<li class="icon-link"><a href="/apidocs/Typography/Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a></li>
-<li class="icon-link"><a href="/apidocs/Typography/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
-<li class="icon-link"><a href="/apidocs/Typography/Classes/MDCTypography.html">MDCTypography</a></li>
-<li class="icon-link"><a href="/apidocs/Typography/Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a></li>
+<li class="icon-link"><a href="/components/Typography/apidocs/Classes/MDCFontResource.html">MDCFontResource</a></li>
+<li class="icon-link"><a href="/components/Typography/apidocs/Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a></li>
+<li class="icon-link"><a href="/components/Typography/apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
+<li class="icon-link"><a href="/components/Typography/apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
+<li class="icon-link"><a href="/components/Typography/apidocs/Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a></li>
 </ul>
 
 

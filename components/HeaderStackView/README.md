@@ -22,7 +22,7 @@ bar views.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/HeaderStackView/Classes/MDCHeaderStackView.html">MDCHeaderStackView</a></li>
+  <li class="icon-link"><a href="/components/HeaderStackView/apidocs/Classes/MDCHeaderStackView.html">MDCHeaderStackView</a></li>
 </ul>
 
 

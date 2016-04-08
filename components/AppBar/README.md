@@ -23,8 +23,8 @@ navigation experience.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/AppBar/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
-  <li class="icon-link"><a href="/apidocs/AppBar/Protocols/MDCAppBarParenting.html">MDCAppBarParenting</a></li>
+  <li class="icon-link"><a href="/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
+  <li class="icon-link"><a href="/components/AppBar/apidocs/Protocols/MDCAppBarParenting.html">MDCAppBarParenting</a></li>
 </ul>
 
 - - -

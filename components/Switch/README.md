@@ -23,8 +23,8 @@ that `MDCSwitch` objects have an intrinsic size and are not resizable.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/Switch/Classes/MDCSwitch.html">MDCSwitch</a></li>
-  <li class="icon-link"><a href="/apidocs/Switch/Functions.html">Global Functions</a></li>
+  <li class="icon-link"><a href="/components/Switch/apidocs/Classes/MDCSwitch.html">MDCSwitch</a></li>
+  <li class="icon-link"><a href="/components/Switch/apidocs/Functions.html">Global Functions</a></li>
 </ul>
 
 

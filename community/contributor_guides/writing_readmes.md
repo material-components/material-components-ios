@@ -36,7 +36,7 @@ fill out have been marked with `TODO` statements.
 
     <ul class="icon-list">
       <li class="icon-link">
-        <a href="/apidocs/<ComponentName>/Classes/<TODO: API name>.html">
+        <a href="/components/<ComponentName>/apidocs/Classes/<TODO: API name>.html">
           TODO: API name
         </a>
       </li>

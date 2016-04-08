@@ -46,8 +46,8 @@ shadow that adheres to defined height and light source principles.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/ShadowLayer/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
-  <li class="icon-link"><a href="/apidocs/ShadowLayer/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
+  <li class="icon-link"><a href="/components/ShadowLayer/apidocs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
+  <li class="icon-link"><a href="/components/ShadowLayer/apidocs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
 </ul>
 
 
