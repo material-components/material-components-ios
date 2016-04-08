@@ -16,9 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialSlider.h"
-#import "MaterialShadowLayer.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
+#import "MaterialSlider.h"
 
 static const CGFloat kShadowElevationsDefault = 8.f;
 static const CGFloat kShadowElevationsMax = 24.f;

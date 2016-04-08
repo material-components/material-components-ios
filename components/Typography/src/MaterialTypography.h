@@ -14,6 +14,6 @@
  limitations under the License.
  */
 
-#import "MDCTypography.h"
 #import "MDCFontResource.h"
 #import "MDCRobotoFontLoader.h"
+#import "MDCTypography.h"

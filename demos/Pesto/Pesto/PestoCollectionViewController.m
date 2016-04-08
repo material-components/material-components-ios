@@ -123,8 +123,8 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   return self.cellSize;
 }
 
@@ -153,24 +153,24 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   if (self.logoScale < 0.5f) {
     self.logoScale = 0.5f;
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
-        delay:0
-        options:UIViewAnimationOptionCurveEaseOut
-        animations:^{
-          self.logoView.layer.opacity = 0;
-          self.logoSmallView.layer.opacity = 1.f;
-        }
-        completion:^(BOOL finished){
-        }];
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                       self.logoView.layer.opacity = 0;
+                       self.logoSmallView.layer.opacity = 1.f;
+                     }
+                     completion:^(BOOL finished){
+                     }];
   } else {
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
-        delay:0
-        options:UIViewAnimationOptionCurveEaseOut
-        animations:^{
-          self.logoView.layer.opacity = 1.f;
-          self.logoSmallView.layer.opacity = 0;
-        }
-        completion:^(BOOL finished){
-        }];
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                       self.logoView.layer.opacity = 1.f;
+                       self.logoSmallView.layer.opacity = 0;
+                     }
+                     completion:^(BOOL finished){
+                     }];
   }
   self.logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, self.logoScale,
                                                    self.logoScale);

@@ -15,8 +15,8 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MaterialTypography.h"
 #import "MaterialSwitch.h"
+#import "MaterialTypography.h"
 
 @interface TypographySystemFontLoaderExampleViewController : UIViewController
 @property(weak, nonatomic) IBOutlet MDCSwitch *mdcSwitch;

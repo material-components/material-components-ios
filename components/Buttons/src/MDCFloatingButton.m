@@ -20,8 +20,8 @@
 
 #import "MDCFloatingButton.h"
 
-#import "private/MDCButton+Subclassing.h"
 #import "MaterialShadowElevations.h"
+#import "private/MDCButton+Subclassing.h"
 
 static const CGFloat MDCFloatingButtonDefaultDimension = 56.0f;
 static const CGFloat MDCFloatingButtonMiniDimension = 40.0f;

@@ -173,7 +173,7 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 }
 
 - (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
-    (UIViewController *)dismissed {
+        (UIViewController *)dismissed {
   return self;
 }
 

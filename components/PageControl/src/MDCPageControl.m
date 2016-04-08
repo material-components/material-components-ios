@@ -16,10 +16,10 @@
 
 #import "MDCPageControl.h"
 
-#import "private/MaterialPageControlStrings.h"
-#import "private/MaterialPageControlStrings_table.h"
 #import "private/MDCPageControlIndicator.h"
 #import "private/MDCPageControlTrackLayer.h"
+#import "private/MaterialPageControlStrings.h"
+#import "private/MaterialPageControlStrings_table.h"
 
 #import <tgmath.h>
 

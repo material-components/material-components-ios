@@ -229,7 +229,7 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell
-forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
   if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
     [cell setSeparatorInset:UIEdgeInsetsZero];
   }

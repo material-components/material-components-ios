@@ -211,7 +211,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (void)fhv_setShadowLayer:(CALayer *)shadowLayer
-   intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
+    intensityDidChangeBlock:(MDCFlexibleHeaderShadowIntensityChangeBlock)block {
   _shadowIntensityChangeBlock = block;
 
   // If there is a custom shadow make sure the shadow on self.layer is not visible.
@@ -760,7 +760,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (void)statusBarShifter:(MDCStatusBarShifter *)statusBarShifter
-  wantsSnapshotViewAdded:(UIView *)view {
+    wantsSnapshotViewAdded:(UIView *)view {
   [self addSubview:view];
 }
 
