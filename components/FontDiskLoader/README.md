@@ -73,7 +73,6 @@ font.
 
 ## Code snippets
 
-~~~
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 ~~~ objc
