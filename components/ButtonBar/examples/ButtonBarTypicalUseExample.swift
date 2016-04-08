@@ -54,8 +54,11 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
     let size = buttonBar.sizeThatFits(self.view.bounds.size)
-    buttonBar.frame = CGRect(x: 0, y: 100, width: size.width, height: size.height)
-    buttonBar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
+    let x = (self.view.bounds.size.width - size.width) / 2;
+    let y = self.view.bounds.size.height / 2 - size.height;
+    buttonBar.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
+    buttonBar.autoresizingMask =
+      [.FlexibleTopMargin, .FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin]
     self.view.addSubview(buttonBar)
 
     // Ensure that the controller's view isn't transparent.
