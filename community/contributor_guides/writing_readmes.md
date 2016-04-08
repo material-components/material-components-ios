@@ -92,15 +92,13 @@ fill out have been marked with `TODO` statements.
 
     TODO **Recommended section**. These breakout sections are a perfect opportunity to talk about
     edge case behaviors.
-    ~~~
 
-    ## Code snippets
+## Code snippets
 
-    Every code snippet must provide both an Objective-C version and a Swift version. Consult the
-    document on [Supported Versions](supported_versions.md) for information on which version of the
-    Swift language to use when writing examples.
+Every code snippet must provide both an Objective-C version and a Swift version. Consult the
+document on [Supported Versions](supported_versions.md) for information on which version of the
+Swift language to use when writing examples.
 
-    ~~~
     <!--<div class="material-code-render" markdown="1">-->
     #### Objective-C
     ~~~ objc
