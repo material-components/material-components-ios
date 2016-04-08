@@ -25,7 +25,7 @@
 		DE5BD5B71CB3FD5F00D8D75D /* MDCCatalogTileDataSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BD5B61CB3FD5F00D8D75D /* MDCCatalogTileDataSlider.swift */; };
 		DE5BD5B91CB3FDB900D8D75D /* MDCCatalogTileDataShadowLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BD5B81CB3FDB900D8D75D /* MDCCatalogTileDataShadowLayer.swift */; };
 		DE5BD5BC1CB3FE0C00D8D75D /* MDCCatalogTileDataPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BD5BB1CB3FE0C00D8D75D /* MDCCatalogTileDataPageControl.swift */; };
-		DE5BD5BE1CB3FE5E00D8D75D /* MDCCatalogTileDataNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BD5BD1CB3FE5E00D8D75D /* MDCCatalogTileDataNavBar.swift */; };
+		DE5BD5BE1CB3FE5E00D8D75D /* MDCCatalogTileDataNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BD5BD1CB3FE5E00D8D75D /* MDCCatalogTileDataNavigationBar.swift */; };
 		DE5BD5C01CB3FECF00D8D75D /* MDCCatalogTileDataMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BD5BF1CB3FECF00D8D75D /* MDCCatalogTileDataMisc.swift */; };
 		DE5BD5C21CB3FF2100D8D75D /* MDCCatalogTileDataInk.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BD5C11CB3FF2100D8D75D /* MDCCatalogTileDataInk.swift */; };
 		DE5BD5C41CB3FF6900D8D75D /* MDCCatalogTileDataHeaderStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BD5C31CB3FF6900D8D75D /* MDCCatalogTileDataHeaderStackView.swift */; };
@@ -108,7 +108,7 @@
 		DE5BD5B61CB3FD5F00D8D75D /* MDCCatalogTileDataSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileDataSlider.swift; sourceTree = "<group>"; };
 		DE5BD5B81CB3FDB900D8D75D /* MDCCatalogTileDataShadowLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileDataShadowLayer.swift; sourceTree = "<group>"; };
 		DE5BD5BB1CB3FE0C00D8D75D /* MDCCatalogTileDataPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileDataPageControl.swift; sourceTree = "<group>"; };
-		DE5BD5BD1CB3FE5E00D8D75D /* MDCCatalogTileDataNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileDataNavBar.swift; sourceTree = "<group>"; };
+		DE5BD5BD1CB3FE5E00D8D75D /* MDCCatalogTileDataNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileDataNavigationBar.swift; sourceTree = "<group>"; };
 		DE5BD5BF1CB3FECF00D8D75D /* MDCCatalogTileDataMisc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileDataMisc.swift; sourceTree = "<group>"; };
 		DE5BD5C11CB3FF2100D8D75D /* MDCCatalogTileDataInk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileDataInk.swift; sourceTree = "<group>"; };
 		DE5BD5C31CB3FF6900D8D75D /* MDCCatalogTileDataHeaderStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileDataHeaderStackView.swift; sourceTree = "<group>"; };
@@ -231,7 +231,7 @@
 				DE5BD5C31CB3FF6900D8D75D /* MDCCatalogTileDataHeaderStackView.swift */,
 				DE5BD5C11CB3FF2100D8D75D /* MDCCatalogTileDataInk.swift */,
 				DE5BD5BF1CB3FECF00D8D75D /* MDCCatalogTileDataMisc.swift */,
-				DE5BD5BD1CB3FE5E00D8D75D /* MDCCatalogTileDataNavBar.swift */,
+				DE5BD5BD1CB3FE5E00D8D75D /* MDCCatalogTileDataNavigationBar.swift */,
 				DE5BD5BB1CB3FE0C00D8D75D /* MDCCatalogTileDataPageControl.swift */,
 				DE5BD5B81CB3FDB900D8D75D /* MDCCatalogTileDataShadowLayer.swift */,
 				DE5BD5B61CB3FD5F00D8D75D /* MDCCatalogTileDataSlider.swift */,
@@ -419,7 +419,7 @@
 				DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */,
 				DE5BD5C41CB3FF6900D8D75D /* MDCCatalogTileDataHeaderStackView.swift in Sources */,
 				DE5BD5B31CB3FA5000D8D75D /* MDCCatalogTileDataSwitch.swift in Sources */,
-				DE5BD5BE1CB3FE5E00D8D75D /* MDCCatalogTileDataNavBar.swift in Sources */,
+				DE5BD5BE1CB3FE5E00D8D75D /* MDCCatalogTileDataNavigationBar.swift in Sources */,
 				664524B91C6BA62A001ADBF8 /* NodeViewController.swift in Sources */,
 				DE3799581CAD9AB00036D5B0 /* MDCCatalogTypicalExampleViewController.swift in Sources */,
 				DE5BD5AE1CB3F7F100D8D75D /* MDCCatalogTile.swift in Sources */,

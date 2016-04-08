@@ -63,8 +63,8 @@ class MDCCatalogTile: UIView {
       MDCCatalogTileDataHeaderStackView.drawTile(frame: centeredFrame)
     case "Ink":
       MDCCatalogTileDataInk.drawTile(frame: centeredFrame)
-    case "NavBar":
-      MDCCatalogTileDataNavBar.drawTile(frame: centeredFrame)
+    case "Navigation Bar":
+      MDCCatalogTileDataNavigationBar.drawTile(frame: centeredFrame)
     case "Page Control":
       MDCCatalogTileDataPageControl.drawTile(frame: centeredFrame)
     case "Shadow Layer":
