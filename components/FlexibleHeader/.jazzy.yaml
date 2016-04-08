@@ -1,4 +1,4 @@
 module_name: FlexibleHeader
 umbrella_header: src/MaterialFlexibleHeader.h
-objc_mode: true
+objc: true
 sdk: iphonesimulator

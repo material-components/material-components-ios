@@ -1,4 +1,4 @@
 module_name: Typography
 umbrella_header: src/MaterialTypography.h
-objc_mode: true
+objc: true
 sdk: iphonesimulator
