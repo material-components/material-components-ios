@@ -77,6 +77,14 @@ class NodeViewController: CBCNodeListViewController {
     self.tableView.backgroundColor = UIColor.whiteColor()
   }
 
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tableView.separatorColor = UIColor.clearColor()
