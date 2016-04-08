@@ -130,9 +130,7 @@ Pod::Spec.new do |s|
     }
 
     ss.dependency "MaterialComponents/FontDiskLoader"
-    # TODO: https://github.com/google/material-components-ios/issues/74 This was intended to be a
-    # strong dependancy but is weak during the deprecation period.
-    # ss.dependency "MaterialComponents/Typography"
+    ss.dependency "MaterialComponents/Typography"
   end
 
   s.subspec "ScrollViewDelegateMultiplexer" do |ss|
@@ -182,8 +180,6 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
-
-    ss.dependency "MaterialComponents/RobotoFontLoader" # This dependancy is part of a deprecation.
   end
 
   s.subspec "private" do |pss|

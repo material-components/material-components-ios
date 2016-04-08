@@ -59,6 +59,7 @@ PODS:
     - MaterialComponents/ShadowLayer
   - MaterialComponents/RobotoFontLoader (3.1.0):
     - MaterialComponents/FontDiskLoader
+    - MaterialComponents/Typography
   - MaterialComponents/ScrollViewDelegateMultiplexer (3.1.0)
   - MaterialComponents/ShadowElevations (3.1.0)
   - MaterialComponents/ShadowLayer (3.1.0)
@@ -67,8 +68,7 @@ PODS:
   - MaterialComponents/SpritedAnimationView (3.1.0)
   - MaterialComponents/Switch (3.1.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (3.1.0):
-    - MaterialComponents/RobotoFontLoader
+  - MaterialComponents/Typography (3.1.0)
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
@@ -78,6 +78,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: b179a6f724c50f0be356b86a8f5447eef2793d84
+  MaterialComponents: 4d0d60fbb6d0c0086dfdccadf59e8fa27e157720
 
 COCOAPODS: 0.39.0

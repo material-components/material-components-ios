@@ -46,9 +46,7 @@
   // once, during the initalization of the app before any UI is called so that any Material
   // Components will have the correct consistent fonts.
   if (switchSender.isOn) {
-    // TODO: https://github.com/google/material-components-ios/issues/74 remove `(id)` which
-    // silences build warning
-    [MDCTypography setFontLoader:(id)[MDCRobotoFontLoader sharedInstance]];
+    [MDCTypography setFontLoader:[MDCRobotoFontLoader sharedInstance]];
   } else {
     [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
   }
