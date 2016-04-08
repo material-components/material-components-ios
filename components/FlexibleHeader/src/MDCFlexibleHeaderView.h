@@ -388,9 +388,7 @@ __deprecated_msg("Use shiftBehavior instead.");
 
 #pragma mark Accessing the header's views
 
-/**
- Content for the flexible header should be added to the content view.
- */
+/** Deprecated. Please register views directly to the flexible header. */
 @property(nonatomic, strong, nonnull) UIView *contentView
 __deprecated_msg("Please register views directly to the flexible header.");
 
