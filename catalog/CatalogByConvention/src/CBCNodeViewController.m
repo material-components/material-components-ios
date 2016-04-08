@@ -94,6 +94,16 @@
   return self;
 }
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  [self doesNotRecognizeSelector:_cmd];
+  return nil;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  [self doesNotRecognizeSelector:_cmd];
+  return nil;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

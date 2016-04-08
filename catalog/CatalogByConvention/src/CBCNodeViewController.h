@@ -27,6 +27,10 @@
 /** Initializes a CBCNodeViewController instance with a non-example node. */
 - (nonnull instancetype)initWithNode:(nonnull CBCNode *)node;
 
+- (nonnull instancetype)initWithNibName:(nonnull NSString *)nibNameOrNil
+                                 bundle:(nonnull NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+
 /** The node that this view controller must represent. */
 @property(nonatomic, strong, nonnull, readonly) CBCNode *node;
 
