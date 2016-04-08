@@ -208,7 +208,7 @@ class TypographyExamplesViewController: UICollectionViewController {
 
   class func catalogDescription() -> String {
     return "The Typography component provides methods for displaying text using the type sizes and"
-           " opacities from the Material Design specifications."
+      + " opacities from the Material Design specifications."
   }
 
   func catalogIsPrimaryDemo() -> Bool {
