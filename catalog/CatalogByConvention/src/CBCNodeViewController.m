@@ -94,12 +94,7 @@
   return self;
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (instancetype)initWithStyle:(UITableViewStyle)style {
   [self doesNotRecognizeSelector:_cmd];
   return nil;
 }
