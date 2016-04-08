@@ -66,62 +66,61 @@ fill out have been marked with `TODO` statements.
     $ pod install
     ~~~
 
-- - -
+    - - -
 
-## Overview
+    ## Overview
 
-TODO *Optional section*. Provide a high level overview of the component here. This is a good place
-to provide:
+    TODO *Optional section*. Provide a high level overview of the component here. This is a good
+    place to provide:
 
-- comparisons with related UIKit APIs, and
-- explanations of the overall component structure.
+    - comparisons with related UIKit APIs, and
+    - explanations of the overall component structure.
 
 
 
-- - -
+    - - -
 
-## Usage
+    ## Usage
 
-TODO **Required section**. Provide essential integration steps here.
+    TODO **Required section**. Provide essential integration steps here.
 
-Remember that the audience for this section is someone completely new to using Material components;
-don't assume or expect the reader to have read another component's README. At best you can assume
-that the reader read the Quick Start guide.
+    Remember that the audience for this section is someone completely new to using Material
+    components; don't assume or expect the reader to have read another component's README. At best
+    you can assume that the reader read the Quick Start guide.
 
-### Additional information section
+    ### Additional information section
 
-TODO **Recommended section**. These breakout sections are a perfect opportunity to talk about edge
-case behaviors.
-~~~
+    TODO **Recommended section**. These breakout sections are a perfect opportunity to talk about
+    edge case behaviors.
+    ~~~
 
-## Code snippets
+    ## Code snippets
 
-Every code snippet must provide both an Objective-C version and a Swift version. Consult the
-document on [Supported Versions](supported_versions.md) for information on which version of the
-Swift language to use when writing examples.
+    Every code snippet must provide both an Objective-C version and a Swift version. Consult the
+    document on [Supported Versions](supported_versions.md) for information on which version of the
+    Swift language to use when writing examples.
 
-~~~
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-- (void)viewDidLoad {
-  [super viewDidLoad];
+    ~~~
+    <!--<div class="material-code-render" markdown="1">-->
+    #### Objective-C
+    ~~~ objc
+    - (void)viewDidLoad {
+      [super viewDidLoad];
 
-  ...
+      ...
 
-  // After all other views have been registered.
-  MDCAppBarAddViews(self);
-}
-~~~
+      // After all other views have been registered.
+      MDCAppBarAddViews(self);
+    }
+    ~~~
 
-#### Swift
-~~~ swift
-override func viewDidLoad() {
-  super.viewDidLoad()
+    #### Swift
+    ~~~ swift
+    override func viewDidLoad() {
+      super.viewDidLoad()
 
-  // After all other views have been registered.
-  MDCAppBarAddViews(self)
-}
-~~~
-<!--</div>-->
-~~~
+      // After all other views have been registered.
+      MDCAppBarAddViews(self)
+    }
+    ~~~
+    <!--</div>-->
