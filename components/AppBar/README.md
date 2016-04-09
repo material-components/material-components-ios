@@ -202,7 +202,7 @@ Flexible Header view's background color. Learn more by reading the section on
 ### UINavigationItem and the App Bar
 
 The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
-`navigationBar` once you call `MDCAppBarAddViews`.
+`navigationBar` once you call `addSubviewsToParent`.
 
 Learn more by reading the Navigation Bar section on
 [Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
@@ -233,7 +233,7 @@ background image.
 This is not trivial to do with the App Bar APIs due to considerations being discussed in
 [Issue #184](https://github.com/google/material-components-ios/issues/184).
 
-The heart of the limitation is that we're using a view (`headerStackView) to lay out the Navigation
+The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
 Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
 end up eating all of your touch events.
 
