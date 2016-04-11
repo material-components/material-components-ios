@@ -17,9 +17,14 @@ limitations under the License.
 import UIKit
 import MaterialComponents
 
-class MDCCatalogTileDataSwitch: NSObject {
+class MDCCatalogTileDataSwitch: MDCCatalogTileData {
+  static var tileImage: UIImage? = nil
 
-  static func drawTile(frame frame: CGRect = CGRect(x: 0, y: 0, width: 188, height: 155)) {
+  static func drawTile(frame: CGRect) {
+    drawAndCache(draw, frame: frame, image: &tileImage)
+  }
+
+  static func draw(frame frame: CGRect = CGRect(x: 0, y: 0, width: 188, height: 155)) {
     let context = UIGraphicsGetCurrentContext()
 
     let fillColor = UIColor(red: 0.119, green: 0.630, blue: 0.950, alpha: 1.000)

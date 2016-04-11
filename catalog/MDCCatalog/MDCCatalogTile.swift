@@ -52,33 +52,33 @@ class MDCCatalogTile: UIView {
 
     switch componentNameString {
     case "App Bar":
-      MDCCatalogTileDataAppBar.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataAppBar.drawTile(centeredFrame)
     case "Button Bar":
-      MDCCatalogTileDataButtonBar.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataButtonBar.drawTile(centeredFrame)
     case "Buttons":
-      MDCCatalogTileDataButtons.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataButtons.drawTile(centeredFrame)
     case "Flexible Header":
-      MDCCatalogTileDataFlexibleHeader.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataFlexibleHeader.drawTile(centeredFrame)
     case "Header Stack View":
-      MDCCatalogTileDataHeaderStackView.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataHeaderStackView.drawTile(centeredFrame)
     case "Ink":
-      MDCCatalogTileDataInk.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataInk.drawTile(centeredFrame)
     case "Navigation Bar":
-      MDCCatalogTileDataNavigationBar.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataNavigationBar.drawTile(centeredFrame)
     case "Page Control":
-      MDCCatalogTileDataPageControl.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataPageControl.drawTile(centeredFrame)
     case "Shadow Layer":
-      MDCCatalogTileDataShadowLayer.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataShadowLayer.drawTile(centeredFrame)
     case "Slider":
-      MDCCatalogTileDataSlider.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataSlider.drawTile(centeredFrame)
     case "Sprited Animation View":
-      MDCCatalogTileDataSpritedAnimationView.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataSpritedAnimationView.drawTile(centeredFrame)
     case "Switch":
-      MDCCatalogTileDataSwitch.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataSwitch.drawTile(centeredFrame)
     case "Typography":
-      MDCCatalogTileDataTypography.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataTypography.drawTile(centeredFrame)
     default:
-      MDCCatalogTileDataMisc.drawTile(frame: centeredFrame)
+      MDCCatalogTileDataMisc.drawTile(centeredFrame)
     }
   }
 

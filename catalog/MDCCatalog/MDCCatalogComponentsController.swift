@@ -126,15 +126,9 @@ class MDCCatalogComponentsController: UICollectionViewController {
       forIndexPath: indexPath)
     cell.backgroundColor = UIColor.whiteColor()
 
-    let imageName = "Misc"
-    var image = UIImage(named: imageName)
     let componentName = self.node.children[indexPath.row].title
-    let componentImage: UIImage? = UIImage(named: componentName)
-    if componentImage != nil {
-      image = componentImage
-    }
     if let catalogCell = cell as? MDCCatalogCollectionViewCell {
-      catalogCell.populateView(componentName, image: image!)
+      catalogCell.populateView(componentName)
     }
 
     return cell
