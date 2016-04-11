@@ -96,6 +96,5 @@ font.
 ~~~ swift
     let fontLoader = MDCFontDiskLoader.init(name: nameOfFontInFile, URL: fontURLOnDisk);
     let myFont:UIFont = fontLoader.fontOfSize(16)!;
-}
 ~~~
 <!--</div>-->
