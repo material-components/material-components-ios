@@ -34,6 +34,7 @@
 
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self.navBar observeNavigationItem:self.navigationItem];
+  self.navBar.tintColor = [UIColor whiteColor];
 
   // Light blue 500
   [self.navBar setBackgroundColor:[UIColor colorWithRed:0.012
@@ -61,6 +62,10 @@
   [self.view addConstraints:arrayOfConstraints];
 
   [self setupExampleViews];
+}
+
+- (BOOL)prefersStatusBarHidden {
+  return YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
