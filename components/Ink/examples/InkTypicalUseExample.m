@@ -47,7 +47,11 @@
 @end
 
 @interface InkTypicalUseViewController () <MDCInkTouchControllerDelegate>
+@property(nonatomic) CGFloat shapeDimension;
+@property(nonatomic) CGFloat spacing;
+@property(nonatomic, strong) ExampleShapes *boundedShapes;
 @property(nonatomic, strong) NSMutableArray *inkTouchControllers;  // MDCInkTouchControllers.
+@property(nonatomic, strong) UIView *unboundedShape;
 @end
 
 @implementation InkTypicalUseViewController
@@ -72,46 +76,63 @@
   self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
   _inkTouchControllers = [[NSMutableArray alloc] init];
 
-  CGRect customFrame = CGRectMake(0, 0, 200, 200);
-  CGFloat spacing = 16;
-  ExampleShapes *boundedShapes = [[ExampleShapes alloc] initWithFrame:customFrame];
-  boundedShapes.title = @"Bounded";
-  boundedShapes.center = CGPointMake(self.view.center.x,
-                                     self.view.center.y -
-                                         (spacing / 2 + customFrame.size.height / 2));
-  boundedShapes.shapeColor = [UIColor whiteColor];
-  for (UIView *view in boundedShapes.subviews) {
+  self.spacing = 16;
+  self.shapeDimension = 200;
+  CGRect customFrame = CGRectMake(0, 0, self.shapeDimension, self.shapeDimension);
+  self.boundedShapes = [[ExampleShapes alloc] initWithFrame:customFrame];
+  self.boundedShapes.title = @"Bounded";
+  self.boundedShapes.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
+      UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
+  self.boundedShapes.shapeColor = [UIColor whiteColor];
+  for (UIView *view in self.boundedShapes.subviews) {
     MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:view];
     inkTouchController.delegate = self;
     [inkTouchController addInkView];
     [_inkTouchControllers addObject:inkTouchController];
   }
-  [self.view addSubview:boundedShapes];
+  [self.view addSubview:self.boundedShapes];
 
-  CGRect unboundedFrame = CGRectMake(spacing / 2,
-                                     spacing / 2,
-                                     customFrame.size.width - spacing,
-                                     customFrame.size.height - spacing);
-  UIView *unboundedShape = [[UIView alloc] initWithFrame:unboundedFrame];
-  unboundedShape.center = CGPointMake(self.view.center.x,
-                                      self.view.center.y +
-                                          (spacing / 2 + customFrame.size.height / 2));
-  unboundedShape.backgroundColor = [UIColor whiteColor];
+  CGRect unboundedFrame = CGRectMake(self.spacing / 2,
+                                     self.spacing / 2,
+                                     customFrame.size.width - self.spacing,
+                                     customFrame.size.height - self.spacing);
+  self.unboundedShape = [[UIView alloc] initWithFrame:unboundedFrame];
+  self.unboundedShape.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
+      UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
+  self.unboundedShape.backgroundColor = [UIColor whiteColor];
   MDCInkTouchController *inkTouchController =
-      [[MDCInkTouchController alloc] initWithView:unboundedShape];
+      [[MDCInkTouchController alloc] initWithView:self.unboundedShape];
   inkTouchController.delegate = self;
   [inkTouchController addInkView];
   UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
   inkTouchController.defaultInkView.inkColor = blueColor;
   inkTouchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
   [_inkTouchControllers addObject:inkTouchController];
-  [self.view addSubview:unboundedShape];
+  [self.view addSubview:self.unboundedShape];
 
-  UILabel *unboundedTitleLabel = [[UILabel alloc] initWithFrame:unboundedShape.bounds];
+  UILabel *unboundedTitleLabel = [[UILabel alloc] initWithFrame:self.unboundedShape.bounds];
   unboundedTitleLabel.text = @"Unbounded";
   unboundedTitleLabel.textAlignment = NSTextAlignmentCenter;
   unboundedTitleLabel.textColor = [UIColor grayColor];
-  [unboundedShape addSubview:unboundedTitleLabel];
+  [self.unboundedShape addSubview:unboundedTitleLabel];
+}
+
+- (void)viewWillLayoutSubviews {
+  if (self.view.frame.size.height > self.view.frame.size.width) {
+    self.boundedShapes.center =
+        CGPointMake(self.view.center.x, self.view.center.y - self.shapeDimension);
+    self.unboundedShape.center = CGPointMake(self.view.center.x,
+                                             self.view.center.y + self.spacing * 2);
+  } else {
+    self.boundedShapes.center =
+        CGPointMake(self.view.center.x - self.shapeDimension / 2 - self.spacing * 2,
+                    self.view.center.y / 2 + self.spacing * 2);
+    self.unboundedShape.center =
+        CGPointMake(self.view.center.x + self.shapeDimension / 2 + self.spacing * 2,
+                    self.view.center.y / 2 + self.spacing * 2);
+  }
 }
 
 #pragma mark - Private
