@@ -31,7 +31,10 @@ Registers a single custom font asset from disk
   </li>
 </ul>
 
-- - -
+## Overview
+
+In order to use custom fonts on iOS the font assets need to be registered before they can be used.
+Font Disk Loader lazily registers your custom fonts.
 
 ## Installation
 
@@ -55,14 +58,22 @@ Then, run the following command:
 $ pod install
 ~~~
 
-- - -
+### Importing
 
-## Overview
+Before using Roboto Font Loader, you'll need to import it:
 
-In order to use custom fonts on iOS the font assets need to be registered before they can be used.
-We provide a component that lazily registers your font.
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
 
-- - -
+~~~ objc
+#import "MaterialRobotoFontLoader.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
 
 ## Usage
 

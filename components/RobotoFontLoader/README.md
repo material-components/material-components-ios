@@ -17,6 +17,13 @@ The Roboto Font Loader lazy loads the Roboto font.
       Roboto font resource
     </a>
   </li>
+  <li class="icon-link">
+    See
+    <a href="https://www.google.com/design/spec/typography.html">
+      Typography
+    </a>
+    for more information
+  </li>
 </ul>
 
 ### API Documentation
@@ -28,8 +35,6 @@ The Roboto Font Loader lazy loads the Roboto font.
     </a>
   </li>
 </ul>
-
-- - -
 
 ## Installation
 
@@ -55,6 +60,9 @@ $ pod install
 
 ## Usage
 
+The Roboto Font Loader Component provides APIs for getting the Roboto Fonts. Consider using the
+Typography Component for font styles recomended by Material spec.
+
 ### Importing
 
 Before using Roboto Font Loader, you'll need to import it:
@@ -72,8 +80,27 @@ import MaterialComponents
 ~~~
 <!--</div>-->
 
+### Dependencies
+
+The Roboto Font Loader Component depends on the FontDiskLoader Component.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+UIFont *font = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
+~~~
+
+#### Swift
+~~~ swift
+let myFont:UIFont = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
+}
+~~~
+<!--</div>-->
+
 ## Advanced Usage
 ### Typography's weak dependency
-By default the Roboto Font Loader is used by the Typography component. For more
-information see
+When included in your build the Roboto Font Loader is used by the Typography component. This runtime
+check occurs when no specific Font Loader is set on Typography, resulting in Roboto being used for
+Material Typography.
+For more information see
 [Typography](https://github.com/google/material-components-ios/tree/develop/components/Typography).
