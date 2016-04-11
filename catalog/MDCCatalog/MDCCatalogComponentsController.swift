@@ -19,16 +19,15 @@ import MaterialComponents
 
 class MDCCatalogComponentsController: UICollectionViewController {
 
+  let spacing = CGFloat(1)
+  let inset = CGFloat(16)
   let node: CBCNode
-
   var headerViewController: MDCFlexibleHeaderViewController
-
   let imageNames = NSMutableArray()
 
   init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
 
-    let spacing = CGFloat(1)
     let layout = UICollectionViewFlowLayout()
     let sectionInset:CGFloat = spacing
     layout.sectionInset = UIEdgeInsetsMake(sectionInset, sectionInset, sectionInset, sectionInset)
@@ -70,8 +69,11 @@ class MDCCatalogComponentsController: UICollectionViewController {
     titleLabel.textColor = UIColor(white: 0.46, alpha: 1)
     titleLabel.font = MDCTypography.titleFont()
     titleLabel.sizeToFit()
+    if (inset + titleLabel.frame.size.width > containerView.frame.size.width) {
+      titleLabel.font = MDCTypography.body2Font()
+    }
 
-    let titleInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
+    let titleInsets = UIEdgeInsets(top: 0, left: inset, bottom: inset, right: inset)
     let titleSize = titleLabel.sizeThatFits(containerView.bounds.size)
     titleLabel.frame = CGRect(
       x: titleInsets.left,
