@@ -16,6 +16,7 @@ fill out have been marked with `TODO` statements.
     ---
     # TODO: ComponentName
 
+    TODO: screenshot.png is made on iPhone 5 simulator
     ![TODO: ComponentName](docs/assets/screenshot.png)
     <!--{: .ios-screenshot .right }-->
 
