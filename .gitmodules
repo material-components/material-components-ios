@@ -10,3 +10,6 @@
 [submodule "scripts/external/arc-jazzy-linter"]
 	path = scripts/external/arc-jazzy-linter
 	url = git@github.com:google/arc-jazzy-linter.git
+[submodule "scripts/external/arc-regex-line-length-linter"]
+	path = scripts/external/arc-regex-line-length-linter
+	url = git@github.com:google/arc-regex-line-length-linter.git

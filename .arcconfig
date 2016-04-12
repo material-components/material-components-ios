@@ -3,6 +3,7 @@
     "scripts/external/clang-format-linter",
     "scripts/external/arc-jazzy-linter",
     "scripts/external/arc-proselint",
+    "scripts/external/arc-regex-line-length-linter",
     "scripts/external/arc-xcode-test-engine"
   ],
   "phabricator.uri" : "http://codereview.cc/",
