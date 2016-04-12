@@ -53,7 +53,8 @@
       "severity": {
         "typography.symbols.curly_quotes": "disabled",
         "typography.symbols.ellipsis": "disabled",
-        "leonard.exclamation.30ppm": "disabled"
+        "leonard.exclamation.30ppm": "disabled",
+        "misc.annotations": "warning"
       }
     },
     "spelling": {
