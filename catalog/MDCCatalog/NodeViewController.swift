@@ -217,6 +217,7 @@ class NodeViewController: CBCNodeListViewController {
     } else {
       cell!.textLabel!.text = node.children[indexPath.row + 1].title
     }
+    cell!.accessoryType = .DisclosureIndicator
 
     return cell!
   }
