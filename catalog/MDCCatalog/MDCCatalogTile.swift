@@ -19,20 +19,24 @@ import MaterialComponents
 
 class MDCCatalogTile: UIView {
 
-  internal var componentNameString = "Buttons"
-  internal var componentName:String {
+  private var componentNameString = "Misc"
+  var componentName:String {
     get {
       return componentNameString
     }
     set {
       componentNameString = newValue
-      self.setNeedsDisplay()
+      imageView.image = getImage(componentNameString)
     }
   }
+  let imageView = UIImageView()
+  let imageCache = NSCache()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = UIColor.clearColor()
+    imageView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+    self.addSubview(imageView)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -40,46 +44,67 @@ class MDCCatalogTile: UIView {
   }
 
   override func layoutSubviews() {
-    self.setNeedsDisplay()
+    imageView.image = getImage(componentNameString)
   }
 
-  override func drawRect(rect: CGRect) {
+  func getImage(key: String) -> UIImage {
+    if let cachedImage = imageCache.objectForKey(key) as? UIImage {
+      let scale = UIScreen.mainScreen().scale
+      let pixelSize = CGSizeMake(frame.width * scale, frame.height * scale)
+      let cachedPixelSize = CGSizeMake(cachedImage.size.width * cachedImage.scale,
+                                       cachedImage.size.height * cachedImage.scale)
+      if (cachedPixelSize != pixelSize) {
+        return createImage()
+      }
+      return cachedImage
+    } else {
+      return createImage()
+    }
+  }
+
+  func createImage() -> UIImage {
+    var newImage = UIImage()
 
     let defaultSize = CGRectMake(0, 0, 188, 155)
-    let left = (rect.width - defaultSize.width) / 2
-    let top = (rect.height - defaultSize.height) / 2
+    let left = (self.frame.width - defaultSize.width) / 2
+    let top = (self.frame.height - defaultSize.height) / 2
     let centeredFrame = CGRectMake(left, top, defaultSize.width, defaultSize.height)
+    imageView.frame = centeredFrame
 
     switch componentNameString {
     case "App Bar":
-      MDCCatalogTileDataAppBar.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataAppBar.drawTileImage(centeredFrame)
     case "Button Bar":
-      MDCCatalogTileDataButtonBar.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataButtonBar.drawTileImage(centeredFrame)
     case "Buttons":
-      MDCCatalogTileDataButtons.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataButtons.drawTileImage(centeredFrame)
     case "Flexible Header":
-      MDCCatalogTileDataFlexibleHeader.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataFlexibleHeader.drawTileImage(centeredFrame)
     case "Header Stack View":
-      MDCCatalogTileDataHeaderStackView.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataHeaderStackView.drawTileImage(centeredFrame)
     case "Ink":
-      MDCCatalogTileDataInk.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataInk.drawTileImage(centeredFrame)
     case "Navigation Bar":
-      MDCCatalogTileDataNavigationBar.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataNavigationBar.drawTileImage(centeredFrame)
+    case "Misc":
+      newImage = MDCCatalogTileDataMisc.drawTileImage(centeredFrame)
     case "Page Control":
-      MDCCatalogTileDataPageControl.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataPageControl.drawTileImage(centeredFrame)
     case "Shadow Layer":
-      MDCCatalogTileDataShadowLayer.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataShadowLayer.drawTileImage(centeredFrame)
     case "Slider":
-      MDCCatalogTileDataSlider.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataSlider.drawTileImage(centeredFrame)
     case "Sprited Animation View":
-      MDCCatalogTileDataSpritedAnimationView.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataSpritedAnimationView.drawTileImage(centeredFrame)
     case "Switch":
-      MDCCatalogTileDataSwitch.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataSwitch.drawTileImage(centeredFrame)
     case "Typography":
-      MDCCatalogTileDataTypography.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataTypography.drawTileImage(centeredFrame)
     default:
-      MDCCatalogTileDataMisc.drawTile(centeredFrame)
+      newImage = MDCCatalogTileDataMisc.drawTileImage(centeredFrame)
     }
+    imageCache.setObject(newImage, forKey: componentNameString)
+    return newImage
   }
 
 }

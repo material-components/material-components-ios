@@ -18,13 +18,13 @@ import UIKit
 import MaterialComponents
 
 class MDCCatalogTileDataButtons: MDCCatalogTileData {
-  static var tileImage: UIImage? = nil
 
-  static func drawTile(frame: CGRect) {
-    drawAndCache(draw, frame: frame, image: &tileImage)
+  static func drawTileImage(frame: CGRect) -> UIImage {
+    return drawImage(draw, frame: frame, image: &tileImage)
   }
 
   static func draw(frame frame: CGRect = CGRect(x: 0, y: 0, width: 188, height: 155)) {
+
     let context = UIGraphicsGetCurrentContext()
 
     let fillColor = UIColor(red: 0.077, green: 0.591, blue: 0.945, alpha: 1.000)

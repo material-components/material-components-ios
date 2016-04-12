@@ -19,25 +19,15 @@ import UIKit
 
 class MDCCatalogTileData: NSObject {
 
-  // Invoke a draw function in @c frame, caching it if necessary in @c image.
-  static func drawAndCache(drawFunction: (CGRect) -> Void, frame: CGRect, inout image: UIImage?) {
+  static var tileImage: UIImage? = nil
+
+  static func drawImage(drawFunction: (CGRect) -> Void, frame: CGRect, inout image:UIImage?) -> UIImage {
     let scale = UIScreen.mainScreen().scale
-    var needCacheRefreshed:Bool = (image == nil)
-
-    if (!needCacheRefreshed) {
-      let pixelSize: CGSize = CGSizeMake(frame.width * scale, frame.height * scale)
-      let cachedPixelSize: CGSize = CGSizeMake(image!.size.width * image!.scale,
-                                               image!.size.height * image!.scale)
-      needCacheRefreshed = (cachedPixelSize != pixelSize)
-    }
-
-    if (needCacheRefreshed) {
-      UIGraphicsBeginImageContextWithOptions(frame.size, false, scale)
-      drawFunction(CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-      image = UIGraphicsGetImageFromCurrentImageContext()
-      UIGraphicsEndImageContext()
-    }
-
-    image?.drawInRect(frame)
+    UIGraphicsBeginImageContextWithOptions(frame.size, false, scale)
+    drawFunction(CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image
   }
+
 }

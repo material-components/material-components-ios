@@ -18,13 +18,12 @@ import UIKit
 import MaterialComponents
 
 class MDCCatalogTileDataMisc: MDCCatalogTileData {
-  static var tileImage: UIImage? = nil
 
-  static func drawTile(frame: CGRect) {
-    drawAndCache(draw, frame: frame, image: &tileImage)
+  static func drawTileImage(frame: CGRect) -> UIImage {
+    return drawImage(draw, frame: frame, image: &tileImage)
   }
 
-  static func draw(frame frame: CGRect = CGRect(x: 0, y: 0, width: 192, height: 182)) {
+  static func draw(frame frame: CGRect = CGRect(x: 0, y: 0, width: 188, height: 155)) {
 
     let context = UIGraphicsGetCurrentContext()
 
