@@ -24,8 +24,5 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 "$DIR/install_pip"
 
-if [ ! $(proselint -v >/dev/null 2>&1) ]; then
-  sudo pip install proselint
-else
-  sudo pip install --upgrade proselint
-fi
+sudo pip uninstall proselint -y
+sudo pip install proselint
