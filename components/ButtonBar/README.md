@@ -6,7 +6,7 @@ excerpt: "The Button Bar component is a view that facilitates the creation and l
 ---
 # Button Bar
 
-The Button Bar is a view that represents a list of UIBarButtonItems as horizontally-aligned buttons.
+The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
 <!--{: .intro }-->
 
 ### API Documentation

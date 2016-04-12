@@ -63,8 +63,7 @@ shadow that adheres to defined height and light source principles.
 
 ### Installation with CocoaPods
 
-To add the ShadowLayer component to your Xcode project using CocoaPods, add the following to your
-PodFile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
 pod 'MaterialComponents/ShadowLayer'

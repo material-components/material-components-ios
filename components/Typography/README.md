@@ -38,8 +38,7 @@ from the Material Design specifications.
 
 ### Installation with CocoaPods
 
-To add the Typography component to your Xcode project using CocoaPods, add the following to your
-PodFile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
 pod 'MaterialComponents/Typography'

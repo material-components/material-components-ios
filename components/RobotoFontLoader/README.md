@@ -45,8 +45,7 @@ The Roboto Font Loader lazy loads the Roboto font.
 
 ### Installation with CocoaPods
 
-To add this component to your Xcode project using CocoaPods, add the
-following to your `Podfile`:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```
 pod 'MaterialComponents/RobotoFontLoader'

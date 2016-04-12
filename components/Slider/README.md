@@ -37,8 +37,7 @@ or discrete set of values.
 
 ### Installation with CocoaPods
 
-To add the Slider component to your Xcode project using CocoaPods, add the following to your
-PodFile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
 pod 'MaterialComponents/Slider'

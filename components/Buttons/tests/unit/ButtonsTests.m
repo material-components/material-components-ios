@@ -271,7 +271,10 @@ static UIColor *randomColor() {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.highlighted = NO;
   button.selected = arc4random_uniform(2);
-  button.enabled = YES;  // For some reason we can only set the highlighted state to YES if its enabled is also YES
+
+  // For some reason we can only set the highlighted state to YES if its enabled is also YES.
+  button.enabled = YES;
+
   UIControlState oldState = button.state;
   XCTAssertFalse(button.highlighted);
 
