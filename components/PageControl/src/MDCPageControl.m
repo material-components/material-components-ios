@@ -185,7 +185,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 - (CGSize)sizeForNumberOfPages:(NSInteger)pageCount {
   CGFloat radius = kMDCPageControlIndicatorRadius;
   CGFloat margin = kMDCPageControlIndicatorMargin;
-  CGFloat width = _numberOfPages * ((radius * 2) + margin) - margin;
+  CGFloat width = pageCount * ((radius * 2) + margin) - margin;
   CGFloat height = MAX(kMDCPageControlMinimumHeight, radius * 2);
   return CGSizeMake(width, height);
 }
