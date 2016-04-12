@@ -18,24 +18,83 @@
 
 #import "MaterialAppBar.h"
 
-@interface AppBarTypicalUseExample : UITableViewController
+// This example builds upon AppBarTypicalUseExample.
 
-// Step 1: Create an App Bar.
+@interface AppBarDelegateForwardingExample : UITableViewController
 @property(nonatomic, strong) MDCAppBar *appBar;
+@end
+
+@implementation AppBarDelegateForwardingExample
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  // UITableViewController's tableView.delegate is self by default. We're setting it here for
+  // emphasis.
+  self.tableView.delegate = self;
+
+  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  [self.appBar addSubviewsToParent];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+// The following four methods must be forwarded to the tracking scroll view in order to implement
+// the Flexible Header's behavior.
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                          targetContentOffset:targetContentOffset];
+  }
+}
 
 @end
 
-@implementation AppBarTypicalUseExample
+@implementation AppBarDelegateForwardingExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"App Bar", @"Delegate forwarding" ];
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
+}
+
+@end
+
+@implementation AppBarDelegateForwardingExample (TypicalUse)
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
     [self addChildViewController:_appBar.headerViewController];
 
-    self.title = @"App Bar";
+    self.title = @"Delegate forwarding";
 
     UIColor *color = [UIColor colorWithRed:(CGFloat)0x03 / (CGFloat)255
                                      green:(CGFloat)0xA9 / (CGFloat)255
@@ -46,29 +105,10 @@
   return self;
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  // Recommended step: Set the tracking scroll view.
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
-
-  // Choice: If you do not need to implement any delegate methods and you are not using a
-  //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarDelegateForwardingExample.
-  self.tableView.delegate = self.appBar.headerViewController;
-
-  // Step 3: Register the App Bar views.
-  [self.appBar addSubviewsToParent];
-}
-
-// Optional step: If you allow the header view to hide the status bar you must implement this
-//                method and return the headerViewController.
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return self.appBar.headerViewController;
 }
 
-// Optional step: The Header View Controller does basic inspection of the header view's background
-//                color to identify whether the status bar should be light or dark-themed.
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.appBar.headerViewController;
 }
@@ -76,37 +116,14 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
-  // we always hide the navigation bar when we're about to appear.
   [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
-@end
-
-@implementation AppBarTypicalUseExample (CatalogByConvention)
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"App Bar" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The App Bar is a flexible navigation bar designed to provide a typical Material Design"
-          " navigation experience.";
-}
-
-- (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-- (BOOL)catalogShouldHideNavigation {
-  return YES;
 }
 
 @end
 
 #pragma mark - Typical application code (not Material-specific)
 
-@implementation AppBarTypicalUseExample (UITableViewDataSource)
+@implementation AppBarDelegateForwardingExample (UITableViewDataSource)
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   return 50;

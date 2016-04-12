@@ -17,17 +17,59 @@ limitations under the License.
 import Foundation
 import MaterialComponents
 
-class AppBarTypicalUseSwiftExample: UITableViewController {
+// This example builds upon AppBarTypicalUseExample.
 
-  // Step 1: Create and initialize an App Bar.
+class AppBarDelegateForwardingExample: UITableViewController {
+
   let appBar = MDCAppBar()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    // UITableViewController's tableView.delegate is self by default. We're setting it here for
+    // emphasis.
+    self.tableView.delegate = self
+
+    appBar.headerViewController.headerView.trackingScrollView = self.tableView
+    appBar.addSubviewsToParent()
+  }
+
+  // The following four methods must be forwarded to the tracking scroll view in order to implement
+  // the Flexible Header's behavior.
+
+  override func scrollViewDidScroll(scrollView: UIScrollView) {
+    if scrollView == self.appBar.headerViewController.headerView.trackingScrollView {
+      self.appBar.headerViewController.headerView.trackingScrollViewDidScroll()
+    }
+  }
+
+  override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    if scrollView == self.appBar.headerViewController.headerView.trackingScrollView {
+      self.appBar.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
+    }
+  }
+
+  override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    let headerView = self.appBar.headerViewController.headerView
+    if scrollView == headerView.trackingScrollView {
+      headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+    }
+  }
+
+  override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    let headerView = self.appBar.headerViewController.headerView
+    if scrollView == headerView.trackingScrollView {
+      headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity, targetContentOffset: targetContentOffset)
+    }
+  }
+
+  // MARK: Typical setup
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "App Bar (Swift)"
+    self.title = "Delegate forwarding (Swift)"
 
-    // Step 2: Add the headerViewController as a child.
     self.addChildViewController(appBar.headerViewController)
 
     let color = UIColor(
@@ -42,30 +84,23 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
+}
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    // Recommended step: Set the tracking scroll view.
-    appBar.headerViewController.headerView.trackingScrollView = self.tableView
-
-    // Choice: If you do not need to implement any delegate methods and you are not using a
-    //         collection view, you can use the headerViewController as the delegate.
-    // Alternative: See AppBarDelegateForwardingExample.
-    self.tableView.delegate = appBar.headerViewController
-
-    // Step 3: Register the App Bar views.
-    appBar.addSubviewsToParent()
+// MARK: Catalog by convention
+extension AppBarDelegateForwardingExample {
+  class func catalogBreadcrumbs() -> [String] {
+    return ["App Bar", "Delegate forwarding (Swift)"]
   }
+  func catalogShouldHideNavigation() -> Bool {
+    return true
+  }
+}
 
-  // Optional step: If you allow the header view to hide the status bar you must implement this
-  //                method and return the headerViewController.
+extension AppBarDelegateForwardingExample {
   override func childViewControllerForStatusBarHidden() -> UIViewController? {
     return appBar.headerViewController
   }
 
-  // Optional step: The Header View Controller does basic inspection of the header view's background
-  //                color to identify whether the status bar should be light or dark-themed.
   override func childViewControllerForStatusBarStyle() -> UIViewController? {
     return appBar.headerViewController
   }
@@ -73,26 +108,14 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
-    // we always hide the navigation bar when we're about to appear.
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-}
-
-// MARK: Catalog by convention
-extension AppBarTypicalUseSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Basic (Swift)"]
-  }
-  func catalogShouldHideNavigation() -> Bool {
-    return true
   }
 }
 
 // MARK: - Typical application code (not Material-specific)
 
 // MARK: UITableViewDataSource
-extension AppBarTypicalUseSwiftExample {
+extension AppBarDelegateForwardingExample {
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 50
