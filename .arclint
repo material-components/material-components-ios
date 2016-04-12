@@ -64,7 +64,7 @@
     },
     "jazzy": {
       "type": "jazzy",
-      "include": "(components/.*\\.(h|swift)$)"
+      "include": "(components/.*?/src/[^\/]+?\\.(h|swift)$)"
     }
   }
 }
