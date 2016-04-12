@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2016-present Google Inc. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,5 +14,17 @@
  limitations under the License.
  */
 
-#import "CatalogByConvention.h"
-#import "MDCCatalogTiles.h"
+#import "MDCCatalogTileData.h"
+
+@implementation MDCCatalogTileData
+
++ (UIImage *)drawImageWithFrame:(CGRect)frame completionBlock:(void (^)())completionBlock {
+  CGFloat scale = [UIScreen mainScreen].scale;
+  UIGraphicsBeginImageContextWithOptions(frame.size, false, scale);
+  completionBlock();
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
+@end
