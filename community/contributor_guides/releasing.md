@@ -10,28 +10,15 @@ which serves as the stable "vetted" branch.
 
 ## Cutting the release
 
-### Pick a release cut date
+### Check the release milestone
 
-We generally cut releases on **Wednesday** mid-afternoons EST.
+We use weekly release milestones to track important issues that need to land in a given release.
+These issues may come from client teams that are shipping to the App Store on a given date.
 
-### Send an announcement
-
-Sometime before the release cut date, send an email to
-material-components-ios-discuss@googlegroups.com.
-
-Email subject:
-
-    State of <release date> release
-
-Email body:
-
-    This week's release cutter: {{USERNAME}}
-
-    We will be cutting this week's release at <time> <timezone>.
-
-    Please respond to this thread with any questions about the upcoming release.
-
-Respond to this email with all subsequent updates.
+Open the [Milestones](https://github.com/google/material-components-ios/milestones) page and verify
+that there are no open issues in this release's milestone. If there are open issues you must
+identify why the issues are still open and either close them if resolved or determine whether it's
+acceptable to move the issue to a subsequent release.
 
 ### Cut a release branch
 
@@ -253,3 +240,41 @@ and delete the release branch:
 ### Regenerate the site
 
 TODO: Add instructions for regenerating Jazzy docs and deploying them.
+
+### Pick the next release cut date
+
+We generally cut releases every **Wednesday** mid-afternoon EST.
+
+#### Create next week's milestone (experimental)
+
+> We are actively experimenting with using GitHub milestones to plan out issues that should land in
+> weekly releases. This process may change in the future.
+
+[Create a new milestone](https://github.com/google/material-components-ios/milestones/new) for next
+week.
+
+Title:
+
+    <Date> Release
+
+Description:
+
+    <Empty>
+
+#### Send an announcement
+
+After you cut the release, send the following email to
+material-components-ios-discuss@googlegroups.com.
+
+Email subject:
+
+    State of <next release date> release
+
+Email body:
+
+    We will be cutting next week's release <date> afternoon EST.
+
+    Please respond to this thread with any questions about the upcoming release.
+
+    If you would like to ensure that a GitHub issue is part of this upcoming release, please respond
+    to this thread so that we may add it to this week's release milestone.
