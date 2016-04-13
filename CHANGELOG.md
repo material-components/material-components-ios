@@ -1,3 +1,59 @@
+## release-candidate
+
+# 4.0.0
+
+## API diffs
+
+### Buttons
+
+- [new] [`+[MDCFloatingButton floatingButtonWithShape:]`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Buttons/src/MDCFloatingButton.h#L50)
+- [new] [`MDCButton.inkMaxRippleRadius`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Buttons/src/MDCButton.h#L66)
+- [new] [`MDCButton.inkStyle`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Buttons/src/MDCButton.h#L57)
+- [new] [`MDCButton.underlyingColorHint`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Buttons/src/MDCButton.h#L116)
+- [new] [`MDCButton.uppercaseTitle`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Buttons/src/MDCButton.h#L90)
+- [deprecated] [`+[MDCFloatingButton buttonWithShape:]`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Buttons/src/MDCFloatingButton.h#L84).
+*Use floatingButtonWithShape: instead.*
+- [deprecated] [`MDCButton.shouldCapitalizeTitle`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Buttons/src/MDCButton.h#L166).
+*Use uppercaseTitle instead.*
+- [deprecated] [`MDCButton.underlyingColor`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Buttons/src/MDCButton.h#L168).
+*Use underlyingColorHint instead.*
+
+### FlexibleHeader
+
+- [new] [`MDCFlexibleHeaderContentImportanceDefault`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/FlexibleHeader/src/MDCFlexibleHeaderView.h#L53)
+- [new] [`MDCFlexibleHeaderContentImportanceHigh`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/FlexibleHeader/src/MDCFlexibleHeaderView.h#L63)
+- [new] [`MDCFlexibleHeaderContentImportance`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/FlexibleHeader/src/MDCFlexibleHeaderView.h#L48)
+- [new] [`MDCFlexibleHeaderView.headerContentImportance`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/FlexibleHeader/src/MDCFlexibleHeaderView.h#L308)
+- [property attribute change] [`MDCFlexibleHeaderView.shadowLayer`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/FlexibleHeader/src/MDCFlexibleHeaderView.h#L109).
+Removed *retain*.
+Added *strong*.
+
+### Ink
+
+- [deleted] [`-[MDCInkView evaporateToPoint:completion:]`](https://github.com/google/material-components-ios/blob/11959487eb429c37b382c521a1c469eac96ed0da/components/Ink/src/MDCInkView.h#L123)
+- [deleted] [`-[MDCInkView evaporateWithCompletion:]`](https://github.com/google/material-components-ios/blob/11959487eb429c37b382c521a1c469eac96ed0da/components/Ink/src/MDCInkView.h#L121)
+- [deleted] [`-[MDCInkView reset]`](https://github.com/google/material-components-ios/blob/11959487eb429c37b382c521a1c469eac96ed0da/components/Ink/src/MDCInkView.h#L118)
+- [deleted] [`-[MDCInkView spreadFromPoint:completion:]`](https://github.com/google/material-components-ios/blob/11959487eb429c37b382c521a1c469eac96ed0da/components/Ink/src/MDCInkView.h#L119)
+- [deleted] [`MDCInkView.clipsRippleToBounds`](https://github.com/google/material-components-ios/blob/11959487eb429c37b382c521a1c469eac96ed0da/components/Ink/src/MDCInkView.h#L115)
+- [deleted] [`MDCInkView.fillsBackgroundOnSpread`](https://github.com/google/material-components-ios/blob/11959487eb429c37b382c521a1c469eac96ed0da/components/Ink/src/MDCInkView.h#L113)
+- [deleted] [`MDCInkView.gravitatesInk`](https://github.com/google/material-components-ios/blob/11959487eb429c37b382c521a1c469eac96ed0da/components/Ink/src/MDCInkView.h#L117)
+- [new] [`-[MDCInkTouchController inkViewAtTouchLocation:]`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Ink/src/MDCInkTouchController.h#L114)
+- [new] [`MDCInkTouchController.defaultInkView`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Ink/src/MDCInkTouchController.h#L43)
+- [deprecated] [`MDCInkTouchController.inkView`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/Ink/src/MDCInkTouchController.h#L118).
+*To configure ink views before display, use defaultInkView or your delegate's inkTouchController:inkViewAtTouchLocation:. To find an ink view at a particular location, use inkViewAtTouchLocation: instead.*
+
+### RobotoFontLoader
+
+- [protocols changed] [`MDCRobotoFontLoader`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/RobotoFontLoader/src/MDCRobotoFontLoader.h#L25).
+Added *MDCTypographyFontLoading*.
+
+### ScrollViewDelegateMultiplexer
+
+- [deprecated] [`MDCScrollViewDelegateCombining`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/ScrollViewDelegateMultiplexer/src/MDCScrollViewDelegateMultiplexer.h#L79).
+*This component is now available at https://github.com/google/GOSScrollViewDelegateMultiplexer.*
+- [deprecated] [`MDCScrollViewDelegateMultiplexer`](https://github.com/google/material-components-ios/blob/7cc87bd6d90ed2c641212339f00f67b08fb76314/components/ScrollViewDelegateMultiplexer/src/MDCScrollViewDelegateMultiplexer.h#L45).
+*This component is now available at https://github.com/google/GOSScrollViewDelegateMultiplexer.*
+
 # 3.1.0
 
 ## API diffs
