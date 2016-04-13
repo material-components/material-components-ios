@@ -56,7 +56,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   headerView.trackingScrollView = self.collectionView;
   headerView.maximumHeight = kPestoCollectionViewControllerDefaultHeaderHeight;
   headerView.minimumHeight = kPestoCollectionViewControllerSmallHeaderHeight;
-  [headerView.contentView addSubview:[self pestoHeaderView]];
+  [headerView addSubview:[self pestoHeaderView]];
 
   // Use a custom shadow under the flexible header.
   MDCShadowLayer *shadowLayer = [MDCShadowLayer layer];
