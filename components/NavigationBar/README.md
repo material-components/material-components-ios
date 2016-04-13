@@ -54,7 +54,11 @@ $ pod install
 
 ## Overview
 
-Navigation Bar is designed to be a drop-in replacement for UINavigationBar.
+Navigation Bar is a drop-in replacement for UINavigationBar with a few notable exceptions:
+
+- No navigationItem stack. Instances of MDCNavigationBar must be explicitly provided with a back
+  button. TODO(featherless): Explain how to create a back button with Navigation Bar once
+  https://github.com/google/material-components-ios/issues/340 lands.
 
 The MDCNavigationBar class is a composition of two [Button Bars](../ButtonBar) and a title label or
 title view. The left and right Button Bars are provided with the navigation item's corresponding bar
