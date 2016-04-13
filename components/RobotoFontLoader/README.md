@@ -1,7 +1,7 @@
 ---
 title:  "TODO: Roboto Font Loader"
 layout: detail
-section: documentation
+section: components
 excerpt: "The Roboto Font Loader lazy loads the Robot font."
 ---
 # Roboto Font Loader

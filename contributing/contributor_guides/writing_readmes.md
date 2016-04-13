@@ -11,7 +11,7 @@ fill out have been marked with `TODO` statements.
     ---
     title:  "TODO: ComponentName"
     layout: detail
-    section: documentation
+    section: components
     excerpt: "TODO: Single sentence description of the component."
     ---
     # TODO: ComponentName

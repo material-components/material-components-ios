@@ -1,7 +1,7 @@
 ---
 title:  "Switch"
 layout: detail
-section: documentation
+section: components
 excerpt: "The Switch component provides an Material Design on/off switch control with an interface similar to UISwitch."
 ---
 

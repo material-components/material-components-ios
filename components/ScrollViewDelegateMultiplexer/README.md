@@ -1,7 +1,7 @@
 ---
 title:  "ScrollViewDelegateMultiplexer"
 layout: detail
-section: documentation
+section: components
 excerpt: "ScrollViewDelegateMultiplexer acts as a proxy object for UIScrollViewDelegate events and forwards all received events to an ordered list of registered observers."
 ---
 # ScrollViewDelegateMultiplexer

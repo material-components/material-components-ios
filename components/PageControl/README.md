@@ -1,7 +1,7 @@
 ---
 title:  "Page Control"
 layout: detail
-section: documentation
+section: components
 excerpt: "Page Control is a drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout."
 ---
 # Page Control
