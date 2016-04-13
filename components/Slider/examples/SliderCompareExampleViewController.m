@@ -14,11 +14,15 @@
  limitations under the License.
  */
 
-#import "SliderSimpleExampleViewController.h"
+#import <UIKit/UIKit.h>
 
 #import "MaterialSlider.h"
 
-@implementation SliderSimpleExampleViewController
+@interface SliderCompareExampleViewController : UIViewController
+
+@end
+
+@implementation SliderCompareExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -27,7 +31,7 @@
   // Load your Material Component here.
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
   [slider addTarget:self
-                action:@selector(didChangeSliderValue:)
+                action:@selector(didChangeMDCSliderValue:)
       forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:slider];
   slider.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) - 2 * slider.frame.size.height);
@@ -41,7 +45,7 @@
   // Vanilla  UISlider for comparison.
   UISlider *uiSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
   [uiSlider addTarget:self
-                action:@selector(didChangeSliderValue:)
+                action:@selector(didChangeUISliderValue:)
       forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:uiSlider];
   uiSlider.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) + 4 * uiSlider.frame.size.height);
@@ -53,24 +57,18 @@
   uiSliderLabel.center = CGPointMake(uiSlider.center.x, uiSlider.center.y + 2 * uiSliderLabel.frame.size.height);
 }
 
-- (void)didChangeSliderValue:(id)sender {
-  MDCSlider *slider = sender;
-  NSLog(@"did change %@ value: %f", NSStringFromClass([sender class]), slider.value);
+- (void)didChangeMDCSliderValue:(MDCSlider *)slider {
+  NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
+}
+
+- (void)didChangeUISliderValue:(UISlider *)slider {
+  NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
 }
 
 #pragma mark catalg by convention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Slider", @"Slider" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The MDCSlider object is a Material Design control used to select a value from a"
-          " continuous range or discrete set of values.";
-}
-
-- (BOOL)catalogIsPrimaryDemo {
-  return YES;
+  return @[ @"Slider", @"MDCSlider and UISlider Compared" ];
 }
 
 @end
