@@ -41,6 +41,12 @@ function getModificationWithType($modifications, $type) {
   return false;
 }
 
+function getRemovedAndAddedFromArrays($previous, $current) {
+  $removed = array_filter(array_diff($previous, $current));
+  $added = array_filter(array_diff($current, $previous));
+  return array($removed, $added);
+}
+
 if (!empty($structure)) {
   foreach ($structure->difference as $delta) {
     if (startsWith($delta->path, '..') || startsWith(strtolower($delta->path), 'private')) {
@@ -68,13 +74,52 @@ if (!empty($structure)) {
 
       $didOutputLines = false;
 
+      // Special-case interpretations of modifications.
       if (count(array_diff($types, array('availability', 'deprecationMessage'))) == 0) {
         $availability = getModificationWithType($modifications, 'availability');
         $message = getModificationWithType($modifications, 'deprecationMessage');
+
         if ($availability->currentValue == 'Deprecated') {
+          // API is newly-deprecated.
           $lines []= "- [deprecated] [`".$delta->name."`]($newurl).";
           $lines []= "*$message->currentValue*";
           $didOutputLines = true;
+        }
+
+      } else if (count(array_diff($types, array('protocols'))) == 0) {
+        $protocols = getModificationWithType($modifications, 'protocols');
+        list($removed, $added) = getRemovedAndAddedFromArrays(
+          explode(", ", $protocols->previousValue),
+          explode(", ", $protocols->currentValue));
+
+        $lines []= "- [protocols changed] [`".$delta->name."`]($newurl).";
+        if (!empty($removed)) {
+          $lines []= "Removed *".implode(", ", $removed)."*.";
+        }
+        if (!empty($added)) {
+          $lines []= "Added *".implode(", ", $added)."*.";
+        }
+        $didOutputLines = true;
+
+      } else if (count(array_diff($types, array('declaration'))) == 0) {
+        $declaration = getModificationWithType($modifications, 'declaration');
+
+        if (preg_match("/@property \((.+?)\) (.+?) (.+)/", $declaration->previousValue, $previous)
+        && preg_match("/@property \((.+?)\) (.+?) (.+)/", $declaration->currentValue, $current)) {
+          if ($previous[2] == $current[2]) { // Same type.
+            $previousAttributes = explode(", ", $previous[1]);
+            $currentAttributes = explode(", ", $current[1]);
+            list($removed, $added) = getRemovedAndAddedFromArrays($previousAttributes, $currentAttributes);
+
+            $lines []= "- [property attribute change] [`".$delta->name."`]($newurl).";
+            if (!empty($removed)) {
+              $lines []= "Removed *".implode(", ", $removed)."*.";
+            }
+            if (!empty($added)) {
+              $lines []= "Added *".implode(", ", $added)."*.";
+            }
+            $didOutputLines = true;
+          }
         }
       }
 
