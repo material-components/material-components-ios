@@ -1,24 +1,24 @@
 PODS:
-  - MaterialComponents (3.1.0):
-    - MaterialComponents/AppBar (= 3.1.0)
-    - MaterialComponents/ButtonBar (= 3.1.0)
-    - MaterialComponents/Buttons (= 3.1.0)
-    - MaterialComponents/FlexibleHeader (= 3.1.0)
-    - MaterialComponents/FontDiskLoader (= 3.1.0)
-    - MaterialComponents/HeaderStackView (= 3.1.0)
-    - MaterialComponents/Ink (= 3.1.0)
-    - MaterialComponents/NavigationBar (= 3.1.0)
-    - MaterialComponents/PageControl (= 3.1.0)
-    - MaterialComponents/private (= 3.1.0)
-    - MaterialComponents/RobotoFontLoader (= 3.1.0)
-    - MaterialComponents/ScrollViewDelegateMultiplexer (= 3.1.0)
-    - MaterialComponents/ShadowElevations (= 3.1.0)
-    - MaterialComponents/ShadowLayer (= 3.1.0)
-    - MaterialComponents/Slider (= 3.1.0)
-    - MaterialComponents/SpritedAnimationView (= 3.1.0)
-    - MaterialComponents/Switch (= 3.1.0)
-    - MaterialComponents/Typography (= 3.1.0)
-  - MaterialComponents/AppBar (3.1.0):
+  - MaterialComponents (4.0.0):
+    - MaterialComponents/AppBar (= 4.0.0)
+    - MaterialComponents/ButtonBar (= 4.0.0)
+    - MaterialComponents/Buttons (= 4.0.0)
+    - MaterialComponents/FlexibleHeader (= 4.0.0)
+    - MaterialComponents/FontDiskLoader (= 4.0.0)
+    - MaterialComponents/HeaderStackView (= 4.0.0)
+    - MaterialComponents/Ink (= 4.0.0)
+    - MaterialComponents/NavigationBar (= 4.0.0)
+    - MaterialComponents/PageControl (= 4.0.0)
+    - MaterialComponents/private (= 4.0.0)
+    - MaterialComponents/RobotoFontLoader (= 4.0.0)
+    - MaterialComponents/ScrollViewDelegateMultiplexer (= 4.0.0)
+    - MaterialComponents/ShadowElevations (= 4.0.0)
+    - MaterialComponents/ShadowLayer (= 4.0.0)
+    - MaterialComponents/Slider (= 4.0.0)
+    - MaterialComponents/SpritedAnimationView (= 4.0.0)
+    - MaterialComponents/Switch (= 4.0.0)
+    - MaterialComponents/Typography (= 4.0.0)
+  - MaterialComponents/AppBar (4.0.0):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -26,49 +26,49 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (3.1.0):
+  - MaterialComponents/ButtonBar (4.0.0):
     - MaterialComponents/Buttons
-  - MaterialComponents/Buttons (3.1.0):
+  - MaterialComponents/Buttons (4.0.0):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/FlexibleHeader (3.1.0)
-  - MaterialComponents/FontDiskLoader (3.1.0)
-  - MaterialComponents/HeaderStackView (3.1.0)
-  - MaterialComponents/Ink (3.1.0)
-  - MaterialComponents/NavigationBar (3.1.0):
+  - MaterialComponents/FlexibleHeader (4.0.0)
+  - MaterialComponents/FontDiskLoader (4.0.0)
+  - MaterialComponents/HeaderStackView (4.0.0)
+  - MaterialComponents/Ink (4.0.0)
+  - MaterialComponents/NavigationBar (4.0.0):
     - MaterialComponents/ButtonBar
     - MaterialComponents/Typography
-  - MaterialComponents/PageControl (3.1.0)
-  - MaterialComponents/private (3.1.0):
-    - MaterialComponents/private/Color (= 3.1.0)
-    - MaterialComponents/private/Icons (= 3.1.0)
-    - MaterialComponents/private/ThumbTrack (= 3.1.0)
-  - MaterialComponents/private/Color (3.1.0)
-  - MaterialComponents/private/Icons (3.1.0):
-    - MaterialComponents/private/Icons/Base (= 3.1.0)
-    - MaterialComponents/private/Icons/ic_arrow_back (= 3.1.0)
-  - MaterialComponents/private/Icons/Base (3.1.0)
-  - MaterialComponents/private/Icons/ic_arrow_back (3.1.0):
+  - MaterialComponents/PageControl (4.0.0)
+  - MaterialComponents/private (4.0.0):
+    - MaterialComponents/private/Color (= 4.0.0)
+    - MaterialComponents/private/Icons (= 4.0.0)
+    - MaterialComponents/private/ThumbTrack (= 4.0.0)
+  - MaterialComponents/private/Color (4.0.0)
+  - MaterialComponents/private/Icons (4.0.0):
+    - MaterialComponents/private/Icons/Base (= 4.0.0)
+    - MaterialComponents/private/Icons/ic_arrow_back (= 4.0.0)
+  - MaterialComponents/private/Icons/Base (4.0.0)
+  - MaterialComponents/private/Icons/ic_arrow_back (4.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/ThumbTrack (3.1.0):
+  - MaterialComponents/private/ThumbTrack (4.0.0):
     - MaterialComponents/Ink
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/RobotoFontLoader (3.1.0):
+  - MaterialComponents/RobotoFontLoader (4.0.0):
     - MaterialComponents/FontDiskLoader
     - MaterialComponents/Typography
-  - MaterialComponents/ScrollViewDelegateMultiplexer (3.1.0)
-  - MaterialComponents/ShadowElevations (3.1.0)
-  - MaterialComponents/ShadowLayer (3.1.0)
-  - MaterialComponents/Slider (3.1.0):
+  - MaterialComponents/ScrollViewDelegateMultiplexer (4.0.0)
+  - MaterialComponents/ShadowElevations (4.0.0)
+  - MaterialComponents/ShadowLayer (4.0.0)
+  - MaterialComponents/Slider (4.0.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/SpritedAnimationView (3.1.0)
-  - MaterialComponents/Switch (3.1.0):
+  - MaterialComponents/SpritedAnimationView (4.0.0)
+  - MaterialComponents/Switch (4.0.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (3.1.0)
+  - MaterialComponents/Typography (4.0.0)
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
@@ -78,6 +78,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 4d0d60fbb6d0c0086dfdccadf59e8fa27e157720
+  MaterialComponents: b9f68b528c394b14b774591be1de18e25648c38a
 
 COCOAPODS: 0.39.0
