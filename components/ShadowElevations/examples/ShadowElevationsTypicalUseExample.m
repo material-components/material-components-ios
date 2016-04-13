@@ -147,7 +147,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
   return @"This component provides the most commonly-used Material Design elevations.";
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 

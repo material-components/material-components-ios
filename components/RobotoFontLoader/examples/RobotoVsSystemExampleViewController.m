@@ -45,7 +45,7 @@
   return @"The Roboto Font Loader lazy loads the Roboto font.";
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 

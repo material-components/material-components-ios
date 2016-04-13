@@ -77,6 +77,10 @@
   return CBCDescriptionFromClass(_exampleClass);
 }
 
+- (BOOL)isPrimaryDemo {
+  return CBCCatalogIsPrimaryDemoFromClass(_exampleClass);
+}
+
 @end
 
 @implementation CBCNodeListViewController

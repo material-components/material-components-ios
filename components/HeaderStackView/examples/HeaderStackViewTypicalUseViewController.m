@@ -36,7 +36,7 @@
           " vertically-stacked bar views.";
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 

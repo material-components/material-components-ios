@@ -54,8 +54,8 @@ class NodeViewController: CBCNodeListViewController {
     let orderedNodes = NSMutableArray()
     for childNode in node.children {
       if childNode.isExample() {
-        let contentVC = childNode.createExampleViewController()
-        if contentVC.respondsToSelector("catalogIsPrimaryDemo") {
+        let isPrimaryDemo = childNode.isPrimaryDemo()
+        if isPrimaryDemo {
           orderedNodes.insertObject(childNode, atIndex: 0)
           componentDescription = childNode.createExampleDescription()
         } else {

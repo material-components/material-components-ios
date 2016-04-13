@@ -92,7 +92,7 @@
   return @[ @"Button Bar", @"Button Bar" ];
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 

@@ -36,7 +36,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
           " UIImageView.";
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 

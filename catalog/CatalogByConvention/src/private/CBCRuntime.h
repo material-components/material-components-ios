@@ -22,6 +22,9 @@
 /** Invokes +catalogBreadcrumbs on the class and returns the corresponding array of strings. */
 FOUNDATION_EXTERN NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass);
 
+/** Invokes +catalogIsPrimaryDemo on the class and returns the BOOL value. */
+FOUNDATION_EXTERN BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass);
+
 #pragma mark Runtime enumeration
 
 /** Returns all Objective-C and Swift classes available to the runtime. */

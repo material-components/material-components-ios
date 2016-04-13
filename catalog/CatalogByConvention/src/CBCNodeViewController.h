@@ -65,6 +65,9 @@ FOUNDATION_EXTERN CBCNode *__nonnull CBCCreateNavigationTree(void);
 /** The children of this node. */
 @property(nonatomic, strong, nonnull) NSArray<CBCNode *> *children;
 
+/** Is this the most important or default demo for this component? */
+- (BOOL)isPrimaryDemo;
+
 /** Returns YES if this is an example node. */
 - (BOOL)isExample;
 

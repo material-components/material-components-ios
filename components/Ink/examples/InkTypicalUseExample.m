@@ -66,7 +66,7 @@
           " expanding outward from the user's touch.";
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 

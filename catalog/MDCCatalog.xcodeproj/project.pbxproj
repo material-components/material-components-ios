@@ -44,6 +44,7 @@
 		0F092FBA334F9A6817C4B9ED /* Pods-MDCCatalog-MDCCatalogUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalogUnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalogUnitTests/Pods-MDCCatalog-MDCCatalogUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		12970BE3EA0028A12E1427AD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		1B8F1AA8D28612EA405B5C1A /* Pods_MDCCatalog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCCatalog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3640411C1CBECABD00C962B2 /* CatalogByConvention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogByConvention.h; sourceTree = "<group>"; };
 		39A3426A088E725ED84D45D4 /* Pods-MDCCatalog-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalog/Pods-MDCCatalog-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		51A574C94F29C2B3F2198B9E /* libPods-MDCCatalog-MDCCatalogUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog-MDCCatalogUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5434D10FB7D7598D60B5F56C /* Pods-MDCCatalogUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalogUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalogUnitTests/Pods-MDCCatalogUnitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -90,7 +91,6 @@
 		664524C01C6BA62A001ADBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		664524C21C6BA62A001ADBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDCCatalog-Bridging-Header.h"; sourceTree = "<group>"; };
-		666CA7071CAEBCA9001B1884 /* CatalogByConvention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogByConvention.h; sourceTree = "<group>"; };
 		666CA7081CAEBCA9001B1884 /* CBCCatalogExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCCatalogExample.h; sourceTree = "<group>"; };
 		666CA7091CAEBCA9001B1884 /* CBCNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCNodeViewController.h; sourceTree = "<group>"; };
 		666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCNodeViewController.m; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 		666CA7061CAEBC98001B1884 /* CatalogByConvention */ = {
 			isa = PBXGroup;
 			children = (
-				666CA7071CAEBCA9001B1884 /* CatalogByConvention.h */,
+				3640411C1CBECABD00C962B2 /* CatalogByConvention.h */,
 				666CA7081CAEBCA9001B1884 /* CBCCatalogExample.h */,
 				666CA7091CAEBCA9001B1884 /* CBCNodeViewController.h */,
 				666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */,

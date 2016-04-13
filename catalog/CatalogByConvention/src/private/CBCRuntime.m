@@ -26,6 +26,23 @@ NSArray<NSString *> *CBCCatalogBreadcrumbsFromClass(Class aClass) {
   return [aClass performSelector:@selector(catalogBreadcrumbs)];
 }
 
+#pragma mark Primary demo check
+
+BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
+  BOOL isPrimaryDemo = NO;
+
+  if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
+    NSMethodSignature *signature = [aClass methodSignatureForSelector:@selector(catalogIsPrimaryDemo)];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    invocation.selector = @selector(catalogIsPrimaryDemo);
+    invocation.target = aClass;
+    [invocation invoke];
+    [invocation getReturnValue:&isPrimaryDemo];
+  }
+
+  return isPrimaryDemo;
+}
+
 #pragma mark Runtime enumeration
 
 NSArray<Class> *CBCGetAllClasses(void) {
