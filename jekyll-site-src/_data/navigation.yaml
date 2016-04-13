@@ -33,7 +33,7 @@ howto:
     url: "#sample-code"
     class: toplevel
 community:
-  - name: Community
+  - name: Contributing
     url: "/community/"
     class: toplevel
   - name: Community Structure
