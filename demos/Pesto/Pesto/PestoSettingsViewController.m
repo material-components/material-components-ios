@@ -178,10 +178,6 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   self.appBar.headerViewController.view.backgroundColor = teal;
   self.appBar.headerViewController.headerView.trackingScrollView = self.settingsTableView;
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-
-  // This app has a forced-hidden status bar. The headerView needs to compensate.
-  self.appBar.headerViewController.headerView.maximumHeight -= 20;
-  self.appBar.headerViewController.headerView.minimumHeight -= 20;
 }
 
 + (UIColor *)tableViewSeparatorColor {
