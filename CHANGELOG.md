@@ -1,5 +1,3 @@
-## release-candidate 4.1.0
-
 # 4.1.0
 
 Updated arrow back icon names. No API changes.
