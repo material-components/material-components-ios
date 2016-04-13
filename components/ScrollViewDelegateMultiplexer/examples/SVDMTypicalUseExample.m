@@ -30,7 +30,10 @@
   UIPageControl *_pageControl;
   NSArray *_pages;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   MDCScrollViewDelegateMultiplexer *_multiplexer;
+#pragma clang diagnostic pop
 }
 
 + (NSArray *)catalogBreadcrumbs {
@@ -101,9 +104,12 @@
   [self.view addSubview:_scrollView];
   [self.view addSubview:pageControl];
 
-  // Create scrollView delegate multiplexer and register observers
+// Create scrollView delegate multiplexer and register observers
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   _multiplexer = [[MDCScrollViewDelegateMultiplexer alloc] init];
+#pragma clang diagnostic pop
   _scrollView.delegate = _multiplexer;
   [_multiplexer addObservingDelegate:self];
   [_multiplexer addObservingDelegate:pageControl];
