@@ -1,11 +1,11 @@
 ---
-title:  "Community"
+title:  "Contributing"
 layout: landing
-section: community
+section: contributing
 ---
 
 
-# Community
+# Contributing
 
 Material Components for iOS is intended to be a full open source project that accepts contributions
 from community members. We can work together to optimize Material Design on iOS.

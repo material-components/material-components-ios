@@ -121,7 +121,7 @@ considerations as a basis for minimizing dependencies:
 - dependency-less components are much easier to drop in and, most importantly, to remove from a
   project.
 
-[Reach out to the team directly](community/#questions) for advice or questions on this matter.
+[Reach out to the team directly](contributing/#questions) for advice or questions on this matter.
 
 Recommendations:
 
