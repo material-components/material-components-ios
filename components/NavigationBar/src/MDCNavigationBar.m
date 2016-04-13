@@ -113,7 +113,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   [self setObservedNavigationItem:nil];
 }
 
-- (void)commonInit {
+- (void)commonMDCNavigationBarInit {
   _observedNavigationItemLock = [[NSObject alloc] init];
 
   _titleLabel = [[UILabel alloc] init];
@@ -131,7 +131,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonInit];
+    [self commonMDCNavigationBarInit];
   }
   return self;
 }
@@ -139,7 +139,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInit];
+    [self commonMDCNavigationBarInit];
   }
   return self;
 }

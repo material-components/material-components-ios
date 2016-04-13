@@ -18,7 +18,7 @@ This component provides the most commonly-used Material Design elevations.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/ShadowElevations/Constants.html">ShadowElevations Constants</a></li>
+  <li class="icon-link"><a href="/components/ShadowElevations/apidocs/Constants.html">ShadowElevations Constants</a></li>
 </ul>
 
 
@@ -33,8 +33,7 @@ This component provides the most commonly-used Material Design elevations.
 
 ### Installation with CocoaPods
 
-To add the ShadowElevations component to your Xcode project using CocoaPods, add the following to
-your PodFile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
 pod 'MaterialComponents/ShadowElevations'
@@ -50,6 +49,23 @@ $ pod install
 - - -
 
 ## Usage
+
+### Importing
+
+Before using Shadow Elevations, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialShadowElevations.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
 
 <!--<div class="material-code-render" markdown="1">-->
 

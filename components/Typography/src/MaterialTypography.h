@@ -15,5 +15,3 @@
  */
 
 #import "MDCTypography.h"
-#import "MDCFontResource.h"
-#import "MDCRobotoFontLoader.h"

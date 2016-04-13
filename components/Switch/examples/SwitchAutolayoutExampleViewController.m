@@ -44,7 +44,7 @@
 #pragma mark catalg by convention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Switch", @"MDCSwitch vs UISwitch with autolayout" ];
+  return @[ @"Switch", @"Switch Autolayout" ];
 }
 
 + (NSString *)catalogStoryboardName {

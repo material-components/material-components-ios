@@ -15,22 +15,25 @@
  */
 
 /**
- The CBCCatalogExample protocol defines the static methods that classes can implement in order to
+ The CBCCatalogExample protocol defines methods that examples are expected to implement in order to
  customize their location and behavior in the Catalog by Convention.
 
  Examples should not formally conform to this protocol. Examples should simply implement these
- methods.
+ methods by convention.
  */
 @protocol CBCCatalogExample <NSObject>
 
 /** Return a list of breadcrumbs defining the navigation path taken to reach this example. */
-+ (NSArray<NSString *> *)catalogBreadcrumbs;
++ (nonnull NSArray<NSString *> *)catalogBreadcrumbs;
 
 @optional
 
 /**
  Return the name of a UIStoryboard from which the example's view controller should be instantiated.
  */
-- (NSString *)catalogStoryboardName;
+- (nonnull NSString *)catalogStoryboardName;
+
+/** Return a description of the example. */
+- (nonnull NSString *)catalogDescription;
 
 @end

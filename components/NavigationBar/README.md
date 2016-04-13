@@ -19,8 +19,8 @@ label or a custom title view.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/NavigationBar/Classes/MDCNavigationBar.html">MDCNavigationBar</a></li>
-  <li class="icon-link"><a href="/apidocs/NavigationBar/Protocols/MDCUINavigationItemObservables.html">MDCUINavigationItemObservables</a></li>
+  <li class="icon-link"><a href="/components/NavigationBar/apidocs/Classes/MDCNavigationBar.html">MDCNavigationBar</a></li>
+  <li class="icon-link"><a href="/components/NavigationBar/apidocs/Protocols/MDCUINavigationItemObservables.html">MDCUINavigationItemObservables</a></li>
 </ul>
 
 
@@ -36,8 +36,7 @@ label or a custom title view.
 
 ### Installation with CocoaPods
 
-To add the NavigationBar component to your Xcode project using CocoaPods, add the following to your
-PodFile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
 pod 'MaterialComponents/NavigationBar'
@@ -71,6 +70,23 @@ UIBarButtonItem properties.
 - - -
 
 ## Usage
+
+### Importing
+
+Before using Navigation Bar, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialNavgiationBar.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
 
 ### Observing UINavigationItem instances
 

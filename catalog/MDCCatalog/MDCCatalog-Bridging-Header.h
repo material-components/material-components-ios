@@ -15,3 +15,4 @@
  */
 
 #import "CatalogByConvention.h"
+#import "MDCCatalogTiles.h"

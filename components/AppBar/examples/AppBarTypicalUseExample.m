@@ -32,13 +32,14 @@
   if (self) {
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
+    _appBar.navigationBar.tintColor = [UIColor whiteColor];
     [self addChildViewController:_appBar.headerViewController];
 
-    self.title = @"Typical use";
+    self.title = @"App Bar";
 
-    UIColor *color = [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
-                                     green:(CGFloat)0xA4 / (CGFloat)255
-                                      blue:(CGFloat)0xDD / (CGFloat)255
+    UIColor *color = [UIColor colorWithRed:(CGFloat)0x03 / (CGFloat)255
+                                     green:(CGFloat)0xA9 / (CGFloat)255
+                                      blue:(CGFloat)0xF4 / (CGFloat)255
                                      alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
   }
@@ -51,8 +52,9 @@
   // Recommended step: Set the tracking scroll view.
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
 
-  // Optional step: If you do not need to implement any delegate methods, you can use the
-  //                headerViewController as the delegate.
+  // Choice: If you do not need to implement any delegate methods and you are not using a
+  //         collection view, you can use the headerViewController as the delegate.
+  // Alternative: See AppBarDelegateForwardingExample.
   self.tableView.delegate = self.appBar.headerViewController;
 
   // Step 3: Register the App Bar views.
@@ -84,7 +86,16 @@
 @implementation AppBarTypicalUseExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"Typical use" ];
+  return @[ @"App Bar", @"App Bar" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"The App Bar is a flexible navigation bar designed to provide a typical Material Design"
+          " navigation experience.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 - (BOOL)catalogShouldHideNavigation {

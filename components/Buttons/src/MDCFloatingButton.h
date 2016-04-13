@@ -19,7 +19,12 @@
 
 #import "MDCButton.h"
 
-/** Shapes for material Floating buttons. */
+/**
+ Shapes for material Floating buttons.
+
+ The mini size should only be used when required for visual continuity with other elements on the
+ screen.
+ */
 typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
   MDCFloatingButtonShapeDefault,
   MDCFloatingButtonShapeMini
@@ -37,12 +42,12 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
 @interface MDCFloatingButton : MDCButton
 
 /**
- Returns a MDCFloatingButton with default colors and the given |shape|.
+ Returns a MDCFloatingButton with default colors and the given @c shape.
 
  @param shape Button shape.
  @return Button with shape.
  */
-+ (nonnull instancetype)buttonWithShape:(MDCFloatingButtonShape)shape;
++ (nonnull instancetype)floatingButtonWithShape:(MDCFloatingButtonShape)shape;
 
 /**
  @return The default floating button size dimension.
@@ -55,7 +60,7 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
 + (CGFloat)miniDimension;
 
 /**
- Initializes self to a button with the given |shape|.
+ Initializes self to a button with the given @c shape.
 
  @param frame Button frame.
  @param shape Button shape.
@@ -73,5 +78,10 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
 - (nonnull instancetype)initWithFrame:(CGRect)frame;
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
+#pragma mark - Deprecations
+
++ (nonnull instancetype)buttonWithShape:(MDCFloatingButtonShape)shape
+    __deprecated_msg("Use floatingButtonWithShape: instead.");
 
 @end

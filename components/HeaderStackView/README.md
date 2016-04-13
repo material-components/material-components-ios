@@ -2,14 +2,14 @@
 title:  "Header Stack View"
 layout: detail
 section: documentation
-excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically-stacked bar views."
+excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically stacked bar views."
 ---
 # Header Stack View
 
 ![Header Stack View](docs/assets/headerstackview_screenshot.png)
 <!--{: .ios-screenshot .right }-->
 
-The Header Stack View component is a view that coordinates the layout of two vertically-stacked
+The Header Stack View component is a view that coordinates the layout of two vertically stacked
 bar views.
 <!--{: .intro }-->
 
@@ -22,7 +22,7 @@ bar views.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/HeaderStackView/Classes/MDCHeaderStackView.html">MDCHeaderStackView</a></li>
+  <li class="icon-link"><a href="/components/HeaderStackView/apidocs/Classes/MDCHeaderStackView.html">MDCHeaderStackView</a></li>
 </ul>
 
 
@@ -64,6 +64,24 @@ The top bar is typically a navigation bar. The bottom bar, when provided, is typ
 - - -
 
 ## Usage
+
+### Importing
+
+Before using Header Stack View, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialHeaderStackView.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 
 Header Stack View provides MDCHeaderStackView, which is a UIView subclass.
 

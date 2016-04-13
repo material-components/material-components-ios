@@ -22,15 +22,12 @@ from the Material Design specifications.
 ### API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="/apidocs/Typography/Classes/MDCFontResource.html">MDCFontResource</a></li>
-<li class="icon-link"><a href="/apidocs/Typography/Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a></li>
-<li class="icon-link"><a href="/apidocs/Typography/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
-<li class="icon-link"><a href="/apidocs/Typography/Classes/MDCTypography.html">MDCTypography</a></li>
-<li class="icon-link"><a href="/apidocs/Typography/Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a></li>
+<li class="icon-link"><a href="/components/Typography/apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
+<li class="icon-link"><a href="/components/FontDiskLoader/apidocs/Classes/MDCFontDiskLoader.html">MDCFontDiskLoader</a></li>
+<li class="icon-link"><a href="/components/RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a></li>
+<li class="icon-link"><a href="/components/Typography/apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
+<li class="icon-link"><a href="/components/Typography/apidocs/Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a></li>
 </ul>
-
-
-- - -
 
 ## Installation
 
@@ -41,8 +38,7 @@ from the Material Design specifications.
 
 ### Installation with CocoaPods
 
-To add the Typography component to your Xcode project using CocoaPods, add the following to your
-PodFile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
 pod 'MaterialComponents/Typography'
@@ -54,10 +50,24 @@ Then, run the following command:
 $ pod install
 ~~~
 
-
-- - -
-
 ## Usage
+
+### Importing
+
+Before using Typography, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialTypography.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
 
 ### Font
 Select a font most appropriate to its usage and set it as your label's font. All fonts are returned
@@ -68,8 +78,6 @@ Material Typography should be used consistently throughout the entire UI.
 Each font has a respective opacity (alpha) value returned by class methods beginning with the
 font's Material Design type style and ending with 'FontOpacity'. These CGFloats should be set on the
 label's alpha property. If animating alpha, it should be the maximum value reached.
-
-- - -
 
 ## Type Sizes and Opacities
 
@@ -101,8 +109,6 @@ settings in the Material Design specifications.
 ![Material Design Type Opacity](docs/assets/style_typography_styles_contrast.png "Shows the Material Design font
                                 opacities")
 <!--{: .illustration }-->
-
-- - -
 
 ## Examples
 
@@ -207,28 +213,88 @@ self.label.sizeToFit()
 ~~~
 <!--</div>-->
 
-
-- - -
-
 ## Advanced Usage
 
 ### Custom Fonts
-Material Components iOS allows you to set your own font instead of Roboto. Since
-all of the other Material Component font requests funnel through the Typography
-component, it is possible to switch the font used by all of Material Components.
-Use `setFontLoader:` to specify a font loader with your own fonts. It should
-conform to the `MDCTypographyFontLoading` protocol which has APIs for
-`regularFontOfSize:`, `mediumFontOfSize:`, and `lightFontOfSize:` which are need
-for material typography styles.
+Material Components iOS allows you to set your own font instead of Roboto. Since all of the other
+Material Component font requests funnel through the Typography component, it is possible to switch
+the font used by all of Material Components. If you want to use the system font for Material
+Components use `MDCSystemFontLoader` which already conforms to the `MDCTypographyFontLoading`
+protocol.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+@interface CustomFontLoader : NSObject <MDCTypographyFontLoading>
+@end
+
+@implementation CustomFontLoader
+
+- (UIFont *)regularFontOfSize:(CGFloat)fontSize {
+  // Consider using MDCFontDiskLoader to register your font.
+  return [UIFont fontWithName:@"yourCustomRegularFont" size:fontSize];
+}
+
+- (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+  // Consider using MDCFontDiskLoader to register your font.
+  return [UIFont fontWithName:@"yourCustomMediumFont" size:fontSize];
+}
+
+- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+  // Consider using MDCFontDiskLoader to register your font.
+  return [UIFont fontWithName:@"yourCustomLightFont" size:fontSize];
+}
+
+@end
+
+...
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+... before any UI is called
+    [MDCTypography setFontLoader:[[CustomFontLoader alloc] init];
+...
+}
+~~~
+
+#### Swift
+~~~ swift
+class CustomFontLoader: NSObject, MDCTypographyFontLoading {
+  func regularFontOfSize(fontSize: CGFloat) -> UIFont {
+    // Consider using MDCFontDiskLoader to register your font.
+    return UIFont.init(name: "yourCustomRegularFont", size: fontSize)!
+  }
+  func mediumFontOfSize(fontSize: CGFloat) -> UIFont {
+    // Consider using MDCFontDiskLoader to register your font.
+    return UIFont.init(name: "yourCustomMediumFont", size: fontSize)!
+  }
+  func lightFontOfSize(fontSize: CGFloat) -> UIFont {
+    // Consider using MDCFontDiskLoader to register your font.
+    return UIFont.init(name: "yourCustomLightFont", size: fontSize)!
+  }
+}
+
+...
+
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+... before any UI is called
+  MDCTypography.setFontLoader(CustomFontLoader())
+...
+}
+~~~
+<!--</div>-->
 
 #### The default FontLoaer
-If no font loader has been set Typography attempts to use the Material
+If no font loader has been set, Typography attempts to use the Material
 [RobotoFontLoader](https://github.com/google/material-components-ios/tree/develop/components/FontDiskLoader)
-which results in Roboto fonts being used when text styles are requested.
+which results in Roboto fonts being used when text styles are requested. If that runtime check
+fails to find MDCRobotoFontLoader, the Material MDCSystemFontLoader font is used resulting in San
+Francisco or Helvetica being used.
 
 If your Podfile.lock has:
 ~~~ bash
 MaterialComponents/RobotoFontLoader
 ~~~
-Then one of your specs depends on RobotoFontLoader and the Roboto will be used
-if no font loader has been set.
+Then one of your specs depends on RobotoFontLoader and the Roboto will be used if no font loader has
+been set. If you set your own Font Loader it is recomened that you not pull in the Roboto Font
+Loader Component because that will add font assets to your app that you will not use.

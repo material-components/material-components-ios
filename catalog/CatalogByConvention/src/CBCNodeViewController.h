@@ -27,6 +27,8 @@
 /** Initializes a CBCNodeViewController instance with a non-example node. */
 - (nonnull instancetype)initWithNode:(nonnull CBCNode *)node;
 
+- (nonnull instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
+
 /** The node that this view controller must represent. */
 @property(nonatomic, strong, nonnull, readonly) CBCNode *node;
 
@@ -57,13 +59,19 @@ FOUNDATION_EXTERN CBCNode *__nonnull CBCCreateNavigationTree(void);
 /** The title for this node. */
 @property(nonatomic, copy, nonnull, readonly) NSString *title;
 
+/** The description for this node. */
+@property(nonatomic, copy, nonnull, readonly) NSString *nodeDescription;
+
 /** The children of this node. */
-@property(nonatomic, strong, nonnull, readonly) NSArray<CBCNode *> *children;
+@property(nonatomic, strong, nonnull) NSArray<CBCNode *> *children;
 
 /** Returns YES if this is an example node. */
 - (BOOL)isExample;
 
 /** Returns an instance of a UIViewController for presentation purposes. */
 - (nonnull UIViewController *)createExampleViewController;
+
+/** Returns a description of the example. */
+- (nonnull NSString *)createExampleDescription;
 
 @end

@@ -203,7 +203,16 @@ class TypographyExamplesViewController: UICollectionViewController {
   }
 
   class func catalogBreadcrumbs() -> [String] {
-    return ["Typography", "Font Type Styles"]
+    return ["Typography", "Typography"]
+  }
+
+  class func catalogDescription() -> String {
+    return "The Typography component provides methods for displaying text using the type sizes and"
+      + " opacities from the Material Design specifications."
+  }
+
+  func catalogIsPrimaryDemo() -> Bool {
+    return true
   }
 
 }

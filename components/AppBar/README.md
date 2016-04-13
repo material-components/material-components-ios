@@ -23,8 +23,8 @@ navigation experience.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/AppBar/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
-  <li class="icon-link"><a href="/apidocs/AppBar/Protocols/MDCAppBarParenting.html">MDCAppBarParenting</a></li>
+  <li class="icon-link"><a href="/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
+  <li class="icon-link"><a href="/components/AppBar/apidocs/Protocols/MDCAppBarParenting.html">MDCAppBarParenting</a></li>
 </ul>
 
 - - -
@@ -83,6 +83,23 @@ identify whether your use case is something we can directly support.
 - - -
 
 ## Usage
+
+### Importing
+
+Before using App Bar, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialAppBar.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
 
 ### Add the App Bar to a view controller
 

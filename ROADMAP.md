@@ -1,4 +1,5 @@
-For the coming months, the Material Components iOS team is focused on developing the following components:
+For the coming months, the Material Components iOS team is focused on developing the following
+components:
 
 - HUD
 - Textfields

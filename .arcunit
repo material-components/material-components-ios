@@ -2,7 +2,7 @@
   "engines": {
     "xcode": {
       "type": "xcode-test-engine",
-      "include": "(\\.(m|h|mm|swift)$)",
+      "include": "(components/.+/(src|unit)/.*\\.(m|h|mm|swift)$)",
       "exclude": "(/Pods/)"
     }
   }

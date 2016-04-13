@@ -25,17 +25,18 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Typical use"
+    self.title = "App Bar (Swift)"
 
     // Step 2: Add the headerViewController as a child.
     self.addChildViewController(appBar.headerViewController)
 
     let color = UIColor(
-      red: CGFloat(0x39) / CGFloat(255),
-      green: CGFloat(0xA4) / CGFloat(255),
-      blue: CGFloat(0xDD) / CGFloat(255),
+      red: CGFloat(0x03) / CGFloat(255),
+      green: CGFloat(0xA9) / CGFloat(255),
+      blue: CGFloat(0xF4) / CGFloat(255),
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
+    appBar.navigationBar.tintColor = UIColor.whiteColor()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -48,8 +49,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
     // Recommended step: Set the tracking scroll view.
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
-    // Optional step: If you do not need to implement any delegate methods, you can use the
-    //                headerViewController as the delegate.
+    // Choice: If you do not need to implement any delegate methods and you are not using a
+    //         collection view, you can use the headerViewController as the delegate.
+    // Alternative: See AppBarDelegateForwardingExample.
     self.tableView.delegate = appBar.headerViewController
 
     // Step 3: Register the App Bar views.
@@ -80,7 +82,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Swift", "Typical use"]
+    return ["App Bar", "Basic (Swift)"]
   }
   func catalogShouldHideNavigation() -> Bool {
     return true

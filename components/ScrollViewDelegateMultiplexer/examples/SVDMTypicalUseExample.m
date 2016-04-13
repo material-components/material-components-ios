@@ -28,12 +28,13 @@
 @implementation SVDMTypicalUseViewController {
   UIScrollView *_scrollView;
   UIPageControl *_pageControl;
+  NSArray *_pages;
 
   MDCScrollViewDelegateMultiplexer *_multiplexer;
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"ScrollViewDelegate Multiplexer", @"Typical use" ];
+  return @[ @"Scroll View Delegate Multiplexer", @"Scroll View Delegate Multiplexer" ];
 }
 
 - (void)viewDidLoad {
@@ -47,10 +48,14 @@
   // Scroll view configuration
 
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+  _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _scrollView.pagingEnabled = YES;
   _scrollView.contentSize = CGSizeMake(boundsWidth * pageColors.count, boundsHeight);
   _scrollView.minimumZoomScale = 0.5;
   _scrollView.maximumZoomScale = 6.0;
+  _scrollView.showsHorizontalScrollIndicator = NO;
+
+  NSMutableArray *pages = [NSMutableArray array];
 
   // Add pages to scrollView.
   for (NSInteger i = 0; i < pageColors.count; i++) {
@@ -61,8 +66,12 @@
     page.textColor = [UIColor colorWithWhite:0 alpha:0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
+    page.autoresizingMask =
+        UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_scrollView addSubview:page];
+    [pages addObject:page];
   }
+  _pages = [pages copy];
 
   // Page control configuration
 
@@ -84,6 +93,8 @@
         forControlEvents:UIControlEventValueChanged];
   pageControl.defersCurrentPageDisplay = YES;
   _pageControl = pageControl;
+  _pageControl.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
 
   // Add subviews
 
@@ -96,6 +107,25 @@
   _scrollView.delegate = _multiplexer;
   [_multiplexer addObservingDelegate:self];
   [_multiplexer addObservingDelegate:pageControl];
+}
+
+#pragma mark - Frame changes
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  NSInteger pageBeforeFrameChange = _pageControl.currentPage;
+  NSInteger pageCount = _pages.count;
+  CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
+  CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
+  for (NSInteger i = 0; i < pageCount; i++) {
+    UILabel *page = [_pages objectAtIndex:i];
+    page.frame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
+  }
+  _scrollView.contentSize = CGSizeMake(boundsWidth * pageCount, boundsHeight);
+  CGPoint offset = _scrollView.contentOffset;
+  offset.x = pageBeforeFrameChange * boundsWidth;
+  // This non-anmiated change of offset ensures we keep the same page
+  [_scrollView setContentOffset:offset animated:NO];
 }
 
 #pragma mark - UIScrollViewDelegate

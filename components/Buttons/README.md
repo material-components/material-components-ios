@@ -6,8 +6,10 @@ excerpt: "Buttons is a collection of Material Design buttons, including a flat b
 ---
 # Buttons
 
-![Raised, Flat, and Floating Action Buttons](docs/assets/buttons_screenshot.png)
-<!--{: .ios-screenshot .right }-->
+<!--<div class="ios-animation right" markdown="1">-->
+  <!--<video src="docs/assets/buttons_screengrab.mp4" autoplay loop></video>-->
+  [![Raised, Flat, and Floating Action Buttons](docs/assets/buttons_screenshot.png)](docs/assets/buttons_screengrab.mp4)
+<!--</div>-->
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
@@ -23,10 +25,10 @@ floating action button.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCRaisedButton.html">MDCRaisedButton</a></li>
-  <li class="icon-link"><a href="/apidocs/Buttons/Classes/MDCButton.html">MDCButton</a></li>
+  <li class="icon-link"><a href="/components/Buttons/apidocs/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
+  <li class="icon-link"><a href="/components/Buttons/apidocs/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
+  <li class="icon-link"><a href="/components/Buttons/apidocs/Classes/MDCRaisedButton.html">MDCRaisedButton</a></li>
+  <li class="icon-link"><a href="/components/Buttons/apidocs/Classes/MDCButton.html">MDCButton</a></li>
 </ul>
 
 
@@ -64,8 +66,7 @@ You should not directly instantiate an MDCButton object.
 
 ### Installation with CocoaPods
 
-To add the Buttons component to your Xcode project using CocoaPods, add the following to your
-Podfile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~
 pod 'MaterialComponents/Buttons'
@@ -82,6 +83,23 @@ $ pod install
 
 
 ## Usage
+
+### Importing
+
+Before using Ink, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialInk.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
 
 ### Ink splash animation
 All buttons display animated ink splashes when the user interacts with the button.

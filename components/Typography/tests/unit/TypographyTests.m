@@ -54,9 +54,7 @@ static const CGFloat kEpsilon = 0.001f;
 
 - (void)tearDown {
   // Since we are using a singleton we need to restore the custom fontLoader back for other tests
-  // TODO: https://github.com/google/material-components-ios/issues/74 remove `(id)` which silences
-  // build warning
-  [MDCTypography setFontLoader:(id)[MDCRobotoFontLoader sharedInstance]];
+  [MDCTypography setFontLoader:[MDCRobotoFontLoader sharedInstance]];
 }
 
 #pragma mark - Font opacity

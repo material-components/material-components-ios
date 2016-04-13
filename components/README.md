@@ -73,12 +73,13 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-navigationbar }-->
 
 - [**PageControl**
-  A drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout.
+  A drop-in Material Design replacement for UIPageControl that implements Material Design animation
+  and layout.
   ](PageControl/)
   <!--{: .icon-pagecontrol }-->
 
 - [**ShadowElevations**
-  Provides the most commonly-used elevations specified in Material Design.
+  Provides the most commonly used elevations specified in Material Design.
   ](ShadowElevations/)
   <!--{: .icon-shadowelevations }-->
 

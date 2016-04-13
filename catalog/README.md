@@ -31,7 +31,7 @@ Let's build a hypothetical example for the "Ink" component.
 The first step is to create a source file. This can be either a .m or a .swift; whichever you
 prefer. Place this source file in the component's `examples/` directory, like so:
 
-> View controller names must be globally-unique across every component's example set. An easy way
+> View controller names must be globally unique across every component's example set. An easy way
 > to ensure this is to prefix the controller with the name of the component.
 
     components/Ink/examples/InkDemoViewController.m
@@ -74,7 +74,7 @@ storyboard. You do this by implementing the CatalogStoryboardViewController prot
 
 Place this source file in the component's `examples/` directory, like so:
 
-> Storyboard names must be globally-unique across every component's example set. An easy way
+> Storyboard names must be globally unique across every component's example set. An easy way
 > to ensure this is to prefix the controller with the name of the component.
 
     components/Slider/examples/SliderAutolayoutExample.storyboard

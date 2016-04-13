@@ -1,0 +1,4 @@
+module_name: AppBar
+umbrella_header: src/MaterialAppBar.h
+objc: true
+sdk: iphonesimulator

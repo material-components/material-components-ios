@@ -6,14 +6,14 @@ excerpt: "The Button Bar component is a view that facilitates the creation and l
 ---
 # Button Bar
 
-The Button Bar is a view that represents a list of UIBarButtonItems as horizontally-aligned buttons.
+The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
 <!--{: .intro }-->
 
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/ButtonBar/Classes/MDCButtonBar.html">MDCButtonBar</a></li>
-  <li class="icon-link"><a href="/apidocs/ButtonBar/Protocols/MDCButtonBarDelegate.html">MDCButtonBarDelegate</a></li>
+  <li class="icon-link"><a href="/components/ButtonBar/apidocs/Classes/MDCButtonBar.html">MDCButtonBar</a></li>
+  <li class="icon-link"><a href="/components/ButtonBar/apidocs/Protocols/MDCButtonBarDelegate.html">MDCButtonBarDelegate</a></li>
 </ul>
 
 
@@ -60,6 +60,24 @@ Button Bar supports a subset of UIBarButtonItem's properties. Learn more by read
 - - -
 
 ## Usage
+
+### Importing
+
+Before using Button Bar, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialButtonBar.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 
 Create an instance of MDCButtonBar and provide it with an array of UIBarButtonItems.
 

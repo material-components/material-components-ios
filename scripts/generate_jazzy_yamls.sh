@@ -23,7 +23,7 @@ for d in components/*/README.md; do
   cat > "$folder/.jazzy.yaml" <<EOL
 module_name: $component
 umbrella_header: src/Material$component.h
-objc_mode: true
+objc: true
 sdk: iphonesimulator
 EOL
 

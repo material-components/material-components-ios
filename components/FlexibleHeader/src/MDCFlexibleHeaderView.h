@@ -44,6 +44,25 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderShiftBehavior) {
   MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar,
 };
 
+/** The importance of content contained within the flexible header view. */
+typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
+
+  /**
+   Default behavior requires at most approximately a single swipe before the header re-appears.
+   */
+  MDCFlexibleHeaderContentImportanceDefault,
+
+  /**
+   Highly-important header content will re-appear faster than default importance.
+
+   Examples of important content:
+
+   - Search bar.
+   - Non-navigational actions.
+   */
+  MDCFlexibleHeaderContentImportanceHigh,
+};
+
 /** Mutually exclusive phases that the flexible header view can be in. */
 typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 
@@ -87,7 +106,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 /**
  Custom shadow shown under flexible header content.
  */
-@property(nonatomic, retain, nullable) CALayer *shadowLayer;
+@property(nonatomic, strong, nullable) CALayer *shadowLayer;
 
 /**
  Sets a custom shadow layer and a block that should be executed when shadow intensity changes.
@@ -279,6 +298,16 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 @property(nonatomic) MDCFlexibleHeaderShiftBehavior shiftBehavior;
 
 /**
+ If shiftBehavior is enabled, this property affects the manner in which the Header reappears when
+ pulling content down in the tracking scroll view.
+
+ Ignored if shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled.
+
+ Default: MDCFlexibleHeaderContentImportanceDefault
+ */
+@property(nonatomic) MDCFlexibleHeaderContentImportance headerContentImportance;
+
+/**
  Whether or not the header view is allowed to expand past its maximum height when the tracking
  scroll view has been dragged past its top edge.
 
@@ -388,10 +417,8 @@ __deprecated_msg("Use shiftBehavior instead.");
 
 #pragma mark Accessing the header's views
 
-/**
- Content for the flexible header should be added to the content view.
- */
-@property(nonatomic, retain, nonnull) UIView *contentView
+/** Deprecated. Please register views directly to the flexible header. */
+@property(nonatomic, strong, nonnull) UIView *contentView
 __deprecated_msg("Please register views directly to the flexible header.");
 
 @end

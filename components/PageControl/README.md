@@ -23,7 +23,7 @@ desired animation of the control.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/PageControl/Classes/MDCPageControl.html">MDCPageControl</a></li>
+  <li class="icon-link"><a href="/components/PageControl/apidocs/Classes/MDCPageControl.html">MDCPageControl</a></li>
 </ul>
 
 
@@ -38,7 +38,7 @@ desired animation of the control.
 
 ### Installation with CocoaPods
 
-To add the PageControl component to your Xcode project using CocoaPods, add the following to your PodFile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
 pod 'MaterialComponents/PageControl'
@@ -90,6 +90,23 @@ Page control showing new current page.
 - - -
 
 ## Usage
+
+### Importing
+
+Before using Page Control, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialPageControl.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
 
 Integrating the page control requires two steps. First, add a page control with companion scroll
 view, and second, forward the scroll view delegate methods to the page control.

@@ -20,8 +20,8 @@
 
 #import "MDCFloatingButton.h"
 
-#import "private/MDCButton+Subclassing.h"
 #import "MaterialShadowElevations.h"
+#import "private/MDCButton+Subclassing.h"
 
 static const CGFloat MDCFloatingButtonDefaultDimension = 56.0f;
 static const CGFloat MDCFloatingButtonMiniDimension = 40.0f;
@@ -39,7 +39,7 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
   return MDCFloatingButtonMiniDimension;
 }
 
-+ (instancetype)buttonWithShape:(MDCFloatingButtonShape)shape {
++ (instancetype)floatingButtonWithShape:(MDCFloatingButtonShape)shape {
   return [[[self class] alloc] initWithFrame:CGRectZero shape:shape];
 }
 
@@ -116,6 +116,12 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
   return (((state & UIControlStateSelected) == UIControlStateSelected)
               ? MDCShadowElevationFABPressed
               : MDCShadowElevationFABResting);
+}
+
+#pragma mark - Deprecations
+
++ (instancetype)buttonWithShape:(MDCFloatingButtonShape)shape {
+  return [[self class] floatingButtonWithShape:shape];
 }
 
 @end

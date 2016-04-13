@@ -107,10 +107,16 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
     button.tintColor = buttonItem.tintColor;
   }
 
+  if (buttonItem.title) {
+    button.inkStyle = MDCInkStyleBounded;
+  } else {
+    button.inkStyle = MDCInkStyleUnbounded;
+  }
+
   button.tag = buttonItem.tag;
 
   button.customTitleColor = self.buttonTitleColor;
-  [button setUnderlyingColor:self.buttonUnderlyingColor];
+  [button setUnderlyingColorHint:self.buttonUnderlyingColor];
 
   [self updateButton:button withItem:buttonItem barMetrics:UIBarMetricsDefault];
 
@@ -235,6 +241,18 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   fitSize.width = MAX(kMinimumItemWidth, fitSize.width);
 
   return fitSize;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  // TODO(featherless): Remove this conditional and always set the max ripple radius once
+  // https://github.com/google/material-components-ios/issues/329 lands.
+  if (self.inkStyle == MDCInkStyleUnbounded) {
+    self.inkMaxRippleRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
+  } else {
+    self.inkMaxRippleRadius = 0;
+  }
 }
 
 @end

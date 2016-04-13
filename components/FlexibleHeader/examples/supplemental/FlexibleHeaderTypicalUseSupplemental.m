@@ -22,6 +22,16 @@
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }
+
++ (NSString *)catalogDescription {
+  return @"The Flexible Header is a container view whose height and vertical offset react to"
+          " UIScrollViewDelegate events.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
 @end
 
 @implementation FlexibleHeaderTypicalUseViewController (Rotation)

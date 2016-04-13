@@ -27,10 +27,20 @@
 @implementation PageControlTypicalUseViewController {
   UIScrollView *_scrollView;
   MDCPageControl *_pageControl;
+  NSArray *_pages;
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Page Control", @"Typical use" ];
+  return @[ @"Page Control", @"Page Control" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"This control is designed to be a drop-in replacement for UIPageControl, with a user"
+          " experience influenced by Material Design.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 - (void)viewDidLoad {
@@ -50,6 +60,8 @@
   _scrollView.showsHorizontalScrollIndicator = NO;
   [self.view addSubview:_scrollView];
 
+  NSMutableArray *pages = [NSMutableArray array];
+
   // Add pages to scrollView.
   for (NSInteger i = 0; i < pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
@@ -59,8 +71,12 @@
     page.textColor = [UIColor colorWithWhite:0 alpha:0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
+    page.autoresizingMask =
+        UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_scrollView addSubview:page];
+    [pages addObject:page];
   }
+  _pages = [pages copy];
 
   // Page control configuration.
   _pageControl = [[MDCPageControl alloc] init];
@@ -79,6 +95,25 @@
   _pageControl.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_pageControl];
+}
+
+#pragma mark - Frame changes
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  NSInteger pageBeforeFrameChange = _pageControl.currentPage;
+  NSInteger pageCount = _pages.count;
+  CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
+  CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
+  for (NSInteger i = 0; i < pageCount; i++) {
+    UILabel *page = [_pages objectAtIndex:i];
+    page.frame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
+  }
+  _scrollView.contentSize = CGSizeMake(boundsWidth * pageCount, boundsHeight);
+  CGPoint offset = _scrollView.contentOffset;
+  offset.x = pageBeforeFrameChange * boundsWidth;
+  // This non-anmiated change of offset ensures we keep the same page
+  [_scrollView setContentOffset:offset animated:NO];
 }
 
 #pragma mark - UIScrollViewDelegate

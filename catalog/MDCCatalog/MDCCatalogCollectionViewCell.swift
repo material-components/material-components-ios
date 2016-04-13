@@ -59,7 +59,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     label.text = ""
   }
 
-  func populateView(componentName: String, image: UIImage) {
+  func populateView(componentName: String) {
     label.text = componentName
     tile.componentName = componentName
   }

@@ -34,10 +34,15 @@ static NSString *const MDCButtonDisabledBackgroundColorLightKey =
     @"MDCButtonDisabledBackgroundColorLightKey";
 static NSString *const MDCButtonDisabledBackgroundColorDarkKey =
     @"MDCButtonDisabledBackgroundColorDarkKey";
+static NSString *const MDCButtonInkViewInkStyleKey = @"MDCButtonInkViewInkStyleKey";
 static NSString *const MDCButtonInkViewInkColorKey = @"MDCButtonInkViewInkColorKey";
+static NSString *const MDCButtonInkViewInkMaxRippleRadiusKey =
+    @"MDCButtonInkViewInkMaxRippleRadiusKey";
 static NSString *const MDCButtonShouldRaiseOnTouchKey = @"MDCButtonShouldRaiseOnTouchKey";
-static NSString *const MDCButtonShouldCapitalizeTitleKey = @"MDCButtonShouldCapitalizeTitleKey";
-static NSString *const MDCButtonUnderlyingColorKey = @"MDCButtonUnderlyingColorKey";
+// Previous value kept for backwards compatibility.
+static NSString *const MDCButtonUppercaseTitleKey = @"MDCButtonShouldCapitalizeTitleKey";
+// Previous value kept for backwards compatibility.
+static NSString *const MDCButtonUnderlyingColorHintKey = @"MDCButtonUnderlyingColorKey";
 static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey";
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
@@ -61,7 +66,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
-static NSAttributedString *capitalizeAttributedString(NSAttributedString *string) {
+static NSAttributedString *uppercaseAttributedString(NSAttributedString *string) {
   // Store the attributes.
   NSMutableArray *attributes = [NSMutableArray array];
   [string enumerateAttributesInRange:NSMakeRange(0, [string length])
@@ -120,6 +125,8 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
+    [self commonButtonInit];
+
     // TODO(randallli): Add backward compatibility to background colors
     //    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
     //      self.enabledBackgroundColor =
@@ -133,27 +140,34 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
     //      self.disabledBackgroundColorDark =
     //          [aDecoder decodeObjectForKey:MDCButtonDisabledBackgroundColorDarkKey];
     //    }
+    if ([aDecoder containsValueForKey:MDCButtonInkViewInkStyleKey]) {
+      self.inkView.inkStyle = [aDecoder decodeIntegerForKey:MDCButtonInkViewInkStyleKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonInkViewInkColorKey]) {
       self.inkView.inkColor = [aDecoder decodeObjectForKey:MDCButtonInkViewInkColorKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonInkViewInkMaxRippleRadiusKey]) {
+      self.inkView.maxRippleRadius =
+          (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonInkViewInkMaxRippleRadiusKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonShouldRaiseOnTouchKey]) {
       self.shouldRaiseOnTouch = [aDecoder decodeBoolForKey:MDCButtonShouldRaiseOnTouchKey];
     }
 
-    if ([aDecoder containsValueForKey:MDCButtonShouldCapitalizeTitleKey]) {
-      self.shouldCapitalizeTitle = [aDecoder decodeBoolForKey:MDCButtonShouldCapitalizeTitleKey];
+    if ([aDecoder containsValueForKey:MDCButtonUppercaseTitleKey]) {
+      self.uppercaseTitle = [aDecoder decodeBoolForKey:MDCButtonUppercaseTitleKey];
     }
 
-    if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorKey]) {
-      self.underlyingColor = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorKey];
+    if ([aDecoder containsValueForKey:MDCButtonUnderlyingColorHintKey]) {
+      self.underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
       _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
     }
-
-    [self commonButtonInit];
   }
   return self;
 }
@@ -161,14 +175,16 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
 
+  [aCoder encodeInteger:_inkView.inkStyle forKey:MDCButtonInkViewInkStyleKey];
   if (_inkView.inkColor) {
     [aCoder encodeObject:_inkView.inkColor forKey:MDCButtonInkViewInkColorKey];
   }
 
+  [aCoder encodeDouble:_inkView.maxRippleRadius forKey:MDCButtonInkViewInkMaxRippleRadiusKey];
   [aCoder encodeBool:_shouldRaiseOnTouch forKey:MDCButtonShouldRaiseOnTouchKey];
-  [aCoder encodeBool:_shouldCapitalizeTitle forKey:MDCButtonShouldCapitalizeTitleKey];
-  if (_underlyingColor) {
-    [aCoder encodeObject:_underlyingColor forKey:MDCButtonUnderlyingColorKey];
+  [aCoder encodeBool:_uppercaseTitle forKey:MDCButtonUppercaseTitleKey];
+  if (_underlyingColorHint) {
+    [aCoder encodeObject:_underlyingColorHint forKey:MDCButtonUnderlyingColorHintKey];
   }
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
 }
@@ -176,7 +192,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 - (void)commonButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
-  _shouldCapitalizeTitle = YES;
+  _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
   _backgroundColors = [NSMutableDictionary dictionary];
   _accessibilityLabelForState = [NSMutableDictionary dictionary];
@@ -201,8 +217,6 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 
   // Set up ink layer.
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-
-  _inkView.maxRippleRadius = 0;
   [self insertSubview:_inkView belowSubview:self.imageView];
 
   // UIButton has a drag enter/exit boundary that is outside of the frame of the button itself.
@@ -225,7 +239,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   self.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 
   // Uppercase all titles
-  if (_shouldCapitalizeTitle) {
+  if (_uppercaseTitle) {
     [self uppercaseAllTitles];
   }
 }
@@ -239,8 +253,8 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   [self updateTitleColor];
 }
 
-- (void)setUnderlyingColor:(UIColor *)underlyingColor {
-  _underlyingColor = underlyingColor;
+- (void)setUnderlyingColorHint:(UIColor *)underlyingColorHint {
+  _underlyingColorHint = underlyingColorHint;
   [self updateTitleColor];
   [self updateDisabledTitleColor];
   [self updateAlphaAndBackgroundColorAnimated:NO];
@@ -319,15 +333,15 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 
 #pragma mark - Title Uppercasing
 
-- (void)setShouldCapitalizeTitle:(BOOL)shouldCapitalizeTitle {
-  _shouldCapitalizeTitle = shouldCapitalizeTitle;
-  if (_shouldCapitalizeTitle) {
+- (void)setUppercaseTitle:(BOOL)uppercaseTitle {
+  _uppercaseTitle = uppercaseTitle;
+  if (_uppercaseTitle) {
     [self uppercaseAllTitles];
   }
 }
 
 - (void)uppercaseAllTitles {
-  // This ensures existing titles will get capitalized.
+  // This ensures existing titles will get uppercased.
   UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
                                     UIControlStateDisabled | UIControlStateSelected;
   for (UIControlState state = 0; state <= allControlStates; ++state) {
@@ -338,7 +352,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 
     NSAttributedString *attributedTitle = [self attributedTitleForState:state];
     if (attributedTitle) {
-      [self setAttributedTitle:capitalizeAttributedString(attributedTitle) forState:state];
+      [self setAttributedTitle:uppercaseAttributedString(attributedTitle) forState:state];
     }
   }
 }
@@ -352,7 +366,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
     [_accessibilityLabelForState removeObjectForKey:@(state)];
   }
 
-  if (_shouldCapitalizeTitle) {
+  if (_uppercaseTitle) {
     title = [title uppercaseStringWithLocale:[NSLocale currentLocale]];
   }
   [super setTitle:title forState:state];
@@ -367,8 +381,8 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
     [_accessibilityLabelForState removeObjectForKey:@(state)];
   }
 
-  if (_shouldCapitalizeTitle) {
-    title = capitalizeAttributedString(title);
+  if (_uppercaseTitle) {
+    title = uppercaseAttributedString(title);
   }
   [super setAttributedTitle:title forState:state];
 }
@@ -384,7 +398,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 }
 
 - (NSString *)accessibilityLabel {
-  if (!_shouldCapitalizeTitle) {
+  if (!_uppercaseTitle) {
     return [super accessibilityLabel];
   }
 
@@ -417,12 +431,28 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 
 #pragma mark - Ink
 
+- (MDCInkStyle)inkStyle {
+  return _inkView.inkStyle;
+}
+
+- (void)setInkStyle:(MDCInkStyle)inkStyle {
+  _inkView.inkStyle = inkStyle;
+}
+
 - (UIColor *)inkColor {
   return _inkView.inkColor;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
   _inkView.inkColor = inkColor;
+}
+
+- (CGFloat)inkMaxRippleRadius {
+  return _inkView.maxRippleRadius;
+}
+
+- (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {
+  _inkView.maxRippleRadius = inkMaxRippleRadius;
 }
 
 #pragma mark - Shadows
@@ -487,11 +517,15 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
 
 /**
  The background color that a user would see for this button. If self.backgroundColor is not
- transparent, then returns that. Otherwise, returns self.underlyingColor.
- @note If self.underlyingColor is not set, then this method will return nil.
+ transparent, then returns that. Otherwise, returns self.underlyingColorHint.
+ @note If self.underlyingColorHint is not set, then this method will return nil.
  */
 - (UIColor *)effectiveBackgroundColor {
-  return ![self isTransparentColor:self.currentBackgroundColor] ? self.currentBackgroundColor : self.underlyingColor;
+  if (![self isTransparentColor:self.currentBackgroundColor]) {
+    return self.currentBackgroundColor;
+  } else {
+    return self.underlyingColorHint;
+  }
 }
 
 /** Returns YES if the color is not transparent and is a "dark" color. */
@@ -583,7 +617,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   //    if (self.enabled) {
   ////      color = self.enabledBackgroundColor;
   //    } else {
-  //      color = [self isDarkColor:_underlyingColor] ? _disabledBackgroundColorLight
+  //      color = [self isDarkColor:_underlyingColorHint] ? _disabledBackgroundColorLight
   //                                                  : _disabledBackgroundColorDark;
   //    }
   //  }
@@ -594,7 +628,7 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
   // Disabled buttons have very low opacity, so we full-opacity text color here to make the text
   // readable. Also, even for non-flat buttons with opaque backgrounds, the correct background color
   // to examine is the underlying color, since disabled buttons are so transparent.
-  BOOL darkBackground = [self isDarkColor:[self underlyingColor]];
+  BOOL darkBackground = [self isDarkColor:[self underlyingColorHint]];
   [self setTitleColor:darkBackground ? [UIColor whiteColor] : [UIColor blackColor]
              forState:UIControlStateDisabled];
 }
@@ -615,6 +649,24 @@ static NSAttributedString *capitalizeAttributedString(NSAttributedString *string
     //                                             options:options];
     //    [self setTitleColor:color forState:UIControlStateNormal];
   }
+}
+
+#pragma mark - Deprecations
+
+- (BOOL)shouldCapitalizeTitle {
+  return [self isUppercaseTitle];
+}
+
+- (void)setShouldCapitalizeTitle:(BOOL)shouldCapitalizeTitle {
+  [self setUppercaseTitle:shouldCapitalizeTitle];
+}
+
+- (UIColor *)underlyingColor {
+  return [self underlyingColorHint];
+}
+
+- (void)setUnderlyingColor:(UIColor *)underlyingColor {
+  [self setUnderlyingColorHint:underlyingColor];
 }
 
 @end

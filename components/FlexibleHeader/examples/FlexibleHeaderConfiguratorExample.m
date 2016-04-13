@@ -149,8 +149,12 @@
 - (void)sliderDidSlide:(UISlider *)sender {
   if (sender == self.exampleView.minHeightSlider) {
     self.fhvc.headerView.minimumHeight = sender.value;
+    self.exampleView.maxHeightSlider.value = MAX(self.exampleView.maxHeightSlider.value,
+                                                 self.fhvc.headerView.minimumHeight);
   } else if (sender == self.exampleView.maxHeightSlider) {
     self.fhvc.headerView.maximumHeight = sender.value;
+    self.exampleView.minHeightSlider.value = MIN(self.exampleView.minHeightSlider.value,
+                                                 self.fhvc.headerView.maximumHeight);
   }
 }
 

@@ -26,7 +26,7 @@
                                   @"navBar" : self.navBar };
   NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints = [NSMutableArray array];
 
-// clang-format off
+  // clang-format off
   [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
                                               constraintsWithVisualFormat:@"H:|[exampleView]|"
                                                                   options:0
@@ -37,7 +37,7 @@
                                                                   options:0
                                                                   metrics:nil
                                                                     views:viewBindings]];
-// clang-format on
+  // clang-format on
   [self.view addConstraints:arrayOfConstraints];
 }
 
@@ -50,6 +50,15 @@
 }
 
 - (BOOL)catalogShouldHideNavigation {
+  return YES;
+}
+
++ (NSString *)catalogDescription {
+  return @"The Navigation Bar component is a view composed of a left and right Button Bar and"
+          " either a title label or a custom title view.";
+}
+
+- (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 

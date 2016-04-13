@@ -46,8 +46,8 @@ shadow that adheres to defined height and light source principles.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/ShadowLayer/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
-  <li class="icon-link"><a href="/apidocs/ShadowLayer/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
+  <li class="icon-link"><a href="/components/ShadowLayer/apidocs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
+  <li class="icon-link"><a href="/components/ShadowLayer/apidocs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
 </ul>
 
 
@@ -63,8 +63,7 @@ shadow that adheres to defined height and light source principles.
 
 ### Installation with CocoaPods
 
-To add the ShadowLayer component to your Xcode project using CocoaPods, add the following to your
-PodFile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
 pod 'MaterialComponents/ShadowLayer'
@@ -80,6 +79,24 @@ $ pod install
 - - -
 
 ## Usage
+
+### Importing
+
+Before using Shadow Layer, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialShadowLayer.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 
 Example of a custom button based on UIButton with Material Design shadows:
 

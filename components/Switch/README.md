@@ -23,8 +23,8 @@ that `MDCSwitch` objects have an intrinsic size and are not resizable.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/Switch/Classes/MDCSwitch.html">MDCSwitch</a></li>
-  <li class="icon-link"><a href="/apidocs/Switch/Functions.html">Global Functions</a></li>
+  <li class="icon-link"><a href="/components/Switch/apidocs/Classes/MDCSwitch.html">MDCSwitch</a></li>
+  <li class="icon-link"><a href="/components/Switch/apidocs/Functions.html">Global Functions</a></li>
 </ul>
 
 
@@ -39,8 +39,7 @@ that `MDCSwitch` objects have an intrinsic size and are not resizable.
 
 ### Installation with CocoaPods
 
-To add the Switch component to your Xcode project using CocoaPods, add the following to your
-PodFile:
+To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ~~~ bash
 pod 'MaterialComponents/Switch'
@@ -58,6 +57,24 @@ $ pod install
 
 
 ## Usage
+
+### Importing
+
+Before using Switch, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialSwitch.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective C

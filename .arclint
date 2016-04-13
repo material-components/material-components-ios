@@ -8,11 +8,35 @@
     "text": {
       "type": "text",
       "include": "(\\.(m|h|mm|md|swift)$)",
-      "exclude": "(/Pods/)",
+      "exclude": [
+        "(/Pods/)"
+      ],
       "severity": {
+        "3": "disabled",
         "5": "disabled"
-      },
-      "text.max-line-length": 100
+      }
+    },
+    "line-length": {
+      "type": "regex-line-length",
+      "include": "(\\.(m|h|mm|md|swift)$)",
+      "exclude": [
+        "(/Pods/)",
+        "(CHANGELOG.md)",
+        "(\\.playground/.+\\.swift)"
+      ],
+      "max-line-length": 100,
+      "ignore-line-regexes": [
+        "(https?://)",
+        "(<a href)",
+        "(\\[.+\\]\\(.+\\))",
+        "( *func )",
+        "(^[-+@].+)",
+        "(NS_UNAVAILABLE;$)",
+        "(^    )",
+        "(^#define)",
+        "(^excerpt:)",
+        "(GENERATED)"
+      ]
     },
     "chmod": {
       "type": "chmod",
@@ -21,17 +45,26 @@
     "prose": {
       "type": "prose",
       "include": "(\\.(md)$)",
-      "exclude": "(/Pods/)",
+      "exclude": [
+        "(/Pods/)",
+        "(^CHANGELOG.md)",
+        "(writing_readmes.md$)"
+      ],
       "severity": {
         "typography.symbols.curly_quotes": "disabled",
         "typography.symbols.ellipsis": "disabled",
-        "leonard.exclamation.30ppm": "disabled"
+        "leonard.exclamation.30ppm": "disabled",
+        "misc.annotations": "warning"
       }
     },
     "spelling": {
       "type": "spelling",
       "include": "(\\.(m|h|mm|md)$)",
       "exclude": "(/Pods/)"
+    },
+    "jazzy": {
+      "type": "jazzy",
+      "include": "(components/.*?/src/[^\/]+?\\.(h|swift)$)"
     }
   }
 }

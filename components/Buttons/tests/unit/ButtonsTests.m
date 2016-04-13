@@ -15,8 +15,8 @@
  */
 
 #import <XCTest/XCTest.h>
-#import "MaterialButtons.h"
 #import "MDCShadowElevations.h"
+#import "MaterialButtons.h"
 
 // A value greater than the largest value created by combining normal values of UIControlState.
 // This is a complete hack, but UIControlState doesn't expose anything useful here.
@@ -71,7 +71,7 @@ static UIColor *randomColor() {
   NSString *originalTitle = @"some Text";
 
   // When
-  button.shouldCapitalizeTitle = YES;
+  button.uppercaseTitle = YES;
   [button setTitle:originalTitle forState:UIControlStateNormal];
 
   // Then
@@ -84,7 +84,7 @@ static UIColor *randomColor() {
   NSString *originalTitle = @"some Text";
 
   // When
-  button.shouldCapitalizeTitle = NO;
+  button.uppercaseTitle = NO;
   [button setTitle:originalTitle forState:UIControlStateNormal];
 
   // Then
@@ -97,9 +97,9 @@ static UIColor *randomColor() {
   NSString *originalTitle = @"some Text";
 
   // When
-  button.shouldCapitalizeTitle = NO;
+  button.uppercaseTitle = NO;
   [button setTitle:originalTitle forState:UIControlStateNormal];
-  button.shouldCapitalizeTitle = YES;
+  button.uppercaseTitle = YES;
 
   // Then
   XCTAssertEqualObjects(button.currentTitle, [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
@@ -271,7 +271,10 @@ static UIColor *randomColor() {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.highlighted = NO;
   button.selected = arc4random_uniform(2);
-  button.enabled = YES;  // For some reason we can only set the highlighted state to YES if its enabled is also YES
+
+  // For some reason we can only set the highlighted state to YES if its enabled is also YES.
+  button.enabled = YES;
+
   UIControlState oldState = button.state;
   XCTAssertFalse(button.highlighted);
 

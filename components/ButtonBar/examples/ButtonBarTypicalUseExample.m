@@ -55,9 +55,12 @@
 
   // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
   CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
-  buttonBar.frame = (CGRect){0, 100, size};
+  CGFloat x = (self.view.bounds.size.width - size.width) / 2;
+  CGFloat y = self.view.bounds.size.height / 2 - size.height;
+  buttonBar.frame = (CGRect){x, y, size};
   buttonBar.autoresizingMask =
-      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
+      (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
+       UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   [self.view addSubview:buttonBar];
 
   // Ensure that the controller's view isn't transparent.
@@ -86,7 +89,16 @@
 @implementation ButtonBarTypicalUseExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Button Bar", @"Typical use" ];
+  return @[ @"Button Bar", @"Button Bar" ];
+}
+
+- (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
++ (NSString *)catalogDescription {
+  return @"The Button Bar is a view that represents a list of UIBarButtonItems as"
+          " horizontally-aligned buttons.";
 }
 
 @end

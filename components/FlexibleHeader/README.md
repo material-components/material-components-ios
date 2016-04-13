@@ -24,11 +24,11 @@ UIScrollViewDelegate events.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
-  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
-  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
-  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
-  <li class="icon-link"><a href="/apidocs/FlexibleHeader/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
+  <li class="icon-link"><a href="/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-link"><a href="/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
+  <li class="icon-link"><a href="/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-link"><a href="/components/FlexibleHeader/apidocs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-link"><a href="/components/FlexibleHeader/apidocs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
 </ul>
 
 
@@ -93,6 +93,23 @@ It also has some technical disadvantages:
 
 
 ## Usage
+
+### Importing
+
+Before using Flexible Header, you'll need to import it:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+#import "MaterialFlexibleHeader.h"
+~~~
+
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
 
 ### Add the Flexible Header to a view controller
 
@@ -247,6 +264,31 @@ UIScrollView subclass.
 
 #### Swift
 ~~~ swift
+override func scrollViewDidScroll(scrollView: UIScrollView) {
+  if scrollView == self.headerViewController.headerView.trackingScrollView {
+    self.headerViewController.headerView.trackingScrollViewDidScroll()
+  }
+}
+
+override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  if scrollView == self.headerViewController.headerView.trackingScrollView {
+    self.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
+  }
+}
+
+override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  let headerView = self.headerViewController.headerView
+  if scrollView == headerView.trackingScrollView {
+    headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+  }
+}
+
+override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  let headerView = self.headerViewController.headerView
+  if scrollView == headerView.trackingScrollView {
+    headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity, targetContentOffset: targetContentOffset)
+  }
+}
 ~~~
 <!--</div>-->
 

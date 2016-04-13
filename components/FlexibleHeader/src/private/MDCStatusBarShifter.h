@@ -104,6 +104,6 @@
  which will cause the snapshot view to shift off-screen as well.
  */
 - (void)statusBarShifter:(MDCStatusBarShifter *)statusBarShifter
-  wantsSnapshotViewAdded:(UIView *)view;
+    wantsSnapshotViewAdded:(UIView *)view;
 
 @end

@@ -16,15 +16,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialTypography.h"
+
 /**
  The MDCRobotoFontLoader class provides a shared mechanism through which the Roboto fonts can
  be loaded and customized.
-
- TODO: https://github.com/google/material-components-ios/issues/74
- Make MDCRobotoFontLoader conform to the <MDCTypographyFontLoading>. This was intended to be a
- strong dependency but is weak during the deprecation period.
  */
-@interface MDCRobotoFontLoader : NSObject
+@interface MDCRobotoFontLoader : NSObject <MDCTypographyFontLoading>
 
 #pragma mark Accessing the font loader
 

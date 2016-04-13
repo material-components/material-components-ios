@@ -35,11 +35,13 @@
 
  Example implementation:
 
-     _multiplexer = [[MDCScrollViewDelegateMultiplexer alloc] init];
-     myScrollView.delegate = _multiplexer;
-     [_multiplexer addObservingDelegate:myControl];
-     [_multiplexer addObservingDelegate:anotherControl];
+ _multiplexer = [[MDCScrollViewDelegateMultiplexer alloc] init];
+ myScrollView.delegate = _multiplexer;
+ [_multiplexer addObservingDelegate:myControl];
+ [_multiplexer addObservingDelegate:anotherControl];
  */
+// clang-format off
+__deprecated_msg("This component is now available at https://github.com/google/GOSScrollViewDelegateMultiplexer.")
 @interface MDCScrollViewDelegateMultiplexer : NSObject <UIScrollViewDelegate>
 
 /**
@@ -47,7 +49,7 @@
 
  @param delegate The observing delegate to be added.
  */
-- (void)addObservingDelegate:(nonnull id<UIScrollViewDelegate>)delegate;
+- (void)addObservingDelegate : (nonnull id<UIScrollViewDelegate>)delegate;
 
 /**
  Removes an observing delegate from the array of delegates.
@@ -73,8 +75,8 @@
  provide return values, this protocol allows the receiver to select the specific value to return
  from an array of those responding result values.
  */
-@protocol MDCScrollViewDelegateCombining <NSObject>
-@optional
+__deprecated_msg("This component is now available at https://github.com/google/GOSScrollViewDelegateMultiplexer.")
+@protocol MDCScrollViewDelegateCombining<NSObject> @optional
 
 /**
  Allows the receiver to return the preferred UIView result from observer delegates that have
@@ -82,7 +84,7 @@
 
  @param multiplexer The scrollView delegate multiplexer.
  @param results A pointer array of UIView instances returned by responding observer delegates.
-                NSPointerArray here to allow nil results from -viewForZoomingInScrollView.
+ NSPointerArray here to allow nil results from -viewForZoomingInScrollView.
  @param respondingObservers An array of observing delegates that responded.
 
  @return The preferred UIView result for this method.
@@ -106,3 +108,4 @@
               fromRespondingObservers:(nonnull NSArray *)respondingObservers;
 
 @end
+    // clang-format on
