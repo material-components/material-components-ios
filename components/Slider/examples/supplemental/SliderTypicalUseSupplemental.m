@@ -21,7 +21,7 @@
           " continuous range or discrete set of values.";
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 
