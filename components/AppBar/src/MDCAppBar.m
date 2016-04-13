@@ -78,6 +78,13 @@ static const CGFloat kStatusBarHeight = 20;
 
 - (void)addSubviewsToParent {
   MDCFlexibleHeaderViewController *fhvc = self.headerViewController;
+#if DEBUG
+  if (!fhvc.parentViewController) {
+    NSLog(@"headerViewController does not have a parentViewController. "
+          @"Use [self addChildViewController:appBar.headerViewController]. "
+          @"This warning only appears in DEBUG builds");
+  }
+#endif  //DEBUG
   if (fhvc.view.superview == fhvc.parentViewController.view) {
     return;
   }
