@@ -52,7 +52,8 @@ static const CGFloat kDeltaYSlop = 5;
 static const CGFloat kAttachmentCoefficient = 12;
 
 // The amount the user needs to scroll back before the header starts shifting back on-screen.
-static const CGFloat kMaxAnchorLength = 175;
+static const CGFloat kMaxAnchorLengthFullSwipe = 175;
+static const CGFloat kMaxAnchorLengthQuickSwipe = 25;
 
 // The minimum proportion of the header that will cause it to slide back on screen when the scroll
 // view finishes decelerating with the header partially shifted.
@@ -170,6 +171,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     NSPointerFunctionsOptions valueOptions =
         (NSPointerFunctionsStrongMemory | NSPointerFunctionsObjectPointerPersonality);
     _trackedScrollViews = [NSMapTable mapTableWithKeyOptions:keyOptions valueOptions:valueOptions];
+
+    _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
 
     _minimumHeight = kFlexibleHeaderDefaultHeight;
     _maximumHeight = kFlexibleHeaderDefaultHeight;
@@ -643,7 +646,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
       CGFloat upperBound;
 
       if (headerHeight < 0) {  // Header is shifting while detached from content.
-        upperBound = [self fhv_accumulatorMax] + kMaxAnchorLength;
+        upperBound = [self fhv_accumulatorMax] + [self fhv_anchorLength];
 
       } else if (headerHeight < _minimumHeight) {  // Header is shifting while attached to content.
         upperBound = [self fhv_accumulatorMax];
@@ -673,6 +676,16 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   self.bounds = bounds;
 
   [self fhv_commitAccumulatorToFrame];
+}
+
+- (CGFloat)fhv_anchorLength {
+  switch (_headerContentImportance) {
+    case MDCFlexibleHeaderContentImportanceDefault:
+      return kMaxAnchorLengthFullSwipe;
+
+    case MDCFlexibleHeaderContentImportanceHigh:
+      return kMaxAnchorLengthQuickSwipe;
+  }
 }
 
 // Commit the current shiftOffscreenAccumulator value to the view's position.

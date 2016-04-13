@@ -44,6 +44,25 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderShiftBehavior) {
   MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar,
 };
 
+/** The importance of content contained within the flexible header view. */
+typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
+
+  /**
+   Default behavior requires at most approximately a single swipe before the header re-appears.
+   */
+  MDCFlexibleHeaderContentImportanceDefault,
+
+  /**
+   Highly-important header content will re-appear faster than default importance.
+
+   Examples of important content:
+
+   - Search bar.
+   - Non-navigational actions.
+   */
+  MDCFlexibleHeaderContentImportanceHigh,
+};
+
 /** Mutually exclusive phases that the flexible header view can be in. */
 typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 
@@ -277,6 +296,16 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 
 /** The behavior of the header in response to the user interacting with the tracking scroll view. */
 @property(nonatomic) MDCFlexibleHeaderShiftBehavior shiftBehavior;
+
+/**
+ If shiftBehavior is enabled, this property affects the manner in which the Header reappears when
+ pulling content down in the tracking scroll view.
+
+ Ignored if shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled.
+
+ Default: MDCFlexibleHeaderContentImportanceDefault
+ */
+@property(nonatomic) MDCFlexibleHeaderContentImportance headerContentImportance;
 
 /**
  Whether or not the header view is allowed to expand past its maximum height when the tracking
