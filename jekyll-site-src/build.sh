@@ -48,11 +48,11 @@ for directory in "$ROOT_DIR"/components/*/README.md; do
   [ -d docs ] && cp -r docs "$ROOT_DIR"/site-source/jekyll-site-src/components/$component
   cd $ROOT_DIR
 done
-# 3. Copy all community markdown files
-[ -d "$ROOT_DIR"/site-source/jekyll-site-src/community ] ||
-	mkdir "$ROOT_DIR"/site-source/jekyll-site-src/community
-cp "$ROOT_DIR"/community/* "$ROOT_DIR"/site-source/jekyll-site-src/community >> /dev/null 2> /dev/null
-mv "$ROOT_DIR"/site-source/jekyll-site-src/community/README.md "$ROOT_DIR"/site-source/jekyll-site-src/community/index.md
+# 3. Copy all contributing markdown files
+[ -d "$ROOT_DIR"/site-source/jekyll-site-src/contributing ] ||
+	mkdir "$ROOT_DIR"/site-source/jekyll-site-src/contributing
+cp "$ROOT_DIR"/contributing/* "$ROOT_DIR"/site-source/jekyll-site-src/contributing >> /dev/null 2> /dev/null
+mv "$ROOT_DIR"/site-source/jekyll-site-src/contributing/README.md "$ROOT_DIR"/site-source/jekyll-site-src/contributing/index.md
 # 4. Copy all howto files
 [ -d "$ROOT_DIR"/site-source/jekyll-site-src/howto ] ||
 	mkdir "$ROOT_DIR"/site-source/jekyll-site-src/howto
@@ -67,7 +67,7 @@ GREP_LIQUID_TAGS="grep -rl --include='*\.md' '<!--[{<].*[>}]-->'"
 PERLSUB_LIQUID_TAGS="perl -pi -e 's/<!--([{<])(.*?)([>}])-->/\1\2\3/g'"
 eval "$PERLSUB_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/index.md"
 eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/howto | xargs $PERLSUB_LIQUID_TAGS"
-eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/community | xargs $PERLSUB_LIQUID_TAGS"
+eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/contributing | xargs $PERLSUB_LIQUID_TAGS"
 eval "$GREP_LIQUID_TAGS $ROOT_DIR/site-source/jekyll-site-src/components | xargs $PERLSUB_LIQUID_TAGS"
 
 

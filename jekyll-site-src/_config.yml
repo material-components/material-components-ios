@@ -59,6 +59,6 @@ defaults:
   values:
     categories: components
 - scope:
-    path: community
+    path: contributing
   values:
-    categories: community
+    categories: contributing
