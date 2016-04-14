@@ -1,4 +1,0 @@
-module_name: Switch
-umbrella_header: src/MaterialSwitch.h
-objc: true
-sdk: iphonesimulator

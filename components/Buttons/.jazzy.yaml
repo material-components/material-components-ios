@@ -1,4 +1,0 @@
-module_name: Buttons
-umbrella_header: src/MaterialButtons.h
-objc: true
-sdk: iphonesimulator

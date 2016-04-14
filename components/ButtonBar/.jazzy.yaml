@@ -1,4 +1,0 @@
-module_name: ButtonBar
-umbrella_header: src/MaterialButtonBar.h
-objc: true
-sdk: iphonesimulator
