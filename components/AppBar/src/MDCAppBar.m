@@ -23,7 +23,7 @@
 #import "MDCAppBarContainerViewController.h"
 
 #import "MaterialFlexibleHeader.h"
-#import "MaterialIcons+ic_arrow_back.h"
+#import "MaterialIcons_ic_arrow_back.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
