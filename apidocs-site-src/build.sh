@@ -37,7 +37,7 @@ BuildComponent () {
 
   # Clear the exsiting folder
   if [ -d $jazzy_output ]; then
-    rm -r $jazzy_output/*
+    rm -r $jazzy_output
   fi
 
   # Generate new api doc
@@ -48,8 +48,11 @@ BuildComponent () {
     --umbrella-header src/Material$component.h \
     --objc \
     --sdk iphonesimulator \
-    >> /dev/null 2> /dev/null
-  cp -R "$ROOT_DIR/docs/assets/" "$jazzy_output/assets" >> /dev/null 2> /dev/null
+    --swift-version 2.1.1 >> /dev/null
+  # Copy api doc assets if there is any
+  if [ -d $folder/docs/assets ]; then
+    cp -R "$folder/docs/assets/" "$jazzy_output/assets/"
+  fi
 
   # Adjust path to assets in generated files
   sed -i '' 's/docs\///g' $jazzy_output/*.html
