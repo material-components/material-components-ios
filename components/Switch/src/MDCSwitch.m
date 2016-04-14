@@ -295,7 +295,7 @@ static const CGFloat kMDCSwitchLightThemeTrackOffAlpha = 0.26f;
 static const CGFloat kMDCSwitchLightThemeTrackDisabledAlpha = 0.12f;
 
 + (UIColor *)defaultOnTintColor {
-  return [UIColor greenColor];
+  return [UIColor colorWithRed:0.32f green:0.87f blue:0 alpha:1];
 }
 
 + (UIColor *)defaultOffThumbColor {

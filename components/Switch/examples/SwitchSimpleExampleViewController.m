@@ -68,16 +68,7 @@
 #pragma mark catalg by convention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Switch", @"Switch" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Switch provides an Material Design on/off switch control with an interface similar to"
-          " UISwitch.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
+  return @[ @"Switch", @"MDCSwitch and UISwitch Compared" ];
 }
 
 @end
