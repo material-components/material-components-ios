@@ -966,7 +966,11 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
   _minimumHeight = minimumHeight;
 
-  [self fhv_updateLayout];
+  if (_minimumHeight > _maximumHeight) {
+    [self setMaximumHeight:_minimumHeight];
+  } else {
+    [self fhv_updateLayout];
+  }
 }
 
 - (void)setMaximumHeight:(CGFloat)maximumHeight {
@@ -991,7 +995,11 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _trackingScrollView.contentOffset = originalOffset;
   }
 
-  [self fhv_updateLayout];
+  if (_maximumHeight < _minimumHeight) {
+    [self setMinimumHeight:_maximumHeight];
+  } else {
+    [self fhv_updateLayout];
+  }
 }
 
 - (void)setInFrontOfInfiniteContent:(BOOL)inFrontOfInfiniteContent {

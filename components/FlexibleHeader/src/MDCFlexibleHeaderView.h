@@ -289,8 +289,21 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 
 #pragma mark Bounding Dimensions
 
-@property(nonatomic) CGFloat minimumHeight;  ///< The minimum height that this header can shrink to.
-@property(nonatomic) CGFloat maximumHeight;  ///< The maximum height that this header can expand to.
+/**
+ The minimum height that this header can shrink to.
+
+ If you change the value of this property and the maximumHeight of the receiver is below the new
+ minimumHeight, maximumHeight will be adjusted to match the new minimum value.
+ */
+@property(nonatomic) CGFloat minimumHeight;
+
+/**
+ The maximum height that this header can expand to.
+
+ If you change the value of this property and the minimumHeight of the receiver is above the new
+ maximumHeight, minimumHeight will be adjusted to match the new maximumHeight.
+ */
+@property(nonatomic) CGFloat maximumHeight;
 
 #pragma mark Behaviors
 
