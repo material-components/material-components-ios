@@ -257,8 +257,34 @@ class NodeViewController: CBCNodeListViewController {
       if contentVC.respondsToSelector("catalogShouldHideNavigation") {
         vc = contentVC
       } else {
-        vc = MDCCatalogTypicalExampleViewController(contentViewController: contentVC,
-          title: node.title)
+        let container = MDCAppBarContainerViewController(contentViewController: contentVC)
+
+        // TODO(featherless): Remove once
+        // https://github.com/google/material-components-ios/issues/367 is resolved.
+        contentVC.title = node.title
+
+        let headerView = container.appBar.headerViewController.headerView
+
+        headerView.backgroundColor = UIColor.whiteColor()
+
+        let textColor = UIColor(white: 0, alpha: 0.8)
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+          [NSForegroundColorAttributeName:textColor],
+          forState: .Normal)
+
+        let lineFrame = CGRectMake(0, headerView.bounds.height, headerView.bounds.width, 1)
+        let line = UIView(frame: lineFrame)
+        line.backgroundColor = UIColor(white: 0.72, alpha: 1)
+        line.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
+        headerView.addSubview(line)
+
+        var contentFrame = container.contentViewController.view.frame
+        let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
+        contentFrame.origin.y += headerSize.height
+        contentFrame.size.height -= headerSize.height
+        container.contentViewController.view.frame = contentFrame
+
+        vc = container
       }
     } else {
       vc = NodeViewController(node: node)
