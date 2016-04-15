@@ -1,0 +1,4 @@
+module_name: HeaderStackView
+umbrella_header: src/MaterialHeaderStackView.h
+objc: true
+sdk: iphonesimulator

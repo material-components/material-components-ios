@@ -1,0 +1,4 @@
+module_name: Slider
+umbrella_header: src/MaterialSlider.h
+objc: true
+sdk: iphonesimulator

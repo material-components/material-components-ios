@@ -1,0 +1,4 @@
+module_name: RobotoFontLoader
+umbrella_header: src/MaterialRobotoFontLoader.h
+objc: true
+sdk: iphonesimulator

@@ -1,0 +1,4 @@
+module_name: FontDiskLoader
+umbrella_header: src/MaterialFontDiskLoader.h
+objc: true
+sdk: iphonesimulator

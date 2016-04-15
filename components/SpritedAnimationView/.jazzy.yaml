@@ -1,0 +1,4 @@
+module_name: SpritedAnimationView
+umbrella_header: src/MaterialSpritedAnimationView.h
+objc: true
+sdk: iphonesimulator

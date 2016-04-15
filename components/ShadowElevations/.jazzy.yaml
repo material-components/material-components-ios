@@ -1,0 +1,4 @@
+module_name: ShadowElevations
+umbrella_header: src/MaterialShadowElevations.h
+objc: true
+sdk: iphonesimulator
