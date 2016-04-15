@@ -368,6 +368,17 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   return _trackingScrollView.contentSize.height;
 }
 
+// Returns a value indicating how much the header is overlapping the tracking scroll view's content.
+// > 0 overlapping the content
+// = 0 attached to top of content
+// < 0 the content is below the header
+- (CGFloat)fhv_projectedHeaderBottomEdge {
+  CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
+  CGRect projectedFrame = [self convertRect:self.bounds toView:self.trackingScrollView.superview];
+  CGFloat frameBottomEdge = CGRectGetMaxY(projectedFrame);
+  return frameBottomEdge + offsetWithoutInset;
+}
+
 - (CGFloat)fhv_accumulatorMax {
   return (self.hidesStatusBarWhenCollapsed ? _minimumHeight
                                            : _minimumHeight - kExpectedStatusBarHeight);
@@ -388,7 +399,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
 // The flexible header is "in front of" the content.
 - (BOOL)fhv_isDetachedFromTopOfContent {
-  return [self fhv_contentOffsetWithoutInjectedTopInset] >= 0;
+  // Epsilon here is somewhat large in order to be visually-forgiving for sub-point situations.
+  return [self fhv_projectedHeaderBottomEdge] > (CGFloat)0.5;
 }
 
 - (BOOL)fhv_isOverExtendingBottom {
@@ -513,16 +525,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     return;
   }
 
-  CGFloat frameBottomEdge;
-
   CGRect frame = self.frame;
 
-  // Calculate the frame's bottom edge in visual relation to the tracking scroll view.
-  CGRect projectedFrame = [self convertRect:self.bounds toView:self.trackingScrollView.superview];
-  frameBottomEdge = (float)CGRectGetMaxY(projectedFrame);
-
-  CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
-  frameBottomEdge = (float)(frameBottomEdge + offsetWithoutInset);
+  CGFloat frameBottomEdge = [self fhv_projectedHeaderBottomEdge];
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
 
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator);
