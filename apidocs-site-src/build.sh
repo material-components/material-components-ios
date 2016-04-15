@@ -48,7 +48,7 @@ BuildComponent () {
     --umbrella-header src/Material$component.h \
     --objc \
     --sdk iphonesimulator \
-    --swift-version 2.1.1 >> /dev/null
+    --swift-version $(swift --version | head -n1 | awk '{print $4}') >> /dev/null
   # Copy api doc assets if there is any
   if [ -d $folder/docs/assets ]; then
     cp -R "$folder/docs/assets/" "$jazzy_output/assets/"
