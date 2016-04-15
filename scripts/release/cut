@@ -26,8 +26,8 @@ else
 fi
 
 # Prepare the CHANGELOG for updates.
-if ! grep "## release-candidate" CHANGELOG.md >> /dev/null; then
-  echo -e "## release-candidate\n" | cat - CHANGELOG.md > /tmp/out && mv /tmp/out CHANGELOG.md
+if ! grep "# release-candidate" CHANGELOG.md >> /dev/null; then
+  echo -e "# release-candidate TODO: Replace me with version number. \n" | cat - CHANGELOG.md > /tmp/out && mv /tmp/out CHANGELOG.md
 fi
 
 RELEASE_SHA=$(git merge-base --fork-point release-candidate origin/develop)

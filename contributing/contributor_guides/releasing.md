@@ -43,6 +43,12 @@ To test the branch locally you can run:
 
 Verify that the unit tests do not fail.
 
+Build and run the catalog and demo applications:
+
+    scripts/build_all_pod_projects
+
+Identify why any failures occurred and resolve them before continuing.
+
 ### Push the release branch early and often
 
 Push `release-candidate` to GitHub as you make necessary changes. This allows other people and
@@ -184,11 +190,14 @@ To see all changes that are part of this release, run:
 
 ### Classify the release type
 
-Based on the information at your disposal you should now be able to identify the release number.
+Based on the information at your disposal you should now be able to identify the release type.
+Use the `next` script to generate the next version number:
 
-Bump the release by running `bump` with the next version number:
+    scripts/release/next {major|minor|patch}
 
-    scripts/release/bump $(scripts/release/next {major|minor|patch})
+Bump the release by running `bump` with the release's version number:
+
+    scripts/release/bump <version number>
 
 Also rename CHANGELOG.md's "release-candidate" section with the name of this release.
 
@@ -196,13 +205,31 @@ Also rename CHANGELOG.md's "release-candidate" section with the name of this rel
 
 Commit the results to your branch.
 
-    git commit -am "Bumped version number to $(scripts/release/next {major|minor|patch})."
+    git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
     git push origin release-candidate
 
-## Merge the release branch
+## Send the release out for review
 
-Once the release has been fully tested and clients have had a reasonable opportunity to test it, you
-may merge the release into the `develop` and `master` branches.
+Sent the release-candidate branch out for review:
+
+    git fetch
+    git checkout release-candidate
+    arc diff origin/master --message-file scripts/release/release_checklist.txt
+
+Check off each item in the diff's checklist before merging the release candidate branch.
+
+## Do not land the release candidate
+
+Before you can merge the release branch into either develop or master you **must** get the release
+go-ahead from the following clients:
+
+- Google: must verify that the release branch passes all internal tests. If you are a Googler, see
+  the internal "mirroring" document for further instructions.
+
+## Merge the release candidate branch
+
+Once the release has passed all tests by clients, you may merge the release into the `develop` and
+`master` branches.
 
     scripts/release/merge
 
