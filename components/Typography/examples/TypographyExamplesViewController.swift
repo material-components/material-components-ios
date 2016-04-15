@@ -211,7 +211,7 @@ class TypographyExamplesViewController: UICollectionViewController {
       + " opacities from the Material Design specifications."
   }
 
-  func catalogIsPrimaryDemo() -> Bool {
+  class func catalogIsPrimaryDemo() -> Bool {
     return true
   }
 
