@@ -30,35 +30,31 @@ cd "$DIR/../.."
 ROOT_DIR="$(pwd)"
 
 
-# COPY ALL SOURCE MARKDOWN
-# 1. Home page
-cp "$ROOT_DIR"/site-index.md "$ROOT_DIR"/site-source/jekyll-site-src/index.md
-# 2. Copy and rename components README.md files
-[ -d "$ROOT_DIR"/site-source/jekyll-site-src/components ] ||
-	mkdir "$ROOT_DIR"/site-source/jekyll-site-src/components
-cp "$ROOT_DIR"/components/README.md "$ROOT_DIR"/site-source/jekyll-site-src/components/index.md
-for directory in "$ROOT_DIR"/components/*/README.md; do
-	folder=$(dirname $directory)
-  component=$(basename $folder)
-  # echo "Copy docs for $component..."
-  cd "$folder"
-  [ -d "$ROOT_DIR"/site-source/jekyll-site-src/components/"$component" ] ||
-    mkdir "$ROOT_DIR"/site-source/jekyll-site-src/components/"$component"
-  cp README.md "$ROOT_DIR"/site-source/jekyll-site-src/components/$component/index.md >> /dev/null 2> /dev/null
-  [ -d docs ] && cp -r docs "$ROOT_DIR"/site-source/jekyll-site-src/components/$component
-  cd $ROOT_DIR
-done
-# 3. Copy all contributing markdown files
-[ -d "$ROOT_DIR"/site-source/jekyll-site-src/contributing ] ||
-	mkdir "$ROOT_DIR"/site-source/jekyll-site-src/contributing
-cp "$ROOT_DIR"/contributing/* "$ROOT_DIR"/site-source/jekyll-site-src/contributing >> /dev/null 2> /dev/null
-mv "$ROOT_DIR"/site-source/jekyll-site-src/contributing/README.md "$ROOT_DIR"/site-source/jekyll-site-src/contributing/index.md
-# 4. Copy all howto files
-[ -d "$ROOT_DIR"/site-source/jekyll-site-src/howto ] ||
-	mkdir "$ROOT_DIR"/site-source/jekyll-site-src/howto
-cp "$ROOT_DIR"/howto/* "$ROOT_DIR"/site-source/jekyll-site-src/howto >> /dev/null 2> /dev/null
-mv "$ROOT_DIR"/site-source/jekyll-site-src/howto/README.md "$ROOT_DIR"/site-source/jekyll-site-src/howto/index.md
+## COPY ALL SOURCE MARKDOWN
 
+## The home page is special.
+cp "$ROOT_DIR"/site-index.md "$ROOT_DIR"/site-source/jekyll-site-src/index.md
+
+## Copy each folder containing documentation.
+FOLDERS=("components" "contributing" "howto")
+TARGET="${ROOT_DIR}/site-source/jekyll-site-src"
+for i in ${FOLDERS[@]}; do
+  ## Include all folders (for recursion) and Markdown files, but nothing else.
+  rsync -r --include='*/' --include='*.md' --exclude='*' --prune-empty-dirs "${ROOT_DIR}/${i}" "${TARGET}"
+
+  ## Rename the README.md files to index.md in preparation to become index.html.
+  for j in $(find "${TARGET}/${i}" -name README.md); do
+    NEW_NAME=$(echo ${j} | sed -e s/README/index/)
+    mv "${j}" "${NEW_NAME}"
+  done
+done
+
+## For the components only, copy extra docs in.
+for i in $(find components/* -type d -maxdepth 0); do
+  if [ -d "${i}/docs" ]; then
+    rsync -r "${i}/docs" "${TARGET}/${i}"
+  fi
+done
 
 # UNCOMMENT LIQUID TAGS FROM MARKDOWN
 #grep -rl '<!--{.*}-->' ./ | xargs sed -i '' 's/<!--{\(.*\)}-->/{\1}/g'
