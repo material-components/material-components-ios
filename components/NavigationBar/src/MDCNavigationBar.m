@@ -235,7 +235,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (CGSize)intrinsicContentSize {
   const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
   CGFloat height = (isPad ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight);
-  return CGSizeMake(self.superview.superview.bounds.size.width, height);
+  return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
 #pragma mark - Private
