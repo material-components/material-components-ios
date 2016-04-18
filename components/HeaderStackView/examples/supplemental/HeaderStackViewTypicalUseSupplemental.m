@@ -21,8 +21,8 @@
 
 #import "HeaderStackViewTypicalUseSupplemental.h"
 
-#import "MaterialNavigationBar.h"
 #import "MaterialHeaderStackView.h"
+#import "MaterialNavigationBar.h"
 
 @interface ExampleInstructionsViewHeaderStackViewTypicalUse : UIView
 
@@ -81,7 +81,7 @@
 
 - (UIImage *)headerBackgroundImage {
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  NSString *imagePath = [bundle pathForResource:@"mdc_theme" ofType:@"png"];
+  NSString *imagePath = [bundle pathForResource:@"header_stack_view_theme" ofType:@"png"];
   return [UIImage imageWithContentsOfFile:imagePath];
 }
 
@@ -150,19 +150,19 @@
 
   NSDictionary *instructionAttributes1 =
       @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline],
-      NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
-                                                       green:0.459
-                                                        blue:0.459
-                                                       alpha:0.87f],
-      NSParagraphStyleAttributeName : style};
+        NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
+                                                         green:0.459
+                                                          blue:0.459
+                                                         alpha:0.87f],
+        NSParagraphStyleAttributeName : style};
 
   NSDictionary *instructionAttributes2 =
       @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline],
-      NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
-                                                       green:0.459
-                                                        blue:0.459
-                                                       alpha:0.87f],
-      NSParagraphStyleAttributeName : style};
+        NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
+                                                         green:0.459
+                                                          blue:0.459
+                                                         alpha:0.87f],
+        NSParagraphStyleAttributeName : style};
 
   NSString *instructionText = @"SWIPE RIGHT\n\n\n\nto go back\n\n\n\n\n\n";
   NSMutableAttributedString *instructionsAttributedString = [[NSMutableAttributedString alloc]
