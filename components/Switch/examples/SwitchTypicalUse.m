@@ -31,7 +31,7 @@
   self.switchComponent = [[MDCSwitch alloc] init];
   [self.switchComponent setOn:YES];
   [self.switchComponent addTarget:self
-                           action:@selector(didChangeSliderValue:)
+                           action:@selector(didChangeSwitchValue:)
                  forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.switchComponent];
 
@@ -41,7 +41,7 @@
   self.colorSwitchComponent.onTintColor = [UIColor colorWithRed:0 green:0.47f blue:0.9f alpha:1];
   [self.colorSwitchComponent setOn:YES];
   [self.colorSwitchComponent addTarget:self
-                                action:@selector(didChangeSliderValue:)
+                                action:@selector(didChangeSwitchValue:)
                       forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.colorSwitchComponent];
 
@@ -49,7 +49,7 @@
 
   self.disabledSwitchComponent = [[MDCSwitch alloc] init];
   [self.disabledSwitchComponent addTarget:self
-                                   action:@selector(didChangeSliderValue:)
+                                   action:@selector(didChangeSwitchValue:)
                          forControlEvents:UIControlEventValueChanged];
   self.disabledSwitchComponent.enabled = NO;
   [self.view addSubview:self.disabledSwitchComponent];
@@ -61,9 +61,8 @@
   [self setupExampleViews];
 }
 
-- (void)didChangeSliderValue:(id)sender {
-  UISwitch *slider = sender;
-  NSLog(@"did change %@ value: %d", NSStringFromClass([sender class]), slider.isOn);
+- (void)didChangeSwitchValue:(MDCSwitch *)sender {
+  NSLog(@"did change %@ value: %d", NSStringFromClass([sender class]), sender.isOn);
 }
 
 @end

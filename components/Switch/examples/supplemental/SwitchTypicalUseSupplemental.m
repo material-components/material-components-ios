@@ -5,15 +5,16 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SwitchTypicalUseSupplemental.h"
+#import "MaterialSwitch.h"
 #import "MaterialTypography.h"
+#import "SwitchTypicalUseSupplemental.h"
 
 #pragma mark - SwitchTypicalUseViewController
 
 @implementation SwitchTypicalUseViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Switch", @"Switch" ];
+  return @[ @"Switch", @"Typical use" ];
 }
 
 + (NSString *)catalogDescription {
