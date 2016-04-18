@@ -31,7 +31,7 @@
 
 - (void)setupExampleViews {
   UILabel *switchLabel = [[UILabel alloc] init];
-  switchLabel.text = @"Slider";
+  switchLabel.text = @"Switch";
   switchLabel.font = [MDCTypography captionFont];
   switchLabel.alpha = [MDCTypography captionFontOpacity];
   [switchLabel sizeToFit];
