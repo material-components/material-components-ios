@@ -15,7 +15,6 @@
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
 		664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */; };
 		666CA70D1CAEBCA9001B1884 /* CBCNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */; };
-		DE0B35471CAC16F2002C7357 /* MDCCatalogBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B35461CAC16F2002C7357 /* MDCCatalogBarViewController.swift */; };
 		DE1944861CBD9E40009E0321 /* MDCCatalogTileData.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1944681CBD9E40009E0321 /* MDCCatalogTileData.m */; };
 		DE1944871CBD9E40009E0321 /* MDCCatalogTileDataAppBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DE19446A1CBD9E40009E0321 /* MDCCatalogTileDataAppBar.m */; };
 		DE1944881CBD9E40009E0321 /* MDCCatalogTileDataButtonBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DE19446C1CBD9E40009E0321 /* MDCCatalogTileDataButtonBar.m */; };
@@ -33,7 +32,6 @@
 		DE1944941CBD9E40009E0321 /* MDCCatalogTileDataTypography.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1944841CBD9E40009E0321 /* MDCCatalogTileDataTypography.m */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DE5BD5AE1CB3F7F100D8D75D /* MDCCatalogTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BD5AD1CB3F7F100D8D75D /* MDCCatalogTile.swift */; };
-		DEEC11E51CA9AC3A00A15FC8 /* MDCCatalogBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEC11E41CA9AC3A00A15FC8 /* MDCCatalogBar.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -98,7 +96,6 @@
 		878DC2619FAA226EA1A1849A /* libPods-MDCCatalog-MDCCatalog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCCatalog-MDCCatalog.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2985B007C0718CB5E2511B3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFBFBC9BA56EED442714E5F3 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
-		DE0B35461CAC16F2002C7357 /* MDCCatalogBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogBarViewController.swift; sourceTree = "<group>"; };
 		DE1944671CBD9E40009E0321 /* MDCCatalogTileData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileData.h; sourceTree = "<group>"; };
 		DE1944681CBD9E40009E0321 /* MDCCatalogTileData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileData.m; sourceTree = "<group>"; };
 		DE1944691CBD9E40009E0321 /* MDCCatalogTileDataAppBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataAppBar.h; sourceTree = "<group>"; };
@@ -132,7 +129,6 @@
 		DE1944851CBD9E40009E0321 /* MDCCatalogTiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTiles.h; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
 		DE5BD5AD1CB3F7F100D8D75D /* MDCCatalogTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTile.swift; sourceTree = "<group>"; };
-		DEEC11E41CA9AC3A00A15FC8 /* MDCCatalogBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogBar.swift; sourceTree = "<group>"; };
 		DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
 		DEFF1C057348FFB1866CD023 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FBDDFF6A49F084B665BA398A /* Pods-MDCCatalog-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog-MDCCatalog/Pods-MDCCatalog-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
@@ -191,8 +187,6 @@
 			children = (
 				664524B61C6BA62A001ADBF8 /* AppDelegate.swift */,
 				665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */,
-				DEEC11E41CA9AC3A00A15FC8 /* MDCCatalogBar.swift */,
-				DE0B35461CAC16F2002C7357 /* MDCCatalogBarViewController.swift */,
 				DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */,
 				DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */,
 				DE5BD5AD1CB3F7F100D8D75D /* MDCCatalogTile.swift */,
@@ -457,7 +451,6 @@
 				DE19448F1CBD9E40009E0321 /* MDCCatalogTileDataPageControl.m in Sources */,
 				DE1944931CBD9E40009E0321 /* MDCCatalogTileDataSwitch.m in Sources */,
 				DE1944871CBD9E40009E0321 /* MDCCatalogTileDataAppBar.m in Sources */,
-				DEEC11E51CA9AC3A00A15FC8 /* MDCCatalogBar.swift in Sources */,
 				DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */,
 				DE19448C1CBD9E40009E0321 /* MDCCatalogTileDataInk.m in Sources */,
 				664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */,
@@ -466,7 +459,6 @@
 				DE5BD5AE1CB3F7F100D8D75D /* MDCCatalogTile.swift in Sources */,
 				DE1944881CBD9E40009E0321 /* MDCCatalogTileDataButtonBar.m in Sources */,
 				DE19448A1CBD9E40009E0321 /* MDCCatalogTileDataFlexibleHeader.m in Sources */,
-				DE0B35471CAC16F2002C7357 /* MDCCatalogBarViewController.swift in Sources */,
 				DE1944921CBD9E40009E0321 /* MDCCatalogTileDataSpritedAnimationView.m in Sources */,
 				DE1944891CBD9E40009E0321 /* MDCCatalogTileDataButtons.m in Sources */,
 				664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */,
