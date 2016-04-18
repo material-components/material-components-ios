@@ -149,7 +149,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
     if node.isExample() {
       vc = node.createExampleViewController()
     } else {
-      vc = NodeViewController(node: node)
+      vc = MDCNodeListViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
   }

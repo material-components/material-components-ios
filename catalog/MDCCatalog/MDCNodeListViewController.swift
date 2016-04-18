@@ -33,7 +33,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
 
 }
 
-class NodeViewController: CBCNodeListViewController {
+class MDCNodeListViewController: CBCNodeListViewController {
   let appBar = MDCAppBar()
   let sectionNames = ["Description", "Additional Examples"]
   let descriptionSectionHeight = CGFloat(100)
@@ -287,7 +287,7 @@ class NodeViewController: CBCNodeListViewController {
         vc = container
       }
     } else {
-      vc = NodeViewController(node: node)
+      vc = MDCNodeListViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
   }
