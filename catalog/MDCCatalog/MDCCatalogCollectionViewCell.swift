@@ -21,7 +21,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   var label = UILabel()
   let pad = CGFloat(14)
-  let tile = MDCCatalogTile(frame: CGRectZero)
+  let tile = MDCCatalogTileView(frame: CGRectZero)
 
   override init(frame: CGRect) {
     super.init(frame: frame)

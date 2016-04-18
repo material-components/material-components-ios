@@ -17,7 +17,7 @@ limitations under the License.
 import UIKit
 import MaterialComponents
 
-class MDCCatalogTile: UIView {
+class MDCCatalogTileView: UIView {
 
   private var componentNameString = "Misc"
   var componentName:String {
