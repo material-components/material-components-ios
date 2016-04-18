@@ -86,6 +86,8 @@ class MDCCatalogComponentsController: UICollectionViewController {
 
     self.headerViewController.headerView.addSubview(containerView)
 
+    self.headerViewController.headerView.forwardTouchEventsForView(containerView)
+
     self.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
     self.headerViewController.headerView.trackingScrollView = self.collectionView
 
