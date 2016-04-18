@@ -58,7 +58,6 @@
                                                      style:UIBarButtonItemStylePlain
                                                     target:self
                                                     action:@selector(didTapToggleButton:)];
-
   self.navBar.rightBarButtonItems = @[ self.moreButton ];
 }
 

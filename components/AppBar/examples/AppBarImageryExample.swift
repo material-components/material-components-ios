@@ -106,7 +106,7 @@ extension AppBarImagerySwiftExample {
       if cell == nil {
         cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
       }
-      cell!.textLabel!.text = "\(indexPath.row)"
+      cell!.layoutMargins = UIEdgeInsetsZero
       return cell!
   }
 }

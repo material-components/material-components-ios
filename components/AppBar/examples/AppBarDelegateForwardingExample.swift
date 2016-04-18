@@ -32,6 +32,9 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
     appBar.addSubviewsToParent()
+
+    self.tableView.layoutMargins = UIEdgeInsetsZero
+    self.tableView.separatorInset = UIEdgeInsetsZero
   }
 
   // The following four methods must be forwarded to the tracking scroll view in order to implement
@@ -68,7 +71,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Delegate forwarding (Swift)"
+    self.title = "Delegate Forwarding (Swift)"
 
     self.addChildViewController(appBar.headerViewController)
 
@@ -89,7 +92,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarDelegateForwardingExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Delegate forwarding (Swift)"]
+    return ["App Bar", "Delegate Forwarding (Swift)"]
   }
   func catalogShouldHideNavigation() -> Bool {
     return true
@@ -128,7 +131,7 @@ extension AppBarDelegateForwardingExample {
       if cell == nil {
         cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
       }
-      cell!.textLabel!.text = "\(indexPath.row)"
+      cell!.layoutMargins = UIEdgeInsetsZero
       return cell!
   }
 

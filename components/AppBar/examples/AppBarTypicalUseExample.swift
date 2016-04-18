@@ -56,6 +56,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     // Step 3: Register the App Bar views.
     appBar.addSubviewsToParent()
+
+    self.tableView.layoutMargins = UIEdgeInsetsZero
+    self.tableView.separatorInset = UIEdgeInsetsZero
   }
 
   // Optional step: If you allow the header view to hide the status bar you must implement this
@@ -105,7 +108,7 @@ extension AppBarTypicalUseSwiftExample {
       if cell == nil {
         cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
       }
-      cell!.textLabel!.text = "\(indexPath.row)"
+      cell!.layoutMargins = UIEdgeInsetsZero
       return cell!
   }
 

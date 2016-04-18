@@ -55,6 +55,9 @@
   self.tableView.delegate = self.appBar.headerViewController;
 
   [self.appBar addSubviewsToParent];
+
+  self.tableView.layoutMargins = UIEdgeInsetsZero;
+  self.tableView.separatorInset = UIEdgeInsetsZero;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -119,7 +122,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                   reuseIdentifier:@"cell"];
   }
-  cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+  cell.layoutMargins = UIEdgeInsetsZero;
   return cell;
 }
 

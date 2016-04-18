@@ -59,6 +59,9 @@
 
   // Step 3: Register the App Bar views.
   [self.appBar addSubviewsToParent];
+
+  self.tableView.layoutMargins = UIEdgeInsetsZero;
+  self.tableView.separatorInset = UIEdgeInsetsZero;
 }
 
 // Optional step: If you allow the header view to hide the status bar you must implement this
@@ -119,7 +122,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                   reuseIdentifier:@"cell"];
   }
-  cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+  cell.layoutMargins = UIEdgeInsetsZero;
   return cell;
 }
 
