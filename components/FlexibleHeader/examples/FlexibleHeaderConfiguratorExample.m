@@ -20,7 +20,7 @@
 
 #import "FlexibleHeaderConfiguratorSupplemental.h"
 
-@interface FlexibleHeaderConfiguratorExample ()
+@interface FlexibleHeaderConfiguratorExample () <MDCFlexibleHeaderViewLayoutDelegate>
 @property(nonatomic) BOOL overrideStatusBarHidden;
 @end
 
@@ -136,6 +136,25 @@
   if (scrollView == headerView.trackingScrollView) {
     [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
                                           targetContentOffset:targetContentOffset];
+  }
+}
+
+#pragma mark - MDCFlexibleHeaderViewLayoutDelegate
+
+- (void)flexibleHeaderViewController:(nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController
+    flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView {
+  CGFloat headerContentAlpha;
+  switch (flexibleHeaderView.scrollPhase) {
+    case MDCFlexibleHeaderScrollPhaseCollapsing:
+    case MDCFlexibleHeaderScrollPhaseOverExtending:
+      headerContentAlpha = 1;
+      break;
+    case MDCFlexibleHeaderScrollPhaseShifting:
+      headerContentAlpha = 1 - flexibleHeaderView.scrollPhasePercentage;
+      break;
+  }
+  for (UIView *subview in self.fhvc.headerView.subviews) {
+    subview.alpha = headerContentAlpha;
   }
 }
 
