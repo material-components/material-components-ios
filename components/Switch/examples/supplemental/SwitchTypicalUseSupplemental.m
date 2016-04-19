@@ -14,7 +14,7 @@
 @implementation SwitchTypicalUseViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Switch", @"Typical use" ];
+  return @[ @"Switch", @"Switch" ];
 }
 
 + (NSString *)catalogDescription {

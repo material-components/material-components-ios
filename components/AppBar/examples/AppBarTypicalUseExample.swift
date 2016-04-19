@@ -85,7 +85,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Basic (Swift)"]
+    return ["App Bar", "App Bar (Swift)"]
   }
   func catalogShouldHideNavigation() -> Bool {
     return true
