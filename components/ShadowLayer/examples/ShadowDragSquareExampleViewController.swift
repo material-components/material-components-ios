@@ -72,7 +72,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
   // MARK: catalog by convention
 
   class func catalogBreadcrumbs() -> Array<String> {
-    return [ "Shadow Layer", "Shadow Layer"]
+    return [ "Shadow", "Shadow Layer"]
   }
 
   class func catalogStoryboardName() -> String {

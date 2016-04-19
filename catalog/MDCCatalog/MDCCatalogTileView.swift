@@ -90,7 +90,7 @@ class MDCCatalogTileView: UIView {
       newImage = MDCCatalogTileDataMisc.drawTileImage(centeredFrame)
     case "Page Control":
       newImage = MDCCatalogTileDataPageControl.drawTileImage(centeredFrame)
-    case "Shadow Layer":
+    case "Shadow":
       newImage = MDCCatalogTileDataShadowLayer.drawTileImage(centeredFrame)
     case "Slider":
       newImage = MDCCatalogTileDataSlider.drawTileImage(centeredFrame)
