@@ -133,12 +133,6 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/Typography"
   end
 
-  s.subspec "ScrollViewDelegateMultiplexer" do |ss|
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
-  end
-
   s.subspec "ShadowElevations" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
