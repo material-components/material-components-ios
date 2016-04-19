@@ -30,3 +30,15 @@ errors to allow the normal deprecation process to work:
 
     -Wno-error=deprecated
     -Wno-error=deprecated-declarations
+
+## Supported versions
+
+### Xcode
+
+The core team uses **Xcode 7.2.1**, which corresponds to Swift 2.1. Once Swift
+has stablized we will track particular Swift versions independently of Xcode
+versions.
+
+### iOS
+
+All components are expected to support **iOS 7.0 and above**.

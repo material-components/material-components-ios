@@ -6,11 +6,13 @@ section: howto
 
 # How to use Material Components
 
-TODO Intro text
+Material Components iOS should be immediately useable out of the box with
+Apple's standard development tool chain.
 
-- [Development Guide](/howto/tutorial/)
+- [Tutorial](/howto/tutorial/)
   <!--{: .icon-guide }-->
 
 - [Build environment](/howto/build-env/)
   <!--{: .icon-guide }-->
   <!-- TODO Correct icon -->
+<!--{: .icon-list }-->
