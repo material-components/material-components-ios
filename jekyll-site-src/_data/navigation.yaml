@@ -2,35 +2,11 @@ howto:
   # NOTE
   # we can use page-relative anchor links here, because it's all local to this page.
   # this prevents page reload, which causes all the code containers to resize.
-  - name: Development Guide
-    url: /howto/
+  - name: Tutorial
+    url: /howto/tutorial
     class: toplevel
-  - name: Getting Started
-    url: "#getting-started"
-    class: toplevel
-  - name: Material Headers
-    url: "#material-headers"
-    class: toplevel
-  - name: Starting with App Bar
-    url: "#starting-with-app-bar"
-    class: toplevel
-  - name: Flexible Header
-    url: "#flexible-header"
-    class: toplevel
-  - name: Material Collection Views
-    url: "#material-collection-views"
-    class: toplevel
-  - name: Material Buttons
-    url: "#material-buttons"
-    class: toplevel
-  - name: View Controller Transitions
-    url: "#bonus--proper-view-controller-transitions"
-    class: toplevel
-  - name: Next Steps
-    url: "#next-steps"
-    class: toplevel
-  - name: Sample Code
-    url: "#sample-code"
+  - name: Build environment
+    url: /howto/build-env
     class: toplevel
 contributing:
   - name: Contributing
