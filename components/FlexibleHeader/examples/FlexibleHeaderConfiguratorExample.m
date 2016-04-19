@@ -20,6 +20,10 @@
 
 #import "FlexibleHeaderConfiguratorSupplemental.h"
 
+@interface FlexibleHeaderConfiguratorExample ()
+@property(nonatomic) BOOL overrideStatusBarHidden;
+@end
+
 @implementation FlexibleHeaderConfiguratorExample
 
 // Invoked when the user has changed a control's value.
@@ -35,6 +39,15 @@
     case FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent:
       headerView.inFrontOfInfiniteContent = [value boolValue];
       break;
+
+    case FlexibleHeaderConfiguratorFieldHideStatusBar: {
+      self.overrideStatusBarHidden = [value boolValue];
+      [UIView animateWithDuration:0.4
+                       animations:^{
+                         [self setNeedsStatusBarAppearanceUpdate];
+                       }];
+      break;
+    }
 
     // Shift behavior
 
@@ -83,8 +96,12 @@
 #pragma mark - Typical Flexible Header implementations
 
 // Required for shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar.
-- (UIViewController *)childViewControllerForStatusBarHidden {
-  return self.fhvc;
+- (BOOL)prefersStatusBarHidden {
+  return _overrideStatusBarHidden || self.fhvc.prefersStatusBarHidden;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+  return UIStatusBarAnimationSlide;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -141,6 +158,9 @@ static const CGFloat kHeightScalar = 300;
 
     case FlexibleHeaderConfiguratorFieldContentImportance:
       return @((self.fhvc.headerView.headerContentImportance == MDCFlexibleHeaderContentImportanceHigh));
+
+    case FlexibleHeaderConfiguratorFieldHideStatusBar:
+      return @(self.overrideStatusBarHidden);
 
     case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled: {
       MDCFlexibleHeaderShiftBehavior behavior = self.fhvc.headerView.shiftBehavior;

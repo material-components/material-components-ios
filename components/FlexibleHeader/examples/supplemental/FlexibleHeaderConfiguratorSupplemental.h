@@ -26,9 +26,12 @@
 typedef enum : NSUInteger {
   FlexibleHeaderConfiguratorFieldCanOverExtend,
   FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent,
+  FlexibleHeaderConfiguratorFieldHideStatusBar,
+
   FlexibleHeaderConfiguratorFieldContentImportance,
   FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled,
   FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar,
+
   FlexibleHeaderConfiguratorFieldMinimumHeight,
   FlexibleHeaderConfiguratorFieldMaximumHeight,
 } FlexibleHeaderConfiguratorField;

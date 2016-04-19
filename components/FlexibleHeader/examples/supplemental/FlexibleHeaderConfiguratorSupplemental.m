@@ -141,6 +141,8 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
                              FlexibleHeaderConfiguratorFieldCanOverExtend),
                   switchItem(@"In front of infinite content",
                              FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent),
+                  switchItem(@"Hide status bar",
+                             FlexibleHeaderConfiguratorFieldHideStatusBar),
                 ]);
 
   createSection(@"Shift behavior",
