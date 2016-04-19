@@ -27,9 +27,11 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   [self setupExampleViews];
 
   self.stackView = [[MDCHeaderStackView alloc] init];
+  self.stackView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   self.stackView.topBar = self.topView;
   self.stackView.bottomBar = self.navBar;
 
