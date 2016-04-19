@@ -20,171 +20,149 @@
 
 #import "FlexibleHeaderConfiguratorSupplemental.h"
 
-@interface FlexibleHeaderConfiguratorExample ()
-
-@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
-
-@end
-
 @implementation FlexibleHeaderConfiguratorExample
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    [self commonFlexibleHeaderConfiguratorExampleInit];
+// Invoked when the user has changed a control's value.
+- (void)field:(FlexibleHeaderConfiguratorField)field didChangeValue:(NSNumber *)value {
+  MDCFlexibleHeaderView *headerView = self.fhvc.headerView;
+  switch (field) {
+    // Basic behavior
+
+    case FlexibleHeaderConfiguratorFieldCanOverExtend:
+      headerView.canOverExtend = [value boolValue];
+      break;
+
+    case FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent:
+      headerView.inFrontOfInfiniteContent = [value boolValue];
+      break;
+
+    // Shift behavior
+
+    case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled: {
+      BOOL isOn = [value boolValue];
+      if (!isOn) {
+        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorDisabled;
+        [self didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar
+                            animated:YES];
+      } else {
+        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+      }
+      break;
+    }
+
+    case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar: {
+      BOOL isOn = [value boolValue];
+      if (!isOn) {
+        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+      } else {
+        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+        [self didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled
+                            animated:YES];
+      }
+      break;
+    }
+
+    case FlexibleHeaderConfiguratorFieldContentImportance:
+      headerView.headerContentImportance = ([value boolValue]
+                                                ? MDCFlexibleHeaderContentImportanceHigh
+                                                : MDCFlexibleHeaderContentImportanceDefault);
+      break;
+
+    // Header height
+
+    case FlexibleHeaderConfiguratorFieldMinimumHeight:
+      headerView.minimumHeight = [self heightDenormalized:[value floatValue]];
+      break;
+
+    case FlexibleHeaderConfiguratorFieldMaximumHeight:
+      headerView.maximumHeight = [self heightDenormalized:[value floatValue]];
+      break;
   }
-  return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    [self commonFlexibleHeaderConfiguratorExampleInit];
-  }
-  return self;
-}
+#pragma mark - Typical Flexible Header implementations
 
-- (void)commonFlexibleHeaderConfiguratorExampleInit {
-  _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  [self addChildViewController:_fhvc];
-
-  self.title = @"Header Configuration";
-}
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  self.view.backgroundColor = [UIColor whiteColor];
-
-  self.scrollView = [[UIScrollView alloc] init];
-  [self.view addSubview:self.scrollView];
-
-  // If a tableView was being used instead of a scrollView, you would set the trackingScrollView
-  // to be that tableView and either set the MDCFlexibleHeaderViewController to be the
-  // UITableViewDelegate or forward the UIScrollViewDelegate methods to
-  // MDCFlexibleHeaderViewController from the UITableViewDelegate.
-  self.scrollView.delegate = self.fhvc;
-  self.fhvc.headerView.trackingScrollView = self.scrollView;
-
-  self.fhvc.view.frame = self.view.bounds;
-
-  [self.view addSubview:self.fhvc.view];
-
-  [self.fhvc didMoveToParentViewController:self];
-
-  UIColor *lightBlue500 = [UIColor colorWithRed:0.012
-                                          green:0.663
-                                           blue:0.957
-                                          alpha:1];
-  self.fhvc.headerView.backgroundColor = lightBlue500;
-  [self setupExampleViews:self.fhvc];
-
-  // Add Back button
-  UIToolbar *bar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-  bar.translatesAutoresizingMaskIntoConstraints = NO;
-  bar.barTintColor = lightBlue500;
-  bar.translucent = NO;
-  bar.clipsToBounds = YES;
-
-  [self.fhvc.headerView addSubview:bar];
-
-  UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
-                                                                 style:UIBarButtonItemStyleDone
-                                                                target:self
-                                                                action:@selector(didTapButton:)];
-  backButton.tintColor = [UIColor whiteColor];
-
-  // Add a title label
-  UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
-      initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                           target:nil
-                           action:nil];
-
-  UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  titleLabel.text = @"Configurator";
-  titleLabel.textColor = [UIColor whiteColor];
-  titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2];
-  [titleLabel sizeToFit];
-
-  UIBarButtonItem *titleItem = [[UIBarButtonItem alloc] initWithCustomView:titleLabel];
-
-  bar.items = @[ backButton, spacer, titleItem, spacer ];
-
-  NSDictionary *viewBindings = @{ @"bar" : bar };
-  NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints = [NSMutableArray array];
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-                                              constraintsWithVisualFormat:@"H:|-[bar]-|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:viewBindings]];
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-                                              constraintsWithVisualFormat:@"V:[bar]-8-|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:viewBindings]];
-
-  [self.view addConstraints:arrayOfConstraints];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  // If the MDCFlexibleHeaderViewController's view is not going to replace a navigation bar,
-  // comment this line:
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return UIStatusBarStyleLightContent;
-}
-
-// This method must be implemented for MDCFlexibleHeaderViewController's
-// MDCFlexibleHeaderView to properly support MDCFlexibleHeaderShiftBehavior should you choose
-// to customize it.
+// Required for shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar.
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return self.fhvc;
 }
 
-#pragma mark - Target Action
+#pragma mark - UIScrollViewDelegate
 
-- (void)sliderDidSlide:(UISlider *)sender {
-  if (sender == self.exampleView.minHeightSlider) {
-    self.fhvc.headerView.minimumHeight = sender.value;
-    self.exampleView.maxHeightSlider.value = MAX(self.exampleView.maxHeightSlider.value,
-                                                 self.fhvc.headerView.minimumHeight);
-  } else if (sender == self.exampleView.maxHeightSlider) {
-    self.fhvc.headerView.maximumHeight = sender.value;
-    self.exampleView.minHeightSlider.value = MIN(self.exampleView.minHeightSlider.value,
-                                                 self.fhvc.headerView.maximumHeight);
+// Note that, unlike the Typical Use example, we are explicitly forwarding the UIScrollViewDelegate
+// methods to the header view. This is because this example controller also needs to handle other
+// UITableViewDelegate events.
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.fhvc.headerView.trackingScrollView) {
+    [self.fhvc.headerView trackingScrollViewDidScroll];
   }
 }
 
-- (void)switchDidToggle:(UISwitch *)sender {
-  if (sender == self.exampleView.overExtendSwitch) {
-    self.fhvc.headerView.canOverExtend = sender.isOn;
-  } else if (sender == self.exampleView.shiftSwitch) {
-    if (!self.exampleView.shiftSwitch.isOn) {
-      self.exampleView.shiftStatusBarSwitch.on = NO;
-      self.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorDisabled;
-    } else {
-      if (self.fhvc.headerView.shiftBehavior != MDCFlexibleHeaderShiftBehaviorEnabled ||
-          self.fhvc.headerView.shiftBehavior != MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
-        self.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
-      }
-    }
-  } else if (sender == self.exampleView.shiftStatusBarSwitch) {
-    if (sender.isOn) {
-      self.exampleView.shiftSwitch.on = YES;
-    }
-
-    self.fhvc.headerView.shiftBehavior =
-        sender.isOn ? MDCFlexibleHeaderShiftBehaviorEnabled : MDCFlexibleHeaderShiftBehaviorDisabled;
-  } else if (sender == self.exampleView.infiniteContentSwitch) {
-    self.fhvc.headerView.inFrontOfInfiniteContent = sender.isOn;
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.fhvc.headerView.trackingScrollView) {
+    [self.fhvc.headerView trackingScrollViewDidEndDecelerating];
   }
 }
 
-- (void)didTapButton:(id)button {
-  [self.navigationController popViewControllerAnimated:YES];
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  MDCFlexibleHeaderView *headerView = self.fhvc.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  MDCFlexibleHeaderView *headerView = self.fhvc.headerView;
+  if (scrollView == headerView.trackingScrollView) {
+    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                          targetContentOffset:targetContentOffset];
+  }
+}
+
+#pragma mark - Field data manipulation
+
+static const CGFloat kHeightScalar = 300;
+
+- (CGFloat)normalizedHeight:(CGFloat)height {
+  return (height - self.minimumHeaderHeight) / (kHeightScalar - self.minimumHeaderHeight);
+}
+
+- (CGFloat)heightDenormalized:(CGFloat)normalized {
+  return normalized * (kHeightScalar - self.minimumHeaderHeight) + self.minimumHeaderHeight;
+}
+
+- (NSNumber *)valueForField:(FlexibleHeaderConfiguratorField)field {
+  switch (field) {
+    case FlexibleHeaderConfiguratorFieldCanOverExtend:
+      return @(self.fhvc.headerView.canOverExtend);
+
+    case FlexibleHeaderConfiguratorFieldContentImportance:
+      return @((self.fhvc.headerView.headerContentImportance == MDCFlexibleHeaderContentImportanceHigh));
+
+    case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled: {
+      MDCFlexibleHeaderShiftBehavior behavior = self.fhvc.headerView.shiftBehavior;
+      BOOL enabled = (behavior == MDCFlexibleHeaderShiftBehaviorEnabled || behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
+      return @(enabled);
+    }
+
+    case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar: {
+      MDCFlexibleHeaderShiftBehavior behavior = self.fhvc.headerView.shiftBehavior;
+      BOOL enabled = (behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
+      return @(enabled);
+    }
+
+    case FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent:
+      return @(self.fhvc.headerView.inFrontOfInfiniteContent);
+
+    case FlexibleHeaderConfiguratorFieldMinimumHeight:
+      return @([self normalizedHeight:self.fhvc.headerView.minimumHeight]);
+
+    case FlexibleHeaderConfiguratorFieldMaximumHeight:
+      return @([self normalizedHeight:self.fhvc.headerView.maximumHeight]);
+  }
 }
 
 @end

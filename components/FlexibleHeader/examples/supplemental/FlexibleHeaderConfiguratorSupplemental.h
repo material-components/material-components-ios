@@ -21,39 +21,35 @@
 
 #import <UIKit/UIKit.h>
 
-@class ExampleConfigurationsView;
 @class MDCFlexibleHeaderViewController;
 
-@interface FlexibleHeaderConfiguratorExample : UIViewController
+typedef enum : NSUInteger {
+  FlexibleHeaderConfiguratorFieldCanOverExtend,
+  FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent,
+  FlexibleHeaderConfiguratorFieldContentImportance,
+  FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled,
+  FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar,
+  FlexibleHeaderConfiguratorFieldMinimumHeight,
+  FlexibleHeaderConfiguratorFieldMaximumHeight,
+} FlexibleHeaderConfiguratorField;
 
-@property(nonatomic) ExampleConfigurationsView *exampleView;
-@property(nonatomic) UIScrollView *scrollView;
+@interface FlexibleHeaderConfiguratorExample : UITableViewController
 
-- (void)sliderDidSlide:(UISwitch *)sender;
-- (void)switchDidToggle:(UISwitch *)sender;
+- (NSNumber *)valueForField:(FlexibleHeaderConfiguratorField)field;
+- (void)field:(FlexibleHeaderConfiguratorField)field didChangeValue:(NSNumber *)value;
+
+@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
+@property(nonatomic) CGFloat minimumHeaderHeight;
+
+// Supplemental properties
+
+@property(nonatomic, copy) NSArray *sections;
+@property(nonatomic, copy) NSArray *sectionTitles;
 
 @end
 
 @interface FlexibleHeaderConfiguratorExample (Supplemental)
 
-- (void)setupExampleViews:(MDCFlexibleHeaderViewController *)fhvc;
-
-@end
-
-@interface ExampleConfigurationsView : UIView
-
-@property(nonatomic) UISlider *minHeightSlider;
-@property(nonatomic) UILabel *minHeightSliderLabel;
-@property(nonatomic) UISlider *maxHeightSlider;
-@property(nonatomic) UILabel *maxHeightSliderLabel;
-
-@property(nonatomic) UISwitch *overExtendSwitch;
-@property(nonatomic) UILabel *overExtendSwitchLabel;
-@property(nonatomic) UISwitch *shiftSwitch;
-@property(nonatomic) UILabel *shiftSwitchLabel;
-@property(nonatomic) UISwitch *shiftStatusBarSwitch;
-@property(nonatomic) UILabel *shiftStatusBarSwitchLabel;
-@property(nonatomic) UISwitch *infiniteContentSwitch;
-@property(nonatomic) UILabel *infiniteContentSwitchLabel;
+- (void)didChangeValueForField:(FlexibleHeaderConfiguratorField)field animated:(BOOL)animated;
 
 @end
