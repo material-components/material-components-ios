@@ -11,7 +11,6 @@ PODS:
     - MaterialComponents/PageControl (= 4.0.1)
     - MaterialComponents/private (= 4.0.1)
     - MaterialComponents/RobotoFontLoader (= 4.0.1)
-    - MaterialComponents/ScrollViewDelegateMultiplexer (= 4.0.1)
     - MaterialComponents/ShadowElevations (= 4.0.1)
     - MaterialComponents/ShadowLayer (= 4.0.1)
     - MaterialComponents/Slider (= 4.0.1)
@@ -60,7 +59,6 @@ PODS:
   - MaterialComponents/RobotoFontLoader (4.0.1):
     - MaterialComponents/FontDiskLoader
     - MaterialComponents/Typography
-  - MaterialComponents/ScrollViewDelegateMultiplexer (4.0.1)
   - MaterialComponents/ShadowElevations (4.0.1)
   - MaterialComponents/ShadowLayer (4.0.1)
   - MaterialComponents/Slider (4.0.1):
@@ -88,7 +86,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 0f57dfb792eee175d9c287e6b5778cbeb60fcf0b
+  MaterialComponents: 3993ec396d4d7f94073890f0a35c87013762f333
   MaterialComponentsCatalog: 4769fcabbbdb4b40373eb428f329dbc4c2b53dac
   MaterialComponentsUnitTests: 8fa9520a8dae5ee0b7962ce449619b5be13445e6
 
