@@ -35,7 +35,7 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Typography", @"Read Me Demo" ];
+  return @[ @"Typography and Fonts", @"Read Me Demo" ];
 }
 
 @end

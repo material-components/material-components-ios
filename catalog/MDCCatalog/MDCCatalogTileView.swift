@@ -98,7 +98,7 @@ class MDCCatalogTileView: UIView {
       newImage = MDCCatalogTileDataSpritedAnimationView.drawTileImage(centeredFrame)
     case "Switch":
       newImage = MDCCatalogTileDataSwitch.drawTileImage(centeredFrame)
-    case "Typography":
+    case "Typography and Fonts":
       newImage = MDCCatalogTileDataTypography.drawTileImage(centeredFrame)
     default:
       newImage = MDCCatalogTileDataMisc.drawTileImage(centeredFrame)

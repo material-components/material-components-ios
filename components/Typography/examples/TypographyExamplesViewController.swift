@@ -203,7 +203,7 @@ class TypographyExamplesViewController: UICollectionViewController {
   }
 
   class func catalogBreadcrumbs() -> [String] {
-    return ["Typography", "Typography"]
+    return ["Typography and Fonts", "Typography"]
   }
 
   class func catalogDescription() -> String {
