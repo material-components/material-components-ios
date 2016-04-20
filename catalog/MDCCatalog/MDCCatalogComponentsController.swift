@@ -102,13 +102,13 @@ class MDCCatalogComponentsController: UICollectionViewController {
 
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-
+    self.collectionView?.collectionViewLayout.invalidateLayout()
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
   override func willAnimateRotationToInterfaceOrientation(
     toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-    collectionView?.collectionViewLayout.invalidateLayout()
+    self.collectionView?.collectionViewLayout.invalidateLayout()
   }
 
   override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -140,7 +140,10 @@ class MDCCatalogComponentsController: UICollectionViewController {
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     let pad = CGFloat(1)
-    let cellWidth = (self.view.frame.size.width - 3 * pad) / 2
+    var cellWidth = (self.view.frame.size.width - 3 * pad) / 2
+    if (self.view.frame.size.width > self.view.frame.size.height) {
+      cellWidth = (self.view.frame.size.width - 4 * pad) / 3
+    }
     return CGSize(width: cellWidth, height: cellWidth * 0.825)
   }
 
@@ -155,6 +158,7 @@ class MDCCatalogComponentsController: UICollectionViewController {
     }
     self.navigationController?.pushViewController(vc, animated: true)
   }
+
 }
 
 // UIScrollViewDelegate
