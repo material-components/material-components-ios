@@ -143,7 +143,7 @@ class TypographyExamplesViewController: UICollectionViewController {
     "Display 4 Font"
   ]
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  init() {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsetsMake(10, 0, 10, 0)
     super.init(collectionViewLayout: flowLayout)

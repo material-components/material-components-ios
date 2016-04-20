@@ -70,8 +70,8 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
   }
 
   // MARK: Typical application code (not Material-specific)
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  init() {
+    super.init(nibName: nil, bundle: nil)
 
     self.title = "Button Bar"
   }

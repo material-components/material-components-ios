@@ -61,8 +61,8 @@ class AppBarImagerySwiftExample: UITableViewController {
 
   // MARK: Typical configuration
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  init() {
+    super.init(nibName: nil, bundle: nil)
 
     self.title = "Imagery (Swift)"
 
