@@ -28,6 +28,14 @@
 
 @implementation FlexibleHeaderTypicalUseViewController
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonMDCFlexibleHeaderViewControllerInit];
+  }
+  return self;
+}
+
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
