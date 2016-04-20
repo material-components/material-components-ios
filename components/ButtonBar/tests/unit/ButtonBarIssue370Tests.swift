@@ -18,7 +18,7 @@ import XCTest
 import MaterialComponents
 
 // Tests confirming that the Button Bar respects UI appearance for bar button item
-// titleTextAttributes.
+// titleTextAttributes on iOS 9 and above.
 //
 // Based on issue https://github.com/google/material-components-ios/issues/370
 class ButtonBarIssue370Tests: XCTestCase {
@@ -49,6 +49,12 @@ class ButtonBarIssue370Tests: XCTestCase {
 
   func testGlobalAppearanceOnly() {
     UIBarButtonItem.appearance().setTitleTextAttributes(globalAttributes, forState: .Normal)
+
+    if UIBarButtonItem.appearance().titleTextAttributesForState(.Normal) == nil {
+      // This feature is not supported on this OS
+      return
+    }
+
     let item = UIBarButtonItem(title: "Text", style: .Plain, target: nil, action: nil)
     buttonBar.items = [item]
 
@@ -76,6 +82,12 @@ class ButtonBarIssue370Tests: XCTestCase {
 
   func testGlobalAppearanceAndDirectMerging() {
     UIBarButtonItem.appearance().setTitleTextAttributes(fontAttributes, forState: .Normal)
+
+    if UIBarButtonItem.appearance().titleTextAttributesForState(.Normal) == nil {
+      // This feature is not supported on this OS
+      return
+    }
+
     let item = UIBarButtonItem(title: "Text", style: .Plain, target: nil, action: nil)
     item.setTitleTextAttributes(directAttributes, forState: .Normal)
     buttonBar.items = [item]
