@@ -104,7 +104,7 @@ UIViewController *CBCViewControllerFromClass(Class aClass) {
     NSCAssert(vc, @"expecting a initialViewController in the storyboard %@", storyboardName);
     return vc;
   }
-  return [[aClass alloc] initWithNibName:nil bundle:nil];
+  return [[aClass alloc] init];
 }
 
 NSString *CBCDescriptionFromClass(Class aClass) {
