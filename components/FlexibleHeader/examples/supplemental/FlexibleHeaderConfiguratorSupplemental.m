@@ -40,33 +40,13 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
 @implementation FlexibleHeaderConfiguratorExample (Supplemental)
 
-- (void)commonInit {
-  self.fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  [self addChildViewController:self.fhvc];
-
-  self.title = @"Configurator";
-}
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (instancetype)init {
   self = [super initWithStyle:kStyle];
   if (self) {
-    [self commonInit];
-  }
-  return self;
-}
+    self.fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+    [self addChildViewController:self.fhvc];
 
-- (instancetype)initWithStyle:(UITableViewStyle)style {
-  self = [super initWithStyle:kStyle];
-  if (self) {
-    [self commonInit];
-  }
-  return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    [self commonInit];
+    self.title = @"Configurator";
   }
   return self;
 }
