@@ -1,13 +1,11 @@
 howto:
-  # NOTE
-  # we can use page-relative anchor links here, because it's all local to this page.
-  # this prevents page reload, which causes all the code containers to resize.
+  - name: How To
+    url: "/howto/"
+    class: toplevel
   - name: Tutorial
     url: /howto/tutorial
-    class: toplevel
   - name: Build environment
     url: /howto/build-env
-    class: toplevel
 contributing:
   - name: Contributing
     url: "/contributing/"
