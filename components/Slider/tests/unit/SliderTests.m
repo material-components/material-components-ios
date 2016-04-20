@@ -19,7 +19,7 @@
 #import "MaterialSlider.h"
 
 static const NSUInteger kNumberOfRepeats = 20;
-static const CGFloat kEpsilonAccuracy = 0.0001f;
+static const CGFloat kEpsilonAccuracy = 0.001f;
 
 // Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
 static const uint32_t MDCBlueColor = 0x2196F3;
