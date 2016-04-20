@@ -103,7 +103,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   titleLabel.frame = frame;
   titleLabel.text = self.title;
   titleLabel.textColor = [UIColor whiteColor];
-  titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2];
+  titleLabel.font = [UIFont systemFontOfSize:22];
   titleLabel.textAlignment = NSTextAlignmentCenter;
   titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
 
