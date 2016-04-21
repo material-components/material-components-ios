@@ -74,7 +74,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
     line.backgroundColor = UIColor(white: 0.72, alpha: 1)
     line.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
     headerContentView.addSubview(line)
-    self.tableView.backgroundColor = UIColor.whiteColor()
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -87,6 +86,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.tableView.backgroundColor = UIColor.whiteColor()
     self.tableView.separatorColor = UIColor.clearColor()
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 

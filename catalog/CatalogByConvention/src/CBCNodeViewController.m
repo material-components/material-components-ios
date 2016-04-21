@@ -89,7 +89,7 @@
   NSAssert(!_node.isExample,
            @"%@ cannot represent example nodes.", NSStringFromClass([self class]));
 
-  self = [super initWithStyle:UITableViewStyleGrouped];
+  self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _node = node;
 
@@ -101,6 +101,22 @@
 - (instancetype)initWithStyle:(UITableViewStyle)style {
   [self doesNotRecognizeSelector:_cmd];
   return nil;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+  self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  self.tableView.delegate = self;
+  self.tableView.dataSource = self;
+  [self.view addSubview:self.tableView];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  [self.tableView flashScrollIndicators];
 }
 
 #pragma mark - UITableViewDataSource
