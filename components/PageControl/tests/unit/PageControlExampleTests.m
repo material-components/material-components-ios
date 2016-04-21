@@ -98,4 +98,21 @@
   XCTAssertFalse(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
 }
 
+- (void)testCurrentPageGetsUpdatedWhenOffsetIsChanged {
+  // Given
+  CGRect frame = CGRectMake(0, 0, 100, 100);
+  MDCPageControl *pageControl = [[MDCPageControl alloc] init];
+  pageControl.numberOfPages = 3;
+  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:frame];
+  scrollView.delegate = pageControl;
+  NSUInteger page = 2;
+
+  // When
+  [scrollView setContentOffset:CGPointMake(frame.size.width * page, 0)
+                      animated:YES];
+
+  // Then
+  XCTAssertEqual(pageControl.currentPage, page);
+}
+
 @end
