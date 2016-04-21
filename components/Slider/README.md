@@ -72,29 +72,42 @@ import MaterialComponents
 ~~~
 <!--</div>-->
 
-<!--<div class="material-code-render" markdown="1">-->
+### Standard usage
 
-### Objective C
+MDCSlider can be be used like a standard `UIControl`.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective C
+
 ~~~ objc
 
 - (void)viewDidLoad {
-...
-
-  MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
+  MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(50, 50, 100, 27)];
   [slider addTarget:self
                 action:@selector(didChangeSliderValue:)
       forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:slider];
-  slider.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) - 2 * slider.frame.size.height);
-
-...
 }
 
-- (void)didChangeSliderValue:(id)sender {
-  MDCSlider *slider = sender;
-  NSLog(@"did change %@ value: %f", NSStringFromClass([sender class]), slider.value);
+- (void)didChangeSliderValue:(MDCSlider *)slider {
+  NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
+}
+~~~
+
+#### Swift
+
+~~~ swift
+override func viewDidLoad() {
+  let slider = MDCSlider(frame: CGRectMake(50, 50, 100, 27))
+  slider.addTarget(self,
+      action: Selector("didChangeSliderValue:"),
+      forControlEvents: .ValueChanged)
+  view.addSubview(slider)
 }
 
+func didChangeSliderValue(senderSlider:MDCSlider) {
+  NSLog("Did change slider value to: %@", senderSlider.value)
+}
 ~~~
 <!--</div>-->
 
