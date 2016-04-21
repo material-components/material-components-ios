@@ -173,6 +173,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _trackedScrollViews = [NSMapTable mapTableWithKeyOptions:keyOptions valueOptions:valueOptions];
 
     _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
+    _statusBarHintCanOverlapHeader = YES;
 
     _minimumHeight = kFlexibleHeaderDefaultHeight;
     _maximumHeight = kFlexibleHeaderDefaultHeight;
@@ -397,11 +398,19 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (CGFloat)fhv_accumulatorMax {
-  return (self.hidesStatusBarWhenCollapsed ? _minimumHeight
-                                           : _minimumHeight - kExpectedStatusBarHeight);
+  BOOL shouldCollapseToStatusBar = [self fhv_shouldCollapseToStatusBar];
+  return (shouldCollapseToStatusBar ? _minimumHeight - kExpectedStatusBarHeight : _minimumHeight);
 }
 
 #pragma mark Logical short forms
+
+- (BOOL)fhv_shouldAllowShifting {
+  return self.hidesStatusBarWhenCollapsed && self.statusBarHintCanOverlapHeader;
+}
+
+- (BOOL)fhv_shouldCollapseToStatusBar {
+  return !self.hidesStatusBarWhenCollapsed && self.statusBarHintCanOverlapHeader;
+}
 
 - (BOOL)fhv_canShiftOffscreen {
   return ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
@@ -439,7 +448,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _scrollPhase = MDCFlexibleHeaderScrollPhaseShifting;
     _scrollPhaseValue = frame.origin.y + _minimumHeight;
     CGFloat adjustedHeight = _minimumHeight;
-    if (!self.hidesStatusBarWhenCollapsed) {
+    if ([self fhv_shouldCollapseToStatusBar]) {
       adjustedHeight -= kExpectedStatusBarHeight;
     }
     if (adjustedHeight > 0) {
@@ -892,6 +901,17 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
           !_trackingScrollView.pagingEnabled);
 }
 
+- (void)setstatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
+  if (_statusBarHintCanOverlapHeader == statusBarHintCanOverlapHeader) {
+    return;
+  }
+  _statusBarHintCanOverlapHeader = statusBarHintCanOverlapHeader;
+
+  _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
+
+  [self fhv_startDisplayLink];
+}
+
 - (void)setShiftBehavior:(MDCFlexibleHeaderShiftBehavior)shiftBehavior {
   if (_shiftBehavior == shiftBehavior) {
     return;
@@ -900,7 +920,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
                              shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled);
   _shiftBehavior = shiftBehavior;
 
-  _statusBarShifter.enabled = self.hidesStatusBarWhenCollapsed;
+  _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 
   if (needsShiftOnScreen) {
     _wantsToBeHidden = NO;

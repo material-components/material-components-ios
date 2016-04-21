@@ -42,6 +42,10 @@
 
     case FlexibleHeaderConfiguratorFieldHideStatusBar: {
       self.overrideStatusBarHidden = [value boolValue];
+
+      BOOL statusBarCanBeVisible = !self.overrideStatusBarHidden;
+      headerView.statusBarHintCanOverlapHeader = statusBarCanBeVisible;
+
       [UIView animateWithDuration:0.4
                        animations:^{
                          [self setNeedsStatusBarAppearanceUpdate];

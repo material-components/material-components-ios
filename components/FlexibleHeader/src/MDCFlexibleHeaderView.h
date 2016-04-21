@@ -328,6 +328,21 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  */
 @property(nonatomic) BOOL canOverExtend;
 
+/**
+ A hint stating whether or not the operating system's status bar frame can ever overlap the header's
+ frame.
+
+ This property is enabled by default with the expectation that the flexible header will primarily
+ be used in full-screen settings on the phone.
+
+ Disabling this property informs the flexible header that it should not concern itself with the
+ status bar in any manner. shiftBehavior .EnabledWithStatusBar will be treated simply as .Enabled
+ in this case.
+
+ Default: YES
+ */
+@property(nonatomic) BOOL statusBarHintCanOverlapHeader;
+
 @property(nonatomic) float visibleShadowOpacity;  ///< The visible shadow opacity. Default: 0.4
 
 #pragma mark Scroll View Tracking
