@@ -25,8 +25,10 @@
 
 @interface FlexibleHeaderTypicalUseViewController : UIViewController
 
-@property(nonatomic) FlexibleHeaderTypicalUseInstructionsView *exampleView;
-@property(nonatomic) UIScrollView *scrollView;
+@property(nonatomic, strong, nullable) IBOutlet UIView *exampleView;
+@property(nonatomic, strong, nullable) UIScrollView *scrollView;
+
+@property(nonatomic, strong, nullable) IBOutlet UIImageView *imageView;
 
 @end
 
