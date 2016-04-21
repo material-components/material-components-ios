@@ -26,12 +26,12 @@ $(".token").click(function(event) {
   $content = link.parent().parent().next();
   $content.slideToggle(animationDuration);
 
-  // Keeps the document from jumping to the hash.
-  var href = $(this).attr('href');
-  if (history.pushState) {
-    history.pushState({}, '', href);
-  } else {
-    location.hash = href;
-  }
+  // // Keeps the document from jumping to the hash.
+  // var href = $(this).attr('href');
+  // if (history.pushState) {
+  //   history.pushState({}, '', href);
+  // } else {
+  //   location.hash = href;
+  // }
   event.preventDefault();
 });
