@@ -214,7 +214,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 - (NSInteger)scrolledPageNumber:(UIScrollView *)scrollView {
   // Returns paged index of scrollView.
-  return lround(scrollView.contentOffset.x / scrollView.frame.size.width);
+  NSInteger unboundedPageNumber = lround(scrollView.contentOffset.x / scrollView.frame.size.width);
+  return MAX(0, MIN(_numberOfPages - 1, unboundedPageNumber));
 }
 
 - (CGFloat)scrolledPercentage:(UIScrollView *)scrollView {

@@ -37,7 +37,7 @@
    @c scrollViewDidEndDecelerating:
    @c scrollViewDidEndScrollingAnimation:
 
-  */
+ */
 @interface MDCPageControl : UIControl <UIScrollViewDelegate>
 
 #pragma mark Managing the page
