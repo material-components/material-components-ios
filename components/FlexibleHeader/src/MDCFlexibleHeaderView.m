@@ -355,8 +355,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     // _adjustContentOffsetIfNecessary doing the right thing most of the time.
 
     if (oldContentOffset.y == 0 && CGPointEqualToPoint(oldContentOffset, scrollView.contentOffset)) {
-      _contentOffset.y -= _maximumHeight;
-      _trackingScrollView.contentOffset = _contentOffset;
+      CGPoint contentOffset = scrollView.contentOffset;
+      contentOffset.y = -_maximumHeight;
+      scrollView.contentOffset = contentOffset;
     }
     _contentInsetsAreChanging = NO;
   }
