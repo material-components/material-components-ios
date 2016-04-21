@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCSlider.h"
+#import "MaterialSlider.h"
 #import "MaterialTypography.h"
 #import "SliderTypicalUseSupplemental.h"
 
