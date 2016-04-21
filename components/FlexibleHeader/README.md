@@ -148,6 +148,19 @@ controller to a MDCFlexibleHeaderView instance.
 
 #### Swift
 ~~~ swift
+let headerViewController = MDCFlexibleHeaderViewController()
+
+override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+  addChildViewController(headerViewController)
+}
+
+required init?(coder aDecoder: NSCoder) {
+  super.init(coder: aDecoder)
+
+  addChildViewController(headerViewController)
+}
 ~~~
 <!--</div>-->
 
@@ -171,6 +184,13 @@ ensure that the Flexible Header is in front of all other views.
 
 #### Swift
 ~~~ swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+
+  headerViewController.view.frame = view.bounds
+  view.addSubview(headerViewController.view)
+  headerViewController.didMoveToParentViewController(self)
+}
 ~~~
 <!--</div>-->
 
@@ -197,7 +217,7 @@ self.headerViewController.headerView.trackingScrollView = scrollView;
 
 #### Swift
 ~~~ swift
-self.headerViewController.headerView.trackingScrollView = scrollView
+headerViewController.headerView.trackingScrollView = scrollView
 ~~~
 <!--</div>-->
 
@@ -220,7 +240,7 @@ scrollView.delegate = self.headerViewController;
 
 #### Swift
 ~~~ swift
-scrollView.delegate = self.headerViewController
+scrollView.delegate = headerViewController
 ~~~
 <!--</div>-->
 
@@ -264,27 +284,29 @@ UIScrollView subclass.
 
 #### Swift
 ~~~ swift
+// MARK: UIScrollViewDelegate
+
 override func scrollViewDidScroll(scrollView: UIScrollView) {
-  if scrollView == self.headerViewController.headerView.trackingScrollView {
-    self.headerViewController.headerView.trackingScrollViewDidScroll()
+  if scrollView == headerViewController.headerView.trackingScrollView {
+    headerViewController.headerView.trackingScrollViewDidScroll()
   }
 }
 
 override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-  if scrollView == self.headerViewController.headerView.trackingScrollView {
-    self.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
+  if scrollView == headerViewController.headerView.trackingScrollView {
+    headerViewController.headerView.trackingScrollViewDidEndDecelerating()
   }
 }
 
 override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-  let headerView = self.headerViewController.headerView
+  let headerView = headerViewController.headerView
   if scrollView == headerView.trackingScrollView {
     headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
   }
 }
 
 override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-  let headerView = self.headerViewController.headerView
+  let headerView = headerViewController.headerView
   if scrollView == headerView.trackingScrollView {
     headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity, targetContentOffset: targetContentOffset)
   }
@@ -354,7 +376,7 @@ MDCFlexibleHeaderViewController instance's `layoutDelegate`.
 // Set yourself as the delegate.
 headerViewController.layoutDelegate = self;
 
-#pragma mark - MDCFlexibleHeaderViewLayoutDelegate
+#pragma - MDCFlexibleHeaderViewLayoutDelegate
 
 - (void)flexibleHeaderViewController:(MDCFlexibleHeaderViewController *)flexibleHeaderViewController
     flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)flexibleHeaderView {
@@ -365,6 +387,14 @@ headerViewController.layoutDelegate = self;
 
 #### Swift
 ~~~ swift
+class MyViewController: UIViewController, MDCFlexibleHeaderViewLayoutDelegate {
+
+  // MARK: MDCFlexibleHeaderViewLayoutDelegate
+  func flexibleHeaderViewController(flexibleHeaderViewController: MDCFlexibleHeaderViewController,
+      flexibleHeaderViewFrameDidChange flexibleHeaderView: MDCFlexibleHeaderView) {
+    // Called whenever the frame changes.
+  }
+}
 ~~~
 <!--</div>-->
 
@@ -383,6 +413,7 @@ take the z-index into account:
 
 #### Swift
 ~~~ swift
+view.insertSubview(myCustomView, belowSubview: headerViewController.headerView)
 ~~~
 <!--</div>-->
 
@@ -412,7 +443,7 @@ animating in/out in a reasonable manner.
 override func viewWillAppear(animated: Bool) {
   super.viewWillAppear(animated)
 
-  self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  navigationController?.setNavigationBarHidden(true, animated: animated)
 }
 ~~~
 <!--</div>-->
@@ -434,7 +465,7 @@ Add the following to view controllers that don't have an app bar:
 override func viewWillAppear(animated: Bool) {
   super.viewWillAppear(animated)
 
-  self.navigationController?.setNavigationBarHidden(false, animated: animated)
+  navigationController?.setNavigationBarHidden(false, animated: animated)
 }
 ~~~
 <!--</div>-->
@@ -474,7 +505,7 @@ controller.
 #### Swift
 ~~~ swift
 override func childViewControllerForStatusBarStyle() -> UIViewController? {
-  return self.headerViewController
+  return headerViewController
 }
 ~~~
 <!--</div>-->
@@ -499,7 +530,7 @@ imageView.clipsToBounds = YES;
 
 #### Swift
 ~~~ swift
-let headerView = self.headerViewController!.headerView
+let headerView = headerViewController!.headerView
 
 let imageView = ...
 imageView.frame = headerView.bounds
