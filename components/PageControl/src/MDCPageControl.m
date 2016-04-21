@@ -53,9 +53,6 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   return (diff > 0) ? ((value - minRange) / diff) : 0;
 }
 
-@interface MDCPageControl () <UIScrollViewDelegate>
-@end
-
 @implementation MDCPageControl {
   UIView *_containerView;
   NSMutableArray *_indicators;

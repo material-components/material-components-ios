@@ -23,8 +23,22 @@
  material design specifications for animation and layout.
 
  The UIControlEventValueChanged control event is sent when the user changes the current page.
- */
-@interface MDCPageControl : UIControl
+
+ ### UIScrollViewDelegate
+
+ In order for the Page Control to respond correctly to scroll events set the scrollView.delegate to
+ your pageControl:
+
+   scrollView.delegate = pageControl;
+
+ or forward the UIScrollViewDelegate methods:
+
+   @c scrollViewDidScroll:
+   @c scrollViewDidEndDecelerating:
+   @c scrollViewDidEndScrollingAnimation:
+
+  */
+@interface MDCPageControl : UIControl <UIScrollViewDelegate>
 
 #pragma mark Managing the page
 
