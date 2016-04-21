@@ -39,7 +39,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
   let descriptionSectionHeight = CGFloat(100)
   let additionalExamplesSectionHeight = CGFloat(50)
   let rowHeight = CGFloat(50)
-  let footerHeight = CGFloat(20)
   var componentDescription = ""
 
   enum Section: Int {
@@ -86,8 +85,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
     self.tableView.backgroundColor = UIColor.whiteColor()
-    self.tableView.separatorColor = UIColor.clearColor()
+    self.tableView.separatorStyle = .None
+
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     appBar.addSubviewsToParent()
@@ -161,10 +162,12 @@ class MDCNodeListViewController: CBCNodeListViewController {
     let sectionView = UIView(frame: sectionViewFrame)
     sectionView.backgroundColor = UIColor.whiteColor()
 
-    let lineDivider = UIView(frame: CGRectMake(0,0,tableView.frame.size.width, 1))
-    lineDivider.backgroundColor = UIColor(white: 0.85, alpha: 1)
-    lineDivider.autoresizingMask = .FlexibleWidth
-    sectionView.addSubview(lineDivider)
+    if section == 1 {
+      let lineDivider = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 1))
+      lineDivider.backgroundColor = UIColor(white: 0.85, alpha: 1)
+      lineDivider.autoresizingMask = .FlexibleWidth
+      sectionView.addSubview(lineDivider)
+    }
 
     let label = UILabel()
     label.text = sectionNames[section]
@@ -201,12 +204,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
       return additionalExamplesSectionHeight
   }
 
-  override func tableView(tableView: UITableView,
-    willDisplayFooterView view: UIView, forSection section: Int) {
-    let footerView = view as! UITableViewHeaderFooterView
-    footerView.contentView.backgroundColor = UIColor.whiteColor()
-  }
-
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if (section == Section.Description.rawValue) {
       return 1
@@ -236,11 +233,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
   override func tableView(tableView: UITableView,
     heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     return rowHeight
-  }
-
-  override func tableView(tableView: UITableView,
-    heightForFooterInSection section: Int) -> CGFloat {
-    return footerHeight
   }
 
   // MARK: UITableViewDelegate
