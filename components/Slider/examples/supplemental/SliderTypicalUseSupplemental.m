@@ -5,8 +5,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SliderTypicalUseSupplemental.h"
 #import "MaterialTypography.h"
+#import "SliderTypicalUseSupplemental.h"
 
 #pragma mark - SliderTypicalUseViewController
 

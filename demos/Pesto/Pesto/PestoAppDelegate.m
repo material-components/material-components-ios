@@ -25,7 +25,6 @@
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
   PestoFlexibleHeaderContainerViewController *flexHeadContainerVC =
       [[PestoFlexibleHeaderContainerViewController alloc] init];
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
