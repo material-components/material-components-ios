@@ -106,7 +106,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+  self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds
+                                                style:UITableViewStyleGrouped];
   self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
