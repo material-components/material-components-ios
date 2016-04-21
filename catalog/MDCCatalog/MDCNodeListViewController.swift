@@ -98,17 +98,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
-
-    if let selectedRowIndexPath = tableView.indexPathForSelectedRow, let _ = transitionCoordinator() {
-      transitionCoordinator()?.animateAlongsideTransition({ (context) -> Void in
-        self.tableView.deselectRowAtIndexPath(selectedRowIndexPath, animated: true)
-        }, completion: { (context) -> Void in
-          if context.isCancelled() {
-            self.tableView.selectRowAtIndexPath(selectedRowIndexPath, animated: false,
-              scrollPosition: .None)
-          }
-      })
-    }
   }
 
   // MARK: UIScrollViewDelegate

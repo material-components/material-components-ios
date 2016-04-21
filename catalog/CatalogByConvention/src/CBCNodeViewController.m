@@ -114,6 +114,24 @@
   [self.view addSubview:self.tableView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  NSIndexPath *selectedRow = self.tableView.indexPathForSelectedRow;
+  if (selectedRow) {
+    [[self transitionCoordinator] animateAlongsideTransition:^(id context) {
+      [self.tableView deselectRowAtIndexPath:selectedRow animated:YES];
+    }
+        completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+          if ([context isCancelled]) {
+            [self.tableView selectRowAtIndexPath:selectedRow
+                                        animated:NO
+                                  scrollPosition:UITableViewScrollPositionNone];
+          }
+        }];
+  }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
