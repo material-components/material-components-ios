@@ -66,34 +66,45 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    CGFloat radius = kMDCPageControlIndicatorRadius;
-    CGFloat topEdge = (CGFloat)(floor(CGRectGetHeight(self.bounds) - (radius * 2)) / 2);
-    CGRect containerFrame = CGRectMake(0, topEdge, CGRectGetWidth(self.bounds), radius * 2);
-    _containerView = [[UIView alloc] initWithFrame:containerFrame];
-
-    _trackLayer = [[MDCPageControlTrackLayer alloc] initWithRadius:radius];
-    [_containerView.layer addSublayer:_trackLayer];
-    _containerView.autoresizingMask =
-        UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin |
-        UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    [self addSubview:_containerView];
-
-    // Defaults.
-    _currentPage = 0;
-    _currentPageIndicatorTintColor =
-        [UIColor colorWithWhite:kMDCPageControlCurrentPageIndicatorWhiteColor
-                          alpha:1];
-    _pageIndicatorTintColor =
-        [UIColor colorWithWhite:kMDCPageControlPageIndicatorWhiteColor
-                          alpha:1];
+    [self commonMDCPageControlInit];
   }
+  return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCPageControlInit];
+  }
+  return self;
+}
+
+- (void)commonMDCPageControlInit {
+  CGFloat radius = kMDCPageControlIndicatorRadius;
+  CGFloat topEdge = (CGFloat)(floor(CGRectGetHeight(self.bounds) - (radius * 2)) / 2);
+  CGRect containerFrame = CGRectMake(0, topEdge, CGRectGetWidth(self.bounds), radius * 2);
+  _containerView = [[UIView alloc] initWithFrame:containerFrame];
+
+  _trackLayer = [[MDCPageControlTrackLayer alloc] initWithRadius:radius];
+  [_containerView.layer addSublayer:_trackLayer];
+  _containerView.autoresizingMask =
+      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin |
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  [self addSubview:_containerView];
+
+  // Defaults.
+  _currentPage = 0;
+  _currentPageIndicatorTintColor =
+      [UIColor colorWithWhite:kMDCPageControlCurrentPageIndicatorWhiteColor
+                        alpha:1];
+  _pageIndicatorTintColor =
+      [UIColor colorWithWhite:kMDCPageControlPageIndicatorWhiteColor
+                        alpha:1];
 
   UITapGestureRecognizer *tapGestureRecognizer =
       [[UITapGestureRecognizer alloc] initWithTarget:self
                                               action:@selector(handleTapGesture:)];
   [self addGestureRecognizer:tapGestureRecognizer];
-
-  return self;
 }
 
 - (void)layoutSubviews {
