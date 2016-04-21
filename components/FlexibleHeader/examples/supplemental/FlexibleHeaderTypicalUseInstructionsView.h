@@ -15,23 +15,11 @@
  */
 
 /** IMPORTANT:
- This file contains supplemental code used to populate the demos with dummy data or instructions.
- It is not necessary to import this file to implement any Material Design Components.
+ This file contains supplemental code used to populate the examples with dummy data and/or
+ instructions. It is not necessary to import this file to implement any Material Design Components.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@class FlexibleHeaderTypicalUseInstructionsView;
-
-@interface FlexibleHeaderTypicalUseViewController : UIViewController
-
-@property(nonatomic) FlexibleHeaderTypicalUseInstructionsView *exampleView;
-@property(nonatomic) UIScrollView *scrollView;
-
-@end
-
-@interface FlexibleHeaderTypicalUseViewController (Supplemental)
-
-- (void)setupExampleViews;
-
+@interface FlexibleHeaderTypicalUseInstructionsView : UIView
 @end
