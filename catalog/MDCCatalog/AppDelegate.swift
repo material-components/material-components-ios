@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    self.window = MDCCatalogWindow(frame: UIScreen.mainScreen().bounds)
 
     let tree = CBCCreateNavigationTree()
 
