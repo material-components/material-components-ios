@@ -24,6 +24,7 @@ import UIKit
 class MDCCatalogWindow: UIWindow {
   var enabled = false
 
+  private let fadeDuration: NSTimeInterval = 0.2
   private var views = [NSNumber: UIView]()
 
   override func sendEvent(event: UIEvent) {
@@ -66,8 +67,16 @@ class MDCCatalogWindow: UIWindow {
   }
 
   private func endDisplayingTouch(touch: UITouch) {
-    views[touch.hash]?.removeFromSuperview()
+    let view = views[touch.hash]
     views[touch.hash] = nil
+
+    UIView.animateWithDuration(fadeDuration,
+                               animations: {
+                                 view?.alpha = 0
+                               },
+                               completion: { finished in
+                                view?.removeFromSuperview()
+                               })
   }
 }
 
