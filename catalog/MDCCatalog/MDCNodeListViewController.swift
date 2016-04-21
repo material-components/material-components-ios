@@ -280,8 +280,8 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
         var contentFrame = container.contentViewController.view.frame
         let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
-        contentFrame.origin.y += headerSize.height
-        contentFrame.size.height -= headerSize.height
+        contentFrame.origin.y = headerSize.height
+        contentFrame.size.height = self.view.bounds.size.height - headerSize.height
         container.contentViewController.view.frame = contentFrame
 
         vc = container
