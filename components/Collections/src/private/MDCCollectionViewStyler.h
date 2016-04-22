@@ -14,10 +14,24 @@
  limitations under the License.
  */
 
-#import "MDCCollectionViewController.h"
-#import "MDCCollectionViewEditing.h"
-#import "MDCCollectionViewEditingDelegate.h"
-#import "MDCCollectionViewFlowLayout.h"
 #import "MDCCollectionViewStyling.h"
-#import "MDCCollectionViewStylingDelegate.h"
-#import "MaterialCollectionCells.h"
+
+/**
+ The MDCCollectionViewStyler class provides a default implementation for a UICollectionView to set
+ its style properties.
+ */
+@interface MDCCollectionViewStyler : NSObject <MDCCollectionViewStyling>
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+/**
+ Initializes and returns a newly allocated style manager object with the specified collection view.
+
+ Designated initializer.
+
+ @param collectionView The controller's collection view.
+ */
+- (nonnull instancetype)initWithCollectionView:
+        (nonnull UICollectionView *)collectionView NS_DESIGNATED_INITIALIZER;
+
+@end

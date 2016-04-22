@@ -26,6 +26,7 @@
 #import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionStringResources.h"
 #import "private/MDCCollectionViewEditor.h"
+#import "private/MDCCollectionViewStyler.h"
 
 #import <tgmath.h>
 
@@ -77,12 +78,9 @@
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.alwaysBounceVertical = YES;
 
-  // Style manager.
-  _styleManager =
-      [[MDCCollectionViewStyleManager alloc] initWithCollectionView:self.collectionView];
-  _styleManager.delegate = self;
+  _styler = [[MDCCollectionViewStyler alloc] initWithCollectionView:self.collectionView];
+  _styler.delegate = self;
 
-  // Editing manager.
   _editor = [[MDCCollectionViewEditor alloc] initWithCollectionView:self.collectionView];
   _editor.delegate = self;
 
@@ -94,7 +92,7 @@
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  _styleManager.shouldInvalidateLayout = NO;
+  _styler.shouldInvalidateLayout = NO;
 }
 
 - (UICollectionViewLayout *)collectionViewLayout {
@@ -145,11 +143,11 @@
   }
 }
 
-#pragma mark - <MDCCollectionViewStyleManagerDelegate>
+#pragma mark - <MDCCollectionViewStylingDelegate>
 
 - (MDCCollectionViewCellStyle)collectionView:(UICollectionView *)collectionView
                          cellStyleForSection:(NSInteger)section {
-  return _styleManager.cellStyle;
+  return _styler.cellStyle;
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
@@ -174,8 +172,8 @@
                                  layout:(UICollectionViewLayout *)collectionViewLayout
     minimumLineSpacingForSectionAtIndex:(NSInteger)section {
   if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
-    if (_styleManager.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
-      return _styleManager.gridPadding;
+    if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
+      return _styler.gridPadding;
     }
     return [(UICollectionViewFlowLayout *)collectionViewLayout minimumLineSpacing];
   }
@@ -184,10 +182,10 @@
 
 - (CGSize)sizeWithAttribute:(UICollectionViewLayoutAttributes *)attr {
   CGFloat height = MDCCellDefaultOneLineHeight;
-  if ([_styleManager.delegate respondsToSelector:
-                                  @selector(collectionView:cellHeightAtIndexPath:)]) {
-    height = [_styleManager.delegate collectionView:self.collectionView
-                              cellHeightAtIndexPath:attr.indexPath];
+  if ([_styler.delegate respondsToSelector:
+                            @selector(collectionView:cellHeightAtIndexPath:)]) {
+    height = [_styler.delegate collectionView:self.collectionView
+                        cellHeightAtIndexPath:attr.indexPath];
   }
 
   CGFloat width = [self cellWidthAtSectionIndex:attr.indexPath.section];
@@ -199,10 +197,10 @@
                                                         self.collectionView.contentInset));
   UIEdgeInsets sectionInsets = [self insetsAtSectionIndex:section];
   CGFloat insets = sectionInsets.left + sectionInsets.right;
-  if (_styleManager.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
+  if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     CGFloat cellWidth =
-        bounds - insets - (_styleManager.gridPadding * (_styleManager.gridColumnCount - 1));
-    return cellWidth / _styleManager.gridColumnCount;
+        bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
+    return cellWidth / _styler.gridColumnCount;
   }
   return bounds - insets;
 }
@@ -214,7 +212,7 @@
   NSInteger numberOfSections = self.collectionView.numberOfSections;
   BOOL isTop = (section == 0);
   BOOL isBottom = (section == numberOfSections - 1);
-  MDCCollectionViewCellStyle cellStyle = [_styleManager cellStyleAtSectionIndex:section];
+  MDCCollectionViewCellStyle cellStyle = [_styler cellStyleAtSectionIndex:section];
   BOOL isCardStyle = cellStyle == MDCCollectionViewCellStyleCard;
   BOOL isGroupedStyle = cellStyle == MDCCollectionViewCellStyleGrouped;
   // Set left/right insets.
@@ -234,7 +232,7 @@
                        withSize:(CGSize)size {
   // If object is inlaid, return its adjusted size.
   UICollectionView *collectionView = self.collectionView;
-  if ([_styleManager isItemInlaidAtIndexPath:indexPath]) {
+  if ([_styler isItemInlaidAtIndexPath:indexPath]) {
     CGFloat inset = MDCCollectionViewCellStyleCardSectionInset;
     UIEdgeInsets inlayInsets = UIEdgeInsetsZero;
     BOOL prevCellIsInlaid = NO;
@@ -263,7 +261,7 @@
       NSIndexPath *prevIndexPath =
           [NSIndexPath indexPathForItem:(indexPath.item - 1)
                               inSection:indexPath.section];
-      prevCellIsInlaid = [_styleManager isItemInlaidAtIndexPath:prevIndexPath];
+      prevCellIsInlaid = [_styler isItemInlaidAtIndexPath:prevIndexPath];
       inlayInsets.top = prevCellIsInlaid ? inset / 2 : inset;
     }
 
@@ -273,7 +271,7 @@
       NSIndexPath *nextIndexPath =
           [NSIndexPath indexPathForItem:(indexPath.item + 1)
                               inSection:indexPath.section];
-      nextCellIsInlaid = [_styleManager isItemInlaidAtIndexPath:nextIndexPath];
+      nextCellIsInlaid = [_styler isItemInlaidAtIndexPath:nextIndexPath];
       inlayInsets.bottom = nextCellIsInlaid ? inset / 2 : inset;
     }
 
@@ -289,10 +287,10 @@
                                   atTouchLocation:(CGPoint)location {
   NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
   if (indexPath) {
-    if ([_styleManager.delegate respondsToSelector:
-                                    @selector(collectionView:hidesInkViewAtIndexPath:)]) {
-      return [_styleManager.delegate collectionView:self.collectionView
-                            hidesInkViewAtIndexPath:indexPath];
+    if ([_styler.delegate respondsToSelector:
+                              @selector(collectionView:hidesInkViewAtIndexPath:)]) {
+      return [_styler.delegate collectionView:self.collectionView
+                      hidesInkViewAtIndexPath:indexPath];
     }
   }
   return YES;
@@ -385,15 +383,15 @@
 
 - (void)collectionViewWillBeginEditing:(UICollectionView *)collectionView {
   // Inlay all items.
-  _styleManager.allowsItemInlay = YES;
-  _styleManager.allowsMultipleItemInlays = YES;
-  [_styleManager applyInlayToAllItemsAnimated:YES];
+  _styler.allowsItemInlay = YES;
+  _styler.allowsMultipleItemInlays = YES;
+  [_styler applyInlayToAllItemsAnimated:YES];
   [self updateHeaderInfoBarIfNecessary];
 }
 
 - (void)collectionViewWillEndEditing:(UICollectionView *)collectionView {
   // Remove inlay of all items.
-  [_styleManager removeInlayFromAllItemsAnimated:YES];
+  [_styler removeInlayFromAllItemsAnimated:YES];
   [self updateFooterInfoBarIfNecessary];
 }
 

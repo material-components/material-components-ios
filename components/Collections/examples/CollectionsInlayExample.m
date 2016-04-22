@@ -40,9 +40,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Customize collection view settings.
-  self.styleManager.cellStyle = MDCCollectionViewCellStyleCard;
-  self.styleManager.allowsItemInlay = YES;
-  self.styleManager.allowsMultipleItemInlays = YES;
+  self.styler.cellStyle = MDCCollectionViewCellStyleCard;
+  self.styler.allowsItemInlay = YES;
+  self.styler.allowsMultipleItemInlays = YES;
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -66,11 +66,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
-  BOOL isInlaid = [self.styleManager isItemInlaidAtIndexPath:indexPath];
+  BOOL isInlaid = [self.styler isItemInlaidAtIndexPath:indexPath];
   if (isInlaid) {
-    [self.styleManager removeInlayFromItemAtIndexPath:indexPath animated:YES];
+    [self.styler removeInlayFromItemAtIndexPath:indexPath animated:YES];
   } else {
-    [self.styleManager applyInlayToItemAtIndexPath:indexPath animated:YES];
+    [self.styler applyInlayToItemAtIndexPath:indexPath animated:YES];
   }
 }
 

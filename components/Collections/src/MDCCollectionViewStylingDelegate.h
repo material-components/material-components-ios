@@ -16,13 +16,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCCollectionViewStyleManager.h"
+#import "MDCCollectionViewStyling.h"
 
 @class MDCInkTouchController;
 @class MDCInkView;
 
 /** A delegate protocol which allows setting collection view cell styles. */
-@protocol MDCCollectionViewStyleManagerDelegate <NSObject>
+@protocol MDCCollectionViewStylingDelegate <NSObject>
 @optional
 
 #pragma mark - Styling

@@ -18,8 +18,8 @@
 
 #import "MDCCollectionViewEditing.h"
 #import "MDCCollectionViewEditingDelegate.h"
-#import "MDCCollectionViewStyleManager.h"
-#import "MDCCollectionViewStyleManagerDelegate.h"
+#import "MDCCollectionViewStyling.h"
+#import "MDCCollectionViewStylingDelegate.h"
 
 /**
  Controller that implements a collection view that adheres to Material design layout
@@ -30,13 +30,13 @@
                                              MDCCollectionViewEditingDelegate,
 
                                              /** Allows for styling updates. */
-                                             MDCCollectionViewStyleManagerDelegate,
+                                             MDCCollectionViewStylingDelegate,
 
                                              /** Adheres to flow layout. */
                                              UICollectionViewDelegateFlowLayout>
 
-/** The collection view style manager. */
-@property(nonatomic, strong, readonly, nonnull) MDCCollectionViewStyleManager *styleManager;
+/** The collection view styler. */
+@property(nonatomic, strong, readonly, nonnull) id<MDCCollectionViewStyling> styler;
 
 /** The collection view editing manager. */
 @property(nonatomic, strong, readonly, nonnull) id<MDCCollectionViewEditing> editor;

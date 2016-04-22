@@ -56,7 +56,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                  atIndex:0];
 
   // Customize collection view settings.
-  self.styleManager.cellStyle = MDCCollectionViewCellStyleCard;
+  self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 }
 
 #pragma mark - <UICollectionViewDataSource>

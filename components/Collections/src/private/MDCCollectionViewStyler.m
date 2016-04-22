@@ -18,9 +18,9 @@
 #error "This file requires ARC support."
 #endif
 
-#import "MDCCollectionViewStyleManager.h"
+#import "MDCCollectionViewStyler.h"
 
-#import "MDCCollectionViewStyleManagerDelegate.h"
+#import "MDCCollectionViewStylingDelegate.h"
 #import "MaterialCollectionLayoutAttributes.h"
 
 #import <tgmath.h>
@@ -85,7 +85,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   return CGRectOffset(RectContract(rect, dx, dy), dx, dy);
 }
 
-@interface MDCCollectionViewStyleManager ()
+@interface MDCCollectionViewStyler ()
 
 /** Convenience property defining the exact color that the collection view background should be. */
 @property(nonatomic, readonly) UIColor *collectionViewBackgroundColor;
@@ -102,9 +102,28 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
 @end
 
-@implementation MDCCollectionViewStyleManager {
+@implementation MDCCollectionViewStyler {
   UIColor *_collectionViewBackgroundColor;
 }
+
+@synthesize collectionView = _collectionView;
+@synthesize delegate = _delegate;
+@synthesize shouldInvalidateLayout = _shouldInvalidateLayout;
+@synthesize cellBackgroundColor = _cellBackgroundColor;
+@synthesize cellLayoutType = _cellLayoutType;
+@synthesize gridColumnCount = _gridColumnCount;
+@synthesize gridPadding = _gridPadding;
+@synthesize cellStyle = _cellStyle;
+@synthesize separatorColor = _separatorColor;
+@synthesize separatorInset = _separatorInset;
+@synthesize separatorLineHeight = _separatorLineHeight;
+@synthesize shouldHideSeparators = _shouldHideSeparators;
+@synthesize allowsItemInlay = _allowsItemInlay;
+@synthesize allowsMultipleItemInlays = _allowsMultipleItemInlays;
+@synthesize shouldAnimateCellsOnAppearance = _shouldAnimateCellsOnAppearance;
+@synthesize willAnimateCellsOnAppearance = _willAnimateCellsOnAppearance;
+@synthesize animateCellsOnAppearancePadding = _animateCellsOnAppearancePadding;
+@synthesize animateCellsOnAppearanceDuration = _animateCellsOnAppearanceDuration;
 
 - (instancetype)initWithCollectionView:(UICollectionView *)collectionView {
   self = [super init];

@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MDCCollectionViewStyleManagerDelegate;
+@protocol MDCCollectionViewStylingDelegate;
 @class MDCCollectionViewLayoutAttributes;
 
 /** The default section insets. Should be an even number to allow even division. */
@@ -50,16 +50,16 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 };
 
 /**
- MDCCollectionViewStyleManager provides a default implementation for a UICollectionView to set
- its style properties.
+ The MDCCollectionViewStyling protocol defines the stylable properties for a Material collection
+ view.
  */
-@interface MDCCollectionViewStyleManager : NSObject
+@protocol MDCCollectionViewStyling <NSObject>
 
 /** The associated collection view. */
 @property(nonatomic, readonly, weak, nullable) UICollectionView *collectionView;
 
 /** The delegate is sent messages when styles change. */
-@property(nonatomic, weak, nullable) id<MDCCollectionViewStyleManagerDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCCollectionViewStylingDelegate> delegate;
 
 /** Indicates whether the collection view layout should be invalidated. */
 @property(nonatomic, assign) BOOL shouldInvalidateLayout;
@@ -261,20 +261,5 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
  animated resizing of the cells by the height specified in animateCellsOnAppearancePadding.
  */
 - (void)beginCellAppearanceAnimation;
-
-#pragma mark - Initializers
-
-/** Unavailable superclass initializer. */
-- (nonnull instancetype)init NS_UNAVAILABLE;
-
-/**
- Initializes and returns a newly allocated style manager object with the specified collection view.
-
- Designated initializer.
-
- @param collectionView The controller's collection view.
- */
-- (nonnull instancetype)initWithCollectionView:
-        (nonnull UICollectionView *)collectionView NS_DESIGNATED_INITIALIZER;
 
 @end

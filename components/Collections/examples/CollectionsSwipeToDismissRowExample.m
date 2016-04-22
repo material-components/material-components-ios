@@ -54,7 +54,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [_content insertObject:@[ @"This cell cannot be deleted." ] atIndex:0];
 
   // Customize collection view settings.
-  self.styleManager.cellStyle = MDCCollectionViewCellStyleCard;
+  self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 }
 
 #pragma mark - <UICollectionViewDataSource>

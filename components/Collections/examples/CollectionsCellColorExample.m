@@ -53,7 +53,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                          @"Default White Color" ]];
 
   // Customize collection view settings.
-  self.styleManager.cellStyle = MDCCollectionViewCellStyleCard;
+  self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -76,7 +76,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return cell;
 }
 
-#pragma mark - <MDCCollectionViewStyleManagerDelegate>
+#pragma mark - <MDCCollectionViewStylingDelegate>
 
 - (UIColor *)collectionView:(UICollectionView *)collectionView
     cellBackgroundColorAtIndexPath:(NSIndexPath *)indexPath {

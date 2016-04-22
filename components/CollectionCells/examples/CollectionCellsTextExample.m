@@ -92,7 +92,7 @@ static NSString *const kExampleDetailText =
   return cell;
 }
 
-#pragma mark - <MDCCollectionViewStyleManagerDelegate>
+#pragma mark - <MDCCollectionViewStylingDelegate>
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
     cellHeightAtIndexPath:(NSIndexPath *)indexPath {

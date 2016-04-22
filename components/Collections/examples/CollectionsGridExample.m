@@ -59,10 +59,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   }
 
   // Customize collection view settings.
-  self.styleManager.cellStyle = MDCCollectionViewCellStyleCard;
-  self.styleManager.cellLayoutType = MDCCollectionViewCellLayoutTypeGrid;
-  self.styleManager.gridPadding = 8;
-  self.styleManager.gridColumnCount = 2;
+  self.styler.cellStyle = MDCCollectionViewCellStyleCard;
+  self.styler.cellLayoutType = MDCCollectionViewCellLayoutTypeGrid;
+  self.styler.gridPadding = 8;
+  self.styler.gridColumnCount = 2;
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -89,16 +89,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (void)toggleCellLayoutType {
   // Toggles between list and grid layout.
-  BOOL isListLayout = (self.styleManager.cellLayoutType == MDCCollectionViewCellLayoutTypeList);
-  self.styleManager.cellLayoutType =
+  BOOL isListLayout = (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeList);
+  self.styler.cellLayoutType =
       isListLayout ? MDCCollectionViewCellLayoutTypeGrid : MDCCollectionViewCellLayoutTypeList;
   [self.collectionView performBatchUpdates:nil completion:nil];
 }
 
 - (void)toggleCellStyle {
   // Toggles between card and grouped styles.
-  BOOL isCardStyle = (self.styleManager.cellStyle == MDCCollectionViewCellStyleCard);
-  self.styleManager.cellStyle =
+  BOOL isCardStyle = (self.styler.cellStyle == MDCCollectionViewCellStyleCard);
+  self.styler.cellStyle =
       isCardStyle ? MDCCollectionViewCellStyleGrouped : MDCCollectionViewCellStyleCard;
   [self.collectionView performBatchUpdates:nil completion:nil];
 }

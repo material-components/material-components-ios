@@ -22,7 +22,7 @@
 
 #import "MDCCollectionViewController.h"
 #import "MDCCollectionViewEditingDelegate.h"
-#import "MDCCollectionViewStyleManager.h"
+#import "MDCCollectionViewStyling.h"
 #import "MaterialCollectionLayoutAttributes.h"
 #import "private/MDCCollectionGridBackgroundView.h"
 #import "private/MDCCollectionInfoBarView.h"
@@ -69,11 +69,11 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   return nil;
 }
 
-- (MDCCollectionViewStyleManager *)styleManager {
+- (id<MDCCollectionViewStyling>)styler {
   if ([self.collectionView.delegate isKindOfClass:[MDCCollectionViewController class]]) {
     MDCCollectionViewController *controller =
         (MDCCollectionViewController *)self.collectionView.delegate;
-    return controller.styleManager;
+    return controller.styler;
   }
   return nil;
 }
@@ -321,9 +321,9 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
     attr.editing = self.editor.isEditing;
   }
   attr.isGridLayout = NO;
-  if (self.styleManager.cellLayoutType == MDCCollectionViewCellLayoutTypeList) {
+  if (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeList) {
     attr.sectionOrdinalPosition = [self ordinalPositionForListElementWithAttribute:attr];
-  } else if (self.styleManager.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
+  } else if (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     attr.sectionOrdinalPosition = [self ordinalPositionForGridElementWithAttribute:attr];
     attr.isGridLayout = YES;
   }
@@ -335,13 +335,13 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   }
 
   // Set cell background.
-  attr.backgroundImage = [self.styleManager backgroundImageForCellLayoutAttributes:attr];
+  attr.backgroundImage = [self.styler backgroundImageForCellLayoutAttributes:attr];
 
   // Set separator styling.
-  attr.separatorColor = self.styleManager.separatorColor;
-  attr.separatorInset = self.styleManager.separatorInset;
-  attr.separatorLineHeight = self.styleManager.separatorLineHeight;
-  attr.shouldHideSeparators = self.styleManager.shouldHideSeparators;
+  attr.separatorColor = self.styler.separatorColor;
+  attr.separatorInset = self.styler.separatorInset;
+  attr.separatorLineHeight = self.styler.separatorLineHeight;
+  attr.shouldHideSeparators = self.styler.shouldHideSeparators;
 
   // Set inlay and hidden state if necessary.
   [self inlayAttributeIfNecessary:attr];
@@ -377,7 +377,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   NSInteger numberOfSections = self.collectionView.numberOfSections;
   BOOL isTop = (section == 0);
   BOOL isBottom = (section == numberOfSections - 1);
-  MDCCollectionViewCellStyle cellStyle = [self.styleManager cellStyleAtSectionIndex:section];
+  MDCCollectionViewCellStyle cellStyle = [self.styler cellStyleAtSectionIndex:section];
   BOOL isCardStyle = cellStyle == MDCCollectionViewCellStyleCard;
   BOOL isGroupedStyle = cellStyle == MDCCollectionViewCellStyleGrouped;
   // Set left/right insets.
@@ -407,19 +407,19 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   BOOL hasSectionItems = YES;
 
   BOOL hidesHeaderBackground = NO;
-  if ([self.styleManager.delegate
+  if ([self.styler.delegate
           respondsToSelector:@selector(collectionView:shouldHideHeaderBackgroundForSection:)]) {
     hidesHeaderBackground =
-        [self.styleManager.delegate collectionView:self.styleManager.collectionView
-              shouldHideHeaderBackgroundForSection:indexPath.section];
+        [self.styler.delegate collectionView:self.styler.collectionView
+            shouldHideHeaderBackgroundForSection:indexPath.section];
   }
 
   BOOL hidesFooterBackground = NO;
-  if ([self.styleManager.delegate
+  if ([self.styler.delegate
           respondsToSelector:@selector(collectionView:shouldHideFooterBackgroundForSection:)]) {
     hidesFooterBackground =
-        [self.styleManager.delegate collectionView:self.styleManager.collectionView
-              shouldHideFooterBackgroundForSection:indexPath.section];
+        [self.styler.delegate collectionView:self.styler.collectionView
+            shouldHideFooterBackgroundForSection:indexPath.section];
   }
 
   if (attr.representedElementCategory == UICollectionElementCategoryCell) {
@@ -435,7 +435,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
     isBottom = (isElementHeader && !hasSectionItems && !hasSectionFooter) || isElementFooter;
   }
 
-  if (attr.editing || [self.styleManager isItemInlaidAtIndexPath:attr.indexPath]) {
+  if (attr.editing || [self.styler isItemInlaidAtIndexPath:attr.indexPath]) {
     isTop = YES;
     isBottom = YES;
   }
@@ -456,7 +456,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   MDCCollectionViewOrdinalPosition position = 0;
   NSIndexPath *indexPath = attr.indexPath;
   NSInteger numberOfItemsInSection = [self numberOfItemsInSection:indexPath.section];
-  NSInteger gridColumnCount = self.styleManager.gridColumnCount;
+  NSInteger gridColumnCount = self.styler.gridColumnCount;
   NSInteger maxRowIndex = (NSInteger)(floor(numberOfItemsInSection / gridColumnCount) - 1);
   NSInteger maxColumnIndex = gridColumnCount - 1;
   NSInteger ordinalRow = (NSInteger)(floor(indexPath.item / gridColumnCount));
@@ -520,7 +520,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   CGFloat inset = MDCCollectionViewCellStyleCardSectionInset;
   UIEdgeInsets inlayInsets = UIEdgeInsetsZero;
   NSInteger item = attr.indexPath.item;
-  NSArray *inlaidIndexPaths = [self.styleManager indexPathsForInlaidItems];
+  NSArray *inlaidIndexPaths = [self.styler indexPathsForInlaidItems];
 
   // Update ordinal position for index paths adjacent to inlaid index path.
   for (NSIndexPath *inlaidIndexPath in inlaidIndexPaths) {
@@ -537,14 +537,14 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
           if (inlaidIndexPath.item > 0 || hasSectionHeader) {
             NSIndexPath *prevIndexPath = [NSIndexPath indexPathForItem:(inlaidIndexPath.item - 1)
                                                              inSection:inlaidIndexPath.section];
-            prevAttrIsInlaid = [self.styleManager isItemInlaidAtIndexPath:prevIndexPath];
+            prevAttrIsInlaid = [self.styler isItemInlaidAtIndexPath:prevIndexPath];
             inlayInsets.top = prevAttrIsInlaid ? inset / 2 : inset;
           }
 
           if (inlaidIndexPath.item < numberOfItemsInSection - 1 || hasSectionFooter) {
             NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:(inlaidIndexPath.item + 1)
                                                              inSection:inlaidIndexPath.section];
-            nextAttrIsInlaid = [self.styleManager isItemInlaidAtIndexPath:nextIndexPath];
+            nextAttrIsInlaid = [self.styler isItemInlaidAtIndexPath:nextIndexPath];
             inlayInsets.bottom = nextAttrIsInlaid ? inset / 2 : inset;
           }
 
@@ -622,7 +622,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   // this happens, the background for those items will not be drawn, and instead this decoration
   // view will extend to the bounds of the sum of its respective section item frames. Shadowing and
   // border will be applied to this decoration view as per the style manager settings.
-  if (self.styleManager.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
+  if (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     NSMutableSet *sectionSet = [NSMutableSet set];
     BOOL shouldShowGridBackground = NO;
     NSMutableArray *decorationAttributes = [NSMutableArray array];
@@ -639,7 +639,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
         shouldShowGridBackground = [self shouldShowGridBackgroundWithAttribute:decorationAttr];
         decorationAttr.shouldShowGridBackground = shouldShowGridBackground;
         decorationAttr.backgroundImage = shouldShowGridBackground
-                                             ? [self.styleManager backgroundImageForCellLayoutAttributes:decorationAttr]
+                                             ? [self.styler backgroundImageForCellLayoutAttributes:decorationAttr]
                                              : nil;
         [decorationAttributes addObject:decorationAttr];
         [sectionSet addObject:@(section)];
@@ -654,10 +654,10 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
 
 - (BOOL)shouldShowGridBackgroundWithAttribute:(MDCCollectionViewLayoutAttributes *)attr {
   // Determine whether to show grid background.
-  if (self.styleManager.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
-    if (self.styleManager.cellStyle == MDCCollectionViewCellStyleGrouped ||
-        (self.styleManager.cellStyle == MDCCollectionViewCellStyleCard &&
-         self.styleManager.gridPadding == 0)) {
+  if (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
+    if (self.styler.cellStyle == MDCCollectionViewCellStyleGrouped ||
+        (self.styler.cellStyle == MDCCollectionViewCellStyleCard &&
+         self.styler.gridPadding == 0)) {
       return YES;
     }
   }
@@ -673,8 +673,8 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
 - (CGRect)boundsForAppearanceAnimationWithInitialBounds:(CGRect)initialBounds {
   // Increase initial bounds by 25% allowing offscreen attributes to be included in the
   // appearance animation.
-  if (self.styleManager.shouldAnimateCellsOnAppearance &&
-      self.styleManager.willAnimateCellsOnAppearance) {
+  if (self.styler.shouldAnimateCellsOnAppearance &&
+      self.styler.willAnimateCellsOnAppearance) {
     CGRect newBounds = initialBounds;
     newBounds.size.height += (newBounds.size.height / 4);
     return newBounds;
@@ -694,8 +694,8 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   // header -> item -> footer ... repeated for each section. Now we can use this ordered array
   // to assign delays based on their proper ordinal position from top down.
   NSInteger attributeCount = attributes.count;
-  NSTimeInterval duration = self.styleManager.animateCellsOnAppearanceDuration;
-  if (self.styleManager.shouldAnimateCellsOnAppearance && attributeCount > 0) {
+  NSTimeInterval duration = self.styler.animateCellsOnAppearanceDuration;
+  if (self.styler.shouldAnimateCellsOnAppearance && attributeCount > 0) {
     // First sort by index path.
     NSArray *sortedByIndexPath =
         [attributes sortedArrayUsingComparator:
@@ -727,22 +727,22 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
     // Now assign delays and add padding to frame Y coordinate which gets removed during animation.
     [sortedAttributes enumerateObjectsUsingBlock:^(MDCCollectionViewLayoutAttributes *attr,
                                                    NSUInteger idx, BOOL *stop) {
-      attr.willAnimateCellsOnAppearance = self.styleManager.willAnimateCellsOnAppearance;
-      attr.animateCellsOnAppearanceDuration = self.styleManager.animateCellsOnAppearanceDuration;
+      attr.willAnimateCellsOnAppearance = self.styler.willAnimateCellsOnAppearance;
+      attr.animateCellsOnAppearanceDuration = self.styler.animateCellsOnAppearanceDuration;
       attr.animateCellsOnAppearanceDelay =
           (attributeCount > 0) ? ((CGFloat)idx / attributeCount) * duration : 0;
 
-      if (self.styleManager.willAnimateCellsOnAppearance) {
+      if (self.styler.willAnimateCellsOnAppearance) {
         CGRect frame = attr.frame;
-        frame.origin.y += self.styleManager.animateCellsOnAppearancePadding;
+        frame.origin.y += self.styler.animateCellsOnAppearancePadding;
         attr.frame = frame;
       }
     }];
 
     // Call asynchronously to allow the current layout cycle to complete before issuing animations.
-    if (self.styleManager.willAnimateCellsOnAppearance) {
+    if (self.styler.willAnimateCellsOnAppearance) {
       dispatch_async(dispatch_get_main_queue(), ^{
-        [self.styleManager beginCellAppearanceAnimation];
+        [self.styler beginCellAppearanceAnimation];
       });
     }
   }

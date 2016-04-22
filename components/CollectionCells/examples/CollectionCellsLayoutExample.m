@@ -95,7 +95,7 @@ static NSString *const kExampleDetailText =
                                         textLineArray:@[ @(2), @(1) ]]];
 
   // Customize collection view settings.
-  self.styleManager.cellStyle = MDCCollectionViewCellStyleCard;
+  self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -138,7 +138,7 @@ static NSString *const kExampleDetailText =
   return cell;
 }
 
-#pragma mark - <MDCCollectionViewStyleManagerDelegate>
+#pragma mark - <MDCCollectionViewStylingDelegate>
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
     cellHeightAtIndexPath:(NSIndexPath *)indexPath {
