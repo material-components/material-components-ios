@@ -59,11 +59,21 @@
   // Light blue 500
   [self.navBar setBackgroundColor:[UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1]];
 
-  self.moreButton = [[UIBarButtonItem alloc] initWithTitle:@"More"
-                                                     style:UIBarButtonItemStylePlain
-                                                    target:self
-                                                    action:@selector(didTapToggleButton:)];
-  self.navBar.rightBarButtonItems = @[ self.moreButton ];
+  UIBarButtonItem *moreButton =
+      [[UIBarButtonItem alloc] initWithTitle:@"More"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didTapToggleButton:)];
+
+  // Set the title text attributes before assigning to buttonBar.items
+  // because of https://github.com/google/material-components-ios/issues/277
+  [moreButton setTitleTextAttributes:[self itemTitleTextAttributes] forState:UIControlStateNormal];
+  self.navBar.rightBarButtonItems = @[ moreButton ];
+}
+
+- (NSDictionary *)itemTitleTextAttributes {
+  UIColor *textColor = [UIColor whiteColor];
+  return @{NSForegroundColorAttributeName : textColor};
 }
 
 - (void)didTapToggleButton:(id)sender {
@@ -74,10 +84,8 @@
                      CGRect frame = self.stackView.frame;
                      if (self.toggled) {
                        frame.size.height = 200;
-                       self.moreButton.title = @"Less";
                      } else {
                        frame.size = [self.stackView sizeThatFits:self.stackView.bounds.size];
-                       self.moreButton.title = @"More";
                      }
                      self.stackView.frame = frame;
                      [self.stackView layoutIfNeeded];
@@ -155,19 +163,19 @@
 
   NSDictionary *instructionAttributes1 =
       @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline],
-        NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
-                                                         green:0.459
-                                                          blue:0.459
-                                                         alpha:0.87f],
-        NSParagraphStyleAttributeName : style};
+      NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
+                                                       green:0.459
+                                                        blue:0.459
+                                                       alpha:0.87f],
+      NSParagraphStyleAttributeName : style};
 
   NSDictionary *instructionAttributes2 =
       @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline],
-        NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
-                                                         green:0.459
-                                                          blue:0.459
-                                                         alpha:0.87f],
-        NSParagraphStyleAttributeName : style};
+      NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
+                                                       green:0.459
+                                                        blue:0.459
+                                                       alpha:0.87f],
+      NSParagraphStyleAttributeName : style};
 
   NSString *instructionText = @"SWIPE RIGHT\n\n\n\nto go back\n\n\n\n\n\n";
   NSMutableAttributedString *instructionsAttributedString = [[NSMutableAttributedString alloc]

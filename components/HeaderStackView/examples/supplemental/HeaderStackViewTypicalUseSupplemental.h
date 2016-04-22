@@ -30,7 +30,6 @@ limitations under the License.
 @property(nonatomic) ExampleInstructionsViewHeaderStackViewTypicalUse *_Nullable exampleView;
 @property(nonatomic) MDCHeaderStackView *_Nullable stackView;
 @property(nonatomic) MDCNavigationBar *_Nullable navBar;
-@property(nonatomic) UIBarButtonItem *_Nullable moreButton;
 @property(nonatomic) UIView *_Nullable topView;
 
 @end
