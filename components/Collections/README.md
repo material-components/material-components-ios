@@ -22,10 +22,10 @@ Collection view classes that adhere to Material design layout and styling.
 
 <ul class="icon-list">
   <li class="icon-link"><a href="/components/Collections/apidocs/Classes/MDCCollectionViewController.html">MDCCollectionViewController</a></li>
-  <li class="icon-link"><a href="/components/Collections/apidocs/Classes/MDCCollectionViewEditing.html">MDCCollectionViewEditing</a></li>
+  <li class="icon-link"><a href="/components/Collections/apidocs/Protocols/MDCCollectionViewEditing.html">MDCCollectionViewEditing</a></li>
   <li class="icon-link"><a href="/components/Collections/apidocs/Protocols/MDCCollectionViewEditingDelegate.html">MDCCollectionViewEditingDelegate</a></li>
   <li class="icon-link"><a href="/components/Collections/apidocs/Classes/MDCCollectionViewFlowLayout.html">MDCCollectionViewFlowLayout</a></li>
-  <li class="icon-link"><a href="/components/Collections/apidocs/Classes/MDCCollectionViewStyling.html">MDCCollectionViewStyling</a></li>
+  <li class="icon-link"><a href="/components/Collections/apidocs/Protocols/MDCCollectionViewStyling.html">MDCCollectionViewStyling</a></li>
   <li class="icon-link"><a href="/components/Collections/apidocs/Protocols/MDCCollectionViewStylingDelegate.html">MDCCollectionViewStylingDelegate</a></li>
 </ul>
 
