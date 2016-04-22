@@ -53,7 +53,7 @@ class TypographyFontListExampleViewController: UITableViewController {
       cell!.textLabel!.text = "MDC"
     }
 
-    cell!.detailTextLabel!.text = fontStyleNames[indexPath.section]
+    cell!.detailTextLabel!.text = fontStyleNames[indexPath.row]
     cell!.detailTextLabel!.font = MDCTypography.captionFont()
     cell!.detailTextLabel!.alpha = MDCTypography.captionFontOpacity()
     cell!.selectionStyle = .None
