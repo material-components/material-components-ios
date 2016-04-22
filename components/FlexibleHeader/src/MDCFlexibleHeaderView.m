@@ -148,13 +148,12 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 @synthesize sharedWithManyScrollViews = _sharedWithManyScrollViews;
 @synthesize visibleShadowOpacity = _visibleShadowOpacity;
 
-- (void)dealloc {
 #if DEBUG
+- (void)dealloc {
   [_trackingScrollView.panGestureRecognizer removeTarget:self
                                                   action:@selector(fhv_scrollViewDidPan:)];
-#endif
-  [self fhv_removeInsetsFromScrollView:_trackingScrollView];
 }
+#endif
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -532,7 +531,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _shiftOffscreenAccumulator += kAttachmentCoefficient * distanceToDestination * duration;
   _shiftOffscreenAccumulator = MAX(0, MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator));
 
- [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
+  [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
 
   // Have we reached our destination?
   if (fabs(destination - _shiftOffscreenAccumulator) <= kShiftEpsilon) {
@@ -734,7 +733,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [self fhv_accumulatorDidChange];
   [self fhv_recalculatePhase];
 
- [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
+  [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
 
   [self.delegate flexibleHeaderViewFrameDidChange:self];
 }
