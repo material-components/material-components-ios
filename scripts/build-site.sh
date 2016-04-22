@@ -63,7 +63,11 @@ fi
 
 # Checking pre-requsits for folders
 # Getting the link for github repository
-GITHUB_REMOTE=`git remote -v | grep "fetch" | sed -e 's/origin.//' | sed -e 's/.(fetch)//' | grep -v "\t"`
+if [ `git remote -v | grep "https://" | wc -l` -gt 0 ]; then
+  GITHUB_REMOTE=https://github.com/google/material-components-ios.git
+else
+  GITHUB_REMOTE=git@github.com:google/material-components-ios.git
+fi
 SITE_SOURCE_BRANCH="site-source"
 SITE_SOURCE_FOLDER=$SITE_SOURCE_BRANCH
 
