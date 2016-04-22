@@ -57,9 +57,9 @@
       (otherAttrs.shouldShowSelectorStateMask != self.shouldShowSelectorStateMask) ||
       (otherAttrs.shouldShowGridBackground != self.shouldShowGridBackground) ||
       (otherAttrs.sectionOrdinalPosition != self.sectionOrdinalPosition) ||
-      (otherAttrs.backgroundImage != self.backgroundImage) ||
+      ![otherAttrs.backgroundImage isEqual:self.backgroundImage] ||
       (otherAttrs.isGridLayout != self.isGridLayout) ||
-      (otherAttrs.separatorColor != self.separatorColor) ||
+      ![otherAttrs.separatorColor isEqual:self.separatorColor] ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.separatorInset, self.separatorInset)) ||
       (otherAttrs.separatorLineHeight != self.separatorLineHeight) ||
       (otherAttrs.shouldHideSeparators != self.shouldHideSeparators) ||
