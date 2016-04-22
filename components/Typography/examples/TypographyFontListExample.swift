@@ -61,10 +61,18 @@ class TypographyFontListExampleViewController: UITableViewController {
     return cell!
   }
 
+  convenience init() {
+    self.init(style: .Plain)
+  }
+
   override init(style: UITableViewStyle) {
-    super.init(style: .Plain)
+    super.init(style: style)
 
     self.title = "Font list"
+  }
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
   required init?(coder aDecoder: NSCoder) {
