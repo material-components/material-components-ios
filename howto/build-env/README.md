@@ -42,3 +42,8 @@ versions.
 ### iOS
 
 All components are expected to support **iOS 7.0 and above**.
+
+### Ruby
+
+The core team uses **Ruby 2.0.0**. Newer versions of ruby have subtle modifications that affect our
+`Podfile.lock` output.
