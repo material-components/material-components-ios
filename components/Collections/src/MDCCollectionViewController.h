@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCCollectionViewEditingManager.h"
-#import "MDCCollectionViewEditingManagerDelegate.h"
+#import "MDCCollectionViewEditing.h"
+#import "MDCCollectionViewEditingDelegate.h"
 #import "MDCCollectionViewStyleManager.h"
 #import "MDCCollectionViewStyleManagerDelegate.h"
 
@@ -27,7 +27,7 @@
  */
 @interface MDCCollectionViewController : UICollectionViewController <
                                              /** Allows for editing notifications/permissions. */
-                                             MDCCollectionViewEditingManagerDelegate,
+                                             MDCCollectionViewEditingDelegate,
 
                                              /** Allows for styling updates. */
                                              MDCCollectionViewStyleManagerDelegate,
@@ -39,8 +39,7 @@
 @property(nonatomic, strong, readonly, nonnull) MDCCollectionViewStyleManager *styleManager;
 
 /** The collection view editing manager. */
-@property(nonatomic, strong, readonly, nonnull)
-    MDCCollectionViewEditingManager *editingManager;
+@property(nonatomic, strong, readonly, nonnull) id<MDCCollectionViewEditing> editor;
 
 #pragma mark - Subclassing
 

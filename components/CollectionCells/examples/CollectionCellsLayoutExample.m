@@ -154,7 +154,7 @@ static NSString *const kExampleDetailText =
   return MDCCellDefaultOneLineHeight;
 }
 
-#pragma mark - <MDCCollectionViewEditingManagerDelegate>
+#pragma mark - <MDCCollectionViewEditingDelegate>
 
 - (BOOL)collectionViewAllowsEditing:(UICollectionView *)collectionView {
   return YES;
@@ -178,7 +178,7 @@ static NSString *const kExampleDetailText =
 
 - (void)didSwitch:(id)sender {
   MDCSwitch *switchControl = sender;
-  [self.editingManager setEditing:switchControl.isOn animated:YES];
+  [self.editor setEditing:switchControl.isOn animated:YES];
 }
 
 #pragma mark - Private helper methods

@@ -14,10 +14,21 @@
  limitations under the License.
  */
 
-#import "MDCCollectionViewController.h"
 #import "MDCCollectionViewEditing.h"
-#import "MDCCollectionViewEditingDelegate.h"
-#import "MDCCollectionViewFlowLayout.h"
-#import "MDCCollectionViewStyleManager.h"
-#import "MDCCollectionViewStyleManagerDelegate.h"
-#import "MaterialCollectionCells.h"
+
+/**
+ The MDCCollectionViewEditingManager class provides an implementation for a UICollectionView to
+ set its editing properties.
+ */
+@interface MDCCollectionViewEditor : NSObject <MDCCollectionViewEditing>
+
+/**
+ Initialize the controller with a collection view.
+
+ Designated initializer.
+
+ @param collectionView The controller's collection view.
+ */
+- (instancetype)initWithCollectionView:(UICollectionView *)collectionView NS_DESIGNATED_INITIALIZER;
+
+@end

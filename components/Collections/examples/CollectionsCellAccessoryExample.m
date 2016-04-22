@@ -93,7 +93,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return cell;
 }
 
-#pragma mark - <MDCCollectionViewEditingManagerDelegate>
+#pragma mark - <MDCCollectionViewEditingDelegate>
 
 - (BOOL)collectionViewAllowsEditing:(UICollectionView *)collectionView {
   return NO;
@@ -117,7 +117,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (void)didSwitch:(id)sender {
   MDCSwitch *switchControl = sender;
-  [self.editingManager setEditing:switchControl.isOn animated:YES];
+  [self.editor setEditing:switchControl.isOn animated:YES];
 }
 
 @end

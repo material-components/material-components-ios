@@ -66,9 +66,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 }
 
 - (void)toggleEditMode:(id)sender {
-  BOOL isEditing = self.editingManager.isEditing;
+  BOOL isEditing = self.editor.isEditing;
   [self updatedRightBarButtonItem:!isEditing];
-  [self.editingManager setEditing:!isEditing animated:YES];
+  [self.editor setEditing:!isEditing animated:YES];
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -91,7 +91,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return cell;
 }
 
-#pragma mark - <MDCCollectionViewEditingManagerDelegate>
+#pragma mark - <MDCCollectionViewEditingDelegate>
 
 - (BOOL)collectionViewAllowsEditing:(UICollectionView *)collectionView {
   return YES;
@@ -102,7 +102,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 }
 
 - (BOOL)collectionViewAllowsSwipeToDismissItem:(UICollectionView *)collectionView {
-  return self.editingManager.isEditing;
+  return self.editor.isEditing;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView

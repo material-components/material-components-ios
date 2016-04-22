@@ -24,7 +24,7 @@
   - Individual cells being swiped horizontally for dismissal.
   - Entire cell sections being swiped horizontally for dismissal.
  */
-@protocol MDCCollectionViewEditingManagerDelegate <NSObject>
+@protocol MDCCollectionViewEditingDelegate <NSObject>
 
 @optional
 

@@ -25,6 +25,7 @@
 #import "MaterialInk.h"
 #import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionStringResources.h"
+#import "private/MDCCollectionViewEditor.h"
 
 #import <tgmath.h>
 
@@ -82,9 +83,8 @@
   _styleManager.delegate = self;
 
   // Editing manager.
-  _editingManager =
-      [[MDCCollectionViewEditingManager alloc] initWithCollectionView:self.collectionView];
-  _editingManager.delegate = self;
+  _editor = [[MDCCollectionViewEditor alloc] initWithCollectionView:self.collectionView];
+  _editor.delegate = self;
 
   // Set up ink touch controller.
   _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
@@ -353,7 +353,7 @@
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
     shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-  if (_editingManager.isEditing) {
+  if (_editor.isEditing) {
     if ([self collectionView:collectionView canEditItemAtIndexPath:indexPath]) {
       return [self collectionView:collectionView canSelectItemDuringEditingAtIndexPath:indexPath];
     }
@@ -377,7 +377,7 @@
   [self updateFooterInfoBarIfNecessary];
 }
 
-#pragma mark - <MDCCollectionViewEditingManagerDelegate>
+#pragma mark - <MDCCollectionViewEditingDelegate>
 
 - (BOOL)collectionViewAllowsEditing:(UICollectionView *)collectionView {
   return NO;
@@ -518,7 +518,7 @@
 }
 
 - (void)updateHeaderInfoBarIfNecessary {
-  if (_editingManager.isEditing) {
+  if (_editor.isEditing) {
     // Show HUD only once before autodissmissing.
     BOOL allowsSwipeToDismissItem = NO;
     if ([self respondsToSelector:@selector(collectionViewAllowsSwipeToDismissItem:)]) {
@@ -535,7 +535,7 @@
 
 - (void)updateFooterInfoBarIfNecessary {
   NSInteger selectedItemCount = [self.collectionView.indexPathsForSelectedItems count];
-  if (_editingManager.isEditing) {
+  if (_editor.isEditing) {
     // Invalidate layout to add info bar if necessary.
     [self.collectionView.collectionViewLayout invalidateLayout];
     if (_footerInfoBar) {

@@ -21,12 +21,12 @@
 #import "MDCCollectionViewFlowLayout.h"
 
 #import "MDCCollectionViewController.h"
-#import "MDCCollectionViewEditingManager.h"
-#import "MDCCollectionViewEditingManagerDelegate.h"
+#import "MDCCollectionViewEditingDelegate.h"
 #import "MDCCollectionViewStyleManager.h"
 #import "MaterialCollectionLayoutAttributes.h"
 #import "private/MDCCollectionGridBackgroundView.h"
 #import "private/MDCCollectionInfoBarView.h"
+#import "private/MDCCollectionViewEditor.h"
 
 #import <tgmath.h>
 
@@ -60,11 +60,11 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   return self;
 }
 
-- (MDCCollectionViewEditingManager *)editingManager {
+- (id<MDCCollectionViewEditing>)editor {
   if ([self.collectionView.delegate isKindOfClass:[MDCCollectionViewController class]]) {
     MDCCollectionViewController *controller =
         (MDCCollectionViewController *)self.collectionView.delegate;
-    return controller.editingManager;
+    return controller.editor;
   }
   return nil;
 }
@@ -108,7 +108,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
   if (!CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size) ||
-      self.editingManager.isEditing) {
+      self.editor.isEditing) {
     [self invalidateLayout];
     return YES;
   }
@@ -318,7 +318,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
 
 - (MDCCollectionViewLayoutAttributes *)updateAttribute:(MDCCollectionViewLayoutAttributes *)attr {
   if (attr.representedElementKind == UICollectionElementCategoryCell) {
-    attr.editing = self.editingManager.isEditing;
+    attr.editing = self.editor.isEditing;
   }
   attr.isGridLayout = NO;
   if (self.styleManager.cellLayoutType == MDCCollectionViewCellLayoutTypeList) {
@@ -495,9 +495,9 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
   // Determine proper state to show cell if editing.
   if (attr.editing) {
     if ([self.collectionView.dataSource
-            conformsToProtocol:@protocol(MDCCollectionViewEditingManagerDelegate)]) {
-      id<MDCCollectionViewEditingManagerDelegate> editingDelegate =
-          (id<MDCCollectionViewEditingManagerDelegate>)self.collectionView.dataSource;
+            conformsToProtocol:@protocol(MDCCollectionViewEditingDelegate)]) {
+      id<MDCCollectionViewEditingDelegate> editingDelegate =
+          (id<MDCCollectionViewEditingDelegate>)self.collectionView.dataSource;
 
       // Check if delegate can select during editing.
       if ([editingDelegate respondsToSelector:
@@ -585,20 +585,20 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
 }
 
 - (void)hideAttributeIfNecessary:(MDCCollectionViewLayoutAttributes *)attr {
-  // Hide the attribute if the MDCCollectionViewEditingManager is either currently handling
-  // a cell item or section swipe for dismissal, or is reordering a cell item.
-  if (self.editingManager) {
+  if (self.editor) {
+    // Hide the attribute if the editor is either currently handling a cell item or section swipe
+    // for dismissal, or is reordering a cell item.
     BOOL isCell = attr.representedElementCategory == UICollectionElementCategoryCell;
-    if (attr.indexPath.section == self.editingManager.dismissingSection ||
-        ([attr.indexPath isEqual:self.editingManager.dismissingCellIndexPath] && isCell) ||
-        ([attr.indexPath isEqual:self.editingManager.reorderingCellIndexPath] && isCell)) {
+    if (attr.indexPath.section == self.editor.dismissingSection ||
+        ([attr.indexPath isEqual:self.editor.dismissingCellIndexPath] && isCell) ||
+        ([attr.indexPath isEqual:self.editor.reorderingCellIndexPath] && isCell)) {
       attr.hidden = YES;
     }
   }
 }
 
 - (void)addInfoBarAttributesIfNecessary:(NSMutableArray *)attributes {
-  if (self.editingManager.isEditing && [attributes count] > 0) {
+  if (self.editor.isEditing && [attributes count] > 0) {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
 
     // Add header info bar if editing.

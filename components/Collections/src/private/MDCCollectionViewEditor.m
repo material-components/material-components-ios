@@ -18,9 +18,9 @@
 #error "This file requires ARC support."
 #endif
 
-#import "MDCCollectionViewEditingManager.h"
+#import "MDCCollectionViewEditor.h"
 
-#import "MDCCollectionViewEditingManagerDelegate.h"
+#import "MDCCollectionViewEditingDelegate.h"
 #import "MaterialShadowLayer.h"
 
 #import <tgmath.h>
@@ -54,10 +54,10 @@ static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
 }
 @end
 
-@interface MDCCollectionViewEditingManager () <UIGestureRecognizerDelegate>
+@interface MDCCollectionViewEditor () <UIGestureRecognizerDelegate>
 @end
 
-@implementation MDCCollectionViewEditingManager {
+@implementation MDCCollectionViewEditor {
   UILongPressGestureRecognizer *_longPressGestureRecognizer;
   UIPanGestureRecognizer *_panGestureRecognizer;
   CGPoint _selectedCellLocation;
@@ -65,16 +65,23 @@ static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
   ShadowedSnapshotView *_cellSnapshot;
 }
 
+@synthesize collectionView = _collectionView;
+@synthesize delegate = _delegate;
+@synthesize reorderingCellIndexPath = _reorderingCellIndexPath;
+@synthesize dismissingCellIndexPath = _dismissingCellIndexPath;
+@synthesize dismissingSection = _dismissingSection;
+@synthesize editing = _editing;
+
 #pragma mark - Public
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
-  return nil;
+  return [self initWithCollectionView:nil];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   [self doesNotRecognizeSelector:_cmd];
-  return nil;
+  return [self initWithCollectionView:nil];
 }
 
 - (instancetype)initWithCollectionView:(UICollectionView *)collectionView {

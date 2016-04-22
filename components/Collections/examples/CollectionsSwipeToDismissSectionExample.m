@@ -79,7 +79,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return cell;
 }
 
-#pragma mark - <MDCCollectionViewEditingManagerDelegate>
+#pragma mark - <MDCCollectionViewEditingDelegate>
 
 - (BOOL)collectionViewAllowsSwipeToDismissSection:(UICollectionView *)collectionView {
   return YES;
