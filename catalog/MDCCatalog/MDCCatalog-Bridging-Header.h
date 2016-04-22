@@ -16,3 +16,4 @@
 
 #import "CatalogByConvention.h"
 #import "MDCCatalogTiles.h"
+#import "MDCInkTouchController+Injection.h"

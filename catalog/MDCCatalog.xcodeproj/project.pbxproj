@@ -15,6 +15,7 @@
 		664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
 		664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */; };
+		66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */; };
 		666CA70D1CAEBCA9001B1884 /* CBCNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */; };
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		DE1944861CBD9E40009E0321 /* MDCCatalogTileData.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1944681CBD9E40009E0321 /* MDCCatalogTileData.m */; };
@@ -89,6 +90,8 @@
 		664524BD1C6BA62A001ADBF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		664524C01C6BA62A001ADBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		664524C21C6BA62A001ADBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66519B051CCA97E100E5423E /* MDCInkTouchController+Injection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDCInkTouchController+Injection.h"; sourceTree = "<group>"; };
+		66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCInkTouchController+Injection.m"; sourceTree = "<group>"; };
 		665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDCCatalog-Bridging-Header.h"; sourceTree = "<group>"; };
 		666CA7081CAEBCA9001B1884 /* CBCCatalogExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCCatalogExample.h; sourceTree = "<group>"; };
 		666CA7091CAEBCA9001B1884 /* CBCNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCNodeViewController.h; sourceTree = "<group>"; };
@@ -195,6 +198,8 @@
 				6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */,
 				0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */,
 				664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */,
+				66519B051CCA97E100E5423E /* MDCInkTouchController+Injection.h */,
+				66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */,
 				665A34DE1C6BDAE700962055 /* Resources */,
 			);
 			path = MDCCatalog;
@@ -459,6 +464,7 @@
 				DE19448C1CBD9E40009E0321 /* MDCCatalogTileDataInk.m in Sources */,
 				0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */,
 				664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */,
+				66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */,
 				DE19448D1CBD9E40009E0321 /* MDCCatalogTileDataMisc.m in Sources */,
 				DE19448B1CBD9E40009E0321 /* MDCCatalogTileDataHeaderStackView.m in Sources */,
 				DE1944881CBD9E40009E0321 /* MDCCatalogTileDataButtonBar.m in Sources */,
