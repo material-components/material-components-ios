@@ -3,6 +3,9 @@ PODS:
     - MaterialComponents/AppBar (= 4.0.1)
     - MaterialComponents/ButtonBar (= 4.0.1)
     - MaterialComponents/Buttons (= 4.0.1)
+    - MaterialComponents/CollectionCells (= 4.0.1)
+    - MaterialComponents/CollectionLayoutAttributes (= 4.0.1)
+    - MaterialComponents/Collections (= 4.0.1)
     - MaterialComponents/FlexibleHeader (= 4.0.1)
     - MaterialComponents/FontDiskLoader (= 4.0.1)
     - MaterialComponents/HeaderStackView (= 4.0.1)
@@ -28,6 +31,18 @@ PODS:
   - MaterialComponents/ButtonBar (4.0.1):
     - MaterialComponents/Buttons
   - MaterialComponents/Buttons (4.0.1):
+    - MaterialComponents/Ink
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+  - MaterialComponents/CollectionCells (4.0.1):
+    - MaterialComponents/CollectionLayoutAttributes
+    - MaterialComponents/Ink
+    - MaterialComponents/Typography
+  - MaterialComponents/CollectionLayoutAttributes (4.0.1)
+  - MaterialComponents/Collections (4.0.1):
+    - MaterialComponents/CollectionCells
+    - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
@@ -79,14 +94,14 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../
+    :path: "../"
   MaterialComponentsCatalog:
-    :path: ../
+    :path: "../"
   MaterialComponentsUnitTests:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 3993ec396d4d7f94073890f0a35c87013762f333
+  MaterialComponents: e5e22c3f3bef3695355326d2c595c0d1e85d053f
   MaterialComponentsCatalog: 4769fcabbbdb4b40373eb428f329dbc4c2b53dac
   MaterialComponentsUnitTests: 8fa9520a8dae5ee0b7962ce449619b5be13445e6
 
