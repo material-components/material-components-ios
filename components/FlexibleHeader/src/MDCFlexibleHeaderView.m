@@ -532,6 +532,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _shiftOffscreenAccumulator += kAttachmentCoefficient * distanceToDestination * duration;
   _shiftOffscreenAccumulator = MAX(0, MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator));
 
+ [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
+
   // Have we reached our destination?
   if (fabs(destination - _shiftOffscreenAccumulator) <= kShiftEpsilon) {
     _shiftOffscreenAccumulator = destination;
@@ -731,6 +733,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
   [self fhv_accumulatorDidChange];
   [self fhv_recalculatePhase];
+
+ [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
 
   [self.delegate flexibleHeaderViewFrameDidChange:self];
 }
