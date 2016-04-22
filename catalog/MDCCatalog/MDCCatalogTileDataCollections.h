@@ -14,19 +14,12 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 #import "MDCCatalogTileData.h"
-#import "MDCCatalogTileDataAppBar.h"
-#import "MDCCatalogTileDataButtonBar.h"
-#import "MDCCatalogTileDataButtons.h"
-#import "MDCCatalogTileDataCollections.h"
-#import "MDCCatalogTileDataFlexibleHeader.h"
-#import "MDCCatalogTileDataHeaderStackView.h"
-#import "MDCCatalogTileDataInk.h"
-#import "MDCCatalogTileDataMisc.h"
-#import "MDCCatalogTileDataNavigationBar.h"
-#import "MDCCatalogTileDataPageControl.h"
-#import "MDCCatalogTileDataShadowLayer.h"
-#import "MDCCatalogTileDataSlider.h"
-#import "MDCCatalogTileDataSpritedAnimationView.h"
-#import "MDCCatalogTileDataSwitch.h"
-#import "MDCCatalogTileDataTypography.h"
+
+@interface MDCCatalogTileDataCollections : MDCCatalogTileData
+
++ (UIImage *)drawTileImage:(CGRect)frame;
+
+@end

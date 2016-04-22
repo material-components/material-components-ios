@@ -78,6 +78,8 @@ class MDCCatalogTileView: UIView {
       newImage = MDCCatalogTileDataButtonBar.drawTileImage(centeredFrame)
     case "Buttons":
       newImage = MDCCatalogTileDataButtons.drawTileImage(centeredFrame)
+    case "Collections":
+      newImage = MDCCatalogTileDataCollections.drawTileImage(centeredFrame)
     case "Flexible Header":
       newImage = MDCCatalogTileDataFlexibleHeader.drawTileImage(centeredFrame)
     case "Header Stack View":
