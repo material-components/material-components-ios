@@ -75,6 +75,41 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/Buttons"
   end
 
+  s.subspec "CollectionCells" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.resource_bundles = {
+      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/**/*.{png}"]
+    }
+
+    ss.dependency "MaterialComponents/CollectionLayoutAttributes"
+    ss.dependency "MaterialComponents/Ink"
+    ss.dependency "MaterialComponents/Typography"
+  end
+
+  s.subspec "CollectionLayoutAttributes" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+  end
+
+  s.subspec "Collections" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.resource_bundles = {
+      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
+    }
+
+    ss.dependency "MaterialComponents/CollectionCells"
+    ss.dependency "MaterialComponents/CollectionLayoutAttributes"
+    ss.dependency "MaterialComponents/Ink"
+    ss.dependency "MaterialComponents/ShadowElevations"
+    ss.dependency "MaterialComponents/ShadowLayer"
+    ss.dependency "MaterialComponents/Typography"
+  end
+
   s.subspec "FlexibleHeader" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
