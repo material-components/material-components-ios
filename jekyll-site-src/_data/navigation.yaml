@@ -3,9 +3,9 @@ howto:
     url: "/howto/"
     class: toplevel
   - name: Tutorial
-    url: /howto/tutorial
+    url: "/howto/tutorial/"
   - name: Build environment
-    url: /howto/build-env
+    url: "/howto/build-env/"
 contributing:
   - name: Contributing
     url: "/contributing/"
