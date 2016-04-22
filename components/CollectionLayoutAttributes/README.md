@@ -6,9 +6,6 @@ excerpt: "Allows passing layout attributes to the cells and supplementary views.
 ---
 # Collection Layout Attributes
 
-![Collections](docs/assets/collections_screenshot.png)
-<!--{: .ios-screenshot .right }-->
-
 Allows passing layout attributes to the cells and supplementary views.
 <!--{: .intro :}-->
 

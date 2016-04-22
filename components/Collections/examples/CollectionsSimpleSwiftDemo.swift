@@ -43,7 +43,7 @@ class CollectionsSimpleSwiftDemo: MDCCollectionViewController {
 
   override func collectionView(collectionView: UICollectionView,
                                cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    var cell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifierItem,
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifierItem,
                                                                      forIndexPath: indexPath)
     if let cell = cell as? MDCCollectionViewTextCell {
       cell.textLabel?.text = colors[indexPath.item]
