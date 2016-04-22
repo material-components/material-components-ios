@@ -2,14 +2,14 @@
 title:  "Collections"
 layout: detail
 section: components
-excerpt: "Collection view classes that adhere to Material design layout and animation styling."
+excerpt: "Collection view classes that adhere to Material design layout and styling."
 ---
 # Collections
 
 ![Collections](docs/assets/collections_screenshot.png)
 <!--{: .ios-screenshot .right }-->
 
-Collection view classes that adhere to Material design layout and animation styling.
+Collection view classes that adhere to Material design layout and styling.
 <!--{: .intro :}-->
 
 ### Material Design Specifications
@@ -68,14 +68,14 @@ Before using Collections, you'll need to import it:
 
 #### Swift
 ~~~ swift
-import MaterialCollections
+import MaterialComponents.MaterialCollections
 ~~~
 <!--</div>-->
 
 ### Use `MDCCollectionViewController` as a view controller
 
-The following four steps will allow you to get a basic example to get a MDCCollectionViewController
-up and running.
+The following four steps will allow you to get a basic example of a `MDCCollectionViewController`
+subclass up and running.
 
 Step 1: **Subclass `MDCCollectionViewController` in your view controller interface**.
 
@@ -90,6 +90,8 @@ Step 1: **Subclass `MDCCollectionViewController` in your view controller interfa
 
 #### Swift
 ~~~ swift
+import MaterialComponents.MaterialCollections
+
 class MyCollectionsExample: MDCCollectionViewController {
 }
 ~~~
@@ -172,7 +174,8 @@ override func collectionView(collectionView: UICollectionView,
 The collection view controller provides a `styler` property that conforms to the
 `MDCCollectionViewStyling` protocol. By using this property, styling can be easily set for the
 collection view items/sections. In addition, by overriding `MDCCollectionViewStyleDelegate`
-protocol methods in a collection view subclass, specific cells/sections can be styled differently.
+protocol methods in a collection view controller subclass, specific cells/sections can be styled
+differently.
 
 ### Cell Styles
 
@@ -186,7 +189,7 @@ either set the styler `cellStyle` property directly, or use the protocol method
 // Set for entire collection view.
 self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 
-
+// Or set for specific sections.
 - (MDCCollectionViewCellStyle)collectionView:(UICollectionView *)collectionView
                          cellStyleForSection:(NSInteger)section {
   if (section == 2) {
@@ -214,7 +217,7 @@ override func collectionView(collectionView: UICollectionView,
 
 ### Cell Height
 
-The styling delegate protocol can be used to override the default cell height of 48.0f.
+The styling delegate protocol can be used to override the default cell height of `48.0f`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
@@ -271,7 +274,7 @@ self.styler.gridColumnCount = 2
 ### Cell Separators
 
 The styler allows customizing cell separators for the entire collection view. Individual
-cell customization is also available by using a cell subclassed from `MDCCollectionViewCell`.
+cell customization is also available by using an `MDCCollectionViewCell` cell or a subclass of it.
 Learn more by reading the section on [Cell Separators](../CollectionCells/#cell-separators) in the
 [CollectionCells](../CollectionCells) component.
 
