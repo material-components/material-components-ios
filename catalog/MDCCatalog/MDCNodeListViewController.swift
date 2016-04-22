@@ -66,13 +66,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     self.addChildViewController(appBar.headerViewController)
     appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
-
-    let headerContentView = appBar.headerViewController.headerView
-    let lineFrame = CGRectMake(0, headerContentView.frame.height, headerContentView.frame.width, 1)
-    let line = UIView(frame: lineFrame)
-    line.backgroundColor = UIColor(white: 0.72, alpha: 1)
-    line.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
-    headerContentView.addSubview(line)
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -252,12 +245,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
         UIBarButtonItem.appearance().setTitleTextAttributes(
           [NSForegroundColorAttributeName:textColor],
           forState: .Normal)
-
-        let lineFrame = CGRectMake(0, headerView.bounds.height, headerView.bounds.width, 1)
-        let line = UIView(frame: lineFrame)
-        line.backgroundColor = UIColor(white: 0.72, alpha: 1)
-        line.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
-        headerView.addSubview(line)
 
         var contentFrame = container.contentViewController.view.frame
         let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
