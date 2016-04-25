@@ -38,6 +38,12 @@ PODS:
   - MaterialComponents/CollectionCells (4.0.1):
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
+    - MaterialComponents/private/Icons/ic_check
+    - MaterialComponents/private/Icons/ic_check_circle
+    - MaterialComponents/private/Icons/ic_chevron_right
+    - MaterialComponents/private/Icons/ic_info
+    - MaterialComponents/private/Icons/ic_radio_button_unchecked
+    - MaterialComponents/private/Icons/ic_reorder
     - MaterialComponents/Typography
   - MaterialComponents/CollectionLayoutAttributes (4.0.1)
   - MaterialComponents/Collections (4.0.1):
@@ -63,8 +69,26 @@ PODS:
   - MaterialComponents/private/Icons (4.0.1):
     - MaterialComponents/private/Icons/Base (= 4.0.1)
     - MaterialComponents/private/Icons/ic_arrow_back (= 4.0.1)
+    - MaterialComponents/private/Icons/ic_check (= 4.0.1)
+    - MaterialComponents/private/Icons/ic_check_circle (= 4.0.1)
+    - MaterialComponents/private/Icons/ic_chevron_right (= 4.0.1)
+    - MaterialComponents/private/Icons/ic_info (= 4.0.1)
+    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 4.0.1)
+    - MaterialComponents/private/Icons/ic_reorder (= 4.0.1)
   - MaterialComponents/private/Icons/Base (4.0.1)
   - MaterialComponents/private/Icons/ic_arrow_back (4.0.1):
+    - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/Icons/ic_check (4.0.1):
+    - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/Icons/ic_check_circle (4.0.1):
+    - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/Icons/ic_chevron_right (4.0.1):
+    - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/Icons/ic_info (4.0.1):
+    - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/Icons/ic_radio_button_unchecked (4.0.1):
+    - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/Icons/ic_reorder (4.0.1):
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/ThumbTrack (4.0.1):
     - MaterialComponents/Ink
@@ -91,6 +115,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: e5e22c3f3bef3695355326d2c595c0d1e85d053f
+  MaterialComponents: 63514a0e6f6fb1d29604ded592b91e6b84238505
 
 COCOAPODS: 0.39.0

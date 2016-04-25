@@ -21,12 +21,24 @@
 #import "MDCCollectionViewCell.h"
 
 #import "MaterialCollectionLayoutAttributes.h"
-#import "private/MDCCollectionCellResources.h"
+#import "MaterialIcons+ic_check.h"
+#import "MaterialIcons+ic_check_circle.h"
+#import "MaterialIcons+ic_chevron_right.h"
+#import "MaterialIcons+ic_info.h"
+#import "MaterialIcons+ic_radio_button_unchecked.h"
+#import "MaterialIcons+ic_reorder.h"
+
+#define RGBCOLOR(r, g, b) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
+#define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
 
 static CGFloat kEditingControlAppearanceOffset = 16.0f;
 
-// Default accesory insets.
+// Default accessory insets.
 static const UIEdgeInsets kAccessoryInsetDefault = {0, 16.0f, 0, 16.0f};
+
+// Default editing icon colors.
+static const uint32_t kCellGrayColor = 0x626262;
+static const uint32_t kCellRedColor = 0xF44336;
 
 @implementation MDCCollectionViewCell {
   MDCCollectionViewLayoutAttributes *_attr;
@@ -150,17 +162,17 @@ static const UIEdgeInsets kAccessoryInsetDefault = {0, 16.0f, 0, 16.0f};
 
   switch (_accessoryType) {
     case MDCCollectionViewCellAccessoryDisclosureIndicator: {
-      UIImage *image = MDCCollectionCellResources(imageForCellAccessoryChevronRight);
-      accessoryImageView.image = image;
+      accessoryImageView.image =
+          [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_chevron_right]];
       break;
     }
     case MDCCollectionViewCellAccessoryCheckmark: {
-      UIImage *image = MDCCollectionCellResources(imageForCellAccessoryCheck);
+      UIImage *image = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_check]];
       accessoryImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
       break;
     }
     case MDCCollectionViewCellAccessoryDetailButton: {
-      UIImage *image = MDCCollectionCellResources(imageForCellAccessoryInfo);
+      UIImage *image = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_info]];
       accessoryImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
       break;
     }
@@ -253,8 +265,10 @@ static const UIEdgeInsets kAccessoryInsetDefault = {0, 16.0f, 0, 16.0f};
 
     // Create reorder editing controls.
     if (_attr.shouldShowReorderStateMask && !_editingReorderImageView) {
-      UIImage *reorderImage = MDCCollectionCellResources(imageForCellEditingReorder);
+      UIImage *reorderImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_reorder]];
+      reorderImage = [reorderImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
       _editingReorderImageView = [[UIImageView alloc] initWithImage:reorderImage];
+      _editingReorderImageView.tintColor = HEXCOLOR(kCellGrayColor);
       _editingReorderImageView.alpha = 0.0f;
       _editingReorderImageView.frame =
           CGRectMake(0,
@@ -266,8 +280,11 @@ static const UIEdgeInsets kAccessoryInsetDefault = {0, 16.0f, 0, 16.0f};
 
     // Create selector editing controls.
     if (_attr.shouldShowSelectorStateMask && !_editingSelectorImageView) {
-      UIImage *selectorImage = MDCCollectionCellResources(imageForCellEditingUnselected);
+      UIImage *selectorImage =
+          [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_radio_button_unchecked]];
+      selectorImage = [selectorImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
       _editingSelectorImageView = [[UIImageView alloc] initWithImage:selectorImage];
+      _editingSelectorImageView.tintColor = HEXCOLOR(kCellGrayColor);
       _editingSelectorImageView.alpha = 0.0f;
       _editingSelectorImageView.frame =
           CGRectMake(CGRectGetWidth(self.bounds) - selectorImage.size.width,
@@ -291,9 +308,17 @@ static const UIEdgeInsets kAccessoryInsetDefault = {0, 16.0f, 0, 16.0f};
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-  _editingSelectorImageView.image = selected
-                                        ? MDCCollectionCellResources(imageForCellEditingSelected)
-                                        : MDCCollectionCellResources(imageForCellEditingUnselected);
+  if (selected) {
+    _editingSelectorImageView.image =
+        [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_check_circle]];
+    _editingSelectorImageView.tintColor = HEXCOLOR(kCellRedColor);
+  } else {
+    _editingSelectorImageView.image =
+        [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_radio_button_unchecked]];
+    _editingSelectorImageView.tintColor = HEXCOLOR(kCellGrayColor);
+  }
+  _editingSelectorImageView.image =
+      [_editingSelectorImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 #pragma mark - Cell Appearance Animation

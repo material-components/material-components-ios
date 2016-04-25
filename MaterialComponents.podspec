@@ -79,13 +79,16 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/**/*.{png}"]
-    }
 
     ss.dependency "MaterialComponents/CollectionLayoutAttributes"
     ss.dependency "MaterialComponents/Ink"
     ss.dependency "MaterialComponents/Typography"
+    ss.dependency "MaterialComponents/private/Icons/ic_check"
+    ss.dependency "MaterialComponents/private/Icons/ic_check_circle"
+    ss.dependency "MaterialComponents/private/Icons/ic_chevron_right"
+    ss.dependency "MaterialComponents/private/Icons/ic_info"
+    ss.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
+    ss.dependency "MaterialComponents/private/Icons/ic_reorder"
   end
 
   s.subspec "CollectionLayoutAttributes" do |ss|
