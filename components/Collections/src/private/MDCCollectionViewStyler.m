@@ -47,7 +47,7 @@ static const UIEdgeInsets kCollectionViewCellContentInsetsRetina = {1.5, 1.5, 1.
 static const UIEdgeInsets kCollectionViewCellContentInsets = {1, 2, 1, 2};
 
 /** Default cell separator style settings */
-static const CGFloat kCollectionViewCellSeparatorDefaultHeight = 1.0f;
+static const CGFloat kCollectionViewCellSeparatorDefaultHeightInPixels = 1.0f;
 
 /** Grid layout defaults */
 static const NSInteger kCollectionViewGridDefaultColumnCount = 2;
@@ -139,7 +139,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // Cell separator defaults.
     _separatorColor = RGBCOLOR(224, 224, 224);
     _separatorInset = UIEdgeInsetsZero;
-    _separatorLineHeight = kCollectionViewCellSeparatorDefaultHeight;
+    _separatorLineHeight =
+        kCollectionViewCellSeparatorDefaultHeightInPixels / [[UIScreen mainScreen] scale];
     _shouldHideSeparators = NO;
 
     // Grid defaults.
