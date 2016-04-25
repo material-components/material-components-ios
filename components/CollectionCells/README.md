@@ -34,36 +34,7 @@ Collection view cell classes that adhere to Material design layout and styling.
 - Xcode 7.0 or higher.
 - iOS SDK version 7.0 or higher.
 
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-~~~
-pod 'MaterialComponents/CollectionCells'
-~~~
-
-Then, run the following command:
-
-~~~ bash
-$ pod install
-~~~
-
-- - -
-
 ## Usage
 
-### Importing
-
-Before using Collection Cells, you'll need to import it:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-#import "MaterialCollectionCells.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents.MaterialCollectionCells
-~~~
-<!--</div>-->
+Please see the [Collections](../Collections) component for more information about using Collection
+Cells. We do not presently support using Collection Cells as a standalone component.
