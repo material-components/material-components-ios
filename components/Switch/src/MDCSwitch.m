@@ -20,9 +20,9 @@
 
 static const CGSize MDCSwitchIntrinsicSize = {.width = 36.0f, .height = 27.0f};
 
-static const CGFloat kMDCSwitchThumbRadius = 10.0f;
-static const CGFloat kMDCSwitchTrackHeight = 14.0f;
-static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
+static const CGFloat kSwitchThumbRadius = 10.0f;
+static const CGFloat kSwitchTrackHeight = 14.0f;
+static const CGFloat kSwitchMinTouchSize = 48.0f;
 static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
 @interface MDCSwitch () <MDCThumbTrackDelegate>
@@ -58,9 +58,9 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
                   action:@selector(thumbTrackValueChanged:)
         forControlEvents:UIControlEventValueChanged];
   _thumbTrack.continuousUpdateEvents = NO;
-  _thumbTrack.trackHeight = kMDCSwitchTrackHeight;
-  _thumbTrack.thumbRadius = kMDCSwitchThumbRadius;
-  _thumbTrack.thumbMaxRippleRadius = kInkMaxRippleRadiusFactor * kMDCSwitchThumbRadius;
+  _thumbTrack.trackHeight = kSwitchTrackHeight;
+  _thumbTrack.thumbRadius = kSwitchThumbRadius;
+  _thumbTrack.thumbMaxRippleRadius = kInkMaxRippleRadiusFactor * kSwitchThumbRadius;
   _thumbTrack.trackEndsAreRounded = YES;
   _thumbTrack.interpolateOnOffColors = YES;
   _thumbTrack.numDiscreteValues = 2;
@@ -181,7 +181,7 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  CGFloat dx = MIN(0, (self.bounds.size.height - kMDCSwitchMinTouchSize) / 2);
+  CGFloat dx = MIN(0, (self.bounds.size.height - kSwitchMinTouchSize) / 2);
   CGRect rect = CGRectInset(self.bounds, dx, dx);
   return CGRectContainsPoint(rect, point);
 }
@@ -293,8 +293,8 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 #pragma mark - Default Colors
 
 // TODO(iangordon): Document source of these values after Theme decision
-static const CGFloat kMDCSwitchLightThemeTrackOffAlpha = 0.26f;
-static const CGFloat kMDCSwitchLightThemeTrackDisabledAlpha = 0.12f;
+static const CGFloat kSwitchLightThemeTrackOffAlpha = 0.26f;
+static const CGFloat kSwitchLightThemeTrackDisabledAlpha = 0.12f;
 
 + (UIColor *)defaultOnTintColor {
   return [UIColor colorWithRed:0.32f green:0.87f blue:0 alpha:1];
@@ -306,7 +306,7 @@ static const CGFloat kMDCSwitchLightThemeTrackDisabledAlpha = 0.12f;
 }
 
 + (UIColor *)defaultOffTrackColor {
-  return [[UIColor blackColor] colorWithAlphaComponent:kMDCSwitchLightThemeTrackOffAlpha];
+  return [[UIColor blackColor] colorWithAlphaComponent:kSwitchLightThemeTrackOffAlpha];
 }
 
 + (UIColor *)defaultDisabledThumbColor {
@@ -315,7 +315,7 @@ static const CGFloat kMDCSwitchLightThemeTrackDisabledAlpha = 0.12f;
 }
 
 + (UIColor *)defaultDisabledTrackColor {
-  return [[UIColor blackColor] colorWithAlphaComponent:kMDCSwitchLightThemeTrackDisabledAlpha];
+  return [[UIColor blackColor] colorWithAlphaComponent:kSwitchLightThemeTrackDisabledAlpha];
 }
 
 @end

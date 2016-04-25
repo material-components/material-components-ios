@@ -18,7 +18,7 @@
 
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
-static const CGFloat kMDCInkGestureDefaultDragCancelDistance = 20;
+static const CGFloat kInkGestureDefaultDragCancelDistance = 20;
 
 @implementation MDCInkGestureRecognizer {
   CGPoint _touchStartLocation;
@@ -30,7 +30,7 @@ static const CGFloat kMDCInkGestureDefaultDragCancelDistance = 20;
   self = [super initWithTarget:target action:action];
   if (self) {
     _cancelOnDragOut = YES;
-    _dragCancelDistance = kMDCInkGestureDefaultDragCancelDistance;
+    _dragCancelDistance = kInkGestureDefaultDragCancelDistance;
     _targetBounds = CGRectNull;
     self.cancelsTouchesInView = NO;
     self.delaysTouchesEnded = NO;

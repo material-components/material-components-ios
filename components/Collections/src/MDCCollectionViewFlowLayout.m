@@ -31,9 +31,9 @@
 #import <tgmath.h>
 
 /** The grid background decoration view kind. */
-NSString *const kMDCCollectionDecorationView = @"MDCCollectionDecorationView";
+NSString *const kCollectionDecorationView = @"MDCCollectionDecorationView";
 
-static const NSInteger kMDCSupplementaryViewZIndex = 99;
+static const NSInteger kSupplementaryViewZIndex = 99;
 
 @implementation MDCCollectionViewFlowLayout {
   NSMutableArray *_deletedIndexPaths;
@@ -55,7 +55,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
 
     // Register decoration view for grid background.
     [self registerClass:[MDCCollectionGridBackgroundView class]
-        forDecorationViewOfKind:kMDCCollectionDecorationView];
+        forDecorationViewOfKind:kCollectionDecorationView];
   }
   return self;
 }
@@ -153,7 +153,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
     // at top/bottom of the collectionView bounds.
     CGFloat offsetY = 0;
     CGRect currentBounds = self.collectionView.bounds;
-    attr.zIndex = kMDCSupplementaryViewZIndex;
+    attr.zIndex = kSupplementaryViewZIndex;
 
     if ([kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
       attr.size = CGSizeMake(CGRectGetWidth(currentBounds), MDCCollectionInfoBarHeaderHeight);
@@ -634,7 +634,7 @@ static const NSInteger kMDCSupplementaryViewZIndex = 99;
         NSIndexPath *decorationIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
         MDCCollectionViewLayoutAttributes *decorationAttr =
             (MDCCollectionViewLayoutAttributes *)
-                [self layoutAttributesForDecorationViewOfKind:kMDCCollectionDecorationView
+                [self layoutAttributesForDecorationViewOfKind:kCollectionDecorationView
                                                   atIndexPath:decorationIndexPath];
         shouldShowGridBackground = [self shouldShowGridBackgroundWithAttribute:decorationAttr];
         decorationAttr.shouldShowGridBackground = shouldShowGridBackground;

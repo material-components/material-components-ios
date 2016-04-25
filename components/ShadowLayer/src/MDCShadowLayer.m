@@ -16,9 +16,9 @@
 
 #import "MDCShadowLayer.h"
 
-static const CGFloat kMDCShadowElevationDialog = 24.0;
-static const float kMDCKeyShadowOpacity = 0.26f;
-static const float kMDCAmbientShadowOpacity = 0.08f;
+static const CGFloat kShadowElevationDialog = 24.0;
+static const float kKeyShadowOpacity = 0.26f;
+static const float kAmbientShadowOpacity = 0.08f;
 
 @implementation MDCShadowMetrics
 
@@ -35,10 +35,10 @@ static const float kMDCAmbientShadowOpacity = 0.08f;
   if (self) {
     _topShadowRadius = [MDCShadowMetrics ambientShadowBlur:elevation];
     _topShadowOffset = CGSizeMake(0.0, 0.0);
-    _topShadowOpacity = kMDCAmbientShadowOpacity;
+    _topShadowOpacity = kAmbientShadowOpacity;
     _bottomShadowRadius = [MDCShadowMetrics keyShadowBlur:elevation];
     _bottomShadowOffset = CGSizeMake(0.0, [MDCShadowMetrics keyShadowYOff:elevation]);
-    _bottomShadowOpacity = kMDCKeyShadowOpacity;
+    _bottomShadowOpacity = kKeyShadowOpacity;
   }
   return self;
 }
@@ -206,7 +206,7 @@ static const float kMDCAmbientShadowOpacity = 0.08f;
 - (CAShapeLayer *)shadowLayerMaskForLayer:(CALayer *)layer {
   CAShapeLayer *maskLayer = [CAShapeLayer layer];
 
-  CGSize shadowSpread = [self shadowSpreadForElevation:kMDCShadowElevationDialog];
+  CGSize shadowSpread = [self shadowSpreadForElevation:kShadowElevationDialog];
   CGRect bounds = layer.bounds;
   CGRect maskRect = CGRectInset(bounds, -shadowSpread.width * 2, -shadowSpread.height * 2);
 
