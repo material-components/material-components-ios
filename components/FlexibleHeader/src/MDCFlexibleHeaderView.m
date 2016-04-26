@@ -336,29 +336,11 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   }
 
   if (!info.hasInjectedTopContentInset) {
-    _contentInsetsAreChanging = YES;
     UIEdgeInsets insets = scrollView.contentInset;
     insets.top += _maximumHeight;
     info.injectedTopContentInset = _maximumHeight;
     info.hasInjectedTopContentInset = YES;
-    CGPoint oldContentOffset = scrollView.contentOffset;
     scrollView.contentInset = insets;
-
-    // The private API -[UIScrollView(UIScrollViewInternal) _adjustContentOffsetIfNecessary]
-    // will automatically adjust the contentOffset when adjusting contentInset. Exactly *when* this
-    // happens is not documented. Some OS versions appear to have different behaviors.
-    // Notably: iOS 8.4 does not appear to change the contentOffset when first initializing the
-    // scroll view.
-    //
-    // The logic below is intentionally conservative because we want to lean on
-    // _adjustContentOffsetIfNecessary doing the right thing most of the time.
-
-    if (oldContentOffset.y == 0 && CGPointEqualToPoint(oldContentOffset, scrollView.contentOffset)) {
-      CGPoint contentOffset = scrollView.contentOffset;
-      contentOffset.y = -_maximumHeight;
-      scrollView.contentOffset = contentOffset;
-    }
-    _contentInsetsAreChanging = NO;
   }
 
   // The scroll indicator insets are updated by fhv_accumulatorDidChange and change dynamically with
