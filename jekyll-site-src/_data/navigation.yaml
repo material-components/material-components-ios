@@ -53,6 +53,12 @@ components:
   - name: Buttons
     url: "/components/Buttons/"
     markdown: Buttons/README.md
+  - name: CollectionCells
+    url: "/components/CollectionCells/"
+    markdown: CollectionCells/README.md
+  - name: CollectionLayoutAttributes
+    url: "/components/CollectionLayoutAttributes/"
+    markdown: CollectionLayoutAttributes/README.md
   - name: Collections
     url: "/components/Collections/"
     markdown: Collections/README.md
