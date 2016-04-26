@@ -30,12 +30,15 @@
   label.alpha = [MDCTypography titleFontOpacity];
 
   [label sizeToFit];
+
   label.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
+  label.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+
   [self.view addSubview:label];
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Typography", @"Read Me Demo" ];
+  return @[ @"Typography and Fonts", @"Read Me Demo" ];
 }
 
 @end

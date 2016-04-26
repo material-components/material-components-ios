@@ -22,12 +22,14 @@
  An instance of CBCNodeListViewController is able to represent a non-example CBCNode instance as a
  UITableView.
  */
-@interface CBCNodeListViewController : UITableViewController
+@interface CBCNodeListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 /** Initializes a CBCNodeViewController instance with a non-example node. */
 - (nonnull instancetype)initWithNode:(nonnull CBCNode *)node;
 
 - (nonnull instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
+
+@property(nonatomic, strong, nonnull) UITableView *tableView;
 
 /** The node that this view controller must represent. */
 @property(nonatomic, strong, nonnull, readonly) CBCNode *node;
@@ -64,6 +66,9 @@ FOUNDATION_EXTERN CBCNode *__nonnull CBCCreateNavigationTree(void);
 
 /** The children of this node. */
 @property(nonatomic, strong, nonnull) NSArray<CBCNode *> *children;
+
+/** Is this the most important or default demo for this component? */
+- (BOOL)isPrimaryDemo;
 
 /** Returns YES if this is an example node. */
 - (BOOL)isExample;

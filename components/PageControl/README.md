@@ -1,7 +1,7 @@
 ---
 title:  "Page Control"
 layout: detail
-section: documentation
+section: components
 excerpt: "Page Control is a drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout."
 ---
 # Page Control
@@ -156,8 +156,38 @@ notified of page changes.
 }
 ~~~
 
-<!--</div>-->
+#### Swift
 
+~~~ swift
+class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDelegate {
+
+  let pageControl = MDCPageControl()
+  let scrollView = UIScrollView()
+  let pages = NSMutableArray()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    scrollView.delegate = self
+    view.addSubview(scrollView)
+
+    pageControl.numberOfPages = pageColors.count
+
+    let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
+    pageControl.frame = CGRectMake(0, view.bounds.height - pageControlSize.height, view.bounds.width, pageControlSize.height);
+    pageControl.addTarget(self, action: "didChangePage:", forControlEvents: .ValueChanged)
+    pageControl.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth];
+    view.addSubview(pageControl)
+  }
+
+  func didChangePage(sender: MDCPageControl){
+    var offset = scrollView.contentOffset
+    offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width;
+    scrollView.setContentOffset(offset, animated: true)
+  }
+
+~~~
+<!--</div>-->
 
 ### Step 2: Forwarding the required scroll view delegate methods
 
@@ -181,6 +211,22 @@ scrolling movement of the designated scroll view.
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
   [_pageControl scrollViewDidEndScrollingAnimation:scrollView];
+}
+~~~
+
+#### Swift
+
+~~~ swift
+func scrollViewDidScroll(scrollView: UIScrollView) {
+  pageControl.scrollViewDidScroll(scrollView)
+}
+
+func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  pageControl.scrollViewDidEndDecelerating(scrollView)
+}
+
+func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+  pageControl.scrollViewDidEndScrollingAnimation(scrollView)
 }
 ~~~
 

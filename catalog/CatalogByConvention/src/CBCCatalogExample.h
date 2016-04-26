@@ -26,6 +26,12 @@
 /** Return a list of breadcrumbs defining the navigation path taken to reach this example. */
 + (nonnull NSArray<NSString *> *)catalogBreadcrumbs;
 
+/**
+ Return a BOOL stating whether this example should be treated as the main "Demo" in the Catalog
+ for this component
+ */
++ (BOOL)catalogIsPrimaryDemo;
+
 @optional
 
 /**

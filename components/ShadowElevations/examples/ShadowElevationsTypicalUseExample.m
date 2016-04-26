@@ -130,7 +130,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
-  self.title = @"Shadows (Points)";
+  self.title = @"Shadow Elevations";
   _shadowsView = [[ShadowElevationsPointsView alloc] initWithFrame:self.view.bounds];
   _shadowsView.autoresizingMask =
       UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -140,15 +140,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 #pragma mark catalog by convention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Shadow Elevations", @"Shadow Elevations" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"This component provides the most commonly-used Material Design elevations.";
-}
-
-- (BOOL)catalogIsPrimaryDemo {
-  return YES;
+  return @[ @"Shadow", @"Shadow Elevations" ];
 }
 
 @end

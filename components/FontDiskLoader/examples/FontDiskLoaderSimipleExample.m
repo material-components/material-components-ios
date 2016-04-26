@@ -27,7 +27,7 @@
 
 // TODO: Support other categorizational methods.
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Roboto Font Loader", @"Font Disk Loader" ];
+  return @[ @"Typography and Fonts", @"Font Disk Loader" ];
 }
 
 - (void)viewDidLoad {

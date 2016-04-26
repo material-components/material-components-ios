@@ -39,7 +39,7 @@
           " experience influenced by Material Design.";
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 

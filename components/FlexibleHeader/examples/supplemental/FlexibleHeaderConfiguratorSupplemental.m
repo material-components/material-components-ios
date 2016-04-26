@@ -1,11 +1,30 @@
-/* IMPORTANT:
+/*
+ Copyright 2016-present Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+/** IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
  instructions. It is not necessary to import this file to implement any Material Design Components.
  */
 
 #import "FlexibleHeaderConfiguratorSupplemental.h"
 
+#import "FlexibleHeaderConfiguratorControlItem.h"
 #import "MaterialFlexibleHeader.h"
+
+static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
 @implementation FlexibleHeaderConfiguratorExample (CatalogByConvention)
 
@@ -21,292 +40,212 @@
 
 @implementation FlexibleHeaderConfiguratorExample (Supplemental)
 
-- (void)setupExampleViews:(MDCFlexibleHeaderViewController *)fhvc {
-  self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-
-  NSDictionary *viewBindings = @{ @"scrollView" : self.scrollView };
-  NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints = [NSMutableArray array];
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-                                              constraintsWithVisualFormat:@"H:|[scrollView]|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:viewBindings]];
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-                                              constraintsWithVisualFormat:@"V:|[scrollView]|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:viewBindings]];
-
-  [self.view addConstraints:arrayOfConstraints];
-
-  self.exampleView = [[ExampleConfigurationsView alloc] initWithFrame:CGRectZero];
-  self.exampleView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:self.exampleView];
-
-  [self.exampleView.overExtendSwitch addTarget:self
-                                        action:@selector(switchDidToggle:)
-                              forControlEvents:UIControlEventValueChanged];
-  [self.exampleView.shiftSwitch addTarget:self
-                                   action:@selector(switchDidToggle:)
-                         forControlEvents:UIControlEventValueChanged];
-  [self.exampleView.shiftStatusBarSwitch addTarget:self
-                                            action:@selector(switchDidToggle:)
-                                  forControlEvents:UIControlEventValueChanged];
-  [self.exampleView.infiniteContentSwitch addTarget:self
-                                             action:@selector(switchDidToggle:)
-                                   forControlEvents:UIControlEventValueChanged];
-  [self.exampleView.minHeightSlider addTarget:self
-                                       action:@selector(sliderDidSlide:)
-                             forControlEvents:UIControlEventValueChanged];
-  [self.exampleView.maxHeightSlider addTarget:self
-                                       action:@selector(sliderDidSlide:)
-                             forControlEvents:UIControlEventValueChanged];
-
-  self.exampleView.minHeightSlider.minimumValue = fhvc.headerView.minimumHeight;
-  self.exampleView.minHeightSlider.maximumValue = 300;
-  self.exampleView.maxHeightSlider.minimumValue = fhvc.headerView.maximumHeight;
-  self.exampleView.maxHeightSlider.maximumValue = 300;
-
-  NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.exampleView
-                                                           attribute:NSLayoutAttributeHeight
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:self.view
-                                                           attribute:NSLayoutAttributeHeight
-                                                          multiplier:1
-                                                            constant:0];
-
-  NSLayoutConstraint *centerX = [self.exampleView.centerXAnchor
-      constraintEqualToAnchor:self.view.centerXAnchor];
-  NSLayoutConstraint *top = [self.exampleView.topAnchor
-      constraintEqualToAnchor:self.scrollView.topAnchor];
-  NSLayoutConstraint *bottom = [self.exampleView.bottomAnchor
-      constraintEqualToAnchor:self.scrollView.bottomAnchor];
-  NSLayoutConstraint *leading = [self.exampleView.leadingAnchor
-      constraintEqualToAnchor:self.scrollView.leadingAnchor];
-  NSLayoutConstraint *trailing = [self.exampleView.trailingAnchor
-      constraintEqualToAnchor:self.scrollView.trailingAnchor];
-
-  [self.view addConstraints:@[ width, centerX, top, bottom, leading, trailing ]];
-
-  self.exampleView.overExtendSwitch.on = fhvc.headerView.canOverExtend;
-  self.exampleView.shiftSwitch.on =
-      fhvc.headerView.shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled;
-  self.exampleView.shiftStatusBarSwitch.on =
-      fhvc.headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
-  self.exampleView.infiniteContentSwitch.on = fhvc.headerView.inFrontOfInfiniteContent;
-
-  self.exampleView.minHeightSlider.value = fhvc.headerView.minimumHeight;
-  self.exampleView.maxHeightSlider.value = fhvc.headerView.maximumHeight;
+- (instancetype)init {
+  return [self initWithStyle:kStyle];
 }
 
-@end
-
-@implementation ExampleConfigurationsView
-
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
+- (instancetype)initWithStyle:(UITableViewStyle)style {
+  self = [super initWithStyle:kStyle];
   if (self) {
-    [self commonExampleConfigurationsViewInit];
+    self.fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+    [self addChildViewController:self.fhvc];
+
+    self.title = @"Configurator";
   }
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    [self commonExampleConfigurationsViewInit];
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
+- (void)viewDidLoad {
+  self.minimumHeaderHeight = self.fhvc.headerView.minimumHeight;
+
+  self.fhvc.headerView.trackingScrollView = self.tableView;
+
+  self.fhvc.view.frame = self.view.bounds;
+  [self.view addSubview:self.fhvc.view];
+  [self.fhvc didMoveToParentViewController:self];
+
+  UIColor *lightBlue500 = [UIColor colorWithRed:0.012
+                                          green:0.663
+                                           blue:0.957
+                                          alpha:1];
+  self.fhvc.headerView.backgroundColor = lightBlue500;
+
+  UILabel *titleLabel = [[UILabel alloc] init];
+  CGRect frame = self.fhvc.headerView.bounds;
+  frame.origin.y += 20;
+  frame.size.height -= 20;
+  titleLabel.frame = frame;
+  titleLabel.text = self.title;
+  titleLabel.textColor = [UIColor whiteColor];
+  titleLabel.font = [UIFont systemFontOfSize:22];
+  titleLabel.textAlignment = NSTextAlignmentCenter;
+  titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+
+  [self.fhvc.headerView addSubview:titleLabel];
+
+  id (^switchItem)(NSString *, FlexibleHeaderConfiguratorField) =
+      ^(NSString *title, FlexibleHeaderConfiguratorField field) {
+        FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeSwitch;
+        return [FlexibleHeaderConfiguratorControlItem itemWithTitle:title
+                                                        controlType:type
+                                                              field:field];
+      };
+  id (^sliderItem)(NSString *, FlexibleHeaderConfiguratorField) =
+      ^(NSString *title, FlexibleHeaderConfiguratorField field) {
+        FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeSlider;
+        return [FlexibleHeaderConfiguratorControlItem itemWithTitle:title
+                                                        controlType:type
+                                                              field:field];
+      };
+  id (^filler)(void) = ^{
+    return [NSNull null];
+  };
+  NSMutableArray *sections = [NSMutableArray array];
+  NSMutableArray *sectionTitles = [NSMutableArray array];
+  void (^createSection)(NSString *, NSArray *) = ^(NSString *title, NSArray *items) {
+    [sectionTitles addObject:title ?: @""];
+    [sections addObject:items ?: @[]];
+  };
+
+  createSection(@"Swipe right to go back", nil);
+
+  createSection(@"Basic behavior",
+                @[
+                  switchItem(@"Can over-extend",
+                             FlexibleHeaderConfiguratorFieldCanOverExtend),
+                  switchItem(@"In front of infinite content",
+                             FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent),
+                  switchItem(@"Hide status bar",
+                             FlexibleHeaderConfiguratorFieldHideStatusBar),
+                ]);
+
+  createSection(@"Shift behavior",
+                @[ switchItem(@"Enabled",
+                              FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled),
+                   switchItem(@"Enabled with status bar",
+                              FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar),
+                   switchItem(@"Header content is important",
+                              FlexibleHeaderConfiguratorFieldContentImportance) ]);
+
+  createSection(@"Header height",
+                @[ sliderItem(@"Minimum",
+                              FlexibleHeaderConfiguratorFieldMinimumHeight),
+                   sliderItem(@"Maximum",
+                              FlexibleHeaderConfiguratorFieldMaximumHeight) ]);
+
+  NSMutableArray *fillerItems = [NSMutableArray array];
+  for (NSUInteger ix = 0; ix < 100; ++ix) {
+    [fillerItems addObject:filler()];
   }
-  return self;
+  createSection(nil, fillerItems);
+
+  self.sections = sections;
+  self.sectionTitles = sectionTitles;
+
+  self.view.backgroundColor = [UIColor whiteColor];
 }
 
-- (void)commonExampleConfigurationsViewInit {
-  self.overExtendSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-  self.overExtendSwitch.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:self.overExtendSwitch];
+- (UIControl *)controlForControlType:(FlexibleHeaderConfiguratorControlType)controlType {
+  switch (controlType) {
+    case FlexibleHeaderConfiguratorControlTypeSwitch:
+      return [[UISwitch alloc] init];
 
-  UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-  NSDictionary *textAttributes = @{NSFontAttributeName : font};
-
-  self.overExtendSwitchLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.overExtendSwitchLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  NSAttributedString *overExtendText =
-      [[NSAttributedString alloc] initWithString:@"Can Over-Extend"
-                                      attributes:textAttributes];
-  self.overExtendSwitchLabel.attributedText = overExtendText;
-  [self addSubview:self.overExtendSwitchLabel];
-
-  self.shiftSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-  self.shiftSwitch.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:self.shiftSwitch];
-
-  self.shiftSwitchLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.shiftSwitchLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  NSAttributedString *shiftSwitchText =
-      [[NSAttributedString alloc] initWithString:@"Hides when collapsed"
-                                      attributes:textAttributes];
-  self.shiftSwitchLabel.attributedText = shiftSwitchText;
-  [self addSubview:self.shiftSwitchLabel];
-
-  self.shiftStatusBarSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-  self.shiftStatusBarSwitch.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:self.shiftStatusBarSwitch];
-
-  self.shiftStatusBarSwitchLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.shiftStatusBarSwitchLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  NSAttributedString *shiftStatusBarSwitchText =
-      [[NSAttributedString alloc] initWithString:@"Hides status bar when collapsed"
-                                      attributes:textAttributes];
-  self.shiftStatusBarSwitchLabel.attributedText = shiftStatusBarSwitchText;
-  [self addSubview:self.shiftStatusBarSwitchLabel];
-
-  self.infiniteContentSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-  self.infiniteContentSwitch.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:self.infiniteContentSwitch];
-
-  self.infiniteContentSwitchLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.infiniteContentSwitchLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  NSAttributedString *infiniteContentSwitchText =
-      [[NSAttributedString alloc] initWithString:@"In front of infinite content"
-                                      attributes:textAttributes];
-  self.infiniteContentSwitchLabel.attributedText = infiniteContentSwitchText;
-  [self addSubview:self.infiniteContentSwitchLabel];
-
-  self.minHeightSlider = [[UISlider alloc] initWithFrame:CGRectZero];
-  self.minHeightSlider.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:self.minHeightSlider];
-
-  self.minHeightSliderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.minHeightSliderLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  NSAttributedString *minHeightSliderText =
-      [[NSAttributedString alloc] initWithString:@"Minimum Height"
-                                      attributes:textAttributes];
-  self.minHeightSliderLabel.attributedText = minHeightSliderText;
-  [self addSubview:self.minHeightSliderLabel];
-
-  self.maxHeightSlider = [[UISlider alloc] initWithFrame:CGRectZero];
-  self.maxHeightSlider.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:self.maxHeightSlider];
-
-  self.maxHeightSliderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.maxHeightSliderLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  NSAttributedString *maxHeightSliderText =
-      [[NSAttributedString alloc] initWithString:@"Maximum Height"
-                                      attributes:textAttributes];
-  self.maxHeightSliderLabel.attributedText = maxHeightSliderText;
-  [self addSubview:self.maxHeightSliderLabel];
-
-  NSDictionary *viewBindings = @{ @"overExtendSwitch" : self.overExtendSwitch,
-                                  @"overExtendSwitchLabel" : self.overExtendSwitchLabel,
-                                  @"shiftSwitch" : self.shiftSwitch,
-                                  @"shiftSwitchLabel" : self.shiftSwitchLabel,
-                                  @"shiftStatusBarSwitch" : self.shiftStatusBarSwitch,
-                                  @"shiftStatusBarSwitchLabel" : self.shiftStatusBarSwitchLabel,
-                                  @"infiniteContentSwitch" : self.infiniteContentSwitch,
-                                  @"infiniteContentSwitchLabel" : self.infiniteContentSwitchLabel,
-                                  @"minHeightSlider" : self.minHeightSlider,
-                                  @"minHeightSliderLabel" : self.minHeightSliderLabel,
-                                  @"maxHeightSlider" : self.maxHeightSlider,
-                                  @"maxHeightSliderLabel" : self.maxHeightSliderLabel };
-
-  NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints =
-      [NSMutableArray array];
-  // clang-format off
-  [arrayOfConstraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[overExtendSwitch]"
-                                           options:NSLayoutFormatAlignAllCenterX
-                                           metrics:nil
-                                             views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"H:|-8-[overExtendSwitchLabel]-[overExtendSwitch]-8-|"
-                        options:NSLayoutFormatAlignAllCenterY
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"V:[overExtendSwitch]-8-[shiftSwitch]"
-                        options:NSLayoutFormatAlignAllCenterX
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"H:|-8-[shiftSwitchLabel]-[shiftSwitch]-8-|"
-                        options:NSLayoutFormatAlignAllCenterY
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"V:[shiftSwitch]-8-[shiftStatusBarSwitch]"
-                        options:NSLayoutFormatAlignAllCenterX
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"H:|-8-[shiftStatusBarSwitchLabel]-[shiftStatusBarSwitch]-8-|"
-                        options:NSLayoutFormatAlignAllCenterY
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"V:[shiftStatusBarSwitch]-8-[infiniteContentSwitch]"
-                        options:NSLayoutFormatAlignAllCenterX
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"H:|-8-[infiniteContentSwitchLabel]-[infiniteContentSwitch]-8-|"
-                        options:NSLayoutFormatAlignAllCenterY
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"V:[infiniteContentSwitchLabel]-16-[minHeightSliderLabel]"
-                        options:0
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"H:|-8-[minHeightSliderLabel]-8-|"
-                        options:0
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"V:[minHeightSliderLabel]-8-[minHeightSlider]"
-                        options:0
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"H:|-8-[minHeightSlider]-8-|"
-                        options:0
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"V:[minHeightSlider]-8-[maxHeightSliderLabel]"
-                        options:0
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"H:|-8-[maxHeightSliderLabel]-8-|"
-                        options:0
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"V:[maxHeightSliderLabel]-8-[maxHeightSlider]"
-                        options:0
-                        metrics:nil
-                          views:viewBindings]];
-
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-    constraintsWithVisualFormat:@"H:|-8-[maxHeightSlider]-8-|"
-                        options:0
-                        metrics:nil
-                          views:viewBindings]];
-  // clang-format on
-  [self addConstraints:arrayOfConstraints];
+    case FlexibleHeaderConfiguratorControlTypeSlider:
+      return [[UISlider alloc] init];
+  }
 }
+
+- (NSNumber *)valueForControl:(UIControl *)control {
+  if ([control isKindOfClass:[UISwitch class]]) {
+    return @([(UISwitch *)control isOn]);
+  } else if ([control isKindOfClass:[UISlider class]]) {
+    return @([(UISlider *)control value]);
+  }
+  return nil;
+}
+
+- (void)setValue:(NSNumber *)value onControl:(UIControl *)control animated:(BOOL)animated {
+  if ([control isKindOfClass:[UISwitch class]]) {
+    [(UISwitch *)control setOn:[value boolValue] animated:animated];
+  } else if ([control isKindOfClass:[UISlider class]]) {
+    [(UISlider *)control setValue:[value floatValue] animated:animated];
+  }
+}
+
+- (void)didChangeValueForField:(FlexibleHeaderConfiguratorField)field animated:(BOOL)animated {
+  UIControl *control = [self.tableView viewWithTag:field];
+  NSNumber *value = [self valueForField:field];
+  [self setValue:value onControl:control animated:animated];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  return [self.sections count];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  return [self.sections[section] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+  return self.sectionTitles[section];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+  if (!cell) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                  reuseIdentifier:@"cell"];
+  }
+  id item = self.sections[indexPath.section][indexPath.row];
+  if ([item isKindOfClass:[FlexibleHeaderConfiguratorControlItem class]]) {
+    FlexibleHeaderConfiguratorControlItem *fieldItem = (FlexibleHeaderConfiguratorControlItem *)item;
+
+    cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+
+    cell.textLabel.text = fieldItem.title;
+
+    UIControl *control = [self controlForControlType:fieldItem.controlType];
+    control.tag = fieldItem.field;
+    [control addTarget:self
+                  action:@selector(didChangeControl:)
+        forControlEvents:UIControlEventValueChanged];
+    [self setValue:[self valueForField:fieldItem.field] onControl:control animated:NO];
+    cell.accessoryView = control;
+
+  } else {
+    cell.textLabel.text = nil;
+    cell.accessoryView = nil;
+  }
+
+  return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+  return NO;
+}
+
+#pragma mark - User actions
+
+- (void)didChangeControl:(UIControl *)sender {
+  NSNumber *value = [self valueForControl:sender];
+  [self field:(FlexibleHeaderConfiguratorField)sender.tag didChangeValue:value];
+}
+
+- (void)didTapBackButton:(id)button {
+  [self.navigationController popViewControllerAnimated:YES];
+}
+
 @end

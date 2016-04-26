@@ -5,8 +5,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SliderTypicalUseSupplemental.h"
+#import "MaterialSlider.h"
 #import "MaterialTypography.h"
+#import "SliderTypicalUseSupplemental.h"
 
 #pragma mark - SliderTypicalUseViewController
 
@@ -21,7 +22,7 @@
           " continuous range or discrete set of values.";
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 
@@ -30,33 +31,33 @@
 @implementation SliderTypicalUseViewController (Supplemental)
 
 - (void)setupExampleViews {
-  UILabel *raisedButtonLabel = [[UILabel alloc] init];
-  raisedButtonLabel.text = @"Slider";
-  raisedButtonLabel.font = [MDCTypography captionFont];
-  raisedButtonLabel.alpha = [MDCTypography captionFontOpacity];
-  [raisedButtonLabel sizeToFit];
-  raisedButtonLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:raisedButtonLabel];
+  UILabel *sliderLabel = [[UILabel alloc] init];
+  sliderLabel.text = @"Slider";
+  sliderLabel.font = [MDCTypography captionFont];
+  sliderLabel.alpha = [MDCTypography captionFontOpacity];
+  [sliderLabel sizeToFit];
+  sliderLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:sliderLabel];
 
-  UILabel *disabledSliderButtonLabel = [[UILabel alloc] init];
-  disabledSliderButtonLabel.text = @"Slider Disabled";
-  disabledSliderButtonLabel.font = [MDCTypography captionFont];
-  disabledSliderButtonLabel.alpha = [MDCTypography captionFontOpacity];
-  [disabledSliderButtonLabel sizeToFit];
-  disabledSliderButtonLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:disabledSliderButtonLabel];
+  UILabel *disabledSliderLabel = [[UILabel alloc] init];
+  disabledSliderLabel.text = @"Slider Disabled";
+  disabledSliderLabel.font = [MDCTypography captionFont];
+  disabledSliderLabel.alpha = [MDCTypography captionFontOpacity];
+  [disabledSliderLabel sizeToFit];
+  disabledSliderLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:disabledSliderLabel];
 
   NSDictionary *views = @{
     @"slider" : self.slider,
-    @"label" : raisedButtonLabel,
+    @"label" : sliderLabel,
     @"disabledSlider" : self.disabledSlider,
-    @"disabledLabel" : disabledSliderButtonLabel
+    @"disabledSliderLabel" : disabledSliderLabel
   };
 
   NSDictionary *metrics = @{ @"smallVMargin" : @24.0,
                              @"largeVMargin" : @56.0,
                              @"smallHMargin" : @24.0,
-                             @"buttonHeight" : @(self.slider.bounds.size.height) };
+                             @"sliderHeight" : @(self.slider.bounds.size.height) };
 
   // Vertical column of sliders
   NSString *sliderLayoutConstraints =
@@ -64,7 +65,7 @@
 
   // Vertical column of labels
   NSString *labelLayoutConstraints =
-      @"V:[label(buttonHeight)]-smallVMargin-[disabledLabel(buttonHeight)]";
+      @"V:[label(sliderHeight)]-smallVMargin-[disabledSliderLabel(sliderHeight)]";
 
   // Horizontal alignment between the two columns
   NSString *columnConstraints = @"[label(100)]-smallHMargin-[slider]";
@@ -79,7 +80,7 @@
                                              multiplier:1.f
                                                constant:12.f]];
 
-  // Center view vertically on the flat button (it's the middlemost)
+  // Center view vertically
   [self.view addConstraint:
                  [NSLayoutConstraint constraintWithItem:self.disabledSlider
                                               attribute:NSLayoutAttributeBottom
@@ -108,7 +109,7 @@
                  [NSLayoutConstraint constraintWithItem:self.slider
                                               attribute:NSLayoutAttributeCenterY
                                               relatedBy:NSLayoutRelationEqual
-                                                 toItem:raisedButtonLabel
+                                                 toItem:sliderLabel
                                               attribute:NSLayoutAttributeCenterY
                                              multiplier:1.f
                                                constant:0.f]];

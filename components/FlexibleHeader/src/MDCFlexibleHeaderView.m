@@ -148,13 +148,12 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 @synthesize sharedWithManyScrollViews = _sharedWithManyScrollViews;
 @synthesize visibleShadowOpacity = _visibleShadowOpacity;
 
-- (void)dealloc {
 #if DEBUG
+- (void)dealloc {
   [_trackingScrollView.panGestureRecognizer removeTarget:self
                                                   action:@selector(fhv_scrollViewDidPan:)];
-#endif
-  [self fhv_removeInsetsFromScrollView:_trackingScrollView];
 }
+#endif
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -173,6 +172,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _trackedScrollViews = [NSMapTable mapTableWithKeyOptions:keyOptions valueOptions:valueOptions];
 
     _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
+    _statusBarHintCanOverlapHeader = YES;
 
     _minimumHeight = kFlexibleHeaderDefaultHeight;
     _maximumHeight = kFlexibleHeaderDefaultHeight;
@@ -368,12 +368,31 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   return _trackingScrollView.contentSize.height;
 }
 
+// Returns a value indicating how much the header is overlapping the tracking scroll view's content.
+// > 0 overlapping the content
+// = 0 attached to top of content
+// < 0 the content is below the header
+- (CGFloat)fhv_projectedHeaderBottomEdge {
+  CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
+  CGRect projectedFrame = [self convertRect:self.bounds toView:self.trackingScrollView.superview];
+  CGFloat frameBottomEdge = CGRectGetMaxY(projectedFrame);
+  return frameBottomEdge + offsetWithoutInset;
+}
+
 - (CGFloat)fhv_accumulatorMax {
-  return (self.hidesStatusBarWhenCollapsed ? _minimumHeight
-                                           : _minimumHeight - kExpectedStatusBarHeight);
+  BOOL shouldCollapseToStatusBar = [self fhv_shouldCollapseToStatusBar];
+  return (shouldCollapseToStatusBar ? _minimumHeight - kExpectedStatusBarHeight : _minimumHeight);
 }
 
 #pragma mark Logical short forms
+
+- (BOOL)fhv_shouldAllowShifting {
+  return self.hidesStatusBarWhenCollapsed && self.statusBarHintCanOverlapHeader;
+}
+
+- (BOOL)fhv_shouldCollapseToStatusBar {
+  return !self.hidesStatusBarWhenCollapsed && self.statusBarHintCanOverlapHeader;
+}
 
 - (BOOL)fhv_canShiftOffscreen {
   return ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
@@ -388,7 +407,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
 // The flexible header is "in front of" the content.
 - (BOOL)fhv_isDetachedFromTopOfContent {
-  return [self fhv_contentOffsetWithoutInjectedTopInset] >= 0;
+  // Epsilon here is somewhat large in order to be visually-forgiving for sub-point situations.
+  return [self fhv_projectedHeaderBottomEdge] > (CGFloat)0.5;
 }
 
 - (BOOL)fhv_isOverExtendingBottom {
@@ -410,7 +430,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _scrollPhase = MDCFlexibleHeaderScrollPhaseShifting;
     _scrollPhaseValue = frame.origin.y + _minimumHeight;
     CGFloat adjustedHeight = _minimumHeight;
-    if (!self.hidesStatusBarWhenCollapsed) {
+    if ([self fhv_shouldCollapseToStatusBar]) {
       adjustedHeight -= kExpectedStatusBarHeight;
     }
     if (adjustedHeight > 0) {
@@ -493,6 +513,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _shiftOffscreenAccumulator += kAttachmentCoefficient * distanceToDestination * duration;
   _shiftOffscreenAccumulator = MAX(0, MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator));
 
+  [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
+
   // Have we reached our destination?
   if (fabs(destination - _shiftOffscreenAccumulator) <= kShiftEpsilon) {
     _shiftOffscreenAccumulator = destination;
@@ -513,16 +535,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     return;
   }
 
-  CGFloat frameBottomEdge;
-
   CGRect frame = self.frame;
 
-  // Calculate the frame's bottom edge in visual relation to the tracking scroll view.
-  CGRect projectedFrame = [self convertRect:self.bounds toView:self.trackingScrollView.superview];
-  frameBottomEdge = (float)CGRectGetMaxY(projectedFrame);
-
-  CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
-  frameBottomEdge = (float)(frameBottomEdge + offsetWithoutInset);
+  CGFloat frameBottomEdge = [self fhv_projectedHeaderBottomEdge];
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
 
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator);
@@ -700,6 +715,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [self fhv_accumulatorDidChange];
   [self fhv_recalculatePhase];
 
+  [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
+
   [self.delegate flexibleHeaderViewFrameDidChange:self];
 }
 
@@ -870,6 +887,17 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
           !_trackingScrollView.pagingEnabled);
 }
 
+- (void)setstatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
+  if (_statusBarHintCanOverlapHeader == statusBarHintCanOverlapHeader) {
+    return;
+  }
+  _statusBarHintCanOverlapHeader = statusBarHintCanOverlapHeader;
+
+  _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
+
+  [self fhv_startDisplayLink];
+}
+
 - (void)setShiftBehavior:(MDCFlexibleHeaderShiftBehavior)shiftBehavior {
   if (_shiftBehavior == shiftBehavior) {
     return;
@@ -878,7 +906,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
                              shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled);
   _shiftBehavior = shiftBehavior;
 
-  _statusBarShifter.enabled = self.hidesStatusBarWhenCollapsed;
+  _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 
   if (needsShiftOnScreen) {
     _wantsToBeHidden = NO;
@@ -966,7 +994,11 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
   _minimumHeight = minimumHeight;
 
-  [self fhv_updateLayout];
+  if (_minimumHeight > _maximumHeight) {
+    [self setMaximumHeight:_minimumHeight];
+  } else {
+    [self fhv_updateLayout];
+  }
 }
 
 - (void)setMaximumHeight:(CGFloat)maximumHeight {
@@ -991,7 +1023,11 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     _trackingScrollView.contentOffset = originalOffset;
   }
 
-  [self fhv_updateLayout];
+  if (_maximumHeight < _minimumHeight) {
+    [self setMinimumHeight:_maximumHeight];
+  } else {
+    [self fhv_updateLayout];
+  }
 }
 
 - (void)setInFrontOfInfiniteContent:(BOOL)inFrontOfInfiniteContent {

@@ -23,6 +23,28 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
   let appBar = MDCAppBar()
 
+  convenience init() {
+    self.init(style: .Plain)
+  }
+
+  override init(style: UITableViewStyle) {
+    super.init(style: style)
+
+    self.appBar.navigationBar.tintColor = UIColor.whiteColor()
+
+    self.addChildViewController(appBar.headerViewController)
+
+    self.title = "Delegate Forwarding"
+
+    let color = UIColor(
+      red: CGFloat(0x03) / CGFloat(255),
+      green: CGFloat(0xA9) / CGFloat(255),
+      blue: CGFloat(0xF4) / CGFloat(255),
+      alpha: 1)
+    appBar.headerViewController.headerView.backgroundColor = color
+    appBar.navigationBar.tintColor = UIColor.whiteColor()
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -32,6 +54,9 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
     appBar.addSubviewsToParent()
+
+    self.tableView.layoutMargins = UIEdgeInsetsZero
+    self.tableView.separatorInset = UIEdgeInsetsZero
   }
 
   // The following four methods must be forwarded to the tracking scroll view in order to implement
@@ -68,7 +93,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Delegate forwarding (Swift)"
+    self.title = "Delegate Forwarding (Swift)"
 
     self.addChildViewController(appBar.headerViewController)
 
@@ -89,7 +114,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarDelegateForwardingExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Delegate forwarding (Swift)"]
+    return ["App Bar", "Delegate Forwarding (Swift)"]
   }
   func catalogShouldHideNavigation() -> Bool {
     return true
@@ -128,7 +153,7 @@ extension AppBarDelegateForwardingExample {
       if cell == nil {
         cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
       }
-      cell!.textLabel!.text = "\(indexPath.row)"
+      cell!.layoutMargins = UIEdgeInsetsZero
       return cell!
   }
 

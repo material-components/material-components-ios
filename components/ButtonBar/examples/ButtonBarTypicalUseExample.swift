@@ -70,10 +70,10 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
   }
 
   // MARK: Typical application code (not Material-specific)
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  init() {
+    super.init(nibName: nil, bundle: nil)
 
-    self.title = "Typical use"
+    self.title = "Button Bar"
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -84,7 +84,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 // MARK: Catalog by convention
 extension ButtonBarTypicalUseSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Button Bar", "Demo (Swift)"]
+    return ["Button Bar", "Button Bar (Swift)"]
   }
 }
 

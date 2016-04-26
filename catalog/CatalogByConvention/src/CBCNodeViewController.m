@@ -77,6 +77,10 @@
   return CBCDescriptionFromClass(_exampleClass);
 }
 
+- (BOOL)isPrimaryDemo {
+  return CBCCatalogIsPrimaryDemoFromClass(_exampleClass);
+}
+
 @end
 
 @implementation CBCNodeListViewController
@@ -85,7 +89,7 @@
   NSAssert(!_node.isExample,
            @"%@ cannot represent example nodes.", NSStringFromClass([self class]));
 
-  self = [super initWithStyle:UITableViewStyleGrouped];
+  self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _node = node;
 
@@ -97,6 +101,41 @@
 - (instancetype)initWithStyle:(UITableViewStyle)style {
   [self doesNotRecognizeSelector:_cmd];
   return nil;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds
+                                                style:UITableViewStyleGrouped];
+  self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  self.tableView.delegate = self;
+  self.tableView.dataSource = self;
+  [self.view addSubview:self.tableView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  NSIndexPath *selectedRow = self.tableView.indexPathForSelectedRow;
+  if (selectedRow) {
+    [[self transitionCoordinator] animateAlongsideTransition:^(id context) {
+      [self.tableView deselectRowAtIndexPath:selectedRow animated:YES];
+    }
+        completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+          if ([context isCancelled]) {
+            [self.tableView selectRowAtIndexPath:selectedRow
+                                        animated:NO
+                                  scrollPosition:UITableViewScrollPositionNone];
+          }
+        }];
+  }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  [self.tableView flashScrollIndicators];
 }
 
 #pragma mark - UITableViewDataSource

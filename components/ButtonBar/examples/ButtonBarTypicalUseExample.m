@@ -92,7 +92,7 @@
   return @[ @"Button Bar", @"Button Bar" ];
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 
@@ -107,10 +107,10 @@
 
 @implementation ButtonBarTypicalUseExample (GeneralApplicationLogic)
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)init {
+  self = [super init];
   if (self) {
-    self.title = @"Typical use";
+    self.title = @"Button Bar";
   }
   return self;
 }

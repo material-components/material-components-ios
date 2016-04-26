@@ -154,7 +154,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonShouldRaiseOnTouchKey]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       self.shouldRaiseOnTouch = [aDecoder decodeBoolForKey:MDCButtonShouldRaiseOnTouchKey];
+#pragma clang diagnostic pop
     }
 
     if ([aDecoder containsValueForKey:MDCButtonUppercaseTitleKey]) {

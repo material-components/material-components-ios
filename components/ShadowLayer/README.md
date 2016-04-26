@@ -1,7 +1,7 @@
 ---
 title:  "Shadow Layer"
 layout: detail
-section: documentation
+section: components
 excerpt: "The Shadow Layer component implements the Material Design specifications for elevation and shadows."
 ---
 
@@ -92,9 +92,11 @@ Before using Shadow Layer, you'll need to import it:
 ~~~
 
 #### Swift
+
 ~~~ swift
 import MaterialComponents
 ~~~
+
 <!--</div>-->
 
 
@@ -116,12 +118,25 @@ Example of a custom button based on UIButton with Material Design shadows:
 
 @end
 ~~~
+
+### Swift
+~~~ swift
+class ShadowButton: UIButton {
+
+  override class func layerClass() -> AnyClass {
+    return MDCShadowLayer.self
+  }
+
+}
+~~~
+
 <!--</div>-->
 
 
 Add the custom button to view:
 
 <!--<div class="material-code-render" markdown="1">-->
+
 ### Objective C
 ~~~ objc
 ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
@@ -131,13 +146,47 @@ button.frame = CGRectMake(100, 100, 200, 50);
 [self.view addSubview:button];
 
 ~~~
+
+### Swift
+~~~ swift
+let button: ShadowButton = ShadowButton.init(type: UIButtonType.System)
+button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
+button.setTitle("Button", forState: UIControlState.Normal)
+(button.layer as! MDCShadowLayer).setElevation(6.0)
+self.addSubview(button)
+
+~~~
+
 <!--</div>-->
 
 
 Creating a custom UIView with a shadow:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Swift
+
+### Objective C
+~~~ objc
+@interface ShadowedView : UIView
+@end
+
+@implementation ShadowedView
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (MDCShadowLayer)shadowLayer {
+  return (MDCShadowLayer *)self.layer;
+}
+
+- (void)setElevation:(CGFloat)points {
+  [(MDCShadowLayer *)self.layer setElevation:points];
+}
+
+@end
+~~~
+
+### Swift
 ~~~ swift
 class ShadowedView: UIView {
 
@@ -154,8 +203,8 @@ class ShadowedView: UIView {
   }
 
 }
-
 ~~~
+
 <!--</div>-->
 
 
@@ -163,6 +212,7 @@ To improve performance, consider rasterizing MDCShadowLayer when the view using 
 animating or changing size.
 
 <!--<div class="material-code-render" markdown="1">-->
+
 ### Objective C
 ~~~ objc
 
@@ -170,6 +220,15 @@ self.layer.shouldRasterize = YES;
 self.layer.rasterizationScale = [UIScreen mainScreen].scale;
 
 ~~~
+
+### Swift
+~~~ swift
+
+self.layer.shouldRasterize = true;
+self.layer.rasterizationScale = UIScreen.mainScreen().scale
+
+~~~
+
 <!--</div>-->
 
 Disable rasterization before animating MDCShadowLayer.

@@ -1,7 +1,7 @@
 ---
 title:  "Header Stack View"
 layout: detail
-section: documentation
+section: components
 excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically stacked bar views."
 ---
 # Header Stack View
@@ -55,7 +55,9 @@ $ pod install
 
 ## Overview
 
-This view's sole purpose is to facilitate the relative layout of two horizontal bars.
+This view's sole purpose is to facilitate the relative layout of two horizontal bars. The bottom bar
+will bottom align and be of fixed height. The top bar will stretch to fill the remaining space if
+there is any.
 
 The top bar is typically a navigation bar. The bottom bar, when provided, is typically a tab bar.
 
@@ -94,6 +96,7 @@ MDCHeaderStackView *headerStackView = [[MDCHeaderStackView alloc] init];
 
 #### Swift
 ~~~ swift
+let headerStackView = MDCHeaderStackView()
 ~~~
 <!--</div>-->
 

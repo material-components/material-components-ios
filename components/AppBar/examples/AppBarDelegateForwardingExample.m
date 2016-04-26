@@ -35,6 +35,9 @@
 
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
   [self.appBar addSubviewsToParent];
+
+  self.tableView.layoutMargins = UIEdgeInsetsZero;
+  self.tableView.separatorInset = UIEdgeInsetsZero;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -76,7 +79,7 @@
 @implementation AppBarDelegateForwardingExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"Delegate forwarding" ];
+  return @[ @"App Bar", @"Delegate Forwarding" ];
 }
 
 - (BOOL)catalogShouldHideNavigation {
@@ -87,14 +90,14 @@
 
 @implementation AppBarDelegateForwardingExample (TypicalUse)
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)init {
+  self = [super init];
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
     [self addChildViewController:_appBar.headerViewController];
 
-    self.title = @"Delegate forwarding";
+    self.title = @"Delegate Forwarding";
 
     UIColor *color = [UIColor colorWithRed:(CGFloat)0x03 / (CGFloat)255
                                      green:(CGFloat)0xA9 / (CGFloat)255
@@ -136,7 +139,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                   reuseIdentifier:@"cell"];
   }
-  cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+  cell.layoutMargins = UIEdgeInsetsZero;
   return cell;
 }
 

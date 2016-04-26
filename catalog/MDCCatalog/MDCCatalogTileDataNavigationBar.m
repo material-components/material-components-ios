@@ -192,8 +192,8 @@
 
       NSDictionary* labelFontAttributes = @{
         NSFontAttributeName : [UIFont fontWithName:@"Roboto-Medium" size:11],
-          NSForegroundColorAttributeName : textForeground,
-          NSParagraphStyleAttributeName : labelStyle
+        NSForegroundColorAttributeName : textForeground,
+        NSParagraphStyleAttributeName : labelStyle
       };
 
       CGFloat labelTextHeight =

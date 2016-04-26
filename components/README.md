@@ -1,7 +1,7 @@
 ---
 title:  "Material Components Documentation"
 layout: landing
-section: documentation
+section: components
 ---
 
 # Component Documentation

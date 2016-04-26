@@ -17,13 +17,15 @@ limitations under the License.
 import UIKit
 import MaterialComponents
 
-class MDCCatalogComponentsController: UICollectionViewController {
+class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchControllerDelegate {
 
   let spacing = CGFloat(1)
   let inset = CGFloat(16)
   let node: CBCNode
   var headerViewController: MDCFlexibleHeaderViewController
   let imageNames = NSMutableArray()
+
+  var inkController: MDCInkTouchController?
 
   init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
@@ -61,6 +63,11 @@ class MDCCatalogComponentsController: UICollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    inkController = MDCInkTouchController(view: self.collectionView!)!
+    inkController!.addInkView()
+    inkController!.delaysInkSpread = true
+    inkController!.delegate = self
+
     let containerView = UIView(frame: self.headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
@@ -86,6 +93,8 @@ class MDCCatalogComponentsController: UICollectionViewController {
 
     self.headerViewController.headerView.addSubview(containerView)
 
+    self.headerViewController.headerView.forwardTouchEventsForView(containerView)
+
     self.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
     self.headerViewController.headerView.trackingScrollView = self.collectionView
 
@@ -100,13 +109,13 @@ class MDCCatalogComponentsController: UICollectionViewController {
 
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-
+    self.collectionView?.collectionViewLayout.invalidateLayout()
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
   override func willAnimateRotationToInterfaceOrientation(
     toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-    collectionView?.collectionViewLayout.invalidateLayout()
+    self.collectionView?.collectionViewLayout.invalidateLayout()
   }
 
   override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -118,10 +127,30 @@ class MDCCatalogComponentsController: UICollectionViewController {
     return node.children.count
   }
 
+  func inkViewForView(view: UIView) -> MDCInkView {
+    let foundInkView = MDCInkTouchController.injectedInkViewForView(view)
+    foundInkView.inkStyle = .Unbounded
+    foundInkView.inkColor = UIColor(red: 0.012, green: 0.663, blue: 0.957, alpha: 0.2)
+    return foundInkView
+  }
+
+  // MARK: MDCInkTouchControllerDelegate
+
+  func inkTouchController(inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
+    return self.collectionView!.indexPathForItemAtPoint(location) != nil
+  }
+
+  func inkTouchController(inkTouchController: MDCInkTouchController, inkViewAtTouchLocation location: CGPoint) -> MDCInkView {
+    if let indexPath = self.collectionView!.indexPathForItemAtPoint(location) {
+      let cell = self.collectionView!.cellForItemAtIndexPath(indexPath)
+      return self.inkViewForView(cell!)
+    }
+    return MDCInkView()
+  }
+
   // MARK: UICollectionViewDelegate
 
-  override func collectionView(collectionView: UICollectionView,
-    cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MDCCatalogCollectionViewCell",
       forIndexPath: indexPath)
     cell.backgroundColor = UIColor.whiteColor()
@@ -131,14 +160,18 @@ class MDCCatalogComponentsController: UICollectionViewController {
       catalogCell.populateView(componentName)
     }
 
+    // Ensure that ink animations aren't recycled.
+    MDCInkTouchController.injectedInkViewForView(view).cancelAllAnimationsAnimated(false)
+
     return cell
   }
 
-  func collectionView(collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     let pad = CGFloat(1)
-    let cellWidth = (self.view.frame.size.width - 3 * pad) / 2
+    var cellWidth = (self.view.frame.size.width - 3 * pad) / 2
+    if (self.view.frame.size.width > self.view.frame.size.height) {
+      cellWidth = (self.view.frame.size.width - 4 * pad) / 3
+    }
     return CGSize(width: cellWidth, height: cellWidth * 0.825)
   }
 
@@ -149,10 +182,11 @@ class MDCCatalogComponentsController: UICollectionViewController {
     if node.isExample() {
       vc = node.createExampleViewController()
     } else {
-      vc = NodeViewController(node: node)
+      vc = MDCNodeListViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
   }
+
 }
 
 // UIScrollViewDelegate

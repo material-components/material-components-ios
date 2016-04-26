@@ -1,7 +1,7 @@
 ---
 title:  "Switch"
 layout: detail
-section: documentation
+section: components
 excerpt: "The Switch component provides an Material Design on/off switch control with an interface similar to UISwitch."
 ---
 
@@ -75,6 +75,7 @@ import MaterialComponents
 ~~~
 <!--</div>-->
 
+### Setup
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective C
@@ -94,6 +95,23 @@ import MaterialComponents
 - (void)didChangeSliderValue:(id)sender {
   ...
 }
+
+~~~
+#### Swift
+~~~ swift
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = UIColor.whiteColor()
+
+    switchComponent.on = true
+    switchComponent.addTarget(self, action: Selector("didChangeSwitchValue:"), forControlEvents: UIControlEvents.ValueChanged)
+    view.addSubview(switchComponent)
+    switchComponent.center = CGPointMake(50, 50);
+  }
+
+  func didChangeSwitchValue(senderSwitch:MDCSwitch) {
+    NSLog("did change value: %@", senderSwitch.on);
+  }
 
 ~~~
 <!--</div>-->

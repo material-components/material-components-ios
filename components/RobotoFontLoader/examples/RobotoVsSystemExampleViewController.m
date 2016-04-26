@@ -34,19 +34,11 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Roboto Font Loader", @"Roboto Font Loader" ];
+  return @[ @"Typography and Fonts", @"Roboto Font Loader" ];
 }
 
 + (NSString *)catalogStoryboardName {
   return @"RobotoVsSystem";
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Roboto Font Loader lazy loads the Roboto font.";
-}
-
-- (BOOL)catalogIsPrimaryDemo {
-  return YES;
 }
 
 @end

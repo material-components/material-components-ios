@@ -289,8 +289,21 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 
 #pragma mark Bounding Dimensions
 
-@property(nonatomic) CGFloat minimumHeight;  ///< The minimum height that this header can shrink to.
-@property(nonatomic) CGFloat maximumHeight;  ///< The maximum height that this header can expand to.
+/**
+ The minimum height that this header can shrink to.
+
+ If you change the value of this property and the maximumHeight of the receiver is below the new
+ minimumHeight, maximumHeight will be adjusted to match the new minimum value.
+ */
+@property(nonatomic) CGFloat minimumHeight;
+
+/**
+ The maximum height that this header can expand to.
+
+ If you change the value of this property and the minimumHeight of the receiver is above the new
+ maximumHeight, minimumHeight will be adjusted to match the new maximumHeight.
+ */
+@property(nonatomic) CGFloat maximumHeight;
 
 #pragma mark Behaviors
 
@@ -314,6 +327,21 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  Default: YES
  */
 @property(nonatomic) BOOL canOverExtend;
+
+/**
+ A hint stating whether or not the operating system's status bar frame can ever overlap the header's
+ frame.
+
+ This property is enabled by default with the expectation that the flexible header will primarily
+ be used in full-screen settings on the phone.
+
+ Disabling this property informs the flexible header that it should not concern itself with the
+ status bar in any manner. shiftBehavior .EnabledWithStatusBar will be treated simply as .Enabled
+ in this case.
+
+ Default: YES
+ */
+@property(nonatomic) BOOL statusBarHintCanOverlapHeader;
 
 @property(nonatomic) float visibleShadowOpacity;  ///< The visible shadow opacity. Default: 0.4
 

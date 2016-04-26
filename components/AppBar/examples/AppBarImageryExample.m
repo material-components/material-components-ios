@@ -55,6 +55,9 @@
   self.tableView.delegate = self.appBar.headerViewController;
 
   [self.appBar addSubviewsToParent];
+
+  self.tableView.layoutMargins = UIEdgeInsetsZero;
+  self.tableView.separatorInset = UIEdgeInsetsZero;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -73,8 +76,8 @@
 
 @implementation AppBarImageryExample (TypicalUse)
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)init {
+  self = [super init];
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
 
@@ -119,7 +122,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                   reuseIdentifier:@"cell"];
   }
-  cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+  cell.layoutMargins = UIEdgeInsetsZero;
   return cell;
 }
 

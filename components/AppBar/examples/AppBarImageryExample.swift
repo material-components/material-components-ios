@@ -61,8 +61,8 @@ class AppBarImagerySwiftExample: UITableViewController {
 
   // MARK: Typical configuration
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  init() {
+    super.init(nibName: nil, bundle: nil)
 
     self.title = "Imagery (Swift)"
 
@@ -106,7 +106,7 @@ extension AppBarImagerySwiftExample {
       if cell == nil {
         cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
       }
-      cell!.textLabel!.text = "\(indexPath.row)"
+      cell!.layoutMargins = UIEdgeInsetsZero
       return cell!
   }
 }

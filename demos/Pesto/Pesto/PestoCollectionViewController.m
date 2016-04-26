@@ -46,7 +46,6 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
     [self.collectionView registerClass:[PestoCardCollectionViewCell class]
             forCellWithReuseIdentifier:NSStringFromClass([PestoCardCollectionViewCell class])];
     _pestoData = [[PestoData alloc] init];
-    [self setNeedsStatusBarAppearanceUpdate];
   }
   return self;
 }
@@ -57,7 +56,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   headerView.trackingScrollView = self.collectionView;
   headerView.maximumHeight = kPestoCollectionViewControllerDefaultHeaderHeight;
   headerView.minimumHeight = kPestoCollectionViewControllerSmallHeaderHeight;
-  [headerView.contentView addSubview:[self pestoHeaderView]];
+  [headerView addSubview:[self pestoHeaderView]];
 
   // Use a custom shadow under the flexible header.
   MDCShadowLayer *shadowLayer = [MDCShadowLayer layer];
@@ -72,10 +71,6 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 - (NSInteger)collectionView:(UICollectionView *)view
      numberOfItemsInSection:(NSInteger)section {
   return (NSInteger)[self.pestoData.imageFileNames count];
-}
-
-- (BOOL)prefersStatusBarHidden {
-  return YES;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation

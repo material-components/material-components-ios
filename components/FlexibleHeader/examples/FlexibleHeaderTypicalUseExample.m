@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2016-present Google Inc. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -28,6 +28,14 @@
 
 @implementation FlexibleHeaderTypicalUseViewController
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonMDCFlexibleHeaderViewControllerInit];
+  }
+  return self;
+}
+
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
@@ -52,7 +60,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.scrollView = [[UIScrollView alloc] init];
+  self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+  self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.view addSubview:self.scrollView];
 
   // If a tableView was being used instead of a scrollView, you would set the trackingScrollView
@@ -63,9 +72,7 @@
   self.fhvc.headerView.trackingScrollView = self.scrollView;
 
   self.fhvc.view.frame = self.view.bounds;
-
   [self.view addSubview:self.fhvc.view];
-
   [self.fhvc didMoveToParentViewController:self];
 
   // Light blue 500

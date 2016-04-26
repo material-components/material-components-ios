@@ -9,6 +9,7 @@
   "phabricator.uri" : "http://codereview.cc/",
   "repository.callsign" : "MDC",
   "arc.land.onto.default" : "develop",
+  "arc.feature.start.default": "origin/develop",
   "git.default-relative-commit" : "origin/develop",
   "unit.xcode": {
     "build": {

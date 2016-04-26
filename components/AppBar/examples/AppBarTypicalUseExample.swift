@@ -22,8 +22,8 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   // Step 1: Create and initialize an App Bar.
   let appBar = MDCAppBar()
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  init() {
+    super.init(nibName: nil, bundle: nil)
 
     self.title = "App Bar (Swift)"
 
@@ -56,6 +56,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     // Step 3: Register the App Bar views.
     appBar.addSubviewsToParent()
+
+    self.tableView.layoutMargins = UIEdgeInsetsZero
+    self.tableView.separatorInset = UIEdgeInsetsZero
   }
 
   // Optional step: If you allow the header view to hide the status bar you must implement this
@@ -82,7 +85,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Basic (Swift)"]
+    return ["App Bar", "App Bar (Swift)"]
   }
   func catalogShouldHideNavigation() -> Bool {
     return true
@@ -105,7 +108,7 @@ extension AppBarTypicalUseSwiftExample {
       if cell == nil {
         cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
       }
-      cell!.textLabel!.text = "\(indexPath.row)"
+      cell!.layoutMargins = UIEdgeInsetsZero
       return cell!
   }
 

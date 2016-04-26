@@ -35,7 +35,8 @@
 
     [self addChildViewController:_appBar.headerViewController];
 
-    self.contentViewController = contentViewController;
+    _contentViewController = contentViewController;
+    [self addChildViewController:contentViewController];
   }
   return self;
 }
@@ -78,32 +79,6 @@
 
 - (MDCFlexibleHeaderViewController *)headerViewController {
   return self.appBar.headerViewController;
-}
-
-- (void)setContentViewController:(UIViewController *)contentViewController {
-  if (_contentViewController == contentViewController) {
-    return;
-  }
-
-  // Teardown of the old controller
-
-  [_contentViewController willMoveToParentViewController:nil];
-  if ([_contentViewController isViewLoaded]) {
-    [_contentViewController.view removeFromSuperview];
-  }
-  [_contentViewController removeFromParentViewController];
-
-  // Setup of the new controller
-
-  _contentViewController = contentViewController;
-
-  [self addChildViewController:contentViewController];
-
-  NSAssert(![self isViewLoaded],
-           @"View should not have been loaded at this point."
-           @" Verify that the view is not being accessed anywhere in %@ or %@.",
-           NSStringFromSelector(_cmd),
-           NSStringFromSelector(@selector(initWithContentViewController:)));
 }
 
 @end

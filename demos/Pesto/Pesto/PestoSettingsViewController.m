@@ -20,8 +20,6 @@
 #import "MaterialSwitch.h"
 #import "MaterialTypography.h"
 
-static CGFloat kPestoSettingsTableViewOffsetTop = 0.f;
-
 static NSString *const kPestoSettingsTableViewCellReuseIdentifier = @"PestoSettingsTableViewCell";
 static NSString *const kPestoSettingsTableViewHeaderViewReuseIdentifier =
     @"PestoSettingsTableViewHeaderView";
@@ -150,9 +148,9 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
   CGRect settingsTableViewFrame =
       CGRectMake(0,
-                 kPestoSettingsTableViewOffsetTop,
+                 0,
                  self.view.bounds.size.width,
-                 self.view.bounds.size.height - kPestoSettingsTableViewOffsetTop);
+                 self.view.bounds.size.height);
   self.settingsTableView = [[UITableView alloc] initWithFrame:settingsTableViewFrame
                                                         style:UITableViewStylePlain];
   self.settingsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -178,10 +176,6 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   self.appBar.headerViewController.view.backgroundColor = teal;
   self.appBar.headerViewController.headerView.trackingScrollView = self.settingsTableView;
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-
-  // This app has a forced-hidden status bar. The headerView needs to compensate.
-  self.appBar.headerViewController.headerView.maximumHeight -= 20;
-  self.appBar.headerViewController.headerView.minimumHeight -= 20;
 }
 
 + (UIColor *)tableViewSeparatorColor {

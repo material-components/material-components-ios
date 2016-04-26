@@ -1,7 +1,7 @@
 ---
 title:  "Shadow Elevations"
 layout: detail
-section: documentation
+section: components
 excerpt: "The Shadow Elevations component provides the most commonly-used Material Design elevations."
 ---
 # Shadow Elevations
@@ -56,7 +56,6 @@ Before using Shadow Elevations, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
-
 ~~~ objc
 #import "MaterialShadowElevations.h"
 ~~~
@@ -65,9 +64,32 @@ Before using Shadow Elevations, you'll need to import it:
 ~~~ swift
 import MaterialComponents
 ~~~
+
 <!--</div>-->
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+@interface ShadowedView: UIView
+
+@end
+
+@implementation ShadowedView
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (MDCShadowLayer *)shadowLayer {
+  return (MDCShadowLayer *)self.layer;
+}
+
+- (void)setDefaultElevation {
+  self.shadowLayer.elevation = MDCShadowElevationCardResting;
+}
+
+@end
+~~~
 
 #### Swift
 ~~~ swift
@@ -81,7 +103,7 @@ class ShadowedView: UIView {
     return self.layer as! MDCShadowLayer
   }
 
-  func setElevation(points: CGFloat) {
+  func setDefaultElevation() {
     self.shadowLayer.elevation = MDCShadowElevationCardResting
   }
 

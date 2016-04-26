@@ -57,7 +57,6 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
     _collectionViewController = collectionVC;
     _collectionViewController.flexHeaderContainerVC = self;
     _collectionViewController.delegate = self;
-    [self setNeedsStatusBarAppearanceUpdate];
   }
   return self;
 }
@@ -91,10 +90,6 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   self.zoomableView.backgroundColor = [UIColor lightGrayColor];
   self.zoomableView.contentMode = UIViewContentModeScaleAspectFill;
   [self.view insertSubview:self.zoomableView belowSubview:self.animatedMenuArrow];
-}
-
-- (BOOL)prefersStatusBarHidden {
-  return YES;
 }
 
 - (void)showMenu {

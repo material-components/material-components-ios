@@ -27,21 +27,13 @@
 
 @implementation AppBarTypicalUseExample
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)init {
+  self = [super init];
   if (self) {
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
     [self addChildViewController:_appBar.headerViewController];
-
     self.title = @"App Bar";
-
-    UIColor *color = [UIColor colorWithRed:(CGFloat)0x03 / (CGFloat)255
-                                     green:(CGFloat)0xA9 / (CGFloat)255
-                                      blue:(CGFloat)0xF4 / (CGFloat)255
-                                     alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
   }
   return self;
 }
@@ -59,6 +51,17 @@
 
   // Step 3: Register the App Bar views.
   [self.appBar addSubviewsToParent];
+
+  // Optional: Change the App Bar's background color and tint color.
+  UIColor *color = [UIColor colorWithRed:(CGFloat)0x03 / (CGFloat)255
+                                   green:(CGFloat)0xA9 / (CGFloat)255
+                                    blue:(CGFloat)0xF4 / (CGFloat)255
+                                   alpha:1];
+  _appBar.headerViewController.headerView.backgroundColor = color;
+  _appBar.navigationBar.tintColor = [UIColor whiteColor];
+
+  self.tableView.layoutMargins = UIEdgeInsetsZero;
+  self.tableView.separatorInset = UIEdgeInsetsZero;
 }
 
 // Optional step: If you allow the header view to hide the status bar you must implement this
@@ -94,7 +97,7 @@
           " navigation experience.";
 }
 
-- (BOOL)catalogIsPrimaryDemo {
++ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 
@@ -119,7 +122,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                   reuseIdentifier:@"cell"];
   }
-  cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+  cell.layoutMargins = UIEdgeInsetsZero;
   return cell;
 }
 
