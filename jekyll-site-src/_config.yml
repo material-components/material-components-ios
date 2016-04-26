@@ -5,6 +5,7 @@ basepath: "" # blank if hosted at site root, /subdirectory if hosted in "subdire
 # temporarily disabled
 # url: "http://www.materialcomponents.org"
 url: ""
+folder: ""
 permalink: :title
 analytics_id: "UA-51798601-9"
 

@@ -133,11 +133,11 @@ pre.CodeMirror-line {
         background-position: center;
 
         &.checked {
-          background-image: url(/images/radio-checked.svg);
+          background-image: url(#{$root_folder}/images/radio-checked.svg);
           display: none;
         }
         &.unchecked {
-          background-image: url(/images/radio-unchecked.svg);
+          background-image: url(#{$root_folder}/images/radio-unchecked.svg);
           opacity: 0.54;
           display: inline-block;
         }

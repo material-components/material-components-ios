@@ -448,7 +448,7 @@ footer {
         background-repeat: no-repeat;
         background-size: 92px 34px;
         background-position: center;
-        background-image: url(/images/logo.svg);
+        background-image: url(#{$root_folder}/images/logo.svg);
         @include transition(opacity 0.3 ease);
         opacity: 0.54;
         &:hover {

@@ -1,9 +1,9 @@
 
     <header>
-      <div class="logo"><a href="{{ site.url }}/">{{ site.title }}</a></div>
+      <div class="logo"><a href="{{ site.folder }}/">{{ site.title }}</a></div>
     </header>
     <nav class="tabs">
-      <a href="/howto/" class="{% if page.section == 'howto' %}active{% endif %}">How To</a>
-      <a href="/components/" class="{% if page.section == 'components' %}active{% endif %}">Components</a>
-      <a href="/contributing/" class="{% if page.section == 'contributing' %}active{% endif %}">Contributing</a>
+      <a href="{{ site.folder }}/howto/" class="{% if page.section == 'howto' %}active{% endif %}">How To</a>
+      <a href="{{ site.folder }}/components/" class="{% if page.section == 'components' %}active{% endif %}">Components</a>
+      <a href="{{ site.folder }}/contributing/" class="{% if page.section == 'contributing' %}active{% endif %}">Contributing</a>
     </nav>

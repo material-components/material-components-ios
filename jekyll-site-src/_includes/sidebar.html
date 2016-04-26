@@ -16,7 +16,7 @@
         assign activepage = "active" %}{%
       endif %}
     <li class="{{ item.class }} {{ activepage }}">
-      <a href="{{ site.basepath | prepend: site.github.url }}{{ item.url }}">{{ item.name }}</a>
+      <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ item.url }}">{{ item.name }}</a>
     </li>{%
     endfor %}
   </ul>

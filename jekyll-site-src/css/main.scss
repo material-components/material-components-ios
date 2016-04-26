@@ -3,6 +3,8 @@
 ---
 @charset "utf-8";
 
+$root_folder: "{{ site.folder }}";
+
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
         "globals",

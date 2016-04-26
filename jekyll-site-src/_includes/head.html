@@ -5,24 +5,24 @@
   <title>{% if page.title and page.title != site.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
 
   <meta itemprop="name" content="{% if page.title and page.title != site.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}" />
-  <meta itemprop="image" content="{{ site.url }}/images/social.png" />
+  <meta itemprop="image" content="{{ site.url }}{{ site.folder }}/images/social.png" />
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="{% if page.title and page.title != site.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}" />
-  <meta property="og:image" content="{{ site.url }}/images/social.png" />
+  <meta property="og:image" content="{{ site.url }}{{ site.folder }}/images/social.png" />
   <meta property="og:site_name" content="{{ site.title | escape }}" />
   <meta property="article:section" content="{% if page.title %}{{ page.title | escape }}{% endif %}" />
 
   <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500|Material+Icons' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="{{ site.url }}/thirdparty/codemirror/lib/codemirror.css">
-  <link rel="stylesheet" href="{{ site.url }}/css/main.css">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
-  <script src="{{ site.url }}/thirdparty/codemirror/lib/codemirror.js"></script>
-  <script src="{{ site.url }}/thirdparty/codemirror/mode/clike/clike.js"></script>
-  <script src="{{ site.url }}/thirdparty/codemirror/mode/swift/swift.js"></script>
-  <script src="{{ site.url }}/thirdparty/codemirror/mode/shell/shell.js"></script>
-  <script src="{{ site.url }}/thirdparty/codemirror/mode/ruby/ruby.js"></script>
-  <script src='{{ site.url }}/js/mdccoderender.js'></script>
+  <link rel="stylesheet" href="{{ site.url }}{{ site.folder }}/thirdparty/codemirror/lib/codemirror.css">
+  <link rel="stylesheet" href="{{ site.url }}{{ site.folder }}/css/main.css">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.folder | prepend: site.url }}">
+  <script src="{{ site.url }}{{ site.folder }}/thirdparty/codemirror/lib/codemirror.js"></script>
+  <script src="{{ site.url }}{{ site.folder }}/thirdparty/codemirror/mode/clike/clike.js"></script>
+  <script src="{{ site.url }}{{ site.folder }}/thirdparty/codemirror/mode/swift/swift.js"></script>
+  <script src="{{ site.url }}{{ site.folder }}/thirdparty/codemirror/mode/shell/shell.js"></script>
+  <script src="{{ site.url }}{{ site.folder }}/thirdparty/codemirror/mode/ruby/ruby.js"></script>
+  <script src='{{ site.url }}{{ site.folder }}/js/mdccoderender.js'></script>
 
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
