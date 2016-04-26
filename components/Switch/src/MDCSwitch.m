@@ -23,6 +23,7 @@ static const CGSize MDCSwitchIntrinsicSize = {.width = 36.0f, .height = 27.0f};
 static const CGFloat kMDCSwitchThumbRadius = 10.0f;
 static const CGFloat kMDCSwitchTrackHeight = 14.0f;
 static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
+static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
 @interface MDCSwitch () <MDCThumbTrackDelegate>
 @end
@@ -59,6 +60,7 @@ static const CGFloat kMDCSwitchMinTouchSize = 48.0f;
   _thumbTrack.continuousUpdateEvents = NO;
   _thumbTrack.trackHeight = kMDCSwitchTrackHeight;
   _thumbTrack.thumbRadius = kMDCSwitchThumbRadius;
+  _thumbTrack.thumbMaxRippleRadius = kInkMaxRippleRadiusFactor * kMDCSwitchThumbRadius;
   _thumbTrack.trackEndsAreRounded = YES;
   _thumbTrack.interpolateOnOffColors = YES;
   _thumbTrack.numDiscreteValues = 2;
