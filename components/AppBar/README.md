@@ -23,8 +23,8 @@ navigation experience.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
-  <li class="icon-link"><a href="/components/AppBar/apidocs/Protocols/MDCAppBarParenting.html">MDCAppBarParenting</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
+  <li class="icon-link"><a href="apidocs/Protocols/MDCAppBarParenting.html">MDCAppBarParenting</a></li>
 </ul>
 
 - - -
@@ -57,9 +57,9 @@ $ pod install
 The App Bar is a composite component that initializes and provides access to instances of the
 following components:
 
-- [Flexible Header](../FlexibleHeader)
-- [Header Stack View](../HeaderStackView)
-- [Navigation Bar](../NavigationBar)
+- [Flexible Header](../FlexibleHeader/)
+- [Header Stack View](../HeaderStackView/)
+- [Navigation Bar](../NavigationBar/)
 
 The provided view hierarchy looks like so:
 

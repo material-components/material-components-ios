@@ -22,9 +22,9 @@ outward from the user's touch.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/Ink/apidocs/Classes/MDCInkTouchController.html">MDCInkTouchController</a></li>
-  <li class="icon-link"><a href="/components/Ink/apidocs/Classes/MDCInkView.html">MDCInkView</a></li>
-  <li class="icon-link"><a href="/components/Ink/apidocs/Protocols/MDCInkTouchControllerDelegate.html">MDCInkTouchControllerDelegate</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCInkTouchController.html">MDCInkTouchController</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCInkView.html">MDCInkView</a></li>
+  <li class="icon-link"><a href="apidocs/Protocols/MDCInkTouchControllerDelegate.html">MDCInkTouchControllerDelegate</a></li>
 </ul>
 
 

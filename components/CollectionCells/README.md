@@ -21,8 +21,8 @@ Collection view cell classes that adhere to Material design layout and styling.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/CollectionCells/apidocs/Classes/MDCCollectionViewCell.html">MDCCollectionViewCell</a></li>
-  <li class="icon-link"><a href="/components/CollectionCells/apidocs/Classes/MDCCollectionViewTextCell.html">MDCCollectionViewTextCell</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewCell.html">MDCCollectionViewCell</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewTextCell.html">MDCCollectionViewTextCell</a></li>
 </ul>
 
 - - -
@@ -36,5 +36,5 @@ Collection view cell classes that adhere to Material design layout and styling.
 
 ## Usage
 
-Please see the [Collections](../Collections) component for more information about using Collection
+Please see the [Collections](../Collections/) component for more information about using Collection
 Cells. We do not presently support using Collection Cells as a standalone component.

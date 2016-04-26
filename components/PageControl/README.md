@@ -23,7 +23,7 @@ desired animation of the control.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/PageControl/apidocs/Classes/MDCPageControl.html">MDCPageControl</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCPageControl.html">MDCPageControl</a></li>
 </ul>
 
 

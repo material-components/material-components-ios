@@ -30,7 +30,7 @@ The Roboto Font Loader lazy loads the Roboto font.
 
 <ul class="icon-list">
   <li class="icon-link">
-    <a href="/components/RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">
+    <a href="apidocs/Classes/MDCRobotoFontLoader.html">
       MDCRobotoFontLoader
     </a>
   </li>

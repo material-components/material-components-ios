@@ -12,7 +12,7 @@ Allows passing layout attributes to the cells and supplementary views.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/CollectionLayoutAttributesCells/apidocs/Classes/MDCCollectionViewLayoutAttributes.html">MDCCollectionViewLayoutAttributes</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewLayoutAttributes.html">MDCCollectionViewLayoutAttributes</a></li>
 </ul>
 
 - - -

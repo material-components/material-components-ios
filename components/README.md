@@ -12,13 +12,13 @@ interface components for iOS. These components implement Google's
 and are developed by a team of iOS engineers and UX designers at Google.
 
 
-- [Development Guide](/howto/)
+- [Development Guide]({{ site.folder }}/howto/)
   <!--{: .icon-guide }-->
 
-- [Code Samples](/howto/#sample-code)
+- [Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
   <!--{: .icon-sample }-->
 
-- [Stack Overflow](http://stackoverflow.com/questions/tagged/material-components-ios)
+- [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
   <!--{: .icon-stackoverflow }-->
 
 - [Github](https://github.com/google/material-components-ios/)

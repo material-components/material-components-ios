@@ -12,8 +12,8 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/ButtonBar/apidocs/Classes/MDCButtonBar.html">MDCButtonBar</a></li>
-  <li class="icon-link"><a href="/components/ButtonBar/apidocs/Protocols/MDCButtonBarDelegate.html">MDCButtonBarDelegate</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCButtonBar.html">MDCButtonBar</a></li>
+  <li class="icon-link"><a href="apidocs/Protocols/MDCButtonBarDelegate.html">MDCButtonBarDelegate</a></li>
 </ul>
 
 

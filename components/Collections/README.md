@@ -21,12 +21,12 @@ Collection view classes that adhere to Material design layout and styling.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/Collections/apidocs/Classes/MDCCollectionViewController.html">MDCCollectionViewController</a></li>
-  <li class="icon-link"><a href="/components/Collections/apidocs/Protocols/MDCCollectionViewEditing.html">MDCCollectionViewEditing</a></li>
-  <li class="icon-link"><a href="/components/Collections/apidocs/Protocols/MDCCollectionViewEditingDelegate.html">MDCCollectionViewEditingDelegate</a></li>
-  <li class="icon-link"><a href="/components/Collections/apidocs/Classes/MDCCollectionViewFlowLayout.html">MDCCollectionViewFlowLayout</a></li>
-  <li class="icon-link"><a href="/components/Collections/apidocs/Protocols/MDCCollectionViewStyling.html">MDCCollectionViewStyling</a></li>
-  <li class="icon-link"><a href="/components/Collections/apidocs/Protocols/MDCCollectionViewStylingDelegate.html">MDCCollectionViewStylingDelegate</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewController.html">MDCCollectionViewController</a></li>
+  <li class="icon-link"><a href="apidocs/Protocols/MDCCollectionViewEditing.html">MDCCollectionViewEditing</a></li>
+  <li class="icon-link"><a href="apidocs/Protocols/MDCCollectionViewEditingDelegate.html">MDCCollectionViewEditingDelegate</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewFlowLayout.html">MDCCollectionViewFlowLayout</a></li>
+  <li class="icon-link"><a href="apidocs/Protocols/MDCCollectionViewStyling.html">MDCCollectionViewStyling</a></li>
+  <li class="icon-link"><a href="apidocs/Protocols/MDCCollectionViewStylingDelegate.html">MDCCollectionViewStylingDelegate</a></li>
 </ul>
 
 - - -
@@ -276,7 +276,7 @@ self.styler.gridColumnCount = 2
 The styler allows customizing cell separators for the entire collection view. Individual
 cell customization is also available by using an `MDCCollectionViewCell` cell or a subclass of it.
 Learn more by reading the section on [Cell Separators](../CollectionCells/#cell-separators) in the
-[CollectionCells](../CollectionCells) component.
+[CollectionCells](../CollectionCells/) component.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
