@@ -16,6 +16,10 @@
 
 # Returns a version number bumped from the latest release on origin/master.
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
+MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
+cd $MDC_ROOT
+
 usage() {
   echo $"Usage: $0 {major|minor|patch}"
   exit 1

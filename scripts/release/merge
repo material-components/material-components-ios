@@ -16,6 +16,10 @@
 
 # Performs the final merge operations into master and develop for the current release.
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
+MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
+cd $MDC_ROOT
+
 if [[ `git status --porcelain` ]]; then
   echo
   echo "    Refusing to merge the release due to presence of local changes."
