@@ -1,0 +1,62 @@
+#!/bin/bash
+#
+# Copyright 2016-present Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Writes a patch to stdout that can be piped to git am. This is helpful for patching
+# commits from one MDC repository to another where the base paths may not necessarily
+# match.
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
+MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
+cd $MDC_ROOT
+
+prefix=""
+commit=""
+
+usage() {
+  echo "Usage: $0 -c [sha] -p [prefix]"
+  echo
+  echo "Example usage: $0 -c <sha> -p path/to/mdc"
+}
+
+while getopts "h?vc:p:" opt; do
+  case "$opt" in
+  h|\?)
+      usage
+      exit 0
+      ;;
+  v)  VERBOSE=1
+      ;;
+  c)  commit=$OPTARG
+      ;;
+  p)  prefix=$OPTARG
+      ;;
+  esac
+done
+
+if [[ -z "$prefix" || -z "$commit" ]]; then
+  usage
+  exit 0
+fi
+
+prefix="${prefix%/}/"
+prefix="${prefix#$(pwd)/}"
+
+git --no-pager \
+  format-patch \
+  -1 $commit \
+  --stdout \
+  --src-prefix=a/$prefix \
+  --dst-prefix=b/$prefix
