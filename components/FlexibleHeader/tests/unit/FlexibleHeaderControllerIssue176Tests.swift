@@ -48,12 +48,19 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
   func testWithTrackingScrollView() {
     let parentVc = UITableViewController()
+
+    // iOS 8.3 and 8.4 do not provide a default frame for the view controller. The contentOffset for
+    // a UIScrollView will only be modified if its bounds is sufficiently large, so we recreate the
+    // expected behavior here.
+    parentVc.view.frame = UIScreen.mainScreen().bounds
+
     self.registerToParentViewController(parentVc)
 
     fhvc.headerView.trackingScrollView = parentVc.tableView
 
     fhvc.didMoveToParentViewController(parentVc)
 
+    XCTAssertEqual(fhvc.headerView.trackingScrollView!.contentOffset.y, -fhvc.headerView.maximumHeight)
     XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.maximumHeight)
   }
 }
