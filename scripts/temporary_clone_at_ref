@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# Copyright 2016-present Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Clones a copy of this git repository to a specific path and checks out the provided ref.
+#
+# This script is useful for checking out two versions of the repo for side-by-side comparison
+# purposes with tools such as objc-diff.
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
+MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
+
+usage() {
+  echo "Usage: $0 <path> <ref>"
+  echo
+  echo "Clones a copy of this git repository to a specific path"
+  echo "and checks out the provided ref."
+  echo
+  echo "Example usage: $0 path v1.0.0"
+}
+
+if [ "$#" -lt 2 ]; then
+  usage
+  exit -1
+fi
+
+if [ ! -d "$1" ]; then
+  git clone "$MDC_ROOT" "$1" || { echo "Failed to clone."; exit 1; }
+fi
+pushd $1 >> /dev/null
+git fetch || { echo "Failed to update repo."; exit 1; }
+git checkout "$2"
+popd >> /dev/null

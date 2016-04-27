@@ -65,9 +65,6 @@ validate_commit $new_commit
 
 # Compute directories relative to the script's known location in scripts/
 SCRIPTS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-REPO_ROOT_PATH="$( cd "$( dirname $SCRIPTS_PATH )" && pwd )"
-
-SYSROOT="$(xcode-select --print-path)/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk"
 
 log "Installing objc-diff..."
 
@@ -82,23 +79,8 @@ TMP_PATH=$(mktemp -d)
 
 OLD_ROOT_PATH="$TMP_PATH/old"
 NEW_ROOT_PATH="$TMP_PATH/new"
-
-# prep_repo <path> <commit>
-prep_repo() {
-  if [ ! -d "$1" ]; then
-    git clone "$REPO_ROOT_PATH" "$1" \
-      2>&1 | logger || { echo "Failed to clone."; exit 1; }
-  fi
-  pushd $1 >> /dev/null
-  git remote add github git@github.com:google/material-components-ios.git 2>&1 | logger
-  git fetch \
-    2>&1 | logger || { echo "Failed to update repo."; exit 1; }
-  git checkout "$2" 2>&1 | logger
-  popd >> /dev/null
-}
-
-prep_repo $OLD_ROOT_PATH $old_commit
-prep_repo $NEW_ROOT_PATH $new_commit
+"$SCRIPTS_PATH/temporary_clone_at_ref" "$OLD_ROOT_PATH" $old_commit
+"$SCRIPTS_PATH/temporary_clone_at_ref" "$NEW_ROOT_PATH" $new_commit
 
 old_header_search_paths=""
 new_header_search_paths=""
