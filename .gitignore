@@ -69,3 +69,7 @@ fastlane/screenshots
 /gh-pages
 /site-source
 
+# Compiled python
+*.pyc
+
+
