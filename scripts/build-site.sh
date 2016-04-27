@@ -19,8 +19,8 @@ args=$*
 deploy=false
 update=true
 while test $# -gt 0; do
-	case $1 in
-		"-b" | "--build")
+  case $1 in
+    "-b" | "--build")
       shift 2
     ;;
     "-d" | "--deploy")
@@ -50,8 +50,8 @@ while test $# -gt 0; do
       exit 0
     ;;
     *)
-	    echo "For available options: site-build.sh -h[--help]."
-	    exit 0
+      echo "For available options: site-build.sh -h[--help]."
+      exit 0
     ;;
   esac
 done
@@ -79,11 +79,11 @@ ROOT_DIR="$(pwd)"
 # # If site-source doesn't exist, clone the repository into site-source folder
 if [[ -d ./$SITE_SOURCE_FOLDER ]]; then
   if $update ; then
-  	echo "Update site folder..."
-  	cd $SITE_SOURCE_FOLDER
-  	git checkout $SITE_SOURCE_BRANCH >> /dev/null 2> /dev/null
-  	git pull >> /dev/null 2> /dev/null
-  	cd ..
+    echo "Update site folder..."
+    cd $SITE_SOURCE_FOLDER
+    git checkout $SITE_SOURCE_BRANCH >> /dev/null 2> /dev/null
+    git pull >> /dev/null 2> /dev/null
+    cd ..
   else
     echo -e "\033[31m*********************************************************************"
     echo -e "\033[31m*****                                                           *****"
@@ -94,13 +94,12 @@ if [[ -d ./$SITE_SOURCE_FOLDER ]]; then
     echo -e "\033[0m"
   fi
 else
-	echo "Set up site folder..."
-	git clone $GITHUB_REMOTE $SITE_SOURCE_FOLDER || { echo "Failed to clone."; exit 1; }
-	cd $SITE_SOURCE_FOLDER
-	git checkout -b $SITE_SOURCE_BRANCH origin/$SITE_SOURCE_BRANCH >> /dev/null 2> /dev/null
-	cd ..
+  echo "Set up site folder..."
+  git clone $GITHUB_REMOTE $SITE_SOURCE_FOLDER || { echo "Failed to clone."; exit 1; }
+  cd $SITE_SOURCE_FOLDER
+  git checkout -b $SITE_SOURCE_BRANCH origin/$SITE_SOURCE_BRANCH >> /dev/null 2> /dev/null
+  cd ..
 fi
 
 # Build site
 $ROOT_DIR/$SITE_SOURCE_FOLDER/build.sh $args
-
