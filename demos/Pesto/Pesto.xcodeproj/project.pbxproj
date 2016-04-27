@@ -393,7 +393,7 @@
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				INFOPLIST_FILE = Pesto/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.Pesto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -420,7 +420,7 @@
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				INFOPLIST_FILE = Pesto/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.Pesto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
