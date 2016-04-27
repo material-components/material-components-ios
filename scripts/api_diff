@@ -32,9 +32,9 @@ while getopts "h?vo:n:" opt; do
       ;;
   v)  VERBOSE=1
       ;;
-  o)  old_commit=$(git rev-parse $OPTARG)
+  o)  old_commit=$(git rev-list -n 1 $OPTARG)
       ;;
-  n)  new_commit=$(git rev-parse $OPTARG)
+  n)  new_commit=$(git rev-list -n 1 $OPTARG)
       ;;
   esac
 done
