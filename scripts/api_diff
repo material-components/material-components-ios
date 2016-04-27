@@ -67,49 +67,15 @@ validate_commit $new_commit
 SCRIPTS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPO_ROOT_PATH="$( cd "$( dirname $SCRIPTS_PATH )" && pwd )"
 
-# Where to fetch the objc-diff repo from
-OBJC_DIFF_REPO_URL="https://github.com/mattstevens/objc-diff.git"
-
-# Where to install the objc-diff repo
-OBJC_DIFF_REPO_PATH="$SCRIPTS_PATH/external/objc-diff"
-OBJC_DIFF_BINARY_RELATIVE_PATH="build/Release/objc-diff"
-OBJC_DIFF_BINARY_PATH=$OBJC_DIFF_REPO_PATH/$OBJC_DIFF_BINARY_RELATIVE_PATH
-
 SYSROOT="$(xcode-select --print-path)/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk"
 
-log "Fetching objc-diff..."
+log "Installing objc-diff..."
 
-# Runs git commands in the objc-diff repository directory.
-git_objc_diff() {
-  pushd $OBJC_DIFF_REPO_PATH >> /dev/null
-  git "$@" 2>&1 | logger
-  popd >> /dev/null
-}
-
-# Clone/update the objc-diff repo
-if [ ! -d "$OBJC_DIFF_REPO_PATH" ]; then
-  git clone "$OBJC_DIFF_REPO_URL" "$OBJC_DIFF_REPO_PATH" \
-    2>&1 | logger || { echo "Failed to clone."; exit 1; }
-else
-  git_objc_diff fetch \
-    2>&1 | logger || { echo "Failed to update objc-diff."; exit 1; }
-fi
-
-# Build objc-diff binary
-xcodebuild build \
-  -project $OBJC_DIFF_REPO_PATH/OCDiff.xcodeproj \
-  -target OCDiff \
-  -configuration Release \
-  2>&1 | logger
-
-# Verify objc-diff binary existence
-if [ ! -f "$OBJC_DIFF_BINARY_PATH" ]; then
-  echo "Unable to find objc-diff at $OBJC_DIFF_BINARY_PATH"
-  exit 1
-fi
+"$SCRIPTS_PATH/install_objc_diff"  \
+    2>&1 | logger || { echo "Failed to install objc-diff."; exit 1; }
 
 objc_diff() {
-  "$OBJC_DIFF_BINARY_PATH" "$@"
+  $($SCRIPTS_PATH/install_objc_diff -p) "$@"
 }
 
 TMP_PATH=$(mktemp -d)
