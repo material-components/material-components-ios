@@ -27,47 +27,8 @@ Our additions:
 ### Conventions
 
 This repository follows a file layout convention that ensures consistency and
-predictability across all of our components. The convention for a given
-component is as follows:
-
-    ComponentName/
-      CHANGELOG.md            <- Release notes and history.
-      README.md               <- Essential installation and usage guide.
-      ComponentName.podspec   <- The podspec for the library.
-
-      docs/                   <- In-depth technical documentation.
-        TechnicalDoc1.md      <- Docs are written in Markdown.
-        assets/               <- All documentation assets live here.
-          image.png           <- Pngs, movs, gifs, etc...
-
-      examples/
-        Example.swift         <- Examples can be Swift,
-        Example.m             <-                        or Objective-C.
-        apps/                 <- Example applications live in this sub-directory.
-          ExampleApp/         <- Example application.
-          AnotherApp/         <- Another example application.
-        resources/            <- Resources required by the examples.
-        supplemental/         <- Supplemental example source code.
-
-      src/                    <- All component source lives here.
-        ComponentName.h       <- Umbrella header.
-        GOSObject.h           <- Component source must be written in Objective-C.
-        GOSObject.m
-        private/              <- Private APIs live in a sub-directory
-          GOSPrivateAPI.h
-          GOSPrivateAPI.m
-        ComponentName.bundle/ <- All assets required by the source.
-
-      tests/
-        ui/                   <- All user interface tests.
-          SomeAPITest.swift   <- Tests can be Swift,
-          AnotherTest.m       <-                     or Objective-C.
-        unit/                 <- All unit tests.
-          SomeAPITest.swift   <- Tests can be Swift,
-          AnotherTest.m       <-                     or Objective-C.
-
-Note that all directories are **lower-cased** except the component's root
-directory.
+predictability across all of our components. The conventions are described in
+the [GOS-conventions](https://github.com/google/GOS-conventions) repository.
 
 ### Before you contribute
 
