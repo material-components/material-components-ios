@@ -218,19 +218,44 @@ Sent the release-candidate branch out for review:
 
 Check off each item in the diff's checklist before merging the release candidate branch.
 
-## Do not land the release candidate
+## Release-blocking clients
 
 Before you can merge the release branch into either develop or master you **must** get the release
 go-ahead from the following clients:
 
 - Google: must verify that the release branch passes all internal tests. If you are a Googler, see
-  the internal "mirroring" document for further instructions.
+  the internal "mirroring" document for further instructions. Notably you **must not continue** this
+  releasing process until the internal synchronization CL has landed.
+
+---
+
+               |\___/|
+              (,\  /,)\
+              /     /  \       DRAGON SAYS HALT:
+             (@_^_@)/   \      READ THE ABOVE SECTION BEFORE CONTINUING.
+              W//W_/     \     DO NOT MERGE OR CUT ANY RELEASES UNTIL
+            (//) |        \    YOU'VE DONE SO.
+          (/ /) _|_ /   )  \
+        (// /) '/,_ _ _/  (~^-.
+      (( // )) ,-{        _    `.
+     (( /// ))  '/\      /      |
+     (( ///))     `.   {       }
+      ((/ ))    .----~-.\   \-'
+               ///.----..>   \
+                ///-._ _  _ _}
+
+---
 
 ## Merge the release candidate branch
 
 Once the release has passed all tests by clients, you may merge the release into the `develop` and
 `master` branches.
 
+    # Did you listen to the dragon?
+    #
+    # Do not run this until all release-blocking clients have given the go-ahead.
+    # Ensure that you've checked off every item in the commit message's checklist.
+    #
     scripts/release/merge
 
 Once you've resolved any merge conflicts your local `develop` and `master` branches will both
@@ -255,6 +280,9 @@ and delete the release branch:
 
 ### Create the official release
 
+1. Have all release-blocking clients given the go-ahead? **Do not create the official release until
+   all release-blocking clients are ready**. Otherwise you might publish a release that isn't
+   actually stable.
 1. Visit our
    [GitHub list of releases](https://github.com/google/material-components-ios/releases), click on
    "Draft a new release".
