@@ -18,9 +18,9 @@
 # Make sure jekyll is installed
 JEKYLL_VERSION=`jekyll --version`
 if [[ $? != 0 ]]; then
-	echo "Cannot find jekyll.  To install try:"
-	echo "[sudo] gem install github-pages"
-	exit 1
+  echo "Cannot find jekyll.  To install try:"
+  echo "[sudo] gem install github-pages"
+  exit 1
 fi
 
 
@@ -74,16 +74,31 @@ if [ -d $jekyll_output ]; then
   rm -r $jekyll_output/*
 fi
 
-# Determine build mode: preview/build
-if [[ $1 == '--no-preview' ]]; then
-	preview=false
-else
-	preview=true
-fi
+# Determine build mode: preview/build, deploy env
+preview=true
+config="_config.yml"
+while [ $# -gt 0 ]; do
+  case $1 in
+    "--no-preview")
+      preview=false
+      shift
+    ;;
+    "-e" | "--for-env")
+      if [[ $2 == 'production' ]]; then
+        config="_config.yml,_mdc_ios_preview_config.yml"
+      fi
+      shift 2
+    ;;
+    *)
+      shift 1
+    ;;
+  esac
+done
+
 # Build site
 cd "$ROOT_DIR"/site-source/jekyll-site-src
 if $preview ; then
-	jekyll serve --destination $jekyll_output
+  jekyll serve --destination $jekyll_output --config $config
 else
-	jekyll build --destination $jekyll_output
+  jekyll build --destination $jekyll_output --config $config
 fi
