@@ -39,15 +39,15 @@ static inline CGFloat MDCInkLayerRectHypotenuse(CGRect rect) {
   return (CGFloat)hypot(CGRectGetWidth(rect), CGRectGetHeight(rect));
 }
 
-static NSString *const kMDCInkLayerOpacity = @"opacity";
-static NSString *const kMDCInkLayerPosition = @"position";
-static NSString *const kMDCInkLayerScale = @"transform.scale";
+static NSString *const kInkLayerOpacity = @"opacity";
+static NSString *const kInkLayerPosition = @"position";
+static NSString *const kInkLayerScale = @"transform.scale";
 
 // State tracking for ink.
 typedef NS_ENUM(NSInteger, MDCInkRippleState) {
-  kMDCInkRippleNone,
-  kMDCInkRippleSpreading,
-  kMDCInkRippleComplete
+  kInkRippleNone,
+  kInkRippleSpreading,
+  kInkRippleComplete
 };
 
 @protocol MDCInkLayerRippleDelegate <NSObject>
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _rippleState = kMDCInkRippleNone;
+    _rippleState = kInkRippleNone;
   }
   return self;
 }
@@ -90,16 +90,16 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 }
 
 - (void)enter {
-  _rippleState = kMDCInkRippleSpreading;
+  _rippleState = kInkRippleSpreading;
   [_inkLayer addSublayer:self];
 }
 
 - (void)exit {
-  _rippleState = kMDCInkRippleComplete;
+  _rippleState = kInkRippleComplete;
 }
 
 - (CAKeyframeAnimation *)opacityAnimWithValues:(NSArray *)values times:(NSArray *)times {
-  CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kMDCInkLayerOpacity];
+  CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kInkLayerOpacity];
   anim.fillMode = kCAFillModeForwards;
   anim.keyTimes = times;
   anim.removedOnCompletion = NO;
@@ -111,7 +111,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 - (CAKeyframeAnimation *)positionAnimWithPath:(CGPathRef)path
                                      duration:(CGFloat)duration
                                timingFunction:(CAMediaTimingFunction *)timingFunction {
-  CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kMDCInkLayerPosition];
+  CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kInkLayerPosition];
   anim.duration = duration;
   anim.fillMode = kCAFillModeForwards;
   anim.path = path;
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 }
 
 - (CAKeyframeAnimation *)scaleAnimWithValues:(NSArray *)values times:(NSArray *)times {
-  CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kMDCInkLayerScale];
+  CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kInkLayerScale];
   anim.fillMode = kCAFillModeForwards;
   anim.keyTimes = times;
   anim.removedOnCompletion = NO;
@@ -142,17 +142,17 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @end
 
-static CGFloat const kMDCInkLayerForegroundBoundedOpacityExitDuration = 0.4f;
-static CGFloat const kMDCInkLayerForegroundBoundedPositionExitDuration = 0.3f;
-static CGFloat const kMDCInkLayerForegroundBoundedRadiusExitDuration = 0.8f;
-static CGFloat const kMDCInkLayerForegroundRadiusGrowthMultiplier = 350.f;
-static CGFloat const kMDCInkLayerForegroundUnboundedEnterDelay = 0.08f;
-static CGFloat const kMDCInkLayerForegroundUnboundedOpacityEnterDuration = 0.12f;
-static CGFloat const kMDCInkLayerForegroundWaveTouchDownAcceleration = 1024.f;
-static CGFloat const kMDCInkLayerForegroundWaveTouchUpAcceleration = 3400.f;
-static NSString *const kMDCInkLayerForegroundOpacityAnim = @"foregroundOpacityAnim";
-static NSString *const kMDCInkLayerForegroundPositionAnim = @"foregroundPositionAnim";
-static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
+static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = 0.4f;
+static CGFloat const kInkLayerForegroundBoundedPositionExitDuration = 0.3f;
+static CGFloat const kInkLayerForegroundBoundedRadiusExitDuration = 0.8f;
+static CGFloat const kInkLayerForegroundRadiusGrowthMultiplier = 350.f;
+static CGFloat const kInkLayerForegroundUnboundedEnterDelay = 0.08f;
+static CGFloat const kInkLayerForegroundUnboundedOpacityEnterDuration = 0.12f;
+static CGFloat const kInkLayerForegroundWaveTouchDownAcceleration = 1024.f;
+static CGFloat const kInkLayerForegroundWaveTouchUpAcceleration = 3400.f;
+static NSString *const kInkLayerForegroundOpacityAnim = @"foregroundOpacityAnim";
+static NSString *const kInkLayerForegroundPositionAnim = @"foregroundPositionAnim";
+static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 @interface MDCInkLayerForegroundRipple : MDCInkLayerRipple
 
@@ -168,7 +168,7 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 - (void)setupRipple {
   CGFloat random = MDCInkLayerRandom();
-  self.radius = (CGFloat)(0.9f + random * 0.1f) * kMDCInkLayerForegroundRadiusGrowthMultiplier;
+  self.radius = (CGFloat)(0.9f + random * 0.1f) * kInkLayerForegroundRadiusGrowthMultiplier;
   [super setupRipple];
 }
 
@@ -180,12 +180,12 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundScaleAnim = [self scaleAnimWithValues:@[ @0 ] times:@[ @0 ]];
   } else {
     _foregroundOpacityAnim = [self opacityAnimWithValues:@[ @0, @1 ] times:@[ @0, @1 ]];
-    _foregroundOpacityAnim.duration = kMDCInkLayerForegroundUnboundedOpacityEnterDuration;
+    _foregroundOpacityAnim.duration = kInkLayerForegroundUnboundedOpacityEnterDuration;
 
-    CGFloat duration = (CGFloat)sqrt(self.radius / kMDCInkLayerForegroundWaveTouchDownAcceleration);
+    CGFloat duration = (CGFloat)sqrt(self.radius / kInkLayerForegroundWaveTouchDownAcceleration);
     _foregroundScaleAnim =
         [self scaleAnimWithValues:@[ @0, @1 ]
-                            times:@[ @(kMDCInkLayerForegroundUnboundedEnterDelay), @1 ]];
+                            times:@[ @(kInkLayerForegroundUnboundedEnterDelay), @1 ]];
     _foregroundScaleAnim.duration = duration;
 
     CGFloat xOffset = self.targetFrame.origin.x - self.inkLayer.frame.origin.x;
@@ -206,11 +206,11 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundPositionAnim = [self positionAnimWithPath:movePath.CGPath
                                                 duration:duration
                                           timingFunction:linearTimingFunction];
-    _foregroundPositionAnim.keyTimes = @[ @(kMDCInkLayerForegroundUnboundedEnterDelay), @1 ];
-    [self addAnimation:_foregroundPositionAnim forKey:kMDCInkLayerForegroundPositionAnim];
+    _foregroundPositionAnim.keyTimes = @[ @(kInkLayerForegroundUnboundedEnterDelay), @1 ];
+    [self addAnimation:_foregroundPositionAnim forKey:kInkLayerForegroundPositionAnim];
   }
-  [self addAnimation:_foregroundOpacityAnim forKey:kMDCInkLayerForegroundOpacityAnim];
-  [self addAnimation:_foregroundScaleAnim forKey:kMDCInkLayerForegroundScaleAnim];
+  [self addAnimation:_foregroundOpacityAnim forKey:kInkLayerForegroundOpacityAnim];
+  [self addAnimation:_foregroundScaleAnim forKey:kInkLayerForegroundScaleAnim];
 }
 
 - (void)exit {
@@ -218,13 +218,13 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
   if (self.bounded) {
     _foregroundOpacityAnim.values = @[ @1, @0 ];
-    _foregroundOpacityAnim.duration = kMDCInkLayerForegroundBoundedOpacityExitDuration;
+    _foregroundOpacityAnim.duration = kInkLayerForegroundBoundedOpacityExitDuration;
 
     // Bounded ripples move slightly towards the center of the tap target. Unbounded ripples
     // move to the center of the tap target.
 
     CGPoint startPoint =
-        [[self.presentationLayer valueForKeyPath:kMDCInkLayerPosition] CGPointValue];
+        [[self.presentationLayer valueForKeyPath:kInkLayerPosition] CGPointValue];
 
     CGFloat xOffset = self.targetFrame.origin.x - self.inkLayer.frame.origin.x;
     CGFloat yOffset = self.targetFrame.origin.y - self.inkLayer.frame.origin.y;
@@ -242,30 +242,30 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
     _foregroundPositionAnim =
         [self positionAnimWithPath:movePath.CGPath
-                          duration:kMDCInkLayerForegroundBoundedPositionExitDuration
+                          duration:kInkLayerForegroundBoundedPositionExitDuration
                     timingFunction:[self logDecelerateEasing]];
     _foregroundScaleAnim.values = @[ @0, @1 ];
     _foregroundScaleAnim.keyTimes = @[ @0, @1 ];
-    _foregroundScaleAnim.duration = kMDCInkLayerForegroundBoundedRadiusExitDuration;
+    _foregroundScaleAnim.duration = kInkLayerForegroundBoundedRadiusExitDuration;
   } else {
-    NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kMDCInkLayerOpacity];
+    NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kInkLayerOpacity];
     if (!opacityVal) {
       opacityVal = [NSNumber numberWithFloat:0];
     }
-    CGFloat adjustedDuration = kMDCInkLayerForegroundBoundedPositionExitDuration;
+    CGFloat adjustedDuration = kInkLayerForegroundBoundedPositionExitDuration;
     CGFloat normOpacityVal = opacityVal.floatValue;
     CGFloat opacityDuration = normOpacityVal / 3.f;
     _foregroundOpacityAnim.values = @[ opacityVal, @0 ];
     _foregroundOpacityAnim.duration = opacityDuration + adjustedDuration;
 
-    NSNumber *scaleVal = [self.presentationLayer valueForKeyPath:kMDCInkLayerScale];
+    NSNumber *scaleVal = [self.presentationLayer valueForKeyPath:kInkLayerScale];
     if (!scaleVal) {
       scaleVal = [NSNumber numberWithFloat:0];
     }
     CGFloat unboundedDuration =
         (CGFloat)sqrt(((1.f - scaleVal.floatValue) * self.radius) /
-                      (kMDCInkLayerForegroundWaveTouchDownAcceleration +
-                       kMDCInkLayerForegroundWaveTouchUpAcceleration));
+                      (kInkLayerForegroundWaveTouchDownAcceleration +
+                       kInkLayerForegroundWaveTouchUpAcceleration));
     _foregroundPositionAnim.duration = unboundedDuration + adjustedDuration;
     _foregroundScaleAnim.values = @[ scaleVal, @1 ];
     _foregroundScaleAnim.duration = unboundedDuration + adjustedDuration;
@@ -283,17 +283,17 @@ static NSString *const kMDCInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   _foregroundPositionAnim.timingFunction = [self logDecelerateEasing];
   _foregroundScaleAnim.timingFunction = [self logDecelerateEasing];
 
-  [self addAnimation:_foregroundOpacityAnim forKey:kMDCInkLayerForegroundOpacityAnim];
-  [self addAnimation:_foregroundPositionAnim forKey:kMDCInkLayerForegroundPositionAnim];
-  [self addAnimation:_foregroundScaleAnim forKey:kMDCInkLayerForegroundScaleAnim];
+  [self addAnimation:_foregroundOpacityAnim forKey:kInkLayerForegroundOpacityAnim];
+  [self addAnimation:_foregroundPositionAnim forKey:kInkLayerForegroundPositionAnim];
+  [self addAnimation:_foregroundScaleAnim forKey:kInkLayerForegroundScaleAnim];
 }
 
 @end
 
-static CGFloat const kMDCInkLayerBackgroundOpacityEnterDuration = 0.6f;
-static CGFloat const kMDCInkLayerBackgroundBaseOpacityExitDuration = 0.48f;
-static CGFloat const kMDCInkLayerBackgroundFastEnterDuration = 0.12f;
-static NSString *const kMDCInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
+static CGFloat const kInkLayerBackgroundOpacityEnterDuration = 0.6f;
+static CGFloat const kInkLayerBackgroundBaseOpacityExitDuration = 0.48f;
+static CGFloat const kInkLayerBackgroundFastEnterDuration = 0.12f;
+static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
 
 @interface MDCInkLayerBackgroundRipple : MDCInkLayerRipple
 
@@ -306,21 +306,21 @@ static NSString *const kMDCInkLayerBackgroundOpacityAnim = @"backgroundOpacityAn
 - (void)enter {
   [super enter];
   _backgroundOpacityAnim = [self opacityAnimWithValues:@[ @0, @1 ] times:@[ @0, @1 ]];
-  _backgroundOpacityAnim.duration = kMDCInkLayerBackgroundOpacityEnterDuration;
-  [self addAnimation:_backgroundOpacityAnim forKey:kMDCInkLayerBackgroundOpacityAnim];
+  _backgroundOpacityAnim.duration = kInkLayerBackgroundOpacityEnterDuration;
+  [self addAnimation:_backgroundOpacityAnim forKey:kInkLayerBackgroundOpacityAnim];
 }
 
 - (void)exit {
   [super exit];
-  NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kMDCInkLayerOpacity];
+  NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kInkLayerOpacity];
   if (!opacityVal) {
     opacityVal = [NSNumber numberWithFloat:0];
   }
-  CGFloat duration = kMDCInkLayerBackgroundBaseOpacityExitDuration;
+  CGFloat duration = kInkLayerBackgroundBaseOpacityExitDuration;
   if (self.bounded) {
     // The end (tap release) animation should continue at the opacity level of the start animation.
     CGFloat enterDuration =
-        (1 - opacityVal.floatValue / 1) * kMDCInkLayerBackgroundFastEnterDuration;
+        (1 - opacityVal.floatValue / 1) * kInkLayerBackgroundFastEnterDuration;
     duration += enterDuration;
     _backgroundOpacityAnim =
         [self opacityAnimWithValues:@[ opacityVal, @1, @0 ]
@@ -332,7 +332,7 @@ static NSString *const kMDCInkLayerBackgroundOpacityAnim = @"backgroundOpacityAn
   }
   _backgroundOpacityAnim.duration = duration;
   _backgroundOpacityAnim.delegate = self;
-  [self addAnimation:_backgroundOpacityAnim forKey:kMDCInkLayerBackgroundOpacityAnim];
+  [self addAnimation:_backgroundOpacityAnim forKey:kInkLayerBackgroundOpacityAnim];
 }
 
 @end

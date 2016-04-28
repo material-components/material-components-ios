@@ -25,7 +25,7 @@ return `MDCShadowLayer`.
 
 `elevation` sets the diffusion level of the shadow. The higher the shadow elevation, the more
 diffused the shadow becomes. Elevation uses points as a unit to specify height. Common shadow
-elevations are defined in [MDCShadowElevations](../ShadowElevations) and range from 0 to 24 points.
+elevations are defined in [MDCShadowElevations](../ShadowElevations/) and range from 0 to 24 points.
 The shadow diffusion effect diminishes as elevations exceed 24 points.
 
 Set `shadowMaskEnabled` to ensure the interior, non-shadow portion of the layer is visible.
@@ -46,8 +46,8 @@ shadow that adheres to defined height and light source principles.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/ShadowLayer/apidocs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
-  <li class="icon-link"><a href="/components/ShadowLayer/apidocs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
 </ul>
 
 

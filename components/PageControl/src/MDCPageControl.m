@@ -27,25 +27,25 @@
 static NSString *const kMaterialPageControlBundle = @"MaterialPageControl.bundle";
 
 // Matches native UIPageControl minimum height.
-static const CGFloat kMDCPageControlMinimumHeight = 37.0f;
+static const CGFloat kPageControlMinimumHeight = 37.0f;
 
 // Matches native UIPageControl indicator radius.
-static const CGFloat kMDCPageControlIndicatorRadius = 3.5f;
+static const CGFloat kPageControlIndicatorRadius = 3.5f;
 
 // Matches native UIPageControl indicator spacing margin.
-static const CGFloat kMDCPageControlIndicatorMargin = kMDCPageControlIndicatorRadius * 2.5;
+static const CGFloat kPageControlIndicatorMargin = kPageControlIndicatorRadius * 2.5;
 
 // Delay for revealing indicators staggered towards current page indicator.
-static const NSTimeInterval kMDCPageControlIndicatorShowDelay = 0.04f;
+static const NSTimeInterval kPageControlIndicatorShowDelay = 0.04f;
 
 // Default indicator opacity.
-static const CGFloat kMDCPageControlIndicatorDefaultOpacity = 0.5f;
+static const CGFloat kPageControlIndicatorDefaultOpacity = 0.5f;
 
 // Default white level for current page indicator color.
-static const CGFloat kMDCPageControlCurrentPageIndicatorWhiteColor = 0.38f;
+static const CGFloat kPageControlCurrentPageIndicatorWhiteColor = 0.38f;
 
 // Default white level for page indicator color.
-static const CGFloat kMDCPageControlPageIndicatorWhiteColor = 0.62f;
+static const CGFloat kPageControlPageIndicatorWhiteColor = 0.62f;
 
 // Normalize to [0,1] range.
 static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat maxRange) {
@@ -80,7 +80,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 }
 
 - (void)commonMDCPageControlInit {
-  CGFloat radius = kMDCPageControlIndicatorRadius;
+  CGFloat radius = kPageControlIndicatorRadius;
   CGFloat topEdge = (CGFloat)(floor(CGRectGetHeight(self.bounds) - (radius * 2)) / 2);
   CGRect containerFrame = CGRectMake(0, topEdge, CGRectGetWidth(self.bounds), radius * 2);
   _containerView = [[UIView alloc] initWithFrame:containerFrame];
@@ -95,10 +95,10 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // Defaults.
   _currentPage = 0;
   _currentPageIndicatorTintColor =
-      [UIColor colorWithWhite:kMDCPageControlCurrentPageIndicatorWhiteColor
+      [UIColor colorWithWhite:kPageControlCurrentPageIndicatorWhiteColor
                         alpha:1];
   _pageIndicatorTintColor =
-      [UIColor colorWithWhite:kMDCPageControlPageIndicatorWhiteColor
+      [UIColor colorWithWhite:kPageControlPageIndicatorWhiteColor
                         alpha:1];
 
   UITapGestureRecognizer *tapGestureRecognizer =
@@ -175,7 +175,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   } else {
     // If not animated, simply move indicator to new position and reset track.
     CGPoint point = [_indicatorPositions[currentPage] CGPointValue];
-    [_animatedIndicator updateIndicatorTransformX:point.x - kMDCPageControlIndicatorRadius];
+    [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
     [_trackLayer resetAtPoint:point];
 
     [CATransaction begin];
@@ -191,10 +191,10 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 }
 
 - (CGSize)sizeForNumberOfPages:(NSInteger)pageCount {
-  CGFloat radius = kMDCPageControlIndicatorRadius;
-  CGFloat margin = kMDCPageControlIndicatorMargin;
+  CGFloat radius = kPageControlIndicatorRadius;
+  CGFloat margin = kPageControlIndicatorMargin;
   CGFloat width = pageCount * ((radius * 2) + margin) - margin;
-  CGFloat height = MAX(kMDCPageControlMinimumHeight, radius * 2);
+  CGFloat height = MAX(kPageControlMinimumHeight, radius * 2);
   return CGSizeMake(width, height);
 }
 
@@ -262,7 +262,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     NSInteger scrolledPageNumber = [self scrolledPageNumber:scrollView];
     CGPoint startPoint = [_indicatorPositions[scrolledPageNumber] CGPointValue];
     CGPoint endPoint = startPoint;
-    CGFloat radius = kMDCPageControlIndicatorRadius;
+    CGFloat radius = kPageControlIndicatorRadius;
     if (transformX > startPoint.x - radius) {
       endPoint = [_indicatorPositions[scrolledPageNumber + 1] CGPointValue];
     } else if (transformX < startPoint.x - radius) {
@@ -336,7 +336,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     // Reveal indicators if hidden and not current page indicator.
     if (indicator.isHidden && !isCurrentPageIndicator) {
       dispatch_time_t popTime = dispatch_time(
-          DISPATCH_TIME_NOW, (int64_t)(kMDCPageControlIndicatorShowDelay * count * NSEC_PER_SEC));
+          DISPATCH_TIME_NOW, (int64_t)(kPageControlIndicatorShowDelay * count * NSEC_PER_SEC));
       dispatch_after(popTime, dispatch_get_main_queue(), ^{
         [indicator revealIndicator];
       });
@@ -436,8 +436,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   _indicatorPositions = [NSMutableArray arrayWithCapacity:_numberOfPages];
 
   // Create indicators.
-  CGFloat radius = kMDCPageControlIndicatorRadius;
-  CGFloat margin = kMDCPageControlIndicatorMargin;
+  CGFloat radius = kPageControlIndicatorRadius;
+  CGFloat margin = kPageControlIndicatorMargin;
   for (int i = 0; i < _numberOfPages; i++) {
     CGFloat offsetX = i * (margin + (radius * 2));
     CGFloat offsetY = radius;
@@ -445,7 +445,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     MDCPageControlIndicator *indicator =
         [[MDCPageControlIndicator alloc] initWithCenter:center
                                                  radius:radius];
-    indicator.opacity = kMDCPageControlIndicatorDefaultOpacity;
+    indicator.opacity = kPageControlIndicatorDefaultOpacity;
     [_containerView.layer addSublayer:indicator];
     [_indicators addObject:indicator];
     [_indicatorPositions addObject:[NSValue valueWithCGPoint:indicator.position]];

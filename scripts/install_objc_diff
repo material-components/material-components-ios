@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+# Copyright 2016-present Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+SHOULD_ECHO_PATH=0
+
+usage() {
+  echo "Usage: $0 [-p]"
+  echo
+  echo "  -p echo path to the objc-diff binary"
+}
+
+# Runs git commands in the objc-diff repository directory.
+git_objc_diff() {
+  pushd $OBJC_DIFF_REPO_PATH >> /dev/null
+  git "$@"
+  popd >> /dev/null
+}
+
+while getopts "p?" opt; do
+  case "$opt" in
+  h|\?)
+      usage
+      exit 0
+      ;;
+  p)  SHOULD_ECHO_PATH=1
+      ;;
+  esac
+done
+
+SCRIPTS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Where to fetch the objc-diff repo from
+OBJC_DIFF_REPO_URL="https://github.com/mattstevens/objc-diff.git"
+
+# Where to install the objc-diff repo
+OBJC_DIFF_REPO_PATH="$SCRIPTS_PATH/external/objc-diff"
+OBJC_DIFF_BINARY_RELATIVE_PATH="build/Release/objc-diff"
+OBJC_DIFF_BINARY_PATH=$OBJC_DIFF_REPO_PATH/$OBJC_DIFF_BINARY_RELATIVE_PATH
+
+if [ "$SHOULD_ECHO_PATH" -eq "1" ]; then
+  echo "$OBJC_DIFF_BINARY_PATH"
+  exit 0
+fi
+
+# Clone/update the objc-diff repo
+if [ ! -d "$OBJC_DIFF_REPO_PATH" ]; then
+  git clone "$OBJC_DIFF_REPO_URL" "$OBJC_DIFF_REPO_PATH" || { echo "Failed to clone."; exit 1; }
+else
+  git_objc_diff fetch || { echo "Failed to update objc-diff."; exit 1; }
+fi
+
+# Build objc-diff binary
+xcodebuild build \
+  -project $OBJC_DIFF_REPO_PATH/OCDiff.xcodeproj \
+  -target OCDiff \
+  -configuration Release
+
+# Verify objc-diff binary existence
+if [ ! -f "$OBJC_DIFF_BINARY_PATH" ]; then
+  echo "Unable to find objc-diff at $OBJC_DIFF_BINARY_PATH"
+  exit 1
+fi

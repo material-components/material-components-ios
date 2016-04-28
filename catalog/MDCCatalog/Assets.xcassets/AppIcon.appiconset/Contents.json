@@ -3,37 +3,37 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_29pt_2x.png",
+      "filename" : "logo_mdc_ios_color_29pt@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_29pt_3x.png",
+      "filename" : "logo_mdc_ios_color_29pt@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_40pt_2x.png",
+      "filename" : "logo_mdc_ios_color_40pt@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_40pt_3x.png",
+      "filename" : "logo_mdc_ios_color_40pt@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_40pt_3x.png",
+      "filename" : "logo_mdc_ios_color_40pt@3x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "logo_mdc_ios_color_60pt_3x.png",
+      "filename" : "logo_mdc_ios_color_60pt@3x.png",
       "scale" : "3x"
     },
     {
@@ -45,7 +45,7 @@
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_29pt_2x.png",
+      "filename" : "logo_mdc_ios_color_29pt@2x.png",
       "scale" : "2x"
     },
     {
@@ -57,7 +57,7 @@
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_40pt_2x.png",
+      "filename" : "logo_mdc_ios_color_40pt@2x.png",
       "scale" : "2x"
     },
     {
@@ -69,13 +69,13 @@
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_76pt_2x.png",
+      "filename" : "logo_mdc_ios_color_76pt@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "logo_mdc_ios_color_83_5pt_2x.png",
+      "filename" : "logo_mdc_ios_color_83_5pt@2x.png",
       "scale" : "2x"
     }
   ],

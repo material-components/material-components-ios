@@ -25,7 +25,7 @@ Registers a single custom font asset from disk
 
 <ul class="icon-list">
   <li class="icon-link">
-    <a href="/apidocs/<FontDiskLoader>/Classes/MDCFontDiskLoader.html">
+    <a href="apidocs/<FontDiskLoader>/Classes/MDCFontDiskLoader.html">
       MDCFontDiskLoader
     </a>
   </li>

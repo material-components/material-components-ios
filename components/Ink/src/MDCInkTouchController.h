@@ -163,6 +163,8 @@
  from being displayed, and returning NO in the middle of a gesture will cancel that gesture and
  evaporate the ink.
 
+ If not implemented then YES is assumed.
+
  @param inkTouchController The ink touch controller.
  @param location The touch location relative to the inkTouchController view.
  @return YES if the controller should process touches at @c location.

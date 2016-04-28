@@ -3,7 +3,7 @@ title:  "Material Components for iOS"
 layout: "homepage"
 ---
 
-![Material Components Pesto App](/images/hero_exampleapp.png)
+![Material Components Pesto App]({{ site.folder }}/images/hero_exampleapp.png)
 <!--{: #heroimg }-->
 
 # Material Components for&nbsp;iOS
@@ -131,13 +131,13 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
 5.  ## What's next?
 
-    - [Read the Development Guide](/howto/)
+    - [Read the Development Guide]({{ site.folder }}/howto/)
       <!--{: .icon-guide }-->
 
-    - [View the Component Documentation](/components/)
+    - [View the Component Documentation]({{ site.folder }}/components/)
       <!--{: .icon-components }-->
 
-    - [Explore our Code Samples](/howto/#sample-code)
+    - [Explore our Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
       <!--{: .icon-sample }-->
     <!--{: .icon-list }-->
 <!--{: .step-sequence }-->

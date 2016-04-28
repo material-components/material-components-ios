@@ -693,7 +693,7 @@ Also see our examples and catalog apps that are in the project to show how to us
 advanced features.
 
 
-- [Read the Component Documentation](/components/)
+- [Read the Component Documentation]({{ site.folder }}/components/)
   <!--{: .icon-components }-->
 
 - [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)

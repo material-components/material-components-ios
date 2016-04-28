@@ -16,6 +16,10 @@
 
 # Writes a CHANGELOG.md-ready API diff for the latest release to stdout.
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
+MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
+cd $MDC_ROOT
+
 if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   echo "Please cut a release first by running scripts/release/cut."
   exit 1

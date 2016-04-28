@@ -23,8 +23,8 @@ that `MDCSwitch` objects have an intrinsic size and are not resizable.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/Switch/apidocs/Classes/MDCSwitch.html">MDCSwitch</a></li>
-  <li class="icon-link"><a href="/components/Switch/apidocs/Functions.html">Global Functions</a></li>
+  <li class="icon-link"><a href="apidocs/Classes/MDCSwitch.html">MDCSwitch</a></li>
+  <li class="icon-link"><a href="apidocs/Functions.html">Global Functions</a></li>
 </ul>
 
 
@@ -79,8 +79,8 @@ import MaterialComponents
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Objective C
-~~~ objc
 
+~~~ objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -95,8 +95,8 @@ import MaterialComponents
 - (void)didChangeSliderValue:(id)sender {
   ...
 }
-
 ~~~
+
 #### Swift
 ~~~ swift
   override func viewDidLoad() {
@@ -112,6 +112,5 @@ import MaterialComponents
   func didChangeSwitchValue(senderSwitch:MDCSwitch) {
     NSLog("did change value: %@", senderSwitch.on);
   }
-
 ~~~
 <!--</div>-->

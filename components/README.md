@@ -12,13 +12,13 @@ interface components for iOS. These components implement Google's
 and are developed by a team of iOS engineers and UX designers at Google.
 
 
-- [Development Guide](/howto/)
+- [Development Guide]({{ site.folder }}/howto/)
   <!--{: .icon-guide }-->
 
-- [Code Samples](/howto/#sample-code)
+- [Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
   <!--{: .icon-sample }-->
 
-- [Stack Overflow](http://stackoverflow.com/questions/tagged/material-components-ios)
+- [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
   <!--{: .icon-stackoverflow }-->
 
 - [Github](https://github.com/google/material-components-ios/)
@@ -47,8 +47,18 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](Buttons/)
   <!--{: .icon-buttons }-->
 
+- [**CollectionCells**
+  Collection view cell classes that adhere to Material Design layout and styling.
+  ](CollectionCells/)
+  <!--{: .icon-collections }-->
+
+- [**CollectionLayoutAttributes**
+  Allows passing layout attributes to the cells and supplementary views.
+  ](CollectionLayoutAttributes/)
+  <!--{: .icon-collections }-->
+
 - [**Collections**
-  TODO Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  Collection view classes that adhere to Material Design layout and styling.
   ](Collections/)
   <!--{: .icon-collections }-->
 

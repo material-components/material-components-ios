@@ -61,8 +61,6 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
 
-@property(nonatomic) CGPoint contentOffset;
-
 // The intensity strength of the shadow being displayed under the flexible header. Use this property
 // to check what the intensity of a custom shadow should be depending on a scroll position. Valid
 // values range from 0 to 1. Where 0 is no shadow is visible and 1 is the shadow is fully visible.
@@ -356,16 +354,24 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
 #pragma mark Typically-used values
 
+// Returns the contentOffset of the tracking scroll view bounded to the range of content offsets
+// that will affect the header.
+- (CGPoint)fhv_boundedContentOffset {
+  // We don't care about rubber banding beyond the bottom of the content.
+  return CGPointMake(_trackingScrollView.contentOffset.x,
+                     MIN(_trackingScrollView.contentOffset.y, [self fhv_contentOffsetMaxY]));
+}
+
 - (CGFloat)fhv_rawTopContentInset {
   return _trackingScrollView.contentInset.top - _trackingInfo.injectedTopContentInset;
 }
 
 - (CGFloat)fhv_contentOffsetWithoutInjectedTopInset {
-  return _contentOffset.y + [self fhv_rawTopContentInset];
+  return _trackingScrollView.contentOffset.y + [self fhv_rawTopContentInset];
 }
 
-- (CGFloat)fhv_contentBottomEdge {
-  return _trackingScrollView.contentSize.height;
+- (CGFloat)fhv_contentOffsetMaxY {
+  return _trackingScrollView.contentSize.height - _trackingScrollView.bounds.size.height;
 }
 
 // Returns a value indicating how much the header is overlapping the tracking scroll view's content.
@@ -412,7 +418,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (BOOL)fhv_isOverExtendingBottom {
-  CGFloat bottomEdgeOfScrollView = (_contentOffset.y + _trackingScrollView.bounds.size.height);
+  CGFloat bottomEdgeOfScrollView =
+      (_trackingScrollView.contentOffset.y + _trackingScrollView.bounds.size.height);
   CGFloat bottomEdgeOfContent =
       (_trackingScrollView.contentSize.height + _trackingScrollView.contentInset.bottom);
   BOOL canOverExtendBottom =
@@ -610,7 +617,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
   if (_hasUpdatedContentOffset) {
     // We track the last direction for our target offset behavior.
-    CGFloat deltaY = _contentOffset.y - _lastContentOffset.y;
+    CGFloat deltaY = [self fhv_boundedContentOffset].y - _lastContentOffset.y;
 
     if (_deltaYDirectionAccum * deltaY < 0) {
       // Direction has changed.
@@ -720,7 +727,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [self.delegate flexibleHeaderViewFrameDidChange:self];
 }
 
-- (void)setContentOffset:(CGPoint)contentOffset {
+- (void)fhv_contentOffsetDidChange {
 #if DEBUG
   _didAdjustTargetContentOffset = NO;
 #endif
@@ -746,14 +753,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     return;
   }
 
-  _contentOffset = contentOffset;
-
-  // We don't care about rubber banding beyond the bottom of the content.
-  _contentOffset.y = MIN([self fhv_contentBottomEdge], _contentOffset.y);
-
   [self fhv_updateLayout];
 
-  _lastContentOffset = _contentOffset;
+  _lastContentOffset = [self fhv_boundedContentOffset];
 
   _hasUpdatedContentOffset = YES;
 }
@@ -826,8 +828,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _trackingScrollView = trackingScrollView;
 
   _hasUpdatedContentOffset = NO;
-  _contentOffset = _trackingScrollView.contentOffset;
-  _lastContentOffset = _contentOffset;
+  _lastContentOffset = _trackingScrollView.contentOffset;
   _deltaYDirectionAccum = 0;
 
   _trackingInfo = [_trackedScrollViews objectForKey:_trackingScrollView];
@@ -858,7 +859,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (void)trackingScrollViewDidScroll {
-  self.contentOffset = _trackingScrollView.contentOffset;
+  [self fhv_contentOffsetDidChange];
 }
 
 - (void)trackingScrollViewDidEndDraggingWillDecelerate:(BOOL)willDecelerate {
@@ -930,8 +931,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   UIEdgeInsets previousInsets = _trackingScrollView.contentInset;
   block();
   CGFloat delta = _trackingScrollView.contentInset.top - previousInsets.top;
-  _contentOffset.y -= delta;  // Keeps the scroll view offset from jumping.
-  _trackingScrollView.contentOffset = _contentOffset;
+  CGPoint contentOffset = _trackingScrollView.contentOffset;
+  contentOffset.y -= delta;  // Keeps the scroll view offset from jumping.
+  _trackingScrollView.contentOffset = contentOffset;
   _contentInsetsAreChanging = NO;
 }
 
@@ -959,8 +961,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _interfaceOrientationIsChanging = NO;
 
   // Ignore any content offset delta that occured as a result of any orientation change.
-  _contentOffset = _trackingScrollView.contentOffset;
-  _lastContentOffset = _contentOffset;
+  _lastContentOffset = [self fhv_boundedContentOffset];
 
   [self fhv_updateLayout];
 

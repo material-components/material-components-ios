@@ -22,11 +22,11 @@ from the Material Design specifications.
 ### API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="/components/Typography/apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
-<li class="icon-link"><a href="/components/FontDiskLoader/apidocs/Classes/MDCFontDiskLoader.html">MDCFontDiskLoader</a></li>
-<li class="icon-link"><a href="/components/RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a></li>
-<li class="icon-link"><a href="/components/Typography/apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
-<li class="icon-link"><a href="/components/Typography/apidocs/Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a></li>
+<li class="icon-link"><a href="apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
+<li class="icon-link"><a href="../FontDiskLoader/apidocs/Classes/MDCFontDiskLoader.html">MDCFontDiskLoader</a></li>
+<li class="icon-link"><a href="../RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a></li>
+<li class="icon-link"><a href="apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
+<li class="icon-link"><a href="apidocs/Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a></li>
 </ul>
 
 ## Installation
@@ -286,15 +286,17 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
 #### The default FontLoaer
 If no font loader has been set, Typography attempts to use the Material
-[RobotoFontLoader](https://github.com/google/material-components-ios/tree/develop/components/FontDiskLoader)
+[RobotoFontLoader](../FontDiskLoader/)
 which results in Roboto fonts being used when text styles are requested. If that runtime check
 fails to find MDCRobotoFontLoader, the Material MDCSystemFontLoader font is used resulting in San
 Francisco or Helvetica being used.
 
 If your Podfile.lock has:
+
 ~~~ bash
 MaterialComponents/RobotoFontLoader
 ~~~
+
 Then one of your specs depends on RobotoFontLoader and the Roboto will be used if no font loader has
 been set. If you set your own Font Loader it is recomened that you not pull in the Roboto Font
 Loader Component because that will add font assets to your app that you will not use.

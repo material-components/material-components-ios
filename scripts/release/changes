@@ -16,6 +16,10 @@
 
 # Writes a CHANGELOG.md-ready list of changes in this release, organized by component, to stdout.
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
+MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
+cd $MDC_ROOT
+
 if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   echo "Please cut a release first by running scripts/release/cut."
   exit 1
@@ -36,16 +40,39 @@ find components -type d -name 'src' | while read path; do
     continue
   fi
 
-  echo
-  echo "### $component"
-  echo
-  
-  git log \
-    --pretty="* [%s](https://github.com/google/material-components-ios/commit/%H) (%an)" \
-    --no-merges \
-    origin/master..release-candidate \
-    $folder \
-    | sed "s|\[$component\] ||" \
-    | sort
-  
+  componentdiff() {
+    git log \
+      --pretty="* [%s](https://github.com/google/material-components-ios/commit/%H) (%an)" \
+      --no-merges \
+      origin/master..release-candidate \
+      $folder
+  }
+
+  if [[ $(componentdiff) ]]; then
+    echo
+    echo "### $component"
+
+    if [[ $(componentdiff | grep "\[$component\]\!") ]]; then
+      echo
+      echo "#### Breaking changes"
+      echo
+
+      componentdiff \
+        | grep "\[$component\]\!" \
+        | sed "s|\[$component\]!|**Breaking**: |" \
+        | sort
+    fi
+
+    if [[ $(componentdiff | grep -v "\[$component\]\!") ]]; then
+      echo
+      echo "#### Changes"
+      echo
+
+      componentdiff \
+        | grep -v "\[$component\]!" \
+        | sed "s|\[$component\] ||" \
+        | sort
+    fi
+  fi
+
 done

@@ -18,8 +18,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-static NSString *const kMDCSpriteAnimationKey = @"spriteAnimate";
-static const NSInteger kMDCSpriteFrameRateDefault = 60;
+static NSString *const kSpriteAnimationKey = @"spriteAnimate";
+static const NSInteger kSpriteFrameRateDefault = 60;
 
 @interface MDCSpritedAnimationView ()
 @property(nonatomic, assign) NSInteger numberOfFrames;
@@ -53,7 +53,7 @@ static const NSInteger kMDCSpriteFrameRateDefault = 60;
     _spriteLayer.bounds = self.layer.bounds;
     [self.layer addSublayer:_spriteLayer];
 
-    _frameRate = kMDCSpriteFrameRateDefault;
+    _frameRate = kSpriteFrameRateDefault;
     _singleFrameWidthInPercent = 1;
     _animationRepeatCount = 1;
     [self setSpriteSheetImage:spriteSheetImage];
@@ -94,13 +94,13 @@ static const NSInteger kMDCSpriteFrameRateDefault = 60;
     animation.removedOnCompletion = NO;
   }
 
-  [self.spriteLayer addAnimation:animation forKey:kMDCSpriteAnimationKey];
+  [self.spriteLayer addAnimation:animation forKey:kSpriteAnimationKey];
   [CATransaction commit];
 }
 
 - (void)stop {
   // Removing the animation will cause the completion block to be also called.
-  [self.spriteLayer removeAnimationForKey:kMDCSpriteAnimationKey];
+  [self.spriteLayer removeAnimationForKey:kSpriteAnimationKey];
 }
 
 - (void)seekToBeginning {
@@ -115,7 +115,7 @@ static const NSInteger kMDCSpriteFrameRateDefault = 60;
 }
 
 - (BOOL)isAnimating {
-  return ([self.spriteLayer animationForKey:kMDCSpriteAnimationKey] != nil);
+  return ([self.spriteLayer animationForKey:kSpriteAnimationKey] != nil);
 }
 
 #pragma mark - Mask Color Handling

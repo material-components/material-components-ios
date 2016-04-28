@@ -26,23 +26,23 @@
 #import <tgmath.h>
 
 // Distance from center before we start fading the item.
-static const CGFloat kMDCDismissalDistanceBeforeFading = 50.0f;
+static const CGFloat kDismissalDistanceBeforeFading = 50.0f;
 
 // Minimum alpha for an item being dismissed.
-static const CGFloat kMDCDismissalMinimumAlpha = 0.5f;
+static const CGFloat kDismissalMinimumAlpha = 0.5f;
 
 // Final angle of the arc the item travels through during dismissal.
-static const CGFloat kMDCDismissalArcAngle = (CGFloat)(M_PI / 6.0f);
+static const CGFloat kDismissalArcAngle = (CGFloat)(M_PI / 6.0f);
 
 // The centroid for the item dismissal arc.
-static const CGFloat kMDCDismissalArcYOffset = 400.0f;
+static const CGFloat kDismissalArcYOffset = 400.0f;
 
 // Simple linear friction applied to swipe velocity.
-static const CGFloat kMDCDismissalSwipeFriction = 0.05f;
+static const CGFloat kDismissalSwipeFriction = 0.05f;
 
 // Animation duration for dismissal / restore.
-static const NSTimeInterval kMDCDismissalAnimationDuration = 0.3;
-static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
+static const NSTimeInterval kDismissalAnimationDuration = 0.3;
+static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 
 /** A view that uses an MDCShadowLayer as its sublayer. */
 @interface ShadowedSnapshotView : UIView
@@ -389,7 +389,7 @@ static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
           [_collectionView setScrollEnabled:YES];
         };
 
-        [UIView animateWithDuration:kMDCDismissalAnimationDuration
+        [UIView animateWithDuration:kDismissalAnimationDuration
                               delay:0
                             options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
@@ -546,8 +546,8 @@ static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
       // Update the tracked item's position and alpha.
       CGAffineTransform transform;
       CGFloat alpha;
-      // The item is fully opaque until it pans at least |kMDCDismissalDistanceBeforeFading| points.
-      CGFloat panDistance = (CGFloat)fabs(translation.x) - kMDCDismissalDistanceBeforeFading;
+      // The item is fully opaque until it pans at least |kDismissalDistanceBeforeFading| points.
+      CGFloat panDistance = (CGFloat)fabs(translation.x) - kDismissalDistanceBeforeFading;
       if (panDistance > 0) {
         transform = [self transformItemDismissalToTranslationX:translation.x];
         alpha = [self dismissalAlphaForTranslationX:translation.x];
@@ -564,7 +564,7 @@ static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
     case UIGestureRecognizerStateEnded: {
       // Check the final translation, including the final velocity, to determine
       // if the item should be dismissed.
-      CGFloat momentumX = velocity.x * kMDCDismissalSwipeFriction;
+      CGFloat momentumX = velocity.x * kDismissalSwipeFriction;
       CGFloat translationX = translation.x + momentumX;
 
       if (fabs(translationX) > [self distanceThresholdForDismissal]) {
@@ -598,27 +598,27 @@ static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
 - (CGAffineTransform)transformItemDismissalToTranslationX:(CGFloat)translationX {
   // Returns a transform that can be applied to the snapshot during dismissal. The
   // translation will pan along an arc facing downwards.
-  CGFloat panDistance = (CGFloat)fabs(translationX) - kMDCDismissalDistanceBeforeFading;
+  CGFloat panDistance = (CGFloat)fabs(translationX) - kDismissalDistanceBeforeFading;
   CGFloat panRatio = panDistance / CGRectGetWidth(_collectionView.bounds);
-  CGFloat arcAngle = (translationX > 0 ? kMDCDismissalArcAngle : -kMDCDismissalArcAngle);
+  CGFloat arcAngle = (translationX > 0 ? kDismissalArcAngle : -kDismissalArcAngle);
 
   CGAffineTransform initialTranslation =
-      CGAffineTransformMakeTranslation(0, -kMDCDismissalArcYOffset);
+      CGAffineTransformMakeTranslation(0, -kDismissalArcYOffset);
   CGAffineTransform rotation = CGAffineTransformMakeRotation(panRatio * arcAngle);
 
   // Modify the X translation to take account of the rotation angle.
   // This makes the item continue to track the finger as it follows the arc.
-  CGFloat correctedXTranslation = (CGFloat)(translationX * (1 - cos(kMDCDismissalArcAngle) / 2));
+  CGFloat correctedXTranslation = (CGFloat)(translationX * (1 - cos(kDismissalArcAngle) / 2));
   if (translationX > 0) {
-    correctedXTranslation = MAX(kMDCDismissalDistanceBeforeFading, correctedXTranslation);
+    correctedXTranslation = MAX(kDismissalDistanceBeforeFading, correctedXTranslation);
   } else {
-    correctedXTranslation = MIN(-kMDCDismissalDistanceBeforeFading, correctedXTranslation);
+    correctedXTranslation = MIN(-kDismissalDistanceBeforeFading, correctedXTranslation);
   }
 
   // Reverse |initialTranslation| and add |translation.x| to ensure that
   // we pan along with the arc.
   CGAffineTransform reverseTranslation =
-      CGAffineTransformMakeTranslation(correctedXTranslation, kMDCDismissalArcYOffset);
+      CGAffineTransformMakeTranslation(correctedXTranslation, kDismissalArcYOffset);
 
   CGAffineTransform arcTransform = CGAffineTransformConcat(initialTranslation, rotation);
   return CGAffineTransformConcat(arcTransform, reverseTranslation);
@@ -645,7 +645,7 @@ static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
     }
   }
 
-  [UIView animateWithDuration:kMDCDismissalAnimationDuration
+  [UIView animateWithDuration:kDismissalAnimationDuration
       delay:0
       options:UIViewAnimationOptionCurveEaseOut
       animations:^{
@@ -665,7 +665,7 @@ static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
   }
 
   CAAnimationGroup *allAnimations = [CAAnimationGroup animation];
-  allAnimations.duration = kMDCRestoreAnimationDuration;
+  allAnimations.duration = kRestoreAnimationDuration;
 
   CATransform3D startTransform = CATransform3DMakeAffineTransform(_cellSnapshot.transform);
   CATransform3D midTransform = CATransform3DTranslate(startTransform, momentumX, 0, 0);
@@ -731,11 +731,11 @@ static const NSTimeInterval kMDCRestoreAnimationDuration = 0.2;
 }
 
 - (CGFloat)dismissalAlphaForTranslationX:(CGFloat)translationX {
-  translationX = (CGFloat)fabs(translationX) - kMDCDismissalDistanceBeforeFading;
+  translationX = (CGFloat)fabs(translationX) - kDismissalDistanceBeforeFading;
   CGFloat adjustedThreshold =
-      [self distanceThresholdForDismissal] - kMDCDismissalDistanceBeforeFading;
+      [self distanceThresholdForDismissal] - kDismissalDistanceBeforeFading;
   CGFloat dismissalPercentage = (CGFloat)MIN(1, fabs(translationX) / adjustedThreshold);
-  return kMDCDismissalMinimumAlpha + (1 - kMDCDismissalMinimumAlpha) * (1 - dismissalPercentage);
+  return kDismissalMinimumAlpha + (1 - kDismissalMinimumAlpha) * (1 - dismissalPercentage);
 }
 
 @end

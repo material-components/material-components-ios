@@ -19,7 +19,7 @@
 #import "MDCInkView.h"
 #import "private/MDCInkGestureRecognizer.h"
 
-static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
+static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 
 @interface MDCInkTouchController ()
 @property(nonatomic, strong) MDCInkView *addedInkView;
@@ -127,7 +127,7 @@ static const NSTimeInterval kMDCInkTouchDelayInterval = 0.1;
 
       _shouldRespondToTouch = YES;
       dispatch_time_t delayTime =
-          dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC * kMDCInkTouchDelayInterval));
+          dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC * kInkTouchDelayInterval));
       dispatch_after(_delaysInkSpread ? delayTime : 0, dispatch_get_main_queue(), ^(void) {
         [self touchBeganAtPoint:[recognizer locationInView:_addedInkView]
                   touchLocation:touchLocation];

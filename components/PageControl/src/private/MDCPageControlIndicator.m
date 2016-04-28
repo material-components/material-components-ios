@@ -16,8 +16,8 @@
 
 #import "MDCPageControlIndicator.h"
 
-static const NSTimeInterval kMDCPageControlIndicatorAnimationDuration = 0.3;
-static NSString *const kMDCPageControlIndicatorAnimationKey = @"fadeInScaleUp";
+static const NSTimeInterval kPageControlIndicatorAnimationDuration = 0.3;
+static NSString *const kPageControlIndicatorAnimationKey = @"fadeInScaleUp";
 
 @implementation MDCPageControlIndicator {
   BOOL _isAnimating;
@@ -63,11 +63,11 @@ static NSString *const kMDCPageControlIndicatorAnimationKey = @"fadeInScaleUp";
   fadeAnimation.toValue = @(self.opacity);
 
   CAAnimationGroup *group = [CAAnimationGroup animation];
-  group.duration = kMDCPageControlIndicatorAnimationDuration;
+  group.duration = kPageControlIndicatorAnimationDuration;
   group.fillMode = kCAFillModeForwards;
   group.removedOnCompletion = YES;
   group.animations = @[ scaleAnimation, fadeAnimation ];
-  [self addAnimation:group forKey:kMDCPageControlIndicatorAnimationKey];
+  [self addAnimation:group forKey:kPageControlIndicatorAnimationKey];
 
   // Default value.
   self.hidden = NO;

@@ -17,6 +17,10 @@
 # Creates a release-candidate branch, creates a release section in CHANGELOG.md, and outputs an
 # email to be sent to the community to stdout.
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
+MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
+cd $MDC_ROOT
+
 if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
 	git fetch
 	git checkout -b release-candidate origin/develop

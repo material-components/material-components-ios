@@ -16,9 +16,9 @@
 
 #import "MDCPageControlTrackLayer.h"
 
-static const NSTimeInterval kMDCPageControlAnimationDuration = 0.2;
-static const NSInteger kMDCPageControlKeyframeCount = 2;
-static NSString *const kMDCPageControlAnimationKeyDraw = @"drawTrack";
+static const NSTimeInterval kPageControlAnimationDuration = 0.2;
+static const NSInteger kPageControlKeyframeCount = 2;
+static NSString *const kPageControlAnimationKeyDraw = @"drawTrack";
 
 @implementation MDCPageControlTrackLayer {
   CGFloat _radius;
@@ -62,7 +62,7 @@ static NSString *const kMDCPageControlAnimationKeyDraw = @"drawTrack";
   [CATransaction begin];
   [CATransaction setCompletionBlock:^{
     // After drawn, remove animation and update track frame.
-    [self removeAnimationForKey:kMDCPageControlAnimationKeyDraw];
+    [self removeAnimationForKey:kPageControlAnimationKeyDraw];
     [self updateTrackFrameWithAnimation:NO completion:nil];
     _trackHidden = NO;
     _isAnimating = NO;
@@ -70,18 +70,18 @@ static NSString *const kMDCPageControlAnimationKeyDraw = @"drawTrack";
 
   // Get animation keyframes.
   NSMutableArray *values = [NSMutableArray array];
-  for (NSInteger i = 0; i < kMDCPageControlKeyframeCount; i++) {
+  for (NSInteger i = 0; i < kPageControlKeyframeCount; i++) {
     [values addObject:(id)[self pathAtKeyframe:i]];
   }
 
   // Add animation path.
   CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"path"];
-  animation.duration = kMDCPageControlAnimationDuration;
+  animation.duration = kPageControlAnimationDuration;
   animation.removedOnCompletion = NO;
   animation.fillMode = kCAFillModeForwards;
   animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
   animation.values = values;
-  [self addAnimation:animation forKey:kMDCPageControlAnimationKeyDraw];
+  [self addAnimation:animation forKey:kPageControlAnimationKeyDraw];
   [CATransaction commit];
 }
 
