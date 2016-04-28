@@ -47,8 +47,18 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](Buttons/)
   <!--{: .icon-buttons }-->
 
+- [**CollectionCells**
+  Collection view cell classes that adhere to Material Design layout and styling.
+  ](CollectionCells/)
+  <!--{: .icon-collections }-->
+
+- [**CollectionLayoutAttributes**
+  Allows passing layout attributes to the cells and supplementary views.
+  ](CollectionLayoutAttributes/)
+  <!--{: .icon-collections }-->
+
 - [**Collections**
-  TODO Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  Collection view classes that adhere to Material Design layout and styling.
   ](Collections/)
   <!--{: .icon-collections }-->
 
