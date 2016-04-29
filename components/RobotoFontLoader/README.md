@@ -54,7 +54,7 @@ pod 'MaterialComponents/RobotoFontLoader'
 Then, run the following command:
 
 ~~~ bash
-$ pod install
+pod install
 ~~~
 
 ## Usage
