@@ -84,7 +84,9 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // If performing appearance animation, increase bounds height in order to retrieve additional
   // offscreen attributes needed during animation.
   rect = [self boundsForAppearanceAnimationWithInitialBounds:rect];
-  NSMutableArray *attributes = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
+  NSMutableArray *attributes =
+      [[NSMutableArray alloc] initWithArray:[super layoutAttributesForElementsInRect:rect]
+                                  copyItems:YES];
 
   // Store index path sections of any headers/footers within these attributes.
   [self storeSupplementaryViewsWithAttributes:attributes];
@@ -122,10 +124,9 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCollectionViewLayoutAttributes *attr =
-      (MDCCollectionViewLayoutAttributes *)[super layoutAttributesForItemAtIndexPath:indexPath];
-  [self updateAttribute:attr];
-  return attr;
+  UICollectionViewLayoutAttributes *attr =
+      [[super layoutAttributesForItemAtIndexPath:indexPath] copy];
+  return [self updateAttribute:(MDCCollectionViewLayoutAttributes *)attr];
 }
 
 - (UICollectionViewLayoutAttributes *)
@@ -136,7 +137,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   if ([kind isEqualToString:UICollectionElementKindSectionHeader] ||
       [kind isEqualToString:UICollectionElementKindSectionFooter]) {
     // Update section headers/Footers attributes.
-    attr = [super layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
+    attr = [[super layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath] copy];
     if (!attr) {
       attr =
           [MDCCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind
@@ -237,7 +238,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:
         (NSIndexPath *)itemIndexPath {
   UICollectionViewLayoutAttributes *attr =
-      [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+      [[super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath] copy];
   // Adding new section or item.
   if ([_insertedSections containsIndex:itemIndexPath.section] ||
       [_insertedIndexPaths containsObject:itemIndexPath]) {
@@ -252,8 +253,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
     initialLayoutAttributesForAppearingSupplementaryElementOfKind:(NSString *)elementKind
                                                       atIndexPath:(NSIndexPath *)elementIndexPath {
   UICollectionViewLayoutAttributes *attr =
-      [super initialLayoutAttributesForAppearingSupplementaryElementOfKind:elementKind
-                                                               atIndexPath:elementIndexPath];
+      [[super initialLayoutAttributesForAppearingSupplementaryElementOfKind:elementKind
+                                                                atIndexPath:elementIndexPath] copy];
   if ([elementKind isEqualToString:UICollectionElementKindSectionHeader] ||
       [elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
     // Adding new section header or footer.
@@ -269,7 +270,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 - (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:
         (NSIndexPath *)itemIndexPath {
   UICollectionViewLayoutAttributes *attr =
-      [super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath];
+      [[super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath] copy];
   // Deleting section or item.
   if ([_deletedSections containsIndex:itemIndexPath.section] ||
       [_deletedIndexPaths containsObject:itemIndexPath]) {
@@ -284,8 +285,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
     finalLayoutAttributesForDisappearingSupplementaryElementOfKind:(NSString *)elementKind
                                                        atIndexPath:(NSIndexPath *)elementIndexPath {
   UICollectionViewLayoutAttributes *attr =
-      [super finalLayoutAttributesForDisappearingSupplementaryElementOfKind:elementKind
-                                                                atIndexPath:elementIndexPath];
+      [[super finalLayoutAttributesForDisappearingSupplementaryElementOfKind:elementKind
+                                                                 atIndexPath:elementIndexPath] copy];
   if ([elementKind isEqualToString:UICollectionElementKindSectionHeader] ||
       [elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
     // Deleting section header or footer.
@@ -693,7 +694,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // When completed, we will end up with an array of attributes in the form of
   // header -> item -> footer ... repeated for each section. Now we can use this ordered array
   // to assign delays based on their proper ordinal position from top down.
-  NSInteger attributeCount = attributes.count;
+  __block NSInteger attributeCount = attributes.count;
   NSTimeInterval duration = self.styler.animateCellsOnAppearanceDuration;
   if (self.styler.shouldAnimateCellsOnAppearance && attributeCount > 0) {
     // First sort by index path.
@@ -711,13 +712,20 @@ static const NSInteger kSupplementaryViewZIndex = 99;
       if (sortedAttributes.count > 0) {
         // Check if current attribute is a header and previous attribute is an item. If so,
         // insert the current header attribute before the cell.
-        MDCCollectionViewLayoutAttributes *prevAttr = [sortedAttributes objectAtIndex:idx - 1];
+        MDCCollectionViewLayoutAttributes *prevAttr =
+            [sortedAttributes objectAtIndex:sortedAttributes.count - 1];
         BOOL prevAttrIsItem =
             prevAttr.representedElementCategory == UICollectionElementCategoryCell;
         BOOL attrIsHeader =
             [attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader];
         if (attrIsHeader && prevAttrIsItem) {
-          [sortedAttributes insertObject:attr atIndex:idx - 1];
+          [sortedAttributes insertObject:attr atIndex:sortedAttributes.count - 1];
+          return;
+        }
+        if ([attr.representedElementKind isEqualToString:MDCCollectionInfoBarKindHeader] ||
+            [attr.representedElementKind isEqualToString:MDCCollectionInfoBarKindFooter]) {
+          // Reduce the attributeCount here to reflect only attributes that can be animated.
+          attributeCount--;
           return;
         }
       }
@@ -727,6 +735,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
     // Now assign delays and add padding to frame Y coordinate which gets removed during animation.
     [sortedAttributes enumerateObjectsUsingBlock:^(MDCCollectionViewLayoutAttributes *attr,
                                                    NSUInteger idx, BOOL *stop) {
+      // If the element is an info bar header, then don't do anything.
       attr.willAnimateCellsOnAppearance = self.styler.willAnimateCellsOnAppearance;
       attr.animateCellsOnAppearanceDuration = self.styler.animateCellsOnAppearanceDuration;
       attr.animateCellsOnAppearanceDelay =
