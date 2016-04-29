@@ -234,7 +234,7 @@ static const uint32_t kCellRedColor = 0xF44336;
     CGRect separatorFrame =
         CGRectMake(borderWidth,
                    CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
-                   CGRectGetWidth(self.bounds) - borderWidth,
+                   CGRectGetWidth(self.bounds) - (borderWidth * 2),
                    _attr.separatorLineHeight);
     _separatorView.frame = UIEdgeInsetsInsetRect(separatorFrame, separatorInset);
     _separatorView.backgroundColor = _attr.separatorColor;
