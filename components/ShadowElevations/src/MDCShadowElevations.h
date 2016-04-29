@@ -58,7 +58,7 @@ CG_EXTERN const CGFloat MDCShadowElevationQuickEntryResting;
 /** The shadow elevation of a raised button in the pressed state. */
 CG_EXTERN const CGFloat MDCShadowElevationRaisedButtonPressed;
 
-/** The shadow elevation of a raised button in the parrot^H^H^H^H^H^Hresting state. */
+/** The shadow elevation of a raised button in the resting state. */
 CG_EXTERN const CGFloat MDCShadowElevationRaisedButtonResting;
 
 /** The shadow elevation of a refresh indicator. */
