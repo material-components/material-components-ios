@@ -283,8 +283,8 @@
 
 #pragma mark - <MDCInkTouchControllerDelegate>
 
-- (BOOL)inkTouchControllerShouldProcessInkTouches:(MDCInkTouchController *)inkTouchController
-                                  atTouchLocation:(CGPoint)location {
+- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
   NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
   if (indexPath) {
     if ([_styler.delegate respondsToSelector:
