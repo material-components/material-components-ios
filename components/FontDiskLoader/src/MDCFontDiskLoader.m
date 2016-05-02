@@ -87,4 +87,16 @@
   return [UIFont fontWithName:self.fontName size:fontSize];
 }
 
+- (NSString *)description {
+  NSMutableString *description = [super.description mutableCopy];
+  [description appendString:[NSString stringWithFormat:@" font name: %@;", self.fontName]];
+  if (self.isRegistered) {
+    [description appendString:@" registered = YES;"];
+  } else if (self.hasFailedRegistration) {
+    [description appendString:@" failed registration = YES;"];
+  }
+  [description appendString:[NSString stringWithFormat:@" font url: %@;", self.fontURL]];
+  return [description copy];
+}
+
 @end
