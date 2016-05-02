@@ -138,9 +138,3 @@
  */
 @interface MDCSystemFontLoader : NSObject <MDCTypographyFontLoading>
 @end
-
-// clang-format off
-__deprecated_msg("Use MDCTypographyFontLoading instead")
-@protocol MDCTypographyFontLoader <MDCTypographyFontLoading>
-@end
-    // clang-format on
