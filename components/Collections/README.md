@@ -418,7 +418,11 @@ The following illustrates a simple cell deletion example.
 // Remove selected index paths from our data.
 - (void)collectionView:(UICollectionView *)collectionView
     willDeleteItemsAtIndexPaths:(NSArray *)indexPaths {
-  for (NSIndexPath *indexPath in indexPaths) {
+  // First sort reverse order then remove. This is done because when we delete an index path the
+  // higher rows shift down, altering the index paths of those that we would like to delete in the
+  // next iteration of this loop.
+  NSArray *sortedArray = [indexPaths sortedArrayUsingSelector:@selector(compare:)];
+  for (NSIndexPath *indexPath in [sortedArray reverseObjectEnumerator]) {
     [data removeObjectAtIndex:indexPath.item];
   }
 }
@@ -437,7 +441,11 @@ override func collectionViewAllowsEditing(collectionView: UICollectionView) -> B
 // Remove selected index paths from our data.
 override func collectionView(collectionView: UICollectionView,
                              willDeleteItemsAtIndexPaths indexPaths: [AnyObject]) {
-  for indexPath in indexPaths as! [NSIndexPath] {
+  // First sort reverse order then remove. This is done because when we delete an index path the
+  // higher rows shift down, altering the index paths of those that we would like to delete in the
+  // next iteration of this loop.
+  let indexPaths = indexPaths.sort({$0.item > $1.item}) as! [NSIndexPath]
+  for indexPath in indexPaths {
     data.removeAtIndex(indexPath.item)
   }
 }
