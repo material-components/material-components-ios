@@ -24,7 +24,7 @@ Collection view classes that adhere to Material design layout and styling.
   <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewController.html">MDCCollectionViewController</a></li>
   <li class="icon-link"><a href="apidocs/Protocols/MDCCollectionViewEditing.html">MDCCollectionViewEditing</a></li>
   <li class="icon-link"><a href="apidocs/Protocols/MDCCollectionViewEditingDelegate.html">MDCCollectionViewEditingDelegate</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewFlowLayout.html">MDCCollectionViewFlowLayout</a></li>
+  <li class="icon-link"><a href="apidocs/Classes.html#/c:objc(cs)MDCCollectionViewFlowLayout">MDCCollectionViewFlowLayout</a></li>
   <li class="icon-link"><a href="apidocs/Protocols/MDCCollectionViewStyling.html">MDCCollectionViewStyling</a></li>
   <li class="icon-link"><a href="apidocs/Protocols/MDCCollectionViewStylingDelegate.html">MDCCollectionViewStylingDelegate</a></li>
 </ul>

@@ -27,7 +27,7 @@ floating action button.
 <ul class="icon-list">
   <li class="icon-link"><a href="apidocs/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
   <li class="icon-link"><a href="apidocs/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCRaisedButton.html">MDCRaisedButton</a></li>
+  <li class="icon-link"><a href="apidocs/Classes.html#/c:objc(cs)MDCRaisedButton">MDCRaisedButton</a></li>
   <li class="icon-link"><a href="apidocs/Classes/MDCButton.html">MDCButton</a></li>
 </ul>
 
