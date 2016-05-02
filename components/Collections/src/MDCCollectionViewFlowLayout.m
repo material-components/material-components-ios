@@ -110,7 +110,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
   if (!CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size) ||
-      self.editor.isEditing) {
+      self.editor.isEditing ||
+      self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     [self invalidateLayout];
     return YES;
   }
