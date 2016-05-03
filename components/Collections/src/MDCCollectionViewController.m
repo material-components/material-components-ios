@@ -90,9 +90,10 @@
   _inkTouchController.delaysInkSpread = YES;
 }
 
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-  _styler.shouldInvalidateLayout = NO;
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration {
+  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+  [_collectionViewLayout invalidateLayout];
 }
 
 - (UICollectionViewLayout *)collectionViewLayout {

@@ -42,6 +42,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   NSMutableIndexSet *_insertedSections;
   NSMutableIndexSet *_headerSections;
   NSMutableIndexSet *_footerSections;
+  NSMutableDictionary *_decorationViewAttributeCache;
 }
 
 - (instancetype)init {
@@ -54,6 +55,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
     self.sectionInset = UIEdgeInsetsZero;
 
     // Register decoration view for grid background.
+    _decorationViewAttributeCache = [NSMutableDictionary dictionary];
     [self registerClass:[MDCCollectionGridBackgroundView class]
         forDecorationViewOfKind:kCollectionDecorationView];
   }
@@ -109,13 +111,17 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
-  if (!CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size) ||
-      self.editor.isEditing ||
-      self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
-    [self invalidateLayout];
+  if (!CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size)) {
     return YES;
   }
-  return [super shouldInvalidateLayoutForBoundsChange:newBounds];
+  return NO;
+}
+
+- (void)invalidateLayout {
+  [super invalidateLayout];
+
+  // Clear decoration attribute cache.
+  [_decorationViewAttributeCache removeAllObjects];
 }
 
 #pragma mark - UICollectionViewLayout (UISubclassingHooks)
@@ -176,9 +182,16 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 - (UICollectionViewLayoutAttributes *)
     layoutAttributesForDecorationViewOfKind:(NSString *)elementKind
                                 atIndexPath:(NSIndexPath *)indexPath {
+  // Check cache for decoration view attributes, and add to cache if they don't exist.
   MDCCollectionViewLayoutAttributes *decorationAttr =
-      [MDCCollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:elementKind
-                                                                   withIndexPath:indexPath];
+      [_decorationViewAttributeCache objectForKey:indexPath];
+  if (!decorationAttr) {
+    decorationAttr =
+        [MDCCollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:elementKind
+                                                                     withIndexPath:indexPath];
+    [_decorationViewAttributeCache setObject:decorationAttr forKey:indexPath];
+  }
+
   // Determine section frame by summing all of its item frames.
   CGRect sectionFrame = CGRectNull;
   for (NSInteger i = 0; i < [self numberOfItemsInSection:indexPath.section]; ++i) {
