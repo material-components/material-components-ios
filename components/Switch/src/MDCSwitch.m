@@ -186,6 +186,20 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   return CGRectContainsPoint(rect, point);
 }
 
+- (void)setOnImage:(UIImage *)onImage {
+  _onImage = onImage;
+  if (self.on) {
+    [_thumbTrack setIcon:onImage];
+  }
+}
+
+- (void)setOffImage:(UIImage *)offImage {
+  _offImage = offImage;
+  if (!self.on) {
+    [_thumbTrack setIcon:offImage];
+  }
+}
+
 #pragma mark - Enabled state
 
 - (void)setEnabled:(BOOL)enabled {
@@ -215,6 +229,13 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 #pragma mark MDCThumbTrackDelegate
 
 - (void)thumbTrack:(MDCThumbTrack *)thumbTrack willJumpToValue:(CGFloat)value {
+  // TODO(iangordon): Find a nicer way to smoothly animate between the on/off image.
+  if (0.5 < value) {
+    [_thumbTrack setIcon:_onImage];
+  } else {
+    [_thumbTrack setIcon:_offImage];
+  }
+
   [self toggleStateFromThumbTrack:thumbTrack withValue:value];
   [self updateAccessibilityValues];
 }

@@ -19,6 +19,12 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 
+@interface MDCThumbView ()
+
+@property(nonatomic, strong) UIImageView *iconView;
+
+@end
+
 @implementation MDCThumbView
 
 static const CGFloat kMinTouchSize = 48;
@@ -75,6 +81,24 @@ static const CGFloat kMinTouchSize = 48;
   }
   CGRect rect = CGRectInset(self.bounds, dx, dx);
   return CGRectContainsPoint(rect, point);
+}
+
+- (void)setIcon:(nullable UIImage *)icon {
+  if (icon == _iconView.image || [icon isEqual:_iconView.image])
+    return;
+
+  if (_iconView) {
+    [_iconView removeFromSuperview];
+    _iconView = nil;
+  }
+  if (icon) {
+    _iconView = [[UIImageView alloc] initWithImage:icon];
+    [self addSubview:_iconView];
+    // Calculate the inner square of the thumbs circle.
+    CGFloat sideLength = sin(45.0 / 180.0 * M_PI) * _cornerRadius * 2;
+    CGFloat topLeft = _cornerRadius - (sideLength / 2);
+    _iconView.frame = CGRectMake(topLeft, topLeft, sideLength, sideLength);
+  }
 }
 
 @end
