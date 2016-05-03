@@ -87,9 +87,6 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
 @interface MDCCollectionViewStyler ()
 
-/** Convenience property defining the exact color that the collection view background should be. */
-@property(nonatomic, readonly) UIColor *collectionViewBackgroundColor;
-
 /**
  A dictionary of NSPointerArray caches, keyed by UIColor, for cached cell background images
  using that background color. Index into the NSPointerArray using the results of
@@ -102,9 +99,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
 @end
 
-@implementation MDCCollectionViewStyler {
-  UIColor *_collectionViewBackgroundColor;
-}
+@implementation MDCCollectionViewStyler
 
 @synthesize collectionView = _collectionView;
 @synthesize delegate = _delegate;
@@ -133,7 +128,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // Cell default style properties.
     _cellBackgroundColor = [UIColor whiteColor];
     _cellStyle = MDCCollectionViewCellStyleDefault;
-    _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.backgroundColor = RGBCOLOR(0xEE, 0xEE, 0xEE);
     _inlaidIndexPathSet = [NSMutableSet set];
 
     // Cell separator defaults.
@@ -447,15 +442,6 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   return _shouldInvalidateLayout;
 }
 
-#pragma mark - Default Colors
-
-- (UIColor *)collectionViewBackgroundColor {
-  if (!_collectionViewBackgroundColor) {
-    _collectionViewBackgroundColor = RGBCOLOR(0xEE, 0xEE, 0xEE);
-  }
-  return _collectionViewBackgroundColor;
-}
-
 #pragma mark - Cell Image Background
 
 - (BOOL)drawShadowForCellWithIsCardStye:(BOOL)isCardStyle
@@ -483,9 +469,6 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   if (!isCardStyle && !isGroupedStyle) {
     // If not card or grouped style, revert |isBottom| to allow drawing separator at bottom.
     isBottom = NO;
-  } else {
-    // Update background color for card/grouped styles.
-    _collectionView.backgroundColor = self.collectionViewBackgroundColor;
   }
   CGFloat borderRadius = (isCardStyle) ? kCollectionViewCellDefaultBorderRadius : 0.0f;
 

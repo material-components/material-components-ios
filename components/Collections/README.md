@@ -343,6 +343,61 @@ self.styler.shouldHideSeparators = false
 ~~~
 <!--</div>-->
 
+
+### Background colors
+
+A background color can be set on the collection view. Also, individual cell background colors can be
+set by using the protocol method `collectionView:cellBackgroundColorAtIndexPath:`. The default
+background colors are #EEEEEE for the collection view and #FFFFFF for the cells.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+// Set collection view background color.
+self.collectionView.backgroundColor = [UIColor redColor];
+
+// Set individual cell background colors.
+- (UIColor *)collectionView:(UICollectionView *)collectionView
+    cellBackgroundColorAtIndexPath:(NSIndexPath *)indexPath {
+  if (indexPath.item == 0) {
+    return [UIColor blueColor];
+  }
+  return [UIColor redColor];
+}
+~~~
+
+#### Swift
+~~~ swift
+// Set collection view background color.
+self.collectionView?.backgroundColor = UIColor.redColor()
+
+// Set individual cell background colors.
+override func collectionView(collectionView: UICollectionView,
+                             cellBackgroundColorAtIndexPath indexPath: NSIndexPath) -> UIColor? {
+  if indexPath.item == 0 {
+    return UIColor.blueColor()
+  }
+  return UIColor.redColor()
+}
+~~~
+<!--</div>-->
+
+### Cell background color
+
+The styler allows setting the cell layout as List, Grid, or Custom.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+
+~~~
+
+#### Swift
+~~~ swift
+
+~~~
+<!--</div>-->
+
 - - -
 
 ## Editing the collection view
