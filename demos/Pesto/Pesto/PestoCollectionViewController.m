@@ -22,7 +22,10 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 
+static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
+
 static CGFloat kPestoCollectionViewControllerAnimationDuration = 0.33f;
+static CGFloat kPestoCollectionViewControllerCellHeight = 300.f;
 static CGFloat kPestoCollectionViewControllerDefaultHeaderHeight = 240.f;
 static CGFloat kPestoCollectionViewControllerInset = 5.f;
 static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
@@ -50,51 +53,43 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   return self;
 }
 
-- (void)setFlexHeaderContainerVC:(MDCFlexibleHeaderContainerViewController *)flexHeaderContainerVC {
-  _flexHeaderContainerVC = flexHeaderContainerVC;
-  MDCFlexibleHeaderView *headerView = _flexHeaderContainerVC.headerViewController.headerView;
-  headerView.trackingScrollView = self.collectionView;
-  headerView.maximumHeight = kPestoCollectionViewControllerDefaultHeaderHeight;
-  headerView.minimumHeight = kPestoCollectionViewControllerSmallHeaderHeight;
-  [headerView addSubview:[self pestoHeaderView]];
+- (void)viewDidLoad {
+  [super viewDidLoad];
 
-  // Use a custom shadow under the flexible header.
-  MDCShadowLayer *shadowLayer = [MDCShadowLayer layer];
-  [headerView setShadowLayer:shadowLayer
-      intensityDidChangeBlock:^(CALayer *layer,
-                                CGFloat intensity) {
-        CGFloat elevation = MDCShadowElevationAppBar * intensity;
-        [(MDCShadowLayer *)layer setElevation:elevation];
-      }];
+  // Customize collection view settings.
+  self.styler.cellStyle = MDCCollectionViewCellStyleCard;
+  self.styler.cellLayoutType = MDCCollectionViewCellLayoutTypeGrid;
+  self.styler.gridPadding = kPestoCollectionViewControllerInset * 2;
+  if (self.view.frame.size.width < self.view.frame.size.height) {
+    self.styler.gridColumnCount = 1;
+  } else {
+    self.styler.gridColumnCount = 2;
+  }
 }
 
-- (NSInteger)collectionView:(UICollectionView *)view
-     numberOfItemsInSection:(NSInteger)section {
-  return (NSInteger)[self.pestoData.imageFileNames count];
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                         duration:(NSTimeInterval)duration {
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  if (size.width < size.height) {
+    self.styler.gridColumnCount = 1;
+  } else {
+    self.styler.gridColumnCount = 2;
+  }
   [self.collectionView.collectionViewLayout invalidateLayout];
-  [self centerHeader];
+  [self centerHeaderWithSize:size];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.collectionView.collectionViewLayout invalidateLayout];
-  [self centerHeader];
+  [self centerHeaderWithSize:self.view.frame.size];
 }
 
-- (void)centerHeader {
-  CGFloat width = [UIScreen mainScreen].bounds.size.width;
-  CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
-  self.logoView.center = CGPointMake(width / 2.f,
-                                     headerFrame.size.height / 2.f);
-  self.logoSmallView.center = CGPointMake(width / 2.f,
-                                          headerFrame.size.height / 2.f);
-}
+#pragma mark - <UICollectionViewDataSource>
 
-#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return (NSInteger)[self.pestoData.imageFileNames count];
+}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -115,16 +110,11 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   return cell;
 }
 
-#pragma mark - UICollectionViewDelegate
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  return self.cellSize;
-}
+#pragma mark - <UICollectionViewDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   PestoCardCollectionViewCell *cell =
       (PestoCardCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
   [self.delegate didSelectCell:cell
@@ -132,46 +122,56 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
                     }];
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark - <MDCCollectionViewStylingDelegate>
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView
+    cellHeightAtIndexPath:(NSIndexPath *)indexPath {
+  return kPestoCollectionViewControllerCellHeight;
+}
+
+#pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   self.scrollOffsetY = scrollView.contentOffset.y;
   [self.flexHeaderContainerVC.headerViewController scrollViewDidScroll:scrollView];
-  CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
-  self.logoView.center = CGPointMake(headerFrame.size.width / 2.f,
-                                     headerFrame.size.height / 2.f);
-  self.logoSmallView.center = CGPointMake(headerFrame.size.width / 2.f,
-                                          headerFrame.size.height / 2.f);
-
+  [self centerHeaderWithSize:self.view.frame.size];
   self.logoScale = scrollView.contentOffset.y / -kPestoCollectionViewControllerDefaultHeaderHeight;
-
   if (self.logoScale < 0.5f) {
     self.logoScale = 0.5f;
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                       self.logoView.layer.opacity = 0;
-                       self.logoSmallView.layer.opacity = 1.f;
-                     }
-                     completion:^(BOOL finished){
-                     }];
+        delay:0
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+          self.logoView.layer.opacity = 0;
+          self.logoSmallView.layer.opacity = 1.f;
+        }
+        completion:^(BOOL finished){
+        }];
   } else {
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                       self.logoView.layer.opacity = 1.f;
-                       self.logoSmallView.layer.opacity = 0;
-                     }
-                     completion:^(BOOL finished){
-                     }];
+        delay:0
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+          self.logoView.layer.opacity = 1.f;
+          self.logoSmallView.layer.opacity = 0;
+        }
+        completion:^(BOOL finished){
+        }];
   }
   self.logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, self.logoScale,
                                                    self.logoScale);
 }
 
 #pragma mark - Private methods
+
+- (void)centerHeaderWithSize:(CGSize)size {
+  CGFloat width = size.width;
+  CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
+  self.logoView.center = CGPointMake(width / 2.f,
+                                     headerFrame.size.height / 2.f);
+  self.logoSmallView.center = CGPointMake(width / 2.f,
+                                          headerFrame.size.height / 2.f);
+}
 
 - (UIView *)pestoHeaderView {
   CGRect headerFrame = _flexHeaderContainerVC.headerViewController.headerView.bounds;
@@ -201,22 +201,22 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   return pestoHeaderView;
 }
 
-- (CGSize)cellSize {
-  CGFloat margins = (2.f * kPestoCollectionViewControllerInset);
-  CGFloat cellDim = self.view.frame.size.width - margins * 2.f;
-  CGFloat maxCellWidth = 400.f;
-  if (cellDim > maxCellWidth && cellDim < maxCellWidth * 2.f) {
-    cellDim = (CGFloat)floor(((double)self.view.frame.size.width -
-                              (2.0 * kPestoCollectionViewControllerInset)) /
-                             2.0) -
-              (2.f * kPestoCollectionViewControllerInset);
-  } else if (cellDim >= maxCellWidth * 2.f) {
-    cellDim = (CGFloat)floor(((double)self.view.frame.size.width -
-                              (3.0 * kPestoCollectionViewControllerInset)) /
-                             3.0) -
-              (2.f * kPestoCollectionViewControllerInset);
-  }
-  return CGSizeMake(cellDim, 300.f);
+- (void)setFlexHeaderContainerVC:(MDCFlexibleHeaderContainerViewController *)flexHeaderContainerVC {
+  _flexHeaderContainerVC = flexHeaderContainerVC;
+  MDCFlexibleHeaderView *headerView = _flexHeaderContainerVC.headerViewController.headerView;
+  headerView.trackingScrollView = self.collectionView;
+  headerView.maximumHeight = kPestoCollectionViewControllerDefaultHeaderHeight;
+  headerView.minimumHeight = kPestoCollectionViewControllerSmallHeaderHeight;
+  [headerView addSubview:[self pestoHeaderView]];
+
+  // Use a custom shadow under the flexible header.
+  MDCShadowLayer *shadowLayer = [MDCShadowLayer layer];
+  [headerView setShadowLayer:shadowLayer
+      intensityDidChangeBlock:^(CALayer *layer,
+                                CGFloat intensity) {
+        CGFloat elevation = MDCShadowElevationAppBar * intensity;
+        [(MDCShadowLayer *)layer setElevation:elevation];
+      }];
 }
 
 @end

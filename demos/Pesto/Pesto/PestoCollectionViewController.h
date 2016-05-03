@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialCollections.h"
 #import "MaterialFlexibleHeader.h"
 #import "PestoCardCollectionViewCell.h"
 
@@ -27,11 +28,10 @@
 
 @end
 
-@interface PestoCollectionViewController : UICollectionViewController
+@interface PestoCollectionViewController : MDCCollectionViewController
 
 @property(weak, nonatomic) id<PestoCollectionViewControllerDelegate> delegate;
 @property(nonatomic) CGFloat scrollOffsetY;
-@property(nonatomic) CGSize cellSize;
 @property(nonatomic) MDCFlexibleHeaderContainerViewController *flexHeaderContainerVC;
 
 @end
