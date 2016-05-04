@@ -111,7 +111,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
-  if (!CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size)) {
+  if (!CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size) ||
+      self.editor.isEditing) {
     return YES;
   }
   return NO;
