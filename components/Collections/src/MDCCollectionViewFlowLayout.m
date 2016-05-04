@@ -352,6 +352,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
   // Set cell background.
   attr.backgroundImage = [self.styler backgroundImageForCellLayoutAttributes:attr];
+  attr.backgroundImageViewInsets =
+      [self.styler backgroundImageViewOutsetsForCellWithAttribute:attr];
 
   // Set separator styling.
   attr.separatorColor = self.styler.separatorColor;

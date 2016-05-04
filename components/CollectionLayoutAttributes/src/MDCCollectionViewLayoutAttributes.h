@@ -76,6 +76,9 @@ typedef NS_OPTIONS(NSUInteger, MDCCollectionViewOrdinalPosition) {
 /** The image for use as the cells background image. */
 @property(nonatomic, strong, nullable) UIImage *backgroundImage;
 
+/** The background image view edge insets. */
+@property(nonatomic) UIEdgeInsets backgroundImageViewInsets;
+
 /**
  A boolean value indicating whether the collectionView cell style is set to
  MDCCollectionViewCellLayoutTypeGrid.
