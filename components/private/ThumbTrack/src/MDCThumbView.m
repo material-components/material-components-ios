@@ -95,7 +95,7 @@ static const CGFloat kMinTouchSize = 48;
     _iconView = [[UIImageView alloc] initWithImage:icon];
     [self addSubview:_iconView];
     // Calculate the inner square of the thumbs circle.
-    CGFloat sideLength = sin(45.0 / 180.0 * M_PI) * _cornerRadius * 2;
+    CGFloat sideLength = (CGFloat)sin(45.0 / 180.0 * M_PI) * _cornerRadius * 2;
     CGFloat topLeft = _cornerRadius - (sideLength / 2);
     _iconView.frame = CGRectMake(topLeft, topLeft, sideLength, sideLength);
   }
