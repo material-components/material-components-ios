@@ -100,7 +100,7 @@
  @param indexPaths An array of index paths.
  */
 - (void)collectionView:(nonnull UICollectionView *)collectionView
-    didApplyInlayToItemAtIndexPaths:(nonnull NSArray *)indexPaths;
+    didApplyInlayToItemAtIndexPaths:(nonnull NSArray<NSIndexPath *> *)indexPaths;
 
 /**
  Allows the receiver to receive notification that items at the specified index paths did
@@ -110,7 +110,7 @@
  @param indexPaths An array of index paths.
  */
 - (void)collectionView:(nonnull UICollectionView *)collectionView
-    didRemoveInlayFromItemAtIndexPaths:(nonnull NSArray *)indexPaths;
+    didRemoveInlayFromItemAtIndexPaths:(nonnull NSArray<NSIndexPath *> *)indexPaths;
 
 #pragma mark - Ink Touches
 
