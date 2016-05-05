@@ -570,7 +570,7 @@ at the specified index paths from your `UICollectionViewDataSource`.
 
 // Remove swiped index paths from our data.
 - (void)collectionView:(UICollectionView *)collectionView
-    willDeleteItemsAtIndexPaths:(NSArray *)indexPaths {
+    willDeleteItemsAtIndexPaths:(NSArray<NSIndexPath *> *) *)indexPaths {
   for (NSIndexPath *indexPath in indexPaths) {
     [data removeObjectAtIndex:indexPath.item];
   }
