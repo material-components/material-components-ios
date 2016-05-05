@@ -28,7 +28,7 @@ static CGFloat kPestoCollectionViewControllerAnimationDuration = 0.33f;
 static CGFloat kPestoCollectionViewControllerCellHeight = 300.f;
 static CGFloat kPestoCollectionViewControllerDefaultHeaderHeight = 240.f;
 static CGFloat kPestoCollectionViewControllerInset = 5.f;
-static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
+static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 76.f;
 
 @interface PestoCollectionViewController ()
 
@@ -165,12 +165,13 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 #pragma mark - Private methods
 
 - (void)centerHeaderWithSize:(CGSize)size {
+  CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
   CGFloat width = size.width;
   CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
   self.logoView.center = CGPointMake(width / 2.f,
                                      headerFrame.size.height / 2.f);
   self.logoSmallView.center = CGPointMake(width / 2.f,
-                                          headerFrame.size.height / 2.f);
+                                          (headerFrame.size.height - statusBarHeight) / 2.f + statusBarHeight);
 }
 
 - (UIView *)pestoHeaderView {

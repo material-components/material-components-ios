@@ -20,23 +20,21 @@
 #import "PestoSettingsViewController.h"
 #import "PestoSideView.h"
 
-#import "MaterialSpritedAnimationView.h"
+#import "MaterialAppBar.h"
 
 static CGFloat kPestoAnimationDuration = 0.33f;
 static CGFloat kPestoInset = 5.f;
-static NSString *const kPestoDetailViewControllerBackMenu = @"mdc_sprite_menu__arrow_back";
-static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_back__menu";
 
 @interface PestoFlexibleHeaderContainerViewController () <PestoCollectionViewControllerDelegate,
                                                           PestoSideViewDelegate,
                                                           UIViewControllerAnimatedTransitioning,
                                                           UIViewControllerTransitioningDelegate>
 
-@property(nonatomic) PestoCollectionViewController *collectionViewController;
-@property(nonatomic) PestoSideView *sideView;
-@property(nonatomic) MDCSpritedAnimationView *animatedMenuArrow;
-@property(nonatomic) UIImageView *zoomableView;
-@property(nonatomic) UIView *zoomableCardView;
+@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) PestoCollectionViewController *collectionViewController;
+@property(nonatomic, strong) PestoSideView *sideView;
+@property(nonatomic, strong) UIImageView *zoomableView;
+@property(nonatomic, strong) UIView *zoomableCardView;
 
 @end
 
@@ -57,12 +55,27 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
     _collectionViewController = collectionVC;
     _collectionViewController.flexHeaderContainerVC = self;
     _collectionViewController.delegate = self;
+
+    _appBar = [[MDCAppBar alloc] init];
+    [self addChildViewController:_appBar.headerViewController];
+
+    _appBar.headerViewController.headerView.backgroundColor = [UIColor clearColor];
+    _appBar.navigationBar.tintColor = [UIColor whiteColor];
+
+    UIBarButtonItem *menuButton =
+        [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+                                         style:UIBarButtonItemStyleDone
+                                        target:self
+                                        action:@selector(showMenu)];
+    self.navigationItem.leftBarButtonItem = menuButton;
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  [self.appBar addSubviewsToParent];
 
   self.sideView = [[PestoSideView alloc] initWithFrame:self.view.bounds];
   self.sideView.hidden = YES;
@@ -71,25 +84,14 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   self.sideView.delegate = self;
   [self.view addSubview:self.sideView];
 
-  UIImage *spriteImage = [UIImage imageNamed:kPestoDetailViewControllerBackMenu];
-  self.animatedMenuArrow = [[MDCSpritedAnimationView alloc]
-      initWithSpriteSheetImage:spriteImage];
-  self.animatedMenuArrow.frame = CGRectMake(20.f, 20.f, 24.f, 24.f);
-  self.animatedMenuArrow.tintColor = [UIColor whiteColor];
-  [self.view addSubview:self.animatedMenuArrow];
-
-  UIButton *button = [[UIButton alloc] initWithFrame:self.animatedMenuArrow.frame];
-  [self.view addSubview:button];
-  [button addTarget:self action:@selector(showMenu) forControlEvents:UIControlEventTouchUpInside];
-
   self.zoomableCardView = [[UIView alloc] initWithFrame:CGRectZero];
   self.zoomableCardView.backgroundColor = [UIColor whiteColor];
-  [self.view insertSubview:self.zoomableCardView belowSubview:self.animatedMenuArrow];
+  [self.view addSubview:self.zoomableCardView];
 
   self.zoomableView = [[UIImageView alloc] initWithFrame:CGRectZero];
   self.zoomableView.backgroundColor = [UIColor lightGrayColor];
   self.zoomableView.contentMode = UIViewContentModeScaleAspectFill;
-  [self.view insertSubview:self.zoomableView belowSubview:self.animatedMenuArrow];
+  [self.view addSubview:self.zoomableView];
 }
 
 - (void)showMenu {
@@ -120,11 +122,6 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
   dispatch_async(dispatch_get_main_queue(), ^{
     self.zoomableView.image = cell.image;
 
-    [self.animatedMenuArrow startAnimatingWithCompletion:^{
-      UIImage *spriteImageArrowToMenu = [UIImage imageNamed:kPestoBackArrowToMenu];
-      self.animatedMenuArrow.spriteSheetImage = spriteImageArrowToMenu;
-    }];
-
     [UIView animateWithDuration:kPestoAnimationDuration
         delay:0.0
         options:UIViewAnimationOptionCurveEaseOut
@@ -151,8 +148,6 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
                            completion:^() {
                              self.zoomableView.frame = CGRectZero;
                              self.zoomableCardView.frame = CGRectZero;
-                             self.animatedMenuArrow.spriteSheetImage =
-                                 [UIImage imageNamed:kPestoMenuToBackArrow];
                              completionBlock();
                            }];
         }];
@@ -182,15 +177,6 @@ static NSString *const kPestoDetailViewControllerMenuBack = @"mdc_sprite_arrow_b
 
   if ([fromController isKindOfClass:[PestoDetailViewController class]] &&
       [toController isKindOfClass:self.class]) {
-    // This is our custom dismissal that keeps the arrow button at the top of the controller
-    UIImage *spriteImageArrowToMenu = [UIImage imageNamed:kPestoMenuToBackArrow];
-    [self.view insertSubview:fromController.view belowSubview:self.animatedMenuArrow];
-    ((PestoDetailViewController *)fromController).animationView.hidden = YES;
-
-    [self.animatedMenuArrow startAnimatingWithCompletion:^{
-      self.animatedMenuArrow.spriteSheetImage = spriteImageArrowToMenu;
-    }];
-
     CGRect detailFrame = fromController.view.frame;
     detailFrame.origin.y = self.view.frame.size.height;
 

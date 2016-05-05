@@ -17,26 +17,43 @@
 #import "PestoDetailViewController.h"
 #import "PestoRecipeCardView.h"
 
-#import "MaterialSpritedAnimationView.h"
+#import "MaterialAppBar.h"
 
 static CGFloat kPestoDetailAnimationDelay = 0.1f;
 static CGFloat kPestoDetailAnimationDuration = 0.33f;
 static CGFloat kPestoDetailBottomSheetBackgroundHeight = 320.f;
 static CGFloat kPestoDetailBottomSheetHeightPortrait = 380.f;
 static CGFloat kPestoDetailBottomSheetHeightLandscape = 300.f;
-NSString *const kPestoMenuToBackArrow = @"mdc_sprite_menu__arrow_back";
-NSString *const kPestoBackArrowToMenu = @"mdc_sprite_arrow_back__menu";
 
 @interface PestoDetailViewController ()
 
 @property(nonatomic) CGFloat bottomSheetHeight;
-@property(nonatomic) PestoRecipeCardView *bottomView;
-@property(nonatomic) UIImageView *imageView;
-@property(nonatomic) BOOL showMenuIcon;
+@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) PestoRecipeCardView *bottomView;
+@property(nonatomic, strong) UIImageView *imageView;
 
 @end
 
 @implementation PestoDetailViewController
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _appBar = [[MDCAppBar alloc] init];
+    [self addChildViewController:_appBar.headerViewController];
+
+    _appBar.headerViewController.headerView.backgroundColor = [UIColor clearColor];
+    _appBar.navigationBar.tintColor = [UIColor whiteColor];
+
+    UIBarButtonItem *backButton =
+        [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                         style:UIBarButtonItemStyleDone
+                                        target:self
+                                        action:@selector(back)];
+    self.navigationItem.leftBarButtonItem = backButton;
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -71,7 +88,6 @@ NSString *const kPestoBackArrowToMenu = @"mdc_sprite_arrow_back__menu";
   [self.view addSubview:bottomViewBackground];
 
   self.bottomView = [[PestoRecipeCardView alloc] initWithFrame:bottomFrame];
-  self.bottomView.title = self.title;
   self.bottomView.iconImageName = self.iconImageName;
   self.bottomView.descText = self.descText;
   self.bottomView.alpha = 0;
@@ -90,18 +106,11 @@ NSString *const kPestoBackArrowToMenu = @"mdc_sprite_arrow_back__menu";
         }];
   });
 
-  UIImage *spriteImage = [UIImage imageNamed:kPestoBackArrowToMenu];
-  self.animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
-  self.animationView.frame = CGRectMake(20.f, 20.f, 24.f, 24.f);
-  self.animationView.tintColor = [UIColor whiteColor];
-  [self.view addSubview:self.animationView];
+  [self.appBar addSubviewsToParent];
 
-  UITapGestureRecognizer *tap =
-      [[UITapGestureRecognizer alloc] initWithTarget:self
-                                              action:@selector(tapDetected)];
-  tap.numberOfTapsRequired = 1;
-  self.animationView.userInteractionEnabled = YES;
-  [self.animationView addGestureRecognizer:tap];
+  // Only display title in the bottom view with no title in the app bar.
+  self.bottomView.title = self.title;
+  self.appBar.navigationBar.title = @"";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -129,16 +138,7 @@ NSString *const kPestoBackArrowToMenu = @"mdc_sprite_arrow_back__menu";
   });
 }
 
-- (void)tapDetected {
-  [self.animationView startAnimatingWithCompletion:^{
-    self.showMenuIcon = !self.showMenuIcon;
-    NSString *imageName = (self.showMenuIcon
-                               ? kPestoBackArrowToMenu
-                               : kPestoMenuToBackArrow);
-    UIImage *spriteImage = [UIImage imageNamed:imageName];
-    self.animationView.spriteSheetImage = spriteImage;
-    self.animationView.hidden = YES;
-  }];
+- (void)back {
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 

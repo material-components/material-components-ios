@@ -16,17 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const kPestoMenuToBackArrow;
-extern NSString *const kPestoBackArrowToMenu;
-
-@class MDCSpritedAnimationView;
-
 @interface PestoDetailViewController : UIViewController
 
 @property(nonatomic) UIImage *image;
 @property(nonatomic, copy) NSString *iconImageName;
 @property(nonatomic, copy) NSString *descText;
-@property(nonatomic) MDCSpritedAnimationView *animationView;
 
 - (void)loadImage;
 
