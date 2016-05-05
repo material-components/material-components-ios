@@ -6,8 +6,10 @@ excerpt: "The Slider component provides a Material Design control for selecting 
 ---
 # Slider
 
-![Slider](docs/assets/slider_screenshot.png)
-<!--{: .ios-screenshot .right }-->
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/slider.mp4" autoplay loop></video>
+  [![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
+</div>
 
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.

@@ -6,8 +6,10 @@ excerpt: "The Header Stack View component is a view that coordinates the layout 
 ---
 # Header Stack View
 
-![Header Stack View](docs/assets/headerstackview_screenshot.png)
-<!--{: .ios-screenshot .right }-->
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/header_stack_view.mp4" autoplay loop></video>
+  [![Header Stack View](docs/assets/header_stack_view.png)](docs/assets/header_stack_view.mp4)
+</div>
 
 The Header Stack View component is a view that coordinates the layout of two vertically stacked
 bar views.

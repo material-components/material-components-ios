@@ -7,8 +7,10 @@ excerpt: "The Shadow Layer component implements the Material Design specificatio
 
 # Shadow Layer
 
-![Shadow Layer](docs/assets/shadows_screenshot.png)
-<!--{: .ios-screenshot .right }-->
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/shadow.mp4" autoplay loop></video>
+  [![Shadow Layer](docs/assets/shadow.png)](docs/assets/shadow.mp4)
+</div>
 
 Shadow Layer implements the Material Design specifications for elevation and shadows.
 By simulating the physical properties of paper, elevation and light source, shadows give

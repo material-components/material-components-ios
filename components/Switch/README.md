@@ -7,8 +7,10 @@ excerpt: "The Switch component provides an Material Design on/off switch control
 
 # Switch
 
-![Switch](docs/assets/switch_screenshot.png)
-<!--{: .ios-screenshot .right }-->
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/switch.mp4" autoplay loop></video>
+  [![Switch](docs/assets/switch.png)](docs/assets/switch.mp4)
+</div>
 
 Switch provides an Material Design on/off switch control with an interface similar to UISwitch. Note
 that `MDCSwitch` objects have an intrinsic size and are not resizable.
