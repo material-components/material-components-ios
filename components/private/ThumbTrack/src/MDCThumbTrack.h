@@ -179,9 +179,9 @@
  @param completion If not NULL, the block will be called after the value is set.
  */
 - (void)setValue:(CGFloat)value
-        animated:(BOOL)animated
-   userGenerated:(BOOL)userGenerated
-      completion:(nullable void (^)())completion;
+         animated:(BOOL)animated
+    userGenerated:(BOOL)userGenerated
+       completion:(nullable void (^)())completion;
 
 /** Set the |icon| shown on the thumb. */
 - (void)setIcon:(nullable UIImage *)icon;

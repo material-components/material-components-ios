@@ -95,15 +95,15 @@ static CGFloat kPestoDetailBottomSheetHeightLandscape = 300.f;
 
   dispatch_async(dispatch_get_main_queue(), ^{
     [UIView animateWithDuration:kPestoDetailAnimationDuration
-        delay:kPestoDetailAnimationDelay
-        options:UIViewAnimationOptionCurveEaseOut
-        animations:^{
-          CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
-          [CATransaction setAnimationTimingFunction:quantumEaseInOut];
-          self.bottomView.alpha = 1;
-        }
-        completion:^(BOOL finished){
-        }];
+                          delay:kPestoDetailAnimationDelay
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                       CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
+                       [CATransaction setAnimationTimingFunction:quantumEaseInOut];
+                       self.bottomView.alpha = 1;
+                     }
+                     completion:^(BOOL finished){
+                     }];
   });
 
   [self.appBar addSubviewsToParent];
