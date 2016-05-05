@@ -241,7 +241,7 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
   NSArray *sectionAttributes = [self attributesAtSection:section];
   CGRect snapshotFrame = CGRectNull;
   for (UICollectionViewLayoutAttributes *attribute in sectionAttributes) {
-    if (!CGRectIsNull(attribute.frame)) {
+    if (!CGRectIsNull(attribute.frame) && !CGRectIsInfinite(attribute.frame)) {
       snapshotFrame = CGRectUnion(snapshotFrame, attribute.frame);
     }
   }
