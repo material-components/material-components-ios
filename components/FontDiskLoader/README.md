@@ -54,7 +54,7 @@ pod 'MaterialComponents/FontDiskLoader'
 Then, run the following command:
 
 ~~~ bash
-$ pod install
+pod install
 ~~~
 
 ### Importing

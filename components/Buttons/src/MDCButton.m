@@ -275,10 +275,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.layer.shadowPath = [self boundingPath].CGPath;
   self.layer.cornerRadius = [self cornerRadius];
 
-  // Calculate center based on contentEdgeInsets
-  _inkView.usesCustomInkCenter = YES;
+  // The ink view frame should match the content rect to be centered correctly. The content rect is
+  // calculated based on the title, image size and padding; then adjusted based on the control
+  // content alignment. The button frame cannot be used since it has rect offsets without insets.
   CGRect contentRect = [self contentRectForBounds:self.bounds];
-  _inkView.customInkCenter = CGPointMake(CGRectGetMidX(contentRect), CGRectGetMidY(contentRect));
+  _inkView.frame = contentRect;
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {

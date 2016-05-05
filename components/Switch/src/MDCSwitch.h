@@ -48,6 +48,20 @@ IB_DESIGNABLE
 @property(null_resettable, nonatomic, strong) UIColor *disabledTrackColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The image displayed on the thumb when the switch is in the on position.
+
+ This property is nil by default.
+ */
+@property(nullable, nonatomic, strong) UIImage *onImage UI_APPEARANCE_SELECTOR;
+
+/**
+ The image displayed on the thumb when the switch is in the off position.
+
+ This property is nil by default.
+ */
+@property(nullable, nonatomic, strong) UIImage *offImage UI_APPEARANCE_SELECTOR;
+
+/**
  Boolean value that determines the off/on state of the switch.
 
  This property allows you to retrieve and set (without animation) a value determining whether the

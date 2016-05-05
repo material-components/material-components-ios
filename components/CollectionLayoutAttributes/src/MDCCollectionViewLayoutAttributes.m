@@ -31,6 +31,7 @@
   attributes->_shouldShowGridBackground = _shouldShowGridBackground;
   attributes->_sectionOrdinalPosition = _sectionOrdinalPosition;
   attributes->_backgroundImage = _backgroundImage;
+  attributes->_backgroundImageViewInsets = _backgroundImageViewInsets;
   attributes->_isGridLayout = _isGridLayout;
   attributes->_separatorColor = _separatorColor;
   attributes->_separatorInset = _separatorInset;
@@ -58,6 +59,8 @@
       (otherAttrs.shouldShowGridBackground != self.shouldShowGridBackground) ||
       (otherAttrs.sectionOrdinalPosition != self.sectionOrdinalPosition) ||
       ![otherAttrs.backgroundImage isEqual:self.backgroundImage] ||
+      (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.backgroundImageViewInsets,
+                                      self.backgroundImageViewInsets)) ||
       (otherAttrs.isGridLayout != self.isGridLayout) ||
       ![otherAttrs.separatorColor isEqual:self.separatorColor] ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.separatorInset, self.separatorInset)) ||

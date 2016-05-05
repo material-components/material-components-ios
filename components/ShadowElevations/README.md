@@ -42,7 +42,7 @@ pod 'MaterialComponents/ShadowElevations'
 Then, run the following command:
 
 ~~~ bash
-$ pod install
+pod install
 ~~~
 
 

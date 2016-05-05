@@ -1,26 +1,26 @@
 PODS:
-  - MaterialComponents (5.1.0):
-    - MaterialComponents/AppBar (= 5.1.0)
-    - MaterialComponents/ButtonBar (= 5.1.0)
-    - MaterialComponents/Buttons (= 5.1.0)
-    - MaterialComponents/CollectionCells (= 5.1.0)
-    - MaterialComponents/CollectionLayoutAttributes (= 5.1.0)
-    - MaterialComponents/Collections (= 5.1.0)
-    - MaterialComponents/FlexibleHeader (= 5.1.0)
-    - MaterialComponents/FontDiskLoader (= 5.1.0)
-    - MaterialComponents/HeaderStackView (= 5.1.0)
-    - MaterialComponents/Ink (= 5.1.0)
-    - MaterialComponents/NavigationBar (= 5.1.0)
-    - MaterialComponents/PageControl (= 5.1.0)
-    - MaterialComponents/private (= 5.1.0)
-    - MaterialComponents/RobotoFontLoader (= 5.1.0)
-    - MaterialComponents/ShadowElevations (= 5.1.0)
-    - MaterialComponents/ShadowLayer (= 5.1.0)
-    - MaterialComponents/Slider (= 5.1.0)
-    - MaterialComponents/SpritedAnimationView (= 5.1.0)
-    - MaterialComponents/Switch (= 5.1.0)
-    - MaterialComponents/Typography (= 5.1.0)
-  - MaterialComponents/AppBar (5.1.0):
+  - MaterialComponents (6.0.0):
+    - MaterialComponents/AppBar (= 6.0.0)
+    - MaterialComponents/ButtonBar (= 6.0.0)
+    - MaterialComponents/Buttons (= 6.0.0)
+    - MaterialComponents/CollectionCells (= 6.0.0)
+    - MaterialComponents/CollectionLayoutAttributes (= 6.0.0)
+    - MaterialComponents/Collections (= 6.0.0)
+    - MaterialComponents/FlexibleHeader (= 6.0.0)
+    - MaterialComponents/FontDiskLoader (= 6.0.0)
+    - MaterialComponents/HeaderStackView (= 6.0.0)
+    - MaterialComponents/Ink (= 6.0.0)
+    - MaterialComponents/NavigationBar (= 6.0.0)
+    - MaterialComponents/PageControl (= 6.0.0)
+    - MaterialComponents/private (= 6.0.0)
+    - MaterialComponents/RobotoFontLoader (= 6.0.0)
+    - MaterialComponents/ShadowElevations (= 6.0.0)
+    - MaterialComponents/ShadowLayer (= 6.0.0)
+    - MaterialComponents/Slider (= 6.0.0)
+    - MaterialComponents/SpritedAnimationView (= 6.0.0)
+    - MaterialComponents/Switch (= 6.0.0)
+    - MaterialComponents/Typography (= 6.0.0)
+  - MaterialComponents/AppBar (6.0.0):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -28,14 +28,14 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (5.1.0):
+  - MaterialComponents/ButtonBar (6.0.0):
     - MaterialComponents/Buttons
-  - MaterialComponents/Buttons (5.1.0):
+  - MaterialComponents/Buttons (6.0.0):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/CollectionCells (5.1.0):
+  - MaterialComponents/CollectionCells (6.0.0):
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/private/Icons/ic_check
@@ -45,67 +45,67 @@ PODS:
     - MaterialComponents/private/Icons/ic_radio_button_unchecked
     - MaterialComponents/private/Icons/ic_reorder
     - MaterialComponents/Typography
-  - MaterialComponents/CollectionLayoutAttributes (5.1.0)
-  - MaterialComponents/Collections (5.1.0):
+  - MaterialComponents/CollectionLayoutAttributes (6.0.0)
+  - MaterialComponents/Collections (6.0.0):
     - MaterialComponents/CollectionCells
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/FlexibleHeader (5.1.0)
-  - MaterialComponents/FontDiskLoader (5.1.0)
-  - MaterialComponents/HeaderStackView (5.1.0)
-  - MaterialComponents/Ink (5.1.0)
-  - MaterialComponents/NavigationBar (5.1.0):
+  - MaterialComponents/FlexibleHeader (6.0.0)
+  - MaterialComponents/FontDiskLoader (6.0.0)
+  - MaterialComponents/HeaderStackView (6.0.0)
+  - MaterialComponents/Ink (6.0.0)
+  - MaterialComponents/NavigationBar (6.0.0):
     - MaterialComponents/ButtonBar
     - MaterialComponents/Typography
-  - MaterialComponents/PageControl (5.1.0)
-  - MaterialComponents/private (5.1.0):
-    - MaterialComponents/private/Color (= 5.1.0)
-    - MaterialComponents/private/Icons (= 5.1.0)
-    - MaterialComponents/private/ThumbTrack (= 5.1.0)
-  - MaterialComponents/private/Color (5.1.0)
-  - MaterialComponents/private/Icons (5.1.0):
-    - MaterialComponents/private/Icons/Base (= 5.1.0)
-    - MaterialComponents/private/Icons/ic_arrow_back (= 5.1.0)
-    - MaterialComponents/private/Icons/ic_check (= 5.1.0)
-    - MaterialComponents/private/Icons/ic_check_circle (= 5.1.0)
-    - MaterialComponents/private/Icons/ic_chevron_right (= 5.1.0)
-    - MaterialComponents/private/Icons/ic_info (= 5.1.0)
-    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 5.1.0)
-    - MaterialComponents/private/Icons/ic_reorder (= 5.1.0)
-  - MaterialComponents/private/Icons/Base (5.1.0)
-  - MaterialComponents/private/Icons/ic_arrow_back (5.1.0):
+  - MaterialComponents/PageControl (6.0.0)
+  - MaterialComponents/private (6.0.0):
+    - MaterialComponents/private/Color (= 6.0.0)
+    - MaterialComponents/private/Icons (= 6.0.0)
+    - MaterialComponents/private/ThumbTrack (= 6.0.0)
+  - MaterialComponents/private/Color (6.0.0)
+  - MaterialComponents/private/Icons (6.0.0):
+    - MaterialComponents/private/Icons/Base (= 6.0.0)
+    - MaterialComponents/private/Icons/ic_arrow_back (= 6.0.0)
+    - MaterialComponents/private/Icons/ic_check (= 6.0.0)
+    - MaterialComponents/private/Icons/ic_check_circle (= 6.0.0)
+    - MaterialComponents/private/Icons/ic_chevron_right (= 6.0.0)
+    - MaterialComponents/private/Icons/ic_info (= 6.0.0)
+    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 6.0.0)
+    - MaterialComponents/private/Icons/ic_reorder (= 6.0.0)
+  - MaterialComponents/private/Icons/Base (6.0.0)
+  - MaterialComponents/private/Icons/ic_arrow_back (6.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check (5.1.0):
+  - MaterialComponents/private/Icons/ic_check (6.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check_circle (5.1.0):
+  - MaterialComponents/private/Icons/ic_check_circle (6.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_chevron_right (5.1.0):
+  - MaterialComponents/private/Icons/ic_chevron_right (6.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_info (5.1.0):
+  - MaterialComponents/private/Icons/ic_info (6.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_radio_button_unchecked (5.1.0):
+  - MaterialComponents/private/Icons/ic_radio_button_unchecked (6.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_reorder (5.1.0):
+  - MaterialComponents/private/Icons/ic_reorder (6.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/ThumbTrack (5.1.0):
+  - MaterialComponents/private/ThumbTrack (6.0.0):
     - MaterialComponents/Ink
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/RobotoFontLoader (5.1.0):
+  - MaterialComponents/RobotoFontLoader (6.0.0):
     - MaterialComponents/FontDiskLoader
     - MaterialComponents/Typography
-  - MaterialComponents/ShadowElevations (5.1.0)
-  - MaterialComponents/ShadowLayer (5.1.0)
-  - MaterialComponents/Slider (5.1.0):
+  - MaterialComponents/ShadowElevations (6.0.0)
+  - MaterialComponents/ShadowLayer (6.0.0)
+  - MaterialComponents/Slider (6.0.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/SpritedAnimationView (5.1.0)
-  - MaterialComponents/Switch (5.1.0):
+  - MaterialComponents/SpritedAnimationView (6.0.0)
+  - MaterialComponents/Switch (6.0.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (5.1.0)
+  - MaterialComponents/Typography (6.0.0)
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
@@ -115,6 +115,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: c31e712ab313d6b0dca3ebc8f362823e080baf96
+  MaterialComponents: 5f379189a21dab9ea5f9c9e64a9fcf8ea68f34c7
 
 COCOAPODS: 0.39.0

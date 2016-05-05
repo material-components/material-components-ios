@@ -90,9 +90,10 @@
   _inkTouchController.delaysInkSpread = YES;
 }
 
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-  _styler.shouldInvalidateLayout = NO;
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration {
+  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+  [_collectionViewLayout invalidateLayout];
 }
 
 - (UICollectionViewLayout *)collectionViewLayout {
@@ -283,8 +284,8 @@
 
 #pragma mark - <MDCInkTouchControllerDelegate>
 
-- (BOOL)inkTouchControllerShouldProcessInkTouches:(MDCInkTouchController *)inkTouchController
-                                  atTouchLocation:(CGPoint)location {
+- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
   NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
   if (indexPath) {
     if ([_styler.delegate respondsToSelector:

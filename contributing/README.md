@@ -4,7 +4,6 @@ layout: landing
 section: contributing
 ---
 
-
 # Contributing
 
 Material Components for iOS is intended to be a full open source project that accepts contributions
@@ -20,9 +19,6 @@ from community members. We can work together to optimize Material Design on iOS.
   <!--{: .icon-stackoverflow }-->
 <!--{: .icon-list }-->
 
-
-
-
 - - -
 
 ## Community Structure
@@ -32,9 +28,6 @@ Material Components and appointment of technical leaders from the community. The
 work with the community to accept contributions in line with the [Material Design
 spec](http://www.google.com/design/spec). You can reach members of the core team on our [Slack
 discussion channel](http://googleoss.slack.com).
-
-
-
 
 - - -
 
@@ -99,11 +92,6 @@ _This code of conduct was adapted from the following sources:_
   lite](https://github.com/google/material-design-lite/blob/master/CONTRIBUTING.md), Apache
   Licensed.
 
-
-
-
-
-
 - - -
 
 ## Questions?
@@ -116,8 +104,6 @@ If you have questions about how to use Material Components for iOS:
 - Join us on our [Slack discussion channel](https://googleoss.slack.com/messages/mdc-ios/) for more
   direct discussions with the team.
 
-
-
 - - -
 
 ## Found an Issue?
@@ -125,10 +111,6 @@ If you have questions about how to use Material Components for iOS:
 If you find a bug in the source code or a mistake in the documentation, you can help us by
 [submitting an issue](https://github.com/google/material-components-ios/issues) to our GitHub
 repository. Even better: submit a fix as a pull request!
-
-
-
-
 
 - - -
 
@@ -143,9 +125,6 @@ would like to implement a new feature then consider what kind of change it is:
   can better coordinate our efforts, prevent duplication of work, and help you to craft the change
   so that it is successfully accepted into the project.
 - Small changes can be crafted and submitted to the GitHub Repository as a Pull Request.
-
-
-
 
 - - -
 
@@ -168,10 +147,6 @@ issue being dealt with quickly:
 Here is a great example of a well defined issue:
 [https://github.com/angular/angular.js/issues/5069](https://github.com/angular/angular.js/issues/5069)
 
-
-
-
-
 - - -
 
 ## Signing the CLA
@@ -183,10 +158,6 @@ changes to be accepted, the CLA must be signed. It's a quick process, we promise
   form](http://code.google.com/legal/individual-cla-v1.0.html).
 - For corporations we'll need you to print, sign and one of scan+email, fax or mail [the form.
   ](http://code.google.com/legal/corporate-cla-v1.0.html)
-
-
-
-
 
 - - -
 
@@ -203,14 +174,29 @@ Once you have code that is ready to share, please create a pull request against 
 repo](https://github.com/google/material-components-ios). See [GitHub's documentation about pull
 requests](https://help.github.com/articles/using-pull-requests) for more information.
 
+We use a simple format for titles:
+
+- Start the title with `[ComponentName]` to identify which component a change affects. Use
+  `[ComponentName|OtherComponentName]` for commits affecting multiple components, which should be
+rare.
+- Use `[ComponentName]!` to indicate that a change introduce a breakage: removing/renaming an
+  element of the public API.
+- Use `[ComponentName]?` to indicate that a change (deliberately) introduces warnings, such as in
+  deprecations.
+
+A good example of a title is:
+
+~~~ objective-c
+[FooBar]! Removes the deprecated fooWithBar:(Bar*)bar method.
+~~~
+
+When referencing GitHub issues, use the full URL:
+`https://github.com/google/material-components-ios/issues/nnn` instead of the shorthand `#nnn`.
+
 Pull requests will be reviewed in [Phabricator's Differential code review
 tool](http://codereview.cc) instead of directly in GitHub. When you submit your pull request, a bot
 will reply with a link to the code review discussion. If you haven't done so before, create a new
 account on Phabricator and join the discussion of your changes.
-
-
-
-
 
 - - -
 
@@ -220,10 +206,6 @@ We have deferred all conversations about coding style to
 [clang-format](http://clang.llvm.org/docs/ClangFormat.html) and it is an automated part of our work
 flow. We follow the [Google style guide](https://google.github.io/styleguide/objcguide.xml). We
 recommend running clang format on your changes before sending a pull request.
-
-
-
-
 
 - - -
 

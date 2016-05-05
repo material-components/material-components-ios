@@ -45,7 +45,7 @@ pod 'MaterialComponents/NavigationBar'
 Then, run the following command:
 
 ~~~ bash
-$ pod install
+pod install
 ~~~
 
 

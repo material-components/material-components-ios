@@ -22,21 +22,21 @@
 @interface MDCThumbTrack : UIControl
 
 /** The delegate for the thumb track. */
-@property(nonatomic, weak) id<MDCThumbTrackDelegate> delegate;
+@property(nullable, nonatomic, weak) id<MDCThumbTrackDelegate> delegate;
 
-@property(nonatomic, strong) UIColor *primaryColor;
+@property(nullable, nonatomic, strong) UIColor *primaryColor;
 
 /** The color of the thumb off color. */
-@property(nonatomic, strong) UIColor *thumbOffColor;
+@property(nullable, nonatomic, strong) UIColor *thumbOffColor;
 
 /** The color of the track off color. */
-@property(nonatomic, strong) UIColor *trackOffColor;
+@property(nullable, nonatomic, strong) UIColor *trackOffColor;
 
 /** The color of the thumb disabled color. */
-@property(nonatomic, strong) UIColor *thumbDisabledColor;
+@property(nullable, nonatomic, strong) UIColor *thumbDisabledColor;
 
 /** The color of the track disabled color. */
-@property(nonatomic, strong) UIColor *trackDisabledColor;
+@property(nullable, nonatomic, strong) UIColor *trackDisabledColor;
 
 /**
  The number of discrete values that the thumb can take along the track. If this property is zero,
@@ -121,7 +121,7 @@
 @property(nonatomic, assign) CGFloat filledTrackAnchorValue;
 
 /** The thumb view that user moves along the track. */
-@property(nonatomic, strong) MDCThumbView *thumbView;
+@property(nullable, nonatomic, strong) MDCThumbView *thumbView;
 
 /**
  Contains a Boolean value indicating whether a user's changes in the value generate continuous
@@ -154,7 +154,7 @@
 
  Designated initializer.
  */
-- (instancetype)initWithFrame:(CGRect)frame onTintColor:(UIColor *)onTintColor;
+- (nonnull instancetype)initWithFrame:(CGRect)frame onTintColor:(nullable UIColor *)onTintColor;
 
 /**
  Set the value of the thumb along the track.
@@ -179,9 +179,12 @@
  @param completion If not NULL, the block will be called after the value is set.
  */
 - (void)setValue:(CGFloat)value
-         animated:(BOOL)animated
-    userGenerated:(BOOL)userGenerated
-       completion:(void (^)())completion;
+        animated:(BOOL)animated
+   userGenerated:(BOOL)userGenerated
+      completion:(nullable void (^)())completion;
+
+/** Set the |icon| shown on the thumb. */
+- (void)setIcon:(nullable UIImage *)icon;
 
 @end
 
@@ -193,7 +196,7 @@
  Called when the user taps on the MDCThumbTrack.
  If not implemented, the MDCThumbTrack will always be allowed to jump to any value.
  */
-- (BOOL)thumbTrack:(MDCThumbTrack *)thumbTrack shouldJumpToValue:(CGFloat)value;
+- (BOOL)thumbTrack:(nonnull MDCThumbTrack *)thumbTrack shouldJumpToValue:(CGFloat)value;
 
 /**
  Called when the thumb track will jump to a specific value.
@@ -201,7 +204,7 @@
  @param thumbTrack The @c MDCThumbTrack sender.
  @param value The new value for the slider.
  */
-- (void)thumbTrack:(MDCThumbTrack *)thumbTrack willJumpToValue:(CGFloat)value;
+- (void)thumbTrack:(nonnull MDCThumbTrack *)thumbTrack willJumpToValue:(CGFloat)value;
 
 /**
  Called when the thumb track will animate to a specific value.
@@ -209,7 +212,7 @@
  @param thumbTrack The @c MDCThumbTrack sender.
  @param value The new value for the slider.
  */
-- (void)thumbTrack:(MDCThumbTrack *)thumbTrack willAnimateToValue:(CGFloat)value;
+- (void)thumbTrack:(nonnull MDCThumbTrack *)thumbTrack willAnimateToValue:(CGFloat)value;
 
 /**
  Called just after the thumb track has animated to a specific value.
@@ -217,6 +220,6 @@
  @param thumbTrack The @c MDCThumbTrack sender.
  @param value The new value for the slider.
  */
-- (void)thumbTrack:(MDCThumbTrack *)thumbTrack didAnimateToValue:(CGFloat)value;
+- (void)thumbTrack:(nonnull MDCThumbTrack *)thumbTrack didAnimateToValue:(CGFloat)value;
 
 @end

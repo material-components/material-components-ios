@@ -10,11 +10,15 @@ This allows you to have complete control over the image assets you pull into you
 
 To add an icon to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-    pod 'MaterialComponents/Icons/ic_arrow_back'
+~~~bash
+pod 'MaterialComponents/Icons/ic_arrow_back'
+~~~
 
 Then, run the following command:
 
-    $ pod install
+~~~bash
+pod install
+~~~
 
 ## Integration
 

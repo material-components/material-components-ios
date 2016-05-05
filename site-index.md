@@ -27,7 +27,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     To install CocoaPods, run the following commands:
 
     ~~~ bash
-    $ sudo gem install cocoapods
+    sudo gem install cocoapods
     ~~~
 
 
@@ -39,8 +39,8 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     To initialize CocoaPods in your project, run the following commands:
 
     ~~~ bash
-    $ cd your-project-directory
-    your-project-directory $ pod init
+    cd your-project-directory
+    pod init
     ~~~
 
 3.  ## Edit Podfile
@@ -63,8 +63,8 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     Then run the command:
 
     ~~~ bash
-    your-project-directory $ pod install
-    your-project-directory $ open your-project.xcworkspace
+    pod install
+    open your-project.xcworkspace
     ~~~
 
     Now you're ready to get started in Xcode.

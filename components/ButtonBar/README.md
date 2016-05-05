@@ -37,7 +37,7 @@ pod 'MaterialComponents/ButtonBar'
 Then, run the following command:
 
 ~~~ bash
-$ pod install
+pod install
 ~~~
 
 

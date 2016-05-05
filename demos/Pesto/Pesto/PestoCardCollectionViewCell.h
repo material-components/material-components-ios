@@ -16,7 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PestoCardCollectionViewCell : UICollectionViewCell
+#import "MaterialCollections.h"
+
+@interface PestoCardCollectionViewCell : MDCCollectionViewCell
 
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, copy) NSString *iconImageName;

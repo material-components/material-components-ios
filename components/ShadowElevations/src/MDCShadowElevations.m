@@ -16,25 +16,25 @@
 
 #import "MDCShadowElevations.h"
 
-const CGFloat MDCShadowElevationDialog = 24.f;
-const CGFloat MDCShadowElevationPicker = 24.f;
-const CGFloat MDCShadowElevationNavDrawer = 16.f;
-const CGFloat MDCShadowElevationRightDrawer = 16.f;
-const CGFloat MDCShadowElevationModalBottomSheet = 16.f;
-const CGFloat MDCShadowElevationFABPressed = 12.f;
-const CGFloat MDCShadowElevationSubMenu = 9.f;
-const CGFloat MDCShadowElevationMenu = 8.f;
-const CGFloat MDCShadowElevationCardPickedUp = 8.f;
-const CGFloat MDCShadowElevationRaisedButtonPressed = 8.f;
-const CGFloat MDCShadowElevationFABResting = 6.f;
-const CGFloat MDCShadowElevationSnackbar = 6.f;
 const CGFloat MDCShadowElevationAppBar = 4.f;
-const CGFloat MDCShadowElevationRefresh = 3.f;
-const CGFloat MDCShadowElevationQuickEntry = 3.f;
-const CGFloat MDCShadowElevationSearchBarScrolled = 3.f;
+const CGFloat MDCShadowElevationCardPickedUp = 8.f;
 const CGFloat MDCShadowElevationCardResting = 2.f;
-const CGFloat MDCShadowElevationRaisedButtonResting = 2.f;
-const CGFloat MDCShadowElevationQuickEntryResting = 2.f;
-const CGFloat MDCShadowElevationSearchBarResting = 2.f;
-const CGFloat MDCShadowElevationSwitch = 1.f;
+const CGFloat MDCShadowElevationDialog = 24.f;
+const CGFloat MDCShadowElevationFABPressed = 12.f;
+const CGFloat MDCShadowElevationFABResting = 6.f;
+const CGFloat MDCShadowElevationMenu = 8.f;
+const CGFloat MDCShadowElevationModalBottomSheet = 16.f;
+const CGFloat MDCShadowElevationNavDrawer = 16.f;
 const CGFloat MDCShadowElevationNone = 0;
+const CGFloat MDCShadowElevationPicker = 24.f;
+const CGFloat MDCShadowElevationQuickEntry = 3.f;
+const CGFloat MDCShadowElevationQuickEntryResting = 2.f;
+const CGFloat MDCShadowElevationRaisedButtonPressed = 8.f;
+const CGFloat MDCShadowElevationRaisedButtonResting = 2.f;
+const CGFloat MDCShadowElevationRefresh = 3.f;
+const CGFloat MDCShadowElevationRightDrawer = 16.f;
+const CGFloat MDCShadowElevationSearchBarResting = 2.f;
+const CGFloat MDCShadowElevationSearchBarScrolled = 3.f;
+const CGFloat MDCShadowElevationSnackbar = 6.f;
+const CGFloat MDCShadowElevationSubMenu = 9.f;
+const CGFloat MDCShadowElevationSwitch = 1.f;

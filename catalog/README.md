@@ -59,7 +59,10 @@ the catalog app. It is easiest to think of the values as a list of breadcrumbs.
 
 To add the example to the Catalog app, simply run pod install in the catalog/ directory again:
 
-    catalog/ $ pod install
+~~~bash
+cd catalog
+pod install
+~~~
 
 Build and run and you'll see your example listed in the app's hierarchy.
 

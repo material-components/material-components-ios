@@ -53,7 +53,7 @@ pod 'MaterialComponents/FlexibleHeader'
 Then, run the following command:
 
 ~~~ bash
-$ pod install
+pod install
 ~~~
 
 - - -

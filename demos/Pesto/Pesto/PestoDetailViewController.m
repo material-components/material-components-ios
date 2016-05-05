@@ -79,15 +79,15 @@ NSString *const kPestoBackArrowToMenu = @"mdc_sprite_arrow_back__menu";
 
   dispatch_async(dispatch_get_main_queue(), ^{
     [UIView animateWithDuration:kPestoDetailAnimationDuration
-                          delay:kPestoDetailAnimationDelay
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                       CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
-                       [CATransaction setAnimationTimingFunction:quantumEaseInOut];
-                       self.bottomView.alpha = 1;
-                     }
-                     completion:^(BOOL finished){
-                     }];
+        delay:kPestoDetailAnimationDelay
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+          CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
+          [CATransaction setAnimationTimingFunction:quantumEaseInOut];
+          self.bottomView.alpha = 1;
+        }
+        completion:^(BOOL finished){
+        }];
   });
 
   UIImage *spriteImage = [UIImage imageNamed:kPestoBackArrowToMenu];
@@ -109,18 +109,17 @@ NSString *const kPestoBackArrowToMenu = @"mdc_sprite_arrow_back__menu";
   [self loadImage];
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                         duration:(NSTimeInterval)duration {
-  if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  if (size.width < size.height) {
     self.bottomSheetHeight = kPestoDetailBottomSheetHeightPortrait;
   } else {
     self.bottomSheetHeight = kPestoDetailBottomSheetHeightLandscape;
   }
-  CGRect bottomFrame =
-      CGRectMake(0,
-                 self.view.frame.size.height - self.bottomSheetHeight,
-                 self.view.frame.size.width,
-                 self.bottomSheetHeight);
+  CGRect bottomFrame = CGRectMake(0,
+                                  size.height - self.bottomSheetHeight,
+                                  size.width,
+                                  self.bottomSheetHeight);
   self.bottomView.frame = bottomFrame;
 }
 

@@ -105,4 +105,51 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   // Then
   XCTAssertNil(font);
 }
+
+- (void)testDescriptionNotRegistered {
+  // Given
+  MDCFontDiskLoader *resource = [self validResource];
+  NSString *expected = [NSString stringWithFormat:@"font name: %@; font url: %@;",
+                                                  resource.fontName, resource.fontURL];
+
+  // When
+  NSString *actual = [resource description];
+
+  // Then
+  XCTAssertTrue([actual hasSuffix:expected], @"actual %@ does not end with: %@", actual, expected);
+}
+
+- (void)testDescriptionRegistered {
+  // Given
+  MDCFontDiskLoader *resource = [self validResource];
+  [resource registerFont];
+  NSString *expected = [NSString stringWithFormat:@"font name: %@; registered = YES; font url: %@;",
+                                                  resource.fontName, resource.fontURL];
+  UIView *view = [UIView new];
+  view.userInteractionEnabled = NO;
+
+  // When
+  NSString *actual = [resource description];
+
+  // Then
+  XCTAssertTrue([actual hasSuffix:expected], @"actual %@ does not end with: %@", actual, expected);
+}
+
+- (void)testDescriptionFailedRegistration {
+  // Given
+  MDCFontDiskLoader *resource = [self invalidResource];
+  [resource registerFont];
+  NSString *expected = [NSString stringWithFormat:@"font name: %@; failed registration = YES; "
+                                                  @"font url: %@;",
+                                                  resource.fontName, resource.fontURL];
+  UIView *view = [UIView new];
+  view.userInteractionEnabled = NO;
+
+  // When
+  NSString *actual = [resource description];
+
+  // Then
+  XCTAssertTrue([actual hasSuffix:expected], @"actual %@ does not end with: %@", actual, expected);
+}
+
 @end

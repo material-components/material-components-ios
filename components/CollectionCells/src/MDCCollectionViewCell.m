@@ -230,11 +230,11 @@ static const uint32_t kCellRedColor = 0xF44336;
   }
 
   if (!hideSeparator) {
-    CGFloat borderWidth = (1.0f / [[UIScreen mainScreen] scale]);
+    UIEdgeInsets insets = _attr.backgroundImageViewInsets;
     CGRect separatorFrame =
-        CGRectMake(borderWidth,
+        CGRectMake(insets.left,
                    CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
-                   CGRectGetWidth(self.bounds) - borderWidth,
+                   CGRectGetWidth(self.bounds) - insets.left - insets.right,
                    _attr.separatorLineHeight);
     _separatorView.frame = UIEdgeInsetsInsetRect(separatorFrame, separatorInset);
     _separatorView.backgroundColor = _attr.separatorColor;

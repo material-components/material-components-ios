@@ -31,9 +31,10 @@
 }
 
 - (void)setInkView:(MDCInkView *)inkView {
-  if (!self.inkView) {
-    [self addSubview:inkView];
+  if (self.inkView) {
+    [self.inkView removeFromSuperview];
   }
+  [self addSubview:inkView];
   objc_setAssociatedObject(self, @selector(inkView), inkView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 

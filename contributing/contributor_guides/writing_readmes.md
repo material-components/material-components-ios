@@ -64,7 +64,7 @@ fill out have been marked with `TODO` statements.
     Then, run the following command:
 
     ~~~ bash
-    $ pod install
+    pod install
     ~~~
 
     - - -

@@ -107,8 +107,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (void)collectionView:(UICollectionView *)collectionView
     willDeleteItemsAtIndexPaths:(NSArray *)indexPaths {
-  // Remove these index paths from our data.
-  for (NSIndexPath *indexPath in indexPaths) {
+  // First sort reverse order then remove. This is done because when we delete an index path the
+  // higher rows shift down, altering the index paths of those that we would like to delete in the
+  // next iteration of this loop.
+  NSArray *sortedArray = [indexPaths sortedArrayUsingSelector:@selector(compare:)];
+  for (NSIndexPath *indexPath in [sortedArray reverseObjectEnumerator]) {
     [_content[indexPath.section] removeObjectAtIndex:indexPath.item];
   }
 }
