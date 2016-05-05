@@ -44,6 +44,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
 - (void)commonMDCButtonBarInit {
   _buttonItemsLock = [[NSObject alloc] init];
+  _layoutPosition = MDCButtonBarLayoutPositionNone;
 
   _defaultBuilder = [[MDCAppBarButtonBarBuilder alloc] init];
 

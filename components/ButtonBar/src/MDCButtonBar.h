@@ -16,6 +16,21 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ The position of the button bar, typically aligned with the left of right edge of the screen.
+
+ Default: MDCBarButtonLayoutPositionNone
+ */
+typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
+  MDCButtonBarLayoutPositionNone = 0,
+
+  /** The button bar is on the left side of the screen. */
+  MDCButtonBarLayoutPositionLeft = 1 << 0,
+
+  /** The button bar is on the right side of the screen. */
+  MDCButtonBarLayoutPositionRight = 1 << 1,
+};
+
 @protocol MDCButtonBarDelegate;
 
 /**
@@ -88,6 +103,13 @@
  Default: 0
  */
 @property(nonatomic) CGFloat buttonTitleBaseline;
+
+/**
+ The position of the button bar, usually positioned on the left or right edge of the screen.
+
+ Default: MDCBarButtonLayoutPositionNone
+ */
+@property(nonatomic) MDCButtonBarLayoutPosition layoutPosition;
 
 /**
  Returns a height adhering to the Material spec for Bars and a width that is able to accommodate

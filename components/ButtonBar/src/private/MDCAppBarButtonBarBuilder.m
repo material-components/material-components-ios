@@ -28,6 +28,9 @@
 
 static const CGFloat kMinimumItemWidth = 36.f;
 
+// The padding around button contents.
+static const CGFloat kButtonPaddingHorizontal = 12.f;
+
 // Additional insets for the left-most or right-most items, primarily for image buttons.
 static const CGFloat kEdgeButtonAdditionalMarginPhone = 4.f;
 static const CGFloat kEdgeButtonAdditionalMarginPad = 12.f;
@@ -51,6 +54,10 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 @end
 
 @interface MDCButtonBarButton : MDCFlatButton
+
+// Content padding for the button.
+@property(nonatomic) UIEdgeInsets contentPadding;
+
 @end
 
 @interface UIBarButtonItem (MDCHeaderInternal)
@@ -175,8 +182,22 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
     NSAssert(0, @"No button title or image");
   }
 
-  button.contentEdgeInsets = contentInsets;
+  // Only add padding to the first item of the button bar.
+  if (layoutHints == MDCBarButtonItemLayoutHintsIsFirstButton) {
+    switch (buttonBar.layoutPosition) {
+      case MDCButtonBarLayoutPositionLeft:
+        button.contentPadding =
+            UIEdgeInsetsMake(0, contentInsets.left - kButtonPaddingHorizontal, 0, 0);
+        break;
+      case MDCButtonBarLayoutPositionRight:
+        button.contentPadding =
+            UIEdgeInsetsMake(0, 0, 0, contentInsets.right - kButtonPaddingHorizontal);
+      default:
+        break;
+    }
+  }
 
+  button.contentEdgeInsets = contentInsets;
   button.enabled = buttonItem.enabled;
   button.accessibilityLabel = buttonItem.accessibilityLabel;
   button.accessibilityHint = buttonItem.accessibilityHint;
@@ -245,8 +266,10 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize fitSize = [super sizeThatFits:size];
-
-  fitSize.width = MAX(kMinimumItemWidth, fitSize.width);
+  fitSize.height = self.contentPadding.top + MAX(kMinimumItemWidth, fitSize.height) +
+                   self.contentPadding.bottom;
+  fitSize.width = self.contentPadding.left + MAX(kMinimumItemWidth, fitSize.width) +
+                  self.contentPadding.right;
 
   return fitSize;
 }
