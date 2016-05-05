@@ -74,13 +74,13 @@ The Abstractor project should be now set up and ready to run. Building and runni
 
 Headers exist in nearly all apps we see to provide framing and navigation. The header and scrolling behavior is well defined in the [Material Design Guidelines](https://www.google.com/design/spec/TODO) but it is tricky to get right.
 
-Material Components for iOS provides both a higher level and lower level implementation that allow developers to easily customize the right behavior for the view controller they are building. Both implementations provide a responsive header that can expand and contract in response to scrolling behaviors to maximize the content area or show high level information to the user.
+Material Components for iOS provides both a higher level and lower level component that allow developers to easily customize the right behavior for the view controller they are building. Both implementations provide a responsive header that can expand and contract in response to scrolling behaviors to maximize the content area or show high level information to the user.
 
 The [App Bar](https://materialcomponents.org/components/appbar/) is the first way to implement a response header. It uses the familiar UINavigationItem properties of a UIViewController to derive the contents of the header view.
 
-The [Flexible Header](https://materialcomponents.org/components/flexible-header/) is the second way to implement the responsive header. This component is what the App Bar is built on and is perfect if the developer would like fine grained control over it's contents and behavior. For example, the flexible header can contain a fully custom view that would respond to size changes as the user scrolled.
+The [Flexible Header](https://materialcomponents.org/components/flexible-header/) is the second way to implement the responsive header. This component is what the App Bar is built on and is perfect if the developer would like fine grained control over its contents and behavior. For example, the flexible header can contain a fully custom view that would respond to size changes as the user scrolled.
 
-If you are used to UINavigationController's UINavigationBar, the fundamental different in design is that your UIViewController has the actual header bar in it's view hierarchy. This contrasts with UINavigationBar being part of UINavigationController's view hierarchy. The different view hierarchy allows gives developers more flexibility when animating between view controllers or customizing unique behaviors when the size of the header changes.
+If you are used to UINavigationController's UINavigationBar, the fundamental difference in design is that your UIViewController owns the header in its own view hierarchy. This contrasts with UINavigationBar being part of UINavigationController's view hierarchy. The different view hierarchy gives developers more flexibility when animating between view controllers or customizing unique behaviors when the size of the header changes.
 
 - - -
 
@@ -113,31 +113,29 @@ class MainViewController : UIViewController {
 
 This snippet is basic UIKit code to create a scroll view, setting the size of the scroll view to be at least 1000 points tall so it will scroll further off screen.
 
-To actually add the App Bar, we need to give the view controller a protocol to conform to, and override the initializers:
+To actually add the App Bar, we create an instance of one:
 
 <!--<div class="material-code-render" markdown="1">-->
 
 #### Swift
 
 ~~~ swift
-class MainViewController : UIViewController, MDCAppBarParenting {
+class MainViewController : UIViewController {
   var scrollView: UIScrollView?
 
-  // -- start MDCAppBarParenting
-  var headerStackView: MDCHeaderStackView?
-  var navigationBar: MDCNavigationBar?
-  var headerViewController: MDCFlexibleHeaderViewController?
+  let appBar = MDCAppBar()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    MDCAppBarPrepareParent(self)
+
+    addChildViewController(appBar.headerViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    MDCAppBarPrepareParent(self)
+
+    addChildViewController(appBar.headerViewController)
   }
-  // -- end MDCAppBarParenting
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -148,9 +146,7 @@ class MainViewController : UIViewController, MDCAppBarParenting {
     scrollView!.backgroundColor = UIColor.whiteColor()
     view.addSubview(scrollView!)
 
-    // -- start MDCAppBarParenting
-    MDCAppBarAddViews(self)
-    // -- end MDCAppBarParenting
+    appBar.addSubviewsToParent()
   }
 }
 
@@ -162,7 +158,7 @@ At this point, the app will add a grey header bar at the top of the view, but th
 
 **TODO: Add image of the grey header**
 
-The MDCFlexibleHeaderViewController that was now exposed as a property of our view controller doesn't know about the scroll view and therefore it cannot adjust any scroll view insets the scroll view needs to render below the bar. To rectify this, simply tell the headerView in the MDCFlexibleHeaderViewController about the scroll view in viewDidLoad():
+The MDCFlexibleHeaderViewController that is now exposed as a property of the MDCAppBar instance doesn't know about the scroll view and therefore it cannot adjust any scroll view insets the scroll view needs to render below the bar. To rectify this, simply tell the headerView in the MDCFlexibleHeaderViewController about the scroll view in viewDidLoad():
 
 <!--<div class="material-code-render" markdown="1">-->
 
@@ -175,10 +171,9 @@ class MainViewController : UIViewController, MDCAppBarParenting {
     // ...
 
     // Connect scroll view with the header view controller.
-    headerViewController?.headerView.trackingScrollView = contentScrollView
-    headerViewController?.headerView.behavior = .EnabledWithStatusBar
-    scrollView.delegate = headerViewController
-
+    appBar.headerViewController.headerView.trackingScrollView = contentScrollView
+    appBar.headerViewController.headerView.behavior = .EnabledWithStatusBar
+    scrollView.delegate = appBar.headerViewController
   }
 ~~~
 <!--</div>-->
@@ -198,7 +193,7 @@ The status bar is not hiding yet, and the reason is by default UIViewController 
 class MainViewController : UIViewController, MDCAppBarParenting {
   // ...
   override func childViewControllerForStatusBarHidden() -> UIViewController {
-    return headerViewController!
+    return appBar.headerViewController
   }
 }
 ~~~
@@ -222,8 +217,8 @@ class MainViewController : UIViewController, MDCAppBarParenting {
     // ...
 
     // Set color using UIColor extension in UIColorAbstractor.swift
-    headerViewController!.headerView.backgroundColor = UIColor.materialOrange700()
-    headerViewController!.headerView.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.87)
+    appBar.headerViewController.headerView.backgroundColor = UIColor.materialOrange700()
+    appBar.headerViewController.headerView.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.87)
   }
 
   // Set the status bar to white.
@@ -248,14 +243,14 @@ class MainViewController : UIViewController, MDCAppBarParenting {
 
     // Set up UINavigationItems
     navigationItem.title = "Abstractor".blackout()
-       navigationItem.rightBarButtonItem = UIBarButtonItem(
-         image: UIImage(named: "ic_search")?.imageWithRenderingMode(.AlwaysTemplate),
-         style: .Plain,
-         target: self,
-         action: #selector(MainViewController.search(_:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(
+      image: UIImage(named: "ic_search")?.imageWithRenderingMode(.AlwaysTemplate),
+      style: .Plain,
+      target: self,
+      action: #selector(MainViewController.search(_:)))
 
      // Last step in viewDidLoad
-     MDCAppBarAddViews(self)
+    appBar.addSubviewsToParent()
   }
 
   // Implement the callback method for the search button.
@@ -273,7 +268,7 @@ the content.
 
 ## Flexible Header
 
-One advantage of the App Bar component is it's compatibility with UINavigationItem. If developers would like to customize the actual contents inside the header, they need to look at  the powerful Flexible Header component.
+One advantage of the App Bar component is its compatibility with UINavigationItem. If developers would like to customize the actual contents inside the header, they need to look at the powerful Flexible Header component.
 
 Observant developers would already have noticed that App Bar uses Flexible Header to create the behavior. Imagine instead that we would like to lock the title to the bottom of the header but keep search button attached to the top.
 
@@ -343,7 +338,7 @@ class MainViewController : UIViewController, MDCFlexibleHeaderViewLayoutDelegate
 
 
 Override the initialize to add the MDCFlexibleHeaderViewController to the view controller
-as a childViewController replacing the previous `MDCAppBArPrepareParent`:
+as a childViewController, similar to how we were doing before with the App Bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 
@@ -365,9 +360,7 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
 <!--</div>-->
 
 
-Initialize the customHeaderView and connect the headerViewController's headerView to
-the UIViewController's hierarchy. This replaces `MDCAppBarAddViews` was doing
-except this is not creating any observing of the UINavigationItem.
+Initialize the customHeaderView and connect the headerViewController's headerView to the UIViewController's hierarchy. This replaces `appBar.addSubviewsToParent()` was doing except this is not creating any observing of the UINavigationItem.
 
 <!--<div class="material-code-render" markdown="1">-->
 
@@ -379,7 +372,7 @@ override func viewDidLoad() {
 
   // ...
 
-  // Remove setting up UINavigationItem and MDCAppBarAddViews(self).
+  // Remove setting up UINavigationItem and appBar.addSubviewsToParent().
 
   // Initialize the customHeaderView
   var headerViewInitialFrame = headerViewController.headerView.contentView!.bounds
@@ -391,7 +384,6 @@ override func viewDidLoad() {
   view.addSubview(headerViewController!.headerView)
   headerViewController.didMoveToParentViewController(self)
   headerViewController.layoutDelegate = self
-
 }
 ~~~
 <!--</div>-->
