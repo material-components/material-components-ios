@@ -10,11 +10,13 @@ header {
 
   .logo {
     position: absolute;
-    font-size: 14px;
-    line-height: 16px;
+    top: 14px;
     left: 24px;
-    top: 24px;
-
+    padding-left: 56px;
+    line-height: 36px;
+    background: url(https://www.gstatic.com/images/branding/product/1x/mdc_ios_36dp.png) 0 0 no-repeat;
+    
+    font-size: 14px;
     text-transform: uppercase;
 
     a {
