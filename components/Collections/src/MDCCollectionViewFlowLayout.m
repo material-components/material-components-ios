@@ -113,6 +113,10 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
   if (!CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size) ||
       self.editor.isEditing) {
+    // Invalidate the layout to force cells to respect the new collection view bounds. Doing here
+    // removes necessity to implement methods -willRotateToInterfaceOrientation:duration: and/or
+    // -viewWillTransitionToSize:withTransitionCoordinator: on the collection view controller.
+    [self invalidateLayout];
     return YES;
   }
   return NO;

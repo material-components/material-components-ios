@@ -90,12 +90,6 @@
   _inkTouchController.delaysInkSpread = YES;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-  [_collectionViewLayout invalidateLayout];
-}
-
 - (UICollectionViewLayout *)collectionViewLayout {
   if (!_collectionViewLayout) {
     _collectionViewLayout = [[MDCCollectionViewFlowLayout alloc] init];
