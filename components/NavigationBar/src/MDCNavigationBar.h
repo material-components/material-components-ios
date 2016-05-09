@@ -84,22 +84,3 @@
 - (void)unobserveNavigationItem;
 
 @end
-
-// clang-format off
-/** @see MDCUINavigationItemObservables */
-__deprecated_msg("Please use MDCUINavigationItemObservables instead.")
-@protocol MDCUINavigationItemKVO <MDCUINavigationItemObservables>
-@end
-
-@interface MDCNavigationBar ()
-
-/** The delegate to be provided to the left button bar instance. */
-@property(nonatomic, weak, nullable) id<MDCButtonBarDelegate> leftButtonBarDelegate
-__deprecated_msg("This API will be removed in an upcoming release. It now has a default value.");
-
-/** The delegate to be provided to the right button bar instance. */
-@property(nonatomic, weak, nullable) id<MDCButtonBarDelegate> rightButtonBarDelegate
-__deprecated_msg("This API will be removed in an upcoming release. It now has a default value.");
-
-@end
-    // clang-format on

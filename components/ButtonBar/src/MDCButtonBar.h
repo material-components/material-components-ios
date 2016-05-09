@@ -150,39 +150,3 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
           layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;
 
 @end
-
-// clang-format off
-@interface MDCButtonBar ()
-
-/** @see items */
-@property(nonatomic, copy) NSArray *buttonItems
-__deprecated_msg("Use items instead.");
-
-/** The delegate creates button views from UIBarButtonItem instances. */
-@property(nonatomic, weak) id<MDCButtonBarDelegate> delegate
-__deprecated_msg("This API will be removed in an upcoming release. It now has a default value.");
-
-/** Tells the receiver to rebuild its button views. */
-- (void)reloadButtonViews
-__deprecated_msg("This API will be removed in an upcoming release.");
-
-@end
-
-/**
- Target selector for buttons created from UIBarButtonItems.
-
- See the MDCButtonBarDelegate documentation for more details on how this method
- should be used.
- */
-@interface MDCButtonBar (Builder)
-
-/**
- Finds the corresponding UIBarButtonItem and calls its target/action with the item as the first
- parameter.
- */
-- (void)didTapButton:(UIButton *)button event:(UIEvent *)event
-__deprecated_msg("This API will be removed in an upcoming release.");
-
-@end
-
-// clang-format on

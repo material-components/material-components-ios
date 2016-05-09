@@ -47,11 +47,6 @@ static NSString *const kEnabledSelector = @"enabled";
   _layoutPosition = MDCButtonBarLayoutPositionNone;
 
   _defaultBuilder = [[MDCAppBarButtonBarBuilder alloc] init];
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  self.delegate = _defaultBuilder;
-#pragma clang diagnostic pop
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -145,12 +140,7 @@ static NSString *const kEnabledSelector = @"enabled";
   if (![barButtonItems count]) {
     return nil;
   }
-  NSAssert(_delegate,
-           @"No delegate provided to %@. Please provide an instance conforming to %@.",
-           NSStringFromClass([self class]),
-           NSStringFromProtocol(@protocol(MDCButtonBarDelegate)));
-
-  id<MDCButtonBarDelegate> delegate = _delegate;
+  id<MDCButtonBarDelegate> delegate = _defaultBuilder;
 
   NSMutableArray *views = [NSMutableArray array];
   [barButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *item, NSUInteger idx, BOOL *stop) {
@@ -324,23 +314,8 @@ static NSString *const kEnabledSelector = @"enabled";
       }
     }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [self reloadButtonViews];
-#pragma clang diagnostic pop
   }
-}
-
-- (void)setDelegate:(id<MDCButtonBarDelegate>)delegate {
-  if (_delegate == delegate) {
-    return;
-  }
-  _delegate = delegate;
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  [self reloadButtonViews];
-#pragma clang diagnostic pop
 }
 
 - (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
@@ -349,12 +324,7 @@ static NSString *const kEnabledSelector = @"enabled";
   }
   _layoutDirection = layoutDirection;
 
-  if (_delegate) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    [self reloadButtonViews];
-#pragma clang diagnostic pop
-  }
+  [self reloadButtonViews];
 }
 
 - (void)setButtonTitleBaseline:(CGFloat)buttonTitleBaseline {
