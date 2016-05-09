@@ -40,6 +40,7 @@
   MDCCollectionInfoBarView *_headerInfoBar;
   MDCCollectionInfoBarView *_footerInfoBar;
   BOOL _headerInfoBarDismissed;
+  CGPoint _inkTouchLocation;
 }
 
 @synthesize collectionViewLayout = _collectionViewLayout;
@@ -87,7 +88,6 @@
   // Set up ink touch controller.
   _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
   _inkTouchController.delegate = self;
-  _inkTouchController.delaysInkSpread = YES;
 }
 
 - (UICollectionViewLayout *)collectionViewLayout {
@@ -280,35 +280,33 @@
 
 - (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
     shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
-  NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
-  if (indexPath) {
-    if ([_styler.delegate respondsToSelector:
-                              @selector(collectionView:hidesInkViewAtIndexPath:)]) {
-      return [_styler.delegate collectionView:self.collectionView
-                      hidesInkViewAtIndexPath:indexPath];
-    }
-  }
-  return YES;
+  // Only store touch location and do not allow ink processing. This ink location will be used when
+  // manually starting/stopping the ink animation during cell highlight/unhighlight states.
+  _inkTouchLocation = location;
+  return NO;
 }
 
 - (MDCInkView *)inkTouchController:(MDCInkTouchController *)inkTouchController
             inkViewAtTouchLocation:(CGPoint)location {
   NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
   UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-
+  MDCInkView *ink = nil;
   if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
     MDCCollectionViewCell *inkCell = (MDCCollectionViewCell *)cell;
     if ([inkCell respondsToSelector:@selector(inkView)]) {
       // Set cell ink.
-      MDCInkView *ink = [cell performSelector:@selector(inkView)];
-      if (!ink) {
-        ink = [[MDCInkView alloc] initWithFrame:inkCell.bounds];
-        inkCell.inkView = ink;
-      }
-      return ink;
+      ink = [cell performSelector:@selector(inkView)];
     }
   }
-  return nil;
+
+  if ([_styler.delegate respondsToSelector:
+                            @selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
+    return [_styler.delegate collectionView:self.collectionView
+                         inkTouchController:inkTouchController
+                         inkViewAtIndexPath:indexPath];
+  }
+
+  return ink;
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -343,6 +341,36 @@
 }
 
 #pragma mark - <UICollectionViewDelegate>
+
+- (BOOL)collectionView:(UICollectionView *)collectionView
+    shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  if ([_styler.delegate respondsToSelector:
+                            @selector(collectionView:hidesInkViewAtIndexPath:)]) {
+    return ![_styler.delegate collectionView:self.collectionView
+                     hidesInkViewAtIndexPath:indexPath];
+  }
+  return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+    didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  // Start cell ink show animation.
+  MDCInkView *inkView = [self inkTouchController:_inkTouchController
+                          inkViewAtTouchLocation:_inkTouchLocation];
+  UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+  CGPoint location = [self.collectionView convertPoint:_inkTouchLocation toView:cell];
+  [inkView startTouchBeganAnimationAtPoint:location completion:nil];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+    didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  // Start cell ink evaporate animation.
+  MDCInkView *inkView = [self inkTouchController:_inkTouchController
+                          inkViewAtTouchLocation:_inkTouchLocation];
+  UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+  CGPoint location = [self.collectionView convertPoint:_inkTouchLocation toView:cell];
+  [inkView startTouchEndedAnimationAtPoint:location completion:nil];
+}
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
     shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
