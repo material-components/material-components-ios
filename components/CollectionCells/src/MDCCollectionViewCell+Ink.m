@@ -27,7 +27,13 @@
 @dynamic inkView;
 
 - (MDCInkView *)inkView {
-  return objc_getAssociatedObject(self, _cmd);
+  MDCInkView *ink = objc_getAssociatedObject(self, _cmd);
+  if (!ink) {
+    ink = [[MDCInkView alloc] initWithFrame:self.bounds];
+    [self addSubview:ink];
+    objc_setAssociatedObject(self, @selector(inkView), ink, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  }
+  return ink;
 }
 
 - (void)setInkView:(MDCInkView *)inkView {
