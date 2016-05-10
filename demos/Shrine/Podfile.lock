@@ -12,6 +12,7 @@ PODS:
     - MaterialComponents/Ink (= 6.0.0)
     - MaterialComponents/NavigationBar (= 6.0.0)
     - MaterialComponents/PageControl (= 6.0.0)
+    - MaterialComponents/Palettes (= 6.0.0)
     - MaterialComponents/private (= 6.0.0)
     - MaterialComponents/RobotoFontLoader (= 6.0.0)
     - MaterialComponents/ShadowElevations (= 6.0.0)
@@ -61,6 +62,7 @@ PODS:
     - MaterialComponents/ButtonBar
     - MaterialComponents/Typography
   - MaterialComponents/PageControl (6.0.0)
+  - MaterialComponents/Palettes (6.0.0)
   - MaterialComponents/private (6.0.0):
     - MaterialComponents/private/Color (= 6.0.0)
     - MaterialComponents/private/Icons (= 6.0.0)
@@ -115,6 +117,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 5f379189a21dab9ea5f9c9e64a9fcf8ea68f34c7
+  MaterialComponents: b864ab0ef10105c0384ada338b4378879fd10a7e
 
 COCOAPODS: 0.39.0

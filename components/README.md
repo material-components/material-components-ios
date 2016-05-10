@@ -88,6 +88,10 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](PageControl/)
   <!--{: .icon-pagecontrol }-->
 
+- [**Palettes**
+  Reference colors from Material Design palettes.
+  ](Palettes/)
+
 - [**ShadowElevations**
   Provides the most commonly used elevations specified in Material Design.
   ](ShadowElevations/)
