@@ -77,6 +77,9 @@ components:
   - name: PageControl
     url: "/components/PageControl/"
     markdown: PageControl/README.md
+  - name: Palettes
+    url: "/components/Palettes/"
+    markdown: Palettes/README.md
   - name: ShadowElevations
     url: "/components/ShadowElevations/"
     markdown: ShadowElevations/README.md
