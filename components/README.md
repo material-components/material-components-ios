@@ -92,6 +92,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**Palettes**
   Reference colors from Material Design palettes.
   ](Palettes/)
+  <!--{: .icon-palette }-->
 
 - [**ShadowElevations**
   Provides the most commonly used elevations specified in Material Design.
