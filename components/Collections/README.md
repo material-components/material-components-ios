@@ -6,8 +6,10 @@ excerpt: "Collection view classes that adhere to Material design layout and styl
 ---
 # Collections
 
-![Collections](docs/assets/collections_screenshot.png)
-<!--{: .ios-screenshot .right }-->
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/collections.mp4" autoplay loop></video>
+  [![App Bar](docs/assets/collections.png)](docs/assets/collections.mp4)
+</div>
 
 Collection view classes that adhere to Material design layout and styling.
 <!--{: .intro :}-->
