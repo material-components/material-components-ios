@@ -61,13 +61,3 @@
 @property(nonatomic, strong, nonnull, readonly) UIViewController *contentViewController;
 
 @end
-
-// clang-format off
-@interface MDCAppBarContainerViewController ()
-
-/** @see appBar.headerViewController */
-- (nonnull MDCFlexibleHeaderViewController *)headerViewController
-__deprecated_msg("Use appBar.headerViewController instead.");
-
-@end
-// clang-format on

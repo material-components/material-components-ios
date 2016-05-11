@@ -75,10 +75,4 @@
   return self.appBar.headerViewController.preferredStatusBarStyle;
 }
 
-#pragma mark - Public
-
-- (MDCFlexibleHeaderViewController *)headerViewController {
-  return self.appBar.headerViewController;
-}
-
 @end
