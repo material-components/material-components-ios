@@ -4,6 +4,22 @@ Material Components’ visual style is based on the
 [material design](http://www.google.com/design/spec/material-design/introduction.html)
 specification, developed by a team of iOS engineers and UX designers at Google.
 
+## Catalog
+
+Catalog is a demonstration application that showcases the Material Components.
+
+### If you haven't checked out the repo yet:
+
+~~~ bash
+pod try MaterialComponents
+~~~
+
+### If you have checked out the repo:
+
+~~~ bash
+pod install --project-directory=catalog/ --no-repo-update
+~~~
+
 ## Quickstart
 
 ### 1. Install CocoaPods
