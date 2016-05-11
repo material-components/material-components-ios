@@ -176,9 +176,11 @@ static const uint32_t kCellRedColor = 0xF44336;
       accessoryImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
       break;
     }
-    case MDCCollectionViewCellAccessoryNone:
-      accessoryImageView.image = nil;
+    case MDCCollectionViewCellAccessoryNone: {
+      [_accessoryView removeFromSuperview];
+      _accessoryView = nil;
       break;
+    }
   }
   [_accessoryView sizeToFit];
 }

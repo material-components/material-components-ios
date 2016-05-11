@@ -45,8 +45,18 @@
 
 /**
  The following methods require a call to super in their overriding implementations to allow
- this collection view controller to properly configure the collection view when in editing mode.
+ this collection view controller to properly configure the collection view when in editing mode
+ as well as ink during the highlight/unhighlight states.
  */
+
+- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
+    shouldHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
+
+- (void)collectionView:(nonnull UICollectionView *)collectionView
+    didHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
+
+- (void)collectionView:(nonnull UICollectionView *)collectionView
+    didUnhighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
 
 - (BOOL)collectionView:(nonnull UICollectionView *)collectionView
     shouldSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;

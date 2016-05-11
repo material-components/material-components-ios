@@ -6,10 +6,10 @@ excerpt: "Buttons is a collection of Material Design buttons, including a flat b
 ---
 # Buttons
 
-<!--<div class="ios-animation right" markdown="1">-->
-  <!--<video src="docs/assets/buttons_screengrab.mp4" autoplay loop></video>-->
-  [![Raised, Flat, and Floating Action Buttons](docs/assets/buttons_screenshot.png)](docs/assets/buttons_screengrab.mp4)
-<!--</div>-->
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/buttons.mp4" autoplay loop></video>
+  [![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
+</div>
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.

@@ -1,5 +1,5 @@
 ---
-title:  "TODO: Roboto Font Loader"
+title:  "Roboto Font Loader"
 layout: detail
 section: components
 excerpt: "The Roboto Font Loader lazy loads the Robot font."

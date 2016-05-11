@@ -6,8 +6,10 @@ excerpt: "The App Bar is a flexible navigation bar designed to provide a typical
 ---
 # App Bar
 
-![App Bar](docs/assets/appbar_screenshot.png)
-<!--{: .ios-screenshot .right }-->
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/app_bar.mp4" autoplay loop></video>
+  [![App Bar](docs/assets/app_bar.png)](docs/assets/app_bar.mp4)
+</div>
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.

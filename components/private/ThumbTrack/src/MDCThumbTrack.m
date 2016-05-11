@@ -253,9 +253,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)setValue:(CGFloat)value
-        animated:(BOOL)animated
-   userGenerated:(BOOL)userGenerated
-      completion:(void (^)())completion {
+         animated:(BOOL)animated
+    userGenerated:(BOOL)userGenerated
+       completion:(void (^)())completion {
   CGFloat previousValue = _value;
   CGFloat newValue = MAX(_minimumValue, MIN(value, _maximumValue));
   newValue = [self closestValueToTargetValue:newValue];

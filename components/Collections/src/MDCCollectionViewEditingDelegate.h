@@ -186,7 +186,7 @@
  @param indexPaths An array of index paths to be deleted from the collection view.
  */
 - (void)collectionView:(nonnull UICollectionView *)collectionView
-    willDeleteItemsAtIndexPaths:(nonnull NSArray *)indexPaths;
+    willDeleteItemsAtIndexPaths:(nonnull NSArray<NSIndexPath *> *)indexPaths;
 
 /**
  Sent to the receiver after an array of index paths did get deleted from the collection view.
@@ -195,7 +195,7 @@
  @param indexPaths An array of index paths deleted from the collection view.
  */
 - (void)collectionView:(nonnull UICollectionView *)collectionView
-    didDeleteItemsAtIndexPaths:(nonnull NSArray *)indexPaths;
+    didDeleteItemsAtIndexPaths:(nonnull NSArray<NSIndexPath *> *)indexPaths;
 
 #pragma mark - CollectionView Section Deletions
 

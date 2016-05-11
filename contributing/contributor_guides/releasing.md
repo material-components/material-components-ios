@@ -119,7 +119,8 @@ Generate the API diff by running the following:
 
     scripts/release/api_diff
 
-Append the command's output to CHANGELOG.md's "release-candidate" section.
+- Append the command's output to CHANGELOG.md's "release-candidate" section.
+- Delete any component sections that state "No public API changes detected."
 
 Commit the changes to the release branch.
 

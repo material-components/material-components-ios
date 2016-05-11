@@ -6,8 +6,10 @@ excerpt: "The Typography component provides methods for displaying text using th
 ---
 # Typography
 
-![Typography](docs/assets/typography_screenshot.png)
-<!--{: .ios-screenshot .right }-->
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/typography.mp4" autoplay loop></video>
+  [![Switch](docs/assets/typography.png)](docs/assets/typography.mp4)
+</div>
 
 The Typography component provides methods for displaying text using the type sizes and opacities
 from the Material Design specifications.

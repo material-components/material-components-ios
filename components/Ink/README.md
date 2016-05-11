@@ -6,8 +6,10 @@ excerpt: "The Ink component provides a radial action in the form of a visual rip
 ---
 # Ink
 
-![Ink](docs/assets/ink_screenshot.png)
-<!--{: .ios-screenshot .right }-->
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/ink.mp4" autoplay loop></video>
+  [![Ink](docs/assets/ink.png)](docs/assets/ink.mp4)
+</div>
 
 The Ink component provides a radial action in the form of a visual ripple of ink expanding
 outward from the user's touch.

@@ -28,7 +28,7 @@ static CGFloat kPestoCollectionViewControllerAnimationDuration = 0.33f;
 static CGFloat kPestoCollectionViewControllerCellHeight = 300.f;
 static CGFloat kPestoCollectionViewControllerDefaultHeaderHeight = 240.f;
 static CGFloat kPestoCollectionViewControllerInset = 5.f;
-static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
+static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 76.f;
 
 @interface PestoCollectionViewController ()
 
@@ -139,24 +139,24 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
   if (self.logoScale < 0.5f) {
     self.logoScale = 0.5f;
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
-        delay:0
-        options:UIViewAnimationOptionCurveEaseOut
-        animations:^{
-          self.logoView.layer.opacity = 0;
-          self.logoSmallView.layer.opacity = 1.f;
-        }
-        completion:^(BOOL finished){
-        }];
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                       self.logoView.layer.opacity = 0;
+                       self.logoSmallView.layer.opacity = 1.f;
+                     }
+                     completion:^(BOOL finished){
+                     }];
   } else {
     [UIView animateWithDuration:kPestoCollectionViewControllerAnimationDuration
-        delay:0
-        options:UIViewAnimationOptionCurveEaseOut
-        animations:^{
-          self.logoView.layer.opacity = 1.f;
-          self.logoSmallView.layer.opacity = 0;
-        }
-        completion:^(BOOL finished){
-        }];
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                       self.logoView.layer.opacity = 1.f;
+                       self.logoSmallView.layer.opacity = 0;
+                     }
+                     completion:^(BOOL finished){
+                     }];
   }
   self.logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, self.logoScale,
                                                    self.logoScale);
@@ -165,12 +165,13 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 64.f;
 #pragma mark - Private methods
 
 - (void)centerHeaderWithSize:(CGSize)size {
+  CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
   CGFloat width = size.width;
   CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
   self.logoView.center = CGPointMake(width / 2.f,
                                      headerFrame.size.height / 2.f);
   self.logoSmallView.center = CGPointMake(width / 2.f,
-                                          headerFrame.size.height / 2.f);
+                                          (headerFrame.size.height - statusBarHeight) / 2.f + statusBarHeight);
 }
 
 - (UIView *)pestoHeaderView {
