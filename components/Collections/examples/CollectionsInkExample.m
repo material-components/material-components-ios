@@ -60,19 +60,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.textLabel.text = _content[indexPath.item];
-
-  // Update cell ink colors.
-  if (indexPath.item == 1) {
-    cell.inkView.inkColor = [UIColor colorWithRed:0.012
-                                            green:0.663
-                                             blue:0.957
-                                            alpha:0.2];
-  } else if (indexPath.item == 2) {
-    cell.inkView.inkColor = [UIColor colorWithRed:1.0
-                                            green:0.0
-                                             blue:0.0
-                                            alpha:0.2];
-  }
   return cell;
 }
 
@@ -85,6 +72,17 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     return YES;
   }
   return NO;
+}
+
+- (UIColor *)collectionView:(UICollectionView *)collectionView
+        inkColorAtIndexPath:(NSIndexPath *)indexPath {
+  // Update cell ink colors.
+  if (indexPath.item == 1) {
+    return [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
+  } else if (indexPath.item == 2) {
+    return [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.2];
+  }
+  return nil;
 }
 
 @end

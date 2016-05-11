@@ -65,7 +65,7 @@
 
  @param collectionView The collection view.
  @param indexPath The item's index path.
- @return if the item background should be hidden at the specified index path.
+ @return If the item background should be hidden at the specified index path.
  */
 - (BOOL)collectionView:(nonnull UICollectionView *)collectionView
     shouldHideItemBackgroundAtIndexPath:(nonnull NSIndexPath *)indexPath;
@@ -75,7 +75,7 @@
 
  @param collectionView The collection view.
  @param section The collection view section.
- @return if the header background should be hidden at the specified section.
+ @return If the header background should be hidden at the specified section.
  */
 - (BOOL)collectionView:(nonnull UICollectionView *)collectionView
     shouldHideHeaderBackgroundForSection:(NSInteger)section;
@@ -85,7 +85,7 @@
 
  @param collectionView The collection view.
  @param section The collection view section.
- @return if the footer background should be hidden at the specified section.
+ @return If the footer background should be hidden at the specified section.
  */
 - (BOOL)collectionView:(nonnull UICollectionView *)collectionView
     shouldHideFooterBackgroundForSection:(NSInteger)section;
@@ -115,14 +115,26 @@
 #pragma mark - Ink Touches
 
 /**
- Asks the delegate whether the inkVIew for a specified index path will is hidden.
+ Asks the delegate whether the inkView for a specified index path should be hidden.
 
  @param collectionView The collection view.
  @param indexPath The collection view index path.
- @return if the ink view should be hidden at the specified index path.
+ @return If the ink view should be hidden at the specified index path.
  */
 - (BOOL)collectionView:(nonnull UICollectionView *)collectionView
     hidesInkViewAtIndexPath:(nonnull NSIndexPath *)indexPath;
+
+/**
+ Asks the delegate for the ink color at the specified index path.
+
+ If nil, defaults to MDCInkView defaultInkColor.
+
+ @param collectionView The collection view.
+ @param indexPath The collection view index path.
+ @return The ink color at the specified index path.
+ */
+- (nullable UIColor *)collectionView:(nonnull UICollectionView *)collectionView
+                 inkColorAtIndexPath:(nonnull NSIndexPath *)indexPath;
 
 /**
  Allows the receiver to set the ink view at the specified collection view index path.

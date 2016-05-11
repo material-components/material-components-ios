@@ -346,8 +346,7 @@
     shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   if ([_styler.delegate respondsToSelector:
                             @selector(collectionView:hidesInkViewAtIndexPath:)]) {
-    return ![_styler.delegate collectionView:self.collectionView
-                     hidesInkViewAtIndexPath:indexPath];
+    return ![_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath];
   }
   return YES;
 }
@@ -357,8 +356,17 @@
   // Start cell ink show animation.
   MDCInkView *inkView = [self inkTouchController:_inkTouchController
                           inkViewAtTouchLocation:_inkTouchLocation];
-  UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-  CGPoint location = [self.collectionView convertPoint:_inkTouchLocation toView:cell];
+  UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+  CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
+
+  // Update ink color if necessary.
+  if ([_styler.delegate respondsToSelector:@selector(collectionView:inkColorAtIndexPath:)]) {
+    inkView.inkColor = [_styler.delegate collectionView:collectionView
+                                    inkColorAtIndexPath:indexPath];
+    if (!inkView.inkColor) {
+      inkView.inkColor = inkView.defaultInkColor;
+    }
+  }
   [inkView startTouchBeganAnimationAtPoint:location completion:nil];
 }
 
@@ -367,8 +375,8 @@
   // Start cell ink evaporate animation.
   MDCInkView *inkView = [self inkTouchController:_inkTouchController
                           inkViewAtTouchLocation:_inkTouchLocation];
-  UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-  CGPoint location = [self.collectionView convertPoint:_inkTouchLocation toView:cell];
+  UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+  CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
   [inkView startTouchEndedAnimationAtPoint:location completion:nil];
 }
 
