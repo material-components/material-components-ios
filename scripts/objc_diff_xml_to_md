@@ -130,7 +130,7 @@ if (!empty($structure)) {
         $lines []= "|:---- |:-- |:---- |";
 
         foreach ($modifications as $modification) {
-          $lines []= "| ". $modification->previousValue ." | ". $modification->currentValue ." | ".$modification->type ." |";
+          $lines []= "| `". $modification->previousValue ."` | `". $modification->currentValue ."` | `".$modification->type ."` |";
         }
         $lines []= "";
       }
