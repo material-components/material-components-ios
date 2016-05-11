@@ -55,6 +55,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 @implementation MDCCollectionInfoBarView {
   CGFloat _backgroundTransformY;
+  CALayer *_backgroundBorderLayer;
   UITapGestureRecognizer *_tapGesture;
 }
 
@@ -104,6 +105,15 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   if (_shouldApplyBackgroundViewShadow) {
     [self setShouldApplyBackgroundViewShadow:_shouldApplyBackgroundViewShadow];
   }
+}
+
+- (void)layoutSublayersOfLayer:(CALayer *)layer {
+  [super layoutSublayersOfLayer:layer];
+  // Set border layer frame.
+  _backgroundBorderLayer.frame = CGRectMake(-1,
+                                            0,
+                                            CGRectGetWidth(self.backgroundView.bounds) + 2,
+                                            CGRectGetHeight(self.backgroundView.bounds) + 1);
 }
 
 - (void)setTintColor:(UIColor *)tintColor {
@@ -158,6 +168,15 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
     self.isAccessibilityElement = YES;
     self.accessibilityTraits = UIAccessibilityTraitButton;
     self.accessibilityLabel = self.message;
+
+    // Adds border to be positioned during sublayer layout.
+    self.backgroundView.clipsToBounds = YES;
+    if (!_backgroundBorderLayer) {
+      _backgroundBorderLayer = [CALayer layer];
+      _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
+      _backgroundBorderLayer.borderWidth = 1.0f / [[UIScreen mainScreen] scale];
+      [self.backgroundView.layer addSublayer:_backgroundBorderLayer];
+    }
   }
 }
 
