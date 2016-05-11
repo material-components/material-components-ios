@@ -134,6 +134,12 @@ static NSString *const kEnabledSelector = @"enabled";
   [self sizeThatFits:self.bounds.size shouldLayout:YES];
 }
 
+- (void)tintColorDidChange {
+  [super tintColorDidChange];
+
+  _defaultBuilder.buttonTitleColor = self.tintColor;
+}
+
 #pragma mark - Private
 
 - (NSArray *)viewsForItems:(NSArray *)barButtonItems {
