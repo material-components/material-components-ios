@@ -166,7 +166,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
       textView.frame = CGRectMake(20,
         40,
         tableView.frame.size.width - 40,
-        (MDCTypography.captionFont().lineHeight) * 3)
+        ceil(MDCTypography.captionFont().lineHeight * 3))
       textView.autoresizingMask = .FlexibleWidth
       textView.contentInset = UIEdgeInsetsMake(-8, -5, -8, -5)
       textView.editable = false
