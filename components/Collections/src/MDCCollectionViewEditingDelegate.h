@@ -39,7 +39,7 @@
 
 /**
  Sent to the receiver when the collection view will begin editing. Typically this method will be
- called from a collection view editing manager that has had its editing property set to YES.
+ called from a collection view editor that has had its editing property set to YES.
  This will be called before any animations to editing state will begin.
 
  @param collectionView The collection view.
@@ -48,7 +48,7 @@
 
 /**
  Sent to the receiver when the collection view did begin editing. Typically this method will be
- called from a collection view editing manager that has had its editing property set to YES.
+ called from a collection view editor that has had its editing property set to YES.
  This is called after animations to editing state have completed.
 
  @param collectionView The collection view.
@@ -57,7 +57,7 @@
 
 /**
  Sent to the receiver when the collection view will end editing. Typically this method will be
- called from a collection view editing manager that has had its editing property set to NO.
+ called from a collection view editor that has had its editing property set to NO.
  This will be called before any animations from editing state begin.
 
  @param collectionView The collection view.
@@ -66,7 +66,7 @@
 
 /**
  Sent to the receiver when the collection view did end editing. Typically this method will be
- called from a collection view editing manager that has had its editing property set to NO.
+ called from a collection view editor that has had its editing property set to NO.
  This is called after animations from editing state have completed.
 
  @param collectionView The collection view.

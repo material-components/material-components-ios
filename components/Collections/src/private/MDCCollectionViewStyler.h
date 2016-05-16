@@ -25,7 +25,7 @@
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
- Initializes and returns a newly allocated style manager object with the specified collection view.
+ Initializes and returns a newly allocated styler object with the specified collection view.
 
  Designated initializer.
 

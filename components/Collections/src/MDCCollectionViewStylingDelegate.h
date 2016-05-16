@@ -41,7 +41,7 @@
 
 /**
  Asks the delegate for the cell style at the specified collection view section index. All
- remaining sections to have their cells styled per the style managers |cellStyle| property.
+ remaining sections to have their cells styled per the styler |cellStyle| property.
 
  @param collectionView The collection view.
  @param section The collection view section.

@@ -38,7 +38,7 @@
 /** The collection view styler. */
 @property(nonatomic, strong, readonly, nonnull) id<MDCCollectionViewStyling> styler;
 
-/** The collection view editing manager. */
+/** The collection view editor. */
 @property(nonatomic, strong, readonly, nonnull) id<MDCCollectionViewEditing> editor;
 
 #pragma mark - Subclassing

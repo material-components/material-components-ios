@@ -524,7 +524,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
                              isHighlighted:isHighlighted];
 
   if (backgroundCacheKey > BackgroundCacheKeyMax) {
-    NSAssert(NO, @"Invalid style manager cell background cache key");
+    NSAssert(NO, @"Invalid styler cell background cache key");
     return nil;
   }
 

@@ -643,7 +643,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // for a grid layout when it is either A) grouped-style or B) card-style with zero padding. When
   // this happens, the background for those items will not be drawn, and instead this decoration
   // view will extend to the bounds of the sum of its respective section item frames. Shadowing and
-  // border will be applied to this decoration view as per the style manager settings.
+  // border will be applied to this decoration view as per the styler settings.
   if (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     NSMutableSet *sectionSet = [NSMutableSet set];
     BOOL shouldShowGridBackground = NO;
