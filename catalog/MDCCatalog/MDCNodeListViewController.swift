@@ -31,6 +31,11 @@ class NodeViewTableViewDemoCell: UITableViewCell {
     super.init(coder: coder)!
   }
 
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    textLabel!.textColor = UIColor.blackColor()
+    imageView!.image = UIImage(named: "Demo")
+  }
 }
 
 class MDCNodeListViewController: CBCNodeListViewController {
