@@ -68,7 +68,7 @@
   // Set the title text attributes before assigning to buttonBar.items
   // because of https://github.com/google/material-components-ios/issues/277
   [moreButton setTitleTextAttributes:[self itemTitleTextAttributes] forState:UIControlStateNormal];
-  self.navBar.rightBarButtonItems = @[ moreButton ];
+  self.navBar.trailingBarButtonItems = @[ moreButton ];
 }
 
 - (NSDictionary *)itemTitleTextAttributes {
