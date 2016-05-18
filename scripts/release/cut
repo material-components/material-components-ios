@@ -22,11 +22,12 @@ MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
 cd $MDC_ROOT
 
 if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
-	git fetch
-	git checkout -b release-candidate origin/develop
+  git fetch
+  git checkout -b release-candidate origin/develop
   git push origin release-candidate
 else
-  echo "Release already cut."
+  echo "Release already cut. Consider deleting the existing release-candidate branch."
+  exit 1
 fi
 
 # Prepare the CHANGELOG for updates.
