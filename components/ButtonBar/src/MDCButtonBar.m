@@ -91,7 +91,12 @@ static NSString *const kEnabledSelector = @"enabled";
 
   BOOL shouldAlignBaselines = _buttonTitleBaseline > 0;
 
-  for (UIView *view in _buttonViews) {
+  NSEnumerator<NSArray *> *positionedButtonViews =
+      self.layoutPosition == MDCButtonBarLayoutPositionTrailing
+          ? [_buttonViews reverseObjectEnumerator]
+          : [_buttonViews objectEnumerator];
+
+  for (UIView *view in positionedButtonViews) {
     CGFloat width = view.frame.size.width;
     switch (_layoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:

@@ -121,9 +121,9 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
 
   _leftButtonBar = [[MDCButtonBar alloc] init];
-  _leftButtonBar.layoutPosition = MDCButtonBarLayoutPositionLeft;
+  _leftButtonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
   _rightButtonBar = [[MDCButtonBar alloc] init];
-  _leftButtonBar.layoutPosition = MDCButtonBarLayoutPositionRight;
+  _leftButtonBar.layoutPosition = MDCButtonBarLayoutPositionTrailing;
 
   [self addSubview:_titleLabel];
   [self addSubview:_leftButtonBar];
