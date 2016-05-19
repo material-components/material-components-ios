@@ -138,6 +138,7 @@ static NSString *const kEnabledSelector = @"enabled";
   [super tintColorDidChange];
 
   _defaultBuilder.buttonTitleColor = self.tintColor;
+  [self reloadButtonViews];
 }
 
 #pragma mark - Private
