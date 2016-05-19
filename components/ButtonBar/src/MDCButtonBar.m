@@ -44,6 +44,10 @@ static NSString *const kEnabledSelector = @"enabled";
 
 - (void)commonMDCButtonBarInit {
   _buttonItemsLock = [[NSObject alloc] init];
+#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
+  _layoutDirection = [UIView
+      userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
+#endif
   _layoutPosition = MDCButtonBarLayoutPositionNone;
 
   _defaultBuilder = [[MDCAppBarButtonBarBuilder alloc] init];

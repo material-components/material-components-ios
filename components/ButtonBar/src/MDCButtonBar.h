@@ -89,7 +89,9 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 /**
  The direction in which the button views should be laid out.
 
- Default: UIUserInterfaceLayoutDirectionLeftToRight
+ Default:
+   - Prior to iOS 9: UIUserInterfaceLayoutDirectionLeftToRight
+   - iOS 9 and above: same as +[UIView userInterfaceLayoutDirectionForSemanticContentAttribute:]
  */
 @property(nonatomic) UIUserInterfaceLayoutDirection layoutDirection;
 
