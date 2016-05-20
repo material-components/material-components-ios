@@ -243,7 +243,7 @@ Send the release-candidate branch out for review:
 
     git fetch
     git checkout release-candidate
-    arc diff origin/master --no-lint --plan-changes --message-file scripts/release/release_checklist.txt
+    arc diff origin/master --no-lint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt
 
 Check off each item in the diff's checklist.
 
