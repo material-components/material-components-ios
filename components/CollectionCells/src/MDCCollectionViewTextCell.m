@@ -103,6 +103,11 @@ static const CGFloat kCellImagePaddingLeft = 16;
 
 #pragma mark - Layout
 
+- (void)prepareForReuse {
+  [super prepareForReuse];
+  [self setNeedsLayout];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
   [self applyMetrics];
