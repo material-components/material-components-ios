@@ -120,6 +120,13 @@ if (!empty($structure)) {
             }
             $didOutputLines = true;
           }
+        } else {
+          $lines []= "- [declaration changed] [`".$delta->name."`]($newurl).";
+          $lines []= "```";
+          $lines []= $declaration->previousValue;
+          $lines []= $declaration->currentValue;
+          $lines []= "```";
+          $didOutputLines = true;
         }
 
       } else if (count(array_diff($types, array('header'))) == 0) {
