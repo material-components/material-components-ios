@@ -27,7 +27,7 @@ index paths. When a collection view has editing enabled, all of the cells will b
 additional protocol delegate methods, you can override which specific cells allow reordering and
 selection for deletion.
 
-<!--<div class="material-code-render" markdown="1">-->
+<div class="material-code-render" markdown="1">
 #### Objective-C
 ~~~ objc
 // Enable editing.
@@ -51,7 +51,7 @@ override func collectionView(collectionView: UICollectionView,
   return indexPath.item != 0
 }
 ~~~
-<!--</div>-->
+</div>
 
 ### Deleting Cells
 
@@ -71,7 +71,7 @@ The following illustrates a simple cell deletion example.
 > For this example, we are assuming a simple data source array of strings:
 > `data = @[ @"red", @"blue", @"green", @"black", @"yellow", @"purple" ];`
 
-<!--<div class="material-code-render" markdown="1">-->
+<div class="material-code-render" markdown="1">
 #### Objective-C
 ~~~ objc
 // Enable editing.
@@ -116,7 +116,7 @@ override func collectionView(collectionView: UICollectionView,
   }
 }
 ~~~
-<!--</div>-->
+</div>
 
 ### Reordering Cells
 
@@ -134,7 +134,7 @@ The following illustrates a simple cell reorder example.
 > For this example, we are assuming a simple data source array of strings:
 > `data = @[ @"red", @"blue", @"green", @"black", @"yellow", @"purple" ];`
 
-<!--<div class="material-code-render" markdown="1">-->
+<div class="material-code-render" markdown="1">
 #### Objective-C
 ~~~ objc
 // Enable editing.
@@ -169,7 +169,7 @@ override func collectionView(collectionView: UICollectionView,
   swap(&data[indexPath.item], &data[newIndexPath.item])
 }
 ~~~
-<!--</div>-->
+</div>
 
 ### Swipe to dismiss item at index path
 
@@ -181,7 +181,7 @@ to be enabled for swiping-to-dismiss to be allowed. Once a user swipes a cell, a
 method `collectionView:willDeleteItemsAtIndexPaths` will allow you to remove the appropriate data
 at the specified index paths from your `UICollectionViewDataSource`.
 
-<!--<div class="material-code-render" markdown="1">-->
+<div class="material-code-render" markdown="1">
 #### Objective-C
 ~~~ objc
 // Enable swipe-to-dismiss items.
@@ -227,7 +227,7 @@ override func collectionView(collectionView: UICollectionView,
   }
 }
 ~~~
-<!--</div>-->
+</div>
 
 ### Swipe to dismiss section
 
@@ -238,7 +238,7 @@ Note, editing mode is **not** required to be enabled for swiping-to-dismiss to b
 user swipes a section, a call to protocol method `collectionView:willDeleteSections` will allow you
 to remove the appropriate data at the specified section from your `UICollectionViewDataSource`.
 
-<!--<div class="material-code-render" markdown="1">-->
+<div class="material-code-render" markdown="1">
 #### Objective-C
 ~~~ objc
 // Enable swipe-to-dismiss sections.
@@ -282,4 +282,4 @@ override func collectionView(collectionView: UICollectionView,
   }
 }
 ~~~
-<!--</div>-->
+</div>

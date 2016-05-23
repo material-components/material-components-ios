@@ -82,8 +82,8 @@ allowing your data to stay in sync with any edits.
 - [Importing](#importing)
 - [Use `MDCCollectionViewController` as a view controller](#use-mdccollectionviewcontroller-as-a-view-controller)
 - [Provide own UICollectionView](#provide-own-uicollectionview)
-- [Styling the collection view](docs/collections_styling.md)
-- [Editing the collection view](docs/collections_editing.md)
+- [Styling the collection view](styling/)
+- [Editing the collection view](editing/)
 
 - - -
 
