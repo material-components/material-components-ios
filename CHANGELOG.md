@@ -32,16 +32,20 @@ From *MDCButtonBar.h* to *private/MDCButtonBar+Private.h*.
 
 ### AppBar
 
-#### Changes
+#### Breaking changes
 
 * [Remove deprecated headerViewController property from MDCAppBarContainerViewController.](https://github.com/google/material-components-ios/commit/dbfc6b783d40e229708af1ee956ded363f621601) (Jeff Verkoeyen)
 
 ### ButtonBar
 
+#### Breaking changes
+
+* [Remove deprecated APIs.](https://github.com/google/material-components-ios/commit/f7c84317ec01774be169bd3486ebb8a561376250) (Jeff Verkoeyen)
+
 #### Changes
 
 * [Propagate the NavigationBar tint color to the bar button items.](https://github.com/google/material-components-ios/commit/39bda0a60728a5989971cb0a09ee8d40b7bd4f09) (Louis Romero)
-* [Remove deprecated APIs.](https://github.com/google/material-components-ios/commit/f7c84317ec01774be169bd3486ebb8a561376250) (Jeff Verkoeyen)
+
 
 ### CollectionCells
 
@@ -58,7 +62,7 @@ From *MDCButtonBar.h* to *private/MDCButtonBar+Private.h*.
 
 ### NavigationBar
 
-#### Changes
+#### Breaking changes
 
 * [[ButtonBar] Remove deprecated APIs.](https://github.com/google/material-components-ios/commit/f7c84317ec01774be169bd3486ebb8a561376250) (Jeff Verkoeyen)
 
