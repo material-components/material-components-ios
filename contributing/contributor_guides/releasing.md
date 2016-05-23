@@ -209,16 +209,6 @@ Commit the results to your branch.
     git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
     git push origin release-candidate
 
-## Send the release out for review
-
-Sent the release-candidate branch out for review:
-
-    git fetch
-    git checkout release-candidate
-    arc diff origin/master --message-file scripts/release/release_checklist.txt
-
-Check off each item in the diff's checklist before merging the release candidate branch.
-
 ## Release-blocking clients
 
 Before you can merge the release branch into either develop or master you **must** get the release
@@ -247,10 +237,24 @@ go-ahead from the following clients:
 
 ---
 
+## Send the release out for review
+
+Send the release-candidate branch out for review:
+
+    git fetch
+    git checkout release-candidate
+    arc diff origin/master --no-lint --plan-changes --message-file scripts/release/release_checklist.txt
+
+Check off each item in the diff's checklist.
+
+Get a reviewer to approve the change.
+
+Do NOT arc land this diff, its purpose is to have someone sanity check the release.
+
 ## Merge the release candidate branch
 
-Once the release has passed all tests by clients, you may merge the release into the `develop` and
-`master` branches.
+Once the release-candidate has passed all tests by clients, you may merge the release into the
+`develop` and `master` branches.
 
     # Did you listen to the dragon?
     #
@@ -288,14 +292,20 @@ and delete the release branch:
    [GitHub list of releases](https://github.com/google/material-components-ios/releases), click on
    "Draft a new release".
 1. Tag the release "vX.Y.Z".
-1. Title the release "Release X.Y.Z".
 1. Select the master branch.
+1. Title the release "Release X.Y.Z".
 1. In the body of the release notes, paste the text from CHANGELOG.md for this release.
 1. Publish the release.
 
 ### Regenerate the site
 
 TODO: Add instructions for regenerating Jazzy docs and deploying them.
+
+### Reply to the original release email message
+
+Post a reply to you message on [Material Components iOS Discuss]
+(https://groups.google.com/forum/#!topic/material-components-ios-discuss/) indicating that you are
+done.
 
 ### Pick the next release cut date
 

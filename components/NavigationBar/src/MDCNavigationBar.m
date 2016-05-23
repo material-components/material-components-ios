@@ -369,22 +369,6 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   }
 }
 
-- (void)setLeftButtonBarDelegate:(id<MDCButtonBarDelegate>)leftButtonBarDelegate {
-  _leftButtonBar.delegate = leftButtonBarDelegate;
-}
-
-- (id<MDCButtonBarDelegate>)leftButtonBarDelegate {
-  return _leftButtonBar.delegate;
-}
-
-- (void)setRightButtonBarDelegate:(id<MDCButtonBarDelegate>)rightButtonBarDelegate {
-  _rightButtonBar.delegate = rightButtonBarDelegate;
-}
-
-- (id<MDCButtonBarDelegate>)rightButtonBarDelegate {
-  return _rightButtonBar.delegate;
-}
-
 - (void)setLeftBarButtonItems:(NSArray *)leftBarButtonItems {
   _leftBarButtonItems = [leftBarButtonItems copy];
   _leftButtonBar.items = [self mdc_buttonItemsForLeftBar];

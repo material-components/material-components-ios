@@ -14,24 +14,14 @@
  limitations under the License.
  */
 
-#import "MDCCollectionViewStyling.h"
+#import "MDCButtonBar.h"
+
+@interface MDCButtonBar (Builder)
 
 /**
- The MDCCollectionViewStyler class provides a default implementation for a UICollectionView to set
- its style properties.
+ Finds the corresponding UIBarButtonItem and calls its target/action with the item as the first
+ parameter.
  */
-@interface MDCCollectionViewStyler : NSObject <MDCCollectionViewStyling>
-
-- (nonnull instancetype)init NS_UNAVAILABLE;
-
-/**
- Initializes and returns a newly allocated styler object with the specified collection view.
-
- Designated initializer.
-
- @param collectionView The controller's collection view.
- */
-- (nonnull instancetype)initWithCollectionView:
-        (nonnull UICollectionView *)collectionView NS_DESIGNATED_INITIALIZER;
+- (void)didTapButton:(UIButton *)button event:(UIEvent *)event;
 
 @end

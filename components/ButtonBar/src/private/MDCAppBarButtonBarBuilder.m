@@ -20,6 +20,7 @@
 
 #import "MDCAppBarButtonBarBuilder.h"
 
+#import "MDCButtonBar+Private.h"
 #import "MaterialButtons.h"
 
 #import <objc/runtime.h>
