@@ -299,7 +299,9 @@ and delete the release branch:
 
 ### Regenerate the site
 
-TODO: Add instructions for regenerating Jazzy docs and deploying them.
+You can preview your changes by serving a local version of the material component document site. Please refer to [Site Content Update](/site_content_update.md#build-and-preview-locally).
+
+However, you need to be one of the material component core members in order to deploy the site for the moment. If you are able to run deploy the site, please refer to [Site Content Update](/site_content_update.md#deploy-to-production). Don't worry, we will incorporate the changes to the site for every weekly cut release as well.
 
 ### Reply to the original release email message
 

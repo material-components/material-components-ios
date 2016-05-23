@@ -34,6 +34,10 @@ while test $# -gt 0; do
       update=false
       shift 1
     ;;
+    "--setup")
+      build=false
+      shift 1
+    ;;
     "-h" | "--help")
       echo "Usage: site-build.sh <command>"
       echo ""
@@ -101,5 +105,7 @@ else
   cd ..
 fi
 
-# Build site
-$ROOT_DIR/$SITE_SOURCE_FOLDER/build.sh $args
+# If it is not for set up, build site
+if $build ; then
+  $ROOT_DIR/$SITE_SOURCE_FOLDER/build.sh $args
+fi
