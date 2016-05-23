@@ -116,6 +116,11 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (void)commonMDCNavigationBarInit {
   _observedNavigationItemLock = [[NSObject alloc] init];
 
+#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
+  _layoutDirection = [UIView
+      userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
+#endif
+
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography titleFont];
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
@@ -174,11 +179,31 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   [super layoutSubviews];
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
-  _leadingButtonBar.frame = (CGRect){self.bounds.origin, leadingButtonBarSize};
+  CGFloat leadingButtonBarOriginX;
+  switch (_layoutDirection) {
+    case UIUserInterfaceLayoutDirectionLeftToRight:
+      leadingButtonBarOriginX = self.bounds.origin.x;
+      break;
+    case UIUserInterfaceLayoutDirectionRightToLeft:
+      leadingButtonBarOriginX = self.bounds.size.width - leadingButtonBarSize.width;
+      break;
+  }
+  _leadingButtonBar.frame =
+      (CGRect){.origin = {leadingButtonBarOriginX, self.bounds.origin.y},
+               .size = leadingButtonBarSize};
 
   CGSize trailingButtonBarSize = [_trailingButtonBar sizeThatFits:self.bounds.size];
+  CGFloat trailingButtonBarOriginX;
+  switch (_layoutDirection) {
+    case UIUserInterfaceLayoutDirectionLeftToRight:
+      trailingButtonBarOriginX = self.bounds.size.width - trailingButtonBarSize.width;
+      break;
+    case UIUserInterfaceLayoutDirectionRightToLeft:
+      trailingButtonBarOriginX = self.bounds.origin.x;
+      break;
+  }
   _trailingButtonBar.frame =
-      (CGRect){.origin = {self.bounds.size.width - trailingButtonBarSize.width, 0},
+      (CGRect){.origin = {trailingButtonBarOriginX, self.bounds.origin.y},
                .size = trailingButtonBarSize};
 
   const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
@@ -201,7 +226,18 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
                          .size;
   titleSize.width = ceil(titleSize.width);
   titleSize.height = ceil(titleSize.height);
-  CGRect titleFrame = (CGRect){{textFrame.origin.x, 0}, titleSize};
+  CGRect titleFrame;
+  switch (_layoutDirection) {
+    case UIUserInterfaceLayoutDirectionLeftToRight:
+      titleFrame = (CGRect){{textFrame.origin.x, 0}, titleSize};
+      break;
+    case UIUserInterfaceLayoutDirectionRightToLeft:
+      titleFrame =
+          (CGRect){
+              .origin = {self.bounds.size.width - textFrame.origin.x - titleSize.width, 0},
+              .size = titleSize};
+      break;
+  }
   UIControlContentVerticalAlignment titleAlignment = [self titleAlignment];
   _titleLabel.frame =
       [self mdc_frameAlignedVertically:titleFrame
@@ -323,6 +359,14 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   }
   [buttonItems addObjectsFromArray:self.leadingBarButtonItems];
   return buttonItems;
+}
+
+- (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
+  if (_layoutDirection == layoutDirection) {
+    return;
+  }
+  _layoutDirection = layoutDirection;
+  [self setNeedsLayout];
 }
 
 #pragma mark Colors

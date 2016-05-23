@@ -97,6 +97,17 @@
 @property(nonatomic, strong, nullable) UIBarButtonItem *leadingBarButtonItem;
 @property(nonatomic, strong, nullable) UIBarButtonItem *trailingBarButtonItem;
 
+#pragma mark Configuring Layout
+
+/**
+ The direction in which the navigation bar items should be laid out.
+
+ Default:
+ - Prior to iOS 9: UIUserInterfaceLayoutDirectionLeftToRight
+ - iOS 9 and above: same as +[UIView userInterfaceLayoutDirectionForSemanticContentAttribute:]
+ */
+@property(nonatomic) UIUserInterfaceLayoutDirection layoutDirection;
+
 #pragma mark Observing UINavigationItem instances
 
 /**
