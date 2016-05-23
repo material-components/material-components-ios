@@ -121,6 +121,13 @@ if (!empty($structure)) {
             $didOutputLines = true;
           }
         }
+
+      } else if (count(array_diff($types, array('header'))) == 0) {
+        // The API has been moved to a new header.
+        $header = getModificationWithType($modifications, 'header');
+        $lines []= "- [moved] [`".$delta->name."`]($newurl).";
+        $lines []= "From *".$header->previousValue."* to *".$header->currentValue."*.";
+        $didOutputLines = true;
       }
 
       if (!$didOutputLines) {
