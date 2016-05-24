@@ -7,17 +7,26 @@
   {% assign navdata = site.data.navigation.contributing %}
 {% endcase %}
 <nav id="sidenav">
-  <ul>{%
-    for item in navdata %}{%
-      assign lcpage = page.url | downcase %}{%
-      assign lcitem = item.url | downcase %}{%
-      assign activepage = "" %}{%
-      if lcpage == lcitem %}{%
-        assign activepage = "active" %}{%
-      endif %}
-    <li class="{{ item.class }} {{ activepage }}">
-      <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ item.url }}">{{ item.name }}</a>
-    </li>{%
-    endfor %}
+  <ul>
+    {% for item in navdata %}
+      {% assign lcpage = page.url | downcase %}
+      {% assign lcitem = item.url | downcase %}
+      {% assign activepage = "" %}
+      {% if lcpage == lcitem %}
+        {% assign activepage = "active" %}
+      {% endif %}
+      <li class="toplevel {{ activepage }}">
+        <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ item.url }}">{{ item.name }}</a>
+          {% if item.sub %}
+            <ul>
+            {% for sub in item.sub %}
+              <li class="sublevel">
+                <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ sub.url }}">{{ sub.name }}</a>
+              </li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+      </li>
+    {% endfor %}
   </ul>
 </nav>

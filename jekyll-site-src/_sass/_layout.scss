@@ -92,7 +92,7 @@ nav.tabs {
   li {
     line-height: 16px;
     margin-top: 32px;
-    margin-left: 72px;
+    margin-left: 48px;
     font-weight: 500;
 
     .sidebar-icon {
@@ -116,15 +116,25 @@ nav.tabs {
     }
   }
 
+  li.sublevel {
+    display: none;
+  }
+
   li.toplevel {
-    margin-left: 24px;
+    margin-left: 28px;
 
     a,
     a:hover,
     a:active {
       color: $black-87;
     }
+    &.active {
+      li.sublevel {
+        display: list-item;
+      }
+    }
   }
+
 
 
   //.icon {

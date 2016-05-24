@@ -1,49 +1,35 @@
 howto:
   - name: How To
     url: "/howto/"
-    class: toplevel
-  - name: Tutorial
-    url: "/howto/tutorial/"
-  - name: Build environment
-    url: "/howto/build-env/"
+    sub:
+      - name: Tutorial
+        url: "/howto/tutorial/"
+      - name: Build environment
+        url: "/howto/build-env/"
 contributing:
   - name: Contributing
     url: "/contributing/"
-    class: toplevel
   - name: Community Structure
     url: "/contributing/#community-structure"
-    class: toplevel
   - name: Code of Conduct
     url: "/contributing/#code-of-conduct"
-    class: toplevel
   - name: Questions
     url: "/contributing/#questions"
-    class: toplevel
   - name: Found an Issue
     url: "/contributing/#found-an-issue"
-    class: toplevel
   - name: Feature Request
     url: "/contributing/#feature-request"
-    class: toplevel
   - name: Submitting an Issue
     url: "/contributing/#submitting-an-issue"
-    class: toplevel
   - name: Submitting a Pull Request
     url: "/contributing/#submitting-a-pull-request"
-    class: toplevel
   - name: Coding Style
     url: "/contributing/#coding-style"
-    class: toplevel
   - name: Contributor License Agreement
     url: "/contributing/#contributor-license-agreement"
-    class: toplevel
   - name: License
     url: "/contributing/#license"
-    class: toplevel
 components:
-  - name: Components
-    url: "/components/"
-    class: toplevel
   - name: AppBar
     url: "/components/AppBar/"
     markdown: AppBar/README.md
@@ -62,6 +48,13 @@ components:
   - name: Collections
     url: "/components/Collections/"
     markdown: Collections/README.md
+    sub:
+      - name: Styling
+        url: "/components/Collections/styling"
+        markdown: Collections/styling/README.md
+      - name: Editing
+        url: "/components/Collections/editing"
+        markdown: Collections/editing/README.md
   - name: FlexibleHeader
     url: "/components/FlexibleHeader/"
     markdown: FlexibleHeader/README.md
@@ -95,4 +88,3 @@ components:
   - name: Typography
     url: "/components/Typography/"
     markdown: Typography/README.md
-
