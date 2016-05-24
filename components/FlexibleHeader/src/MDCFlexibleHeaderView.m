@@ -697,6 +697,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   self.bounds = bounds;
 
   [self fhv_commitAccumulatorToFrame];
+
+  _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
+  _shiftAccumulatorLastContentOffsetIsValid = YES;
 }
 
 - (CGFloat)fhv_anchorLength {
@@ -753,9 +756,6 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   }
 
   [self fhv_updateLayout];
-
-  _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
-  _shiftAccumulatorLastContentOffsetIsValid = YES;
 }
 
 #pragma mark Gestures
