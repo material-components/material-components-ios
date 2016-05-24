@@ -108,4 +108,24 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return cell;
 }
 
+#pragma mark - <MDCCollectionViewEditingDelegate>
+
+- (BOOL)collectionViewAllowsSwipeToDismissItem:(UICollectionView *)collectionView {
+  return YES;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView
+    canSwipeToDismissItemAtIndexPath:(NSIndexPath *)indexPath {
+  // In this example we are allowing all items to be dismissed.
+  return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+    willDeleteItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+  // Remove these swiped index paths from our data.
+  for (NSIndexPath *indexPath in indexPaths) {
+    [_content[indexPath.section] removeObjectAtIndex:indexPath.item];
+  }
+}
+
 @end
