@@ -26,9 +26,11 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 
   /** The button bar is on the leading side of the screen. */
   MDCButtonBarLayoutPositionLeading = 1 << 0,
+  MDCButtonBarLayoutPositionLeft = MDCButtonBarLayoutPositionLeading,
 
   /** The button bar is on the trailing side of the screen. */
   MDCButtonBarLayoutPositionTrailing = 1 << 1,
+  MDCButtonBarLayoutPositionRight = MDCButtonBarLayoutPositionTrailing,
 };
 
 @protocol MDCButtonBarDelegate;
