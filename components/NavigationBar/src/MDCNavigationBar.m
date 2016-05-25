@@ -117,8 +117,10 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   _observedNavigationItemLock = [[NSObject alloc] init];
 
 #if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
-  _layoutDirection = [UIView
-      userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
+  if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
+    _layoutDirection = [UIView
+        userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
+  }
 #endif
 
   _titleLabel = [[UILabel alloc] init];
