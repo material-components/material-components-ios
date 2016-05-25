@@ -70,7 +70,7 @@ flow and cherry-picking the resulting change into origin/develop.
     # Cherry-pick back to develop
     git checkout develop
     git rebase origin/develop
-    git cherry-pick <SHA from release-candidate>
+    git cherry-pick -x <SHA from release-candidate>
     git push origin develop
 
 ### Draft the release notes
