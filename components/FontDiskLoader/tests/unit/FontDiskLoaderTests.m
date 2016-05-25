@@ -152,4 +152,41 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertTrue([actual hasSuffix:expected], @"actual %@ does not end with: %@", actual, expected);
 }
 
+- (void)testNotEquals {
+  // Given
+  NSString *name = @"some name";
+  NSString *otherName = @"some other name";
+  NSURL *url = [NSURL fileURLWithPath:@"some url string"];
+  NSURL *otherUrl = [NSURL fileURLWithPath:@"some other url string"];
+  MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithName:name URL:url];
+  MDCFontDiskLoader *secondLoader = [[MDCFontDiskLoader alloc] initWithName:otherName URL:url];
+  MDCFontDiskLoader *thirdLoader = [[MDCFontDiskLoader alloc] initWithName:name URL:otherUrl];
+  NSObject *object = [[NSObject alloc] init];
+
+  // When
+
+  // Then
+  XCTAssertNotEqualObjects(loader, secondLoader);
+  XCTAssertNotEqual([loader hash], [secondLoader hash]);
+  XCTAssertNotEqualObjects(loader, thirdLoader);
+  XCTAssertNotEqual([loader hash], [secondLoader hash]);
+  XCTAssertNotEqualObjects(secondLoader, thirdLoader);
+  XCTAssertNotEqual([loader hash], [secondLoader hash]);
+  XCTAssertNotEqualObjects(loader, object);
+  XCTAssertNotEqual([loader hash], [object hash]);
+  XCTAssertNotEqualObjects(loader, nil);
+}
+
+- (void)testEquals {
+  // Given
+  NSURL *url = [NSURL fileURLWithPath:@"some url string"];
+  MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithName:@"some name" URL:url];
+  MDCFontDiskLoader *secondLoader = [[MDCFontDiskLoader alloc] initWithName:@"some name" URL:url];
+
+  // When
+
+  // Then
+  XCTAssertEqualObjects(loader, secondLoader);
+  XCTAssertEqual([loader hash], [secondLoader hash]);
+}
 @end
