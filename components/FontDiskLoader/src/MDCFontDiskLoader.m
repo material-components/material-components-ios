@@ -22,6 +22,8 @@
 @property(nonatomic, strong) NSURL *fontURL;
 @end
 
+static NSMutableSet *registeredFonts;
+
 @implementation MDCFontDiskLoader
 
 - (instancetype)initWithName:(NSString *)fontName URL:(NSURL *)fontURL {
@@ -49,7 +51,7 @@
 }
 
 - (BOOL)registerFont {
-  if (_isRegistered) {
+  if (self.isRegistered) {
     return YES;
   }
   if (_hasFailedRegistration) {
@@ -61,16 +63,16 @@
     return NO;
   }
   CFErrorRef error = NULL;
-  _isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                   kCTFontManagerScopeProcess,
-                                                   &error);
-  if (!_isRegistered) {
+  self.isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
+                                                       kCTFontManagerScopeProcess,
+                                                       &error);
+  if (!self.isRegistered) {
     if (error && CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
       // If it's already been loaded by somebody else, we don't care.
       // We do not check the error domain to make sure they match because
       // kCTFontManagerErrorDomain is not defined in the iOS 8 SDK.
       // Radar 18651170 iOS 8 SDK missing definition for kCTFontManagerErrorDomain
-      _isRegistered = YES;
+      self.isRegistered = YES;
     } else {
       NSLog(@"Failed to load font: %@", error);
       _hasFailedRegistration = YES;
@@ -79,22 +81,22 @@
   if (error) {
     CFRelease(error);
   }
-  return _isRegistered;
+  return self.isRegistered;
 }
 
 - (BOOL)unregisterFont {
-  if (!_isRegistered) {
+  if (!self.isRegistered) {
     _hasFailedRegistration = NO;
-    return !_isRegistered;  // Is already not registered
+    return YES;
   }
   CFErrorRef error = NULL;
-  _isRegistered = !CTFontManagerUnregisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                      kCTFontManagerScopeProcess,
-                                                      &error);
-  if (_isRegistered || error) {
+  self.isRegistered = !CTFontManagerUnregisterFontsForURL((__bridge CFURLRef)self.fontURL,
+                                                          kCTFontManagerScopeProcess,
+                                                          &error);
+  if (self.isRegistered || error) {
     NSLog(@"Failed to unregister font: %@", error);
   }
-  return !_isRegistered;
+  return !self.isRegistered;
 }
 
 - (UIFont *)fontOfSize:(CGFloat)fontSize {
@@ -129,6 +131,32 @@
 
 - (id)copyWithZone:(NSZone *)zone {
   return self;
+}
+
+- (BOOL)isRegistered {
+  @synchronized(registeredFonts) {
+    return [registeredFonts containsObject:self.fontURL];
+  }
+}
+
+- (void)setIsRegistered:(BOOL)isRegistered {
+  @synchronized(registeredFonts) {
+    if (isRegistered == [registeredFonts containsObject:self.fontURL]) {
+      return;  // Already in the correct state;
+    }
+    if (isRegistered) {
+      [registeredFonts addObject:self.fontURL];
+    } else {
+      [registeredFonts removeObject:self.fontURL];
+    }
+  }
+}
+
++ (void)load {
+  static dispatch_once_t once;
+  dispatch_once(&once, ^{
+    registeredFonts = [[NSMutableSet alloc] init];
+  });
 }
 
 @end

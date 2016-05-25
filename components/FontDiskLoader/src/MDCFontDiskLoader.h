@@ -16,7 +16,15 @@
 
 #import <UIKit/UIKit.h>
 
-/** Register and load a custom font resource. */
+/**
+ Register and load a custom font resource.
+
+ This class provides a convenience layer on top of CoreText APIs. Registration occurs by @c fileURL,
+ therefore registration state is shared across all instances of MDCFontDiskLoader objects. For
+ example if two MDCFontDiskLoader objects have the same fileURL, calling @c registerFont one will
+ also alter the state of the second MDCFontDiskLoader object. The same holds true for
+ @c unregisterFont.
+ */
 @interface MDCFontDiskLoader : NSObject <NSCopying>
 
 #pragma mark Creating a font resource
@@ -58,21 +66,37 @@
 /**
  Attempts to register the font.
 
+ All instances of MDCFontDiskLoader with the same fontURL will reflect changes from this method.
+
  The @c isRegistered and @c hasFailedRegistration flags reflect the results of this registration
  attempt. Returns true if the font is registered. If font registration fails, subsequent calls to
  registerFont will fail unless unregisterFont is called first.
  */
 - (BOOL)registerFont;
 
-/** Attempts to unregister the font. Returns true when the font is unregistered. */
+/**
+ Attempts to unregister the font.
+
+ All instances of MDCFontDiskLoader with the same fontURL will reflect changes from this method.
+
+ Returns true when the font is unregistered. Resets @c hasFailedRegistration back to false.
+ */
 - (BOOL)unregisterFont;
 
 #pragma mark Accessing the font's registration status
 
-/** The registered state of the custom font. */
+/**
+ The registered state of the custom font.
+
+ All instances of MDCFontDiskLoader with the same fontURL have the same value of @c isRegistered.
+ */
 @property(nonatomic) BOOL isRegistered;
 
-/** This flag is true when the registration failed. It prevents future attempts at registration. */
+/**
+ This flag is true when the registration failed.
+
+ It prevents future attempts at registration. To reset call @c unregisterFont.
+ */
 @property(nonatomic) BOOL hasFailedRegistration;
 
 #pragma mark Requesting fonts of a given size
