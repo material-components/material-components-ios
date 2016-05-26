@@ -64,13 +64,15 @@ flow and cherry-picking the resulting change into origin/develop.
 
     # Create a fix on the release branch
     arc feature <fix-name> release-candidate
-    arc diff
+    arc diff release-candidate
     arc land --onto release-candidate
+    git push origin release-candidate
 
-    # Cherry-pick back to develop
+    # Any changes made above will be merged back into develop at the end of the releasing process
+    # but if you need them in develop immediately, you can cherry-pick
     git checkout develop
     git rebase origin/develop
-    git cherry-pick <SHA from release-candidate>
+    git cherry-pick -x <SHA from release-candidate>
     git push origin develop
 
 ### Draft the release notes
