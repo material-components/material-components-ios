@@ -64,13 +64,15 @@ flow and cherry-picking the resulting change into origin/develop.
 
     # Create a fix on the release branch
     arc feature <fix-name> release-candidate
-    arc diff
+    arc diff release-candidate
     arc land --onto release-candidate
+    git push origin release-candidate
 
-    # Cherry-pick back to develop
+    # Any changes made above will be merged back into develop at the end of the releasing process
+    # but if you need them in develop immediately, you can cherry-pick
     git checkout develop
     git rebase origin/develop
-    git cherry-pick <SHA from release-candidate>
+    git cherry-pick -x <SHA from release-candidate>
     git push origin develop
 
 ### Draft the release notes
@@ -243,7 +245,7 @@ Send the release-candidate branch out for review:
 
     git fetch
     git checkout release-candidate
-    arc diff origin/master --no-lint --plan-changes --message-file scripts/release/release_checklist.txt
+    arc diff origin/master --no-lint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt
 
 Check off each item in the diff's checklist.
 
@@ -299,7 +301,9 @@ and delete the release branch:
 
 ### Regenerate the site
 
-TODO: Add instructions for regenerating Jazzy docs and deploying them.
+You can preview your changes by serving a local version of the material component document site. Please refer to [Site Content Update](./site_content_update.md#build-and-preview-locally).
+
+However, you need to be one of the material component core members in order to deploy the site for the moment. If you are able to run deploy the site, please refer to [Site Content Update](./site_content_update.md#deploy-to-production). Don't worry, we will incorporate the changes to the site for every weekly cut release as well.
 
 ### Reply to the original release email message
 

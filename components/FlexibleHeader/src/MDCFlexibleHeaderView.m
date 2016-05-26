@@ -96,21 +96,20 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   NSMapTable *_trackedScrollViews;  // {UIScrollView:MDCFlexibleHeaderScrollViewInfo}
   MDCFlexibleHeaderScrollViewInfo *_trackingInfo;
 
-  // Prevents delta calculations on first update pass.
-  BOOL _hasUpdatedContentOffset;
-
-  // Tracks the last content offset so that we can track relative movement.
-  CGPoint _lastContentOffset;
-  CGFloat _deltaYDirectionAccum;
-
   // The ideal visibility state of the header. This may not match the present visibility if the user
   // is interacting with the header or if we're presently animating it.
   BOOL _wantsToBeHidden;
 
+  // Shift behavior state
+
+  // Prevents delta calculations on first update pass.
+  BOOL _shiftAccumulatorLastContentOffsetIsValid;
   // When the header can slide off-screen, this tracks how off-screen the header is.
-  // Essentially: view's top edge = -_shiftOffscreenAccumulator
-  CGFloat _shiftOffscreenAccumulator;
-  CADisplayLink *_shiftDisplayLink;
+  // Essentially: view's top edge = -_shiftAccumulator
+  CGFloat _shiftAccumulator;
+  CGPoint _shiftAccumulatorLastContentOffset;  // Stores our last delta'd content offset.
+  CGFloat _shiftAccumulatorDeltaY;
+  CADisplayLink *_shiftAccumulatorDisplayLink;
 
   BOOL _interfaceOrientationIsChanging;
   BOOL _contentInsetsAreChanging;
@@ -407,8 +406,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 }
 
 - (BOOL)fhv_isPartiallyShifted {
-  return ([self fhv_isDetachedFromTopOfContent] && _shiftOffscreenAccumulator > 0 &&
-          _shiftOffscreenAccumulator < [self fhv_accumulatorMax]);
+  return ([self fhv_isDetachedFromTopOfContent] && _shiftAccumulator > 0 &&
+          _shiftAccumulator < [self fhv_accumulatorMax]);
 }
 
 // The flexible header is "in front of" the content.
@@ -492,23 +491,23 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 - (void)fhv_startDisplayLink {
   [self fhv_stopDisplayLink];
 
-  _shiftDisplayLink =
+  _shiftAccumulatorDisplayLink =
       [CADisplayLink displayLinkWithTarget:self
-                                  selector:@selector(fhv_shiftDisplayLinkDidFire:)];
-  [_shiftDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+                                  selector:@selector(fhv_shiftAccumulatorDisplayLinkDidFire:)];
+  [_shiftAccumulatorDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 }
 
 - (void)fhv_stopDisplayLink {
-  [_shiftDisplayLink invalidate];
-  _shiftDisplayLink = nil;
+  [_shiftAccumulatorDisplayLink invalidate];
+  _shiftAccumulatorDisplayLink = nil;
 }
 
-- (void)fhv_shiftDisplayLinkDidFire:(CADisplayLink *)displayLink {
+- (void)fhv_shiftAccumulatorDisplayLinkDidFire:(CADisplayLink *)displayLink {
   // Erase any scrollback that was injected into the accumulator by capping it back down.
-  _shiftOffscreenAccumulator = MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator);
+  _shiftAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
 
   CGFloat destination = _wantsToBeHidden ? [self fhv_accumulatorMax] : 0;
-  CGFloat distanceToDestination = destination - _shiftOffscreenAccumulator;
+  CGFloat distanceToDestination = destination - _shiftAccumulator;
 
   NSTimeInterval duration = displayLink.duration;
 
@@ -517,14 +516,14 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 #endif
 
   // This is a simple "force" that's stronger the further we are from the destination.
-  _shiftOffscreenAccumulator += kAttachmentCoefficient * distanceToDestination * duration;
-  _shiftOffscreenAccumulator = MAX(0, MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator));
+  _shiftAccumulator += kAttachmentCoefficient * distanceToDestination * duration;
+  _shiftAccumulator = MAX(0, MIN([self fhv_accumulatorMax], _shiftAccumulator));
 
-  [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
+  [_statusBarShifter setOffset:_shiftAccumulator];
 
   // Have we reached our destination?
-  if (fabs(destination - _shiftOffscreenAccumulator) <= kShiftEpsilon) {
-    _shiftOffscreenAccumulator = destination;
+  if (fabs(destination - _shiftAccumulator) <= kShiftEpsilon) {
+    _shiftAccumulator = destination;
 
     [self fhv_stopDisplayLink];
   }
@@ -547,7 +546,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   CGFloat frameBottomEdge = [self fhv_projectedHeaderBottomEdge];
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
 
-  CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator);
+  CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
 
   CGFloat shadowIntensity;
   if (self.hidesStatusBarWhenCollapsed) {
@@ -615,26 +614,26 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     [self fhv_stopDisplayLink];
   }
 
-  if (_hasUpdatedContentOffset) {
+  if (_shiftAccumulatorLastContentOffsetIsValid) {
     // We track the last direction for our target offset behavior.
-    CGFloat deltaY = [self fhv_boundedContentOffset].y - _lastContentOffset.y;
+    CGFloat deltaY = [self fhv_boundedContentOffset].y - _shiftAccumulatorLastContentOffset.y;
 
-    if (_deltaYDirectionAccum * deltaY < 0) {
+    if (_shiftAccumulatorDeltaY * deltaY < 0) {
       // Direction has changed.
-      _deltaYDirectionAccum = 0;
+      _shiftAccumulatorDeltaY = 0;
     }
-    _deltaYDirectionAccum += deltaY;
+    _shiftAccumulatorDeltaY += deltaY;
 
     // Keeps track of the last direction the user moved their finger in.
     if (_trackingScrollView.isTracking) {
-      if (_deltaYDirectionAccum > kDeltaYSlop) {
+      if (_shiftAccumulatorDeltaY > kDeltaYSlop) {
         _wantsToBeHidden = YES;
-      } else if (_deltaYDirectionAccum < -kDeltaYSlop) {
+      } else if (_shiftAccumulatorDeltaY < -kDeltaYSlop) {
         _wantsToBeHidden = NO;
       }
     }
 
-    if (![self fhv_isOverExtendingBottom] && !_shiftDisplayLink) {
+    if (![self fhv_isOverExtendingBottom] && !_shiftAccumulatorDisplayLink) {
       // When we're not allowed to shift offscreen, only allow the header to shift further
       // on-screen in case it was previously off-screen due to a behavior change.
       if (![self fhv_canShiftOffscreen]) {
@@ -679,10 +678,10 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
       // Ensure that we don't lose any deltaY by first capping the accumulator within its valid
       // range.
-      _shiftOffscreenAccumulator = MIN(upperBound, _shiftOffscreenAccumulator);
+      _shiftAccumulator = MIN(upperBound, _shiftAccumulator);
 
       // Accumulate the deltaY.
-      _shiftOffscreenAccumulator = MAX(0, MIN(upperBound, _shiftOffscreenAccumulator + deltaY));
+      _shiftAccumulator = MAX(0, MIN(upperBound, _shiftAccumulator + deltaY));
     }
   }
 
@@ -698,6 +697,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   self.bounds = bounds;
 
   [self fhv_commitAccumulatorToFrame];
+
+  _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
+  _shiftAccumulatorLastContentOffsetIsValid = YES;
 }
 
 - (CGFloat)fhv_anchorLength {
@@ -714,7 +716,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 - (void)fhv_commitAccumulatorToFrame {
   CGPoint position = self.center;
   // Offset the frame.
-  position.y = -MIN([self fhv_accumulatorMax], _shiftOffscreenAccumulator);
+  position.y = -MIN([self fhv_accumulatorMax], _shiftAccumulator);
   position.y += self.bounds.size.height / 2;
 
   self.center = position;
@@ -722,7 +724,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   [self fhv_accumulatorDidChange];
   [self fhv_recalculatePhase];
 
-  [_statusBarShifter setOffset:_shiftOffscreenAccumulator];
+  [_statusBarShifter setOffset:_shiftAccumulator];
 
   [self.delegate flexibleHeaderViewFrameDidChange:self];
 }
@@ -754,10 +756,6 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   }
 
   [self fhv_updateLayout];
-
-  _lastContentOffset = [self fhv_boundedContentOffset];
-
-  _hasUpdatedContentOffset = YES;
 }
 
 #pragma mark Gestures
@@ -827,9 +825,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
   _trackingScrollView = trackingScrollView;
 
-  _hasUpdatedContentOffset = NO;
-  _lastContentOffset = _trackingScrollView.contentOffset;
-  _deltaYDirectionAccum = 0;
+  _shiftAccumulatorLastContentOffsetIsValid = NO;
+  _shiftAccumulatorLastContentOffset = _trackingScrollView.contentOffset;
+  _shiftAccumulatorDeltaY = 0;
 
   _trackingInfo = [_trackedScrollViews objectForKey:_trackingScrollView];
   if (!_sharedWithManyScrollViews || !_trackingInfo) {
@@ -874,7 +872,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 - (void)trackingScrollViewDidEndDecelerating {
   if ([self fhv_isPartiallyShifted]) {
     _wantsToBeHidden =
-        (_shiftOffscreenAccumulator >= (1 - kMinimumVisibleProportion) * [self fhv_accumulatorMax]);
+        (_shiftAccumulator >= (1 - kMinimumVisibleProportion) * [self fhv_accumulatorMax]);
     [self fhv_startDisplayLink];
   }
 }
@@ -961,7 +959,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   _interfaceOrientationIsChanging = NO;
 
   // Ignore any content offset delta that occured as a result of any orientation change.
-  _lastContentOffset = [self fhv_boundedContentOffset];
+  _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
 
   [self fhv_updateLayout];
 
@@ -1077,7 +1075,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     scrollView.contentOffset = offset;
   }
 
-  if (_shiftOffscreenAccumulator >= [self fhv_accumulatorMax]) {
+  if (_shiftAccumulator >= [self fhv_accumulatorMax]) {
     // We're shifted off-screen, make sure that this scroll view isn't expecting to show the header.
 
     CGPoint offset = scrollView.contentOffset;
@@ -1104,7 +1102,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     [self fhv_startDisplayLink];
   } else {
     // Remove any offscreen accumulation.
-    _shiftOffscreenAccumulator = 0;
+    _shiftAccumulator = 0;
     [self fhv_commitAccumulatorToFrame];
   }
 }
@@ -1116,7 +1114,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
     [self fhv_startDisplayLink];
   } else {
     // Add offscreen accumulation equal to this header view's size.
-    _shiftOffscreenAccumulator = self.fhv_accumulatorMax;
+    _shiftAccumulator = self.fhv_accumulatorMax;
     [self fhv_commitAccumulatorToFrame];
   }
 }

@@ -99,4 +99,17 @@
   return [description copy];
 }
 
+- (BOOL)isEqual:(id)object {
+  if (!object || ![object isKindOfClass:[self class]]) {
+    return NO;
+  }
+  MDCFontDiskLoader *otherObject = (MDCFontDiskLoader *)object;
+  BOOL fontNamesAreEqual = [otherObject.fontName isEqualToString:self.fontName];
+  return fontNamesAreEqual && [otherObject.fontURL isEqual:self.fontURL];
+}
+
+- (NSUInteger)hash {
+  return self.fontName.hash ^ self.fontURL.hash;
+}
+
 @end

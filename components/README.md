@@ -12,6 +12,9 @@ interface components for iOS. These components implement Google's
 and are developed by a team of iOS engineers and UX designers at Google.
 
 
+- [Github](https://github.com/google/material-components-ios/)
+  <!--{: .icon-github }-->
+
 - [Development Guide]({{ site.folder }}/howto/)
   <!--{: .icon-guide }-->
 
@@ -21,8 +24,6 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
   <!--{: .icon-stackoverflow }-->
 
-- [Github](https://github.com/google/material-components-ios/)
-  <!--{: .icon-github }-->
 <!--{: .icon-list }-->
 
 - - -
@@ -91,6 +92,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**Palettes**
   Reference colors from Material Design palettes.
   ](Palettes/)
+  <!--{: .icon-palette }-->
 
 - [**ShadowElevations**
   Provides the most commonly used elevations specified in Material Design.

@@ -186,11 +186,11 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   // Only add padding to the first item of the button bar.
   if (layoutHints == MDCBarButtonItemLayoutHintsIsFirstButton) {
     switch (buttonBar.layoutPosition) {
-      case MDCButtonBarLayoutPositionLeft:
+      case MDCButtonBarLayoutPositionLeading:
         button.contentPadding =
             UIEdgeInsetsMake(0, contentInsets.left - kButtonPaddingHorizontal, 0, 0);
         break;
-      case MDCButtonBarLayoutPositionRight:
+      case MDCButtonBarLayoutPositionTrailing:
         button.contentPadding =
             UIEdgeInsetsMake(0, 0, 0, contentInsets.right - kButtonPaddingHorizontal);
       default:

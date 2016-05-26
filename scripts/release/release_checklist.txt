@@ -10,3 +10,8 @@ Checklist:
 - [ ] Ran `scripts/release/diff components/*/src/` and visually inspected the changes.
 - [ ] Ran `scripts/release/bump` with the new version number.
 - [ ] Updated CHANGELOG.md's latest section header to match the release's version number.
+- [ ] I did not `arc land` this change because I followed the [releasing guide](https://github.com/google/material-components-ios/blob/develop/contributing/contributor_guides/releasing.md) and did the following:
+- [ ] Ran `scripts/release/merge`
+- [ ] Push to master
+- [ ] Push to develop
+- [ ] Manually marked this diff closed in the web ui

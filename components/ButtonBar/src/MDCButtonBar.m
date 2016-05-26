@@ -44,6 +44,12 @@ static NSString *const kEnabledSelector = @"enabled";
 
 - (void)commonMDCButtonBarInit {
   _buttonItemsLock = [[NSObject alloc] init];
+#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
+  if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
+    _layoutDirection = [UIView
+        userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
+  }
+#endif
   _layoutPosition = MDCButtonBarLayoutPositionNone;
 
   _defaultBuilder = [[MDCAppBarButtonBarBuilder alloc] init];
@@ -91,7 +97,12 @@ static NSString *const kEnabledSelector = @"enabled";
 
   BOOL shouldAlignBaselines = _buttonTitleBaseline > 0;
 
-  for (UIView *view in _buttonViews) {
+  NSEnumerator<NSArray *> *positionedButtonViews =
+      self.layoutPosition == MDCButtonBarLayoutPositionTrailing
+          ? [_buttonViews reverseObjectEnumerator]
+          : [_buttonViews objectEnumerator];
+
+  for (UIView *view in positionedButtonViews) {
     CGFloat width = view.frame.size.width;
     switch (_layoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
@@ -138,6 +149,7 @@ static NSString *const kEnabledSelector = @"enabled";
   [super tintColorDidChange];
 
   _defaultBuilder.buttonTitleColor = self.tintColor;
+  [self reloadButtonViews];
 }
 
 #pragma mark - Private

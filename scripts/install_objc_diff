@@ -43,7 +43,8 @@ done
 SCRIPTS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Where to fetch the objc-diff repo from
-OBJC_DIFF_REPO_URL="https://github.com/mattstevens/objc-diff.git"
+OBJC_DIFF_REPO_URL="https://github.com/jverkoey/objc-diff.git"
+OBJC_DIFF_REPO_BRANCH="origin/anonymous"
 
 # Where to install the objc-diff repo
 OBJC_DIFF_REPO_PATH="$SCRIPTS_PATH/external/objc-diff"
@@ -61,6 +62,9 @@ if [ ! -d "$OBJC_DIFF_REPO_PATH" ]; then
 else
   git_objc_diff fetch || { echo "Failed to update objc-diff."; exit 1; }
 fi
+
+# Check out the desired branch
+git_objc_diff checkout "$OBJC_DIFF_REPO_BRANCH"
 
 # Build objc-diff binary
 xcodebuild build \

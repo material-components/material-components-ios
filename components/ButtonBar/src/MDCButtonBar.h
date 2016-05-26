@@ -17,18 +17,20 @@
 #import <UIKit/UIKit.h>
 
 /**
- The position of the button bar, typically aligned with the left of right edge of the screen.
+ The position of the button bar, typically aligned with the leading or trailing edge of the screen.
 
  Default: MDCBarButtonLayoutPositionNone
  */
 typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
   MDCButtonBarLayoutPositionNone = 0,
 
-  /** The button bar is on the left side of the screen. */
-  MDCButtonBarLayoutPositionLeft = 1 << 0,
+  /** The button bar is on the leading side of the screen. */
+  MDCButtonBarLayoutPositionLeading = 1 << 0,
+  MDCButtonBarLayoutPositionLeft = MDCButtonBarLayoutPositionLeading,
 
-  /** The button bar is on the right side of the screen. */
-  MDCButtonBarLayoutPositionRight = 1 << 1,
+  /** The button bar is on the trailing side of the screen. */
+  MDCButtonBarLayoutPositionTrailing = 1 << 1,
+  MDCButtonBarLayoutPositionRight = MDCButtonBarLayoutPositionTrailing,
 };
 
 @protocol MDCButtonBarDelegate;
@@ -89,7 +91,9 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 /**
  The direction in which the button views should be laid out.
 
- Default: UIUserInterfaceLayoutDirectionLeftToRight
+ Default:
+   - Prior to iOS 9: UIUserInterfaceLayoutDirectionLeftToRight
+   - iOS 9 and above: same as +[UIView userInterfaceLayoutDirectionForSemanticContentAttribute:]
  */
 @property(nonatomic) UIUserInterfaceLayoutDirection layoutDirection;
 
@@ -105,7 +109,7 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 @property(nonatomic) CGFloat buttonTitleBaseline;
 
 /**
- The position of the button bar, usually positioned on the left or right edge of the screen.
+ The position of the button bar, usually positioned on the leading or trailing edge of the screen.
 
  Default: MDCBarButtonLayoutPositionNone
  */
