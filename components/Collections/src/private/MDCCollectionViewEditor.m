@@ -74,16 +74,6 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 
 #pragma mark - Public
 
-- (instancetype)init {
-  [self doesNotRecognizeSelector:_cmd];
-  return [self initWithCollectionView:nil];
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  [self doesNotRecognizeSelector:_cmd];
-  return [self initWithCollectionView:nil];
-}
-
 - (instancetype)initWithCollectionView:(UICollectionView *)collectionView {
   self = [super init];
   if (self) {
