@@ -35,11 +35,6 @@
   return self;
 }
 
-- (instancetype)init {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
-}
-
 - (NSComparisonResult)compare:(CBCNode *)otherObject {
   return [self.title compare:otherObject.title];
 }
@@ -96,11 +91,6 @@
     self.title = _node.title;
   }
   return self;
-}
-
-- (instancetype)initWithStyle:(UITableViewStyle)style {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
 }
 
 - (void)viewDidLoad {
