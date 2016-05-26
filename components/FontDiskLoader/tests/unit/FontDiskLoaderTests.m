@@ -123,6 +123,17 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   XCTAssertTrue(resource.hasFailedRegistration);
 }
 
+- (void)testCopy {
+  // Given
+  MDCFontDiskLoader *loader = [self validResource];
+
+  // When
+  MDCFontDiskLoader *secondFontLoader = [loader copy];
+
+  // Then
+  XCTAssertEqualObjects(loader, secondFontLoader);
+}
+
 - (void)testProvidesACustomFont {
   // Given
   MDCFontDiskLoader *resource = [self validResource];
@@ -233,4 +244,5 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   XCTAssertEqualObjects(loader, secondLoader);
   XCTAssertEqual([loader hash], [secondLoader hash]);
 }
+
 @end

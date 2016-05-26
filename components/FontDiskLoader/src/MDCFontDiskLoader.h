@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /** Register and load a custom font resource. */
-@interface MDCFontDiskLoader : NSObject
+@interface MDCFontDiskLoader : NSObject <NSCopying>
 
 #pragma mark Creating a font resource
 

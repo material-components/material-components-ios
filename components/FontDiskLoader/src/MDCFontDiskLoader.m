@@ -127,4 +127,8 @@
   return self.fontName.hash ^ self.fontURL.hash;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+  return self;
+}
+
 @end
