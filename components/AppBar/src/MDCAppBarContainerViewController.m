@@ -41,21 +41,6 @@
   return self;
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
-}
-
-- (instancetype)init {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
