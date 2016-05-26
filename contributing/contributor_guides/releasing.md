@@ -218,7 +218,7 @@ go-ahead from the following clients:
 
 - Google: must verify that the release branch passes all internal tests. If you are a Googler, see
   the internal "mirroring" document for further instructions. Notably you **must not continue** this
-  releasing process until the internal synchronization CL has landed.
+  releasing process until the internal synchronization CL has been tested.
 
 ---
 
@@ -305,11 +305,18 @@ You can preview your changes by serving a local version of the material componen
 
 However, you need to be one of the material component core members in order to deploy the site for the moment. If you are able to run deploy the site, please refer to [Site Content Update](./site_content_update.md#deploy-to-production). Don't worry, we will incorporate the changes to the site for every weekly cut release as well.
 
-### Reply to the original release email message
+### Fix clients
+
+#### Reply to the original release email message
 
 Post a reply to you message on [Material Components iOS Discuss]
 (https://groups.google.com/forum/#!topic/material-components-ios-discuss/) indicating that you are
 done.
+
+#### Finish any internal work
+
+Any work that was started by the [Release-blocking clients](#release-blocking-clients)
+(dragon) step above may need to be finalized.
 
 ### Pick the next release cut date
 
