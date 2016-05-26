@@ -39,15 +39,6 @@
 
 @implementation MDCRobotoFontLoader
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self doesNotRecognizeSelector:_cmd];
-    self = nil;
-  }
-  return nil;
-}
-
 - (instancetype)initInternal {
   self = [super init];
   if (self) {
