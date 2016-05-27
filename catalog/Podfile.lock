@@ -127,8 +127,10 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: bf088342f30ec956e548eb54bc0b75e3c876f91e
-  MaterialComponentsCatalog: e76173e0c3d36d0fc3d042f0531cbcf83bd9e04d
+  MaterialComponents: b05b817044c3f08605ec82cf0c21fbe35529d77d
+  MaterialComponentsCatalog: 8847861c7c8efa2db50d0affbae5054b57bd8232
   MaterialComponentsUnitTests: ab50ea5e682ec9fdf603db44e777e6e5a10f9bd9
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 3810dd2385e450829343bc42e062131d6e6436c1
+
+COCOAPODS: 1.0.0

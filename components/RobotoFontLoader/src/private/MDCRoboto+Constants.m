@@ -14,7 +14,9 @@
  limitations under the License.
  */
 
-#import "private/MDCRoboto+Constants.h"
+// TODO(iangordon): Re-add 'private/' to the path below once our Podspec specfically defines our
+// header search paths instead of flattening our header files into a single directory.
+#import "MDCRoboto+Constants.h"
 
 NSString *const MDCRobotoRegularFontName = @"Roboto-Regular";
 NSString *const MDCRobotoRegularItalicFontName = @"Roboto-Italic";

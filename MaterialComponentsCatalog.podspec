@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
   s.source_files = 'components/*/examples/*.{h,m,swift}', 'components/*/examples/supplemental/*.{h,m,swift}'
   s.resources = ['components/*/examples/resources/*']
   s.dependency 'MaterialComponents'
+  s.public_header_files = 'components/*/examples/*.h', 'components/*/examples/supplemental/*.h'
 end
