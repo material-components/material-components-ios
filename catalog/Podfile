@@ -1,8 +1,8 @@
 workspace 'MDCCatalog.xcworkspace'
-xcodeproj 'MDCCatalog.xcodeproj'
+project 'MDCCatalog.xcodeproj'
 
 target "MDCCatalog" do
-  xcodeproj 'MDCCatalog.xcodeproj'
+  project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsCatalog', :path => '../'
   pod 'MaterialComponents', :path => '../'
 
@@ -10,7 +10,7 @@ target "MDCCatalog" do
 end
 
 target "MDCUnitTests" do
-  xcodeproj 'MDCUnitTests.xcodeproj'
+  project 'MDCUnitTests.xcodeproj'
   pod 'MaterialComponentsUnitTests', :path => '../'
   pod 'MaterialComponents', :path => '../'
 
