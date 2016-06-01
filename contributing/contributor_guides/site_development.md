@@ -132,7 +132,7 @@ The build process has 2 steps:
 
 Since the api reference is part of the contents of the document site, so step 1 need to be carried out before step 2.
 
-In step 1, we build the api reference from the inline comments of the components using [Jazzy](/site_content_update.md#api-reference). The api reference are output to the jekyll folder in preparation for step 2.
+In step 1, we build the api reference from the inline comments of the components using [Jazzy](./site_content_update.md#api-reference). The api reference are output to the jekyll folder in preparation for step 2.
 
 In step 2, the documents sepcified in ```site-source/jekyll-site-src/_data/navigation.yaml``` are copied to the corresponding place and rename to index.md for servering purpose. Jekyll processes these files and generates static html into ```site-source/site-build```.
 
