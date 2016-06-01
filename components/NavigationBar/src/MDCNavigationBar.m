@@ -120,7 +120,11 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
     _layoutDirection = [UIView
         userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
+  } else {
+    _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   }
+#else
+  _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
 #endif
 
   _titleLabel = [[UILabel alloc] init];

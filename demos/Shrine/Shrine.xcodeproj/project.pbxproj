@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2665BDBFD6F42B19B3B61192 /* libPods-Shrine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D180A261B9BB43A253618934 /* libPods-Shrine.a */; };
 		DE064E731C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */; };
 		DE34DEBB1C88E90000E04B65 /* ShrineInkOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE34DEBA1C88E90000E04B65 /* ShrineInkOverlay.swift */; };
 		DE34DEBF1C8A34B100E04B65 /* ShrineHeaderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE34DEBE1C8A34B100E04B65 /* ShrineHeaderContentView.swift */; };
@@ -22,12 +21,13 @@
 		DE6887EA1C849C7C0074A8C5 /* AbrilFatface-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE6887E91C849C7C0074A8C5 /* AbrilFatface-Regular.ttf */; };
 		DE6887F11C849F7F0074A8C5 /* RemoteImageService.m in Sources */ = {isa = PBXBuildFile; fileRef = DE6887F01C849F7F0074A8C5 /* RemoteImageService.m */; };
 		DE6887F31C84FCD40074A8C5 /* ShrineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6887F21C84FCD40074A8C5 /* ShrineData.swift */; };
+		E30DA9E4A1B6883CF2A6D767 /* libPods-Shrine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F6BAB7EBA92D35902D7E2D2 /* libPods-Shrine.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		83593BB5EA6C1CAD35CAD96C /* Pods-Shrine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.debug.xcconfig"; sourceTree = "<group>"; };
-		CFB1C7A97606A3396EC257A4 /* Pods-Shrine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.release.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.release.xcconfig"; sourceTree = "<group>"; };
-		D180A261B9BB43A253618934 /* libPods-Shrine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Shrine.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C7F50E40E35B48C29C884F8 /* Pods-Shrine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.release.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.release.xcconfig"; sourceTree = "<group>"; };
+		3D22DA7C0F576B707C1CA5BE /* Pods-Shrine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.debug.xcconfig"; sourceTree = "<group>"; };
+		6F6BAB7EBA92D35902D7E2D2 /* libPods-Shrine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Shrine.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineFlexibleHeaderContainerViewController.swift; sourceTree = "<group>"; };
 		DE34DEBA1C88E90000E04B65 /* ShrineInkOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineInkOverlay.swift; sourceTree = "<group>"; };
 		DE34DEBE1C8A34B100E04B65 /* ShrineHeaderContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineHeaderContentView.swift; sourceTree = "<group>"; };
@@ -53,29 +53,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2665BDBFD6F42B19B3B61192 /* libPods-Shrine.a in Frameworks */,
+				E30DA9E4A1B6883CF2A6D767 /* libPods-Shrine.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		60901E99B297612457C55BA1 /* Frameworks */ = {
+		642D1F1EA5C73400CE64F5A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D180A261B9BB43A253618934 /* libPods-Shrine.a */,
+				6F6BAB7EBA92D35902D7E2D2 /* libPods-Shrine.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7DA6FBA546AC6B885D4CA01F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3D22DA7C0F576B707C1CA5BE /* Pods-Shrine.debug.xcconfig */,
+				1C7F50E40E35B48C29C884F8 /* Pods-Shrine.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		DE5D2A3B1C81068100C9C650 = {
 			isa = PBXGroup;
 			children = (
 				DE5D2A461C81068100C9C650 /* Shrine */,
-				60901E99B297612457C55BA1 /* Frameworks */,
-				EDCFA322554E2AF3EE87A986 /* Pods */,
 				DE5D2A451C81068100C9C650 /* Products */,
 				DE6887E81C849C6C0074A8C5 /* Resources */,
+				7DA6FBA546AC6B885D4CA01F /* Pods */,
+				642D1F1EA5C73400CE64F5A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,15 +127,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		EDCFA322554E2AF3EE87A986 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				83593BB5EA6C1CAD35CAD96C /* Pods-Shrine.debug.xcconfig */,
-				CFB1C7A97606A3396EC257A4 /* Pods-Shrine.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,12 +134,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DE5D2A561C81068100C9C650 /* Build configuration list for PBXNativeTarget "Shrine" */;
 			buildPhases = (
-				894F7E080969EC72133ADF8D /* Check Pods Manifest.lock */,
+				BD04A4A94E7A074ACE45ED21 /* 📦 Check Pods Manifest.lock */,
 				DE5D2A401C81068100C9C650 /* Sources */,
 				DE5D2A411C81068100C9C650 /* Frameworks */,
 				DE5D2A421C81068100C9C650 /* Resources */,
-				DEDE9192EBE2B7AB134C2758 /* Embed Pods Frameworks */,
-				424AAC4EDFBFEA4D43D04D87 /* Copy Pods Resources */,
+				D1F846F8DE8314F37D7BCFC1 /* 📦 Embed Pods Frameworks */,
+				E79A83FFB3D723D88B7FB762 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -199,29 +199,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		424AAC4EDFBFEA4D43D04D87 /* Copy Pods Resources */ = {
+		BD04A4A94E7A074ACE45ED21 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Shrine/Pods-Shrine-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		894F7E080969EC72133ADF8D /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,19 +214,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		DEDE9192EBE2B7AB134C2758 /* Embed Pods Frameworks */ = {
+		D1F846F8DE8314F37D7BCFC1 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Shrine/Pods-Shrine-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E79A83FFB3D723D88B7FB762 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Shrine/Pods-Shrine-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -370,7 +370,7 @@
 		};
 		DE5D2A571C81068100C9C650 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 83593BB5EA6C1CAD35CAD96C /* Pods-Shrine.debug.xcconfig */;
+			baseConfigurationReference = 3D22DA7C0F576B707C1CA5BE /* Pods-Shrine.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -385,7 +385,7 @@
 		};
 		DE5D2A581C81068100C9C650 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CFB1C7A97606A3396EC257A4 /* Pods-Shrine.release.xcconfig */;
+			baseConfigurationReference = 1C7F50E40E35B48C29C884F8 /* Pods-Shrine.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

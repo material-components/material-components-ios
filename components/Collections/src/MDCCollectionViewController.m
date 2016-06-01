@@ -97,6 +97,16 @@
   return _collectionViewLayout;
 }
 
+- (void)setCollectionView:(__kindof UICollectionView *)collectionView {
+  [super setCollectionView:collectionView];
+
+  // Reset editor and ink to provided collection view.
+  _editor = [[MDCCollectionViewEditor alloc] initWithCollectionView:collectionView];
+  _editor.delegate = self;
+  _inkTouchController = [[MDCInkTouchController alloc] initWithView:collectionView];
+  _inkTouchController.delegate = self;
+}
+
 #pragma mark - <MDCCollectionInfoBarViewDelegate>
 
 - (void)updateControllerWithInfoBar:(MDCCollectionInfoBarView *)infoBar {

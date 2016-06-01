@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "9.0.0"
+  s.version      = "10.0.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
   s.subspec "AppBar" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     # Navigation bar contents
     ss.dependency "MaterialComponents/HeaderStackView"
@@ -59,7 +59,7 @@ Pod::Spec.new do |s|
   s.subspec "Buttons" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     ss.dependency "MaterialComponents/Ink"
     ss.dependency "MaterialComponents/ShadowElevations"
@@ -70,7 +70,7 @@ Pod::Spec.new do |s|
   s.subspec "ButtonBar" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     ss.dependency "MaterialComponents/Buttons"
   end
@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   s.subspec "CollectionCells" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     ss.dependency "MaterialComponents/CollectionLayoutAttributes"
     ss.dependency "MaterialComponents/Ink"
@@ -94,13 +94,13 @@ Pod::Spec.new do |s|
   s.subspec "CollectionLayoutAttributes" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "Collections" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
     ss.resource_bundles = {
       "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
     }
@@ -116,13 +116,13 @@ Pod::Spec.new do |s|
   s.subspec "FlexibleHeader" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "FontDiskLoader" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     ss.framework = "CoreText"
   end
@@ -130,19 +130,19 @@ Pod::Spec.new do |s|
   s.subspec "HeaderStackView" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "Ink" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "NavigationBar" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     ss.dependency "MaterialComponents/ButtonBar"
     ss.dependency "MaterialComponents/Typography"
@@ -151,7 +151,7 @@ Pod::Spec.new do |s|
   s.subspec "PageControl" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
     ss.resource_bundles = {
       "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
     }
@@ -160,13 +160,13 @@ Pod::Spec.new do |s|
   s.subspec "Palettes" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "RobotoFontLoader" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     # Only if you have a resource bundle
     ss.resource_bundles = {
@@ -180,19 +180,19 @@ Pod::Spec.new do |s|
   s.subspec "ShadowElevations" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "ShadowLayer" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "Slider" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     ss.dependency "MaterialComponents/private/ThumbTrack"
   end
@@ -200,13 +200,13 @@ Pod::Spec.new do |s|
   s.subspec "SpritedAnimationView" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "Switch" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
     ss.resource_bundles = {
       "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
     }
@@ -217,24 +217,26 @@ Pod::Spec.new do |s|
   s.subspec "Typography" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "private" do |pss|
   
+    # Pull in icon dependencies
     # The implementation of this method is generated by running scripts/sync_icons.sh
+    # and defined in scripts/generated/icons.rb
     registerIcons(pss)
 
     pss.subspec "Color" do |ss|
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
-      ss.header_mappings_dir = "components/private/#{ss.base_name}/src/*"
+      ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
     end
 
     pss.subspec "ThumbTrack" do |ss|
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
-      ss.header_mappings_dir = "components/private/#{ss.base_name}/src/*"
+      ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
 
       ss.dependency "MaterialComponents/Ink"
       ss.dependency "MaterialComponents/ShadowElevations"

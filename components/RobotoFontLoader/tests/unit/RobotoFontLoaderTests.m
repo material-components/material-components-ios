@@ -18,7 +18,9 @@
 
 #import "MDCFontDiskLoader.h"
 #import "MDCRobotoFontLoader.h"
-#import "private/MDCRoboto+Constants.h"
+// TODO(iangordon): Re-add 'private/' to the path below once our Podspec specfically defines our
+// header search paths instead of flattening our header files into a single directory.
+#import "MDCRoboto+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 

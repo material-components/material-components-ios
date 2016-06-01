@@ -47,7 +47,7 @@
 
 #pragma mark Accessing a font's properties
 
-/** The name of the font within the *.ttf file. */
+/** The name of the font within the font resource file. */
 @property(nonatomic, strong, nonnull) NSString *fontName;
 
 /** The URL of the font asset. */

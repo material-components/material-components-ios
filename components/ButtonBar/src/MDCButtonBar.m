@@ -48,7 +48,11 @@ static NSString *const kEnabledSelector = @"enabled";
   if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
     _layoutDirection = [UIView
         userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
+  } else {
+    _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   }
+#else
+  _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
 #endif
   _layoutPosition = MDCButtonBarLayoutPositionNone;
 

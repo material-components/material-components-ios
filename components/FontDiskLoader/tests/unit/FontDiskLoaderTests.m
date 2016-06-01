@@ -17,10 +17,14 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCFontDiskLoader.h"
-#import "MDCRobotoFontLoader.h"
-#import "private/MDCRoboto+Constants.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
+
+// We use the bundle from MDCRobotoFontLoader to test loading functionality
+static NSString *MDCRobotoFontLoaderClassname = @"MDCRobotoFontLoader";
+static NSString *MDCRobotoRegularFontName = @"Roboto-Regular";
+static NSString *MDCRobotoRegularFontFilename = @"Roboto-Regular.ttf";
+static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 
 @interface FontDiskLoaderTests : XCTestCase
 @end
@@ -28,7 +32,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 @implementation FontDiskLoaderTests
 
 - (MDCFontDiskLoader *)validResource {
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
+  NSBundle *bundle =
+      [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
   return [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
                                             filename:MDCRobotoRegularFontFilename
                                       bundleFileName:MDCRobotoBundle
@@ -36,7 +41,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 }
 
 - (MDCFontDiskLoader *)invalidResource {
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
+  NSBundle *bundle =
+      [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
   return [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
                                             filename:@"some invalid filename"
                                       bundleFileName:MDCRobotoBundle

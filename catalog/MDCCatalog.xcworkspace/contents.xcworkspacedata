@@ -2,24 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../CHANGELOG.md">
-   </FileRef>
-   <FileRef
-      location = "group:README.md">
-   </FileRef>
-   <FileRef
-      location = "group:Podfile">
-   </FileRef>
-   <FileRef
-      location = "group:../MaterialComponents.podspec">
-   </FileRef>
-   <FileRef
-      location = "group:../MaterialComponentsCatalog.podspec">
-   </FileRef>
-   <FileRef
-      location = "group:../MaterialComponentsUnitTests.podspec">
-   </FileRef>
-   <FileRef
       location = "group:MDCCatalog.xcodeproj">
    </FileRef>
    <FileRef

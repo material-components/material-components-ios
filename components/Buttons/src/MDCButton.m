@@ -109,11 +109,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return [MDCShadowLayer class];
 }
 
-+ (instancetype)buttonWithType:(UIButtonType)buttonType {
-  [self doesNotRecognizeSelector:_cmd];
-  return nil;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {

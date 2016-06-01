@@ -30,7 +30,7 @@
 + (nonnull instancetype)sharedInstance;
 
 /** This is a singleton: Use sharedInstance instead. */
-- (nonnull instancetype)init __deprecated_msg("This is a singleton: Use sharedInstance instead");
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 #pragma mark Non-italic fonts
 
