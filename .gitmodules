@@ -1,15 +1,15 @@
 [submodule "scripts/external/arc-xcode-test-engine"]
-	path = scripts/external/arc-xcode-test-engine
-	url = git@github.com:google/arc-xcode-test-engine.git
+       path = scripts/external/arc-xcode-test-engine
+       url = https://github.com/google/arc-xcode-test-engine.git
 [submodule "scripts/external/clang-format-linter"]
-	path = scripts/external/clang-format-linter
-	url = git@github.com:vhbit/clang-format-linter.git
+       path = scripts/external/clang-format-linter
+       url = https://github.com/vhbit/clang-format-linter.git
 [submodule "scripts/external/arc-proselint"]
-	path = scripts/external/arc-proselint
-	url = git@github.com:google/arc-proselint.git
+       path = scripts/external/arc-proselint
+       url = https://github.com/google/arc-proselint.git
 [submodule "scripts/external/arc-jazzy-linter"]
-	path = scripts/external/arc-jazzy-linter
-	url = git@github.com:google/arc-jazzy-linter.git
+       path = scripts/external/arc-jazzy-linter
+       url = https://github.com/google/arc-jazzy-linter.git
 [submodule "scripts/external/arc-regex-line-length-linter"]
-	path = scripts/external/arc-regex-line-length-linter
-	url = git@github.com:google/arc-regex-line-length-linter.git
+       path = scripts/external/arc-regex-line-length-linter
+       url = https://github.com/google/arc-regex-line-length-linter.git
