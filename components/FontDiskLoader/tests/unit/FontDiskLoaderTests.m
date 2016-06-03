@@ -74,6 +74,44 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   XCTAssertTrue(resource.isRegistered);
 }
 
+- (void)testUnregisterFont {
+  // Given
+  MDCFontDiskLoader *resource = [self validResource];
+  [resource registerFont];
+
+  // When
+  BOOL success = [resource unregisterFont];
+
+  // Then
+  XCTAssertFalse(resource.isRegistered);
+  XCTAssertTrue(success);
+}
+
+- (void)testUnregisterFailedRegistration {
+  // Given
+  MDCFontDiskLoader *resource = [self invalidResource];
+  [resource registerFont];
+
+  // When
+  [resource unregisterFont];
+
+  // Then
+  XCTAssertFalse(resource.isRegistered);
+  XCTAssertFalse(resource.hasFailedRegistration);
+}
+
+- (void)testUnregisterNotRegistered {
+  // Given
+  MDCFontDiskLoader *resource = [self invalidResource];
+
+  // When
+  [resource unregisterFont];
+
+  // Then
+  XCTAssertFalse(resource.isRegistered);
+  XCTAssertFalse(resource.hasFailedRegistration);
+}
+
 - (void)testRegisterFontFailure {
   // Given
   MDCFontDiskLoader *resource = [self invalidResource];

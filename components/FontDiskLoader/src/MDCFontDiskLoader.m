@@ -82,6 +82,21 @@
   return _isRegistered;
 }
 
+- (BOOL)unregisterFont {
+  if (!_isRegistered) {
+    _hasFailedRegistration = NO;
+    return !_isRegistered;  // Is already not registered
+  }
+  CFErrorRef error = NULL;
+  _isRegistered = !CTFontManagerUnregisterFontsForURL((__bridge CFURLRef)self.fontURL,
+                                                      kCTFontManagerScopeProcess,
+                                                      &error);
+  if (_isRegistered || error) {
+    NSLog(@"Failed to unregister font: %@", error);
+  }
+  return !_isRegistered;
+}
+
 - (UIFont *)fontOfSize:(CGFloat)fontSize {
   [self registerFont];
   return [UIFont fontWithName:self.fontName size:fontSize];

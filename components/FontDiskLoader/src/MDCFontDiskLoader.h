@@ -59,9 +59,13 @@
  Attempts to register the font.
 
  The @c isRegistered and @c hasFailedRegistration flags reflect the results of this registration
- attempt. Returns the value of isRegistered.
+ attempt. Returns true if the font is registered. If font registration fails, subsequent calls to
+ registerFont will fail unless unregisterFont is called first.
  */
 - (BOOL)registerFont;
+
+/** Attempts to unregister the font. Returns true when the font is unregistered. */
+- (BOOL)unregisterFont;
 
 #pragma mark Accessing the font's registration status
 
