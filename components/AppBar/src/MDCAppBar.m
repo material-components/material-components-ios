@@ -169,6 +169,7 @@ static const CGFloat kStatusBarHeight = 20;
                                                         target:self
                                                         action:@selector(didTapBackButton:)];
   }
+  backBarButtonItem.accessibilityIdentifier = @"back_back_button";
   return backBarButtonItem;
 }
 
