@@ -114,7 +114,14 @@ static NSMutableSet *registeredFonts;
 
 - (UIFont *)fontOfSize:(CGFloat)fontSize {
   [self registerFont];
-  return [UIFont fontWithName:self.fontName size:fontSize];
+  UIFont *font = [UIFont fontWithName:self.fontName size:fontSize];
+#if DEBUG
+  if (font == nil) {
+    NSLog(@"Warning: This log will turn into an NSAssert on or after 6/8/2016");
+    NSLog(@"Failed to find font: %@ in file at %@", self.fontName, self.fontURL);
+  }
+#endif
+  return font;
 }
 
 - (NSString *)description {

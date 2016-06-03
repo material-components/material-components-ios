@@ -43,7 +43,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 - (MDCFontDiskLoader *)invalidResource {
   NSBundle *bundle =
       [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
-  return [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
+  return [[MDCFontDiskLoader alloc] initWithFontName:@"some invalid font name"
                                             filename:@"some invalid filename"
                                       bundleFileName:MDCRobotoBundle
                                           baseBundle:bundle];
@@ -120,6 +120,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   [resource registerFont];
 
   // Then
+  XCTAssertNil([resource fontOfSize:10]);
   XCTAssertTrue(resource.hasFailedRegistration);
 }
 
