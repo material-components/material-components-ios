@@ -63,7 +63,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
     let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
     pageControl.frame = CGRectMake(0, view.bounds.height - pageControlSize.height, view.bounds.width, pageControlSize.height);
-    pageControl.addTarget(self, action: "didChangePage:", forControlEvents: .ValueChanged)
+    pageControl.addTarget(self, action: #selector(didChangePage), forControlEvents: .ValueChanged)
     pageControl.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth];
     view.addSubview(pageControl)
   }

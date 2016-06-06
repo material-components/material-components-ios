@@ -27,7 +27,7 @@ class SwitchSwiftExampleViewController : UIViewController {
     view.backgroundColor = UIColor.whiteColor()
 
     switchComponent.on = true
-    switchComponent.addTarget(self, action: Selector("didChangeSwitchValue:"), forControlEvents: UIControlEvents.ValueChanged)
+    switchComponent.addTarget(self, action: #selector(didChangeSwitchValue), forControlEvents: UIControlEvents.ValueChanged)
     view.addSubview(switchComponent)
     switchComponent.center = CGPointMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds));
     switchComponent.autoresizingMask = [.FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleRightMargin]

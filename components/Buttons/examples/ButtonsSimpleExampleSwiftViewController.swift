@@ -29,7 +29,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     raisedButton.setTitle("Tap Me Too", forState: .Normal)
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
-    raisedButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+    raisedButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(raisedButton)
 
     let flatButton = MDCFlatButton()
@@ -37,14 +37,14 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     flatButton.setTitle("Touch me", forState: .Normal)
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
-    flatButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+    flatButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(flatButton)
 
     let floatingButton = MDCFloatingButton()
     floatingButton.setTitle("+", forState: .Normal)
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
-    floatingButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+    floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(floatingButton)
 
     let views = [

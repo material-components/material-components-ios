@@ -49,20 +49,20 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
     raisedButton.setTitle("Programmatic", forState: .Normal)
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
-    raisedButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+    raisedButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(raisedButton)
 
     flatButton.customTitleColor = UIColor.grayColor()
     flatButton.setTitle("Programmatic", forState: .Normal)
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
-    flatButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+    flatButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(flatButton)
 
     floatingButton.setTitle("+", forState: .Normal)
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
-    floatingButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+    floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(floatingButton)
 
     let views = [
