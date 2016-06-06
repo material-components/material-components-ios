@@ -437,7 +437,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       _trackOnLayer.backgroundColor = _trackOnColor.CGColor;
 
       CGFloat anchor = [self thumbPositionForValue:_filledTrackAnchorValue].x;
-      if (!_trackEndsAreInset) {
+
+      if (_trackEndsAreInset) {
+        // Account for the fact that _trackView is actually shorter in this case
+        anchor -= _thumbRadius;
+      } else {
         if (_filledTrackAnchorValue <= _minimumValue) {
           anchor -= _thumbRadius;
         }
@@ -470,18 +474,21 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // Move thumb position.
   CGPoint point = [self thumbPositionForValue:_value];
   _thumbView.center = point;
+  if (_trackEndsAreInset) {
+    _trackView.frame =
+        CGRectMake(_thumbView.cornerRadius, self.center.y - (_trackHeight / 2),
+                   CGRectGetWidth(self.bounds) - (_thumbView.cornerRadius * 2), _trackHeight);
+  } else {
+    _trackView.frame =
+        CGRectMake(0, self.center.y - (_trackHeight / 2), CGRectGetWidth(self.bounds), _trackHeight);
+  }
   [self updateTrackMask];
-  _trackView.frame =
-      CGRectMake(0, self.center.y - (_trackHeight / 2), CGRectGetWidth(self.bounds), _trackHeight);
 
   [self updateColorsAnimated:animated withDuration:duration];
 }
 
 - (void)updateTrackMask {
   CGRect maskFrame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), _trackHeight);
-  if (_trackEndsAreInset) {
-    maskFrame = CGRectInset(maskFrame, _thumbView.cornerRadius, 0);
-  }
 
   CGMutablePathRef path = CGPathCreateMutable();
   CGFloat cornerRadius = _trackHeight / 2;
