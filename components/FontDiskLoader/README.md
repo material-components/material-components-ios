@@ -13,11 +13,9 @@ Registers a single custom font asset from disk
 
 <ul class="icon-list">
   <li class="icon-link">
-    See
     <a href="https://www.google.com/design/spec/typography.html">
       Typography
     </a>
-    for more information
   </li>
 </ul>
 

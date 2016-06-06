@@ -18,11 +18,9 @@ The Roboto Font Loader lazy loads the Roboto font.
     </a>
   </li>
   <li class="icon-link">
-    See
     <a href="https://www.google.com/design/spec/typography.html">
       Typography
     </a>
-    for more information
   </li>
 </ul>
 
