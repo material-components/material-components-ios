@@ -470,6 +470,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // Move thumb position.
   CGPoint point = [self thumbPositionForValue:_value];
   _thumbView.center = point;
+  [self updateTrackMask];
   _trackView.frame =
       CGRectMake(0, self.center.y - (_trackHeight / 2), CGRectGetWidth(self.bounds), _trackHeight);
 
