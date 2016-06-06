@@ -1,5 +1,6 @@
 PODS:
   - MaterialComponents (10.0.0):
+    - MaterialComponents/ActivityIndicator (= 10.0.0)
     - MaterialComponents/AppBar (= 10.0.0)
     - MaterialComponents/ButtonBar (= 10.0.0)
     - MaterialComponents/Buttons (= 10.0.0)
@@ -21,6 +22,7 @@ PODS:
     - MaterialComponents/SpritedAnimationView (= 10.0.0)
     - MaterialComponents/Switch (= 10.0.0)
     - MaterialComponents/Typography (= 10.0.0)
+  - MaterialComponents/ActivityIndicator (10.0.0)
   - MaterialComponents/AppBar (10.0.0):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
@@ -117,7 +119,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: c368e132f1750211ec982d3b4c844d2886a785e0
+  MaterialComponents: 9c573b7371abd74208fe05a1915f3f02f513a009
 
 PODFILE CHECKSUM: b585ca32a2884e050823cc1f861e8b7246f7dcc1
 
