@@ -1,27 +1,34 @@
 {% case page.categories %}
 {% when 'components' %}
-  {% assign navdata = site.data.navigation.components %}
+  {% assign section = site.data.navigation.components %}
 {% when 'howto' %}
-  {% assign navdata = site.data.navigation.howto %}
+  {% assign section = site.data.navigation.howto %}
 {% when 'contributing' %}
-  {% assign navdata = site.data.navigation.contributing %}
+  {% assign section = site.data.navigation.contributing %}
 {% endcase %}
 <nav id="sidenav">
   <ul>
-    {% for item in navdata %}
+    {% for item in section.children %}
       {% assign lcpage = page.url | downcase %}
       {% assign lcitem = item.url | downcase %}
       {% assign activepage = "" %}
       {% if lcpage == lcitem %}
         {% assign activepage = "active" %}
+      {% else %}
+        {% for child in item.children %}
+          {% assign lcchild = child.url | downcase %}
+          {% if lcpage == lcchild %}
+            {% assign activepage = "active" %}
+          {% endif %}
+        {% endfor %}
       {% endif %}
       <li class="toplevel {{ activepage }}">
         <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ item.url }}">{{ item.name }}</a>
-          {% if item.sub %}
+          {% if item.children %}
             <ul>
-            {% for sub in item.sub %}
+            {% for child in item.children %}
               <li class="sublevel">
-                <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ sub.url }}">{{ sub.name }}</a>
+                <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ child.url }}">{{ child.name }}</a>
               </li>
             {% endfor %}
             </ul>

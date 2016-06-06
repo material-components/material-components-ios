@@ -1,90 +1,107 @@
+homepage:
+  markdown: site-index.md
 howto:
-  - name: How To
-    url: "/howto/"
-    sub:
-      - name: Tutorial
-        url: "/howto/tutorial/"
-      - name: Build environment
-        url: "/howto/build-env/"
+  markdown: "howto/README.md"
+  children:
+    - name: How To
+      url: "/howto/"
+      children:
+        - name: Tutorial
+          url: "/howto/tutorial/"
+          markdown: "howto/tutorial/README.md"
+        - name: Build environment
+          url: "/howto/build-env/"
+          markdown: "howto/build-env/README.md"
 contributing:
-  - name: Contributing
-    url: "/contributing/"
-  - name: Community Structure
-    url: "/contributing/#community-structure"
-  - name: Code of Conduct
-    url: "/contributing/#code-of-conduct"
-  - name: Questions
-    url: "/contributing/#questions"
-  - name: Found an Issue
-    url: "/contributing/#found-an-issue"
-  - name: Feature Request
-    url: "/contributing/#feature-request"
-  - name: Submitting an Issue
-    url: "/contributing/#submitting-an-issue"
-  - name: Submitting a Pull Request
-    url: "/contributing/#submitting-a-pull-request"
-  - name: Coding Style
-    url: "/contributing/#coding-style"
-  - name: Contributor License Agreement
-    url: "/contributing/#contributor-license-agreement"
-  - name: License
-    url: "/contributing/#license"
+  markdown: "contributing/README.md"
+  children:
+    - name: Contributing
+      url: "/contributing/"
+    - name: Community Structure
+      url: "/contributing/#community-structure"
+    - name: Code of Conduct
+      url: "/contributing/#code-of-conduct"
+    - name: Questions
+      url: "/contributing/#questions"
+    - name: Found an Issue
+      url: "/contributing/#found-an-issue"
+    - name: Feature Request
+      url: "/contributing/#feature-request"
+    - name: Submitting an Issue
+      url: "/contributing/#submitting-an-issue"
+    - name: Submitting a Pull Request
+      url: "/contributing/#submitting-a-pull-request"
+    - name: Coding Style
+      url: "/contributing/#coding-style"
+    - name: Contributor License Agreement
+      url: "/contributing/#contributor-license-agreement"
+    - name: License
+      url: "/contributing/#license"
 components:
-  - name: AppBar
-    url: "/components/AppBar/"
-    markdown: AppBar/README.md
-  - name: ButtonBar
-    url: "/components/ButtonBar/"
-    markdown: ButtonBar/README.md
-  - name: Buttons
-    url: "/components/Buttons/"
-    markdown: Buttons/README.md
-  - name: CollectionCells
-    url: "/components/CollectionCells/"
-    markdown: CollectionCells/README.md
-  - name: CollectionLayoutAttributes
-    url: "/components/CollectionLayoutAttributes/"
-    markdown: CollectionLayoutAttributes/README.md
-  - name: Collections
-    url: "/components/Collections/"
-    markdown: Collections/README.md
-    sub:
-      - name: Styling
-        url: "/components/Collections/styling"
-        markdown: Collections/styling/README.md
-      - name: Editing
-        url: "/components/Collections/editing"
-        markdown: Collections/editing/README.md
-  - name: FlexibleHeader
-    url: "/components/FlexibleHeader/"
-    markdown: FlexibleHeader/README.md
-  - name: HeaderStackView
-    url: "/components/HeaderStackView/"
-    markdown: HeaderStackView/README.md
-  - name: Ink
-    url: "/components/Ink/"
-    markdown: Ink/README.md
-  - name: NavigationBar
-    url: "/components/NavigationBar/"
-    markdown: NavigationBar/README.md
-  - name: PageControl
-    url: "/components/PageControl/"
-    markdown: PageControl/README.md
-  - name: Palettes
-    url: "/components/Palettes/"
-    markdown: Palettes/README.md
-  - name: ShadowElevations
-    url: "/components/ShadowElevations/"
-    markdown: ShadowElevations/README.md
-  - name: ShadowLayer
-    url: "/components/ShadowLayer/"
-    markdown: ShadowLayer/README.md
-  - name: Slider
-    url: "/components/Slider/"
-    markdown: Slider/README.md
-  - name: Switch
-    url: "/components/Switch/"
-    markdown: Switch/README.md
-  - name: Typography
-    url: "/components/Typography/"
-    markdown: Typography/README.md
+  markdown: components/README.md
+  children:
+    - name: AppBar
+      url: "/components/AppBar/"
+      markdown: components/AppBar/README.md
+    - name: ButtonBar
+      url: "/components/ButtonBar/"
+      markdown: components/ButtonBar/README.md
+    - name: Buttons
+      url: "/components/Buttons/"
+      markdown: components/Buttons/README.md
+    - name: CollectionCells
+      url: "/components/CollectionCells/"
+      markdown: components/CollectionCells/README.md
+    - name: CollectionLayoutAttributes
+      url: "/components/CollectionLayoutAttributes/"
+      markdown: components/CollectionLayoutAttributes/README.md
+    - name: Collections
+      url: "/components/Collections/"
+      markdown: components/Collections/README.md
+      children:
+        - name: Styling
+          url: "/components/Collections/styling/"
+          markdown: components/Collections/styling/README.md
+        - name: Editing
+          url: "/components/Collections/editing/"
+          markdown: components/Collections/editing/README.md
+    - name: FlexibleHeader
+      url: "/components/FlexibleHeader/"
+      markdown: components/FlexibleHeader/README.md
+    - name: HeaderStackView
+      url: "/components/HeaderStackView/"
+      markdown: components/HeaderStackView/README.md
+    - name: Ink
+      url: "/components/Ink/"
+      markdown: components/Ink/README.md
+    - name: NavigationBar
+      url: "/components/NavigationBar/"
+      markdown: components/NavigationBar/README.md
+    - name: PageControl
+      url: "/components/PageControl/"
+      markdown: components/PageControl/README.md
+    - name: Palettes
+      url: "/components/Palettes/"
+      markdown: components/Palettes/README.md
+    - name: ShadowElevations
+      url: "/components/ShadowElevations/"
+      markdown: components/ShadowElevations/README.md
+    - name: ShadowLayer
+      url: "/components/ShadowLayer/"
+      markdown: components/ShadowLayer/README.md
+    - name: Slider
+      url: "/components/Slider/"
+      markdown: components/Slider/README.md
+    - name: Switch
+      url: "/components/Switch/"
+      markdown: components/Switch/README.md
+    - name: Typography
+      url: "/components/Typography/"
+      markdown: components/Typography/README.md
+      children:
+        - name: RobotoFontLoader
+          url: "/components/RobotoFontLoader/"
+          markdown: components/RobotoFontLoader/README.md
+        - name: FontDiskLoader
+          url: "/components/FontDiskLoader/"
+          markdown: components/FontDiskLoader/README.md
