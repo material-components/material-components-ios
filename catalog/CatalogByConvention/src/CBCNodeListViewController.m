@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "CBCNodeViewController.h"
+#import "CBCNodeListViewController.h"
 
 #import "CBCCatalogExample.h"
 #import "CBCRuntime.h"

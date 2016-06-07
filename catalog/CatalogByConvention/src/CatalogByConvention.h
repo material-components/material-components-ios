@@ -14,4 +14,4 @@
  limitations under the License.
  */
 
-#import "CBCNodeViewController.h"
+#import "CBCNodeListViewController.h"
