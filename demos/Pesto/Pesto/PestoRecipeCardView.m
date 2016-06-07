@@ -16,6 +16,13 @@
 
 #import "PestoRecipeCardView.h"
 
+#import "PestoFoodIconFish.h"
+#import "PestoFoodIconMain.h"
+#import "PestoFoodIconMeat.h"
+#import "PestoFoodIconSpicy.h"
+#import "PestoFoodIconTimer.h"
+#import "PestoFoodIconVeggie.h"
+
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialSpritedAnimationView.h"
@@ -93,30 +100,23 @@ static CGFloat kPestoDetailSplitWidth = 64;
 }
 
 - (void)commonInit {
-  _contentViewFrame =
-      CGRectMake(kPestoDetailPadding,
-                 kPestoDetailPadding,
-                 self.frame.size.width - kPestoDetailPadding * 2.f,
-                 self.frame.size.height - kPestoDetailPadding * 2.f);
+  _contentViewFrame = CGRectMake(kPestoDetailPadding, kPestoDetailPadding,
+                                 self.frame.size.width - kPestoDetailPadding * 2.f,
+                                 self.frame.size.height - kPestoDetailPadding * 2.f);
   UIView *contentView = [[UIView alloc] initWithFrame:_contentViewFrame];
-  contentView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:contentView];
 
-  UIImage *image = [UIImage imageNamed:@"Timer"];
+  CGRect iconFrame = CGRectMake(0, 0, 32, 32);
+  UIImage *image = [PestoFoodIconTimer drawTileImage:iconFrame];
   _iconImageView = [[UIImageView alloc] initWithImage:image];
-  _iconImageView.alpha = 0.87f;
-  _iconImageView.frame = CGRectMake(0,
-                                    0,
-                                    _iconImageView.frame.size.width,
-                                    _iconImageView.frame.size.height);
+  _iconImageView.frame =
+      CGRectMake(0, 0, _iconImageView.frame.size.width, _iconImageView.frame.size.height);
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography display1Font];
   _titleLabel.alpha = [MDCTypography display1FontOpacity];
   _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
-  _titleLabel.frame = CGRectMake(0,
-                                 0,
-                                 _contentViewFrame.size.width - kPestoDetailSplitWidth,
+  _titleLabel.frame = CGRectMake(0, 0, _contentViewFrame.size.width - kPestoDetailSplitWidth,
                                  [MDCTypography display1Font].pointSize + 4.f);
   _labelDesc = [[UILabel alloc] init];
   _labelDesc.lineBreakMode = NSLineBreakByWordWrapping;
@@ -183,18 +183,13 @@ static CGFloat kPestoDetailSplitWidth = 64;
   _amount4.textColor = teal;
   [_amount4 sizeToFit];
 
-  CGRect splitViewTitleFrame = CGRectMake(0,
-                                          0,
-                                          _contentViewFrame.size.width,
-                                          [MDCTypography display1Font].pointSize + 4.f);
-  PestoSplitView *splitViewTitle =
-      [[PestoSplitView alloc] initWithFrame:splitViewTitleFrame
-                                   leftView:_iconImageView
-                                  rightView:_titleLabel];
-  CGRect splitViewDescFrame = CGRectMake(0,
-                                         0,
-                                         _contentViewFrame.size.width,
-                                         kPestoDetailDescTextHeight);
+  CGRect splitViewTitleFrame =
+      CGRectMake(0, 0, _contentViewFrame.size.width, [MDCTypography display1Font].pointSize + 4.f);
+  PestoSplitView *splitViewTitle = [[PestoSplitView alloc] initWithFrame:splitViewTitleFrame
+                                                                leftView:_iconImageView
+                                                               rightView:_titleLabel];
+  CGRect splitViewDescFrame =
+      CGRectMake(0, 0, _contentViewFrame.size.width, kPestoDetailDescTextHeight);
   PestoSplitView *splitViewDesc =
       [[PestoSplitView alloc] initWithFrame:splitViewDescFrame
                                    leftView:nil
@@ -217,10 +212,9 @@ static CGFloat kPestoDetailSplitWidth = 64;
                                    leftView:_amount4
                                   rightView:_ingredient4];
 
-  CGRect stackFrame = CGRectMake(kPestoDetailPadding,
-                                 0,
-                                 self.bounds.size.width - kPestoDetailPadding * 2.f,
-                                 self.bounds.size.height);
+  CGRect stackFrame =
+      CGRectMake(kPestoDetailPadding, 0, self.bounds.size.width - kPestoDetailPadding * 2.f,
+                 self.bounds.size.height);
   _stackView = [[UIStackView alloc] initWithFrame:stackFrame];
   _stackView.axis = UILayoutConstraintAxisVertical;
   _stackView.spacing = 12.f;
@@ -252,7 +246,20 @@ static CGFloat kPestoDetailSplitWidth = 64;
 
 - (void)setIconImageName:(NSString *)iconImageName {
   _iconImageName = [iconImageName copy];
-  _iconImageView.image = [UIImage imageNamed:_iconImageName];
+  CGRect iconFrame = CGRectMake(0, 0, 32, 32);
+  UIImage *icon = [PestoFoodIconFish drawTileImage:iconFrame];
+  if ([_iconImageName isEqualToString:@"Main"]) {
+    icon = [PestoFoodIconMain drawTileImage:iconFrame];
+  } else if ([_iconImageName isEqualToString:@"Meat"]) {
+    icon = [PestoFoodIconMeat drawTileImage:iconFrame];
+  } else if ([_iconImageName isEqualToString:@"Spicy"]) {
+    icon = [PestoFoodIconSpicy drawTileImage:iconFrame];
+  } else if ([_iconImageName isEqualToString:@"Timer"]) {
+    icon = [PestoFoodIconTimer drawTileImage:iconFrame];
+  } else if ([_iconImageName isEqualToString:@"Veggie"]) {
+    icon = [PestoFoodIconVeggie drawTileImage:iconFrame];
+  }
+  _iconImageView.image = icon;
 }
 
 - (void)setDescText:(NSString *)descText {
@@ -266,9 +273,7 @@ static CGFloat kPestoDetailSplitWidth = 64;
                          value:descParagraphStyle
                          range:NSMakeRange(0, descAttrString.length)];
   self.labelDesc.attributedText = descAttrString;
-  self.labelDesc.frame = CGRectMake(0,
-                                    0,
-                                    self.contentViewFrame.size.width - kPestoDetailSplitWidth,
+  self.labelDesc.frame = CGRectMake(0, 0, self.contentViewFrame.size.width - kPestoDetailSplitWidth,
                                     kPestoDetailDescTextHeight);
 }
 
