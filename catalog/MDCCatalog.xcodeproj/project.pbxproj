@@ -15,7 +15,7 @@
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
 		664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */; };
 		66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */; };
-		666CA70D1CAEBCA9001B1884 /* CBCNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */; };
+		666CA70D1CAEBCA9001B1884 /* CBCNodeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666CA70A1CAEBCA9001B1884 /* CBCNodeListViewController.m */; };
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
 		DE1944861CBD9E40009E0321 /* MDCCatalogTileData.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1944681CBD9E40009E0321 /* MDCCatalogTileData.m */; };
@@ -88,8 +88,8 @@
 		66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCInkTouchController+Injection.m"; sourceTree = "<group>"; };
 		665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDCCatalog-Bridging-Header.h"; sourceTree = "<group>"; };
 		666CA7081CAEBCA9001B1884 /* CBCCatalogExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCCatalogExample.h; sourceTree = "<group>"; };
-		666CA7091CAEBCA9001B1884 /* CBCNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCNodeViewController.h; sourceTree = "<group>"; };
-		666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCNodeViewController.m; sourceTree = "<group>"; };
+		666CA7091CAEBCA9001B1884 /* CBCNodeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCNodeListViewController.h; sourceTree = "<group>"; };
+		666CA70A1CAEBCA9001B1884 /* CBCNodeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCNodeListViewController.m; sourceTree = "<group>"; };
 		6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileView.swift; sourceTree = "<group>"; };
 		90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
@@ -212,8 +212,8 @@
 			children = (
 				3640411C1CBECABD00C962B2 /* CatalogByConvention.h */,
 				666CA7081CAEBCA9001B1884 /* CBCCatalogExample.h */,
-				666CA7091CAEBCA9001B1884 /* CBCNodeViewController.h */,
-				666CA70A1CAEBCA9001B1884 /* CBCNodeViewController.m */,
+				666CA7091CAEBCA9001B1884 /* CBCNodeListViewController.h */,
+				666CA70A1CAEBCA9001B1884 /* CBCNodeListViewController.m */,
 				6642AB7E1CBDBE0900F5B1D7 /* private */,
 			);
 			name = CatalogByConvention;
@@ -434,7 +434,7 @@
 			files = (
 				DE1944901CBD9E40009E0321 /* MDCCatalogTileDataShadowLayer.m in Sources */,
 				6642AB811CBDBE0900F5B1D7 /* CBCRuntime.m in Sources */,
-				666CA70D1CAEBCA9001B1884 /* CBCNodeViewController.m in Sources */,
+				666CA70D1CAEBCA9001B1884 /* CBCNodeListViewController.m in Sources */,
 				DE1944911CBD9E40009E0321 /* MDCCatalogTileDataSlider.m in Sources */,
 				DE19448E1CBD9E40009E0321 /* MDCCatalogTileDataNavigationBar.m in Sources */,
 				DE19448F1CBD9E40009E0321 /* MDCCatalogTileDataPageControl.m in Sources */,
