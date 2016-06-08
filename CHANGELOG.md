@@ -42,13 +42,13 @@ Added *NSCopying*.
 
 #### Changes
 
-* [updated examples and readme to use new swift selector syntax](https://github.com/google/material-components-ios/commit/25ea19e76a7b4d7baf9420639972127022c27602) (Eric Li)
+* [Updated examples and readme to use new swift selector syntax.](https://github.com/google/material-components-ios/commit/25ea19e76a7b4d7baf9420639972127022c27602) (Eric Li)
 
 ### Buttons
 
 #### Changes
 
-* [updated examples and readme to use new swift selector syntax](https://github.com/google/material-components-ios/commit/25ea19e76a7b4d7baf9420639972127022c27602) (Eric Li)
+* [Updated examples and readme to use new swift selector syntax.](https://github.com/google/material-components-ios/commit/25ea19e76a7b4d7baf9420639972127022c27602) (Eric Li)
 
 ### Collections
 
