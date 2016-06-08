@@ -35,7 +35,75 @@ Added *NSCopying*.
 | `Available` | `Deprecated` | `availability` |
 | `` | `This setter is no longer public` | `deprecationMessage` |
 
+## Component changes
 
+### ActivityIndicator
+
+#### Changes
+
+* [Adding activity indicator component and demo](https://github.com/google/material-components-ios/commit/d589b27330d717c9d7a4bd1ebea562453f5c5639) (Junius Gunaratne)
+* [Move layout code into supplemental, support landscape mode](https://github.com/google/material-components-ios/commit/06acbe8cb8b9aa0befea566233f5e7b7528dd8dd) (Junius Gunaratne)
+
+### AppBar
+
+#### Changes
+
+* [Fix typo in back item accessibility identifier.](https://github.com/google/material-components-ios/commit/f5a6ce7244edd1ad67fc8a04a0a087623936db32) (Louis Romero)
+* [Respect the navigation bar's layout direction](https://github.com/google/material-components-ios/commit/c60de65ffdef1cf83d664e429615b87238f15ccf) (Louis Romero)
+* [Set an accessibility identifier on the default back button.](https://github.com/google/material-components-ios/commit/ae21fd0453b3f932e2926a14518009429190c39c) (Louis Romero)
+
+### ButtonBar
+
+#### Changes
+
+* [updated examples and readme to use new swift selector syntax](https://github.com/google/material-components-ios/commit/25ea19e76a7b4d7baf9420639972127022c27602) (Eric Li)
+
+### Buttons
+
+#### Changes
+
+* [updated examples and readme to use new swift selector syntax](https://github.com/google/material-components-ios/commit/25ea19e76a7b4d7baf9420639972127022c27602) (Eric Li)
+
+### Collections
+
+#### Changes
+
+* [Fixes bug when initializing collection view with own layout.](https://github.com/google/material-components-ios/commit/306da8d238cfd9d85f65ccb33370e1c6485418a1) (Chris Cox)
+
+### FontDiskLoader
+
+#### Changes
+
+* [Added unregisterFont method.](https://github.com/google/material-components-ios/commit/77d8ebcd78cf37b9e38b77c5b29136ee37d6f719) (randallli)
+* [Correct Roboto Font markdown for design specification link.](https://github.com/google/material-components-ios/commit/fa55cdd03099dfb2822e76222e81f631f7e000d0) (Yiran Mao)
+* [[FontDiskLoader]? added warning NSLog when failing to load the font by name.](https://github.com/google/material-components-ios/commit/d62b6dc116d8db90e1f1953c48c0e8b6c45949de) (randallli)
+* [[MDCFontDiskLoader] Added copying protocol](https://github.com/google/material-components-ios/commit/7a0a9f0aaa61d47a780fd404916701f373f7e53d) (randallli)
+* [[MDCFontDiskLoader] sharing registered state across all instances of objects.](https://github.com/google/material-components-ios/commit/1ef21ea7e080664050271576fd85dcea3c4d87b4) (randallli)
+* [[MDCFontDiskLoader]? Deprecated properties that should not have been public write.](https://github.com/google/material-components-ios/commit/25f4d7caec33172ef9aafc1c633c03740da62d16) (randallli)
+
+### PageControl
+
+#### Changes
+
+* [updated examples and readme to use new swift selector syntax](https://github.com/google/material-components-ios/commit/25ea19e76a7b4d7baf9420639972127022c27602) (Eric Li)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [Correct Roboto Font markdown for design specification link.](https://github.com/google/material-components-ios/commit/fa55cdd03099dfb2822e76222e81f631f7e000d0) (Yiran Mao)
+
+### ShadowLayer
+
+#### Changes
+
+* [updated examples and readme to use new swift selector syntax](https://github.com/google/material-components-ios/commit/25ea19e76a7b4d7baf9420639972127022c27602) (Eric Li)
+
+### Switch
+
+#### Changes
+
+* [updated examples and readme to use new swift selector syntax](https://github.com/google/material-components-ios/commit/25ea19e76a7b4d7baf9420639972127022c27602) (Eric Li)
 
 # 10.0.0
 
