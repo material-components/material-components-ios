@@ -1,5 +1,11 @@
 # 10.1.1
 
+### FontDiskLoader
+
+#### Changes
+
+* [Removed extra /x03 character in comment because it shouldn't be there.](https://github.com/google/material-components-ios/commit/b018eb87438ccfd4fa99850d9ed48698ff91e7e3) (randallli)
+
 # 10.1.0
 
 ## API diffs
