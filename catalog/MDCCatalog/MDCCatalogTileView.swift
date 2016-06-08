@@ -72,6 +72,8 @@ class MDCCatalogTileView: UIView {
     imageView.frame = centeredFrame
 
     switch componentNameString {
+    case "Activity Indicator":
+      newImage = MDCCatalogTileDataActivityIndicator.drawTileImage(centeredFrame)
     case "App Bar":
       newImage = MDCCatalogTileDataAppBar.drawTileImage(centeredFrame)
     case "Button Bar":

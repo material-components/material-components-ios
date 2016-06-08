@@ -16,8 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCCatalogTileData : NSObject
+#import "MDCCatalogTileData.h"
 
-+ (UIImage *)drawImageWithFrame:(CGRect)frame drawBlock:(void (^)(CGRect))drawBlock;
+@interface MDCCatalogTileDataActivityIndicator : MDCCatalogTileData
+
++ (UIImage *)drawTileImage:(CGRect)frame;
 
 @end
