@@ -1,4 +1,4 @@
-# release-candidate TODO: Replace me with version number.
+# 10.1.0
 
 ## API diffs
 
@@ -18,6 +18,7 @@ Deprecated setter.
 - [property attribute change] [`MDCFontDiskLoader.isRegistered`](https://github.com/google/material-components-ios/blob/d4a3ac376f5c8498cfb52401f4fbb69d2e318897/components/FontDiskLoader/src/MDCFontDiskLoader.h#L93).
 Deprecated setter.
 - [protocols changed] [`MDCFontDiskLoader`](https://github.com/google/material-components-ios/blob/d4a3ac376f5c8498cfb52401f4fbb69d2e318897/components/FontDiskLoader/src/MDCFontDiskLoader.h#L28).
+
 Added *NSCopying*.
 
 ## Component changes
