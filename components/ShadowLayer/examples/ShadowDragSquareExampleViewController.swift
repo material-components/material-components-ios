@@ -43,7 +43,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
 
     self.blueView.setElevation(kRestingCardElevation)
 
-    longPressRecogniser.addTarget(self, action: "longPressedInView:")
+    longPressRecogniser.addTarget(self, action: #selector(longPressedInView))
     longPressRecogniser.minimumPressDuration = 0.0
     self.blueView.addGestureRecognizer(longPressRecogniser)
   }

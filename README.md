@@ -121,7 +121,7 @@ class MDCBuildTestViewController: UIViewController {
         let raiseButton = MDCRaisedButton.init();
         raiseButton.setTitle("Raised Button", forState: .Normal);
         raiseButton.sizeToFit();
-        raiseButton.addTarget(self, action: "tapped:", forControlEvents: .TouchUpInside);
+        raiseButton.addTarget(self, action: #selector(tapped), forControlEvents: .TouchUpInside);
         self.view.addSubview(raiseButton);
     }
 

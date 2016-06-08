@@ -48,7 +48,7 @@
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self commonMDCCollectionViewControllerInit:self.collectionViewLayout];
+    [self commonMDCCollectionViewControllerInit:layout];
   }
   return self;
 }

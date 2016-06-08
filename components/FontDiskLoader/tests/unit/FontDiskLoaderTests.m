@@ -43,7 +43,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 - (MDCFontDiskLoader *)invalidResource {
   NSBundle *bundle =
       [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
-  return [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
+  return [[MDCFontDiskLoader alloc] initWithFontName:@"some invalid font name"
                                             filename:@"some invalid filename"
                                       bundleFileName:MDCRobotoBundle
                                           baseBundle:bundle];
@@ -74,6 +74,44 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   XCTAssertTrue(resource.isRegistered);
 }
 
+- (void)testUnregisterFont {
+  // Given
+  MDCFontDiskLoader *resource = [self validResource];
+  [resource registerFont];
+
+  // When
+  BOOL success = [resource unregisterFont];
+
+  // Then
+  XCTAssertFalse(resource.isRegistered);
+  XCTAssertTrue(success);
+}
+
+- (void)testUnregisterFailedRegistration {
+  // Given
+  MDCFontDiskLoader *resource = [self invalidResource];
+  [resource registerFont];
+
+  // When
+  [resource unregisterFont];
+
+  // Then
+  XCTAssertFalse(resource.isRegistered);
+  XCTAssertFalse(resource.hasFailedRegistration);
+}
+
+- (void)testUnregisterNotRegistered {
+  // Given
+  MDCFontDiskLoader *resource = [self invalidResource];
+
+  // When
+  [resource unregisterFont];
+
+  // Then
+  XCTAssertFalse(resource.isRegistered);
+  XCTAssertFalse(resource.hasFailedRegistration);
+}
+
 - (void)testRegisterFontFailure {
   // Given
   MDCFontDiskLoader *resource = [self invalidResource];
@@ -82,7 +120,33 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   [resource registerFont];
 
   // Then
+  XCTAssertNil([resource fontOfSize:10]);
   XCTAssertTrue(resource.hasFailedRegistration);
+}
+
+- (void)testCopy {
+  // Given
+  MDCFontDiskLoader *loader = [self validResource];
+
+  // When
+  MDCFontDiskLoader *secondFontLoader = [loader copy];
+
+  // Then
+  XCTAssertEqualObjects(loader, secondFontLoader);
+}
+
+- (void)testIsRegisteredOfSecondFontLoader {
+  // Given
+  MDCFontDiskLoader *loader = [self validResource];
+  MDCFontDiskLoader *secondFontLoader =
+      [[MDCFontDiskLoader alloc] initWithName:loader.fontName
+                                          URL:loader.fontURL];
+
+  // When
+  [loader registerFont];
+
+  // Then
+  XCTAssertEqual(loader.isRegistered, secondFontLoader.isRegistered);
 }
 
 - (void)testProvidesACustomFont {
@@ -195,4 +259,5 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   XCTAssertEqualObjects(loader, secondLoader);
   XCTAssertEqual([loader hash], [secondLoader hash]);
 }
+
 @end

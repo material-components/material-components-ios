@@ -16,8 +16,16 @@
 
 #import <UIKit/UIKit.h>
 
-/** Register and load a custom font resource. */
-@interface MDCFontDiskLoader : NSObject
+/**
+ Register and load a custom font resource.
+
+ This class provides a convenience layer on top of CoreText APIs. Registration occurs by @c fileURL,
+ therefore registration state is shared across all instances of MDCFontDiskLoader objects. For
+ example if two MDCFontDiskLoader objects have the same fileURL, calling @c registerFont one will
+ also alter the state of the second MDCFontDiskLoader object. The same holds true for
+ @c unregisterFont.
+ */
+@interface MDCFontDiskLoader : NSObject <NSCopying>
 
 #pragma mark Creating a font resource
 
@@ -58,22 +66,46 @@
 /**
  Attempts to register the font.
 
+ All instances of MDCFontDiskLoader with the same fontURL will reflect changes from this method.
+
  The @c isRegistered and @c hasFailedRegistration flags reflect the results of this registration
- attempt. Returns the value of isRegistered.
+ attempt. Returns true if the font is registered. If font registration fails, subsequent calls to
+ registerFont will fail unless unregisterFont is called first.
  */
 - (BOOL)registerFont;
 
+/**
+ Attempts to unregister the font.
+
+ All instances of MDCFontDiskLoader with the same fontURL will reflect changes from this method.
+
+ Returns true when the font is unregistered. Resets @c hasFailedRegistration back to false.
+ */
+- (BOOL)unregisterFont;
+
 #pragma mark Accessing the font's registration status
 
-/** The registered state of the custom font. */
-@property(nonatomic) BOOL isRegistered;
+/**
+ The registered state of the custom font.
 
-/** This flag is true when the registration failed. It prevents future attempts at registration. */
-@property(nonatomic) BOOL hasFailedRegistration;
+ All instances of MDCFontDiskLoader with the same fontURL have the same value of @c isRegistered.
+ */
+@property(nonatomic, readonly) BOOL isRegistered;
+
+/**
+ This flag is true when the registration failed.
+
+ It prevents future attempts at registration. To reset call @c unregisterFont.
+ */
+@property(nonatomic, readonly) BOOL hasFailedRegistration;
 
 #pragma mark Requesting fonts of a given size
 
 /** A convience method for getting a font. */
 - (nullable UIFont *)fontOfSize:(CGFloat)fontSize;
+
+// TODO: On or after 6/8/2016 delete these deprecations
+- (void)setIsRegistered:(BOOL)isRegistered __deprecated_msg("This setter is no longer public");
+- (void)setHasFailedRegistration:(BOOL)hasFailedRegistration __deprecated_msg("This setter is no longer public");
 
 @end

@@ -74,7 +74,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
       boundsHeight - pageControlSize.height,
       boundsWidth,
       pageControlSize.height)
-    pageControl.addTarget(self, action: "didChangePage:",
+    pageControl.addTarget(self, action: #selector(didChangePage),
                           forControlEvents: UIControlEvents.ValueChanged)
     self.addSubview(pageControl)
 

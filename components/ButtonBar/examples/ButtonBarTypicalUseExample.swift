@@ -32,14 +32,14 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
       title: "Action",
       style: ignored,
       target: self,
-      action: "didTapActionButton:"
+      action: #selector(didTapActionButton)
     )
 
     let secondActionItem = UIBarButtonItem(
       title: "Second action",
       style: ignored,
       target: self,
-      action: "didTapActionButton:"
+      action: #selector(didTapActionButton)
     )
 
     let items = [actionItem, secondActionItem]

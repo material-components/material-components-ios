@@ -13,6 +13,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 <!--{: .subhead }-->
 
 [Get Started](#quickstart)
+[View on GitHub](https://github.com/google/material-components-ios)
 <!--{: .button-getstarted }-->
 
 <a name="quickstart"></a>
@@ -139,5 +140,8 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     - [Explore our Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
       <!--{: .icon-sample }-->
+
+    - [View the project on Github](https://github.com/google/material-components-ios/)
+      <!--{: .icon-github }-->
     <!--{: .icon-list }-->
 <!--{: .step-sequence }-->

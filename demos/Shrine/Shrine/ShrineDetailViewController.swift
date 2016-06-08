@@ -114,7 +114,7 @@ class ShrineDetailViewController: UIViewController {
     dismissBtn.customTitleColor = UIColor.grayColor()
     dismissBtn.sizeToFit()
     dismissBtn.frame = CGRectMake(8, 28, dismissBtn.frame.width, dismissBtn.frame.height)
-    dismissBtn.addTarget(self, action: "dismissDetails",
+    dismissBtn.addTarget(self, action: #selector(dismissDetails),
                          forControlEvents: .TouchUpInside)
     self.view.addSubview(dismissBtn)
   }

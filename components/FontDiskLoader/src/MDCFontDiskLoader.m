@@ -20,7 +20,11 @@
 
 @interface MDCFontDiskLoader ()
 @property(nonatomic, strong) NSURL *fontURL;
+@property(nonatomic) BOOL isRegistered;
+@property(nonatomic) BOOL hasFailedRegistration;
 @end
+
+static NSMutableSet *registeredFonts;
 
 @implementation MDCFontDiskLoader
 
@@ -49,7 +53,7 @@
 }
 
 - (BOOL)registerFont {
-  if (_isRegistered) {
+  if (self.isRegistered) {
     return YES;
   }
   if (_hasFailedRegistration) {
@@ -61,16 +65,23 @@
     return NO;
   }
   CFErrorRef error = NULL;
-  _isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                   kCTFontManagerScopeProcess,
-                                                   &error);
-  if (!_isRegistered) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  self.isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
+                                                       kCTFontManagerScopeProcess,
+                                                       &error);
+#pragma clang diagnostic pop
+
+  if (!self.isRegistered) {
     if (error && CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       // If it's already been loaded by somebody else, we don't care.
       // We do not check the error domain to make sure they match because
       // kCTFontManagerErrorDomain is not defined in the iOS 8 SDK.
       // Radar 18651170 iOS 8 SDK missing definition for kCTFontManagerErrorDomain
-      _isRegistered = YES;
+      self.isRegistered = YES;
+#pragma clang diagnostic pop
     } else {
       NSLog(@"Failed to load font: %@", error);
       _hasFailedRegistration = YES;
@@ -79,12 +90,38 @@
   if (error) {
     CFRelease(error);
   }
-  return _isRegistered;
+  return self.isRegistered;
+}
+
+- (BOOL)unregisterFont {
+  if (!self.isRegistered) {
+    _hasFailedRegistration = NO;
+    return YES;
+  }
+  CFErrorRef error = NULL;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  self.isRegistered = !CTFontManagerUnregisterFontsForURL((__bridge CFURLRef)self.fontURL,
+                                                          kCTFontManagerScopeProcess,
+                                                          &error);
+#pragma clang diagnostic pop
+
+  if (self.isRegistered || error) {
+    NSLog(@"Failed to unregister font: %@", error);
+  }
+  return !self.isRegistered;
 }
 
 - (UIFont *)fontOfSize:(CGFloat)fontSize {
   [self registerFont];
-  return [UIFont fontWithName:self.fontName size:fontSize];
+  UIFont *font = [UIFont fontWithName:self.fontName size:fontSize];
+#if DEBUG
+  if (font == nil) {
+    NSLog(@"Warning: This log will turn into an NSAssert on or after 6/8/2016");
+    NSLog(@"Failed to find font: %@ in file at %@", self.fontName, self.fontURL);
+  }
+#endif
+  return font;
 }
 
 - (NSString *)description {
@@ -110,6 +147,36 @@
 
 - (NSUInteger)hash {
   return self.fontName.hash ^ self.fontURL.hash;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+  return self;
+}
+
+- (BOOL)isRegistered {
+  @synchronized(registeredFonts) {
+    return [registeredFonts containsObject:self.fontURL];
+  }
+}
+
+- (void)setIsRegistered:(BOOL)isRegistered {
+  @synchronized(registeredFonts) {
+    if (isRegistered == [registeredFonts containsObject:self.fontURL]) {
+      return;  // Already in the correct state;
+    }
+    if (isRegistered) {
+      [registeredFonts addObject:self.fontURL];
+    } else {
+      [registeredFonts removeObject:self.fontURL];
+    }
+  }
+}
+
++ (void)load {
+  static dispatch_once_t once;
+  dispatch_once(&once, ^{
+    registeredFonts = [[NSMutableSet alloc] init];
+  });
 }
 
 @end
