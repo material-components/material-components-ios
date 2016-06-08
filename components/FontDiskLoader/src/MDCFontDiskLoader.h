@@ -104,7 +104,7 @@
 /** A convience method for getting a font. */
 - (nullable UIFont *)fontOfSize:(CGFloat)fontSize;
 
-// TODO: On or after 6/8/2016 delete these deprecations
+// TODO: On or after 6/8/2016 delete these deprecations
 - (void)setIsRegistered:(BOOL)isRegistered __deprecated_msg("This setter is no longer public");
 - (void)setHasFailedRegistration:(BOOL)hasFailedRegistration __deprecated_msg("This setter is no longer public");
 
