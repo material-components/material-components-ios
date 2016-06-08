@@ -101,7 +101,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 #endif
 
   MDCButtonBarButton *button = [[MDCButtonBarButton alloc] init];
-  [button setBackgroundColor:nil forState:UIControlStateNormal];
+  [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
   button.disabledAlpha = kDisabledButtonAlpha;
 
   button.exclusiveTouch = YES;
