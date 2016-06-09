@@ -1,12 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = "Resistor"
   s.version      = "1.0.0"
-  s.authors      = { 'Jeff Verkoeyen' => 'featherless@google.com' }
   s.summary      = "An example component."
-  s.homepage     = "https://google.com"
+  s.homepage     = "https://github.com/google/catalog-by-convention"
+  s.authors      = "Google Inc."
   s.license      = 'Apache 2.0'
-  s.source       = { :git => "https://github.com/google/catalog-by-convention.git", :tag => s.version.to_s }
-  s.platform     = :ios, '7.0'
+  s.source       = { :git => "https://github.com/google/catalog-by-convention.git", :tag => "v#{s.version}" }
   s.requires_arc = true
 
   s.public_header_files = "src/*.h"
