@@ -1,3 +1,9 @@
+# 10.1.2
+
+#### Changes
+
+* [Bumped version number to 10.1.2. This was needed because 10.1.1 forgot to update the podspec's.] https://github.com/google/material-components-ios/commit/73cea102fd6f02854de69b11f33e91acfcfbc5ab
+
 # 10.1.1
 
 ### FontDiskLoader
