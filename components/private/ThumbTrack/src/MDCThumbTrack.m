@@ -239,6 +239,16 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self updateThumbTrackAnimated:NO previousValue:previousValue completion:NULL];
 }
 
+- (void)setTrackEndsAreRounded:(BOOL)trackEndsAreRounded {
+  _trackEndsAreRounded = trackEndsAreRounded;
+
+  if (_trackEndsAreRounded) {
+    _trackView.layer.cornerRadius = _trackHeight / 2;
+  } else {
+    _trackView.layer.cornerRadius = 0;
+  }
+}
+
 - (void)setFilledTrackAnchorValue:(CGFloat)filledTrackAnchorValue {
   _filledTrackAnchorValue = MAX(_minimumValue, MIN(filledTrackAnchorValue, _maximumValue));
   [self updateThumbTrackAnimated:NO previousValue:_value completion:NULL];
@@ -476,11 +486,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _thumbView.center = point;
   if (_trackEndsAreInset) {
     _trackView.frame =
-        CGRectMake(_thumbView.cornerRadius, self.center.y - (_trackHeight / 2),
+        CGRectMake(_thumbView.cornerRadius, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
                    CGRectGetWidth(self.bounds) - (_thumbView.cornerRadius * 2), _trackHeight);
   } else {
     _trackView.frame =
-        CGRectMake(0, self.center.y - (_trackHeight / 2), CGRectGetWidth(self.bounds), _trackHeight);
+        CGRectMake(0, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
+                   CGRectGetWidth(self.bounds), _trackHeight);
   }
   [self updateTrackMask];
 
@@ -488,19 +499,18 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)updateTrackMask {
-  CGRect maskFrame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), _trackHeight);
+  // Adding 1pt to the top and bottom is necessary to account for the behavior of CAShapeLayer,
+  // which according Apple's documentation "may favor speed over accuracy" when rasterizing.
+  // https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CAShapeLayer_class
+  // This means that its rasterization sometimes doesn't line up with the UIView that it's masking,
+  // particularly when that view's edges fall on a subpixel. Adding the extra pt on the top and
+  // bottom accounts for this case here, and ensures that none of the _trackView appears where it
+  // isn't supposed to.
+  // This fixes https://github.com/google/material-components-ios/issues/566 for all orientations.
+  CGRect maskFrame = CGRectMake(0, -1, CGRectGetWidth(self.bounds), _trackHeight + 2);
 
   CGMutablePathRef path = CGPathCreateMutable();
-  CGFloat cornerRadius = _trackHeight / 2;
-  // If _trackEndsAreRounded, maskFrame width and height must be at least 2 * cornerRadius to avoid
-  // a GPathAddRoundedRect() assert.  Fallback to CGPathAddRect if maskFrame is too small.
-  if (_trackEndsAreRounded &&
-      2 * cornerRadius <= CGRectGetWidth(maskFrame) &&
-      2 * cornerRadius <= CGRectGetHeight(maskFrame)) {
-    CGPathAddRoundedRect(path, NULL, maskFrame, cornerRadius, cornerRadius);
-  } else {
-    CGPathAddRect(path, NULL, maskFrame);
-  }
+  CGPathAddRect(path, NULL, maskFrame);
 
   if (!self.enabled && _disabledTrackHasThumbGaps) {
     CGRect gapMaskFrame = [_thumbView convertRect:_thumbView.bounds toView:_trackView];
