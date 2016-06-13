@@ -26,6 +26,10 @@ static NSString *MDCRobotoRegularFontName = @"Roboto-Regular";
 static NSString *MDCRobotoRegularFontFilename = @"Roboto-Regular.ttf";
 static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 
+@interface MDCFontDiskLoader (Testing)
+@property(nonatomic, assign) BOOL disableSanityChecks;
+@end
+
 @interface FontDiskLoaderTests : XCTestCase
 @end
 
@@ -115,6 +119,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 - (void)testRegisterFontFailure {
   // Given
   MDCFontDiskLoader *resource = [self invalidResource];
+  resource.disableSanityChecks = YES;
 
   // When
   [resource registerFont];
@@ -167,6 +172,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   // Given
   MDCFontDiskLoader *resource = [self validResource];
   resource.fontName = @"some invalid font name";
+  resource.disableSanityChecks = YES;
   CGFloat randomSize = arc4random() * 100 / CGFLOAT_MAX;
 
   // When

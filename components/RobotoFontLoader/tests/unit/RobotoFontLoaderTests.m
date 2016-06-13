@@ -27,6 +27,10 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 @interface RobotoFontLoaderTests : XCTestCase
 @end
 
+@interface MDCFontDiskLoader (Testing)
+@property(nonatomic, assign) BOOL disableSanityChecks;
+@end
+
 @interface MDCRobotoFontLoader (Testing)
 @property(nonatomic, strong) MDCFontDiskLoader *lightFontResource;
 @property(nonatomic, strong) MDCFontDiskLoader *regularFontResource;
@@ -156,6 +160,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
+  fontLoader.lightFontResource.disableSanityChecks = YES;
   fontLoader.lightFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -170,6 +175,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
+  fontLoader.regularFontResource.disableSanityChecks = YES;
   fontLoader.regularFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -184,6 +190,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
+  fontLoader.mediumFontResource.disableSanityChecks = YES;
   fontLoader.mediumFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -198,6 +205,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
+  fontLoader.boldFontResource.disableSanityChecks = YES;
   fontLoader.boldFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -212,6 +220,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
+  fontLoader.lightItalicFontResource.disableSanityChecks = YES;
   fontLoader.lightItalicFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -226,6 +235,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
+  fontLoader.italicFontResource.disableSanityChecks = YES;
   fontLoader.italicFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -240,6 +250,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
+  fontLoader.mediumItalicFontResource.disableSanityChecks = YES;
   fontLoader.mediumItalicFontResource.fontName = @"something that doesn't exist";
 
   // When
@@ -254,6 +265,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   CGFloat size = [self randomNumber];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
+  fontLoader.boldItalicFontResource.disableSanityChecks = YES;
   fontLoader.boldItalicFontResource.fontName = @"something that doesn't exist";
 
   // When

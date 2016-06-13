@@ -21,6 +21,7 @@
 @interface MDCFontDiskLoader ()
 @property(nonatomic, strong) NSURL *fontURL;
 @property(nonatomic) BOOL isRegistered;
+@property(nonatomic) BOOL disableSanityChecks;
 @property(nonatomic) BOOL hasFailedRegistration;
 @end
 
@@ -115,12 +116,8 @@ static NSMutableSet *registeredFonts;
 - (UIFont *)fontOfSize:(CGFloat)fontSize {
   [self registerFont];
   UIFont *font = [UIFont fontWithName:self.fontName size:fontSize];
-#if DEBUG
-  if (font == nil) {
-    NSLog(@"Warning: This log will turn into an NSAssert on or after 6/8/2016");
-    NSLog(@"Failed to find font: %@ in file at %@", self.fontName, self.fontURL);
-  }
-#endif
+  NSAssert(_disableSanityChecks || font,
+           @"Failed to find font: %@ in file at %@", self.fontName, self.fontURL);
   return font;
 }
 
