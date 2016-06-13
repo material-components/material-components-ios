@@ -82,10 +82,8 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _backgroundView.hidden = YES;
 
-  _titleLabel =
-      [[UILabel alloc] initWithFrame:CGRectInset(self.bounds,
-                                                 MDCCollectionInfoBarLabelHorizontalPadding,
-                                                 0)];
+  _titleLabel = [[UILabel alloc]
+      initWithFrame:CGRectInset(self.bounds, MDCCollectionInfoBarLabelHorizontalPadding, 0)];
   _titleLabel.backgroundColor = [UIColor clearColor];
   _titleLabel.textAlignment = NSTextAlignmentCenter;
   _titleLabel.font = [MDCTypography body1Font];
@@ -95,8 +93,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   [self addSubview:_backgroundView];
 
   _tapGesture =
-      [[UITapGestureRecognizer alloc] initWithTarget:self
-                                              action:@selector(handleTapGesture:)];
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
   [_backgroundView addGestureRecognizer:_tapGesture];
 }
 
@@ -110,9 +107,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
   [super layoutSublayersOfLayer:layer];
   // Set border layer frame.
-  _backgroundBorderLayer.frame = CGRectMake(-1,
-                                            0,
-                                            CGRectGetWidth(self.backgroundView.bounds) + 2,
+  _backgroundBorderLayer.frame = CGRectMake(-1, 0, CGRectGetWidth(self.backgroundView.bounds) + 2,
                                             CGRectGetHeight(self.backgroundView.bounds) + 1);
 }
 
@@ -202,8 +197,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
         self.userInteractionEnabled = _allowsTap;
 
         // Notify delegate.
-        if ([_delegate respondsToSelector:
-                           @selector(infoBar:didShowAnimated:willAutoDismiss:)]) {
+        if ([_delegate respondsToSelector:@selector(infoBar:didShowAnimated:willAutoDismiss:)]) {
           [_delegate infoBar:self
               didShowAnimated:animated
               willAutoDismiss:[self shouldAutoDismiss]];
@@ -224,16 +218,14 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
       delay:0
       options:UIViewAnimationOptionCurveEaseIn
       animations:^{
-        _backgroundView.transform =
-            CGAffineTransformMakeTranslation(0, _backgroundTransformY);
+        _backgroundView.transform = CGAffineTransformMakeTranslation(0, _backgroundTransformY);
       }
       completion:^(BOOL finished) {
         self.userInteractionEnabled = NO;
         _backgroundView.hidden = YES;
 
         // Notify delegate.
-        if ([_delegate respondsToSelector:
-                           @selector(infoBar:didDismissAnimated:didAutoDismiss:)]) {
+        if ([_delegate respondsToSelector:@selector(infoBar:didDismissAnimated:didAutoDismiss:)]) {
           [_delegate infoBar:self
               didDismissAnimated:animated
                   didAutoDismiss:[self shouldAutoDismiss]];

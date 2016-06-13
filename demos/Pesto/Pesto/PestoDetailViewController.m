@@ -45,11 +45,10 @@ static CGFloat kPestoDetailBottomSheetHeightLandscape = 300.f;
     _appBar.headerViewController.headerView.backgroundColor = [UIColor clearColor];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
 
-    UIBarButtonItem *backButton =
-        [[UIBarButtonItem alloc] initWithTitle:@"Back"
-                                         style:UIBarButtonItemStyleDone
-                                        target:self
-                                        action:@selector(back)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                   style:UIBarButtonItemStyleDone
+                                                                  target:self
+                                                                  action:@selector(back)];
     self.navigationItem.leftBarButtonItem = backButton;
   }
   return self;
@@ -68,10 +67,8 @@ static CGFloat kPestoDetailBottomSheetHeightLandscape = 300.f;
   mainView.backgroundColor = [UIColor clearColor];
   [self.view addSubview:mainView];
 
-  CGRect imageViewFrame = CGRectMake(0,
-                                     0,
-                                     self.view.frame.size.width,
-                                     kPestoDetailBottomSheetBackgroundHeight);
+  CGRect imageViewFrame =
+      CGRectMake(0, 0, self.view.frame.size.width, kPestoDetailBottomSheetBackgroundHeight);
   self.imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
   self.imageView.contentMode = UIViewContentModeScaleAspectFill;
   self.imageView.autoresizingMask =
@@ -79,9 +76,7 @@ static CGFloat kPestoDetailBottomSheetHeightLandscape = 300.f;
   [self.view addSubview:self.imageView];
 
   CGRect bottomFrame =
-      CGRectMake(0,
-                 kPestoDetailBottomSheetBackgroundHeight,
-                 self.view.frame.size.width,
+      CGRectMake(0, kPestoDetailBottomSheetBackgroundHeight, self.view.frame.size.width,
                  self.view.frame.size.height - kPestoDetailBottomSheetBackgroundHeight);
   UIView *bottomViewBackground = [[UIView alloc] initWithFrame:bottomFrame];
   bottomViewBackground.backgroundColor = [UIColor whiteColor];
@@ -125,10 +120,8 @@ static CGFloat kPestoDetailBottomSheetHeightLandscape = 300.f;
   } else {
     self.bottomSheetHeight = kPestoDetailBottomSheetHeightLandscape;
   }
-  CGRect bottomFrame = CGRectMake(0,
-                                  size.height - self.bottomSheetHeight,
-                                  size.width,
-                                  self.bottomSheetHeight);
+  CGRect bottomFrame =
+      CGRectMake(0, size.height - self.bottomSheetHeight, size.width, self.bottomSheetHeight);
   self.bottomView.frame = bottomFrame;
 }
 

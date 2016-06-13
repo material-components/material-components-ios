@@ -313,9 +313,10 @@ static NSString *const kEnabledSelector = @"enabled";
       return;
     }
 
-    NSArray *keyPaths = @[ kEnabledSelector,
-                           NSStringFromSelector(@selector(title)),
-                           NSStringFromSelector(@selector(image)) ];
+    NSArray *keyPaths = @[
+      kEnabledSelector, NSStringFromSelector(@selector(title)),
+      NSStringFromSelector(@selector(image))
+    ];
 
     // Remove old observers
     for (UIBarButtonItem *item in _items) {

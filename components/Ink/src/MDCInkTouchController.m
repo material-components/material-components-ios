@@ -59,8 +59,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
   self = [super init];
   if (self) {
     _gestureRecognizer =
-        [[MDCInkGestureRecognizer alloc] initWithTarget:self
-                                                 action:@selector(handleInkGesture:)];
+        [[MDCInkGestureRecognizer alloc] initWithTarget:self action:@selector(handleInkGesture:)];
     _gestureRecognizer.delegate = self;
 
     _view = view;
@@ -167,8 +166,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
   recognizer.enabled = YES;
 }
 
-- (void)touchBeganAtPoint:(CGPoint)point
-            touchLocation:(CGPoint)touchLocation {
+- (void)touchBeganAtPoint:(CGPoint)point touchLocation:(CGPoint)touchLocation {
   if (_shouldRespondToTouch) {
     [_addedInkView startTouchBeganAnimationAtPoint:point completion:nil];
     if ([_delegate
@@ -190,8 +188,8 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-  if ([_delegate respondsToSelector:
-                     @selector(inkTouchController:shouldProcessInkTouchesAtTouchLocation:)]) {
+  if ([_delegate respondsToSelector:@selector(inkTouchController:
+                                        shouldProcessInkTouchesAtTouchLocation:)]) {
     CGPoint touchLocation = [gestureRecognizer locationInView:_view];
     return [_delegate inkTouchController:self shouldProcessInkTouchesAtTouchLocation:touchLocation];
   }

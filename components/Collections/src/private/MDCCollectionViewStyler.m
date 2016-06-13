@@ -25,7 +25,8 @@
 
 #import <tgmath.h>
 
-#define RGBCOLOR(r, g, b) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
+#define RGBCOLOR(r, g, b) \
+  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
 
 typedef NS_OPTIONS(NSUInteger, BackgroundCacheKey) {
   BackgroundCacheKeyFlat = 0,
@@ -41,8 +42,8 @@ const CGFloat MDCCollectionViewCellStyleCardSectionInset = 8.0f;
 
 /** Cell content view insets for card-style cells */
 static const CGFloat kFourThirds = 4.0f / 3.0f;
-static const UIEdgeInsets kCollectionViewCellContentInsetsRetina3x = {
-    kFourThirds, kFourThirds, kFourThirds, kFourThirds};
+static const UIEdgeInsets kCollectionViewCellContentInsetsRetina3x = {kFourThirds, kFourThirds,
+                                                                      kFourThirds, kFourThirds};
 static const UIEdgeInsets kCollectionViewCellContentInsetsRetina = {1.5, 1.5, 1.5, 1.5};
 static const UIEdgeInsets kCollectionViewCellContentInsets = {1, 2, 1, 2};
 
@@ -329,8 +330,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     }
 
     void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
-      if ([self.delegate respondsToSelector:
-                             @selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
+      if ([self.delegate
+              respondsToSelector:@selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
         [self.delegate collectionView:_collectionView
             didApplyInlayToItemAtIndexPaths:@[ indexPath ]];
       }
@@ -346,8 +347,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   [_inlaidIndexPathSet removeObject:indexPath];
 
   void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
-    if ([self.delegate respondsToSelector:
-                           @selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
+    if ([self.delegate
+            respondsToSelector:@selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
       [self.delegate collectionView:_collectionView
           didRemoveInlayFromItemAtIndexPaths:@[ indexPath ]];
     }
@@ -368,8 +369,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     }
 
     void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
-      if ([self.delegate respondsToSelector:
-                             @selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
+      if ([self.delegate
+              respondsToSelector:@selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
         [self.delegate collectionView:_collectionView
             didApplyInlayToItemAtIndexPaths:[_inlaidIndexPathSet allObjects]];
       }
@@ -385,10 +386,9 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   [_inlaidIndexPathSet removeAllObjects];
 
   void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
-    if ([self.delegate respondsToSelector:
-                           @selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
-      [self.delegate collectionView:_collectionView
-          didRemoveInlayFromItemAtIndexPaths:indexPaths];
+    if ([self.delegate
+            respondsToSelector:@selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
+      [self.delegate collectionView:_collectionView didRemoveInlayFromItemAtIndexPaths:indexPaths];
     }
   };
 
@@ -447,8 +447,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 - (BOOL)drawShadowForCellWithIsCardStye:(BOOL)isCardStyle
                            isGroupStyle:(BOOL)isGroupStyle
                           isHighlighted:(BOOL)isHighlighted {
-  return (isCardStyle || isGroupStyle) &&
-         kCollectionViewCellDefaultShadowWidth > 0 &&
+  return (isCardStyle || isGroupStyle) && kCollectionViewCellDefaultShadowWidth > 0 &&
          !isHighlighted;
 }
 
@@ -483,8 +482,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
   // If no-background section header, return nil image.
   BOOL hidesHeaderBackground = NO;
-  if ([_delegate respondsToSelector:
-                     @selector(collectionView:shouldHideHeaderBackgroundForSection:)]) {
+  if ([_delegate
+          respondsToSelector:@selector(collectionView:shouldHideHeaderBackgroundForSection:)]) {
     hidesHeaderBackground = [_delegate collectionView:_collectionView
                  shouldHideHeaderBackgroundForSection:attr.indexPath.section];
   }
@@ -494,8 +493,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
   // If no-background section footer, return nil image.
   BOOL hidesFooterBackground = NO;
-  if ([_delegate respondsToSelector:
-                     @selector(collectionView:shouldHideFooterBackgroundForSection:)]) {
+  if ([_delegate
+          respondsToSelector:@selector(collectionView:shouldHideFooterBackgroundForSection:)]) {
     hidesFooterBackground = [_delegate collectionView:_collectionView
                  shouldHideFooterBackgroundForSection:attr.indexPath.section];
   }
@@ -505,8 +504,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
   // If no-background section item, return nil image.
   BOOL hidesBackground = NO;
-  if ([_delegate respondsToSelector:
-                     @selector(collectionView:shouldHideItemBackgroundAtIndexPath:)]) {
+  if ([_delegate
+          respondsToSelector:@selector(collectionView:shouldHideItemBackgroundAtIndexPath:)]) {
     hidesBackground = [_delegate collectionView:_collectionView
             shouldHideItemBackgroundAtIndexPath:attr.indexPath];
   }
@@ -516,12 +515,11 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
   BOOL isHighlighted = NO;
 
-  BackgroundCacheKey backgroundCacheKey =
-      [self backgroundCacheKeyForCardStyle:isCardStyle
-                            isGroupedStyle:isGroupedStyle
-                                     isTop:isTop
-                                  isBottom:isBottom
-                             isHighlighted:isHighlighted];
+  BackgroundCacheKey backgroundCacheKey = [self backgroundCacheKeyForCardStyle:isCardStyle
+                                                                isGroupedStyle:isGroupedStyle
+                                                                         isTop:isTop
+                                                                      isBottom:isBottom
+                                                                 isHighlighted:isHighlighted];
 
   if (backgroundCacheKey > BackgroundCacheKeyMax) {
     NSAssert(NO, @"Invalid styler cell background cache key");
@@ -531,8 +529,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   // Get cell color.
   UIColor *backgroundColor = _cellBackgroundColor;
   if ([_delegate respondsToSelector:@selector(collectionView:cellBackgroundColorAtIndexPath:)]) {
-    backgroundColor = [_delegate collectionView:_collectionView
-                 cellBackgroundColorAtIndexPath:attr.indexPath];
+    backgroundColor =
+        [_delegate collectionView:_collectionView cellBackgroundColorAtIndexPath:attr.indexPath];
   }
 
   NSPointerArray *cellBackgroundCache = _cellBackgroundCaches[backgroundColor];
@@ -588,8 +586,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
                               isBottom:isBottom
                                 isCard:(isCardStyle || isGroupedStyle)
                           borderRadius:borderRadius];
-    CGContextSetShadowWithColor(cx,
-                                kCollectionViewCellDefaultShadowOffset(),
+    CGContextSetShadowWithColor(cx, kCollectionViewCellDefaultShadowOffset(),
                                 kCollectionViewCellDefaultShadowWidth,
                                 kCollectionViewCellDefaultShadowColor().CGColor);
     CGContextDrawPath(cx, kCGPathFill);

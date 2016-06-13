@@ -84,8 +84,7 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 
     SEL longPressSelector = @selector(handleLongPressGesture:);
     _longPressGestureRecognizer =
-        [[UILongPressGestureRecognizer alloc] initWithTarget:self
-                                                      action:longPressSelector];
+        [[UILongPressGestureRecognizer alloc] initWithTarget:self action:longPressSelector];
     _longPressGestureRecognizer.delegate = self;
     [_collectionView addGestureRecognizer:_longPressGestureRecognizer];
 
@@ -344,8 +343,8 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
       }
 
       // Notify delegate dragging has began.
-      if ([_delegate respondsToSelector:
-                         @selector(collectionView:willBeginDraggingItemAtIndexPath:)]) {
+      if ([_delegate
+              respondsToSelector:@selector(collectionView:willBeginDraggingItemAtIndexPath:)]) {
         [_delegate collectionView:_collectionView
             willBeginDraggingItemAtIndexPath:_reorderingCellIndexPath];
       }
@@ -362,14 +361,13 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
     case UIGestureRecognizerStateEnded: {
       NSIndexPath *currentIndexPath = _reorderingCellIndexPath;
       if (currentIndexPath) {
-        UICollectionViewLayoutAttributes *attributes =
-            [_collectionView.collectionViewLayout
-                layoutAttributesForItemAtIndexPath:currentIndexPath];
+        UICollectionViewLayoutAttributes *attributes = [_collectionView.collectionViewLayout
+            layoutAttributesForItemAtIndexPath:currentIndexPath];
 
         void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
           // Notify delegate dragging has finished.
-          if ([_delegate respondsToSelector:
-                             @selector(collectionView:didEndDraggingItemAtIndexPath:)]) {
+          if ([_delegate
+                  respondsToSelector:@selector(collectionView:didEndDraggingItemAtIndexPath:)]) {
             [_delegate collectionView:_collectionView
                 didEndDraggingItemAtIndexPath:_reorderingCellIndexPath];
           }
@@ -420,23 +418,25 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
     }
 
     // Check delegate for permission to move item.
-    if ([_delegate respondsToSelector:
-                       @selector(collectionView:canMoveItemAtIndexPath:toIndexPath:)]) {
+    if ([_delegate
+            respondsToSelector:@selector(collectionView:canMoveItemAtIndexPath:toIndexPath:)]) {
       if ([_delegate collectionView:_collectionView
               canMoveItemAtIndexPath:previousIndexPath
                          toIndexPath:newIndexPath]) {
         _reorderingCellIndexPath = newIndexPath;
 
         // Notify delegate that item will move.
-        if ([_delegate respondsToSelector:
-                           @selector(collectionView:willMoveItemAtIndexPath:toIndexPath:)]) {
+        if ([_delegate respondsToSelector:@selector(collectionView:
+                                              willMoveItemAtIndexPath:
+                                                          toIndexPath:)]) {
           [_delegate collectionView:_collectionView
               willMoveItemAtIndexPath:previousIndexPath
                           toIndexPath:newIndexPath];
 
           // Notify delegate item did move.
-          if ([_delegate respondsToSelector:
-                             @selector(collectionView:didMoveItemAtIndexPath:toIndexPath:)]) {
+          if ([_delegate respondsToSelector:@selector(collectionView:
+                                                didMoveItemAtIndexPath:
+                                                           toIndexPath:)]) {
             [_delegate collectionView:_collectionView
                 didMoveItemAtIndexPath:previousIndexPath
                            toIndexPath:newIndexPath];
@@ -486,8 +486,8 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
           if ([_delegate collectionView:_collectionView
                   canSwipeToDismissSection:_dismissingSection]) {
             // Notify delegate.
-            if ([_delegate respondsToSelector:
-                               @selector(collectionView:willBeginSwipeToDismissSection:)]) {
+            if ([_delegate
+                    respondsToSelector:@selector(collectionView:willBeginSwipeToDismissSection:)]) {
               [_delegate collectionView:_collectionView
                   willBeginSwipeToDismissSection:_dismissingSection];
             }
@@ -509,13 +509,13 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
         }
 
         // Check delegate for permission to swipe item.
-        if ([_delegate respondsToSelector:
-                           @selector(collectionView:canSwipeToDismissItemAtIndexPath:)]) {
+        if ([_delegate
+                respondsToSelector:@selector(collectionView:canSwipeToDismissItemAtIndexPath:)]) {
           if ([_delegate collectionView:_collectionView
                   canSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath]) {
             // Notify delegate.
-            if ([_delegate respondsToSelector:
-                               @selector(collectionView:willBeginSwipeToDismissItemAtIndexPath:)]) {
+            if ([_delegate respondsToSelector:@selector(collectionView:
+                                                  willBeginSwipeToDismissItemAtIndexPath:)]) {
               [_delegate collectionView:_collectionView
                   willBeginSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
             }
@@ -560,9 +560,8 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
       if (fabs(translationX) > [self distanceThresholdForDismissal]) {
         // |translationX| is only guaranteed to be over the dismissal threshold;
         // make sure the view animates all the way off the screen.
-        translationX = (CGFloat)copysign(MAX(fabs(translationX),
-                                             CGRectGetWidth(_collectionView.bounds)),
-                                         translationX);
+        translationX = (CGFloat)copysign(
+            MAX(fabs(translationX), CGRectGetWidth(_collectionView.bounds)), translationX);
         [self animateFinalItemDismissalToTranslationX:translationX];
       } else {
         [self restorePanningItemIfNecessaryWithMomentumX:momentumX];
@@ -592,8 +591,7 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
   CGFloat panRatio = panDistance / CGRectGetWidth(_collectionView.bounds);
   CGFloat arcAngle = (translationX > 0 ? kDismissalArcAngle : -kDismissalArcAngle);
 
-  CGAffineTransform initialTranslation =
-      CGAffineTransformMakeTranslation(0, -kDismissalArcYOffset);
+  CGAffineTransform initialTranslation = CGAffineTransformMakeTranslation(0, -kDismissalArcYOffset);
   CGAffineTransform rotation = CGAffineTransformMakeRotation(panRatio * arcAngle);
 
   // Modify the X translation to take account of the rotation angle.
@@ -628,8 +626,8 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 
   // Notify delegate of dismissed item.
   if (_dismissingCellIndexPath) {
-    if ([_delegate respondsToSelector:
-                       @selector(collectionView:didEndSwipeToDismissItemAtIndexPath:)]) {
+    if ([_delegate
+            respondsToSelector:@selector(collectionView:didEndSwipeToDismissItemAtIndexPath:)]) {
       [_delegate collectionView:_collectionView
           didEndSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
     }
@@ -663,8 +661,7 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 
   CAKeyframeAnimation *transformAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
   transformAnimation.values = @[
-    [NSValue valueWithCATransform3D:startTransform],
-    [NSValue valueWithCATransform3D:midTransform],
+    [NSValue valueWithCATransform3D:startTransform], [NSValue valueWithCATransform3D:midTransform],
     [NSValue valueWithCATransform3D:endTransform]
   ];
   transformAnimation.calculationMode = kCAAnimationCubicPaced;
@@ -695,8 +692,8 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 
   // Notify delegate of panned index path cancellation.
   if (_dismissingCellIndexPath) {
-    if ([_delegate respondsToSelector:
-                       @selector(collectionView:didCancelSwipeToDismissItemAtIndexPath:)]) {
+    if ([_delegate
+            respondsToSelector:@selector(collectionView:didCancelSwipeToDismissItemAtIndexPath:)]) {
       [_delegate collectionView:_collectionView
           didCancelSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
     }
@@ -722,8 +719,7 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 
 - (CGFloat)dismissalAlphaForTranslationX:(CGFloat)translationX {
   translationX = (CGFloat)fabs(translationX) - kDismissalDistanceBeforeFading;
-  CGFloat adjustedThreshold =
-      [self distanceThresholdForDismissal] - kDismissalDistanceBeforeFading;
+  CGFloat adjustedThreshold = [self distanceThresholdForDismissal] - kDismissalDistanceBeforeFading;
   CGFloat dismissalPercentage = (CGFloat)MIN(1, fabs(translationX) / adjustedThreshold);
   return kDismissalMinimumAlpha + (1 - kDismissalMinimumAlpha) * (1 - dismissalPercentage);
 }

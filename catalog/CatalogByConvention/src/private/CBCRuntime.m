@@ -32,7 +32,8 @@ BOOL CBCCatalogIsPrimaryDemoFromClass(Class aClass) {
   BOOL isPrimaryDemo = NO;
 
   if ([aClass respondsToSelector:@selector(catalogIsPrimaryDemo)]) {
-    NSMethodSignature *signature = [aClass methodSignatureForSelector:@selector(catalogIsPrimaryDemo)];
+    NSMethodSignature *signature =
+        [aClass methodSignatureForSelector:@selector(catalogIsPrimaryDemo)];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     invocation.selector = @selector(catalogIsPrimaryDemo);
     invocation.target = aClass;
@@ -52,10 +53,9 @@ NSArray<Class> *CBCGetAllClasses(void) {
 
   NSMutableArray<Class> *classes = [NSMutableArray array];
 
-  NSSet *ignoredClasses = [NSSet setWithArray:@[ @"SwiftObject",
-                                                 @"Object",
-                                                 @"FigIrisAutoTrimmerMotionSampleExport",
-                                                 @"NSLeafProxy" ]];
+  NSSet *ignoredClasses = [NSSet setWithArray:@[
+    @"SwiftObject", @"Object", @"FigIrisAutoTrimmerMotionSampleExport", @"NSLeafProxy"
+  ]];
   NSArray *ignoredPrefixes = @[ @"Swift.", @"_", @"JS" ];
 
   for (int ix = 0; ix < numberOfClasses; ++ix) {

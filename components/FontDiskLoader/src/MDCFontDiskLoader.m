@@ -69,8 +69,7 @@ static NSMutableSet *registeredFonts;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                       kCTFontManagerScopeProcess,
-                                                       &error);
+                                                       kCTFontManagerScopeProcess, &error);
 #pragma clang diagnostic pop
 
   if (!self.isRegistered) {
@@ -103,8 +102,7 @@ static NSMutableSet *registeredFonts;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.isRegistered = !CTFontManagerUnregisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                          kCTFontManagerScopeProcess,
-                                                          &error);
+                                                          kCTFontManagerScopeProcess, &error);
 #pragma clang diagnostic pop
 
   if (self.isRegistered || error) {

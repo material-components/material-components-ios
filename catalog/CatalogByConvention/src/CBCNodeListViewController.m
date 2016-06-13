@@ -81,8 +81,8 @@
 @implementation CBCNodeListViewController
 
 - (instancetype)initWithNode:(CBCNode *)node {
-  NSAssert(!_node.isExample,
-           @"%@ cannot represent example nodes.", NSStringFromClass([self class]));
+  NSAssert(!_node.isExample, @"%@ cannot represent example nodes.",
+           NSStringFromClass([self class]));
 
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
@@ -96,9 +96,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds
-                                                style:UITableViewStyleGrouped];
-  self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  self.tableView =
+      [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+  self.tableView.autoresizingMask =
+      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
   [self.view addSubview:self.tableView];
@@ -138,8 +139,8 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
   if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                  reuseIdentifier:@"cell"];
+    cell =
+        [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
   cell.textLabel.text = [_node.children[indexPath.row] title];
   cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

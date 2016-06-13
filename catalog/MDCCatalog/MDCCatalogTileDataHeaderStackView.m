@@ -47,14 +47,13 @@
 
   CGFloat gradientLocations[] = {0.14, 0.51, 1};
 
-  CGGradientRef gradient =
-      CGGradientCreateWithColors(colorSpace,
-                                 (__bridge CFArrayRef) @[
-                                   (id)gradientColor.CGColor,
-                                   (id)[gradientColor colorWithAlphaComponent:0.5].CGColor,
-                                   (id)UIColor.clearColor.CGColor
-                                 ],
-                                 gradientLocations);
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef) @[
+        (id)gradientColor.CGColor, (id)[gradientColor colorWithAlphaComponent:0.5].CGColor,
+        (id)UIColor.clearColor.CGColor
+      ],
+      gradientLocations);
 
   NSShadow* shadow = [[NSShadow alloc] init];
   [shadow setShadowColor:[color colorWithAlphaComponent:CGColorGetAlpha(color.CGColor) * 0.4]];

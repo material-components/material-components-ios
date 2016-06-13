@@ -36,8 +36,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 @implementation FontDiskLoaderTests
 
 - (MDCFontDiskLoader *)validResource {
-  NSBundle *bundle =
-      [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
+  NSBundle *bundle = [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
   return [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
                                             filename:MDCRobotoRegularFontFilename
                                       bundleFileName:MDCRobotoBundle
@@ -45,8 +44,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 }
 
 - (MDCFontDiskLoader *)invalidResource {
-  NSBundle *bundle =
-      [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
+  NSBundle *bundle = [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
   return [[MDCFontDiskLoader alloc] initWithFontName:@"some invalid font name"
                                             filename:@"some invalid filename"
                                       bundleFileName:MDCRobotoBundle
@@ -144,8 +142,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   // Given
   MDCFontDiskLoader *loader = [self validResource];
   MDCFontDiskLoader *secondFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:loader.fontName
-                                          URL:loader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithName:loader.fontName URL:loader.fontURL];
 
   // When
   [loader registerFont];
@@ -185,8 +182,8 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 - (void)testDescriptionNotRegistered {
   // Given
   MDCFontDiskLoader *resource = [self validResource];
-  NSString *expected = [NSString stringWithFormat:@"font name: %@; font url: %@;",
-                                                  resource.fontName, resource.fontURL];
+  NSString *expected = [NSString
+      stringWithFormat:@"font name: %@; font url: %@;", resource.fontName, resource.fontURL];
 
   // When
   NSString *actual = [resource description];

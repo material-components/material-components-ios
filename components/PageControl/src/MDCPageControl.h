@@ -84,7 +84,8 @@
 @property(nonatomic, strong, nullable) UIColor *pageIndicatorTintColor UI_APPEARANCE_SELECTOR;
 
 /** The color of the current page indicator. */
-@property(nonatomic, strong, nullable) UIColor *currentPageIndicatorTintColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable)
+    UIColor *currentPageIndicatorTintColor UI_APPEARANCE_SELECTOR;
 
 #pragma mark Configuring the page behavior
 

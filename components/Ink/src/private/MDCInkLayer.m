@@ -223,8 +223,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     // Bounded ripples move slightly towards the center of the tap target. Unbounded ripples
     // move to the center of the tap target.
 
-    CGPoint startPoint =
-        [[self.presentationLayer valueForKeyPath:kInkLayerPosition] CGPointValue];
+    CGPoint startPoint = [[self.presentationLayer valueForKeyPath:kInkLayerPosition] CGPointValue];
 
     CGFloat xOffset = self.targetFrame.origin.x - self.inkLayer.frame.origin.x;
     CGFloat yOffset = self.targetFrame.origin.y - self.inkLayer.frame.origin.y;
@@ -262,10 +261,9 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     if (!scaleVal) {
       scaleVal = [NSNumber numberWithFloat:0];
     }
-    CGFloat unboundedDuration =
-        (CGFloat)sqrt(((1.f - scaleVal.floatValue) * self.radius) /
-                      (kInkLayerForegroundWaveTouchDownAcceleration +
-                       kInkLayerForegroundWaveTouchUpAcceleration));
+    CGFloat unboundedDuration = (CGFloat)sqrt(((1.f - scaleVal.floatValue) * self.radius) /
+                                              (kInkLayerForegroundWaveTouchDownAcceleration +
+                                               kInkLayerForegroundWaveTouchUpAcceleration));
     _foregroundPositionAnim.duration = unboundedDuration + adjustedDuration;
     _foregroundScaleAnim.values = @[ scaleVal, @1 ];
     _foregroundScaleAnim.duration = unboundedDuration + adjustedDuration;
@@ -319,16 +317,12 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   CGFloat duration = kInkLayerBackgroundBaseOpacityExitDuration;
   if (self.bounded) {
     // The end (tap release) animation should continue at the opacity level of the start animation.
-    CGFloat enterDuration =
-        (1 - opacityVal.floatValue / 1) * kInkLayerBackgroundFastEnterDuration;
+    CGFloat enterDuration = (1 - opacityVal.floatValue / 1) * kInkLayerBackgroundFastEnterDuration;
     duration += enterDuration;
-    _backgroundOpacityAnim =
-        [self opacityAnimWithValues:@[ opacityVal, @1, @0 ]
-                              times:@[ @0, @(enterDuration / duration), @1 ]];
+    _backgroundOpacityAnim = [self opacityAnimWithValues:@[ opacityVal, @1, @0 ]
+                                                   times:@[ @0, @(enterDuration / duration), @1 ]];
   } else {
-    _backgroundOpacityAnim =
-        [self opacityAnimWithValues:@[ opacityVal, @0 ]
-                              times:@[ @0, @1 ]];
+    _backgroundOpacityAnim = [self opacityAnimWithValues:@[ opacityVal, @0 ] times:@[ @0, @1 ]];
   }
   _backgroundOpacityAnim.duration = duration;
   _backgroundOpacityAnim.delegate = self;
@@ -368,10 +362,9 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   if (_maxRippleRadius > 0) {
     radius = _maxRippleRadius;
   }
-  CGRect rippleFrame = CGRectMake(-(radius * 2.f - self.bounds.size.width) / 2.f,
-                                  -(radius * 2.f - self.bounds.size.height) / 2.f,
-                                  radius * 2.f,
-                                  radius * 2.f);
+  CGRect rippleFrame =
+      CGRectMake(-(radius * 2.f - self.bounds.size.width) / 2.f,
+                 -(radius * 2.f - self.bounds.size.height) / 2.f, radius * 2.f, radius * 2.f);
   _compositeRipple.frame = rippleFrame;
   CGRect rippleBounds = CGRectMake(0, 0, radius * 2.f, radius * 2.f);
   CAShapeLayer *rippleMaskLayer = [CAShapeLayer layer];

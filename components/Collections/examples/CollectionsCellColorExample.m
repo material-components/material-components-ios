@@ -39,18 +39,19 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Array of cell background colors.
-  _cellBackgroundColors = @[ [UIColor colorWithWhite:0 alpha:0.2],
-                             [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
-                                             green:(CGFloat)0xA4 / (CGFloat)255
-                                              blue:(CGFloat)0xDD / (CGFloat)255
-                                             alpha:1],
-                             [UIColor whiteColor] ];
+  _cellBackgroundColors = @[
+    [UIColor colorWithWhite:0 alpha:0.2], [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
+                                                          green:(CGFloat)0xA4 / (CGFloat)255
+                                                           blue:(CGFloat)0xDD / (CGFloat)255
+                                                          alpha:1],
+    [UIColor whiteColor]
+  ];
 
   // Populate content.
   _content = [NSMutableArray array];
-  [_content addObject:@[ @"[UIColor colorWithWhite:0 alpha:0.2]",
-                         @"Custom Blue Color",
-                         @"Default White Color" ]];
+  [_content addObject:@[
+    @"[UIColor colorWithWhite:0 alpha:0.2]", @"Custom Blue Color", @"Default White Color"
+  ]];
 
   // Customize collection view settings.
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;

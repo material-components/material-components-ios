@@ -57,7 +57,8 @@ static NSString *const kExampleDetailText =
     @"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
 
-#define RGBCOLOR(r, g, b) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
+#define RGBCOLOR(r, g, b) \
+  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
 #define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
 
 @implementation CollectionCellsLayoutExample {
@@ -130,9 +131,7 @@ static NSString *const kExampleDetailText =
     cell.accessoryType = MDCCollectionViewCellAccessoryCheckmark;
   } else if (indexPath.item == 5 || indexPath.item == 6) {
     cell.imageView.image =
-        [self imageWithSize:CGSizeMake(40, 40)
-                      color:HEXCOLOR(0x80CBC4)
-               cornerRadius:20];
+        [self imageWithSize:CGSizeMake(40, 40) color:HEXCOLOR(0x80CBC4) cornerRadius:20];
   }
 
   return cell;

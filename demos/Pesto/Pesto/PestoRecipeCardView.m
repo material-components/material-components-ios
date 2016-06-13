@@ -191,26 +191,16 @@ static CGFloat kPestoDetailSplitWidth = 64;
   CGRect splitViewDescFrame =
       CGRectMake(0, 0, _contentViewFrame.size.width, kPestoDetailDescTextHeight);
   PestoSplitView *splitViewDesc =
-      [[PestoSplitView alloc] initWithFrame:splitViewDescFrame
-                                   leftView:nil
-                                  rightView:_labelDesc];
+      [[PestoSplitView alloc] initWithFrame:splitViewDescFrame leftView:nil rightView:_labelDesc];
   CGRect splitViewRect = CGRectMake(0, 0, _contentViewFrame.size.width, 18.f);
   PestoSplitView *splitView1 =
-      [[PestoSplitView alloc] initWithFrame:splitViewRect
-                                   leftView:_amount1
-                                  rightView:_ingredient1];
+      [[PestoSplitView alloc] initWithFrame:splitViewRect leftView:_amount1 rightView:_ingredient1];
   PestoSplitView *splitView2 =
-      [[PestoSplitView alloc] initWithFrame:splitViewRect
-                                   leftView:_amount2
-                                  rightView:_ingredient2];
+      [[PestoSplitView alloc] initWithFrame:splitViewRect leftView:_amount2 rightView:_ingredient2];
   PestoSplitView *splitView3 =
-      [[PestoSplitView alloc] initWithFrame:splitViewRect
-                                   leftView:_amount3
-                                  rightView:_ingredient3];
+      [[PestoSplitView alloc] initWithFrame:splitViewRect leftView:_amount3 rightView:_ingredient3];
   PestoSplitView *splitView4 =
-      [[PestoSplitView alloc] initWithFrame:splitViewRect
-                                   leftView:_amount4
-                                  rightView:_ingredient4];
+      [[PestoSplitView alloc] initWithFrame:splitViewRect leftView:_amount4 rightView:_ingredient4];
 
   CGRect stackFrame =
       CGRectMake(kPestoDetailPadding, 0, self.bounds.size.width - kPestoDetailPadding * 2.f,

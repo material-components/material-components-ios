@@ -100,9 +100,8 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  return (ShouldUseLightOverlayForColor(_headerView.backgroundColor)
-              ? UIStatusBarStyleLightContent
-              : UIStatusBarStyleDefault);
+  return (ShouldUseLightOverlayForColor(_headerView.backgroundColor) ? UIStatusBarStyleLightContent
+                                                                     : UIStatusBarStyleDefault);
 }
 
 - (BOOL)prefersStatusBarHidden {

@@ -44,10 +44,7 @@ static CGFloat kPestoInset = 5.f;
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 0;
   CGFloat sectionInset = kPestoInset * 2.f;
-  [layout setSectionInset:UIEdgeInsetsMake(sectionInset,
-                                           sectionInset,
-                                           sectionInset,
-                                           sectionInset)];
+  [layout setSectionInset:UIEdgeInsetsMake(sectionInset, sectionInset, sectionInset, sectionInset)];
   PestoCollectionViewController *collectionVC =
       [[PestoCollectionViewController alloc] initWithCollectionViewLayout:layout];
   self = [super initWithContentViewController:collectionVC];
@@ -62,11 +59,10 @@ static CGFloat kPestoInset = 5.f;
     _appBar.headerViewController.headerView.backgroundColor = [UIColor clearColor];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
 
-    UIBarButtonItem *menuButton =
-        [[UIBarButtonItem alloc] initWithTitle:@"Menu"
-                                         style:UIBarButtonItemStyleDone
-                                        target:self
-                                        action:@selector(showMenu)];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+                                                                   style:UIBarButtonItemStyleDone
+                                                                  target:self
+                                                                  action:@selector(showMenu)];
     self.navigationItem.leftBarButtonItem = menuButton;
   }
   return self;
@@ -109,16 +105,12 @@ static CGFloat kPestoInset = 5.f;
 #pragma mark - PestoCollectionViewControllerDelegate
 
 - (void)didSelectCell:(PestoCardCollectionViewCell *)cell completion:(void (^)())completionBlock {
-  self.zoomableView.frame =
-      CGRectMake(cell.frame.origin.x,
-                 cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
-                 cell.frame.size.width,
-                 cell.frame.size.height - 50.f);
-  self.zoomableCardView.frame =
-      CGRectMake(cell.frame.origin.x,
-                 cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
-                 cell.frame.size.width,
-                 cell.frame.size.height);
+  self.zoomableView.frame = CGRectMake(
+      cell.frame.origin.x, cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
+      cell.frame.size.width, cell.frame.size.height - 50.f);
+  self.zoomableCardView.frame = CGRectMake(
+      cell.frame.origin.x, cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
+      cell.frame.size.width, cell.frame.size.height);
   dispatch_async(dispatch_get_main_queue(), ^{
     self.zoomableView.image = cell.image;
 
@@ -133,8 +125,7 @@ static CGFloat kPestoInset = 5.f;
           self.zoomableCardView.frame = self.view.bounds;
         }
         completion:^(BOOL finished) {
-          PestoDetailViewController *detailVC =
-              [[PestoDetailViewController alloc] init];
+          PestoDetailViewController *detailVC = [[PestoDetailViewController alloc] init];
           detailVC.image = cell.image;
           detailVC.title = cell.title;
           detailVC.iconImageName = cell.iconImageName;
@@ -155,10 +146,10 @@ static CGFloat kPestoInset = 5.f;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
-- (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:
-                                                          (UIViewController *)presented
-                                                                           presentingController:(UIViewController *)presenting
-                                                                               sourceController:(UIViewController *)source {
+- (nullable id<UIViewControllerAnimatedTransitioning>)
+    animationControllerForPresentedController:(UIViewController *)presented
+                         presentingController:(UIViewController *)presenting
+                             sourceController:(UIViewController *)source {
   return nil;
 }
 
@@ -169,11 +160,11 @@ static CGFloat kPestoInset = 5.f;
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-  UIViewController *const fromController = [transitionContext
-      viewControllerForKey:UITransitionContextFromViewControllerKey];
+  UIViewController *const fromController =
+      [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
 
-  UIViewController *const toController = [transitionContext
-      viewControllerForKey:UITransitionContextToViewControllerKey];
+  UIViewController *const toController =
+      [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
 
   if ([fromController isKindOfClass:[PestoDetailViewController class]] &&
       [toController isKindOfClass:self.class]) {
@@ -205,16 +196,16 @@ static CGFloat kPestoInset = 5.f;
 
   UIColor *white = [UIColor whiteColor];
   UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1.f];
-  UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]
-      initWithTitle:@"Done"
-              style:UIBarButtonItemStylePlain
-             target:self
-             action:@selector(closeViewController)];
+  UIBarButtonItem *rightBarButton =
+      [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(closeViewController)];
   rightBarButton.tintColor = white;
   settingsVC.navigationItem.rightBarButtonItem = rightBarButton;
 
-  UINavigationController *navVC = [[UINavigationController alloc]
-      initWithRootViewController:settingsVC];
+  UINavigationController *navVC =
+      [[UINavigationController alloc] initWithRootViewController:settingsVC];
   navVC.navigationBar.barTintColor = teal;
   navVC.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : white};
   navVC.navigationBar.translucent = NO;

@@ -29,7 +29,8 @@
 
  @param collectionView The controller's collection view.
  */
-- (nonnull instancetype)initWithCollectionView:(nullable UICollectionView *)collectionView NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithCollectionView:(nullable UICollectionView *)collectionView
+    NS_DESIGNATED_INITIALIZER;
 
 /** Use initWithCollectionView: instead. */
 - (nonnull instancetype)init NS_UNAVAILABLE;

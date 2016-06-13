@@ -21,10 +21,8 @@
   if (self) {
     CGFloat padding = 8;
     CGFloat bigViewFrameHeight = 130;
-    CGRect bigViewFrame = CGRectMake(padding,
-                                     padding,
-                                     frame.size.width - 2 * padding,
-                                     bigViewFrameHeight);
+    CGRect bigViewFrame =
+        CGRectMake(padding, padding, frame.size.width - 2 * padding, bigViewFrameHeight);
     UIView *bigView = [[UIView alloc] initWithFrame:bigViewFrame];
     bigView.backgroundColor = [UIColor whiteColor];
     [self addSubview:bigView];
@@ -32,11 +30,9 @@
     CGFloat buttonViewDim = 50;
     CGFloat pseudoButtonViewHeight = 40;
     CGFloat fabPadding = 6;
-    CGRect pseudoButtonViewFrame =
-        CGRectMake(padding,
-                   padding + bigViewFrameHeight + fabPadding + padding,
-                   frame.size.width - 2 * padding - buttonViewDim - fabPadding * 3,
-                   pseudoButtonViewHeight);
+    CGRect pseudoButtonViewFrame = CGRectMake(
+        padding, padding + bigViewFrameHeight + fabPadding + padding,
+        frame.size.width - 2 * padding - buttonViewDim - fabPadding * 3, pseudoButtonViewHeight);
     UIView *pseudoButtonView = [[UIView alloc] initWithFrame:pseudoButtonViewFrame];
     pseudoButtonView.backgroundColor = [UIColor whiteColor];
     pseudoButtonView.layer.cornerRadius = 5;
@@ -45,10 +41,9 @@
 
     CGFloat pseudoFABViewFrameLeft =
         padding + frame.size.width - 2 * padding - buttonViewDim + padding - fabPadding * 2;
-    CGRect pseudoFABViewFrame = CGRectMake(pseudoFABViewFrameLeft,
-                                           padding + bigViewFrameHeight + padding,
-                                           buttonViewDim + fabPadding,
-                                           buttonViewDim + fabPadding);
+    CGRect pseudoFABViewFrame =
+        CGRectMake(pseudoFABViewFrameLeft, padding + bigViewFrameHeight + padding,
+                   buttonViewDim + fabPadding, buttonViewDim + fabPadding);
     UIView *pseudoFABView = [[UIView alloc] initWithFrame:pseudoFABViewFrame];
     pseudoFABView.backgroundColor = [UIColor whiteColor];
     pseudoFABView.layer.cornerRadius = 28;
@@ -88,10 +83,8 @@
 - (void)setupExampleViews {
   self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
 
-  CGRect boundedTitleLabelFrame = CGRectMake(0,
-                                             self.boundedShapes.frame.size.height,
-                                             self.boundedShapes.frame.size.width,
-                                             24);
+  CGRect boundedTitleLabelFrame =
+      CGRectMake(0, self.boundedShapes.frame.size.height, self.boundedShapes.frame.size.width, 24);
   UILabel *boundedTitleLabel = [[UILabel alloc] initWithFrame:boundedTitleLabelFrame];
   boundedTitleLabel.text = @"Bounded";
   boundedTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -104,10 +97,8 @@
       UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
   self.unboundedShape.backgroundColor = [UIColor whiteColor];
 
-  CGRect unboundedTitleLabelFrame = CGRectMake(0,
-                                               self.unboundedShape.frame.size.height,
-                                               self.unboundedShape.frame.size.width,
-                                               36);
+  CGRect unboundedTitleLabelFrame = CGRectMake(0, self.unboundedShape.frame.size.height,
+                                               self.unboundedShape.frame.size.width, 36);
   UILabel *unboundedTitleLabel = [[UILabel alloc] initWithFrame:unboundedTitleLabelFrame];
   unboundedTitleLabel.text = @"Unbounded";
   unboundedTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -123,15 +114,13 @@
   if (self.view.frame.size.height > self.view.frame.size.width) {
     self.boundedShapes.center =
         CGPointMake(self.view.center.x, self.view.center.y - shapeDimension - offset);
-    self.unboundedShape.center = CGPointMake(self.view.center.x,
-                                             self.view.center.y + spacing * 2 + offset);
-  } else {
-    self.boundedShapes.center =
-        CGPointMake(self.view.center.x - shapeDimension / 2 - spacing * 2,
-                    self.view.center.y / 2 + spacing * 2);
     self.unboundedShape.center =
-        CGPointMake(self.view.center.x + shapeDimension / 2 + spacing * 2,
-                    self.view.center.y / 2 + spacing * 2);
+        CGPointMake(self.view.center.x, self.view.center.y + spacing * 2 + offset);
+  } else {
+    self.boundedShapes.center = CGPointMake(self.view.center.x - shapeDimension / 2 - spacing * 2,
+                                            self.view.center.y / 2 + spacing * 2);
+    self.unboundedShape.center = CGPointMake(self.view.center.x + shapeDimension / 2 + spacing * 2,
+                                             self.view.center.y / 2 + spacing * 2);
   }
 }
 

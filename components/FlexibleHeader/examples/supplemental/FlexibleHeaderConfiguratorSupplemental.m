@@ -74,10 +74,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  UIColor *lightBlue500 = [UIColor colorWithRed:0.012
-                                          green:0.663
-                                           blue:0.957
-                                          alpha:1];
+  UIColor *lightBlue500 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
   self.fhvc.headerView.backgroundColor = lightBlue500;
 
   UILabel *titleLabel = [[UILabel alloc] init];
@@ -89,24 +86,21 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   titleLabel.textColor = [UIColor whiteColor];
   titleLabel.font = [UIFont systemFontOfSize:22];
   titleLabel.textAlignment = NSTextAlignmentCenter;
-  titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+  titleLabel.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
 
   [self.fhvc.headerView addSubview:titleLabel];
 
-  id (^switchItem)(NSString *, FlexibleHeaderConfiguratorField) =
-      ^(NSString *title, FlexibleHeaderConfiguratorField field) {
-        FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeSwitch;
-        return [FlexibleHeaderConfiguratorControlItem itemWithTitle:title
-                                                        controlType:type
-                                                              field:field];
-      };
-  id (^sliderItem)(NSString *, FlexibleHeaderConfiguratorField) =
-      ^(NSString *title, FlexibleHeaderConfiguratorField field) {
-        FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeSlider;
-        return [FlexibleHeaderConfiguratorControlItem itemWithTitle:title
-                                                        controlType:type
-                                                              field:field];
-      };
+  id (^switchItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
+      NSString *title, FlexibleHeaderConfiguratorField field) {
+    FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeSwitch;
+    return [FlexibleHeaderConfiguratorControlItem itemWithTitle:title controlType:type field:field];
+  };
+  id (^sliderItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
+      NSString *title, FlexibleHeaderConfiguratorField field) {
+    FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeSlider;
+    return [FlexibleHeaderConfiguratorControlItem itemWithTitle:title controlType:type field:field];
+  };
   id (^filler)(void) = ^{
     return [NSNull null];
   };
@@ -119,29 +113,24 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
   createSection(@"Swipe right to go back", nil);
 
-  createSection(@"Basic behavior",
-                @[
-                  switchItem(@"Can over-extend",
-                             FlexibleHeaderConfiguratorFieldCanOverExtend),
-                  switchItem(@"In front of infinite content",
-                             FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent),
-                  switchItem(@"Hide status bar",
-                             FlexibleHeaderConfiguratorFieldHideStatusBar),
-                ]);
+  createSection(@"Basic behavior", @[
+    switchItem(@"Can over-extend", FlexibleHeaderConfiguratorFieldCanOverExtend),
+    switchItem(@"In front of infinite content",
+               FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent),
+    switchItem(@"Hide status bar", FlexibleHeaderConfiguratorFieldHideStatusBar),
+  ]);
 
-  createSection(@"Shift behavior",
-                @[ switchItem(@"Enabled",
-                              FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled),
-                   switchItem(@"Enabled with status bar",
-                              FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar),
-                   switchItem(@"Header content is important",
-                              FlexibleHeaderConfiguratorFieldContentImportance) ]);
+  createSection(@"Shift behavior", @[
+    switchItem(@"Enabled", FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled),
+    switchItem(@"Enabled with status bar",
+               FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar),
+    switchItem(@"Header content is important", FlexibleHeaderConfiguratorFieldContentImportance)
+  ]);
 
-  createSection(@"Header height",
-                @[ sliderItem(@"Minimum",
-                              FlexibleHeaderConfiguratorFieldMinimumHeight),
-                   sliderItem(@"Maximum",
-                              FlexibleHeaderConfiguratorFieldMaximumHeight) ]);
+  createSection(@"Header height", @[
+    sliderItem(@"Minimum", FlexibleHeaderConfiguratorFieldMinimumHeight),
+    sliderItem(@"Maximum", FlexibleHeaderConfiguratorFieldMaximumHeight)
+  ]);
 
   NSMutableArray *fillerItems = [NSMutableArray array];
   for (NSUInteger ix = 0; ix < 100; ++ix) {
@@ -211,7 +200,8 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   }
   id item = self.sections[indexPath.section][indexPath.row];
   if ([item isKindOfClass:[FlexibleHeaderConfiguratorControlItem class]]) {
-    FlexibleHeaderConfiguratorControlItem *fieldItem = (FlexibleHeaderConfiguratorControlItem *)item;
+    FlexibleHeaderConfiguratorControlItem *fieldItem =
+        (FlexibleHeaderConfiguratorControlItem *)item;
 
     cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
 

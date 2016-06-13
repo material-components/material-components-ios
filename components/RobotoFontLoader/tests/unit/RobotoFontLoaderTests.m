@@ -280,27 +280,17 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   NSBundle *testBundle = [NSBundle bundleForClass:[UIFont class]];
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   NSArray *existingFontResources = @[
-    fontLoader.regularFontResource,
-    fontLoader.lightFontResource,
-    fontLoader.mediumFontResource,
-    fontLoader.boldFontResource,
-    fontLoader.italicFontResource,
-    fontLoader.lightItalicFontResource,
-    fontLoader.mediumItalicFontResource,
-    fontLoader.boldItalicFontResource
+    fontLoader.regularFontResource, fontLoader.lightFontResource, fontLoader.mediumFontResource,
+    fontLoader.boldFontResource, fontLoader.italicFontResource, fontLoader.lightItalicFontResource,
+    fontLoader.mediumItalicFontResource, fontLoader.boldItalicFontResource
   ];
 
   // When
   fontLoader.baseBundle = testBundle;
   NSArray *newFontResources = @[
-    fontLoader.regularFontResource,
-    fontLoader.lightFontResource,
-    fontLoader.mediumFontResource,
-    fontLoader.boldFontResource,
-    fontLoader.italicFontResource,
-    fontLoader.lightItalicFontResource,
-    fontLoader.mediumItalicFontResource,
-    fontLoader.boldItalicFontResource
+    fontLoader.regularFontResource, fontLoader.lightFontResource, fontLoader.mediumFontResource,
+    fontLoader.boldFontResource, fontLoader.italicFontResource, fontLoader.lightItalicFontResource,
+    fontLoader.mediumItalicFontResource, fontLoader.boldItalicFontResource
   ];
 
   // Then

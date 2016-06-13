@@ -38,10 +38,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Populate content.
-  _content = @[ @"Default ink color",
-                @"Custom blue ink color",
-                @"Custom red ink color",
-                @"Ink hidden on this cell" ];
+  _content = @[
+    @"Default ink color", @"Custom blue ink color", @"Custom red ink color",
+    @"Ink hidden on this cell"
+  ];
 
   // Customize collection view settings.
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;

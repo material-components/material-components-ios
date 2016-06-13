@@ -75,7 +75,8 @@ static UIColor *randomColor() {
   [button setTitle:originalTitle forState:UIControlStateNormal];
 
   // Then
-  XCTAssertEqualObjects(button.currentTitle, [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
+  XCTAssertEqualObjects(button.currentTitle,
+                        [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
 }
 
 - (void)testUppercaseTitleNo {
@@ -102,7 +103,8 @@ static UIColor *randomColor() {
   button.uppercaseTitle = YES;
 
   // Then
-  XCTAssertEqualObjects(button.currentTitle, [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
+  XCTAssertEqualObjects(button.currentTitle,
+                        [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
 }
 
 - (void)testSetEnabledAnimated {

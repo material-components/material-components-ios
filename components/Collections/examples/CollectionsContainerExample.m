@@ -42,9 +42,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
   // Create gray view to contain collection view.
   UIView *container =
-      [[UIView alloc] initWithFrame:CGRectMake(30,
-                                               200,
-                                               self.view.bounds.size.width - 60,
+      [[UIView alloc] initWithFrame:CGRectMake(30, 200, self.view.bounds.size.width - 60,
                                                self.view.bounds.size.height - 200 - 30)];
   container.backgroundColor = [UIColor lightGrayColor];
   container.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

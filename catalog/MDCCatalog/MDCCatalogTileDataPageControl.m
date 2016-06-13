@@ -38,14 +38,13 @@
   UIColor* color2 = [UIColor colorWithRed:0.902 green:0.965 blue:0.996 alpha:0.3];
 
   CGFloat gradient2Locations[] = {0.28, 0.68, 0.98};
-  CGGradientRef gradient2 =
-      CGGradientCreateWithColors(colorSpace,
-                                 (__bridge CFArrayRef) @[
-                                   (id)gradientColor2.CGColor,
-                                   (id)[gradientColor2 colorWithAlphaComponent:0.5].CGColor,
-                                   (id)gradientColor.CGColor
-                                 ],
-                                 gradient2Locations);
+  CGGradientRef gradient2 = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef) @[
+        (id)gradientColor2.CGColor, (id)[gradientColor2 colorWithAlphaComponent:0.5].CGColor,
+        (id)gradientColor.CGColor
+      ],
+      gradient2Locations);
 
   CGRect group2 = CGRectMake(CGRectGetMinX(frame) + 30.75, CGRectGetMinY(frame) + 51,
                              floor((CGRectGetWidth(frame) - 30.75) * 0.81399 + 0.5),
@@ -103,8 +102,7 @@
                      floor(CGRectGetHeight(group2) * 0.99947 + 0.49) -
                          floor(CGRectGetHeight(group2) * 0.00000 + 0.49));
       UIBezierPath* rectangle2Path =
-          [UIBezierPath bezierPathWithRoundedRect:rectangle2Rect
-                                     cornerRadius:11.4];
+          [UIBezierPath bezierPathWithRoundedRect:rectangle2Rect cornerRadius:11.4];
       CGContextSaveGState(context);
       [rectangle2Path addClip];
       CGContextDrawLinearGradient(

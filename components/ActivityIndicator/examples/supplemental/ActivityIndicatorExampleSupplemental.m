@@ -86,31 +86,31 @@
 
   CGFloat navHeight = self.navigationController.navigationBar.frame.size.height;
   if (self.view.frame.size.height > self.view.frame.size.width) {
-    self.activityIndicator.center = CGPointMake(CGRectGetMidX(self.view.frame),
-                                                CGRectGetMidY(self.view.frame) - navHeight * 2);
+    self.activityIndicator.center =
+        CGPointMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame) - navHeight * 2);
     self.slider.center = CGPointMake(CGRectGetMidX(self.view.frame), 80);
     self.progressLabel.center = CGPointMake(CGRectGetMidX(self.view.frame), 110);
-    self.onSwitch.center = CGPointMake(CGRectGetMidX(self.view.frame) - 50,
-                                       self.view.frame.size.height - 140);
-    self.onSwitchLabel.center = CGPointMake(CGRectGetMidX(self.view.frame) + 32,
-                                            self.view.frame.size.height - 140);
-    self.determinateSwitch.center = CGPointMake(CGRectGetMidX(self.view.frame) - 50,
-                                                self.view.frame.size.height - 90);
-    self.determinateSwitchLabel.center = CGPointMake(CGRectGetMidX(self.view.frame) + 38,
-                                                     self.view.frame.size.height - 90);
+    self.onSwitch.center =
+        CGPointMake(CGRectGetMidX(self.view.frame) - 50, self.view.frame.size.height - 140);
+    self.onSwitchLabel.center =
+        CGPointMake(CGRectGetMidX(self.view.frame) + 32, self.view.frame.size.height - 140);
+    self.determinateSwitch.center =
+        CGPointMake(CGRectGetMidX(self.view.frame) - 50, self.view.frame.size.height - 90);
+    self.determinateSwitchLabel.center =
+        CGPointMake(CGRectGetMidX(self.view.frame) + 38, self.view.frame.size.height - 90);
   } else {
-    self.activityIndicator.center = CGPointMake(CGRectGetMidX(self.view.frame) - 150,
-                                                CGRectGetMidY(self.view.frame) - 100);
+    self.activityIndicator.center =
+        CGPointMake(CGRectGetMidX(self.view.frame) - 150, CGRectGetMidY(self.view.frame) - 100);
     self.slider.center = CGPointMake(CGRectGetMidX(self.view.frame) + 150, 20);
     self.progressLabel.center = CGPointMake(CGRectGetMidX(self.view.frame) + 150, 50);
-    self.onSwitch.center = CGPointMake(CGRectGetMidX(self.view.frame) + 90,
-                                       self.view.frame.size.height - 140);
-    self.onSwitchLabel.center = CGPointMake(CGRectGetMidX(self.view.frame) + 172,
-                                            self.view.frame.size.height - 140);
-    self.determinateSwitch.center = CGPointMake(CGRectGetMidX(self.view.frame) + 90,
-                                                self.view.frame.size.height - 90);
-    self.determinateSwitchLabel.center = CGPointMake(CGRectGetMidX(self.view.frame) + 178,
-                                                     self.view.frame.size.height - 90);
+    self.onSwitch.center =
+        CGPointMake(CGRectGetMidX(self.view.frame) + 90, self.view.frame.size.height - 140);
+    self.onSwitchLabel.center =
+        CGPointMake(CGRectGetMidX(self.view.frame) + 172, self.view.frame.size.height - 140);
+    self.determinateSwitch.center =
+        CGPointMake(CGRectGetMidX(self.view.frame) + 90, self.view.frame.size.height - 90);
+    self.determinateSwitchLabel.center =
+        CGPointMake(CGRectGetMidX(self.view.frame) + 178, self.view.frame.size.height - 90);
   }
   self.progressPercentLabel.center = self.activityIndicator.center;
 }

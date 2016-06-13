@@ -41,20 +41,19 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Array of available accessory types.
-  _accessoryTypes = @[ @(MDCCollectionViewCellAccessoryDisclosureIndicator),
-                       @(MDCCollectionViewCellAccessoryCheckmark),
-                       @(MDCCollectionViewCellAccessoryDetailButton),
-                       @(MDCCollectionViewCellAccessoryNone),
-                       @(MDCCollectionViewCellAccessoryNone) ];
+  _accessoryTypes = @[
+    @(MDCCollectionViewCellAccessoryDisclosureIndicator),
+    @(MDCCollectionViewCellAccessoryCheckmark), @(MDCCollectionViewCellAccessoryDetailButton),
+    @(MDCCollectionViewCellAccessoryNone), @(MDCCollectionViewCellAccessoryNone)
+  ];
 
   // Populate content.
   _content = [NSMutableArray array];
   [_content addObject:@[ @"Enable Editing" ]];
-  [_content addObject:@[ @"Disclosure Indicator",
-                         @"Checkmark",
-                         @"Detail Button",
-                         @"Custom Accessory View",
-                         @"No Accessory View" ]];
+  [_content addObject:@[
+    @"Disclosure Indicator", @"Checkmark", @"Detail Button", @"Custom Accessory View",
+    @"No Accessory View"
+  ]];
 
   // Customize collection view settings.
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;

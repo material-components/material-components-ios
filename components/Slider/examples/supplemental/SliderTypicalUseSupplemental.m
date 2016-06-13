@@ -54,14 +54,15 @@
     @"disabledSliderLabel" : disabledSliderLabel
   };
 
-  NSDictionary *metrics = @{ @"smallVMargin" : @24.0,
-                             @"largeVMargin" : @56.0,
-                             @"smallHMargin" : @24.0,
-                             @"sliderHeight" : @(self.slider.bounds.size.height) };
+  NSDictionary *metrics = @{
+    @"smallVMargin" : @24.0,
+    @"largeVMargin" : @56.0,
+    @"smallHMargin" : @24.0,
+    @"sliderHeight" : @(self.slider.bounds.size.height)
+  };
 
   // Vertical column of sliders
-  NSString *sliderLayoutConstraints =
-      @"V:[slider]-smallVMargin-[disabledSlider]";
+  NSString *sliderLayoutConstraints = @"V:[slider]-smallVMargin-[disabledSlider]";
 
   // Vertical column of labels
   NSString *labelLayoutConstraints =
@@ -71,55 +72,51 @@
   NSString *columnConstraints = @"[label(100)]-smallHMargin-[slider]";
 
   // Center view horizontally on the left edge of one of the sliders
-  [self.view addConstraint:
-                 [NSLayoutConstraint constraintWithItem:self.disabledSlider
-                                              attribute:NSLayoutAttributeLeft
-                                              relatedBy:NSLayoutRelationEqual
-                                                 toItem:self.view
-                                              attribute:NSLayoutAttributeCenterX
-                                             multiplier:1.f
-                                               constant:12.f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.disabledSlider
+                                                        attribute:NSLayoutAttributeLeft
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.view
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.f
+                                                         constant:12.f]];
 
   // Center view vertically
-  [self.view addConstraint:
-                 [NSLayoutConstraint constraintWithItem:self.disabledSlider
-                                              attribute:NSLayoutAttributeBottom
-                                              relatedBy:NSLayoutRelationEqual
-                                                 toItem:self.view
-                                              attribute:NSLayoutAttributeCenterY
-                                             multiplier:1.f
-                                               constant:0.f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.disabledSlider
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.view
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.f
+                                                         constant:0.f]];
 
   // Center sliders in their column
-  [self.view addConstraints:
-                 [NSLayoutConstraint constraintsWithVisualFormat:sliderLayoutConstraints
-                                                         options:NSLayoutFormatAlignAllCenterX
-                                                         metrics:metrics
-                                                           views:views]];
+  [self.view
+      addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:sliderLayoutConstraints
+                                                             options:NSLayoutFormatAlignAllCenterX
+                                                             metrics:metrics
+                                                               views:views]];
 
   // Left align labels in their column
-  [self.view addConstraints:
-                 [NSLayoutConstraint constraintsWithVisualFormat:labelLayoutConstraints
-                                                         options:NSLayoutFormatAlignAllLeft
-                                                         metrics:metrics
-                                                           views:views]];
+  [self.view
+      addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:labelLayoutConstraints
+                                                             options:NSLayoutFormatAlignAllLeft
+                                                             metrics:metrics
+                                                               views:views]];
 
   // Vertically align first element in label column to first element in slider column
-  [self.view addConstraint:
-                 [NSLayoutConstraint constraintWithItem:self.slider
-                                              attribute:NSLayoutAttributeCenterY
-                                              relatedBy:NSLayoutRelationEqual
-                                                 toItem:sliderLabel
-                                              attribute:NSLayoutAttributeCenterY
-                                             multiplier:1.f
-                                               constant:0.f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.slider
+                                                        attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:sliderLabel
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.f
+                                                         constant:0.f]];
 
   // Position label column left of slider column, wide enough to accommodate label text
-  [self.view addConstraints:
-                 [NSLayoutConstraint constraintsWithVisualFormat:columnConstraints
-                                                         options:0
-                                                         metrics:metrics
-                                                           views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:columnConstraints
+                                                                    options:0
+                                                                    metrics:metrics
+                                                                      views:views]];
 }
 
 @end

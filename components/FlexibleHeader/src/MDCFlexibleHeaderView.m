@@ -552,8 +552,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   if (self.hidesStatusBarWhenCollapsed) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
     // weakest strength.
-    CGFloat accumulator =
-        MAX(0, MIN(kShadowScaleLength, _minimumHeight - boundedAccumulator));
+    CGFloat accumulator = MAX(0, MIN(kShadowScaleLength, _minimumHeight - boundedAccumulator));
     if (self.isInFrontOfInfiniteContent) {
       // When in front of infinite content we only care to hide the shadow when our header is
       // off-screen.

@@ -28,7 +28,8 @@
 #import "MaterialIcons+ic_radio_button_unchecked.h"
 #import "MaterialIcons+ic_reorder.h"
 
-#define RGBCOLOR(r, g, b) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
+#define RGBCOLOR(r, g, b) \
+  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
 #define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
 
 static CGFloat kEditingControlAppearanceOffset = 16.0f;
@@ -101,22 +102,21 @@ static const uint32_t kCellRedColor = 0xF44336;
   _accessoryView.frame = [self accessoryFrame];
 
   // Animate editing controls.
-  [UIView animateWithDuration:0.3
-                   animations:^{
-                     _editingReorderImageView.alpha =
-                         _attr.shouldShowReorderStateMask ? 1.0f : 0.0f;
-                     _editingReorderImageView.transform =
-                         _attr.shouldShowReorderStateMask
-                             ? CGAffineTransformMakeTranslation(kEditingControlAppearanceOffset, 0)
-                             : CGAffineTransformIdentity;
+  [UIView
+      animateWithDuration:0.3
+               animations:^{
+                 _editingReorderImageView.alpha = _attr.shouldShowReorderStateMask ? 1.0f : 0.0f;
+                 _editingReorderImageView.transform =
+                     _attr.shouldShowReorderStateMask
+                         ? CGAffineTransformMakeTranslation(kEditingControlAppearanceOffset, 0)
+                         : CGAffineTransformIdentity;
 
-                     _editingSelectorImageView.alpha =
-                         _attr.shouldShowSelectorStateMask ? 1.0f : 0.0f;
-                     _editingSelectorImageView.transform =
-                         _attr.shouldShowSelectorStateMask
-                             ? CGAffineTransformMakeTranslation(-kEditingControlAppearanceOffset, 0)
-                             : CGAffineTransformIdentity;
-                   }];
+                 _editingSelectorImageView.alpha = _attr.shouldShowSelectorStateMask ? 1.0f : 0.0f;
+                 _editingSelectorImageView.transform =
+                     _attr.shouldShowSelectorStateMask
+                         ? CGAffineTransformMakeTranslation(-kEditingControlAppearanceOffset, 0)
+                         : CGAffineTransformIdentity;
+               }];
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
@@ -195,9 +195,7 @@ static const uint32_t kCellRedColor = 0xF44336;
 - (CGRect)accessoryFrame {
   CGSize size = _accessoryView.frame.size;
   return CGRectMake(CGRectGetWidth(self.bounds) - size.width - _accessoryInset.right,
-                    (CGRectGetHeight(self.bounds) - size.height) / 2,
-                    size.width,
-                    size.height);
+                    (CGRectGetHeight(self.bounds) - size.height) / 2, size.width, size.height);
 }
 
 #pragma mark - Separator
@@ -233,11 +231,9 @@ static const uint32_t kCellRedColor = 0xF44336;
 
   if (!hideSeparator) {
     UIEdgeInsets insets = _attr.backgroundImageViewInsets;
-    CGRect separatorFrame =
-        CGRectMake(insets.left,
-                   CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
-                   CGRectGetWidth(self.bounds) - insets.left - insets.right,
-                   _attr.separatorLineHeight);
+    CGRect separatorFrame = CGRectMake(
+        insets.left, CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
+        CGRectGetWidth(self.bounds) - insets.left - insets.right, _attr.separatorLineHeight);
     _separatorView.frame = UIEdgeInsetsInsetRect(separatorFrame, separatorInset);
     _separatorView.backgroundColor = _attr.separatorColor;
   }
@@ -273,10 +269,8 @@ static const uint32_t kCellRedColor = 0xF44336;
       _editingReorderImageView.tintColor = HEXCOLOR(kCellGrayColor);
       _editingReorderImageView.alpha = 0.0f;
       _editingReorderImageView.frame =
-          CGRectMake(0,
-                     (CGRectGetHeight(self.bounds) - reorderImage.size.height) / 2,
-                     reorderImage.size.width,
-                     reorderImage.size.height);
+          CGRectMake(0, (CGRectGetHeight(self.bounds) - reorderImage.size.height) / 2,
+                     reorderImage.size.width, reorderImage.size.height);
       [self addSubview:_editingReorderImageView];
     }
 
@@ -291,8 +285,7 @@ static const uint32_t kCellRedColor = 0xF44336;
       _editingSelectorImageView.frame =
           CGRectMake(CGRectGetWidth(self.bounds) - selectorImage.size.width,
                      (CGRectGetHeight(self.bounds) - selectorImage.size.height) / 2,
-                     selectorImage.size.width,
-                     selectorImage.size.height);
+                     selectorImage.size.width, selectorImage.size.height);
       _editingSelectorImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
       [self addSubview:_editingSelectorImageView];
     }

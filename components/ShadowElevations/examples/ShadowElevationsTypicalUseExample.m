@@ -57,29 +57,25 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
     [self addSubview:_elevationLabel];
 
     CGFloat paperDim = 200.f;
-    CGRect paperFrame = CGRectMake((CGRectGetWidth(frame) - paperDim) / 2,
-                                   200.f,
-                                   paperDim,
-                                   paperDim);
+    CGRect paperFrame =
+        CGRectMake((CGRectGetWidth(frame) - paperDim) / 2, 200.f, paperDim, paperDim);
     _paper = [[ShadowElevationsPointsLabel alloc] initWithFrame:paperFrame];
     _paper.textAlignment = NSTextAlignmentCenter;
     _paper.text = [NSString stringWithFormat:@"%ld pt", (long)kShadowElevationsDefault];
-    _paper.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                               UIViewAutoresizingFlexibleLeftMargin |
-                               UIViewAutoresizingFlexibleRightMargin);
+    _paper.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |
+         UIViewAutoresizingFlexibleRightMargin);
     [_paper setElevation:kShadowElevationsDefault];
     [self addSubview:_paper];
 
     CGFloat margin = 20.f;
-    CGRect sliderRect = CGRectMake(margin,
-                                   140.f,
-                                   frame.size.width - margin * 2,
+    CGRect sliderRect = CGRectMake(margin, 140.f, frame.size.width - margin * 2,
                                    kShadowElevationsSliderFrameHeight);
     MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:sliderRect];
     sliderControl.value = kShadowElevationsDefault / kShadowElevationsMax;
-    sliderControl.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                                      UIViewAutoresizingFlexibleLeftMargin |
-                                      UIViewAutoresizingFlexibleRightMargin);
+    sliderControl.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |
+         UIViewAutoresizingFlexibleRightMargin);
     [sliderControl addTarget:self
                       action:@selector(sliderValueChanged:)
             forControlEvents:UIControlEventValueChanged];

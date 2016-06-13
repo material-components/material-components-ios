@@ -141,9 +141,9 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   return [self updateAttribute:(MDCCollectionViewLayoutAttributes *)attr];
 }
 
-- (UICollectionViewLayoutAttributes *)
-    layoutAttributesForSupplementaryViewOfKind:(NSString *)kind
-                                   atIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind
+                                                                     atIndexPath:
+                                                                         (NSIndexPath *)indexPath {
   UICollectionViewLayoutAttributes *attr;
 
   if ([kind isEqualToString:UICollectionElementKindSectionHeader] ||
@@ -303,9 +303,9 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 - (UICollectionViewLayoutAttributes *)
     finalLayoutAttributesForDisappearingSupplementaryElementOfKind:(NSString *)elementKind
                                                        atIndexPath:(NSIndexPath *)elementIndexPath {
-  UICollectionViewLayoutAttributes *attr =
-      [[super finalLayoutAttributesForDisappearingSupplementaryElementOfKind:elementKind
-                                                                 atIndexPath:elementIndexPath] copy];
+  UICollectionViewLayoutAttributes *attr = [[super
+      finalLayoutAttributesForDisappearingSupplementaryElementOfKind:elementKind
+                                                         atIndexPath:elementIndexPath] copy];
   if ([elementKind isEqualToString:UICollectionElementKindSectionHeader] ||
       [elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
     // Deleting section header or footer.
@@ -431,24 +431,21 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   BOOL hidesHeaderBackground = NO;
   if ([self.styler.delegate
           respondsToSelector:@selector(collectionView:shouldHideHeaderBackgroundForSection:)]) {
-    hidesHeaderBackground =
-        [self.styler.delegate collectionView:self.styler.collectionView
-            shouldHideHeaderBackgroundForSection:indexPath.section];
+    hidesHeaderBackground = [self.styler.delegate collectionView:self.styler.collectionView
+                            shouldHideHeaderBackgroundForSection:indexPath.section];
   }
 
   BOOL hidesFooterBackground = NO;
   if ([self.styler.delegate
           respondsToSelector:@selector(collectionView:shouldHideFooterBackgroundForSection:)]) {
-    hidesFooterBackground =
-        [self.styler.delegate collectionView:self.styler.collectionView
-            shouldHideFooterBackgroundForSection:indexPath.section];
+    hidesFooterBackground = [self.styler.delegate collectionView:self.styler.collectionView
+                            shouldHideFooterBackgroundForSection:indexPath.section];
   }
 
   if (attr.representedElementCategory == UICollectionElementCategoryCell) {
     isTop = (indexPath.item == 0) && (!hasSectionHeader || hidesHeaderBackground);
-    isBottom =
-        (indexPath.item == numberOfItemsInSection - 1) &&
-        (!hasSectionFooter || hidesFooterBackground);
+    isBottom = (indexPath.item == numberOfItemsInSection - 1) &&
+               (!hasSectionFooter || hidesFooterBackground);
   } else if (attr.representedElementCategory == UICollectionElementCategorySupplementaryView) {
     NSString *kind = attr.representedElementKind;
     BOOL isElementHeader = ([kind isEqualToString:UICollectionElementKindSectionHeader]);
@@ -488,9 +485,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   if (ordinalRow > 0 && ordinalRow < maxRowIndex) {
     position = position | MDCCollectionViewOrdinalPositionVerticalCenter;
   } else {
-    position = (ordinalRow == 0)
-                   ? position | MDCCollectionViewOrdinalPositionVerticalTop
-                   : position;
+    position =
+        (ordinalRow == 0) ? position | MDCCollectionViewOrdinalPositionVerticalTop : position;
     position = (ordinalRow == maxRowIndex)
                    ? position | MDCCollectionViewOrdinalPositionVerticalBottom
                    : position;
@@ -500,9 +496,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   if (ordinalColumn > 0 && ordinalColumn < maxColumnIndex) {
     position = position | MDCCollectionViewOrdinalPositionHorizontalCenter;
   } else {
-    position = (ordinalColumn == 0)
-                   ? position | MDCCollectionViewOrdinalPositionHorizontalLeft
-                   : position;
+    position =
+        (ordinalColumn == 0) ? position | MDCCollectionViewOrdinalPositionHorizontalLeft : position;
     position = (ordinalColumn == maxColumnIndex)
                    ? position | MDCCollectionViewOrdinalPositionHorizontalRight
                    : position;
@@ -522,8 +517,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
           (id<MDCCollectionViewEditingDelegate>)self.collectionView.dataSource;
 
       // Check if delegate can select during editing.
-      if ([editingDelegate respondsToSelector:
-                               @selector(collectionView:canSelectItemDuringEditingAtIndexPath:)]) {
+      if ([editingDelegate respondsToSelector:@selector(collectionView:
+                                                  canSelectItemDuringEditingAtIndexPath:)]) {
         attr.shouldShowSelectorStateMask = [editingDelegate collectionView:self.collectionView
                                      canSelectItemDuringEditingAtIndexPath:attr.indexPath];
       }
@@ -577,16 +572,14 @@ static const NSInteger kSupplementaryViewZIndex = 99;
           // Is previous to inlaid attribute.
           if (attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalTop) {
             attr.sectionOrdinalPosition = MDCCollectionViewOrdinalPositionVerticalTopBottom;
-          } else if (attr.sectionOrdinalPosition &
-                     MDCCollectionViewOrdinalPositionVerticalCenter) {
+          } else if (attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalCenter) {
             attr.sectionOrdinalPosition = MDCCollectionViewOrdinalPositionVerticalBottom;
           }
         } else if (item == inlaidIndexPath.item + 1) {
           // Is next to inlaid attribute.
           if (attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalCenter) {
             attr.sectionOrdinalPosition = MDCCollectionViewOrdinalPositionVerticalTop;
-          } else if (attr.sectionOrdinalPosition &
-                     MDCCollectionViewOrdinalPositionVerticalBottom) {
+          } else if (attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalBottom) {
             attr.sectionOrdinalPosition = MDCCollectionViewOrdinalPositionVerticalBottom;
           }
         }
@@ -624,16 +617,16 @@ static const NSInteger kSupplementaryViewZIndex = 99;
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
 
     // Add header info bar if editing.
-    [attributes addObject:
-                    [self layoutAttributesForSupplementaryViewOfKind:MDCCollectionInfoBarKindHeader
-                                                         atIndexPath:indexPath]];
+    [attributes
+        addObject:[self layoutAttributesForSupplementaryViewOfKind:MDCCollectionInfoBarKindHeader
+                                                       atIndexPath:indexPath]];
 
     // Add footer info bar if editing and item(s) are selected.
     NSInteger selectedItemCount = [self.collectionView.indexPathsForSelectedItems count];
     if (selectedItemCount > 0) {
-      [attributes addObject:
-                      [self layoutAttributesForSupplementaryViewOfKind:MDCCollectionInfoBarKindFooter
-                                                           atIndexPath:indexPath]];
+      [attributes
+          addObject:[self layoutAttributesForSupplementaryViewOfKind:MDCCollectionInfoBarKindFooter
+                                                         atIndexPath:indexPath]];
     }
   }
 }
@@ -655,14 +648,15 @@ static const NSInteger kSupplementaryViewZIndex = 99;
       if (![sectionSet containsObject:@(section)]) {
         NSIndexPath *decorationIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
         MDCCollectionViewLayoutAttributes *decorationAttr =
-            (MDCCollectionViewLayoutAttributes *)
-                [self layoutAttributesForDecorationViewOfKind:kCollectionDecorationView
-                                                  atIndexPath:decorationIndexPath];
+            (MDCCollectionViewLayoutAttributes *)[self
+                layoutAttributesForDecorationViewOfKind:kCollectionDecorationView
+                                            atIndexPath:decorationIndexPath];
         shouldShowGridBackground = [self shouldShowGridBackgroundWithAttribute:decorationAttr];
         decorationAttr.shouldShowGridBackground = shouldShowGridBackground;
-        decorationAttr.backgroundImage = shouldShowGridBackground
-                                             ? [self.styler backgroundImageForCellLayoutAttributes:decorationAttr]
-                                             : nil;
+        decorationAttr.backgroundImage =
+            shouldShowGridBackground
+                ? [self.styler backgroundImageForCellLayoutAttributes:decorationAttr]
+                : nil;
         [decorationAttributes addObject:decorationAttr];
         [sectionSet addObject:@(section)];
       }
@@ -678,8 +672,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // Determine whether to show grid background.
   if (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     if (self.styler.cellStyle == MDCCollectionViewCellStyleGrouped ||
-        (self.styler.cellStyle == MDCCollectionViewCellStyleCard &&
-         self.styler.gridPadding == 0)) {
+        (self.styler.cellStyle == MDCCollectionViewCellStyleCard && self.styler.gridPadding == 0)) {
       return YES;
     }
   }
@@ -695,8 +688,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 - (CGRect)boundsForAppearanceAnimationWithInitialBounds:(CGRect)initialBounds {
   // Increase initial bounds by 25% allowing offscreen attributes to be included in the
   // appearance animation.
-  if (self.styler.shouldAnimateCellsOnAppearance &&
-      self.styler.willAnimateCellsOnAppearance) {
+  if (self.styler.shouldAnimateCellsOnAppearance && self.styler.willAnimateCellsOnAppearance) {
     CGRect newBounds = initialBounds;
     newBounds.size.height += (newBounds.size.height / 4);
     return newBounds;
@@ -719,12 +711,11 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   NSTimeInterval duration = self.styler.animateCellsOnAppearanceDuration;
   if (self.styler.shouldAnimateCellsOnAppearance && attributeCount > 0) {
     // First sort by index path.
-    NSArray *sortedByIndexPath =
-        [attributes sortedArrayUsingComparator:
-                        ^NSComparisonResult(MDCCollectionViewLayoutAttributes *attr1,
-                                            MDCCollectionViewLayoutAttributes *attr2) {
-                          return [attr1.indexPath compare:attr2.indexPath];
-                        }];
+    NSArray *sortedByIndexPath = [attributes
+        sortedArrayUsingComparator:^NSComparisonResult(MDCCollectionViewLayoutAttributes *attr1,
+                                                       MDCCollectionViewLayoutAttributes *attr2) {
+          return [attr1.indexPath compare:attr2.indexPath];
+        }];
 
     // Next create new array containing attributes in the form of header -> item -> footer.
     NSMutableArray *sortedAttributes = [NSMutableArray array];

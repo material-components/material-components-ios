@@ -55,11 +55,15 @@
   MDCSwitch *testSmallSwitch = [[MDCSwitch alloc] initWithFrame:CGRectMake(0.0, 0.0, 4.0, 4.0)];
   MDCSwitch *testLargeSwitch = [[MDCSwitch alloc] initWithFrame:CGRectMake(0.0, 0.0, 900.0, 900.0)];
 
-  XCTAssertEqual(testZeroSwitch.bounds.size.height, testSmallSwitch.bounds.size.height, @"MDCSwitch height must be constant");
-  XCTAssertEqual(testZeroSwitch.bounds.size.width, testSmallSwitch.bounds.size.width, @"MDCSwitch width must be constant");
+  XCTAssertEqual(testZeroSwitch.bounds.size.height, testSmallSwitch.bounds.size.height,
+                 @"MDCSwitch height must be constant");
+  XCTAssertEqual(testZeroSwitch.bounds.size.width, testSmallSwitch.bounds.size.width,
+                 @"MDCSwitch width must be constant");
 
-  XCTAssertEqual(testZeroSwitch.bounds.size.height, testLargeSwitch.bounds.size.height, @"MDCSwitch height must be constant");
-  XCTAssertEqual(testZeroSwitch.bounds.size.width, testLargeSwitch.bounds.size.width, @"MDCSwitch width must be constant");
+  XCTAssertEqual(testZeroSwitch.bounds.size.height, testLargeSwitch.bounds.size.height,
+                 @"MDCSwitch height must be constant");
+  XCTAssertEqual(testZeroSwitch.bounds.size.width, testLargeSwitch.bounds.size.width,
+                 @"MDCSwitch width must be constant");
 }
 
 - (void)testRectZeroSize {

@@ -131,8 +131,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self addSubview:_trackView];
 
     UITapGestureRecognizer *tapGestureRecognizer =
-        [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(handleTapGesture:)];
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self addGestureRecognizer:tapGestureRecognizer];
 
     // Note that we use a LongPress recognizer instead of Pan to prevent the behavior of having to
@@ -186,9 +185,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _primaryColor = primaryColor;
   _thumbOnColor = primaryColor;
   _trackOnColor =
-      _interpolateOnOffColors
-          ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha]
-          : primaryColor;
+      _interpolateOnOffColors ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha] : primaryColor;
 
   _touchController.defaultInkView.inkColor = [primaryColor colorWithAlphaComponent:kTrackOnAlpha];
   [self updateColorsAnimated:NO withDuration:0.0f];
@@ -321,7 +318,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (CGPoint)thumbPositionForValue:(CGFloat)value {
   CGFloat relValue = [self relativeValueForValue:value];
-  CGPoint position = CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
+  CGPoint position =
+      CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
   return position;
 }
 
@@ -388,9 +386,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (crossesAnchor) {
     CGFloat currentValue = _value;
     _value = _filledTrackAnchorValue;
-    CGFloat animationDurationToAnchor = CGFabs(previousValue) /
-                                        (CGFabs(previousValue) + CGFabs(currentValue)) *
-                                        animationDuration;
+    CGFloat animationDurationToAnchor =
+        CGFabs(previousValue) / (CGFabs(previousValue) + CGFabs(currentValue)) * animationDuration;
     void (^secondAnimation)(BOOL) = ^void(BOOL finished) {
       _value = currentValue;
       [UIView animateWithDuration:(animationDuration - animationDurationToAnchor)
@@ -494,9 +491,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
         CGRectMake(_thumbView.cornerRadius, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
                    CGRectGetWidth(self.bounds) - (_thumbView.cornerRadius * 2), _trackHeight);
   } else {
-    _trackView.frame =
-        CGRectMake(0, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
-                   CGRectGetWidth(self.bounds), _trackHeight);
+    _trackView.frame = CGRectMake(0, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
+                                  CGRectGetWidth(self.bounds), _trackHeight);
   }
   [self updateTrackMask];
 

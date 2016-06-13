@@ -35,7 +35,8 @@
 
  scrollView.delegate = headerViewController;
  */
-@interface MDCFlexibleHeaderViewController : UIViewController <UIScrollViewDelegate, UITableViewDelegate>
+@interface MDCFlexibleHeaderViewController
+    : UIViewController <UIScrollViewDelegate, UITableViewDelegate>
 
 /** The flexible header view instance that this controller manages. */
 @property(nonatomic, strong, nonnull, readonly) MDCFlexibleHeaderView *headerView;
@@ -70,7 +71,8 @@
  The receiver should use the MDCFlexibleHeader scrollPhase APIs in order to react to the frame
  changes.
  */
-- (void)flexibleHeaderViewController:(nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController
+- (void)flexibleHeaderViewController:
+            (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController
     flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 @end

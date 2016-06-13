@@ -124,8 +124,7 @@
   NSUInteger page = 2;
 
   // When
-  [scrollView setContentOffset:CGPointMake(frame.size.width * page, 0)
-                      animated:YES];
+  [scrollView setContentOffset:CGPointMake(frame.size.width * page, 0) animated:YES];
 
   // Then
   XCTAssertEqual(pageControl.currentPage, page);

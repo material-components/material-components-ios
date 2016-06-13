@@ -152,9 +152,8 @@ static const CGFloat kCellImagePaddingLeft = 16;
       // Alignment for two lines.
       textFrame.origin.y =
           kCellTwoLinePaddingTop + _textLabel.font.ascender - textFrame.size.height;
-      detailFrame.origin.y =
-          boundsHeight - kCellTwoLinePaddingBottom -
-          detailFrame.size.height - _detailTextLabel.font.descender;
+      detailFrame.origin.y = boundsHeight - kCellTwoLinePaddingBottom - detailFrame.size.height -
+                             _detailTextLabel.font.descender;
     } else {
       // Since single wrapped label, just center.
       textFrame.origin.y = (boundsHeight / 2) - (textFrame.size.height / 2);
@@ -166,9 +165,8 @@ static const CGFloat kCellImagePaddingLeft = 16;
       // Alignment for three lines.
       textFrame.origin.y =
           kCellThreeLinePaddingTop + _textLabel.font.ascender - _textLabel.font.lineHeight;
-      detailFrame.origin.y =
-          boundsHeight - kCellThreeLinePaddingBottom -
-          detailFrame.size.height - _detailTextLabel.font.descender;
+      detailFrame.origin.y = boundsHeight - kCellThreeLinePaddingBottom - detailFrame.size.height -
+                             _detailTextLabel.font.descender;
       imageFrame.origin.y = kCellThreeLinePaddingTop;
     } else {
       // Since single wrapped label, just center.
@@ -193,9 +191,9 @@ static const CGFloat kCellImagePaddingLeft = 16;
 - (CGSize)frameSizeForLabel:(UILabel *)label {
   CGFloat width = MIN(CGRectGetWidth(_contentWrapper.bounds),
                       [label.text sizeWithAttributes:@{NSFontAttributeName : label.font}].width);
-  CGFloat height = [label textRectForBounds:_contentWrapper.bounds
-                       limitedToNumberOfLines:label.numberOfLines]
-                       .size.height;
+  CGFloat height =
+      [label textRectForBounds:_contentWrapper.bounds limitedToNumberOfLines:label.numberOfLines]
+          .size.height;
   return CGSizeMake(width, height);
 }
 

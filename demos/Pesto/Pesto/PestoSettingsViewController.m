@@ -98,11 +98,9 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  CGFloat borderBottomYPos = CGRectGetMaxY(self.contentView.bounds) -
-                             kPestoSettingsTableViewHeaderSeparatorWidth;
-  self.separator.frame = CGRectMake(0,
-                                    borderBottomYPos,
-                                    CGRectGetWidth(self.contentView.bounds),
+  CGFloat borderBottomYPos =
+      CGRectGetMaxY(self.contentView.bounds) - kPestoSettingsTableViewHeaderSeparatorWidth;
+  self.separator.frame = CGRectMake(0, borderBottomYPos, CGRectGetWidth(self.contentView.bounds),
                                     kPestoSettingsTableViewHeaderSeparatorWidth);
   self.backgroundView.frame = self.bounds;
 }
@@ -142,17 +140,16 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   self.view.backgroundColor = [UIColor whiteColor];
 
   self.dummySettingHeaders = @[ @"Account", @"Notification" ];
-  self.dummySettingTitles = @[ @[ @"Public Profile", @"Subscribe to Daily Digest" ],
-                               @[ @"Get email notifications", @"Get text notifications" ] ];
+  self.dummySettingTitles = @[
+    @[ @"Public Profile", @"Subscribe to Daily Digest" ],
+    @[ @"Get email notifications", @"Get text notifications" ]
+  ];
   self.dummySettingVals = @[ @[ @YES, @NO ], @[ @NO, @YES ] ];
 
   CGRect settingsTableViewFrame =
-      CGRectMake(0,
-                 0,
-                 self.view.bounds.size.width,
-                 self.view.bounds.size.height);
-  self.settingsTableView = [[UITableView alloc] initWithFrame:settingsTableViewFrame
-                                                        style:UITableViewStylePlain];
+      CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+  self.settingsTableView =
+      [[UITableView alloc] initWithFrame:settingsTableViewFrame style:UITableViewStylePlain];
   self.settingsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   self.settingsTableView.allowsSelection = NO;
   self.settingsTableView.backgroundColor = self.view.backgroundColor;
@@ -222,7 +219,8 @@ static CGFloat kPestoSettingsTableViewHeaderSeparatorWidth = 1.f;
   return 50;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell
+- (void)tableView:(UITableView *)tableView
+      willDisplayCell:(nonnull UITableViewCell *)cell
     forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
   if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
     [cell setSeparatorInset:UIEdgeInsetsZero];

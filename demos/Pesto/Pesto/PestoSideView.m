@@ -82,8 +82,8 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 @end
 
-@interface PestoSideContentView : UIView <UICollectionViewDataSource,
-                                          UICollectionViewDelegateFlowLayout>
+@interface PestoSideContentView
+    : UIView <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property(nonatomic) NSArray *titles;
 @property(nonatomic) NSCache *imageCache;
@@ -104,18 +104,15 @@ static NSString *const kPestoSideViewWidthBaseURL =
 
 - (void)commonInit {
   CGRect avatarRect = CGRectMake(0, 0, kPestoSideViewAvatarDim, kPestoSideViewAvatarDim);
-  NSURL *avatarURL = [NSURL URLWithString:[kPestoSideViewWidthBaseURL
-                                              stringByAppendingString:@"avatar.jpg"]];
+  NSURL *avatarURL =
+      [NSURL URLWithString:[kPestoSideViewWidthBaseURL stringByAppendingString:@"avatar.jpg"]];
   PestoAvatarView *avatarView = [[PestoAvatarView alloc] initWithFrame:avatarRect];
   avatarView.avatarImageURL = avatarURL;
-  avatarView.center = CGPointMake(self.bounds.size.width / 2.f,
-                                  kPestoSideViewUserItemHeight / 2.f - 12.f);
+  avatarView.center =
+      CGPointMake(self.bounds.size.width / 2.f, kPestoSideViewUserItemHeight / 2.f - 12.f);
   [self addSubview:avatarView];
 
-  CGRect nameRect = CGRectMake(0,
-                               110.f,
-                               self.bounds.size.width,
-                               kPestoSideViewAvatarDim);
+  CGRect nameRect = CGRectMake(0, 110.f, self.bounds.size.width, kPestoSideViewAvatarDim);
   UILabel *name = [[UILabel alloc] initWithFrame:nameRect];
   name.text = @"Jonathan";
   name.font = [MDCTypography titleFont];
@@ -124,11 +121,8 @@ static NSString *const kPestoSideViewWidthBaseURL =
   [self addSubview:name];
 
   CGFloat lightHeight = 0.5f;
-  UIView *lineView =
-      [[UIView alloc] initWithFrame:CGRectMake(15.f,
-                                               180.f,
-                                               self.bounds.size.width - 30.f,
-                                               lightHeight)];
+  UIView *lineView = [[UIView alloc]
+      initWithFrame:CGRectMake(15.f, 180.f, self.bounds.size.width - 30.f, lightHeight)];
   [lineView.heightAnchor constraintEqualToConstant:lightHeight].active = YES;
   lineView.backgroundColor = [UIColor lightGrayColor];
   [self addSubview:lineView];
@@ -141,12 +135,10 @@ static NSString *const kPestoSideViewWidthBaseURL =
                                            kPestoSideViewCollectionViewInset,
                                            kPestoSideViewCollectionViewInset,
                                            kPestoSideViewCollectionViewInset)];
-  CGRect collectionViewFrame = CGRectMake(0,
-                                          kPestoSideViewUserItemHeight,
-                                          self.bounds.size.width,
-                                          self.bounds.size.height);
-  _collectionView = [[UICollectionView alloc] initWithFrame:collectionViewFrame
-                                       collectionViewLayout:layout];
+  CGRect collectionViewFrame =
+      CGRectMake(0, kPestoSideViewUserItemHeight, self.bounds.size.width, self.bounds.size.height);
+  _collectionView =
+      [[UICollectionView alloc] initWithFrame:collectionViewFrame collectionViewLayout:layout];
   _collectionView.contentSize = _collectionView.bounds.size;
   _collectionView.backgroundColor = [UIColor whiteColor];
   _collectionView.autoresizingMask =
@@ -231,8 +223,7 @@ static NSString *const kPestoSideViewWidthBaseURL =
     [self addSubview:_contentView];
 
     UITapGestureRecognizer *tapRecognizer =
-        [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(hideSideView)];
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideSideView)];
     tapRecognizer.delegate = self;
     [self addGestureRecognizer:tapRecognizer];
 
@@ -277,7 +268,8 @@ static NSString *const kPestoSideViewWidthBaseURL =
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:
+        (UIGestureRecognizer *)otherGestureRecognizer {
   return YES;
 }
 

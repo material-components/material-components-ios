@@ -36,8 +36,7 @@
 
   self.exampleView.translatesAutoresizingMaskIntoConstraints = NO;
 
-  NSDictionary *viewBindings = @{ @"exampleView" : self.exampleView,
-                                  @"navBar" : self.navBar };
+  NSDictionary *viewBindings = @{ @"exampleView" : self.exampleView, @"navBar" : self.navBar };
   NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints = [NSMutableArray array];
 
   // clang-format off
@@ -103,10 +102,10 @@
 }
 
 - (CGSize)textSizeForRect:(CGRect)frame {
-  return [[self instructionsString]
-             boundingRectWithSize:frame.size
-                          options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                          context:nil]
+  return [[self instructionsString] boundingRectWithSize:frame.size
+                                                 options:NSStringDrawingUsesLineFragmentOrigin |
+                                                         NSStringDrawingUsesFontLeading
+                                                 context:nil]
       .size;
 }
 
@@ -115,27 +114,24 @@
   [style setAlignment:NSTextAlignmentCenter];
   [style setLineBreakMode:NSLineBreakByWordWrapping];
 
-  NSDictionary *instructionAttributes1 =
-      @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline],
-        NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
-                                                         green:0.459
-                                                          blue:0.459
-                                                         alpha:0.87f],
-        NSParagraphStyleAttributeName : style};
+  NSDictionary *instructionAttributes1 = @{
+    NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline],
+    NSForegroundColorAttributeName :
+        [UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f],
+    NSParagraphStyleAttributeName : style
+  };
 
-  NSDictionary *instructionAttributes2 =
-      @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline],
-        NSForegroundColorAttributeName : [UIColor colorWithRed:0.459
-                                                         green:0.459
-                                                          blue:0.459
-                                                         alpha:0.87f],
-        NSParagraphStyleAttributeName : style};
+  NSDictionary *instructionAttributes2 = @{
+    NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline],
+    NSForegroundColorAttributeName :
+        [UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f],
+    NSParagraphStyleAttributeName : style
+  };
 
   NSString *instructionText = @"SWIPE RIGHT\n\n\n\nto go back\n\n\n\n\n\n";
-  NSMutableAttributedString *instructionsAttributedString = [[NSMutableAttributedString alloc]
-      initWithString:instructionText];
-  [instructionsAttributedString setAttributes:instructionAttributes1
-                                        range:NSMakeRange(0, 11)];
+  NSMutableAttributedString *instructionsAttributedString =
+      [[NSMutableAttributedString alloc] initWithString:instructionText];
+  [instructionsAttributedString setAttributes:instructionAttributes1 range:NSMakeRange(0, 11)];
   [instructionsAttributedString setAttributes:instructionAttributes2
                                         range:NSMakeRange(11, instructionText.length - 11)];
 
@@ -145,24 +141,21 @@
 - (void)drawArrowWithFrame:(CGRect)frame {
   UIBezierPath *bezierPath = [UIBezierPath bezierPath];
   [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame) + 12, CGRectGetMinY(frame) + 4)];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59,
-                                         CGRectGetMinY(frame) + 5.41)];
+  [bezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59, CGRectGetMinY(frame) + 5.41)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 16.17, CGRectGetMinY(frame) + 11)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 4, CGRectGetMinY(frame) + 11)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 4, CGRectGetMinY(frame) + 13)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 16.17, CGRectGetMinY(frame) + 13)];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59,
-                                         CGRectGetMinY(frame) + 18.59)];
+  [bezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59, CGRectGetMinY(frame) + 18.59)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 12, CGRectGetMinY(frame) + 20)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 20, CGRectGetMinY(frame) + 12)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 12, CGRectGetMinY(frame) + 4)];
   [bezierPath closePath];
   bezierPath.miterLimit = 4;
 
-  [[UIColor colorWithRed:0.459
-                   green:0.459
-                    blue:0.459
-                   alpha:0.87f] setFill];
+  [[UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f] setFill];
   [bezierPath fill];
 }
 

@@ -31,10 +31,8 @@
     self.title = @"Activity Indicator";
     self.view.backgroundColor = [UIColor whiteColor];
 
-    CGRect activityIndicator = CGRectMake(0,
-                                          0,
-                                          kActivityIndicatorRadius * 2,
-                                          kActivityIndicatorRadius * 2);
+    CGRect activityIndicator =
+        CGRectMake(0, 0, kActivityIndicatorRadius * 2, kActivityIndicatorRadius * 2);
     _activityIndicator = [[MDCActivityIndicator alloc] initWithFrame:activityIndicator];
     _activityIndicator.delegate = self;
     _activityIndicator.radius = kActivityIndicatorRadius;

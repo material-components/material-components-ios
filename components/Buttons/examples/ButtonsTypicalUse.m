@@ -88,11 +88,13 @@
   floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:floatingButton];
 
-  NSDictionary *views = @{ @"raised" : raisedButton,
-                           @"disabledRaised" : disabledRaisedButton,
-                           @"flat" : flatButton,
-                           @"disabledFlat" : disabledFlatButton,
-                           @"floating" : floatingButton };
+  NSDictionary *views = @{
+    @"raised" : raisedButton,
+    @"disabledRaised" : disabledRaisedButton,
+    @"flat" : flatButton,
+    @"disabledFlat" : disabledFlatButton,
+    @"floating" : floatingButton
+  };
 
   self.views = [NSMutableDictionary dictionary];
   [self.views addEntriesFromDictionary:views];

@@ -37,14 +37,13 @@
   UIColor* gradientColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
 
   CGFloat gradientLocations[] = {0.14, 0.5, 1};
-  CGGradientRef gradient =
-      CGGradientCreateWithColors(colorSpace,
-                                 (__bridge CFArrayRef) @[
-                                   (id)gradientColor2.CGColor,
-                                   (id)[gradientColor2 colorWithAlphaComponent:0.5].CGColor,
-                                   (id)gradientColor.CGColor
-                                 ],
-                                 gradientLocations);
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef) @[
+        (id)gradientColor2.CGColor, (id)[gradientColor2 colorWithAlphaComponent:0.5].CGColor,
+        (id)gradientColor.CGColor
+      ],
+      gradientLocations);
   {
     {
       CGContextSaveGState(context);
@@ -192,8 +191,8 @@
 
       NSDictionary* labelFontAttributes = @{
         NSFontAttributeName : [UIFont fontWithName:@"Roboto-Medium" size:11],
-          NSForegroundColorAttributeName : textForeground,
-          NSParagraphStyleAttributeName : labelStyle
+        NSForegroundColorAttributeName : textForeground,
+        NSParagraphStyleAttributeName : labelStyle
       };
 
       CGFloat labelTextHeight =

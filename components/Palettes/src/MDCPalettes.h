@@ -139,7 +139,8 @@ CG_EXTERN const NSString *__nonnull MDCPaletteAccent700Name;
  @return An palette containing the custom colors.
  */
 + (nonnull instancetype)paletteWithTints:(nonnull NSDictionary<const NSString *, UIColor *> *)tints
-                                 accents:(nullable NSDictionary<const NSString *, UIColor *> *)accents;
+                                 accents:
+                                     (nullable NSDictionary<const NSString *, UIColor *> *)accents;
 
 /**
  Returns an initialized palette object with a custom set of tints and accents.

@@ -60,8 +60,7 @@
     CGContextRotateCTM(context, 44.9 * M_PI / 180);
 
     UIBezierPath* rectangle2Path =
-        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-0.68, -2, 1.35, 4)
-                                   cornerRadius:0.4];
+        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-0.68, -2, 1.35, 4) cornerRadius:0.4];
     [fillColor setFill];
     [rectangle2Path fill];
 
@@ -86,8 +85,7 @@
     CGContextRotateCTM(context, 44.9 * M_PI / 180);
 
     UIBezierPath* rectangle4Path =
-        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-0.68, -2, 1.35, 4)
-                                   cornerRadius:0.4];
+        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-0.68, -2, 1.35, 4) cornerRadius:0.4];
     [fillColor setFill];
     [rectangle4Path fill];
 
@@ -112,8 +110,7 @@
     CGContextRotateCTM(context, -44.9 * M_PI / 180);
 
     UIBezierPath* rectangle6Path =
-        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-2, -0.68, 4, 1.35)
-                                   cornerRadius:0.4];
+        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-2, -0.68, 4, 1.35) cornerRadius:0.4];
     [fillColor setFill];
     [rectangle6Path fill];
 
@@ -138,8 +135,7 @@
     CGContextRotateCTM(context, -44.9 * M_PI / 180);
 
     UIBezierPath* rectangle8Path =
-        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-2, -0.68, 4, 1.35)
-                                   cornerRadius:0.4];
+        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(-2, -0.68, 4, 1.35) cornerRadius:0.4];
     [fillColor setFill];
     [rectangle8Path fill];
 
