@@ -81,7 +81,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 @end
 
 @implementation MDCThumbTrack {
-  UIPanGestureRecognizer *_panRecognizer;
+  UILongPressGestureRecognizer *_moveRecognizer;
   CGFloat _panThumbGrabPosition;
   UITapGestureRecognizer *_tapRecognizer;
   CGFloat _lastDispatchedValue;
@@ -135,10 +135,15 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                                                 action:@selector(handleTapGesture:)];
     [self addGestureRecognizer:tapGestureRecognizer];
 
-    _panRecognizer =
-        [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(handlePanGesture:)];
-    _panRecognizer.cancelsTouchesInView = NO;
+    // Note that we use a LongPress recognizer instead of Pan to prevent the behavior of having to
+    // move a minimum slop distance before movement actions are recognized.
+    // http://stackoverflow.com/questions/10728066/why-is-there-a-delay-when-moving-object-using-uipangesturerecognizer
+    _moveRecognizer =
+        [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                      action:@selector(handlePanGesture:)];
+
+    _moveRecognizer.minimumPressDuration = 0.0;
+    _moveRecognizer.cancelsTouchesInView = NO;
     [self updatePanRecognizerTarget];
 
     // Set up ink layer.
@@ -546,9 +551,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 #pragma mark - Gestures and touches
 
 - (void)updatePanRecognizerTarget {
-  [_panRecognizer.view removeGestureRecognizer:_panRecognizer];
+  [_moveRecognizer.view removeGestureRecognizer:_moveRecognizer];
   UIView *panTarget = _panningAllowedOnEntireControl ? self : _thumbView;
-  [panTarget addGestureRecognizer:_panRecognizer];
+  [panTarget addGestureRecognizer:_moveRecognizer];
 }
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)recognizer {
