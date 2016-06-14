@@ -313,6 +313,50 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertNotNil(fontLoader.baseBundle);
 }
 
+- (void)testDescription {
+  // Given
+  MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  NSArray *expected = @[
+    [NSString stringWithFormat:@"%@: %@", NSStringFromSelector(@selector(lightFontResource)),
+                               fontLoader.lightFontResource],
+    [NSString stringWithFormat:@"%@: %@", NSStringFromSelector(@selector(regularFontResource)),
+                               fontLoader.regularFontResource],
+    [NSString stringWithFormat:@"%@: %@", NSStringFromSelector(@selector(mediumFontResource)),
+                               fontLoader.mediumFontResource],
+    [NSString stringWithFormat:@"%@: %@", NSStringFromSelector(@selector(boldFontResource)),
+                               fontLoader.boldFontResource],
+    [NSString stringWithFormat:@"%@: %@", NSStringFromSelector(@selector(lightItalicFontResource)),
+                               fontLoader.lightItalicFontResource],
+    [NSString stringWithFormat:@"%@: %@", NSStringFromSelector(@selector(italicFontResource)),
+                               fontLoader.italicFontResource],
+    [NSString stringWithFormat:@"%@: %@", NSStringFromSelector(@selector(mediumItalicFontResource)),
+                               fontLoader.mediumItalicFontResource],
+    [NSString stringWithFormat:@"%@: %@", NSStringFromSelector(@selector(boldItalicFontResource)),
+                               fontLoader.boldItalicFontResource],
+  ];
+
+  // When
+  NSString *actual = [fontLoader description];
+
+  // Then
+  for (NSString *resourceDescriptoin in expected) {
+    XCTAssertTrue([actual rangeOfString:resourceDescriptoin].location != NSNotFound,
+                  @"actual %@ does not end with: %@", actual, expected);
+  }
+}
+
+- (void)testDescriptionWithNoResourcesShouldBeMostlyEmpty {
+  // Given
+  MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
+  NSString *expected = @" (\n)\n";
+
+  // When
+  NSString *actual = [fontLoader description];
+
+  // Then
+  XCTAssertTrue([actual hasSuffix:expected], @"actual %@ does not end with: %@", actual, expected);
+}
+
 #pragma mark private
 
 - (CGFloat)randomNumber {
