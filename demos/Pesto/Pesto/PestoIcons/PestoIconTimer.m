@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "PestoFoodIconTimer.h"
+#import "PestoIconTimer.h"
 
-@implementation PestoFoodIconTimer
+@implementation PestoIconTimer
 
 + (UIImage*)drawTileImage:(CGRect)frame {
   void (^drawBlock)(CGRect) = ^(CGRect drawBlockFrame) {

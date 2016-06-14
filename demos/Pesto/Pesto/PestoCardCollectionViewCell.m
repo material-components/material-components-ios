@@ -17,12 +17,12 @@
 #import "PestoCardCollectionViewCell.h"
 #import "PestoRemoteImageService.h"
 
-#import "PestoFoodIconFish.h"
-#import "PestoFoodIconMain.h"
-#import "PestoFoodIconMeat.h"
-#import "PestoFoodIconSpicy.h"
-#import "PestoFoodIconTimer.h"
-#import "PestoFoodIconVeggie.h"
+#import "PestoIconFish.h"
+#import "PestoIconMain.h"
+#import "PestoIconMeat.h"
+#import "PestoIconSpicy.h"
+#import "PestoIconTimer.h"
+#import "PestoIconVeggie.h"
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
@@ -111,17 +111,17 @@ static const CGFloat kPestoCardIconSize = 72.f;
   self.iconImageName = iconName;
 
   CGRect iconFrame = CGRectMake(0, 0, 32, 32);
-  UIImage *icon = [PestoFoodIconFish drawTileImage:iconFrame];
+  UIImage *icon = [PestoIconFish drawTileImage:iconFrame];
   if ([iconName isEqualToString:@"Main"]) {
-    icon = [PestoFoodIconMain drawTileImage:iconFrame];
+    icon = [PestoIconMain drawTileImage:iconFrame];
   } else if ([iconName isEqualToString:@"Meat"]) {
-    icon = [PestoFoodIconMeat drawTileImage:iconFrame];
+    icon = [PestoIconMeat drawTileImage:iconFrame];
   } else if ([iconName isEqualToString:@"Spicy"]) {
-    icon = [PestoFoodIconSpicy drawTileImage:iconFrame];
+    icon = [PestoIconSpicy drawTileImage:iconFrame];
   } else if ([iconName isEqualToString:@"Timer"]) {
-    icon = [PestoFoodIconTimer drawTileImage:iconFrame];
+    icon = [PestoIconTimer drawTileImage:iconFrame];
   } else if ([iconName isEqualToString:@"Veggie"]) {
-    icon = [PestoFoodIconVeggie drawTileImage:iconFrame];
+    icon = [PestoIconVeggie drawTileImage:iconFrame];
   }
 
   self.iconImageView.image = icon;

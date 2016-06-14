@@ -14,17 +14,12 @@
  limitations under the License.
  */
 
-#import "PestoFoodIcon.h"
+#import <UIKit/UIKit.h>
 
-@implementation PestoFoodIcon
+#import "PestoIcon.h"
 
-+ (UIImage *)drawImageWithFrame:(CGRect)frame drawBlock:(void (^)(CGRect))drawBlock {
-  CGFloat scale = [UIScreen mainScreen].scale;
-  UIGraphicsBeginImageContextWithOptions(frame.size, false, scale);
-  drawBlock(frame);
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  return image;
-}
+@interface PestoIconVeggie : PestoIcon
+
++ (UIImage *)drawTileImage:(CGRect)frame;
 
 @end

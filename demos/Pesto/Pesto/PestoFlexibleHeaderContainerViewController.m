@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
-#import "PestoFlexibleHeaderContainerViewController.h"
 #import "PestoCollectionViewController.h"
 #import "PestoDetailViewController.h"
+#import "PestoFlexibleHeaderContainerViewController.h"
+#import "PestoIconSettings.h"
 #import "PestoSettingsViewController.h"
-#import "PestoSideView.h"
 
 #import "MaterialAppBar.h"
 
@@ -26,13 +26,11 @@ static CGFloat kPestoAnimationDuration = 0.33f;
 static CGFloat kPestoInset = 5.f;
 
 @interface PestoFlexibleHeaderContainerViewController () <PestoCollectionViewControllerDelegate,
-                                                          PestoSideViewDelegate,
                                                           UIViewControllerAnimatedTransitioning,
                                                           UIViewControllerTransitioningDelegate>
 
 @property(nonatomic, strong) MDCAppBar *appBar;
 @property(nonatomic, strong) PestoCollectionViewController *collectionViewController;
-@property(nonatomic, strong) PestoSideView *sideView;
 @property(nonatomic, strong) UIImageView *zoomableView;
 @property(nonatomic, strong) UIView *zoomableCardView;
 
@@ -59,11 +57,14 @@ static CGFloat kPestoInset = 5.f;
     _appBar.headerViewController.headerView.backgroundColor = [UIColor clearColor];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
 
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
-                                                                   style:UIBarButtonItemStyleDone
-                                                                  target:self
-                                                                  action:@selector(showMenu)];
-    self.navigationItem.leftBarButtonItem = menuButton;
+    CGRect iconFrame = CGRectMake(0, 0, 32, 32);
+    UIImage *icon = [PestoIconSettings drawTileImage:iconFrame];
+    UIBarButtonItem *menuButton =
+        [[UIBarButtonItem alloc] initWithImage:icon
+                                         style:UIBarButtonItemStyleDone
+                                        target:self
+                                        action:@selector(didSelectSettings)];
+    self.navigationItem.rightBarButtonItem = menuButton;
   }
   return self;
 }
@@ -73,13 +74,6 @@ static CGFloat kPestoInset = 5.f;
 
   [self.appBar addSubviewsToParent];
 
-  self.sideView = [[PestoSideView alloc] initWithFrame:self.view.bounds];
-  self.sideView.hidden = YES;
-  self.sideView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.sideView.delegate = self;
-  [self.view addSubview:self.sideView];
-
   self.zoomableCardView = [[UIView alloc] initWithFrame:CGRectZero];
   self.zoomableCardView.backgroundColor = [UIColor whiteColor];
   [self.view addSubview:self.zoomableCardView];
@@ -88,11 +82,6 @@ static CGFloat kPestoInset = 5.f;
   self.zoomableView.backgroundColor = [UIColor lightGrayColor];
   self.zoomableView.contentMode = UIViewContentModeScaleAspectFill;
   [self.view addSubview:self.zoomableView];
-}
-
-- (void)showMenu {
-  self.sideView.hidden = NO;
-  [self.sideView showSideView];
 }
 
 /** Use MDCAnimationCurve once available. */
@@ -190,7 +179,7 @@ static CGFloat kPestoInset = 5.f;
 
 #pragma mark - PestoSideViewDelegate
 
-- (void)sideViewDidSelectSettings:(PestoSideView *)sideView {
+- (void)didSelectSettings {
   PestoSettingsViewController *settingsVC = [PestoSettingsViewController new];
   settingsVC.title = @"Settings";
 
@@ -211,7 +200,6 @@ static CGFloat kPestoInset = 5.f;
   navVC.navigationBar.translucent = NO;
   navVC.navigationBarHidden = YES;
 
-  [sideView hideSideView];
   [self presentViewController:navVC animated:YES completion:nil];
 }
 

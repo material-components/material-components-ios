@@ -16,22 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class PestoSideView;
+#import "PestoIcon.h"
 
-@protocol PestoSideViewDelegate <NSObject>
+@interface PestoIconSpicy : PestoIcon
 
-@optional
-
-- (void)sideViewDidSelectSettings:(PestoSideView *)sideView;
-
-@end
-
-@interface PestoSideView : UIView
-
-@property(weak, nonatomic) id<PestoSideViewDelegate> delegate;
-
-- (void)showSideView;
-
-- (void)hideSideView;
++ (UIImage *)drawTileImage:(CGRect)frame;
 
 @end

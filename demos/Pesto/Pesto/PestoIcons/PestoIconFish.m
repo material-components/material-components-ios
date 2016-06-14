@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "PestoFoodIconFish.h"
+#import "PestoIconFish.h"
 
-@implementation PestoFoodIconFish
+@implementation PestoIconFish
 
 + (UIImage*)drawTileImage:(CGRect)frame {
   void (^drawBlock)(CGRect) = ^(CGRect drawBlockFrame) {

@@ -16,12 +16,12 @@
 
 #import "PestoRecipeCardView.h"
 
-#import "PestoFoodIconFish.h"
-#import "PestoFoodIconMain.h"
-#import "PestoFoodIconMeat.h"
-#import "PestoFoodIconSpicy.h"
-#import "PestoFoodIconTimer.h"
-#import "PestoFoodIconVeggie.h"
+#import "PestoIconFish.h"
+#import "PestoIconMain.h"
+#import "PestoIconMeat.h"
+#import "PestoIconSpicy.h"
+#import "PestoIconTimer.h"
+#import "PestoIconVeggie.h"
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
@@ -108,7 +108,7 @@ static CGFloat kPestoDetailSplitWidth = 64;
   [self addSubview:contentView];
 
   CGRect iconFrame = CGRectMake(0, 0, 32, 32);
-  UIImage *image = [PestoFoodIconTimer drawTileImage:iconFrame];
+  UIImage *image = [PestoIconTimer drawTileImage:iconFrame];
   _iconImageView = [[UIImageView alloc] initWithImage:image];
   _iconImageView.frame =
       CGRectMake(0, 0, _iconImageView.frame.size.width, _iconImageView.frame.size.height);
@@ -237,17 +237,17 @@ static CGFloat kPestoDetailSplitWidth = 64;
 - (void)setIconImageName:(NSString *)iconImageName {
   _iconImageName = [iconImageName copy];
   CGRect iconFrame = CGRectMake(0, 0, 32, 32);
-  UIImage *icon = [PestoFoodIconFish drawTileImage:iconFrame];
+  UIImage *icon = [PestoIconFish drawTileImage:iconFrame];
   if ([_iconImageName isEqualToString:@"Main"]) {
-    icon = [PestoFoodIconMain drawTileImage:iconFrame];
+    icon = [PestoIconMain drawTileImage:iconFrame];
   } else if ([_iconImageName isEqualToString:@"Meat"]) {
-    icon = [PestoFoodIconMeat drawTileImage:iconFrame];
+    icon = [PestoIconMeat drawTileImage:iconFrame];
   } else if ([_iconImageName isEqualToString:@"Spicy"]) {
-    icon = [PestoFoodIconSpicy drawTileImage:iconFrame];
+    icon = [PestoIconSpicy drawTileImage:iconFrame];
   } else if ([_iconImageName isEqualToString:@"Timer"]) {
-    icon = [PestoFoodIconTimer drawTileImage:iconFrame];
+    icon = [PestoIconTimer drawTileImage:iconFrame];
   } else if ([_iconImageName isEqualToString:@"Veggie"]) {
-    icon = [PestoFoodIconVeggie drawTileImage:iconFrame];
+    icon = [PestoIconVeggie drawTileImage:iconFrame];
   }
   _iconImageView.image = icon;
 }

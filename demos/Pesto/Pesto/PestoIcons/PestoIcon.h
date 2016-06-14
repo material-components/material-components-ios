@@ -16,10 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PestoFoodIcon.h"
+@interface PestoIcon : NSObject
 
-@interface PestoFoodIconMeat : PestoFoodIcon
-
-+ (UIImage *)drawTileImage:(CGRect)frame;
++ (UIImage *)drawImageWithFrame:(CGRect)frame drawBlock:(void (^)(CGRect))drawBlock;
 
 @end

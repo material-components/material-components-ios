@@ -16,9 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PestoFoodIcon.h"
+#import "PestoIcon.h"
 
-@interface PestoFoodIconFish : PestoFoodIcon
+@interface PestoIconTimer : PestoIcon
 
 + (UIImage *)drawTileImage:(CGRect)frame;
 
