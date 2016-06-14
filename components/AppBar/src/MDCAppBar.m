@@ -60,6 +60,7 @@ static const CGFloat kStatusBarHeight = 20;
     // Header stack view + navigation bar
     MDCAppBarViewController *appBarViewController = [[MDCAppBarViewController alloc] init];
     [_headerViewController addChildViewController:appBarViewController];
+    appBarViewController.view.frame = _headerViewController.view.bounds;
     [_headerViewController.view addSubview:appBarViewController.view];
     [appBarViewController didMoveToParentViewController:_headerViewController];
 
