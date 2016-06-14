@@ -66,22 +66,16 @@ static NSMutableSet *registeredFonts;
     return NO;
   }
   CFErrorRef error = NULL;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
                                                        kCTFontManagerScopeProcess, &error);
-#pragma clang diagnostic pop
 
   if (!self.isRegistered) {
     if (error && CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       // If it's already been loaded by somebody else, we don't care.
       // We do not check the error domain to make sure they match because
       // kCTFontManagerErrorDomain is not defined in the iOS 8 SDK.
       // Radar 18651170 iOS 8 SDK missing definition for kCTFontManagerErrorDomain
       self.isRegistered = YES;
-#pragma clang diagnostic pop
     } else {
       NSLog(@"Failed to load font: %@", error);
       _hasFailedRegistration = YES;
@@ -99,11 +93,8 @@ static NSMutableSet *registeredFonts;
     return YES;
   }
   CFErrorRef error = NULL;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.isRegistered = !CTFontManagerUnregisterFontsForURL((__bridge CFURLRef)self.fontURL,
                                                           kCTFontManagerScopeProcess, &error);
-#pragma clang diagnostic pop
 
   if (self.isRegistered || error) {
     NSLog(@"Failed to unregister font: %@", error);
