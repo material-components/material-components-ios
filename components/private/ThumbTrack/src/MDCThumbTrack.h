@@ -93,6 +93,9 @@
 /** The radius of the track thumb that moves along the track. */
 @property(nonatomic, assign) CGFloat thumbRadius;
 
+/** Whether or not the thumb should be smaller when the track is disabled. Defaults to NO. */
+@property(nonatomic, assign) BOOL thumbIsSmallerWhenDisabled;
+
 /** The max radius of the ripple when the user touches the thumb. */
 @property(nonatomic, assign) CGFloat thumbMaxRippleRadius;
 

@@ -425,9 +425,16 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
+// Note: this method became bloated and confusing but I'm working on a refactor which will be
+// landed soon.
 - (void)updateColorsAnimated:(BOOL)animated withDuration:(NSTimeInterval)duration {
   if (self.enabled) {
     CGFloat percent = [self relativeValueForValue:_value];
+
+    if (_thumbIsSmallerWhenDisabled) {
+      _thumbView.layer.transform = CATransform3DIdentity;
+    }
+
     if (_interpolateOnOffColors) {
       // Set background/border colors based on interpolated percent.
       _thumbView.layer.backgroundColor = [UIColor mdc_colorInterpolatedFromColor:_thumbOffColor
@@ -474,9 +481,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     }
   } else {
     // Set background/border colors for disabled state.
-    BOOL start = [self isThumbAtStart];
-    _thumbView.layer.backgroundColor = _thumbDisabledColor.CGColor;
-    _thumbView.layer.borderColor = start ? _thumbDisabledColor.CGColor : _clearColor.CGColor;
+    _thumbView.backgroundColor = _thumbDisabledColor;
+    _thumbView.layer.borderColor = _clearColor.CGColor;
+
+    if (_thumbIsSmallerWhenDisabled) {
+      CGFloat smallerRatio = (_thumbRadius - _trackHeight) / _thumbRadius;
+      _thumbView.layer.transform = CATransform3DMakeScale(smallerRatio, smallerRatio, 1.0f);
+    }
+
     _trackView.backgroundColor = _trackDisabledColor;
     _trackOnLayer.backgroundColor = _clearColor.CGColor;
   }
@@ -514,8 +526,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGPathAddRect(path, NULL, maskFrame);
 
   if (!self.enabled && _disabledTrackHasThumbGaps) {
-    CGRect gapMaskFrame = [_thumbView convertRect:_thumbView.bounds toView:_trackView];
-    gapMaskFrame = CGRectInset(gapMaskFrame, -_trackHeight, 0);
+    // The reason we calculate this explicitly instead of just using _thumbView.frame is because
+    // the thumb view might not be have the exact radius of _thumbRadius, depending on if the track
+    // is disabled or if a user is dragging the thumb.
+    CGRect gapMaskFrame = CGRectMake(_thumbView.center.x - _thumbRadius,
+                                     _thumbView.center.y - _thumbRadius,
+                                     _thumbRadius * 2, _thumbRadius * 2);
+    gapMaskFrame = [self convertRect:gapMaskFrame toView:_trackView];
     CGPathAddRect(path, NULL, gapMaskFrame);
   }
   _trackMaskLayer.path = path;

@@ -68,6 +68,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.disabledTrackHasThumbGaps = YES;
   _thumbTrack.trackEndsAreInset = YES;
   _thumbTrack.thumbRadius = kSliderThumbRadius;
+  _thumbTrack.thumbIsSmallerWhenDisabled = YES;
   _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
   _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
