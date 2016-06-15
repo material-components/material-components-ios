@@ -55,7 +55,7 @@ Material component for ios uses [jazzy](https://github.com/realm/jazzy) to trans
 
 Run the following command and follow the hint in the command line.
 
-    scripts/build-site.sh 
+    scripts/build-site.sh
 
 The site should be served at [127.0.0.1:4000](http://127.0.0.1:4000) after build by default.
 
@@ -68,9 +68,9 @@ If you are able to deploy the site, run
 ```
 # Run these to install gsutil for the first time
 curl https://sdk.cloud.google.com | bash
-exec -l $SHELL 
+exec -l $SHELL
 #Set up the gsutil authentication information, it doesn't matter which app engine project you choose.
-gcloud init  
+gcloud init
 
 # Deploy it!
 scripts/build-site.sh --deploy production

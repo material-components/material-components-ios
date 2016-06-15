@@ -131,8 +131,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self addSubview:_trackView];
 
     UITapGestureRecognizer *tapGestureRecognizer =
-        [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(handleTapGesture:)];
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self addGestureRecognizer:tapGestureRecognizer];
 
     _panRecognizer =
@@ -181,9 +180,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _primaryColor = primaryColor;
   _thumbOnColor = primaryColor;
   _trackOnColor =
-      _interpolateOnOffColors
-          ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha]
-          : primaryColor;
+      _interpolateOnOffColors ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha] : primaryColor;
 
   _touchController.defaultInkView.inkColor = [primaryColor colorWithAlphaComponent:kTrackOnAlpha];
   [self updateColorsAnimated:NO withDuration:0.0f];
@@ -237,6 +234,16 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _value = _maximumValue;
   }
   [self updateThumbTrackAnimated:NO previousValue:previousValue completion:NULL];
+}
+
+- (void)setTrackEndsAreRounded:(BOOL)trackEndsAreRounded {
+  _trackEndsAreRounded = trackEndsAreRounded;
+
+  if (_trackEndsAreRounded) {
+    _trackView.layer.cornerRadius = _trackHeight / 2;
+  } else {
+    _trackView.layer.cornerRadius = 0;
+  }
 }
 
 - (void)setFilledTrackAnchorValue:(CGFloat)filledTrackAnchorValue {
@@ -306,7 +313,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (CGPoint)thumbPositionForValue:(CGFloat)value {
   CGFloat relValue = [self relativeValueForValue:value];
-  CGPoint position = CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
+  CGPoint position =
+      CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
   return position;
 }
 
@@ -373,9 +381,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (crossesAnchor) {
     CGFloat currentValue = _value;
     _value = _filledTrackAnchorValue;
-    CGFloat animationDurationToAnchor = CGFabs(previousValue) /
-                                        (CGFabs(previousValue) + CGFabs(currentValue)) *
-                                        animationDuration;
+    CGFloat animationDurationToAnchor =
+        CGFabs(previousValue) / (CGFabs(previousValue) + CGFabs(currentValue)) * animationDuration;
     void (^secondAnimation)(BOOL) = ^void(BOOL finished) {
       _value = currentValue;
       [UIView animateWithDuration:(animationDuration - animationDurationToAnchor)
@@ -413,9 +420,16 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
+// Note: this method became bloated and confusing but I'm working on a refactor which will be
+// landed soon.
 - (void)updateColorsAnimated:(BOOL)animated withDuration:(NSTimeInterval)duration {
   if (self.enabled) {
     CGFloat percent = [self relativeValueForValue:_value];
+
+    if (_thumbIsSmallerWhenDisabled) {
+      _thumbView.layer.transform = CATransform3DIdentity;
+    }
+
     if (_interpolateOnOffColors) {
       // Set background/border colors based on interpolated percent.
       _thumbView.layer.backgroundColor = [UIColor mdc_colorInterpolatedFromColor:_thumbOffColor
@@ -462,9 +476,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     }
   } else {
     // Set background/border colors for disabled state.
-    BOOL start = [self isThumbAtStart];
-    _thumbView.layer.backgroundColor = _thumbDisabledColor.CGColor;
-    _thumbView.layer.borderColor = start ? _thumbDisabledColor.CGColor : _clearColor.CGColor;
+    _thumbView.backgroundColor = _thumbDisabledColor;
+    _thumbView.layer.borderColor = _clearColor.CGColor;
+
+    if (_thumbIsSmallerWhenDisabled) {
+      CGFloat smallerRatio = (_thumbRadius - _trackHeight) / _thumbRadius;
+      _thumbView.layer.transform = CATransform3DMakeScale(smallerRatio, smallerRatio, 1.0f);
+    }
+
     _trackView.backgroundColor = _trackDisabledColor;
     _trackOnLayer.backgroundColor = _clearColor.CGColor;
   }
@@ -476,11 +495,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _thumbView.center = point;
   if (_trackEndsAreInset) {
     _trackView.frame =
-        CGRectMake(_thumbView.cornerRadius, self.center.y - (_trackHeight / 2),
+        CGRectMake(_thumbView.cornerRadius, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
                    CGRectGetWidth(self.bounds) - (_thumbView.cornerRadius * 2), _trackHeight);
   } else {
-    _trackView.frame =
-        CGRectMake(0, self.center.y - (_trackHeight / 2), CGRectGetWidth(self.bounds), _trackHeight);
+    _trackView.frame = CGRectMake(0, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
+                                  CGRectGetWidth(self.bounds), _trackHeight);
   }
   [self updateTrackMask];
 
@@ -488,23 +507,27 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)updateTrackMask {
-  CGRect maskFrame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), _trackHeight);
+  // Adding 1pt to the top and bottom is necessary to account for the behavior of CAShapeLayer,
+  // which according Apple's documentation "may favor speed over accuracy" when rasterizing.
+  // https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CAShapeLayer_class
+  // This means that its rasterization sometimes doesn't line up with the UIView that it's masking,
+  // particularly when that view's edges fall on a subpixel. Adding the extra pt on the top and
+  // bottom accounts for this case here, and ensures that none of the _trackView appears where it
+  // isn't supposed to.
+  // This fixes https://github.com/google/material-components-ios/issues/566 for all orientations.
+  CGRect maskFrame = CGRectMake(0, -1, CGRectGetWidth(self.bounds), _trackHeight + 2);
 
   CGMutablePathRef path = CGPathCreateMutable();
-  CGFloat cornerRadius = _trackHeight / 2;
-  // If _trackEndsAreRounded, maskFrame width and height must be at least 2 * cornerRadius to avoid
-  // a GPathAddRoundedRect() assert.  Fallback to CGPathAddRect if maskFrame is too small.
-  if (_trackEndsAreRounded &&
-      2 * cornerRadius <= CGRectGetWidth(maskFrame) &&
-      2 * cornerRadius <= CGRectGetHeight(maskFrame)) {
-    CGPathAddRoundedRect(path, NULL, maskFrame, cornerRadius, cornerRadius);
-  } else {
-    CGPathAddRect(path, NULL, maskFrame);
-  }
+  CGPathAddRect(path, NULL, maskFrame);
 
   if (!self.enabled && _disabledTrackHasThumbGaps) {
-    CGRect gapMaskFrame = [_thumbView convertRect:_thumbView.bounds toView:_trackView];
-    gapMaskFrame = CGRectInset(gapMaskFrame, -_trackHeight, 0);
+    // The reason we calculate this explicitly instead of just using _thumbView.frame is because
+    // the thumb view might not be have the exact radius of _thumbRadius, depending on if the track
+    // is disabled or if a user is dragging the thumb.
+    CGRect gapMaskFrame = CGRectMake(_thumbView.center.x - _thumbRadius,
+                                     _thumbView.center.y - _thumbRadius,
+                                     _thumbRadius * 2, _thumbRadius * 2);
+    gapMaskFrame = [self convertRect:gapMaskFrame toView:_trackView];
     CGPathAddRect(path, NULL, gapMaskFrame);
   }
   _trackMaskLayer.path = path;

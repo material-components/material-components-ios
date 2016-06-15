@@ -50,16 +50,17 @@ static const CGFloat kStatusBarHeight = 20;
 
     // Shadow layer
 
-    MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock = ^(CALayer *_Nonnull shadowLayer,
-                                                                   CGFloat intensity) {
-      CGFloat elevation = MDCShadowElevationAppBar * intensity;
-      [(MDCShadowLayer *)shadowLayer setElevation:elevation];
-    };
+    MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock =
+        ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
+          CGFloat elevation = MDCShadowElevationAppBar * intensity;
+          [(MDCShadowLayer *)shadowLayer setElevation:elevation];
+        };
     [headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
 
     // Header stack view + navigation bar
     MDCAppBarViewController *appBarViewController = [[MDCAppBarViewController alloc] init];
     [_headerViewController addChildViewController:appBarViewController];
+    appBarViewController.view.frame = _headerViewController.view.bounds;
     [_headerViewController.view addSubview:appBarViewController.view];
     [appBarViewController didMoveToParentViewController:_headerViewController];
 
@@ -72,7 +73,8 @@ static const CGFloat kStatusBarHeight = 20;
   return self;
 }
 
-- (void)addHeaderViewControllerToParentViewController:(nonnull UIViewController *)parentViewController {
+- (void)addHeaderViewControllerToParentViewController:
+        (nonnull UIViewController *)parentViewController {
   [parentViewController addChildViewController:_headerViewController];
 }
 
@@ -118,8 +120,7 @@ static const CGFloat kStatusBarHeight = 20;
 
 - (UIViewController *)flexibleHeaderParentViewController {
   NSAssert([self.parentViewController isKindOfClass:[MDCFlexibleHeaderViewController class]],
-           @"Expected the parent of %@ to be a type of %@",
-           NSStringFromClass([self class]),
+           @"Expected the parent of %@ to be a type of %@", NSStringFromClass([self class]),
            NSStringFromClass([MDCFlexibleHeaderViewController class]));
   return self.parentViewController.parentViewController;
 }
@@ -210,25 +211,21 @@ static const CGFloat kStatusBarHeight = 20;
 
   // Bar stack expands vertically, but has a margin above it for the status bar.
 
-  NSArray *horizontalConstraints =
-      [NSLayoutConstraint constraintsWithVisualFormat:
-                              [NSString stringWithFormat:
-                                            @"H:|[%@]|",
-                                            kBarStackKey]
-                                              options:0
-                                              metrics:nil
-                                                views:@{kBarStackKey : self.headerStackView}];
+  NSArray *horizontalConstraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|[%@]|", kBarStackKey]
+                          options:0
+                          metrics:nil
+                            views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
-  NSArray *verticalConstraints =
-      [NSLayoutConstraint constraintsWithVisualFormat:
-                              [NSString stringWithFormat:
-                                            @"V:|-%@-[%@]|",
-                                            kStatusBarHeightKey,
-                                            kBarStackKey]
-                                              options:0
-                                              metrics:@{ kStatusBarHeightKey : @(kStatusBarHeight) }
-                                                views:@{kBarStackKey : self.headerStackView}];
+  NSArray *verticalConstraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%@-[%@]|", kStatusBarHeightKey,
+                                                             kBarStackKey]
+                          options:0
+                          metrics:@{
+                            kStatusBarHeightKey : @(kStatusBarHeight)
+                          }
+                            views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:verticalConstraints];
 }
 

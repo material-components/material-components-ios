@@ -19,8 +19,7 @@
 #import "MaterialTypography.h"
 
 /**
- The MDCRobotoFontLoader class provides a shared mechanism through which the Roboto fonts can
- be loaded and customized.
+ The MDCRobotoFontLoader class provides a central location where the Roboto fonts are lazily loaded.
  */
 @interface MDCRobotoFontLoader : NSObject <MDCTypographyFontLoading>
 

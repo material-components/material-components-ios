@@ -61,7 +61,8 @@
   [super viewDidLoad];
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-  self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  self.scrollView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self.view addSubview:self.scrollView];
 
   // If a tableView was being used instead of a scrollView, you would set the trackingScrollView
@@ -76,10 +77,8 @@
   [self.fhvc didMoveToParentViewController:self];
 
   // Light blue 500
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithRed:0.012
-                                                         green:0.663
-                                                          blue:0.957
-                                                         alpha:1];
+  self.fhvc.headerView.backgroundColor =
+      [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
 
   [self setupExampleViews];
 }

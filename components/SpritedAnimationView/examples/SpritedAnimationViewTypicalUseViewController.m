@@ -46,9 +46,8 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
   self.view.backgroundColor = [UIColor whiteColor];
 
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  UIImage *spriteImage = [UIImage imageNamed:kSpriteList
-                                    inBundle:bundle
-               compatibleWithTraitCollection:nil];
+  UIImage *spriteImage =
+      [UIImage imageNamed:kSpriteList inBundle:bundle compatibleWithTraitCollection:nil];
   _animationView = [[MDCSpritedAnimationView alloc] initWithSpriteSheetImage:spriteImage];
   _animationView.frame = CGRectMake(0, 0, 30, 30);
   _animationView.center = self.view.center;
@@ -65,8 +64,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
 
   // Add tap gesture to view.
   UITapGestureRecognizer *tapGesture =
-      [[UITapGestureRecognizer alloc] initWithTarget:self
-                                              action:@selector(didTap:)];
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
   [self.view addGestureRecognizer:tapGesture];
 }
 

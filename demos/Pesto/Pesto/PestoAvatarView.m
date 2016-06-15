@@ -33,14 +33,13 @@ static CGFloat kPestoAvatarViewCircleLineWidth = 2.f;
   if (self) {
     CGFloat imageInset = kPestoAvatarViewImageInset + kPestoAvatarViewCircleLineWidth;
 
-    _imageView = [[UIImageView alloc]
-        initWithFrame:CGRectInset(self.bounds, imageInset, imageInset)];
+    _imageView =
+        [[UIImageView alloc] initWithFrame:CGRectInset(self.bounds, imageInset, imageInset)];
     _imageView.layer.masksToBounds = YES;
 
     CAShapeLayer *circleLayer = [CAShapeLayer layer];
-    CGRect ovalRect = CGRectInset(self.bounds,
-                                  kPestoAvatarViewCircleLineWidth,
-                                  kPestoAvatarViewCircleLineWidth);
+    CGRect ovalRect =
+        CGRectInset(self.bounds, kPestoAvatarViewCircleLineWidth, kPestoAvatarViewCircleLineWidth);
     circleLayer.path = [UIBezierPath bezierPathWithOvalInRect:ovalRect].CGPath;
     UIColor *teal = [UIColor colorWithRed:0.0f green:0.67f blue:0.55f alpha:1.f];
     circleLayer.strokeColor = teal.CGColor;

@@ -16,6 +16,48 @@
 
 #import <UIKit/UIKit.h>
 
+/** The name of the tint 50 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint50Name;
+
+/** The name of the tint 100 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint100Name;
+
+/** The name of the tint 200 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint200Name;
+
+/** The name of the tint 300 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint300Name;
+
+/** The name of the tint 400 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint400Name;
+
+/** The name of the tint 500 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint500Name;
+
+/** The name of the tint 600 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint600Name;
+
+/** The name of the tint 700 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint700Name;
+
+/** The name of the tint 800 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint800Name;
+
+/** The name of the tint 900 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteTint900Name;
+
+/** The name of the accent 100 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteAccent100Name;
+
+/** The name of the accent 200 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteAccent200Name;
+
+/** The name of the accent 400 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteAccent400Name;
+
+/** The name of the accent 700 color when creating a custom palette. */
+CG_EXTERN const NSString *__nonnull MDCPaletteAccent700Name;
+
 /**
  A palette of Material colors.
 
@@ -83,6 +125,37 @@
 
 /** The blue grey palette (no accents). */
 + (nonnull MDCPalette *)blueGreyPalette;
+
+/**
+ Returns a palette with a custom set of tints and accents.
+
+ The tints dictionary must have values for each key matching MDCPaletteTint.*Name. The accents
+ dictionary, if specified, may have entries for each key matching MDCPaletteAccent.*Name. Missing
+ accent values will cause an assert in debug mode and will return +[UIColor clearColor] in release
+ mode when the corresponding property is acccessed.
+
+ @param tints A dictionary mapping MDCPaletteTint.*Name keys to UIColors.
+ @param accents An optional dictionary mapping MDCPaletteAccent.*Name keys to UIColors.
+ @return An palette containing the custom colors.
+ */
++ (nonnull instancetype)paletteWithTints:(nonnull NSDictionary<const NSString *, UIColor *> *)tints
+                                 accents:
+                                     (nullable NSDictionary<const NSString *, UIColor *> *)accents;
+
+/**
+ Returns an initialized palette object with a custom set of tints and accents.
+
+ The tints dictionary must have values for each key matching MDCPaletteTint.*Name. The accents
+ dictionary, if specified, may have entries for each key matching MDCPaletteAccent.*Name. Missing
+ accent values will cause an assert in debug mode and will return +[UIColor clearColor] in release
+ mode when the corresponding property is acccessed.
+
+ @param tints A dictionary mapping MDCPaletteTint.*Name keys to UIColors.
+ @param accents An optional dictionary mapping MDCPaletteAccent.*Name keys to UIColors.
+ @return An initialized MDCPalette object containing the custom colors.
+ */
+- (nonnull instancetype)initWithTints:(nonnull NSDictionary<const NSString *, UIColor *> *)tints
+                              accents:(nullable NSDictionary<const NSString *, UIColor *> *)accents;
 
 /** The 50 tint color, the lightest tint of the palette. */
 @property(nonatomic, nonnull, readonly) UIColor *tint50;

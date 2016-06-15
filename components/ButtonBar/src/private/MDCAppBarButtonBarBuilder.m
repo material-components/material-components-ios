@@ -101,7 +101,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 #endif
 
   MDCButtonBarButton *button = [[MDCButtonBarButton alloc] init];
-  [button setBackgroundColor:nil forState:UIControlStateNormal];
+  [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
   button.disabledAlpha = kDisabledButtonAlpha;
 
   button.exclusiveTouch = YES;
@@ -267,10 +267,10 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
 
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize fitSize = [super sizeThatFits:size];
-  fitSize.height = self.contentPadding.top + MAX(kMinimumItemWidth, fitSize.height) +
-                   self.contentPadding.bottom;
-  fitSize.width = self.contentPadding.left + MAX(kMinimumItemWidth, fitSize.width) +
-                  self.contentPadding.right;
+  fitSize.height =
+      self.contentPadding.top + MAX(kMinimumItemWidth, fitSize.height) + self.contentPadding.bottom;
+  fitSize.width =
+      self.contentPadding.left + MAX(kMinimumItemWidth, fitSize.width) + self.contentPadding.right;
 
   return fitSize;
 }

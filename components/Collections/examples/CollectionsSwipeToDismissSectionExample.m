@@ -51,8 +51,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   }
 
   // Insert section of cells that cannot be removed.
-  [_content insertObject:@[ @"This cell cannot be deleted.",
-                            @"This cell cannot be deleted." ]
+  [_content insertObject:@[ @"This cell cannot be deleted.", @"This cell cannot be deleted." ]
                  atIndex:0];
 
   // Customize collection view settings.

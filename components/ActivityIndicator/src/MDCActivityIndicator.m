@@ -22,16 +22,16 @@ static const NSTimeInterval kMDCActivityIndicatorPointCycleDuration = 4.0f / 3.0
 static const NSTimeInterval kMDCActivityIndicatorPointCycleMinimumVariableDuration =
     kMDCActivityIndicatorPointCycleDuration / 8;
 static const CGFloat kCycleRotation = 3.0f / 2.0f;
-static const CGFloat kOuterRotationIncrement = (1.0f / kMDCActivityIndicatorTotalDetentCount) *
-                                               (CGFloat)M_PI;
+static const CGFloat kOuterRotationIncrement =
+    (1.0f / kMDCActivityIndicatorTotalDetentCount) * (CGFloat)M_PI;
 static const CGFloat kSpinnerRadius = 12.f;
 static const CGFloat kStrokeLength = 0.75f;
 
 /**
  Total rotation (outer rotation + stroke rotation) per _cycleCount. One turn is 2.0f.
  */
-static const CGFloat kSingleCycleRotation = 2 * kStrokeLength + kCycleRotation + 1.0f /
-    kMDCActivityIndicatorTotalDetentCount;
+static const CGFloat kSingleCycleRotation =
+    2 * kStrokeLength + kCycleRotation + 1.0f / kMDCActivityIndicatorTotalDetentCount;
 
 /*
  States for the internal state machine. The states represent the last animation completed.
@@ -322,8 +322,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
 - (void)controlAnimatingOnForegroundChange:(NSNotification *)notification {
   // Stop or restart animating if the app has a foreground change.
-  _backgrounded =
-      [notification.name isEqualToString:UIApplicationDidEnterBackgroundNotification];
+  _backgrounded = [notification.name isEqualToString:UIApplicationDidEnterBackgroundNotification];
   if (_animating) {
     if (_backgrounded) {
       [self actuallyStopAnimating];
@@ -445,8 +444,8 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
     // Stroke end.
     CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndPathAnimation.duration = kMDCActivityIndicatorPointCycleDuration *
-                                      ABS(_lastProgress - _currentProgress);
+    strokeEndPathAnimation.duration =
+        kMDCActivityIndicatorPointCycleDuration * ABS(_lastProgress - _currentProgress);
     // Ensure the stroke never completely disappears on start by animating from non-zero start and
     // to a value slightly larger than the strokeStart's final value.
     strokeEndPathAnimation.fromValue = @(_minStrokeDifference);
@@ -497,8 +496,9 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
                                (CGFloat)kMDCActivityIndicatorPointCycleDuration;
   CGFloat strokeEndTravelDistance = targetRotation - _currentProgress + _minStrokeDifference;
   CGFloat totalDistance = targetRotation + strokeEndTravelDistance;
-  CGFloat strokeStartDuration = MAX(normalizedDuration * targetRotation / totalDistance,
-                                    (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
+  CGFloat strokeStartDuration =
+      MAX(normalizedDuration * targetRotation / totalDistance,
+          (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
   CGFloat strokeEndDuration = MAX(normalizedDuration * strokeEndTravelDistance / totalDistance,
                                   (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
 
@@ -559,10 +559,10 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
     CGFloat rotationDelta = 1.0f - [self normalizedRotationForCycle:_cycleCount];
 
     // Change the duration relative to the distance in order to keep same relative speed.
-    CGFloat duration = 2.0f * (rotationDelta + _currentProgress) / kSingleCycleRotation * (CGFloat)kMDCActivityIndicatorPointCycleDuration;
+    CGFloat duration = 2.0f * (rotationDelta + _currentProgress) / kSingleCycleRotation *
+                       (CGFloat)kMDCActivityIndicatorPointCycleDuration;
 
-    duration = MAX(duration,
-                   (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
+    duration = MAX(duration, (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
     [CATransaction begin];
     {
       [CATransaction setCompletionBlock:^{
@@ -779,20 +779,12 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   static NSArray *defaultColors;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    defaultColors =
-        @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-           [[UIColor alloc] initWithRed:0.957f
-                                  green:0.263f
-                                   blue:0.212f
-                                  alpha:1],
-           [[UIColor alloc] initWithRed:1.0f
-                                  green:0.922f
-                                   blue:0.231f
-                                  alpha:1],
-           [[UIColor alloc] initWithRed:0.298f
-                                  green:0.686f
-                                   blue:0.314f
-                                  alpha:1] ];
+    defaultColors = @[
+      [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
+      [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
+      [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
+      [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1]
+    ];
   });
   return defaultColors;
 }

@@ -19,10 +19,10 @@
 @implementation MDCCatalogTileDataNavigationBar
 
 + (UIImage*)drawTileImage:(CGRect)frame {
-  void (^completionBlock)() = ^() {
-    [self draw:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+  void (^drawBlock)(CGRect) = ^(CGRect drawBlockFrame) {
+    [self draw:CGRectMake(0, 0, drawBlockFrame.size.width, drawBlockFrame.size.height)];
   };
-  return [self drawImageWithFrame:frame completionBlock:completionBlock];
+  return [self drawImageWithFrame:frame drawBlock:drawBlock];
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */
@@ -37,14 +37,13 @@
   UIColor* gradientColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
 
   CGFloat gradientLocations[] = {0.14, 0.5, 1};
-  CGGradientRef gradient =
-      CGGradientCreateWithColors(colorSpace,
-                                 (__bridge CFArrayRef) @[
-                                   (id)gradientColor2.CGColor,
-                                   (id)[gradientColor2 colorWithAlphaComponent:0.5].CGColor,
-                                   (id)gradientColor.CGColor
-                                 ],
-                                 gradientLocations);
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef) @[
+        (id)gradientColor2.CGColor, (id)[gradientColor2 colorWithAlphaComponent:0.5].CGColor,
+        (id)gradientColor.CGColor
+      ],
+      gradientLocations);
   {
     {
       CGContextSaveGState(context);

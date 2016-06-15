@@ -27,8 +27,7 @@
 
 - (void)setUp {
   NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:0];
-  _attributes =
-      [MDCCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+  _attributes = [MDCCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
   _attributes.editing = YES;
   _attributes.shouldShowReorderStateMask = YES;
   _attributes.shouldShowSelectorStateMask = YES;

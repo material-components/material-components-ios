@@ -41,7 +41,8 @@ static const NSUInteger kNumberOfPages = 10;
   _pagingScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
   _pagingScrollView.pagingEnabled = YES;
   _pagingScrollView.delegate = self;
-  _pagingScrollView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  _pagingScrollView.autoresizingMask =
+      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _pagingScrollView.scrollsToTop = NO;
 
   NSArray *pageColors = @[ HexColor(0x55C4F5), HexColor(0x8BC34A), HexColor(0xFFC107) ];
@@ -153,10 +154,8 @@ static const NSUInteger kNumberOfPages = 10;
   [self.fhvc didMoveToParentViewController:self];
 
   // Light blue 500
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithRed:0.012
-                                                         green:0.663
-                                                          blue:0.957
-                                                         alpha:1];
+  self.fhvc.headerView.backgroundColor =
+      [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

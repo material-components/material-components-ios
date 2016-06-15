@@ -158,8 +158,8 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 76.f;
                      completion:^(BOOL finished){
                      }];
   }
-  self.logoView.transform = CGAffineTransformScale(CGAffineTransformIdentity, self.logoScale,
-                                                   self.logoScale);
+  self.logoView.transform =
+      CGAffineTransformScale(CGAffineTransformIdentity, self.logoScale, self.logoScale);
 }
 
 #pragma mark - Private methods
@@ -168,10 +168,9 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 76.f;
   CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
   CGFloat width = size.width;
   CGRect headerFrame = self.flexHeaderContainerVC.headerViewController.headerView.bounds;
-  self.logoView.center = CGPointMake(width / 2.f,
-                                     headerFrame.size.height / 2.f);
-  self.logoSmallView.center = CGPointMake(width / 2.f,
-                                          (headerFrame.size.height - statusBarHeight) / 2.f + statusBarHeight);
+  self.logoView.center = CGPointMake(width / 2.f, headerFrame.size.height / 2.f);
+  self.logoSmallView.center =
+      CGPointMake(width / 2.f, (headerFrame.size.height - statusBarHeight) / 2.f + statusBarHeight);
 }
 
 - (UIView *)pestoHeaderView {
@@ -186,8 +185,8 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 76.f;
   UIImage *image = [UIImage imageNamed:@"PestoLogoLarge"];
   _logoView = [[UIImageView alloc] initWithImage:image];
   _logoView.contentMode = UIViewContentModeScaleAspectFill;
-  _logoView.center = CGPointMake(pestoHeaderView.frame.size.width / 2.f,
-                                 pestoHeaderView.frame.size.height / 2.f);
+  _logoView.center =
+      CGPointMake(pestoHeaderView.frame.size.width / 2.f, pestoHeaderView.frame.size.height / 2.f);
   [pestoHeaderView addSubview:_logoView];
 
   UIImage *logoSmallImage = [UIImage imageNamed:@"PestoLogoSmall"];
@@ -213,8 +212,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 76.f;
   // Use a custom shadow under the flexible header.
   MDCShadowLayer *shadowLayer = [MDCShadowLayer layer];
   [headerView setShadowLayer:shadowLayer
-      intensityDidChangeBlock:^(CALayer *layer,
-                                CGFloat intensity) {
+      intensityDidChangeBlock:^(CALayer *layer, CGFloat intensity) {
         CGFloat elevation = MDCShadowElevationAppBar * intensity;
         [(MDCShadowLayer *)layer setElevation:elevation];
       }];

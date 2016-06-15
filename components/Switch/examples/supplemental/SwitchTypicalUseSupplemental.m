@@ -64,9 +64,11 @@
     @"disabledLabel" : disabledSwitchButtonLabel
   };
 
-  NSDictionary *metrics = @{ @"smallVMargin" : @24.0,
-                             @"smallHMargin" : @24.0,
-                             @"buttonHeight" : @(self.switchComponent.bounds.size.height) };
+  NSDictionary *metrics = @{
+    @"smallVMargin" : @24.0,
+    @"smallHMargin" : @24.0,
+    @"buttonHeight" : @(self.switchComponent.bounds.size.height)
+  };
 
   // Vertical column of switches
   NSString *sliderLayoutConstraints =
@@ -81,55 +83,51 @@
   NSString *columnConstraints = @"[label(100)]-smallHMargin-[slider]";
 
   // Center view horizontally on the left edge of one of the switches
-  [self.view addConstraint:
-                 [NSLayoutConstraint constraintWithItem:self.colorSwitchComponent
-                                              attribute:NSLayoutAttributeLeft
-                                              relatedBy:NSLayoutRelationEqual
-                                                 toItem:self.view
-                                              attribute:NSLayoutAttributeCenterX
-                                             multiplier:1.f
-                                               constant:40.f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.colorSwitchComponent
+                                                        attribute:NSLayoutAttributeLeft
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.view
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.f
+                                                         constant:40.f]];
 
   // Center view vertically
-  [self.view addConstraint:
-                 [NSLayoutConstraint constraintWithItem:self.colorSwitchComponent
-                                              attribute:NSLayoutAttributeBottom
-                                              relatedBy:NSLayoutRelationEqual
-                                                 toItem:self.view
-                                              attribute:NSLayoutAttributeCenterY
-                                             multiplier:1.f
-                                               constant:0]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.colorSwitchComponent
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.view
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.f
+                                                         constant:0]];
 
   // Center switches in their column
-  [self.view addConstraints:
-                 [NSLayoutConstraint constraintsWithVisualFormat:sliderLayoutConstraints
-                                                         options:NSLayoutFormatAlignAllCenterX
-                                                         metrics:metrics
-                                                           views:views]];
+  [self.view
+      addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:sliderLayoutConstraints
+                                                             options:NSLayoutFormatAlignAllCenterX
+                                                             metrics:metrics
+                                                               views:views]];
 
   // Left align labels in their column
-  [self.view addConstraints:
-                 [NSLayoutConstraint constraintsWithVisualFormat:labelLayoutConstraints
-                                                         options:NSLayoutFormatAlignAllLeft
-                                                         metrics:metrics
-                                                           views:views]];
+  [self.view
+      addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:labelLayoutConstraints
+                                                             options:NSLayoutFormatAlignAllLeft
+                                                             metrics:metrics
+                                                               views:views]];
 
   // Vertically align first element in label column to first element in switch column
-  [self.view addConstraint:
-                 [NSLayoutConstraint constraintWithItem:self.switchComponent
-                                              attribute:NSLayoutAttributeCenterY
-                                              relatedBy:NSLayoutRelationEqual
-                                                 toItem:switchLabel
-                                              attribute:NSLayoutAttributeCenterY
-                                             multiplier:1.f
-                                               constant:0.f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.switchComponent
+                                                        attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:switchLabel
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.f
+                                                         constant:0.f]];
 
   // Position label column left of slider column, wide enough to accommodate label text
-  [self.view addConstraints:
-                 [NSLayoutConstraint constraintsWithVisualFormat:columnConstraints
-                                                         options:0
-                                                         metrics:metrics
-                                                           views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:columnConstraints
+                                                                    options:0
+                                                                    metrics:metrics
+                                                                      views:views]];
 }
 
 @end

@@ -74,16 +74,11 @@
 }
 
 - (NSUInteger)hash {
-  return (NSUInteger)self.editing ^
-         (NSUInteger)self.shouldShowReorderStateMask ^
-         (NSUInteger)self.shouldShowSelectorStateMask ^
-         (NSUInteger)self.shouldShowGridBackground ^
-         (NSUInteger)self.sectionOrdinalPosition ^
-         (NSUInteger)self.backgroundImage ^
-         (NSUInteger)self.isGridLayout ^
-         (NSUInteger)self.separatorColor ^
-         (NSUInteger)self.separatorLineHeight ^
-         (NSUInteger)self.shouldHideSeparators;
+  return (NSUInteger)self.editing ^ (NSUInteger)self.shouldShowReorderStateMask ^
+         (NSUInteger)self.shouldShowSelectorStateMask ^ (NSUInteger)self.shouldShowGridBackground ^
+         (NSUInteger)self.sectionOrdinalPosition ^ (NSUInteger)self.backgroundImage ^
+         (NSUInteger)self.isGridLayout ^ (NSUInteger)self.separatorColor ^
+         (NSUInteger)self.separatorLineHeight ^ (NSUInteger)self.shouldHideSeparators;
 }
 
 @end

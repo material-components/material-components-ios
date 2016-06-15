@@ -66,8 +66,8 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
  @param shape Button shape.
  @return Button with shape.
  */
-- (nonnull instancetype)initWithFrame:(CGRect)frame shape:(MDCFloatingButtonShape)shape
-    NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame
+                                shape:(MDCFloatingButtonShape)shape NS_DESIGNATED_INITIALIZER;
 
 /**
  Initializes self to a button with the MDCFloatingButtonShapeDefault shape.

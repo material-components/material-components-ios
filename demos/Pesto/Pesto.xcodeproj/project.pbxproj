@@ -12,10 +12,17 @@
 		C9A8552B1C4EDFAA003CADF7 /* PestoSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A8552A1C4EDFAA003CADF7 /* PestoSettingsViewController.m */; };
 		DE3620651C73A0850026DF5D /* PestoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3620641C73A0850026DF5D /* PestoCollectionViewController.m */; };
 		DE381E1A1C457CEE00019C1D /* PestoCardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DE381E191C457CEE00019C1D /* PestoCardCollectionViewCell.m */; };
-		DE381E401C45A9FB00019C1D /* PestoSideView.m in Sources */ = {isa = PBXBuildFile; fileRef = DE381E3F1C45A9FB00019C1D /* PestoSideView.m */; };
 		DE5EF8671C404E0E00D2D4B9 /* PestoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5EF8661C404E0E00D2D4B9 /* PestoDetailViewController.m */; };
 		DEA791031C751D0D006301CC /* PestoData.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA791021C751D0D006301CC /* PestoData.m */; };
 		DEA791051C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA791041C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m */; };
+		DEB4A9301D10500F0052923F /* PestoIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB4A9211D10500F0052923F /* PestoIcon.m */; };
+		DEB4A9311D10500F0052923F /* PestoIconFish.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB4A9231D10500F0052923F /* PestoIconFish.m */; };
+		DEB4A9321D10500F0052923F /* PestoIconMain.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB4A9251D10500F0052923F /* PestoIconMain.m */; };
+		DEB4A9331D10500F0052923F /* PestoIconMeat.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB4A9271D10500F0052923F /* PestoIconMeat.m */; };
+		DEB4A9341D10500F0052923F /* PestoIconSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB4A9291D10500F0052923F /* PestoIconSettings.m */; };
+		DEB4A9351D10500F0052923F /* PestoIconSpicy.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB4A92B1D10500F0052923F /* PestoIconSpicy.m */; };
+		DEB4A9361D10500F0052923F /* PestoIconTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB4A92D1D10500F0052923F /* PestoIconTimer.m */; };
+		DEB4A9371D10500F0052923F /* PestoIconVeggie.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB4A92F1D10500F0052923F /* PestoIconVeggie.m */; };
 		DEBEDF291C3EF5D5004B614B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DEBEDF281C3EF5D5004B614B /* main.m */; };
 		DEBEDF2C1C3EF5D5004B614B /* PestoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DEBEDF2B1C3EF5D5004B614B /* PestoAppDelegate.m */; };
 		DEBEDF341C3EF5D5004B614B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEBEDF331C3EF5D5004B614B /* Assets.xcassets */; };
@@ -38,14 +45,28 @@
 		DE3620641C73A0850026DF5D /* PestoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoCollectionViewController.m; sourceTree = "<group>"; };
 		DE381E181C457CE300019C1D /* PestoCardCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoCardCollectionViewCell.h; sourceTree = "<group>"; };
 		DE381E191C457CEE00019C1D /* PestoCardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoCardCollectionViewCell.m; sourceTree = "<group>"; };
-		DE381E3E1C45A9FB00019C1D /* PestoSideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PestoSideView.h; sourceTree = "<group>"; };
-		DE381E3F1C45A9FB00019C1D /* PestoSideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoSideView.m; sourceTree = "<group>"; };
 		DE5EF8651C404DFD00D2D4B9 /* PestoDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoDetailViewController.h; sourceTree = "<group>"; };
 		DE5EF8661C404E0E00D2D4B9 /* PestoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoDetailViewController.m; sourceTree = "<group>"; };
 		DEA791011C751D00006301CC /* PestoData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoData.h; sourceTree = "<group>"; };
 		DEA791021C751D0D006301CC /* PestoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoData.m; sourceTree = "<group>"; };
 		DEA791041C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PestoFlexibleHeaderContainerViewController.m; sourceTree = "<group>"; };
 		DEA791061C752B74006301CC /* PestoFlexibleHeaderContainerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoFlexibleHeaderContainerViewController.h; sourceTree = "<group>"; };
+		DEB4A9201D10500F0052923F /* PestoIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PestoIcon.h; path = PestoIcons/PestoIcon.h; sourceTree = "<group>"; };
+		DEB4A9211D10500F0052923F /* PestoIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PestoIcon.m; path = PestoIcons/PestoIcon.m; sourceTree = "<group>"; };
+		DEB4A9221D10500F0052923F /* PestoIconFish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PestoIconFish.h; path = PestoIcons/PestoIconFish.h; sourceTree = "<group>"; };
+		DEB4A9231D10500F0052923F /* PestoIconFish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PestoIconFish.m; path = PestoIcons/PestoIconFish.m; sourceTree = "<group>"; };
+		DEB4A9241D10500F0052923F /* PestoIconMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PestoIconMain.h; path = PestoIcons/PestoIconMain.h; sourceTree = "<group>"; };
+		DEB4A9251D10500F0052923F /* PestoIconMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PestoIconMain.m; path = PestoIcons/PestoIconMain.m; sourceTree = "<group>"; };
+		DEB4A9261D10500F0052923F /* PestoIconMeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PestoIconMeat.h; path = PestoIcons/PestoIconMeat.h; sourceTree = "<group>"; };
+		DEB4A9271D10500F0052923F /* PestoIconMeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PestoIconMeat.m; path = PestoIcons/PestoIconMeat.m; sourceTree = "<group>"; };
+		DEB4A9281D10500F0052923F /* PestoIconSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PestoIconSettings.h; path = PestoIcons/PestoIconSettings.h; sourceTree = "<group>"; };
+		DEB4A9291D10500F0052923F /* PestoIconSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PestoIconSettings.m; path = PestoIcons/PestoIconSettings.m; sourceTree = "<group>"; };
+		DEB4A92A1D10500F0052923F /* PestoIconSpicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PestoIconSpicy.h; path = PestoIcons/PestoIconSpicy.h; sourceTree = "<group>"; };
+		DEB4A92B1D10500F0052923F /* PestoIconSpicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PestoIconSpicy.m; path = PestoIcons/PestoIconSpicy.m; sourceTree = "<group>"; };
+		DEB4A92C1D10500F0052923F /* PestoIconTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PestoIconTimer.h; path = PestoIcons/PestoIconTimer.h; sourceTree = "<group>"; };
+		DEB4A92D1D10500F0052923F /* PestoIconTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PestoIconTimer.m; path = PestoIcons/PestoIconTimer.m; sourceTree = "<group>"; };
+		DEB4A92E1D10500F0052923F /* PestoIconVeggie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PestoIconVeggie.h; path = PestoIcons/PestoIconVeggie.h; sourceTree = "<group>"; };
+		DEB4A92F1D10500F0052923F /* PestoIconVeggie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PestoIconVeggie.m; path = PestoIcons/PestoIconVeggie.m; sourceTree = "<group>"; };
 		DEBEDF241C3EF5D5004B614B /* Pesto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pesto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEBEDF281C3EF5D5004B614B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DEBEDF2A1C3EF5D5004B614B /* PestoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PestoAppDelegate.h; sourceTree = "<group>"; };
@@ -75,6 +96,29 @@
 				13270CD243A4DAE9D2641C01 /* libPods-Pesto.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DE28DA0A1D06222D0000F4CF /* PestoIcons */ = {
+			isa = PBXGroup;
+			children = (
+				DEB4A9201D10500F0052923F /* PestoIcon.h */,
+				DEB4A9211D10500F0052923F /* PestoIcon.m */,
+				DEB4A9221D10500F0052923F /* PestoIconFish.h */,
+				DEB4A9231D10500F0052923F /* PestoIconFish.m */,
+				DEB4A9241D10500F0052923F /* PestoIconMain.h */,
+				DEB4A9251D10500F0052923F /* PestoIconMain.m */,
+				DEB4A9261D10500F0052923F /* PestoIconMeat.h */,
+				DEB4A9271D10500F0052923F /* PestoIconMeat.m */,
+				DEB4A9281D10500F0052923F /* PestoIconSettings.h */,
+				DEB4A9291D10500F0052923F /* PestoIconSettings.m */,
+				DEB4A92A1D10500F0052923F /* PestoIconSpicy.h */,
+				DEB4A92B1D10500F0052923F /* PestoIconSpicy.m */,
+				DEB4A92C1D10500F0052923F /* PestoIconTimer.h */,
+				DEB4A92D1D10500F0052923F /* PestoIconTimer.m */,
+				DEB4A92E1D10500F0052923F /* PestoIconVeggie.h */,
+				DEB4A92F1D10500F0052923F /* PestoIconVeggie.m */,
+			);
+			name = PestoIcons;
 			sourceTree = "<group>";
 		};
 		DEBEDF1B1C3EF5D5004B614B = {
@@ -115,14 +159,13 @@
 				DE5EF8661C404E0E00D2D4B9 /* PestoDetailViewController.m */,
 				DEA791061C752B74006301CC /* PestoFlexibleHeaderContainerViewController.h */,
 				DEA791041C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m */,
+				DE28DA0A1D06222D0000F4CF /* PestoIcons */,
 				DEE21BBF1C9AF5610024CB5C /* PestoRecipeCardView.h */,
 				DEE21BC01C9AF56E0024CB5C /* PestoRecipeCardView.m */,
 				C91F6A4E1C63A80F00EB4BA8 /* PestoRemoteImageService.h */,
 				C91F6A4F1C63A80F00EB4BA8 /* PestoRemoteImageService.m */,
 				C9A855291C4EDFAA003CADF7 /* PestoSettingsViewController.h */,
 				C9A8552A1C4EDFAA003CADF7 /* PestoSettingsViewController.m */,
-				DE381E3E1C45A9FB00019C1D /* PestoSideView.h */,
-				DE381E3F1C45A9FB00019C1D /* PestoSideView.m */,
 				DEBEDF271C3EF5D5004B614B /* Supporting Files */,
 			);
 			path = Pesto;
@@ -265,18 +308,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEB4A9331D10500F0052923F /* PestoIconMeat.m in Sources */,
 				DE3620651C73A0850026DF5D /* PestoCollectionViewController.m in Sources */,
 				C91F6A501C63A80F00EB4BA8 /* PestoRemoteImageService.m in Sources */,
+				DEB4A9341D10500F0052923F /* PestoIconSettings.m in Sources */,
+				DEB4A9301D10500F0052923F /* PestoIcon.m in Sources */,
+				DEB4A9351D10500F0052923F /* PestoIconSpicy.m in Sources */,
 				DEA791051C752B6A006301CC /* PestoFlexibleHeaderContainerViewController.m in Sources */,
 				C9A8552B1C4EDFAA003CADF7 /* PestoSettingsViewController.m in Sources */,
 				DEE21BC11C9AF56E0024CB5C /* PestoRecipeCardView.m in Sources */,
 				C91F6A4A1C62BC0400EB4BA8 /* PestoAvatarView.m in Sources */,
 				DE381E1A1C457CEE00019C1D /* PestoCardCollectionViewCell.m in Sources */,
 				DE5EF8671C404E0E00D2D4B9 /* PestoDetailViewController.m in Sources */,
+				DEB4A9321D10500F0052923F /* PestoIconMain.m in Sources */,
 				DEBEDF2C1C3EF5D5004B614B /* PestoAppDelegate.m in Sources */,
-				DE381E401C45A9FB00019C1D /* PestoSideView.m in Sources */,
+				DEB4A9361D10500F0052923F /* PestoIconTimer.m in Sources */,
+				DEB4A9371D10500F0052923F /* PestoIconVeggie.m in Sources */,
 				DEBEDF291C3EF5D5004B614B /* main.m in Sources */,
 				DEA791031C751D0D006301CC /* PestoData.m in Sources */,
+				DEB4A9311D10500F0052923F /* PestoIconFish.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +436,8 @@
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
@@ -413,6 +465,8 @@
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;

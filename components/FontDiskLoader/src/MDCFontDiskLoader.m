@@ -21,6 +21,7 @@
 @interface MDCFontDiskLoader ()
 @property(nonatomic, strong) NSURL *fontURL;
 @property(nonatomic) BOOL isRegistered;
+@property(nonatomic) BOOL disableSanityChecks;
 @property(nonatomic) BOOL hasFailedRegistration;
 @end
 
@@ -65,23 +66,16 @@ static NSMutableSet *registeredFonts;
     return NO;
   }
   CFErrorRef error = NULL;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                       kCTFontManagerScopeProcess,
-                                                       &error);
-#pragma clang diagnostic pop
+                                                       kCTFontManagerScopeProcess, &error);
 
   if (!self.isRegistered) {
     if (error && CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       // If it's already been loaded by somebody else, we don't care.
       // We do not check the error domain to make sure they match because
       // kCTFontManagerErrorDomain is not defined in the iOS 8 SDK.
       // Radar 18651170 iOS 8 SDK missing definition for kCTFontManagerErrorDomain
       self.isRegistered = YES;
-#pragma clang diagnostic pop
     } else {
       NSLog(@"Failed to load font: %@", error);
       _hasFailedRegistration = YES;
@@ -99,12 +93,8 @@ static NSMutableSet *registeredFonts;
     return YES;
   }
   CFErrorRef error = NULL;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.isRegistered = !CTFontManagerUnregisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                          kCTFontManagerScopeProcess,
-                                                          &error);
-#pragma clang diagnostic pop
+                                                          kCTFontManagerScopeProcess, &error);
 
   if (self.isRegistered || error) {
     NSLog(@"Failed to unregister font: %@", error);
@@ -115,12 +105,8 @@ static NSMutableSet *registeredFonts;
 - (UIFont *)fontOfSize:(CGFloat)fontSize {
   [self registerFont];
   UIFont *font = [UIFont fontWithName:self.fontName size:fontSize];
-#if DEBUG
-  if (font == nil) {
-    NSLog(@"Warning: This log will turn into an NSAssert on or after 6/8/2016");
-    NSLog(@"Failed to find font: %@ in file at %@", self.fontName, self.fontURL);
-  }
-#endif
+  NSAssert(_disableSanityChecks || font,
+           @"Failed to find font: %@ in file at %@", self.fontName, self.fontURL);
   return font;
 }
 

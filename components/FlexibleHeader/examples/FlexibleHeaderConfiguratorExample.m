@@ -59,8 +59,9 @@
       BOOL isOn = [value boolValue];
       if (!isOn) {
         headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorDisabled;
-        [self didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar
-                            animated:YES];
+        [self
+            didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar
+                          animated:YES];
       } else {
         headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
       }
@@ -80,9 +81,9 @@
     }
 
     case FlexibleHeaderConfiguratorFieldContentImportance:
-      headerView.headerContentImportance = ([value boolValue]
-                                                ? MDCFlexibleHeaderContentImportanceHigh
-                                                : MDCFlexibleHeaderContentImportanceDefault);
+      headerView.headerContentImportance =
+          ([value boolValue] ? MDCFlexibleHeaderContentImportanceHigh
+                             : MDCFlexibleHeaderContentImportanceDefault);
       break;
 
     // Header height
@@ -145,7 +146,8 @@
 
 #pragma mark - MDCFlexibleHeaderViewLayoutDelegate
 
-- (void)flexibleHeaderViewController:(nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController
+- (void)flexibleHeaderViewController:
+            (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController
     flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView {
   CGFloat headerContentAlpha;
   switch (flexibleHeaderView.scrollPhase) {
@@ -180,14 +182,16 @@ static const CGFloat kHeightScalar = 300;
       return @(self.fhvc.headerView.canOverExtend);
 
     case FlexibleHeaderConfiguratorFieldContentImportance:
-      return @((self.fhvc.headerView.headerContentImportance == MDCFlexibleHeaderContentImportanceHigh));
+      return @(
+          (self.fhvc.headerView.headerContentImportance == MDCFlexibleHeaderContentImportanceHigh));
 
     case FlexibleHeaderConfiguratorFieldHideStatusBar:
       return @(self.overrideStatusBarHidden);
 
     case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled: {
       MDCFlexibleHeaderShiftBehavior behavior = self.fhvc.headerView.shiftBehavior;
-      BOOL enabled = (behavior == MDCFlexibleHeaderShiftBehaviorEnabled || behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
+      BOOL enabled = (behavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
+                      behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
       return @(enabled);
     }
 

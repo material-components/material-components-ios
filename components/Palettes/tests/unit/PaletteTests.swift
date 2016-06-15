@@ -43,4 +43,39 @@ class PaletteTests: XCTestCase {
     XCTAssertNil(brownPalette.accent100)
   }
 
+  func testCustomPalette() {
+    let tints = [
+      MDCPaletteTint50Name : UIColor(white: 0, alpha: 1),
+      MDCPaletteTint100Name : UIColor(white: 0.1, alpha: 1),
+      MDCPaletteTint200Name : UIColor(white: 0.2, alpha: 1),
+      MDCPaletteTint300Name : UIColor(white: 0.3, alpha: 1),
+      MDCPaletteTint400Name : UIColor(white: 0.4, alpha: 1),
+      MDCPaletteTint500Name : UIColor(white: 0.5, alpha: 1),
+      MDCPaletteTint600Name : UIColor(white: 0.6, alpha: 1),
+      MDCPaletteTint700Name : UIColor(white: 0.7, alpha: 1),
+      MDCPaletteTint800Name : UIColor(white: 0.8, alpha: 1),
+      MDCPaletteTint900Name : UIColor(white: 0.9, alpha: 1)
+    ]
+    let accents = [
+      MDCPaletteAccent100Name : UIColor(white: 1, alpha: 0),
+      MDCPaletteAccent200Name : UIColor(white: 1, alpha: 0.25),
+      MDCPaletteAccent400Name : UIColor(white: 1, alpha: 0.75),
+      MDCPaletteAccent700Name : UIColor(white: 1, alpha: 1)
+    ]
+    let palette = MDCPalette(tints: tints, accents: accents)
+    XCTAssertEqual(palette.tint50, tints[MDCPaletteTint50Name])
+    XCTAssertEqual(palette.tint100, tints[MDCPaletteTint100Name])
+    XCTAssertEqual(palette.tint200, tints[MDCPaletteTint200Name])
+    XCTAssertEqual(palette.tint300, tints[MDCPaletteTint300Name])
+    XCTAssertEqual(palette.tint400, tints[MDCPaletteTint400Name])
+    XCTAssertEqual(palette.tint500, tints[MDCPaletteTint500Name])
+    XCTAssertEqual(palette.tint600, tints[MDCPaletteTint600Name])
+    XCTAssertEqual(palette.tint700, tints[MDCPaletteTint700Name])
+    XCTAssertEqual(palette.tint800, tints[MDCPaletteTint800Name])
+    XCTAssertEqual(palette.tint900, tints[MDCPaletteTint900Name])
+    XCTAssertEqual(palette.accent100, accents[MDCPaletteAccent100Name])
+    XCTAssertEqual(palette.accent200, accents[MDCPaletteAccent200Name])
+    XCTAssertEqual(palette.accent400, accents[MDCPaletteAccent400Name])
+    XCTAssertEqual(palette.accent700, accents[MDCPaletteAccent700Name])
+  }
 }

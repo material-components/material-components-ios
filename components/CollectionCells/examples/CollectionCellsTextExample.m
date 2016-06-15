@@ -54,21 +54,16 @@ static NSString *const kExampleDetailText =
 
   // Populate content with array of text, details text, and number of lines.
   _content = [NSMutableArray array];
-  [_content addObject:@[ @"Single line text",
-                         @"",
-                         @(MDCCellDefaultOneLineHeight) ]];
-  [_content addObject:@[ @"",
-                         @"Single line detail text",
-                         @(MDCCellDefaultOneLineHeight) ]];
-  [_content addObject:@[ @"Two line text",
-                         @"Here is the detail text",
-                         @(MDCCellDefaultTwoLineHeight) ]];
-  [_content addObject:@[ @"Two line text (truncated)",
-                         kExampleDetailText,
-                         @(MDCCellDefaultTwoLineHeight) ]];
-  [_content addObject:@[ @"Three line text (wrapped)",
-                         kExampleDetailText,
-                         @(MDCCellDefaultThreeLineHeight) ]];
+  [_content addObject:@[ @"Single line text", @"", @(MDCCellDefaultOneLineHeight) ]];
+  [_content addObject:@[ @"", @"Single line detail text", @(MDCCellDefaultOneLineHeight) ]];
+  [_content
+      addObject:@[ @"Two line text", @"Here is the detail text", @(MDCCellDefaultTwoLineHeight) ]];
+  [_content addObject:@[
+    @"Two line text (truncated)", kExampleDetailText, @(MDCCellDefaultTwoLineHeight)
+  ]];
+  [_content addObject:@[
+    @"Three line text (wrapped)", kExampleDetailText, @(MDCCellDefaultThreeLineHeight)
+  ]];
 }
 
 #pragma mark - <UICollectionViewDataSource>

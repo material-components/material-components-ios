@@ -33,6 +33,7 @@
 		DE1944921CBD9E40009E0321 /* MDCCatalogTileDataSpritedAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1944801CBD9E40009E0321 /* MDCCatalogTileDataSpritedAnimationView.m */; };
 		DE1944931CBD9E40009E0321 /* MDCCatalogTileDataSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1944821CBD9E40009E0321 /* MDCCatalogTileDataSwitch.m */; };
 		DE1944941CBD9E40009E0321 /* MDCCatalogTileDataTypography.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1944841CBD9E40009E0321 /* MDCCatalogTileDataTypography.m */; };
+		DE28DA271D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = DE28DA261D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.m */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DE7A17C51CCAC1EA00B66230 /* MDCCatalogTileDataCollections.m in Sources */ = {isa = PBXBuildFile; fileRef = DE7A17C41CCAC1EA00B66230 /* MDCCatalogTileDataCollections.m */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
@@ -124,6 +125,8 @@
 		DE1944831CBD9E40009E0321 /* MDCCatalogTileDataTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataTypography.h; sourceTree = "<group>"; };
 		DE1944841CBD9E40009E0321 /* MDCCatalogTileDataTypography.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileDataTypography.m; sourceTree = "<group>"; };
 		DE1944851CBD9E40009E0321 /* MDCCatalogTiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTiles.h; sourceTree = "<group>"; };
+		DE28DA251D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataActivityIndicator.h; sourceTree = "<group>"; };
+		DE28DA261D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileDataActivityIndicator.m; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
 		DE7A17C41CCAC1EA00B66230 /* MDCCatalogTileDataCollections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileDataCollections.m; sourceTree = "<group>"; };
 		DE7A17C61CCAC1F700B66230 /* MDCCatalogTileDataCollections.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataCollections.h; sourceTree = "<group>"; };
@@ -233,6 +236,8 @@
 			children = (
 				DE1944671CBD9E40009E0321 /* MDCCatalogTileData.h */,
 				DE1944681CBD9E40009E0321 /* MDCCatalogTileData.m */,
+				DE28DA251D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.h */,
+				DE28DA261D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.m */,
 				DE1944691CBD9E40009E0321 /* MDCCatalogTileDataAppBar.h */,
 				DE19446A1CBD9E40009E0321 /* MDCCatalogTileDataAppBar.m */,
 				DE19446B1CBD9E40009E0321 /* MDCCatalogTileDataButtonBar.h */,
@@ -443,6 +448,7 @@
 				DE1944871CBD9E40009E0321 /* MDCCatalogTileDataAppBar.m in Sources */,
 				DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */,
 				6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */,
+				DE28DA271D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.m in Sources */,
 				DE19448C1CBD9E40009E0321 /* MDCCatalogTileDataInk.m in Sources */,
 				0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */,
 				664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */,

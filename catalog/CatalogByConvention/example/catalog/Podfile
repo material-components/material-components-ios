@@ -1,0 +1,29 @@
+workspace 'Catalog.xcworkspace'
+project 'Catalog.xcodeproj'
+
+target "Catalog" do
+  project 'Catalog.xcodeproj'
+  # Our catalog is written in Swift, so we must import dependencies as frameworks
+  use_frameworks!
+
+  # Runtime library for loading examples
+  pod 'CatalogByConvention', :path => '../../'
+
+  # Conventions
+  pod 'CatalogExamples', :path => '../'
+
+  # Component dependencies
+  pod 'Resistor', :path => '../components/Resistor'
+end
+
+target "UnitTests" do
+  project 'UnitTests.xcodeproj'
+  # Our tests may be written in Swift, so we must import dependencies as frameworks
+  use_frameworks!
+
+  # Conventions
+  pod 'CatalogUnitTests', :path => '../'
+
+  # Component dependencies
+  pod 'Resistor', :path => '../components/Resistor'
+end

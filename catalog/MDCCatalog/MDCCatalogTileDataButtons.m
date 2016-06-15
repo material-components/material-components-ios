@@ -19,10 +19,10 @@
 @implementation MDCCatalogTileDataButtons
 
 + (UIImage*)drawTileImage:(CGRect)frame {
-  void (^completionBlock)() = ^() {
-    [self draw:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+  void (^drawBlock)(CGRect) = ^(CGRect drawBlockFrame) {
+    [self draw:CGRectMake(0, 0, drawBlockFrame.size.width, drawBlockFrame.size.height)];
   };
-  return [self drawImageWithFrame:frame completionBlock:completionBlock];
+  return [self drawImageWithFrame:frame drawBlock:drawBlock];
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */

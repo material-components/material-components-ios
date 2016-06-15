@@ -18,6 +18,6 @@
 
 @interface MDCCatalogTileData : NSObject
 
-+ (UIImage *)drawImageWithFrame:(CGRect)frame completionBlock:(void (^)())completionBlock;
++ (UIImage *)drawImageWithFrame:(CGRect)frame drawBlock:(void (^)(CGRect))drawBlock;
 
 @end

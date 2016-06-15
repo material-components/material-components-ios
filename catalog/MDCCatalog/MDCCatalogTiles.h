@@ -15,6 +15,7 @@
  */
 
 #import "MDCCatalogTileData.h"
+#import "MDCCatalogTileDataActivityIndicator.h"
 #import "MDCCatalogTileDataAppBar.h"
 #import "MDCCatalogTileDataButtonBar.h"
 #import "MDCCatalogTileDataButtons.h"

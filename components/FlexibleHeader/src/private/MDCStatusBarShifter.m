@@ -104,8 +104,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   if (_snapshotState == snapshotState) {
     // It's likely too good to be true that we're able to stay in the snapshot state, so let's see
     // if we can invalidate the snapshot in any way.
-    if (_snapshotState == MDCStatusBarShifterStateIsSnapshot &&
-        [self shouldInvalidateSnapshot]) {
+    if (_snapshotState == MDCStatusBarShifterStateIsSnapshot && [self shouldInvalidateSnapshot]) {
       // Frame has become invalid - kill the snapshot.
       [self invalidateSnapshot];
     }
@@ -131,8 +130,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 
   // If snapshotting is disabled, then can't go from real => snapshot, but must jump to invalid
   // state.
-  if (!_snapshottingEnabled &&
-      _snapshotState == MDCStatusBarShifterStateRealStatusBar &&
+  if (!_snapshottingEnabled && _snapshotState == MDCStatusBarShifterStateRealStatusBar &&
       snapshotState == MDCStatusBarShifterStateIsSnapshot) {
     snapshotState = MDCStatusBarShifterStateInvalidSnapshot;
   }
@@ -175,8 +173,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 
       NSCalendar *calendar = [NSCalendar currentCalendar];
       NSDateComponents *components =
-          [calendar components:NSCalendarUnitSecond
-                      fromDate:[NSDate date]];
+          [calendar components:NSCalendarUnitSecond fromDate:[NSDate date]];
       _secondsRemainingInMinute =
           MAX(kMinimumNumberOfSecondsToWaitFor, (NSTimeInterval)(60 - components.second));
 

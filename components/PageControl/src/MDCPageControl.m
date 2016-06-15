@@ -95,15 +95,11 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // Defaults.
   _currentPage = 0;
   _currentPageIndicatorTintColor =
-      [UIColor colorWithWhite:kPageControlCurrentPageIndicatorWhiteColor
-                        alpha:1];
-  _pageIndicatorTintColor =
-      [UIColor colorWithWhite:kPageControlPageIndicatorWhiteColor
-                        alpha:1];
+      [UIColor colorWithWhite:kPageControlCurrentPageIndicatorWhiteColor alpha:1];
+  _pageIndicatorTintColor = [UIColor colorWithWhite:kPageControlPageIndicatorWhiteColor alpha:1];
 
   UITapGestureRecognizer *tapGestureRecognizer =
-      [[UITapGestureRecognizer alloc] initWithTarget:self
-                                              action:@selector(handleTapGesture:)];
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
   [self addGestureRecognizer:tapGestureRecognizer];
 }
 
@@ -232,8 +228,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 - (CGFloat)scrolledPercentage:(UIScrollView *)scrollView {
   // Returns scrolled percentage of scrollView from 0 to 1. If the scrollView has bounced past
   // the edge of its content, it will return either a negative value or value above 1.
-  return normalizeValue(scrollView.contentOffset.x,
-                        0,
+  return normalizeValue(scrollView.contentOffset.x, 0,
                         scrollView.contentSize.width - scrollView.frame.size.width);
 }
 
@@ -244,9 +239,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
   // Quit early if animated and on last page to prevent undesired scrolling. This
   // will typically happen during rotation while on last page.
-  if (!scrollView.isTracking &&
-      !scrollView.isDecelerating &&
-      !scrollView.isDragging &&
+  if (!scrollView.isTracking && !scrollView.isDecelerating && !scrollView.isDragging &&
       scrolledPercentage == 1) {
     return;
   }
@@ -393,8 +386,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 - (NSString *)accessibilityLabel {
   return
-      [[self class] pageControlAccessibilityLabelWithPage:_currentPage + 1
-                                                  ofPages:_numberOfPages];
+      [[self class] pageControlAccessibilityLabelWithPage:_currentPage + 1 ofPages:_numberOfPages];
 }
 
 - (UIAccessibilityTraits)accessibilityTraits {
@@ -443,8 +435,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     CGFloat offsetY = radius;
     CGPoint center = CGPointMake(offsetX + radius, offsetY);
     MDCPageControlIndicator *indicator =
-        [[MDCPageControlIndicator alloc] initWithCenter:center
-                                                 radius:radius];
+        [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
     indicator.opacity = kPageControlIndicatorDefaultOpacity;
     [_containerView.layer addSublayer:indicator];
     [_indicators addObject:indicator];
@@ -471,11 +462,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 + (NSString *)pageControlAccessibilityLabelWithPage:(NSInteger)currentPage
                                             ofPages:(NSInteger)ofPages {
   NSString *key = kMaterialPageControlStringTable[kStr_MaterialPageControlAccessibilityLabel];
-  NSString *localizedString =
-      NSLocalizedStringFromTableInBundle(key,
-                                         kMaterialPageControlStringsTableName,
-                                         [self bundle],
-                                         @"page {number} of {total number}");
+  NSString *localizedString = NSLocalizedStringFromTableInBundle(
+      key, kMaterialPageControlStringsTableName, [self bundle], @"page {number} of {total number}");
   return [NSString localizedStringWithFormat:localizedString, currentPage, ofPages];
 }
 

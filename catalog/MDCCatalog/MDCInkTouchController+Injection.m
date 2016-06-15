@@ -28,7 +28,8 @@
   }
   if (!foundInkView) {
     foundInkView = [[MDCInkView alloc] initWithFrame:view.bounds];
-    foundInkView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    foundInkView.autoresizingMask =
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [view addSubview:foundInkView];
   }
   return foundInkView;

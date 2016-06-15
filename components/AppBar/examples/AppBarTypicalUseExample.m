@@ -63,6 +63,12 @@
 
   self.tableView.layoutMargins = UIEdgeInsetsZero;
   self.tableView.separatorInset = UIEdgeInsetsZero;
+
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Right"
+                                       style:UIBarButtonItemStyleDone
+                                      target:nil
+                                      action:nil];
 }
 
 // Optional step: If you allow the header view to hide the status bar you must implement this
@@ -120,8 +126,8 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
   if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                  reuseIdentifier:@"cell"];
+    cell =
+        [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
   cell.layoutMargins = UIEdgeInsetsZero;
   return cell;

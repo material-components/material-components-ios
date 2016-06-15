@@ -21,7 +21,8 @@
 @interface PageControlTypicalUseViewController : UIViewController <UIScrollViewDelegate>
 @end
 
-#define RGBCOLOR(r, g, b) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
+#define RGBCOLOR(r, g, b) \
+  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
 #define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
 
 @implementation PageControlTypicalUseViewController {
@@ -84,10 +85,8 @@
 
   // We want the page control to span the bottom of the screen.
   CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
-  _pageControl.frame = CGRectMake(0,
-                                  boundsHeight - pageControlSize.height,
-                                  boundsWidth,
-                                  pageControlSize.height);
+  _pageControl.frame =
+      CGRectMake(0, boundsHeight - pageControlSize.height, boundsWidth, pageControlSize.height);
 
   [_pageControl addTarget:self
                    action:@selector(didChangePage:)

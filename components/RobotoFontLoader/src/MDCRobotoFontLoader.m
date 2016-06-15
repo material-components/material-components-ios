@@ -106,8 +106,8 @@
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
   MDCFontDiskLoader *fontResource = self.regularFontResource;
   UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font,
-           @"Font %@ not found in location: %@.", fontResource.fontName, fontResource.fontURL);
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
+           fontResource.fontName, fontResource.fontURL);
   if (!font) {
     font = [UIFont systemFontOfSize:fontSize];
   }
@@ -127,8 +127,8 @@
 - (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
   MDCFontDiskLoader *fontResource = self.mediumFontResource;
   UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font,
-           @"Font %@ not found in location: %@.", fontResource.fontName, fontResource.fontURL);
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
+           fontResource.fontName, fontResource.fontURL);
   if (!font) {
     font = [UIFont boldSystemFontOfSize:fontSize];
   }
@@ -148,8 +148,8 @@
 - (UIFont *)lightFontOfSize:(CGFloat)fontSize {
   MDCFontDiskLoader *fontResource = self.lightFontResource;
   UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font,
-           @"Font %@ not found in location: %@.", fontResource.fontName, fontResource.fontURL);
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
+           fontResource.fontName, fontResource.fontURL);
   if (!font) {
     font = [UIFont systemFontOfSize:fontSize];
   }
@@ -169,8 +169,8 @@
 - (UIFont *)boldFontOfSize:(CGFloat)fontSize {
   MDCFontDiskLoader *fontResource = self.boldFontResource;
   UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font,
-           @"Font %@ not found in location: %@.", fontResource.fontName, fontResource.fontURL);
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
+           fontResource.fontName, fontResource.fontURL);
   if (!font) {
     font = [UIFont boldSystemFontOfSize:fontSize];
   }
@@ -191,8 +191,8 @@
 - (UIFont *)italicFontOfSize:(CGFloat)fontSize {
   MDCFontDiskLoader *fontResource = self.italicFontResource;
   UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font,
-           @"Font %@ not found in location: %@.", fontResource.fontName, fontResource.fontURL);
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
+           fontResource.fontName, fontResource.fontURL);
   if (!font) {
     font = [UIFont italicSystemFontOfSize:fontSize];
   }
@@ -213,8 +213,8 @@
 - (UIFont *)lightItalicFontOfSize:(CGFloat)fontSize {
   MDCFontDiskLoader *fontResource = self.lightItalicFontResource;
   UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font,
-           @"Font %@ not found in location: %@.", fontResource.fontName, fontResource.fontURL);
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
+           fontResource.fontName, fontResource.fontURL);
   if (!font) {
     font = [UIFont italicSystemFontOfSize:fontSize];
   }
@@ -235,8 +235,8 @@
 - (UIFont *)mediumItalicFontOfSize:(CGFloat)fontSize {
   MDCFontDiskLoader *fontResource = self.mediumItalicFontResource;
   UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font,
-           @"Font %@ not found in location: %@.", fontResource.fontName, fontResource.fontURL);
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
+           fontResource.fontName, fontResource.fontURL);
   if (!font) {
     font = [UIFont italicSystemFontOfSize:fontSize];
   }
@@ -257,12 +257,39 @@
 - (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
   MDCFontDiskLoader *fontResource = self.boldItalicFontResource;
   UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font,
-           @"Font %@ not found in location: %@.", fontResource.fontName, fontResource.fontURL);
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
+           fontResource.fontName, fontResource.fontURL);
   if (!font) {
     font = [UIFont italicSystemFontOfSize:fontSize];
   }
   return font;
+}
+
+- (NSString *)description {
+  NSMutableString *description = [super.description mutableCopy];
+  [description appendString:@" (\n"];
+  NSNull *null = [NSNull null];
+  NSDictionary *selectors = @{
+    NSStringFromSelector(@selector(lightFontResource)) : _lightFontResource ?: null,
+    NSStringFromSelector(@selector(regularFontResource)) : _regularFontResource ?: null,
+    NSStringFromSelector(@selector(mediumFontResource)) : _mediumFontResource ?: null,
+    NSStringFromSelector(@selector(boldFontResource)) : _boldFontResource ?: null,
+    NSStringFromSelector(@selector(lightItalicFontResource)) : _lightItalicFontResource ?: null,
+    NSStringFromSelector(@selector(italicFontResource)) : _italicFontResource ?: null,
+    NSStringFromSelector(@selector(mediumItalicFontResource)) : _mediumItalicFontResource ?: null,
+    NSStringFromSelector(@selector(boldItalicFontResource)) : _boldItalicFontResource ?: null,
+  };
+  for (NSString *selectorString in selectors) {
+    MDCFontDiskLoader *loader = [selectors objectForKey:selectorString];
+    if ([loader isEqual:[NSNull null]]) {
+      continue;
+    }
+    NSString *resourceDescription = [NSString stringWithFormat:@"%@: %@\n", selectorString, loader];
+    [description appendString:resourceDescription];
+  }
+
+  [description appendString:@")\n"];
+  return description;
 }
 
 #pragma mark private

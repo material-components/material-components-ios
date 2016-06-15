@@ -160,12 +160,13 @@
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor
     __deprecated_msg("Use setBackgroundColor:forState: instead.");
 
-@property(nonatomic) BOOL shouldRaiseOnTouch
-    __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO");
+@property(nonatomic)
+    BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
+        ;
 
 @property(nonatomic) BOOL shouldCapitalizeTitle __deprecated_msg("Use uppercaseTitle instead.");
 
-@property(nonatomic, strong, nullable) UIColor *underlyingColor
-    __deprecated_msg("Use underlyingColorHint instead.");
+@property(nonatomic, strong, nullable)
+    UIColor *underlyingColor __deprecated_msg("Use underlyingColorHint instead.");
 
 @end

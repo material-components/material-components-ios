@@ -25,7 +25,8 @@
  A Material App Bar consists of a Flexible View with a shadow, a Navigation Bar, and space for
  flexible content such as a photo.
 
- Learn more at the [Material spec](https://www.google.com/design/spec/patterns/scrolling-techniques.html)
+ Learn more at the [Material
+ spec](https://www.google.com/design/spec/patterns/scrolling-techniques.html)
  */
 @interface MDCAppBar : NSObject
 
@@ -36,7 +37,8 @@
 - (void)addSubviewsToParent;
 
 /** The header view controller instance manages the App Bar's flexible header view behavior. */
-@property(nonatomic, strong, nonnull, readonly) MDCFlexibleHeaderViewController *headerViewController;
+@property(nonatomic, strong, nonnull, readonly)
+    MDCFlexibleHeaderViewController *headerViewController;
 
 /** The navigation bar. */
 @property(nonatomic, strong, nonnull, readonly) MDCNavigationBar *navigationBar;

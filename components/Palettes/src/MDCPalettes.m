@@ -16,20 +16,20 @@
 
 #import "MDCPalettes.h"
 
-static const NSString *kTint50Name = @"50";
-static const NSString *kTint100Name = @"100";
-static const NSString *kTint200Name = @"200";
-static const NSString *kTint300Name = @"300";
-static const NSString *kTint400Name = @"400";
-static const NSString *kTint500Name = @"500";
-static const NSString *kTint600Name = @"600";
-static const NSString *kTint700Name = @"700";
-static const NSString *kTint800Name = @"800";
-static const NSString *kTint900Name = @"900";
-static const NSString *kAccent100Name = @"A100";
-static const NSString *kAccent200Name = @"A200";
-static const NSString *kAccent400Name = @"A400";
-static const NSString *kAccent700Name = @"A700";
+const NSString *MDCPaletteTint50Name = @"50";
+const NSString *MDCPaletteTint100Name = @"100";
+const NSString *MDCPaletteTint200Name = @"200";
+const NSString *MDCPaletteTint300Name = @"300";
+const NSString *MDCPaletteTint400Name = @"400";
+const NSString *MDCPaletteTint500Name = @"500";
+const NSString *MDCPaletteTint600Name = @"600";
+const NSString *MDCPaletteTint700Name = @"700";
+const NSString *MDCPaletteTint800Name = @"800";
+const NSString *MDCPaletteTint900Name = @"900";
+const NSString *MDCPaletteAccent100Name = @"A100";
+const NSString *MDCPaletteAccent200Name = @"A200";
+const NSString *MDCPaletteAccent400Name = @"A400";
+const NSString *MDCPaletteAccent700Name = @"A700";
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
@@ -52,20 +52,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xFFEBEE),
-                                             kTint100Name : ColorFromRGB(0xFFCDD2),
-                                             kTint200Name : ColorFromRGB(0xEF9A9A),
-                                             kTint300Name : ColorFromRGB(0xE57373),
-                                             kTint400Name : ColorFromRGB(0xEF5350),
-                                             kTint500Name : ColorFromRGB(0xF44336),
-                                             kTint600Name : ColorFromRGB(0xE53935),
-                                             kTint700Name : ColorFromRGB(0xD32F2F),
-                                             kTint800Name : ColorFromRGB(0xC62828),
-                                             kTint900Name : ColorFromRGB(0xB71C1C) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xFF8A80),
-                                            kAccent200Name : ColorFromRGB(0xFF5252),
-                                            kAccent400Name : ColorFromRGB(0xFF1744),
-                                            kAccent700Name : ColorFromRGB(0xD50000)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xFFEBEE),
+      MDCPaletteTint100Name : ColorFromRGB(0xFFCDD2),
+      MDCPaletteTint200Name : ColorFromRGB(0xEF9A9A),
+      MDCPaletteTint300Name : ColorFromRGB(0xE57373),
+      MDCPaletteTint400Name : ColorFromRGB(0xEF5350),
+      MDCPaletteTint500Name : ColorFromRGB(0xF44336),
+      MDCPaletteTint600Name : ColorFromRGB(0xE53935),
+      MDCPaletteTint700Name : ColorFromRGB(0xD32F2F),
+      MDCPaletteTint800Name : ColorFromRGB(0xC62828),
+      MDCPaletteTint900Name : ColorFromRGB(0xB71C1C)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xFF8A80),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0xFF5252),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0xFF1744),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0xD50000)
+                                  }];
   });
   return palette;
 }
@@ -74,20 +78,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xFCE4EC),
-                                             kTint100Name : ColorFromRGB(0xF8BBD0),
-                                             kTint200Name : ColorFromRGB(0xF48FB1),
-                                             kTint300Name : ColorFromRGB(0xF06292),
-                                             kTint400Name : ColorFromRGB(0xEC407A),
-                                             kTint500Name : ColorFromRGB(0xE91E63),
-                                             kTint600Name : ColorFromRGB(0xD81B60),
-                                             kTint700Name : ColorFromRGB(0xC2185B),
-                                             kTint800Name : ColorFromRGB(0xAD1457),
-                                             kTint900Name : ColorFromRGB(0x880E4F) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xFF80AB),
-                                            kAccent200Name : ColorFromRGB(0xFF4081),
-                                            kAccent400Name : ColorFromRGB(0xF50057),
-                                            kAccent700Name : ColorFromRGB(0xC51162)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xFCE4EC),
+      MDCPaletteTint100Name : ColorFromRGB(0xF8BBD0),
+      MDCPaletteTint200Name : ColorFromRGB(0xF48FB1),
+      MDCPaletteTint300Name : ColorFromRGB(0xF06292),
+      MDCPaletteTint400Name : ColorFromRGB(0xEC407A),
+      MDCPaletteTint500Name : ColorFromRGB(0xE91E63),
+      MDCPaletteTint600Name : ColorFromRGB(0xD81B60),
+      MDCPaletteTint700Name : ColorFromRGB(0xC2185B),
+      MDCPaletteTint800Name : ColorFromRGB(0xAD1457),
+      MDCPaletteTint900Name : ColorFromRGB(0x880E4F)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xFF80AB),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0xFF4081),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0xF50057),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0xC51162)
+                                  }];
   });
   return palette;
 }
@@ -96,20 +104,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xF3E5F5),
-                                             kTint100Name : ColorFromRGB(0xE1BEE7),
-                                             kTint200Name : ColorFromRGB(0xCE93D8),
-                                             kTint300Name : ColorFromRGB(0xBA68C8),
-                                             kTint400Name : ColorFromRGB(0xAB47BC),
-                                             kTint500Name : ColorFromRGB(0x9C27B0),
-                                             kTint600Name : ColorFromRGB(0x8E24AA),
-                                             kTint700Name : ColorFromRGB(0x7B1FA2),
-                                             kTint800Name : ColorFromRGB(0x6A1B9A),
-                                             kTint900Name : ColorFromRGB(0x4A148C) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xEA80FC),
-                                            kAccent200Name : ColorFromRGB(0xE040FB),
-                                            kAccent400Name : ColorFromRGB(0xD500F9),
-                                            kAccent700Name : ColorFromRGB(0xAA00FF)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xF3E5F5),
+      MDCPaletteTint100Name : ColorFromRGB(0xE1BEE7),
+      MDCPaletteTint200Name : ColorFromRGB(0xCE93D8),
+      MDCPaletteTint300Name : ColorFromRGB(0xBA68C8),
+      MDCPaletteTint400Name : ColorFromRGB(0xAB47BC),
+      MDCPaletteTint500Name : ColorFromRGB(0x9C27B0),
+      MDCPaletteTint600Name : ColorFromRGB(0x8E24AA),
+      MDCPaletteTint700Name : ColorFromRGB(0x7B1FA2),
+      MDCPaletteTint800Name : ColorFromRGB(0x6A1B9A),
+      MDCPaletteTint900Name : ColorFromRGB(0x4A148C)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xEA80FC),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0xE040FB),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0xD500F9),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0xAA00FF)
+                                  }];
   });
   return palette;
 }
@@ -118,20 +130,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xEDE7F6),
-                                             kTint100Name : ColorFromRGB(0xD1C4E9),
-                                             kTint200Name : ColorFromRGB(0xB39DDB),
-                                             kTint300Name : ColorFromRGB(0x9575CD),
-                                             kTint400Name : ColorFromRGB(0x7E57C2),
-                                             kTint500Name : ColorFromRGB(0x673AB7),
-                                             kTint600Name : ColorFromRGB(0x5E35B1),
-                                             kTint700Name : ColorFromRGB(0x512DA8),
-                                             kTint800Name : ColorFromRGB(0x4527A0),
-                                             kTint900Name : ColorFromRGB(0x311B92) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xB388FF),
-                                            kAccent200Name : ColorFromRGB(0x7C4DFF),
-                                            kAccent400Name : ColorFromRGB(0x651FFF),
-                                            kAccent700Name : ColorFromRGB(0x6200EA)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xEDE7F6),
+      MDCPaletteTint100Name : ColorFromRGB(0xD1C4E9),
+      MDCPaletteTint200Name : ColorFromRGB(0xB39DDB),
+      MDCPaletteTint300Name : ColorFromRGB(0x9575CD),
+      MDCPaletteTint400Name : ColorFromRGB(0x7E57C2),
+      MDCPaletteTint500Name : ColorFromRGB(0x673AB7),
+      MDCPaletteTint600Name : ColorFromRGB(0x5E35B1),
+      MDCPaletteTint700Name : ColorFromRGB(0x512DA8),
+      MDCPaletteTint800Name : ColorFromRGB(0x4527A0),
+      MDCPaletteTint900Name : ColorFromRGB(0x311B92)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xB388FF),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0x7C4DFF),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0x651FFF),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0x6200EA)
+                                  }];
   });
   return palette;
 }
@@ -140,20 +156,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xE8EAF6),
-                                             kTint100Name : ColorFromRGB(0xC5CAE9),
-                                             kTint200Name : ColorFromRGB(0x9FA8DA),
-                                             kTint300Name : ColorFromRGB(0x7986CB),
-                                             kTint400Name : ColorFromRGB(0x5C6BC0),
-                                             kTint500Name : ColorFromRGB(0x3F51B5),
-                                             kTint600Name : ColorFromRGB(0x3949AB),
-                                             kTint700Name : ColorFromRGB(0x303F9F),
-                                             kTint800Name : ColorFromRGB(0x283593),
-                                             kTint900Name : ColorFromRGB(0x1A237E) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0x8C9EFF),
-                                            kAccent200Name : ColorFromRGB(0x536DFE),
-                                            kAccent400Name : ColorFromRGB(0x3D5AFE),
-                                            kAccent700Name : ColorFromRGB(0x304FFE)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xE8EAF6),
+      MDCPaletteTint100Name : ColorFromRGB(0xC5CAE9),
+      MDCPaletteTint200Name : ColorFromRGB(0x9FA8DA),
+      MDCPaletteTint300Name : ColorFromRGB(0x7986CB),
+      MDCPaletteTint400Name : ColorFromRGB(0x5C6BC0),
+      MDCPaletteTint500Name : ColorFromRGB(0x3F51B5),
+      MDCPaletteTint600Name : ColorFromRGB(0x3949AB),
+      MDCPaletteTint700Name : ColorFromRGB(0x303F9F),
+      MDCPaletteTint800Name : ColorFromRGB(0x283593),
+      MDCPaletteTint900Name : ColorFromRGB(0x1A237E)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0x8C9EFF),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0x536DFE),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0x3D5AFE),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0x304FFE)
+                                  }];
   });
   return palette;
 }
@@ -162,20 +182,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xE3F2FD),
-                                             kTint100Name : ColorFromRGB(0xBBDEFB),
-                                             kTint200Name : ColorFromRGB(0x90CAF9),
-                                             kTint300Name : ColorFromRGB(0x64B5F6),
-                                             kTint400Name : ColorFromRGB(0x42A5F5),
-                                             kTint500Name : ColorFromRGB(0x2196F3),
-                                             kTint600Name : ColorFromRGB(0x1E88E5),
-                                             kTint700Name : ColorFromRGB(0x1976D2),
-                                             kTint800Name : ColorFromRGB(0x1565C0),
-                                             kTint900Name : ColorFromRGB(0x0D47A1) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0x82B1FF),
-                                            kAccent200Name : ColorFromRGB(0x448AFF),
-                                            kAccent400Name : ColorFromRGB(0x2979FF),
-                                            kAccent700Name : ColorFromRGB(0x2962FF)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xE3F2FD),
+      MDCPaletteTint100Name : ColorFromRGB(0xBBDEFB),
+      MDCPaletteTint200Name : ColorFromRGB(0x90CAF9),
+      MDCPaletteTint300Name : ColorFromRGB(0x64B5F6),
+      MDCPaletteTint400Name : ColorFromRGB(0x42A5F5),
+      MDCPaletteTint500Name : ColorFromRGB(0x2196F3),
+      MDCPaletteTint600Name : ColorFromRGB(0x1E88E5),
+      MDCPaletteTint700Name : ColorFromRGB(0x1976D2),
+      MDCPaletteTint800Name : ColorFromRGB(0x1565C0),
+      MDCPaletteTint900Name : ColorFromRGB(0x0D47A1)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0x82B1FF),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0x448AFF),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0x2979FF),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0x2962FF)
+                                  }];
   });
   return palette;
 }
@@ -184,20 +208,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xE1F5FE),
-                                             kTint100Name : ColorFromRGB(0xB3E5FC),
-                                             kTint200Name : ColorFromRGB(0x81D4FA),
-                                             kTint300Name : ColorFromRGB(0x4FC3F7),
-                                             kTint400Name : ColorFromRGB(0x29B6F6),
-                                             kTint500Name : ColorFromRGB(0x03A9F4),
-                                             kTint600Name : ColorFromRGB(0x039BE5),
-                                             kTint700Name : ColorFromRGB(0x0288D1),
-                                             kTint800Name : ColorFromRGB(0x0277BD),
-                                             kTint900Name : ColorFromRGB(0x01579B) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0x80D8FF),
-                                            kAccent200Name : ColorFromRGB(0x40C4FF),
-                                            kAccent400Name : ColorFromRGB(0x00B0FF),
-                                            kAccent700Name : ColorFromRGB(0x0091EA)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xE1F5FE),
+      MDCPaletteTint100Name : ColorFromRGB(0xB3E5FC),
+      MDCPaletteTint200Name : ColorFromRGB(0x81D4FA),
+      MDCPaletteTint300Name : ColorFromRGB(0x4FC3F7),
+      MDCPaletteTint400Name : ColorFromRGB(0x29B6F6),
+      MDCPaletteTint500Name : ColorFromRGB(0x03A9F4),
+      MDCPaletteTint600Name : ColorFromRGB(0x039BE5),
+      MDCPaletteTint700Name : ColorFromRGB(0x0288D1),
+      MDCPaletteTint800Name : ColorFromRGB(0x0277BD),
+      MDCPaletteTint900Name : ColorFromRGB(0x01579B)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0x80D8FF),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0x40C4FF),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0x00B0FF),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0x0091EA)
+                                  }];
   });
   return palette;
 }
@@ -206,20 +234,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xE0F7FA),
-                                             kTint100Name : ColorFromRGB(0xB2EBF2),
-                                             kTint200Name : ColorFromRGB(0x80DEEA),
-                                             kTint300Name : ColorFromRGB(0x4DD0E1),
-                                             kTint400Name : ColorFromRGB(0x26C6DA),
-                                             kTint500Name : ColorFromRGB(0x00BCD4),
-                                             kTint600Name : ColorFromRGB(0x00ACC1),
-                                             kTint700Name : ColorFromRGB(0x0097A7),
-                                             kTint800Name : ColorFromRGB(0x00838F),
-                                             kTint900Name : ColorFromRGB(0x006064) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0x84FFFF),
-                                            kAccent200Name : ColorFromRGB(0x18FFFF),
-                                            kAccent400Name : ColorFromRGB(0x00E5FF),
-                                            kAccent700Name : ColorFromRGB(0x00B8D4)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xE0F7FA),
+      MDCPaletteTint100Name : ColorFromRGB(0xB2EBF2),
+      MDCPaletteTint200Name : ColorFromRGB(0x80DEEA),
+      MDCPaletteTint300Name : ColorFromRGB(0x4DD0E1),
+      MDCPaletteTint400Name : ColorFromRGB(0x26C6DA),
+      MDCPaletteTint500Name : ColorFromRGB(0x00BCD4),
+      MDCPaletteTint600Name : ColorFromRGB(0x00ACC1),
+      MDCPaletteTint700Name : ColorFromRGB(0x0097A7),
+      MDCPaletteTint800Name : ColorFromRGB(0x00838F),
+      MDCPaletteTint900Name : ColorFromRGB(0x006064)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0x84FFFF),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0x18FFFF),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0x00E5FF),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0x00B8D4)
+                                  }];
   });
   return palette;
 }
@@ -228,20 +260,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xE0F2F1),
-                                             kTint100Name : ColorFromRGB(0xB2DFDB),
-                                             kTint200Name : ColorFromRGB(0x80CBC4),
-                                             kTint300Name : ColorFromRGB(0x4DB6AC),
-                                             kTint400Name : ColorFromRGB(0x26A69A),
-                                             kTint500Name : ColorFromRGB(0x009688),
-                                             kTint600Name : ColorFromRGB(0x00897B),
-                                             kTint700Name : ColorFromRGB(0x00796B),
-                                             kTint800Name : ColorFromRGB(0x00695C),
-                                             kTint900Name : ColorFromRGB(0x004D40) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xA7FFEB),
-                                            kAccent200Name : ColorFromRGB(0x64FFDA),
-                                            kAccent400Name : ColorFromRGB(0x1DE9B6),
-                                            kAccent700Name : ColorFromRGB(0x00BFA5)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xE0F2F1),
+      MDCPaletteTint100Name : ColorFromRGB(0xB2DFDB),
+      MDCPaletteTint200Name : ColorFromRGB(0x80CBC4),
+      MDCPaletteTint300Name : ColorFromRGB(0x4DB6AC),
+      MDCPaletteTint400Name : ColorFromRGB(0x26A69A),
+      MDCPaletteTint500Name : ColorFromRGB(0x009688),
+      MDCPaletteTint600Name : ColorFromRGB(0x00897B),
+      MDCPaletteTint700Name : ColorFromRGB(0x00796B),
+      MDCPaletteTint800Name : ColorFromRGB(0x00695C),
+      MDCPaletteTint900Name : ColorFromRGB(0x004D40)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xA7FFEB),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0x64FFDA),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0x1DE9B6),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0x00BFA5)
+                                  }];
   });
   return palette;
 }
@@ -250,20 +286,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xE8F5E9),
-                                             kTint100Name : ColorFromRGB(0xC8E6C9),
-                                             kTint200Name : ColorFromRGB(0xA5D6A7),
-                                             kTint300Name : ColorFromRGB(0x81C784),
-                                             kTint400Name : ColorFromRGB(0x66BB6A),
-                                             kTint500Name : ColorFromRGB(0x4CAF50),
-                                             kTint600Name : ColorFromRGB(0x43A047),
-                                             kTint700Name : ColorFromRGB(0x388E3C),
-                                             kTint800Name : ColorFromRGB(0x2E7D32),
-                                             kTint900Name : ColorFromRGB(0x1B5E20) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xB9F6CA),
-                                            kAccent200Name : ColorFromRGB(0x69F0AE),
-                                            kAccent400Name : ColorFromRGB(0x00E676),
-                                            kAccent700Name : ColorFromRGB(0x00C853)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xE8F5E9),
+      MDCPaletteTint100Name : ColorFromRGB(0xC8E6C9),
+      MDCPaletteTint200Name : ColorFromRGB(0xA5D6A7),
+      MDCPaletteTint300Name : ColorFromRGB(0x81C784),
+      MDCPaletteTint400Name : ColorFromRGB(0x66BB6A),
+      MDCPaletteTint500Name : ColorFromRGB(0x4CAF50),
+      MDCPaletteTint600Name : ColorFromRGB(0x43A047),
+      MDCPaletteTint700Name : ColorFromRGB(0x388E3C),
+      MDCPaletteTint800Name : ColorFromRGB(0x2E7D32),
+      MDCPaletteTint900Name : ColorFromRGB(0x1B5E20)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xB9F6CA),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0x69F0AE),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0x00E676),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0x00C853)
+                                  }];
   });
   return palette;
 }
@@ -272,20 +312,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xF1F8E9),
-                                             kTint100Name : ColorFromRGB(0xDCEDC8),
-                                             kTint200Name : ColorFromRGB(0xC5E1A5),
-                                             kTint300Name : ColorFromRGB(0xAED581),
-                                             kTint400Name : ColorFromRGB(0x9CCC65),
-                                             kTint500Name : ColorFromRGB(0x8BC34A),
-                                             kTint600Name : ColorFromRGB(0x7CB342),
-                                             kTint700Name : ColorFromRGB(0x689F38),
-                                             kTint800Name : ColorFromRGB(0x558B2F),
-                                             kTint900Name : ColorFromRGB(0x33691E) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xCCFF90),
-                                            kAccent200Name : ColorFromRGB(0xB2FF59),
-                                            kAccent400Name : ColorFromRGB(0x76FF03),
-                                            kAccent700Name : ColorFromRGB(0x64DD17)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xF1F8E9),
+      MDCPaletteTint100Name : ColorFromRGB(0xDCEDC8),
+      MDCPaletteTint200Name : ColorFromRGB(0xC5E1A5),
+      MDCPaletteTint300Name : ColorFromRGB(0xAED581),
+      MDCPaletteTint400Name : ColorFromRGB(0x9CCC65),
+      MDCPaletteTint500Name : ColorFromRGB(0x8BC34A),
+      MDCPaletteTint600Name : ColorFromRGB(0x7CB342),
+      MDCPaletteTint700Name : ColorFromRGB(0x689F38),
+      MDCPaletteTint800Name : ColorFromRGB(0x558B2F),
+      MDCPaletteTint900Name : ColorFromRGB(0x33691E)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xCCFF90),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0xB2FF59),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0x76FF03),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0x64DD17)
+                                  }];
   });
   return palette;
 }
@@ -294,20 +338,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xF9FBE7),
-                                             kTint100Name : ColorFromRGB(0xF0F4C3),
-                                             kTint200Name : ColorFromRGB(0xE6EE9C),
-                                             kTint300Name : ColorFromRGB(0xDCE775),
-                                             kTint400Name : ColorFromRGB(0xD4E157),
-                                             kTint500Name : ColorFromRGB(0xCDDC39),
-                                             kTint600Name : ColorFromRGB(0xC0CA33),
-                                             kTint700Name : ColorFromRGB(0xAFB42B),
-                                             kTint800Name : ColorFromRGB(0x9E9D24),
-                                             kTint900Name : ColorFromRGB(0x827717) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xF4FF81),
-                                            kAccent200Name : ColorFromRGB(0xEEFF41),
-                                            kAccent400Name : ColorFromRGB(0xC6FF00),
-                                            kAccent700Name : ColorFromRGB(0xAEEA00)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xF9FBE7),
+      MDCPaletteTint100Name : ColorFromRGB(0xF0F4C3),
+      MDCPaletteTint200Name : ColorFromRGB(0xE6EE9C),
+      MDCPaletteTint300Name : ColorFromRGB(0xDCE775),
+      MDCPaletteTint400Name : ColorFromRGB(0xD4E157),
+      MDCPaletteTint500Name : ColorFromRGB(0xCDDC39),
+      MDCPaletteTint600Name : ColorFromRGB(0xC0CA33),
+      MDCPaletteTint700Name : ColorFromRGB(0xAFB42B),
+      MDCPaletteTint800Name : ColorFromRGB(0x9E9D24),
+      MDCPaletteTint900Name : ColorFromRGB(0x827717)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xF4FF81),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0xEEFF41),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0xC6FF00),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0xAEEA00)
+                                  }];
   });
   return palette;
 }
@@ -316,20 +364,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xFFFDE7),
-                                             kTint100Name : ColorFromRGB(0xFFF9C4),
-                                             kTint200Name : ColorFromRGB(0xFFF59D),
-                                             kTint300Name : ColorFromRGB(0xFFF176),
-                                             kTint400Name : ColorFromRGB(0xFFEE58),
-                                             kTint500Name : ColorFromRGB(0xFFEB3B),
-                                             kTint600Name : ColorFromRGB(0xFDD835),
-                                             kTint700Name : ColorFromRGB(0xFBC02D),
-                                             kTint800Name : ColorFromRGB(0xF9A825),
-                                             kTint900Name : ColorFromRGB(0xF57F17) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xFFFF8D),
-                                            kAccent200Name : ColorFromRGB(0xFFFF00),
-                                            kAccent400Name : ColorFromRGB(0xFFEA00),
-                                            kAccent700Name : ColorFromRGB(0xFFD600)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xFFFDE7),
+      MDCPaletteTint100Name : ColorFromRGB(0xFFF9C4),
+      MDCPaletteTint200Name : ColorFromRGB(0xFFF59D),
+      MDCPaletteTint300Name : ColorFromRGB(0xFFF176),
+      MDCPaletteTint400Name : ColorFromRGB(0xFFEE58),
+      MDCPaletteTint500Name : ColorFromRGB(0xFFEB3B),
+      MDCPaletteTint600Name : ColorFromRGB(0xFDD835),
+      MDCPaletteTint700Name : ColorFromRGB(0xFBC02D),
+      MDCPaletteTint800Name : ColorFromRGB(0xF9A825),
+      MDCPaletteTint900Name : ColorFromRGB(0xF57F17)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xFFFF8D),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0xFFFF00),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0xFFEA00),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0xFFD600)
+                                  }];
   });
   return palette;
 }
@@ -338,20 +390,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xFFF8E1),
-                                             kTint100Name : ColorFromRGB(0xFFECB3),
-                                             kTint200Name : ColorFromRGB(0xFFE082),
-                                             kTint300Name : ColorFromRGB(0xFFD54F),
-                                             kTint400Name : ColorFromRGB(0xFFCA28),
-                                             kTint500Name : ColorFromRGB(0xFFC107),
-                                             kTint600Name : ColorFromRGB(0xFFB300),
-                                             kTint700Name : ColorFromRGB(0xFFA000),
-                                             kTint800Name : ColorFromRGB(0xFF8F00),
-                                             kTint900Name : ColorFromRGB(0xFF6F00) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xFFE57F),
-                                            kAccent200Name : ColorFromRGB(0xFFD740),
-                                            kAccent400Name : ColorFromRGB(0xFFC400),
-                                            kAccent700Name : ColorFromRGB(0xFFAB00)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xFFF8E1),
+      MDCPaletteTint100Name : ColorFromRGB(0xFFECB3),
+      MDCPaletteTint200Name : ColorFromRGB(0xFFE082),
+      MDCPaletteTint300Name : ColorFromRGB(0xFFD54F),
+      MDCPaletteTint400Name : ColorFromRGB(0xFFCA28),
+      MDCPaletteTint500Name : ColorFromRGB(0xFFC107),
+      MDCPaletteTint600Name : ColorFromRGB(0xFFB300),
+      MDCPaletteTint700Name : ColorFromRGB(0xFFA000),
+      MDCPaletteTint800Name : ColorFromRGB(0xFF8F00),
+      MDCPaletteTint900Name : ColorFromRGB(0xFF6F00)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xFFE57F),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0xFFD740),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0xFFC400),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0xFFAB00)
+                                  }];
   });
   return palette;
 }
@@ -360,20 +416,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xFFF3E0),
-                                             kTint100Name : ColorFromRGB(0xFFE0B2),
-                                             kTint200Name : ColorFromRGB(0xFFCC80),
-                                             kTint300Name : ColorFromRGB(0xFFB74D),
-                                             kTint400Name : ColorFromRGB(0xFFA726),
-                                             kTint500Name : ColorFromRGB(0xFF9800),
-                                             kTint600Name : ColorFromRGB(0xFB8C00),
-                                             kTint700Name : ColorFromRGB(0xF57C00),
-                                             kTint800Name : ColorFromRGB(0xEF6C00),
-                                             kTint900Name : ColorFromRGB(0xE65100) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xFFD180),
-                                            kAccent200Name : ColorFromRGB(0xFFAB40),
-                                            kAccent400Name : ColorFromRGB(0xFF9100),
-                                            kAccent700Name : ColorFromRGB(0xFF6D00)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xFFF3E0),
+      MDCPaletteTint100Name : ColorFromRGB(0xFFE0B2),
+      MDCPaletteTint200Name : ColorFromRGB(0xFFCC80),
+      MDCPaletteTint300Name : ColorFromRGB(0xFFB74D),
+      MDCPaletteTint400Name : ColorFromRGB(0xFFA726),
+      MDCPaletteTint500Name : ColorFromRGB(0xFF9800),
+      MDCPaletteTint600Name : ColorFromRGB(0xFB8C00),
+      MDCPaletteTint700Name : ColorFromRGB(0xF57C00),
+      MDCPaletteTint800Name : ColorFromRGB(0xEF6C00),
+      MDCPaletteTint900Name : ColorFromRGB(0xE65100)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xFFD180),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0xFFAB40),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0xFF9100),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0xFF6D00)
+                                  }];
   });
   return palette;
 }
@@ -382,20 +442,24 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xFBE9E7),
-                                             kTint100Name : ColorFromRGB(0xFFCCBC),
-                                             kTint200Name : ColorFromRGB(0xFFAB91),
-                                             kTint300Name : ColorFromRGB(0xFF8A65),
-                                             kTint400Name : ColorFromRGB(0xFF7043),
-                                             kTint500Name : ColorFromRGB(0xFF5722),
-                                             kTint600Name : ColorFromRGB(0xF4511E),
-                                             kTint700Name : ColorFromRGB(0xE64A19),
-                                             kTint800Name : ColorFromRGB(0xD84315),
-                                             kTint900Name : ColorFromRGB(0xBF360C) }
-                                  accents:@{kAccent100Name : ColorFromRGB(0xFF9E80),
-                                            kAccent200Name : ColorFromRGB(0xFF6E40),
-                                            kAccent400Name : ColorFromRGB(0xFF3D00),
-                                            kAccent700Name : ColorFromRGB(0xDD2C00)}];
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xFBE9E7),
+      MDCPaletteTint100Name : ColorFromRGB(0xFFCCBC),
+      MDCPaletteTint200Name : ColorFromRGB(0xFFAB91),
+      MDCPaletteTint300Name : ColorFromRGB(0xFF8A65),
+      MDCPaletteTint400Name : ColorFromRGB(0xFF7043),
+      MDCPaletteTint500Name : ColorFromRGB(0xFF5722),
+      MDCPaletteTint600Name : ColorFromRGB(0xF4511E),
+      MDCPaletteTint700Name : ColorFromRGB(0xE64A19),
+      MDCPaletteTint800Name : ColorFromRGB(0xD84315),
+      MDCPaletteTint900Name : ColorFromRGB(0xBF360C)
+    }
+                                  accents:@{
+                                    MDCPaletteAccent100Name : ColorFromRGB(0xFF9E80),
+                                    MDCPaletteAccent200Name : ColorFromRGB(0xFF6E40),
+                                    MDCPaletteAccent400Name : ColorFromRGB(0xFF3D00),
+                                    MDCPaletteAccent700Name : ColorFromRGB(0xDD2C00)
+                                  }];
   });
   return palette;
 }
@@ -404,16 +468,18 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xEFEBE9),
-                                             kTint100Name : ColorFromRGB(0xD7CCC8),
-                                             kTint200Name : ColorFromRGB(0xBCAAA4),
-                                             kTint300Name : ColorFromRGB(0xA1887F),
-                                             kTint400Name : ColorFromRGB(0x8D6E63),
-                                             kTint500Name : ColorFromRGB(0x795548),
-                                             kTint600Name : ColorFromRGB(0x6D4C41),
-                                             kTint700Name : ColorFromRGB(0x5D4037),
-                                             kTint800Name : ColorFromRGB(0x4E342E),
-                                             kTint900Name : ColorFromRGB(0x3E2723) }
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xEFEBE9),
+      MDCPaletteTint100Name : ColorFromRGB(0xD7CCC8),
+      MDCPaletteTint200Name : ColorFromRGB(0xBCAAA4),
+      MDCPaletteTint300Name : ColorFromRGB(0xA1887F),
+      MDCPaletteTint400Name : ColorFromRGB(0x8D6E63),
+      MDCPaletteTint500Name : ColorFromRGB(0x795548),
+      MDCPaletteTint600Name : ColorFromRGB(0x6D4C41),
+      MDCPaletteTint700Name : ColorFromRGB(0x5D4037),
+      MDCPaletteTint800Name : ColorFromRGB(0x4E342E),
+      MDCPaletteTint900Name : ColorFromRGB(0x3E2723)
+    }
                                   accents:nil];
   });
   return palette;
@@ -423,16 +489,18 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xFAFAFA),
-                                             kTint100Name : ColorFromRGB(0xF5F5F5),
-                                             kTint200Name : ColorFromRGB(0xEEEEEE),
-                                             kTint300Name : ColorFromRGB(0xE0E0E0),
-                                             kTint400Name : ColorFromRGB(0xBDBDBD),
-                                             kTint500Name : ColorFromRGB(0x9E9E9E),
-                                             kTint600Name : ColorFromRGB(0x757575),
-                                             kTint700Name : ColorFromRGB(0x616161),
-                                             kTint800Name : ColorFromRGB(0x424242),
-                                             kTint900Name : ColorFromRGB(0x212121) }
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xFAFAFA),
+      MDCPaletteTint100Name : ColorFromRGB(0xF5F5F5),
+      MDCPaletteTint200Name : ColorFromRGB(0xEEEEEE),
+      MDCPaletteTint300Name : ColorFromRGB(0xE0E0E0),
+      MDCPaletteTint400Name : ColorFromRGB(0xBDBDBD),
+      MDCPaletteTint500Name : ColorFromRGB(0x9E9E9E),
+      MDCPaletteTint600Name : ColorFromRGB(0x757575),
+      MDCPaletteTint700Name : ColorFromRGB(0x616161),
+      MDCPaletteTint800Name : ColorFromRGB(0x424242),
+      MDCPaletteTint900Name : ColorFromRGB(0x212121)
+    }
                                   accents:nil];
   });
   return palette;
@@ -442,84 +510,117 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   static MDCPalette *palette;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    palette = [[self alloc] initWithTints:@{ kTint50Name : ColorFromRGB(0xECEFF1),
-                                             kTint100Name : ColorFromRGB(0xCFD8DC),
-                                             kTint200Name : ColorFromRGB(0xB0BEC5),
-                                             kTint300Name : ColorFromRGB(0x90A4AE),
-                                             kTint400Name : ColorFromRGB(0x78909C),
-                                             kTint500Name : ColorFromRGB(0x607D8B),
-                                             kTint600Name : ColorFromRGB(0x546E7A),
-                                             kTint700Name : ColorFromRGB(0x455A64),
-                                             kTint800Name : ColorFromRGB(0x37474F),
-                                             kTint900Name : ColorFromRGB(0x263238) }
+    palette = [[self alloc] initWithTints:@{
+      MDCPaletteTint50Name : ColorFromRGB(0xECEFF1),
+      MDCPaletteTint100Name : ColorFromRGB(0xCFD8DC),
+      MDCPaletteTint200Name : ColorFromRGB(0xB0BEC5),
+      MDCPaletteTint300Name : ColorFromRGB(0x90A4AE),
+      MDCPaletteTint400Name : ColorFromRGB(0x78909C),
+      MDCPaletteTint500Name : ColorFromRGB(0x607D8B),
+      MDCPaletteTint600Name : ColorFromRGB(0x546E7A),
+      MDCPaletteTint700Name : ColorFromRGB(0x455A64),
+      MDCPaletteTint800Name : ColorFromRGB(0x37474F),
+      MDCPaletteTint900Name : ColorFromRGB(0x263238)
+    }
                                   accents:nil];
   });
   return palette;
 }
 
-- (instancetype)initWithTints:(NSDictionary *)tints accents:(NSDictionary *)accents {
++ (instancetype)paletteWithTints:(NSDictionary<NSString *, UIColor *> *)tints
+                         accents:(NSDictionary<NSString *, UIColor *> *)accents {
+  return [[self alloc] initWithTints:tints accents:accents];
+}
+
+- (instancetype)initWithTints:(NSDictionary<const NSString *, UIColor *> *)tints
+                      accents:(NSDictionary<const NSString *, UIColor *> *)accents {
   self = [super init];
   if (self) {
-    _tints = [tints copy];
     _accents = accents ? [accents copy] : @{};
+
+    // Check if all the accent colors are present.
+    NSDictionary *allTints = tints;
+    NSMutableSet *requiredTintKeys = [NSMutableSet setWithSet:[[self class] requiredTintKeys]];
+    [requiredTintKeys minusSet:[NSSet setWithArray:[tints allKeys]]];
+    if ([requiredTintKeys count] != 0) {
+      NSAssert(NO, @"Missing accent colors for the following keys: %@.", requiredTintKeys);
+      NSMutableDictionary *replacementTints =
+          [NSMutableDictionary dictionaryWithDictionary:_accents];
+      for (const NSString *tintKey in requiredTintKeys) {
+        [replacementTints setObject:[UIColor clearColor] forKey:tintKey];
+      }
+      allTints = replacementTints;
+    }
+
+    _tints = [allTints copy];
   }
   return self;
 }
 
 - (UIColor *)tint50 {
-  return _tints[kTint50Name];
+  return _tints[MDCPaletteTint50Name];
 }
 
 - (UIColor *)tint100 {
-  return _tints[kTint100Name];
+  return _tints[MDCPaletteTint100Name];
 }
 
 - (UIColor *)tint200 {
-  return _tints[kTint200Name];
+  return _tints[MDCPaletteTint200Name];
 }
 
 - (UIColor *)tint300 {
-  return _tints[kTint300Name];
+  return _tints[MDCPaletteTint300Name];
 }
 
 - (UIColor *)tint400 {
-  return _tints[kTint400Name];
+  return _tints[MDCPaletteTint400Name];
 }
 
 - (UIColor *)tint500 {
-  return _tints[kTint500Name];
+  return _tints[MDCPaletteTint500Name];
 }
 
 - (UIColor *)tint600 {
-  return _tints[kTint600Name];
+  return _tints[MDCPaletteTint600Name];
 }
 
 - (UIColor *)tint700 {
-  return _tints[kTint700Name];
+  return _tints[MDCPaletteTint700Name];
 }
 
 - (UIColor *)tint800 {
-  return _tints[kTint800Name];
+  return _tints[MDCPaletteTint800Name];
 }
 
 - (UIColor *)tint900 {
-  return _tints[kTint900Name];
+  return _tints[MDCPaletteTint900Name];
 }
 
 - (UIColor *)accent100 {
-  return _accents[kAccent100Name];
+  return _accents[MDCPaletteAccent100Name];
 }
 
 - (UIColor *)accent200 {
-  return _accents[kAccent200Name];
+  return _accents[MDCPaletteAccent200Name];
 }
 
 - (UIColor *)accent400 {
-  return _accents[kAccent400Name];
+  return _accents[MDCPaletteAccent400Name];
 }
 
 - (UIColor *)accent700 {
-  return _accents[kAccent700Name];
+  return _accents[MDCPaletteAccent700Name];
+}
+
+#pragma mark - Private methods
+
++ (nonnull NSSet *)requiredTintKeys {
+  return [NSSet setWithArray:@[
+    MDCPaletteTint50Name, MDCPaletteTint100Name, MDCPaletteTint200Name, MDCPaletteTint300Name,
+    MDCPaletteTint400Name, MDCPaletteTint500Name, MDCPaletteTint600Name, MDCPaletteTint700Name,
+    MDCPaletteTint800Name, MDCPaletteTint900Name
+  ]];
 }
 
 @end

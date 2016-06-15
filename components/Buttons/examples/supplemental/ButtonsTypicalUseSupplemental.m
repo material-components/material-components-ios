@@ -71,11 +71,13 @@
   floatingButtonLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:floatingButtonLabel];
 
-  NSDictionary *views = @{ @"raisedLabel" : raisedButtonLabel,
-                           @"disabledRaisedLabel" : disabledRaisedButtonLabel,
-                           @"flatLabel" : flatButtonLabel,
-                           @"disabledFlatLabel" : disabledFlatButtonLabel,
-                           @"floatingLabel" : floatingButtonLabel };
+  NSDictionary *views = @{
+    @"raisedLabel" : raisedButtonLabel,
+    @"disabledRaisedLabel" : disabledRaisedButtonLabel,
+    @"flatLabel" : flatButtonLabel,
+    @"disabledFlatLabel" : disabledFlatButtonLabel,
+    @"floatingLabel" : floatingButtonLabel
+  };
   [self.views addEntriesFromDictionary:views];
 }
 
@@ -97,27 +99,27 @@
 
   self.portraitLayoutConstraints = [NSMutableArray array];
 
-  NSDictionary *metrics = @{ @"smallVMargin" : @24.0,
-                             @"largeVMargin" : @56.0,
-                             @"smallHMargin" : @24.0,
-                             @"buttonHeight" : @(raisedButton.bounds.size.height),
-                             @"fabHeight" : @(floatingButton.bounds.size.height) };
+  NSDictionary *metrics = @{
+    @"smallVMargin" : @24.0,
+    @"largeVMargin" : @56.0,
+    @"smallHMargin" : @24.0,
+    @"buttonHeight" : @(raisedButton.bounds.size.height),
+    @"fabHeight" : @(floatingButton.bounds.size.height)
+  };
 
   // Vertical column of buttons
-  NSString *buttonLayoutConstraints =
-      @"V:[raised]-smallVMargin-"
-       "[disabledRaised]-largeVMargin-"
-       "[flat]-smallVMargin-"
-       "[disabledFlat]-largeVMargin-"
-       "[floating]";
+  NSString *buttonLayoutConstraints = @"V:[raised]-smallVMargin-"
+                                       "[disabledRaised]-largeVMargin-"
+                                       "[flat]-smallVMargin-"
+                                       "[disabledFlat]-largeVMargin-"
+                                       "[floating]";
 
   // Vertical column of labels
-  NSString *labelLayoutConstraints =
-      @"V:[raisedLabel(buttonHeight)]-smallVMargin-"
-       "[disabledRaisedLabel(buttonHeight)]-largeVMargin-"
-       "[flatLabel(buttonHeight)]-smallVMargin-"
-       "[disabledFlatLabel(buttonHeight)]-largeVMargin-"
-       "[floatingLabel(fabHeight)]";
+  NSString *labelLayoutConstraints = @"V:[raisedLabel(buttonHeight)]-smallVMargin-"
+                                      "[disabledRaisedLabel(buttonHeight)]-largeVMargin-"
+                                      "[flatLabel(buttonHeight)]-smallVMargin-"
+                                      "[disabledFlatLabel(buttonHeight)]-largeVMargin-"
+                                      "[floatingLabel(fabHeight)]";
 
   // Horizontal alignment between the two columns
   NSString *columnConstraints = @"[raisedLabel(100)]-smallHMargin-[raised]";
@@ -191,16 +193,20 @@
                                     constant:0];
   [self.landscapeLayoutConstraints addObject:landscapeRaiseButtonConstraint];
 
-  NSDictionary *views = @{ @"raisedButtonLabel" : raisedButtonLabel,
-                           @"raisedButton" : raisedButton,
-                           @"flatButtonLabel" : flatButtonLabel,
-                           @"flatButton" : flatButton };
+  NSDictionary *views = @{
+    @"raisedButtonLabel" : raisedButtonLabel,
+    @"raisedButton" : raisedButton,
+    @"flatButtonLabel" : flatButtonLabel,
+    @"flatButton" : flatButton
+  };
   NSString *horizontalConstraints = @"H:|-(50)-[raisedButtonLabel(100)]-[raisedButton]-(50)-"
                                      "[flatButtonLabel(100)]-[flatButton]-(50)-|";
-  NSDictionary *horizontalMetrics = @{ @"raisedButtonLabel" : @(50),
-                                       @"raisedButton" : @(raisedButton.frame.size.width),
-                                       @"flatButtonLabel" : @(200),
-                                       @"flatButton" : @(flatButton.frame.size.width) };
+  NSDictionary *horizontalMetrics = @{
+    @"raisedButtonLabel" : @(50),
+    @"raisedButton" : @(raisedButton.frame.size.width),
+    @"flatButtonLabel" : @(200),
+    @"flatButton" : @(flatButton.frame.size.width)
+  };
 
   NSArray<NSLayoutConstraint *> *landscapeHorizontalMetricsConstraints =
       [NSLayoutConstraint constraintsWithVisualFormat:horizontalConstraints
@@ -209,14 +215,16 @@
                                                 views:views];
   [self.landscapeLayoutConstraints addObjectsFromArray:landscapeHorizontalMetricsConstraints];
 
-  NSDictionary *raisedButtonLabelViews =
-      @{ @"raisedButtonLabel" : raisedButtonLabel,
-         @"disabledRaisedButtonLabel" : disabledRaisedButtonLabel };
+  NSDictionary *raisedButtonLabelViews = @{
+    @"raisedButtonLabel" : raisedButtonLabel,
+    @"disabledRaisedButtonLabel" : disabledRaisedButtonLabel
+  };
   NSString *raisedButtonLabelConstraints = @"V:[raisedButtonLabel]-[disabledRaisedButtonLabel]";
 
-  NSDictionary *metricsY =
-      @{ @"raisedButtonLabel" : @(raisedButtonLabel.frame.size.height),
-         @"disabledRaisedButtonLabel" : @(disabledRaisedButtonLabel.frame.size.height) };
+  NSDictionary *metricsY = @{
+    @"raisedButtonLabel" : @(raisedButtonLabel.frame.size.height),
+    @"disabledRaisedButtonLabel" : @(disabledRaisedButtonLabel.frame.size.height)
+  };
 
   NSArray<NSLayoutConstraint *> *landscapeRaisedButtonMetricsConstraints =
       [NSLayoutConstraint constraintsWithVisualFormat:raisedButtonLabelConstraints
@@ -242,12 +250,14 @@
                                     constant:0.f];
   [self.landscapeLayoutConstraints addObject:landscapeDisabledRaiseButtonConstraint];
 
-  NSDictionary *raisedButtonViews = @{ @"raisedButton" : raisedButton,
-                                       @"disabledRaisedButton" : disabledRaisedButton };
+  NSDictionary *raisedButtonViews =
+      @{ @"raisedButton" : raisedButton,
+         @"disabledRaisedButton" : disabledRaisedButton };
   NSString *raisedButtonConstraints = @"V:[raisedButton]-[disabledRaisedButton]";
-  NSDictionary *raisedButtonMetrics =
-      @{ @"raisedButton" : @(raisedButton.frame.size.height),
-         @"disabledRaisedButton" : @(disabledRaisedButton.frame.size.height) };
+  NSDictionary *raisedButtonMetrics = @{
+    @"raisedButton" : @(raisedButton.frame.size.height),
+    @"disabledRaisedButton" : @(disabledRaisedButton.frame.size.height)
+  };
   NSArray<NSLayoutConstraint *> *landscapeMetricsY2Constraints =
       [NSLayoutConstraint constraintsWithVisualFormat:raisedButtonConstraints
                                               options:NSLayoutFormatAlignAllCenterX
@@ -262,12 +272,15 @@
                                                 views:raisedButtonViews];
   [self.landscapeLayoutConstraints addObjectsFromArray:landscapeMetricsY2LeftConstraints];
 
-  NSDictionary *flatButtonLabelViews = @{ @"flatButtonLabel" : flatButtonLabel,
-                                          @"disabledFlatButtonLabel" : disabledFlatButtonLabel };
+  NSDictionary *flatButtonLabelViews = @{
+    @"flatButtonLabel" : flatButtonLabel,
+    @"disabledFlatButtonLabel" : disabledFlatButtonLabel
+  };
   NSString *flatButtonLabelConstraints = @"V:[flatButtonLabel]-[disabledFlatButtonLabel]";
-  NSDictionary *flatButtonLabelMetrics =
-      @{ @"flatButtonLabel" : @(flatButtonLabel.frame.size.height),
-         @"disabledFlatButtonLabel" : @(disabledFlatButtonLabel.frame.size.height) };
+  NSDictionary *flatButtonLabelMetrics = @{
+    @"flatButtonLabel" : @(flatButtonLabel.frame.size.height),
+    @"disabledFlatButtonLabel" : @(disabledFlatButtonLabel.frame.size.height)
+  };
   NSArray<NSLayoutConstraint *> *landscapeMetricsY3Constraints =
       [NSLayoutConstraint constraintsWithVisualFormat:flatButtonLabelConstraints
                                               options:NSLayoutFormatAlignAllCenterX
@@ -282,11 +295,14 @@
                                                 views:flatButtonLabelViews];
   [self.landscapeLayoutConstraints addObjectsFromArray:landscapeMetricsY3LeftConstraints];
 
-  NSDictionary *flatButtonViews = @{ @"flatButton" : flatButton,
-                                     @"disabledFlatButton" : disabledFlatButton };
+  NSDictionary *flatButtonViews =
+      @{ @"flatButton" : flatButton,
+         @"disabledFlatButton" : disabledFlatButton };
   NSString *flatButtonConstraints = @"V:[flatButton]-[disabledFlatButton]";
-  NSDictionary *flatButtonMetrics = @{ @"flatButton" : @(flatButton.frame.size.height),
-                                       @"disabledFlatButton" : @(disabledFlatButton.frame.size.height) };
+  NSDictionary *flatButtonMetrics = @{
+    @"flatButton" : @(flatButton.frame.size.height),
+    @"disabledFlatButton" : @(disabledFlatButton.frame.size.height)
+  };
 
   NSArray<NSLayoutConstraint *> *landscapeMetricsY4Constraints =
       [NSLayoutConstraint constraintsWithVisualFormat:flatButtonConstraints

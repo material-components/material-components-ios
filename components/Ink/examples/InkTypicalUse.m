@@ -33,9 +33,7 @@
 
   CGFloat spacing = 16;
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
-  CGRect unboundedFrame = CGRectMake(spacing / 2,
-                                     spacing / 2,
-                                     customFrame.size.width - spacing,
+  CGRect unboundedFrame = CGRectMake(spacing / 2, spacing / 2, customFrame.size.width - spacing,
                                      customFrame.size.height - spacing);
 
   // ExampleShapes is a custom UIView with several subviews of various shapes.
@@ -71,10 +69,8 @@
 - (void)inkTouchController:(MDCInkTouchController *)inkTouchController
          didProcessInkView:(MDCInkView *)inkView
            atTouchLocation:(CGPoint)location {
-  NSLog(@"InkTouchController %p did process ink view: %p at touch location: %@",
-        inkTouchController,
-        inkView,
-        NSStringFromCGPoint(location));
+  NSLog(@"InkTouchController %p did process ink view: %p at touch location: %@", inkTouchController,
+        inkView, NSStringFromCGPoint(location));
 }
 
 @end

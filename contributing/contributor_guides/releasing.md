@@ -245,13 +245,18 @@ Send the release-candidate branch out for review:
 
     git fetch
     git checkout release-candidate
-    arc diff origin/master --no-lint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt
+    arc diff origin/master --no-lint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt --no-amend
 
 Check off each item in the diff's checklist.
 
 Get a reviewer to approve the change.
 
 Do NOT arc land this diff, its purpose is to have someone sanity check the release.
+
+If you need to make changes you have to explicity specify which diff you are modifying because we
+use the `--no-amend` option on the previous `arc diff` command.
+
+    arc diff origin/master --no-lint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt --no-amend --update <revision_id>
 
 ## Merge the release candidate branch
 
@@ -310,7 +315,7 @@ However, you need to be one of the material component core members in order to d
 #### Reply to the original release email message
 
 Post a reply to you message on [Material Components iOS Discuss]
-(https://groups.google.com/forum/#!topic/material-components-ios-discuss/) indicating that you are
+(https://groups.google.com/forum/#!forum/material-components-ios-discuss) indicating that you are
 done.
 
 #### Finish any internal work

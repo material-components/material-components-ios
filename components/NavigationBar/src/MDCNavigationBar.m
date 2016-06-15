@@ -194,9 +194,8 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
       leadingButtonBarOriginX = self.bounds.size.width - leadingButtonBarSize.width;
       break;
   }
-  _leadingButtonBar.frame =
-      (CGRect){.origin = {leadingButtonBarOriginX, self.bounds.origin.y},
-               .size = leadingButtonBarSize};
+  _leadingButtonBar.frame = (CGRect){.origin = {leadingButtonBarOriginX, self.bounds.origin.y},
+                                     .size = leadingButtonBarSize};
 
   CGSize trailingButtonBarSize = [_trailingButtonBar sizeThatFits:self.bounds.size];
   CGFloat trailingButtonBarOriginX;
@@ -208,9 +207,8 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
       trailingButtonBarOriginX = self.bounds.origin.x;
       break;
   }
-  _trailingButtonBar.frame =
-      (CGRect){.origin = {trailingButtonBarOriginX, self.bounds.origin.y},
-               .size = trailingButtonBarSize};
+  _trailingButtonBar.frame = (CGRect){.origin = {trailingButtonBarOriginX, self.bounds.origin.y},
+                                      .size = trailingButtonBarSize};
 
   const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
   UIEdgeInsets textInsets = isPad ? kTextPadInsets : kTextInsets;
@@ -239,24 +237,19 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
       break;
     case UIUserInterfaceLayoutDirectionRightToLeft:
       titleFrame =
-          (CGRect){
-              .origin = {self.bounds.size.width - textFrame.origin.x - titleSize.width, 0},
-              .size = titleSize};
+          (CGRect){.origin = {self.bounds.size.width - textFrame.origin.x - titleSize.width, 0},
+                   .size = titleSize};
       break;
   }
   UIControlContentVerticalAlignment titleAlignment = [self titleAlignment];
   _titleLabel.frame =
-      [self mdc_frameAlignedVertically:titleFrame
-                          withinBounds:textFrame
-                             alignment:titleAlignment];
+      [self mdc_frameAlignedVertically:titleFrame withinBounds:textFrame alignment:titleAlignment];
   self.titleView.frame = textFrame;
 
   // Button and title label alignment
 
   CGFloat titleTextRectHeight =
-      [_titleLabel textRectForBounds:_titleLabel.bounds
-              limitedToNumberOfLines:0]
-          .size.height;
+      [_titleLabel textRectForBounds:_titleLabel.bounds limitedToNumberOfLines:0].size.height;
 
   if (_titleLabel.hidden || titleTextRectHeight <= 0) {
     _leadingButtonBar.buttonTitleBaseline = 0;

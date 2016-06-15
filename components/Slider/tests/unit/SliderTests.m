@@ -110,7 +110,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   // Given
   MDCSlider *slider = [[MDCSlider alloc] init];
   slider.maximumValue = [self randomNumber];
-  slider.value = slider.minimumValue + [self randomPercent] * (slider.maximumValue - slider.minimumValue);
+  slider.value =
+      slider.minimumValue + [self randomPercent] * (slider.maximumValue - slider.minimumValue);
 
   // When
   slider.maximumValue = slider.value - [self randomPercent] * slider.value;
@@ -123,7 +124,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   // Given
   MDCSlider *slider = [[MDCSlider alloc] init];
   slider.maximumValue = [self randomNumber];
-  slider.value = slider.minimumValue + [self randomPercent] * (slider.maximumValue - slider.minimumValue);
+  slider.value =
+      slider.minimumValue + [self randomPercent] * (slider.maximumValue - slider.minimumValue);
 
   // When
   slider.minimumValue = slider.value + [self randomPercent] * slider.value;
@@ -234,7 +236,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     CGFloat delta = [self randomNumber] + 1;
     NSUInteger numberOfValues = arc4random_uniform(8) + 2;
     CGFloat snapedValue = arc4random_uniform((int)numberOfValues) * delta;
-    CGFloat originalValue = snapedValue + [self randomPercent] * (delta - kEpsilonAccuracy) - (delta - kEpsilonAccuracy) / 2;
+    CGFloat originalValue = snapedValue + [self randomPercent] * (delta - kEpsilonAccuracy) -
+                            (delta - kEpsilonAccuracy) / 2;
 
     MDCSlider *slider = [[MDCSlider alloc] init];
     slider.minimumValue = 0;
@@ -247,7 +250,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     // Then
     XCTAssertEqualWithAccuracy(slider.value, originalValue, delta / 2 + kEpsilonAccuracy);
     XCTAssertEqualWithAccuracy(slider.value, snapedValue, kEpsilonAccuracy);
-    if ((slider.value - kEpsilonAccuracy > snapedValue) || (slider.value + kEpsilonAccuracy < snapedValue)) {
+    if ((slider.value - kEpsilonAccuracy > snapedValue) ||
+        (slider.value + kEpsilonAccuracy < snapedValue)) {
       NSLog(@"failed with difference:%f", slider.value - snapedValue);
     }
   }
@@ -334,7 +338,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   // Then
   NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
   numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
-  CGFloat percent = (slider.value - slider.minimumValue) / (slider.maximumValue - slider.minimumValue);
+  CGFloat percent =
+      (slider.value - slider.minimumValue) / (slider.maximumValue - slider.minimumValue);
   NSString *expected = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:percent]];
   XCTAssertEqualObjects([slider accessibilityValue], expected);
 }
@@ -382,7 +387,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (void)testAccessibilityTraits {
   // Given
   MDCSlider *slider = [[MDCSlider alloc] init];
-  slider.enabled = arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
+  slider.enabled =
+      arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
 
   // When
 

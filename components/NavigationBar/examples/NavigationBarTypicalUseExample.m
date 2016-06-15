@@ -37,10 +37,7 @@
   self.navBar.tintColor = [UIColor whiteColor];
 
   // Light blue 500
-  [self.navBar setBackgroundColor:[UIColor colorWithRed:0.012
-                                                  green:0.663
-                                                   blue:0.957
-                                                  alpha:1]];
+  [self.navBar setBackgroundColor:[UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1]];
 
   [self.view addSubview:self.navBar];
 
@@ -48,13 +45,13 @@
 
   NSDictionary *viewBindings = @{ @"navBar" : self.navBar };
   NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints = [NSMutableArray array];
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-                                              constraintsWithVisualFormat:@"H:|[navBar]|"
+  [arrayOfConstraints
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navBar]|"
                                                                   options:0
                                                                   metrics:nil
                                                                     views:viewBindings]];
-  [arrayOfConstraints addObjectsFromArray:[NSLayoutConstraint
-                                              constraintsWithVisualFormat:@"V:|[navBar]"
+  [arrayOfConstraints
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[navBar]"
                                                                   options:0
                                                                   metrics:nil
                                                                     views:viewBindings]];

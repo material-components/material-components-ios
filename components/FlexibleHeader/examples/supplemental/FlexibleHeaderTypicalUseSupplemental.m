@@ -50,8 +50,8 @@
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   [bundle loadNibNamed:@"FlexibleHeaderTypicalUseInstructionsView" owner:self options:nil];
 
-  self.imageView.image = [self.imageView.image
-      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.imageView.image =
+      [self.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.scrollView addSubview:self.exampleView];
 
   self.view.backgroundColor = [UIColor whiteColor];

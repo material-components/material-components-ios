@@ -5,7 +5,7 @@ AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 AlwaysBreakBeforeMultilineStrings: false
 BinPackParameters: false
-ColumnLimit: 0
+ColumnLimit: 100
 ObjCSpaceBeforeProtocolList: true
 PointerBindsToType: false
 IndentWrappedFunctionNames: true

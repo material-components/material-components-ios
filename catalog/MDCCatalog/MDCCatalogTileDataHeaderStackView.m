@@ -19,10 +19,10 @@
 @implementation MDCCatalogTileDataHeaderStackView
 
 + (UIImage*)drawTileImage:(CGRect)frame {
-  void (^completionBlock)() = ^() {
-    [self draw:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+  void (^drawBlock)(CGRect) = ^(CGRect drawBlockFrame) {
+    [self draw:CGRectMake(0, 0, drawBlockFrame.size.width, drawBlockFrame.size.height)];
   };
-  return [self drawImageWithFrame:frame completionBlock:completionBlock];
+  return [self drawImageWithFrame:frame drawBlock:drawBlock];
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */
@@ -47,14 +47,13 @@
 
   CGFloat gradientLocations[] = {0.14, 0.51, 1};
 
-  CGGradientRef gradient =
-      CGGradientCreateWithColors(colorSpace,
-                                 (__bridge CFArrayRef) @[
-                                   (id)gradientColor.CGColor,
-                                   (id)[gradientColor colorWithAlphaComponent:0.5].CGColor,
-                                   (id)UIColor.clearColor.CGColor
-                                 ],
-                                 gradientLocations);
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef) @[
+        (id)gradientColor.CGColor, (id)[gradientColor colorWithAlphaComponent:0.5].CGColor,
+        (id)UIColor.clearColor.CGColor
+      ],
+      gradientLocations);
 
   NSShadow* shadow = [[NSShadow alloc] init];
   [shadow setShadowColor:[color colorWithAlphaComponent:CGColorGetAlpha(color.CGColor) * 0.4]];

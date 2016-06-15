@@ -18,10 +18,10 @@
 
 @implementation MDCCatalogTileData
 
-+ (UIImage *)drawImageWithFrame:(CGRect)frame completionBlock:(void (^)())completionBlock {
++ (UIImage *)drawImageWithFrame:(CGRect)frame drawBlock:(void (^)(CGRect))drawBlock {
   CGFloat scale = [UIScreen mainScreen].scale;
   UIGraphicsBeginImageContextWithOptions(frame.size, false, scale);
-  completionBlock();
+  drawBlock(frame);
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return image;

@@ -111,26 +111,23 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                                           message:nil
                                    preferredStyle:UIAlertControllerStyleActionSheet];
 
-  [_actionController addAction:
-                         [UIAlertAction actionWithTitle:@"Toggle List/Grid Layout"
-                                                  style:UIAlertActionStyleDefault
-                                                handler:^(UIAlertAction *action) {
-                                                  [self toggleCellLayoutType];
-                                                }]];
+  [_actionController addAction:[UIAlertAction actionWithTitle:@"Toggle List/Grid Layout"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction *action) {
+                                                        [self toggleCellLayoutType];
+                                                      }]];
 
-  [_actionController addAction:
-                         [UIAlertAction actionWithTitle:@"Toggle Card/Grouped Style"
-                                                  style:UIAlertActionStyleDefault
-                                                handler:^(UIAlertAction *action) {
-                                                  [self toggleCellStyle];
-                                                }]];
+  [_actionController addAction:[UIAlertAction actionWithTitle:@"Toggle Card/Grouped Style"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction *action) {
+                                                        [self toggleCellStyle];
+                                                      }]];
 
-  [_actionController addAction:
-                         [UIAlertAction actionWithTitle:@"Cancel"
-                                                  style:UIAlertActionStyleCancel
-                                                handler:^(UIAlertAction *action) {
-                                                  [self dismissActionController];
-                                                }]];
+  [_actionController addAction:[UIAlertAction actionWithTitle:@"Cancel"
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction *action) {
+                                                        [self dismissActionController];
+                                                      }]];
 
   [self presentViewController:_actionController animated:YES completion:nil];
 }

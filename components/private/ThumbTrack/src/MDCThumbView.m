@@ -56,7 +56,8 @@ static const CGFloat kMinTouchSize = 48;
 
 - (void)setHasShadow:(BOOL)hasShadow {
   _hasShadow = hasShadow;
-  [[self shadowLayer] setElevation:(hasShadow) ? MDCShadowElevationCardResting : MDCShadowElevationNone];
+  [[self shadowLayer]
+      setElevation:(hasShadow) ? MDCShadowElevationCardResting : MDCShadowElevationNone];
 }
 
 - (MDCShadowLayer *)shadowLayer {
@@ -66,9 +67,7 @@ static const CGFloat kMinTouchSize = 48;
 - (void)layoutSubviews {
   [super layoutSubviews];
   self.layer.shadowPath =
-      [UIBezierPath bezierPathWithRoundedRect:self.bounds
-                                 cornerRadius:_cornerRadius]
-          .CGPath;
+      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:_cornerRadius].CGPath;
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {

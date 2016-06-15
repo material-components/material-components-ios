@@ -187,10 +187,9 @@
 
 - (CGSize)sizeWithAttribute:(UICollectionViewLayoutAttributes *)attr {
   CGFloat height = MDCCellDefaultOneLineHeight;
-  if ([_styler.delegate respondsToSelector:
-                            @selector(collectionView:cellHeightAtIndexPath:)]) {
-    height = [_styler.delegate collectionView:self.collectionView
-                        cellHeightAtIndexPath:attr.indexPath];
+  if ([_styler.delegate respondsToSelector:@selector(collectionView:cellHeightAtIndexPath:)]) {
+    height =
+        [_styler.delegate collectionView:self.collectionView cellHeightAtIndexPath:attr.indexPath];
   }
 
   CGFloat width = [self cellWidthAtSectionIndex:attr.indexPath.section];
@@ -198,13 +197,12 @@
 }
 
 - (CGFloat)cellWidthAtSectionIndex:(NSInteger)section {
-  CGFloat bounds = CGRectGetWidth(UIEdgeInsetsInsetRect(self.collectionView.bounds,
-                                                        self.collectionView.contentInset));
+  CGFloat bounds = CGRectGetWidth(
+      UIEdgeInsetsInsetRect(self.collectionView.bounds, self.collectionView.contentInset));
   UIEdgeInsets sectionInsets = [self insetsAtSectionIndex:section];
   CGFloat insets = sectionInsets.left + sectionInsets.right;
   if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
-    CGFloat cellWidth =
-        bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
+    CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
     return cellWidth / _styler.gridColumnCount;
   }
   return bounds - insets;
@@ -233,8 +231,7 @@
   return insets;
 }
 
-- (CGSize)inlaidSizeAtIndexPath:(NSIndexPath *)indexPath
-                       withSize:(CGSize)size {
+- (CGSize)inlaidSizeAtIndexPath:(NSIndexPath *)indexPath withSize:(CGSize)size {
   // If object is inlaid, return its adjusted size.
   UICollectionView *collectionView = self.collectionView;
   if ([_styler isItemInlaidAtIndexPath:indexPath]) {
@@ -244,8 +241,8 @@
     BOOL nextCellIsInlaid = NO;
 
     BOOL hasSectionHeader = NO;
-    if ([self respondsToSelector:
-                  @selector(collectionView:layout:referenceSizeForHeaderInSection:)]) {
+    if ([self
+            respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]) {
       CGSize headerSize = [self collectionView:collectionView
                                         layout:_collectionViewLayout
                referenceSizeForHeaderInSection:indexPath.section];
@@ -253,8 +250,8 @@
     }
 
     BOOL hasSectionFooter = NO;
-    if ([self respondsToSelector:
-                  @selector(collectionView:layout:referenceSizeForFooterInSection:)]) {
+    if ([self
+            respondsToSelector:@selector(collectionView:layout:referenceSizeForFooterInSection:)]) {
       CGSize footerSize = [self collectionView:collectionView
                                         layout:_collectionViewLayout
                referenceSizeForFooterInSection:indexPath.section];
@@ -264,8 +261,7 @@
     // Check if previous cell is inlaid.
     if (indexPath.item > 0 || hasSectionHeader) {
       NSIndexPath *prevIndexPath =
-          [NSIndexPath indexPathForItem:(indexPath.item - 1)
-                              inSection:indexPath.section];
+          [NSIndexPath indexPathForItem:(indexPath.item - 1) inSection:indexPath.section];
       prevCellIsInlaid = [_styler isItemInlaidAtIndexPath:prevIndexPath];
       inlayInsets.top = prevCellIsInlaid ? inset / 2 : inset;
     }
@@ -274,8 +270,7 @@
     if (indexPath.item < [collectionView numberOfItemsInSection:indexPath.section] - 1 ||
         hasSectionFooter) {
       NSIndexPath *nextIndexPath =
-          [NSIndexPath indexPathForItem:(indexPath.item + 1)
-                              inSection:indexPath.section];
+          [NSIndexPath indexPathForItem:(indexPath.item + 1) inSection:indexPath.section];
       nextCellIsInlaid = [_styler isItemInlaidAtIndexPath:nextIndexPath];
       inlayInsets.bottom = nextCellIsInlaid ? inset / 2 : inset;
     }
@@ -309,8 +304,8 @@
     }
   }
 
-  if ([_styler.delegate respondsToSelector:
-                            @selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
+  if ([_styler.delegate
+          respondsToSelector:@selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
     return [_styler.delegate collectionView:self.collectionView
                          inkTouchController:inkTouchController
                          inkViewAtIndexPath:indexPath];
@@ -354,8 +349,7 @@
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
     shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  if ([_styler.delegate respondsToSelector:
-                            @selector(collectionView:hidesInkViewAtIndexPath:)]) {
+  if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)]) {
     return ![_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath];
   }
   return YES;
@@ -364,15 +358,15 @@
 - (void)collectionView:(UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   // Start cell ink show animation.
-  MDCInkView *inkView = [self inkTouchController:_inkTouchController
-                          inkViewAtTouchLocation:_inkTouchLocation];
+  MDCInkView *inkView =
+      [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
 
   // Update ink color if necessary.
   if ([_styler.delegate respondsToSelector:@selector(collectionView:inkColorAtIndexPath:)]) {
-    inkView.inkColor = [_styler.delegate collectionView:collectionView
-                                    inkColorAtIndexPath:indexPath];
+    inkView.inkColor =
+        [_styler.delegate collectionView:collectionView inkColorAtIndexPath:indexPath];
     if (!inkView.inkColor) {
       inkView.inkColor = inkView.defaultInkColor;
     }
@@ -383,8 +377,8 @@
 - (void)collectionView:(UICollectionView *)collectionView
     didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   // Start cell ink evaporate animation.
-  MDCInkView *inkView = [self inkTouchController:_inkTouchController
-                          inkViewAtTouchLocation:_inkTouchLocation];
+  MDCInkView *inkView =
+      [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
   [inkView startTouchEndedAnimationAtPoint:location completion:nil];
@@ -466,8 +460,7 @@
                toIndexPath:(NSIndexPath *)newIndexPath {
   // First ensure both source and target items can be moved.
   return ([self collectionView:collectionView canMoveItemAtIndexPath:indexPath] &&
-          [self collectionView:collectionView
-              canMoveItemAtIndexPath:newIndexPath]);
+          [self collectionView:collectionView canMoveItemAtIndexPath:newIndexPath]);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
