@@ -17,12 +17,12 @@
 #import "PestoCardCollectionViewCell.h"
 #import "PestoRemoteImageService.h"
 
-#import "PestoIconFish.h"
-#import "PestoIconMain.h"
-#import "PestoIconMeat.h"
-#import "PestoIconSpicy.h"
-#import "PestoIconTimer.h"
-#import "PestoIconVeggie.h"
+#import "PestoIcons/PestoIconFish.h"
+#import "PestoIcons/PestoIconMain.h"
+#import "PestoIcons/PestoIconMeat.h"
+#import "PestoIcons/PestoIconSpicy.h"
+#import "PestoIcons/PestoIconTimer.h"
+#import "PestoIcons/PestoIconVeggie.h"
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"

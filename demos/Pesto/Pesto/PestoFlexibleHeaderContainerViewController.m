@@ -17,7 +17,7 @@
 #import "PestoCollectionViewController.h"
 #import "PestoDetailViewController.h"
 #import "PestoFlexibleHeaderContainerViewController.h"
-#import "PestoIconSettings.h"
+#import "PestoIcons/PestoIconSettings.h"
 #import "PestoSettingsViewController.h"
 
 #import "MaterialAppBar.h"
