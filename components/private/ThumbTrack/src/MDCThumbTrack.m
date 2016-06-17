@@ -135,8 +135,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self addGestureRecognizer:tapGestureRecognizer];
 
     _panRecognizer =
-        [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(handlePanGesture:)];
+        [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     _panRecognizer.cancelsTouchesInView = NO;
     [self updatePanRecognizerTarget];
 
@@ -524,9 +523,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // The reason we calculate this explicitly instead of just using _thumbView.frame is because
     // the thumb view might not be have the exact radius of _thumbRadius, depending on if the track
     // is disabled or if a user is dragging the thumb.
-    CGRect gapMaskFrame = CGRectMake(_thumbView.center.x - _thumbRadius,
-                                     _thumbView.center.y - _thumbRadius,
-                                     _thumbRadius * 2, _thumbRadius * 2);
+    CGRect gapMaskFrame =
+        CGRectMake(_thumbView.center.x - _thumbRadius, _thumbView.center.y - _thumbRadius,
+                   _thumbRadius * 2, _thumbRadius * 2);
     gapMaskFrame = [self convertRect:gapMaskFrame toView:_trackView];
     CGPathAddRect(path, NULL, gapMaskFrame);
   }
