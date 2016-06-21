@@ -20,13 +20,32 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
 MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
 cd $MDC_ROOT
+isHotFix=false;
+
+while test $# -gt 0; do
+  case "$1" in
+    --hotfix)
+      isHotFix=true;
+      shift
+      ;;
+  esac
+done
 
 if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   git fetch
-  git checkout -b release-candidate origin/develop
+  if $isHotFix; then
+    BRANCH_MESSAGE="This is a hotfix... branching off origin/master"
+    BRANCH=origin/master
+  else
+    BRANCH_MESSAGE="This is a normal release... branching off origin/develop"
+    BRANCH=origin/develop
+  fi
+  echo ${BRANCH_MESSAGE}
+  git checkout -b release-candidate ${BRANCH}
   git push origin release-candidate
 else
-  echo "Release already cut. Consider deleting the existing release-candidate branch."
+  echo "Release already cut."
+  echo "Consider deleting your existing release-candidate branch."
   exit 1
 fi
 
