@@ -78,11 +78,17 @@ static NSString *const kEnabledSelector = @"enabled";
 - (void)alignButtonBaseline:(UIButton *)button {
   CGRect contentRect = [button contentRectForBounds:button.bounds];
   CGRect titleRect = [button titleRectForContentRect:contentRect];
+
+  // Calculate baseline information based on frame that the title text appears in.
   CGFloat baseline = CGRectGetMaxY(titleRect) + button.titleLabel.font.descender;
   CGFloat buttonBaseline = button.frame.origin.y + baseline;
 
+  // When modifying insets, be sure to add/subtract equal amounts on opposite sides.
   UIEdgeInsets insets = button.titleEdgeInsets;
-  insets.top += _buttonTitleBaseline - buttonBaseline;
+  CGFloat baselineOffset = _buttonTitleBaseline - buttonBaseline;
+
+  insets.top += baselineOffset;
+  insets.bottom -= baselineOffset;
   button.titleEdgeInsets = insets;
 }
 
