@@ -775,7 +775,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [CATransaction commit];
 }
 
-+ (NSArray *)defaultColors {
++ (NSArray <UIColor *> *)defaultColors {
   static NSArray *defaultColors;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
