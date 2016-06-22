@@ -320,7 +320,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
 #pragma mark - Header/Footer Caching
 
-- (void)storeSupplementaryViewsWithAttributes:(NSArray <MDCCollectionViewLayoutAttributes *> *)attributes {
+- (void)storeSupplementaryViewsWithAttributes:(NSArray <__kindof UICollectionViewLayoutAttributes *> *)attributes {
   _headerSections = [NSMutableIndexSet indexSet];
   _footerSections = [NSMutableIndexSet indexSet];
 
@@ -640,7 +640,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   if (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     NSMutableSet *sectionSet = [NSMutableSet set];
     BOOL shouldShowGridBackground = NO;
-    NSMutableArray <MDCCollectionViewLayoutAttributes *> *decorationAttributes = [NSMutableArray array];
+    NSMutableArray <__kindof UICollectionViewLayoutAttributes *> *decorationAttributes = [NSMutableArray array];
     for (MDCCollectionViewLayoutAttributes *attr in attributes) {
       NSInteger section = attr.indexPath.section;
 
