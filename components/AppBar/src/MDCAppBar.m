@@ -166,16 +166,10 @@ static const CGFloat kStatusBarHeight = 20;
     UIImage *backButtonImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_arrow_back]];
     backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     if (self.navigationBar.layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
       if ([backButtonImage
               respondsToSelector:@selector(imageFlippedForRightToLeftLayoutDirection)]) {
         backButtonImage = [backButtonImage imageFlippedForRightToLeftLayoutDirection];
       }
-#else
-      backButtonImage = [UIImage imageWithCGImage:backButtonImage.CGImage
-                                            scale:backButtonImage.scale
-                                      orientation:UIImageOrientationUpMirrored];
-#endif
     }
     backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
                                                          style:UIBarButtonItemStyleDone

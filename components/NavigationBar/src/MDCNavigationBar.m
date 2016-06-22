@@ -116,16 +116,12 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (void)commonMDCNavigationBarInit {
   _observedNavigationItemLock = [[NSObject alloc] init];
 
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
   if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
     _layoutDirection = [UIView
         userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
   } else {
     _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   }
-#else
-  _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-#endif
 
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography titleFont];
