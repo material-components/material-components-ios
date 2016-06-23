@@ -16,6 +16,6 @@
 
 #import "MaterialFlexibleHeader.h"
 
-@interface PestoFlexibleHeaderContainerViewController : MDCFlexibleHeaderContainerViewController
+@interface PestoViewController : MDCFlexibleHeaderContainerViewController
 
 @end
