@@ -69,6 +69,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.trackEndsAreInset = YES;
   _thumbTrack.thumbRadius = kSliderThumbRadius;
   _thumbTrack.thumbIsSmallerWhenDisabled = YES;
+  _thumbTrack.thumbIsHollowAtStart = YES;
   _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
   _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
@@ -215,7 +216,11 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat newValue = self.value + kSliderAccessibilityIncrement * range;
-    [_thumbTrack setValue:newValue animated:NO userGenerated:YES completion:NULL];
+    [_thumbTrack setValue:newValue
+                     animated:NO
+        animateThumbAfterMove:NO
+                userGenerated:YES
+                   completion:NULL];
 
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
@@ -225,7 +230,11 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat newValue = self.value - kSliderAccessibilityIncrement * range;
-    [_thumbTrack setValue:newValue animated:NO userGenerated:YES completion:NULL];
+    [_thumbTrack setValue:newValue
+                     animated:NO
+        animateThumbAfterMove:NO
+                userGenerated:YES
+                   completion:NULL];
 
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }

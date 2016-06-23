@@ -219,7 +219,11 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   _on = on;
 
   CGFloat value = _on ? _thumbTrack.maximumValue : _thumbTrack.minimumValue;
-  [_thumbTrack setValue:value animated:animated userGenerated:NO completion:NULL];
+  [_thumbTrack setValue:value
+                   animated:animated
+      animateThumbAfterMove:animated
+              userGenerated:NO
+                 completion:NULL];
 
   [self updateAccessibilityValues];
 }
