@@ -165,7 +165,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 
  @return An array of index paths.
  */
-- (nullable NSArray *)indexPathsForInlaidItems;
+- (nullable NSArray <NSIndexPath *> *)indexPathsForInlaidItems;
 
 /**
  A Boolean value indicating if the collection view item at the specified index path has its

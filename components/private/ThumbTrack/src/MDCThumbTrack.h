@@ -190,7 +190,7 @@
  */
 - (void)setValue:(CGFloat)value
                  animated:(BOOL)animated
-    animateThumbAfterMove:(BOOL)animateThumbAtValue
+    animateThumbAfterMove:(BOOL)animateThumbAfterMove
             userGenerated:(BOOL)userGenerated
                completion:(nullable void (^)())completion;
 

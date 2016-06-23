@@ -129,7 +129,7 @@ static const CGFloat kStatusBarHeight = 20;
   UIViewController *fhvParent = self.flexibleHeaderParentViewController;
   UINavigationController *navigationController = fhvParent.navigationController;
 
-  NSArray *viewControllerStack = navigationController.viewControllers;
+  NSArray <UIViewController *> *viewControllerStack = navigationController.viewControllers;
 
   // This will be zero if there is no navigation controller, so a view controller which is not
   // inside a navigation controller will be treated the same as a view controller at the root of a
@@ -166,16 +166,10 @@ static const CGFloat kStatusBarHeight = 20;
     UIImage *backButtonImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_arrow_back]];
     backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     if (self.navigationBar.layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
       if ([backButtonImage
               respondsToSelector:@selector(imageFlippedForRightToLeftLayoutDirection)]) {
         backButtonImage = [backButtonImage imageFlippedForRightToLeftLayoutDirection];
       }
-#else
-      backButtonImage = [UIImage imageWithCGImage:backButtonImage.CGImage
-                                            scale:backButtonImage.scale
-                                      orientation:UIImageOrientationUpMirrored];
-#endif
     }
     backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
                                                          style:UIBarButtonItemStyleDone
@@ -211,14 +205,14 @@ static const CGFloat kStatusBarHeight = 20;
 
   // Bar stack expands vertically, but has a margin above it for the status bar.
 
-  NSArray *horizontalConstraints = [NSLayoutConstraint
+  NSArray <NSLayoutConstraint *> *horizontalConstraints = [NSLayoutConstraint
       constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|[%@]|", kBarStackKey]
                           options:0
                           metrics:nil
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
-  NSArray *verticalConstraints = [NSLayoutConstraint
+  NSArray <NSLayoutConstraint *> *verticalConstraints = [NSLayoutConstraint
       constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%@-[%@]|", kStatusBarHeightKey,
                                                              kBarStackKey]
                           options:0

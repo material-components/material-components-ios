@@ -224,7 +224,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
           barMetrics:(UIBarMetrics)barMetrics {
   NSString *title = item.title ?: @"";
   if ([UIButton instancesRespondToSelector:@selector(setAttributedTitle:forState:)]) {
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    NSMutableDictionary <NSString *, id> *attributes = [NSMutableDictionary dictionary];
 
     // UIBarButtonItem's appearance proxy values don't appear to come "for free" like they do with
     // typical UIView instances, so we're attempting to recreate the behavior here.

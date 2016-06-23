@@ -52,10 +52,12 @@ static CGFloat kPestoDetailSplitWidth = 64;
 
     CGFloat leftWidth = kPestoDetailSplitWidth;
     CGFloat height = frame.size.height;
-    _leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, leftWidth, height)];
+    _leftView =
+        [[UIView alloc] initWithFrame:CGRectMake(0, 1, leftWidth, height)];
     [_leftView addSubview:leftView];
     [self addSubview:_leftView];
-    CGRect rightFrame = CGRectMake(leftWidth, 0, self.frame.size.width - leftWidth, height);
+    CGRect rightFrame =
+        CGRectMake(leftWidth, 0, self.frame.size.width - leftWidth, height);
     _rightView = [[UIView alloc] initWithFrame:rightFrame];
     [_rightView addSubview:rightView];
     _rightView.autoresizingMask =
@@ -100,24 +102,27 @@ static CGFloat kPestoDetailSplitWidth = 64;
 }
 
 - (void)commonInit {
-  _contentViewFrame = CGRectMake(kPestoDetailPadding, kPestoDetailPadding,
-                                 self.frame.size.width - kPestoDetailPadding * 2.f,
-                                 self.frame.size.height - kPestoDetailPadding * 2.f);
+  _contentViewFrame =
+      CGRectMake(kPestoDetailPadding, kPestoDetailPadding,
+                 self.frame.size.width - kPestoDetailPadding * 2.f,
+                 self.frame.size.height - kPestoDetailPadding * 2.f);
   UIView *contentView = [[UIView alloc] initWithFrame:_contentViewFrame];
-  contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  contentView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:contentView];
 
   CGRect iconFrame = CGRectMake(0, 0, 32, 32);
   UIImage *image = [PestoIconTimer drawTileImage:iconFrame];
   _iconImageView = [[UIImageView alloc] initWithImage:image];
-  _iconImageView.frame =
-      CGRectMake(0, 0, _iconImageView.frame.size.width, _iconImageView.frame.size.height);
+  _iconImageView.frame = CGRectMake(0, 0, _iconImageView.frame.size.width,
+                                    _iconImageView.frame.size.height);
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography display1Font];
   _titleLabel.alpha = [MDCTypography display1FontOpacity];
   _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
-  _titleLabel.frame = CGRectMake(0, 0, _contentViewFrame.size.width - kPestoDetailSplitWidth,
-                                 [MDCTypography display1Font].pointSize + 4.f);
+  _titleLabel.frame =
+      CGRectMake(0, 0, _contentViewFrame.size.width - kPestoDetailSplitWidth,
+                 [MDCTypography display1Font].pointSize + 4.f);
   _labelDesc = [[UILabel alloc] init];
   _labelDesc.lineBreakMode = NSLineBreakByWordWrapping;
   _labelDesc.numberOfLines = 8;
@@ -184,26 +189,39 @@ static CGFloat kPestoDetailSplitWidth = 64;
   [_amount4 sizeToFit];
 
   CGRect splitViewTitleFrame =
-      CGRectMake(0, 0, _contentViewFrame.size.width, [MDCTypography display1Font].pointSize + 4.f);
-  PestoSplitView *splitViewTitle = [[PestoSplitView alloc] initWithFrame:splitViewTitleFrame
-                                                                leftView:_iconImageView
-                                                               rightView:_titleLabel];
-  CGRect splitViewDescFrame =
-      CGRectMake(0, 0, _contentViewFrame.size.width, kPestoDetailDescTextHeight);
+      CGRectMake(0, 0, _contentViewFrame.size.width,
+                 [MDCTypography display1Font].pointSize + 4.f);
+  PestoSplitView *splitViewTitle =
+      [[PestoSplitView alloc] initWithFrame:splitViewTitleFrame
+                                   leftView:_iconImageView
+                                  rightView:_titleLabel];
+  CGRect splitViewDescFrame = CGRectMake(0, 0, _contentViewFrame.size.width,
+                                         kPestoDetailDescTextHeight);
   PestoSplitView *splitViewDesc =
-      [[PestoSplitView alloc] initWithFrame:splitViewDescFrame leftView:nil rightView:_labelDesc];
+      [[PestoSplitView alloc] initWithFrame:splitViewDescFrame
+                                   leftView:nil
+                                  rightView:_labelDesc];
   CGRect splitViewRect = CGRectMake(0, 0, _contentViewFrame.size.width, 18.f);
   PestoSplitView *splitView1 =
-      [[PestoSplitView alloc] initWithFrame:splitViewRect leftView:_amount1 rightView:_ingredient1];
+      [[PestoSplitView alloc] initWithFrame:splitViewRect
+                                   leftView:_amount1
+                                  rightView:_ingredient1];
   PestoSplitView *splitView2 =
-      [[PestoSplitView alloc] initWithFrame:splitViewRect leftView:_amount2 rightView:_ingredient2];
+      [[PestoSplitView alloc] initWithFrame:splitViewRect
+                                   leftView:_amount2
+                                  rightView:_ingredient2];
   PestoSplitView *splitView3 =
-      [[PestoSplitView alloc] initWithFrame:splitViewRect leftView:_amount3 rightView:_ingredient3];
+      [[PestoSplitView alloc] initWithFrame:splitViewRect
+                                   leftView:_amount3
+                                  rightView:_ingredient3];
   PestoSplitView *splitView4 =
-      [[PestoSplitView alloc] initWithFrame:splitViewRect leftView:_amount4 rightView:_ingredient4];
+      [[PestoSplitView alloc] initWithFrame:splitViewRect
+                                   leftView:_amount4
+                                  rightView:_ingredient4];
 
   CGRect stackFrame =
-      CGRectMake(kPestoDetailPadding, 0, self.bounds.size.width - kPestoDetailPadding * 2.f,
+      CGRectMake(kPestoDetailPadding, 0,
+                 self.bounds.size.width - kPestoDetailPadding * 2.f,
                  self.bounds.size.height);
   _stackView = [[UIStackView alloc] initWithFrame:stackFrame];
   _stackView.axis = UILayoutConstraintAxisVertical;
@@ -218,15 +236,20 @@ static CGFloat kPestoDetailSplitWidth = 64;
   [_stackView addArrangedSubview:splitView3];
   [_stackView addArrangedSubview:splitView4];
 
-  [_stackView.topAnchor constraintEqualToAnchor:contentView.topAnchor].active = YES;
-  [_stackView.leftAnchor constraintEqualToAnchor:contentView.leftAnchor].active = YES;
-  [_stackView.rightAnchor constraintEqualToAnchor:contentView.rightAnchor].active = YES;
-  [_stackView.widthAnchor constraintEqualToAnchor:contentView.widthAnchor].active = YES;
+  [_stackView.topAnchor constraintEqualToAnchor:contentView.topAnchor].active =
+      YES;
+  [_stackView.leftAnchor constraintEqualToAnchor:contentView.leftAnchor]
+      .active = YES;
+  [_stackView.rightAnchor constraintEqualToAnchor:contentView.rightAnchor]
+      .active = YES;
+  [_stackView.widthAnchor constraintEqualToAnchor:contentView.widthAnchor]
+      .active = YES;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.contentSize = CGSizeMake(self.frame.size.width, kPestoDetailBottomSheetHeightPortrait);
+  self.contentSize =
+      CGSizeMake(self.frame.size.width, kPestoDetailBottomSheetHeightPortrait);
 }
 
 - (void)setTitle:(NSString *)title {
@@ -255,7 +278,8 @@ static CGFloat kPestoDetailSplitWidth = 64;
 - (void)setDescText:(NSString *)descText {
   _descText = [descText copy];
 
-  NSMutableParagraphStyle *descParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+  NSMutableParagraphStyle *descParagraphStyle =
+      [[NSMutableParagraphStyle alloc] init];
   descParagraphStyle.lineHeightMultiple = 1.2f;
   NSMutableAttributedString *descAttrString =
       [[NSMutableAttributedString alloc] initWithString:_descText];
@@ -263,7 +287,8 @@ static CGFloat kPestoDetailSplitWidth = 64;
                          value:descParagraphStyle
                          range:NSMakeRange(0, descAttrString.length)];
   self.labelDesc.attributedText = descAttrString;
-  self.labelDesc.frame = CGRectMake(0, 0, self.contentViewFrame.size.width - kPestoDetailSplitWidth,
+  self.labelDesc.frame = CGRectMake(0, 0, self.contentViewFrame.size.width -
+                                              kPestoDetailSplitWidth,
                                     kPestoDetailDescTextHeight);
 }
 

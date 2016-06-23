@@ -220,7 +220,10 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   _animating = NO;
 
   [self actuallyStopAnimating];
-  [_delegate activityIndicatorAnimationDidFinish:self];
+
+  if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+    [_delegate activityIndicatorAnimationDidFinish:self];
+  }
 }
 
 - (void)resetStrokeColor {
@@ -733,7 +736,9 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [CATransaction setCompletionBlock:^{
     if (_animatingOut) {
       [self removeAnimations];
-      [_delegate activityIndicatorAnimationDidFinish:self];
+      if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+        [_delegate activityIndicatorAnimationDidFinish:self];
+      }
     }
   }];
   [CATransaction setAnimationDuration:kMDCActivityIndicatorAnimateOutDuration];
@@ -775,7 +780,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [CATransaction commit];
 }
 
-+ (NSArray *)defaultColors {
++ (NSArray<UIColor *> *)defaultColors {
   static NSArray *defaultColors;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{

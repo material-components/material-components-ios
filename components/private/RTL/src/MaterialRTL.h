@@ -14,8 +14,6 @@
  limitations under the License.
  */
 
-#import "MaterialFlexibleHeader.h"
-
-@interface PestoFlexibleHeaderContainerViewController : MDCFlexibleHeaderContainerViewController
-
-@end
+#import "MDCRTL.h"
+#import "UIImage+MaterialRTL.h"
+#import "UIView+MaterialRTL.h"

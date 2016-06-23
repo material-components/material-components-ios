@@ -98,7 +98,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   _rippleState = kInkRippleComplete;
 }
 
-- (CAKeyframeAnimation *)opacityAnimWithValues:(NSArray *)values times:(NSArray *)times {
+- (CAKeyframeAnimation *)opacityAnimWithValues:(NSArray <NSNumber *> *)values times:(NSArray <NSNumber *> *)times {
   CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kInkLayerOpacity];
   anim.fillMode = kCAFillModeForwards;
   anim.keyTimes = times;
@@ -120,7 +120,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   return anim;
 }
 
-- (CAKeyframeAnimation *)scaleAnimWithValues:(NSArray *)values times:(NSArray *)times {
+- (CAKeyframeAnimation *)scaleAnimWithValues:(NSArray <NSNumber *> *)values times:(NSArray <NSNumber *> *)times {
   CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:kInkLayerScale];
   anim.fillMode = kCAFillModeForwards;
   anim.keyTimes = times;

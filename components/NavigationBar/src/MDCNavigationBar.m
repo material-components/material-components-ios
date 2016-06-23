@@ -40,11 +40,11 @@ static const UIEdgeInsets kTextPadInsets = {20, 16, 20, 16};
 // KVO contexts
 static char *const kKVOContextMDCNavigationBar = "kKVOContextMDCNavigationBar";
 
-static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
+static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   static dispatch_once_t onceToken;
-  static NSArray *forwardingKeyPaths = nil;
+  static NSArray <NSString *> *forwardingKeyPaths = nil;
   dispatch_once(&onceToken, ^{
-    NSMutableArray *keyPaths = [NSMutableArray array];
+    NSMutableArray <NSString *> *keyPaths = [NSMutableArray array];
 
     Protocol *headerProtocol = @protocol(MDCUINavigationItemObservables);
     unsigned int count = 0;
@@ -58,7 +58,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 
     // Ensure that the plural bar button item key paths are listened to last, otherwise the
     // non-plural variant will cause the extra bar button items to be lost. Fun!
-    NSArray *orderedKeyPaths = @[
+    NSArray <NSString *> *orderedKeyPaths = @[
       NSStringFromSelector(@selector(leftBarButtonItems)),
       NSStringFromSelector(@selector(rightBarButtonItems))
     ];
@@ -116,16 +116,12 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (void)commonMDCNavigationBarInit {
   _observedNavigationItemLock = [[NSObject alloc] init];
 
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
   if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
     _layoutDirection = [UIView
         userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
   } else {
     _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   }
-#else
-  _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-#endif
 
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography titleFont];
@@ -159,7 +155,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 #pragma mark Accessibility
 
-- (NSArray *)accessibilityElements {
+- (NSArray <__kindof UIView *> *)accessibilityElements {
   return @[ _leadingButtonBar, self.titleView ?: _titleLabel, _trailingButtonBar ];
 }
 
@@ -220,7 +216,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
   paraStyle.lineBreakMode = _titleLabel.lineBreakMode;
 
-  NSDictionary *attributes =
+  NSDictionary <NSString *, id> *attributes =
       @{NSFontAttributeName : _titleLabel.font, NSParagraphStyleAttributeName : paraStyle};
 
   CGSize titleSize = [_titleLabel.text boundingRectWithSize:textFrame.size
@@ -347,12 +343,12 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   }
 }
 
-- (NSArray *)mdc_buttonItemsForLeadingBar {
+- (NSArray <UIBarButtonItem *> *)mdc_buttonItemsForLeadingBar {
   if (!self.leadingItemsSupplementBackButton && self.leadingBarButtonItems.count > 0) {
     return self.leadingBarButtonItems;
   }
 
-  NSMutableArray *buttonItems = [NSMutableArray array];
+  NSMutableArray <UIBarButtonItem *> *buttonItems = [NSMutableArray array];
   if (self.backItem && !self.hidesBackButton) {
     [buttonItems addObject:self.backItem];
   }
@@ -413,13 +409,13 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
   }
 }
 
-- (void)setLeadingBarButtonItems:(NSArray *)leadingBarButtonItems {
+- (void)setLeadingBarButtonItems:(NSArray <UIBarButtonItem *> *)leadingBarButtonItems {
   _leadingBarButtonItems = [leadingBarButtonItems copy];
   _leadingButtonBar.items = [self mdc_buttonItemsForLeadingBar];
   [self setNeedsLayout];
 }
 
-- (void)setTrailingBarButtonItems:(NSArray *)trailingBarButtonItems {
+- (void)setTrailingBarButtonItems:(NSArray <UIBarButtonItem *> *)trailingBarButtonItems {
   _trailingBarButtonItems = [trailingBarButtonItems copy];
   _trailingButtonBar.items = _trailingBarButtonItems;
   [self setNeedsLayout];
@@ -482,7 +478,7 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
       return;
     }
 
-    NSArray *keyPaths = MDCNavigationBarNavigationItemKVOPaths();
+    NSArray <NSString *> *keyPaths = MDCNavigationBarNavigationItemKVOPaths();
     for (NSString *keyPath in keyPaths) {
       [_observedNavigationItem removeObserver:self
                                    forKeyPath:keyPath
@@ -512,19 +508,19 @@ static NSArray *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 #pragma mark UINavigationItem interface matching
 
-- (NSArray *)leftBarButtonItems {
+- (NSArray <UIBarButtonItem *> *)leftBarButtonItems {
   return self.leadingBarButtonItems;
 }
 
-- (void)setLeftBarButtonItems:(NSArray *)leftBarButtonItems {
+- (void)setLeftBarButtonItems:(NSArray <UIBarButtonItem *> *)leftBarButtonItems {
   self.leadingBarButtonItems = leftBarButtonItems;
 }
 
-- (NSArray *)rightBarButtonItems {
+- (NSArray <UIBarButtonItem *> *)rightBarButtonItems {
   return self.trailingBarButtonItems;
 }
 
-- (void)setRightBarButtonItems:(NSArray *)rightBarButtonItems {
+- (void)setRightBarButtonItems:(NSArray <UIBarButtonItem *> *)rightBarButtonItems {
   self.trailingBarButtonItems = rightBarButtonItems;
 }
 
