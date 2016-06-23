@@ -31,6 +31,7 @@
     _title = [title copy];
     _map = [NSMutableDictionary dictionary];
     _children = [NSMutableArray array];
+    CBCFixViewDebuggingIfNeeded();
   }
   return self;
 }

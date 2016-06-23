@@ -47,3 +47,11 @@ FOUNDATION_EXTERN UIViewController *CBCViewControllerFromClass(Class aClass);
 
 /** Create a description from the provided class. **/
 FOUNDATION_EXTERN NSString *CBCDescriptionFromClass(Class aClass);
+
+#pragma mark Fix View Debugging
+
+/**
+ Fixes View Debugging in Xcode when running on iOS 8 and below. See
+ http://stackoverflow.com/questions/36313850/debug-view-hierarchy-in-xcode-7-3-fails
+ */
+FOUNDATION_EXTERN void CBCFixViewDebuggingIfNeeded();

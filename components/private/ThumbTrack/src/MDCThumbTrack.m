@@ -21,11 +21,11 @@
 #import "UIColor+MDC.h"
 
 static const CGFloat kAnimationDuration = 0.25f;
+static const CGFloat kThumbChangeAnimationDuration = 0.12f;
 static const CGFloat kDefaultThumbBorderWidth = 2.0f;
 static const CGFloat kDefaultThumbRadius = 6.0f;
 static const CGFloat kDefaultTrackHeight = 2.0f;
 static const CGFloat kDefaultFilledTrackAnchorValue = -CGFLOAT_MAX;
-static const CGFloat kEpsilon = 2.0f;  // Points.
 static const CGFloat kTrackOnAlpha = 0.5f;
 static const CGFloat kMinTouchSize = 48.0f;
 
@@ -135,8 +135,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self addGestureRecognizer:tapGestureRecognizer];
 
     _panRecognizer =
-        [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(handlePanGesture:)];
+        [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     _panRecognizer.cancelsTouchesInView = NO;
     [self updatePanRecognizerTarget];
 
@@ -164,7 +163,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [super layoutSubviews];
 
   [self updateTrackMask];
-  [self updateViewsAnimated:NO withDuration:0.0f];
+  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
@@ -183,27 +182,26 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       _interpolateOnOffColors ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha] : primaryColor;
 
   _touchController.defaultInkView.inkColor = [primaryColor colorWithAlphaComponent:kTrackOnAlpha];
-  [self updateColorsAnimated:NO withDuration:0.0f];
+  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
 }
 
 - (void)setThumbOffColor:(UIColor *)thumbOffColor {
   _thumbOffColor = thumbOffColor;
-  [self updateColorsAnimated:NO withDuration:0.0f];
 }
 
 - (void)setThumbDisabledColor:(UIColor *)thumbDisabledColor {
   _thumbDisabledColor = thumbDisabledColor;
-  [self updateColorsAnimated:NO withDuration:0.0f];
+  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
 }
 
 - (void)setTrackOffColor:(UIColor *)trackOffColor {
   _trackOffColor = trackOffColor;
-  [self updateColorsAnimated:NO withDuration:0.0f];
+  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
 }
 
 - (void)setTrackDisabledColor:(UIColor *)trackDisabledColor {
   _trackDisabledColor = trackDisabledColor;
-  [self updateColorsAnimated:NO withDuration:0.0f];
+  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
 }
 
 - (void)setInterpolateOnOffColors:(BOOL)interpolateOnOffColors {
@@ -224,7 +222,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (_value < _minimumValue) {
     _value = _minimumValue;
   }
-  [self updateThumbTrackAnimated:NO previousValue:previousValue completion:NULL];
+  [self updateThumbTrackAnimated:NO
+           animateThumbAfterMove:NO
+                   previousValue:previousValue
+                      completion:NULL];
 }
 
 - (void)setMaximumValue:(CGFloat)maximumValue {
@@ -233,7 +234,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (_value > _maximumValue) {
     _value = _maximumValue;
   }
-  [self updateThumbTrackAnimated:NO previousValue:previousValue completion:NULL];
+  [self updateThumbTrackAnimated:NO
+           animateThumbAfterMove:NO
+                   previousValue:previousValue
+                      completion:NULL];
 }
 
 - (void)setTrackEndsAreRounded:(BOOL)trackEndsAreRounded {
@@ -248,7 +252,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)setFilledTrackAnchorValue:(CGFloat)filledTrackAnchorValue {
   _filledTrackAnchorValue = MAX(_minimumValue, MIN(filledTrackAnchorValue, _maximumValue));
-  [self updateThumbTrackAnimated:NO previousValue:_value completion:NULL];
+  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:NULL];
 }
 
 - (void)setValue:(CGFloat)value {
@@ -256,13 +260,18 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)setValue:(CGFloat)value animated:(BOOL)animated {
-  [self setValue:value animated:animated userGenerated:NO completion:NULL];
+  [self setValue:value
+                   animated:animated
+      animateThumbAfterMove:animated
+              userGenerated:NO
+                 completion:NULL];
 }
 
 - (void)setValue:(CGFloat)value
-         animated:(BOOL)animated
-    userGenerated:(BOOL)userGenerated
-       completion:(void (^)())completion {
+                 animated:(BOOL)animated
+    animateThumbAfterMove:(BOOL)animateThumbAfterMove
+            userGenerated:(BOOL)userGenerated
+               completion:(void (^)())completion {
   CGFloat previousValue = _value;
   CGFloat newValue = MAX(_minimumValue, MIN(value, _maximumValue));
   newValue = [self closestValueToTargetValue:newValue];
@@ -275,7 +284,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (!userGenerated) {
     _lastDispatchedValue = _value;
   }
-  [self updateThumbTrackAnimated:animated previousValue:previousValue completion:completion];
+
+  [self updateThumbTrackAnimated:animated
+           animateThumbAfterMove:animateThumbAfterMove
+                   previousValue:previousValue
+                      completion:completion];
 }
 
 - (void)setNumDiscreteValues:(NSUInteger)numDiscreteValues {
@@ -335,8 +348,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (enabled) {
     [self setPrimaryColor:_primaryColor];
   }
-  [self updateTrackMask];
-  [self updateColorsAnimated:NO withDuration:0.0f];
+  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
 }
 
 #pragma mark - MDCInkTouchControllerDelegate
@@ -348,10 +360,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 #pragma mark - Private
 
-- (BOOL)isThumbAtStart {
-  CGPoint thumbLocation = _thumbView.center;
-  CGPoint start = [self thumbPositionForValue:_minimumValue];
-  return fabs(thumbLocation.x - start.x) < kEpsilon;
+- (BOOL)isValueAtMinimum {
+  return _value == _minimumValue;
 }
 
 - (CGFloat)thumbPanOffset {
@@ -362,76 +372,122 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return self.bounds.size.width - (self.thumbRadius * 2);
 }
 
+/**
+ Updates the state of the thumb track. First updates the views with properties that should change
+ before the animation. Then performs the main update block, which is animated or not as specified by
+ the `animated` parameter. After this completes, the secondary animation kicks in, again
+ animated or not as specified by `animateThumbAfterMove`. After this completes, the `completion`
+ handler is run.
+ */
 - (void)updateThumbTrackAnimated:(BOOL)animated
+           animateThumbAfterMove:(BOOL)animateThumbAfterMove
                    previousValue:(CGFloat)previousValue
                       completion:(void (^)())completion {
-  // UIView animateWithDuration:delay:options:animations: takes a different block signature.
-  void (^animationCompletion)(BOOL);
-  if (completion) {
-    animationCompletion = ^void(BOOL finished) {
-      completion();
+  [self updateViewsNoAnimation];
+
+  UIViewAnimationOptions animationOptions = UIViewAnimationOptionBeginFromCurrentState |
+                                            UIViewAnimationOptionAllowUserInteraction |
+                                            UIViewAnimationOptionCurveEaseInOut;
+
+  if (animated) {
+    // UIView animateWithDuration:delay:options:animations: takes a different block signature.
+    void (^animationCompletion)(BOOL) = ^void(BOOL finished) {
+      if (!finished) {
+        // If we were interrupted, we shoudldn't complete the second animation.
+        return;
+      }
+
+      // Do secondary animation and return.
+      [self updateThumbAfterMoveAnimated:animateThumbAfterMove
+                                 options:animationOptions
+                              completion:completion];
     };
-  }
-  CGFloat animationDuration = animated ? kAnimationDuration : 0.0f;
-  BOOL crossesAnchor =
-      (previousValue < _filledTrackAnchorValue && _filledTrackAnchorValue < _value) ||
-      (_value < _filledTrackAnchorValue && _filledTrackAnchorValue < previousValue);
-  UIViewAnimationOptions animationOptions =
-      UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction;
-  if (crossesAnchor) {
-    CGFloat currentValue = _value;
-    _value = _filledTrackAnchorValue;
-    CGFloat animationDurationToAnchor =
-        CGFabs(previousValue) / (CGFabs(previousValue) + CGFabs(currentValue)) * animationDuration;
-    void (^secondAnimation)(BOOL) = ^void(BOOL finished) {
-      _value = currentValue;
-      [UIView animateWithDuration:(animationDuration - animationDurationToAnchor)
+
+    // Note that currently the animations across an anchor point animate weirdly, but it'll be
+    // resolved soon in a future diff.
+    BOOL crossesAnchor =
+        (previousValue < _filledTrackAnchorValue && _filledTrackAnchorValue < _value) ||
+        (_value < _filledTrackAnchorValue && _filledTrackAnchorValue < previousValue);
+    if (crossesAnchor) {
+      CGFloat currentValue = _value;
+      _value = _filledTrackAnchorValue;
+      CGFloat animationDurationToAnchor = CGFabs(previousValue) /
+                                          (CGFabs(previousValue) + CGFabs(currentValue)) *
+                                          kAnimationDuration;
+      void (^secondAnimation)(BOOL) = ^void(BOOL finished) {
+        _value = currentValue;
+        [UIView animateWithDuration:(kAnimationDuration - animationDurationToAnchor)
+                              delay:0.0f
+                            options:animationOptions
+                         animations:^{
+                           [self updateViewsMainIsAnimated:animated
+                                              withDuration:(kAnimationDuration -
+                                                            animationDurationToAnchor)];
+                         }
+                         completion:animationCompletion];
+      };
+      [UIView animateWithDuration:animationDurationToAnchor
                             delay:0.0f
                           options:animationOptions
                        animations:^{
-                         [self updateViewsAnimated:animated
-                                      withDuration:(animationDuration - animationDurationToAnchor)];
+                         [self updateViewsMainIsAnimated:animated
+                                            withDuration:animationDurationToAnchor];
                        }
-                       completion:animationCompletion];
-    };
-    [UIView animateWithDuration:animationDurationToAnchor
-                          delay:0.0f
-                        options:animationOptions
-                     animations:^{
-                       [self updateViewsAnimated:animated withDuration:animationDurationToAnchor];
-                     }
-                     completion:secondAnimation];
-  } else {
-    void (^updateViews)() = ^() {
-      [self updateViewsAnimated:animated withDuration:animationDuration];
-    };
-    if (animated) {
-      [UIView animateWithDuration:animationDuration
+                       completion:secondAnimation];
+    } else {
+      [UIView animateWithDuration:kAnimationDuration
                             delay:0.0f
                           options:animationOptions
-                       animations:updateViews
+                       animations:^{
+                         [self updateViewsMainIsAnimated:animated withDuration:kAnimationDuration];
+                       }
                        completion:animationCompletion];
-    } else {
-      updateViews();
-      if (animationCompletion) {
-        animationCompletion(YES);
-      }
+    }
+  } else {
+    [self updateViewsMainIsAnimated:animated withDuration:0.0f];
+    [self updateThumbAfterMoveAnimated:animateThumbAfterMove
+                               options:animationOptions
+                            completion:completion];
+  }
+}
+
+- (void)updateThumbAfterMoveAnimated:(BOOL)animated
+                             options:(UIViewAnimationOptions)animationOptions
+                          completion:(void (^)())completion {
+  if (animated) {
+    [UIView animateWithDuration:kThumbChangeAnimationDuration
+        delay:0.0f
+        options:animationOptions
+        animations:^{
+          [self updateViewsForThumbAfterMoveIsAnimated:animated
+                                          withDuration:kThumbChangeAnimationDuration];
+        }
+        completion:^void(BOOL _) {
+          if (completion) {
+            completion();
+          }
+        }];
+  } else {
+    [self updateViewsForThumbAfterMoveIsAnimated:animated withDuration:0.0f];
+
+    if (completion) {
+      completion();
     }
   }
 }
 
-// Note: this method became bloated and confusing but I'm working on a refactor which will be
-// landed soon.
-- (void)updateColorsAnimated:(BOOL)animated withDuration:(NSTimeInterval)duration {
+/**
+ Updates the display of the ThumbTrack with properties we want to appear instantly, before the
+ animated properties are animated.
+ */
+- (void)updateViewsNoAnimation {
+  // If not enabled, adjust thumbView accordingly
   if (self.enabled) {
-    CGFloat percent = [self relativeValueForValue:_value];
-
-    if (_thumbIsSmallerWhenDisabled) {
-      _thumbView.layer.transform = CATransform3DIdentity;
-    }
-
+    // Set thumb color if needed. Note that setting color to hollow start state happes in secondary
+    // animation block (-updateViewsSecondaryAnimated:withDuration:).
     if (_interpolateOnOffColors) {
       // Set background/border colors based on interpolated percent.
+      CGFloat percent = [self relativeValueForValue:_value];
       _thumbView.layer.backgroundColor = [UIColor mdc_colorInterpolatedFromColor:_thumbOffColor
                                                                          toColor:_thumbOnColor
                                                                          percent:percent]
@@ -444,9 +500,49 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                                                                    toColor:_trackOnColor
                                                                    percent:percent];
       _trackOnLayer.backgroundColor = _clearColor.CGColor;
-    } else {
-      _thumbView.layer.backgroundColor = _thumbOnColor.CGColor;
+    } else if (!_thumbIsHollowAtStart || ![self isValueAtMinimum]) {
+      [self updateTrackMask];
+
+      _thumbView.backgroundColor = _thumbOnColor;
       _thumbView.layer.borderColor = _thumbOnColor.CGColor;
+    }
+  } else {
+    _thumbView.backgroundColor = _thumbDisabledColor;
+    _thumbView.layer.borderColor = _clearColor.CGColor;
+
+    if (_thumbIsSmallerWhenDisabled) {
+      CGFloat smallerRatio = (_thumbRadius - _trackHeight) / _thumbRadius;
+      _thumbView.layer.transform = CATransform3DMakeScale(smallerRatio, smallerRatio, 1.0f);
+    }
+  }
+}
+
+/**
+ Updates the properties of the ThumbTrack that are animated in the main animation body. May be
+ called from within a UIView animation block.
+ */
+- (void)updateViewsMainIsAnimated:(BOOL)animated withDuration:(NSTimeInterval)duration {
+  // Move thumb position.
+  CGPoint point = [self thumbPositionForValue:_value];
+  _thumbView.center = point;
+
+  // Re-draw track position
+  if (_trackEndsAreInset) {
+    _trackView.frame =
+        CGRectMake(_thumbView.cornerRadius, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
+                   CGRectGetWidth(self.bounds) - (_thumbView.cornerRadius * 2), _trackHeight);
+  } else {
+    _trackView.frame = CGRectMake(0, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
+                                  CGRectGetWidth(self.bounds), _trackHeight);
+  }
+
+  // Update colors, etc.
+  if (self.enabled) {
+    if (_thumbIsSmallerWhenDisabled) {
+      _thumbView.layer.transform = CATransform3DIdentity;
+    }
+
+    if (!_interpolateOnOffColors) {
       _trackView.layer.backgroundColor = _trackOffColor.CGColor;
       _trackOnLayer.backgroundColor = _trackOnColor.CGColor;
 
@@ -465,6 +561,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       }
       CGFloat current = [self thumbPositionForValue:_value].x;
 
+      // We have to use a CATransaction here because CALayer.frame is only animatable using this
+      // method, not the UIVIew block-based animation that the rest of this method uses. We specify
+      // the timing function and duration to match with that of the other animations.
       [CATransaction begin];
       [CATransaction
           setAnimationTimingFunction:[CAMediaTimingFunction
@@ -475,35 +574,28 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       [CATransaction commit];
     }
   } else {
-    // Set background/border colors for disabled state.
-    _thumbView.backgroundColor = _thumbDisabledColor;
-    _thumbView.layer.borderColor = _clearColor.CGColor;
-
-    if (_thumbIsSmallerWhenDisabled) {
-      CGFloat smallerRatio = (_thumbRadius - _trackHeight) / _thumbRadius;
-      _thumbView.layer.transform = CATransform3DMakeScale(smallerRatio, smallerRatio, 1.0f);
-    }
-
+    // Set background colors for disabled state.
     _trackView.backgroundColor = _trackDisabledColor;
     _trackOnLayer.backgroundColor = _clearColor.CGColor;
+
+    // Update mask again, since thumb may have moved
+    [self updateTrackMask];
   }
 }
 
-- (void)updateViewsAnimated:(BOOL)animated withDuration:(NSTimeInterval)duration {
-  // Move thumb position.
-  CGPoint point = [self thumbPositionForValue:_value];
-  _thumbView.center = point;
-  if (_trackEndsAreInset) {
-    _trackView.frame =
-        CGRectMake(_thumbView.cornerRadius, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
-                   CGRectGetWidth(self.bounds) - (_thumbView.cornerRadius * 2), _trackHeight);
-  } else {
-    _trackView.frame = CGRectMake(0, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
-                                  CGRectGetWidth(self.bounds), _trackHeight);
-  }
-  [self updateTrackMask];
+/**
+ Updates the properties of the ThumbTrack that animate after the thumb move has finished, i.e. after
+ the main animation block completes. May be called from within a UIView animation block.
+ */
+- (void)updateViewsForThumbAfterMoveIsAnimated:(BOOL)animated
+                                  withDuration:(NSTimeInterval)duration {
+  // If thumb at start and thumbIsHollowAtStart and enabled, make it hollow and call updateTrackMask
+  if ([self isValueAtMinimum] && _thumbIsHollowAtStart && self.enabled) {
+    [self updateTrackMask];
 
-  [self updateColorsAnimated:animated withDuration:duration];
+    _thumbView.backgroundColor = _clearColor;
+    _thumbView.layer.borderColor = _trackOffColor.CGColor;
+  }
 }
 
 - (void)updateTrackMask {
@@ -520,16 +612,18 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGMutablePathRef path = CGPathCreateMutable();
   CGPathAddRect(path, NULL, maskFrame);
 
-  if (!self.enabled && _disabledTrackHasThumbGaps) {
+  if ((!self.enabled && _disabledTrackHasThumbGaps) ||
+      ([self isValueAtMinimum] && _thumbIsHollowAtStart)) {
     // The reason we calculate this explicitly instead of just using _thumbView.frame is because
     // the thumb view might not be have the exact radius of _thumbRadius, depending on if the track
     // is disabled or if a user is dragging the thumb.
-    CGRect gapMaskFrame = CGRectMake(_thumbView.center.x - _thumbRadius,
-                                     _thumbView.center.y - _thumbRadius,
-                                     _thumbRadius * 2, _thumbRadius * 2);
+    CGRect gapMaskFrame =
+        CGRectMake(_thumbView.center.x - _thumbRadius, _thumbView.center.y - _thumbRadius,
+                   _thumbRadius * 2, _thumbRadius * 2);
     gapMaskFrame = [self convertRect:gapMaskFrame toView:_trackView];
     CGPathAddRect(path, NULL, gapMaskFrame);
   }
+
   _trackMaskLayer.path = path;
   CGPathRelease(path);
 }
@@ -593,7 +687,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (!self.enabled) {
     return;
   }
-  [self interruptAnimation];
 
   if (recognizer.state == UIGestureRecognizerStateBegan) {
     CGPoint touchPosition = [recognizer locationInView:self];
@@ -608,7 +701,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     CGPoint touchPosition = [recognizer locationInView:self];
     CGFloat thumbPosition = touchPosition.x - _panThumbGrabPosition;
     CGFloat value = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
-    [self setValue:value animated:NO userGenerated:YES completion:NULL];
+    [self setValue:value animated:NO animateThumbAfterMove:YES userGenerated:YES completion:NULL];
   }
 
   if (recognizer.state == UIGestureRecognizerStateChanged) {
@@ -648,16 +741,18 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [_delegate thumbTrack:self willAnimateToValue:value];
   }
   [self setValue:value
-           animated:YES
-      userGenerated:YES
-         completion:^{
-           MDCThumbTrack *strongSelf = weakSelf;
-           [strongSelf sendDiscreteChangeAction];
-           if (strongSelf && [strongSelf->_delegate
-                                 respondsToSelector:@selector(thumbTrack:didAnimateToValue:)]) {
-             [strongSelf->_delegate thumbTrack:weakSelf didAnimateToValue:value];
-           }
-         }];
+                   animated:YES
+      animateThumbAfterMove:YES
+              userGenerated:YES
+                 completion:^{
+                   MDCThumbTrack *strongSelf = weakSelf;
+                   [strongSelf sendDiscreteChangeAction];
+                   if (strongSelf &&
+                       [strongSelf->_delegate
+                           respondsToSelector:@selector(thumbTrack:didAnimateToValue:)]) {
+                     [strongSelf->_delegate thumbTrack:weakSelf didAnimateToValue:value];
+                   }
+                 }];
 }
 
 - (void)sendContinuousChangeAction {

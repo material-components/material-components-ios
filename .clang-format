@@ -6,6 +6,7 @@ AllowShortLoopsOnASingleLine: false
 AlwaysBreakBeforeMultilineStrings: false
 BinPackParameters: false
 ColumnLimit: 100
+IndentWrappedFunctionNames: true
 ObjCSpaceBeforeProtocolList: true
 PointerBindsToType: false
-IndentWrappedFunctionNames: true
+SortIncludes: true

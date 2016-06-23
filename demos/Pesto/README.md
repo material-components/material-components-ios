@@ -10,5 +10,5 @@ management. You will need cocoapods as well as SSH access to
 Needing SSH access is only temporary until MDC launches publicly.
 
 To install/build, cd into this directory and run `pod install`.
-Then run `open Pesto.xcworkspace`.  Do **not** open `Pesto.xcodeproj`
+Then run `open Pesto.xcworkspace`. Do **not** open `Pesto.xcodeproj`
 or the project will not build.

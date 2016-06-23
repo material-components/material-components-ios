@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Resistor"
-  s.version      = "1.0.0"
+  s.version      = "11.0.1"
   s.summary      = "An example component."
   s.homepage     = "https://github.com/google/catalog-by-convention"
   s.authors      = "Google Inc."

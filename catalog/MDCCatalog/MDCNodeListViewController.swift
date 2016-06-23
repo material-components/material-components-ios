@@ -168,16 +168,35 @@ class MDCNodeListViewController: CBCNodeListViewController {
       textView.text = componentDescription
       textView.font = MDCTypography.captionFont()
       textView.alpha = MDCTypography.captionFontOpacity()
-      textView.frame = CGRectMake(20,
-        40,
-        tableView.frame.size.width - 40,
-        ceil(MDCTypography.captionFont().lineHeight * 3))
-      textView.autoresizingMask = .FlexibleWidth
       textView.contentInset = UIEdgeInsetsMake(-8, -5, -8, -5)
       textView.editable = false
+      textView.translatesAutoresizingMaskIntoConstraints = false
       sectionViewFrame = CGRectMake(0, 0, tableView.frame.size.width, descriptionSectionHeight)
       sectionView.frame = sectionViewFrame
       sectionView.addSubview(textView)
+      let textViewHeight = ceil(MDCTypography.captionFont().lineHeight * 3)
+      // Use AutoLayout to workaround http://www.openradar.me/25505644.
+      if #available(iOS 9.0, *) {
+        NSLayoutConstraint.activateConstraints([
+          textView.leadingAnchor.constraintEqualToAnchor(sectionView.leadingAnchor, constant: 20),
+          textView.trailingAnchor.constraintEqualToAnchor(sectionView.trailingAnchor,
+              constant: -20),
+          textView.topAnchor.constraintEqualToAnchor(sectionView.leadingAnchor, constant: 40),
+          textView.heightAnchor.constraintEqualToConstant(textViewHeight)
+        ])
+      } else {
+        let horizontalConstraints =
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-(20)-[textView]-(20)-|",
+                                                           options: [], metrics: nil,
+                                                           views: ["textView" : textView])
+        let verticalConstraints =
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-(40)-[textView(==h)]",
+                                                           options: [],
+                                                           metrics: ["h" : textViewHeight],
+                                                           views: ["textView" : textView])
+        sectionView.addConstraints(horizontalConstraints)
+        sectionView.addConstraints(verticalConstraints)
+      }
     }
 
     return sectionView

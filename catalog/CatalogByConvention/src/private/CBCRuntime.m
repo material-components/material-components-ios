@@ -114,3 +114,16 @@ NSString *CBCDescriptionFromClass(Class aClass) {
   }
   return nil;
 }
+
+#pragma mark Fix View Debugging
+
+void CBCFixViewDebuggingIfNeeded() {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    Method original = class_getInstanceMethod([UIView class], @selector(viewForBaselineLayout));
+    class_addMethod([UIView class], @selector(viewForFirstBaselineLayout),
+                    method_getImplementation(original), method_getTypeEncoding(original));
+    class_addMethod([UIView class], @selector(viewForLastBaselineLayout),
+                    method_getImplementation(original), method_getTypeEncoding(original));
+  });
+}

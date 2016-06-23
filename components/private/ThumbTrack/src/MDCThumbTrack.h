@@ -96,6 +96,12 @@
 /** Whether or not the thumb should be smaller when the track is disabled. Defaults to NO. */
 @property(nonatomic, assign) BOOL thumbIsSmallerWhenDisabled;
 
+/**
+ Whether or not the thumb view should be a hollow circle when at the start position. Defaults to
+ NO.
+ */
+@property(nonatomic, assign) BOOL thumbIsHollowAtStart;
+
 /** The max radius of the ripple when the user touches the thumb. */
 @property(nonatomic, assign) CGFloat thumbMaxRippleRadius;
 
@@ -177,14 +183,16 @@
  result in an action message being sent.
 
  @param value The value to set the thumb to.
- @param animated If YES, the thumb will animate to its new position.
+ @param animated If YES, the change of value will be animated.
+ @param animateThumbAfterMove If YES, animate the thumb to its new state after moving it into place.
  @param userGenerated Is this call a direct result of a user's action?
  @param completion If not NULL, the block will be called after the value is set.
  */
 - (void)setValue:(CGFloat)value
-         animated:(BOOL)animated
-    userGenerated:(BOOL)userGenerated
-       completion:(nullable void (^)())completion;
+                 animated:(BOOL)animated
+    animateThumbAfterMove:(BOOL)animateThumbAfterMove
+            userGenerated:(BOOL)userGenerated
+               completion:(nullable void (^)())completion;
 
 /** Set the |icon| shown on the thumb. */
 - (void)setIcon:(nullable UIImage *)icon;
