@@ -68,6 +68,7 @@ PODS:
   - MaterialComponents/private (11.0.1):
     - MaterialComponents/private/Color (= 11.0.1)
     - MaterialComponents/private/Icons (= 11.0.1)
+    - MaterialComponents/private/RTL (= 11.0.1)
     - MaterialComponents/private/ThumbTrack (= 11.0.1)
   - MaterialComponents/private/Color (11.0.1)
   - MaterialComponents/private/Icons (11.0.1):
@@ -94,6 +95,7 @@ PODS:
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/Icons/ic_reorder (11.0.1):
     - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/RTL (11.0.1)
   - MaterialComponents/private/ThumbTrack (11.0.1):
     - MaterialComponents/Ink
     - MaterialComponents/private/Color
@@ -119,7 +121,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: a23addc228bb15a7dcdd90fc22c634e184cb74f0
+  MaterialComponents: bf83fb093332806c5d5a12a665c05917143b9d55
 
 PODFILE CHECKSUM: f138be16d4835113ff672258fc7529fad3f90e91
 

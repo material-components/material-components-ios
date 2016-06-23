@@ -243,6 +243,12 @@ Pod::Spec.new do |s|
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
     end
 
+    pss.subspec "RTL" do |ss|
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+      ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
+    end
+
     pss.subspec "ThumbTrack" do |ss|
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
