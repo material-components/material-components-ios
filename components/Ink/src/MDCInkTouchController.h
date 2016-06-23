@@ -69,14 +69,14 @@
 @property(nonatomic) CGRect targetBounds;
 
 /** Unavailable, please use initWithView: instead. */
-- (nullable instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
  Initializes the controller.
 
  @param view View that responds to touch events for ink.
  */
-- (nullable instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
 /**
  Adds the ink view to the view hierarchy.

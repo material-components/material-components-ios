@@ -63,7 +63,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    inkController = MDCInkTouchController(view: self.collectionView!)!
+    inkController = MDCInkTouchController(view: self.collectionView!)
     inkController!.addInkView()
     inkController!.delaysInkSpread = true
     inkController!.delegate = self
