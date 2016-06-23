@@ -252,7 +252,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     var vc: UIViewController
     if node.isExample() {
       let contentVC = node.createExampleViewController()
-      if contentVC.respondsToSelector("catalogShouldHideNavigation") {
+      if contentVC.respondsToSelector(NSSelectorFromString("catalogShouldHideNavigation")) {
         vc = contentVC
       } else {
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
