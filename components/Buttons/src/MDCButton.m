@@ -68,7 +68,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 static NSAttributedString *uppercaseAttributedString(NSAttributedString *string) {
   // Store the attributes.
-  NSMutableArray *attributes = [NSMutableArray array];
+  NSMutableArray <NSDictionary *> *attributes = [NSMutableArray array];
   [string enumerateAttributesInRange:NSMakeRange(0, [string length])
                              options:0
                           usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
@@ -93,11 +93,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 @interface MDCButton () {
-  NSMutableDictionary *_userElevations;    // For each UIControlState.
-  NSMutableDictionary *_backgroundColors;  // For each UIControlState.
+  NSMutableDictionary <NSNumber *, NSNumber *> *_userElevations;    // For each UIControlState.
+  NSMutableDictionary <NSNumber *, UIColor *> *_backgroundColors;  // For each UIControlState.
 
   // Cached accessibility settings.
-  NSMutableDictionary *_accessibilityLabelForState;
+  NSMutableDictionary <NSNumber *, NSString *> *_accessibilityLabelForState;
   NSString *_accessibilityLabelExplicitValue;
 }
 @property(nonatomic, strong) MDCInkView *inkView;

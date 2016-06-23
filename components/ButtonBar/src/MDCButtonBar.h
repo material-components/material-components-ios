@@ -84,7 +84,7 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 
  - (void)didTap:(UIBarButtonItem *)item event:(UIEvent *)event button:(UIButton *)button;
  */
-@property(nonatomic, copy) NSArray *items;
+@property(nonatomic, copy) NSArray <UIBarButtonItem *> *items;
 
 #pragma mark Configuring Layout
 

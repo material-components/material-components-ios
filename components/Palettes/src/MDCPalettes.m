@@ -40,8 +40,8 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 }
 
 @interface MDCPalette () {
-  NSDictionary *_tints;
-  NSDictionary *_accents;
+  NSDictionary <const NSString *, UIColor *> *_tints;
+  NSDictionary <const NSString *, UIColor *> *_accents;
 }
 
 @end
@@ -539,12 +539,12 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
     _accents = accents ? [accents copy] : @{};
 
     // Check if all the accent colors are present.
-    NSDictionary *allTints = tints;
-    NSMutableSet *requiredTintKeys = [NSMutableSet setWithSet:[[self class] requiredTintKeys]];
+    NSDictionary <const NSString *, UIColor *> *allTints = tints;
+    NSMutableSet <const NSString *> *requiredTintKeys = [NSMutableSet setWithSet:[[self class] requiredTintKeys]];
     [requiredTintKeys minusSet:[NSSet setWithArray:[tints allKeys]]];
     if ([requiredTintKeys count] != 0) {
       NSAssert(NO, @"Missing accent colors for the following keys: %@.", requiredTintKeys);
-      NSMutableDictionary *replacementTints =
+      NSMutableDictionary <const NSString *, UIColor *> *replacementTints =
           [NSMutableDictionary dictionaryWithDictionary:_accents];
       for (const NSString *tintKey in requiredTintKeys) {
         [replacementTints setObject:[UIColor clearColor] forKey:tintKey];
@@ -615,7 +615,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 #pragma mark - Private methods
 
-+ (nonnull NSSet *)requiredTintKeys {
++ (nonnull NSSet <const NSString *> *)requiredTintKeys {
   return [NSSet setWithArray:@[
     MDCPaletteTint50Name, MDCPaletteTint100Name, MDCPaletteTint200Name, MDCPaletteTint300Name,
     MDCPaletteTint400Name, MDCPaletteTint500Name, MDCPaletteTint600Name, MDCPaletteTint700Name,

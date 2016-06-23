@@ -73,8 +73,8 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   [CATransaction begin];
   [CATransaction setCompletionBlock:completion];
 
-  NSMutableArray *linearValues = [NSMutableArray array];
-  NSMutableArray *keyTimes = [NSMutableArray array];
+  NSMutableArray <NSValue *> *linearValues = [NSMutableArray array];
+  NSMutableArray <NSNumber *> *keyTimes = [NSMutableArray array];
   for (NSInteger i = 0; i < _numberOfFrames; i++) {
     CGRect contentsRect =
         CGRectMake(0, i * _singleFrameWidthInPercent, 1, _singleFrameWidthInPercent);
