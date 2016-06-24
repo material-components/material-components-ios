@@ -19,6 +19,7 @@
 #endif
 
 #import "MDCButtonBar.h"
+#import "MDCButton.h"
 
 #import "private/MDCAppBarButtonBarBuilder.h"
 
@@ -155,10 +156,19 @@ static NSString *const kEnabledSelector = @"enabled";
   [super tintColorDidChange];
 
   _defaultBuilder.buttonTitleColor = self.tintColor;
-  [self reloadButtonViews];
+  [self updateButtonTitleColors];
 }
 
 #pragma mark - Private
+
+- (void)updateButtonTitleColors {
+  for (UIView *viewObj in _buttonViews) {
+    if ([viewObj isKindOfClass:[MDCButton class]]) {
+      MDCButton *buttonView = (MDCButton *)viewObj;
+      buttonView.customTitleColor = self.tintColor;
+    }
+  }
+}
 
 - (NSArray <UIView *> *)viewsForItems:(NSArray <UIBarButtonItem *> *)barButtonItems {
   if (![barButtonItems count]) {

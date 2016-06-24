@@ -126,7 +126,6 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography titleFont];
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
-
   _leadingButtonBar = [[MDCButtonBar alloc] init];
   _leadingButtonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
   _trailingButtonBar = [[MDCButtonBar alloc] init];
@@ -369,7 +368,7 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (void)tintColorDidChange {
   [super tintColorDidChange];
 
-  _titleLabel.textColor = self.tintColor;
+  // Tint color should only modify interactive elements
   _leadingButtonBar.tintColor = self.tintColor;
   _trailingButtonBar.tintColor = self.tintColor;
 }
