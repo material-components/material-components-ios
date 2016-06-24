@@ -14,20 +14,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-find . -name 'Podfile' | while read path; do
+set -o errexit
+
+build_log=build_log.txt
+find * -name 'Podfile' | while read path; do
   project_dir=$(dirname $path)
-  
-  echo "Entering $project_dir..."
+  echo "Building in $project_dir..."
+  pushd $(dirname $path) >/dev/null
 
-  pushd $project_dir >> /dev/null
-
-  pod install || { echo "Failed to run pod install."; exit 1; }
+  rm -rf Pods
+  pod install --silent
 
   workspace=$(find . -d 1 -name '*.xcworkspace')
   scheme=$(xcodebuild build -workspace $workspace -list | grep "Information about workspace" | cut -d'"' -f2)
-  xcodebuild clean -workspace $workspace -scheme $scheme
-  xcodebuild build -workspace $workspace -scheme $scheme \
-    || { echo "Failed to build $workspace."; exit 1; }
+  xcodebuild clean -workspace $workspace -scheme $scheme >/dev/null
+  
+  if ! xcodebuild build -workspace $workspace -scheme $scheme >$build_log 2>&1; then
+    echo "Failed to build $scheme in $workspace, log left in $project_dir/$build_log."
+    echo "Continuing with next project..."
+  else
+    rm $build_log
+    echo "Done."
+  fi
 
-  popd >> /dev/null
+  popd >/dev/null
 done

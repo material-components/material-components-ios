@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -x
-
 # Install brew.
 #
 # This is not required for anyone but core team members.
 
-if [ ! $(brew -v >/dev/null 2>&1) ]; then
+if ! brew -v >/dev/null 2>&1; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+else
+  echo "Fixing permissions in brew's install directory."
+  sudo /usr/sbin/chown -R $USER:admin /usr/local
 fi

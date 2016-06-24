@@ -65,13 +65,9 @@ if $deploy ; then
   update=true
 fi 
 
-# Checking pre-requsits for folders
+# Checking prerequisites for folders
 # Getting the link for github repository
-if [ `git remote -v | grep "https://" | wc -l` -gt 0 ]; then
-  GITHUB_REMOTE=https://github.com/google/material-components-ios.git
-else
-  GITHUB_REMOTE=git@github.com:google/material-components-ios.git
-fi
+GITHUB_REMOTE=$(git config --get remote.origin.url)
 SITE_SOURCE_BRANCH="site-source"
 SITE_SOURCE_FOLDER=$SITE_SOURCE_BRANCH
 
