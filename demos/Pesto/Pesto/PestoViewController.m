@@ -14,11 +14,11 @@
  limitations under the License.
  */
 
+#import "PestoViewController.h"
 #import "PestoCollectionViewController.h"
 #import "PestoDetailViewController.h"
 #import "PestoIcons/PestoIconSettings.h"
 #import "PestoSettingsViewController.h"
-#import "PestoViewController.h"
 
 #import "MaterialAppBar.h"
 
@@ -30,8 +30,7 @@ static CGFloat kPestoInset = 5.f;
                                    UIViewControllerTransitioningDelegate>
 
 @property(nonatomic, strong) MDCAppBar *appBar;
-@property(nonatomic, strong)
-    PestoCollectionViewController *collectionViewController;
+@property(nonatomic, strong) PestoCollectionViewController *collectionViewController;
 @property(nonatomic, strong) UIImageView *zoomableView;
 @property(nonatomic, strong) UIView *zoomableCardView;
 
@@ -40,15 +39,12 @@ static CGFloat kPestoInset = 5.f;
 @implementation PestoViewController
 
 - (instancetype)init {
-  UICollectionViewFlowLayout *layout =
-      [[UICollectionViewFlowLayout alloc] init];
+  UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 0;
   CGFloat sectionInset = kPestoInset * 2.f;
-  [layout setSectionInset:UIEdgeInsetsMake(sectionInset, sectionInset,
-                                           sectionInset, sectionInset)];
+  [layout setSectionInset:UIEdgeInsetsMake(sectionInset, sectionInset, sectionInset, sectionInset)];
   PestoCollectionViewController *collectionVC =
-      [[PestoCollectionViewController alloc]
-          initWithCollectionViewLayout:layout];
+      [[PestoCollectionViewController alloc] initWithCollectionViewLayout:layout];
   self = [super initWithContentViewController:collectionVC];
   if (self) {
     _collectionViewController = collectionVC;
@@ -58,8 +54,7 @@ static CGFloat kPestoInset = 5.f;
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    _appBar.headerViewController.headerView.backgroundColor =
-        [UIColor clearColor];
+    _appBar.headerViewController.headerView.backgroundColor = [UIColor clearColor];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
 
     CGRect iconFrame = CGRectMake(0, 0, 32, 32);
@@ -93,21 +88,17 @@ static CGFloat kPestoInset = 5.f;
 - (CAMediaTimingFunction *)quantumEaseInOut {
   // This curve is slow both at the beginning and end.
   // Visualization of curve  http://cubic-bezier.com/#.4,0,.2,1
-  return
-      [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:0.2f:1.0f];
+  return [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:0.2f:1.0f];
 }
 
 #pragma mark - PestoCollectionViewControllerDelegate
 
-- (void)didSelectCell:(PestoCardCollectionViewCell *)cell
-           completion:(void (^)())completionBlock {
+- (void)didSelectCell:(PestoCardCollectionViewCell *)cell completion:(void (^)())completionBlock {
   self.zoomableView.frame = CGRectMake(
-      cell.frame.origin.x,
-      cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
+      cell.frame.origin.x, cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
       cell.frame.size.width, cell.frame.size.height - 50.f);
   self.zoomableCardView.frame = CGRectMake(
-      cell.frame.origin.x,
-      cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
+      cell.frame.origin.x, cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
       cell.frame.size.width, cell.frame.size.height);
   dispatch_async(dispatch_get_main_queue(), ^{
     self.zoomableView.image = cell.image;
@@ -118,14 +109,12 @@ static CGFloat kPestoInset = 5.f;
         animations:^{
           CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
           [CATransaction setAnimationTimingFunction:quantumEaseInOut];
-          CGRect zoomFrame =
-              CGRectMake(0, 0, self.view.bounds.size.width, 320.f);
+          CGRect zoomFrame = CGRectMake(0, 0, self.view.bounds.size.width, 320.f);
           self.zoomableView.frame = zoomFrame;
           self.zoomableCardView.frame = self.view.bounds;
         }
         completion:^(BOOL finished) {
-          PestoDetailViewController *detailVC =
-              [[PestoDetailViewController alloc] init];
+          PestoDetailViewController *detailVC = [[PestoDetailViewController alloc] init];
           detailVC.image = cell.image;
           detailVC.title = cell.title;
           detailVC.iconImageName = cell.iconImageName;
@@ -133,8 +122,8 @@ static CGFloat kPestoInset = 5.f;
           detailVC.modalPresentationStyle = UIModalPresentationCustom;
           detailVC.transitioningDelegate = self;
 
-          UINavigationController *navVC = [[UINavigationController alloc]
-              initWithRootViewController:detailVC];
+          UINavigationController *navVC =
+              [[UINavigationController alloc] initWithRootViewController:detailVC];
           navVC.navigationBarHidden = YES;
 
           [self presentViewController:navVC
@@ -150,25 +139,24 @@ static CGFloat kPestoInset = 5.f;
 
 #pragma mark - UIViewControllerTransitioningDelegate
 - (nullable id<UIViewControllerAnimatedTransitioning>)
-animationControllerForPresentedController:(UIViewController *)presented
-                     presentingController:(UIViewController *)presenting
-                         sourceController:(UIViewController *)source {
+    animationControllerForPresentedController:(UIViewController *)presented
+                         presentingController:(UIViewController *)presenting
+                             sourceController:(UIViewController *)source {
   return nil;
 }
 
-- (nullable id<UIViewControllerAnimatedTransitioning>)
-animationControllerForDismissedController:(UIViewController *)dismissed {
+- (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
+        (UIViewController *)dismissed {
   return self;
 }
 
 #pragma mark - UIViewControllerAnimatedTransitioning
-- (void)animateTransition:
-    (id<UIViewControllerContextTransitioning>)transitionContext {
-  UIViewController *const fromController = [transitionContext
-      viewControllerForKey:UITransitionContextFromViewControllerKey];
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+  UIViewController *const fromController =
+      [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
 
-  UIViewController *const toController = [transitionContext
-      viewControllerForKey:UITransitionContextToViewControllerKey];
+  UIViewController *const toController =
+      [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
 
   if ([fromController isKindOfClass:[PestoDetailViewController class]] &&
       [toController isKindOfClass:self.class]) {
@@ -188,8 +176,7 @@ animationControllerForDismissedController:(UIViewController *)dismissed {
   }
 }
 
-- (NSTimeInterval)transitionDuration:
-    (id<UIViewControllerContextTransitioning>)transitionContext {
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
   return 0.2;
 }
 
@@ -212,8 +199,7 @@ animationControllerForDismissedController:(UIViewController *)dismissed {
   UINavigationController *navVC =
       [[UINavigationController alloc] initWithRootViewController:settingsVC];
   navVC.navigationBar.barTintColor = teal;
-  navVC.navigationBar.titleTextAttributes =
-      @{NSForegroundColorAttributeName : white};
+  navVC.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : white};
   navVC.navigationBar.translucent = NO;
   navVC.navigationBarHidden = YES;
 

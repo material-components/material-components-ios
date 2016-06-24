@@ -28,8 +28,8 @@
 @property(nonatomic, copy, nullable) NSString *title;
 @property(nonatomic, strong, nullable) UIView *titleView;
 @property(nonatomic) BOOL hidesBackButton;
-@property(nonatomic, copy, nullable) NSArray <UIBarButtonItem *> *leftBarButtonItems;
-@property(nonatomic, copy, nullable) NSArray <UIBarButtonItem *> *rightBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *leftBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *rightBarButtonItems;
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
 @property(nonatomic, strong, nullable) UIBarButtonItem *leftBarButtonItem;
 @property(nonatomic, strong, nullable) UIBarButtonItem *rightBarButtonItem;
@@ -79,8 +79,8 @@
    trailingBarButtonItems are placed from the trailing edge to the leading edge with the first item
  in the list at the trailing outside edge and trailing aligned.
  */
-@property(nonatomic, copy, nullable) NSArray <UIBarButtonItem *> *leadingBarButtonItems;
-@property(nonatomic, copy, nullable) NSArray <UIBarButtonItem *> *trailingBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *leadingBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *trailingBarButtonItems;
 
 /* By default, the leadingItemsSupplementBackButton property is NO. In this case, the back button is
  not drawn and the leading item or items replace it. If you would like the leading items to appear
@@ -133,10 +133,10 @@
 #pragma mark UINavigationItem interface matching
 
 /* Equivalent to leadingBarButtonItems. */
-@property(nonatomic, copy, nullable) NSArray <UIBarButtonItem *> *leftBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *leftBarButtonItems;
 
 /* Equivalent to trailingBarButtonItems. */
-@property(nonatomic, copy, nullable) NSArray <UIBarButtonItem *> *rightBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *rightBarButtonItems;
 
 /* Equivalent to leadingBarButtonItem. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *leftBarButtonItem;

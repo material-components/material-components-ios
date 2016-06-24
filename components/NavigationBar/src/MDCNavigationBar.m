@@ -40,11 +40,11 @@ static const UIEdgeInsets kTextPadInsets = {20, 16, 20, 16};
 // KVO contexts
 static char *const kKVOContextMDCNavigationBar = "kKVOContextMDCNavigationBar";
 
-static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
+static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   static dispatch_once_t onceToken;
-  static NSArray <NSString *> *forwardingKeyPaths = nil;
+  static NSArray<NSString *> *forwardingKeyPaths = nil;
   dispatch_once(&onceToken, ^{
-    NSMutableArray <NSString *> *keyPaths = [NSMutableArray array];
+    NSMutableArray<NSString *> *keyPaths = [NSMutableArray array];
 
     Protocol *headerProtocol = @protocol(MDCUINavigationItemObservables);
     unsigned int count = 0;
@@ -58,7 +58,7 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
     // Ensure that the plural bar button item key paths are listened to last, otherwise the
     // non-plural variant will cause the extra bar button items to be lost. Fun!
-    NSArray <NSString *> *orderedKeyPaths = @[
+    NSArray<NSString *> *orderedKeyPaths = @[
       NSStringFromSelector(@selector(leftBarButtonItems)),
       NSStringFromSelector(@selector(rightBarButtonItems))
     ];
@@ -154,7 +154,7 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 #pragma mark Accessibility
 
-- (NSArray <__kindof UIView *> *)accessibilityElements {
+- (NSArray<__kindof UIView *> *)accessibilityElements {
   return @[ _leadingButtonBar, self.titleView ?: _titleLabel, _trailingButtonBar ];
 }
 
@@ -215,7 +215,7 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
   paraStyle.lineBreakMode = _titleLabel.lineBreakMode;
 
-  NSDictionary <NSString *, id> *attributes =
+  NSDictionary<NSString *, id> *attributes =
       @{NSFontAttributeName : _titleLabel.font, NSParagraphStyleAttributeName : paraStyle};
 
   CGSize titleSize = [_titleLabel.text boundingRectWithSize:textFrame.size
@@ -342,12 +342,12 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   }
 }
 
-- (NSArray <UIBarButtonItem *> *)mdc_buttonItemsForLeadingBar {
+- (NSArray<UIBarButtonItem *> *)mdc_buttonItemsForLeadingBar {
   if (!self.leadingItemsSupplementBackButton && self.leadingBarButtonItems.count > 0) {
     return self.leadingBarButtonItems;
   }
 
-  NSMutableArray <UIBarButtonItem *> *buttonItems = [NSMutableArray array];
+  NSMutableArray<UIBarButtonItem *> *buttonItems = [NSMutableArray array];
   if (self.backItem && !self.hidesBackButton) {
     [buttonItems addObject:self.backItem];
   }
@@ -408,13 +408,13 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   }
 }
 
-- (void)setLeadingBarButtonItems:(NSArray <UIBarButtonItem *> *)leadingBarButtonItems {
+- (void)setLeadingBarButtonItems:(NSArray<UIBarButtonItem *> *)leadingBarButtonItems {
   _leadingBarButtonItems = [leadingBarButtonItems copy];
   _leadingButtonBar.items = [self mdc_buttonItemsForLeadingBar];
   [self setNeedsLayout];
 }
 
-- (void)setTrailingBarButtonItems:(NSArray <UIBarButtonItem *> *)trailingBarButtonItems {
+- (void)setTrailingBarButtonItems:(NSArray<UIBarButtonItem *> *)trailingBarButtonItems {
   _trailingBarButtonItems = [trailingBarButtonItems copy];
   _trailingButtonBar.items = _trailingBarButtonItems;
   [self setNeedsLayout];
@@ -477,7 +477,7 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       return;
     }
 
-    NSArray <NSString *> *keyPaths = MDCNavigationBarNavigationItemKVOPaths();
+    NSArray<NSString *> *keyPaths = MDCNavigationBarNavigationItemKVOPaths();
     for (NSString *keyPath in keyPaths) {
       [_observedNavigationItem removeObserver:self
                                    forKeyPath:keyPath
@@ -507,19 +507,19 @@ static NSArray <NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 #pragma mark UINavigationItem interface matching
 
-- (NSArray <UIBarButtonItem *> *)leftBarButtonItems {
+- (NSArray<UIBarButtonItem *> *)leftBarButtonItems {
   return self.leadingBarButtonItems;
 }
 
-- (void)setLeftBarButtonItems:(NSArray <UIBarButtonItem *> *)leftBarButtonItems {
+- (void)setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems {
   self.leadingBarButtonItems = leftBarButtonItems;
 }
 
-- (NSArray <UIBarButtonItem *> *)rightBarButtonItems {
+- (NSArray<UIBarButtonItem *> *)rightBarButtonItems {
   return self.trailingBarButtonItems;
 }
 
-- (void)setRightBarButtonItems:(NSArray <UIBarButtonItem *> *)rightBarButtonItems {
+- (void)setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems {
   self.trailingBarButtonItems = rightBarButtonItems;
 }
 

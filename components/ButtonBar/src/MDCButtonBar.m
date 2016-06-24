@@ -34,7 +34,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
 @implementation MDCButtonBar {
   id _buttonItemsLock;
-  NSArray <__kindof UIView *> *_buttonViews;
+  NSArray<__kindof UIView *> *_buttonViews;
 
   MDCAppBarButtonBarBuilder *_defaultBuilder;
 }
@@ -104,7 +104,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
   BOOL shouldAlignBaselines = _buttonTitleBaseline > 0;
 
-  NSEnumerator <__kindof UIView *> *positionedButtonViews =
+  NSEnumerator<__kindof UIView *> *positionedButtonViews =
       self.layoutPosition == MDCButtonBarLayoutPositionTrailing
           ? [_buttonViews reverseObjectEnumerator]
           : [_buttonViews objectEnumerator];
@@ -170,13 +170,13 @@ static NSString *const kEnabledSelector = @"enabled";
   }
 }
 
-- (NSArray <UIView *> *)viewsForItems:(NSArray <UIBarButtonItem *> *)barButtonItems {
+- (NSArray<UIView *> *)viewsForItems:(NSArray<UIBarButtonItem *> *)barButtonItems {
   if (![barButtonItems count]) {
     return nil;
   }
   id<MDCButtonBarDelegate> delegate = _defaultBuilder;
 
-  NSMutableArray <UIView *> *views = [NSMutableArray array];
+  NSMutableArray<UIView *> *views = [NSMutableArray array];
   [barButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *item, NSUInteger idx, BOOL *stop) {
     MDCBarButtonItemLayoutHints hints = MDCBarButtonItemLayoutHintsNone;
     if (idx == 0) {
@@ -311,21 +311,21 @@ static NSString *const kEnabledSelector = @"enabled";
 
 #pragma mark - Public
 
-- (NSArray <UIBarButtonItem *> *)buttonItems {
+- (NSArray<UIBarButtonItem *> *)buttonItems {
   return self.items;
 }
 
-- (void)setButtonItems:(NSArray <UIBarButtonItem *> *)buttonItems {
+- (void)setButtonItems:(NSArray<UIBarButtonItem *> *)buttonItems {
   self.items = buttonItems;
 }
 
-- (void)setItems:(NSArray <UIBarButtonItem *> *)items {
+- (void)setItems:(NSArray<UIBarButtonItem *> *)items {
   @synchronized(_buttonItemsLock) {
     if (_items == items || [_items isEqualToArray:items]) {
       return;
     }
 
-    NSArray <NSString *> *keyPaths = @[
+    NSArray<NSString *> *keyPaths = @[
       kEnabledSelector, NSStringFromSelector(@selector(title)),
       NSStringFromSelector(@selector(image))
     ];

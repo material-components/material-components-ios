@@ -503,7 +503,7 @@
 
 #pragma mark - Private
 
-- (void)deleteIndexPaths:(NSArray <NSIndexPath *> *)indexPaths {
+- (void)deleteIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
   if ([self respondsToSelector:@selector(collectionView:willDeleteItemsAtIndexPaths:)]) {
     void (^batchUpdates)() = ^{
       // Notify delegate to delete data.

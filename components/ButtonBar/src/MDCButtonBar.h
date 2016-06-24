@@ -84,7 +84,7 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 
  - (void)didTap:(UIBarButtonItem *)item event:(UIEvent *)event button:(UIButton *)button;
  */
-@property(nonatomic, copy) NSArray <UIBarButtonItem *> *items;
+@property(nonatomic, copy) NSArray<UIBarButtonItem *> *items;
 
 #pragma mark Configuring Layout
 
@@ -140,7 +140,8 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
  An object that conforms to this protocol must forward UIControlEventTouchUpInside events to the
  button bar's didTapButton:event: method signature in order to pass the correct UIBarButtonItem
  argument to the item's target/action invocation. This method signature is made available by
- importing the MDCAppBarButtonBarBuilder.h header. The MDCAppBarButtonBarBuilder.h header should *only* be
+ importing the MDCAppBarButtonBarBuilder.h header. The MDCAppBarButtonBarBuilder.h header should
+ *only* be
  imported in files that implement objects conforming to MDCButtonBarDelegate.
 
  @seealso MDCBarButtonItemLayoutHints

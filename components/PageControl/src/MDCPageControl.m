@@ -55,8 +55,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 @implementation MDCPageControl {
   UIView *_containerView;
-  NSMutableArray <MDCPageControlIndicator *> *_indicators;
-  NSMutableArray <NSValue *> *_indicatorPositions;
+  NSMutableArray<MDCPageControlIndicator *> *_indicators;
+  NSMutableArray<NSValue *> *_indicatorPositions;
   MDCPageControlIndicator *_animatedIndicator;
   MDCPageControlTrackLayer *_trackLayer;
   CGFloat _trackLength;
@@ -316,7 +316,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 - (void)revealIndicatorsReversed:(BOOL)reversed {
   // Animate hidden indicators staggered with delay.
-  NSArray <MDCPageControlIndicator *> *indicators = reversed ? [[_indicators reverseObjectEnumerator] allObjects] : _indicators;
+  NSArray<MDCPageControlIndicator *> *indicators =
+      reversed ? [[_indicators reverseObjectEnumerator] allObjects] : _indicators;
   NSInteger count = 0;
   for (MDCPageControlIndicator *indicator in indicators) {
     // Determine if this is the current page indicator.

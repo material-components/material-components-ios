@@ -17,8 +17,8 @@
 #import "PestoAppDelegate.h"
 #import "PestoViewController.h"
 
-#import "PestoIcons/PestoIconHome.h"
 #import "PestoIcons/PestoIconFavorite.h"
+#import "PestoIcons/PestoIconHome.h"
 #import "PestoIcons/PestoIconTrending.h"
 
 @interface PestoAppDelegate ()
@@ -36,19 +36,15 @@
   UITabBarController *tabBarController = [[UITabBarController alloc] init];
 
   PestoViewController *homeViewController = [[PestoViewController alloc] init];
-  PestoViewController *favoritesViewController =
-      [[PestoViewController alloc] init];
-  PestoViewController *trendingViewController =
-      [[PestoViewController alloc] init];
+  PestoViewController *favoritesViewController = [[PestoViewController alloc] init];
+  PestoViewController *trendingViewController = [[PestoViewController alloc] init];
 
   homeViewController.tabBarItem.title = @"Home";
   homeViewController.tabBarItem.image = [PestoIconHome drawTileImage:iconFrame];
   favoritesViewController.tabBarItem.title = @"Favorites";
-  favoritesViewController.tabBarItem.image =
-      [PestoIconFavorite drawTileImage:iconFrame];
+  favoritesViewController.tabBarItem.image = [PestoIconFavorite drawTileImage:iconFrame];
   trendingViewController.tabBarItem.title = @"Trending";
-  trendingViewController.tabBarItem.image =
-      [PestoIconTrending drawTileImage:iconFrame];
+  trendingViewController.tabBarItem.image = [PestoIconTrending drawTileImage:iconFrame];
   tabBarController.viewControllers =
       @[ homeViewController, favoritesViewController, trendingViewController ];
   UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1.f];

@@ -36,8 +36,8 @@ NSString *const kCollectionDecorationView = @"MDCCollectionDecorationView";
 static const NSInteger kSupplementaryViewZIndex = 99;
 
 @implementation MDCCollectionViewFlowLayout {
-  NSMutableArray <NSIndexPath *> *_deletedIndexPaths;
-  NSMutableArray <NSIndexPath *> *_insertedIndexPaths;
+  NSMutableArray<NSIndexPath *> *_deletedIndexPaths;
+  NSMutableArray<NSIndexPath *> *_insertedIndexPaths;
   NSMutableIndexSet *_deletedSections;
   NSMutableIndexSet *_insertedSections;
   NSMutableIndexSet *_headerSections;
@@ -82,11 +82,12 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
 #pragma mark - UICollectionViewLayout (SubclassingHooks)
 
-- (NSArray <__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
+- (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:
+        (CGRect)rect {
   // If performing appearance animation, increase bounds height in order to retrieve additional
   // offscreen attributes needed during animation.
   rect = [self boundsForAppearanceAnimationWithInitialBounds:rect];
-  NSMutableArray <__kindof UICollectionViewLayoutAttributes *> *attributes =
+  NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *attributes =
       [[NSMutableArray alloc] initWithArray:[super layoutAttributesForElementsInRect:rect]
                                   copyItems:YES];
 
@@ -219,7 +220,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
 #pragma mark - UICollectionViewLayout (UIUpdateSupportHooks)
 
-- (void)prepareForCollectionViewUpdates:(NSArray <UICollectionViewUpdateItem *> *)updateItems {
+- (void)prepareForCollectionViewUpdates:(NSArray<UICollectionViewUpdateItem *> *)updateItems {
   [super prepareForCollectionViewUpdates:updateItems];
   _deletedIndexPaths = [NSMutableArray array];
   _insertedIndexPaths = [NSMutableArray array];
@@ -320,7 +321,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
 #pragma mark - Header/Footer Caching
 
-- (void)storeSupplementaryViewsWithAttributes:(NSArray <__kindof UICollectionViewLayoutAttributes *> *)attributes {
+- (void)storeSupplementaryViewsWithAttributes:
+        (NSArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
   _headerSections = [NSMutableIndexSet indexSet];
   _footerSections = [NSMutableIndexSet indexSet];
 
@@ -537,7 +539,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   CGFloat inset = MDCCollectionViewCellStyleCardSectionInset;
   UIEdgeInsets inlayInsets = UIEdgeInsetsZero;
   NSInteger item = attr.indexPath.item;
-  NSArray <NSIndexPath *> *inlaidIndexPaths = [self.styler indexPathsForInlaidItems];
+  NSArray<NSIndexPath *> *inlaidIndexPaths = [self.styler indexPathsForInlaidItems];
 
   // Update ordinal position for index paths adjacent to inlaid index path.
   for (NSIndexPath *inlaidIndexPath in inlaidIndexPaths) {
@@ -612,7 +614,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   }
 }
 
-- (void)addInfoBarAttributesIfNecessary:(NSMutableArray <__kindof UICollectionViewLayoutAttributes *> *)attributes {
+- (void)addInfoBarAttributesIfNecessary:
+        (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
   if (self.editor.isEditing && [attributes count] > 0) {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
 
@@ -631,7 +634,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   }
 }
 
-- (void)addDecorationViewIfNecessary:(NSMutableArray <__kindof UICollectionViewLayoutAttributes *> *)attributes {
+- (void)addDecorationViewIfNecessary:
+        (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
   // If necessary, adds a decoration view to a section drawn below its items. This will only happen
   // for a grid layout when it is either A) grouped-style or B) card-style with zero padding. When
   // this happens, the background for those items will not be drawn, and instead this decoration
@@ -640,7 +644,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   if (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     NSMutableSet *sectionSet = [NSMutableSet set];
     BOOL shouldShowGridBackground = NO;
-    NSMutableArray <__kindof UICollectionViewLayoutAttributes *> *decorationAttributes = [NSMutableArray array];
+    NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *decorationAttributes =
+        [NSMutableArray array];
     for (MDCCollectionViewLayoutAttributes *attr in attributes) {
       NSInteger section = attr.indexPath.section;
 
@@ -696,7 +701,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   return initialBounds;
 }
 
-- (void)beginCellAppearanceAnimationIfNecessary:(NSMutableArray <__kindof UICollectionViewLayoutAttributes *> *)attributes {
+- (void)beginCellAppearanceAnimationIfNecessary:
+        (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
   // Here we want to assign a delay to each attribute such that the animation will fade-in from the
   // top downwards in a staggered manner. However, the array of attributes we receive here are not
   // in the correct order and must be sorted and re-ordered to properly assign these delays.
@@ -711,14 +717,15 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   NSTimeInterval duration = self.styler.animateCellsOnAppearanceDuration;
   if (self.styler.shouldAnimateCellsOnAppearance && attributeCount > 0) {
     // First sort by index path.
-    NSArray <__kindof UICollectionViewLayoutAttributes *> *sortedByIndexPath = [attributes
+    NSArray<__kindof UICollectionViewLayoutAttributes *> *sortedByIndexPath = [attributes
         sortedArrayUsingComparator:^NSComparisonResult(MDCCollectionViewLayoutAttributes *attr1,
                                                        MDCCollectionViewLayoutAttributes *attr2) {
           return [attr1.indexPath compare:attr2.indexPath];
         }];
 
     // Next create new array containing attributes in the form of header -> item -> footer.
-    NSMutableArray <__kindof UICollectionViewLayoutAttributes *> *sortedAttributes = [NSMutableArray array];
+    NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *sortedAttributes =
+        [NSMutableArray array];
     [sortedByIndexPath enumerateObjectsUsingBlock:^(MDCCollectionViewLayoutAttributes *attr,
                                                     NSUInteger idx, BOOL *stop) {
       if (sortedAttributes.count > 0) {
