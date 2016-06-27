@@ -291,11 +291,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)setThumbRadius:(CGFloat)thumbRadius {
   _thumbRadius = thumbRadius;
+  [self setDisplayThumbRadius:_thumbRadius];
+}
+
+- (void)setDisplayThumbRadius:(CGFloat)thumbRadius {
   _thumbView.cornerRadius = thumbRadius;
   CGPoint thumbCenter = _thumbView.center;
   _thumbView.frame = CGRectMake(thumbCenter.x - thumbRadius, thumbCenter.y - thumbRadius,
                                 2 * thumbRadius, 2 * thumbRadius);
-  [self setNeedsLayout];
 }
 
 - (CGFloat)thumbMaxRippleRadius {
@@ -497,8 +500,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _thumbView.layer.borderColor = _clearColor.CGColor;
 
     if (_thumbIsSmallerWhenDisabled) {
-      CGFloat smallerRatio = (_thumbRadius - _trackHeight) / _thumbRadius;
-      _thumbView.layer.transform = CATransform3DMakeScale(smallerRatio, smallerRatio, 1.0f);
+      [self setDisplayThumbRadius:_thumbRadius - _trackHeight];
     }
   }
 }
@@ -514,9 +516,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   // Re-draw track position
   if (_trackEndsAreInset) {
-    _trackView.frame =
-        CGRectMake(_thumbView.cornerRadius, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
-                   CGRectGetWidth(self.bounds) - (_thumbView.cornerRadius * 2), _trackHeight);
+    _trackView.frame = CGRectMake(_thumbRadius, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
+                                  CGRectGetWidth(self.bounds) - (_thumbRadius * 2), _trackHeight);
   } else {
     _trackView.frame = CGRectMake(0, CGRectGetMidY(self.bounds) - (_trackHeight / 2),
                                   CGRectGetWidth(self.bounds), _trackHeight);
@@ -575,12 +576,53 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  */
 - (void)updateViewsForThumbAfterMoveIsAnimated:(BOOL)animated
                                   withDuration:(NSTimeInterval)duration {
-  // If thumb at start and thumbIsHollowAtStart and enabled, make it hollow and call updateTrackMask
-  if ([self isValueAtMinimum] && _thumbIsHollowAtStart && self.enabled) {
+  if (!self.enabled) {
+    // The following changes only matter if the track is enabled.
+    return;
+  }
+
+  if ([self isValueAtMinimum] && _thumbIsHollowAtStart) {
     [self updateTrackMask];
 
     _thumbView.backgroundColor = _clearColor;
     _thumbView.layer.borderColor = _trackOffColor.CGColor;
+  }
+
+  CGFloat radius;
+  if (_isDraggingThumb) {
+    radius = _thumbRadius + _trackHeight;
+  } else {
+    radius = _thumbRadius;
+  }
+
+  if (radius == _thumbView.layer.cornerRadius || !_thumbGrowsWhenDragging) {
+    // No need to change anything
+    return;
+  }
+
+  if (animated) {
+    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+    anim.timingFunction =
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    anim.fromValue = [NSNumber numberWithDouble:_thumbView.layer.cornerRadius];
+    anim.toValue = [NSNumber numberWithDouble:radius];
+    anim.duration = duration;
+    anim.delegate = self;
+    anim.removedOnCompletion = NO;  // We'll remove it ourselves as the delegate
+    [_thumbView.layer addAnimation:anim forKey:anim.keyPath];
+  }
+  [self setDisplayThumbRadius:radius];  // Updates frame and corner radius
+
+  [self updateTrackMask];
+}
+
+// Used to make sure we update the mask after animating the thumb growing or shrinking. Specifically
+// in the case where the thumb is at the start and hollow, forgetting to update could leave the mask
+// in a strange visual state.
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+  if (anim == [_thumbView.layer animationForKey:@"cornerRadius"]) {
+    [_thumbView.layer removeAllAnimations];
+    [self updateTrackMask];
   }
 }
 
@@ -598,14 +640,21 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGMutablePathRef path = CGPathCreateMutable();
   CGPathAddRect(path, NULL, maskFrame);
 
+  CGFloat radius = _thumbView.layer.cornerRadius;
+  if (_thumbView.layer.presentationLayer != NULL) {
+    // If we're animating (growing or shrinking) lean on the side of the smaller radius, to prevent
+    // a gap from appearing between the thumb and the track in the intermediate frames.
+    radius = MIN(((CALayer *)_thumbView.layer.presentationLayer).cornerRadius, radius);
+  }
+  radius = MAX(radius, _thumbRadius);
+
   if ((!self.enabled && _disabledTrackHasThumbGaps) ||
       ([self isValueAtMinimum] && _thumbIsHollowAtStart)) {
     // The reason we calculate this explicitly instead of just using _thumbView.frame is because
     // the thumb view might not be have the exact radius of _thumbRadius, depending on if the track
     // is disabled or if a user is dragging the thumb.
-    CGRect gapMaskFrame =
-        CGRectMake(_thumbView.center.x - _thumbRadius, _thumbView.center.y - _thumbRadius,
-                   _thumbRadius * 2, _thumbRadius * 2);
+    CGRect gapMaskFrame = CGRectMake(_thumbView.center.x - radius, _thumbView.center.y - radius,
+                                     radius * 2, radius * 2);
     gapMaskFrame = [self convertRect:gapMaskFrame toView:_trackView];
     CGPathAddRect(path, NULL, gapMaskFrame);
   }
@@ -653,6 +702,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (_isDraggingThumb) {
     // Start panning
     _panThumbGrabPosition = touchLoc.x - self.thumbPosition.x;
+
+    // Grow the thumb
+    [self updateThumbTrackAnimated:NO
+             animateThumbAfterMove:YES
+                     previousValue:_value
+                        completion:nil];
   }
 
   return YES;
@@ -690,7 +745,17 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     return;
   }
 
+  BOOL wasDragging = _isDraggingThumb;
   _isDraggingThumb = NO;
+
+  if (wasDragging) {
+    // Shrink the thumb
+    [self updateThumbTrackAnimated:NO
+             animateThumbAfterMove:YES
+                     previousValue:_value
+                        completion:nil];
+  }
+
   CGPoint touchLoc = [touch locationInView:self];
   if ([self pointInside:touchLoc withEvent:nil]) {
     if (!_didChangeValueDuringPan && (_tapsAllowedOnThumb || ![self isPointOnThumb:touchLoc])) {
