@@ -326,6 +326,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return (1 - relValue) * _minimumValue + relValue * _maximumValue;
 }
 
+// Describes where on the track the specified value would fall. Differs from
+// -thumbPositionForValue: because it varies by whether or not the track ends are inset. Note that
+// if the edges are inset, the two values are equivalent, but if not, this point's x value can
+// differ from the thumb's x value by at most _thumbRadius.
+- (CGPoint)trackPositionForValue:(CGFloat)value {
+  if (_trackEndsAreInset) {
+    return [self thumbPositionForValue:value];
+  }
+
+  CGFloat xValue = [self relativeValueForValue:value] * self.bounds.size.width;
+  return CGPointMake(xValue, self.frame.size.height / 2);
+}
+
 - (void)setIcon:(nullable UIImage *)icon {
   [_thumbView setIcon:icon];
 }
@@ -353,6 +366,28 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return _value == _minimumValue;
 }
 
+- (CAMediaTimingFunction *)timingFunctionFromUIViewAnimationOptions:
+        (UIViewAnimationOptions)options {
+  NSString *name;
+
+  // It's important to check these in this order, due to their actual values specified in UIView.h:
+  // UIViewAnimationOptionCurveEaseInOut            = 0 << 16, // default
+  // UIViewAnimationOptionCurveEaseIn               = 1 << 16,
+  // UIViewAnimationOptionCurveEaseOut              = 2 << 16,
+  // UIViewAnimationOptionCurveLinear               = 3 << 16,
+  if ((options & UIViewAnimationOptionCurveLinear) == UIViewAnimationOptionCurveLinear) {
+    name = kCAMediaTimingFunctionEaseIn;
+  } else if ((options & UIViewAnimationOptionCurveEaseIn) == UIViewAnimationOptionCurveEaseIn) {
+    name = kCAMediaTimingFunctionEaseIn;
+  } else if ((options & UIViewAnimationOptionCurveEaseOut) == UIViewAnimationOptionCurveEaseOut) {
+    name = kCAMediaTimingFunctionEaseOut;
+  } else {
+    name = kCAMediaTimingFunctionEaseInEaseOut;
+  }
+
+  return [CAMediaTimingFunction functionWithName:name];
+}
+
 - (CGFloat)thumbPanOffset {
   return _thumbView.frame.origin.x / self.thumbPanRange;
 }
@@ -374,9 +409,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                       completion:(void (^)())completion {
   [self updateViewsNoAnimation];
 
-  UIViewAnimationOptions animationOptions = UIViewAnimationOptionBeginFromCurrentState |
-                                            UIViewAnimationOptionAllowUserInteraction |
-                                            UIViewAnimationOptionCurveEaseInOut;
+  UIViewAnimationOptions baseAnimationOptions =
+      UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction;
+  // Note that UIViewAnimationOptionCurveEaseInOut == 0, so by not specifying it, these options
+  // default to animating with Ease in / Ease out
 
   if (animated) {
     // UIView animateWithDuration:delay:options:animations: takes a different block signature.
@@ -388,54 +424,60 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
       // Do secondary animation and return.
       [self updateThumbAfterMoveAnimated:animateThumbAfterMove
-                                 options:animationOptions
+                                 options:baseAnimationOptions
                               completion:completion];
     };
 
-    // Note that currently the animations across an anchor point animate weirdly, but it'll be
-    // resolved soon in a future diff.
     BOOL crossesAnchor =
         (previousValue < _filledTrackAnchorValue && _filledTrackAnchorValue < _value) ||
         (_value < _filledTrackAnchorValue && _filledTrackAnchorValue < previousValue);
     if (crossesAnchor) {
       CGFloat currentValue = _value;
-      _value = _filledTrackAnchorValue;
-      CGFloat animationDurationToAnchor = CGFabs(previousValue) /
-                                          (CGFabs(previousValue) + CGFabs(currentValue)) *
-                                          kAnimationDuration;
-      void (^secondAnimation)(BOOL) = ^void(BOOL finished) {
-        _value = currentValue;
+      CGFloat animationDurationToAnchor =
+          (CGFabs(previousValue - _filledTrackAnchorValue) / CGFabs(previousValue - currentValue)) *
+          kAnimationDuration;
+      void (^afterCrossingAnchorAnimation)(BOOL) = ^void(BOOL finished) {
+        UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseOut;
         [UIView animateWithDuration:(kAnimationDuration - animationDurationToAnchor)
                               delay:0.0f
-                            options:animationOptions
+                            options:options
                          animations:^{
                            [self updateViewsMainIsAnimated:animated
                                               withDuration:(kAnimationDuration -
-                                                            animationDurationToAnchor)];
+                                                            animationDurationToAnchor)
+                                          animationOptions:options];
                          }
                          completion:animationCompletion];
       };
+      UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseIn;
       [UIView animateWithDuration:animationDurationToAnchor
                             delay:0.0f
-                          options:animationOptions
+                          options:options
                        animations:^{
+                         _value = _filledTrackAnchorValue;
                          [self updateViewsMainIsAnimated:animated
-                                            withDuration:animationDurationToAnchor];
+                                            withDuration:animationDurationToAnchor
+                                        animationOptions:options];
+                         _value = currentValue;
                        }
-                       completion:secondAnimation];
+                       completion:afterCrossingAnchorAnimation];
     } else {
       [UIView animateWithDuration:kAnimationDuration
                             delay:0.0f
-                          options:animationOptions
+                          options:baseAnimationOptions
                        animations:^{
-                         [self updateViewsMainIsAnimated:animated withDuration:kAnimationDuration];
+                         [self updateViewsMainIsAnimated:animated
+                                            withDuration:kAnimationDuration
+                                        animationOptions:baseAnimationOptions];
                        }
                        completion:animationCompletion];
     }
   } else {
-    [self updateViewsMainIsAnimated:animated withDuration:0.0f];
+    [self updateViewsMainIsAnimated:animated
+                       withDuration:0.0f
+                   animationOptions:baseAnimationOptions];
     [self updateThumbAfterMoveAnimated:animateThumbAfterMove
-                               options:animationOptions
+                               options:baseAnimationOptions
                             completion:completion];
   }
 }
@@ -509,7 +551,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  Updates the properties of the ThumbTrack that are animated in the main animation body. May be
  called from within a UIView animation block.
  */
-- (void)updateViewsMainIsAnimated:(BOOL)animated withDuration:(NSTimeInterval)duration {
+- (void)updateViewsMainIsAnimated:(BOOL)animated
+                     withDuration:(NSTimeInterval)duration
+                 animationOptions:(UIViewAnimationOptions)animationOptions {
   // Move thumb position.
   CGPoint point = [self thumbPositionForValue:_value];
   _thumbView.center = point;
@@ -533,31 +577,24 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       _trackView.layer.backgroundColor = _trackOffColor.CGColor;
       _trackOnLayer.backgroundColor = _trackOnColor.CGColor;
 
-      CGFloat anchor = [self thumbPositionForValue:_filledTrackAnchorValue].x;
+      CGFloat anchorXValue = [self trackPositionForValue:_filledTrackAnchorValue].x;
+      CGFloat currentXValue = [self trackPositionForValue:_value].x;
 
+      CGFloat trackOnXValue = MIN(currentXValue, anchorXValue);
       if (_trackEndsAreInset) {
-        // Account for the fact that _trackView is actually shorter in this case
-        anchor -= _thumbRadius;
-      } else {
-        if (_filledTrackAnchorValue <= _minimumValue) {
-          anchor -= _thumbRadius;
-        }
-        if (_filledTrackAnchorValue >= _maximumValue) {
-          anchor += _thumbRadius;
-        }
+        // Account for the fact that the layer's coords are relative to the frame of the track.
+        trackOnXValue -= _thumbRadius;
       }
-      CGFloat current = [self thumbPositionForValue:_value].x;
 
       // We have to use a CATransaction here because CALayer.frame is only animatable using this
-      // method, not the UIVIew block-based animation that the rest of this method uses. We specify
-      // the timing function and duration to match with that of the other animations.
+      // method, not the UIVIew block-based animation that the rest of this method uses. We use
+      // the timing function and duration passed in in order to match with the other animations.
       [CATransaction begin];
-      [CATransaction
-          setAnimationTimingFunction:[CAMediaTimingFunction
-                                         functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+      [CATransaction setAnimationTimingFunction:
+                         [self timingFunctionFromUIViewAnimationOptions:animationOptions]];
       [CATransaction setAnimationDuration:duration];
       _trackOnLayer.frame =
-          CGRectMake(MIN(current, anchor), 0, CGFabs(current - anchor), _trackHeight);
+          CGRectMake(trackOnXValue, 0, CGFabs(currentXValue - anchorXValue), _trackHeight);
       [CATransaction commit];
     }
   } else {
