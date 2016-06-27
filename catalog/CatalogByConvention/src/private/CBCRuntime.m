@@ -117,7 +117,7 @@ NSString *CBCDescriptionFromClass(Class aClass) {
 
 #pragma mark Fix View Debugging
 
-void CBCFixViewDebuggingIfNeeded() {
+void CBCFixViewDebuggingIfNeeded(void) {
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     Method original = class_getInstanceMethod([UIView class], @selector(viewForBaselineLayout));

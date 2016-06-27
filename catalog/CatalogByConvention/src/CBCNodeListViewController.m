@@ -176,7 +176,7 @@ CBCNode *CBCCreateNavigationTree(void) {
     // Walk down the navigation tree one breadcrumb at a time, creating nodes along the way.
 
     CBCNode *node = tree;
-    for (NSInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
+    for (NSUInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
       NSString *title = breadCrumbs[ix];
       BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
 
