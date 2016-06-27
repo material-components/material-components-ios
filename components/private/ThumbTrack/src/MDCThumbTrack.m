@@ -28,6 +28,7 @@ static const CGFloat kDefaultTrackHeight = 2.0f;
 static const CGFloat kDefaultFilledTrackAnchorValue = -CGFLOAT_MAX;
 static const CGFloat kTrackOnAlpha = 0.5f;
 static const CGFloat kMinTouchSize = 48.0f;
+static const CGFloat kThumbSlopFactor = 3.5f;
 
 // TODO(iangordon): Properly handle broken tgmath
 static inline CGFloat CGFabs(CGFloat value) {
@@ -81,9 +82,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 @end
 
 @implementation MDCThumbTrack {
-  UIPanGestureRecognizer *_panRecognizer;
   CGFloat _panThumbGrabPosition;
-  UITapGestureRecognizer *_tapRecognizer;
   CGFloat _lastDispatchedValue;
   UIColor *_thumbOnColor;
   UIColor *_trackOnColor;
@@ -92,7 +91,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   UIView *_trackView;
   CAShapeLayer *_trackMaskLayer;
   CALayer *_trackOnLayer;
-  BOOL _isTrackingTouches;
+  BOOL _isDraggingThumb;
+  BOOL _didChangeValueDuringPan;
   BOOL _shouldDisplayInk;
 }
 
@@ -105,6 +105,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   self = [super initWithFrame:frame];
   if (self) {
     self.userInteractionEnabled = YES;
+    self.multipleTouchEnabled = NO;  // We only want one touch event at a time
     _continuousUpdateEvents = YES;
     _lastDispatchedValue = _value;
     _maximumValue = 1;
@@ -116,6 +117,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // Default thumb view.
     CGRect thumbFrame = CGRectMake(0, 0, self.thumbRadius * 2, self.thumbRadius * 2);
     _thumbView = [[MDCThumbView alloc] initWithFrame:thumbFrame];
+    _thumbView.userInteractionEnabled = NO;
     _thumbView.borderWidth = kDefaultThumbBorderWidth;
     _thumbView.cornerRadius = self.thumbRadius;
     _thumbView.layer.zPosition = 1;
@@ -129,15 +131,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _trackOnLayer = [CALayer layer];
     [_trackView.layer addSublayer:_trackOnLayer];
     [self addSubview:_trackView];
-
-    UITapGestureRecognizer *tapGestureRecognizer =
-        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    [self addGestureRecognizer:tapGestureRecognizer];
-
-    _panRecognizer =
-        [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    _panRecognizer.cancelsTouchesInView = NO;
-    [self updatePanRecognizerTarget];
 
     // Set up ink layer.
     _touchController = [[MDCInkTouchController alloc] initWithView:_thumbView];
@@ -315,13 +308,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (CGPoint)thumbPosition {
   return _thumbView.center;
-}
-
-- (void)setPanningAllowedOnEntireControl:(BOOL)panningAllowedOnEntireControl {
-  if (_panningAllowedOnEntireControl != panningAllowedOnEntireControl) {
-    _panningAllowedOnEntireControl = panningAllowedOnEntireControl;
-    [self updatePanRecognizerTarget];
-  }
 }
 
 - (CGPoint)thumbPositionForValue:(CGFloat)value {
@@ -650,78 +636,76 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return (1 - snappedValue) * _minimumValue + snappedValue * _maximumValue;
 }
 
-#pragma mark - Gestures and touches
+#pragma mark - UIControl Touch Events
 
-- (void)updatePanRecognizerTarget {
-  [_panRecognizer.view removeGestureRecognizer:_panRecognizer];
-  UIView *panTarget = _panningAllowedOnEntireControl ? self : _thumbView;
-  [panTarget addGestureRecognizer:_panRecognizer];
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+  if (!self.enabled) {
+    return NO;
+  }
+
+  _didChangeValueDuringPan = NO;
+
+  CGPoint touchLoc = [touch locationInView:self];
+  // Note that we let the thumb's draggable area extend beyond its actual view to account for
+  // the imprecise nature of hit targets on device.
+  _isDraggingThumb = _panningAllowedOnEntireControl || [self isPointOnThumb:touchLoc];
+
+  if (_isDraggingThumb) {
+    // Start panning
+    _panThumbGrabPosition = touchLoc.x - self.thumbPosition.x;
+  }
+
+  return YES;
 }
 
-- (void)handleTapGesture:(UITapGestureRecognizer *)recognizer {
+- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+  if (!self.enabled) {
+    return NO;
+  } else if (!_isDraggingThumb) {
+    return YES;  // System should keep tracking touches, but we don't need to move the thumb
+  }
+
+  CGPoint touchLoc = [touch locationInView:self];
+  CGFloat thumbPosition = touchLoc.x - _panThumbGrabPosition;
+  CGFloat previousValue = _value;
+  CGFloat value = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
+  [self setValue:value animated:NO animateThumbAfterMove:YES userGenerated:YES completion:NULL];
+
+  [self sendContinuousChangeAction];
+
+  if (value != previousValue) {
+    // We made a move, now this action can't later count as a tap
+    _didChangeValueDuringPan = YES;
+  }
+
+  return YES;
+}
+
+- (void)cancelTrackingWithEvent:(UIEvent *)event {
+  _isDraggingThumb = NO;
+}
+
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
   if (!self.enabled) {
     return;
   }
-  [self interruptAnimation];
 
-  CGPoint thumbLocation = [recognizer locationInView:self];
-
-  if ([_delegate respondsToSelector:@selector(thumbTrack:shouldJumpToValue:)]) {
-    if (![self.delegate thumbTrack:self
-                 shouldJumpToValue:[self valueForThumbPosition:thumbLocation]]) {
-      return;
+  _isDraggingThumb = NO;
+  CGPoint touchLoc = [touch locationInView:self];
+  if ([self pointInside:touchLoc withEvent:nil]) {
+    if (!_didChangeValueDuringPan && (_tapsAllowedOnThumb || ![self isPointOnThumb:touchLoc])) {
+      // Treat it like a tap
+      if (![_delegate respondsToSelector:@selector(thumbTrack:shouldJumpToValue:)] ||
+          [self.delegate thumbTrack:self shouldJumpToValue:[self valueForThumbPosition:touchLoc]]) {
+        [self interruptAnimation];
+        [self setValueFromThumbPosition:touchLoc isTap:YES];
+      }
     }
   }
-
-  if (!_tapsAllowedOnThumb) {
-    // TODO(iangordon): Compare distance^2 to cornerRadius^2 to remove a sqrt calculation
-    if (DistanceFromPointToPoint(thumbLocation, _thumbView.center) < _thumbView.cornerRadius) {
-      return;
-    }
-  }
-
-  [self setValueFromThumbPosition:thumbLocation isTap:YES];
 }
 
-- (void)handlePanGesture:(UIPanGestureRecognizer *)recognizer {
-  if (!self.enabled) {
-    return;
-  }
-
-  if (recognizer.state == UIGestureRecognizerStateBegan) {
-    CGPoint touchPosition = [recognizer locationInView:self];
-    CGPoint thumbPosition = self.thumbPosition;
-    _panThumbGrabPosition = touchPosition.x - thumbPosition.x;
-    _isTrackingTouches = YES;
-    [self sendActionsForControlEvents:UIControlEventTouchDown];
-  }
-
-  if (recognizer.state == UIGestureRecognizerStateBegan ||
-      recognizer.state == UIGestureRecognizerStateChanged) {
-    CGPoint touchPosition = [recognizer locationInView:self];
-    CGFloat thumbPosition = touchPosition.x - _panThumbGrabPosition;
-    CGFloat value = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
-    [self setValue:value animated:NO animateThumbAfterMove:YES userGenerated:YES completion:NULL];
-  }
-
-  if (recognizer.state == UIGestureRecognizerStateChanged) {
-    [self sendContinuousChangeAction];
-  }
-
-  if (recognizer.state == UIGestureRecognizerStateEnded) {
-    [self setValueFromThumbPosition:self.thumbPosition isTap:NO];
-    _isTrackingTouches = NO;
-    CGPoint touchPoint = [recognizer locationInView:self];
-    if ([self pointInside:touchPoint withEvent:nil]) {
-      [self sendActionsForControlEvents:UIControlEventTouchUpInside];
-    } else {
-      [self sendActionsForControlEvents:UIControlEventTouchUpOutside];
-    }
-  } else if (recognizer.state == UIGestureRecognizerStateCancelled) {
-    [self setValueFromThumbPosition:self.thumbPosition isTap:NO];
-    _isTrackingTouches = NO;
-    [self sendActionsForControlEvents:UIControlEventTouchCancel];
-  }
+- (BOOL)isPointOnThumb:(CGPoint)point {
+  return DistanceFromPointToPoint(point, _thumbView.center) <= (_thumbRadius * kThumbSlopFactor);
 }
 
 - (void)setValueFromThumbPosition:(CGPoint)position isTap:(BOOL)isTap {
@@ -767,10 +751,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     _lastDispatchedValue = _value;
   }
-}
-
-- (BOOL)isTracking {
-  return _isTrackingTouches;
 }
 
 #pragma mark - Private
