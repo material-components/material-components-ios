@@ -21,7 +21,6 @@
  UIUserInterfaceLayoutDirectionLeftToRight, 'Right' otherwise.
 
  @param layoutDirection The layout direction to consider to compute the autoresizing mask.
-
  @return The leading margin part of an autoresizing mask.
  */
 UIViewAutoresizing MDCAutoresizingFlexibleLeadingMargin(
@@ -32,23 +31,21 @@ UIViewAutoresizing MDCAutoresizingFlexibleLeadingMargin(
  UIUserInterfaceLayoutDirectionLeftToRight, 'Left' otherwise.
 
  @param layoutDirection The layout direction to consider to compute the autoresizing mask.
-
  @return The trailing margin part of an autoresizing mask.
  */
 UIViewAutoresizing MDCAutoresizingFlexibleTrailingMargin(
     UIUserInterfaceLayoutDirection layoutDirection);
 
 /**
- The origin to use when actually laying out a view in its superview.
+ The frame to use when actually laying out a view in its superview.
 
  A view is conceptually positioned within its superview in terms of leading/trailing. When it's time
- to actually lay out (ie setting frames), leading/trailing needs to be converted to left/right,
- based on the layout direction. Use this method to compute the internationalized origin to use at
- layout time.
+ to actually lay out (i.e. setting frames), leading/trailing needs to be converted to left/right,
+ based on the layout direction. Use this method to compute the international frame to use at layout
+ time.
 
- Example: placing a view 50pts wide at 10pts from the leading edge of its parent 100pts wide.
-   CGFloat originX = MDCOriginForLeadingInset(10, 50, 100, layoutDirection);
-   CGRect frame = CGRectMake(originX, originY, 50, height);
+ @note Example: placing a view 50pts wide at 10pts from the leading edge of its parent 100pts wide.
+   CGRect frame = MDCRectFlippedForRTL(CGRectMake(10, originY, 50, height), 100, layoutDirection);
 
  In LTR, frame is { { 10, originY }, { 50, height } }.
   +----------------------------------------100----------------------------------------+
@@ -68,17 +65,14 @@ UIViewAutoresizing MDCAutoresizingFlexibleTrailingMargin(
   |                                                                                   |
   +----------------------------------------100----------------------------------------+
 
- @param leadingInset The leading inset between the view and its superview.
- @param width The width of the view to lay out.
- @param boundingWidth The width of the superview in witch to lay out.
+ @param leftToRightRect The frame to convert.
+ @param boundingWidth The superview's bounds's width.
  @param layoutDirection The layout direction to consider to compute the layout origin.
-
- @return The origin in terms of left/right, already internationalized based on the layout direction.
+ @return The frame ready for layout, already internationalized based on the layout direction.
  */
-CGFloat MDCOriginForLeadingInset(CGFloat leadingInset,
-                                 CGFloat width,
-                                 CGFloat boundingWidth,
-                                 UIUserInterfaceLayoutDirection layoutDirection);
+CGRect MDCRectFlippedForRTL(CGRect leftToRightRect,
+                            CGFloat boundingWidth,
+                            UIUserInterfaceLayoutDirection layoutDirection);
 
 /**
  Creates an UIEdgeInsets instance from the parameters while obeying layoutDirection.
@@ -90,7 +84,6 @@ CGFloat MDCOriginForLeadingInset(CGFloat leadingInset,
  @param top The leading inset.
  @param top The bottom inset.
  @param top The trailing inset.
-
  @return Insets in terms of left/right, already internationalized based on the layout direction.
  */
 UIEdgeInsets MDCInsetsMakeWithLayoutDirection(CGFloat top,

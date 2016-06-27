@@ -116,6 +116,9 @@ PODS:
     - MaterialComponents
   - MaterialComponentsUnitTests (11.0.1):
     - MaterialComponents
+    - MaterialComponentsUnitTests/private (= 11.0.1)
+  - MaterialComponentsUnitTests/private (11.0.1):
+    - MaterialComponents
 
 DEPENDENCIES:
   - MaterialComponents (from `../`)
@@ -133,7 +136,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   MaterialComponents: bf83fb093332806c5d5a12a665c05917143b9d55
   MaterialComponentsCatalog: b9cd875b76b40f8888ad0bba78891e3668c4c911
-  MaterialComponentsUnitTests: 888f06c5189e91acf229d5594c38e4ff77dc45be
+  MaterialComponentsUnitTests: 47175f06e8f5f17ef077dbba552e9d0cd0841303
 
 PODFILE CHECKSUM: 859f7856fc0fa049789dc17023b9f6f887fb1be9
 

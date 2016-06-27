@@ -16,6 +16,20 @@
 
 #import "MDCRTL.h"
 
+static CGFloat MDCOriginForLeadingInset(CGFloat leadingInset,
+                                        CGFloat width,
+                                        CGFloat boundingWidth,
+                                        UIUserInterfaceLayoutDirection layoutDirection) {
+  switch (layoutDirection) {
+    case UIUserInterfaceLayoutDirectionLeftToRight:
+      return leadingInset;
+    case UIUserInterfaceLayoutDirectionRightToLeft:
+      return boundingWidth - leadingInset - width;
+  }
+  NSCAssert(NO, @"Invalid enumeration value %i.", (int)layoutDirection);
+  return UIUserInterfaceLayoutDirectionLeftToRight;
+}
+
 UIViewAutoresizing MDCAutoresizingFlexibleLeadingMargin(
     UIUserInterfaceLayoutDirection layoutDirection) {
   switch (layoutDirection) {
@@ -40,18 +54,13 @@ UIViewAutoresizing MDCAutoresizingFlexibleTrailingMargin(
   return UIViewAutoresizingFlexibleRightMargin;
 }
 
-CGFloat MDCOriginForLeadingInset(CGFloat leadingInset,
-                                 CGFloat width,
-                                 CGFloat boundingWidth,
-                                 UIUserInterfaceLayoutDirection layoutDirection) {
-  switch (layoutDirection) {
-    case UIUserInterfaceLayoutDirectionLeftToRight:
-      return leadingInset;
-    case UIUserInterfaceLayoutDirectionRightToLeft:
-      return boundingWidth - leadingInset - width;
-  }
-  NSCAssert(NO, @"Invalid enumeration value %i.", (int)layoutDirection);
-  return UIUserInterfaceLayoutDirectionLeftToRight;
+CGRect MDCRectFlippedForRTL(CGRect leftToRightRect,
+                            CGFloat boundingWidth,
+                            UIUserInterfaceLayoutDirection layoutDirection) {
+  leftToRightRect.origin.x =
+      MDCOriginForLeadingInset(CGRectGetMinX(leftToRightRect), CGRectGetWidth(leftToRightRect),
+                               boundingWidth, layoutDirection);
+  return leftToRightRect;
 }
 
 UIEdgeInsets MDCInsetsMakeWithLayoutDirection(CGFloat top,
