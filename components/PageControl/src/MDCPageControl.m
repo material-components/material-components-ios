@@ -26,6 +26,9 @@
 // The Bundle for string resources.
 static NSString *const kMaterialPageControlBundle = @"MaterialPageControl.bundle";
 
+// The keypath for the content offset of a scrollview.
+static NSString *const kMaterialPageControlScrollViewContentOffset = @"bounds.origin";
+
 // Matches native UIPageControl minimum height.
 static const CGFloat kPageControlMinimumHeight = 37.0f;
 
@@ -139,6 +142,11 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 }
 
 - (void)setCurrentPage:(NSInteger)currentPage animated:(BOOL)animated {
+  [self setCurrentPage:currentPage animated:animated duration:0];
+}
+- (void)setCurrentPage:(NSInteger)currentPage
+              animated:(BOOL)animated
+              duration:(NSTimeInterval)duration {
   currentPage = MAX(0, MIN(_numberOfPages - 1, currentPage));
   NSInteger previousPage = _currentPage;
   BOOL shouldReverse = (previousPage > currentPage);
@@ -156,13 +164,20 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     // Remove track and reveal hidden indicators staggered towards current page indicator. Reveal
     // indicators in reverse if scrolling to left.
     void (^completionBlock)() = ^{
-      [_trackLayer removeTrackTowardsPoint:shouldReverse ? startPoint : endPoint
-                                completion:^{
-                                  // Once track is removed, reveal indicators once more to ensure
-                                  // no hidden indicators remain.
-                                  [self revealIndicatorsReversed:shouldReverse];
-                                }];
-      [self revealIndicatorsReversed:shouldReverse];
+      // We are using the delay to increase the time between the end of the extension of the track
+      // ahead of the dots movement and the contraction of the track under the dot at the
+      // destination.
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)),
+                     dispatch_get_main_queue(), ^{
+                       [_trackLayer removeTrackTowardsPoint:shouldReverse ? startPoint : endPoint
+                                                 completion:^{
+                                                   // Once track is removed, reveal indicators once
+                                                   // more to ensure
+                                                   // no hidden indicators remain.
+                                                   [self revealIndicatorsReversed:shouldReverse];
+                                                 }];
+                       [self revealIndicatorsReversed:shouldReverse];
+                     });
     };
 
     [_trackLayer drawAndExtendTrackFromStartPoint:startPoint
@@ -237,14 +252,27 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   CGFloat scrolledPercentage = [self scrolledPercentage:scrollView];
 
-  // Quit early if animated and on last page to prevent undesired scrolling. This
-  // will typically happen during rotation while on last page.
-  if (!scrollView.isTracking && !scrollView.isDecelerating && !scrollView.isDragging &&
-      scrolledPercentage == 1) {
-    return;
-  }
+  // Detect if we are getting called from an animation block
+  if ([scrollView.layer.animationKeys containsObject:kMaterialPageControlScrollViewContentOffset]) {
+    CAAnimation *animation =
+        [scrollView.layer animationForKey:kMaterialPageControlScrollViewContentOffset];
 
-  if (scrolledPercentage >= 0 && scrolledPercentage <= 1) {
+    // If the animation block has a delay it translates to the beginTime of the CAAnimation. We need
+    // to ensure that we delay our animation of the page control to keep in sync with the animation
+    // of the scrollView.contentOffset.
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(animation.beginTime * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                     NSInteger currentPage = [self scrolledPageNumber:scrollView];
+                     [self setCurrentPage:currentPage animated:YES duration:animation.duration];
+
+                     CGFloat transformX = scrolledPercentage * _trackLength;
+                     [_animatedIndicator updateIndicatorTransformX:transformX
+                                                          animated:YES
+                                                          duration:animation.duration
+                                               mediaTimingFunction:animation.timingFunction];
+                   });
+
+  } else if (scrolledPercentage >= 0 && scrolledPercentage <= 1) {
     // Update active indicator position.
     CGFloat transformX = scrolledPercentage * _trackLength;
     if (!_isDeferredScrolling) {

@@ -45,4 +45,17 @@
  */
 - (void)updateIndicatorTransformX:(CGFloat)transformX;
 
+/**
+ Updates the indicator transform.x property along the track by the designated percentage.
+
+ @param transformX The transform.x value.
+ @param animated The whether to animate the change.
+ @param duration The duration of the animation.
+ @param mediaTimingFunctino The timing function to use when animating the value.
+ */
+- (void)updateIndicatorTransformX:(CGFloat)transformX
+                         animated:(BOOL)animated
+                         duration:(NSTimeInterval)duration
+              mediaTimingFunction:(CAMediaTimingFunction *)timingFunction;
+
 @end
