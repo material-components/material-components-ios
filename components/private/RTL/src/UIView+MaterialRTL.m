@@ -85,14 +85,17 @@ static inline UIUserInterfaceLayoutDirection
 
 + (UIUserInterfaceLayoutDirection)mdc_userInterfaceLayoutDirectionForSemanticContentAttribute:
         (UISemanticContentAttribute)attribute {
-  UIUserInterfaceLayoutDirection layoutDirection =
-      [[UIApplication sharedApplication] userInterfaceLayoutDirection];
   if ([self
           respondsToSelector:@selector(userInterfaceLayoutDirectionForSemanticContentAttribute:)]) {
     return [self userInterfaceLayoutDirectionForSemanticContentAttribute:attribute];
   } else {
-    return [self mdc_userInterfaceLayoutDirectionForSemanticContentAttribute:attribute
-                                                   relativeToLayoutDirection:layoutDirection];
+    // Use a default of Left-to-Right, as UIKit in iOS 8 and below doesn't support native RTL
+    // layout.
+    UIUserInterfaceLayoutDirection applicationLayoutDirection =
+        UIUserInterfaceLayoutDirectionLeftToRight;
+    return [self
+        mdc_userInterfaceLayoutDirectionForSemanticContentAttribute:attribute
+                                          relativeToLayoutDirection:applicationLayoutDirection];
   }
 }
 
