@@ -137,7 +137,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
       break;
     case UIGestureRecognizerStateChanged: {
       // Due to changes on iPhone 6s, possibly due to the force touch,
-      // |UIGestureRecognizerStateChanged| constantly fires. However, we do not want to cancel the
+      // @c UIGestureRecognizerStateChanged constantly fires. However, we do not want to cancel the
       // ink unless the users moves.
       if (_shouldRespondToTouch && !CGPointEqualToPoint(touchLocation, _previousLocation)) {
         _shouldRespondToTouch = NO;

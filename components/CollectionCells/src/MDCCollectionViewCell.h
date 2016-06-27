@@ -51,14 +51,14 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {
 @property(nonatomic) UIEdgeInsets accessoryInset;
 
 /**
- Whether to hide the separator for this cell. If not set, the |shouldHideSeparators| property of
+ Whether to hide the separator for this cell. If not set, the @c shouldHideSeparators property of
  the collection view styler will be used. Defaults to NO.
  */
 @property(nonatomic) BOOL shouldHideSeparator;
 
 /**
  The separator inset for this cell. Only left/right insets are valid as top/bottom insets will be
- ignored. If this property is not changed, the |separatorInset| property of the collection view
+ ignored. If this property is not changed, the @c separatorInset property of the collection view
  styler will be used instead. Defaults to UIEdgeInsetsZero.
  */
 @property(nonatomic) UIEdgeInsets separatorInset;

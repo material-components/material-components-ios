@@ -67,7 +67,7 @@
 
 /**
  A custom title color for the non-disabled states. The default is nil, which means that the button
- chooses its title color automatically based on |underlyingColor|, whether the button is opaque,
+ chooses its title color automatically based on @c underlyingColor, whether the button is opaque,
  its current background color, etc.
 
  Setting this to a non-nil color overrides that logic, and the caller is responsible for ensuring

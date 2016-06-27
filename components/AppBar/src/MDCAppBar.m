@@ -138,7 +138,7 @@ static const CGFloat kStatusBarHeight = 20;
 
   UIViewController *iterator = fhvParent;
 
-  // In complex cases it might actually be a parent of |fhvParent| which is on the nav stack.
+  // In complex cases it might actually be a parent of @c fhvParent which is on the nav stack.
   while (index == NSNotFound && iterator && ![iterator isEqual:navigationController]) {
     iterator = iterator.parentViewController;
     index = [viewControllerStack indexOfObject:iterator];

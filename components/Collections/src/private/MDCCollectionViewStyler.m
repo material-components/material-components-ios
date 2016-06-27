@@ -466,7 +466,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   BOOL isGroupedStyle = cellStyle == MDCCollectionViewCellStyleGrouped;
   BOOL isGridLayout = (_cellLayoutType == MDCCollectionViewCellLayoutTypeGrid);
   if (!isCardStyle && !isGroupedStyle) {
-    // If not card or grouped style, revert |isBottom| to allow drawing separator at bottom.
+    // If not card or grouped style, revert @c isBottom to allow drawing separator at bottom.
     isBottom = NO;
   }
   CGFloat borderRadius = (isCardStyle) ? kCollectionViewCellDefaultBorderRadius : 0.0f;

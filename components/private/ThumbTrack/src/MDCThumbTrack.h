@@ -197,7 +197,7 @@
             userGenerated:(BOOL)userGenerated
                completion:(nullable void (^)())completion;
 
-/** Set the |icon| shown on the thumb. */
+/** Set the @c icon shown on the thumb. */
 - (void)setIcon:(nullable UIImage *)icon;
 
 @end

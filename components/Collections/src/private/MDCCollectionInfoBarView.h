@@ -63,7 +63,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionInfoBarViewStyle) {
  @param infoBar The MDCCollectionInfoBarView info bar.
  @param animated YES the transition will be animated; otherwise, NO.
  @param willAutoDismiss YES the info bar will be auto-dismissed after the time interval
-        set in |autoDismissAfterDuration|.
+        set in @c autoDismissAfterDuration.
  */
 - (void)infoBar:(nonnull MDCCollectionInfoBarView *)infoBar
     willShowAnimated:(BOOL)animated
@@ -75,7 +75,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionInfoBarViewStyle) {
  @param infoBar The MDCCollectionInfoBarView info bar.
  @param animated YES the transition was animated; otherwise, NO.
  @param willAutoDismiss YES the info bar will be auto-dismissed after the time interval
-        set in |autoDismissAfterDuration|.
+        set in @c autoDismissAfterDuration.
  */
 - (void)infoBar:(nonnull MDCCollectionInfoBarView *)infoBar
     didShowAnimated:(BOOL)animated
@@ -87,7 +87,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionInfoBarViewStyle) {
  @param infoBar The MDCCollectionInfoBarView info bar.
  @param animated YES the transition will be animated; otherwise, NO.
  @param willAutoDismiss YES the info bar will be auto-dismissed after the time interval
-        set in |autoDismissAfterDuration|.
+        set in @c autoDismissAfterDuration.
  */
 - (void)infoBar:(nonnull MDCCollectionInfoBarView *)infoBar
     willDismissAnimated:(BOOL)animated
