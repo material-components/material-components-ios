@@ -67,16 +67,28 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
 /** The children of this node. */
 @property(nonatomic, strong, nonnull) NSArray<CBCNode *> *children;
 
-/** Is this the most important or default demo for this component? */
-- (BOOL)isPrimaryDemo;
-
 /** Returns YES if this is an example node. */
 - (BOOL)isExample;
 
-/** Returns an instance of a UIViewController for presentation purposes. */
+/**
+ Returns YES if this the primary demo for this component.
+
+ Can only return YES if isExample also returns YES.
+ */
+- (BOOL)isPrimaryDemo;
+
+/**
+ Returns an instance of a UIViewController for presentation purposes.
+
+ Check that isExample returns YES before invoking.
+ */
 - (nonnull UIViewController *)createExampleViewController;
 
-/** Returns a description of the example. */
-- (nonnull NSString *)createExampleDescription;
+/**
+ Returns a description of the example.
+
+ Check that isExample returns YES before invoking.
+ */
+- (nonnull NSString *)exampleDescription;
 
 @end

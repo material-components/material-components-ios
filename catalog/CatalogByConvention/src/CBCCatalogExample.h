@@ -29,8 +29,7 @@
 + (nonnull NSArray<NSString *> *)catalogBreadcrumbs;
 
 /**
- Return a BOOL stating whether this example should be treated as the main "Demo" in the Catalog
- for this component
+ Return a BOOL stating whether this example should be treated as the primary demo of the component.
  */
 + (BOOL)catalogIsPrimaryDemo;
 

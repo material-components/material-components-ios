@@ -68,7 +68,7 @@
   return CBCViewControllerFromClass(_exampleClass);
 }
 
-- (NSString *)createExampleDescription {
+- (NSString *)exampleDescription {
   NSAssert(_exampleClass != nil, @"This node has no associated example.");
   return CBCDescriptionFromClass(_exampleClass);
 }

@@ -62,7 +62,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
         let isPrimaryDemo = childNode.isPrimaryDemo()
         if isPrimaryDemo {
           orderedNodes.insertObject(childNode, atIndex: 0)
-          componentDescription = childNode.createExampleDescription()
+          componentDescription = childNode.exampleDescription()
         } else {
           orderedNodes.addObject(childNode)
         }
