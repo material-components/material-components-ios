@@ -68,11 +68,11 @@ static UIImage *MDCRTLFlippedImage(UIImage *image) {
       // thus sufficient and nothing needs to be down to flip the image.
       break;
     case UIImageOrientationLeft:
-      CGContextRotateCTM(context, -M_PI / 2);
+      CGContextRotateCTM(context, -(CGFloat)M_PI / 2.f);
       CGContextTranslateCTM(context, -rect.size.width, 0);
       break;
     case UIImageOrientationRight:
-      CGContextRotateCTM(context, M_PI / 2);
+      CGContextRotateCTM(context, (CGFloat)M_PI / 2);
       CGContextTranslateCTM(context, 0, -rect.size.width);
       break;
     case UIImageOrientationUpMirrored:
@@ -84,13 +84,13 @@ static UIImage *MDCRTLFlippedImage(UIImage *image) {
       CGContextTranslateCTM(context, -rect.size.width, 0);
       break;
     case UIImageOrientationLeftMirrored:
-      CGContextRotateCTM(context, -M_PI / 2);
+      CGContextRotateCTM(context, -(CGFloat)M_PI / 2);
       CGContextTranslateCTM(context, -rect.size.width, 0);
       CGContextScaleCTM(context, -1, 1);
       CGContextTranslateCTM(context, -rect.size.width, 0);
       break;
     case UIImageOrientationRightMirrored:
-      CGContextRotateCTM(context, M_PI / 2);
+      CGContextRotateCTM(context, (CGFloat)M_PI / 2);
       CGContextTranslateCTM(context, 0, -rect.size.width);
       CGContextScaleCTM(context, -1, 1);
       CGContextTranslateCTM(context, -rect.size.width, 0);
