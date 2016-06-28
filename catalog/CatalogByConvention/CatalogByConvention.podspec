@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
 
   s.public_header_files = "src/*.h"
   s.source_files = "src/*.{h,m,swift}", "src/private/*.{h,m,swift}"
-  s.header_mappings_dir = "src/*"
+  s.header_mappings_dir = "src"
 end
