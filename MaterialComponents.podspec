@@ -60,6 +60,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/ShadowLayer"
 
     ss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "Buttons" do |ss|
@@ -79,6 +80,7 @@ Pod::Spec.new do |s|
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     ss.dependency "MaterialComponents/Buttons"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "CollectionCells" do |ss|
@@ -156,6 +158,7 @@ Pod::Spec.new do |s|
 
     ss.dependency "MaterialComponents/ButtonBar"
     ss.dependency "MaterialComponents/Typography"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "PageControl" do |ss|

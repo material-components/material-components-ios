@@ -38,4 +38,33 @@ class RTLTests: XCTestCase {
     let insets = MDCInsetsMakeWithLayoutDirection(10, 20, 30, 40, .LeftToRight)
     XCTAssertEqual(insets.right, 40)
   }
+
+  func testMDCRTLFlippedImagePortsRenderingMode() {
+    let image = RTLTests.testImage()
+    XCTAssertTrue(image.renderingMode == .Automatic)
+    XCTAssertTrue(image.mdc_imageFlippedForRightToLeftLayoutDirection().renderingMode == .Automatic)
+
+    let templateImage = image.imageWithRenderingMode(.AlwaysTemplate)
+    XCTAssertTrue(templateImage.mdc_imageFlippedForRightToLeftLayoutDirection().renderingMode ==
+                      .AlwaysTemplate)
+
+    let originalImage = image.imageWithRenderingMode(.AlwaysOriginal)
+    XCTAssertTrue(originalImage.mdc_imageFlippedForRightToLeftLayoutDirection().renderingMode ==
+                      .AlwaysOriginal)
+  }
+
+  // Returns a 1*1 test image.
+  class func testImage() -> UIImage {
+    let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
+    UIGraphicsBeginImageContext(rect.size)
+    let context = UIGraphicsGetCurrentContext();
+
+    CGContextSetFillColorWithColor(context, UIColor.blueColor().CGColor);
+    CGContextFillRect(context, rect);
+
+    let image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return image;
+  }
 }

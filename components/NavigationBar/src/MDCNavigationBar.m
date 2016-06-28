@@ -21,6 +21,7 @@
 #import "MDCNavigationBar.h"
 
 #import "MaterialButtonBar.h"
+#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 #import <objc/runtime.h>
@@ -116,13 +117,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (void)commonMDCNavigationBarInit {
   _observedNavigationItemLock = [[NSObject alloc] init];
 
-  if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
-    _layoutDirection = [UIView
-        userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
-  } else {
-    _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-  }
-
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography titleFont];
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
@@ -180,30 +174,17 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   [super layoutSubviews];
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
-  CGFloat leadingButtonBarOriginX;
-  switch (_layoutDirection) {
-    case UIUserInterfaceLayoutDirectionLeftToRight:
-      leadingButtonBarOriginX = self.bounds.origin.x;
-      break;
-    case UIUserInterfaceLayoutDirectionRightToLeft:
-      leadingButtonBarOriginX = self.bounds.size.width - leadingButtonBarSize.width;
-      break;
-  }
-  _leadingButtonBar.frame = (CGRect){.origin = {leadingButtonBarOriginX, self.bounds.origin.y},
-                                     .size = leadingButtonBarSize};
+  CGRect leadingButtonBarFrame =
+      (CGRect){.origin = {0, self.bounds.origin.y}, .size = leadingButtonBarSize};
+  _leadingButtonBar.frame = MDCRectFlippedForRTL(leadingButtonBarFrame, self.bounds.size.width,
+                                                 self.mdc_effectiveUserInterfaceLayoutDirection);
 
   CGSize trailingButtonBarSize = [_trailingButtonBar sizeThatFits:self.bounds.size];
-  CGFloat trailingButtonBarOriginX;
-  switch (_layoutDirection) {
-    case UIUserInterfaceLayoutDirectionLeftToRight:
-      trailingButtonBarOriginX = self.bounds.size.width - trailingButtonBarSize.width;
-      break;
-    case UIUserInterfaceLayoutDirectionRightToLeft:
-      trailingButtonBarOriginX = self.bounds.origin.x;
-      break;
-  }
-  _trailingButtonBar.frame = (CGRect){.origin = {trailingButtonBarOriginX, self.bounds.origin.y},
-                                      .size = trailingButtonBarSize};
+  CGRect trailingButtonBarFrame = (CGRect){
+      .origin = {self.bounds.size.width - trailingButtonBarSize.width, self.bounds.origin.y},
+      .size = trailingButtonBarSize};
+  _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame, self.bounds.size.width,
+                                                  self.mdc_effectiveUserInterfaceLayoutDirection);
 
   const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
   UIEdgeInsets textInsets = isPad ? kTextPadInsets : kTextInsets;
@@ -225,17 +206,9 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
                          .size;
   titleSize.width = ceil(titleSize.width);
   titleSize.height = ceil(titleSize.height);
-  CGRect titleFrame;
-  switch (_layoutDirection) {
-    case UIUserInterfaceLayoutDirectionLeftToRight:
-      titleFrame = (CGRect){{textFrame.origin.x, 0}, titleSize};
-      break;
-    case UIUserInterfaceLayoutDirectionRightToLeft:
-      titleFrame =
-          (CGRect){.origin = {self.bounds.size.width - textFrame.origin.x - titleSize.width, 0},
-                   .size = titleSize};
-      break;
-  }
+  CGRect titleFrame = (CGRect){{textFrame.origin.x, 0}, titleSize};
+  titleFrame = MDCRectFlippedForRTL(titleFrame, self.bounds.size.width,
+                                    self.mdc_effectiveUserInterfaceLayoutDirection);
   UIControlContentVerticalAlignment titleAlignment = [self titleAlignment];
   _titleLabel.frame =
       [self mdc_frameAlignedVertically:titleFrame withinBounds:textFrame alignment:titleAlignment];
@@ -353,14 +326,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   }
   [buttonItems addObjectsFromArray:self.leadingBarButtonItems];
   return buttonItems;
-}
-
-- (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
-  if (_layoutDirection == layoutDirection) {
-    return;
-  }
-  _layoutDirection = layoutDirection;
-  [self setNeedsLayout];
 }
 
 #pragma mark Colors

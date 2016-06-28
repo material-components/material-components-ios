@@ -22,6 +22,7 @@
 
 #import "MDCButtonBar+Private.h"
 #import "MaterialButtons.h"
+#import "MaterialRTL.h"
 
 #import <objc/runtime.h>
 
@@ -161,7 +162,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
       CGFloat additionalInset =
           (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
 
-      if (buttonBar.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      if (buttonBar.mdc_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionLeftToRight) {
         contentInsets.left += additionalInset;
       } else {
         contentInsets.right += additionalInset;
@@ -172,7 +174,8 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
       CGFloat additionalInset =
           (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
 
-      if (buttonBar.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      if (buttonBar.mdc_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionLeftToRight) {
         contentInsets.right += additionalInset;
       } else {
         contentInsets.left += additionalInset;

@@ -28,11 +28,13 @@ PODS:
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
     - MaterialComponents/private/Icons/ic_arrow_back
+    - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
   - MaterialComponents/ButtonBar (11.0.1):
     - MaterialComponents/Buttons
+    - MaterialComponents/private/RTL
   - MaterialComponents/Buttons (11.0.1):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
@@ -62,6 +64,7 @@ PODS:
   - MaterialComponents/Ink (11.0.1)
   - MaterialComponents/NavigationBar (11.0.1):
     - MaterialComponents/ButtonBar
+    - MaterialComponents/private/RTL
     - MaterialComponents/Typography
   - MaterialComponents/PageControl (11.0.1)
   - MaterialComponents/Palettes (11.0.1)
@@ -121,7 +124,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: bf83fb093332806c5d5a12a665c05917143b9d55
+  MaterialComponents: 9bbf03bbb17524524ff7c9ce561d9ff5c6f7110c
 
 PODFILE CHECKSUM: f138be16d4835113ff672258fc7529fad3f90e91
 

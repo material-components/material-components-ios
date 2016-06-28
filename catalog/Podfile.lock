@@ -28,11 +28,13 @@ PODS:
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
     - MaterialComponents/private/Icons/ic_arrow_back
+    - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
   - MaterialComponents/ButtonBar (11.0.1):
     - MaterialComponents/Buttons
+    - MaterialComponents/private/RTL
   - MaterialComponents/Buttons (11.0.1):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
@@ -62,6 +64,7 @@ PODS:
   - MaterialComponents/Ink (11.0.1)
   - MaterialComponents/NavigationBar (11.0.1):
     - MaterialComponents/ButtonBar
+    - MaterialComponents/private/RTL
     - MaterialComponents/Typography
   - MaterialComponents/PageControl (11.0.1)
   - MaterialComponents/Palettes (11.0.1)
@@ -116,9 +119,6 @@ PODS:
     - MaterialComponents
   - MaterialComponentsUnitTests (11.0.1):
     - MaterialComponents
-    - MaterialComponentsUnitTests/private (= 11.0.1)
-  - MaterialComponentsUnitTests/private (11.0.1):
-    - MaterialComponents
 
 DEPENDENCIES:
   - MaterialComponents (from `../`)
@@ -134,9 +134,9 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MaterialComponents: bf83fb093332806c5d5a12a665c05917143b9d55
+  MaterialComponents: 9bbf03bbb17524524ff7c9ce561d9ff5c6f7110c
   MaterialComponentsCatalog: b9cd875b76b40f8888ad0bba78891e3668c4c911
-  MaterialComponentsUnitTests: 47175f06e8f5f17ef077dbba552e9d0cd0841303
+  MaterialComponentsUnitTests: 1d4b001c7567ce45e3859a25f8deb82a53d239a9
 
 PODFILE CHECKSUM: 859f7856fc0fa049789dc17023b9f6f887fb1be9
 

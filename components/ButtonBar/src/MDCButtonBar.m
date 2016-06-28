@@ -21,6 +21,7 @@
 #import "MDCButtonBar.h"
 #import "MDCButton.h"
 
+#import "MaterialRTL.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
 static const CGFloat kDefaultHeight = 56;
@@ -45,12 +46,6 @@ static NSString *const kEnabledSelector = @"enabled";
 
 - (void)commonMDCButtonBarInit {
   _buttonItemsLock = [[NSObject alloc] init];
-  if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
-    _layoutDirection = [UIView
-        userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
-  } else {
-    _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-  }
   _layoutPosition = MDCButtonBarLayoutPositionNone;
 
   _defaultBuilder = [[MDCAppBarButtonBarBuilder alloc] init];
@@ -93,7 +88,7 @@ static NSString *const kEnabledSelector = @"enabled";
   CGFloat totalWidth = 0;
 
   CGFloat edge;
-  switch (_layoutDirection) {
+  switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
     case UIUserInterfaceLayoutDirectionLeftToRight:
       edge = 0;
       break;
@@ -111,7 +106,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
   for (UIView *view in positionedButtonViews) {
     CGFloat width = view.frame.size.width;
-    switch (_layoutDirection) {
+    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         break;
       case UIUserInterfaceLayoutDirectionRightToLeft:
@@ -127,7 +122,7 @@ static NSString *const kEnabledSelector = @"enabled";
         }
       }
     }
-    switch (_layoutDirection) {
+    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         edge += width;
         break;
@@ -353,12 +348,8 @@ static NSString *const kEnabledSelector = @"enabled";
   }
 }
 
-- (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
-  if (_layoutDirection == layoutDirection) {
-    return;
-  }
-  _layoutDirection = layoutDirection;
-
+- (void)mdc_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  [super mdc_setSemanticContentAttribute:semanticContentAttribute];
   [self reloadButtonViews];
 }
 

@@ -24,6 +24,7 @@
 
 #import "MaterialFlexibleHeader.h"
 #import "MaterialIcons+ic_arrow_back.h"
+#import "MaterialRTL.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -165,11 +166,9 @@ static const CGFloat kStatusBarHeight = 20;
   if (!backBarButtonItem) {
     UIImage *backButtonImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_arrow_back]];
     backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    if (self.navigationBar.layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-      if ([backButtonImage
-              respondsToSelector:@selector(imageFlippedForRightToLeftLayoutDirection)]) {
-        backButtonImage = [backButtonImage imageFlippedForRightToLeftLayoutDirection];
-      }
+    if (self.navigationBar.mdc_effectiveUserInterfaceLayoutDirection ==
+        UIUserInterfaceLayoutDirectionRightToLeft) {
+      backButtonImage = [backButtonImage mdc_imageFlippedForRightToLeftLayoutDirection];
     }
     backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
                                                          style:UIBarButtonItemStyleDone
