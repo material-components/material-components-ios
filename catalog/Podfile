@@ -29,4 +29,10 @@ post_install do |installer|
     new_xcconfig << "\n#include \"../MaterialComponentsWarnings.xcconfig\""
     File.write(mdc_xcconfig, new_xcconfig)
   end
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '2.3'
+    end
+  end
 end
