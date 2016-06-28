@@ -46,7 +46,7 @@ extern const CGFloat MDCCellDefaultThreeLineHeight;
   - textColor       defaults to [UIColor colorWithWhite:0 alpha:MDCTypography subheadFontOpacity]].
   - shadowColor     defaults to nil.
   - shadowOffset    defaults to CGSizeZero.
-  - textAlignment   defaults to NSTextAlignmentLeft.
+  - textAlignment   defaults to NSTextAlignmentNatural.
   - lineBreakMode   defaults to NSLineBreakByTruncatingTail.
   - numberOfLines   defaults to 1.
  */
@@ -61,14 +61,14 @@ extern const CGFloat MDCCellDefaultThreeLineHeight;
  - textColor       defaults to [UIColor colorWithWhite:0 alpha:MDCTypography captionFontOpacity]].
  - shadowColor     defaults to nil.
  - shadowOffset    defaults to CGSizeZero.
- - textAlignment   defaults to NSTextAlignmentLeft.
+ - textAlignment   defaults to NSTextAlignmentNatural.
  - lineBreakMode   defaults to NSLineBreakByTruncatingTail.
  - numberOfLines   defaults to 1.
  */
 @property(nonatomic, readonly, strong, nullable) UILabel *detailTextLabel;
 
 /**
- An image view placed left side of cell. Default left padding is 16.0f.
+ An image view on the leading side of cell. Default leading padding is 16.0f.
  */
 @property(nonatomic, readonly, strong, nullable) UIImageView *imageView;
 

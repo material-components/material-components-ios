@@ -99,6 +99,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Icons/ic_info"
     ss.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
     ss.dependency "MaterialComponents/private/Icons/ic_reorder"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "CollectionLayoutAttributes" do |ss|

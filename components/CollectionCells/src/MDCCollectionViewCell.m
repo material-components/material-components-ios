@@ -27,6 +27,7 @@
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_radio_button_unchecked.h"
 #import "MaterialIcons+ic_reorder.h"
+#import "MaterialRTL.h"
 
 #define RGBCOLOR(r, g, b) \
   [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
@@ -40,6 +41,14 @@ static const UIEdgeInsets kAccessoryInsetDefault = {0, 16.0f, 0, 16.0f};
 // Default editing icon colors.
 static const uint32_t kCellGrayColor = 0x626262;
 static const uint32_t kCellRedColor = 0xF44336;
+
+// To be used as accessory view when an accessory type is set. It has no particular functionalities
+// other than being a private class defined here, to check if an accessory view was set via an
+// accessory type, or if the user of MDCCollectionViewCell set a custom accessory view.
+@interface MDCAccessoryTypeImageView : UIImageView
+@end
+@implementation MDCAccessoryTypeImageView
+@end
 
 @implementation MDCCollectionViewCell {
   MDCCollectionViewLayoutAttributes *_attr;
@@ -105,16 +114,28 @@ static const uint32_t kCellRedColor = 0xF44336;
   [UIView
       animateWithDuration:0.3
                animations:^{
+                 CGFloat txReorderTransform;
+                 CGFloat txSelectorTransform;
+                 switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
+                   case UIUserInterfaceLayoutDirectionLeftToRight:
+                     txReorderTransform = kEditingControlAppearanceOffset;
+                     txSelectorTransform = -kEditingControlAppearanceOffset;
+                     break;
+                   case UIUserInterfaceLayoutDirectionRightToLeft:
+                     txReorderTransform = -kEditingControlAppearanceOffset;
+                     txSelectorTransform = kEditingControlAppearanceOffset;
+                     break;
+                 }
                  _editingReorderImageView.alpha = _attr.shouldShowReorderStateMask ? 1.0f : 0.0f;
                  _editingReorderImageView.transform =
                      _attr.shouldShowReorderStateMask
-                         ? CGAffineTransformMakeTranslation(kEditingControlAppearanceOffset, 0)
+                         ? CGAffineTransformMakeTranslation(txReorderTransform, 0)
                          : CGAffineTransformIdentity;
 
                  _editingSelectorImageView.alpha = _attr.shouldShowSelectorStateMask ? 1.0f : 0.0f;
                  _editingSelectorImageView.transform =
                      _attr.shouldShowSelectorStateMask
-                         ? CGAffineTransformMakeTranslation(-kEditingControlAppearanceOffset, 0)
+                         ? CGAffineTransformMakeTranslation(txSelectorTransform, 0)
                          : CGAffineTransformIdentity;
                }];
 }
@@ -154,7 +175,7 @@ static const uint32_t kCellRedColor = 0xF44336;
   UIImageView *accessoryImageView = nil;
   if (!_accessoryView && accessoryType != MDCCollectionViewCellAccessoryNone) {
     // Add accessory view.
-    accessoryImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    accessoryImageView = [[MDCAccessoryTypeImageView alloc] initWithFrame:CGRectZero];
     _accessoryView = accessoryImageView;
     _accessoryView.userInteractionEnabled = NO;
     [self addSubview:_accessoryView];
@@ -162,8 +183,12 @@ static const uint32_t kCellRedColor = 0xF44336;
 
   switch (_accessoryType) {
     case MDCCollectionViewCellAccessoryDisclosureIndicator: {
-      accessoryImageView.image =
-          [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_chevron_right]];
+      UIImage *image = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_chevron_right]];
+      if (self.mdc_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionRightToLeft) {
+        image = [image mdc_imageFlippedForRightToLeftLayoutDirection];
+      }
+      accessoryImageView.image = image;
       break;
     }
     case MDCCollectionViewCellAccessoryCheckmark: {
@@ -194,8 +219,11 @@ static const uint32_t kCellRedColor = 0xF44336;
 
 - (CGRect)accessoryFrame {
   CGSize size = _accessoryView.frame.size;
-  return CGRectMake(CGRectGetWidth(self.bounds) - size.width - _accessoryInset.right,
-                    (CGRectGetHeight(self.bounds) - size.height) / 2, size.width, size.height);
+  CGFloat originX = CGRectGetWidth(self.bounds) - size.width - _accessoryInset.right;
+  CGFloat originY = (CGRectGetHeight(self.bounds) - size.height) / 2;
+  CGRect frame = CGRectMake(originX, originY, size.width, size.height);
+  return MDCRectFlippedForRTL(frame, CGRectGetWidth(self.bounds),
+                              self.mdc_effectiveUserInterfaceLayoutDirection);
 }
 
 #pragma mark - Separator
@@ -231,8 +259,17 @@ static const uint32_t kCellRedColor = 0xF44336;
 
   if (!hideSeparator) {
     UIEdgeInsets insets = _attr.backgroundImageViewInsets;
+    CGFloat separatorOriginX;
+    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
+      case UIUserInterfaceLayoutDirectionLeftToRight:
+        separatorOriginX = insets.left;
+        break;
+      case UIUserInterfaceLayoutDirectionRightToLeft:
+        separatorOriginX = insets.right;
+        break;
+    }
     CGRect separatorFrame = CGRectMake(
-        insets.left, CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
+        separatorOriginX, CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
         CGRectGetWidth(self.bounds) - insets.left - insets.right, _attr.separatorLineHeight);
     _separatorView.frame = UIEdgeInsetsInsetRect(separatorFrame, separatorInset);
     _separatorView.backgroundColor = _attr.separatorColor;
@@ -268,9 +305,12 @@ static const uint32_t kCellRedColor = 0xF44336;
       _editingReorderImageView = [[UIImageView alloc] initWithImage:reorderImage];
       _editingReorderImageView.tintColor = HEXCOLOR(kCellGrayColor);
       _editingReorderImageView.alpha = 0.0f;
-      _editingReorderImageView.frame =
-          CGRectMake(0, (CGRectGetHeight(self.bounds) - reorderImage.size.height) / 2,
-                     reorderImage.size.width, reorderImage.size.height);
+      CGRect frame = (CGRect){{0, (CGRectGetHeight(self.bounds) - reorderImage.size.height) / 2},
+                              reorderImage.size};
+      _editingReorderImageView.autoresizingMask =
+          MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
+      _editingReorderImageView.frame = MDCRectFlippedForRTL(
+          frame, CGRectGetWidth(self.bounds), self.mdc_effectiveUserInterfaceLayoutDirection);
       [self addSubview:_editingReorderImageView];
     }
 
@@ -282,11 +322,13 @@ static const uint32_t kCellRedColor = 0xF44336;
       _editingSelectorImageView = [[UIImageView alloc] initWithImage:selectorImage];
       _editingSelectorImageView.tintColor = HEXCOLOR(kCellGrayColor);
       _editingSelectorImageView.alpha = 0.0f;
-      _editingSelectorImageView.frame =
-          CGRectMake(CGRectGetWidth(self.bounds) - selectorImage.size.width,
-                     (CGRectGetHeight(self.bounds) - selectorImage.size.height) / 2,
-                     selectorImage.size.width, selectorImage.size.height);
-      _editingSelectorImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+      CGFloat originX = CGRectGetWidth(self.bounds) - selectorImage.size.width;
+      CGFloat originY = (CGRectGetHeight(self.bounds) - selectorImage.size.height) / 2;
+      CGRect frame = (CGRect){{originX, originY}, selectorImage.size};
+      _editingSelectorImageView.autoresizingMask =
+          MDCAutoresizingFlexibleLeadingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
+      _editingSelectorImageView.frame = MDCRectFlippedForRTL(
+          frame, CGRectGetWidth(self.bounds), self.mdc_effectiveUserInterfaceLayoutDirection);
       [self addSubview:_editingSelectorImageView];
     }
     [CATransaction commit];
@@ -338,19 +380,31 @@ static const uint32_t kCellRedColor = 0xF44336;
   }
 }
 
+#pragma mark - RTL
+
+- (void)mdc_setSemanticContentAttribute:(UISemanticContentAttribute)mdc_semanticContentAttribute {
+  [super mdc_setSemanticContentAttribute:mdc_semanticContentAttribute];
+  // Reload the accessory type image if there is one.
+  if ([_accessoryView isKindOfClass:[MDCAccessoryTypeImageView class]]) {
+    self.accessoryType = self.accessoryType;
+  }
+}
+
 #pragma mark - Private
 
 - (CGRect)contentViewFrame {
-  CGFloat leftPadding =
+  CGFloat leadingPadding =
       _attr.shouldShowReorderStateMask
           ? CGRectGetWidth(_editingReorderImageView.bounds) + kEditingControlAppearanceOffset
           : 0.f;
 
-  CGFloat rightPadding =
+  CGFloat trailingPadding =
       _attr.shouldShowSelectorStateMask
           ? CGRectGetWidth(_editingSelectorImageView.bounds) + kEditingControlAppearanceOffset
           : 0.f;
-  return UIEdgeInsetsInsetRect(self.bounds, UIEdgeInsetsMake(0, leftPadding, 0, rightPadding));
+  UIEdgeInsets insets = MDCInsetsMakeWithLayoutDirection(
+      0, leadingPadding, 0, trailingPadding, self.mdc_effectiveUserInterfaceLayoutDirection);
+  return UIEdgeInsetsInsetRect(self.bounds, insets);
 }
 
 - (BOOL)shouldEnableCellInteractions {
