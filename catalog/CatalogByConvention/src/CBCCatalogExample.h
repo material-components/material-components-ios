@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 /**
  The CBCCatalogExample protocol defines methods that examples are expected to implement in order to
  customize their location and behavior in the Catalog by Convention.
