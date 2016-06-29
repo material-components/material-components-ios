@@ -1,5 +1,5 @@
 PODS:
-  - CatalogByConvention (12.0.0)
+  - CatalogByConvention (1.0.0)
   - MaterialComponents (12.0.0):
     - MaterialComponents/ActivityIndicator (= 12.0.0)
     - MaterialComponents/AppBar (= 12.0.0)
@@ -121,6 +121,7 @@ PODS:
   - MaterialComponents/Slider (12.0.0):
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Snackbar (12.0.0):
+    - MaterialComponents/OverlayWindow
     - MaterialComponents/private/Overlay
   - MaterialComponents/SpritedAnimationView (12.0.0)
   - MaterialComponents/Switch (12.0.0):
@@ -148,8 +149,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  CatalogByConvention: ff3cae24278d11be9a3801d4a1ed64730264354b
-  MaterialComponents: 42eb127ef2fbd4c5e14969132f1562907c9b40d8
+  CatalogByConvention: 0137d280781667dd3d856a14cdf507f5ac8eedc0
+  MaterialComponents: 657928d52740b8f15d7db57fb5fb8f75699ce0a6
   MaterialComponentsCatalog: 3c6a3d15087e14ac2b2e5c290860c4cac4a5011f
   MaterialComponentsUnitTests: 66b39dea98ce533496934a14162661583c062271
 

@@ -1,8 +1,8 @@
 #import "MDCSnackbarManager.h"
-#import "MDCOverlayWindow.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
 #import "MDCSnackbarOverlayView.h"
+#import "MaterialOverlayWindow.h"
 #import "private/MDCSnackbarMessageInternal.h"
 
 @class MDCSnackbarManagerSuspensionToken;
