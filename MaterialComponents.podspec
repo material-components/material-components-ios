@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   #  s.subspec "ComponentName" do |ss|
   #    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
   #    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-  #    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+  #    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   #
   #    # Only if you have a resource bundle
   #    ss.resource_bundles = {
@@ -162,6 +162,12 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/RTL"
   end
 
+  s.subspec "OverlayWindow" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
+  end
+
   s.subspec "PageControl" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
@@ -211,6 +217,14 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/ThumbTrack"
   end
 
+  s.subspec "Snackbar" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
+
+    ss.dependency "MaterialComponents/private/Overlay"
+  end
+
   s.subspec "SpritedAnimationView" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
@@ -244,6 +258,18 @@ Pod::Spec.new do |s|
     pss.subspec "Color" do |ss|
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+      ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
+    end
+
+    pss.subspec "KeyboardWatcher" do |ss|
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+      ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
+    end
+
+    pss.subspec "Overlay" do |ss|
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
     end
 

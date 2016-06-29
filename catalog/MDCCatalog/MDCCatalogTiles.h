@@ -28,6 +28,7 @@
 #import "MDCCatalogTileDataPageControl.h"
 #import "MDCCatalogTileDataShadowLayer.h"
 #import "MDCCatalogTileDataSlider.h"
+#import "MDCCatalogTileDataSnackbar.h"
 #import "MDCCatalogTileDataSpritedAnimationView.h"
 #import "MDCCatalogTileDataSwitch.h"
 #import "MDCCatalogTileDataTypography.h"

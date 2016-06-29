@@ -12,6 +12,7 @@ PODS:
     - MaterialComponents/HeaderStackView (= 11.0.1)
     - MaterialComponents/Ink (= 11.0.1)
     - MaterialComponents/NavigationBar (= 11.0.1)
+    - MaterialComponents/OverlayWindow (= 11.0.1)
     - MaterialComponents/PageControl (= 11.0.1)
     - MaterialComponents/Palettes (= 11.0.1)
     - MaterialComponents/private (= 11.0.1)
@@ -19,6 +20,7 @@ PODS:
     - MaterialComponents/ShadowElevations (= 11.0.1)
     - MaterialComponents/ShadowLayer (= 11.0.1)
     - MaterialComponents/Slider (= 11.0.1)
+    - MaterialComponents/Snackbar (= 11.0.1)
     - MaterialComponents/SpritedAnimationView (= 11.0.1)
     - MaterialComponents/Switch (= 11.0.1)
     - MaterialComponents/Typography (= 11.0.1)
@@ -67,11 +69,14 @@ PODS:
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
+  - MaterialComponents/OverlayWindow (11.0.1)
   - MaterialComponents/PageControl (11.0.1)
   - MaterialComponents/Palettes (11.0.1)
   - MaterialComponents/private (11.0.1):
     - MaterialComponents/private/Color (= 11.0.1)
     - MaterialComponents/private/Icons (= 11.0.1)
+    - MaterialComponents/private/KeyboardWatcher (= 11.0.1)
+    - MaterialComponents/private/Overlay (= 11.0.1)
     - MaterialComponents/private/RTL (= 11.0.1)
     - MaterialComponents/private/ThumbTrack (= 11.0.1)
   - MaterialComponents/private/Color (11.0.1)
@@ -99,6 +104,8 @@ PODS:
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/Icons/ic_reorder (11.0.1):
     - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/KeyboardWatcher (11.0.1)
+  - MaterialComponents/private/Overlay (11.0.1)
   - MaterialComponents/private/RTL (11.0.1)
   - MaterialComponents/private/ThumbTrack (11.0.1):
     - MaterialComponents/Ink
@@ -112,6 +119,8 @@ PODS:
   - MaterialComponents/ShadowLayer (11.0.1)
   - MaterialComponents/Slider (11.0.1):
     - MaterialComponents/private/ThumbTrack
+  - MaterialComponents/Snackbar (11.0.1):
+    - MaterialComponents/private/Overlay
   - MaterialComponents/SpritedAnimationView (11.0.1)
   - MaterialComponents/Switch (11.0.1):
     - MaterialComponents/private/ThumbTrack
@@ -125,7 +134,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: ce5500fa3584a2f9745c2bb90c8427d9c0459f17
+  MaterialComponents: 0886735f54e439e4465a06a8f8fc8bf167e78332
 
 PODFILE CHECKSUM: f138be16d4835113ff672258fc7529fad3f90e91
 
