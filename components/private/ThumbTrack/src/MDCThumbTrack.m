@@ -855,7 +855,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // handling an event. If you need to keep information about a touch from one touch phase to
   // another, copy that information from the touch."
   // https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITouch_Class/
-  return CGPointEqualToPoint([touch previousLocationInView:self], _lastTouchPoint);
+  return CGPointEqualToPoint(_lastTouchPoint, [touch previousLocationInView:self]) ||
+         CGPointEqualToPoint(_lastTouchPoint, [touch locationInView:self]);
 }
 
 - (BOOL)isPointOnThumb:(CGPoint)point {
