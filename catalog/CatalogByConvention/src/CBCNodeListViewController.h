@@ -77,6 +77,9 @@ FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
  */
 - (BOOL)isPrimaryDemo;
 
+/** Returns String representation of exampleViewController class name if it exists */
+- (nullable NSString *)exampleViewControllerName;
+
 /**
  Returns an instance of a UIViewController for presentation purposes.
 

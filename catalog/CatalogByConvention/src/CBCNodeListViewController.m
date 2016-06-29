@@ -63,6 +63,10 @@
   return _exampleClass != nil;
 }
 
+- (NSString *)exampleViewControllerName {
+  return NSStringFromClass(_exampleClass);
+}
+
 - (UIViewController *)createExampleViewController {
   NSAssert(_exampleClass != nil, @"This node has no associated example.");
   return CBCViewControllerFromClass(_exampleClass);
