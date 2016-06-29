@@ -141,7 +141,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     - [Explore our Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
       <!--{: .icon-sample }-->
 
-    - [View the project on Github](https://github.com/google/material-components-ios/)
+    - [View the project on GitHub](https://github.com/google/material-components-ios/)
       <!--{: .icon-github }-->
     <!--{: .icon-list }-->
 <!--{: .step-sequence }-->
