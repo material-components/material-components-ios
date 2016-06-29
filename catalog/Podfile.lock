@@ -1,4 +1,5 @@
 PODS:
+  - CatalogByConvention (1.0.0)
   - MaterialComponents (11.0.1):
     - MaterialComponents/ActivityIndicator (= 11.0.1)
     - MaterialComponents/AppBar (= 11.0.1)
@@ -131,11 +132,14 @@ PODS:
     - MaterialComponents
 
 DEPENDENCIES:
+  - CatalogByConvention (from `./CatalogByConvention/`)
   - MaterialComponents (from `../`)
   - MaterialComponentsCatalog (from `../`)
   - MaterialComponentsUnitTests (from `../`)
 
 EXTERNAL SOURCES:
+  CatalogByConvention:
+    :path: ./CatalogByConvention/
   MaterialComponents:
     :path: ../
   MaterialComponentsCatalog:
@@ -144,10 +148,11 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
+  CatalogByConvention: 0137d280781667dd3d856a14cdf507f5ac8eedc0
   MaterialComponents: 0886735f54e439e4465a06a8f8fc8bf167e78332
   MaterialComponentsCatalog: b9cd875b76b40f8888ad0bba78891e3668c4c911
   MaterialComponentsUnitTests: 1d4b001c7567ce45e3859a25f8deb82a53d239a9
 
-PODFILE CHECKSUM: 859f7856fc0fa049789dc17023b9f6f887fb1be9
+PODFILE CHECKSUM: cef207e5d4326fe42f1dfc4322297ddb5a6f3fc2
 
 COCOAPODS: 1.0.0
