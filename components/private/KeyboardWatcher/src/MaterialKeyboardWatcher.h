@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2015-present Google Inc. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,10 +14,4 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
-/**
- Utility function which converts a rectangle in overlay coordinates into the local coordinate
- space of the given @c target
- */
-OBJC_EXPORT CGRect MDCOverlayConvertRectToView(CGRect overlayFrame, UIView *targetView);
+#import "MDCKeyboardWatcher.h"
