@@ -200,6 +200,9 @@
 /** Set the @c icon shown on the thumb. */
 - (void)setIcon:(nullable UIImage *)icon;
 
+/** Disable setting multitouch. Has to be NO. */
+- (void)setMultipleTouchEnabled:(BOOL)multipleTouchEnabled NS_UNAVAILABLE;
+
 @end
 
 /** MDCThumbtrack delegate which allows setting custom behavior. */

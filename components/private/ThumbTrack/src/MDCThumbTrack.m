@@ -91,7 +91,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   UIView *_trackView;
   CAShapeLayer *_trackMaskLayer;
   CALayer *_trackOnLayer;
+  BOOL _isTouchDown;
   BOOL _isDraggingThumb;
+  CGPoint _lastTouchPoint;
   BOOL _didChangeValueDuringPan;
   BOOL _shouldDisplayInk;
 }
@@ -105,7 +107,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   self = [super initWithFrame:frame];
   if (self) {
     self.userInteractionEnabled = YES;
-    self.multipleTouchEnabled = NO;  // We only want one touch event at a time
+    [super setMultipleTouchEnabled:NO];  // We only want one touch event at a time
     _continuousUpdateEvents = YES;
     _lastDispatchedValue = _value;
     _maximumValue = 1;
@@ -117,7 +119,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // Default thumb view.
     CGRect thumbFrame = CGRectMake(0, 0, self.thumbRadius * 2, self.thumbRadius * 2);
     _thumbView = [[MDCThumbView alloc] initWithFrame:thumbFrame];
-    _thumbView.userInteractionEnabled = NO;
     _thumbView.borderWidth = kDefaultThumbBorderWidth;
     _thumbView.cornerRadius = self.thumbRadius;
     _thumbView.layer.zPosition = 1;
@@ -722,18 +723,40 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return (1 - snappedValue) * _minimumValue + snappedValue * _maximumValue;
 }
 
-#pragma mark - UIControl Touch Events
+#pragma mark - UIResponder Events
 
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-  if (!self.enabled) {
-    return NO;
+/**
+ We implement our own touch handling here instead of using gesture recognizers. This allows more
+ fine grained control over how the thumb track behaves, including more specific logic over what
+ counts as a tap vs. a drag.
+
+ Note that we must use -touchesBegan:, -touchesMoves:, etc here, rather than the UIControl methods
+ -beginDraggingWithTouch:withEvent:, -continueDraggingWithTouch:withEvent:, etc. This is because
+ with those events, we are forced to disable user interaction on our subviews else the events could
+ be swallowed up by their event handlers and not ours. We can't do this because the we have an ink
+ controller attached to the thumb view for MDCSwitch, and that needs to receive touch events in
+ order to know when to display ink.
+
+ Using -touchesBegan:, etc. solves this problem because we can handle touches ourselves as well as
+ continue to have them pass through to the contained thumb view. So we get our custom event handling
+ without disabling the ink display, hurray!
+
+ Because we set `multipleTouchEnabled = NO`, the sets of touches in these methods will always be of
+ size 1. For this reason, we can simply call `-anyObject` on the set instead of iterating through
+ every touch.
+ */
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  if (!self.enabled || _isTouchDown) {
+    return;
   }
 
+  CGPoint touchLoc = [[touches anyObject] locationInView:self];
+
+  _isTouchDown = YES;
+  _lastTouchPoint = touchLoc;
   _didChangeValueDuringPan = NO;
 
-  CGPoint touchLoc = [touch locationInView:self];
-  // Note that we let the thumb's draggable area extend beyond its actual view to account for
-  // the imprecise nature of hit targets on device.
   _isDraggingThumb = _panningAllowedOnEntireControl || [self isPointOnThumb:touchLoc];
 
   if (_isDraggingThumb) {
@@ -747,22 +770,28 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                         completion:nil];
   }
 
-  return YES;
+  [self sendActionsForControlEvents:UIControlEventTouchDown];
 }
 
-- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-  if (!self.enabled) {
-    return NO;
-  } else if (!_isDraggingThumb) {
-    return YES;  // System should keep tracking touches, but we don't need to move the thumb
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  UITouch *touch = [touches anyObject];
+  if (!self.enabled || ![self isTouchRelevant:touch]) {
+    return;
   }
 
   CGPoint touchLoc = [touch locationInView:self];
+  _lastTouchPoint = touchLoc;
+
+  if (!_isDraggingThumb) {
+    // The rest is dragging logic
+    return;
+  }
+
   CGFloat thumbPosition = touchLoc.x - _panThumbGrabPosition;
   CGFloat previousValue = _value;
   CGFloat value = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
-  [self setValue:value animated:NO animateThumbAfterMove:YES userGenerated:YES completion:NULL];
 
+  [self setValue:value animated:NO animateThumbAfterMove:YES userGenerated:YES completion:NULL];
   [self sendContinuousChangeAction];
 
   if (value != previousValue) {
@@ -770,20 +799,30 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _didChangeValueDuringPan = YES;
   }
 
-  return YES;
+  if ([self pointInside:touchLoc withEvent:nil]) {
+    [self sendActionsForControlEvents:UIControlEventTouchDragInside];
+  } else {
+    [self sendActionsForControlEvents:UIControlEventTouchDragOutside];
+  }
 }
 
-- (void)cancelTrackingWithEvent:(UIEvent *)event {
-  _isDraggingThumb = NO;
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  UITouch *touch = [touches anyObject];
+  if ([self isTouchRelevant:touch]) {
+    _isTouchDown = _isDraggingThumb = NO;
+
+    [self sendActionsForControlEvents:UIControlEventTouchCancel];
+  }
 }
 
-- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-  if (!self.enabled) {
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  UITouch *touch = [touches anyObject];
+  if (!self.enabled || ![self isTouchRelevant:touch]) {
     return;
   }
 
   BOOL wasDragging = _isDraggingThumb;
-  _isDraggingThumb = NO;
+  _isTouchDown = _isDraggingThumb = NO;
 
   if (wasDragging) {
     // Shrink the thumb
@@ -803,10 +842,25 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
         [self setValueFromThumbPosition:touchLoc isTap:YES];
       }
     }
+
+    [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+  } else {
+    [self sendActionsForControlEvents:UIControlEventTouchUpOutside];
   }
 }
 
+- (BOOL)isTouchRelevant:(UITouch *)touch {
+  // We compare the previous position vs. current position rather than saving and comparing UITouch
+  // objects per Apple's documentation in UITouch, which says: "Never retain a touch object when
+  // handling an event. If you need to keep information about a touch from one touch phase to
+  // another, copy that information from the touch."
+  // https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITouch_Class/
+  return CGPointEqualToPoint([touch previousLocationInView:self], _lastTouchPoint);
+}
+
 - (BOOL)isPointOnThumb:(CGPoint)point {
+  // Note that we let the thumb's draggable area extend beyond its actual view to account for
+  // the imprecise nature of hit targets on device.
   return DistanceFromPointToPoint(point, _thumbView.center) <= (_thumbRadius * kThumbSlopFactor);
 }
 
