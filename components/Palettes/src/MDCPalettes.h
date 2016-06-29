@@ -17,46 +17,46 @@
 #import <UIKit/UIKit.h>
 
 /** The name of the tint 50 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint50Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint50Name;
 
 /** The name of the tint 100 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint100Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint100Name;
 
 /** The name of the tint 200 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint200Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint200Name;
 
 /** The name of the tint 300 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint300Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint300Name;
 
 /** The name of the tint 400 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint400Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint400Name;
 
 /** The name of the tint 500 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint500Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint500Name;
 
 /** The name of the tint 600 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint600Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint600Name;
 
 /** The name of the tint 700 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint700Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint700Name;
 
 /** The name of the tint 800 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint800Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint800Name;
 
 /** The name of the tint 900 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteTint900Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteTint900Name;
 
 /** The name of the accent 100 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteAccent100Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteAccent100Name;
 
 /** The name of the accent 200 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteAccent200Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteAccent200Name;
 
 /** The name of the accent 400 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteAccent400Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteAccent400Name;
 
 /** The name of the accent 700 color when creating a custom palette. */
-CG_EXTERN const NSString *__nonnull MDCPaletteAccent700Name;
+CG_EXTERN const NSString *_Nonnull MDCPaletteAccent700Name;
 
 /**
  A palette of Material colors.

@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void (^MDCFlexibleHeaderChangeContentInsetsBlock)(void);
-typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(CALayer *__nonnull shadowLayer,
+typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(CALayer *_Nonnull shadowLayer,
                                                             CGFloat intensity);
 
 /**

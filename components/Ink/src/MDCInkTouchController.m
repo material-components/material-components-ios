@@ -94,7 +94,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
   [_addedInkView cancelAllAnimationsAnimated:YES];
 }
 
-- (MDCInkView *__nullable)inkViewAtTouchLocation:(CGPoint)location {
+- (MDCInkView *_Nullable)inkViewAtTouchLocation:(CGPoint)location {
   MDCInkView *inkView;
   if ([_delegate respondsToSelector:@selector(inkTouchController:inkViewAtTouchLocation:)]) {
     inkView = [_delegate inkTouchController:self inkViewAtTouchLocation:location];

@@ -42,7 +42,7 @@
  Only classes that implement +catalogBreadcrumbs and return at least one breadcrumb will be part of
  the tree.
  */
-FOUNDATION_EXTERN CBCNode *__nonnull CBCCreateNavigationTree(void);
+FOUNDATION_EXTERN CBCNode *_Nonnull CBCCreateNavigationTree(void);
 
 /**
  A node describes a single navigable page in the Catalog by Convention.

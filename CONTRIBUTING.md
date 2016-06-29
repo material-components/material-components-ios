@@ -102,9 +102,6 @@ Recommendations:
 We **explicitly** annotate all public APIs rather than use `NS_ASSUME_NONNULL_BEGIN`. This is an
 intentional deviation from Apple’s practice of using the `ASSUME` macros.
 
-While Xcode 7 also introduced `_Nullable` and `_Nonnull`, we require the `__nullable` and
-`__nonnull` versions in order to maintain Xcode 6 support.
-
 Further reading:
 
 - http://nshipster.com/swift-1.2/#nullability-annotations
