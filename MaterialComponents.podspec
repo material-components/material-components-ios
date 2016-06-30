@@ -223,6 +223,7 @@ Pod::Spec.new do |s|
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     ss.dependency "MaterialComponents/OverlayWindow"
+    ss.dependency "MaterialComponents/private/KeyboardWatcher"
     ss.dependency "MaterialComponents/private/Overlay"
   end
 
