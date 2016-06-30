@@ -84,18 +84,7 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 
  - (void)didTap:(UIBarButtonItem *)item event:(UIEvent *)event button:(UIButton *)button;
  */
-@property(nonatomic, copy) NSArray *items;
-
-#pragma mark Configuring Layout
-
-/**
- The direction in which the button views should be laid out.
-
- Default:
-   - Prior to iOS 9: UIUserInterfaceLayoutDirectionLeftToRight
-   - iOS 9 and above: same as +[UIView userInterfaceLayoutDirectionForSemanticContentAttribute:]
- */
-@property(nonatomic) UIUserInterfaceLayoutDirection layoutDirection;
+@property(nonatomic, copy) NSArray<UIBarButtonItem *> *items;
 
 /**
  If greater than zero, will ensure that any UIButton with a title is aligned to the provided
@@ -140,7 +129,8 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
  An object that conforms to this protocol must forward UIControlEventTouchUpInside events to the
  button bar's didTapButton:event: method signature in order to pass the correct UIBarButtonItem
  argument to the item's target/action invocation. This method signature is made available by
- importing the MDCButtonBar+Builder.h header. The MDCButtonBar+Builder.h header should *only* be
+ importing the MDCAppBarButtonBarBuilder.h header. The MDCAppBarButtonBarBuilder.h header should
+ *only* be
  imported in files that implement objects conforming to MDCButtonBarDelegate.
 
  @seealso MDCBarButtonItemLayoutHints

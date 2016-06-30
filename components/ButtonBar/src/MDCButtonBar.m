@@ -19,7 +19,9 @@
 #endif
 
 #import "MDCButtonBar.h"
+#import "MDCButton.h"
 
+#import "MaterialRTL.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
 static const CGFloat kDefaultHeight = 56;
@@ -33,7 +35,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
 @implementation MDCButtonBar {
   id _buttonItemsLock;
-  NSArray *_buttonViews;
+  NSArray<__kindof UIView *> *_buttonViews;
 
   MDCAppBarButtonBarBuilder *_defaultBuilder;
 }
@@ -44,16 +46,6 @@ static NSString *const kEnabledSelector = @"enabled";
 
 - (void)commonMDCButtonBarInit {
   _buttonItemsLock = [[NSObject alloc] init];
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
-  if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
-    _layoutDirection = [UIView
-        userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute];
-  } else {
-    _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-  }
-#else
-  _layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-#endif
   _layoutPosition = MDCButtonBarLayoutPositionNone;
 
   _defaultBuilder = [[MDCAppBarButtonBarBuilder alloc] init];
@@ -96,7 +88,7 @@ static NSString *const kEnabledSelector = @"enabled";
   CGFloat totalWidth = 0;
 
   CGFloat edge;
-  switch (_layoutDirection) {
+  switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
     case UIUserInterfaceLayoutDirectionLeftToRight:
       edge = 0;
       break;
@@ -107,14 +99,14 @@ static NSString *const kEnabledSelector = @"enabled";
 
   BOOL shouldAlignBaselines = _buttonTitleBaseline > 0;
 
-  NSEnumerator<NSArray *> *positionedButtonViews =
+  NSEnumerator<__kindof UIView *> *positionedButtonViews =
       self.layoutPosition == MDCButtonBarLayoutPositionTrailing
           ? [_buttonViews reverseObjectEnumerator]
           : [_buttonViews objectEnumerator];
 
   for (UIView *view in positionedButtonViews) {
     CGFloat width = view.frame.size.width;
-    switch (_layoutDirection) {
+    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         break;
       case UIUserInterfaceLayoutDirectionRightToLeft:
@@ -130,7 +122,7 @@ static NSString *const kEnabledSelector = @"enabled";
         }
       }
     }
-    switch (_layoutDirection) {
+    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         edge += width;
         break;
@@ -159,18 +151,27 @@ static NSString *const kEnabledSelector = @"enabled";
   [super tintColorDidChange];
 
   _defaultBuilder.buttonTitleColor = self.tintColor;
-  [self reloadButtonViews];
+  [self updateButtonTitleColors];
 }
 
 #pragma mark - Private
 
-- (NSArray *)viewsForItems:(NSArray *)barButtonItems {
+- (void)updateButtonTitleColors {
+  for (UIView *viewObj in _buttonViews) {
+    if ([viewObj isKindOfClass:[MDCButton class]]) {
+      MDCButton *buttonView = (MDCButton *)viewObj;
+      buttonView.customTitleColor = self.tintColor;
+    }
+  }
+}
+
+- (NSArray<UIView *> *)viewsForItems:(NSArray<UIBarButtonItem *> *)barButtonItems {
   if (![barButtonItems count]) {
     return nil;
   }
   id<MDCButtonBarDelegate> delegate = _defaultBuilder;
 
-  NSMutableArray *views = [NSMutableArray array];
+  NSMutableArray<UIView *> *views = [NSMutableArray array];
   [barButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *item, NSUInteger idx, BOOL *stop) {
     MDCBarButtonItemLayoutHints hints = MDCBarButtonItemLayoutHintsNone;
     if (idx == 0) {
@@ -305,21 +306,21 @@ static NSString *const kEnabledSelector = @"enabled";
 
 #pragma mark - Public
 
-- (NSArray *)buttonItems {
+- (NSArray<UIBarButtonItem *> *)buttonItems {
   return self.items;
 }
 
-- (void)setButtonItems:(NSArray *)buttonItems {
+- (void)setButtonItems:(NSArray<UIBarButtonItem *> *)buttonItems {
   self.items = buttonItems;
 }
 
-- (void)setItems:(NSArray *)items {
+- (void)setItems:(NSArray<UIBarButtonItem *> *)items {
   @synchronized(_buttonItemsLock) {
     if (_items == items || [_items isEqualToArray:items]) {
       return;
     }
 
-    NSArray *keyPaths = @[
+    NSArray<NSString *> *keyPaths = @[
       kEnabledSelector, NSStringFromSelector(@selector(title)),
       NSStringFromSelector(@selector(image))
     ];
@@ -347,12 +348,8 @@ static NSString *const kEnabledSelector = @"enabled";
   }
 }
 
-- (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
-  if (_layoutDirection == layoutDirection) {
-    return;
-  }
-  _layoutDirection = layoutDirection;
-
+- (void)mdc_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  [super mdc_setSemanticContentAttribute:semanticContentAttribute];
   [self reloadButtonViews];
 }
 

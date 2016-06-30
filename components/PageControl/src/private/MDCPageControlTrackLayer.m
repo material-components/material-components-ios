@@ -69,7 +69,7 @@ static NSString *const kPageControlAnimationKeyDraw = @"drawTrack";
   }];
 
   // Get animation keyframes.
-  NSMutableArray *values = [NSMutableArray array];
+  NSMutableArray<UIBezierPath *> *values = [NSMutableArray array];
   for (NSInteger i = 0; i < kPageControlKeyframeCount; i++) {
     [values addObject:(id)[self pathAtKeyframe:i]];
   }

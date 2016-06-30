@@ -14,10 +14,9 @@
  limitations under the License.
  */
 
-#import "PestoFlexibleHeaderContainerViewController.h"
+#import "PestoViewController.h"
 #import "PestoCollectionViewController.h"
 #import "PestoDetailViewController.h"
-#import "PestoFlexibleHeaderContainerViewController.h"
 #import "PestoIcons/PestoIconSettings.h"
 #import "PestoSettingsViewController.h"
 
@@ -26,9 +25,9 @@
 static CGFloat kPestoAnimationDuration = 0.33f;
 static CGFloat kPestoInset = 5.f;
 
-@interface PestoFlexibleHeaderContainerViewController () <PestoCollectionViewControllerDelegate,
-                                                          UIViewControllerAnimatedTransitioning,
-                                                          UIViewControllerTransitioningDelegate>
+@interface PestoViewController () <PestoCollectionViewControllerDelegate,
+                                   UIViewControllerAnimatedTransitioning,
+                                   UIViewControllerTransitioningDelegate>
 
 @property(nonatomic, strong) MDCAppBar *appBar;
 @property(nonatomic, strong) PestoCollectionViewController *collectionViewController;
@@ -37,7 +36,7 @@ static CGFloat kPestoInset = 5.f;
 
 @end
 
-@implementation PestoFlexibleHeaderContainerViewController
+@implementation PestoViewController
 
 - (instancetype)init {
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -120,11 +119,14 @@ static CGFloat kPestoInset = 5.f;
           detailVC.title = cell.title;
           detailVC.iconImageName = cell.iconImageName;
           detailVC.descText = cell.descText;
-
           detailVC.modalPresentationStyle = UIModalPresentationCustom;
           detailVC.transitioningDelegate = self;
 
-          [self presentViewController:detailVC
+          UINavigationController *navVC =
+              [[UINavigationController alloc] initWithRootViewController:detailVC];
+          navVC.navigationBarHidden = YES;
+
+          [self presentViewController:navVC
                              animated:NO
                            completion:^() {
                              self.zoomableView.frame = CGRectZero;

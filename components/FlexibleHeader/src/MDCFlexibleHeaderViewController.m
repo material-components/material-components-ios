@@ -37,14 +37,6 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
   return LuminanceForColor(color) < 0.55f;
 }
 
-#if !defined(__IPHONE_8_0)
-// Back-expose the new iOS APIs for view controller autorotation.
-@interface UIViewController ()
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator;
-@end
-#endif
-
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
 @end
 
@@ -114,7 +106,7 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
                                 duration:(NSTimeInterval)duration {
   [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-  // Check if we're on iOS 8 and the new method will be called.
+  // Check if we're on iOS 8 and above and the new method will be called.
   if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
                                                              withTransitionCoordinator:)]) {
     [_headerView interfaceOrientationWillChange];
@@ -125,7 +117,7 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
                                          duration:(NSTimeInterval)duration {
   [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-  // Check if we're on iOS 8 and the new method will be called.
+  // Check if we're on iOS 8 and above and the new method will be called.
   if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
                                                              withTransitionCoordinator:)]) {
     [_headerView interfaceOrientationIsChanging];
@@ -135,22 +127,13 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
   [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-  // Check if we're on iOS 8 and the new method will be called.
+  // Check if we're on iOS 8 and above and the new method will be called.
   if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
                                                              withTransitionCoordinator:)]) {
     [_headerView interfaceOrientationDidChange];
   }
 }
 #endif  // #if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0  // Built for iOS 8.0 and above.
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-
-  [_headerView viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-}
-#endif
 
 #pragma mark - UIScrollViewDelegate
 

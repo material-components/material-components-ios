@@ -46,13 +46,13 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     view.addSubview(scrollView)
 
     // Add pages to scrollView.
-    for (var i:NSInteger = 0; i < pageColors.count; i++) {
+    for (i, pageColor) in pageColors.enumerate() {
       let pageFrame:CGRect = CGRectOffset(self.view.bounds, CGFloat(i) * view.bounds.width, 0);
       let page = UILabel.init(frame:pageFrame)
       page.text = String(format: "Page %zd", i + 1)
       page.font = page.font.fontWithSize(50)
       page.textColor = UIColor.init(white: 0, alpha: 0.8)
-      page.backgroundColor = pageColors[i];
+      page.backgroundColor = pageColor;
       page.textAlignment = NSTextAlignment.Center;
       page.autoresizingMask = [.FlexibleTopMargin, .FlexibleBottomMargin]
       scrollView.addSubview(page)
@@ -73,9 +73,9 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     let pageBeforeFrameChange = pageControl.currentPage;
-    for (var i = 0; i < pages.count; i++) {
-      let page:UILabel = pages.objectAtIndex(i) as! UILabel
-      page.frame = CGRectOffset(view.bounds, CGFloat(i) * view.bounds.width, 0);
+    for (i, page) in pages.enumerate() {
+      let pageLabel:UILabel = page as! UILabel
+      pageLabel.frame = CGRectOffset(view.bounds, CGFloat(i) * view.bounds.width, 0);
     }
     scrollView.contentSize = CGSizeMake(view.bounds.width * CGFloat(pages.count), view.bounds.height);
     var offset = scrollView.contentOffset;

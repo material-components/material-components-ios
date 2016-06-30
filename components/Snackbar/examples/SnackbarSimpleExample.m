@@ -14,8 +14,25 @@
  limitations under the License.
  */
 
-#import "MaterialFlexibleHeader.h"
+#import <UIKit/UIKit.h>
 
-@interface PestoFlexibleHeaderContainerViewController : MDCFlexibleHeaderContainerViewController
+#import "MaterialSnackbar.h"
+#import "SnackbarExampleSupplemental.h"
+
+@implementation SnackbarSimpleExample
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  [self setupExampleViews];
+  self.title = @"Snackbar";
+}
+
+#pragma mark - Event Handling
+
+- (void)handleShowSnackbarButtonTapped:(id)sender {
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"Snackbar Message";
+  [MDCSnackbarManager showMessage:message];
+}
 
 @end

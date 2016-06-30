@@ -120,6 +120,7 @@ IB_DESIGNABLE
  */
 @protocol MDCActivityIndicatorDelegate <NSObject>
 
+@optional
 /**
  When stop is called, the spinner gracefully animates out using opacity and stroke width.
  This method is called after that fade-out animation completes.

@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -x
-
 # Install clang-format.
 #
 # This is not required for anyone but core team members.
@@ -24,10 +22,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 "$DIR/install_brew"
 
+set -o errexit
+brew update
+brew uninstall --force clang-format
 brew install clang-format
 
-if [ $? -ne 0 ]; then
-  echo "If brew failed to install clang-format then you may need to run:"
-  echo
-  echo "    sudo chown -R `whoami` /usr/local"
-fi

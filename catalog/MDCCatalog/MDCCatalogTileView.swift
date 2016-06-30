@@ -98,6 +98,8 @@ class MDCCatalogTileView: UIView {
       newImage = MDCCatalogTileDataShadowLayer.drawTileImage(centeredFrame)
     case "Slider":
       newImage = MDCCatalogTileDataSlider.drawTileImage(centeredFrame)
+    case "Snackbar":
+      newImage = MDCCatalogTileDataSnackbar.drawTileImage(centeredFrame)
     case "Sprited Animation View":
       newImage = MDCCatalogTileDataSpritedAnimationView.drawTileImage(centeredFrame)
     case "Switch":

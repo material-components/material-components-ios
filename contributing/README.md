@@ -12,7 +12,7 @@ from community members. We can work together to optimize Material Design on iOS.
 - [Slack Channel](http://googleoss.slack.com)
   <!--{: .icon-slack }-->
 
-- [Github Issues](https://github.com/google/material-components-ios/issues)
+- [GitHub Issues](https://github.com/google/material-components-ios/issues)
   <!--{: .icon-github }-->
 
 - [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)

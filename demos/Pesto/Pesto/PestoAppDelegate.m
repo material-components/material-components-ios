@@ -15,7 +15,11 @@
  */
 
 #import "PestoAppDelegate.h"
-#import "PestoFlexibleHeaderContainerViewController.h"
+#import "PestoViewController.h"
+
+#import "PestoIcons/PestoIconFavorite.h"
+#import "PestoIcons/PestoIconHome.h"
+#import "PestoIcons/PestoIconTrending.h"
 
 @interface PestoAppDelegate ()
 
@@ -25,12 +29,28 @@
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  PestoFlexibleHeaderContainerViewController *flexHeadContainerVC =
-      [[PestoFlexibleHeaderContainerViewController alloc] init];
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-  [self.window setRootViewController:flexHeadContainerVC];
   [self.window makeKeyAndVisible];
+
+  CGRect iconFrame = CGRectMake(0, 0, 32, 32);
+  UITabBarController *tabBarController = [[UITabBarController alloc] init];
+
+  PestoViewController *homeViewController = [[PestoViewController alloc] init];
+  PestoViewController *favoritesViewController = [[PestoViewController alloc] init];
+  PestoViewController *trendingViewController = [[PestoViewController alloc] init];
+
+  homeViewController.tabBarItem.title = @"Home";
+  homeViewController.tabBarItem.image = [PestoIconHome drawTileImage:iconFrame];
+  favoritesViewController.tabBarItem.title = @"Favorites";
+  favoritesViewController.tabBarItem.image = [PestoIconFavorite drawTileImage:iconFrame];
+  trendingViewController.tabBarItem.title = @"Trending";
+  trendingViewController.tabBarItem.image = [PestoIconTrending drawTileImage:iconFrame];
+  tabBarController.viewControllers =
+      @[ homeViewController, favoritesViewController, trendingViewController ];
+  UIColor *teal = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1.f];
+  tabBarController.tabBar.tintColor = teal;
+  tabBarController.tabBar.translucent = NO;
+  self.window.rootViewController = tabBarController;
 
   return YES;
 }

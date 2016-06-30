@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import UIKit
+import CatalogByConvention
 import MaterialComponents
+import UIKit
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 
@@ -25,6 +26,11 @@ class NodeViewTableViewDemoCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     textLabel!.font = MDCTypography.subheadFont()
     imageView!.image = UIImage(named: "Demo")
+
+    // Ensure subtitile text is proportionally less pronounced than the title label
+    let textLabelFont = textLabel!.font
+    detailTextLabel?.alpha = CGFloat(0.5)
+    detailTextLabel?.font = textLabelFont.fontWithSize(CGFloat(textLabelFont.pointSize * 0.5))
   }
 
   required init(coder: NSCoder) {
@@ -61,7 +67,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
         let isPrimaryDemo = childNode.isPrimaryDemo()
         if isPrimaryDemo {
           orderedNodes.insertObject(childNode, atIndex: 0)
-          componentDescription = childNode.createExampleDescription()
+          componentDescription = childNode.exampleDescription()
         } else {
           orderedNodes.addObject(childNode)
         }
@@ -221,15 +227,25 @@ class MDCNodeListViewController: CBCNodeListViewController {
     cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     var cell = tableView.dequeueReusableCellWithIdentifier("NodeViewTableViewDemoCell")
     if ((cell == nil)) {
-      cell = NodeViewTableViewDemoCell.init(style: .Default,
+      cell = NodeViewTableViewDemoCell.init(style: .Subtitle,
         reuseIdentifier: "NodeViewTableViewDemoCell")
     }
+
+    var subtitleText: String?
     if (indexPath.section == Section.Description.rawValue) {
+      subtitleText = node.children[indexPath.row].exampleViewControllerName()
       cell!.textLabel!.text = "Demo"
       cell!.textLabel!.textColor = UIColor(red: 0.01, green: 0.66, blue: 0.96, alpha: 1)
-      cell!.imageView?.image = UIImage(named: "Demo Main")
+      cell!.imageView?.image = UIImage(named: "DemoMain")
     } else {
+      subtitleText = node.children[indexPath.row + 1].exampleViewControllerName()
       cell!.textLabel!.text = node.children[indexPath.row + 1].title
+    }
+    if subtitleText != nil {
+      if let swiftModuleRange = subtitleText?.rangeOfString(".") {
+        subtitleText = subtitleText!.substringFromIndex(swiftModuleRange.endIndex)
+      }
+      cell!.detailTextLabel?.text = subtitleText!
     }
     cell!.accessoryType = .DisclosureIndicator
 
@@ -252,7 +268,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     var vc: UIViewController
     if node.isExample() {
       let contentVC = node.createExampleViewController()
-      if contentVC.respondsToSelector("catalogShouldHideNavigation") {
+      if contentVC.respondsToSelector(NSSelectorFromString("catalogShouldHideNavigation")) {
         vc = contentVC
       } else {
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)

@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "11.0.1"
+  s.version      = "12.0.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   #  s.subspec "ComponentName" do |ss|
   #    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
   #    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-  #    ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+  #    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   #
   #    # Only if you have a resource bundle
   #    ss.resource_bundles = {
@@ -60,6 +60,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/ShadowLayer"
 
     ss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "Buttons" do |ss|
@@ -79,6 +80,7 @@ Pod::Spec.new do |s|
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     ss.dependency "MaterialComponents/Buttons"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "CollectionCells" do |ss|
@@ -97,6 +99,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Icons/ic_info"
     ss.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
     ss.dependency "MaterialComponents/private/Icons/ic_reorder"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "CollectionLayoutAttributes" do |ss|
@@ -156,6 +159,13 @@ Pod::Spec.new do |s|
 
     ss.dependency "MaterialComponents/ButtonBar"
     ss.dependency "MaterialComponents/Typography"
+    ss.dependency "MaterialComponents/private/RTL"
+  end
+
+  s.subspec "OverlayWindow" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "PageControl" do |ss|
@@ -207,6 +217,17 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/ThumbTrack"
   end
 
+  s.subspec "Snackbar" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
+
+    ss.dependency "MaterialComponents/Buttons"
+    ss.dependency "MaterialComponents/OverlayWindow"
+    ss.dependency "MaterialComponents/private/KeyboardWatcher"
+    ss.dependency "MaterialComponents/private/Overlay"
+  end
+
   s.subspec "SpritedAnimationView" do |ss|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
@@ -238,6 +259,24 @@ Pod::Spec.new do |s|
     registerIcons(pss)
 
     pss.subspec "Color" do |ss|
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+      ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
+    end
+
+    pss.subspec "KeyboardWatcher" do |ss|
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+      ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
+    end
+
+    pss.subspec "Overlay" do |ss|
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+      ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
+    end
+
+    pss.subspec "RTL" do |ss|
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src"

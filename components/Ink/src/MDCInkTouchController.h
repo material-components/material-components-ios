@@ -111,7 +111,7 @@
  @param location The query location in the coordinates of @c self.view.
  @return The ink view at the touch location, or nil.
 */
-- (MDCInkView *__nullable)inkViewAtTouchLocation:(CGPoint)location;
+- (MDCInkView *_Nullable)inkViewAtTouchLocation:(CGPoint)location;
 
 #pragma mark - Deprecations
 

@@ -73,6 +73,18 @@ static NSString *const kPageControlIndicatorAnimationKey = @"fadeInScaleUp";
   self.hidden = NO;
 }
 
+- (void)updateIndicatorTransformX:(CGFloat)transformX
+                         animated:(BOOL)animated
+                         duration:(NSTimeInterval)duration
+              mediaTimingFunction:(CAMediaTimingFunction *)timingFunction {
+  [CATransaction begin];
+  [CATransaction setDisableActions:!animated];
+  [CATransaction setAnimationDuration:duration];
+  [CATransaction setAnimationTimingFunction:timingFunction];
+  self.transform = CATransform3DMakeTranslation(transformX, 0, 0);
+  [CATransaction commit];
+}
+
 - (void)updateIndicatorTransformX:(CGFloat)transformX {
   // Disable animation of this transform.
   [CATransaction begin];

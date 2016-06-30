@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "CatalogByConvention"
-  s.version      = "11.0.1"
+  s.version      = "1.0.0"
   s.authors      = "Google Inc."
   s.summary      = "Tools for building a Catalog by Convention."
   s.homepage     = "https://github.com/google/catalog-by-convention"
@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
 
   s.public_header_files = "src/*.h"
   s.source_files = "src/*.{h,m,swift}", "src/private/*.{h,m,swift}"
-  s.header_mappings_dir = "src/*"
+  s.header_mappings_dir = "src"
 end

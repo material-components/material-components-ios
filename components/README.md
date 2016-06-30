@@ -12,7 +12,7 @@ interface components for iOS. These components implement Google's
 and are developed by a team of iOS engineers and UX designers at Google.
 
 
-- [Github](https://github.com/google/material-components-ios/)
+- [GitHub](https://github.com/google/material-components-ios/)
   <!--{: .icon-github }-->
 
 - [Development Guide]({{ site.folder }}/howto/)

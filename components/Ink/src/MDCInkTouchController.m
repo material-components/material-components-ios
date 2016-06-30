@@ -94,7 +94,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
   [_addedInkView cancelAllAnimationsAnimated:YES];
 }
 
-- (MDCInkView *__nullable)inkViewAtTouchLocation:(CGPoint)location {
+- (MDCInkView *_Nullable)inkViewAtTouchLocation:(CGPoint)location {
   MDCInkView *inkView;
   if ([_delegate respondsToSelector:@selector(inkTouchController:inkViewAtTouchLocation:)]) {
     inkView = [_delegate inkTouchController:self inkViewAtTouchLocation:location];
@@ -137,7 +137,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
       break;
     case UIGestureRecognizerStateChanged: {
       // Due to changes on iPhone 6s, possibly due to the force touch,
-      // |UIGestureRecognizerStateChanged| constantly fires. However, we do not want to cancel the
+      // @c UIGestureRecognizerStateChanged constantly fires. However, we do not want to cancel the
       // ink unless the users moves.
       if (_shouldRespondToTouch && !CGPointEqualToPoint(touchLocation, _previousLocation)) {
         _shouldRespondToTouch = NO;

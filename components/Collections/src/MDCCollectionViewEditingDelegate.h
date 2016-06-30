@@ -287,7 +287,7 @@
 
 /**
  Sent to the receiver when a collection view section begins to swipe for dismissal. The
- collection view property |allowsSwipeToDismissSection| must be true in order for this
+ collection view property @c allowsSwipeToDismissSection must be true in order for this
  subsequent delegate method to be called. The collection view is NOT required to be in
  edit mode to allow swipe-to-dismiss sections. Returning NO here will prevent swiping the
  designated section. If not implemented, will default to NO.

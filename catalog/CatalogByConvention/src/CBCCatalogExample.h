@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 /**
  The CBCCatalogExample protocol defines methods that examples are expected to implement in order to
  customize their location and behavior in the Catalog by Convention.
@@ -27,8 +29,7 @@
 + (nonnull NSArray<NSString *> *)catalogBreadcrumbs;
 
 /**
- Return a BOOL stating whether this example should be treated as the main "Demo" in the Catalog
- for this component
+ Return a BOOL stating whether this example should be treated as the primary demo of the component.
  */
 + (BOOL)catalogIsPrimaryDemo;
 

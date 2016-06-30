@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import MaterialComponents
 import UIKit
 
 /**
@@ -21,7 +22,7 @@ import UIKit
 
  Triple tapping anywhere will toggle the visible touches.
  */
-class MDCCatalogWindow: UIWindow {
+class MDCCatalogWindow: MDCOverlayWindow {
   var enabled = false
 
   private let fadeDuration: NSTimeInterval = 0.2

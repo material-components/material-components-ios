@@ -8,16 +8,16 @@ collection of Objective-C and Swift "components".
 If your team works on many components simultaneously then you may find that building examples and
 unit tests involves some non-trivial overhead:
 
-- Each component likely has its own Xcode target.
-- Each component will ideally have at least one example and testing target.
-- Cost of switching between projects/targets/workspaces.
+- Maintenance of each component's Xcode projects.
+- Maintenance of each component's examples and testing target.
+- Switching between projects/targets/workspaces.
 
-One solution to this problem is to create what's called a "Catalog" app. The Catalog's purpose is to
-demonstrate the usage of a collection of components. A Catalog application reduces the number of
-distinct Xcode targets your team has to interact with.
+One solution to this problem is to create what's called a "Catalog" app. A Catalog's purpose is to
+demonstrate the usage of a collection of components in one app. A Catalog application reduces the
+number of distinct Xcode targets your team has to interact with.
 
 Your team still has to manually manage your Catalog's Xcode project, adding and updating files as
-necessary. What if this could be automated?
+necessary. What if this could be even further optimized?
 
 Catalog by Convention minimizes the engineering overhead of creating **examples** and **unit tests**
 via a combination of conventions and CocoaPods. Simply run `pod install` and your Catalog will

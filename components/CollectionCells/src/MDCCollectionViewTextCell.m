@@ -20,6 +20,7 @@
 
 #import "MDCCollectionViewTextCell.h"
 
+#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 #import <tgmath.h>
@@ -43,12 +44,12 @@ static const CGFloat kCellTwoLinePaddingTop = 20;
 static const CGFloat kCellTwoLinePaddingBottom = 20;
 static const CGFloat kCellThreeLinePaddingTop = 16;
 static const CGFloat kCellThreeLinePaddingBottom = 20;
-// Cell padding left/right.
-static const CGFloat kCellTextNoImagePaddingLeft = 16;
-static const CGFloat kCellTextNoImagePaddingRight = 16;
-static const CGFloat kCellTextWithImagePaddingLeft = 72;
+// Cell padding leading/trailing.
+static const CGFloat kCellTextNoImagePaddingLeading = 16;
+static const CGFloat kCellTextNoImagePaddingTrailing = 16;
+static const CGFloat kCellTextWithImagePaddingLeading = 72;
 // Cell image view padding.
-static const CGFloat kCellImagePaddingLeft = 16;
+static const CGFloat kCellImagePaddingLeading = 16;
 
 @implementation MDCCollectionViewTextCell {
   UIView *_contentWrapper;
@@ -72,7 +73,9 @@ static const CGFloat kCellImagePaddingLeft = 16;
 
 - (void)commonMDCCollectionViewTextCellInit {
   _contentWrapper = [[UIView alloc] initWithFrame:self.contentView.bounds];
-  _contentWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _contentWrapper.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth |
+      MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
   _contentWrapper.clipsToBounds = YES;
   [self.contentView addSubview:_contentWrapper];
 
@@ -82,8 +85,10 @@ static const CGFloat kCellImagePaddingLeft = 16;
   _textLabel.textColor = [UIColor colorWithWhite:0 alpha:kCellDefaultTextOpacity];
   _textLabel.shadowColor = nil;
   _textLabel.shadowOffset = CGSizeZero;
-  _textLabel.textAlignment = NSTextAlignmentLeft;
+  _textLabel.textAlignment = NSTextAlignmentNatural;
   _textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  _textLabel.autoresizingMask =
+      MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
   [_contentWrapper addSubview:_textLabel];
 
   // Detail text label.
@@ -92,12 +97,16 @@ static const CGFloat kCellImagePaddingLeft = 16;
   _detailTextLabel.textColor = [UIColor colorWithWhite:0 alpha:kCellDefaultDetailTextFontOpacity];
   _detailTextLabel.shadowColor = nil;
   _detailTextLabel.shadowOffset = CGSizeZero;
-  _detailTextLabel.textAlignment = NSTextAlignmentLeft;
+  _detailTextLabel.textAlignment = NSTextAlignmentNatural;
   _detailTextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  _detailTextLabel.autoresizingMask =
+      MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
   [_contentWrapper addSubview:_detailTextLabel];
 
   // Image view.
   _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+  _imageView.autoresizingMask =
+      MDCAutoresizingFlexibleTrailingMargin(self.mdc_effectiveUserInterfaceLayoutDirection);
   [self.contentView addSubview:_imageView];
 }
 
@@ -114,14 +123,15 @@ static const CGFloat kCellImagePaddingLeft = 16;
 }
 
 - (CGRect)contentWrapperFrame {
-  CGFloat leftPadding =
-      _imageView.image ? kCellTextWithImagePaddingLeft : kCellTextNoImagePaddingLeft;
-  CGFloat rightPadding = kCellTextNoImagePaddingRight;
+  CGFloat leadingPadding =
+      _imageView.image ? kCellTextWithImagePaddingLeading : kCellTextNoImagePaddingLeading;
+  CGFloat trailingPadding = kCellTextNoImagePaddingTrailing;
   if (self.accessoryView && !self.isEditing) {
-    rightPadding += CGRectGetWidth(self.accessoryView.bounds) + kCellTextNoImagePaddingRight;
+    trailingPadding += CGRectGetWidth(self.accessoryView.bounds) + kCellTextNoImagePaddingTrailing;
   }
-  return UIEdgeInsetsInsetRect(self.contentView.bounds,
-                               UIEdgeInsetsMake(0, leftPadding, 0, rightPadding));
+  UIEdgeInsets insets = MDCInsetsMakeWithLayoutDirection(
+      0, leadingPadding, 0, trailingPadding, self.mdc_effectiveUserInterfaceLayoutDirection);
+  return UIEdgeInsetsInsetRect(self.contentView.bounds, insets);
 }
 
 - (void)applyMetrics {
@@ -132,7 +142,7 @@ static const CGFloat kCellImagePaddingLeft = 16;
   // Image layout.
   [_imageView sizeToFit];
   CGRect imageFrame = _imageView.frame;
-  imageFrame.origin.x = kCellImagePaddingLeft;
+  imageFrame.origin.x = kCellImagePaddingLeading;
   imageFrame.origin.y =
       (CGRectGetHeight(self.contentView.frame) / 2) - (imageFrame.size.height / 2);
 
@@ -142,6 +152,11 @@ static const CGFloat kCellImagePaddingLeft = 16;
   CGRect detailFrame = CGRectZero;
   detailFrame.size = [self frameSizeForLabel:_detailTextLabel];
 
+  // Adjust the labels X origin.
+  textFrame.origin.x = 0;
+  detailFrame.origin.x = 0;
+
+  // Adjust the labels Y origin.
   if ([self numberOfAllVisibleTextLines] == 1) {
     // Alignment for single line.
     textFrame.origin.y = (boundsHeight / 2) - (textFrame.size.height / 2);
@@ -174,9 +189,12 @@ static const CGFloat kCellImagePaddingLeft = 16;
       detailFrame.origin.y = (boundsHeight / 2) - (detailFrame.size.height / 2);
     }
   }
-  _textLabel.frame = textFrame;
-  _detailTextLabel.frame = detailFrame;
-  _imageView.frame = imageFrame;
+  _textLabel.frame = MDCRectFlippedForRTL(textFrame, CGRectGetWidth(_contentWrapper.bounds),
+                                          self.mdc_effectiveUserInterfaceLayoutDirection);
+  _detailTextLabel.frame = MDCRectFlippedForRTL(detailFrame, CGRectGetWidth(_contentWrapper.bounds),
+                                                self.mdc_effectiveUserInterfaceLayoutDirection);
+  _imageView.frame = MDCRectFlippedForRTL(imageFrame, CGRectGetWidth(self.contentView.bounds),
+                                          self.mdc_effectiveUserInterfaceLayoutDirection);
 }
 
 - (NSInteger)numberOfAllVisibleTextLines {

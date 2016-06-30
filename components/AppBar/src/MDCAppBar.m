@@ -24,6 +24,7 @@
 
 #import "MaterialFlexibleHeader.h"
 #import "MaterialIcons+ic_arrow_back.h"
+#import "MaterialRTL.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -129,7 +130,7 @@ static const CGFloat kStatusBarHeight = 20;
   UIViewController *fhvParent = self.flexibleHeaderParentViewController;
   UINavigationController *navigationController = fhvParent.navigationController;
 
-  NSArray *viewControllerStack = navigationController.viewControllers;
+  NSArray<UIViewController *> *viewControllerStack = navigationController.viewControllers;
 
   // This will be zero if there is no navigation controller, so a view controller which is not
   // inside a navigation controller will be treated the same as a view controller at the root of a
@@ -138,7 +139,7 @@ static const CGFloat kStatusBarHeight = 20;
 
   UIViewController *iterator = fhvParent;
 
-  // In complex cases it might actually be a parent of |fhvParent| which is on the nav stack.
+  // In complex cases it might actually be a parent of @c fhvParent which is on the nav stack.
   while (index == NSNotFound && iterator && ![iterator isEqual:navigationController]) {
     iterator = iterator.parentViewController;
     index = [viewControllerStack indexOfObject:iterator];
@@ -165,17 +166,9 @@ static const CGFloat kStatusBarHeight = 20;
   if (!backBarButtonItem) {
     UIImage *backButtonImage = [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_arrow_back]];
     backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    if (self.navigationBar.layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
-      if ([backButtonImage
-              respondsToSelector:@selector(imageFlippedForRightToLeftLayoutDirection)]) {
-        backButtonImage = [backButtonImage imageFlippedForRightToLeftLayoutDirection];
-      }
-#else
-      backButtonImage = [UIImage imageWithCGImage:backButtonImage.CGImage
-                                            scale:backButtonImage.scale
-                                      orientation:UIImageOrientationUpMirrored];
-#endif
+    if (self.navigationBar.mdc_effectiveUserInterfaceLayoutDirection ==
+        UIUserInterfaceLayoutDirectionRightToLeft) {
+      backButtonImage = [backButtonImage mdc_imageFlippedForRightToLeftLayoutDirection];
     }
     backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
                                                          style:UIBarButtonItemStyleDone
@@ -211,14 +204,14 @@ static const CGFloat kStatusBarHeight = 20;
 
   // Bar stack expands vertically, but has a margin above it for the status bar.
 
-  NSArray *horizontalConstraints = [NSLayoutConstraint
+  NSArray<NSLayoutConstraint *> *horizontalConstraints = [NSLayoutConstraint
       constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|[%@]|", kBarStackKey]
                           options:0
                           metrics:nil
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
-  NSArray *verticalConstraints = [NSLayoutConstraint
+  NSArray<NSLayoutConstraint *> *verticalConstraints = [NSLayoutConstraint
       constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%@-[%@]|", kStatusBarHeightKey,
                                                              kBarStackKey]
                           options:0

@@ -14,6 +14,5 @@
  limitations under the License.
  */
 
-#import "CatalogByConvention.h"
 #import "MDCCatalogTiles.h"
 #import "MDCInkTouchController+Injection.h"

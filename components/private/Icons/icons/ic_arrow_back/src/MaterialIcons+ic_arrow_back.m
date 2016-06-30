@@ -24,6 +24,10 @@
 static NSString *const kBundleName = @"MaterialIcons_ic_arrow_back";
 static NSString *const kIconName = @"ic_arrow_back";
 
+// Export a nonsense symbol to suppress a libtool warning when this is linked alone in a static lib.
+__attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarning_ic_arrow_back =
+    0;
+
 @implementation MDCIcons (ic_arrow_back)
 
 + (nonnull NSString *)pathFor_ic_arrow_back {

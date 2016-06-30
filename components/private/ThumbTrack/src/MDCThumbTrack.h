@@ -102,6 +102,9 @@
  */
 @property(nonatomic, assign) BOOL thumbIsHollowAtStart;
 
+/** Whether or not the thumb should grow when the user is dragging it. Default is NO. */
+@property(nonatomic, assign) BOOL thumbGrowsWhenDragging;
+
 /** The max radius of the ripple when the user touches the thumb. */
 @property(nonatomic, assign) CGFloat thumbMaxRippleRadius;
 
@@ -194,8 +197,11 @@
             userGenerated:(BOOL)userGenerated
                completion:(nullable void (^)())completion;
 
-/** Set the |icon| shown on the thumb. */
+/** Set the @c icon shown on the thumb. */
 - (void)setIcon:(nullable UIImage *)icon;
+
+/** Disable setting multitouch. Has to be NO. */
+- (void)setMultipleTouchEnabled:(BOOL)multipleTouchEnabled NS_UNAVAILABLE;
 
 @end
 

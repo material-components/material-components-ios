@@ -536,7 +536,7 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
       // Update the tracked item's position and alpha.
       CGAffineTransform transform;
       CGFloat alpha;
-      // The item is fully opaque until it pans at least |kDismissalDistanceBeforeFading| points.
+      // The item is fully opaque until it pans at least @c kDismissalDistanceBeforeFading points.
       CGFloat panDistance = (CGFloat)fabs(translation.x) - kDismissalDistanceBeforeFading;
       if (panDistance > 0) {
         transform = [self transformItemDismissalToTranslationX:translation.x];
@@ -558,7 +558,7 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
       CGFloat translationX = translation.x + momentumX;
 
       if (fabs(translationX) > [self distanceThresholdForDismissal]) {
-        // |translationX| is only guaranteed to be over the dismissal threshold;
+        // @c translationX is only guaranteed to be over the dismissal threshold;
         // make sure the view animates all the way off the screen.
         translationX = (CGFloat)copysign(
             MAX(fabs(translationX), CGRectGetWidth(_collectionView.bounds)), translationX);
@@ -603,7 +603,7 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
     correctedXTranslation = MIN(-kDismissalDistanceBeforeFading, correctedXTranslation);
   }
 
-  // Reverse |initialTranslation| and add |translation.x| to ensure that
+  // Reverse @c initialTranslation and add @c translation.x to ensure that
   // we pan along with the arc.
   CGAffineTransform reverseTranslation =
       CGAffineTransformMakeTranslation(correctedXTranslation, kDismissalArcYOffset);

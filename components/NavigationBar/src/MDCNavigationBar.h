@@ -28,8 +28,8 @@
 @property(nonatomic, copy, nullable) NSString *title;
 @property(nonatomic, strong, nullable) UIView *titleView;
 @property(nonatomic) BOOL hidesBackButton;
-@property(nonatomic, copy, nullable) NSArray *leftBarButtonItems;
-@property(nonatomic, copy, nullable) NSArray *rightBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *leftBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *rightBarButtonItems;
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
 @property(nonatomic, strong, nullable) UIBarButtonItem *leftBarButtonItem;
 @property(nonatomic, strong, nullable) UIBarButtonItem *rightBarButtonItem;
@@ -79,8 +79,8 @@
    trailingBarButtonItems are placed from the trailing edge to the leading edge with the first item
  in the list at the trailing outside edge and trailing aligned.
  */
-@property(nonatomic, copy, nullable) NSArray *leadingBarButtonItems;
-@property(nonatomic, copy, nullable) NSArray *trailingBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *leadingBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *trailingBarButtonItems;
 
 /* By default, the leadingItemsSupplementBackButton property is NO. In this case, the back button is
  not drawn and the leading item or items replace it. If you would like the leading items to appear
@@ -96,17 +96,6 @@
  */
 @property(nonatomic, strong, nullable) UIBarButtonItem *leadingBarButtonItem;
 @property(nonatomic, strong, nullable) UIBarButtonItem *trailingBarButtonItem;
-
-#pragma mark Configuring Layout
-
-/**
- The direction in which the navigation bar items should be laid out.
-
- Default:
- - Prior to iOS 9: UIUserInterfaceLayoutDirectionLeftToRight
- - iOS 9 and above: same as +[UIView userInterfaceLayoutDirectionForSemanticContentAttribute:]
- */
-@property(nonatomic) UIUserInterfaceLayoutDirection layoutDirection;
 
 #pragma mark Observing UINavigationItem instances
 
@@ -133,10 +122,10 @@
 #pragma mark UINavigationItem interface matching
 
 /* Equivalent to leadingBarButtonItems. */
-@property(nonatomic, copy, nullable) NSArray *leftBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *leftBarButtonItems;
 
 /* Equivalent to trailingBarButtonItems. */
-@property(nonatomic, copy, nullable) NSArray *rightBarButtonItems;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *rightBarButtonItems;
 
 /* Equivalent to leadingBarButtonItem. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *leftBarButtonItem;

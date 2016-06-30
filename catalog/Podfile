@@ -5,6 +5,7 @@ target "MDCCatalog" do
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsCatalog', :path => '../'
   pod 'MaterialComponents', :path => '../'
+  pod 'CatalogByConvention', :path => './CatalogByConvention/'
 
   use_frameworks!
 end
@@ -13,6 +14,7 @@ target "MDCUnitTests" do
   project 'MDCUnitTests.xcodeproj'
   pod 'MaterialComponentsUnitTests', :path => '../'
   pod 'MaterialComponents', :path => '../'
+  pod 'CatalogByConvention', :path => './CatalogByConvention/'
 
   use_frameworks!
 end
@@ -28,5 +30,11 @@ post_install do |installer|
     new_xcconfig = File.read(mdc_xcconfig)
     new_xcconfig << "\n#include \"../MaterialComponentsWarnings.xcconfig\""
     File.write(mdc_xcconfig, new_xcconfig)
+  end
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '2.3'
+    end
   end
 end

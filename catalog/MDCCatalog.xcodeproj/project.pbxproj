@@ -9,13 +9,11 @@
 /* Begin PBXBuildFile section */
 		0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */; };
 		5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D090E341C9AEB8C0061344A /* Localizable.strings */; };
-		6642AB811CBDBE0900F5B1D7 /* CBCRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 6642AB801CBDBE0900F5B1D7 /* CBCRuntime.m */; };
 		664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B61C6BA62A001ADBF8 /* AppDelegate.swift */; };
 		664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
 		664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */; };
 		66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */; };
-		666CA70D1CAEBCA9001B1884 /* CBCNodeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666CA70A1CAEBCA9001B1884 /* CBCNodeListViewController.m */; };
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
 		DE1944861CBD9E40009E0321 /* MDCCatalogTileData.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1944681CBD9E40009E0321 /* MDCCatalogTileData.m */; };
@@ -36,13 +34,13 @@
 		DE28DA271D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = DE28DA261D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.m */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DE7A17C51CCAC1EA00B66230 /* MDCCatalogTileDataCollections.m in Sources */ = {isa = PBXBuildFile; fileRef = DE7A17C41CCAC1EA00B66230 /* MDCCatalogTileDataCollections.m */; };
+		DE8261D61D23000600D75992 /* MDCCatalogTileDataSnackbar.m in Sources */ = {isa = PBXBuildFile; fileRef = DE8261D51D23000600D75992 /* MDCCatalogTileDataSnackbar.m */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogWindow.swift; sourceTree = "<group>"; };
 		1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCCatalog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3640411C1CBECABD00C962B2 /* CatalogByConvention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogByConvention.h; sourceTree = "<group>"; };
 		5D090E351C9AEB8C0061344A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E361C9AEB8C0061344A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E371C9AEB8C0061344A /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -77,8 +75,6 @@
 		5D090E541C9AEB8D0061344A /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E551C9AEB8D0061344A /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E561C9AEB8D0061344A /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6642AB7F1CBDBE0900F5B1D7 /* CBCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCRuntime.h; sourceTree = "<group>"; };
-		6642AB801CBDBE0900F5B1D7 /* CBCRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCRuntime.m; sourceTree = "<group>"; };
 		664524B31C6BA62A001ADBF8 /* MDCCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDCCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		664524B61C6BA62A001ADBF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCNodeListViewController.swift; sourceTree = "<group>"; };
@@ -88,9 +84,6 @@
 		66519B051CCA97E100E5423E /* MDCInkTouchController+Injection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDCInkTouchController+Injection.h"; sourceTree = "<group>"; };
 		66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCInkTouchController+Injection.m"; sourceTree = "<group>"; };
 		665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDCCatalog-Bridging-Header.h"; sourceTree = "<group>"; };
-		666CA7081CAEBCA9001B1884 /* CBCCatalogExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCCatalogExample.h; sourceTree = "<group>"; };
-		666CA7091CAEBCA9001B1884 /* CBCNodeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCNodeListViewController.h; sourceTree = "<group>"; };
-		666CA70A1CAEBCA9001B1884 /* CBCNodeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCNodeListViewController.m; sourceTree = "<group>"; };
 		6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileView.swift; sourceTree = "<group>"; };
 		90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
@@ -130,6 +123,8 @@
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
 		DE7A17C41CCAC1EA00B66230 /* MDCCatalogTileDataCollections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileDataCollections.m; sourceTree = "<group>"; };
 		DE7A17C61CCAC1F700B66230 /* MDCCatalogTileDataCollections.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataCollections.h; sourceTree = "<group>"; };
+		DE8261D41D23000600D75992 /* MDCCatalogTileDataSnackbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataSnackbar.h; sourceTree = "<group>"; };
+		DE8261D51D23000600D75992 /* MDCCatalogTileDataSnackbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileDataSnackbar.m; sourceTree = "<group>"; };
 		DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,20 +148,10 @@
 			path = Localizable;
 			sourceTree = "<group>";
 		};
-		6642AB7E1CBDBE0900F5B1D7 /* private */ = {
-			isa = PBXGroup;
-			children = (
-				6642AB7F1CBDBE0900F5B1D7 /* CBCRuntime.h */,
-				6642AB801CBDBE0900F5B1D7 /* CBCRuntime.m */,
-			);
-			path = private;
-			sourceTree = "<group>";
-		};
 		664524AA1C6BA62A001ADBF8 = {
 			isa = PBXGroup;
 			children = (
 				664524B51C6BA62A001ADBF8 /* MDCCatalog */,
-				666CA7061CAEBC98001B1884 /* CatalogByConvention */,
 				664524B41C6BA62A001ADBF8 /* Products */,
 				E165A9868676B4998575E09A /* Pods */,
 				C18E275F798D7A4D3C533DF1 /* Frameworks */,
@@ -210,19 +195,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		666CA7061CAEBC98001B1884 /* CatalogByConvention */ = {
-			isa = PBXGroup;
-			children = (
-				3640411C1CBECABD00C962B2 /* CatalogByConvention.h */,
-				666CA7081CAEBCA9001B1884 /* CBCCatalogExample.h */,
-				666CA7091CAEBCA9001B1884 /* CBCNodeListViewController.h */,
-				666CA70A1CAEBCA9001B1884 /* CBCNodeListViewController.m */,
-				6642AB7E1CBDBE0900F5B1D7 /* private */,
-			);
-			name = CatalogByConvention;
-			path = CatalogByConvention/src;
-			sourceTree = "<group>";
-		};
 		C18E275F798D7A4D3C533DF1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,6 +234,8 @@
 				DE19447C1CBD9E40009E0321 /* MDCCatalogTileDataShadowLayer.m */,
 				DE19447D1CBD9E40009E0321 /* MDCCatalogTileDataSlider.h */,
 				DE19447E1CBD9E40009E0321 /* MDCCatalogTileDataSlider.m */,
+				DE8261D41D23000600D75992 /* MDCCatalogTileDataSnackbar.h */,
+				DE8261D51D23000600D75992 /* MDCCatalogTileDataSnackbar.m */,
 				DE19447F1CBD9E40009E0321 /* MDCCatalogTileDataSpritedAnimationView.h */,
 				DE1944801CBD9E40009E0321 /* MDCCatalogTileDataSpritedAnimationView.m */,
 				DE1944811CBD9E40009E0321 /* MDCCatalogTileDataSwitch.h */,
@@ -438,8 +412,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE1944901CBD9E40009E0321 /* MDCCatalogTileDataShadowLayer.m in Sources */,
-				6642AB811CBDBE0900F5B1D7 /* CBCRuntime.m in Sources */,
-				666CA70D1CAEBCA9001B1884 /* CBCNodeListViewController.m in Sources */,
 				DE1944911CBD9E40009E0321 /* MDCCatalogTileDataSlider.m in Sources */,
 				DE19448E1CBD9E40009E0321 /* MDCCatalogTileDataNavigationBar.m in Sources */,
 				DE19448F1CBD9E40009E0321 /* MDCCatalogTileDataPageControl.m in Sources */,
@@ -448,6 +420,7 @@
 				DE1944871CBD9E40009E0321 /* MDCCatalogTileDataAppBar.m in Sources */,
 				DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */,
 				6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */,
+				DE8261D61D23000600D75992 /* MDCCatalogTileDataSnackbar.m in Sources */,
 				DE28DA271D071FC30000F4CF /* MDCCatalogTileDataActivityIndicator.m in Sources */,
 				DE19448C1CBD9E40009E0321 /* MDCCatalogTileDataInk.m in Sources */,
 				0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */,

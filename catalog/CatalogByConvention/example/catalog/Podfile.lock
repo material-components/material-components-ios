@@ -1,8 +1,8 @@
 PODS:
-  - CatalogByConvention (11.0.1)
-  - CatalogExamples (11.0.1)
-  - CatalogUnitTests (11.0.1)
-  - Resistor (11.0.1)
+  - CatalogByConvention (1.0.0)
+  - CatalogExamples (1.0.0)
+  - CatalogUnitTests (1.0.0)
+  - Resistor (1.0.0)
 
 DEPENDENCIES:
   - CatalogByConvention (from `../../`)
@@ -21,10 +21,10 @@ EXTERNAL SOURCES:
     :path: ../components/Resistor
 
 SPEC CHECKSUMS:
-  CatalogByConvention: cb3bf6550efc96d001571bae8c2851619fd6baca
-  CatalogExamples: 0dec333384784ed28aa7b819bdd67e1f9b9dba95
-  CatalogUnitTests: 100108899e9f33c0ec180f5d97e12d64a2ca6be2
-  Resistor: 559c4185e95d9a85507178dc06653c0bad19b6b2
+  CatalogByConvention: 0137d280781667dd3d856a14cdf507f5ac8eedc0
+  CatalogExamples: 27e215f180dff5c7753195a54819086512fca89c
+  CatalogUnitTests: a6fd65fa28a9ac14d49a66418848cb626d9ae49f
+  Resistor: 36a9ae98666be3b4f34d8133fad442fa87fdbce2
 
 PODFILE CHECKSUM: f14a477885bb971999b5fa8afb20a539b2bcabdc
 

@@ -63,12 +63,16 @@
   return _exampleClass != nil;
 }
 
+- (NSString *)exampleViewControllerName {
+  return NSStringFromClass(_exampleClass);
+}
+
 - (UIViewController *)createExampleViewController {
   NSAssert(_exampleClass != nil, @"This node has no associated example.");
   return CBCViewControllerFromClass(_exampleClass);
 }
 
-- (NSString *)createExampleDescription {
+- (NSString *)exampleDescription {
   NSAssert(_exampleClass != nil, @"This node has no associated example.");
   return CBCDescriptionFromClass(_exampleClass);
 }
@@ -176,7 +180,7 @@ CBCNode *CBCCreateNavigationTree(void) {
     // Walk down the navigation tree one breadcrumb at a time, creating nodes along the way.
 
     CBCNode *node = tree;
-    for (NSInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
+    for (NSUInteger ix = 0; ix < [breadCrumbs count]; ++ix) {
       NSString *title = breadCrumbs[ix];
       BOOL isLastCrumb = ix == [breadCrumbs count] - 1;
 
