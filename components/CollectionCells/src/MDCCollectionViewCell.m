@@ -107,8 +107,8 @@ static const uint32_t kCellRedColor = 0xF44336;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  self.contentView.frame = [self contentViewFrame];
-  _accessoryView.frame = [self accessoryFrame];
+  // Layout the accessory view and the content view.
+  [self layoutForegroundSubviews];
 
   // Animate editing controls.
   [UIView
@@ -159,12 +159,19 @@ static const uint32_t kCellRedColor = 0xF44336;
     // Draw separator if needed.
     [self drawSeparatorIfNeeded];
 
-    self.contentView.frame = [self contentViewFrame];
-    _accessoryView.frame = [self accessoryFrame];
+    // Layout the accessory view and the content view.
+    [self layoutForegroundSubviews];
 
     // Animate cell on appearance settings.
     [self updateAppearanceAnimation];
   }
+}
+
+- (void)layoutForegroundSubviews {
+  // First lay out the accessory view.
+  _accessoryView.frame = [self accessoryFrame];
+  // Then lay out the content view, inset by the accessory view's width.
+  self.contentView.frame = [self contentViewFrame];
 }
 
 #pragma mark - Accessory Views
@@ -398,10 +405,12 @@ static const uint32_t kCellRedColor = 0xF44336;
           ? CGRectGetWidth(_editingReorderImageView.bounds) + kEditingControlAppearanceOffset
           : 0.f;
 
+  CGFloat accessoryViewPadding =
+      _accessoryView ? CGRectGetWidth(self.bounds) - CGRectGetMinX(_accessoryView.frame) : 0;
   CGFloat trailingPadding =
       _attr.shouldShowSelectorStateMask
           ? CGRectGetWidth(_editingSelectorImageView.bounds) + kEditingControlAppearanceOffset
-          : 0.f;
+          : accessoryViewPadding;
   UIEdgeInsets insets = MDCInsetsMakeWithLayoutDirection(
       0, leadingPadding, 0, trailingPadding, self.mdc_effectiveUserInterfaceLayoutDirection);
   return UIEdgeInsetsInsetRect(self.bounds, insets);
