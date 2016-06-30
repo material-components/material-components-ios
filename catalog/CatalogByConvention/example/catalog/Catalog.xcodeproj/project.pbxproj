@@ -89,7 +89,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 666CA6C31CAE277E001B1884 /* Build configuration list for PBXNativeTarget "Catalog" */;
 			buildPhases = (
-				A6D4D34D01155E957863CFC5 /* 📦 Check Pods Manifest.lock */,
+				A6D4D34D01155E957863CFC5 /* [CP] Check Pods Manifest.lock */,
 				5E0C759D6BF372D69AB4361F /* [CP] Check Pods Manifest.lock */,
 				666CA6AD1CAE277E001B1884 /* Sources */,
 				666CA6AE1CAE277E001B1884 /* Frameworks */,
@@ -199,14 +199,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Catalog/Pods-Catalog-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A6D4D34D01155E957863CFC5 /* 📦 Check Pods Manifest.lock */ = {
+		A6D4D34D01155E957863CFC5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
