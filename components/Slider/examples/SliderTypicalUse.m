@@ -35,6 +35,15 @@
         forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.slider];
 
+  // Discrete slider
+
+  self.discreteSlider = [[MDCSlider alloc] initWithFrame:sliderFrame];
+  self.discreteSlider.numberOfDiscreteValues = 5;
+  [self.discreteSlider addTarget:self
+                          action:@selector(didChangeSliderValue:)
+                forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:self.discreteSlider];
+
   // Slider disabled
 
   self.disabledSlider = [[MDCSlider alloc] initWithFrame:sliderFrame];
@@ -46,6 +55,7 @@
   [self.view addSubview:self.disabledSlider];
 
   self.slider.translatesAutoresizingMaskIntoConstraints = NO;
+  self.discreteSlider.translatesAutoresizingMaskIntoConstraints = NO;
   self.disabledSlider.translatesAutoresizingMaskIntoConstraints = NO;
 
   [self setupExampleViews];

@@ -72,6 +72,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.thumbIsHollowAtStart = YES;
   _thumbTrack.thumbGrowsWhenDragging = YES;
   _thumbTrack.shouldDisplayInk = NO;
+  _thumbTrack.shouldDisplayDiscreteDots = YES;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
   _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
   _thumbTrack.trackDisabledColor = [[self class] defaultDisabledColor];
