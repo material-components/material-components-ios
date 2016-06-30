@@ -24,6 +24,9 @@
 static NSString *const kBundleName = @"MaterialIcons_ic_reorder";
 static NSString *const kIconName = @"ic_reorder";
 
+// Export a nonsense symbol to suppress a libtool warning when this is linked alone in a static lib.
+__attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarning_ic_reorder = 0;
+
 @implementation MDCIcons (ic_reorder)
 
 + (nonnull NSString *)pathFor_ic_reorder {

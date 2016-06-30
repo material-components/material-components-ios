@@ -54,7 +54,7 @@
  application-wide layout direction (as returned by
  UIApplication.sharedApplication.userInterfaceLayoutDirection).
 
- @param The semantic content attribute.
+ @param semanticContentAttribute The semantic content attribute.
  @return The layout direction.
  */
 + (UIUserInterfaceLayoutDirection)mdc_userInterfaceLayoutDirectionForSemanticContentAttribute:
@@ -67,8 +67,8 @@
  and drawing code can use this method to determine how to arrange elements, but might find it easier
  to query the container view's mdc_effectiveUserInterfaceLayoutDirection property instead.
 
- @param The semantic content attribute.
- @param The layout direction to consider.
+ @param semanticContentAttribute The semantic content attribute.
+ @param layoutDirection The layout direction to consider.
  @return The implied layout direction.
  */
 + (UIUserInterfaceLayoutDirection)

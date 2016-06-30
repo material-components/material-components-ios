@@ -81,9 +81,9 @@ CGRect MDCRectFlippedForRTL(CGRect leftToRightRect,
  the right inset is trailing, otherwise they are reversed.
 
  @param top The top inset.
- @param top The leading inset.
- @param top The bottom inset.
- @param top The trailing inset.
+ @param leading The leading inset.
+ @param bottom The bottom inset.
+ @param trailing The trailing inset.
  @return Insets in terms of left/right, already internationalized based on the layout direction.
  */
 UIEdgeInsets MDCInsetsMakeWithLayoutDirection(CGFloat top,
