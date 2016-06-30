@@ -57,6 +57,9 @@ NSString *const PestoDataBaseURL = @"https://www.gstatic.com/angular/material-ad
     @"Veggie", @"Spicy", @"Main", @"Timer"
   ];
 
+// The following string concatenations are deliberate and introduced by clang-format.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-string-concatenation"
   _descriptions = @[
     @"Bask in greens this season by trying this delightful take on traditional bruschetta. Top "
     @"with a dollop of homemade pesto, and season with freshly ground sea salt and pepper.",
@@ -96,6 +99,7 @@ NSString *const PestoDataBaseURL = @"https://www.gstatic.com/angular/material-ad
     @"This mellow and herb filled blending of simple ingredients is easy enough to mix that a "
     @"novice host will feel like a seasoned bartender. Top with crushed basil, shake or stir."
   ];
+#pragma clang diagnostic pop
 }
 
 @end

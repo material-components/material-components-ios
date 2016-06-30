@@ -24,6 +24,10 @@
 static NSString *const kBundleName = @"MaterialIcons_ic_chevron_right";
 static NSString *const kIconName = @"ic_chevron_right";
 
+// Export a nonsense symbol to suppress a libtool warning when this is linked alone in a static lib.
+__attribute__((
+    visibility("default"))) char MDCIconsExportToSuppressLibToolWarning_ic_chevron_right = 0;
+
 @implementation MDCIcons (ic_chevron_right)
 
 + (nonnull NSString *)pathFor_ic_chevron_right {

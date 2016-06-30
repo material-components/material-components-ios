@@ -222,6 +222,10 @@ EOL
 static NSString *const kBundleName = @"MaterialIcons_$icon_name";
 static NSString *const kIconName = @"$icon_name";
 
+// Export a nonsense symbol to suppress a libtool warning when this is linked alone in a static lib.
+__attribute__((visibility("default")))
+    char MDCIconsExportToSuppressLibToolWarning_$icon_name = 0;
+
 @implementation MDCIcons ($icon_name)
 
 + (nonnull NSString *)pathFor_$icon_name {

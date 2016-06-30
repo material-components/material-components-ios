@@ -51,7 +51,7 @@
  @param transformX The transform.x value.
  @param animated The whether to animate the change.
  @param duration The duration of the animation.
- @param mediaTimingFunctino The timing function to use when animating the value.
+ @param timingFunction The timing function to use when animating the value.
  */
 - (void)updateIndicatorTransformX:(CGFloat)transformX
                          animated:(BOOL)animated

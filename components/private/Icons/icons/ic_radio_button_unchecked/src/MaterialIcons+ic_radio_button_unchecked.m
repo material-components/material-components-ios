@@ -24,6 +24,10 @@
 static NSString *const kBundleName = @"MaterialIcons_ic_radio_button_unchecked";
 static NSString *const kIconName = @"ic_radio_button_unchecked";
 
+// Export a nonsense symbol to suppress a libtool warning when this is linked alone in a static lib.
+__attribute__((visibility(
+    "default"))) char MDCIconsExportToSuppressLibToolWarning_ic_radio_button_unchecked = 0;
+
 @implementation MDCIcons (ic_radio_button_unchecked)
 
 + (nonnull NSString *)pathFor_ic_radio_button_unchecked {

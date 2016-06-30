@@ -4,11 +4,11 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCOverlayAnimationObserver.h"
 #import "MDCOverlayImplementor.h"
-#import "MDCOverlayObserverOverlay.h"
-#import "MDCOverlayObserverTransition.h"
 #import "MDCOverlayTransitioning.h"
+#import "private/MDCOverlayAnimationObserver.h"
+#import "private/MDCOverlayObserverOverlay.h"
+#import "private/MDCOverlayObserverTransition.h"
 
 @interface MDCOverlayObserver () <MDCOverlayAnimationObserverDelegate>
 

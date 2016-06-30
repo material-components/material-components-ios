@@ -120,6 +120,7 @@ PODS:
   - MaterialComponents/Slider (12.0.0):
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Snackbar (12.0.0):
+    - MaterialComponents/Buttons
     - MaterialComponents/OverlayWindow
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Overlay
@@ -136,7 +137,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: 564e34a0423bdd1b75b5cb79b37e4cf7e04cf7d0
+  MaterialComponents: da64cae6db6bef2d7d1c80e10a3c71a18b07bb76
 
 PODFILE CHECKSUM: b585ca32a2884e050823cc1f861e8b7246f7dcc1
 
