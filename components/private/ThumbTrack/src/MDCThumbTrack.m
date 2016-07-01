@@ -879,9 +879,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   UITouch *touch = [touches anyObject];
   if ([self isTouchRelevant:touch]) {
+    BOOL wasDragging = _isDraggingThumb;
     _isTouchDown = _isDraggingThumb = NO;
 
     [self sendActionsForControlEvents:UIControlEventTouchCancel];
+
+    if (!_continuousUpdateEvents && wasDragging) {
+      [self sendDiscreteChangeAction];
+    }
   }
 }
 
@@ -916,6 +921,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self sendActionsForControlEvents:UIControlEventTouchUpInside];
   } else {
     [self sendActionsForControlEvents:UIControlEventTouchUpOutside];
+  }
+
+  if (!_continuousUpdateEvents && wasDragging) {
+    [self sendDiscreteChangeAction];
   }
 }
 
