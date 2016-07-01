@@ -123,7 +123,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 @end
 
 @implementation MDCThumbTrack {
-  CGFloat _panThumbGrabPosition;
   CGFloat _lastDispatchedValue;
   UIColor *_thumbOnColor;
   UIColor *_trackOnColor;
@@ -133,11 +132,15 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CAShapeLayer *_trackMaskLayer;
   CALayer *_trackOnLayer;
   MDCDiscreteDotView *_discreteDots;
-  BOOL _isTouchDown;
-  BOOL _isDraggingThumb;
-  CGPoint _lastTouchPoint;
-  BOOL _didChangeValueDuringPan;
   BOOL _shouldDisplayInk;
+
+  // Attributes to handle interaction. To associate touches to previous touches, we keep a reference
+  // to the current touch, since the system reuses the same memory address when sending subsequent
+  // touches for the same gesture. If _currentTouch == nil, then there's no interaction going on.
+  UITouch *_currentTouch;
+  BOOL _isDraggingThumb;
+  BOOL _didChangeValueDuringPan;
+  CGFloat _panThumbGrabPosition;
 }
 
 // TODO(iangordon): ThumbView is not respecting the bounds of ThumbTrack
@@ -817,14 +820,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  */
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  if (!self.enabled || _isTouchDown) {
+  if (!self.enabled || _currentTouch != nil) {
     return;
   }
 
+  UITouch *touch = [touches anyObject];
   CGPoint touchLoc = [[touches anyObject] locationInView:self];
 
-  _isTouchDown = YES;
-  _lastTouchPoint = touchLoc;
+  _currentTouch = touch;
   _didChangeValueDuringPan = NO;
 
   _isDraggingThumb = _panningAllowedOnEntireControl || [self isPointOnThumb:touchLoc];
@@ -845,18 +848,16 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   UITouch *touch = [touches anyObject];
-  if (!self.enabled || ![self isTouchRelevant:touch]) {
+  if (!self.enabled || touch != _currentTouch) {
     return;
   }
-
-  CGPoint touchLoc = [touch locationInView:self];
-  _lastTouchPoint = touchLoc;
 
   if (!_isDraggingThumb) {
     // The rest is dragging logic
     return;
   }
 
+  CGPoint touchLoc = [touch locationInView:self];
   CGFloat thumbPosition = touchLoc.x - _panThumbGrabPosition;
   CGFloat previousValue = _value;
   CGFloat value = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
@@ -878,9 +879,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   UITouch *touch = [touches anyObject];
-  if ([self isTouchRelevant:touch]) {
+  if (touch == _currentTouch) {
     BOOL wasDragging = _isDraggingThumb;
-    _isTouchDown = _isDraggingThumb = NO;
+    _isDraggingThumb = NO;
+    _currentTouch = nil;
 
     [self sendActionsForControlEvents:UIControlEventTouchCancel];
 
@@ -892,12 +894,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   UITouch *touch = [touches anyObject];
-  if (!self.enabled || ![self isTouchRelevant:touch]) {
+  if (!self.enabled || touch != _currentTouch) {
     return;
   }
 
   BOOL wasDragging = _isDraggingThumb;
-  _isTouchDown = _isDraggingThumb = NO;
+  _isDraggingThumb = NO;
+  _currentTouch = nil;
 
   if (wasDragging) {
     // Shrink the thumb
@@ -926,16 +929,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (!_continuousUpdateEvents && wasDragging) {
     [self sendDiscreteChangeAction];
   }
-}
-
-- (BOOL)isTouchRelevant:(UITouch *)touch {
-  // We compare the previous position vs. current position rather than saving and comparing UITouch
-  // objects per Apple's documentation in UITouch, which says: "Never retain a touch object when
-  // handling an event. If you need to keep information about a touch from one touch phase to
-  // another, copy that information from the touch."
-  // https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITouch_Class/
-  return CGPointEqualToPoint(_lastTouchPoint, [touch previousLocationInView:self]) ||
-         CGPointEqualToPoint(_lastTouchPoint, [touch locationInView:self]);
 }
 
 - (BOOL)isPointOnThumb:(CGPoint)point {
