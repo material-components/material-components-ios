@@ -62,7 +62,7 @@
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCollectionViewLayout:self.collectionViewLayout];
+  self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCCollectionViewControllerInit:self.collectionViewLayout];
   }
