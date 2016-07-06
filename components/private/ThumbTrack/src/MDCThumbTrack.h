@@ -111,6 +111,9 @@
 /** Whether the thumb should display ink splashes on touch. */
 @property(nonatomic, assign) BOOL shouldDisplayInk;
 
+/** Whether or not to display dots indicating discrete locations. Default is NO. */
+@property(nonatomic, assign) BOOL shouldDisplayDiscreteDots;
+
 /** Whether a disabled thumb track includes gaps on either side of the thumb. The default is NO. */
 @property(nonatomic, assign) BOOL disabledTrackHasThumbGaps;
 

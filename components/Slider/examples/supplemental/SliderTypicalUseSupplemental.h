@@ -11,6 +11,7 @@
 @interface SliderTypicalUseViewController : UIViewController
 
 @property(nonatomic) MDCSlider *slider;
+@property(nonatomic) MDCSlider *discreteSlider;
 @property(nonatomic) MDCSlider *disabledSlider;
 
 @end

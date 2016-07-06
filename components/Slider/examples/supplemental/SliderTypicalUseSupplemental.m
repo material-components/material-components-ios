@@ -39,6 +39,14 @@
   sliderLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:sliderLabel];
 
+  UILabel *discreteSliderLabel = [[UILabel alloc] init];
+  discreteSliderLabel.text = @"Discrete Slider";
+  discreteSliderLabel.font = [MDCTypography captionFont];
+  discreteSliderLabel.alpha = [MDCTypography captionFontOpacity];
+  [discreteSliderLabel sizeToFit];
+  discreteSliderLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:discreteSliderLabel];
+
   UILabel *disabledSliderLabel = [[UILabel alloc] init];
   disabledSliderLabel.text = @"Slider Disabled";
   disabledSliderLabel.font = [MDCTypography captionFont];
@@ -50,6 +58,8 @@
   NSDictionary *views = @{
     @"slider" : self.slider,
     @"label" : sliderLabel,
+    @"discreteSlider" : self.discreteSlider,
+    @"discreteSliderLabel" : discreteSliderLabel,
     @"disabledSlider" : self.disabledSlider,
     @"disabledSliderLabel" : disabledSliderLabel
   };
@@ -62,11 +72,13 @@
   };
 
   // Vertical column of sliders
-  NSString *sliderLayoutConstraints = @"V:[slider]-smallVMargin-[disabledSlider]";
+  NSString *sliderLayoutConstraints =
+      @"V:[slider]-smallVMargin-[discreteSlider]-smallVMargin-[disabledSlider]";
 
   // Vertical column of labels
-  NSString *labelLayoutConstraints =
-      @"V:[label(sliderHeight)]-smallVMargin-[disabledSliderLabel(sliderHeight)]";
+  NSString *labelLayoutConstraints = @"V:[label(sliderHeight)]-smallVMargin-[discreteSliderLabel("
+                                     @"sliderHeight)]-smallVMargin-[disabledSliderLabel("
+                                     @"sliderHeight)]";
 
   // Horizontal alignment between the two columns
   NSString *columnConstraints = @"[label(100)]-smallHMargin-[slider]";

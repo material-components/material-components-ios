@@ -126,9 +126,6 @@ static const CGFloat kCellImagePaddingLeading = 16;
   CGFloat leadingPadding =
       _imageView.image ? kCellTextWithImagePaddingLeading : kCellTextNoImagePaddingLeading;
   CGFloat trailingPadding = kCellTextNoImagePaddingTrailing;
-  if (self.accessoryView && !self.isEditing) {
-    trailingPadding += CGRectGetWidth(self.accessoryView.bounds) + kCellTextNoImagePaddingTrailing;
-  }
   UIEdgeInsets insets = MDCInsetsMakeWithLayoutDirection(
       0, leadingPadding, 0, trailingPadding, self.mdc_effectiveUserInterfaceLayoutDirection);
   return UIEdgeInsetsInsetRect(self.contentView.bounds, insets);

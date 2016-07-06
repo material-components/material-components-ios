@@ -134,12 +134,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DE5D2A561C81068100C9C650 /* Build configuration list for PBXNativeTarget "Shrine" */;
 			buildPhases = (
-				BD04A4A94E7A074ACE45ED21 /* 📦 Check Pods Manifest.lock */,
+				BD04A4A94E7A074ACE45ED21 /* [CP] Check Pods Manifest.lock */,
 				DE5D2A401C81068100C9C650 /* Sources */,
 				DE5D2A411C81068100C9C650 /* Frameworks */,
 				DE5D2A421C81068100C9C650 /* Resources */,
-				D1F846F8DE8314F37D7BCFC1 /* 📦 Embed Pods Frameworks */,
-				E79A83FFB3D723D88B7FB762 /* 📦 Copy Pods Resources */,
+				D1F846F8DE8314F37D7BCFC1 /* [CP] Embed Pods Frameworks */,
+				E79A83FFB3D723D88B7FB762 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -199,14 +199,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BD04A4A94E7A074ACE45ED21 /* 📦 Check Pods Manifest.lock */ = {
+		BD04A4A94E7A074ACE45ED21 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,14 +214,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D1F846F8DE8314F37D7BCFC1 /* 📦 Embed Pods Frameworks */ = {
+		D1F846F8DE8314F37D7BCFC1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,14 +229,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Shrine/Pods-Shrine-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E79A83FFB3D723D88B7FB762 /* 📦 Copy Pods Resources */ = {
+		E79A83FFB3D723D88B7FB762 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
