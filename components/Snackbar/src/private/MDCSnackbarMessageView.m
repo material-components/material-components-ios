@@ -364,13 +364,11 @@ static const CGFloat kButtonInkRadius = 64.0f;
       [buttonView addSubview:button];
 
       // Style the text in the button.
-      NSString *uppercaseButtonText =
-          [message.action.title uppercaseStringWithLocale:[NSLocale currentLocale]];
       NSAttributedString *buttonText =
-          [[NSAttributedString alloc] initWithString:uppercaseButtonText
+          [[NSAttributedString alloc] initWithString:message.action.title
                                           attributes:buttonAttributes];
       NSAttributedString *buttonHighlightedText =
-          [[NSAttributedString alloc] initWithString:uppercaseButtonText
+          [[NSAttributedString alloc] initWithString:message.action.title
                                           attributes:buttonHighlightedAttributes];
       button.titleLabel.numberOfLines = 1;
       button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
