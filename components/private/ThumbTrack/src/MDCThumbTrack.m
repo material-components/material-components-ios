@@ -119,6 +119,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return CGHypot(point1.x - point2.x, point1.y - point2.y);
 }
 
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCThumbTrack () <CAAnimationDelegate>
+@end
+#endif
+
 @interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
 @end
 
