@@ -4,6 +4,6 @@ components:
 - HUD
 - Textfields
 - ActivityIndicator
-- ProgressBar
+- ProgressView
 
 For suggestions, please [file a GitHub issue](https://github.com/google/material-components-ios/issues).

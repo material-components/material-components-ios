@@ -16,6 +16,7 @@ PODS:
     - MaterialComponents/PageControl (= 12.0.1)
     - MaterialComponents/Palettes (= 12.0.1)
     - MaterialComponents/private (= 12.0.1)
+    - MaterialComponents/ProgressView (= 12.0.1)
     - MaterialComponents/RobotoFontLoader (= 12.0.1)
     - MaterialComponents/ShadowElevations (= 12.0.1)
     - MaterialComponents/ShadowLayer (= 12.0.1)
@@ -112,6 +113,8 @@ PODS:
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
+  - MaterialComponents/ProgressView (12.0.1):
+    - MaterialComponents/private/RTL
   - MaterialComponents/RobotoFontLoader (12.0.1):
     - MaterialComponents/FontDiskLoader
     - MaterialComponents/Typography
@@ -137,7 +140,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: c9194c49be10b8ac59cb8f857bedecbb511705a8
+  MaterialComponents: ed704822f99f7286a3e5d2d4cc7ffdeac044c211
 
 PODFILE CHECKSUM: b585ca32a2884e050823cc1f861e8b7246f7dcc1
 
