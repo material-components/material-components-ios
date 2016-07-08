@@ -57,6 +57,11 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 @interface MDCCollectionViewEditor () <UIGestureRecognizerDelegate>
 @end
 
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCCollectionViewEditor () <CAAnimationDelegate>
+@end
+#endif
+
 @implementation MDCCollectionViewEditor {
   UILongPressGestureRecognizer *_longPressGestureRecognizer;
   UIPanGestureRecognizer *_panGestureRecognizer;
