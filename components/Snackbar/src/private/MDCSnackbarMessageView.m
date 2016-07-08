@@ -291,10 +291,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [messageString addAttributes:attributes range:NSMakeRange(0, messageString.length)];
 
     _label.backgroundColor = [UIColor clearColor];
-    _label.textAlignment = NSTextAlignmentLeft;
-
-    // TODO: Add support for RTL languages so @c _label renders correctly.
-
+    _label.textAlignment = NSTextAlignmentNatural;
     _label.attributedText = messageString;
     _label.numberOfLines = 0;
     [_label setTranslatesAutoresizingMaskIntoConstraints:NO];
