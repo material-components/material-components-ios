@@ -26,6 +26,8 @@
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
 + (void)draw:(CGRect)frame {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -116,5 +118,6 @@
     [rectangle5Path fill];
   }
 }
+#pragma clang diagnostic pop
 
 @end

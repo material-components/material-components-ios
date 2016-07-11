@@ -26,6 +26,8 @@
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
 + (void)draw:(CGRect)frame {
   UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
 
@@ -118,5 +120,6 @@
   [fillColor setFill];
   [bezier2Path fill];
 }
+#pragma clang diagnostic pop
 
 @end
