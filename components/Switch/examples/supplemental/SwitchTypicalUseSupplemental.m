@@ -84,7 +84,7 @@
 
   // Center view horizontally on the left edge of one of the switches
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.colorSwitchComponent
-                                                        attribute:NSLayoutAttributeLeft
+                                                        attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.view
                                                         attribute:NSLayoutAttributeCenterX
@@ -110,7 +110,7 @@
   // Left align labels in their column
   [self.view
       addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:labelLayoutConstraints
-                                                             options:NSLayoutFormatAlignAllLeft
+                                                             options:NSLayoutFormatAlignAllLeading
                                                              metrics:metrics
                                                                views:views]];
 
