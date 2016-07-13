@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "CatalogUnitTests"
-  s.version      = "1.0.0"
+  s.version      = "12.1.0"
   s.summary      = "Convention specification for the catalog examples."
   s.homepage     = "https://github.com/google/catalog-by-convention"
   s.authors      = "Google Inc."
