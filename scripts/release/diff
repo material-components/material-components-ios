@@ -25,4 +25,4 @@ if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   exit 1
 fi
 
-git difftool origin/master..release-candidate "$@"
+git diff origin/master..release-candidate "$@"
