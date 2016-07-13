@@ -89,8 +89,44 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       width: containerView.bounds.size.width,
       height: titleSize.height)
     titleLabel.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
     containerView.addSubview(titleLabel)
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .Leading,
+      relatedBy: .Equal,
+      toItem: containerView,
+      attribute: .Leading,
+      multiplier: 1.0,
+      constant: titleInsets.left).active = true
+
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .Trailing,
+      relatedBy: .Equal,
+      toItem: containerView,
+      attribute: .Trailing,
+      multiplier: 1.0,
+      constant: 0).active = true
+
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .Bottom,
+      relatedBy: .Equal,
+      toItem: containerView,
+      attribute: .Bottom,
+      multiplier: 1.0,
+      constant: -titleInsets.bottom).active = true
+
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .Height,
+      relatedBy: .Equal,
+      toItem: nil,
+      attribute: .NotAnAttribute,
+      multiplier: 1.0,
+      constant: titleSize.height).active = true
 
     self.headerViewController.headerView.addSubview(containerView)
 

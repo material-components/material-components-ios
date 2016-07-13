@@ -26,6 +26,8 @@
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
 + (void)draw:(CGRect)frame {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
@@ -161,5 +163,6 @@
   CGGradientRelease(gradient);
   CGColorSpaceRelease(colorSpace);
 }
+#pragma clang diagnostic pop
 
 @end

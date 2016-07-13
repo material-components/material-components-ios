@@ -94,6 +94,10 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](Palettes/)
   <!--{: .icon-palette }-->
 
+- [**ProgressView**
+  A determinate and linear progress indicator that implements Material Design animation and layout.
+  ](ProgressView/)
+
 - [**ShadowElevations**
   Provides the most commonly used elevations specified in Material Design.
   ](ShadowElevations/)

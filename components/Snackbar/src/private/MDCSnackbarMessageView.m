@@ -291,10 +291,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [messageString addAttributes:attributes range:NSMakeRange(0, messageString.length)];
 
     _label.backgroundColor = [UIColor clearColor];
-    _label.textAlignment = NSTextAlignmentLeft;
-
-    // TODO: Add support for RTL languages so @c _label renders correctly.
-
+    _label.textAlignment = NSTextAlignmentNatural;
     _label.attributedText = messageString;
     _label.numberOfLines = 0;
     [_label setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -376,7 +373,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
       button.contentEdgeInsets = UIEdgeInsetsMake(0, kButtonPadding, 0, kButtonPadding);
 
       // Set up the button's accessibility values.
-      button.accessibilityIdentifier = message.accessibilityIdentifier;
+      button.accessibilityIdentifier = message.action.accessibilityIdentifier;
       [button setAttributedTitle:buttonText forState:UIControlStateNormal];
       [button setAttributedTitle:buttonHighlightedText forState:UIControlStateHighlighted];
 

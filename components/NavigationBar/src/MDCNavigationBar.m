@@ -341,7 +341,12 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 #pragma mark Public
 
 - (void)setTitle:(NSString *)title {
-  _titleLabel.text = title;
+  if (self.titleTextAttributes) {
+    _titleLabel.attributedText =
+        [[NSAttributedString alloc] initWithString:title attributes:_titleTextAttributes];
+  } else {
+    _titleLabel.text = title;
+  }
   [self setNeedsLayout];
 }
 
@@ -370,6 +375,27 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     _observedNavigationItem.titleView = [[MDCNavigationBarSandbagView alloc] init];
   } else if (_observedNavigationItem.titleView) {
     _observedNavigationItem.titleView = nil;
+  }
+}
+
+- (void)setTitleTextAttributes:(NSDictionary<NSString *, id> *)titleTextAttributes {
+  // If title dictionary is equivalent, no need to make changes
+  if ([_titleTextAttributes isEqualToDictionary:titleTextAttributes]) {
+    return;
+  }
+
+  // Copy attributes dictionary
+  _titleTextAttributes = [titleTextAttributes copy];
+  if (_titleLabel) {
+    if (_titleTextAttributes) {
+      // Set label text as newly created attributed string with attributes if non-nil
+      _titleLabel.attributedText =
+          [[NSAttributedString alloc] initWithString:self.title attributes:_titleTextAttributes];
+    } else {
+      // Otherwise set titleLabel text property
+      _titleLabel.text = self.title;
+    }
+    [self setNeedsLayout];
   }
 }
 

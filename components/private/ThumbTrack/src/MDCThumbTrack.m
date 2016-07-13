@@ -119,6 +119,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return CGHypot(point1.x - point2.x, point1.y - point2.y);
 }
 
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCThumbTrack () <CAAnimationDelegate>
+@end
+#endif
+
 @interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
 @end
 
@@ -340,10 +345,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _lastDispatchedValue = _value;
   }
 
-  [self updateThumbTrackAnimated:animated
-           animateThumbAfterMove:animateThumbAfterMove
-                   previousValue:previousValue
-                      completion:completion];
+  if (_value != previousValue) {
+    [self interruptAnimation];
+    [self updateThumbTrackAnimated:animated
+             animateThumbAfterMove:animateThumbAfterMove
+                     previousValue:previousValue
+                        completion:completion];
+  }
 }
 
 - (void)setNumDiscreteValues:(NSUInteger)numDiscreteValues {
@@ -862,10 +870,15 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat previousValue = _value;
   CGFloat value = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
 
-  [self setValue:value animated:NO animateThumbAfterMove:YES userGenerated:YES completion:NULL];
+  BOOL shouldAnimate = _numDiscreteValues > 1;
+  [self setValue:value
+                   animated:shouldAnimate
+      animateThumbAfterMove:YES
+              userGenerated:YES
+                 completion:NULL];
   [self sendContinuousChangeAction];
 
-  if (value != previousValue) {
+  if (_value != previousValue) {
     // We made a move, now this action can't later count as a tap
     _didChangeValueDuringPan = YES;
   }
@@ -916,7 +929,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       // Treat it like a tap
       if (![_delegate respondsToSelector:@selector(thumbTrack:shouldJumpToValue:)] ||
           [self.delegate thumbTrack:self shouldJumpToValue:[self valueForThumbPosition:touchLoc]]) {
-        [self interruptAnimation];
         [self setValueFromThumbPosition:touchLoc isTap:YES];
       }
     }
@@ -953,6 +965,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if ([_delegate respondsToSelector:@selector(thumbTrack:willAnimateToValue:)]) {
     [_delegate thumbTrack:self willAnimateToValue:value];
   }
+
+  if (isTap && _numDiscreteValues > 1 && _shouldDisplayDiscreteDots) {
+    _discreteDots.alpha = 1.0;
+  }
+
   [self setValue:value
                    animated:YES
       animateThumbAfterMove:YES

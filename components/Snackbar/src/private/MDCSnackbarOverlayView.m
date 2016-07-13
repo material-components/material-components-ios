@@ -36,6 +36,11 @@ static const CGFloat MDCSnackbarSideMargin_iPad = 24.0f;
 // The maximum height of the snackbar.
 static const CGFloat kMaximumHeight = 80.0f;
 
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCSnackbarOverlayView () <CAAnimationDelegate>
+@end
+#endif
+
 @interface MDCSnackbarOverlayView ()
 
 /**
