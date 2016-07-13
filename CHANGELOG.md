@@ -10,6 +10,60 @@
 
 **New component.**
 
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Added missing Jazzy configs by running scripts/generate_jazzy_yamls.sh.](https://github.com/google/material-components-ios/commit/2b8ef4160fdafd9d103b09c6842d647d41b00780) (Adrian Secord)
+
+### Collections
+
+#### Changes
+
+* [Add more conformances to CAAnimationDelegate on iOS 10 SDK](https://github.com/google/material-components-ios/commit/8f4a71ea54ff2a7ae01850109919181474bd8104) (Brian Moore)
+* [Adds storyboard example.](https://github.com/google/material-components-ios/commit/627206634f45721c547eec155f4426c59f5fb2e5) (Chris Cox)
+
+### Ink
+
+#### Changes
+
+* [Add conformances to CAAnimationDelegate on iOS 10 SDK](https://github.com/google/material-components-ios/commit/d4ee92a107ebc3d0801cb62d60e5b38e06c9a1dc) (Brian Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [MDC_#623 - Added titleTextAttributes property to MDCNavigationBar](https://github.com/google/material-components-ios/commit/1309e628b6aac1e5e83a2e19759e45edb787e061) (Justin Shephard)
+
+### OverlayWindow
+
+#### Changes
+
+* [Added missing Jazzy configs by running scripts/generate_jazzy_yamls.sh.](https://github.com/google/material-components-ios/commit/2b8ef4160fdafd9d103b09c6842d647d41b00780) (Adrian Secord)
+
+### Palettes
+
+#### Changes
+
+* [Added missing Jazzy configs by running scripts/generate_jazzy_yamls.sh.](https://github.com/google/material-components-ios/commit/2b8ef4160fdafd9d103b09c6842d647d41b00780) (Adrian Secord)
+
+### ProgressView
+
+#### Changes
+
+* [Add the ProgressView component.](https://github.com/google/material-components-ios/commit/a806413bd6414f684899c9a0fae10c3fc8aa54fd) (Louis Romero)
+
+### Snackbar
+
+#### Changes
+
+* [Add more conformances to CAAnimationDelegate on iOS 10 SDK](https://github.com/google/material-components-ios/commit/8f4a71ea54ff2a7ae01850109919181474bd8104) (Brian Moore)
+* [Added missing Jazzy configs by running scripts/generate_jazzy_yamls.sh.](https://github.com/google/material-components-ios/commit/2b8ef4160fdafd9d103b09c6842d647d41b00780) (Adrian Secord)
+* [Align text correctly in RTL layout](https://github.com/google/material-components-ios/commit/112ff5446f567374324e5e7c685625f7ada238bd) (Louis Romero)
+* [The button a11y identifier is the action's](https://github.com/google/material-components-ios/commit/b92d724d906f6c0f072bca17f92177db819651c5) (Louis Romero)
+
 # 12.0.1
 
 ## API diffs
