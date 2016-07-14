@@ -7,6 +7,7 @@ PODS:
     - MaterialComponents/CollectionCells (= 12.0.1)
     - MaterialComponents/CollectionLayoutAttributes (= 12.0.1)
     - MaterialComponents/Collections (= 12.0.1)
+    - MaterialComponents/Dialogs (= 12.0.1)
     - MaterialComponents/FlexibleHeader (= 12.0.1)
     - MaterialComponents/FontDiskLoader (= 12.0.1)
     - MaterialComponents/HeaderStackView (= 12.0.1)
@@ -62,6 +63,10 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
+  - MaterialComponents/Dialogs (12.0.1):
+    - MaterialComponents/Buttons
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
   - MaterialComponents/FlexibleHeader (12.0.1)
   - MaterialComponents/FontDiskLoader (12.0.1)
   - MaterialComponents/HeaderStackView (12.0.1)
@@ -140,7 +145,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: ed704822f99f7286a3e5d2d4cc7ffdeac044c211
+  MaterialComponents: 3afee35d1cd8bc2196922dd9e5f33bdb89a18cd3
 
 PODFILE CHECKSUM: b585ca32a2884e050823cc1f861e8b7246f7dcc1
 
