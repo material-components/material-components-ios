@@ -61,6 +61,14 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   return self;
 }
 
+- (CGSize)intrinsicContentSize {
+  if (_spriteSheetImage) {
+    CGFloat width = _spriteSheetImage.size.width;
+    return CGSizeMake(width, width);
+  }
+  return [super intrinsicContentSize];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -188,7 +196,7 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   _numberOfFrames = (NSInteger)floor(spriteSheetSize.height / singleFrameWidth);
   _singleFrameWidthInPercent = 1.0f / _numberOfFrames;
   _spriteSheetImage = [self colorizedSpriteSheet:spriteSheetImage];
-
+  [self invalidateIntrinsicContentSize];
   [self updateSpriteAnimationLayer];
   [self.spriteLayer removeAllAnimations];
 }

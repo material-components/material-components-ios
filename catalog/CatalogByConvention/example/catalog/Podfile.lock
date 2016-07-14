@@ -1,8 +1,8 @@
 PODS:
   - CatalogByConvention (1.0.0)
-  - CatalogExamples (1.0.0)
-  - CatalogUnitTests (12.1.0)
-  - Resistor (12.1.0)
+  - CatalogExamples (12.1.1)
+  - CatalogUnitTests (12.1.1)
+  - Resistor (12.1.1)
 
 DEPENDENCIES:
   - CatalogByConvention (from `../../`)
@@ -22,9 +22,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: 0137d280781667dd3d856a14cdf507f5ac8eedc0
-  CatalogExamples: 27e215f180dff5c7753195a54819086512fca89c
-  CatalogUnitTests: b4134d2a704fbbdaa60fe24c93e24f6c7e7e4091
-  Resistor: 6951c0267af3e254ae388711e391afaad598c737
+  CatalogExamples: 8cffc57870982105ef8cc40e162fcdf550595343
+  CatalogUnitTests: 28fd9a743d80d98f0d3410dd96ac37e31fc51503
+  Resistor: f538e741349b302ac1be16ebf3fc0c3fb9bef182
 
 PODFILE CHECKSUM: f14a477885bb971999b5fa8afb20a539b2bcabdc
 
