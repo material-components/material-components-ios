@@ -45,37 +45,30 @@
 
 @synthesize collectionViewLayout = _collectionViewLayout;
 
+- (instancetype)init {
+  return [self initWithCollectionViewLayout:self.collectionViewLayout];
+}
+
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self commonMDCCollectionViewControllerInit:layout];
+    _collectionViewLayout = layout;
   }
   return self;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithCollectionViewLayout:self.collectionViewLayout];
-  if (self) {
-    [self commonMDCCollectionViewControllerInit:self.collectionViewLayout];
-  }
-  return self;
+  return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    [self commonMDCCollectionViewControllerInit:self.collectionViewLayout];
-  }
-  return self;
-}
-
-- (void)commonMDCCollectionViewControllerInit:(UICollectionViewLayout *)layout {
-  _collectionViewLayout = layout;
+  return [super initWithCoder:aDecoder];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.alwaysBounceVertical = YES;
 
