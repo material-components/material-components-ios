@@ -40,6 +40,9 @@ contributing:
 components:
   markdown: components/README.md
   children:
+    - name: ActivityIndicator
+      url: "/components/ActivityIndicator/"
+      markdown: components/ActivityIndicator/README.md
     - name: AppBar
       url: "/components/AppBar/"
       markdown: components/AppBar/README.md
@@ -65,6 +68,9 @@ components:
         - name: Editing
           url: "/components/Collections/editing/"
           markdown: components/Collections/editing/README.md
+    - name: Dialogs
+      url: "/components/Dialogs/"
+      markdown: components/Dialogs/README.md
     - name: FlexibleHeader
       url: "/components/FlexibleHeader/"
       markdown: components/FlexibleHeader/README.md
@@ -83,6 +89,9 @@ components:
     - name: Palettes
       url: "/components/Palettes/"
       markdown: components/Palettes/README.md
+    - name: ProgressView
+      url: "/components/ProgressView/"
+      markdown: components/ProgressView/README.md
     - name: ShadowElevations
       url: "/components/ShadowElevations/"
       markdown: components/ShadowElevations/README.md
@@ -92,6 +101,9 @@ components:
     - name: Slider
       url: "/components/Slider/"
       markdown: components/Slider/README.md
+    - name: Snackbar
+      url: "/components/Snackbar/"
+      markdown: components/Snackbar/README.md
     - name: Switch
       url: "/components/Switch/"
       markdown: components/Switch/README.md
@@ -99,9 +111,9 @@ components:
       url: "/components/Typography/"
       markdown: components/Typography/README.md
       children:
-        - name: RobotoFontLoader
-          url: "/components/RobotoFontLoader/"
-          markdown: components/RobotoFontLoader/README.md
         - name: FontDiskLoader
           url: "/components/FontDiskLoader/"
           markdown: components/FontDiskLoader/README.md
+        - name: RobotoFontLoader
+          url: "/components/RobotoFontLoader/"
+          markdown: components/RobotoFontLoader/README.md
