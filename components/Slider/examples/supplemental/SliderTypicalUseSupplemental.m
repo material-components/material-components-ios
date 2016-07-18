@@ -45,7 +45,7 @@
   discreteSliderLabel.alpha = [MDCTypography captionFontOpacity];
   [discreteSliderLabel sizeToFit];
   discreteSliderLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:discreteSliderLabel];
+  [self.view insertSubview:discreteSliderLabel belowSubview:self.discreteSlider];
 
   UILabel *disabledSliderLabel = [[UILabel alloc] init];
   disabledSliderLabel.text = @"Slider Disabled";
@@ -71,29 +71,14 @@
     @"sliderHeight" : @(self.slider.bounds.size.height)
   };
 
-  // Vertical column of sliders
-  NSString *sliderLayoutConstraints =
-      @"V:[slider]-smallVMargin-[discreteSlider]-smallVMargin-[disabledSlider]";
-
-  // Vertical column of labels
-  NSString *labelLayoutConstraints = @"V:[label(sliderHeight)]-smallVMargin-[discreteSliderLabel("
-                                     @"sliderHeight)]-smallVMargin-[disabledSliderLabel("
-                                     @"sliderHeight)]";
-
-  // Horizontal alignment between the two columns
-  NSString *columnConstraints = @"[label(100)]-smallHMargin-[slider]";
-
-  // Center view horizontally on the left edge of one of the sliders
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.disabledSlider
-                                                        attribute:NSLayoutAttributeLeft
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.view
-                                                        attribute:NSLayoutAttributeCenterX
-                                                       multiplier:1.f
-                                                         constant:12.f]];
+  // Vertical column
+  NSString *columnConstraints =
+      @"V:[label(sliderHeight)]-smallVMargin-[slider]-largeVMargin-[discreteSliderLabel("
+      @"sliderHeight)]-smallVMargin-[discreteSlider]-largeVMargin-[disabledSliderLabel("
+      @"sliderHeight)]-smallVMargin-[disabledSlider]";
 
   // Center view vertically
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.disabledSlider
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.discreteSlider
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.view
@@ -101,34 +86,37 @@
                                                        multiplier:1.f
                                                          constant:0.f]];
 
-  // Center sliders in their column
-  [self.view
-      addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:sliderLayoutConstraints
-                                                             options:NSLayoutFormatAlignAllCenterX
-                                                             metrics:metrics
-                                                               views:views]];
+  // Left-align views
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:sliderLabel
+                                                        attribute:NSLayoutAttributeLeft
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.view
+                                                        attribute:NSLayoutAttributeLeft
+                                                       multiplier:1.f
+                                                         constant:24.f]];
 
-  // Left align labels in their column
+  // Right-align views
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:sliderLabel
+                                                        attribute:NSLayoutAttributeRight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.view
+                                                        attribute:NSLayoutAttributeRight
+                                                       multiplier:1.f
+                                                         constant:-24.f]];
+
+  // All views have same left
   [self.view
-      addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:labelLayoutConstraints
+      addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:columnConstraints
                                                              options:NSLayoutFormatAlignAllLeft
                                                              metrics:metrics
                                                                views:views]];
 
-  // Vertically align first element in label column to first element in slider column
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.slider
-                                                        attribute:NSLayoutAttributeCenterY
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:sliderLabel
-                                                        attribute:NSLayoutAttributeCenterY
-                                                       multiplier:1.f
-                                                         constant:0.f]];
-
-  // Position label column left of slider column, wide enough to accommodate label text
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:columnConstraints
-                                                                    options:0
-                                                                    metrics:metrics
-                                                                      views:views]];
+  // All views have same right
+  [self.view
+      addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:columnConstraints
+                                                             options:NSLayoutFormatAlignAllRight
+                                                             metrics:metrics
+                                                               views:views]];
 }
 
 @end
