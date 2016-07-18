@@ -11,6 +11,8 @@ Checklist:
 - [ ] Ran `scripts/release/bump` with the new version number.
 - [ ] Updated CHANGELOG.md's latest section header to match the release's version number.
 - [ ] I did not `arc land` this change because I followed the [releasing guide](https://github.com/google/material-components-ios/blob/develop/contributing/contributor_guides/releasing.md) and did the following:
+- [ ] Marked this diff needs review in the web UI.
+- [ ] Got another MDC'er to approve the release.
 - [ ] Ran `scripts/release/merge`
 - [ ] Push to master
 - [ ] Push to develop

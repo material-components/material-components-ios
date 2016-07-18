@@ -5,7 +5,7 @@ target "MDCCatalog" do
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsCatalog', :path => '../'
   pod 'MaterialComponents', :path => '../'
-  pod 'CatalogByConvention', :path => './CatalogByConvention/'
+  pod 'CatalogByConvention'
 
   use_frameworks!
 end
@@ -14,7 +14,7 @@ target "MDCUnitTests" do
   project 'MDCUnitTests.xcodeproj'
   pod 'MaterialComponentsUnitTests', :path => '../'
   pod 'MaterialComponents', :path => '../'
-  pod 'CatalogByConvention', :path => './CatalogByConvention/'
+  pod 'CatalogByConvention'
 
   use_frameworks!
 end

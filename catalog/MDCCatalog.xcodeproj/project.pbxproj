@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */; };
+		403860EF1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 403860EE1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m */; };
 		5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D090E341C9AEB8C0061344A /* Localizable.strings */; };
 		664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B61C6BA62A001ADBF8 /* AppDelegate.swift */; };
 		664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */; };
@@ -41,6 +42,8 @@
 /* Begin PBXFileReference section */
 		0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogWindow.swift; sourceTree = "<group>"; };
 		1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCCatalog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		403860ED1D24328A00FB8216 /* MDCCatalogTileDataDialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataDialogs.h; sourceTree = "<group>"; };
+		403860EE1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileDataDialogs.m; sourceTree = "<group>"; };
 		5D090E351C9AEB8C0061344A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E361C9AEB8C0061344A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E371C9AEB8C0061344A /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -218,6 +221,8 @@
 				DE19446E1CBD9E40009E0321 /* MDCCatalogTileDataButtons.m */,
 				DE7A17C61CCAC1F700B66230 /* MDCCatalogTileDataCollections.h */,
 				DE7A17C41CCAC1EA00B66230 /* MDCCatalogTileDataCollections.m */,
+				403860ED1D24328A00FB8216 /* MDCCatalogTileDataDialogs.h */,
+				403860EE1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m */,
 				DE19446F1CBD9E40009E0321 /* MDCCatalogTileDataFlexibleHeader.h */,
 				DE1944701CBD9E40009E0321 /* MDCCatalogTileDataFlexibleHeader.m */,
 				DE1944711CBD9E40009E0321 /* MDCCatalogTileDataHeaderStackView.h */,
@@ -435,6 +440,7 @@
 				664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */,
 				DE1944941CBD9E40009E0321 /* MDCCatalogTileDataTypography.m in Sources */,
 				DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */,
+				403860EF1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m in Sources */,
 				DE1944861CBD9E40009E0321 /* MDCCatalogTileData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

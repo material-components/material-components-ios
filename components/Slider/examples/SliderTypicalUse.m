@@ -38,7 +38,7 @@
   // Discrete slider
 
   self.discreteSlider = [[MDCSlider alloc] initWithFrame:sliderFrame];
-  self.discreteSlider.numberOfDiscreteValues = 5;
+  self.discreteSlider.numberOfDiscreteValues = 7;
   [self.discreteSlider addTarget:self
                           action:@selector(didChangeSliderValue:)
                 forControlEvents:UIControlEventValueChanged];
