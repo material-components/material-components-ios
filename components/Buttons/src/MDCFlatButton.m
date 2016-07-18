@@ -24,6 +24,17 @@
 
 static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaqueBackground";
 
+// Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
+static const uint32_t MDCFlatButtonDefaultTitleColor = 0x2196F3;
+
+// Creates a UIColor from a 24-bit RGB color encoded as an integer.
+static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
+  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
+                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
+                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
+                         alpha:1];
+}
+
 @implementation MDCFlatButton
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -50,6 +61,8 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.shouldRaiseOnTouch = NO;
 #pragma clang diagnostic pop
+  [self setTitleColor:MDCColorFromRGB(MDCFlatButtonDefaultTitleColor)
+             forState:UIControlStateNormal];
   [self setBackgroundColor:nil forState:UIControlStateNormal];
   self.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
 }
