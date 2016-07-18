@@ -1,6 +1,10 @@
+---
+title:  "Snackbar"
+layout: detail
+section: components
+excerpt: "Snackbars provide brief feedback about an operation through a message at the bottom of the screen."
+---
 # Snackbar
-
-A material design snackbar.
 
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
