@@ -142,7 +142,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../../
+    :path: "../../"
 
 SPEC CHECKSUMS:
   MaterialComponents: 2e1a19c8798f30d073ca1353dfe9445f8e39b940
