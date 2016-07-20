@@ -82,7 +82,7 @@
 
  @param completion Block called when transition completes.
  */
-- (void)startAnimatingWithCompletion:(nullable void (^)())completion;
+- (void)startAnimatingWithCompletion:(nullable void (^)(BOOL finished))completion;
 
 /** Stop the animation. */
 - (void)stop;

@@ -150,7 +150,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
   recognizer.enabled = NO;
 
   // Animate the sprited view.
-  [_animationView startAnimatingWithCompletion:^{
+  [_animationView startAnimatingWithCompletion:^(BOOL finished) {
 
     // When animation completes, toggle image.
     _toggle = !_toggle;

@@ -55,7 +55,7 @@ animation completes for each state, and be replaced with the other sprite image.
 
 ```objectivec
 // Animate the sprited view.
-[_animationView startAnimatingWithCompletion:^{
+[_animationView startAnimatingWithCompletion:^(BOOL finished) {
 
   // When animation completes, toggle image.
   _toggle = !_toggle;
@@ -97,7 +97,7 @@ animationView.tintColor = [UIColor blueColor];
 [self.view addSubview:animationView];
 
 // To Animate.
-[animationView startAnimatingWithCompletion:^{
+[animationView startAnimatingWithCompletion:^(BOOL finished) {
     NSLog(@"Done animating.");
 }];
 ```
