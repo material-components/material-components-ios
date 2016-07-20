@@ -134,6 +134,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/Buttons"
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
+    ss.dependency "MaterialComponents/private/KeyboardWatcher"
   end
 
   s.subspec "FlexibleHeader" do |ss|

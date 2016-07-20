@@ -65,6 +65,7 @@ PODS:
     - MaterialComponents/Typography
   - MaterialComponents/Dialogs (12.2.0):
     - MaterialComponents/Buttons
+    - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
   - MaterialComponents/FlexibleHeader (12.2.0)
@@ -145,7 +146,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 5ff890e3f60150b1bddb0c98dc34b972eb841865
+  MaterialComponents: aad22d3473a7b32c8477be45e493c8b6f5d06edb
 
 PODFILE CHECKSUM: b585ca32a2884e050823cc1f861e8b7246f7dcc1
 

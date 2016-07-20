@@ -66,6 +66,7 @@ PODS:
     - MaterialComponents/Typography
   - MaterialComponents/Dialogs (12.2.0):
     - MaterialComponents/Buttons
+    - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
   - MaterialComponents/FlexibleHeader (12.2.0)
@@ -158,7 +159,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
-  MaterialComponents: 5ff890e3f60150b1bddb0c98dc34b972eb841865
+  MaterialComponents: aad22d3473a7b32c8477be45e493c8b6f5d06edb
   MaterialComponentsCatalog: 2b5f51302ffd2b444b5ec1f3cf6097d9377944d8
   MaterialComponentsUnitTests: '0288b5f4d98079b22c62ad04072875ebc44c7769'
 
