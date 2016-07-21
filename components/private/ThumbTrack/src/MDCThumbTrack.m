@@ -999,6 +999,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
+#pragma mark - UIControl methods
+
+- (BOOL)isTracking {
+  return _isDraggingThumb;
+}
+
 #pragma mark - Private
 
 - (void)interruptAnimation {

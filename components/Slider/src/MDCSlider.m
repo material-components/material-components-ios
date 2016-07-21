@@ -164,7 +164,9 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.enabled = enabled;
 }
 
-#pragma mark UIView methods
+- (BOOL)isTracking {
+  return _thumbTrack.isTracking;
+}
 
 - (CGSize)intrinsicContentSize {
   return CGSizeMake(kSliderDefaultWidth, kSliderFrameHeight);
