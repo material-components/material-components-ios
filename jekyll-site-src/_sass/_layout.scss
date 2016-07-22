@@ -15,7 +15,7 @@ header {
     padding-left: 56px;
     line-height: 36px;
     background: url(https://www.gstatic.com/images/branding/product/1x/mdc_ios_36dp.png) 0 0 no-repeat;
-    
+
     font-size: 14px;
     text-transform: uppercase;
 
@@ -92,7 +92,7 @@ nav.tabs {
   li {
     line-height: 16px;
     margin-top: 32px;
-    margin-left: 48px;
+    margin-left: 36px;
     font-weight: 500;
 
     .sidebar-icon {
@@ -116,20 +116,23 @@ nav.tabs {
     }
   }
 
-  li.sublevel {
-    display: none;
-  }
-
   li.toplevel {
     margin-left: 28px;
+    cursor: default;
 
     a,
     a:hover,
     a:active {
       color: $black-87;
     }
+  }
+
+  li.sublevel {
+    li.thirdlevel {
+      display: none;
+    }
     &.active {
-      li.sublevel {
+      li.thirdlevel {
         display: list-item;
       }
     }
