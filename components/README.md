@@ -33,8 +33,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
 
 ## Components
 
+- [**ActivityIndicator**
+  A circular rotating indicator for showing indeterminate or determinate progress.
+  ](ActivityIndicator/)
+
 - [**AppBar**
-  A flexible navigation bar, designed to provide a typical Material Design navigation experience.
+  A flexible navigation bar, designed to provide a typical material navigation experience.
   ](AppBar/)
   <!--{: .icon-appbar }-->
 
@@ -44,12 +48,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-buttonbar }-->
 
 - [**Buttons**
-  Material Design buttons, including a flat button, a raised button and a floating action button.
+  Material buttons, including a flat button, a raised button and a floating action button.
   ](Buttons/)
   <!--{: .icon-buttons }-->
 
 - [**CollectionCells**
-  Collection view cell classes that adhere to Material Design layout and styling.
+  Collection view cell classes that adhere to material layout and styling.
   ](CollectionCells/)
   <!--{: .icon-collections }-->
 
@@ -59,9 +63,13 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-collections }-->
 
 - [**Collections**
-  Collection view classes that adhere to Material Design layout and styling.
+  Collection view classes that adhere to material layout and styling.
   ](Collections/)
   <!--{: .icon-collections }-->
+
+- [**Dialogs**
+  A presentation controller that will display a material modal dialog.
+  ](Dialogs/)
 
 - [**FlexibleHeader**
   A container view whose height and vertical offset react to UIScrollViewDelegate events.
@@ -84,42 +92,45 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-navigationbar }-->
 
 - [**PageControl**
-  A drop-in Material Design replacement for UIPageControl that implements Material Design animation
-  and layout.
+  A drop-in material replacement for UIPageControl.
   ](PageControl/)
   <!--{: .icon-pagecontrol }-->
 
 - [**Palettes**
-  Reference colors from Material Design palettes.
+  Reference colors from material palettes.
   ](Palettes/)
   <!--{: .icon-palette }-->
 
 - [**ProgressView**
-  A determinate and linear progress indicator that implements Material Design animation and layout.
+  A determinate and linear progress indicator that implements material animation and layout.
   ](ProgressView/)
 
 - [**ShadowElevations**
-  Provides the most commonly used elevations specified in Material Design.
+  Provides the most commonly used elevations specified in material.
   ](ShadowElevations/)
   <!--{: .icon-shadowelevations }-->
 
 - [**ShadowLayer**
-  A shadow which uses Material Design principles for visualizing depth.
+  A shadow which uses material principles for visualizing depth.
   ](ShadowLayer/)
   <!--{: .icon-shadowlayer }-->
 
 - [**Slider**
-  A Material Design control for selecting from a range of values.
+  A material control for selecting from a range of values.
   ](Slider/)
   <!--{: .icon-slider }-->
 
+- [**Snackbar**
+  A brief dismissible feedback message.
+  ](Snackbar/)
+
 - [**Switch**
-  A Material Design on/off switch with an interface similar to UISwitch.
+  A material on/off switch with an interface similar to UISwitch.
   ](Switch/)
   <!--{: .icon-switch }-->
 
 - [**Typography**
-  Text styles for Material Design fonts and opacities.
+  Text styles for material fonts and opacities.
   ](Typography/)
   <!--{: .icon-typography }-->
 <!--{: .icon-list .large-format }-->

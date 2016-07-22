@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bUd-nh-klo">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--DialogsTypicalUseViewController-->
+        <scene sceneID="WMP-nM-Jx6">
+            <objects>
+                <viewController storyboardIdentifier="DialogsTypicalUseController" title="DialogsTypicalUse" id="bUd-nh-klo" userLabel="DialogsTypicalUseViewController" customClass="DialogsTypicalUseViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yyY-OF-sQW"/>
+                        <viewControllerLayoutGuide type="bottom" id="Zhm-xj-hPs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="D3I-hi-DX6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nk6-ZZ-sLb" customClass="MDCRaisedButton">
+                                <rect key="frame" x="212" y="28" width="177" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                <state key="normal" title="PROGRAMMATIC DIALOG">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapProgrammatic:" destination="bUd-nh-klo" eventType="touchUpInside" id="ZhY-yy-uaP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9VI-Tq-cpg" customClass="MDCRaisedButton">
+                                <rect key="frame" x="221" y="66" width="158" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                <state key="normal" title="STORYBOARD DIALOG">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapStoryboard:" destination="bUd-nh-klo" eventType="touchUpInside" id="IWE-cI-Cnu"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Nk6-ZZ-sLb" firstAttribute="centerX" secondItem="D3I-hi-DX6" secondAttribute="centerX" id="UKd-PX-wT5"/>
+                            <constraint firstItem="Nk6-ZZ-sLb" firstAttribute="top" secondItem="yyY-OF-sQW" secondAttribute="bottom" constant="8" id="abk-O5-qGg"/>
+                            <constraint firstItem="9VI-Tq-cpg" firstAttribute="centerX" secondItem="D3I-hi-DX6" secondAttribute="centerX" id="oBW-LT-Zhm"/>
+                            <constraint firstItem="9VI-Tq-cpg" firstAttribute="top" secondItem="Nk6-ZZ-sLb" secondAttribute="bottom" constant="8" id="uQn-qf-Goe"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n4R-rW-mx7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="522" y="666"/>
+        </scene>
+    </scenes>
+</document>
