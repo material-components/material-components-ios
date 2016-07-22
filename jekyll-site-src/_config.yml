@@ -1,6 +1,6 @@
 title: Material Components for iOS
 description: > # this means to ignore newlines
-  Material Components for iOS is a set of user interface components that help iOS app developers build Material Design apps.
+  Material Components for iOS is a set of user interface components that help iOS app developers build apps with material design.
 basepath: "" # blank if hosted at site root, /subdirectory if hosted in "subdirectory" folder
 # temporarily disabled
 # url: "http://www.materialcomponents.org"
