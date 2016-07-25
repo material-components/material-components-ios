@@ -7,7 +7,7 @@ section: contributing
 # Contributing
 
 Material Components for iOS is intended to be a full open source project that accepts contributions
-from community members. We can work together to optimize Material Design on iOS.
+from community members. We can work together to optimize material design on iOS.
 
 - [Slack Channel](http://googleoss.slack.com)
   <!--{: .icon-slack }-->
@@ -25,7 +25,7 @@ from community members. We can work together to optimize Material Design on iOS.
 
 Members of the core team are engineers from Google, Inc. responsible for the strategic direction of
 Material Components and appointment of technical leaders from the community. The Core Team will
-work with the community to accept contributions in line with the [Material Design
+work with the community to accept contributions in line with the [material design
 spec](http://www.google.com/design/spec). You can reach members of the core team on our [Slack
 discussion channel](http://googleoss.slack.com).
 
@@ -37,7 +37,7 @@ As contributors and maintainers of the project, we pledge to respect everyone wh
 through posting issues, updating documentation, submitting pull requests, providing feedback in
 comments and any other related activities.
 
-Communication through any of our Material Design channels
+Communication through any of our material design channels
 ([GitHub](http://github.com/google/material-components-ios), [Stack
 Overflow](http://stackoverflow.com/questions/tagged/material-components-ios),
 [Google+](http://plus.google.com/+googledesign), [Twitter](https://twitter.com/googledesign), etc.)

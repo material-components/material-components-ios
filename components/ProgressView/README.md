@@ -2,7 +2,7 @@
 title:  "Progress View"
 layout: detail
 section: components
-excerpt: "Progress View is a determinate and linear progress indicator that implements Material Design animation and layout."
+excerpt: "Progress View is a determinate and linear progress indicator that implements material design animation and layout."
 ---
 # Progress View
 
@@ -12,7 +12,7 @@ excerpt: "Progress View is a determinate and linear progress indicator that impl
 </div>
 
 This control is designed to be a drop-in replacement for `UIProgressView`, with a user experience
-influenced by [Material Design specifications](https://material.google.com/components/progress-activity.html#)
+influenced by [material design specifications](https://material.google.com/components/progress-activity.html#)
 for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
 few key methods required to achieve the desired animation of the control.
 <!--{: .intro }-->

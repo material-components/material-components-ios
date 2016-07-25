@@ -2,11 +2,11 @@
 title:  "Shadow Elevations"
 layout: detail
 section: components
-excerpt: "The Shadow Elevations component provides the most commonly-used Material Design elevations."
+excerpt: "The Shadow Elevations component provides the most commonly-used material design elevations."
 ---
 # Shadow Elevations
 
-This component provides the most commonly-used Material Design elevations.
+This component provides the most commonly used material design elevations.
 <!--{: .intro }-->
 
 ### Design Specifications

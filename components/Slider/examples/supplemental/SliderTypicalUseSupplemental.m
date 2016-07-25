@@ -1,6 +1,6 @@
 /* IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
- instructions. It is not necessary to import this file to implement any Material Design Components.
+ instructions. It is not necessary to import this file to use Material Components iOS.
  */
 
 #import <Foundation/Foundation.h>
@@ -18,7 +18,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The MDCSlider object is a Material Design control used to select a value from a"
+  return @"The MDCSlider object is a material design control used to select a value from a"
           " continuous range or discrete set of values.";
 }
 

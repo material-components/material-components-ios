@@ -2,7 +2,7 @@
 title:  "Slider"
 layout: detail
 section: components
-excerpt: "The Slider component provides a Material Design control for selecting a value from a continuous range or discrete set of values."
+excerpt: "The Slider component provides a material design control for selecting a value from a continuous range or discrete set of values."
 ---
 # Slider
 
@@ -11,7 +11,7 @@ excerpt: "The Slider component provides a Material Design control for selecting 
   [![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
 </div>
 
-The `MDCSlider` object is a Material Design control used to select a value from a continuous range
+The `MDCSlider` object is a material design control used to select a value from a continuous range
 or discrete set of values.
 <!--{: .intro }-->
 

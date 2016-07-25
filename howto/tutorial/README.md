@@ -7,14 +7,14 @@ section: howto
 # Material Components Development Guide
 
 Material Components for iOS is a set of components that help iOS app developers
-build Material Design apps. These are the same components Google uses to build
+build material design apps. These are the same components Google uses to build
 apps like Google Maps, Calendar, Chrome and many more.
 
-Individually, the components bring Material Design principles to common UI
+Individually, the components bring material design principles to common UI
 elements and behaviors, but tailored for iOS. Our team has taken care to design
 the APIs to feel natural on iOS.
 
-Our goal is to make implementing Material Design as easy as possible. The
+Our goal is to make implementing material design as easy as possible. The
 components are easy to assemble and be used piecemeal.
 
 This tutorial will take you through building an example app called Abstractor
@@ -757,7 +757,7 @@ override func collectionView(collectionView: UICollectionView, didSelectItemAtIn
 
 ## Next steps
 
-This tutorial has taken you through implementing a basic Material Design style
+This tutorial has taken you through implementing a basic material design style
 app with some of our components. There are a lot more components that are not
 covered which are covered in our component documentation.
 

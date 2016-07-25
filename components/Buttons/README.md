@@ -2,7 +2,7 @@
 title:  "Buttons"
 layout: detail
 section: components
-excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
+excerpt: "Buttons is a collection of material design buttons, including a flat button, a raised button and a floating action button."
 ---
 # Buttons
 
@@ -11,7 +11,7 @@ excerpt: "Buttons is a collection of Material Design buttons, including a flat b
   [![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
 </div>
 
-Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
+Buttons is a collection of material design buttons, including a flat button, a raised button and a
 floating action button.
 <!--{: .intro }-->
 

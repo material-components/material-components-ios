@@ -8,7 +8,7 @@ section: components
 
 Material Components is a collection of standalone, production-quality user
 interface components for iOS. These components implement Google's
-[Material Design](http://www.google.com/design/spec/material-design/introduction.html) specification
+[material design](http://www.google.com/design/spec/material-design/introduction.html) specification
 and are developed by a team of iOS engineers and UX designers at Google.
 
 

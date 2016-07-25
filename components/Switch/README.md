@@ -2,7 +2,7 @@
 title:  "Switch"
 layout: detail
 section: components
-excerpt: "The Switch component provides an Material Design on/off switch control with an interface similar to UISwitch."
+excerpt: "The Switch component provides an material design on/off switch control with an interface similar to UISwitch."
 ---
 
 # Switch
@@ -12,7 +12,7 @@ excerpt: "The Switch component provides an Material Design on/off switch control
   [![Switch](docs/assets/switch.png)](docs/assets/switch.mp4)
 </div>
 
-Switch provides an Material Design on/off switch control with an interface similar to UISwitch. Note
+Switch provides an material design on/off switch control with an interface similar to UISwitch. Note
 that `MDCSwitch` objects have an intrinsic size and are not resizable.
 <!--{: .intro }-->
 
