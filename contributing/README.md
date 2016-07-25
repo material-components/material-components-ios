@@ -182,8 +182,8 @@ We use a simple format for titles:
 rare.
 - Use `[ComponentName]!` to indicate that a change introduce a breakage: removing/renaming an
   element of the public API.
-- Use `[ComponentName]?` to indicate that a change (deliberately) introduces warnings, such as in
-  deprecations.
+- Use `[ComponentName]?` to indicate that a change (deliberately) introduces warnings. For example
+  when we mark an API deprecated.
 
 A good example of a title is:
 
