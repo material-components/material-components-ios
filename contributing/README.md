@@ -144,8 +144,8 @@ issue being dealt with quickly:
 - Reproduction steps - was it just a one time error or can you show the steps to reproduce?
 - Related issues - has a similar issue been reported before?
 
-Here is a great example of a well defined issue:
-[https://github.com/angular/angular.js/issues/5069](https://github.com/angular/angular.js/issues/5069)
+Here is a great example of a [well defined issue](https://github.com/angular/angular.js/issues/5069)
+in angular.js.
 
 - - -
 
