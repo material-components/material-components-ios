@@ -8,7 +8,7 @@ excerpt: "The Dialogs component implements the material design specifications fo
 # Dialogs
 
 Dialogs provides a presentation controller that will display a modal dialog according to the
-material spec.
+material spec. Additionally, an alert controller is provided that will display a simple alert.
 
 ### Material Design Specifications
 
@@ -20,12 +20,17 @@ material spec.
 
 #### Dialogs Presentation Controller and Transition Controller
 
-Dialogs is comprised of two classes: MDCDialogPresentationController and
+Presenting dialogs utilizes two classes: MDCDialogPresentationController and
 MDCDialogTransitionController. These allow the presentation of view controllers in a material
 specificed manner. MDCDialogPresentationController is a subclass of UIPresentationController
 that observes the presented view controller for preferred content size.
 MDCDialogTransitionController implements UIViewControllerAnimatedTransitioning and
 UIViewControllerTransitioningDelegate to vend the presentation controller during the transition.
+
+#### Alert Controller
+
+MDCAlertController provides a simple interface for developers to present a simple modal dialog
+according to the material spec.
 
 ## Installation
 
@@ -105,5 +110,40 @@ dialogTransitionController = MDCDialogTransitionController()
 modalDialogViewController.modalPresentationStyle = UIModalPresentationCustom
 modalDialogViewController.transitioningDelegate = dialogTransitionController
 presentViewController(myDialogViewController animated:YES ...)
+
+~~~
+
+### Present an alert
+
+#### Objective-C
+
+~~~ objc
+// Present a modal alert
+MDCAlertController *alertController =
+    [MDCAlertController alertControllerWithTitle:titleString
+                                         message:messageString]
+
+MDCAlertAction *alertAction =
+    [MDCAlertAction actionWithTitle:@"OK"
+                            handler:^(MDCAlertAction *action)
+                                {
+                                  NSLog(@"OK");
+                                }];
+
+[alertController addAction:alertAction];
+
+[self presentViewController:alertController animated:YES completion:NULL];
+
+~~~
+
+#### Swift
+
+~~~ swift
+// Present a modal alert
+let alertController = MDCAlertController(title: titleString, message: messageString)
+let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
+alertController.addAction(action)
+
+self.presentViewController(alertController, animated:true, completion:nil)
 
 ~~~
