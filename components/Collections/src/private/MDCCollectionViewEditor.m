@@ -426,7 +426,7 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
                          toIndexPath:newIndexPath]) {
         _reorderingCellIndexPath = newIndexPath;
 
-         // Notify delegate that item will move.
+        // Notify delegate that item will move.
         if ([_delegate respondsToSelector:@selector(collectionView:
                                               willMoveItemAtIndexPath:
                                                           toIndexPath:)]) {
