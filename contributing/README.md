@@ -98,9 +98,9 @@ _This code of conduct was adapted from the following sources:_
 
 If you have questions about how to use Material Components for iOS:
 
-- Please post questions to Stack Overflow with the tag `material-components-ios`.
 - Search previous questions that have been answered by visiting [Stack
   Overflow](http://stackoverflow.com/questions/tagged/material-components-ios).
+- Please post questions to Stack Overflow with the tag `material-components-ios`.
 - Join us on our [Slack discussion channel](https://googleoss.slack.com/messages/mdc-ios/) for more
   direct discussions with the team.
 
