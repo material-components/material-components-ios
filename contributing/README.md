@@ -155,10 +155,10 @@ in angular.js.
 Please sign our Contributor License Agreement (CLA) before sending pull requests. For any code
 changes to be accepted, the CLA must be signed. It's a quick process, we promise!
 
-- For individuals we have a [simple click-through
-  form](http://code.google.com/legal/individual-cla-v1.0.html).
-- For corporations we'll need you to print, sign and one of scan+email, fax or mail [the form.
-  ](http://code.google.com/legal/corporate-cla-v1.0.html)
+- For individuals we have a [simple click-through form]
+(http://code.google.com/legal/individual-cla-v1.0.html).
+- For corporations we'll need you to sign a different [agreement]
+(http://code.google.com/legal/corporate-cla-v1.0.html).
 
 - - -
 
