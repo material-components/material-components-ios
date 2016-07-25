@@ -37,6 +37,13 @@ OBJC_EXTERN NSString *const MDCKeyboardWatcherKeyboardWillChangeFrameNotificatio
  */
 + (instancetype)sharedKeyboardWatcher;
 
+/** Extract the animation duration from the keyboard notification */
++ (NSTimeInterval)animationDurationFromKeyboardNotification:(NSNotification *)notification;
+
+/** Extract the animation curve option from the keyboard notification */
++ (UIViewAnimationOptions)animationCurveOptionFromKeyboardNotification:
+        (NSNotification *)notification;
+
 /**
  The distance from the top of the keyboard to the bottom of the screen.
 

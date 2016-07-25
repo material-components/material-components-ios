@@ -312,6 +312,7 @@ static UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve ani
 #pragma mark - KeyboardWatcher Notifications
 
 - (void)keyboardWatcherHandler:(NSNotification *)aNotification {
+  // TODO Get these from KeyboardWatcher
   NSNumber *animationDurationNumber =
       aNotification.userInfo[UIKeyboardAnimationDurationUserInfoKey];
   NSTimeInterval animationDuration = (NSTimeInterval)[animationDurationNumber doubleValue];

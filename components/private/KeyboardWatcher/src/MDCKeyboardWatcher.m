@@ -177,6 +177,59 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
   return CGRectGetHeight(self.keyboardFrame);
 }
 
++ (NSTimeInterval)animationDurationFromKeyboardNotification:(NSNotification *)notification {
+  if (![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillShowNotification] &&
+      ![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillHideNotification] &&
+      ![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillChangeFrameNotification]) {
+    NSAssert(NO, @"Cannot extract the animation duration from a non-keyboard notification.");
+
+    return 0.0;
+  }
+
+  NSNumber *animationDurationNumber = notification.userInfo[UIKeyboardAnimationDurationUserInfoKey];
+  NSTimeInterval animationDuration = (NSTimeInterval)[animationDurationNumber doubleValue];
+
+  return animationDuration;
+}
+
+/** Convert UIViewAnimationCurve to UIViewAnimationOptions */
+static UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve animationCurve) {
+  switch (animationCurve) {
+    case UIViewAnimationCurveEaseInOut:
+      return UIViewAnimationOptionCurveEaseInOut;
+    case UIViewAnimationCurveEaseIn:
+      return UIViewAnimationOptionCurveEaseIn;
+    case UIViewAnimationCurveEaseOut:
+      return UIViewAnimationOptionCurveEaseOut;
+    case UIViewAnimationCurveLinear:
+      return UIViewAnimationOptionCurveLinear;
+  }
+
+  // UIKit unpredictably returns values that aren't declared in UIViewAnimationCurve, so we can't
+  // assert here.
+  // UIKeyboardWillChangeFrameNotification can post with a curve of 7.
+  // Based on how UIViewAnimationOptions are defined in UIView.h, (animationCurve << 16) may an
+  // be acceptable return value for unrecognized curves.
+  return UIViewAnimationOptionCurveEaseInOut;
+}
+
++ (UIViewAnimationOptions)animationCurveOptionFromKeyboardNotification:
+        (NSNotification *)notification {
+  if (![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillShowNotification] &&
+      ![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillHideNotification] &&
+      ![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillChangeFrameNotification]) {
+    NSAssert(NO, @"Cannot extract the animation curve option from a non-keyboard notification.");
+
+    return UIViewAnimationOptionCurveEaseInOut;
+  }
+
+  NSNumber *animationCurveNumber = notification.userInfo[UIKeyboardAnimationCurveUserInfoKey];
+  UIViewAnimationCurve animationCurve = (UIViewAnimationCurve)[animationCurveNumber integerValue];
+  UIViewAnimationOptions animationCurveOption = animationOptionsWithCurve(animationCurve);
+
+  return animationCurveOption;
+}
+
 #pragma mark - Notifications
 
 - (void)updateOffsetWithUserInfo:(NSDictionary *)userInfo
