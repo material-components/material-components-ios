@@ -110,7 +110,7 @@ If you have questions about how to use Material Components for iOS:
 
 If you find a bug in the source code or a mistake in the documentation, you can help us by
 [submitting an issue](https://github.com/google/material-components-ios/issues) to our GitHub
-repository. Even better: submit a fix as a pull request!
+repository. Even better: send a fix as a [pull request](https://github.com/google/material-components-ios/compare/)!
 
 - - -
 
@@ -124,7 +124,8 @@ would like to implement a new feature then consider what kind of change it is:
   mailing list](https://groups.google.com/forum/#!forum/material-components-ios-discuss) so that we
   can better coordinate our efforts, prevent duplication of work, and help you to craft the change
   so that it is successfully accepted into the project.
-- Small changes can be crafted and submitted to the GitHub Repository as a Pull Request.
+- Small changes can be crafted and submitted to the GitHub Repository as a [pull request]
+(https://github.com/google/material-components-ios/compare/).
 
 - - -
 
@@ -161,7 +162,7 @@ changes to be accepted, the CLA must be signed. It's a quick process, we promise
 
 - - -
 
-## Submitting a Pull Request
+## Submitting a [Pull Request](https://github.com/google/material-components-ios/compare/)
 
 For major changes, it's worthwhile discussing the idea on our [mailing
 list](https://groups.google.com/forum/#!forum/material-components-ios-discuss)—that way you'll get
@@ -170,7 +171,7 @@ is working on it. [Search our GitHub](https://github.com/google/material-compone
 issues to see if anyone has proposed the idea before, too. Feature requests and bug fixes should be
 tracked with issues, so file one early on and assign it to yourself.
 
-Once you have code that is ready to share, please create a pull request against our [GitHub
+Once you have code that is ready to share, please create a [pull request](https://github.com/google/material-components-ios/compare/) against our [GitHub
 repo](https://github.com/google/material-components-ios). See [GitHub's documentation about pull
 requests](https://help.github.com/articles/using-pull-requests) for more information.
 
@@ -205,7 +206,9 @@ account on Phabricator and join the discussion of your changes.
 We have deferred all conversations about coding style to
 [clang-format](http://clang.llvm.org/docs/ClangFormat.html) and it is an automated part of our work
 flow. We follow the [Google style guide](https://google.github.io/styleguide/objcguide.xml). We
-recommend running clang format on your changes before sending a pull request.
+recommend running clang format on your changes before sending a pull request because it will
+facilitate readability by everyone working on the project. Reading and understanding the code faster
+results in landing your code into our codebase faster.
 
 - - -
 
