@@ -433,15 +433,14 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
           [_delegate collectionView:_collectionView
               willMoveItemAtIndexPath:previousIndexPath
                           toIndexPath:newIndexPath];
+        }
 
-          // Notify delegate item did move.
-          if ([_delegate respondsToSelector:@selector(collectionView:
-                                                didMoveItemAtIndexPath:
-                                                           toIndexPath:)]) {
-            [_delegate collectionView:_collectionView
-                didMoveItemAtIndexPath:previousIndexPath
-                           toIndexPath:newIndexPath];
-          }
+        // Notify delegate item did move.
+        if ([_delegate
+                respondsToSelector:@selector(collectionView:didMoveItemAtIndexPath:toIndexPath:)]) {
+          [_delegate collectionView:_collectionView
+              didMoveItemAtIndexPath:previousIndexPath
+                         toIndexPath:newIndexPath];
         }
       } else {
         // Exit if delegate will not allow this indexPath to move.
