@@ -109,8 +109,9 @@ static const CGFloat kCellImagePaddingLeading = 16;
 #pragma mark - Layout
 
 - (void)prepareForReuse {
+  _imageView.image = nil;
+
   [super prepareForReuse];
-  [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {

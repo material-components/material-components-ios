@@ -117,6 +117,7 @@ static NSString *const kExampleDetailText =
   if (indexPath.item == 0) {
     // Add switch as accessory view.
     MDCSwitch *editingSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+    editingSwitch.on = self.editor.isEditing;
     [editingSwitch addTarget:self
                       action:@selector(didSwitch:)
             forControlEvents:UIControlEventValueChanged];
