@@ -250,30 +250,6 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 #pragma mark - Keyboard handling
 
-// Convert UIViewAnimationCurve to UIViewAnimationOptions
-// TODO(iangordon): Move to MDCKeyboardWatcher
-static UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve animationCurve) {
-  switch (animationCurve) {
-    case UIViewAnimationCurveEaseInOut:
-      return UIViewAnimationOptionCurveEaseInOut;
-    case UIViewAnimationCurveEaseIn:
-      return UIViewAnimationOptionCurveEaseIn;
-    case UIViewAnimationCurveEaseOut:
-      return UIViewAnimationOptionCurveEaseOut;
-    case UIViewAnimationCurveLinear:
-      return UIViewAnimationOptionCurveLinear;
-    default:
-      // HACK:
-      // UIKeyboardWillChangeFrameNotification can happen with a curve of 7 which is not currently
-      // defined in UIViewAnimationCurve
-      if ((NSInteger)animationCurve != 7) {
-        NSLog(@"Unknown UIViewAnimationCurve : %ld", (long)animationCurve);
-      }
-      // animationCurve << 16 may an be acceptable workaround
-      return UIViewAnimationOptionCurveEaseInOut;
-  }
-}
-
 - (void)registerKeyboardNotifications {
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardWatcherHandler:)
@@ -312,14 +288,11 @@ static UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve ani
 #pragma mark - KeyboardWatcher Notifications
 
 - (void)keyboardWatcherHandler:(NSNotification *)aNotification {
-  // TODO Get these from KeyboardWatcher
-  NSNumber *animationDurationNumber =
-      aNotification.userInfo[UIKeyboardAnimationDurationUserInfoKey];
-  NSTimeInterval animationDuration = (NSTimeInterval)[animationDurationNumber doubleValue];
+  NSTimeInterval animationDuration =
+      [MDCKeyboardWatcher animationDurationFromKeyboardNotification:aNotification];
 
-  NSNumber *animationCurveNumber = aNotification.userInfo[UIKeyboardAnimationCurveUserInfoKey];
-  UIViewAnimationCurve animationCurve = (UIViewAnimationCurve)[animationCurveNumber integerValue];
-  UIViewAnimationOptions animationCurveOption = animationOptionsWithCurve(animationCurve);
+  UIViewAnimationOptions animationCurveOption =
+      [MDCKeyboardWatcher animationCurveOptionFromKeyboardNotification:aNotification];
 
   [UIView animateWithDuration:animationDuration
                         delay:0.0f
