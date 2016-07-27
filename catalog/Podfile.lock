@@ -161,7 +161,7 @@ SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
   MaterialComponents: dc641f565bbf36b134427bf24fea1e02016d657c
   MaterialComponentsCatalog: 2b5f51302ffd2b444b5ec1f3cf6097d9377944d8
-  MaterialComponentsUnitTests: '0288b5f4d98079b22c62ad04072875ebc44c7769'
+  MaterialComponentsUnitTests: 0288b5f4d98079b22c62ad04072875ebc44c7769
 
 PODFILE CHECKSUM: 309489cdb2727f360a2446856fc0dbe264a2bf36
 
