@@ -2,7 +2,7 @@
 title:  "Typography"
 layout: detail
 section: components
-excerpt: "The Typography component provides methods for displaying text using the type sizes and opacities from the Material Design specifications."
+excerpt: "The Typography component provides methods for displaying text using the type sizes and opacities from the material design specifications."
 ---
 # Typography
 
@@ -12,7 +12,7 @@ excerpt: "The Typography component provides methods for displaying text using th
 </div>
 
 The Typography component provides methods for displaying text using the type sizes and opacities
-from the Material Design specifications.
+from the material design specifications.
 <!--{: .intro }-->
 
 ### Design Specifications
@@ -73,20 +73,20 @@ import MaterialComponents
 
 ### Font
 Select a font most appropriate to its usage and set it as your label's font. All fonts are returned
-from class methods beginning with the font's Material Design type style and ending with 'Font'.
+from class methods beginning with the font's material design type style and ending with 'Font'.
 Material Typography should be used consistently throughout the entire UI.
 
 ### Opacity
 Each font has a respective opacity (alpha) value returned by class methods beginning with the
-font's Material Design type style and ending with 'FontOpacity'. These CGFloats should be set on the
+font's material design type style and ending with 'FontOpacity'. These CGFloats should be set on the
 label's alpha property. If animating alpha, it should be the maximum value reached.
 
 ## Type Sizes and Opacities
 
 `MDCTypography` provides a `UIFont` font and a `CGFloat` opacity for each of the standard type
-settings in the Material Design specifications.
+settings in the material design specifications.
 
-### Material Design type styles and their respective `MDCTypography` methods
+### Material design type styles and their respective `MDCTypography` methods
 
 | Material Design Type | MDCTypography Font | MDCTypography Opacity |
 | -------------------- | ------------------ | --------------------- |
@@ -103,13 +103,13 @@ settings in the Material Design specifications.
 <!--{: .data-table }-->
 
 ### Font size reference
-![Material Design Type Size](docs/assets/style_typography_styles_scale.png "Shows the Material Design font
-                             sizes")
+![Material Design Type Size](docs/assets/style_typography_styles_scale.png
+                             "Shows the material design font sizes")
 <!--{: .illustration }-->
 
 ### Font opacity reference
-![Material Design Type Opacity](docs/assets/style_typography_styles_contrast.png "Shows the Material Design font
-                                opacities")
+![Material Design Type Opacity](docs/assets/style_typography_styles_contrast.png
+                                "Shows the material design font opacities")
 <!--{: .illustration }-->
 
 ## Examples

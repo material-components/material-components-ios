@@ -59,7 +59,7 @@ pod install
 ## Overview
 
 The Collections component consists of a set of collection view related classes that adhere to
-Material Design layout and styling. Typically you will subclass the `MDCCollectionViewController`,
+material design layout and styling. Typically you will subclass the `MDCCollectionViewController`,
 which in turn subclasses `UICollectionViewController`. This controller provides the collection view
 used as its content.
 

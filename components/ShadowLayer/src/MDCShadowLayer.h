@@ -59,7 +59,9 @@
 /**
  The elevation of the layer in points.
 
- The higher the elevation, the more spread out the shadow is.
+ The higher the elevation, the more spread out the shadow is. This is distinct from the layer's
+ zPosition which can be used to order overlapping layers, but will have no affect on the size of
+ the shadow.
 
  Negative values act as if zero were specified.
  */

@@ -230,12 +230,10 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     // Bounded ripples move slightly towards the center of the tap target. Unbounded ripples
     // move to the center of the tap target.
 
-    CGPoint startPoint = [[self.presentationLayer valueForKeyPath:kInkLayerPosition] CGPointValue];
-
     CGFloat xOffset = self.targetFrame.origin.x - self.inkLayer.frame.origin.x;
     CGFloat yOffset = self.targetFrame.origin.y - self.inkLayer.frame.origin.y;
 
-    startPoint = CGPointMake(self.point.x + xOffset, self.point.y + yOffset);
+    CGPoint startPoint = CGPointMake(self.point.x + xOffset, self.point.y + yOffset);
     CGPoint endPoint = MDCInkLayerRectGetCenter(self.targetFrame);
     if (self.useCustomInkCenter) {
       endPoint = self.customInkCenter;

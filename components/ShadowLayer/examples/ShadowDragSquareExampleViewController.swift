@@ -80,7 +80,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
   }
 
   class func catalogDescription() -> String {
-    return "Shadow Layer implements the Material Design specifications for elevation and shadows."
+    return "Shadow Layer implements the material design specifications for elevation and shadows."
   }
 
   class func catalogIsPrimaryDemo() -> Bool {

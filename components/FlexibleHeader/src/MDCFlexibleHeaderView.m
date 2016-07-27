@@ -14,10 +14,6 @@
  limitations under the License.
  */
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 #import "MDCFlexibleHeaderView.h"
 
 #import "private/MDCStatusBarShifter.h"
@@ -157,6 +153,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   if (self) {
     _statusBarShifter = [[MDCStatusBarShifter alloc] init];
     _statusBarShifter.delegate = self;
+    _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 
     NSPointerFunctionsOptions options =
         (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);

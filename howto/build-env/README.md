@@ -43,6 +43,14 @@ versions.
 
 All components are expected to support **iOS 7.0 and above**.
 
+#### iOS 8.0 and above components
+
+* [Dialogs](https://github.com/google/material-components-ios/tree/develop/components/Dialogs)
+
+### CocoaPods
+
+We are using CocoaPods 1.0.1.
+
 ### Ruby
 
 The core team uses **Ruby 2.0.0**. Newer versions of ruby have subtle modifications that affect our

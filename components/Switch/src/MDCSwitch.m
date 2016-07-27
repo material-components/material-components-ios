@@ -278,6 +278,10 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   [self updateAccessibilityValues];
 }
 
+- (BOOL)isTracking {
+  return _thumbTrack.isTracking;
+}
+
 #pragma mark - Animation tracking
 
 - (void)thumbTrack:(MDCThumbTrack *)thumbTrack willAnimateToValue:(CGFloat)value {

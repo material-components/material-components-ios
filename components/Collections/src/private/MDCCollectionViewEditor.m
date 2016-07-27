@@ -14,10 +14,6 @@
  limitations under the License.
  */
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 #import "MDCCollectionViewEditor.h"
 
 #import "MDCCollectionViewEditingDelegate.h"
@@ -437,15 +433,14 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
           [_delegate collectionView:_collectionView
               willMoveItemAtIndexPath:previousIndexPath
                           toIndexPath:newIndexPath];
+        }
 
-          // Notify delegate item did move.
-          if ([_delegate respondsToSelector:@selector(collectionView:
-                                                didMoveItemAtIndexPath:
-                                                           toIndexPath:)]) {
-            [_delegate collectionView:_collectionView
-                didMoveItemAtIndexPath:previousIndexPath
-                           toIndexPath:newIndexPath];
-          }
+        // Notify delegate item did move.
+        if ([_delegate
+                respondsToSelector:@selector(collectionView:didMoveItemAtIndexPath:toIndexPath:)]) {
+          [_delegate collectionView:_collectionView
+              didMoveItemAtIndexPath:previousIndexPath
+                         toIndexPath:newIndexPath];
         }
       } else {
         // Exit if delegate will not allow this indexPath to move.

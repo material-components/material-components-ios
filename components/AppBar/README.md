@@ -2,7 +2,7 @@
 title:  "App Bar"
 layout: detail
 section: components
-excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
+excerpt: "The App Bar is a flexible navigation bar designed to provide a typical material design navigation experience."
 ---
 # App Bar
 

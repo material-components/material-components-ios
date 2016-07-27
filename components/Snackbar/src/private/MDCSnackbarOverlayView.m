@@ -637,12 +637,12 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingCurve) {
   MDCAnimationTimingCurveEaseOut = UIViewAnimationCurveEaseOut,
   MDCAnimationTimingCurveLinear = UIViewAnimationCurveLinear,
 
-  // Below are the interesting Material Design animation curves.
+  // Below are the interesting material design animation curves.
 
   /**
-   This is the most frequently used interpolation curve for Material Design animations. This curve
+   This is the most frequently used interpolation curve for material design animations. This curve
    is slow both at the beginning and end. It has similar characteristics to the system's EaseInOut.
-   This is known as FastOutSlowIn in the Material Design spec.
+   This is known as FastOutSlowIn in the material design spec.
    */
   MDCAnimationTimingCurveQuantumEaseInOut,
 
@@ -656,7 +656,7 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingCurve) {
   /**
    This curve should be used for motion when exiting frame or when fading out to 0% opacity. This
    curve is slow at the beginning. It has similar characteristics to the system's EaseIn. This
-   is known as FastOutLinearIn in the Material Design spec.
+   is known as FastOutLinearIn in the material design spec.
    */
   MDCAnimationTimingCurveQuantumEaseIn,
 

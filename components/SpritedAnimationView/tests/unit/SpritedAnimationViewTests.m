@@ -45,7 +45,7 @@ static NSString *const kExpectationDescription = @"animatingWithCompletion";
   XCTestExpectation *expectation = [self expectationWithDescription:kExpectationDescription];
 
   // Fulfill expectation after completion of animation.
-  [animationView startAnimatingWithCompletion:^{
+  [animationView startAnimatingWithCompletion:^(BOOL completion) {
     [expectation fulfill];
   }];
 

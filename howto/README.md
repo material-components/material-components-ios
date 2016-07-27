@@ -9,10 +9,10 @@ section: howto
 Material Components iOS should be immediately useable out of the box with
 Apple's standard development tool chain.
 
-- [Tutorial]({{ site.folder }}/howto/tutorial/)
+- [Tutorial](tutorial/README.md)
   <!--{: .icon-guide }-->
 
-- [Build environment]({{ site.folder }}/howto/build-env/)
+- [Build environment](build-env/README.md)
   <!--{: .icon-guide }-->
   <!-- TODO Correct icon -->
 <!--{: .icon-list }-->
