@@ -1,4 +1,4 @@
-# release-candidate TODO: Replace me with version number. 
+# 13.0.0
 
 ## API diffs
 
