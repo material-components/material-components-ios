@@ -36,9 +36,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
-@interface MDCSlider () <MDCThumbTrackDelegate>
-@end
-
 @implementation MDCSlider {
   MDCThumbTrack *_thumbTrack;
 }
@@ -60,10 +57,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)commonMDCSliderInit {
-  CGRect trackFrame = CGRectInset(self.frame, 8.f, 0.f);
-
   _thumbTrack =
-      [[MDCThumbTrack alloc] initWithFrame:trackFrame onTintColor:[[self class] defaultColor]];
+      [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:[[self class] defaultColor]];
   _thumbTrack.delegate = self;
   _thumbTrack.disabledTrackHasThumbGaps = YES;
   _thumbTrack.trackEndsAreInset = YES;
@@ -73,6 +68,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.thumbGrowsWhenDragging = YES;
   _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.shouldDisplayDiscreteDots = YES;
+  _thumbTrack.shouldDisplayDiscreteValueLabel = YES;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
   _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
   _thumbTrack.trackDisabledColor = [[self class] defaultDisabledColor];
@@ -157,6 +153,25 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.maximumValue = maximumValue;
 }
 
+#pragma mark - MDCThumbTrackDelegate methods
+
+- (NSString *)thumbTrack:(MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {
+  if ([_delegate respondsToSelector:@selector(slider:displayedStringForValue:)]) {
+    return [_delegate slider:self displayedStringForValue:value];
+  }
+
+  // Default behavior
+
+  static dispatch_once_t onceToken;
+  static NSNumberFormatter *numberFormatter;
+  dispatch_once(&onceToken, ^{
+    numberFormatter = [[NSNumberFormatter alloc] init];
+    numberFormatter.maximumFractionDigits = 3;
+    numberFormatter.minimumIntegerDigits = 1;  // To get 0.5 instead of .5
+  });
+  return [numberFormatter stringFromNumber:@(value)];
+}
+
 #pragma mark - UIControl methods
 
 - (void)setEnabled:(BOOL)enabled {
@@ -167,6 +182,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (BOOL)isTracking {
   return _thumbTrack.isTracking;
 }
+
+#pragma mark - UIView methods
 
 - (CGSize)intrinsicContentSize {
   return CGSizeMake(kSliderDefaultWidth, kSliderFrameHeight);
@@ -196,6 +213,12 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (NSString *)accessibilityValue {
+  if ([_delegate respondsToSelector:@selector(slider:accessibilityLabelForValue:)]) {
+    return [_delegate slider:self accessibilityLabelForValue:self.value];
+  }
+
+  // Default behavior
+
   static dispatch_once_t onceToken;
   static NSNumberFormatter *numberFormatter;
   dispatch_once(&onceToken, ^{

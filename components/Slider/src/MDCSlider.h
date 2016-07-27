@@ -16,6 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCThumbTrack.h"
+
+@protocol MDCSliderDelegate;
+
 /**
  A material slider.
 
@@ -34,7 +38,10 @@
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
  */
 IB_DESIGNABLE
-@interface MDCSlider : UIControl <NSCoding>
+@interface MDCSlider : UIControl <NSCoding, MDCThumbTrackDelegate>
+
+/** The delegate for the slider. */
+@property(nullable, nonatomic, weak) id<MDCSliderDelegate> delegate;
 
 /**
  The color of the cursor (thumb) and filled in portion of the track (left side).
@@ -113,5 +120,39 @@ IB_DESIGNABLE
  The default value of this property is YES.
  */
 @property(nonatomic, assign, getter=isContinuous) BOOL continuous;
+
+@end
+
+/** MDCSlider delegate which allows setting custom behavior. */
+@protocol MDCSliderDelegate <NSObject>
+@optional
+
+/**
+ For discrete sliders, called when the slider is determining the string label to display for a given
+ discrete value.
+
+ If not implemented, or if no slider delegate is specified, the slider defaults to displaying the
+ value rounded to the closest relevant digit. For instance, 0.50000 would become "0.5"
+
+ Override this to provide custom behavior, for instance if your slider deals in percentages, the
+ above example could become "50%"
+
+ @param slider The MDCSlider sender.
+ @param value The value whose label needs to be calculated.
+ */
+- (nonnull NSString *)slider:(nonnull MDCSlider *)slider displayedStringForValue:(CGFloat)value;
+
+/**
+ Used to determine what string value should be used as the accessibility string for a given value.
+
+ If not implemented, or if no slider delegate is specified, the slider defaults to how filled the
+ slider is, as a percentage. Override this method to provide custom behavior, and when implementing,
+ you may want to also implement @c -slider:displayedStringForValue: to ensure consistency between
+ the displayed value and the accessibility label.
+
+ @param slider The MDCSlider sender.
+ @param value The value whose accessibility label needs to be calculated.
+ */
+- (nonnull NSString *)slider:(nonnull MDCSlider *)slider accessibilityLabelForValue:(CGFloat)value;
 
 @end
