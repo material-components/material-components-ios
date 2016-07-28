@@ -59,12 +59,12 @@ class RTLTests: XCTestCase {
     UIGraphicsBeginImageContext(rect.size)
     let context = UIGraphicsGetCurrentContext();
 
-    CGContextSetFillColorWithColor(context, UIColor.blueColor().CGColor);
-    CGContextFillRect(context, rect);
+    CGContextSetFillColorWithColor(context!, UIColor.blueColor().CGColor);
+    CGContextFillRect(context!, rect);
 
     let image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return image;
+    return image!;
   }
 }

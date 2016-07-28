@@ -21,6 +21,11 @@
 static NSString *const kSpriteAnimationKey = @"spriteAnimate";
 static const NSInteger kSpriteFrameRateDefault = 60;
 
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCSpritedAnimationView () <CAAnimationDelegate>
+@end
+#endif
+
 @interface MDCSpritedAnimationView ()
 @property(nonatomic, copy) void (^pendingCompletionBlock)(BOOL finished);
 @property(nonatomic, assign) NSInteger numberOfFrames;
