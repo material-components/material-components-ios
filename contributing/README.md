@@ -171,7 +171,7 @@ list](https://groups.google.com/forum/#!forum/material-components-ios-discuss)â€
 early feedback on your idea and find out if the approach has been tried before or if someone else
 is working on it. [Search our GitHub](https://github.com/google/material-components-ios/issues)
 issues to see if anyone has proposed the idea before, too. Feature requests and bug fixes should be
-tracked with issues, so file one early on and assign it to yourself.
+tracked with issues, so file one early on and assign it to yourself once you have started it.
 
 ### Tips for a good pull request
 
