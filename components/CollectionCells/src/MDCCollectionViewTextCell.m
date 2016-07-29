@@ -112,6 +112,7 @@ static const CGFloat kCellImagePaddingLeading = 16;
   _imageView.image = nil;
 
   [super prepareForReuse];
+  [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {
