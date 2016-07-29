@@ -44,7 +44,7 @@
 @end
 
 @interface SnackbarSimpleExample : SnackbarExample
-
+- (void)handleShowSnackbarButtonTapped:(id)sender;
 @end
 
 @interface SnackbarSuspensionExample : SnackbarExample
@@ -60,5 +60,8 @@
 @property(nonatomic) UILabel *groupALabel;
 @property(nonatomic) UILabel *groupBLabel;
 @property(nonatomic) UILabel *allLabel;
+
+- (void)handleShowTapped:(id)sender;
+- (void)handleSuspendStateChanged:(MDCSwitch *)sender;
 
 @end

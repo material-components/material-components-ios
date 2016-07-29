@@ -120,7 +120,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 }
 
 - (void)setupConstraints {
-  NSArray *views = @{
+  NSDictionary *views = @{
     @"stockView" : _stockProgressView,
     @"stockLabel" : _stockProgressLabel,
     @"tintedView" : _tintedProgressView,
@@ -130,7 +130,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     @"backwardView" : _backwardProgressView,
     @"backwardLabel" : _backwardProgressLabel,
   };
-  NSArray *metrics = @{
+  NSDictionary *metrics = @{
     @"p" : @20,
     @"s" : @40,
     @"h" : @2,
@@ -158,7 +158,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     @"H:|-(>=p)-[coloredLabel]-(>=p)-|",
     @"H:|-(>=p)-[backwardLabel]-(>=p)-|",
   ];
-  for (NSArray *format in horizontalVisualFormats) {
+  for (NSString *format in horizontalVisualFormats) {
     [horizontalConstraints
         addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:format
                                                                     options:0
