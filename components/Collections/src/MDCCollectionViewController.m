@@ -53,14 +53,6 @@
   return self;
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  return [super initWithCoder:aDecoder];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
