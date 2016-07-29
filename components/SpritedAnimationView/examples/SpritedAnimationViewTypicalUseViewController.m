@@ -62,7 +62,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
                                    attribute:NSLayoutAttributeWidth
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:nil
-                                   attribute:nil
+                                   attribute:NSLayoutAttributeNotAnAttribute
                                   multiplier:1.0
                                     constant:30];
   animationViewWidthConstraint.active = true;
@@ -71,7 +71,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
                                    attribute:NSLayoutAttributeHeight
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:nil
-                                   attribute:nil
+                                   attribute:NSLayoutAttributeNotAnAttribute
                                   multiplier:1.0
                                     constant:30];
   animationViewHeightConstraint.active = true;
