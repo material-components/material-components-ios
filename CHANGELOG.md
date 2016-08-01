@@ -1,3 +1,7 @@
+# 13.0.2
+
+Hotfix for Catalog bundle id.
+
 # 13.0.1
 
 Hotfix for Xcode 8.0 beta 3 (8S174q) compilation.
