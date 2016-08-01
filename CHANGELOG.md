@@ -910,7 +910,7 @@ Added *NSCopying*.
 
 ## Infrastructure
 
-Material Components iOS now [requires Cocoapods 1.0.0](https://groups.google.com/d/topic/material-components-ios-discuss/FnipGJXMeww/discussion).
+Material Components for iOS now [requires Cocoapods 1.0.0](https://groups.google.com/d/topic/material-components-ios-discuss/FnipGJXMeww/discussion).
 
 ## API diffs
 

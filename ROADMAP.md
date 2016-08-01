@@ -1,4 +1,4 @@
-For the coming months, the Material Components iOS team is focused on developing the following
+For the coming months, the Material Components for iOS team is focused on developing the following
 components:
 
 High priority:

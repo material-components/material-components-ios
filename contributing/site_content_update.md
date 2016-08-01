@@ -1,7 +1,7 @@
 # Site Content Update
 
 ## Overview
-Material components for ios site consists of 2 parts: [document site](https://material-ext.appspot.com/mdc-ios-preview/) and API reference site of each components (e.g, [AppBar API](https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html), etc...)
+Material Components for iOS site consists of 2 parts: [document site](https://material-ext.appspot.com/mdc-ios-preview/) and API reference site of each components (e.g, [AppBar API](https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html), etc...)
 
 This document will walk you through the process for updating the contents on document site and API reference, or adding new sections to the document site. You only need to edit markdown files in most cases, however, if you wish to make further changes to the templates, please read to [Site Development](./site_development.md).
 

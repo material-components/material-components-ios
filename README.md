@@ -48,16 +48,16 @@ pod init
 ### 3. Edit Podfile
 
 Once you've initialized CocoaPods, add the
-[Material Components iOS Pod](https://cocoapods.org/pods/MaterialComponentsIOS)
+[Material Components for iOS Pod](https://cocoapods.org/pods/MaterialComponentsIOS)
 to your target in your Podfile:
 
 ~~~ ruby
 target "MyApp" do
   ...
-  # Until Material Components iOS is public:
+  # Until Material Components for iOS is public:
   pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
 
-  # After Material Components iOS is public:
+  # After Material Components for iOS is public:
   # pod 'MaterialComponents'
 end
 ~~~
@@ -142,7 +142,7 @@ class MDCBuildTestViewController: UIViewController {
 
 ## Attributions
 
-Material Components iOS uses
+Material Components for iOS uses
 [material design icons](https://github.com/google/material-design-icons),
 copyright Google Inc. and licensed under
 [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).

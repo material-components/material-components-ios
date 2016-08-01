@@ -314,7 +314,7 @@ However, you need to be one of the material component core members in order to d
 
 #### Reply to the original release email message
 
-Post a reply to you message on [Material Components iOS Discuss]
+Post a reply to you message on [Material Components for iOS Discuss]
 (https://groups.google.com/forum/#!forum/material-components-ios-discuss) indicating that you are
 done.
 
