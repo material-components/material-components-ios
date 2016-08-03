@@ -76,14 +76,14 @@ static const CGFloat kValueLabelFontSize = 12.f;
 @end
 
 // TODO(iangordon): Properly handle broken tgmath
-static inline CGFloat CGFabs(CGFloat value) {
+static inline CGFloat Fabs(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return fabs(value);
 #else
   return fabsf(value);
 #endif
 }
-static inline CGFloat CGRound(CGFloat value) {
+static inline CGFloat Round(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return round(value);
 #else
@@ -91,7 +91,7 @@ static inline CGFloat CGRound(CGFloat value) {
 #endif
 }
 
-static inline CGFloat CGHypot(CGFloat x, CGFloat y) {
+static inline CGFloat Hypot(CGFloat x, CGFloat y) {
 #if CGFLOAT_IS_DOUBLE
   return hypot(x, y);
 #else
@@ -108,7 +108,7 @@ static inline bool CGFloatEqual(CGFloat a, CGFloat b) {
   const CGFloat epsilon = FLT_EPSILON;
   const CGFloat min = FLT_MIN;
 #endif
-  return (CGFabs(a - b) < constantK * epsilon * CGFabs(a + b) || CGFabs(a - b) < min);
+  return (Fabs(a - b) < constantK * epsilon * Fabs(a + b) || Fabs(a - b) < min);
 }
 
 /**
@@ -120,7 +120,7 @@ static inline bool CGFloatEqual(CGFloat a, CGFloat b) {
  @return Absolute straight line distance.
  */
 static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
-  return CGHypot(point1.x - point2.x, point1.y - point2.y);
+  return Hypot(point1.x - point2.x, point1.y - point2.y);
 }
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
@@ -544,7 +544,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     if (crossesAnchor) {
       CGFloat currentValue = _value;
       CGFloat animationDurationToAnchor =
-          (CGFabs(previousValue - _filledTrackAnchorValue) / CGFabs(previousValue - currentValue)) *
+          (Fabs(previousValue - _filledTrackAnchorValue) / Fabs(previousValue - currentValue)) *
           kAnimationDuration;
       void (^afterCrossingAnchorAnimation)(BOOL) = ^void(BOOL finished) {
         UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseOut;
@@ -715,7 +715,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                          [self timingFunctionFromUIViewAnimationOptions:animationOptions]];
       [CATransaction setAnimationDuration:duration];
       _trackOnLayer.frame =
-          CGRectMake(trackOnXValue, 0, CGFabs(currentXValue - anchorXValue), _trackHeight);
+          CGRectMake(trackOnXValue, 0, Fabs(currentXValue - anchorXValue), _trackHeight);
       [CATransaction commit];
     }
   } else {
@@ -847,7 +847,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (CGFloatEqual(_minimumValue, _maximumValue)) {
     return _minimumValue;
   }
-  return (value - _minimumValue) / CGFabs(_minimumValue - _maximumValue);
+  return (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
 }
 
 - (CGFloat)closestValueToTargetValue:(CGFloat)targetValue {
@@ -860,7 +860,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   CGFloat scaledTargetValue = (targetValue - _minimumValue) / (_maximumValue - _minimumValue);
   CGFloat snappedValue =
-      CGRound((_numDiscreteValues - 1) * scaledTargetValue) / (_numDiscreteValues - 1.0f);
+      Round((_numDiscreteValues - 1) * scaledTargetValue) / (_numDiscreteValues - 1.0f);
   return (1 - snappedValue) * _minimumValue + snappedValue * _maximumValue;
 }
 
