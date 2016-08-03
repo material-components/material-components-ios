@@ -18,19 +18,14 @@
 
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
+#import "MDFTextAccessibility.h"
 
-static inline CGFloat LuminanceForColor(UIColor *color) {
-  // See http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
-  CGFloat luminance = 1;
-  CGFloat rgba[4];
-  if ([color getRed:&rgba[0] green:&rgba[1] blue:&rgba[2] alpha:&rgba[3]]) {
-    luminance = rgba[0] * 0.299f + rgba[1] * 0.587f + rgba[2] * 0.114f;
-  }
-  return luminance;
-}
-
-static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
-  return LuminanceForColor(color) < 0.55f;
+static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
+  // We assume that the light iOS status text is pure white and not big enough to be considered
+  // "large" text according to the W3CAG 2.0 spec.
+  return [MDFTextAccessibility textColor:[UIColor whiteColor]
+                 passesOnBackgroundColor:color
+                                 options:MDFTextAccessibilityOptionsNone];
 }
 
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
@@ -88,8 +83,9 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  return (ShouldUseLightOverlayForColor(_headerView.backgroundColor) ? UIStatusBarStyleLightContent
-                                                                     : UIStatusBarStyleDefault);
+  return (ShouldUseLightStatusBarOnBackgroundColor(_headerView.backgroundColor)
+              ? UIStatusBarStyleLightContent
+              : UIStatusBarStyleDefault);
 }
 
 - (BOOL)prefersStatusBarHidden {

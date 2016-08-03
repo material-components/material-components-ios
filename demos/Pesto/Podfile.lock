@@ -68,7 +68,8 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/FlexibleHeader (13.0.1)
+  - MaterialComponents/FlexibleHeader (13.0.1):
+    - MDFTextAccessibility (~> 1.1)
   - MaterialComponents/FontDiskLoader (13.0.1)
   - MaterialComponents/HeaderStackView (13.0.1)
   - MaterialComponents/Ink (13.0.1)
@@ -137,6 +138,7 @@ PODS:
   - MaterialComponents/Switch (13.0.1):
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Typography (13.0.1)
+  - MDFTextAccessibility (1.1.1)
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
@@ -146,7 +148,8 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: ff17f58b0ca6d9cc24fd113fb0668c5e72eace8e
+  MaterialComponents: aec3377a656ee1b95cdde77fd908f892be35c303
+  MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
 
 PODFILE CHECKSUM: f138be16d4835113ff672258fc7529fad3f90e91
 
