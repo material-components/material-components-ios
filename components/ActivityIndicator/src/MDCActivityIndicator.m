@@ -96,7 +96,6 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   BOOL _cycleInProgress;
   CGFloat _currentProgress;
   CGFloat _lastProgress;
-  MDCActivityIndicatorState _lastCompletedState;
 }
 
 #pragma mark - Init
@@ -403,8 +402,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
-      _lastCompletedState = MDCActivityIndicatorStateIndeterminate;
-      [self strokeRotationCycleFinished];
+      [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateIndeterminate];
     }];
 
     // Outer 5-point star detent rotation.
@@ -484,8 +482,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   if (nearestCycle == 0 && _lastProgress <= _minStrokeDifference) {
     // Special case for 0% progress.
     _cycleCount = nearestCycle;
-    _lastCompletedState = MDCActivityIndicatorStateTransitionToIndeterminate;
-    [self strokeRotationCycleFinished];
+    [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
     return;
   }
 
@@ -508,8 +505,8 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
-      _lastCompletedState = MDCActivityIndicatorStateTransitionToIndeterminate;
-      [self strokeRotationCycleFinished];
+      [self strokeRotationCycleFinishedFromState:
+          MDCActivityIndicatorStateTransitionToIndeterminate];
     }];
 
     // Stroke start.
@@ -554,8 +551,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
     // Necessary for transition from indeterminate to determinate when cycle == 0.
     _currentProgress = 0.0f;
     _lastProgress = _currentProgress;
-    _lastCompletedState = MDCActivityIndicatorStateTransitionToDeterminate;
-    [self strokeRotationCycleFinished];
+    [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
   } else {
     _currentProgress = MAX(_progress, _minStrokeDifference);
 
@@ -569,8 +565,8 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
     [CATransaction begin];
     {
       [CATransaction setCompletionBlock:^{
-        _lastCompletedState = MDCActivityIndicatorStateTransitionToDeterminate;
-        [self strokeRotationCycleFinished];
+        [self strokeRotationCycleFinishedFromState:
+            MDCActivityIndicatorStateTransitionToDeterminate];
       }];
 
       // Outer 5-point star detent rotation. Required for passing from transitionToIndeterminate to
@@ -648,8 +644,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
-      _lastCompletedState = MDCActivityIndicatorStateDeterminate;
-      [self strokeRotationCycleFinished];
+      [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateDeterminate];
     }];
 
     // Stroke end.
@@ -669,13 +664,13 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   _animationInProgress = YES;
 }
 
-- (void)strokeRotationCycleFinished {
+- (void)strokeRotationCycleFinishedFromState:(MDCActivityIndicatorState)state {
   _animationInProgress = NO;
 
   if (!_animationsAdded) {
     return;
   }
-  if (_lastCompletedState == MDCActivityIndicatorStateIndeterminate) {
+  if (state == MDCActivityIndicatorStateIndeterminate) {
     if (_cycleColors.count > 0) {
       _currentColorCount = (_currentColorCount + 1) % _cycleColors.count;
       [self updateStrokeColor];
@@ -685,7 +680,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
   switch (_indicatorMode) {
     case MDCActivityIndicatorModeDeterminate:
-      switch (_lastCompletedState) {
+      switch (state) {
         case MDCActivityIndicatorStateDeterminate:
         case MDCActivityIndicatorStateTransitionToDeterminate:
           [self addProgressAnimationIfRequired];
@@ -697,7 +692,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
       }
       break;
     case MDCActivityIndicatorModeIndeterminate:
-      switch (_lastCompletedState) {
+      switch (state) {
         case MDCActivityIndicatorStateDeterminate:
         case MDCActivityIndicatorStateTransitionToDeterminate:
           [self addTransitionToIndeterminateCycle];
