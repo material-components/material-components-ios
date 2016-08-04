@@ -173,6 +173,12 @@ is working on it. [Search our GitHub](https://github.com/google/material-compone
 issues to see if anyone has proposed the idea before, too. Feature requests and bug fixes should be
 tracked with issues, so file one early on and assign it to yourself once you have started it.
 
+### Conventions
+
+MDC follows certain [coding styles and conventions](code-conventions.md) for its code to help
+everyone easily read, review, and understand our code. Please follow these conventions when
+submitting pull requests.
+
 ### Tips for a good pull request
 
 Pull requests can be hard to review if they try to tackle too many things
@@ -196,12 +202,6 @@ Our additions:
 - A pull request should affect as few components as possible.
 - Pull requests must include a modification to the CHANGELOG.md summarizing the
   change.
-
-### Conventions
-
-This repository follows a file layout convention that ensures consistency and
-predictability across all of our components. The conventions are described in
-the [GOS-conventions](https://github.com/google/GOS-conventions) repository.
 
 ### Before you contribute
 
@@ -263,17 +263,6 @@ account on Phabricator and join the discussion of your changes.
 
 - - -
 
-## Coding Style
-
-We have deferred all conversations about coding style to
-[clang-format](http://clang.llvm.org/docs/ClangFormat.html) and it is an automated part of our work
-flow. We follow the [Google style guide](https://google.github.io/styleguide/objcguide.xml). We
-recommend running clang format on your changes before sending a pull request because it will
-facilitate readability by everyone working on the project. Reading and understanding the code faster
-results in landing your code into our codebase faster.
-
-- - -
-
 # Component checklist
 
 This checklist describes the process by which Material components are built.
@@ -287,41 +276,6 @@ To initiate an API review, send a pull request that only includes the public API
 review.
 
 TODO(featherless): Flesh this out with some concrete examples of existing API reviews.
-
-## Minimize dependencies
-
-The work: avoid non-essential dependencies.
-
-The why: the team has had many discussions on this topic. Generally speaking, we use the following
-considerations as a basis for minimizing dependencies:
-
-- dependencies increase cost of maintenance and cost of usage for a component, and
-- dependency-less components are much easier to drop in and, most importantly, to remove from a
-  project.
-
-[Reach out to the team directly](contributing/#questions) for advice or questions on this matter.
-
-Recommendations:
-
-- Aim for zero non-platform dependencies.
-- Reasonable exceptions can be made, but must be justified.
-- Do not create "Core" or "Utility" libraries.
-
-## Nullability annotations
-
-The work: add nullability annotations to every header of your component.
-
-The why: nullability annotations improve Swift usage of a component's APIs.
-[Learn more](https://developer.apple.com/swift/blog/?id=25)
-
-Recommendations:
-
-We **explicitly** annotate all public APIs rather than use `NS_ASSUME_NONNULL_BEGIN`. This is an
-intentional deviation from Apple’s practice of using the `ASSUME` macros.
-
-Further reading:
-
-- http://nshipster.com/swift-1.2/#nullability-annotations
 
 - - -
 
