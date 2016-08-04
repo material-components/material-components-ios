@@ -505,8 +505,8 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
-      [self strokeRotationCycleFinishedFromState:
-          MDCActivityIndicatorStateTransitionToIndeterminate];
+      [self
+          strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
     }];
 
     // Stroke start.
@@ -565,8 +565,8 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
     [CATransaction begin];
     {
       [CATransaction setCompletionBlock:^{
-        [self strokeRotationCycleFinishedFromState:
-            MDCActivityIndicatorStateTransitionToDeterminate];
+        [self
+            strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
       }];
 
       // Outer 5-point star detent rotation. Required for passing from transitionToIndeterminate to
