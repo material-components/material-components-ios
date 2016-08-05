@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
   s.source_files = 'components/*/tests/unit/*.{h,m,swift}', 'components/private/*/tests/unit/*.{h,m,swift}'
   s.framework    = 'XCTest'
   s.dependency 'MaterialComponents'
+  s.dependency 'MDFTextAccessibility'
 end
