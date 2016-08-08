@@ -19,21 +19,95 @@
 #import <CoreText/CoreText.h>
 
 @interface MDCFontDiskLoader ()
-@property(nonatomic, strong) NSURL *fontURL;
-@property(nonatomic) BOOL isRegistered;
-@property(nonatomic) BOOL disableSanityChecks;
-@property(nonatomic) BOOL hasFailedRegistration;
+@property(nonatomic) BOOL disableSanityChecks;  // For tests to turn off asserts
 @end
 
-static NSMutableSet *registeredFonts;
+// Use |isFontURLLoaded:| and |setFontURL:loaded:| for access to loaded fonts.
+static NSMutableSet<NSURL *> *gLoadedFonts;
+// The queue that ensures |gLoadedFonts| is accessed in a thread safe manner.
+static dispatch_queue_t gLoadedFontsConcurrentQueueAccess;
 
+/*
+ This class caches the registered state of fileURL because it is much faster than calling the
+ CoreText api.
+
+ Benchmark testing results for a iPod touch Model A1421 running 9.2.1 (13D11) on 7/21/2016:
+ ==============================
+ first load runtime: 6.729903 ms
+ iterations: 1000
+
+ single instance of FontDiskLoader
+ unoptimizedLoad Avg. Runtime: 1.312834 ms
+ load Avg. Runtime: 0.006540 ms
+ ratio first/unoptimized: 5.126241
+ ratio first/optimized: 1029.037109
+ ratio unoptimized/optimized: 200.739151
+
+ new instances of FontDiskLoader
+ unoptimizedLoad Avg. Runtime: 1.384893 ms
+ load Avg. Runtime: 0.096831 ms
+ ratio first/unoptimized: 4.859511
+ ratio first/optimized: 69.501534
+ ratio unoptimized/optimized: 14.302166
+ ==============================
+
+ The unoptimizedLoad was calling just the CoreText API. As you can see the unoptimizedLoad was on
+ average 1.3 ms. This is unacceptable in situations in which you may want to display more than 20
+ different labels as is the case for a scrolling collection view because it would cause frame drops.
+ */
 @implementation MDCFontDiskLoader
+
+@synthesize loadFailed = _loadFailed;
+
++ (void)initialize {
+  static dispatch_once_t once;
+  dispatch_once(&once, ^{
+    gLoadedFonts = [[NSMutableSet alloc] init];
+    gLoadedFontsConcurrentQueueAccess =
+        dispatch_queue_create("com.google.mdc.FontDiskLoaderQueue", DISPATCH_QUEUE_CONCURRENT);
+  });
+}
+
+// A font's loaded state is shared accross all fontloaders that share the same URL. This class
+// method ensures that the collection of URLs that are loaded are set in a thread safe manner.
+// Inspired by https://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1 "Handling
+// the Readers and Writers Problem."
++ (void)setFontURL:(NSURL *)fontURL loaded:(BOOL)loaded {
+  if (!fontURL) {
+    return;
+  }
+  dispatch_barrier_async(gLoadedFontsConcurrentQueueAccess, ^{
+    if (loaded == [gLoadedFonts containsObject:fontURL]) {
+      return;  // Already in the correct state;
+    }
+    if (loaded) {
+      [gLoadedFonts addObject:fontURL];
+    } else {
+      [gLoadedFonts removeObject:fontURL];
+    }
+  });
+}
+
+// A font's loaded state is shared accross all fontloaders that share the same URL. This class
+// method ensures that the collection of URLs that are loaded are gotten in a thread safe manner.
+// Inspired by https://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1 "Handling
+// the Readers and Writers Problem."
++ (BOOL)isFontURLLoaded:(NSURL *)fontURL {
+  if (!fontURL) {
+    return NO;
+  }
+  __block BOOL isLoaded = NO;
+  dispatch_sync(gLoadedFontsConcurrentQueueAccess, ^{
+    isLoaded = [gLoadedFonts containsObject:fontURL];
+  });
+  return isLoaded;
+}
 
 - (instancetype)initWithName:(NSString *)fontName URL:(NSURL *)fontURL {
   self = [super init];
   if (self) {
-    _fontName = fontName;
-    _fontURL = fontURL;
+    _fontName = [fontName copy];
+    _fontURL = [fontURL copy];
   }
   return self;
 }
@@ -42,83 +116,26 @@ static NSMutableSet *registeredFonts;
                         filename:(NSString *)filename
                   bundleFileName:(NSString *)bundleFilename
                       baseBundle:(NSBundle *)baseBundle {
-  NSString *searchPath = [baseBundle bundlePath];
-  NSString *fontsBundlePath = [searchPath stringByAppendingPathComponent:bundleFilename];
-  NSString *fontPath = [fontsBundlePath stringByAppendingPathComponent:filename];
-  NSURL *fontURL = [NSURL fileURLWithPath:fontPath isDirectory:NO];
+  NSURL *fontURL =
+      [baseBundle URLForResource:filename withExtension:nil subdirectory:bundleFilename];
   if (!fontURL) {
-    NSLog(@"Failed to locate '%@' in bundle at path '%@'.", filename, fontsBundlePath);
+    NSLog(@"Failed to locate: %@ in bundle: %@ %@.", filename, baseBundle, bundleFilename);
     return nil;
   }
   return [self initWithName:fontName URL:fontURL];
 }
 
-- (BOOL)registerFont {
-  if (self.isRegistered) {
-    return YES;
-  }
-  if (_hasFailedRegistration) {
-    return NO;
-  }
-  if (![[NSFileManager defaultManager] fileExistsAtPath:[self.fontURL path]]) {
-    _hasFailedRegistration = YES;
-    NSLog(@"Failed to load font: file not found at %@", self.fontURL);
-    return NO;
-  }
-  CFErrorRef error = NULL;
-  self.isRegistered = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                       kCTFontManagerScopeProcess, &error);
-
-  if (!self.isRegistered) {
-    if (error && CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
-      // If it's already been loaded by somebody else, we don't care.
-      // We do not check the error domain to make sure they match because
-      // kCTFontManagerErrorDomain is not defined in the iOS 8 SDK.
-      // Radar 18651170 iOS 8 SDK missing definition for kCTFontManagerErrorDomain
-      self.isRegistered = YES;
-    } else {
-      NSLog(@"Failed to load font: %@", error);
-      _hasFailedRegistration = YES;
-    }
-  }
-  if (error) {
-    CFRelease(error);
-  }
-  return self.isRegistered;
-}
-
-- (BOOL)unregisterFont {
-  if (!self.isRegistered) {
-    _hasFailedRegistration = NO;
-    return YES;
-  }
-  CFErrorRef error = NULL;
-  self.isRegistered = !CTFontManagerUnregisterFontsForURL((__bridge CFURLRef)self.fontURL,
-                                                          kCTFontManagerScopeProcess, &error);
-
-  if (self.isRegistered || error) {
-    NSLog(@"Failed to unregister font: %@", error);
-  }
-  return !self.isRegistered;
-}
-
-- (UIFont *)fontOfSize:(CGFloat)fontSize {
-  [self registerFont];
-  UIFont *font = [UIFont fontWithName:self.fontName size:fontSize];
-  NSAssert(_disableSanityChecks || font, @"Failed to find font: %@ in file at %@", self.fontName,
-           self.fontURL);
-  return font;
-}
+#pragma mark - NSObject overridden methods
 
 - (NSString *)description {
   NSMutableString *description = [super.description mutableCopy];
-  [description appendString:[NSString stringWithFormat:@" font name: %@;", self.fontName]];
-  if (self.isRegistered) {
-    [description appendString:@" registered = YES;"];
-  } else if (self.hasFailedRegistration) {
+  [description appendFormat:@" font name: %@;", _fontName];
+  if (self.loaded) {
+    [description appendString:@" loaded = YES;"];
+  } else if (_loadFailed) {
     [description appendString:@" failed registration = YES;"];
   }
-  [description appendString:[NSString stringWithFormat:@" font url: %@;", self.fontURL]];
+  [description appendFormat:@" font url: %@;", _fontURL];
   return [description copy];
 }
 
@@ -127,42 +144,109 @@ static NSMutableSet *registeredFonts;
     return NO;
   }
   MDCFontDiskLoader *otherObject = (MDCFontDiskLoader *)object;
-  BOOL fontNamesAreEqual = [otherObject.fontName isEqualToString:self.fontName];
-  return fontNamesAreEqual && [otherObject.fontURL isEqual:self.fontURL];
+  BOOL fontNamesAreEqual = [otherObject.fontName isEqualToString:_fontName];
+  return fontNamesAreEqual && [otherObject.fontURL isEqual:_fontURL];
 }
 
 - (NSUInteger)hash {
-  return self.fontName.hash ^ self.fontURL.hash;
+  return _fontName.hash ^ _fontURL.hash;
 }
 
 - (id)copyWithZone:(NSZone *)zone {
   return self;
 }
 
+#pragma mark - Public methods
+
+- (BOOL)load {
+  @synchronized(self) {
+    BOOL loaded = [MDCFontDiskLoader isFontURLLoaded:_fontURL];
+    if (loaded) {
+      return YES;
+    }
+    if (_loadFailed) {
+      return NO;
+    }
+    CFErrorRef error = NULL;
+    loaded = CTFontManagerRegisterFontsForURL((__bridge CFURLRef)_fontURL,
+                                              kCTFontManagerScopeProcess, &error);
+    if (!loaded) {
+      if (error && CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
+        // If it's already been loaded by somebody else, we don't care.
+        // We do not check the error domain to make sure they match because
+        // kCTFontManagerErrorDomain is not defined in the iOS 8 SDK.
+        // Radar 18651170 iOS 8 SDK missing definition for kCTFontManagerErrorDomain
+        loaded = YES;
+      } else {
+        NSLog(@"Failed to load font: %@", error);
+        _loadFailed = YES;
+      }
+    }
+    if (error) {
+      CFRelease(error);
+    }
+    [MDCFontDiskLoader setFontURL:_fontURL loaded:loaded];
+    return loaded;
+  }
+}
+
+- (BOOL)unload {
+  @synchronized(self) {
+    BOOL loaded = [MDCFontDiskLoader isFontURLLoaded:_fontURL];
+    _loadFailed = NO;
+    if (!loaded) {
+      return YES;
+    }
+    CFErrorRef error = NULL;
+    loaded = !CTFontManagerUnregisterFontsForURL((__bridge CFURLRef)_fontURL,
+                                                 kCTFontManagerScopeProcess, &error);
+
+    if (loaded || error) {
+      NSLog(@"Failed to unload font: %@", error);
+    }
+    [MDCFontDiskLoader setFontURL:_fontURL loaded:loaded];
+    return !loaded;
+  }
+}
+
+- (UIFont *)fontOfSize:(CGFloat)fontSize {
+  [self load];
+  UIFont *font = [UIFont fontWithName:_fontName size:fontSize];
+  NSAssert(_disableSanityChecks || font, @"Failed to find font: %@ in file at %@", _fontName,
+           _fontURL);
+  return font;
+}
+
+- (BOOL)isLoaded {
+  return [MDCFontDiskLoader isFontURLLoaded:_fontURL];
+}
+
+- (BOOL)hasLoadFailed {
+  @synchronized(self) {
+    return _loadFailed;
+  }
+}
+
+#pragma mark - Deprecated methods after 7/27/2016
+
+- (BOOL)registerFont {
+  return [self load];
+}
+
+- (BOOL)unregisterFont {
+  return [self unload];
+}
+
 - (BOOL)isRegistered {
-  @synchronized(registeredFonts) {
-    return [registeredFonts containsObject:self.fontURL];
-  }
+  return self.loaded;
 }
 
-- (void)setIsRegistered:(BOOL)isRegistered {
-  @synchronized(registeredFonts) {
-    if (isRegistered == [registeredFonts containsObject:self.fontURL]) {
-      return;  // Already in the correct state;
-    }
-    if (isRegistered) {
-      [registeredFonts addObject:self.fontURL];
-    } else {
-      [registeredFonts removeObject:self.fontURL];
-    }
-  }
+- (BOOL)hasFailedRegistration {
+  return _loadFailed;
 }
 
-+ (void)load {
-  static dispatch_once_t once;
-  dispatch_once(&once, ^{
-    registeredFonts = [[NSMutableSet alloc] init];
-  });
+- (void)setFontName:(NSString *)fontName {
+  _fontName = [fontName copy];
 }
 
 @end

@@ -17,17 +17,15 @@
 #import <UIKit/UIKit.h>
 
 /**
- Register and load a custom font resource.
+ This class loads and registers a custom font by file url.
 
  This class provides a convenience layer on top of CoreText APIs. Registration occurs by @c fileURL,
  therefore registration state is shared across all instances of MDCFontDiskLoader objects. For
- example if two MDCFontDiskLoader objects have the same fileURL, calling @c registerFont one will
- also alter the state of the second MDCFontDiskLoader object. The same holds true for
- @c unregisterFont.
+ example if two MDCFontDiskLoader objects have the same fileURL, calling @c load one will also
+ alter the state of the second MDCFontDiskLoader object. The same holds true for @c unload.
+ This class is thread safe and can be called from any thread.
  */
 @interface MDCFontDiskLoader : NSObject <NSCopying>
-
-#pragma mark Creating a font resource
 
 /**
  Designated initializer for the MDCFontDiskLoader.
@@ -51,57 +49,71 @@
                           bundleFileName:(nonnull NSString *)bundleFilename
                               baseBundle:(nonnull NSBundle *)baseBundle;
 
+/**
+ This class requires a fontURL and fontName therefore init is no longer allowed.
+ Please use initWithName:URL:
+ */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
-#pragma mark Accessing a font's properties
-
 /** The name of the font within the font resource file. */
-@property(nonatomic, strong, nonnull) NSString *fontName;
+@property(nonatomic, readonly, copy, nonnull) NSString *fontName;
 
 /** The URL of the font asset. */
-@property(nonatomic, strong, readonly, nullable) NSURL *fontURL;
-
-#pragma mark Registering a font
+@property(nonatomic, readonly, copy, nonnull) NSURL *fontURL;
 
 /**
- Attempts to register the font.
+ The loaded state of the custom font.
 
- All instances of MDCFontDiskLoader with the same fontURL will reflect changes from this method.
-
- The @c isRegistered and @c hasFailedRegistration flags reflect the results of this registration
- attempt. Returns true if the font is registered. If font registration fails, subsequent calls to
- registerFont will fail unless unregisterFont is called first.
+ All instances of MDCFontDiskLoader with the same fontURL have the same value of @c loaded.
  */
-- (BOOL)registerFont;
-
-/**
- Attempts to unregister the font.
-
- All instances of MDCFontDiskLoader with the same fontURL will reflect changes from this method.
-
- Returns true when the font is unregistered. Resets @c hasFailedRegistration back to false.
- */
-- (BOOL)unregisterFont;
-
-#pragma mark Accessing the font's registration status
-
-/**
- The registered state of the custom font.
-
- All instances of MDCFontDiskLoader with the same fontURL have the same value of @c isRegistered.
- */
-@property(nonatomic, readonly) BOOL isRegistered;
+@property(nonatomic, readonly, getter=isLoaded) BOOL loaded;
 
 /**
  This flag is true when the registration failed.
 
- It prevents future attempts at registration. To reset call @c unregisterFont.
+ It prevents future attempts at registration. To reset call @c unload.
  */
-@property(nonatomic, readonly) BOOL hasFailedRegistration;
+@property(nonatomic, readonly, getter=hasLoadFailed) BOOL loadFailed;
 
-#pragma mark Requesting fonts of a given size
+/**
+ Attempts to load the font.
+
+ All instances of MDCFontDiskLoader with the same fontURL will reflect changes from this method.
+
+ The @c loaded and @c loadFailed flags reflect the results of this registration
+ attempt. Returns true if the font is loaded. If font registration fails, subsequent calls to
+ load will fail unless unload is called first.
+ */
+- (BOOL)load;
+
+/**
+ Attempts to unload the font.
+
+ All instances of MDCFontDiskLoader with the same fontURL will reflect changes from this method.
+
+ Returns true when the font is unloaded. Resets @c loadFailed back to false.
+ */
+- (BOOL)unload;
 
 /** A convience method for getting a font. */
 - (nullable UIFont *)fontOfSize:(CGFloat)fontSize;
+
+/** Will be deprecated after 7/27/2016: @c load. */
+- (BOOL)registerFont;
+
+/** Will be deprecated after 7/27/2016: @c unload. */
+- (BOOL)unregisterFont;
+
+/** Will be deprecated after 7/27/2016: @c loaded. */
+@property(nonatomic, readonly) BOOL isRegistered;
+
+/** Will be deprecated after 7/27/2016: @c loadFailed. */
+@property(nonatomic, readonly) BOOL hasFailedRegistration;
+
+/**
+ Will be deprecated after 7/27/2016: This class should not be mutated. Create a new instance if you
+ need to specifiy a different font name.
+ */
+- (void)setFontName:(NSString *_Nonnull)fontName;
 
 @end

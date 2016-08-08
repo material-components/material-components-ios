@@ -26,6 +26,20 @@ static NSString *MDCRobotoRegularFontName = @"Roboto-Regular";
 static NSString *MDCRobotoRegularFontFilename = @"Roboto-Regular.ttf";
 static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 
+/**
+ For our tests we are following a Given When Then structure as defined in
+ http://martinfowler.com/bliki/GivenWhenThen.html
+
+ The essential idea is to break down writing a scenario (or test) into three sections:
+
+ The |given| part describes the state of the world before you begin the behavior you're specifying
+ in this scenario. You can think of it as the pre-conditions to the test.
+ The |when| section is that behavior that you're specifying.
+ Finally the |then| section describes the changes you expect due to the specified behavior.
+
+ For us this just means that we have the Given When Then guide posts as comments for each unit test.
+ */
+
 @interface MDCFontDiskLoader (Testing)
 @property(nonatomic, assign) BOOL disableSanityChecks;
 @end
@@ -35,7 +49,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 
 @implementation FontDiskLoaderTests
 
-- (MDCFontDiskLoader *)validResource {
+- (MDCFontDiskLoader *)validFontLoader {
   NSBundle *bundle = [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
   return [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
                                             filename:MDCRobotoRegularFontFilename
@@ -43,186 +57,204 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
                                           baseBundle:bundle];
 }
 
-- (MDCFontDiskLoader *)invalidResource {
+- (MDCFontDiskLoader *)invalidFontLoader {
   NSBundle *bundle = [NSBundle bundleForClass:NSClassFromString(MDCRobotoFontLoaderClassname)];
+  // This attempts to use a png asset instead of a valid font file.
   return [[MDCFontDiskLoader alloc] initWithFontName:@"some invalid font name"
-                                            filename:@"some invalid filename"
-                                      bundleFileName:MDCRobotoBundle
+                                            filename:@"ic_arrow_back.png"
+                                      bundleFileName:@"MaterialIcons_ic_arrow_back.bundle"
                                           baseBundle:bundle];
 }
 
-- (void)testCreatesAFontURL {
+- (void)testConvenienceInitCreatesAFontURL {
   // Given
-  MDCFontDiskLoader *resource = [self validResource];
-
-  // When
+  MDCFontDiskLoader *loader = [self validFontLoader];
 
   // Then
-  XCTAssertNotNil(resource.fontURL, @"expecting font url to be valid");
-  XCTAssertTrue([[resource.fontURL path] containsString:MDCRobotoRegularFontFilename],
-                @"expecting font to be correct");
-  XCTAssertTrue([[resource.fontURL path] containsString:MDCRobotoBundle],
-                @"expecting font to be correct");
+  XCTAssertNotNil(loader.fontURL, @"The font URL must not be nil when using the convenience init.");
+  XCTAssertTrue([[loader.fontURL path] containsString:MDCRobotoRegularFontFilename],
+                @"The font URL's path must contain %@", MDCRobotoRegularFontFilename);
+  XCTAssertTrue([[loader.fontURL path] containsString:MDCRobotoBundle],
+                @"The font URL's path must contain %@", MDCRobotoBundle);
 }
 
-- (void)testRegisterFont {
+- (void)testload {
   // Given
-  MDCFontDiskLoader *resource = [self validResource];
+  MDCFontDiskLoader *loader = [self validFontLoader];
 
   // When
-  [resource registerFont];
+  [loader load];
 
   // Then
-  XCTAssertTrue(resource.isRegistered);
+  XCTAssertTrue(loader.loaded, @"Loading a valid font must mark its state loaded.");
 }
 
-- (void)testUnregisterFont {
+- (void)testUnload {
   // Given
-  MDCFontDiskLoader *resource = [self validResource];
-  [resource registerFont];
+  MDCFontDiskLoader *loader = [self validFontLoader];
+  [loader load];
+  XCTAssertTrue(loader.loaded, @"Loading a valid font must mark its state loaded.");
 
   // When
-  BOOL success = [resource unregisterFont];
+  BOOL success = [loader unload];
 
   // Then
-  XCTAssertFalse(resource.isRegistered);
-  XCTAssertTrue(success);
+  XCTAssertFalse(loader.loaded, @"Unloading a loaded font must not mark its state loaded.");
+  XCTAssertTrue(success, @"Unloading a loaded font must return success.");
 }
 
-- (void)testUnregisterFailedRegistration {
+- (void)testUnloadFailedRegistration {
   // Given
-  MDCFontDiskLoader *resource = [self invalidResource];
-  [resource registerFont];
+  MDCFontDiskLoader *loader = [self invalidFontLoader];
+  [loader load];
 
   // When
-  [resource unregisterFont];
+  [loader unload];
 
   // Then
-  XCTAssertFalse(resource.isRegistered);
-  XCTAssertFalse(resource.hasFailedRegistration);
+  XCTAssertFalse(loader.loaded,
+                 @"Unloading a previously failed fontloader must not mark it loaded");
+  XCTAssertFalse(loader.loadFailed,
+                 @"Unloading a previously failed fontloader must reset its loadFailed.");
 }
 
-- (void)testUnregisterNotRegistered {
+- (void)testUnloadNotloaded {
   // Given
-  MDCFontDiskLoader *resource = [self invalidResource];
+  MDCFontDiskLoader *loader = [self invalidFontLoader];
 
   // When
-  [resource unregisterFont];
+  [loader unload];
 
   // Then
-  XCTAssertFalse(resource.isRegistered);
-  XCTAssertFalse(resource.hasFailedRegistration);
+  XCTAssertFalse(loader.loaded,
+                 @"Unloading a fontLoader that was never loaded must not mark it loaded.");
+  XCTAssertFalse(loader.loadFailed, @"Unloading a fontloader must reset its loadFailed flag.");
 }
 
-- (void)testRegisterFontFailure {
+- (void)testloadFailure {
   // Given
-  MDCFontDiskLoader *resource = [self invalidResource];
-  resource.disableSanityChecks = YES;
+  MDCFontDiskLoader *loader = [self invalidFontLoader];
+  loader.disableSanityChecks = YES;
 
   // When
-  [resource registerFont];
+  [loader load];
 
   // Then
-  XCTAssertNil([resource fontOfSize:10]);
-  XCTAssertTrue(resource.hasFailedRegistration);
+  XCTAssertNil([loader fontOfSize:10],
+               @"Asking for a font with an invalid font url must not return a UIFont.");
+  XCTAssertTrue(loader.loadFailed,
+                @"Asking for a font with an invalid font url must set the loadFailed flag to YES");
 }
 
 - (void)testCopy {
   // Given
-  MDCFontDiskLoader *loader = [self validResource];
+  MDCFontDiskLoader *loader = [self validFontLoader];
 
   // When
   MDCFontDiskLoader *secondFontLoader = [loader copy];
 
   // Then
-  XCTAssertEqualObjects(loader, secondFontLoader);
+  XCTAssertEqualObjects(loader, secondFontLoader,
+                        @"A copy of a fontloader must equal the original");
 }
 
-- (void)testIsRegisteredOfSecondFontLoader {
+- (void)testloadedOfSecondFontLoader {
   // Given
-  MDCFontDiskLoader *loader = [self validResource];
+  MDCFontDiskLoader *loader = [self validFontLoader];
   MDCFontDiskLoader *secondFontLoader =
       [[MDCFontDiskLoader alloc] initWithName:loader.fontName URL:loader.fontURL];
 
   // When
-  [loader registerFont];
+  [loader load];
 
   // Then
-  XCTAssertEqual(loader.isRegistered, secondFontLoader.isRegistered);
+  XCTAssertEqual(loader.loaded, secondFontLoader.loaded, @"Loading the fontloader with the same "
+                                                         @"url and name must also update the "
+                                                         @"loaded state of both fontloader.");
 }
 
 - (void)testProvidesACustomFont {
   // Given
-  MDCFontDiskLoader *resource = [self validResource];
+  MDCFontDiskLoader *loader = [self validFontLoader];
   CGFloat randomSize = arc4random() * 100 / CGFLOAT_MAX;
 
   // When
-  UIFont *font = [resource fontOfSize:randomSize];
+  UIFont *font = [loader fontOfSize:randomSize];
 
   // Then
-  XCTAssertNotNil(font);
-  XCTAssertEqualWithAccuracy(font.pointSize, randomSize, kEpsilonAccuracy);
+  XCTAssertNotNil(
+      font, @"Asking for a font of any size of a valid font url and name must return a font.");
+  XCTAssertEqualWithAccuracy(font.pointSize, randomSize, kEpsilonAccuracy,
+                             @"The font size of the font returned from fontOfSize: must match ");
   XCTAssertEqualObjects(font.fontName, MDCRobotoRegularFontName);
 }
 
 - (void)testReturnNilWhenTheCustomFontCanNotBeFound {
   // Given
-  MDCFontDiskLoader *resource = [self validResource];
-  resource.fontName = @"some invalid font name";
-  resource.disableSanityChecks = YES;
+  MDCFontDiskLoader *validLoader = [self validFontLoader];
+  MDCFontDiskLoader *loader =
+      [[MDCFontDiskLoader alloc] initWithName:@"some invalid font name" URL:validLoader.fontURL];
+  loader.disableSanityChecks = YES;
   CGFloat randomSize = arc4random() * 100 / CGFLOAT_MAX;
 
   // When
-  UIFont *font = [resource fontOfSize:randomSize];
+  UIFont *font = [loader fontOfSize:randomSize];
 
   // Then
-  XCTAssertNil(font);
+  XCTAssertNil(font, @"Asking for a font must not return a font when the font name is not found.");
 }
 
-- (void)testDescriptionNotRegistered {
+- (void)testDescriptionNotloaded {
   // Given
-  MDCFontDiskLoader *resource = [self validResource];
-  NSString *expected = [NSString
-      stringWithFormat:@"font name: %@; font url: %@;", resource.fontName, resource.fontURL];
+  MDCFontDiskLoader *loader = [self validFontLoader];
+  [loader unload];
+  NSString *expected =
+      [NSString stringWithFormat:@"font name: %@; font url: %@;", loader.fontName, loader.fontURL];
 
   // When
-  NSString *actual = [resource description];
+  NSString *actual = [loader description];
 
   // Then
-  XCTAssertTrue([actual hasSuffix:expected], @"actual %@ does not end with: %@", actual, expected);
+  XCTAssertTrue([actual hasSuffix:expected],
+                @"When not loaded the description of the font loader `%@` must end with: `%@`",
+                actual, expected);
 }
 
-- (void)testDescriptionRegistered {
+- (void)testDescriptionloaded {
   // Given
-  MDCFontDiskLoader *resource = [self validResource];
-  [resource registerFont];
-  NSString *expected = [NSString stringWithFormat:@"font name: %@; registered = YES; font url: %@;",
-                                                  resource.fontName, resource.fontURL];
+  MDCFontDiskLoader *loader = [self validFontLoader];
+  [loader load];
+  NSString *expected = [NSString stringWithFormat:@"font name: %@; loaded = YES; font url: %@;",
+                                                  loader.fontName, loader.fontURL];
   UIView *view = [UIView new];
   view.userInteractionEnabled = NO;
 
   // When
-  NSString *actual = [resource description];
+  NSString *actual = [loader description];
 
   // Then
-  XCTAssertTrue([actual hasSuffix:expected], @"actual %@ does not end with: %@", actual, expected);
+  XCTAssertTrue([actual hasSuffix:expected],
+                @"When loaded the description of the font loader `%@` must end with: %@", actual,
+                expected);
 }
 
 - (void)testDescriptionFailedRegistration {
   // Given
-  MDCFontDiskLoader *resource = [self invalidResource];
-  [resource registerFont];
+  MDCFontDiskLoader *loader = [self invalidFontLoader];
+  [loader load];
   NSString *expected = [NSString stringWithFormat:@"font name: %@; failed registration = YES; "
                                                   @"font url: %@;",
-                                                  resource.fontName, resource.fontURL];
+                                                  loader.fontName, loader.fontURL];
   UIView *view = [UIView new];
   view.userInteractionEnabled = NO;
 
   // When
-  NSString *actual = [resource description];
+  NSString *actual = [loader description];
 
   // Then
-  XCTAssertTrue([actual hasSuffix:expected], @"actual %@ does not end with: %@", actual, expected);
+  XCTAssertTrue([actual hasSuffix:expected],
+                @"When load fails the description of the font loader %@ must end with: %@", actual,
+                expected);
 }
 
 - (void)testNotEquals {
@@ -236,18 +268,25 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   MDCFontDiskLoader *thirdLoader = [[MDCFontDiskLoader alloc] initWithName:name URL:otherUrl];
   NSObject *object = [[NSObject alloc] init];
 
-  // When
-
   // Then
-  XCTAssertNotEqualObjects(loader, secondLoader);
-  XCTAssertNotEqual([loader hash], [secondLoader hash]);
-  XCTAssertNotEqualObjects(loader, thirdLoader);
-  XCTAssertNotEqual([loader hash], [secondLoader hash]);
-  XCTAssertNotEqualObjects(secondLoader, thirdLoader);
-  XCTAssertNotEqual([loader hash], [secondLoader hash]);
-  XCTAssertNotEqualObjects(loader, object);
-  XCTAssertNotEqual([loader hash], [object hash]);
-  XCTAssertNotEqualObjects(loader, nil);
+  XCTAssertNotEqualObjects(loader, secondLoader,
+                           @"Fontloaders with different font names must not equal eachother.");
+  XCTAssertNotEqual([loader hash], [secondLoader hash],
+                    @"Fontloaders with different font names must not have equal hashes.");
+  XCTAssertNotEqualObjects(loader, thirdLoader,
+                           @"Fontloaders with different font urls must not equal eachother.");
+  XCTAssertNotEqual([loader hash], [secondLoader hash],
+                    @"Fontloaders with different font urls must not have equal hashes.");
+  XCTAssertNotEqualObjects(
+      secondLoader, thirdLoader,
+      @"Fontloaders with different font names and different names must not equal eachother.");
+  XCTAssertNotEqual(
+      [loader hash], [secondLoader hash],
+      @"Fontloaders with different font names and different names must not have equal hashes.");
+  XCTAssertNotEqualObjects(loader, object, @"A fontloader must not equal a object instance.");
+  XCTAssertNotEqual([loader hash], [object hash],
+                    @"A fontloader must not have the same hash as a object instance.");
+  XCTAssertNotEqualObjects(loader, nil, @"A font loader must not equal nil");
 }
 
 - (void)testEquals {
@@ -256,11 +295,12 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithName:@"some name" URL:url];
   MDCFontDiskLoader *secondLoader = [[MDCFontDiskLoader alloc] initWithName:@"some name" URL:url];
 
-  // When
-
   // Then
-  XCTAssertEqualObjects(loader, secondLoader);
-  XCTAssertEqual([loader hash], [secondLoader hash]);
+  XCTAssertEqualObjects(
+      loader, secondLoader,
+      @"Fontloaders with the same font names and font urls must equal eachother.");
+  XCTAssertEqual([loader hash], [secondLoader hash],
+                 @"Fontloaders with the same font name and font urls must have the same hash.");
 }
 
 @end

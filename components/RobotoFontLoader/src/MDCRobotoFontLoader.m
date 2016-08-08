@@ -20,15 +20,15 @@
 #import "private/MDCRoboto+Constants.h"
 
 @interface MDCRobotoFontLoader ()
-@property(nonatomic, strong) MDCFontDiskLoader *lightFontResource;
-@property(nonatomic, strong) MDCFontDiskLoader *regularFontResource;
-@property(nonatomic, strong) MDCFontDiskLoader *mediumFontResource;
-@property(nonatomic, strong) MDCFontDiskLoader *boldFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *lightFontLoader;
+@property(nonatomic, strong) MDCFontDiskLoader *regularFontLoader;
+@property(nonatomic, strong) MDCFontDiskLoader *mediumFontLoader;
+@property(nonatomic, strong) MDCFontDiskLoader *boldFontLoader;
 
-@property(nonatomic, strong) MDCFontDiskLoader *lightItalicFontResource;
-@property(nonatomic, strong) MDCFontDiskLoader *italicFontResource;
-@property(nonatomic, strong) MDCFontDiskLoader *mediumItalicFontResource;
-@property(nonatomic, strong) MDCFontDiskLoader *boldItalicFontResource;
+@property(nonatomic, strong) MDCFontDiskLoader *lightItalicFontLoader;
+@property(nonatomic, strong) MDCFontDiskLoader *italicFontLoader;
+@property(nonatomic, strong) MDCFontDiskLoader *mediumItalicFontLoader;
+@property(nonatomic, strong) MDCFontDiskLoader *boldItalicFontLoader;
 
 @property(nonatomic, strong) NSBundle *baseBundle;
 @property(nonatomic, strong) NSString *bundleFileName;
@@ -39,17 +39,7 @@
 
 @implementation MDCRobotoFontLoader
 
-- (instancetype)initInternal {
-  self = [super init];
-  if (self) {
-    self = [super init];
-    _baseBundle = [MDCRobotoFontLoader baseBundle];
-    _bundleFileName = MDCRobotoBundle;
-  }
-  return self;
-}
-
-+ (instancetype)sharedInstance {
++ (MDCRobotoFontLoader *)sharedInstance {
   static id sharedInstance = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -57,242 +47,6 @@
   });
   return sharedInstance;
 }
-
-- (void)setBundleFileName:(NSString *)bundleFileName {
-  if ([bundleFileName isEqualToString:_bundleFileName]) {
-    return;
-  }
-  if (bundleFileName) {
-    _bundleFileName = bundleFileName;
-  } else {
-    _bundleFileName = MDCRobotoBundle;
-  }
-  [self resetFontResources];
-}
-
-- (void)setBaseBundle:(NSBundle *)baseBundle {
-  if ([baseBundle isEqual:_baseBundle]) {
-    return;
-  }
-  if (baseBundle) {
-    _baseBundle = baseBundle;
-  } else {
-    _baseBundle = [MDCRobotoFontLoader baseBundle];
-  }
-  [self resetFontResources];
-}
-
-- (void)resetFontResources {
-  _regularFontResource = nil;
-  _lightFontResource = nil;
-  _mediumFontResource = nil;
-  _boldFontResource = nil;
-  _italicFontResource = nil;
-  _lightItalicFontResource = nil;
-  _mediumItalicFontResource = nil;
-  _boldItalicFontResource = nil;
-}
-
-- (MDCFontDiskLoader *)regularFontResource {
-  if (!_regularFontResource) {
-    _regularFontResource = [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
-                                                              filename:MDCRobotoRegularFontFilename
-                                                        bundleFileName:_bundleFileName
-                                                            baseBundle:_baseBundle];
-  }
-  return _regularFontResource;
-}
-
-- (UIFont *)regularFontOfSize:(CGFloat)fontSize {
-  MDCFontDiskLoader *fontResource = self.regularFontResource;
-  UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
-           fontResource.fontName, fontResource.fontURL);
-  if (!font) {
-    font = [UIFont systemFontOfSize:fontSize];
-  }
-  return font;
-}
-
-- (MDCFontDiskLoader *)mediumFontResource {
-  if (!_mediumFontResource) {
-    _mediumFontResource = [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoMediumFontName
-                                                             filename:MDCRobotoMediumFontFilename
-                                                       bundleFileName:_bundleFileName
-                                                           baseBundle:_baseBundle];
-  }
-  return _mediumFontResource;
-}
-
-- (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
-  MDCFontDiskLoader *fontResource = self.mediumFontResource;
-  UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
-           fontResource.fontName, fontResource.fontURL);
-  if (!font) {
-    font = [UIFont boldSystemFontOfSize:fontSize];
-  }
-  return font;
-}
-
-- (MDCFontDiskLoader *)lightFontResource {
-  if (!_lightFontResource) {
-    _lightFontResource = [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoLightFontName
-                                                            filename:MDCRobotoLightFontFilename
-                                                      bundleFileName:_bundleFileName
-                                                          baseBundle:_baseBundle];
-  }
-  return _lightFontResource;
-}
-
-- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
-  MDCFontDiskLoader *fontResource = self.lightFontResource;
-  UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
-           fontResource.fontName, fontResource.fontURL);
-  if (!font) {
-    font = [UIFont systemFontOfSize:fontSize];
-  }
-  return font;
-}
-
-- (MDCFontDiskLoader *)boldFontResource {
-  if (!_boldFontResource) {
-    _boldFontResource = [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoBoldFontName
-                                                           filename:MDCRobotoBoldFontFilename
-                                                     bundleFileName:_bundleFileName
-                                                         baseBundle:_baseBundle];
-  }
-  return _boldFontResource;
-}
-
-- (UIFont *)boldFontOfSize:(CGFloat)fontSize {
-  MDCFontDiskLoader *fontResource = self.boldFontResource;
-  UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
-           fontResource.fontName, fontResource.fontURL);
-  if (!font) {
-    font = [UIFont boldSystemFontOfSize:fontSize];
-  }
-  return font;
-}
-
-- (MDCFontDiskLoader *)italicFontResource {
-  if (!_italicFontResource) {
-    _italicFontResource =
-        [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularItalicFontName
-                                           filename:MDCRobotoRegularItalicFontFilename
-                                     bundleFileName:_bundleFileName
-                                         baseBundle:_baseBundle];
-  }
-  return _italicFontResource;
-}
-
-- (UIFont *)italicFontOfSize:(CGFloat)fontSize {
-  MDCFontDiskLoader *fontResource = self.italicFontResource;
-  UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
-           fontResource.fontName, fontResource.fontURL);
-  if (!font) {
-    font = [UIFont italicSystemFontOfSize:fontSize];
-  }
-  return font;
-}
-
-- (MDCFontDiskLoader *)lightItalicFontResource {
-  if (!_lightItalicFontResource) {
-    _lightItalicFontResource =
-        [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoLightItalicFontName
-                                           filename:MDCRobotoLightItalicFontFilename
-                                     bundleFileName:_bundleFileName
-                                         baseBundle:_baseBundle];
-  }
-  return _lightItalicFontResource;
-}
-
-- (UIFont *)lightItalicFontOfSize:(CGFloat)fontSize {
-  MDCFontDiskLoader *fontResource = self.lightItalicFontResource;
-  UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
-           fontResource.fontName, fontResource.fontURL);
-  if (!font) {
-    font = [UIFont italicSystemFontOfSize:fontSize];
-  }
-  return font;
-}
-
-- (MDCFontDiskLoader *)mediumItalicFontResource {
-  if (!_mediumItalicFontResource) {
-    _mediumItalicFontResource =
-        [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoMediumItalicFontName
-                                           filename:MDCRobotoMediumItalicFontFilename
-                                     bundleFileName:_bundleFileName
-                                         baseBundle:_baseBundle];
-  }
-  return _mediumItalicFontResource;
-}
-
-- (UIFont *)mediumItalicFontOfSize:(CGFloat)fontSize {
-  MDCFontDiskLoader *fontResource = self.mediumItalicFontResource;
-  UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
-           fontResource.fontName, fontResource.fontURL);
-  if (!font) {
-    font = [UIFont italicSystemFontOfSize:fontSize];
-  }
-  return font;
-}
-
-- (MDCFontDiskLoader *)boldItalicFontResource {
-  if (!_boldItalicFontResource) {
-    _boldItalicFontResource =
-        [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoBoldItalicFontName
-                                           filename:MDCRobotoBoldItalicFontFilename
-                                     bundleFileName:_bundleFileName
-                                         baseBundle:_baseBundle];
-  }
-  return _boldItalicFontResource;
-}
-
-- (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
-  MDCFontDiskLoader *fontResource = self.boldItalicFontResource;
-  UIFont *font = [fontResource fontOfSize:fontSize];
-  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.",
-           fontResource.fontName, fontResource.fontURL);
-  if (!font) {
-    font = [UIFont italicSystemFontOfSize:fontSize];
-  }
-  return font;
-}
-
-- (NSString *)description {
-  NSMutableString *description = [super.description mutableCopy];
-  [description appendString:@" (\n"];
-  NSNull *null = [NSNull null];
-  NSDictionary *selectors = @{
-    NSStringFromSelector(@selector(lightFontResource)) : _lightFontResource ?: null,
-    NSStringFromSelector(@selector(regularFontResource)) : _regularFontResource ?: null,
-    NSStringFromSelector(@selector(mediumFontResource)) : _mediumFontResource ?: null,
-    NSStringFromSelector(@selector(boldFontResource)) : _boldFontResource ?: null,
-    NSStringFromSelector(@selector(lightItalicFontResource)) : _lightItalicFontResource ?: null,
-    NSStringFromSelector(@selector(italicFontResource)) : _italicFontResource ?: null,
-    NSStringFromSelector(@selector(mediumItalicFontResource)) : _mediumItalicFontResource ?: null,
-    NSStringFromSelector(@selector(boldItalicFontResource)) : _boldItalicFontResource ?: null,
-  };
-  for (NSString *selectorString in selectors) {
-    MDCFontDiskLoader *loader = [selectors objectForKey:selectorString];
-    if ([loader isEqual:[NSNull null]]) {
-      continue;
-    }
-    NSString *resourceDescription = [NSString stringWithFormat:@"%@: %@\n", selectorString, loader];
-    [description appendString:resourceDescription];
-  }
-
-  [description appendString:@")\n"];
-  return description;
-}
-
-#pragma mark private
 
 + (NSBundle *)baseBundle {
   static NSBundle *bundle = nil;
@@ -304,6 +58,253 @@
   });
 
   return bundle;
+}
+
+- (instancetype)initInternal {
+  self = [super init];
+  if (self) {
+    self = [super init];
+    _baseBundle = [MDCRobotoFontLoader baseBundle];
+    _bundleFileName = MDCRobotoBundle;
+  }
+  return self;
+}
+
+- (NSString *)description {
+  NSMutableString *description = [super.description mutableCopy];
+  [description appendString:@" (\n"];
+  NSNull *null = [NSNull null];
+  NSDictionary *selectors = @{
+    NSStringFromSelector(@selector(lightFontLoader)) : _lightFontLoader ?: null,
+    NSStringFromSelector(@selector(regularFontLoader)) : _regularFontLoader ?: null,
+    NSStringFromSelector(@selector(mediumFontLoader)) : _mediumFontLoader ?: null,
+    NSStringFromSelector(@selector(boldFontLoader)) : _boldFontLoader ?: null,
+    NSStringFromSelector(@selector(lightItalicFontLoader)) : _lightItalicFontLoader ?: null,
+    NSStringFromSelector(@selector(italicFontLoader)) : _italicFontLoader ?: null,
+    NSStringFromSelector(@selector(mediumItalicFontLoader)) : _mediumItalicFontLoader ?: null,
+    NSStringFromSelector(@selector(boldItalicFontLoader)) : _boldItalicFontLoader ?: null,
+  };
+  for (NSString *selectorString in selectors) {
+    MDCFontDiskLoader *loader = [selectors objectForKey:selectorString];
+    if ([loader isEqual:[NSNull null]]) {
+      continue;
+    }
+    [description appendFormat:@"%@: %@\n", selectorString, loader];
+  }
+
+  [description appendString:@")\n"];
+  return description;
+}
+
+#pragma mark - Private
+
+- (void)setBundleFileName:(NSString *)bundleFileName {
+  if ([bundleFileName isEqualToString:_bundleFileName]) {
+    return;
+  }
+  if (bundleFileName) {
+    _bundleFileName = bundleFileName;
+  } else {
+    _bundleFileName = MDCRobotoBundle;
+  }
+  [self resetFontLoaders];
+}
+
+- (void)setBaseBundle:(NSBundle *)baseBundle {
+  if ([baseBundle isEqual:_baseBundle]) {
+    return;
+  }
+  if (baseBundle) {
+    _baseBundle = baseBundle;
+  } else {
+    _baseBundle = [MDCRobotoFontLoader baseBundle];
+  }
+  [self resetFontLoaders];
+}
+
+- (void)resetFontLoaders {
+  _regularFontLoader = nil;
+  _lightFontLoader = nil;
+  _mediumFontLoader = nil;
+  _boldFontLoader = nil;
+  _italicFontLoader = nil;
+  _lightItalicFontLoader = nil;
+  _mediumItalicFontLoader = nil;
+  _boldItalicFontLoader = nil;
+}
+
+- (MDCFontDiskLoader *)regularFontLoader {
+  if (!_regularFontLoader) {
+    _regularFontLoader = [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularFontName
+                                                            filename:MDCRobotoRegularFontFilename
+                                                      bundleFileName:_bundleFileName
+                                                          baseBundle:_baseBundle];
+  }
+  return _regularFontLoader;
+}
+
+- (MDCFontDiskLoader *)mediumFontLoader {
+  if (!_mediumFontLoader) {
+    _mediumFontLoader = [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoMediumFontName
+                                                           filename:MDCRobotoMediumFontFilename
+                                                     bundleFileName:_bundleFileName
+                                                         baseBundle:_baseBundle];
+  }
+  return _mediumFontLoader;
+}
+
+- (MDCFontDiskLoader *)lightFontLoader {
+  if (!_lightFontLoader) {
+    _lightFontLoader = [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoLightFontName
+                                                          filename:MDCRobotoLightFontFilename
+                                                    bundleFileName:_bundleFileName
+                                                        baseBundle:_baseBundle];
+  }
+  return _lightFontLoader;
+}
+
+- (MDCFontDiskLoader *)boldFontLoader {
+  if (!_boldFontLoader) {
+    _boldFontLoader = [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoBoldFontName
+                                                         filename:MDCRobotoBoldFontFilename
+                                                   bundleFileName:_bundleFileName
+                                                       baseBundle:_baseBundle];
+  }
+  return _boldFontLoader;
+}
+
+- (MDCFontDiskLoader *)italicFontLoader {
+  if (!_italicFontLoader) {
+    _italicFontLoader =
+        [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoRegularItalicFontName
+                                           filename:MDCRobotoRegularItalicFontFilename
+                                     bundleFileName:_bundleFileName
+                                         baseBundle:_baseBundle];
+  }
+  return _italicFontLoader;
+}
+
+- (MDCFontDiskLoader *)lightItalicFontLoader {
+  if (!_lightItalicFontLoader) {
+    _lightItalicFontLoader =
+        [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoLightItalicFontName
+                                           filename:MDCRobotoLightItalicFontFilename
+                                     bundleFileName:_bundleFileName
+                                         baseBundle:_baseBundle];
+  }
+  return _lightItalicFontLoader;
+}
+
+- (MDCFontDiskLoader *)mediumItalicFontLoader {
+  if (!_mediumItalicFontLoader) {
+    _mediumItalicFontLoader =
+        [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoMediumItalicFontName
+                                           filename:MDCRobotoMediumItalicFontFilename
+                                     bundleFileName:_bundleFileName
+                                         baseBundle:_baseBundle];
+  }
+  return _mediumItalicFontLoader;
+}
+
+- (MDCFontDiskLoader *)boldItalicFontLoader {
+  if (!_boldItalicFontLoader) {
+    _boldItalicFontLoader =
+        [[MDCFontDiskLoader alloc] initWithFontName:MDCRobotoBoldItalicFontName
+                                           filename:MDCRobotoBoldItalicFontFilename
+                                     bundleFileName:_bundleFileName
+                                         baseBundle:_baseBundle];
+  }
+  return _boldItalicFontLoader;
+}
+
+#pragma mark - Public
+
+- (UIFont *)regularFontOfSize:(CGFloat)fontSize {
+  MDCFontDiskLoader *fontLoader = self.regularFontLoader;
+  UIFont *font = [fontLoader fontOfSize:fontSize];
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.", fontLoader.fontName,
+           fontLoader.fontURL);
+  if (!font) {
+    font = [UIFont systemFontOfSize:fontSize];
+  }
+  return font;
+}
+
+- (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+  MDCFontDiskLoader *fontLoader = self.mediumFontLoader;
+  UIFont *font = [fontLoader fontOfSize:fontSize];
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.", fontLoader.fontName,
+           fontLoader.fontURL);
+  if (!font) {
+    font = [UIFont boldSystemFontOfSize:fontSize];
+  }
+  return font;
+}
+
+- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+  MDCFontDiskLoader *fontLoader = self.lightFontLoader;
+  UIFont *font = [fontLoader fontOfSize:fontSize];
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.", fontLoader.fontName,
+           fontLoader.fontURL);
+  if (!font) {
+    font = [UIFont systemFontOfSize:fontSize];
+  }
+  return font;
+}
+
+- (UIFont *)boldFontOfSize:(CGFloat)fontSize {
+  MDCFontDiskLoader *fontLoader = self.boldFontLoader;
+  UIFont *font = [fontLoader fontOfSize:fontSize];
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.", fontLoader.fontName,
+           fontLoader.fontURL);
+  if (!font) {
+    font = [UIFont boldSystemFontOfSize:fontSize];
+  }
+  return font;
+}
+
+- (UIFont *)italicFontOfSize:(CGFloat)fontSize {
+  MDCFontDiskLoader *fontLoader = self.italicFontLoader;
+  UIFont *font = [fontLoader fontOfSize:fontSize];
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.", fontLoader.fontName,
+           fontLoader.fontURL);
+  if (!font) {
+    font = [UIFont italicSystemFontOfSize:fontSize];
+  }
+  return font;
+}
+
+- (UIFont *)lightItalicFontOfSize:(CGFloat)fontSize {
+  MDCFontDiskLoader *fontLoader = self.lightItalicFontLoader;
+  UIFont *font = [fontLoader fontOfSize:fontSize];
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.", fontLoader.fontName,
+           fontLoader.fontURL);
+  if (!font) {
+    font = [UIFont italicSystemFontOfSize:fontSize];
+  }
+  return font;
+}
+
+- (UIFont *)mediumItalicFontOfSize:(CGFloat)fontSize {
+  MDCFontDiskLoader *fontLoader = self.mediumItalicFontLoader;
+  UIFont *font = [fontLoader fontOfSize:fontSize];
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.", fontLoader.fontName,
+           fontLoader.fontURL);
+  if (!font) {
+    font = [UIFont italicSystemFontOfSize:fontSize];
+  }
+  return font;
+}
+
+- (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
+  MDCFontDiskLoader *fontLoader = self.boldItalicFontLoader;
+  UIFont *font = [fontLoader fontOfSize:fontSize];
+  NSAssert(_disableSanityChecks || font, @"Font %@ not found in location: %@.", fontLoader.fontName,
+           fontLoader.fontURL);
+  if (!font) {
+    font = [UIFont italicSystemFontOfSize:fontSize];
+  }
+  return font;
 }
 
 @end
