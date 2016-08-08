@@ -410,7 +410,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   }
 }
 
-- (void)testDescriptionWithNoLoaderShouldBeMostlyEmpty {
+- (void)testDescriptionWithNoLoaderMustBeMostlyEmpty {
   // Given
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   NSString *expected = @" (\n)\n";

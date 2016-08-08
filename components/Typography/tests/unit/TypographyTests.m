@@ -74,28 +74,28 @@ static const CGFloat kEpsilon = 0.001f;
   CGFloat opacity = [MDCTypography display4FontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of display 4 should be 54%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of display 4 must be 54%.");
 }
 - (void)testDisplay3FontOpacity {
   // When
   CGFloat opacity = [MDCTypography display3FontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of display 3 should be 54%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of display 3 must be 54%.");
 }
 - (void)testDisplay2FontOpacity {
   // When
   CGFloat opacity = [MDCTypography display2FontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of display 2 should be 54%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of display 2 must be 54%.");
 }
 - (void)testDisplay1FontOpacity {
   // When
   CGFloat opacity = [MDCTypography display1FontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of display 1 should be 54%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of display 1 must be 54%.");
 }
 
 - (void)testHeadlineFontOpacity {
@@ -103,7 +103,7 @@ static const CGFloat kEpsilon = 0.001f;
   CGFloat opacity = [MDCTypography headlineFontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of headline should be 87%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of headline must be 87%.");
 }
 
 - (void)testTitleFontOpacity {
@@ -111,7 +111,7 @@ static const CGFloat kEpsilon = 0.001f;
   CGFloat opacity = [MDCTypography titleFontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of headline should be 87%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of headline must be 87%.");
 }
 
 - (void)testSubheadFontOpacity {
@@ -119,7 +119,7 @@ static const CGFloat kEpsilon = 0.001f;
   CGFloat opacity = [MDCTypography subheadFontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of subhead should be 87%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of subhead must be 87%.");
 }
 
 - (void)testBody2FontOpacity {
@@ -127,7 +127,7 @@ static const CGFloat kEpsilon = 0.001f;
   CGFloat opacity = [MDCTypography body2FontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of body 2 should be 87%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of body 2 must be 87%.");
 }
 
 - (void)testBody1FontOpacity {
@@ -135,7 +135,7 @@ static const CGFloat kEpsilon = 0.001f;
   CGFloat opacity = [MDCTypography body1FontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of body 1 should be 87%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of body 1 must be 87%.");
 }
 
 - (void)testCaptionFontOpacity {
@@ -143,7 +143,7 @@ static const CGFloat kEpsilon = 0.001f;
   CGFloat opacity = [MDCTypography captionFontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of caption should be 54%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.54, kEpsilon, @"Opacity of caption must be 54%.");
 }
 
 - (void)testButtonFontOpacity {
@@ -151,7 +151,7 @@ static const CGFloat kEpsilon = 0.001f;
   CGFloat opacity = [MDCTypography buttonFontOpacity];
 
   // Then
-  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of button should be 87%.");
+  XCTAssertEqualWithAccuracy(opacity, 0.87, kEpsilon, @"Opacity of button must be 87%.");
 }
 
 #pragma mark - font name and size
@@ -163,9 +163,9 @@ static const CGFloat kEpsilon = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 112, kEpsilon,
-                             @"The font size of display 4 should be 112.");
+                             @"The font size of display 4 must be 112.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Light",
-                        @"The font name of display 4 should be Roboto-Light.");
+                        @"The font name of display 4 must be Roboto-Light.");
 }
 
 - (void)testDisplay3Font {
@@ -175,9 +175,9 @@ static const CGFloat kEpsilon = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 56, kEpsilon,
-                             @"The font size of display 3 should be 56.");
+                             @"The font size of display 3 must be 56.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of display 3 should be Roboto-Regular.");
+                        @"The font name of display 3 must be Roboto-Regular.");
 }
 
 - (void)testDisplay2Font {
@@ -187,9 +187,9 @@ static const CGFloat kEpsilon = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 45, kEpsilon,
-                             @"The font size of display 2 should be 45.");
+                             @"The font size of display 2 must be 45.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of display 2 should be Roboto-Regular.");
+                        @"The font name of display 2 must be Roboto-Regular.");
 }
 
 - (void)testDisplay1Font {
@@ -199,9 +199,9 @@ static const CGFloat kEpsilon = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 34, kEpsilon,
-                             @"The font size of display 1 should be 32.");
+                             @"The font size of display 1 must be 32.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of display 1 should be Roboto-Regular.");
+                        @"The font name of display 1 must be Roboto-Regular.");
 }
 
 - (void)testHeadlineFont {
@@ -211,9 +211,9 @@ static const CGFloat kEpsilon = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 24, kEpsilon,
-                             @"The font size of headline should be 24.");
+                             @"The font size of headline must be 24.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of headline should be Roboto-Regular.");
+                        @"The font name of headline must be Roboto-Regular.");
 }
 
 - (void)testTitleFont {
@@ -222,9 +222,9 @@ static const CGFloat kEpsilon = 0.001f;
   UIFont *font = [MDCTypography titleFont];
 
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 20, kEpsilon, @"The font size of title should be 20.");
+  XCTAssertEqualWithAccuracy(font.pointSize, 20, kEpsilon, @"The font size of title must be 20.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Medium",
-                        @"The font name of title should be Roboto-Medium.");
+                        @"The font name of title must be Roboto-Medium.");
 }
 
 - (void)testSubheadFont {
@@ -233,9 +233,9 @@ static const CGFloat kEpsilon = 0.001f;
   UIFont *font = [MDCTypography subheadFont];
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 16, kEpsilon,
-                             @"The font size of subhead should be 16.");
+                             @"The font size of subhead must be 16.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of subhead should be Roboto-Regular.");
+                        @"The font name of subhead must be Roboto-Regular.");
 }
 
 - (void)testBody2Font {
@@ -245,9 +245,9 @@ static const CGFloat kEpsilon = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon,
-                             @"The font size of body 2 should be 14.");
+                             @"The font size of body 2 must be 14.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Medium",
-                        @"The font name of body 2 should be Roboto-Medium.");
+                        @"The font name of body 2 must be Roboto-Medium.");
 }
 
 - (void)testBody1Font {
@@ -257,9 +257,9 @@ static const CGFloat kEpsilon = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon,
-                             @"The font size of body 1 should be 14.");
+                             @"The font size of body 1 must be 14.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of body 1 should be Roboto-Regular.");
+                        @"The font name of body 1 must be Roboto-Regular.");
 }
 
 - (void)testCaptionFont {
@@ -269,9 +269,9 @@ static const CGFloat kEpsilon = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 12, kEpsilon,
-                             @"The font size of caption should be 12.");
+                             @"The font size of caption must be 12.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of caption should be Roboto-Regular.");
+                        @"The font name of caption must be Roboto-Regular.");
 }
 
 - (void)testButtonFont {
@@ -281,9 +281,9 @@ static const CGFloat kEpsilon = 0.001f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon,
-                             @"The font size of button should be 14.");
+                             @"The font size of button must be 14.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Medium",
-                        @"The font name of button should be Roboto-Medium.");
+                        @"The font name of button must be Roboto-Medium.");
 }
 
 #pragma mark - Setting a custom font loader
