@@ -1,13 +1,3 @@
-//
-//  DialogsLongAlertViewController.swift
-//  Pods
-//
-//  Created by Ian Gordon on 7/19/16.
-//
-//
-
-import Foundation
-
 /*
  Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 

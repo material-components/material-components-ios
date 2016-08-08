@@ -14,6 +14,11 @@
  limitations under the License.
  */
 
+/* IMPORTANT:
+ This file contains supplemental code used to populate the examples with dummy data and/or
+ instructions. It is not necessary to import this file to use Material Components for iOS.
+ */
+
 #import "DialogWithPreferredContentSizeViewController.h"
 
 @implementation DialogWithPreferredContentSizeViewController

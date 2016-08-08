@@ -21,6 +21,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DialogWithPreferredContentSizeViewController : UIViewController
+@interface DialogWithInputFieldViewController : UIViewController
 
 @end
