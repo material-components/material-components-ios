@@ -25,7 +25,7 @@
 // Use |isFontURLLoaded:| and |setFontURL:loaded:| for access to loaded fonts.
 static NSMutableSet<NSURL *> *gLoadedFonts;
 // The queue that ensures |gLoadedFonts| is accessed in a thread safe manner.
-static dispatch_queue_t gLoadedFontsConcurrentQueueAccess;
+static dispatch_queue_t gLoadedFontsQueueAccess;
 
 /*
  This class caches the registered state of fileURL because it is much faster than calling the
@@ -63,20 +63,19 @@ static dispatch_queue_t gLoadedFontsConcurrentQueueAccess;
   static dispatch_once_t once;
   dispatch_once(&once, ^{
     gLoadedFonts = [[NSMutableSet alloc] init];
-    gLoadedFontsConcurrentQueueAccess =
+    gLoadedFontsQueueAccess =
         dispatch_queue_create("com.google.mdc.FontDiskLoaderQueue", DISPATCH_QUEUE_SERIAL);
   });
 }
 
 // A font's loaded state is shared accross all fontloaders that share the same URL. This class
 // method ensures that the collection of URLs that are loaded are set in a thread safe manner.
-// Inspired by https://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1 "Handling
-// the Readers and Writers Problem."
+// By using a serial queue we ensure that reads and writes do not occur at the same time.
 + (void)setFontURL:(NSURL *)fontURL loaded:(BOOL)loaded {
   if (!fontURL) {
     return;
   }
-  dispatch_async(gLoadedFontsConcurrentQueueAccess, ^{
+  dispatch_async(gLoadedFontsQueueAccess, ^{
     if (loaded == [gLoadedFonts containsObject:fontURL]) {
       return;  // Already in the correct state;
     }
@@ -90,14 +89,13 @@ static dispatch_queue_t gLoadedFontsConcurrentQueueAccess;
 
 // A font's loaded state is shared accross all fontloaders that share the same URL. This class
 // method ensures that the collection of URLs that are loaded are gotten in a thread safe manner.
-// Inspired by https://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1 "Handling
-// the Readers and Writers Problem."
+// By using a serial queue we ensure that reads and writes do not occur at the same time.
 + (BOOL)isFontURLLoaded:(NSURL *)fontURL {
   if (!fontURL) {
     return NO;
   }
   __block BOOL isLoaded = NO;
-  dispatch_sync(gLoadedFontsConcurrentQueueAccess, ^{
+  dispatch_sync(gLoadedFontsQueueAccess, ^{
     isLoaded = [gLoadedFonts containsObject:fontURL];
   });
   return isLoaded;
