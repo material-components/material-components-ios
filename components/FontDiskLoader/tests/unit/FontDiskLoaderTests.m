@@ -192,8 +192,8 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 - (void)testReturnNilWhenTheCustomFontCanNotBeFound {
   // Given
   MDCFontDiskLoader *validLoader = [self validFontLoader];
-  MDCFontDiskLoader *loader =
-      [[MDCFontDiskLoader alloc] initWithFontName:@"some invalid font name" fontURL:validLoader.fontURL];
+  MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithFontName:@"some invalid font name"
+                                                                  fontURL:validLoader.fontURL];
   loader.disableSanityChecks = YES;
   CGFloat randomSize = arc4random() * 100 / CGFLOAT_MAX;
 
@@ -264,8 +264,10 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   NSURL *url = [NSURL fileURLWithPath:@"some url string"];
   NSURL *otherUrl = [NSURL fileURLWithPath:@"some other url string"];
   MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithFontName:name fontURL:url];
-  MDCFontDiskLoader *secondLoader = [[MDCFontDiskLoader alloc] initWithFontName:otherName fontURL:url];
-  MDCFontDiskLoader *thirdLoader = [[MDCFontDiskLoader alloc] initWithFontName:name fontURL:otherUrl];
+  MDCFontDiskLoader *secondLoader =
+      [[MDCFontDiskLoader alloc] initWithFontName:otherName fontURL:url];
+  MDCFontDiskLoader *thirdLoader =
+      [[MDCFontDiskLoader alloc] initWithFontName:name fontURL:otherUrl];
   NSObject *object = [[NSObject alloc] init];
 
   // Then
@@ -293,7 +295,8 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   // Given
   NSURL *url = [NSURL fileURLWithPath:@"some url string"];
   MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithFontName:@"some name" fontURL:url];
-  MDCFontDiskLoader *secondLoader = [[MDCFontDiskLoader alloc] initWithFontName:@"some name" fontURL:url];
+  MDCFontDiskLoader *secondLoader =
+      [[MDCFontDiskLoader alloc] initWithFontName:@"some name" fontURL:url];
 
   // Then
   XCTAssertEqualObjects(
