@@ -64,7 +64,7 @@ static dispatch_queue_t gLoadedFontsConcurrentQueueAccess;
   dispatch_once(&once, ^{
     gLoadedFonts = [[NSMutableSet alloc] init];
     gLoadedFontsConcurrentQueueAccess =
-        dispatch_queue_create("com.google.mdc.FontDiskLoaderQueue", DISPATCH_QUEUE_CONCURRENT);
+        dispatch_queue_create("com.google.mdc.FontDiskLoaderQueue", DISPATCH_QUEUE_SERIAL);
   });
 }
 
@@ -76,7 +76,7 @@ static dispatch_queue_t gLoadedFontsConcurrentQueueAccess;
   if (!fontURL) {
     return;
   }
-  dispatch_barrier_async(gLoadedFontsConcurrentQueueAccess, ^{
+  dispatch_async(gLoadedFontsConcurrentQueueAccess, ^{
     if (loaded == [gLoadedFonts containsObject:fontURL]) {
       return;  // Already in the correct state;
     }
