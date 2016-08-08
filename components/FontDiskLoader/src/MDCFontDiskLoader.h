@@ -33,8 +33,8 @@
  @param fontName The font's name as it is defined in the resource file.
  @param fontURL The url location of the font on the file system.
  */
-- (nonnull instancetype)initWithName:(nonnull NSString *)fontName
-                                 URL:(nonnull NSURL *)fontURL NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFontName:(nonnull NSString *)fontName
+                                 fontURL:(nonnull NSURL *)fontURL NS_DESIGNATED_INITIALIZER;
 
 /**
  Convenience initializer for the MDCFontDiskLoader.
@@ -51,7 +51,7 @@
 
 /**
  This class requires a fontURL and fontName therefore init is no longer allowed.
- Please use initWithName:URL:
+ Please use initWithFontName:fontURL:
  */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
@@ -94,6 +94,9 @@
  Returns true when the font is unloaded. Resets @c loadFailed back to false.
  */
 - (BOOL)unload;
+
+/** Will be deprecated after 7/27/2016: @c initWithFontName:fontURL:. */
+- (nonnull instancetype)initWithName:(nonnull NSString *)fontName URL:(nonnull NSURL *)fontURL;
 
 /** A convience method for getting a font. */
 - (nullable UIFont *)fontOfSize:(CGFloat)fontSize;

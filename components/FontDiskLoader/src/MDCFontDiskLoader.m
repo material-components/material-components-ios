@@ -103,7 +103,7 @@ static dispatch_queue_t gLoadedFontsConcurrentQueueAccess;
   return isLoaded;
 }
 
-- (instancetype)initWithName:(NSString *)fontName URL:(NSURL *)fontURL {
+- (instancetype)initWithFontName:(NSString *)fontName fontURL:(NSURL *)fontURL {
   self = [super init];
   if (self) {
     _fontName = [fontName copy];
@@ -122,7 +122,7 @@ static dispatch_queue_t gLoadedFontsConcurrentQueueAccess;
     NSLog(@"Failed to locate: %@ in bundle: %@ %@.", filename, baseBundle, bundleFilename);
     return nil;
   }
-  return [self initWithName:fontName URL:fontURL];
+  return [self initWithFontName:fontName fontURL:fontURL];
 }
 
 #pragma mark - NSObject overridden methods
@@ -228,6 +228,10 @@ static dispatch_queue_t gLoadedFontsConcurrentQueueAccess;
 }
 
 #pragma mark - Deprecated methods after 7/27/2016
+
+- (instancetype)initWithName:(NSString *)fontName URL:(NSURL *)fontURL {
+  return [self initWithFontName:fontName fontURL:fontURL];
+}
 
 - (BOOL)registerFont {
   return [self load];
