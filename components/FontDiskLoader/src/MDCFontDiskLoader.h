@@ -95,26 +95,26 @@
  */
 - (BOOL)unload;
 
-/** Will be deprecated after 7/27/2016: @c initWithFontName:fontURL:. */
-- (nonnull instancetype)initWithName:(nonnull NSString *)fontName URL:(nonnull NSURL *)fontURL;
+/** Will be deprecated after 8/10/2016: @c initWithFontName:fontURL:. */
+//- (nonnull instancetype)initWithName:(nonnull NSString *)fontName URL:(nonnull NSURL *)fontURL;
 
 /** A convience method for getting a font. */
 - (nullable UIFont *)fontOfSize:(CGFloat)fontSize;
 
-/** Will be deprecated after 7/27/2016: @c load. */
+/** Will be deprecated after 8/10/2016: @c load. */
 - (BOOL)registerFont;
 
-/** Will be deprecated after 7/27/2016: @c unload. */
+/** Will be deprecated after 8/10/2016: @c unload. */
 - (BOOL)unregisterFont;
 
-/** Will be deprecated after 7/27/2016: @c loaded. */
+/** Will be deprecated after 8/10/2016: @c loaded. */
 @property(nonatomic, readonly) BOOL isRegistered;
 
-/** Will be deprecated after 7/27/2016: @c loadFailed. */
+/** Will be deprecated after 8/10/2016: @c loadFailed. */
 @property(nonatomic, readonly) BOOL hasFailedRegistration;
 
 /**
- Will be deprecated after 7/27/2016: This class should not be mutated. Create a new instance if you
+ Will be deprecated after 8/10/2016: This class should not be mutated. Create a new instance if you
  need to specifiy a different font name.
  */
 - (void)setFontName:(NSString *_Nonnull)fontName;
