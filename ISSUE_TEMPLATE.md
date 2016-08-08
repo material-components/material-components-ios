@@ -1,9 +1,7 @@
-For usage questions please ask on
-[Stack  Overflow](http://stackoverflow.com/questions/tagged/material-components-ios).
+For usage questions please ask on [Stack  Overflow](http://stackoverflow.com/questions/tagged/material-components-ios).
 This will allow others to find answers to your questions too.
 
-Providing the following information will increase the chances of your
-issue being dealt with quickly:
+Providing the following information will increase the chances of your issue being dealt with quickly:
 ### Overview of the issue
  - Providing screen-shots and video are probably the best way to communicate what is happening.
 Especially for describing UI.
