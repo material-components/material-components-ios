@@ -162,7 +162,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   // Given
   MDCFontDiskLoader *loader = [self validFontLoader];
   MDCFontDiskLoader *secondFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:loader.fontName URL:loader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:loader.fontName fontURL:loader.fontURL];
 
   // When
   [loader load];
@@ -193,7 +193,7 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   // Given
   MDCFontDiskLoader *validLoader = [self validFontLoader];
   MDCFontDiskLoader *loader =
-      [[MDCFontDiskLoader alloc] initWithName:@"some invalid font name" URL:validLoader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:@"some invalid font name" fontURL:validLoader.fontURL];
   loader.disableSanityChecks = YES;
   CGFloat randomSize = arc4random() * 100 / CGFLOAT_MAX;
 
@@ -263,9 +263,9 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
   NSString *otherName = @"some other name";
   NSURL *url = [NSURL fileURLWithPath:@"some url string"];
   NSURL *otherUrl = [NSURL fileURLWithPath:@"some other url string"];
-  MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithName:name URL:url];
-  MDCFontDiskLoader *secondLoader = [[MDCFontDiskLoader alloc] initWithName:otherName URL:url];
-  MDCFontDiskLoader *thirdLoader = [[MDCFontDiskLoader alloc] initWithName:name URL:otherUrl];
+  MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithFontName:name fontURL:url];
+  MDCFontDiskLoader *secondLoader = [[MDCFontDiskLoader alloc] initWithFontName:otherName fontURL:url];
+  MDCFontDiskLoader *thirdLoader = [[MDCFontDiskLoader alloc] initWithFontName:name fontURL:otherUrl];
   NSObject *object = [[NSObject alloc] init];
 
   // Then
@@ -292,8 +292,8 @@ static NSString *MDCRobotoBundle = @"MaterialRobotoFontLoader.bundle";
 - (void)testEquals {
   // Given
   NSURL *url = [NSURL fileURLWithPath:@"some url string"];
-  MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithName:@"some name" URL:url];
-  MDCFontDiskLoader *secondLoader = [[MDCFontDiskLoader alloc] initWithName:@"some name" URL:url];
+  MDCFontDiskLoader *loader = [[MDCFontDiskLoader alloc] initWithFontName:@"some name" fontURL:url];
+  MDCFontDiskLoader *secondLoader = [[MDCFontDiskLoader alloc] initWithFontName:@"some name" fontURL:url];
 
   // Then
   XCTAssertEqualObjects(

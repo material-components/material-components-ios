@@ -192,8 +192,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
   fontLoader.lightFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:@"something that doesn't exist"
-                                          URL:fontLoader.lightFontLoader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:@"something that doesn't exist"
+                                          fontURL:fontLoader.lightFontLoader.fontURL];
   fontLoader.lightFontLoader.disableSanityChecks = YES;
 
   // When
@@ -211,8 +211,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
   fontLoader.regularFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:@"something that doesn't exist"
-                                          URL:fontLoader.regularFontLoader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:@"something that doesn't exist"
+                                          fontURL:fontLoader.regularFontLoader.fontURL];
   fontLoader.regularFontLoader.disableSanityChecks = YES;
 
   // When
@@ -230,8 +230,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
   fontLoader.mediumFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:@"something that doesn't exist"
-                                          URL:fontLoader.mediumFontLoader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:@"something that doesn't exist"
+                                          fontURL:fontLoader.mediumFontLoader.fontURL];
   fontLoader.mediumFontLoader.disableSanityChecks = YES;
 
   // When
@@ -249,8 +249,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
   fontLoader.boldFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:@"something that doesn't exist"
-                                          URL:fontLoader.boldFontLoader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:@"something that doesn't exist"
+                                          fontURL:fontLoader.boldFontLoader.fontURL];
   fontLoader.boldFontLoader.disableSanityChecks = YES;
 
   // When
@@ -268,8 +268,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
   fontLoader.lightItalicFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:@"something that doesn't exist"
-                                          URL:fontLoader.lightItalicFontLoader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:@"something that doesn't exist"
+                                          fontURL:fontLoader.lightItalicFontLoader.fontURL];
   fontLoader.lightItalicFontLoader.disableSanityChecks = YES;
 
   // When
@@ -287,8 +287,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
   fontLoader.italicFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:@"something that doesn't exist"
-                                          URL:fontLoader.italicFontLoader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:@"something that doesn't exist"
+                                          fontURL:fontLoader.italicFontLoader.fontURL];
   fontLoader.italicFontLoader.disableSanityChecks = YES;
 
   // When
@@ -306,8 +306,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
   fontLoader.mediumItalicFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:@"something that doesn't exist"
-                                          URL:fontLoader.mediumItalicFontLoader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:@"something that doesn't exist"
+                                          fontURL:fontLoader.mediumItalicFontLoader.fontURL];
   fontLoader.mediumItalicFontLoader.disableSanityChecks = YES;
 
   // When
@@ -325,8 +325,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCRobotoFontLoader *fontLoader = [[MDCRobotoFontLoader alloc] initInternal];
   fontLoader.disableSanityChecks = YES;
   fontLoader.boldItalicFontLoader =
-      [[MDCFontDiskLoader alloc] initWithName:@"something that doesn't exist"
-                                          URL:fontLoader.boldItalicFontLoader.fontURL];
+      [[MDCFontDiskLoader alloc] initWithFontName:@"something that doesn't exist"
+                                          fontURL:fontLoader.boldItalicFontLoader.fontURL];
   fontLoader.boldItalicFontLoader.disableSanityChecks = YES;
 
   // When
