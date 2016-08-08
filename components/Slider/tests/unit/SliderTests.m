@@ -324,10 +324,17 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   }
   XCTAssertNotEqualObjects(track, nil);
 
+  // With
+  NSNumberFormatter *testFormatter = [[NSNumberFormatter alloc] init];
+
   // Then
-  XCTAssertEqualObjects([slider thumbTrack:track stringForValue:1.f], @"1");
-  XCTAssertEqualObjects([slider thumbTrack:track stringForValue:0.57f], @"0.57");
-  XCTAssertEqualObjects([slider thumbTrack:track stringForValue:0.3333333333f], @"0.333");
+  XCTAssertEqualObjects(
+      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:1.f]], @(1.));
+  XCTAssertEqualObjects(
+      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:0.57f]], @(0.57));
+  XCTAssertEqualObjects(
+      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:0.33333333f]],
+      @(0.333));
 }
 
 #pragma mark accessibility
