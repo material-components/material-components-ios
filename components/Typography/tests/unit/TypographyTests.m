@@ -232,8 +232,7 @@ static const CGFloat kEpsilon = 0.001f;
   // When
   UIFont *font = [MDCTypography subheadFont];
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 16, kEpsilon,
-                             @"The font size of subhead must be 16.");
+  XCTAssertEqualWithAccuracy(font.pointSize, 16, kEpsilon, @"The font size of subhead must be 16.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
                         @"The font name of subhead must be Roboto-Regular.");
 }
@@ -244,8 +243,7 @@ static const CGFloat kEpsilon = 0.001f;
   UIFont *font = [MDCTypography body2Font];
 
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon,
-                             @"The font size of body 2 must be 14.");
+  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon, @"The font size of body 2 must be 14.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Medium",
                         @"The font name of body 2 must be Roboto-Medium.");
 }
@@ -256,8 +254,7 @@ static const CGFloat kEpsilon = 0.001f;
   UIFont *font = [MDCTypography body1Font];
 
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon,
-                             @"The font size of body 1 must be 14.");
+  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon, @"The font size of body 1 must be 14.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
                         @"The font name of body 1 must be Roboto-Regular.");
 }
@@ -268,8 +265,7 @@ static const CGFloat kEpsilon = 0.001f;
   UIFont *font = [MDCTypography captionFont];
 
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 12, kEpsilon,
-                             @"The font size of caption must be 12.");
+  XCTAssertEqualWithAccuracy(font.pointSize, 12, kEpsilon, @"The font size of caption must be 12.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
                         @"The font name of caption must be Roboto-Regular.");
 }
@@ -280,8 +276,7 @@ static const CGFloat kEpsilon = 0.001f;
   UIFont *font = [MDCTypography buttonFont];
 
   // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon,
-                             @"The font size of button must be 14.");
+  XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon, @"The font size of button must be 14.");
   XCTAssertEqualObjects(font.fontName, @"Roboto-Medium",
                         @"The font name of button must be Roboto-Medium.");
 }
