@@ -21,8 +21,6 @@
 #import "PestoIcons/PestoIconHome.h"
 #import "PestoIcons/PestoIconTrending.h"
 
-extern CFAbsoluteTime StartTime;
-
 @interface PestoAppDelegate ()
 
 @end
@@ -54,9 +52,6 @@ extern CFAbsoluteTime StartTime;
   tabBarController.tabBar.translucent = NO;
   self.window.rootViewController = tabBarController;
 
-  dispatch_async(dispatch_get_main_queue(), ^{
-    NSLog(@"Launched in %f sec", CFAbsoluteTimeGetCurrent() - StartTime);
-  });
   return YES;
 }
 
