@@ -66,7 +66,7 @@
 
 + (NSString *)catalogDescription {
   return @"Snackbars provide brief feedback about an operation through a message at the bottom of"
-          "the screen.";
+          " the screen.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
