@@ -188,6 +188,15 @@ static const uint32_t kCellRedColor = 0xF44336;
   _accessoryView.frame = [self accessoryFrame];
   // Then lay out the content view, inset by the accessory view's width.
   self.contentView.frame = [self contentViewFrame];
+
+  [self flipSubviewsIfNecessaryForRTL];
+}
+
+- (void)flipSubviewsIfNecessaryForRTL {
+  _accessoryView.frame = MDCRectFlippedForRTL(_accessoryView.frame, CGRectGetWidth(self.bounds),
+                                              self.mdc_effectiveUserInterfaceLayoutDirection);
+  self.contentView.frame = MDCRectFlippedForRTL(self.contentView.frame, CGRectGetWidth(self.bounds),
+                                                self.mdc_effectiveUserInterfaceLayoutDirection);
 }
 
 #pragma mark - Accessory Views
@@ -247,9 +256,7 @@ static const uint32_t kCellRedColor = 0xF44336;
   CGSize size = _accessoryView.frame.size;
   CGFloat originX = CGRectGetWidth(self.bounds) - size.width - _accessoryInset.right;
   CGFloat originY = (CGRectGetHeight(self.bounds) - size.height) / 2;
-  CGRect frame = CGRectMake(originX, originY, size.width, size.height);
-  return MDCRectFlippedForRTL(frame, CGRectGetWidth(self.bounds),
-                              self.mdc_effectiveUserInterfaceLayoutDirection);
+  return CGRectMake(originX, originY, size.width, size.height);
 }
 
 #pragma mark - Separator
@@ -442,8 +449,7 @@ static const uint32_t kCellRedColor = 0xF44336;
       _attr.shouldShowSelectorStateMask
           ? CGRectGetWidth(_editingSelectorImageView.bounds) + kEditingControlAppearanceOffset
           : accessoryViewPadding;
-  UIEdgeInsets insets = MDCInsetsMakeWithLayoutDirection(
-      0, leadingPadding, 0, trailingPadding, self.mdc_effectiveUserInterfaceLayoutDirection);
+  UIEdgeInsets insets = UIEdgeInsetsMake(0, leadingPadding, 0, trailingPadding);
   return UIEdgeInsetsInsetRect(self.bounds, insets);
 }
 
