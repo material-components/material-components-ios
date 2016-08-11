@@ -35,7 +35,7 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCSwitchInitWithColor:nil];
+    [self commonMDCSwitchInit];
   }
   return self;
 }
@@ -44,15 +44,14 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   self = [super initWithCoder:aDecoder];
   if (self) {
     // TODO(iangordon): Get color from Storyboard / XIB
-    [self commonMDCSwitchInitWithColor:nil];
+    [self commonMDCSwitchInit];
   }
   return self;
 }
 
-- (void)commonMDCSwitchInitWithColor:(UIColor *)color {
-  if (color == nil) {
-    color = [MDCSwitch defaultOnTintColor];
-  }
+- (void)commonMDCSwitchInit {
+  // TODO(iangordon): Set a sane default in the UIAppearance Proxy
+  UIColor *color = [MDCSwitch defaultOnTintColor];
   _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:color];
   [_thumbTrack addTarget:self
                   action:@selector(thumbTrackValueChanged:)
