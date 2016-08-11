@@ -2,6 +2,7 @@ PODS:
   - CatalogByConvention (1.0.1)
   - MaterialComponents (13.0.1):
     - MaterialComponents/ActivityIndicator (= 13.0.1)
+    - MaterialComponents/AnimationTiming (= 13.0.1)
     - MaterialComponents/AppBar (= 13.0.1)
     - MaterialComponents/ButtonBar (= 13.0.1)
     - MaterialComponents/Buttons (= 13.0.1)
@@ -28,6 +29,7 @@ PODS:
     - MaterialComponents/Switch (= 13.0.1)
     - MaterialComponents/Typography (= 13.0.1)
   - MaterialComponents/ActivityIndicator (13.0.1)
+  - MaterialComponents/AnimationTiming (13.0.1)
   - MaterialComponents/AppBar (13.0.1):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
@@ -162,7 +164,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
-  MaterialComponents: aec3377a656ee1b95cdde77fd908f892be35c303
+  MaterialComponents: 84d72d4bdb76bfd3657121f11e3b78b6a2fac962
   MaterialComponentsCatalog: 1325863f2364beeae1885aab0f3f8cdf2d00e7b5
   MaterialComponentsUnitTests: fcc7b001cfc521cf4d31d2742ee5e58a613dca63
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
