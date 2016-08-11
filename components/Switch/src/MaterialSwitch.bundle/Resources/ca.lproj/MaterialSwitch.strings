@@ -1,8 +1,8 @@
 /* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
 "MDCSwitchAccessibilityHint" = "Toqueu dues vegades per canviar l'ajust";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityLabelOn" = "Activat";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityValueOn" = "Activat";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityLabelOff" = "Desactivat";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityValueOff" = "Desactivat";

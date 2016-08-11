@@ -1,8 +1,8 @@
 /* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
 "MDCSwitchAccessibilityHint" = "Тохиргоог сэлгэн харуулах бол хоёр товшино";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityLabelOn" = "Идэвхтэй";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityValueOn" = "Идэвхтэй";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityLabelOff" = "Идэвхгүй";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityValueOff" = "Идэвхгүй";

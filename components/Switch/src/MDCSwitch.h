@@ -62,6 +62,22 @@ IB_DESIGNABLE
 @property(nullable, nonatomic, strong) UIImage *offImage UI_APPEARANCE_SELECTOR;
 
 /**
+ The accessibility value to be set when the switch is on.
+
+ When nil, the accessibility value defaults to "On" localized to the device's language. Please keep
+ internationalization in mind when overriding this.
+ */
+@property(nullable, nonatomic, copy) IBInspectable NSString *onAccessibilityValue;
+
+/**
+ The accessibility value to be set when the switch is off.
+
+ When nil, the accessibility value defaults to "Off" localized to the device's language. Please keep
+ internationalization in mind when overriding this.
+ */
+@property(nullable, nonatomic, copy) IBInspectable NSString *offAccessibilityValue;
+
+/**
  Boolean value that determines the off/on state of the switch.
 
  This property allows you to retrieve and set (without animation) a value determining whether the
