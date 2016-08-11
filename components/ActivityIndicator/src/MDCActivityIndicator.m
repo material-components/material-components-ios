@@ -16,6 +16,8 @@
 
 #import "MDCActivityIndicator.h"
 
+#import "MaterialRTL.h"
+
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
 static const NSTimeInterval kMDCActivityIndicatorAnimateOutDuration = 0.1f;
 static const NSTimeInterval kMDCActivityIndicatorPointCycleDuration = 4.0f / 3.0f;
@@ -139,6 +141,10 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 - (void)commonMDCActivityIndicatorInit {
   // Register notifications for foreground and background if needed.
   [self registerForegroundAndBackgroundNotificationObserversIfNeeded];
+
+  // The activity indicator reflects the passage of time (a spatial semantic context) and so
+  // will not be mirrored in RTL languages.
+  self.mdc_semanticContentAttribute = UISemanticContentAttributeSpatial;
 
   _cycleStartIndex = 0;
   _indicatorMode = MDCActivityIndicatorModeIndeterminate;

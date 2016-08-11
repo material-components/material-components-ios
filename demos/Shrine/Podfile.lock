@@ -27,7 +27,8 @@ PODS:
     - MaterialComponents/SpritedAnimationView (= 13.0.1)
     - MaterialComponents/Switch (= 13.0.1)
     - MaterialComponents/Typography (= 13.0.1)
-  - MaterialComponents/ActivityIndicator (13.0.1)
+  - MaterialComponents/ActivityIndicator (13.0.1):
+    - MaterialComponents/private/RTL
   - MaterialComponents/AnimationTiming (13.0.1)
   - MaterialComponents/AppBar (13.0.1):
     - MaterialComponents/FlexibleHeader
@@ -150,7 +151,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 84d72d4bdb76bfd3657121f11e3b78b6a2fac962
+  MaterialComponents: c388040a39a779bf46e263ba826b700ab0e79d17
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
 
 PODFILE CHECKSUM: b585ca32a2884e050823cc1f861e8b7246f7dcc1
