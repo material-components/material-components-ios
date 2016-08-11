@@ -103,7 +103,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInitializer];
+    [self commonMDCActivityIndicatorInit];
   }
   return self;
 }
@@ -111,7 +111,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 - (id)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    [self commonInitializer];
+    [self commonMDCActivityIndicatorInit];
   }
   return self;
 }
@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   }];
 }
 
-- (void)commonInitializer {
+- (void)commonMDCActivityIndicatorInit {
   // Register notifications for foreground and background if needed.
   [self registerForegroundAndBackgroundNotificationObserversIfNeeded];
 
