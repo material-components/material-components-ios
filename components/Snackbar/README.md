@@ -114,10 +114,10 @@ message.action = action;
 let action = MDCSnackbarMessageAction()
 let actionHandler = {() in
   let answerMessage = MDCSnackbarMessage()
-  answerMessage.text = @"Fascinating";
+  answerMessage.text = "Fascinating"
   MDCSnackbarManager.showMessage(answerMessage)
 }
-action.handler = actionHandler;
-action.title = @"OK";
-message.action = action;
+action.handler = actionHandler
+action.title = "OK"
+message.action = action
 ~~~
