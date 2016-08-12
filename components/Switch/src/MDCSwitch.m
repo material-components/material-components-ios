@@ -16,6 +16,7 @@
 
 #import "MDCSwitch.h"
 
+#import "MaterialRTL.h"
 #import "MaterialThumbTrack.h"
 
 static const CGSize MDCSwitchIntrinsicSize = {.width = 36.0f, .height = 27.0f};
@@ -95,7 +96,10 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   [super layoutSubviews];
   _thumbTrack.frame = self.bounds;
 
-  // TODO(iangordon): Handle BiDi layouts
+  // If necessary, flip for RTL.
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    [self.layer setAffineTransform:CGAffineTransformMakeScale(-1, 1)];
+  }
 }
 
 - (UIColor *)onTintColor {

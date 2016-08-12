@@ -294,6 +294,7 @@ Pod::Spec.new do |s|
     }
 
     ss.dependency "MaterialComponents/private/ThumbTrack"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "Typography" do |ss|

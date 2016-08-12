@@ -139,6 +139,7 @@ PODS:
     - MaterialComponents/private/Overlay
   - MaterialComponents/SpritedAnimationView (13.0.1)
   - MaterialComponents/Switch (13.0.1):
+    - MaterialComponents/private/RTL
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Typography (13.0.1)
   - MDFTextAccessibility (1.1.1)
@@ -151,7 +152,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: c388040a39a779bf46e263ba826b700ab0e79d17
+  MaterialComponents: 1f777ec8018c35e1d9ee84e7a9b85b2f0af61fb2
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
 
 PODFILE CHECKSUM: b585ca32a2884e050823cc1f861e8b7246f7dcc1

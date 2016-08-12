@@ -140,6 +140,7 @@ PODS:
     - MaterialComponents/private/Overlay
   - MaterialComponents/SpritedAnimationView (13.0.1)
   - MaterialComponents/Switch (13.0.1):
+    - MaterialComponents/private/RTL
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Typography (13.0.1)
   - MaterialComponentsCatalog (13.0.1):
@@ -165,7 +166,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
-  MaterialComponents: c388040a39a779bf46e263ba826b700ab0e79d17
+  MaterialComponents: 1f777ec8018c35e1d9ee84e7a9b85b2f0af61fb2
   MaterialComponentsCatalog: 1325863f2364beeae1885aab0f3f8cdf2d00e7b5
   MaterialComponentsUnitTests: fcc7b001cfc521cf4d31d2742ee5e58a613dca63
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
