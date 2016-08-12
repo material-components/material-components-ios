@@ -323,26 +323,6 @@ done.
 Any work that was started by the [Release-blocking clients](#release-blocking-clients)
 (dragon) step above may need to be finalized.
 
-### Pick the next release cut date
-
-We generally cut releases every **Wednesday** mid-afternoon EST.
-
-#### Create next week's milestone (experimental)
-
-> We are actively experimenting with using GitHub milestones to plan out issues that should land in
-> weekly releases. This process may change in the future.
-
-[Create a new milestone](https://github.com/google/material-components-ios/milestones/new) for next
-week.
-
-Title:
-
-    <Date> Release
-
-Description:
-
-    <Empty>
-
 #### Send an announcement
 
 After you cut the release, send the following email to
