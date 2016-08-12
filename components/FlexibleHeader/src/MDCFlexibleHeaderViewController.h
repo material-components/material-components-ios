@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -53,7 +53,13 @@
  */
 - (BOOL)prefersStatusBarHidden;
 
-/** Calculates the status bar style based on the header view's background color. */
+/**
+ Calculates the status bar style based on the header view's background color.
+
+ Light background colors use the default black status bar and dark background colors use the light
+ status bar. If the header view's background color is not fully-opaque, then this returns
+ UIStatusBarStyleDefault.
+ */
 - (UIStatusBarStyle)preferredStatusBarStyle;
 
 @end

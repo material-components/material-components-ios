@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,13 +21,22 @@
 #import "MaterialTypography.h"
 
 #import <objc/runtime.h>
-#import <tgmath.h>
 
-#undef ceil
-#define ceil(__x) __tg_ceil(__tg_promote1((__x))(__x))
+static inline CGFloat Ceil(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return ceil(value);
+#else
+  return ceilf(value);
+#endif
+}
 
-#undef floor
-#define floor(__x) __tg_floor(__tg_promote1((__x))(__x))
+static inline CGFloat Floor(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return floor(value);
+#else
+  return floorf(value);
+#endif
+}
 
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarPadDefaultHeight = 64;
@@ -200,8 +209,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
                                                  attributes:attributes
                                                     context:NULL]
                          .size;
-  titleSize.width = ceil(titleSize.width);
-  titleSize.height = ceil(titleSize.height);
+  titleSize.width = Ceil(titleSize.width);
+  titleSize.height = Ceil(titleSize.height);
   CGRect titleFrame = (CGRect){{textFrame.origin.x, 0}, titleSize};
   titleFrame = MDCRectFlippedForRTL(titleFrame, self.bounds.size.width,
                                     self.mdc_effectiveUserInterfaceLayoutDirection);
@@ -297,7 +306,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       return (CGRect){{frame.origin.x, CGRectGetMaxY(bounds) - frame.size.height}, frame.size};
 
     case UIControlContentVerticalAlignmentCenter: {
-      CGFloat centeredY = floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
+      CGFloat centeredY = Floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
       return (CGRect){{frame.origin.x, centeredY}, frame.size};
     }
 

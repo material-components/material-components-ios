@@ -1,7 +1,7 @@
-# Material Components iOS Catalog
+# Material Components for iOS Catalog
 
-The Material Components iOS Catalog collects examples from each component together into a single app
-to explore, experiment, and experience.
+The Material Components for iOS Catalog collects examples from each component together into a single
+app to explore, experiment, and experience.
 
 ## Generation
 

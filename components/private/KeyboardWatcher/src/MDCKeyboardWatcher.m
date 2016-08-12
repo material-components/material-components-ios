@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -161,11 +161,17 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
         break;
     }
   } else {
-    isDockedKeyboard = CGRectGetMaxY(keyboardRect) == CGRectGetMaxY(screenBounds);
+    // On an iPad an input accessory view may be shown on the screen even if there is an external
+    // keyboard attached. In that case, iOS will build a software keyboard with an accessory view
+    // attached to the top. It then sets the frame of this keyboard to be below the bounds of the
+    // screen so only the top accessory view is rendered.
+    // We handle this by considering software keyboards with a MaxY >= screen.MaxY as being docked.
+    isDockedKeyboard = CGRectGetMaxY(keyboardRect) >= CGRectGetMaxY(screenBounds);
   }
 
-  // If the bottom of the keyboard isn't at the bottom of the screen, then it is undocked, and we
-  // shouldn't try to account for it.
+  // If the keyboard is docked and the intersection of the keyboard and the screen is
+  // non-zero update our stored keyboard frame.
+  // If the keyboard is undocked, split, or not visible set the keyboard frame to CGRectZero.
   if (isDockedKeyboard && !CGRectIsEmpty(intersection)) {
     self.keyboardFrame = intersection;
   } else {

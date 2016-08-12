@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 #import "MDCThumbTrack.h"
 
+#import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
 #import "MaterialInk.h"
 #import "UIColor+MDC.h"
@@ -29,6 +30,9 @@ static const CGFloat kDefaultFilledTrackAnchorValue = -CGFLOAT_MAX;
 static const CGFloat kTrackOnAlpha = 0.5f;
 static const CGFloat kMinTouchSize = 48.0f;
 static const CGFloat kThumbSlopFactor = 3.5f;
+static const CGFloat kValueLabelHeight = 48.f;
+static const CGFloat kValueLabelWidth = 0.81f * kValueLabelHeight;
+static const CGFloat kValueLabelFontSize = 12.f;
 
 // Credit to the Beacon Tools iOS team for the idea for this implementations
 @interface MDCDiscreteDotView : UIView
@@ -72,14 +76,14 @@ static const CGFloat kThumbSlopFactor = 3.5f;
 @end
 
 // TODO(iangordon): Properly handle broken tgmath
-static inline CGFloat CGFabs(CGFloat value) {
+static inline CGFloat Fabs(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return fabs(value);
 #else
   return fabsf(value);
 #endif
 }
-static inline CGFloat CGRound(CGFloat value) {
+static inline CGFloat Round(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return round(value);
 #else
@@ -87,7 +91,7 @@ static inline CGFloat CGRound(CGFloat value) {
 #endif
 }
 
-static inline CGFloat CGHypot(CGFloat x, CGFloat y) {
+static inline CGFloat Hypot(CGFloat x, CGFloat y) {
 #if CGFLOAT_IS_DOUBLE
   return hypot(x, y);
 #else
@@ -104,7 +108,7 @@ static inline bool CGFloatEqual(CGFloat a, CGFloat b) {
   const CGFloat epsilon = FLT_EPSILON;
   const CGFloat min = FLT_MIN;
 #endif
-  return (CGFabs(a - b) < constantK * epsilon * CGFabs(a + b) || CGFabs(a - b) < min);
+  return (Fabs(a - b) < constantK * epsilon * Fabs(a + b) || Fabs(a - b) < min);
 }
 
 /**
@@ -116,7 +120,7 @@ static inline bool CGFloatEqual(CGFloat a, CGFloat b) {
  @return Absolute straight line distance.
  */
 static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
-  return CGHypot(point1.x - point2.x, point1.y - point2.y);
+  return Hypot(point1.x - point2.x, point1.y - point2.y);
 }
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
@@ -138,6 +142,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CALayer *_trackOnLayer;
   MDCDiscreteDotView *_discreteDots;
   BOOL _shouldDisplayInk;
+  MDCNumericValueLabel *_valueLabel;
 
   // Attributes to handle interaction. To associate touches to previous touches, we keep a reference
   // to the current touch, since the system reuses the same memory address when sending subsequent
@@ -228,7 +233,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       _interpolateOnOffColors ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha] : primaryColor;
 
   _touchController.defaultInkView.inkColor = [primaryColor colorWithAlphaComponent:kTrackOnAlpha];
-  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
+  [self setNeedsLayout];
 }
 
 - (void)setThumbOffColor:(UIColor *)thumbOffColor {
@@ -237,17 +242,17 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)setThumbDisabledColor:(UIColor *)thumbDisabledColor {
   _thumbDisabledColor = thumbDisabledColor;
-  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
+  [self setNeedsLayout];
 }
 
 - (void)setTrackOffColor:(UIColor *)trackOffColor {
   _trackOffColor = trackOffColor;
-  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
+  [self setNeedsLayout];
 }
 
 - (void)setTrackDisabledColor:(UIColor *)trackDisabledColor {
   _trackDisabledColor = trackDisabledColor;
-  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
+  [self setNeedsLayout];
 }
 
 - (void)setInterpolateOnOffColors:(BOOL)interpolateOnOffColors {
@@ -273,6 +278,26 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       _discreteDots = nil;
     }
     _shouldDisplayDiscreteDots = shouldDisplayDiscreteDots;
+  }
+}
+
+- (void)setShouldDisplayDiscreteValueLabel:(BOOL)shouldDisplayDiscreteValueLabel {
+  if (_shouldDisplayDiscreteValueLabel == shouldDisplayDiscreteValueLabel) {
+    return;
+  }
+
+  _shouldDisplayDiscreteValueLabel = shouldDisplayDiscreteValueLabel;
+
+  if (shouldDisplayDiscreteValueLabel) {
+    _valueLabel = [[MDCNumericValueLabel alloc]
+        initWithFrame:CGRectMake(0, 0, kValueLabelWidth, kValueLabelHeight)];
+    // Effectively 0, but setting it to 0 results in animation not happening
+    _valueLabel.transform = CGAffineTransformMakeScale(0.001f, 0.001f);
+    _valueLabel.fontSize = kValueLabelFontSize;
+    [self addSubview:_valueLabel];
+  } else {
+    [_valueLabel removeFromSuperview];
+    _valueLabel = nil;
   }
 }
 
@@ -312,7 +337,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)setFilledTrackAnchorValue:(CGFloat)filledTrackAnchorValue {
   _filledTrackAnchorValue = MAX(_minimumValue, MIN(filledTrackAnchorValue, _maximumValue));
-  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:NULL];
+  [self setNeedsLayout];
 }
 
 - (void)setValue:(CGFloat)value {
@@ -386,9 +411,23 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (CGPoint)thumbPositionForValue:(CGFloat)value {
   CGFloat relValue = [self relativeValueForValue:value];
-  CGPoint position =
-      CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
-  return position;
+  return CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
+}
+
+/**
+ Gives the point on the thumb track that we should set as the "center" of the numeric value label.
+ Keep in mind that this doesn't actually correspond to the geometric center of the label, but rather
+ the anchor point which falls to the bottom of the label. So by setting this point to be on the
+ track we automatically get the property of the numeric value label hovering slightly above the
+ track.
+ */
+- (CGPoint)numericValueLabelPositionForValue:(CGFloat)value {
+  CGFloat relValue = [self relativeValueForValue:value];
+
+  // To account for the discrete dots on the left and right sides
+  CGFloat range = self.thumbPanRange - _trackHeight;
+  return CGPointMake(_thumbRadius + (_trackHeight / 2) + range * relValue,
+                     self.frame.size.height / 2);
 }
 
 - (CGFloat)valueForThumbPosition:(CGPoint)position {
@@ -421,7 +460,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (enabled) {
     [self setPrimaryColor:_primaryColor];
   }
-  [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
+  [self setNeedsLayout];
 }
 
 #pragma mark - MDCInkTouchControllerDelegate
@@ -505,7 +544,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     if (crossesAnchor) {
       CGFloat currentValue = _value;
       CGFloat animationDurationToAnchor =
-          (CGFabs(previousValue - _filledTrackAnchorValue) / CGFabs(previousValue - currentValue)) *
+          (Fabs(previousValue - _filledTrackAnchorValue) / Fabs(previousValue - currentValue)) *
           kAnimationDuration;
       void (^afterCrossingAnchorAnimation)(BOOL) = ^void(BOOL finished) {
         UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseOut;
@@ -641,12 +680,20 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // Make sure discrete dots match up
   _discreteDots.frame = [_trackView bounds];
 
+  // Make sure Numeric Value Label matches up
+  if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+    // Note that "center" here doesn't refer to the actual center, but rather the anchor point,
+    // which is re-defined to be slightly below the bottom of the label
+    _valueLabel.center = [self numericValueLabelPositionForValue:_value];
+    _valueLabel.backgroundColor = _trackOnColor;
+    _valueLabel.textColor = [UIColor whiteColor];
+    if ([_delegate respondsToSelector:@selector(thumbTrack:stringForValue:)]) {
+      _valueLabel.text = [_delegate thumbTrack:self stringForValue:_value];
+    }
+  }
+
   // Update colors, etc.
   if (self.enabled) {
-    if (_thumbIsSmallerWhenDisabled) {
-      _thumbView.layer.transform = CATransform3DIdentity;
-    }
-
     if (!_interpolateOnOffColors) {
       _trackView.backgroundColor = _trackOffColor;
       _trackOnLayer.backgroundColor = _trackOnColor.CGColor;
@@ -668,7 +715,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                          [self timingFunctionFromUIViewAnimationOptions:animationOptions]];
       [CATransaction setAnimationDuration:duration];
       _trackOnLayer.frame =
-          CGRectMake(trackOnXValue, 0, CGFabs(currentXValue - anchorXValue), _trackHeight);
+          CGRectMake(trackOnXValue, 0, Fabs(currentXValue - anchorXValue), _trackHeight);
       [CATransaction commit];
     }
   } else {
@@ -695,6 +742,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     }
   }
 
+  if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+    if (self.enabled && _isDraggingThumb) {
+      _valueLabel.transform = CGAffineTransformIdentity;
+    } else {
+      _valueLabel.transform = CGAffineTransformMakeScale(0.001f, 0.001f);
+    }
+  }
+
   if (!self.enabled) {
     // The following changes only matter if the track is enabled.
     return;
@@ -709,7 +764,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   CGFloat radius;
   if (_isDraggingThumb) {
-    radius = _thumbRadius + _trackHeight;
+    if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+      radius = 0;
+    } else {
+      radius = _thumbRadius + _trackHeight;
+    }
   } else {
     radius = _thumbRadius;
   }
@@ -768,7 +827,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   radius = MAX(radius, _thumbRadius);
 
   if ((!self.enabled && _disabledTrackHasThumbGaps) ||
-      ([self isValueAtMinimum] && _thumbIsHollowAtStart)) {
+      ([self isValueAtMinimum] && _thumbIsHollowAtStart &&
+       !(_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 0 && _isDraggingThumb))) {
     // The reason we calculate this explicitly instead of just using _thumbView.frame is because
     // the thumb view might not be have the exact radius of _thumbRadius, depending on if the track
     // is disabled or if a user is dragging the thumb.
@@ -787,7 +847,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (CGFloatEqual(_minimumValue, _maximumValue)) {
     return _minimumValue;
   }
-  return (value - _minimumValue) / CGFabs(_minimumValue - _maximumValue);
+  return (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
 }
 
 - (CGFloat)closestValueToTargetValue:(CGFloat)targetValue {
@@ -800,7 +860,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   CGFloat scaledTargetValue = (targetValue - _minimumValue) / (_maximumValue - _minimumValue);
   CGFloat snappedValue =
-      CGRound((_numDiscreteValues - 1) * scaledTargetValue) / (_numDiscreteValues - 1.0f);
+      Round((_numDiscreteValues - 1) * scaledTargetValue) / (_numDiscreteValues - 1.0f);
   return (1 - snappedValue) * _minimumValue + snappedValue * _maximumValue;
 }
 
@@ -1010,9 +1070,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (void)interruptAnimation {
   if (_thumbView.layer.presentationLayer) {
     _thumbView.layer.position = [(CALayer *)_thumbView.layer.presentationLayer position];
+    _valueLabel.layer.position = [(CALayer *)_valueLabel.layer.presentationLayer position];
   }
   [_thumbView.layer removeAllAnimations];
   [_trackView.layer removeAllAnimations];
+  [_valueLabel.layer removeAllAnimations];
   [_trackOnLayer removeAllAnimations];
 }
 

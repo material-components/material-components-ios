@@ -22,13 +22,20 @@ end
 post_install do |installer|
   pod_dir = File.dirname(installer.pods_project.path)
 
+  # Inject our specific warning flags into the .xcconfig files.
   mdc_xcconfigs = [
     "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.xcconfig",
+    "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig",
+    "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig",
+    "#{pod_dir}/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.debug.xcconfig",
+    "#{pod_dir}/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.release.xcconfig",
   ]
-
+  
+  # Note the path is relative to the xcconfig file being modified.
+  # https://pewpewthespells.com/blog/xcconfig_guide.html
   mdc_xcconfigs.each do |mdc_xcconfig|
     new_xcconfig = File.read(mdc_xcconfig)
-    new_xcconfig << "\n#include \"../MaterialComponentsWarnings.xcconfig\""
+    new_xcconfig << "\n#include \"../../../MaterialComponentsWarnings.xcconfig\""
     File.write(mdc_xcconfig, new_xcconfig)
   end
 

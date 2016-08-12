@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCThumbTrack.h"
 #import "MaterialSlider.h"
 
 static const NSUInteger kNumberOfRepeats = 20;
@@ -307,6 +308,33 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   UIColor *actualColor = slider.trackBackgroundColor;
   UIColor *expectedColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
   XCTAssertEqualObjects(actualColor, expectedColor);
+}
+
+#pragma mark numeric value label
+
+- (void)testNumericValueLabelString {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+  MDCThumbTrack *track = nil;
+  for (UIView *view in slider.subviews) {
+    if ([view isKindOfClass:[MDCThumbTrack class]]) {
+      track = (MDCThumbTrack *)view;
+      break;
+    }
+  }
+  XCTAssertNotEqualObjects(track, nil);
+
+  // With
+  NSNumberFormatter *testFormatter = [[NSNumberFormatter alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(
+      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:1.f]], @(1.));
+  XCTAssertEqualObjects(
+      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:0.57f]], @(0.57));
+  XCTAssertEqualObjects(
+      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:0.33333333f]],
+      @(0.333));
 }
 
 #pragma mark accessibility

@@ -1,13 +1,13 @@
 # Site Development
 
-**This document talks about material components for ios site development. If you are trying to
+**This document talks about Material Components for iOS site development. If you are trying to
 updating the contents of site, please refer to [Site Content Update](./site_content_update.md)
 instead.**
 
 
 ## Overview
 
-Material components for ios site consists of 2 parts: [document
+Material Components for iOS site consists of 2 parts: [document
 site](https://material-ext.appspot.com/mdc-ios-preview/) and API reference site of each components
 (e.g, [AppBar
 API](https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html),

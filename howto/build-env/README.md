@@ -6,7 +6,7 @@ section: howto
 
 # Build environment
 
-Material Components iOS builds with the standard open-source iOS toolchain:
+Material Components for iOS builds with the standard open-source iOS toolchain:
 Xcode and CocoaPods. However, there are certain settings that you can use to
 maximize compatibility with our source.
 

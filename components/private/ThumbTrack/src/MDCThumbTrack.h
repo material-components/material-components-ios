@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -114,6 +114,9 @@
 /** Whether or not to display dots indicating discrete locations. Default is NO. */
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteDots;
 
+/** Whether or not to show the numeric value label when dragging a discrete slider. */
+@property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
+
 /** Whether a disabled thumb track includes gaps on either side of the thumb. The default is NO. */
 @property(nonatomic, assign) BOOL disabledTrackHasThumbGaps;
 
@@ -211,6 +214,18 @@
 /** MDCThumbtrack delegate which allows setting custom behavior. */
 @protocol MDCThumbTrackDelegate <NSObject>
 @optional
+
+/**
+ For discrete thumb tracks, used when determining the string label to display for a given discrete
+ value.
+
+ If not implemented, or if no delegate is specified, the thumb track displays the empty string ""
+ for all values.
+
+ @param thumbTrack The thumb track sender.
+ @param value The value whose label needs to be calculated.
+ */
+- (nonnull NSString *)thumbTrack:(nonnull MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value;
 
 /**
  Called when the user taps on the MDCThumbTrack.

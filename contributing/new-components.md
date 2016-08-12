@@ -1,6 +1,6 @@
 # Documenting a new component
 
-Components are the basic organizational unit in Material Components iOS. When a new component is
+Components are the basic organizational unit in Material Components for iOS. When a new component is
 added, its documentation needs to be inserted in various places in the repo and on the web site.
 
 ## What you'll need
