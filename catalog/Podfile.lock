@@ -2,6 +2,7 @@ PODS:
   - CatalogByConvention (1.0.1)
   - MaterialComponents (13.0.2):
     - MaterialComponents/ActivityIndicator (= 13.0.2)
+    - MaterialComponents/AnimationTiming (= 13.0.2)
     - MaterialComponents/AppBar (= 13.0.2)
     - MaterialComponents/ButtonBar (= 13.0.2)
     - MaterialComponents/Buttons (= 13.0.2)
@@ -27,7 +28,9 @@ PODS:
     - MaterialComponents/SpritedAnimationView (= 13.0.2)
     - MaterialComponents/Switch (= 13.0.2)
     - MaterialComponents/Typography (= 13.0.2)
-  - MaterialComponents/ActivityIndicator (13.0.2)
+  - MaterialComponents/ActivityIndicator (13.0.2):
+    - MaterialComponents/private/RTL
+  - MaterialComponents/AnimationTiming (13.0.2)
   - MaterialComponents/AppBar (13.0.2):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
@@ -137,6 +140,7 @@ PODS:
     - MaterialComponents/private/Overlay
   - MaterialComponents/SpritedAnimationView (13.0.2)
   - MaterialComponents/Switch (13.0.2):
+    - MaterialComponents/private/RTL
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Typography (13.0.2)
   - MaterialComponentsCatalog (13.0.2):
@@ -162,7 +166,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
-  MaterialComponents: 2e758f307e25703260a3ca6dd0a86bddea9b09ae
+  MaterialComponents: 8e6434a2a4ba7a7135733cfe8f6f3611ae220f87
   MaterialComponentsCatalog: 73939ad7423299cf8b1b19876858d3c2b1d56968
   MaterialComponentsUnitTests: 730b95112beb2d2f965ca9b4cfbb268f147ae9c2
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e

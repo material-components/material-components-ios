@@ -1,36 +1,36 @@
 PODS:
-  - MaterialComponents (13.0.1):
-    - MaterialComponents/ActivityIndicator (= 13.0.1)
-    - MaterialComponents/AnimationTiming (= 13.0.1)
-    - MaterialComponents/AppBar (= 13.0.1)
-    - MaterialComponents/ButtonBar (= 13.0.1)
-    - MaterialComponents/Buttons (= 13.0.1)
-    - MaterialComponents/CollectionCells (= 13.0.1)
-    - MaterialComponents/CollectionLayoutAttributes (= 13.0.1)
-    - MaterialComponents/Collections (= 13.0.1)
-    - MaterialComponents/Dialogs (= 13.0.1)
-    - MaterialComponents/FlexibleHeader (= 13.0.1)
-    - MaterialComponents/FontDiskLoader (= 13.0.1)
-    - MaterialComponents/HeaderStackView (= 13.0.1)
-    - MaterialComponents/Ink (= 13.0.1)
-    - MaterialComponents/NavigationBar (= 13.0.1)
-    - MaterialComponents/OverlayWindow (= 13.0.1)
-    - MaterialComponents/PageControl (= 13.0.1)
-    - MaterialComponents/Palettes (= 13.0.1)
-    - MaterialComponents/private (= 13.0.1)
-    - MaterialComponents/ProgressView (= 13.0.1)
-    - MaterialComponents/RobotoFontLoader (= 13.0.1)
-    - MaterialComponents/ShadowElevations (= 13.0.1)
-    - MaterialComponents/ShadowLayer (= 13.0.1)
-    - MaterialComponents/Slider (= 13.0.1)
-    - MaterialComponents/Snackbar (= 13.0.1)
-    - MaterialComponents/SpritedAnimationView (= 13.0.1)
-    - MaterialComponents/Switch (= 13.0.1)
-    - MaterialComponents/Typography (= 13.0.1)
-  - MaterialComponents/ActivityIndicator (13.0.1):
+  - MaterialComponents (13.0.2):
+    - MaterialComponents/ActivityIndicator (= 13.0.2)
+    - MaterialComponents/AnimationTiming (= 13.0.2)
+    - MaterialComponents/AppBar (= 13.0.2)
+    - MaterialComponents/ButtonBar (= 13.0.2)
+    - MaterialComponents/Buttons (= 13.0.2)
+    - MaterialComponents/CollectionCells (= 13.0.2)
+    - MaterialComponents/CollectionLayoutAttributes (= 13.0.2)
+    - MaterialComponents/Collections (= 13.0.2)
+    - MaterialComponents/Dialogs (= 13.0.2)
+    - MaterialComponents/FlexibleHeader (= 13.0.2)
+    - MaterialComponents/FontDiskLoader (= 13.0.2)
+    - MaterialComponents/HeaderStackView (= 13.0.2)
+    - MaterialComponents/Ink (= 13.0.2)
+    - MaterialComponents/NavigationBar (= 13.0.2)
+    - MaterialComponents/OverlayWindow (= 13.0.2)
+    - MaterialComponents/PageControl (= 13.0.2)
+    - MaterialComponents/Palettes (= 13.0.2)
+    - MaterialComponents/private (= 13.0.2)
+    - MaterialComponents/ProgressView (= 13.0.2)
+    - MaterialComponents/RobotoFontLoader (= 13.0.2)
+    - MaterialComponents/ShadowElevations (= 13.0.2)
+    - MaterialComponents/ShadowLayer (= 13.0.2)
+    - MaterialComponents/Slider (= 13.0.2)
+    - MaterialComponents/Snackbar (= 13.0.2)
+    - MaterialComponents/SpritedAnimationView (= 13.0.2)
+    - MaterialComponents/Switch (= 13.0.2)
+    - MaterialComponents/Typography (= 13.0.2)
+  - MaterialComponents/ActivityIndicator (13.0.2):
     - MaterialComponents/private/RTL
-  - MaterialComponents/AnimationTiming (13.0.1)
-  - MaterialComponents/AppBar (13.0.1):
+  - MaterialComponents/AnimationTiming (13.0.2)
+  - MaterialComponents/AppBar (13.0.2):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -152,7 +152,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 2e758f307e25703260a3ca6dd0a86bddea9b09ae
+  MaterialComponents: 8e6434a2a4ba7a7135733cfe8f6f3611ae220f87
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
 
 PODFILE CHECKSUM: f138be16d4835113ff672258fc7529fad3f90e91

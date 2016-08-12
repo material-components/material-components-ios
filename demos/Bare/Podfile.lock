@@ -1,6 +1,7 @@
 PODS:
   - MaterialComponents (13.0.2):
     - MaterialComponents/ActivityIndicator (= 13.0.2)
+    - MaterialComponents/AnimationTiming (= 13.0.2)
     - MaterialComponents/AppBar (= 13.0.2)
     - MaterialComponents/ButtonBar (= 13.0.2)
     - MaterialComponents/Buttons (= 13.0.2)
@@ -26,7 +27,9 @@ PODS:
     - MaterialComponents/SpritedAnimationView (= 13.0.2)
     - MaterialComponents/Switch (= 13.0.2)
     - MaterialComponents/Typography (= 13.0.2)
-  - MaterialComponents/ActivityIndicator (13.0.2)
+  - MaterialComponents/ActivityIndicator (13.0.2):
+    - MaterialComponents/private/RTL
+  - MaterialComponents/AnimationTiming (13.0.2)
   - MaterialComponents/AppBar (13.0.2):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
@@ -136,6 +139,7 @@ PODS:
     - MaterialComponents/private/Overlay
   - MaterialComponents/SpritedAnimationView (13.0.2)
   - MaterialComponents/Switch (13.0.2):
+    - MaterialComponents/private/RTL
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Typography (13.0.2)
   - MDFTextAccessibility (1.1.1)
@@ -148,7 +152,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 2e758f307e25703260a3ca6dd0a86bddea9b09ae
+  MaterialComponents: 8e6434a2a4ba7a7135733cfe8f6f3611ae220f87
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
 
 PODFILE CHECKSUM: 44e7c616a05bb4ce24db557c3de4bfbe915c2f56
