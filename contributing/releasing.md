@@ -322,21 +322,3 @@ done.
 
 Any work that was started by the [Release-blocking clients](#release-blocking-clients)
 (dragon) step above may need to be finalized.
-
-#### Send an announcement
-
-After you cut the release, send the following email to
-material-components-ios-discuss@googlegroups.com.
-
-Email subject:
-
-    State of <next release date> release
-
-Email body:
-
-    We will be cutting next week's release <date> afternoon EST.
-
-    Please respond to this thread with any questions about the upcoming release.
-
-    If you would like to ensure that a GitHub issue is part of this upcoming release, please respond
-    to this thread so that we may add it to this week's release milestone.
