@@ -54,6 +54,21 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 @property(nonatomic, readonly, strong) MDCSnackbarMessage *message;
 
 /**
+ The color for the background of the snackbar.
+ */
+@property(nonatomic, strong) UIColor *snackbarBackgroundColor UI_APPEARANCE_SELECTOR;
+
+/**
+ The color for the shadow color for the snackbar.
+ */
+@property(nonatomic, strong) UIColor *snackbarShadowColor UI_APPEARANCE_SELECTOR;
+
+/**
+ The color for the message text in the snackbar.
+ */
+@property(nonatomic, strong) UIColor *snackbarTextColor UI_APPEARANCE_SELECTOR;
+
+/**
  Creates a snackbar view to display @c message.
 
  The view will call @c handler when the user has interacted with the snackbar view in such a way

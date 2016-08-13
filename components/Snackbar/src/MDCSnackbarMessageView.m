@@ -1,24 +1,25 @@
-#import <QuartzCore/QuartzCore.h>
-
-#import "MDCSnackbarMessage.h"
-#import "MDCSnackbarMessageView.h"
-
-#import "MaterialButtons.h"
 /*
  Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
+ 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
-
+ 
  http://www.apache.org/licenses/LICENSE-2.0
-
+ 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+
+#import <QuartzCore/QuartzCore.h>
+
+#import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
+
+#import "MaterialButtons.h"
 
 #import "MaterialTypography.h"
 
@@ -199,9 +200,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                                                               : kMaximumViewWidth_iPhone;
 }
 
-- (UIColor *)snackbarBackgroundColor {
-  return MDCRGBAColor(0x32, 0x32, 0x32, 1.0f);
-}
+#pragma mark - Styling the view
 
 - (UIColor *)snackbarButtonTextColor {
   return MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
@@ -215,12 +214,27 @@ static const CGFloat kButtonInkRadius = 64.0f;
   return MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.5f);
 }
 
-- (UIColor *)snackbarShadowColor {
-  return MDCRGBAColor(0x00, 0x00, 0x00, 1.0f);
+- (void)setSnackbarBackgroundColor:(UIColor *)snackbarBackgroundColor {
+  _snackbarBackgroundColor = snackbarBackgroundColor;
+  _containerView.backgroundColor = snackbarBackgroundColor;
 }
 
-- (UIColor *)snackbarTextColor {
-  return MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f);
+- (void)setSnackbarShadowColor:(UIColor *)snackbarShadowColor {
+  _snackbarShadowColor = snackbarShadowColor;
+  self.layer.shadowColor = snackbarShadowColor.CGColor;
+}
+
+- (void)setSnackbarTextColor:(UIColor *)snackbarTextColor {
+  _snackbarTextColor = snackbarTextColor;
+  [self addColorToMessageLabel:snackbarTextColor];
+}
+
+- (void)addColorToMessageLabel:(UIColor *)color {
+  NSMutableAttributedString *messageString = [_label.attributedText mutableCopy];
+  [messageString addAttributes:@{
+                                 NSForegroundColorAttributeName :color,
+                                 } range:NSMakeRange(0, messageString.length)];
+  _label.attributedText = messageString;
 }
 
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
@@ -229,15 +243,16 @@ static const CGFloat kButtonInkRadius = 64.0f;
   if (self) {
     _message = message;
     _dismissalHandler = [handler copy];
-
-    UIColor *shadowColor = [self snackbarShadowColor];
+    
     self.backgroundColor = [UIColor clearColor];
     self.layer.cornerRadius = kCornerRadius;
-    self.layer.shadowColor = shadowColor.CGColor;
+    self.layer.shadowColor = MDCRGBAColor(0x00, 0x00, 0x00, 1.0f).CGColor;
     self.layer.shadowOpacity = kShadowAlpha;
     self.layer.shadowOffset = kShadowOffset;
     self.layer.shadowRadius = kShadowSpread;
 
+    _snackbarBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1.0f);
+    
     // Borders are drawn inside of the bounds of a layer. Because our border is translucent, we need
     // to have a view with transparent background and border only (@c self). Inside will be a
     // content view that has the dark grey color.
@@ -245,7 +260,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [self addSubview:_containerView];
 
     [_containerView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    _containerView.backgroundColor = [self snackbarBackgroundColor];
+    _containerView.backgroundColor = _snackbarBackgroundColor;
     _containerView.layer.cornerRadius = kCornerRadius;
     _containerView.layer.masksToBounds = YES;
 
@@ -285,11 +300,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                 }];
 
     // Apply 'global' attributes along the whole string.
-    NSDictionary *attributes = @{
-      NSForegroundColorAttributeName : [self snackbarTextColor],
-    };
-    [messageString addAttributes:attributes range:NSMakeRange(0, messageString.length)];
-
+    [self addColorToMessageLabel:(MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f))];
     _label.backgroundColor = [UIColor clearColor];
     _label.textAlignment = NSTextAlignmentNatural;
     _label.attributedText = messageString;
