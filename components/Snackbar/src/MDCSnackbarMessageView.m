@@ -214,19 +214,19 @@ static const CGFloat kButtonInkRadius = 64.0f;
   return MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.5f);
 }
 
-- (void)setSnackbarBackgroundColor:(UIColor *)snackbarBackgroundColor {
-  _snackbarBackgroundColor = snackbarBackgroundColor;
-  _containerView.backgroundColor = snackbarBackgroundColor;
+- (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
+  _snackbarMessageViewBackgroundColor = snackbarMessageViewBackgroundColor;
+  _containerView.backgroundColor = snackbarMessageViewBackgroundColor;
 }
 
-- (void)setSnackbarShadowColor:(UIColor *)snackbarShadowColor {
-  _snackbarShadowColor = snackbarShadowColor;
-  self.layer.shadowColor = snackbarShadowColor.CGColor;
+- (void)setSnackbarShadowColor:(UIColor *)snackbarMessageViewShadowColor {
+  _snackbarMessageViewShadowColor = snackbarMessageViewShadowColor;
+  self.layer.shadowColor = snackbarMessageViewShadowColor.CGColor;
 }
 
-- (void)setSnackbarTextColor:(UIColor *)snackbarTextColor {
-  _snackbarTextColor = snackbarTextColor;
-  [self addColorToMessageLabel:snackbarTextColor];
+- (void)setSnackbarMessageViewTextColor:(UIColor *)snackbarMessageViewTextColor {
+  _snackbarMessageViewTextColor = snackbarMessageViewTextColor;
+  [self addColorToMessageLabel:snackbarMessageViewTextColor];
 }
 
 - (void)addColorToMessageLabel:(UIColor *)color {
@@ -244,14 +244,17 @@ static const CGFloat kButtonInkRadius = 64.0f;
     _message = message;
     _dismissalHandler = [handler copy];
     
+    // styling the snackbar message view
+    _snackbarMessageViewShadowColor = MDCRGBAColor(0x00, 0x00, 0x00, 1.0f);
+    _snackbarMessageViewBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1.0f);
+    _snackbarMessageViewTextColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f);
+    
     self.backgroundColor = [UIColor clearColor];
     self.layer.cornerRadius = kCornerRadius;
-    self.layer.shadowColor = MDCRGBAColor(0x00, 0x00, 0x00, 1.0f).CGColor;
+    self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
     self.layer.shadowOpacity = kShadowAlpha;
     self.layer.shadowOffset = kShadowOffset;
     self.layer.shadowRadius = kShadowSpread;
-
-    _snackbarBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1.0f);
     
     // Borders are drawn inside of the bounds of a layer. Because our border is translucent, we need
     // to have a view with transparent background and border only (@c self). Inside will be a
@@ -260,7 +263,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [self addSubview:_containerView];
 
     [_containerView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    _containerView.backgroundColor = _snackbarBackgroundColor;
+    _containerView.backgroundColor = _snackbarMessageViewBackgroundColor;
     _containerView.layer.cornerRadius = kCornerRadius;
     _containerView.layer.masksToBounds = YES;
 
@@ -300,7 +303,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                 }];
 
     // Apply 'global' attributes along the whole string.
-    [self addColorToMessageLabel:(MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f))];
+    [self addColorToMessageLabel:_snackbarMessageViewTextColor];
     _label.backgroundColor = [UIColor clearColor];
     _label.textAlignment = NSTextAlignmentNatural;
     _label.attributedText = messageString;
