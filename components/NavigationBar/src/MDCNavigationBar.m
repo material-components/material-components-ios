@@ -341,11 +341,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // Tint color should only modify interactive elements
   _leadingButtonBar.tintColor = self.tintColor;
   _trailingButtonBar.tintColor = self.tintColor;
-
-  // When |titleTextAttributes| is not set use tint color to colorize title text
-  if (!_titleTextAttributes) {
-    _titleTextAttributes = @{NSForegroundColorAttributeName : self.tintColor};
-  }
 }
 
 #pragma mark Public
