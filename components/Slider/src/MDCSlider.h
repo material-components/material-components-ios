@@ -121,6 +121,16 @@ IB_DESIGNABLE
  */
 @property(nonatomic, assign, getter=isContinuous) BOOL continuous;
 
+/**
+ The value from which the filled part of the track is anchored. If set to a value between
+ minimumValue and maximumValue, then the filled/colored part of the track extends from the
+ trackAnchorValue to the thumb. Values beyond the minimum/maximum values are effectively capped.
+
+ The default value is -CGFLOAT_MAX, so the filled part of the track extends from the minimum value
+ to the thumb.
+ */
+@property(nonatomic, assign) CGFloat filledTrackAnchorValue;
+
 @end
 
 /** MDCSlider delegate which allows setting custom behavior. */

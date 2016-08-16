@@ -153,6 +153,14 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.maximumValue = maximumValue;
 }
 
+- (CGFloat)filledTrackAnchorValue {
+  return _thumbTrack.filledTrackAnchorValue;
+}
+
+- (void)setFilledTrackAnchorValue:(CGFloat)filledTrackAnchorValue {
+  _thumbTrack.filledTrackAnchorValue = filledTrackAnchorValue;
+}
+
 #pragma mark - MDCThumbTrackDelegate methods
 
 - (NSString *)thumbTrack:(MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {
