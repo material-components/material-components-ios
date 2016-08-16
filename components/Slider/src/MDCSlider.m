@@ -180,6 +180,11 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [numberFormatter stringFromNumber:@(value)];
 }
 
+- (BOOL)thumbTrack:(MDCThumbTrack *)thumbTrack shouldJumpToValue:(CGFloat)value {
+  return ![_delegate respondsToSelector:@selector(slider:shouldJumpToValue:)] ||
+         [_delegate slider:self shouldJumpToValue:value];
+}
+
 #pragma mark - UIControl methods
 
 - (void)setEnabled:(BOOL)enabled {

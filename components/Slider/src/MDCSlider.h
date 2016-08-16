@@ -138,6 +138,13 @@ IB_DESIGNABLE
 @optional
 
 /**
+ Called when the user taps on the MDCSlider.
+
+ If not implemented, the MDCSlider will always be allowed to jump to any value.
+ */
+- (BOOL)slider:(nonnull MDCSlider *)slider shouldJumpToValue:(CGFloat)value;
+
+/**
  For discrete sliders, called when the slider is determining the string label to display for a given
  discrete value.
 
