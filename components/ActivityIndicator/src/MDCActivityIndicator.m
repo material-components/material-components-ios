@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
 #pragma mark - Init
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self commonMDCActivityIndicatorInit];
@@ -110,7 +110,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   return self;
 }
 
-- (id)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCActivityIndicatorInit];
