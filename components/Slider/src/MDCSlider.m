@@ -15,6 +15,7 @@
  */
 
 #import "MDCSlider.h"
+#import "MDCSlider_Subclassable.h"
 
 #import "MaterialThumbTrack.h"
 
@@ -36,9 +37,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
-@implementation MDCSlider {
-  MDCThumbTrack *_thumbTrack;
-}
+@implementation MDCSlider
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
