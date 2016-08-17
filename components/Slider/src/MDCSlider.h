@@ -131,6 +131,15 @@ IB_DESIGNABLE
  */
 @property(nonatomic, assign) CGFloat filledTrackAnchorValue;
 
+/**
+ Whether or not to show the numeric value label when dragging a discrete slider. If YES, consider
+ implementing MDCSliderDelegate's @c -slider:displayedStringForValue: method to customize the string
+ displayed for each discrete value.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
+
 @end
 
 /** MDCSlider delegate which allows setting custom behavior. */
