@@ -37,6 +37,8 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
     appBar.navigationBar.tintColor = UIColor.whiteColor()
+    appBar.navigationBar.titleTextAttributes =
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
   }
 
   required init?(coder aDecoder: NSCoder) {

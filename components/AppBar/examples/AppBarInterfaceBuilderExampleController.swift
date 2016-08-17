@@ -37,6 +37,8 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
 
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
     appBar.navigationBar.tintColor = UIColor.whiteColor()
+    appBar.navigationBar.titleTextAttributes =
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
 
     addChildViewController(appBar.headerViewController)
     let headerColor = UIColor(red: 0.01, green: 0.67, blue: 0.96, alpha: 1.0)

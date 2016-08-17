@@ -43,6 +43,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     _tealColor = [UIColor colorWithRed:0 green:0.67f blue:0.55f alpha:1.f];
     _appBar.headerViewController.headerView.backgroundColor = _tealColor;
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
+    _appBar.navigationBar.titleTextAttributes =
+        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   }
   return self;
 }

@@ -346,7 +346,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 #pragma mark Public
 
 - (void)setTitle:(NSString *)title {
-  if (self.titleTextAttributes) {
+  // |self.titleTextAttributes| can only be set if |title| is set
+  if (self.titleTextAttributes && title.length > 0) {
     _titleLabel.attributedText =
         [[NSAttributedString alloc] initWithString:title attributes:_titleTextAttributes];
   } else {
@@ -392,7 +393,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // Copy attributes dictionary
   _titleTextAttributes = [titleTextAttributes copy];
   if (_titleLabel) {
-    if (_titleTextAttributes) {
+    // |_titleTextAttributes| can only be set if |self.title| is set
+    if (_titleTextAttributes && self.title.length > 0) {
       // Set label text as newly created attributed string with attributes if non-nil
       _titleLabel.attributedText =
           [[NSAttributedString alloc] initWithString:self.title attributes:_titleTextAttributes];
