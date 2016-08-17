@@ -124,6 +124,7 @@ PODS:
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
   - MaterialComponents/ProgressView (13.1.0):
     - MaterialComponents/private/RTL
   - MaterialComponents/RobotoFontLoader (13.1.0):
@@ -134,6 +135,7 @@ PODS:
   - MaterialComponents/Slider (13.1.0):
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Snackbar (13.1.0):
+    - MaterialComponents/AnimationTiming
     - MaterialComponents/Buttons
     - MaterialComponents/OverlayWindow
     - MaterialComponents/private/KeyboardWatcher
@@ -166,7 +168,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
-  MaterialComponents: 11d63d67e9cf42d0e216afce8606000699a6a2a1
+  MaterialComponents: e7310bbc904d318f14b6ee23f1bcbcf5da796123
   MaterialComponentsCatalog: b7c6ea9d1b49aa55b287420011ee8d9ce2d976b9
   MaterialComponentsUnitTests: dab690cdf98debdb4059750117bd3cdaa36cac45
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e

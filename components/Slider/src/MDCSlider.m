@@ -15,7 +15,7 @@
  */
 
 #import "MDCSlider.h"
-#import "MDCSlider_Subclassable.h"
+#import "private/MDCSlider_Subclassable.h"
 
 #import "MaterialThumbTrack.h"
 
