@@ -39,8 +39,8 @@ cp "$ROOT_DIR"/site-index.md "$ROOT_DIR"/site-source/jekyll-site-src/index.md
 FOLDERS=("components" "contributing" "howto")
 TARGET="${ROOT_DIR}/site-source/jekyll-site-src"
 for i in ${FOLDERS[@]}; do
-  ## Include all folders (for recursion), Markdown files, and jekyll_prefix.yaml files but nothing else.
-  rsync -r --include='*/' --include='*.md' --include='jekyll_prefix.yaml' --exclude='*' --prune-empty-dirs "${ROOT_DIR}/${i}" "${TARGET}"
+  ## Include all folders (for recursion), Markdown files, and .jekyll_prefix.yaml files but nothing else.
+  rsync -r --include='*/' --include='*.md' --include='.jekyll_prefix.yaml' --exclude='*' --prune-empty-dirs "${ROOT_DIR}/${i}" "${TARGET}"
 
   ## Rename the README.md files to index.md in preparation to become index.html.
   for j in $(find "${TARGET}/${i}" -name README.md); do
