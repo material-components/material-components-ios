@@ -1,9 +1,3 @@
----
-title:  "FontDiskLoader"
-layout: detail
-section: components
-excerpt: "Registers a single custom font asset from disk."
----
 #FontDiskLoader
 
 Registers a single custom font asset from disk

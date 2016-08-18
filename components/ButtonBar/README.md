@@ -1,9 +1,3 @@
----
-title:  "Button Bar"
-layout: detail
-section: components
-excerpt: "The Button Bar component is a view that facilitates the creation and layout of a horizontally-aligned list of buttons."
----
 # Button Bar
 
 <div class="ios-animation right" markdown="1">

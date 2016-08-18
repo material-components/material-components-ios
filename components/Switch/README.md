@@ -1,9 +1,3 @@
----
-title:  "Switch"
-layout: detail
-section: components
-excerpt: "The Switch component provides an material design on/off switch control with an interface similar to UISwitch."
----
 
 # Switch
 

@@ -1,10 +1,3 @@
----
-title:  "Shadow Layer"
-layout: detail
-section: components
-excerpt: "The Shadow Layer component implements the material design specifications for elevation and shadows."
----
-
 # Shadow Layer
 
 <div class="ios-animation right" markdown="1">

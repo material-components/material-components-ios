@@ -1,9 +1,3 @@
----
-title:  "Collection Cells"
-layout: detail
-section: components
-excerpt: "Collection view cell classes that adhere to Material design layout and styling."
----
 # Collection Cells
 
 ![Collections](docs/assets/collections_screenshot.png)

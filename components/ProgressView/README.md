@@ -1,9 +1,3 @@
----
-title:  "Progress View"
-layout: detail
-section: components
-excerpt: "Progress View is a determinate and linear progress indicator that implements material design animation and layout."
----
 # Progress View
 
 <div class="ios-animation right" markdown="1">

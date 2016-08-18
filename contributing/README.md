@@ -1,8 +1,3 @@
----
-title:  "Contributing"
-layout: landing
-section: contributing
----
 
 Want to contribute? Great! First, read this page (including the [small print](#the-small-print)).
 

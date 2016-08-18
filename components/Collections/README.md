@@ -1,9 +1,3 @@
----
-title:  "Collections"
-layout: detail
-section: components
-excerpt: "Collection view classes that adhere to Material design layout and styling."
----
 # Collections
 
 <div class="ios-animation right" markdown="1">

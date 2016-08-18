@@ -1,9 +1,3 @@
----
-title:  "App Bar"
-layout: detail
-section: components
-excerpt: "The App Bar is a flexible navigation bar designed to provide a typical material design navigation experience."
----
 # App Bar
 
 <div class="ios-animation right" markdown="1">

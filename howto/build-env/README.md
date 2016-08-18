@@ -1,9 +1,3 @@
----
-title:  "Build environment"
-layout: landing
-section: howto
----
-
 # Build environment
 
 Material Components for iOS builds with the standard open-source iOS toolchain:

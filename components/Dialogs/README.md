@@ -1,10 +1,3 @@
----
-title:  "Dialogs"
-layout: detail
-section: components
-excerpt: "The Dialogs component implements the material design specifications for modal presentations."
----
-
 # Dialogs
 
 Dialogs provides a presentation controller that will display a modal dialog according to the

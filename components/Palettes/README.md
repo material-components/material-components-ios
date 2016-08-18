@@ -1,9 +1,3 @@
----
-title:  "Palettes"
-layout: detail
-section: components
-excerpt: "The Palettes component provides Material color palettes."
----
 # Palettes
 
 The Palettes component provides Material colors organized into similar palettes.

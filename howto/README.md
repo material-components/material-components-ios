@@ -1,8 +1,3 @@
----
-title:  "How to use Material Components"
-layout: landing
-section: howto
----
 
 # How to use Material Components
 

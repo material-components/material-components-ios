@@ -1,9 +1,3 @@
----
-title:  "Slider"
-layout: detail
-section: components
-excerpt: "The Slider component provides a material design control for selecting a value from a continuous range or discrete set of values."
----
 # Slider
 
 <div class="ios-animation right" markdown="1">

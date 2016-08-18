@@ -1,9 +1,3 @@
----
-title:  "Activity Indicator"
-layout: detail
-section: components
-excerpt: "Progress and activity indicators are visual indications of an app loading content."
----
 # Activity Indicator
 
 <div class="ios-animation right" markdown="1">

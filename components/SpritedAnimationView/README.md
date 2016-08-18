@@ -1,9 +1,3 @@
----
-title:  "Sprited Animation View"
-layout: detail
-section: components
-excerpt: "The Sprited Animation View component provides an alternative to animating an array of images with an UIImageView."
----
 # SpritedAnimationView
 
 ![SpritedAnimationView](docs/assets/spritedanimationview_screenshot.png)

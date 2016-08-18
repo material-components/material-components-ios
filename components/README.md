@@ -1,9 +1,3 @@
----
-title:  "Material Components Documentation"
-layout: landing
-section: components
----
-
 # Component Documentation
 
 Material Components is a collection of standalone, production-quality user

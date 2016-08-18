@@ -1,9 +1,3 @@
----
-title:  "Buttons"
-layout: detail
-section: components
-excerpt: "Buttons is a collection of material design buttons, including a flat button, a raised button and a floating action button."
----
 # Buttons
 
 <div class="ios-animation right" markdown="1">

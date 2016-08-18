@@ -1,9 +1,3 @@
----
-title:  "Roboto Font Loader"
-layout: detail
-section: components
-excerpt: "The Roboto Font Loader lazy loads the Robot font."
----
 # Roboto Font Loader
 
 The Roboto Font Loader lazy loads the Roboto font.

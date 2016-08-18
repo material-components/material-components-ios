@@ -1,8 +1,3 @@
----
-title:  "Material Components Development Guide"
-layout: landing
-section: howto
----
 
 # Material Components Development Guide
 
