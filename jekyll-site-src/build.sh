@@ -45,10 +45,10 @@ for i in ${FOLDERS[@]}; do
   ## Rename the README.md files to index.md in preparation to become index.html.
   for j in $(find "${TARGET}/${i}" -name README.md); do
 
-    ## Prepend all README.md files with associated jekyll_prefix.yaml files if available then remove
-    ## jekyll_prefix.yaml files
+    ## Prepend all README.md files with associated .jekyll_prefix.yaml files if available then remove
+    ## .jekyll_prefix.yaml files
     DIR=$(dirname "$j")
-    YAML_FILE=$(find "$DIR" -maxdepth 1 -name jekyll_prefix.yaml)
+    YAML_FILE=$(find "$DIR" -maxdepth 1 -name .jekyll_prefix.yaml)
     if [ -e "$YAML_FILE" ]; then
       cat "$YAML_FILE" "$j" > "${DIR}/README.tmp"
       mv "${DIR}/README.tmp" "$j"
