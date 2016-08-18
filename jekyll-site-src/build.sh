@@ -46,7 +46,7 @@ for i in ${FOLDERS[@]}; do
   for j in $(find "${TARGET}/${i}" -name README.md); do
 
     ## Prepend all README.md files with associated jekyll_prefix.yaml files if available then remove
-    ## README.yaml files
+    ## jekyll_prefix.yaml files
     DIR=$(dirname "$j")
     YAML_FILE=$(find "$DIR" -maxdepth 1 -name jekyll_prefix.yaml)
     if [ -e "$YAML_FILE" ]; then
