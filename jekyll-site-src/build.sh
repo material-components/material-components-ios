@@ -47,11 +47,11 @@ for i in ${FOLDERS[@]}; do
 
     ## Prepend all README.md files with associated README.yaml files if available then remove
     ## README.yaml files
-    DIR=$(dirname "${j}")
-    YAML_FILE=$(find "${DIR}" -maxdepth 1 -name README.yaml)
+    DIR=$(dirname "$j")
+    YAML_FILE=$(find "$DIR" -maxdepth 1 -name README.yaml)
     if [ -e "$YAML_FILE" ]; then
-      cat "${YAML_FILE}" "${j}" > "${DIR}/README.tmp"
-      mv "${DIR}/README.tmp" "${j}"
+      cat "$YAML_FILE" "$j" > "${DIR}/README.tmp"
+      mv "${DIR}/README.tmp" "$j"
       rm $YAML_FILE
     fi
     NEW_NAME=$(echo ${j} | sed -e s/README/index/)
