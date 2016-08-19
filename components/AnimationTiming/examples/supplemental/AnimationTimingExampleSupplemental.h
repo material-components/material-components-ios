@@ -16,10 +16,23 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PestoIcon.h"
+@interface AnimationTimingExample : UIViewController
 
-@interface PestoIconSettings : PestoIcon
+@property(nonatomic, strong) NSTimer *animationLoop;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) UIView *linearView;
+@property(nonatomic, strong) UIView *materialEaseInOutView;
+@property(nonatomic, strong) UIView *materialEaseOutView;
+@property(nonatomic, strong) UIView *materialEaseInView;
 
-+ (UIImage *)drawTileImage:(CGRect)frame;
+@end
+
+@interface AnimationTimingExample (Supplemental)
+
+- (void)setupExampleViews;
+
++ (UILabel *)curveLabelWithTitle:(NSString *)text;
+
++ (NSArray<UIColor *> *)defaultColors;
 
 @end

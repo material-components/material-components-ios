@@ -17,9 +17,9 @@
 #import "PestoViewController.h"
 #import "PestoCollectionViewController.h"
 #import "PestoDetailViewController.h"
-#import "PestoIcons/PestoIconSettings.h"
 #import "PestoSettingsViewController.h"
 
+#import "MaterialAnimationTiming.h"
 #import "MaterialAppBar.h"
 
 static CGFloat kPestoAnimationDuration = 0.33f;
@@ -57,8 +57,7 @@ static CGFloat kPestoInset = 5.f;
     _appBar.headerViewController.headerView.backgroundColor = [UIColor clearColor];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
 
-    CGRect iconFrame = CGRectMake(0, 0, 32, 32);
-    UIImage *icon = [PestoIconSettings drawTileImage:iconFrame];
+    UIImage *icon = [UIImage imageNamed:@"Settings"];
     UIBarButtonItem *menuButton =
         [[UIBarButtonItem alloc] initWithImage:icon
                                          style:UIBarButtonItemStyleDone
@@ -71,7 +70,6 @@ static CGFloat kPestoInset = 5.f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
   [self.appBar addSubviewsToParent];
 
   self.zoomableCardView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -82,13 +80,6 @@ static CGFloat kPestoInset = 5.f;
   self.zoomableView.backgroundColor = [UIColor lightGrayColor];
   self.zoomableView.contentMode = UIViewContentModeScaleAspectFill;
   [self.view addSubview:self.zoomableView];
-}
-
-/** Use MDCAnimationCurve once available. */
-- (CAMediaTimingFunction *)quantumEaseInOut {
-  // This curve is slow both at the beginning and end.
-  // Visualization of curve  http://cubic-bezier.com/#.4,0,.2,1
-  return [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:0.2f:1.0f];
 }
 
 #pragma mark - PestoCollectionViewControllerDelegate
@@ -102,12 +93,12 @@ static CGFloat kPestoInset = 5.f;
       cell.frame.size.width, cell.frame.size.height);
   dispatch_async(dispatch_get_main_queue(), ^{
     self.zoomableView.image = cell.image;
-
     [UIView animateWithDuration:kPestoAnimationDuration
         delay:0.0
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
-          CAMediaTimingFunction *quantumEaseInOut = [self quantumEaseInOut];
+          CAMediaTimingFunction *quantumEaseInOut =
+              [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
           [CATransaction setAnimationTimingFunction:quantumEaseInOut];
           CGRect zoomFrame = CGRectMake(0, 0, self.view.bounds.size.width, 320.f);
           self.zoomableView.frame = zoomFrame;
@@ -115,18 +106,11 @@ static CGFloat kPestoInset = 5.f;
         }
         completion:^(BOOL finished) {
           PestoDetailViewController *detailVC = [[PestoDetailViewController alloc] init];
-          detailVC.image = cell.image;
+          detailVC.imageView.image = cell.image;
           detailVC.title = cell.title;
-          detailVC.iconImageName = cell.iconImageName;
           detailVC.descText = cell.descText;
-          detailVC.modalPresentationStyle = UIModalPresentationCustom;
-          detailVC.transitioningDelegate = self;
-
-          UINavigationController *navVC =
-              [[UINavigationController alloc] initWithRootViewController:detailVC];
-          navVC.navigationBarHidden = YES;
-
-          [self presentViewController:navVC
+          detailVC.iconImageName = cell.iconImageName;
+          [self presentViewController:detailVC
                              animated:NO
                            completion:^() {
                              self.zoomableView.frame = CGRectZero;
@@ -138,6 +122,7 @@ static CGFloat kPestoInset = 5.f;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
+
 - (nullable id<UIViewControllerAnimatedTransitioning>)
     animationControllerForPresentedController:(UIViewController *)presented
                          presentingController:(UIViewController *)presenting
@@ -151,6 +136,7 @@ static CGFloat kPestoInset = 5.f;
 }
 
 #pragma mark - UIViewControllerAnimatedTransitioning
+
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   UIViewController *const fromController =
       [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];

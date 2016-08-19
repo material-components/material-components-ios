@@ -73,6 +73,15 @@ Avoid macros.
 * Macros are appropriate when dealing with system-level macros like
   `__IPHONE_OS_VERSION_MIN_REQUIRED`.
 
+### A note about subclassing a UIView
+
+Assume you've created MDCFooSpinner which subclasses UIView.
+
+* Implement both initWithFrame: and initWithCoder:.
+* If both init methods are setting up the same state, each should call a common method.
+* To avoid collisions and problems subclasses, this common method should be named
+  commonMDCFooSpinnerInit.
+
 ## Swift
 
 Swift cannot be used for the implementation of components, but is encouraged for unit tests, UI

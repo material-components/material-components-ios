@@ -488,6 +488,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 - (void)fhv_startDisplayLink {
   [self fhv_stopDisplayLink];
 
+  // NOTE: This may cause a retain cycle.
+  // cl/129917749
   _shiftAccumulatorDisplayLink =
       [CADisplayLink displayLinkWithTarget:self
                                   selector:@selector(fhv_shiftAccumulatorDisplayLinkDidFire:)];

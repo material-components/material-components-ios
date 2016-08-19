@@ -85,7 +85,7 @@ static const float kAmbientShadowOpacity = 0.08f;
 
 @implementation MDCShadowLayer
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     _elevation = 0;

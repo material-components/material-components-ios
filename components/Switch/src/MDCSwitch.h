@@ -52,14 +52,30 @@ IB_DESIGNABLE
 
  This property is nil by default.
  */
-@property(nullable, nonatomic, strong) UIImage *onImage UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, strong) IBInspectable UIImage *onImage;
 
 /**
  The image displayed on the thumb when the switch is in the off position.
 
  This property is nil by default.
  */
-@property(nullable, nonatomic, strong) UIImage *offImage UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, strong) IBInspectable UIImage *offImage;
+
+/**
+ The accessibility value to be set when the switch is on.
+
+ When nil, the accessibility value defaults to "On" localized to the device's language. Please keep
+ internationalization in mind when overriding this.
+ */
+@property(nullable, nonatomic, copy) IBInspectable NSString *onAccessibilityValue;
+
+/**
+ The accessibility value to be set when the switch is off.
+
+ When nil, the accessibility value defaults to "Off" localized to the device's language. Please keep
+ internationalization in mind when overriding this.
+ */
+@property(nullable, nonatomic, copy) IBInspectable NSString *offAccessibilityValue;
 
 /**
  Boolean value that determines the off/on state of the switch.

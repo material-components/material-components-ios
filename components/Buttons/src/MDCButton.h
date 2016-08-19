@@ -73,7 +73,7 @@
  Setting this to a non-nil color overrides that logic, and the caller is responsible for ensuring
  that the title color/background color combination meets the accessibility requirements.
  */
-@property(nonatomic, strong, nullable) UIColor *customTitleColor;
+@property(nonatomic, strong, nullable) UIColor *customTitleColor UI_APPEARANCE_SELECTOR;
 
 /**
  The alpha value that will be applied when the button is disabled. Most clients can leave this as

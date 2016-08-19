@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "13.0.2"
+  s.version      = "13.1.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
@@ -43,6 +43,8 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "AppBar" do |ss|
@@ -63,6 +65,12 @@ Pod::Spec.new do |s|
 
     ss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
     ss.dependency "MaterialComponents/private/RTL"
+  end
+
+  s.subspec "AnimationTiming" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "Buttons" do |ss|
@@ -138,6 +146,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
+
     ss.dependency "MaterialComponents/Buttons"
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
@@ -263,6 +272,7 @@ Pod::Spec.new do |s|
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
+    ss.dependency "MaterialComponents/AnimationTiming"
     ss.dependency "MaterialComponents/Buttons"
     ss.dependency "MaterialComponents/OverlayWindow"
     ss.dependency "MaterialComponents/private/KeyboardWatcher"
@@ -286,6 +296,7 @@ Pod::Spec.new do |s|
     }
 
     ss.dependency "MaterialComponents/private/ThumbTrack"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "Typography" do |ss|
@@ -339,6 +350,7 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/Ink"
       ss.dependency "MaterialComponents/ShadowElevations"
       ss.dependency "MaterialComponents/ShadowLayer"
+      ss.dependency "MaterialComponents/Typography"
       ss.dependency "MaterialComponents/private/Color"
     end
 

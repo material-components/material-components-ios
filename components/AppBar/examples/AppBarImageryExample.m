@@ -46,6 +46,8 @@
   // We want navigation bar + status bar tint color to be white, so we set tint color here and
   // implement -preferredStatusBarStyle.
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
+  self.appBar.navigationBar.titleTextAttributes =
+      @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 
   // Allow the header to show more of the image.
   self.appBar.headerViewController.headerView.maximumHeight = 200;

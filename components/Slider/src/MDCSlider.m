@@ -15,6 +15,7 @@
  */
 
 #import "MDCSlider.h"
+#import "private/MDCSlider_Subclassable.h"
 
 #import "MaterialThumbTrack.h"
 
@@ -36,9 +37,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
-@implementation MDCSlider {
-  MDCThumbTrack *_thumbTrack;
-}
+@implementation MDCSlider
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -153,6 +152,22 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.maximumValue = maximumValue;
 }
 
+- (CGFloat)filledTrackAnchorValue {
+  return _thumbTrack.filledTrackAnchorValue;
+}
+
+- (void)setFilledTrackAnchorValue:(CGFloat)filledTrackAnchorValue {
+  _thumbTrack.filledTrackAnchorValue = filledTrackAnchorValue;
+}
+
+- (BOOL)shouldDisplayDiscreteValueLabel {
+  return _thumbTrack.shouldDisplayDiscreteValueLabel;
+}
+
+- (void)setShouldDisplayDiscreteValueLabel:(BOOL)shouldDisplayDiscreteValueLabel {
+  _thumbTrack.shouldDisplayDiscreteValueLabel = shouldDisplayDiscreteValueLabel;
+}
+
 #pragma mark - MDCThumbTrackDelegate methods
 
 - (NSString *)thumbTrack:(MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {
@@ -170,6 +185,11 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     numberFormatter.minimumIntegerDigits = 1;  // To get 0.5 instead of .5
   });
   return [numberFormatter stringFromNumber:@(value)];
+}
+
+- (BOOL)thumbTrack:(MDCThumbTrack *)thumbTrack shouldJumpToValue:(CGFloat)value {
+  return ![_delegate respondsToSelector:@selector(slider:shouldJumpToValue:)] ||
+         [_delegate slider:self shouldJumpToValue:value];
 }
 
 #pragma mark - UIControl methods

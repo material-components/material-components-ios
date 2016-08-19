@@ -112,7 +112,7 @@ Choose from Objective-C or Swift:
 #### Swift
 
 ~~~swift
-import material_components_ios
+import MaterialComponents
 
 class MDCBuildTestViewController: UIViewController {
 

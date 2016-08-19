@@ -1,8 +1,8 @@
 /* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
 "MDCSwitchAccessibilityHint" = "แตะสองครั้งเพื่อสลับการตั้งค่า";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityLabelOn" = "เปิด";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityValueOn" = "เปิด";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityLabelOff" = "ปิด";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityValueOff" = "ปิด";
