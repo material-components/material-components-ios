@@ -39,11 +39,21 @@ cp "$ROOT_DIR"/site-index.md "$ROOT_DIR"/site-source/jekyll-site-src/index.md
 FOLDERS=("components" "contributing" "howto")
 TARGET="${ROOT_DIR}/site-source/jekyll-site-src"
 for i in ${FOLDERS[@]}; do
-  ## Include all folders (for recursion) and Markdown files, but nothing else.
-  rsync -r --include='*/' --include='*.md' --exclude='*' --prune-empty-dirs "${ROOT_DIR}/${i}" "${TARGET}"
+  ## Include all folders (for recursion), Markdown files, and .jekyll_prefix.yaml files but nothing else.
+  rsync -r --include='*/' --include='*.md' --include='.jekyll_prefix.yaml' --exclude='*' --prune-empty-dirs "${ROOT_DIR}/${i}" "${TARGET}"
 
   ## Rename the README.md files to index.md in preparation to become index.html.
   for j in $(find "${TARGET}/${i}" -name README.md); do
+
+    ## Prepend all README.md files with associated .jekyll_prefix.yaml files if available then remove
+    ## .jekyll_prefix.yaml files
+    DIR=$(dirname "$j")
+    YAML_FILE=$(find "$DIR" -maxdepth 1 -name .jekyll_prefix.yaml)
+    if [ -e "$YAML_FILE" ]; then
+      cat "$YAML_FILE" "$j" > "${DIR}/README.tmp"
+      mv "${DIR}/README.tmp" "$j"
+      rm $YAML_FILE
+    fi
     NEW_NAME=$(echo ${j} | sed -e s/README/index/)
     mv "${j}" "${NEW_NAME}"
   done
