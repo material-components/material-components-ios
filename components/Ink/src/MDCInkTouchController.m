@@ -91,7 +91,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 }
 
 - (void)cancelInkTouchProcessing {
-  [_addedInkView cancelAllAnimationsAnimated:YES];
+  [_addedInkView cancelAllAnimations];
 }
 
 - (MDCInkView *_Nullable)inkViewAtTouchLocation:(CGPoint)location {
@@ -147,7 +147,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
     case UIGestureRecognizerStateCancelled:
     case UIGestureRecognizerStateRecognized:
     case UIGestureRecognizerStateFailed:
-      [_addedInkView cancelAllAnimationsAnimated:YES];
+      [_addedInkView cancelAllAnimations];
       _shouldRespondToTouch = NO;
       break;
   }

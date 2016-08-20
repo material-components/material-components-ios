@@ -103,9 +103,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 
 /**
  Cancel all animations.
-
- @param animated If false, remove the animations immediately.
  */
-- (void)cancelAllAnimationsAnimated:(BOOL)animated;
+- (void)cancelAllAnimations;
 
 @end
