@@ -28,6 +28,10 @@
     ink = [[MDCInkView alloc] initWithFrame:self.bounds];
     [self addSubview:ink];
     objc_setAssociatedObject(self, @selector(inkView), ink, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  } else if ([ink superview] == nil) {
+    // add the inkView back in if it was previously removed.
+    // See `prepareForReuse` for when this subview could have been removed.
+    [self addSubview:ink];
   }
   return ink;
 }
@@ -38,6 +42,13 @@
   }
   [self addSubview:inkView];
   objc_setAssociatedObject(self, @selector(inkView), inkView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)prepareForReuse {
+  [super prepareForReuse];
+  if (self.inkView) {
+    [self.inkView removeFromSuperview];
+  }
 }
 
 @end
