@@ -18,6 +18,7 @@
 
 #import "MaterialKeyboardWatcher.h"
 #import "private/MDCDialogShadowedView.h"
+#import "MDCDialogPresentationControllerDelegate.h"
 
 static CGFloat MDCDialogMinimumWidth = 280.0f;
 // TODO: Spec indicates 40 side margins and 280 minimum width.
@@ -243,7 +244,11 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 #pragma mark - Internal
 
 - (void)dismiss:(UIGestureRecognizer *)gesture {
-  if (gesture.state == UIGestureRecognizerStateRecognized) {
+  BOOL shouldDismiss = gesture.state == UIGestureRecognizerStateRecognized;
+  if ([self.presentationControllerDelegate respondsToSelector:@selector(presentationControllerShouldDismissOnBackgroundTap:)]) {
+    shouldDismiss = shouldDismiss && [self.presentationControllerDelegate presentationControllerShouldDismissOnBackgroundTap:self];
+  }
+  if (shouldDismiss) {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
   }
 }

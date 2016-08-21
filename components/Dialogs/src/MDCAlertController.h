@@ -22,6 +22,8 @@
 
 @class MDCAlertAction;
 
+@protocol MDCDialogPresentationControllerDelegate;
+
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
 
@@ -48,6 +50,18 @@
 + (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)title
                                          message:(nullable NSString *)message;
 
+/**
+ Similar to `alertControllerWithTitle:message`, but this method allows the caller to specify a presentationControllerDelegate too.
+ 
+ @param title The title of the alert.
+ @param message Descriptive text that summarizes a decision in a sentence of two.
+ @param presentationControllerDelegate a MDCDialogPresentationControllerDelegate callback
+ @return An initialized MDCAlertController object.
+ */
++ (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)title
+                                         message:(nullable NSString *)message
+                         presentationControllerDelegate:(nullable id<MDCDialogPresentationControllerDelegate>)presentationControllerDelegate;
+
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
                                  bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
@@ -67,6 +81,11 @@
  @param action Will be added to the end of MDCAlertController.actions.
  */
 - (void)addAction:(nonnull MDCAlertAction *)action;
+
+/**
+ The callback delegate. See @c MDCDialogPresentationControllerDelegate.
+ */
+@property(nonatomic, weak, nullable) id<MDCDialogPresentationControllerDelegate> presentationControllerDelegate;
 
 /**
  The actions that the user can take in response to the alert.

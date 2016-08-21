@@ -22,7 +22,7 @@ material spec. Additionally, an alert controller is provided that will display a
 
 Presenting dialogs utilizes two classes: MDCDialogPresentationController and
 MDCDialogTransitionController. These allow the presentation of view controllers in a material
-specificed manner. MDCDialogPresentationController is a subclass of UIPresentationController
+specific manner. MDCDialogPresentationController is a subclass of UIPresentationController
 that observes the presented view controller for preferred content size.
 MDCDialogTransitionController implements UIViewControllerAnimatedTransitioning and
 UIViewControllerTransitioningDelegate to vend the presentation controller during the transition.
@@ -58,7 +58,7 @@ pod install
 ## Usage
 
 To display a modal using MaterialDialogs you set two properties on the view controller to be
-presentented. Set modalPresentationStyle to UIModalPresentationCustom and set
+presented. Set modalPresentationStyle to UIModalPresentationCustom and set
 transitioningDelegate to and instance of MDCDialogTransitionController. Then you present the
 view controller from the root controller to display it as a modal dialog.
 

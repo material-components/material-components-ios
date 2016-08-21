@@ -20,6 +20,8 @@
 #error "This component only supports iOS 8.0 and above."
 #endif
 
+@protocol MDCDialogPresentationControllerDelegate;
+
 /**
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the
  material spec.
@@ -38,6 +40,11 @@
  presentedView's frame.
  */
 @interface MDCDialogPresentationController : UIPresentationController
+
+/**
+ The callback delegate. See @c MDCDialogPresentationControllerDelegate.
+ */
+@property(nonatomic, weak, nullable) id<MDCDialogPresentationControllerDelegate> presentationControllerDelegate;
 
 /**
  Returns the size of the specified child view controller's content.
