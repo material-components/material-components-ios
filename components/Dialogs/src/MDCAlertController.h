@@ -60,7 +60,7 @@
  */
 + (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)title
                                          message:(nullable NSString *)message
-                         presentationControllerDelegate:(nullable id<MDCDialogPresentationControllerDelegate>)presentationControllerDelegate;
+                  presentationControllerDelegate:(nullable id<MDCDialogPresentationControllerDelegate>)presentationControllerDelegate;
 
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
