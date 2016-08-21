@@ -27,6 +27,7 @@
  Allows the receiver to dictate whether or not to allow the user to dismiss the dialog by tapping on the background view.
  
  @param presentationController The controller which is presenting the dialog.
+ @return BOOL indicating that the presentation controller should dismiss the dialog when a user taps on the background view.
  */
 - (BOOL)presentationControllerShouldDismissOnBackgroundTap:(nonnull MDCDialogPresentationController *)presentationController;
 
