@@ -80,13 +80,13 @@ pod install
 
 ### Importing
 
-Before using Ink, you'll need to import it:
+Before using a Button, you'll need to import the button you want to use:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
-#import "MaterialInk.h"
+#import "MDCButton.h"
 ~~~
 
 #### Swift
