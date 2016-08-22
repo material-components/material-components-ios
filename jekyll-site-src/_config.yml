@@ -8,6 +8,7 @@ url: ""
 folder: ""
 permalink: :title
 analytics_id: "UA-51798601-9"
+link_to_site: "false"
 
 
 # Build settings
