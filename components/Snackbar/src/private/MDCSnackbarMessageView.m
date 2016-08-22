@@ -101,6 +101,11 @@ static const CGFloat kButtonHeightVerticalLayout = 48.0f;
  */
 static const CGFloat kButtonInkRadius = 64.0f;
 
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCSnackbarMessageView () <CAAnimationDelegate>
+@end
+#endif
+
 @interface MDCSnackbarMessageView ()
 
 /**

@@ -1,3 +1,14 @@
+# 13.1.1
+
+## Component changes
+
+### Snackbar
+
+#### Changes
+
+* [iOS10+ hotfix.](https://github.com/google/material-components-ios/commit/dd2de7c8573ab353274bec4f069a3538f2108a17) (Peter Lee)
+
+
 # 13.1.0
 
 ## API diffs
