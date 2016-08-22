@@ -1,3 +1,6 @@
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/contributing/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/contributing">GitHub</a> for README documentation.{% endif %}-->
 
 Want to contribute? Great! First, read this page (including the [small print](#the-small-print)).
 

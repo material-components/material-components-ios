@@ -1,3 +1,7 @@
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ShadowLayer">GitHub</a> for README documentation.{% endif %}-->
+
 # Shadow Layer
 
 <div class="ios-animation right" markdown="1">

@@ -1,3 +1,7 @@
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Snackbar/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Snackbar">GitHub</a> for README documentation.{% endif %}-->
+
 # Snackbar
 
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.

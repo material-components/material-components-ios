@@ -1,3 +1,7 @@
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/howto/build-env/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/howto/build-env">GitHub</a> for README documentation.{% endif %}-->
+
 # Build environment
 
 Material Components for iOS builds with the standard open-source iOS toolchain:
