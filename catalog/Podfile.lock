@@ -1,37 +1,37 @@
 PODS:
   - CatalogByConvention (1.0.1)
-  - MaterialComponents (13.1.0):
-    - MaterialComponents/ActivityIndicator (= 13.1.0)
-    - MaterialComponents/AnimationTiming (= 13.1.0)
-    - MaterialComponents/AppBar (= 13.1.0)
-    - MaterialComponents/ButtonBar (= 13.1.0)
-    - MaterialComponents/Buttons (= 13.1.0)
-    - MaterialComponents/CollectionCells (= 13.1.0)
-    - MaterialComponents/CollectionLayoutAttributes (= 13.1.0)
-    - MaterialComponents/Collections (= 13.1.0)
-    - MaterialComponents/Dialogs (= 13.1.0)
-    - MaterialComponents/FlexibleHeader (= 13.1.0)
-    - MaterialComponents/FontDiskLoader (= 13.1.0)
-    - MaterialComponents/HeaderStackView (= 13.1.0)
-    - MaterialComponents/Ink (= 13.1.0)
-    - MaterialComponents/NavigationBar (= 13.1.0)
-    - MaterialComponents/OverlayWindow (= 13.1.0)
-    - MaterialComponents/PageControl (= 13.1.0)
-    - MaterialComponents/Palettes (= 13.1.0)
-    - MaterialComponents/private (= 13.1.0)
-    - MaterialComponents/ProgressView (= 13.1.0)
-    - MaterialComponents/RobotoFontLoader (= 13.1.0)
-    - MaterialComponents/ShadowElevations (= 13.1.0)
-    - MaterialComponents/ShadowLayer (= 13.1.0)
-    - MaterialComponents/Slider (= 13.1.0)
-    - MaterialComponents/Snackbar (= 13.1.0)
-    - MaterialComponents/SpritedAnimationView (= 13.1.0)
-    - MaterialComponents/Switch (= 13.1.0)
-    - MaterialComponents/Typography (= 13.1.0)
-  - MaterialComponents/ActivityIndicator (13.1.0):
+  - MaterialComponents (13.1.1):
+    - MaterialComponents/ActivityIndicator (= 13.1.1)
+    - MaterialComponents/AnimationTiming (= 13.1.1)
+    - MaterialComponents/AppBar (= 13.1.1)
+    - MaterialComponents/ButtonBar (= 13.1.1)
+    - MaterialComponents/Buttons (= 13.1.1)
+    - MaterialComponents/CollectionCells (= 13.1.1)
+    - MaterialComponents/CollectionLayoutAttributes (= 13.1.1)
+    - MaterialComponents/Collections (= 13.1.1)
+    - MaterialComponents/Dialogs (= 13.1.1)
+    - MaterialComponents/FlexibleHeader (= 13.1.1)
+    - MaterialComponents/FontDiskLoader (= 13.1.1)
+    - MaterialComponents/HeaderStackView (= 13.1.1)
+    - MaterialComponents/Ink (= 13.1.1)
+    - MaterialComponents/NavigationBar (= 13.1.1)
+    - MaterialComponents/OverlayWindow (= 13.1.1)
+    - MaterialComponents/PageControl (= 13.1.1)
+    - MaterialComponents/Palettes (= 13.1.1)
+    - MaterialComponents/private (= 13.1.1)
+    - MaterialComponents/ProgressView (= 13.1.1)
+    - MaterialComponents/RobotoFontLoader (= 13.1.1)
+    - MaterialComponents/ShadowElevations (= 13.1.1)
+    - MaterialComponents/ShadowLayer (= 13.1.1)
+    - MaterialComponents/Slider (= 13.1.1)
+    - MaterialComponents/Snackbar (= 13.1.1)
+    - MaterialComponents/SpritedAnimationView (= 13.1.1)
+    - MaterialComponents/Switch (= 13.1.1)
+    - MaterialComponents/Typography (= 13.1.1)
+  - MaterialComponents/ActivityIndicator (13.1.1):
     - MaterialComponents/private/RTL
-  - MaterialComponents/AnimationTiming (13.1.0)
-  - MaterialComponents/AppBar (13.1.0):
+  - MaterialComponents/AnimationTiming (13.1.1)
+  - MaterialComponents/AppBar (13.1.1):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -40,15 +40,15 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (13.1.0):
+  - MaterialComponents/ButtonBar (13.1.1):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/Buttons (13.1.0):
+  - MaterialComponents/Buttons (13.1.1):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/CollectionCells (13.1.0):
+  - MaterialComponents/CollectionCells (13.1.1):
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/private/Icons/ic_check
@@ -59,95 +59,95 @@ PODS:
     - MaterialComponents/private/Icons/ic_reorder
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/CollectionLayoutAttributes (13.1.0)
-  - MaterialComponents/Collections (13.1.0):
+  - MaterialComponents/CollectionLayoutAttributes (13.1.1)
+  - MaterialComponents/Collections (13.1.1):
     - MaterialComponents/CollectionCells
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/Dialogs (13.1.0):
+  - MaterialComponents/Dialogs (13.1.1):
     - MaterialComponents/Buttons
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/FlexibleHeader (13.1.0):
+  - MaterialComponents/FlexibleHeader (13.1.1):
     - MDFTextAccessibility (~> 1.1)
-  - MaterialComponents/FontDiskLoader (13.1.0)
-  - MaterialComponents/HeaderStackView (13.1.0)
-  - MaterialComponents/Ink (13.1.0)
-  - MaterialComponents/NavigationBar (13.1.0):
+  - MaterialComponents/FontDiskLoader (13.1.1)
+  - MaterialComponents/HeaderStackView (13.1.1)
+  - MaterialComponents/Ink (13.1.1)
+  - MaterialComponents/NavigationBar (13.1.1):
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/OverlayWindow (13.1.0)
-  - MaterialComponents/PageControl (13.1.0)
-  - MaterialComponents/Palettes (13.1.0)
-  - MaterialComponents/private (13.1.0):
-    - MaterialComponents/private/Color (= 13.1.0)
-    - MaterialComponents/private/Icons (= 13.1.0)
-    - MaterialComponents/private/KeyboardWatcher (= 13.1.0)
-    - MaterialComponents/private/Overlay (= 13.1.0)
-    - MaterialComponents/private/RTL (= 13.1.0)
-    - MaterialComponents/private/ThumbTrack (= 13.1.0)
-  - MaterialComponents/private/Color (13.1.0)
-  - MaterialComponents/private/Icons (13.1.0):
-    - MaterialComponents/private/Icons/Base (= 13.1.0)
-    - MaterialComponents/private/Icons/ic_arrow_back (= 13.1.0)
-    - MaterialComponents/private/Icons/ic_check (= 13.1.0)
-    - MaterialComponents/private/Icons/ic_check_circle (= 13.1.0)
-    - MaterialComponents/private/Icons/ic_chevron_right (= 13.1.0)
-    - MaterialComponents/private/Icons/ic_info (= 13.1.0)
-    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 13.1.0)
-    - MaterialComponents/private/Icons/ic_reorder (= 13.1.0)
-  - MaterialComponents/private/Icons/Base (13.1.0)
-  - MaterialComponents/private/Icons/ic_arrow_back (13.1.0):
+  - MaterialComponents/OverlayWindow (13.1.1)
+  - MaterialComponents/PageControl (13.1.1)
+  - MaterialComponents/Palettes (13.1.1)
+  - MaterialComponents/private (13.1.1):
+    - MaterialComponents/private/Color (= 13.1.1)
+    - MaterialComponents/private/Icons (= 13.1.1)
+    - MaterialComponents/private/KeyboardWatcher (= 13.1.1)
+    - MaterialComponents/private/Overlay (= 13.1.1)
+    - MaterialComponents/private/RTL (= 13.1.1)
+    - MaterialComponents/private/ThumbTrack (= 13.1.1)
+  - MaterialComponents/private/Color (13.1.1)
+  - MaterialComponents/private/Icons (13.1.1):
+    - MaterialComponents/private/Icons/Base (= 13.1.1)
+    - MaterialComponents/private/Icons/ic_arrow_back (= 13.1.1)
+    - MaterialComponents/private/Icons/ic_check (= 13.1.1)
+    - MaterialComponents/private/Icons/ic_check_circle (= 13.1.1)
+    - MaterialComponents/private/Icons/ic_chevron_right (= 13.1.1)
+    - MaterialComponents/private/Icons/ic_info (= 13.1.1)
+    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 13.1.1)
+    - MaterialComponents/private/Icons/ic_reorder (= 13.1.1)
+  - MaterialComponents/private/Icons/Base (13.1.1)
+  - MaterialComponents/private/Icons/ic_arrow_back (13.1.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check (13.1.0):
+  - MaterialComponents/private/Icons/ic_check (13.1.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check_circle (13.1.0):
+  - MaterialComponents/private/Icons/ic_check_circle (13.1.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_chevron_right (13.1.0):
+  - MaterialComponents/private/Icons/ic_chevron_right (13.1.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_info (13.1.0):
+  - MaterialComponents/private/Icons/ic_info (13.1.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_radio_button_unchecked (13.1.0):
+  - MaterialComponents/private/Icons/ic_radio_button_unchecked (13.1.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_reorder (13.1.0):
+  - MaterialComponents/private/Icons/ic_reorder (13.1.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/KeyboardWatcher (13.1.0)
-  - MaterialComponents/private/Overlay (13.1.0)
-  - MaterialComponents/private/RTL (13.1.0)
-  - MaterialComponents/private/ThumbTrack (13.1.0):
+  - MaterialComponents/private/KeyboardWatcher (13.1.1)
+  - MaterialComponents/private/Overlay (13.1.1)
+  - MaterialComponents/private/RTL (13.1.1)
+  - MaterialComponents/private/ThumbTrack (13.1.1):
     - MaterialComponents/Ink
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ProgressView (13.1.0):
+  - MaterialComponents/ProgressView (13.1.1):
     - MaterialComponents/private/RTL
-  - MaterialComponents/RobotoFontLoader (13.1.0):
+  - MaterialComponents/RobotoFontLoader (13.1.1):
     - MaterialComponents/FontDiskLoader
     - MaterialComponents/Typography
-  - MaterialComponents/ShadowElevations (13.1.0)
-  - MaterialComponents/ShadowLayer (13.1.0)
-  - MaterialComponents/Slider (13.1.0):
+  - MaterialComponents/ShadowElevations (13.1.1)
+  - MaterialComponents/ShadowLayer (13.1.1)
+  - MaterialComponents/Slider (13.1.1):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Snackbar (13.1.0):
+  - MaterialComponents/Snackbar (13.1.1):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Buttons
     - MaterialComponents/OverlayWindow
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Overlay
-  - MaterialComponents/SpritedAnimationView (13.1.0)
-  - MaterialComponents/Switch (13.1.0):
+  - MaterialComponents/SpritedAnimationView (13.1.1)
+  - MaterialComponents/Switch (13.1.1):
     - MaterialComponents/private/RTL
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Typography (13.1.0)
-  - MaterialComponentsCatalog (13.1.0):
+  - MaterialComponents/Typography (13.1.1)
+  - MaterialComponentsCatalog (13.1.1):
     - MaterialComponents
-  - MaterialComponentsUnitTests (13.1.0):
+  - MaterialComponentsUnitTests (13.1.1):
     - MaterialComponents
     - MDFTextAccessibility
   - MDFTextAccessibility (1.1.1)
@@ -168,9 +168,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
-  MaterialComponents: e7310bbc904d318f14b6ee23f1bcbcf5da796123
-  MaterialComponentsCatalog: b7c6ea9d1b49aa55b287420011ee8d9ce2d976b9
-  MaterialComponentsUnitTests: dab690cdf98debdb4059750117bd3cdaa36cac45
+  MaterialComponents: d6d3f95ebf80484ed130692b37c7d2ca9f2246da
+  MaterialComponentsCatalog: ba3d0f1c51200f9349895de689267d823ac4eb0d
+  MaterialComponentsUnitTests: a99fabc85d02fccc353aed14010495474fc615c2
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
 
 PODFILE CHECKSUM: d8e6d6aab517ce9f15b570bd45e131bbde872b51
