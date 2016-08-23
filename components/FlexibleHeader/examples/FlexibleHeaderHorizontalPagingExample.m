@@ -44,6 +44,7 @@ static const NSUInteger kNumberOfPages = 10;
   _pagingScrollView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _pagingScrollView.scrollsToTop = NO;
+  self.title = @"Swipe Right From Left Edge to Go Back";
 
   NSArray *pageColors = @[ HexColor(0x55C4F5), HexColor(0x8BC34A), HexColor(0xFFC107) ];
 
