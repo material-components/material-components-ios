@@ -143,6 +143,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   MDCDiscreteDotView *_discreteDots;
   BOOL _shouldDisplayInk;
   MDCNumericValueLabel *_valueLabel;
+  UIPanGestureRecognizer *_dummyPanRecognizer;
 
   // Attributes to handle interaction. To associate touches to previous touches, we keep a reference
   // to the current touch, since the system reuses the same memory address when sending subsequent
@@ -204,6 +205,21 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     }
     self.primaryColor = onTintColor;
     _clearColor = [UIColor colorWithWhite:1.0f alpha:0.0f];
+
+    // We add this UIPanGestureRecognizer to our view so that any superviews of the thumb track know
+    // when we are dragging the thumb track, and can treat us accordingly. Specifically, without
+    // this if a ThumbTrack is contained within a UIScrollView, the scroll view will cancel any
+    // touch events sent to the thumb track whenever the view is scrolling, regardless of whether or
+    // not we're in the middle of dragging the thumb. Adding a dummy gesture recognizer lets the
+    // scroll view know that we are in the middle of dragging, so those touch events shouldn't be
+    // cancelled.
+    //
+    // Note that an alternative to this would be to set canCancelContentTouches = NO on the
+    // UIScrollView, but because we can't guarentee that the thumb track will always be contained in
+    // scroll views configured like that, we have to handle it within the thumb track.
+    _dummyPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:nil];
+    _dummyPanRecognizer.cancelsTouchesInView = NO;
+    [self updateDummyPanRecognizerTarget];
 
     [self setValue:_minimumValue animated:NO];
   }
@@ -332,6 +348,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _trackView.layer.cornerRadius = _trackHeight / 2;
   } else {
     _trackView.layer.cornerRadius = 0;
+  }
+}
+
+- (void)setPanningAllowedOnEntireControl:(BOOL)panningAllowedOnEntireControl {
+  if (_panningAllowedOnEntireControl != panningAllowedOnEntireControl) {
+    _panningAllowedOnEntireControl = panningAllowedOnEntireControl;
+    [self updateDummyPanRecognizerTarget];
   }
 }
 
@@ -957,6 +980,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _isDraggingThumb = NO;
     _currentTouch = nil;
 
+    if (wasDragging) {
+      // Shrink the thumb
+      [self updateThumbTrackAnimated:NO
+               animateThumbAfterMove:YES
+                       previousValue:_value
+                          completion:nil];
+    }
+
     [self sendActionsForControlEvents:UIControlEventTouchCancel];
 
     if (!_continuousUpdateEvents && wasDragging) {
@@ -1057,6 +1088,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     _lastDispatchedValue = _value;
   }
+}
+
+- (void)updateDummyPanRecognizerTarget {
+  [_dummyPanRecognizer.view removeGestureRecognizer:_dummyPanRecognizer];
+  UIView *panTarget = _panningAllowedOnEntireControl ? self : _thumbView;
+  [panTarget addGestureRecognizer:_dummyPanRecognizer];
 }
 
 #pragma mark - UIControl methods
