@@ -47,6 +47,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 @property(nonatomic, assign) CGFloat value;
 @property(nonatomic, assign) CGFloat anchorValue;
 @property(nonatomic, assign) BOOL discreteValueLabel;
+@property(nonatomic, assign) BOOL hollowCircle;
 @property(nonatomic, assign) BOOL enabled;
 
 - (void)didChangeMDCSliderValue:(MDCSlider *)slider;
@@ -67,6 +68,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     _value = 0.5;
     _anchorValue = -CGFLOAT_MAX;
     _discreteValueLabel = YES;
+    _hollowCircle = YES;
     _enabled = YES;
   }
 
@@ -114,6 +116,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _slider.value = model.value;
   _slider.filledTrackAnchorValue = model.anchorValue;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
+  _slider.thumbIsHollowAtStart = model.hollowCircle;
   _slider.enabled = model.enabled;
 
   // Add target/action pair
@@ -196,9 +199,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
-    model.labelString = @"Green slider";
+    model.labelString = @"Green slider without hollow circle at 0";
+    model.hollowCircle = NO;
     model.sliderColor = MDCColorFromRGB(MDCGreenColor);
-    model.value = 0.8f;
+    model.value = 0.f;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
