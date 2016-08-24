@@ -116,7 +116,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _slider.value = model.value;
   _slider.filledTrackAnchorValue = model.anchorValue;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
-  _slider.thumbIsHollowAtStart = model.hollowCircle;
+  _slider.isThumbHollowAtStart = model.hollowCircle;
   _slider.enabled = model.enabled;
 
   // Add target/action pair
