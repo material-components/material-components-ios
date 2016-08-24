@@ -69,7 +69,7 @@ static const NSInteger kSpriteFrameRateDefault = 60;
 
 - (instancetype)initWithSpriteSheetImage:(UIImage *)spriteSheetImage
                           numberOfFrames:(NSInteger)numberOfFrames {
-  GOSSpritedAnimationView *animationView = [self initWithSpriteSheetImage:spriteSheetImage];
+  MDCSpritedAnimationView *animationView = [self initWithSpriteSheetImage:spriteSheetImage];
   animationView.numberOfFrames = numberOfFrames;
   animationView.singleFrameWidthInPercent = 1.0f / numberOfFrames;
   [animationView updateSpriteAnimationLayer];
