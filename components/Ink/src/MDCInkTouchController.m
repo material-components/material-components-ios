@@ -209,8 +209,9 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
   } else if ([_delegate respondsToSelector:@selector(shouldInkTouchControllerProcessInkTouches:)]) {
     // Please use inkTouchController:shouldProcessInkTouchesAtTouchLocation. The delegate call below
     // is deprecated and only provided for legacy support.
-    return [self performSelector:@selector(shouldInkTouchControllerProcessInkTouches:)
-                      withObject:self];
+    id<MDCInkTouchControllerLegacyDelegate> legacyDelegate =
+        (id<MDCInkTouchControllerLegacyDelegate>)_delegate;
+    return [legacyDelegate shouldInkTouchControllerProcessInkTouches:self];
   }
   return YES;
 }
