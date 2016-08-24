@@ -118,7 +118,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
                                 handler:(__nullable MDCActionHandler)handler;
 
 /** Alert actions must be created with actionWithTitle:handler: */
-- (nullable instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
  Title of the button shown on the alert dialog.
