@@ -148,7 +148,7 @@ IB_DESIGNABLE
 
  Defaults to YES.
  */
-@property(nonatomic, assign) BOOL isThumbHollowAtStart;
+@property(nonatomic, assign, getter=isThumbHollowAtStart) BOOL thumbHollowAtStart;
 
 @end
 

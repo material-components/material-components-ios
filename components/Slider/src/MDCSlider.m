@@ -172,8 +172,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return _thumbTrack.thumbIsHollowAtStart;
 }
 
-- (void)setIsThumbHollowAtStart:(BOOL)isThumbHollowAtStart {
-  _thumbTrack.thumbIsHollowAtStart = isThumbHollowAtStart;
+- (void)setThumbHollowAtStart:(BOOL)thumbHollowAtStart {
+  _thumbTrack.thumbIsHollowAtStart = thumbHollowAtStart;
 }
 
 #pragma mark - MDCThumbTrackDelegate methods
