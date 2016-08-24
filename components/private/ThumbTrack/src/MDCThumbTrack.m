@@ -207,7 +207,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _clearColor = [UIColor colorWithWhite:1.0f alpha:0.0f];
 
     // We add this UIPanGestureRecognizer to our view so that any superviews of the thumb track know
-    // when we are dragging the thumb track, and can treat us accordingly. Specifically, without
+    // when we are dragging the thumb track, and can treat it accordingly. Specifically, without
     // this if a ThumbTrack is contained within a UIScrollView, the scroll view will cancel any
     // touch events sent to the thumb track whenever the view is scrolling, regardless of whether or
     // not we're in the middle of dragging the thumb. Adding a dummy gesture recognizer lets the
@@ -215,7 +215,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // cancelled.
     //
     // Note that an alternative to this would be to set canCancelContentTouches = NO on the
-    // UIScrollView, but because we can't guarentee that the thumb track will always be contained in
+    // UIScrollView, but because we can't guarantee that the thumb track will always be contained in
     // scroll views configured like that, we have to handle it within the thumb track.
     _dummyPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:nil];
     _dummyPanRecognizer.cancelsTouchesInView = NO;
