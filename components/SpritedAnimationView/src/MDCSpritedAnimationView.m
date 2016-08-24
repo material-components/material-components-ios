@@ -67,6 +67,16 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   return self;
 }
 
+- (instancetype)initWithSpriteSheetImage:(UIImage *)spriteSheetImage
+                          numberOfFrames:(NSInteger)numberOfFrames {
+  MDCSpritedAnimationView *animationView = [self initWithSpriteSheetImage:spriteSheetImage];
+  animationView.numberOfFrames = numberOfFrames;
+  animationView.singleFrameWidthInPercent = 1.0f / numberOfFrames;
+  [animationView updateSpriteAnimationLayer];
+
+  return animationView;
+}
+
 - (CGSize)intrinsicContentSize {
   if (_spriteSheetImage) {
     CGFloat width = _spriteSheetImage.size.width;
