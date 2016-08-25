@@ -28,6 +28,7 @@
 @implementation DialogsTypicalUseViewController
 
 - (void)viewDidLoad {
+  [super viewDidLoad];
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
