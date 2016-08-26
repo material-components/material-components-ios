@@ -1,9 +1,7 @@
----
-title:  "Navigation Bar"
-layout: detail
-section: components
-excerpt: "The Navigation Bar component is a view composed of a left and right Button Bar and either a title label or a custom title view."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/NavigationBar/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/NavigationBar">GitHub</a> for README documentation.{% endif %}-->
+
 # Navigation Bar
 
 <div class="ios-animation right" markdown="1">

@@ -1,9 +1,7 @@
----
-title:  "App Bar"
-layout: detail
-section: components
-excerpt: "The App Bar is a flexible navigation bar designed to provide a typical material design navigation experience."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/AppBar">GitHub</a> for README documentation.{% endif %}-->
+
 # App Bar
 
 <div class="ios-animation right" markdown="1">

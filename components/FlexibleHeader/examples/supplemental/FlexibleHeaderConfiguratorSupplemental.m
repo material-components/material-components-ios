@@ -111,7 +111,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
     [sections addObject:items ?: @[]];
   };
 
-  createSection(@"Swipe right to go back", nil);
+  createSection(@"Swipe right from left edge to go back", nil);
 
   createSection(@"Basic behavior", @[
     switchItem(@"Can over-extend", FlexibleHeaderConfiguratorFieldCanOverExtend),

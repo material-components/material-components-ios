@@ -15,6 +15,7 @@
  */
 
 #import "MDCPageControl.h"
+#import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialInk.h"

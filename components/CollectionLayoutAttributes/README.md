@@ -1,9 +1,7 @@
----
-title:  "Collection Layout Attributes"
-layout: detail
-section: components
-excerpt: "Allows passing layout attributes to the cells and supplementary views."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/CollectionLayoutAttributes/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/CollectionLayoutAttributes">GitHub</a> for README documentation.{% endif %}-->
+
 # Collection Layout Attributes
 
 Allows passing layout attributes to the cells and supplementary views.

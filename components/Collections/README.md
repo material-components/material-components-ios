@@ -1,9 +1,7 @@
----
-title:  "Collections"
-layout: detail
-section: components
-excerpt: "Collection view classes that adhere to Material design layout and styling."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Collections">GitHub</a> for README documentation.{% endif %}-->
+
 # Collections
 
 <div class="ios-animation right" markdown="1">

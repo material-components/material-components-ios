@@ -168,6 +168,14 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.shouldDisplayDiscreteValueLabel = shouldDisplayDiscreteValueLabel;
 }
 
+- (BOOL)isThumbHollowAtStart {
+  return _thumbTrack.thumbIsHollowAtStart;
+}
+
+- (void)setThumbHollowAtStart:(BOOL)thumbHollowAtStart {
+  _thumbTrack.thumbIsHollowAtStart = thumbHollowAtStart;
+}
+
 #pragma mark - MDCThumbTrackDelegate methods
 
 - (NSString *)thumbTrack:(MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {

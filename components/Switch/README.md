@@ -1,9 +1,6 @@
----
-title:  "Switch"
-layout: detail
-section: components
-excerpt: "The Switch component provides an material design on/off switch control with an interface similar to UISwitch."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Switch/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Switch">GitHub</a> for README documentation.{% endif %}-->
 
 # Switch
 

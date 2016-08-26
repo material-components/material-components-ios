@@ -1,9 +1,7 @@
----
-title:  "Buttons"
-layout: detail
-section: components
-excerpt: "Buttons is a collection of material design buttons, including a flat button, a raised button and a floating action button."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Buttons">GitHub</a> for README documentation.{% endif %}-->
+
 # Buttons
 
 <div class="ios-animation right" markdown="1">
@@ -86,13 +84,13 @@ pod install
 
 ### Importing
 
-Before using Ink, you'll need to import it:
+Before using a Button, you'll need to import the button you want to use:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
-#import "MaterialInk.h"
+#import "MDCButton.h"
 ~~~
 
 #### Swift

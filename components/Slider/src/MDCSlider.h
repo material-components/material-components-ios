@@ -140,6 +140,16 @@ IB_DESIGNABLE
  */
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
 
+/**
+ Whether or not the thumb view should be a hollow circle when at the minimum value. For sliders
+ where the minimum value indicates that the associated property is off (for example a volume slider
+ where a value of 0 = muted), this should be set to YES. In cases where this doesn't make sense (for
+ instance a scrubber of an audio or video file), this should be set to NO.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign, getter=isThumbHollowAtStart) BOOL thumbHollowAtStart;
+
 @end
 
 /** MDCSlider delegate which allows setting custom behavior. */
