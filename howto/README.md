@@ -12,5 +12,7 @@ Apple's standard development tool chain.
 
 - [Build environment](build-env/)
   <!--{: .icon-guide }-->
-  <!-- TODO Correct icon -->
+
+- [FAQ](faq/)
+  <!--{: .icon-guide }-->
 <!--{: .icon-list }-->
