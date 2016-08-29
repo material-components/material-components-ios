@@ -77,7 +77,7 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message
-       presentationControllerDelegate:(nullable id<MDCDialogPresentationControllerDelegate>)presentationControllerDelegate;
+          presentationControllerBlock:(nullable MDCDialogPresentationControllerBlock)presentationControllerBlock;
 
 @end
 
@@ -92,18 +92,18 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)title
                                  message:(nullable NSString *)message {
-  return [[MDCAlertController alloc] initWithTitle:title message:message presentationControllerDelegate:nil];
+  return [[MDCAlertController alloc] initWithTitle:title message:message presentationControllerBlock:nil];
 }
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
                                  message:(nullable NSString *)message
-          presentationControllerDelegate:(nullable id<MDCDialogPresentationControllerDelegate>)presentationControllerDelegate {
-  return [[MDCAlertController alloc] initWithTitle:alertTitle message:message presentationControllerDelegate:presentationControllerDelegate];
+          presentationControllerBlock:(nullable MDCDialogPresentationControllerBlock)presentationControllerBlock {
+  return [[MDCAlertController alloc] initWithTitle:alertTitle message:message presentationControllerBlock:presentationControllerBlock];
 }
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message
-       presentationControllerDelegate:(nullable id<MDCDialogPresentationControllerDelegate>)presentationControllerDelegate {
+       presentationControllerBlock:(nullable MDCDialogPresentationControllerBlock)presentationControllerBlock {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _alertTitle = [title copy];
@@ -115,10 +115,10 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
     _actions = [[NSMutableArray alloc] init];
     _actionButtons = [[NSMutableArray alloc] init];
 
-    _presentationControllerDelegate = presentationControllerDelegate;
+    _presentationControllerBlock = [presentationControllerBlock copy];
     
     _transitionController = [[MDCDialogTransitionController alloc] init];
-    _transitionController.presentationControllerDelegate = presentationControllerDelegate;
+    _transitionController.presentationControllerBlock = _presentationControllerBlock;
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
@@ -137,10 +137,9 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
   return;
 }
 
-- (void)setPresentationControllerDelegate:(id<MDCDialogPresentationControllerDelegate>)presentationControllerDelegate {
-  _presentationControllerDelegate = presentationControllerDelegate;
-  // ensure the `transitionController` knows about the change in delegate.
-  self.transitionController.presentationControllerDelegate = presentationControllerDelegate;
+- (void)setPresentationControllerBlock:(MDCDialogPresentationControllerBlock)presentationControllerBlock {
+  _presentationControllerBlock = [presentationControllerBlock copy];
+  self.transitionController.presentationControllerBlock = _presentationControllerBlock;
 }
 
 - (NSString *)title {

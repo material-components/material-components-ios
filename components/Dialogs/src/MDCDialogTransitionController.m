@@ -17,7 +17,7 @@
 #import "MDCDialogTransitionController.h"
 
 #import "MDCDialogPresentationController.h"
-#import "MDCDialogPresentationControllerDelegate.h"
+#import "MDCAlertController.h"
 
 @implementation MDCDialogTransitionController
 
@@ -95,7 +95,9 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.5;
                             presentingViewController:(UIViewController *)presenting
                                 sourceViewController:(UIViewController *)source {
   MDCDialogPresentationController *presentationController = [[MDCDialogPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
-  presentationController.presentationControllerDelegate = self.presentationControllerDelegate;
+  if (self.presentationControllerBlock) {
+    presentationController.presentationControllerBlock = self.presentationControllerBlock;
+  }
   return presentationController;
 }
 

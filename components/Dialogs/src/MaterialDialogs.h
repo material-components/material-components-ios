@@ -17,4 +17,3 @@
 #import "MDCAlertController.h"
 #import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
-#import "MDCDialogPresentationControllerDelegate.h"

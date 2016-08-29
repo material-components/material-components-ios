@@ -20,7 +20,7 @@
 #error "This component only supports iOS 8.0 and above."
 #endif
 
-@protocol MDCDialogPresentationControllerDelegate;
+#import "MDCAlertController.h"
 
 /**
  MDCDialogTransitionController is be used to setup a custom transition and animationed presentation
@@ -43,8 +43,8 @@
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
 /**
- The callback delegate. See @c MDCDialogPresentationControllerDelegate.
+ The callback block. Dictates whether or not the controller should be dismissed if the user taps on the dimmed view behind the alert controller.
  */
-@property(nonatomic, nullable, weak) id<MDCDialogPresentationControllerDelegate> presentationControllerDelegate;
+@property(nonatomic, nullable, copy) MDCDialogPresentationControllerBlock presentationControllerBlock;
 
 @end

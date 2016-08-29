@@ -17,17 +17,8 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCAlertController.h"
-#import "MDCDialogPresentationControllerDelegate.h"
 #import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
-
-@interface DummyPresentationControllerDelegate : UIViewController <MDCDialogPresentationControllerDelegate>
-
-@end
-
-@implementation DummyPresentationControllerDelegate
-
-@end
 
 @interface TestGestureRecognizer : UIGestureRecognizer
 
@@ -70,7 +61,7 @@
 
 @end
 
-@interface DialogPresentationControllerDelegateTests : XCTestCase <MDCDialogPresentationControllerDelegate>
+@interface DialogPresentationControllerBlockTests : XCTestCase
 
 @property (nonatomic, nullable, strong) UIViewController *presentedViewController;
 @property (nonatomic, nullable, strong) TestPresentingViewController *presentingViewController;
@@ -78,29 +69,29 @@
 
 @property (nonatomic, nullable, strong) TestGestureRecognizer *gestureRecognizer;
 
-@property (nonatomic, assign) BOOL shouldDismissOnBackgroundTap;
-
 @end
 
-@implementation DialogPresentationControllerDelegateTests
+@implementation DialogPresentationControllerBlockTests
 
 - (void)setUp {
   [super setUp];
   self.presentedViewController = [[UIViewController alloc] init];
   self.presentingViewController = [[TestPresentingViewController alloc] init];
   self.presentationViewController = [[MDCDialogPresentationController alloc] initWithPresentedViewController:self.presentedViewController presentingViewController:self.presentingViewController];
-  self.presentationViewController.presentationControllerDelegate = self;
+  self.presentationViewController.presentationControllerBlock = ^BOOL(MDCDialogPresentationController * _Nonnull presentationController) {
+    return YES;
+  };
   
   self.gestureRecognizer = [[TestGestureRecognizer alloc] init];
   self.gestureRecognizer.state = UIGestureRecognizerStateRecognized;
-  
-  self.shouldDismissOnBackgroundTap = true;
 }
 
-- (void)testDelegateInitializer {
-  MDCAlertController *alertViewController = [MDCAlertController alertControllerWithTitle:@"Title" message:@"Message" presentationControllerDelegate:self];
+- (void)testBlockInitializer {
+  MDCAlertController *alertController = [MDCAlertController alertControllerWithTitle:@"Title" message:@"Message" presentationControllerBlock:^BOOL(MDCDialogPresentationController * _Nonnull presentationController) {
+    return YES;
+  }];
   
-  XCTAssertNotNil(alertViewController);
+  XCTAssertNotNil(alertController);
 }
 
 - (void)testPresentationControllerIsDismissed {
@@ -118,56 +109,23 @@
   XCTAssertFalse(self.presentingViewController.wasDismissed);
 }
 
-- (void)testPresentationControllerIsDismissedIfDelegateIsNil {
-  self.presentationViewController.presentationControllerDelegate = nil;
+- (void)testPresentationControllerIsDismissedIfBlockIsNil {
+  self.presentationViewController.presentationControllerBlock = nil;
   
   [self.presentationViewController dismiss:self.gestureRecognizer];
   
   XCTAssertTrue(self.presentingViewController.wasDismissed);
 }
 
-- (void)testPresentationControllerIsNotDismissedIfDelegateSaysSo {
-  self.shouldDismissOnBackgroundTap = NO;
+- (void)testPresentationControllerIsNotDismissedIfBlockSaysSo {
+  
+  self.presentationViewController.presentationControllerBlock = ^BOOL(MDCDialogPresentationController * _Nonnull presentationController) {
+    return NO;
+  };
   
   [self.presentationViewController dismiss:self.gestureRecognizer];
   
   XCTAssertFalse(self.presentingViewController.wasDismissed);
-}
-
-- (void)testPresentationControllerIsDismissedIfDelegateDoesNotImplementMethods {
-  DummyPresentationControllerDelegate *dummyDelegate = [[DummyPresentationControllerDelegate alloc] init];
-  self.presentationViewController.presentationControllerDelegate = dummyDelegate;
-  
-  [self.presentationViewController dismiss:self.gestureRecognizer];
-  
-  XCTAssertTrue(self.presentingViewController.wasDismissed);
-}
-
-- (void)testTransitionControllerDelegation {
-  TestAlertController *alertViewController = [TestAlertController alertControllerWithTitle:@"Title" message:@"Message" presentationControllerDelegate:nil];
-  
-  XCTAssertNil(alertViewController.presentationControllerDelegate);
-  XCTAssertNil(alertViewController.transitionController.presentationControllerDelegate);
-  
-  alertViewController.presentationControllerDelegate = self;
-  
-  XCTAssertTrue([alertViewController.presentationControllerDelegate isEqual:self]);
-  XCTAssertTrue([alertViewController.transitionController.presentationControllerDelegate isEqual:self]);
-}
-
-- (void)testViewControllerTransitioningDelegate {
-  UIViewController *sourceViewController = [[UIViewController alloc] init];
-  TestAlertController *alertViewController = [TestAlertController alertControllerWithTitle:@"Title" message:@"Message" presentationControllerDelegate:self];
-  
-  MDCDialogPresentationController *presentationController = [alertViewController.transitionController presentationControllerForPresentedViewController:self.presentedViewController presentingViewController:self.presentingViewController sourceViewController:sourceViewController];
-  
-  XCTAssertTrue([presentationController.presentationControllerDelegate isEqual:self]);
-}
-
-#pragma mark MDCDialogPresentationControllerDelegate
-
-- (BOOL)presentationControllerShouldDismissOnBackgroundTap:(MDCDialogPresentationController *)presentationController {
-  return self.shouldDismissOnBackgroundTap;
 }
 
 @end

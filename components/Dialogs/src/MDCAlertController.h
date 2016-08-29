@@ -21,8 +21,9 @@
 #endif
 
 @class MDCAlertAction;
+@class MDCDialogPresentationController;
 
-@protocol MDCDialogPresentationControllerDelegate;
+typedef BOOL (^MDCDialogPresentationControllerBlock)(MDCDialogPresentationController *_Nonnull presentationController);
 
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
@@ -51,16 +52,16 @@
                                          message:(nullable NSString *)message;
 
 /**
- Similar to `alertControllerWithTitle:message`, but this method allows the caller to specify a presentationControllerDelegate too.
+ Similar to `alertControllerWithTitle:message`, but this method allows the caller to specify a presentationControllerBlock too.
  
  @param title The title of the alert.
  @param message Descriptive text that summarizes a decision in a sentence of two.
- @param presentationControllerDelegate a MDCDialogPresentationControllerDelegate callback
+ @param presentationControllerBlock a block which defines whether or not to close the dialog when the user taps on the dimmed view behind the alert controller.
  @return An initialized MDCAlertController object.
  */
 + (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)title
                                          message:(nullable NSString *)message
-                  presentationControllerDelegate:(nullable id<MDCDialogPresentationControllerDelegate>)presentationControllerDelegate;
+                  presentationControllerBlock:(nullable MDCDialogPresentationControllerBlock)presentationControllerBlock;
 
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
@@ -83,9 +84,9 @@
 - (void)addAction:(nonnull MDCAlertAction *)action;
 
 /**
- The callback delegate. See @c MDCDialogPresentationControllerDelegate.
+  The callback block. Dictates whether or not the controller should be dismissed if the user taps on the dimmed view behind the alert controller.
  */
-@property(nonatomic, weak, nullable) id<MDCDialogPresentationControllerDelegate> presentationControllerDelegate;
+@property(nonatomic, copy, nullable) MDCDialogPresentationControllerBlock presentationControllerBlock;
 
 /**
  The actions that the user can take in response to the alert.

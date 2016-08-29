@@ -19,7 +19,7 @@
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
-@interface DialogsAlertViewController() <MDCDialogPresentationControllerDelegate>
+@interface DialogsAlertViewController()
 
 @end
 
@@ -30,7 +30,9 @@
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
 
   MDCAlertController *materialAlertController =
-      [MDCAlertController alertControllerWithTitle:titleString message:messageString presentationControllerDelegate:self];
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString presentationControllerBlock:^BOOL(MDCDialogPresentationController * _Nonnull presentationController) {
+        return YES;
+      }];
 
   MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
@@ -72,12 +74,6 @@
   [materialAlertController addAction:action];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
-}
-
-#pragma mark MDCDialogPresentationControllerDelegate
-
-- (BOOL)presentationControllerShouldDismissOnBackgroundTap:(MDCDialogPresentationController *)presentationController {
-  return true;
 }
 
 @end
