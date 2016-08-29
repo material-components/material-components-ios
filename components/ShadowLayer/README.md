@@ -45,8 +45,8 @@ shadow that adheres to defined height and light source principles.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/apidocs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/apidocs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
 </ul>
 
 

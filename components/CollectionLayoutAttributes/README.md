@@ -10,7 +10,7 @@ Allows passing layout attributes to the cells and supplementary views.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewLayoutAttributes.html">MDCCollectionViewLayoutAttributes</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/CollectionLayoutAttributes/apidocs/Classes/MDCCollectionViewLayoutAttributes.html">MDCCollectionViewLayoutAttributes</a></li>
 </ul>
 
 - - -

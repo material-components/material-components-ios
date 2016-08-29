@@ -24,11 +24,11 @@ UIScrollViewDelegate events.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
-  <li class="icon-link"><a href="apidocs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
-  <li class="icon-link"><a href="apidocs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
 </ul>
 
 
