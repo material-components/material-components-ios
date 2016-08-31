@@ -23,6 +23,7 @@ navigation experience.
 ### API Documentation
 
 <ul class="icon-list">
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBar.html">MDCAppBar</a></li>
   <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
   <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Protocols/MDCAppBarParenting.html">MDCAppBarParenting</a></li>
 </ul>
