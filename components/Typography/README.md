@@ -281,7 +281,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 ~~~
 <!--</div>-->
 
-#### The default FontLoaer
+#### The default FontLoader
 If no font loader has been set, Typography attempts to use the Material
 [RobotoFontLoader](../FontDiskLoader/)
 which results in Roboto fonts being used when text styles are requested. If that runtime check
