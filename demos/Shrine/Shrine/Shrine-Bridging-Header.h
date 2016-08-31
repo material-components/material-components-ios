@@ -18,6 +18,7 @@
 #import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
+#import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 #import "RemoteImageService.h"
