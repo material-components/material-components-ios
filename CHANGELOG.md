@@ -1,3 +1,142 @@
+# 13.2.1
+
+## API diffs
+
+No public API changes.
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Adding link to MDCAppBar.h apidoc to the README](https://github.com/google/material-components-ios/commit/b3c17a6ab23e758ff058946eb2f3dfdabada08c5) (Will Larche)
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+* [AppBar dependency warning](https://github.com/google/material-components-ios/commit/585343e5fed11a83f48a6929a47b91453f4ddb2e) (Will Larche)
+
+### ButtonBar
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Buttons
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### CollectionCells
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Collections
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Dialogs
+
+#### Changes
+
+* [Some examples are missing super calls to viewDidLoad (#681)](https://github.com/google/material-components-ios/commit/ef7d60b174f7114a37c9387a7bc3ed70cb730e28) (Sean O'Shea)
+
+### FlexibleHeader
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+* [Some examples are missing super calls to viewDidLoad (#681)](https://github.com/google/material-components-ios/commit/ef7d60b174f7114a37c9387a7bc3ed70cb730e28) (Sean O'Shea)
+
+### FontDiskLoader
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### HeaderStackView
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Ink
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### PageControl
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Palettes
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### ProgressView
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### ShadowElevations
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### ShadowLayer
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+* [Small MDCShadowLayer fixes](https://github.com/google/material-components-ios/commit/592ce9d54d6328dbfb8aa14f58d5b0b16953aefb) (Sam Morrison)
+
+### Slider
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Switch
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+* [Typo in README](https://github.com/google/material-components-ios/commit/32c499aee17e9f881dcb8f0ae922d20fc9da1736) (Will Larche)
+
 # 13.2.0
 
 ## API diffs
