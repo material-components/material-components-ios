@@ -2,7 +2,9 @@
 
 ## API diffs
 
-No public API changes.
+### Icons
+
+- [new] [Added method to enable testing of new back button style](https://github.com/google/material-components-ios/commit/e9175eddabea93bd367e04e97d24cb71900430d1) (Sam Morrison)
 
 ## Component changes
 
