@@ -22,11 +22,9 @@ from the material design specifications.
 ### API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
-<li class="icon-link"><a href="../FontDiskLoader/apidocs/Classes/MDCFontDiskLoader.html">MDCFontDiskLoader</a></li>
-<li class="icon-link"><a href="../RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a></li>
-<li class="icon-link"><a href="apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
-<li class="icon-link"><a href="apidocs/Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FontDiskLoader/apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Protocols/MDCTypographyFontLoading.html">MDCTypographyFontLoading</a></li>
 </ul>
 
 ## Installation
@@ -283,7 +281,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 ~~~
 <!--</div>-->
 
-#### The default FontLoaer
+#### The default FontLoader
 If no font loader has been set, Typography attempts to use the Material
 [RobotoFontLoader](../FontDiskLoader/)
 which results in Roboto fonts being used when text styles are requested. If that runtime check

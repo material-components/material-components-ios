@@ -21,7 +21,7 @@ Registers a single custom font asset from disk
 
 <ul class="icon-list">
   <li class="icon-link">
-    <a href="apidocs/<FontDiskLoader>/Classes/MDCFontDiskLoader.html">
+    <a href="https://material-ext.appspot.com/mdc-ios-preview/components/FontDiskLoader/apidocs/Classes/MDCFontDiskLoader.html">
       MDCFontDiskLoader
     </a>
   </li>
@@ -55,13 +55,13 @@ pod install
 
 ### Importing
 
-Before using Roboto Font Loader, you'll need to import it:
+Before using Font Disk Loader, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
-#import "MaterialRobotoFontLoader.h"
+#import "MaterialFontDiskLoader.h"
 ~~~
 
 #### Swift

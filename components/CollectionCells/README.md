@@ -19,8 +19,8 @@ Collection view cell classes that adhere to Material design layout and styling.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewCell.html">MDCCollectionViewCell</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCCollectionViewTextCell.html">MDCCollectionViewTextCell</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/CollectionCells/apidocs/Classes/MDCCollectionViewCell.html">MDCCollectionViewCell</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/CollectionCells/apidocs/Classes/MDCCollectionViewTextCell.html">MDCCollectionViewTextCell</a></li>
 </ul>
 
 - - -

@@ -22,7 +22,7 @@ or discrete set of values.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCSlider.html">MDCSlider</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Slider/apidocs/Classes/MDCSlider.html">MDCSlider</a></li>
 </ul>
 
 - - -

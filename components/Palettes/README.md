@@ -16,7 +16,7 @@ The Palettes component provides Material colors organized into similar palettes.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCPalette.html">MDCPalette</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Palettes/apidocs/Classes/MDCPalette.html">MDCPalette</a></li>
 </ul>
 
 - - -

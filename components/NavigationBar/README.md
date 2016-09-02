@@ -22,8 +22,8 @@ label or a custom title view.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCNavigationBar.html">MDCNavigationBar</a></li>
-  <li class="icon-link"><a href="apidocs/Protocols/MDCUINavigationItemObservables.html">MDCUINavigationItemObservables</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/NavigationBar/apidocs/Classes/MDCNavigationBar.html">MDCNavigationBar</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/NavigationBar/apidocs/Protocols/MDCUINavigationItemObservables.html">MDCUINavigationItemObservables</a></li>
 </ul>
 
 

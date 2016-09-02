@@ -16,7 +16,7 @@ This component provides the most commonly used material design elevations.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Constants.html">ShadowElevations Constants</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowElevations/apidocs/Constants.html">ShadowElevations Constants</a></li>
 </ul>
 
 

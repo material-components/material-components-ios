@@ -26,7 +26,7 @@ The Roboto Font Loader lazy loads the Roboto font.
 
 <ul class="icon-list">
   <li class="icon-link">
-    <a href="apidocs/Classes/MDCRobotoFontLoader.html">
+    <a href="https://material-ext.appspot.com/mdc-ios-preview/components/RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">
       MDCRobotoFontLoader
     </a>
   </li>

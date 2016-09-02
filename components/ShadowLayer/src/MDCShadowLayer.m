@@ -120,23 +120,6 @@ static const float kAmbientShadowOpacity = 0.08f;
   }
 }
 
-- (void)renderInContext:(CGContextRef)ctx {
-  [self commonLayoutSublayers];
-
-  // The CAShapeLayers won't draw shadows unless it determines there is content upon which to cast
-  // a shadow. We set the background color (along with the mask) and clear it after we're done.
-  self.topShadow.backgroundColor = self.backgroundColor;
-  self.bottomShadow.backgroundColor = self.backgroundColor;
-
-  [super renderInContext:ctx];
-  [self.topShadow renderInContext:ctx];
-  [self.bottomShadow renderInContext:ctx];
-
-  // Reclear the background colors.
-  self.topShadow.backgroundColor = [UIColor clearColor].CGColor;
-  self.bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
-}
-
 #pragma mark - CALayer change monitoring.
 
 /** Returns a shadowPath based on the layer properties. */
@@ -189,8 +172,8 @@ static const float kAmbientShadowOpacity = 0.08f;
 
 #pragma mark - Pseudo Shadow Masks
 
-- (void)setApplyShadowMask:(BOOL)applyShadowMask {
-  _shadowMaskEnabled = applyShadowMask;
+- (void)setShadowMaskEnabled:(BOOL)shadowMaskEnabled {
+  _shadowMaskEnabled = shadowMaskEnabled;
   if (_shadowMaskEnabled) {
     _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
     _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];

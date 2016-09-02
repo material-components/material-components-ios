@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = flexHeadVC;
     self.window?.makeKeyAndVisible();
 
+    MDCIcons.ic_arrow_backUseNewStyle(true);
+
     return true
   }
 
