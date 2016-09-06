@@ -57,6 +57,7 @@ UIViewAutoresizing MDCAutoresizingFlexibleTrailingMargin(
 CGRect MDCRectFlippedForRTL(CGRect leftToRightRect,
                             CGFloat boundingWidth,
                             UIUserInterfaceLayoutDirection layoutDirection) {
+  leftToRightRect = CGRectStandardize(leftToRightRect);
   leftToRightRect.origin.x =
       MDCOriginForLeadingInset(CGRectGetMinX(leftToRightRect), CGRectGetWidth(leftToRightRect),
                                boundingWidth, layoutDirection);

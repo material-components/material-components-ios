@@ -29,6 +29,19 @@ class RTLTests: XCTestCase {
     XCTAssertEqual(frame, CGRect(x: 40, y: 20, width: 50, height: 30))
   }
 
+  func testMDCRectFlippedForRTLNegativeLeftToRight() {
+    let originalFrame = CGRect(x: 60, y: 50, width: -50, height: -30)
+    let frame = MDCRectFlippedForRTL(originalFrame, 100, .LeftToRight)
+    XCTAssertTrue(CGRectEqualToRect(frame, originalFrame))
+  }
+
+  func testMDCRectFlippedForRTLNegativeRightToLeft() {
+    let originalFrame = CGRect(x: 60, y: 50, width: -50, height: -30)
+    let frame = MDCRectFlippedForRTL(originalFrame, 100.0, .RightToLeft)
+    XCTAssertTrue(
+      CGRectEqualToRect(frame.standardized, CGRect(x: 40, y: 20, width: 50, height: 30)))
+  }
+
   func testMDCInsetsMakeWithLayoutDirectionLeftToRight() {
     let insets = MDCInsetsMakeWithLayoutDirection(10, 20, 30, 40, .LeftToRight)
     XCTAssertEqual(insets.left, 20)
