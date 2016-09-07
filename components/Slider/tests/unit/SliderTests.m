@@ -76,8 +76,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)testMaximumDefault {
-  // Given
-
   // When
   MDCSlider *slider = [[MDCSlider alloc] init];
 
@@ -417,8 +415,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   MDCSlider *slider = [[MDCSlider alloc] init];
   slider.enabled =
       arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
-
-  // When
 
   // Then
   XCTAssertTrue(slider.accessibilityTraits & UIAccessibilityTraitAdjustable);

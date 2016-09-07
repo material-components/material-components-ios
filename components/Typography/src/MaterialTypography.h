@@ -14,4 +14,13 @@
  limitations under the License.
  */
 
+/**
+ The Typography component provides methods for getting sized fonts and opacities following Material
+ style guidelines.
+
+ This header is the umbrella header for the component and should be imported by consumers of the
+ Typography component. Please do not directly import other headers. This will allow the componet to
+ expand or contract the header file space without consumer modifications.
+ */
+
 #import "MDCTypography.h"

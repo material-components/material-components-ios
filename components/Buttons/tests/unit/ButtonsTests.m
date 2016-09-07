@@ -160,8 +160,6 @@ static UIColor *randomColor() {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
 
-  // When
-
   // Then
   XCTAssertEqual([button elevationForState:UIControlStateNormal], 0);
   XCTAssertEqual([button elevationForState:UIControlStateHighlighted], 0);

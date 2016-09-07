@@ -20,4 +20,12 @@
 #error "This component only supports iOS 4.1 and above."
 #endif
 
+/**
+ The RobotoFontLoader component provides methods for getting Roboto fonts.
+
+ This header is the umbrella header for the component and should be imported by consumers of the
+ RobotoFontLoader component. Please do not directly import other headers. This will allow the
+ componet to expand or contract the header file space without consumer modifications.
+ */
+
 #import "MDCRobotoFontLoader.h"
