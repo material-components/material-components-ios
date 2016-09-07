@@ -37,6 +37,61 @@ Added *copy, nonnull*.
 
 /var/folders/km/jwhx5mp50_n1rctj6lcjrg_m0081qp/T/tmp.wviHfYsq/old/components/Slider/src/MDCSlider.h:19:9: fatal error: 'MDCThumbTrack.h' file not found
 
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [MDC_#758 - Updated incorrectly named setter](https://github.com/google/material-components-ios/commit/ad8986dc35203851861ee5004ca723465fd20cff) (Justin Shephard)
+
+### Buttons
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### Dialogs
+
+#### Changes
+
+* [Dismiss the dialog when we recive the Z A11y gesture](https://github.com/google/material-components-ios/commit/f2f95d647cbf345b665c2ab683a8b9179821b682) (Felix Emiliano)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Added `-Wnewline-eof` warning to MDC and MDFTextAccessibility, fix one issue.](https://github.com/google/material-components-ios/commit/89e7306d03f33f503e778d5c1444c4699921d1a4) (Adrian Secord)
+
+### FontDiskLoader
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### Slider
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### Typography
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
 
 # 13.2.1
 
