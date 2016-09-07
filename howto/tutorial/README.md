@@ -117,7 +117,7 @@ override func viewDidLoad() {
     // Configure the collection view's appearance.
     styler.cellStyle = .card
     styler.cellLayoutType = .grid
-    }
+}
 ~~~
         
 Below `viewDidLoad`, add a mock datasource:
