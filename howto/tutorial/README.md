@@ -18,33 +18,39 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
 1.  Setup CocoaPods:
     1.  Open the app “Terminal.”
     1.  If you do not already have CocoaPods installed on this system, run:
-sudo gem install cocoapods
+        ``` bash
+        sudo gem install cocoapods
+        ```
     1.  Navigate to your project's directory and create a Podfile by running:
-    ~~~ bash
-    cd [directory of your project]
-    pod init
-    ~~~ 
-    4.  Open the new Podfile in a text editor or by running:
-    ~~~ bash
-    open -a Xcode Podfile
-    ~~~
-    5.  Add the Material Components pod to the Podfile:
-    ~~~ ruby
-    target 'MDC-Tutorial' 
-    use_frameworks!
+        ``` bash
+        
+        cd [directory of your project]
+        pod init
+        ``` 
+    1.  Open the new Podfile in a text editor or by running:
+        ~~~ bash
+        
+        open -a Xcode Podfile
+        ~~~
+    1.  Add the Material Components pod to the Podfile:
+        ~~~ ruby
+        
+        target 'MDC-Tutorial' 
+        use_frameworks!
     
-    # Pods for MDC-Tutorial
-    pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
+        # Pods for MDC-Tutorial
+        pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
     
-    end
-    ~~~ 
+        end
+        ~~~ 
     NOTE: If the language you’re using in this project is Objective-C, comment out ‘use_frameworks’ by adding a ‘#’ in front of it.
-    6.  Save the Podfile
-    7.  Back in Terminal, install your new pod and open the generated workspace:
-    ~~~ bash
-    pod install
-    open MDC-Tutorial.xcworkspace
-    ~~~
+    1.  Save the Podfile
+    1.  Back in Terminal, install your new pod and open the generated workspace:
+        ``` bash
+        
+        pod install
+        open MDC-Tutorial.xcworkspace
+        ```
 
 
 
