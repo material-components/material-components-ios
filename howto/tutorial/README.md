@@ -18,16 +18,16 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
 1.  Setup CocoaPods:
     1.  Open the app “Terminal.”
     1.  If you do not already have CocoaPods installed on this system, run:
-        ``` bash
+        ~~~ bash
         
         sudo gem install cocoapods
-        ```
+        ~~~
     1.  Navigate to your project's directory and create a Podfile by running:
-        ``` bash
+        ~~~ bash
         
         cd [directory of your project]
         pod init
-        ``` 
+        ~~~ 
     1.  Open the new Podfile in a text editor or by running:
         ~~~ bash
         
@@ -47,11 +47,11 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
     NOTE: If the language you’re using in this project is Objective-C, comment out ‘use_frameworks’ by adding a ‘#’ in front of it.
     1.  Save the Podfile
     1.  Back in Terminal, install your new pod and open the generated workspace:
-        ``` bash
+        ~~~ bash
         
         pod install
         open MDC-Tutorial.xcworkspace
-        ```
+        ~~~
 
 
 
