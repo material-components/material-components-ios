@@ -14,11 +14,12 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
     2.  In the template window, select “iOS” as the platform and “Single View Application” as the Application type. Click “Next.”
     3.  Name your project “MDC-Tutorial” and choose your preferred language. Click “Next.”
     4.  Choose a place to save your new project that you can remember. Click “Create.”
-    5.  Close your new project by going to menu File -> Close Project or holding "option+command+w . We’ll come back to the project in a minute.
+    5.  Close your new project by going to menu File -> Close Project or holding "option+command+w". We’ll come back to the project in a minute.
 1.  Setup CocoaPods:
     1.  Open the app “Terminal.”
     1.  If you do not already have CocoaPods installed on this system, run:
         ``` bash
+        
         sudo gem install cocoapods
         ```
     1.  Navigate to your project's directory and create a Podfile by running:
