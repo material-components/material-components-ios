@@ -63,7 +63,7 @@ end
 
 Save the `Podfile`.
 
-Back in Terminal, install your new pod and open the generated workspace:
+Back in `Terminal`, install your new pod and open the generated workspace:
 
 ~~~ bash
         
