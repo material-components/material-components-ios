@@ -44,7 +44,7 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
     
         end
         ~~~ 
-    NOTE: If the language you’re using in this project is Objective-C, comment out ‘use_frameworks’ by adding a ‘#’ in front of it.
+    **NOTE:** If the language you’re using in this project is Objective-C, comment out ‘use_frameworks’ by adding a ‘#’ in front of it.
     1.  Save the Podfile
     1.  Back in Terminal, install your new pod and open the generated workspace:
         ~~~ bash
@@ -52,7 +52,6 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
         pod install
         open MDC-Tutorial.xcworkspace
         ~~~
-
 
 
 3.  Add a Material Collection View:
