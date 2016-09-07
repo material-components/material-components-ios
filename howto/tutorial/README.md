@@ -58,7 +58,7 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
 3.  Add a Material Collection View:
     1.  In Xcode, select "ViewController.swift" or "ViewController.h." 
 
-    2.  Import MDC
+    1.  Import MDC
     
         Swift:
         ~~~ swift
@@ -68,7 +68,8 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
         ~~~ objc
         TODO: ObjC
         ~~~
-    3.  Change ViewController’s superclass to MDCCollectionViewController:
+        
+    1.  Change ViewController’s superclass to MDCCollectionViewController:
     
         Swift:
         ~~~ swift
@@ -79,7 +80,7 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
         TODO: ObjC
         ~~~
 
-    4.  Open Main.storyboard and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to ViewController, and set “Is Initial View Controller” to true. 
+    1.  Open Main.storyboard and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to ViewController, and set “Is Initial View Controller” to true. 
     Select the prototype cell and set its custom class to “MDCCollectionViewTextCell”, 
     then set its reuse identifier to “cell”:
 
