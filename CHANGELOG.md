@@ -33,9 +33,6 @@ Added *copy, nonnull*.
 + (nonnull MDCRobotoFontLoader *)sharedInstance
 ```
 
-### Slider
-
-/var/folders/km/jwhx5mp50_n1rctj6lcjrg_m0081qp/T/tmp.wviHfYsq/old/components/Slider/src/MDCSlider.h:19:9: fatal error: 'MDCThumbTrack.h' file not found
 
 ## Component changes
 
