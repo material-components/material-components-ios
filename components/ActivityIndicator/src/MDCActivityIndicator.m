@@ -290,9 +290,9 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [self updateStrokePath];
 }
 
-- (void)setSpinnerRadius:(CGFloat)spinnerRadius {
+- (void)setRadius:(CGFloat)radius {
   // Constrain radius to range [8dp, 72dp].
-  _radius = MIN(MAX(spinnerRadius, 8.0f), 72.0f);
+  _radius = MIN(MAX(radius, 8.0f), 72.0f);
 
   [self updateStrokePath];
 }
