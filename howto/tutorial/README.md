@@ -39,13 +39,12 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
         target 'MDC-Tutorial' 
         use_frameworks!
     
-        # Pods for MDC-Tutorial
         pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
     
         end
         ~~~ 
     **NOTE:** If the language you’re using in this project is Objective-C, comment out ‘use_frameworks’ by adding a ‘#’ in front of it.
-    1.  Save the Podfile
+    1.  Save the Podfile.
     1.  Back in Terminal, install your new pod and open the generated workspace:
         ~~~ bash
         
