@@ -11,10 +11,10 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
 
 1.  Create a new Xcode application:
     1.  Open Xcode. If the launch screen is present, click “Create a new Xcode project” or go to menu File -> New -> Project….
-    2.  In the template window, select “iOS” as the platform and “Single View Application” as the Application type. Click “Next.”
-    3.  Name your project “MDC-Tutorial” and choose your preferred language. Click “Next.”
-    4.  Choose a place to save your new project that you can remember. Click “Create.”
-    5.  Close your new project by going to menu File -> Close Project or holding "option+command+w". We’ll come back to the project in a minute.
+    1.  In the template window, select “iOS” as the platform and “Single View Application” as the Application type. Click “Next.”
+    1.  Name your project “MDC-Tutorial” and choose your preferred language. Click “Next.”
+    1.  Choose a place to save your new project that you can remember. Click “Create.”
+    1.  Close your new project by going to menu File -> Close Project or holding "option+command+w". We’ll come back to the project in a minute.
 1.  Setup CocoaPods:
     1.  Open the app “Terminal.”
     1.  If you do not already have CocoaPods installed on this system, run:
