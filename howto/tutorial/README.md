@@ -79,112 +79,114 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
         ~~~
 
     4.  Open Main.storyboard and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to ViewController, and set “Is Initial View Controller” to true. 
-    
-        Select the prototype cell and set its custom class to “MDCCollectionViewTextCell”,
-then set its reuse identifier to “cell”:
+    Select the prototype cell and set its custom class to “MDCCollectionViewTextCell”, 
+    then set its reuse identifier to “cell”:
 
     1.  In viewDidLoad, configure the collection view’s appearance:
-    ~~~ swift
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        ~~~swift
+        override func viewDidLoad() {
+            super.viewDidLoad()
     
-        // Configure the collection view's appearance.
-        styler.cellStyle = .card
-        styler.cellLayoutType = .grid
-    }
-    ~~~
-
-    6.  Below viewDidLoad, add a mock datasource:
-    ~~~ swift
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 40
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-    
-        if let textCell = cell as? MDCCollectionViewTextCell {
-    
-        // Add some mock text to the cell.
-     textCell.textLabel?.text = "#" + String(indexPath.item)
-    
+            // Configure the collection view's appearance.
+            styler.cellStyle = .card
+            styler.cellLayoutType = .grid
+        }
+        ~~~
+        
+    1.  Below viewDidLoad, add a mock datasource:
+        ~~~ swift
+        override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            return 40
         }
     
-        return cell
-    }
-    ~~~
-    7.  Build and run your app. It should display a scrollable, touchable collection view:
-
+        override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+          let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+    
+          if let textCell = cell as? MDCCollectionViewTextCell {
+    
+          // Add some mock text to the cell.
+        textCell.textLabel?.text = "#" + String(indexPath.item)
+    
+          }
+    
+          return cell
+        }
+        ~~~
+        
+    1.  Build and run your app. It should display a scrollable, touchable collection view:
 
 
 4.  Add an app bar:
     1.  Add the property declaration to the top of the class:
-    ~~~ swift
-    let appBar = MDCAppBar()
-    TODO: Image
-    ~~~
-    2.  Configure the app bar in viewDidLoad:
-    ~~~ swift
-    addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor.white
-    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
-    appBar.addSubviewsToParent()
-    ~~~
-    3.  Build and run your app. It should display a white rectangle above the collection view: But if you pull down, it doesn’t expand at all.
+        ~~~ swift
+        let appBar = MDCAppBar()
+        TODO: Image
+        ~~~
+
+    1.  Configure the app bar in viewDidLoad:
+        ~~~ swift
+        addChildViewController(appBar.headerViewController)
+        appBar.headerViewController.headerView.backgroundColor = UIColor.white
+        appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+        appBar.addSubviewsToParent()
+        ~~~
+        
+    1.  Build and run your app. It should display a white rectangle above the collection view: But if you pull down, it doesn’t expand at all.
+
 1.  Make the app bar flexible by forwarding scroll view delegate methods:
     1.  Implement the following methods. (In Swift you can choose to do this as a new extension.):
-    ~~~swift
-    extension ViewController {
+        ~~~swift
+        extension ViewController {
     
-            // MARK: UIScrollViewDelegate
+                // MARK: UIScrollViewDelegate
     
-            override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+                override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
-            if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+                if scrollView == appBar.headerViewController.headerView.trackingScrollView {
 
-            appBar.headerViewController.headerView.trackingScrollDidScroll()
+                appBar.headerViewController.headerView.trackingScrollDidScroll()
 
-            }
-
-        }
-
-        override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-
-            if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-
-            appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+                }
 
             }
 
-        }
+            override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 
-        override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+                if scrollView == appBar.headerViewController.headerView.trackingScrollView {
 
-            if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+               appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
 
-            let headerView = appBar.headerViewController.headerView
-
-            headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+               }
 
             }
 
-        }
+            override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+
+                if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+
+               let headerView = appBar.headerViewController.headerView
+
+               headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+
+                }
+
+            }
     
-        override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+            override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 
-            if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+                if scrollView == appBar.headerViewController.headerView.trackingScrollView {
 
-            let headerView = appBar.headerViewController.headerView
+                let headerView = appBar.headerViewController.headerView
 
-            headerView.trackingScrollWillEndDragging(
-            withVelocity: velocity, targetContentOffset: targetContentOffset)
+                headerView.trackingScrollWillEndDragging(
+                withVelocity: velocity, targetContentOffset: targetContentOffset)
+
+                }
 
             }
 
         }
-
-    }
-    ~~~
+        ~~~
 
     2. Build and run your app. The app bar should now flex when the collection view is scrolled too far:
 
