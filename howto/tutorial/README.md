@@ -25,12 +25,14 @@ Close your new project by going to menu `File -> Close Project` or holding `opti
 Open `Terminal`.
 
 If you do not already have CocoaPods installed on this system, run:
+
 ~~~ bash
         
 sudo gem install cocoapods
 ~~~
 
 Navigate to your project's directory and create a `Podfile` by running:
+
 ~~~ bash
         
 cd [directory of your project]
@@ -38,12 +40,14 @@ pod init
 ~~~ 
 
 Open the new `Podfile` in a text editor or by running:
+
 ~~~ bash
         
 open -a Xcode Podfile
 ~~~
 
 Add the `Material Components` pod to the `Podfile`:
+
 ~~~ ruby
         
 target 'MDC-Tutorial' 
@@ -54,11 +58,13 @@ pod 'MaterialComponents', :git => 'https://github.com/google/material-components
     
 end
 ~~~ 
+
 **NOTE:** If the language you’re using in this project is Objective-C, comment out `use_frameworks` by adding a `#` in front of it.
 
 Save the `Podfile`.
 
 Back in Terminal, install your new pod and open the generated workspace:
+
 ~~~ bash
         
 pod install
@@ -71,10 +77,13 @@ In Xcode, select `ViewController.swift` or `ViewController.h`.
 
 Then import MDC:
 ##### Swift:
+
 ~~~ swift
 Import MaterialComponents
 ~~~
+
 ##### Objective-C:
+
 ~~~ objc
 TODO: ObjC
 ~~~
@@ -82,10 +91,13 @@ TODO: ObjC
 Change `ViewController`’s superclass to `MDCCollectionViewController`:
     
 ##### Swift:
+
 ~~~ swift
 class ViewController: MDCCollectionViewController {
 ~~~
+
 ##### Objective-C:
+
 ~~~ objc
 TODO: ObjC
 ~~~
@@ -97,6 +109,7 @@ Select the prototype cell and set its custom class to `MDCCollectionViewTextCell
 then set its reuse identifier to `cell`:
 
 In `viewDidLoad`, configure the collection view’s appearance:
+
 ~~~swift
 override func viewDidLoad() {
     super.viewDidLoad()
@@ -108,6 +121,7 @@ override func viewDidLoad() {
 ~~~
         
 Below `viewDidLoad`, add a mock datasource:
+
 ~~~ swift
 override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 40
@@ -132,12 +146,14 @@ Build and run your app. It should display a scrollable, touchable collection vie
 
 ### 4.  Add an app bar:
 Add the property declaration to the top of the class:
+
 ~~~ swift
 let appBar = MDCAppBar()
 TODO: Image
 ~~~
 
 Configure the app bar in `viewDidLoad`:
+
 ~~~ swift
 addChildViewController(appBar.headerViewController)
 appBar.headerViewController.headerView.backgroundColor = UIColor.white
@@ -149,6 +165,7 @@ Build and run your app. It should display a white rectangle above the collection
 
 ### 5.  Make the app bar flexible by forwarding scroll view delegate methods:
 Implement the following methods. (In Swift you can choose to do this as a new extension.):
+
 ~~~swift
 extension ViewController {
     
