@@ -9,186 +9,200 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
 
 
 
-1.  Create a new Xcode application:
-    1.  Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`.
-    1.  In the template window, select `iOS` as the platform and `Single View Application` as the Application type. Click `Next`.
-    1.  Name your project `MDC-Tutorial` and choose your preferred language. Click `Next`.
-    1.  Choose a place to save your new project that you can remember. Click `Create`.
-    1.  Close your new project by going to menu `File -> Close Project` or holding `option + command + w`. We’ll come back to the project in a minute.
-1.  Setup CocoaPods:
-    1.  Open `Terminal`.
-    1.  If you do not already have CocoaPods installed on this system, run:
-        ~~~ bash
+### 1.  Create a new Xcode application:
+
+Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`. 
+
+In the template window, select `iOS` as the platform and `Single View Application` as the Application type. Click `Next`.
+  
+Name your project `MDC-Tutorial` and choose your preferred language. Click `Next`.
+  
+Choose a place to save your new project that you can remember. Click `Create`.
+  
+Close your new project by going to menu `File -> Close Project` or holding `option + command + w`. We’ll come back to the project in a minute.
+  
+### 2.  Setup CocoaPods:
+Open `Terminal`.
+
+If you do not already have CocoaPods installed on this system, run:
+~~~ bash
         
-        sudo gem install cocoapods
-        ~~~
-    1.  Navigate to your project's directory and create a `Podfile` by running:
-        ~~~ bash
+sudo gem install cocoapods
+~~~
+
+Navigate to your project's directory and create a `Podfile` by running:
+~~~ bash
         
-        cd [directory of your project]
-        pod init
-        ~~~ 
-    1.  Open the new `Podfile` in a text editor or by running:
-        ~~~ bash
+cd [directory of your project]
+pod init
+~~~ 
+
+Open the new `Podfile` in a text editor or by running:
+~~~ bash
         
-        open -a Xcode Podfile
-        ~~~
-    1.  Add the `Material Components` pod to the `Podfile`:
-        ~~~ ruby
+open -a Xcode Podfile
+~~~
+
+Add the `Material Components` pod to the `Podfile`:
+~~~ ruby
         
-        target 'MDC-Tutorial' 
-        use_frameworks!
+target 'MDC-Tutorial' 
+use_frameworks!
     
-        pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
+# Pods for MDC-Tutorial
+pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
     
-        end
-        ~~~ 
-    **NOTE:** If the language you’re using in this project is Objective-C, comment out `use_frameworks` by adding a `#` in front of it.
-    1.  Save the `Podfile`.
-    1.  Back in Terminal, install your new pod and open the generated workspace:
-        ~~~ bash
+end
+~~~ 
+**NOTE:** If the language you’re using in this project is Objective-C, comment out `use_frameworks` by adding a `#` in front of it.
+
+Save the `Podfile`.
+
+Back in Terminal, install your new pod and open the generated workspace:
+~~~ bash
         
-        pod install
-        open MDC-Tutorial.xcworkspace
-        ~~~
+pod install
+open MDC-Tutorial.xcworkspace
+~~~
 
 
-3.  Add a Material Collection View:
-    1.  In Xcode, select `ViewController.swift` or `ViewController.h`. 
+### 3.  Add a Material Collection View:
+In Xcode, select `ViewController.swift` or `ViewController.h`. 
 
-    1.  Import MDC
-    
-        Swift:
-        ~~~ swift
-        Import MaterialComponents
-        ~~~
-        Objective-C:
-        ~~~ objc
-        TODO: ObjC
-        ~~~
+Then import MDC:
+##### Swift:
+~~~ swift
+Import MaterialComponents
+~~~
+##### Objective-C:
+~~~ objc
+TODO: ObjC
+~~~
         
-    1.  Change `ViewController`’s superclass to `MDCCollectionViewController`:
+Change `ViewController`’s superclass to `MDCCollectionViewController`:
     
-        Swift:
-        ~~~ swift
-        class ViewController: MDCCollectionViewController {
-        ~~~
-        Objective-C:
-        ~~~ objc
-        TODO: ObjC
-        ~~~
+##### Swift:
+~~~ swift
+class ViewController: MDCCollectionViewController {
+~~~
+##### Objective-C:
+~~~ objc
+TODO: ObjC
+~~~
 
-    1.  Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
-    Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
-    then set its reuse identifier to `cell`:
-
-    1.  In `viewDidLoad`, configure the collection view’s appearance:
-        ~~~swift
-        override func viewDidLoad() {
-            super.viewDidLoad()
+Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
     
-            // Configure the collection view's appearance.
-            styler.cellStyle = .card
-            styler.cellLayoutType = .grid
-        }
-        ~~~
+Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
+
+then set its reuse identifier to `cell`:
+
+In `viewDidLoad`, configure the collection view’s appearance:
+~~~swift
+override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    // Configure the collection view's appearance.
+    styler.cellStyle = .card
+    styler.cellLayoutType = .grid
+    }
+~~~
         
-    1.  Below `viewDidLoad`, add a mock datasource:
-        ~~~ swift
-        override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return 40
-        }
+Below `viewDidLoad`, add a mock datasource:
+~~~ swift
+override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 40
+}
     
-        override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-          let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
     
-          if let textCell = cell as? MDCCollectionViewTextCell {
+  if let textCell = cell as? MDCCollectionViewTextCell {
     
-          // Add some mock text to the cell.
-        textCell.textLabel?.text = "#" + String(indexPath.item)
+  // Add some mock text to the cell.
+textCell.textLabel?.text = "#" + String(indexPath.item)
     
-          }
+    }
     
-          return cell
-        }
-        ~~~
+    return cell
+}
+~~~
         
-    1.  Build and run your app. It should display a scrollable, touchable collection view:
+Build and run your app. It should display a scrollable, touchable collection view:
 
 
-4.  Add an app bar:
-    1.  Add the property declaration to the top of the class:
-        ~~~ swift
-        let appBar = MDCAppBar()
-        TODO: Image
-        ~~~
+### 4.  Add an app bar:
+Add the property declaration to the top of the class:
+~~~ swift
+let appBar = MDCAppBar()
+TODO: Image
+~~~
 
-    1.  Configure the app bar in `viewDidLoad`:
-        ~~~ swift
-        addChildViewController(appBar.headerViewController)
-        appBar.headerViewController.headerView.backgroundColor = UIColor.white
-        appBar.headerViewController.headerView.trackingScrollView = self.collectionView
-        appBar.addSubviewsToParent()
-        ~~~
-        
-    1.  Build and run your app. It should display a white rectangle above the collection view: But if you pull down, it doesn’t expand at all.
-
-1.  Make the app bar flexible by forwarding scroll view delegate methods:
-    1.  Implement the following methods. (In Swift you can choose to do this as a new extension.):
-        ~~~swift
-        extension ViewController {
+Configure the app bar in `viewDidLoad`:
+~~~ swift
+addChildViewController(appBar.headerViewController)
+appBar.headerViewController.headerView.backgroundColor = UIColor.white
+appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+appBar.addSubviewsToParent()
+~~~
     
-                // MARK: UIScrollViewDelegate
+Build and run your app. It should display a white rectangle above the collection view: But if you pull down, it doesn’t expand at all.
+
+### 5.  Make the app bar flexible by forwarding scroll view delegate methods:
+Implement the following methods. (In Swift you can choose to do this as a new extension.):
+~~~swift
+extension ViewController {
     
-                override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
-                if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-
-                appBar.headerViewController.headerView.trackingScrollDidScroll()
-
-                }
-
-            }
-
-            override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-
-                if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-
-               appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
-
-               }
-
-            }
-
-            override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-
-                if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-
-               let headerView = appBar.headerViewController.headerView
-
-               headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
-
-                }
-
-            }
+        // MARK: UIScrollViewDelegate
     
-            override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
-                if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+        if scrollView == appBar.headerViewController.headerView.trackingScrollView {
 
-                let headerView = appBar.headerViewController.headerView
-
-                headerView.trackingScrollWillEndDragging(
-                withVelocity: velocity, targetContentOffset: targetContentOffset)
-
-                }
-
-            }
+        appBar.headerViewController.headerView.trackingScrollDidScroll()
 
         }
-        ~~~
 
-    2. Build and run your app. The app bar should now flex when the collection view is scrolled too far:
+    }
+
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+
+        if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+
+       appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+
+       }
+
+    }
+
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+
+        if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+
+       let headerView = appBar.headerViewController.headerView
+
+       headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+
+        }
+
+    }
+    
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+        if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+
+        let headerView = appBar.headerViewController.headerView
+
+        headerView.trackingScrollWillEndDragging(
+        withVelocity: velocity, targetContentOffset: targetContentOffset)
+
+        }
+
+    }
+
+}
+~~~
+
+Build and run your app. The app bar should now flex when the collection view is scrolled too far:
 
 
 
