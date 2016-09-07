@@ -10,30 +10,30 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
 
 
 1.  Create a new Xcode application:
-    1.  Open Xcode. If the launch screen is present, click “Create a new Xcode project” or go to menu File -> New -> Project….
-    1.  In the template window, select “iOS” as the platform and “Single View Application” as the Application type. Click “Next.”
-    1.  Name your project “MDC-Tutorial” and choose your preferred language. Click “Next.”
-    1.  Choose a place to save your new project that you can remember. Click “Create.”
-    1.  Close your new project by going to menu File -> Close Project or holding "option+command+w". We’ll come back to the project in a minute.
+    1.  Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`.
+    1.  In the template window, select `iOS` as the platform and `Single View Application` as the Application type. Click `Next`.
+    1.  Name your project `MDC-Tutorial` and choose your preferred language. Click `Next`.
+    1.  Choose a place to save your new project that you can remember. Click `Create`.
+    1.  Close your new project by going to menu `File -> Close Project` or holding `option + command + w`. We’ll come back to the project in a minute.
 1.  Setup CocoaPods:
-    1.  Open the app “Terminal.”
+    1.  Open `Terminal`.
     1.  If you do not already have CocoaPods installed on this system, run:
         ~~~ bash
         
         sudo gem install cocoapods
         ~~~
-    1.  Navigate to your project's directory and create a Podfile by running:
+    1.  Navigate to your project's directory and create a `Podfile` by running:
         ~~~ bash
         
         cd [directory of your project]
         pod init
         ~~~ 
-    1.  Open the new Podfile in a text editor or by running:
+    1.  Open the new `Podfile` in a text editor or by running:
         ~~~ bash
         
         open -a Xcode Podfile
         ~~~
-    1.  Add the Material Components pod to the Podfile:
+    1.  Add the `Material Components` pod to the `Podfile`:
         ~~~ ruby
         
         target 'MDC-Tutorial' 
@@ -43,8 +43,8 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
     
         end
         ~~~ 
-    **NOTE:** If the language you’re using in this project is Objective-C, comment out ‘use_frameworks’ by adding a ‘#’ in front of it.
-    1.  Save the Podfile.
+    **NOTE:** If the language you’re using in this project is Objective-C, comment out `use_frameworks` by adding a `#` in front of it.
+    1.  Save the `Podfile`.
     1.  Back in Terminal, install your new pod and open the generated workspace:
         ~~~ bash
         
@@ -54,7 +54,7 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
 
 
 3.  Add a Material Collection View:
-    1.  In Xcode, select "ViewController.swift" or "ViewController.h." 
+    1.  In Xcode, select `ViewController.swift` or `ViewController.h`. 
 
     1.  Import MDC
     
@@ -67,7 +67,7 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
         TODO: ObjC
         ~~~
         
-    1.  Change ViewController’s superclass to MDCCollectionViewController:
+    1.  Change `ViewController`’s superclass to `MDCCollectionViewController`:
     
         Swift:
         ~~~ swift
@@ -78,11 +78,11 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
         TODO: ObjC
         ~~~
 
-    1.  Open Main.storyboard and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to ViewController, and set “Is Initial View Controller” to true. 
-    Select the prototype cell and set its custom class to “MDCCollectionViewTextCell”, 
-    then set its reuse identifier to “cell”:
+    1.  Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
+    Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
+    then set its reuse identifier to `cell`:
 
-    1.  In viewDidLoad, configure the collection view’s appearance:
+    1.  In `viewDidLoad`, configure the collection view’s appearance:
         ~~~swift
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -93,7 +93,7 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
         }
         ~~~
         
-    1.  Below viewDidLoad, add a mock datasource:
+    1.  Below `viewDidLoad`, add a mock datasource:
         ~~~ swift
         override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
             return 40
@@ -123,7 +123,7 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
         TODO: Image
         ~~~
 
-    1.  Configure the app bar in viewDidLoad:
+    1.  Configure the app bar in `viewDidLoad`:
         ~~~ swift
         addChildViewController(appBar.headerViewController)
         appBar.headerViewController.headerView.backgroundColor = UIColor.white
