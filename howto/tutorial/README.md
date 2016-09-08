@@ -82,6 +82,7 @@ In Xcode, select `ViewController.swift` or `ViewController.h`.
 ![Selecting the correct view controller file in Xcode's file navigator](assets/docs/Xcode-Select-File.gif)
 
 Then import MDC:
+
 ##### Swift:
 
 ~~~ swift
