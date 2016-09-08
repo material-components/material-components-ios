@@ -16,7 +16,7 @@
 
 #import "MDCTypography.h"
 
-static id<MDCTypographyFontLoading> sFontLoader = nil;
+static id<MDCTypographyFontLoading> gFontLoader = nil;
 const CGFloat MDCTypographyStandardOpacity = 0.87f;
 const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
@@ -32,22 +32,22 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma mark - Font loader access
 
 + (void)setFontLoader:(id<MDCTypographyFontLoading>)fontLoader {
-  sFontLoader = fontLoader;
-  NSAssert(sFontLoader,
+  gFontLoader = fontLoader;
+  NSAssert(gFontLoader,
            @"Font loader can't be null. The font loader will be reset to the default font loader.");
-  if (!sFontLoader) {
-    sFontLoader = [self defaultFontLoader];
+  if (!gFontLoader) {
+    gFontLoader = [self defaultFontLoader];
   }
 }
 
 + (id<MDCTypographyFontLoading>)fontLoader {
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    if (!sFontLoader) {
-      sFontLoader = [self defaultFontLoader];
+    if (!gFontLoader) {
+      gFontLoader = [self defaultFontLoader];
     }
   });
-  return sFontLoader;
+  return gFontLoader;
 }
 
 #pragma mark - Display fonts (extra large fonts)

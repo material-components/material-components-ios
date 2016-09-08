@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+/** The constants defining the names of the fonts inside the font files for Roboto. */
 extern NSString *const MDCRobotoRegularFontName;
 extern NSString *const MDCRobotoRegularItalicFontName;
 extern NSString *const MDCRobotoBoldFontName;
@@ -25,6 +26,7 @@ extern NSString *const MDCRobotoMediumItalicFontName;
 extern NSString *const MDCRobotoLightFontName;
 extern NSString *const MDCRobotoLightItalicFontName;
 
+/** The constants defining the font files for Roboto. */
 extern NSString *const MDCRobotoRegularFontFilename;
 extern NSString *const MDCRobotoRegularItalicFontFilename;
 extern NSString *const MDCRobotoBoldFontFilename;
@@ -34,4 +36,5 @@ extern NSString *const MDCRobotoMediumItalicFontFilename;
 extern NSString *const MDCRobotoLightFontFilename;
 extern NSString *const MDCRobotoLightItalicFontFilename;
 
+/** The constant defining the bundle that has the font files for Roboto. */
 extern NSString *const MDCRobotoBundle;

@@ -43,6 +43,7 @@ if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   echo ${BRANCH_MESSAGE}
   git checkout -b release-candidate ${BRANCH}
   git push origin release-candidate
+  git branch --set-upstream-to=origin/release-candidate release-candidate
 else
   echo "Release already cut."
   echo "Consider deleting your existing release-candidate branch."

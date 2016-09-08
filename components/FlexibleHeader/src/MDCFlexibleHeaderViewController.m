@@ -172,3 +172,4 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
 }
 
 @end
+
