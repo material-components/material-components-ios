@@ -2,12 +2,11 @@
 See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documentation</a> for richer experience.
 <!--{% else %}See <a href="https://github.com/google/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
 
----
-
-
 ## Tutorial
 
 This tutorial will teach you how to link Material Components to an application, use a material collection view, and add an expandable app bar at the top of your controller.
+
+---
 
 
 ### 1.  Create a new Xcode application:
