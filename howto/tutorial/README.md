@@ -59,6 +59,7 @@ pod 'MaterialComponents', :git => 'https://github.com/google/material-components
     
 end
 ~~~ 
+![Finished Podfile](assets/docs/Podfile-Complete.jpg)
 
 **NOTE:** If the language you’re using in this project is Objective-C, comment out `use_frameworks` by adding a `#` in front of it.
 
@@ -72,9 +73,13 @@ pod install
 open MDC-Tutorial.xcworkspace
 ~~~
 
+![CocoaPods installation script and opening of workspace into Xcode](assets/docs/Terminal-Pod-Installation.jpg)
+
 
 ### 3.  Add a Material Collection View:
 In Xcode, select `ViewController.swift` or `ViewController.h`. 
+
+![Selecting the correct view controller file in Xcode's file navigator](assets/docs/Xcode-Select-File.gif)
 
 Then import MDC:
 ##### Swift:
@@ -103,11 +108,15 @@ class ViewController: MDCCollectionViewController {
 TODO: ObjC
 ~~~
 
+![Swift: Importing MaterialComponents module and changing the view controller's superclass](assets/docs/Xcode-Class-Import-and-Subclass.gif)
+
 Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
     
 Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
 
 then set its reuse identifier to `cell`:
+
+![In the storyboard, replacing the default view controller](assets/docs/Xcode-Storyboard-Replace-Controller.gif)
 
 In `viewDidLoad`, configure the collection view’s appearance:
 
@@ -144,6 +153,7 @@ textCell.textLabel?.text = "#" + String(indexPath.item)
         
 Build and run your app. It should display a scrollable, touchable collection view:
 
+![Running the app to show a working collection of cells](assets/docs/App-Collection-No-AppBar.gif)
 
 ### 4.  Add an app bar:
 Add the property declaration to the top of the class:
@@ -162,7 +172,11 @@ appBar.headerViewController.headerView.trackingScrollView = self.collectionView
 appBar.addSubviewsToParent()
 ~~~
     
-Build and run your app. It should display a white rectangle above the collection view: But if you pull down, it doesn’t expand at all.
+Build and run your app. It should display a white rectangle above the collection view: 
+
+![Running the app to show the new app bar](assets/docs/App-Collection-No-Flexing.gif)
+
+But if you pull down, it doesn’t expand at all.
 
 ### 5.  Make the app bar flexible by forwarding scroll view delegate methods:
 Implement the following methods. (In Swift you can choose to do this as a new extension.):
@@ -222,7 +236,7 @@ extension ViewController {
 
 Build and run your app. The app bar should now flex when the collection view is scrolled too far:
 
-
+![Running the app to show the new app bar and its flex behavior](assets/docs/App-Collection-With-Flexing.gif)
 
 ---
 
