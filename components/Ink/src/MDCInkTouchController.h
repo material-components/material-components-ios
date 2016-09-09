@@ -69,7 +69,7 @@
 @property(nonatomic) CGRect targetBounds;
 
 /** Unavailable, please use initWithView: instead. */
-- (nullable instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
  Initializes the controller.
