@@ -79,16 +79,13 @@
 - (nullable instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
 /**
- Adds the ink view to the view hierarchy.
+ When called the @c defaultInkView is added to the @c view.
 
- By default, @c defaultInkView is inserted into the view hierarchy. However, callers can bypass this
- behavior by providing a delegate that responds to @c inkTouchController:inkViewAtTouchLocation: and
- provides its own ink view. In that case the controller will not use @c defaultInkView and the
- following insertion step is also skipped.
+ This method is a no-op when the delegate conforms to @c inkTouchController:inkViewAtTouchLocation:
+ because this is how a client specifies a custom ink view.
 
- By default, the ink view is added as a subview of @c self.view. If the delegate responds to
- @c inkTouchController:insertInkView:intoView:, then that method is called instead to do the
- insertion.
+ If you want to specify a specific z-index order for your inkView please conform to
+ @c inkTouchController:insertInkView:intoView: and do so there.
  */
 - (void)addInkView;
 
@@ -131,7 +128,8 @@
 
  If this method is not implemented, the ink view is added as a subview of the view when the
  controller's addInkView method is called. Delegates can choose to insert the ink view below the
- contents as a background view.
+ contents as a background view. When inkTouchController:inkViewAtTouchLocation is implemented
+ this method will not be invoked.
 
  @param inkTouchController The ink touch controller.
  @param inkView The ink view.
