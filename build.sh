@@ -89,7 +89,7 @@ else
         read -p "Are you sure you want to deploy to production environment?" -n 1 -r
         echo ""
         if [[ $REPLY =~ ^[Yy]$ ]]; then
-          gsutil -m cp -r $DIR/site-build/* gs://mdc-ios-preview
+          gsutil -m rsync -d -r -c $DIR/site-build gs://mdc-ios-preview
           if [[ $? = 0 ]]; then
             echo -e "\033[32m*********************************************************************"
             echo -e "\033[32m*****                                                           *****"

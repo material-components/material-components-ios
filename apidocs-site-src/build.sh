@@ -49,10 +49,6 @@ BuildComponent () {
     --objc \
     --sdk iphonesimulator \
     --swift-version $(swift --version | head -n1 | awk '{print $4}') >> /dev/null
-  # Copy api doc assets if there is any
-  if [ -d $folder/docs/assets ]; then
-    cp -R "$folder/docs/assets/" "$jazzy_output/assets/"
-  fi
 
   # Adjust path to assets in generated files
   sed -i '' 's/docs\///g' $jazzy_output/*.html

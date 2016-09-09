@@ -57,14 +57,20 @@ for i in ${FOLDERS[@]}; do
     NEW_NAME=$(echo ${j} | sed -e s/README/index/)
     mv "${j}" "${NEW_NAME}"
   done
+
+  ## Copy extra docs/assets in.
+  for k in $(find "${i}"/* -type d -maxdepth 0); do
+    if [ -d "${k}/docs" ]; then
+      rsync -r "${k}/docs" "${TARGET}/${k}"
+    else
+      if [ -d "${TARGET}/${k}/docs" ]; then
+        rm -rf "${TARGET}/${k}/docs"
+      fi
+    fi
+  done
 done
 
-## For the components only, copy extra docs in.
-for i in $(find components/* -type d -maxdepth 0); do
-  if [ -d "${i}/docs" ]; then
-    rsync -r "${i}/docs" "${TARGET}/${i}"
-  fi
-done
+
 
 # UNCOMMENT LIQUID TAGS FROM MARKDOWN
 #grep -rl '<!--{.*}-->' ./ | xargs sed -i '' 's/<!--{\(.*\)}-->/{\1}/g'
