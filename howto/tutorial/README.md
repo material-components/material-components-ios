@@ -58,7 +58,7 @@ pod 'MaterialComponents', :git => 'https://github.com/google/material-components
     
 end
 ~~~ 
-![Finished Podfile](docs/assets/Podfile-Complete.jpg)
+![Finished Podfile](docs/assets/Podfile-Complete.png)
 
 **NOTE:** If the language you’re using in this project is Objective-C, comment out `use_frameworks` by adding a `#` in front of it.
 
