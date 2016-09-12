@@ -119,12 +119,19 @@ then set its reuse identifier to `cell`:
 In `viewDidLoad`, configure the collection view’s appearance:
 
 ~~~swift
-override func viewDidLoad() {
+import UIKit
+import MaterialComponents.MaterialCollections
+
+class ViewController: MDCCollectionViewController {
+
+  override func viewDidLoad() {
+
     super.viewDidLoad()
-    
+
     // Configure the collection view's appearance.
     styler.cellStyle = .card
-    styler.cellLayoutType = .grid
+  }
+
 }
 ~~~
         
