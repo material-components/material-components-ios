@@ -79,33 +79,29 @@ In Xcode, select `ViewController.swift` or `ViewController.h`.
 
 ![Selecting the correct view controller file in Xcode's file navigator](docs/assets/Xcode-Select-File.gif)
 
-Then import MDC:
+Then import Material Collections and set `ViewController`’s superclass to `MDCCollectionViewController`:
 
-##### Swift:
-
-~~~ swift
-import MaterialComponents
-~~~
-
-##### Objective-C:
-
-~~~ objc
-TODO: ObjC
-~~~
-        
-Change `ViewController`’s superclass to `MDCCollectionViewController`:
-    
-##### Swift:
+##### Swift (ViewController.swift):
 
 ~~~ swift
+import UIKit
+import MaterialComponents.MaterialCollections
+
 class ViewController: MDCCollectionViewController {
 ~~~
 
-##### Objective-C:
+##### Objective-C (ViewController.h):
 
 ~~~ objc
-TODO: ObjC
+#import <UIKit/UIKit.h>
+
+#import "MaterialCollections.h"
+
+@interface ViewController : MDCCollectionViewController
+
+@end
 ~~~
+        
 
 ![Swift: Importing MaterialComponents module and changing the view controller's superclass](docs/assets/Xcode-Class-Import-and-Subclass.gif)
 
