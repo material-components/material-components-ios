@@ -88,13 +88,19 @@ import UIKit
 import MaterialComponents.MaterialCollections
 
 class ViewController: MDCCollectionViewController {
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+  }
+
+}
 ~~~
 
 ##### Objective-C (ViewController.h):
 
 ~~~ objc
 #import <UIKit/UIKit.h>
-
 #import "MaterialCollections.h"
 
 @interface ViewController : MDCCollectionViewController
