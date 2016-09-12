@@ -27,12 +27,6 @@ static const NSInteger kSwitchStressTestNumSwitches = 40;
 static const NSInteger kSwitchStressTestNumColumns = 4;
 static const CGFloat kSwitchStressTestColumnWidth = 50;
 
-@protocol SKDisplayLinkInterface <NSObject>
-
-+ (id)displayLinkWithBlock:(id)arg1 queue:(id)arg2;
-
-@end
-
 @implementation SwitchStressTestViewController {
   MDCButtonBar *_buttonBar;
   NSMutableArray *_switches;
