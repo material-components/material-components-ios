@@ -9,7 +9,7 @@ This tutorial will teach you how to link Material Components to an application, 
 ---
 
 
-### 1.  Create a new Xcode application:
+## 1.  Create a new Xcode application:
 
 Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`. 
 
@@ -21,7 +21,7 @@ Choose a place to save your new project that you can remember. Click `Create`.
   
 Close your new project by going to menu `File -> Close Project` or holding `option + command + w`. We’ll come back to the project in a minute.
   
-### 2.  Setup CocoaPods:
+## 2.  Setup CocoaPods:
 Open `Terminal`.
 
 If you do not already have CocoaPods installed on this system, run:
@@ -75,7 +75,7 @@ open MDC-Tutorial.xcworkspace
 ![CocoaPods installation script and opening of workspace into Xcode](docs/assets/Terminal-Pod-Installation.jpg)
 
 
-### 3.  Add a Material Collection View:
+## 3.  Add a Material Collection View:
 In Xcode, select `ViewController.swift` or `ViewController.h`. 
 
 ![Selecting the correct view controller file in Xcode's file navigator](docs/assets/Xcode-Select-File.gif)
@@ -155,7 +155,7 @@ Build and run your app. It should display a scrollable, touchable collection vie
 
 ![Running the app to show a working collection of cells](docs/assets/App-Collection-No-AppBar.gif)
 
-### 4.  Add an app bar:
+## 4.  Add an app bar:
 Add the property declaration to the top of the class:
 
 ~~~ swift
@@ -178,7 +178,7 @@ Build and run your app. It should display a white rectangle above the collection
 
 But if you pull down, it doesn’t expand at all.
 
-### 5.  Make the app bar flexible by forwarding scroll view delegate methods:
+## 5.  Make the app bar flexible by forwarding scroll view delegate methods:
 Implement the following methods. (In Swift you can choose to do this as a new extension.):
 
 ~~~swift
