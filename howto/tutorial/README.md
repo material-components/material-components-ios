@@ -125,7 +125,6 @@ import MaterialComponents.MaterialCollections
 class ViewController: MDCCollectionViewController {
 
   override func viewDidLoad() {
-
     super.viewDidLoad()
 
     styler.cellStyle = .card
@@ -143,7 +142,6 @@ import MaterialComponents.MaterialCollections
 class ViewController: MDCCollectionViewController {
 
   override func viewDidLoad() {
-
     super.viewDidLoad()
 
     styler.cellStyle = .card
