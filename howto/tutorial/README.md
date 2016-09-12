@@ -108,9 +108,6 @@ class ViewController: MDCCollectionViewController {
 @end
 ~~~
         
-
-![Swift: Importing MaterialComponents module and changing the view controller's superclass](docs/assets/Xcode-Class-Import-and-Subclass.gif)
-
 Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
     
 Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
