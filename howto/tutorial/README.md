@@ -84,7 +84,7 @@ Then import MDC:
 ##### Swift:
 
 ~~~ swift
-Import MaterialComponents
+import MaterialComponents
 ~~~
 
 ##### Objective-C:
