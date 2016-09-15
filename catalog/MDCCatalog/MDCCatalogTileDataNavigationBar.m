@@ -188,7 +188,7 @@
     CGRect labelRect =
         CGRectMake(CGRectGetMinX(frame) + 57, CGRectGetMinY(frame) + 29.86, 36.21, 17);
     {
-      NSString* textContent = NSLocalizedString(@"AppBar", @"AppBar");
+      NSString* textContent = @"AppBar";
       NSMutableParagraphStyle* labelStyle = [NSMutableParagraphStyle new];
       labelStyle.alignment = NSTextAlignmentCenter;
 
