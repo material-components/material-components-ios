@@ -27,8 +27,12 @@
 
 // TODO: Replace with Dialog-specific Tile drawing code
 /* Auto-generated code using PaintCode and formatted with clang-format. */
+// Temporarily disable certain warnings
+//   "One thorn of experience is worth a whole wilderness of warning."
+//     - James Russell Lowell
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
+#pragma clang diagnostic ignored "-Wassign-enum"
 + (void)draw:(CGRect)frame {
   CGContextRef context = UIGraphicsGetCurrentContext();
 

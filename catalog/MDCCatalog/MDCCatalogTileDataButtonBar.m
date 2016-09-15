@@ -26,8 +26,11 @@
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */
+// "History is a vast early warning system."
+// - Norman Cousins
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
+#pragma clang diagnostic ignored "-Wassign-enum"
 + (void)draw:(CGRect)frame {
   UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
   UIColor* fillColor2 = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
