@@ -20,6 +20,8 @@
 #error "This component only supports iOS 8.0 and above."
 #endif
 
+@protocol MDCDialogPresentationControllerDelegate;
+
 /**
  MDCDialogTransitionController is be used to setup a custom transition and animationed presentation
  and dismissal for material-styled alerts, simple dialogs and confirmation dialogs.
@@ -39,5 +41,10 @@
  */
 @interface MDCDialogTransitionController
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+
+/**
+ The callback delegate. See @c MDCDialogPresentationControllerDelegate.
+ */
+@property(nonatomic, nullable, weak) id<MDCDialogPresentationControllerDelegate> presentationControllerDelegate;
 
 @end

@@ -19,6 +19,10 @@
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
+@interface DialogsAlertViewController() <MDCDialogPresentationControllerDelegate>
+
+@end
+
 @implementation DialogsAlertViewController
 
 - (IBAction)didTapShowAlert:(id)sender {
@@ -29,19 +33,19 @@
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
 
   MDCAlertController *materialAlertController =
-      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString presentationControllerDelegate:self];
 
-  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
+  MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
                                                            NSLog(@"%@", @"AGREE pressed");
                                                          }];
-  [materialAlertController addAction:agreeAaction];
+  [materialAlertController addAction:agreeAction];
 
-  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
+  MDCAlertAction *disagreeAction = [MDCAlertAction actionWithTitle:@"DISAGREE"
                                                             handler:^(MDCAlertAction *action) {
                                                               NSLog(@"%@", @"DISAGREE pressed");
                                                             }];
-  [materialAlertController addAction:disagreeAaction];
+  [materialAlertController addAction:disagreeAction];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
@@ -71,6 +75,12 @@
   [materialAlertController addAction:action];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
+
+#pragma mark MDCDialogPresentationControllerDelegate
+
+- (BOOL)presentationControllerShouldDismissOnBackgroundTap:(MDCDialogPresentationController *)presentationController {
+  return true;
 }
 
 @end
