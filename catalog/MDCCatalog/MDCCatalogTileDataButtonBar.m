@@ -26,8 +26,6 @@
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */
-// "History is a vast early warning system."
-// - Norman Cousins
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
 #pragma clang diagnostic ignored "-Wassign-enum"
