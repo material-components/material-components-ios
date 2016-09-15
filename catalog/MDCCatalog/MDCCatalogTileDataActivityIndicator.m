@@ -28,6 +28,7 @@
 /* Auto-generated code using PaintCode and formatted with clang-format. */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
+#pragma clang diagnostic ignored "-Wassign-enum"
 + (void)draw:(CGRect)frame {
   UIColor* fillColor = [UIColor colorWithRed:0 green:0.655 blue:0.969 alpha:1];
 

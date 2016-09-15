@@ -28,6 +28,7 @@
 /* Auto-generated code using PaintCode and formatted with clang-format. */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
+#pragma clang diagnostic ignored "-Wassign-enum"
 + (void)draw:(CGRect)frame {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
@@ -187,7 +188,7 @@
     CGRect labelRect =
         CGRectMake(CGRectGetMinX(frame) + 57, CGRectGetMinY(frame) + 29.86, 36.21, 17);
     {
-      NSString* textContent = @"AppBar";
+      NSString* textContent = NSLocalizedString(@"AppBar", @"AppBar");
       NSMutableParagraphStyle* labelStyle = [NSMutableParagraphStyle new];
       labelStyle.alignment = NSTextAlignmentCenter;
 
