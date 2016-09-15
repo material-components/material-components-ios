@@ -95,28 +95,32 @@
  */
 - (BOOL)unload;
 
-/** Will be deprecated after 9/7/2016: @c initWithFontName:fontURL:. */
-- (nonnull instancetype)initWithName:(nonnull NSString *)fontName URL:(nonnull NSURL *)fontURL;
+/** Deprecated please use: @c initWithFontName:fontURL:. */
+- (nonnull instancetype)initWithName:(nonnull NSString *)fontName
+                                 URL:(nonnull NSURL *)fontURL
+    __deprecated_msg("Use initWithFontName:fontURL: instead.");
 
 /** A convience method for getting a font. */
 - (nullable UIFont *)fontOfSize:(CGFloat)fontSize;
 
-/** Will be deprecated after 9/7/2016: @c load. */
-- (BOOL)registerFont;
+/** Deprecated please use: @c load. */
+- (BOOL)registerFont __deprecated_msg("Use load instead.");
 
-/** Will be deprecated after 9/7/2016: @c unload. */
-- (BOOL)unregisterFont;
+/** Deprecated please use: @c unload. */
+- (BOOL)unregisterFont __deprecated_msg("Use unload instead.");
 
-/** Will be deprecated after 9/7/2016: @c loaded. */
-@property(nonatomic, readonly) BOOL isRegistered;
+/** Deprecated please use: @c loaded. */
+@property(nonatomic, readonly) BOOL isRegistered __deprecated_msg("Use loaded instead.");
 
-/** Will be deprecated after 9/7/2016: @c loadFailed. */
-@property(nonatomic, readonly) BOOL hasFailedRegistration;
+/** Deprecated please use: @c loadFailed. */
+@property(nonatomic, readonly)
+    BOOL hasFailedRegistration __deprecated_msg("Use loadFailed instead.");
 
 /**
- Will be deprecated after 9/7/2016: This class should not be mutated. Create a new instance if you
+ Deprecated: This class should not be mutated. Create a new instance if you
  need to specifiy a different font name.
  */
-- (void)setFontName:(NSString *_Nonnull)fontName;
+- (void)setFontName:(NSString *_Nonnull)fontName
+    __deprecated_msg("Create a new instance if you need to specifiy a different font name.");
 
 @end

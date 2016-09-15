@@ -51,6 +51,11 @@ static const CGFloat kValueLabelFontSize = 12.f;
   return self;
 }
 
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+  [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect {
   [super drawRect:rect];
 
@@ -320,10 +325,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)setMinimumValue:(CGFloat)minimumValue {
-  _minimumValue = MIN(_maximumValue, minimumValue);
+  _minimumValue = minimumValue;
   CGFloat previousValue = _value;
   if (_value < _minimumValue) {
     _value = _minimumValue;
+  }
+  if (_maximumValue < _minimumValue) {
+    _maximumValue = _minimumValue;
   }
   [self updateThumbTrackAnimated:NO
            animateThumbAfterMove:NO
@@ -332,10 +340,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)setMaximumValue:(CGFloat)maximumValue {
-  _maximumValue = MAX(_minimumValue, maximumValue);
+  _maximumValue = maximumValue;
   CGFloat previousValue = _value;
   if (_value > _maximumValue) {
     _value = _maximumValue;
+  }
+  if (_minimumValue > _maximumValue) {
+    _minimumValue = _maximumValue;
   }
   [self updateThumbTrackAnimated:NO
            animateThumbAfterMove:NO

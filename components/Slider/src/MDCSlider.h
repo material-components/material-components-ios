@@ -93,8 +93,10 @@ IB_DESIGNABLE
 /**
  The minimum value of the slider.
 
- If you change the value of this property and the current value of the receiver is below the new
- minimum, the current value will be adjusted to match the new minimum value.
+ If you change the value of this property and the @c value of the receiver is below the new minimum,
+ the current value will be adjusted to match the new minimum value.
+ If you change the value of this property and @c maximumValue of the receiver is below the new
+ minimum, the @c maximumValue will also be set to this new minimum value.
 
  The default value of this property is 0.0.
  */
@@ -103,8 +105,10 @@ IB_DESIGNABLE
 /**
  The maximum value of the slider.
 
- If you change the value of this property and the current value of the receiver is above the new
- maximum, the current value will be adjusted to match the new maximum value.
+ If you change the value of this property and the @c value of the receiver is above the new maximum,
+ the current value will be adjusted to match the new maximum value.
+ If you change the value of this property and @c minimumValue of the receiver is above the new
+ maximum, the @c minimumValue will also be set to this new maximum value.
 
  The default value of this property is 1.0.
  */

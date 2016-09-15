@@ -226,7 +226,7 @@ static dispatch_queue_t gLoadedFontsQueue;
   }
 }
 
-#pragma mark - Deprecated methods after 9/7/2016
+#pragma mark - Deprecated methods
 
 - (instancetype)initWithName:(NSString *)fontName URL:(NSURL *)fontURL {
   return [self initWithFontName:fontName fontURL:fontURL];
