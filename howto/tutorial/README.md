@@ -145,6 +145,14 @@ class ViewController: MDCCollectionViewController {
     super.viewDidLoad()
 
     styler.cellStyle = .card
+
+    title = "Material Components"
+
+    addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
+
+    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+    appBar.addSubviewsToParent()
   }
 
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
