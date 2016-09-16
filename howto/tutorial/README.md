@@ -241,11 +241,9 @@ class ViewController: MDCCollectionViewController {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
 
     if let textCell = cell as? MDCCollectionViewTextCell {
-
-    // Add some mock text to the cell.
-    let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
-    textCell.textLabel?.text = animals[indexPath.item]
-
+      // Add some mock text to the cell.
+      let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
+      textCell.textLabel?.text = animals[indexPath.item]
     }
 
     return cell
