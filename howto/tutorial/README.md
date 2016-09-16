@@ -119,43 +119,43 @@ then set its reuse identifier to `cell`:
 In `viewDidLoad`, configure the collection view’s appearance:
 
 ~~~swift
-  override func viewDidLoad() {
-    super.viewDidLoad()
+override func viewDidLoad() {
+  super.viewDidLoad()
 
-    styler.cellStyle = .card
-  }
+  styler.cellStyle = .card
+}
 ~~~
         
 Below `viewDidLoad`, add a mock datasource:
 
 ~~~ swift
-  override func viewDidLoad() {
-    super.viewDidLoad()
+override func viewDidLoad() {
+  super.viewDidLoad()
 
-    styler.cellStyle = .card
+  styler.cellStyle = .card
+}
+
+override func numberOfSections(in collectionView: UICollectionView) -> Int {
+  return 5
+}
+
+override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  return 4
+}
+
+override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+
+  if let textCell = cell as? MDCCollectionViewTextCell {
+
+  // Add some mock text to the cell.
+  let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
+  textCell.textLabel?.text = animals[indexPath.item]
+
   }
 
-  override func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 5
-  }
-
-  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 4
-  }
-
-  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-
-    if let textCell = cell as? MDCCollectionViewTextCell {
-
-    // Add some mock text to the cell.
-    let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
-    textCell.textLabel?.text = animals[indexPath.item]
-
-    }
-
-    return cell
-  }
+  return cell
+}
 ~~~
         
 Build and run your app. It should display a scrollable, touchable collection view:
