@@ -1,9 +1,7 @@
----
-title:  "Roboto Font Loader"
-layout: detail
-section: components
-excerpt: "The Roboto Font Loader lazy loads the Robot font."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/RobotoFontLoader/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/RobotoFontLoader">GitHub</a> for README documentation.{% endif %}-->
+
 # Roboto Font Loader
 
 The Roboto Font Loader lazy loads the Roboto font.
@@ -28,7 +26,7 @@ The Roboto Font Loader lazy loads the Roboto font.
 
 <ul class="icon-list">
   <li class="icon-link">
-    <a href="apidocs/Classes/MDCRobotoFontLoader.html">
+    <a href="https://material-ext.appspot.com/mdc-ios-preview/components/RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">
       MDCRobotoFontLoader
     </a>
   </li>

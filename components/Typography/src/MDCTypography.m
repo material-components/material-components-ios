@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,13 +14,9 @@
  limitations under the License.
  */
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 #import "MDCTypography.h"
 
-static id<MDCTypographyFontLoading> sFontLoader = nil;
+static id<MDCTypographyFontLoading> gFontLoader = nil;
 const CGFloat MDCTypographyStandardOpacity = 0.87f;
 const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
@@ -36,22 +32,22 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma mark - Font loader access
 
 + (void)setFontLoader:(id<MDCTypographyFontLoading>)fontLoader {
-  sFontLoader = fontLoader;
-  NSAssert(sFontLoader,
+  gFontLoader = fontLoader;
+  NSAssert(gFontLoader,
            @"Font loader can't be null. The font loader will be reset to the default font loader.");
-  if (!sFontLoader) {
-    sFontLoader = [self defaultFontLoader];
+  if (!gFontLoader) {
+    gFontLoader = [self defaultFontLoader];
   }
 }
 
 + (id<MDCTypographyFontLoading>)fontLoader {
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    if (!sFontLoader) {
-      sFontLoader = [self defaultFontLoader];
+    if (!gFontLoader) {
+      gFontLoader = [self defaultFontLoader];
     }
   });
-  return sFontLoader;
+  return gFontLoader;
 }
 
 #pragma mark - Display fonts (extra large fonts)

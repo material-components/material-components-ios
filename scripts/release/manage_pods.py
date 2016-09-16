@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2016-present Google Inc. All Rights Reserved.
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import subprocess
 import sys
 
 
-COMMANDS = ['install', 'clean']
+COMMANDS = ['install', 'clean', 'update']
 
 def find_podfile_dirs(directory):
   """Return a list of directories that contain Podfile files.
@@ -45,8 +45,27 @@ def find_podfile_dirs(directory):
 
   return paths
 
+def update_podfile_dir(directory):
+  """Run `pod update` in a directory.
 
-def update_podfile_dir(directory, fast_install):
+  Args:
+    directory: The directory to use.
+  """
+  cmd = ['pod', 'update', '--project-directory=%s' % directory]
+  subprocess.check_call(cmd)
+
+
+def update_all_podfile_dirs(directory):
+  """Run `pod update` in all directories containing a Podfile.
+
+  Args:
+    directory: The directory to use.
+  """
+  dirs = find_podfile_dirs(directory)
+  for d in dirs:
+    update_podfile_dir(d)
+
+def install_podfile_dir(directory, fast_install):
   """Run `pod install` in a directory.
 
   Args:
@@ -59,7 +78,7 @@ def update_podfile_dir(directory, fast_install):
   subprocess.check_call(cmd)
 
 
-def update_all_podfile_dirs(directory, fast_install):
+def install_all_podfile_dirs(directory, fast_install):
   """Run `pod install` in all directories containing a Podfile.
 
   Args:
@@ -68,7 +87,7 @@ def update_all_podfile_dirs(directory, fast_install):
   """
   dirs = find_podfile_dirs(directory)
   for d in dirs:
-    update_podfile_dir(d, fast_install)
+    install_podfile_dir(d, fast_install)
 
 
 def clean_all_pods_dirs(directory):
@@ -91,13 +110,14 @@ def create_argument_parser(commands):
 
   Args:
     commands: The list of possible commands the user can specify.
-  
+
   Returns:
     An ArgumentParser object.
   """
   epilog="""
 possible commands are:
   install: Run `pod install` in every directory with a Podfile.
+  update: Run `pod update` in every directory with a Podfile.
   clean: Recursively remove all Pods directories.
   """
   parser = argparse.ArgumentParser(description=('Runs `pod` commands in all '
@@ -120,7 +140,7 @@ possible commands are:
   parser.add_argument('--fast_pod_install', action='store_true',
                       help=('skip updating the pod repos when running `pod '
                             'install`.'),
-                      default=False) 
+                      default=False)
   return parser
 
 
@@ -147,7 +167,9 @@ def main():
 
   # TODO: Avoid this duplication of the COMMANDS strings.
   if args.command == 'install':
-    update_all_podfile_dirs(args.directory, args.fast_pod_install)
+    install_all_podfile_dirs(args.directory, args.fast_pod_install)
+  elif args.command == 'update':
+    update_all_podfile_dirs(args.directory)
   elif args.command == 'clean':
     clean_all_pods_dirs(args.directory)
   else:

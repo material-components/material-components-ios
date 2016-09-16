@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let flexHeadVC = ShrineFlexibleHeaderContainerViewController()
     self.window?.rootViewController = flexHeadVC;
     self.window?.makeKeyAndVisible();
+
+    MDCIcons.ic_arrow_backUseNewStyle(true);
 
     return true
   }

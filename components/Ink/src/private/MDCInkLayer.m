@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 @end
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-@interface MDCInkLayerRipple ()<CAAnimationDelegate>
+@interface MDCInkLayerRipple () <CAAnimationDelegate>
 @end
 #endif
 
@@ -230,12 +230,10 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     // Bounded ripples move slightly towards the center of the tap target. Unbounded ripples
     // move to the center of the tap target.
 
-    CGPoint startPoint = [[self.presentationLayer valueForKeyPath:kInkLayerPosition] CGPointValue];
-
     CGFloat xOffset = self.targetFrame.origin.x - self.inkLayer.frame.origin.x;
     CGFloat yOffset = self.targetFrame.origin.y - self.inkLayer.frame.origin.y;
 
-    startPoint = CGPointMake(self.point.x + xOffset, self.point.y + yOffset);
+    CGPoint startPoint = CGPointMake(self.point.x + xOffset, self.point.y + yOffset);
     CGPoint endPoint = MDCInkLayerRectGetCenter(self.targetFrame);
     if (self.useCustomInkCenter) {
       endPoint = self.customInkCenter;

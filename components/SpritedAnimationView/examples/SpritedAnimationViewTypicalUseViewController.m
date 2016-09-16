@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
                                    attribute:NSLayoutAttributeWidth
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:nil
-                                   attribute:nil
+                                   attribute:NSLayoutAttributeNotAnAttribute
                                   multiplier:1.0
                                     constant:30];
   animationViewWidthConstraint.active = true;
@@ -71,7 +71,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
                                    attribute:NSLayoutAttributeHeight
                                    relatedBy:NSLayoutRelationEqual
                                       toItem:nil
-                                   attribute:nil
+                                   attribute:NSLayoutAttributeNotAnAttribute
                                   multiplier:1.0
                                     constant:30];
   animationViewHeightConstraint.active = true;
@@ -150,7 +150,7 @@ static NSString *const kSpriteGrid = @"mdc_sprite_grid__list";
   recognizer.enabled = NO;
 
   // Animate the sprited view.
-  [_animationView startAnimatingWithCompletion:^{
+  [_animationView startAnimatingWithCompletion:^(BOOL finished) {
 
     // When animation completes, toggle image.
     _toggle = !_toggle;

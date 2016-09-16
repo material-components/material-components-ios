@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 #import "MDCSwitch.h"
 
+#import "MaterialRTL.h"
 #import "MaterialThumbTrack.h"
 
 static const CGSize MDCSwitchIntrinsicSize = {.width = 36.0f, .height = 27.0f};
@@ -35,7 +36,7 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCSwitchInitWithColor:nil];
+    [self commonMDCSwitchInit];
   }
   return self;
 }
@@ -44,15 +45,14 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   self = [super initWithCoder:aDecoder];
   if (self) {
     // TODO(iangordon): Get color from Storyboard / XIB
-    [self commonMDCSwitchInitWithColor:nil];
+    [self commonMDCSwitchInit];
   }
   return self;
 }
 
-- (void)commonMDCSwitchInitWithColor:(UIColor *)color {
-  if (color == nil) {
-    color = [MDCSwitch defaultOnTintColor];
-  }
+- (void)commonMDCSwitchInit {
+  // TODO(iangordon): Set a sane default in the UIAppearance Proxy
+  UIColor *color = [MDCSwitch defaultOnTintColor];
   _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:color];
   [_thumbTrack addTarget:self
                   action:@selector(thumbTrackValueChanged:)
@@ -96,7 +96,10 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   [super layoutSubviews];
   _thumbTrack.frame = self.bounds;
 
-  // TODO(iangordon): Handle BiDi layouts
+  // If necessary, flip for RTL.
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    [self.layer setAffineTransform:CGAffineTransformMakeScale(-1, 1)];
+  }
 }
 
 - (UIColor *)onTintColor {
@@ -245,16 +248,11 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 }
 
 - (void)updateAccessibilityValues {
-  // Set accessibility value similar to native UISwitch.
-  if (self.on) {
-    self.accessibilityValue = [[self class] a11yLabelOnString];
-  } else {
-    self.accessibilityValue = [[self class] a11yLabelOffString];
-  }
+  // Accessibility value handled in -accessibilityValue method
 
   if (self.enabled) {
     self.accessibilityTraits &= ~UIAccessibilityTraitNotEnabled;
-    self.accessibilityHint = [[self class] a11yHintString];
+    self.accessibilityHint = [[self class] defaultA11yHintString];
   } else {
     self.accessibilityTraits |= UIAccessibilityTraitNotEnabled;
     self.accessibilityHint = nil;
@@ -278,6 +276,10 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   [self updateAccessibilityValues];
 }
 
+- (BOOL)isTracking {
+  return _thumbTrack.isTracking;
+}
+
 #pragma mark - Animation tracking
 
 - (void)thumbTrack:(MDCThumbTrack *)thumbTrack willAnimateToValue:(CGFloat)value {
@@ -294,8 +296,17 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
 #pragma mark - Accessibility Strings
 
+- (NSString *)accessibilityValue {
+  if (self.on) {
+    return self.onAccessibilityValue ?: [[self class] defaultA11yValueOnString];
+  } else {
+    return self.offAccessibilityValue ?: [[self class] defaultA11yValueOffString];
+  }
+}
+
 + (NSString *)a11yStringForKey:(NSString *)key {
-  NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"MaterialSwitch" ofType:@"bundle"];
+  NSString *bundlePath =
+      [[NSBundle bundleForClass:[self class]] pathForResource:@"MaterialSwitch" ofType:@"bundle"];
   NSBundle *componentBundle = [NSBundle bundleWithPath:bundlePath];
   NSString *localizedString =
       NSLocalizedStringFromTableInBundle(key, @"MaterialSwitch", componentBundle, nil);
@@ -303,15 +314,15 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   return localizedString;
 }
 
-+ (NSString *)a11yLabelOnString {
-  return [[self class] a11yStringForKey:@"MDCSwitchAccessibilityLabelOn"];
++ (NSString *)defaultA11yValueOnString {
+  return [[self class] a11yStringForKey:@"MDCSwitchAccessibilityValueOn"];
 }
 
-+ (NSString *)a11yLabelOffString {
-  return [[self class] a11yStringForKey:@"MDCSwitchAccessibilityLabelOff"];
++ (NSString *)defaultA11yValueOffString {
+  return [[self class] a11yStringForKey:@"MDCSwitchAccessibilityValueOff"];
 }
 
-+ (NSString *)a11yHintString {
++ (NSString *)defaultA11yHintString {
   return [[self class] a11yStringForKey:@"MDCSwitchAccessibilityHint"];
 }
 

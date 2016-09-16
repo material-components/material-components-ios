@@ -1,5 +1,5 @@
 /*
-Copyright 2016-present Google Inc. All Rights Reserved.
+Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -37,6 +37,8 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
     appBar.navigationBar.tintColor = UIColor.whiteColor()
+    appBar.navigationBar.titleTextAttributes =
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
   }
 
   required init?(coder aDecoder: NSCoder) {

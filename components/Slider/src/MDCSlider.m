@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 
 #import "MDCSlider.h"
+#import "private/MDCSlider_Subclassable.h"
 
 #import "MaterialThumbTrack.h"
 
@@ -36,12 +37,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
-@interface MDCSlider () <MDCThumbTrackDelegate>
-@end
-
-@implementation MDCSlider {
-  MDCThumbTrack *_thumbTrack;
-}
+@implementation MDCSlider
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -60,10 +56,8 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)commonMDCSliderInit {
-  CGRect trackFrame = CGRectInset(self.frame, 8.f, 0.f);
-
   _thumbTrack =
-      [[MDCThumbTrack alloc] initWithFrame:trackFrame onTintColor:[[self class] defaultColor]];
+      [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:[[self class] defaultColor]];
   _thumbTrack.delegate = self;
   _thumbTrack.disabledTrackHasThumbGaps = YES;
   _thumbTrack.trackEndsAreInset = YES;
@@ -73,6 +67,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.thumbGrowsWhenDragging = YES;
   _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.shouldDisplayDiscreteDots = YES;
+  _thumbTrack.shouldDisplayDiscreteValueLabel = YES;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
   _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
   _thumbTrack.trackDisabledColor = [[self class] defaultDisabledColor];
@@ -157,6 +152,54 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.maximumValue = maximumValue;
 }
 
+- (CGFloat)filledTrackAnchorValue {
+  return _thumbTrack.filledTrackAnchorValue;
+}
+
+- (void)setFilledTrackAnchorValue:(CGFloat)filledTrackAnchorValue {
+  _thumbTrack.filledTrackAnchorValue = filledTrackAnchorValue;
+}
+
+- (BOOL)shouldDisplayDiscreteValueLabel {
+  return _thumbTrack.shouldDisplayDiscreteValueLabel;
+}
+
+- (void)setShouldDisplayDiscreteValueLabel:(BOOL)shouldDisplayDiscreteValueLabel {
+  _thumbTrack.shouldDisplayDiscreteValueLabel = shouldDisplayDiscreteValueLabel;
+}
+
+- (BOOL)isThumbHollowAtStart {
+  return _thumbTrack.thumbIsHollowAtStart;
+}
+
+- (void)setThumbHollowAtStart:(BOOL)thumbHollowAtStart {
+  _thumbTrack.thumbIsHollowAtStart = thumbHollowAtStart;
+}
+
+#pragma mark - MDCThumbTrackDelegate methods
+
+- (NSString *)thumbTrack:(MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {
+  if ([_delegate respondsToSelector:@selector(slider:displayedStringForValue:)]) {
+    return [_delegate slider:self displayedStringForValue:value];
+  }
+
+  // Default behavior
+
+  static dispatch_once_t onceToken;
+  static NSNumberFormatter *numberFormatter;
+  dispatch_once(&onceToken, ^{
+    numberFormatter = [[NSNumberFormatter alloc] init];
+    numberFormatter.maximumFractionDigits = 3;
+    numberFormatter.minimumIntegerDigits = 1;  // To get 0.5 instead of .5
+  });
+  return [numberFormatter stringFromNumber:@(value)];
+}
+
+- (BOOL)thumbTrack:(MDCThumbTrack *)thumbTrack shouldJumpToValue:(CGFloat)value {
+  return ![_delegate respondsToSelector:@selector(slider:shouldJumpToValue:)] ||
+         [_delegate slider:self shouldJumpToValue:value];
+}
+
 #pragma mark - UIControl methods
 
 - (void)setEnabled:(BOOL)enabled {
@@ -164,7 +207,11 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   _thumbTrack.enabled = enabled;
 }
 
-#pragma mark UIView methods
+- (BOOL)isTracking {
+  return _thumbTrack.isTracking;
+}
+
+#pragma mark - UIView methods
 
 - (CGSize)intrinsicContentSize {
   return CGSizeMake(kSliderDefaultWidth, kSliderFrameHeight);
@@ -194,6 +241,12 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (NSString *)accessibilityValue {
+  if ([_delegate respondsToSelector:@selector(slider:accessibilityLabelForValue:)]) {
+    return [_delegate slider:self accessibilityLabelForValue:self.value];
+  }
+
+  // Default behavior
+
   static dispatch_once_t onceToken;
   static NSNumberFormatter *numberFormatter;
   dispatch_once(&onceToken, ^{

@@ -1,11 +1,5 @@
-#import <QuartzCore/QuartzCore.h>
-
-#import "MDCSnackbarMessage.h"
-#import "MDCSnackbarMessageView.h"
-
-#import "MaterialButtons.h"
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,6 +14,13 @@
  limitations under the License.
  */
 
+#import <QuartzCore/QuartzCore.h>
+
+#import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
+#import "MDCSnackbarOverlayView.h"
+#import "MaterialAnimationTiming.h"
+#import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
@@ -99,6 +100,11 @@ static const CGFloat kButtonHeightVerticalLayout = 48.0f;
  The ink radius of the action button.
  */
 static const CGFloat kButtonInkRadius = 64.0f;
+
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCSnackbarMessageView () <CAAnimationDelegate>
+@end
+#endif
 
 @interface MDCSnackbarMessageView ()
 
@@ -253,6 +259,18 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [_containerView addTarget:self
                        action:@selector(handleBackgroundTapped:)
              forControlEvents:UIControlEventTouchUpInside];
+
+    UISwipeGestureRecognizer *swipeRightGesture =
+        [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                  action:@selector(handleBackgroundSwipedRight:)];
+    [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionRight];
+    [_containerView addGestureRecognizer:swipeRightGesture];
+
+    UISwipeGestureRecognizer *swipeLeftGesture =
+        [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                  action:@selector(handleBackgroundSwipedLeft:)];
+    [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [_containerView addGestureRecognizer:swipeLeftGesture];
 
     _contentView = [[UIView alloc] init];
     [_contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -842,12 +860,44 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 #pragma mark - Event Handlers
 
+- (void)handleBackgroundSwipedRight:(UIButton *)sender {
+  CABasicAnimation *translationAnimation =
+      [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
+  translationAnimation.toValue = [NSNumber numberWithDouble:-self.frame.size.width];
+  translationAnimation.duration = MDCSnackbarTransitionDuration;
+  translationAnimation.timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
+  translationAnimation.delegate = self;
+  translationAnimation.fillMode = kCAFillModeForwards;
+  translationAnimation.removedOnCompletion = NO;
+  [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
+}
+
+- (void)handleBackgroundSwipedLeft:(UIButton *)sender {
+  CABasicAnimation *translationAnimation =
+      [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
+  translationAnimation.toValue = [NSNumber numberWithDouble:self.frame.size.width];
+  translationAnimation.duration = MDCSnackbarTransitionDuration;
+  translationAnimation.timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
+  translationAnimation.delegate = self;
+  translationAnimation.fillMode = kCAFillModeForwards;
+  translationAnimation.removedOnCompletion = NO;
+  [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
+}
+
 - (void)handleBackgroundTapped:(UIButton *)sender {
   [self dismissWithAction:nil userInitiated:YES];
 }
 
 - (void)handleButtonTapped:(UIButton *)sender {
   [self dismissWithAction:self.message.action userInitiated:YES];
+}
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
+  if (flag) {
+    [self dismissWithAction:nil userInitiated:YES];
+  }
 }
 
 #pragma mark - Accessibility

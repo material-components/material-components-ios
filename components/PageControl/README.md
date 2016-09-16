@@ -1,9 +1,7 @@
----
-title:  "Page Control"
-layout: detail
-section: components
-excerpt: "Page Control is a drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/PageControl/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/PageControl">GitHub</a> for README documentation.{% endif %}-->
+
 # Page Control
 
 <div class="ios-animation right" markdown="1">
@@ -12,7 +10,7 @@ excerpt: "Page Control is a drop-in Material Design replacement for UIPageContro
 </div>
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
-influenced by Material Design specifications for animation and layout. The API methods are the
+influenced by material design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
 <!--{: .intro }-->
@@ -21,7 +19,7 @@ desired animation of the control.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCPageControl.html">MDCPageControl</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/PageControl/apidocs/Classes/MDCPageControl.html">MDCPageControl</a></li>
 </ul>
 
 

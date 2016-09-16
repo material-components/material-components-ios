@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ static NSString *const kExpectationDescription = @"animatingWithCompletion";
   XCTestExpectation *expectation = [self expectationWithDescription:kExpectationDescription];
 
   // Fulfill expectation after completion of animation.
-  [animationView startAnimatingWithCompletion:^{
+  [animationView startAnimatingWithCompletion:^(BOOL completion) {
     [expectation fulfill];
   }];
 

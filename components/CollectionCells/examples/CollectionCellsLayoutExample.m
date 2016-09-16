@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,10 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 #import "CollectionCellsLayoutExample.h"
 
@@ -121,6 +117,7 @@ static NSString *const kExampleDetailText =
   if (indexPath.item == 0) {
     // Add switch as accessory view.
     MDCSwitch *editingSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+    editingSwitch.on = self.editor.isEditing;
     [editingSwitch addTarget:self
                       action:@selector(didSwitch:)
             forControlEvents:UIControlEventValueChanged];

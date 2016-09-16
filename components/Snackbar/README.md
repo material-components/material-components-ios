@@ -1,6 +1,8 @@
-# Snackbar
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Snackbar/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Snackbar">GitHub</a> for README documentation.{% endif %}-->
 
-A material design snackbar.
+# Snackbar
 
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
@@ -110,10 +112,10 @@ message.action = action;
 let action = MDCSnackbarMessageAction()
 let actionHandler = {() in
   let answerMessage = MDCSnackbarMessage()
-  answerMessage.text = @"Fascinating";
+  answerMessage.text = "Fascinating"
   MDCSnackbarManager.showMessage(answerMessage)
 }
-action.handler = actionHandler;
-action.title = @"OK";
-message.action = action;
+action.handler = actionHandler
+action.title = "OK"
+message.action = action
 ~~~

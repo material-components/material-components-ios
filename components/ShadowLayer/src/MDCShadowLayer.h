@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -59,7 +59,9 @@
 /**
  The elevation of the layer in points.
 
- The higher the elevation, the more spread out the shadow is.
+ The higher the elevation, the more spread out the shadow is. This is distinct from the layer's
+ zPosition which can be used to order overlapping layers, but will have no affect on the size of
+ the shadow.
 
  Negative values act as if zero were specified.
  */

@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCThumbTrack.h"
 #import "MaterialSlider.h"
 
 static const NSUInteger kNumberOfRepeats = 20;
@@ -75,8 +76,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)testMaximumDefault {
-  // Given
-
   // When
   MDCSlider *slider = [[MDCSlider alloc] init];
 
@@ -137,23 +136,45 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (void)testSetMaximumToLowerThanMinimum {
   // Given
   MDCSlider *slider = [[MDCSlider alloc] init];
+  CGFloat newMax = slider.minimumValue - [self randomNumber];
 
   // When
-  slider.maximumValue = slider.minimumValue - [self randomNumber];
+  slider.maximumValue = newMax;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.maximumValue, slider.minimumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(slider.maximumValue, slider.minimumValue, kEpsilonAccuracy,
+                             @"setting the slider's max to lower than the max must equal the min");
+  XCTAssertEqualWithAccuracy(
+      newMax, slider.minimumValue, kEpsilonAccuracy,
+      @"setting the slider's max must change the min when smaller than the min");
+  XCTAssertEqualWithAccuracy(
+      newMax, slider.maximumValue, kEpsilonAccuracy,
+      @"setting the slider's max must equal the value gotten even when smaller than the minimum");
+  XCTAssertEqualWithAccuracy(
+      newMax, slider.value, kEpsilonAccuracy,
+      @"setting the slider's min to lower than the value must change the value also");
 }
 
 - (void)testSetMinimumToLowerThanMaximum {
   // Given
   MDCSlider *slider = [[MDCSlider alloc] init];
+  CGFloat newMin = slider.maximumValue + [self randomNumber];
 
   // When
-  slider.minimumValue = slider.maximumValue + [self randomNumber];
+  slider.minimumValue = newMin;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.minimumValue, slider.maximumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(slider.minimumValue, slider.maximumValue, kEpsilonAccuracy,
+                             @"setting the slider's min to higher than the max must equal the max");
+  XCTAssertEqualWithAccuracy(
+      newMin, slider.minimumValue, kEpsilonAccuracy,
+      @"setting the slider's min must equal the value gotten even when larger than the maximum");
+  XCTAssertEqualWithAccuracy(
+      newMin, slider.maximumValue, kEpsilonAccuracy,
+      @"setting the slider's min to larger than the max must change the max also");
+  XCTAssertEqualWithAccuracy(
+      newMin, slider.value, kEpsilonAccuracy,
+      @"setting the slider's min to higher than the value must change the value also");
 }
 
 - (void)testDiscreteValues2 {
@@ -309,6 +330,33 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   XCTAssertEqualObjects(actualColor, expectedColor);
 }
 
+#pragma mark numeric value label
+
+- (void)testNumericValueLabelString {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+  MDCThumbTrack *track = nil;
+  for (UIView *view in slider.subviews) {
+    if ([view isKindOfClass:[MDCThumbTrack class]]) {
+      track = (MDCThumbTrack *)view;
+      break;
+    }
+  }
+  XCTAssertNotEqualObjects(track, nil);
+
+  // With
+  NSNumberFormatter *testFormatter = [[NSNumberFormatter alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(
+      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:1.f]], @(1.));
+  XCTAssertEqualObjects(
+      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:0.57f]], @(0.57));
+  XCTAssertEqualObjects(
+      [testFormatter numberFromString:[slider thumbTrack:track stringForValue:0.33333333f]],
+      @(0.333));
+}
+
 #pragma mark accessibility
 
 - (void)testAccessibilityValue {
@@ -389,8 +437,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   MDCSlider *slider = [[MDCSlider alloc] init];
   slider.enabled =
       arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
-
-  // When
 
   // Then
   XCTAssertTrue(slider.accessibilityTraits & UIAccessibilityTraitAdjustable);

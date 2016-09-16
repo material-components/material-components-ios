@@ -1,15 +1,15 @@
----
-title:  "Contributing"
-layout: landing
-section: contributing
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/contributing/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/contributing">GitHub</a> for README documentation.{% endif %}-->
+
+Want to contribute? Great! First, read this page (including the [small print](#the-small-print)).
 
 # Contributing
 
 Material Components for iOS is intended to be a full open source project that accepts contributions
-from community members. We can work together to optimize Material Design on iOS.
+from community members. We can work together to optimize material design on iOS.
 
-- [Slack Channel](http://googleoss.slack.com)
+- [Slack Channel](http://mdc-private.slack.com)
   <!--{: .icon-slack }-->
 
 - [GitHub Issues](https://github.com/google/material-components-ios/issues)
@@ -25,9 +25,9 @@ from community members. We can work together to optimize Material Design on iOS.
 
 Members of the core team are engineers from Google, Inc. responsible for the strategic direction of
 Material Components and appointment of technical leaders from the community. The Core Team will
-work with the community to accept contributions in line with the [Material Design
+work with the community to accept contributions in line with the [material design
 spec](http://www.google.com/design/spec). You can reach members of the core team on our [Slack
-discussion channel](http://googleoss.slack.com).
+discussion channel](http://mdc-private.slack.com).
 
 - - -
 
@@ -37,7 +37,7 @@ As contributors and maintainers of the project, we pledge to respect everyone wh
 through posting issues, updating documentation, submitting pull requests, providing feedback in
 comments and any other related activities.
 
-Communication through any of our Material Design channels
+Communication through any of our material design channels
 ([GitHub](http://github.com/google/material-components-ios), [Stack
 Overflow](http://stackoverflow.com/questions/tagged/material-components-ios),
 [Google+](http://plus.google.com/+googledesign), [Twitter](https://twitter.com/googledesign), etc.)
@@ -98,10 +98,10 @@ _This code of conduct was adapted from the following sources:_
 
 If you have questions about how to use Material Components for iOS:
 
-- Please post questions to Stack Overflow with the tag `material-components-ios`.
 - Search previous questions that have been answered by visiting [Stack
   Overflow](http://stackoverflow.com/questions/tagged/material-components-ios).
-- Join us on our [Slack discussion channel](https://googleoss.slack.com/messages/mdc-ios/) for more
+- Please post questions to Stack Overflow with the tag `material-components-ios`.
+- Join us on our [Slack discussion channel](https://mdc-private.slack.com/messages/mdc-ios/) for more
   direct discussions with the team.
 
 - - -
@@ -110,7 +110,7 @@ If you have questions about how to use Material Components for iOS:
 
 If you find a bug in the source code or a mistake in the documentation, you can help us by
 [submitting an issue](https://github.com/google/material-components-ios/issues) to our GitHub
-repository. Even better: submit a fix as a pull request!
+repository. Even better: send a fix as a [pull request](https://github.com/google/material-components-ios/compare/)!
 
 - - -
 
@@ -124,7 +124,8 @@ would like to implement a new feature then consider what kind of change it is:
   mailing list](https://groups.google.com/forum/#!forum/material-components-ios-discuss) so that we
   can better coordinate our efforts, prevent duplication of work, and help you to craft the change
   so that it is successfully accepted into the project.
-- Small changes can be crafted and submitted to the GitHub Repository as a Pull Request.
+- Small changes can be crafted and submitted to the GitHub Repository as a [pull request]
+(https://github.com/google/material-components-ios/compare/).
 
 - - -
 
@@ -144,8 +145,8 @@ issue being dealt with quickly:
 - Reproduction steps - was it just a one time error or can you show the steps to reproduce?
 - Related issues - has a similar issue been reported before?
 
-Here is a great example of a well defined issue:
-[https://github.com/angular/angular.js/issues/5069](https://github.com/angular/angular.js/issues/5069)
+Here is a great example of a [well defined issue](https://github.com/angular/angular.js/issues/5069)
+in angular.js.
 
 - - -
 
@@ -154,26 +155,86 @@ Here is a great example of a well defined issue:
 Please sign our Contributor License Agreement (CLA) before sending pull requests. For any code
 changes to be accepted, the CLA must be signed. It's a quick process, we promise!
 
-- For individuals we have a [simple click-through
-  form](http://code.google.com/legal/individual-cla-v1.0.html).
-- For corporations we'll need you to print, sign and one of scan+email, fax or mail [the form.
-  ](http://code.google.com/legal/corporate-cla-v1.0.html)
+- For individuals we have a [simple click-through form]
+(http://code.google.com/legal/individual-cla-v1.0.html).
+- For corporations we'll need you to sign a different [agreement]
+(http://code.google.com/legal/corporate-cla-v1.0.html).
 
 - - -
 
-## Submitting a Pull Request
+## Pull requests
 
 For major changes, it's worthwhile discussing the idea on our [mailing
 list](https://groups.google.com/forum/#!forum/material-components-ios-discuss)—that way you'll get
 early feedback on your idea and find out if the approach has been tried before or if someone else
 is working on it. [Search our GitHub](https://github.com/google/material-components-ios/issues)
 issues to see if anyone has proposed the idea before, too. Feature requests and bug fixes should be
-tracked with issues, so file one early on and assign it to yourself.
+tracked with issues, so file one early on and assign it to yourself once you have started it.
 
-Once you have code that is ready to share, please create a pull request against our [GitHub
+### Conventions
+
+MDC follows certain [coding styles and conventions](code-conventions.md) for its code to help
+everyone easily read, review, and understand our code. Please follow these conventions when
+submitting pull requests.
+
+### Tips for a good pull request
+
+Pull requests can be hard to review if they try to tackle too many things
+at once. Phabricator's
+"[Writing Reviewable Code](https://secure.phabricator.com/book/phabflavor/article/writing_reviewable_code/)"
+provides a set of guidelines that help increase the likelihood of your
+pull request getting merged.
+
+In short (slightly modified from the original article):
+
+- A pull request should be as small as possible, but no smaller.
+- The smallest a pull request can be is a single cohesive idea: don't
+  make pull requests so small that they are meaningless on their own.
+- Turn large pull requests into small pull requests by dividing large
+  problems into smaller problems and solving the small problems one at
+  a time.
+- Write sensible pull request descriptions.
+
+Our additions:
+
+- A pull request should affect as few components as possible.
+- Pull requests must include a modification to the CHANGELOG.md summarizing the
+  change.
+
+### Before you contribute
+
+Before we can use your code, you must sign the
+[Google Individual Contributor License Agreement](https://developers.google.com/open-source/cla/individual?csw=1)
+(CLA), which you can do online. The CLA is necessary mainly because you own the
+copyright to your changes, even after your contribution becomes part of our
+codebase, so we need your permission to use and distribute your code. We also
+need to be sure of various other things—for instance that you'll tell us if you
+know that your code infringes on other people's patents. You don't have to sign
+the CLA until after you've submitted your code for review and a member has
+approved it, but you must do it before we can put your code into our codebase.
+Before you start working on a larger contribution, you should get in touch with
+us first through the issue tracker with your idea so that we can help out and
+possibly guide you. Coordinating up front makes it much easier to avoid
+frustration later on.
+
+### Code reviews
+
+All submissions, including submissions by project members, require review. We
+allow pull requests to be filed, but we perform code reviews on codereview.cc.
+
+### The small print
+
+Contributions made by corporations are covered by a different agreement than
+the one above, the
+[Software Grant and Corporate Contributor License Agreement](https://cla.developers.google.com/about/google-corporate).
+
+### Submitting a [Pull Request](https://github.com/google/material-components-ios/compare/)
+
+Once you have code that is ready to share, please create a [pull request](https://github.com/google/material-components-ios/compare/) against our [GitHub
 repo](https://github.com/google/material-components-ios). See [GitHub's documentation about pull
 requests](https://help.github.com/articles/using-pull-requests) for more information.
 
+### Subject Format
 We use a simple format for titles:
 
 - Start the title with `[ComponentName]` to identify which component a change affects. Use
@@ -181,8 +242,8 @@ We use a simple format for titles:
 rare.
 - Use `[ComponentName]!` to indicate that a change introduce a breakage: removing/renaming an
   element of the public API.
-- Use `[ComponentName]?` to indicate that a change (deliberately) introduces warnings, such as in
-  deprecations.
+- Use `[ComponentName]?` to indicate that a change (deliberately) introduces warnings. For example
+  when we mark an API deprecated.
 
 A good example of a title is:
 
@@ -200,12 +261,19 @@ account on Phabricator and join the discussion of your changes.
 
 - - -
 
-## Coding Style
+# Component checklist
 
-We have deferred all conversations about coding style to
-[clang-format](http://clang.llvm.org/docs/ClangFormat.html) and it is an automated part of our work
-flow. We follow the [Google style guide](https://google.github.io/styleguide/objcguide.xml). We
-recommend running clang format on your changes before sending a pull request.
+This checklist describes the process by which Material components are built.
+
+## API review
+
+API reviews work like typical code reviews with the added constraint of only reviewing the
+component's **public APIs**.
+
+To initiate an API review, send a pull request that only includes the public APIs you wish to
+review.
+
+TODO(featherless): Flesh this out with some concrete examples of existing API reviews.
 
 - - -
 
@@ -228,7 +296,7 @@ the appropriate years applied:
 
 ~~~ text
 
-Copyright 2016-present Google Inc. All Rights Reserved.
+Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License. You may obtain a copy of the

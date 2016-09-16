@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@
 
 + (NSString *)catalogDescription {
   return @"This control is designed to be a drop-in replacement for UIPageControl, with a user"
-          " experience influenced by Material Design.";
+          " experience influenced by material design.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

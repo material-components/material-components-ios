@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@
  Setting this to a non-nil color overrides that logic, and the caller is responsible for ensuring
  that the title color/background color combination meets the accessibility requirements.
  */
-@property(nonatomic, strong, nullable) UIColor *customTitleColor;
+@property(nonatomic, strong, nullable) UIColor *customTitleColor UI_APPEARANCE_SELECTOR;
 
 /**
  The alpha value that will be applied when the button is disabled. Most clients can leave this as

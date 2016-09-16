@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -60,6 +60,15 @@
  requires it.
  */
 @property(nonatomic, strong, nullable) UIView *titleView;
+
+/**
+ Display attributes for the titleView's title text.
+
+ Setting this property will render an NSAttributedString with the assigned attributes across the
+ entire text.
+ */
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
 
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;

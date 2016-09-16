@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self.navBar observeNavigationItem:self.navigationItem];
   self.navBar.tintColor = [UIColor whiteColor];
+  self.navBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 
   // Light blue 500
   [self.navBar setBackgroundColor:[UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1]];

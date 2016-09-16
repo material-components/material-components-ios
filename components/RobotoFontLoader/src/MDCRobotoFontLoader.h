@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -23,15 +23,11 @@
  */
 @interface MDCRobotoFontLoader : NSObject <MDCTypographyFontLoading>
 
-#pragma mark Accessing the font loader
-
 /** Shared singleton instance. */
-+ (nonnull instancetype)sharedInstance;
++ (nonnull MDCRobotoFontLoader *)sharedInstance;
 
 /** This is a singleton: Use sharedInstance instead. */
 - (nonnull instancetype)init NS_UNAVAILABLE;
-
-#pragma mark Non-italic fonts
 
 /**
  Returns a lazy-registered Roboto Light font.
@@ -60,8 +56,6 @@
  If registration fails then the bold system font is returned.
  */
 - (nonnull UIFont *)boldFontOfSize:(CGFloat)fontSize;
-
-#pragma mark Italic fonts
 
 /**
  Returns a lazy-registered Roboto Light Italic font.

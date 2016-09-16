@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -72,6 +72,17 @@
 - (nonnull instancetype)initWithSpriteSheetImage:(nullable UIImage *)spriteSheetImage
     NS_DESIGNATED_INITIALIZER;
 
+/**
+ Creates an animated sprite view. Use this initializer if your images are non-square.
+
+ @param spriteSheetImage A vertical sprite sheet of images.
+ @param numberOfFrames The number of frames in the sprite sheet image. Used for calculating
+      the size of each frame.
+ @return Initialized sprited animation view.
+ */
+- (nonnull instancetype)initWithSpriteSheetImage:(nullable UIImage *)spriteSheetImage
+                                  numberOfFrames:(NSInteger)numberOfFrames;
+
 /** Please use initWithSpriteSheetImage:. */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
@@ -82,7 +93,7 @@
 
  @param completion Block called when transition completes.
  */
-- (void)startAnimatingWithCompletion:(nullable void (^)())completion;
+- (void)startAnimatingWithCompletion:(nullable void (^)(BOOL finished))completion;
 
 /** Stop the animation. */
 - (void)stop;

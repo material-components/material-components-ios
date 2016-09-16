@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,10 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 #import "MDCFlexibleHeaderView.h"
 
@@ -157,6 +153,7 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
   if (self) {
     _statusBarShifter = [[MDCStatusBarShifter alloc] init];
     _statusBarShifter.delegate = self;
+    _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 
     NSPointerFunctionsOptions options =
         (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
@@ -491,6 +488,8 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 - (void)fhv_startDisplayLink {
   [self fhv_stopDisplayLink];
 
+  // NOTE: This may cause a retain cycle.
+  // cl/129917749
   _shiftAccumulatorDisplayLink =
       [CADisplayLink displayLinkWithTarget:self
                                   selector:@selector(fhv_shiftAccumulatorDisplayLinkDidFire:)];

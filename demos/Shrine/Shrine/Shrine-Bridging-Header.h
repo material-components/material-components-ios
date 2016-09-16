@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,8 +15,10 @@
  */
 
 #import "MDCPageControl.h"
+#import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
+#import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 #import "RemoteImageService.h"

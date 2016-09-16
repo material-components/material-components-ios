@@ -1,5 +1,5 @@
 /*
-Copyright 2016-present Google Inc. All Rights Reserved.
+Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -37,6 +37,8 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
 
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
     appBar.navigationBar.tintColor = UIColor.whiteColor()
+    appBar.navigationBar.titleTextAttributes =
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
 
     addChildViewController(appBar.headerViewController)
     let headerColor = UIColor(red: 0.01, green: 0.67, blue: 0.96, alpha: 1.0)

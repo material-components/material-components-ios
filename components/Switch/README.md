@@ -1,9 +1,6 @@
----
-title:  "Switch"
-layout: detail
-section: components
-excerpt: "The Switch component provides an Material Design on/off switch control with an interface similar to UISwitch."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Switch/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Switch">GitHub</a> for README documentation.{% endif %}-->
 
 # Switch
 
@@ -12,7 +9,7 @@ excerpt: "The Switch component provides an Material Design on/off switch control
   [![Switch](docs/assets/switch.png)](docs/assets/switch.mp4)
 </div>
 
-Switch provides an Material Design on/off switch control with an interface similar to UISwitch. Note
+Switch provides an material design on/off switch control with an interface similar to UISwitch. Note
 that `MDCSwitch` objects have an intrinsic size and are not resizable.
 <!--{: .intro }-->
 
@@ -25,8 +22,8 @@ that `MDCSwitch` objects have an intrinsic size and are not resizable.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCSwitch.html">MDCSwitch</a></li>
-  <li class="icon-link"><a href="apidocs/Functions.html">Global Functions</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Switch/apidocs/Classes/MDCSwitch.html">MDCSwitch</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Switch/apidocs/Functions.html">Global Functions</a></li>
 </ul>
 
 

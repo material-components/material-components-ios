@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@
 #import "MaterialSpritedAnimationView.h"
 #import "MaterialTypography.h"
 
-static CGFloat kPestoDetailBottomSheetHeightPortrait = 380;
 static CGFloat kPestoDetailDescTextHeight = 140;
 static CGFloat kPestoDetailPadding = 28;
 static CGFloat kPestoDetailSplitWidth = 64;
@@ -111,10 +110,10 @@ static CGFloat kPestoDetailSplitWidth = 64;
   UIImage *image = [PestoIconTimer drawTileImage:iconFrame];
   _iconImageView = [[UIImageView alloc] initWithImage:image];
   _iconImageView.frame =
-      CGRectMake(0, 0, _iconImageView.frame.size.width, _iconImageView.frame.size.height);
+      CGRectMake(0, 1.f, _iconImageView.frame.size.width, _iconImageView.frame.size.height);
   _titleLabel = [[UILabel alloc] init];
-  _titleLabel.font = [MDCTypography display1Font];
-  _titleLabel.alpha = [MDCTypography display1FontOpacity];
+  _titleLabel.font = [MDCTypography headlineFont];
+  _titleLabel.alpha = [MDCTypography headlineFontOpacity];
   _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:0.87f];
   _titleLabel.frame = CGRectMake(0, 0, _contentViewFrame.size.width - kPestoDetailSplitWidth,
                                  [MDCTypography display1Font].pointSize + 4.f);
@@ -222,11 +221,6 @@ static CGFloat kPestoDetailSplitWidth = 64;
   [_stackView.leftAnchor constraintEqualToAnchor:contentView.leftAnchor].active = YES;
   [_stackView.rightAnchor constraintEqualToAnchor:contentView.rightAnchor].active = YES;
   [_stackView.widthAnchor constraintEqualToAnchor:contentView.widthAnchor].active = YES;
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  self.contentSize = CGSizeMake(self.frame.size.width, kPestoDetailBottomSheetHeightPortrait);
 }
 
 - (void)setTitle:(NSString *)title {

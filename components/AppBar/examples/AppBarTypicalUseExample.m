@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -43,6 +43,8 @@
                                      alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
+    _appBar.navigationBar.titleTextAttributes =
+        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   }
   return self;
 }
@@ -100,7 +102,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The App Bar is a flexible navigation bar designed to provide a typical Material Design"
+  return @"The App Bar is a flexible navigation bar designed to provide a typical material design"
           " navigation experience.";
 }
 

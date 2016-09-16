@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,15 +15,16 @@
  */
 
 #import "MDCSnackbarOverlayView.h"
-#import "MDCSnackbarMessageView.h"
 
+#import "MDCSnackbarMessageView.h"
+#import "MaterialAnimationTiming.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlays.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the snackbar.
-static const NSTimeInterval MDCSnackbarTransitionDuration = 0.15f;
+NSTimeInterval const MDCSnackbarTransitionDuration = 0.15f;
 
 // How far from the bottom of the screen should the snackbar be.
 static const CGFloat MDCSnackbarBottomMargin_iPhone = 0;
@@ -35,6 +36,11 @@ static const CGFloat MDCSnackbarSideMargin_iPad = 24.0f;
 
 // The maximum height of the snackbar.
 static const CGFloat kMaximumHeight = 80.0f;
+
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCSnackbarOverlayView () <CAAnimationDelegate>
+@end
+#endif
 
 @interface MDCSnackbarOverlayView ()
 
@@ -388,11 +394,11 @@ static const CGFloat kMaximumHeight = 80.0f;
   UIViewAnimationCurve curve = UIViewAnimationCurveEaseInOut;
   CAMediaTimingFunction *function = nil;
 
-  MDCAnimationTimingCurve quantumCurve = MDCAnimationTimingCurveQuantumEaseOut;
-  function = [MDCSnackbarOverlayView animationTimingFunctionForCurve:quantumCurve];
+  MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
+  function = [CAMediaTimingFunction mdc_functionWithType:materialCurve];
 
   [MDCSnackbarOverlayView animateWithDuration:MDCSnackbarTransitionDuration
-                                        curve:quantumCurve
+                                        curve:materialCurve
                                    animations:animations
                                    completion:realCompletion];
 
@@ -417,11 +423,11 @@ static const CGFloat kMaximumHeight = 80.0f;
   UIViewAnimationCurve curve = UIViewAnimationCurveEaseInOut;
   CAMediaTimingFunction *function = nil;
 
-  MDCAnimationTimingCurve quantumCurve = MDCAnimationTimingCurveQuantumEaseIn;
-  function = [MDCSnackbarOverlayView animationTimingFunctionForCurve:quantumCurve];
+  MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseIn;
+  function = [CAMediaTimingFunction mdc_functionWithType:materialCurve];
 
   [MDCSnackbarOverlayView animateWithDuration:MDCSnackbarTransitionDuration
-                                        curve:quantumCurve
+                                        curve:materialCurve
                                    animations:animations
                                    completion:realCompletion];
 
@@ -451,8 +457,8 @@ static const CGFloat kMaximumHeight = 80.0f;
   translationAnimation.toValue = @(0.0f);
   translationAnimation.delegate = self;
 
-  translationAnimation.timingFunction = [MDCSnackbarOverlayView
-      animationTimingFunctionForCurve:MDCAnimationTimingCurveQuantumEaseOut];
+  translationAnimation.timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseOut];
 
   [snackbarView.layer addAnimation:translationAnimation forKey:@"translation"];
 
@@ -625,92 +631,17 @@ static const CGFloat kMaximumHeight = 80.0f;
 
 #pragma mark - Timing functions
 
-typedef NS_ENUM(NSUInteger, MDCAnimationTimingCurve) {
-  // These curves just map to the system-defined curves.
-  MDCAnimationTimingCurveEaseInOut = UIViewAnimationCurveEaseInOut,
-  MDCAnimationTimingCurveEaseIn = UIViewAnimationCurveEaseIn,
-  MDCAnimationTimingCurveEaseOut = UIViewAnimationCurveEaseOut,
-  MDCAnimationTimingCurveLinear = UIViewAnimationCurveLinear,
-
-  // Below are the interesting Material Design animation curves.
-
-  /**
-   This is the most frequently used interpolation curve for Material Design animations. This curve
-   is slow both at the beginning and end. It has similar characteristics to the system's EaseInOut.
-   This is known as FastOutSlowIn in the Material Design spec.
-   */
-  MDCAnimationTimingCurveQuantumEaseInOut,
-
-  /**
-   This curve should be used for motion when entering frame or when fading in from 0% opacity. This
-   curve is slow at the end. It has similar characteristics to the system's EaseOut. This is known
-   as LinearOutSlowIn in the spec.
-   */
-  MDCAnimationTimingCurveQuantumEaseOut,
-
-  /**
-   This curve should be used for motion when exiting frame or when fading out to 0% opacity. This
-   curve is slow at the beginning. It has similar characteristics to the system's EaseIn. This
-   is known as FastOutLinearIn in the Material Design spec.
-   */
-  MDCAnimationTimingCurveQuantumEaseIn,
-
-  /**
-   Aliases for various specific timing curve recommendations.
-   */
-  MDCAnimationTimingCurveTranslate = MDCAnimationTimingCurveQuantumEaseInOut,
-  MDCAnimationTimingCurveTranslateOnScreen = MDCAnimationTimingCurveQuantumEaseOut,
-  MDCAnimationTimingCurveTranslateOffScreen = MDCAnimationTimingCurveQuantumEaseIn,
-  MDCAnimationTimingCurveFadeIn = MDCAnimationTimingCurveQuantumEaseOut,
-  MDCAnimationTimingCurveFadeOut = MDCAnimationTimingCurveQuantumEaseIn,
-};
-
-+ (CAMediaTimingFunction *)animationTimingFunctionForCurve:(MDCAnimationTimingCurve)curve {
-  CAMediaTimingFunction *timingFunction = nil;
-
-  switch (curve) {
-    case MDCAnimationTimingCurveEaseInOut: {
-      timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-      break;
-    }
-    case MDCAnimationTimingCurveEaseIn: {
-      timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-      break;
-    }
-    case MDCAnimationTimingCurveEaseOut: {
-      timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-      break;
-    }
-    case MDCAnimationTimingCurveLinear: {
-      timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-      break;
-    }
-    case MDCAnimationTimingCurveQuantumEaseInOut: {
-      timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:0.2f:1.0f];
-      break;
-    }
-    case MDCAnimationTimingCurveQuantumEaseOut: {
-      timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.0f:0.0f:0.2f:1.0f];
-      break;
-    }
-    case MDCAnimationTimingCurveQuantumEaseIn: {
-      timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:1.0f:1.0f];
-      break;
-    }
-  }
-  return timingFunction;
-}
-
-static void WrapWithTimingFunctionForCurve(MDCAnimationTimingCurve curve, void (^block)(void)) {
+static void WrapWithTimingFunctionForCurve(MDCAnimationTimingFunction mediaTiming,
+                                           void (^block)(void)) {
   [CATransaction begin];
   [CATransaction
-      setAnimationTimingFunction:[MDCSnackbarOverlayView animationTimingFunctionForCurve:curve]];
+      setAnimationTimingFunction:[CAMediaTimingFunction mdc_functionWithType:mediaTiming]];
   block();
   [CATransaction commit];
 }
 
 + (void)animateWithDuration:(NSTimeInterval)duration
-                      curve:(MDCAnimationTimingCurve)curve
+                      curve:(MDCAnimationTimingFunction)curve
                  animations:(void (^)(void))animations
                  completion:(void (^)(BOOL finished))completion {
   WrapWithTimingFunctionForCurve(curve, ^{

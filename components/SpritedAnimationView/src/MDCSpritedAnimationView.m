@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,7 +21,13 @@
 static NSString *const kSpriteAnimationKey = @"spriteAnimate";
 static const NSInteger kSpriteFrameRateDefault = 60;
 
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCSpritedAnimationView () <CAAnimationDelegate>
+@end
+#endif
+
 @interface MDCSpritedAnimationView ()
+@property(nonatomic, copy) void (^pendingCompletionBlock)(BOOL finished);
 @property(nonatomic, assign) NSInteger numberOfFrames;
 @property(nonatomic, assign) CGFloat singleFrameWidthInPercent;  // 1 / numberOfFrames
 @property(nonatomic, strong) CALayer *spriteLayer;
@@ -61,6 +67,24 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   return self;
 }
 
+- (instancetype)initWithSpriteSheetImage:(UIImage *)spriteSheetImage
+                          numberOfFrames:(NSInteger)numberOfFrames {
+  MDCSpritedAnimationView *animationView = [self initWithSpriteSheetImage:spriteSheetImage];
+  animationView.numberOfFrames = numberOfFrames;
+  animationView.singleFrameWidthInPercent = 1.0f / numberOfFrames;
+  [animationView updateSpriteAnimationLayer];
+
+  return animationView;
+}
+
+- (CGSize)intrinsicContentSize {
+  if (_spriteSheetImage) {
+    CGFloat width = _spriteSheetImage.size.width;
+    return CGSizeMake(width, width);
+  }
+  return [super intrinsicContentSize];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -69,9 +93,10 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   self.spriteLayer.bounds = self.bounds;
 }
 
-- (void)startAnimatingWithCompletion:(void (^)())completion {
-  [CATransaction begin];
-  [CATransaction setCompletionBlock:completion];
+- (void)startAnimatingWithCompletion:(void (^)(BOOL finished))completion {
+  [self stop];
+
+  self.pendingCompletionBlock = completion;
 
   NSMutableArray<NSValue *> *linearValues = [NSMutableArray array];
   NSMutableArray<NSNumber *> *keyTimes = [NSMutableArray array];
@@ -83,6 +108,7 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   }
 
   CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];
+  animation.delegate = self;
   animation.duration = (NSTimeInterval)_numberOfFrames / (NSTimeInterval)_frameRate;
   animation.values = linearValues;
   animation.keyTimes = keyTimes;
@@ -95,22 +121,37 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   }
 
   [self.spriteLayer addAnimation:animation forKey:kSpriteAnimationKey];
-  [CATransaction commit];
 }
 
 - (void)stop {
-  // Removing the animation will cause the completion block to be also called.
+  // Removing the animation will trigger |animationDidStop| and therefore the completion block, but
+  // there is no guarantee it happens atomically so to ensure predictable call-order we manually
+  // trigger the completion block here.
+  void (^block)(BOOL cancelled) = self.pendingCompletionBlock;
+  self.pendingCompletionBlock = nil;
+
+  if (block) {
+    block(NO);
+  }
   [self.spriteLayer removeAnimationForKey:kSpriteAnimationKey];
 }
 
 - (void)seekToBeginning {
+  [self stop];
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
   self.spriteLayer.contentsRect = CGRectMake(0, 0, 1, _singleFrameWidthInPercent);
+  [CATransaction commit];
   [self.spriteLayer setNeedsDisplay];
 }
 
 - (void)seekToEnd {
+  [self stop];
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
   self.spriteLayer.contentsRect =
       CGRectMake(0, 1.0f - _singleFrameWidthInPercent, 1, _singleFrameWidthInPercent);
+  [CATransaction commit];
   [self.layer setNeedsDisplay];
 }
 
@@ -158,13 +199,31 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   CGSize spriteSheetSize = [_spriteSheetImage size];
   CGFloat singleFrameWidth = spriteSheetSize.width;
 
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
+  // Disable implicit animations for these assignments
   CALayer *layer = self.spriteLayer;
   layer.contents = (id)_spriteSheetImage.CGImage;
   layer.bounds = CGRectMake(0, 0, singleFrameWidth, singleFrameWidth);
   layer.contentsRect = CGRectMake(0, 0, 1, _singleFrameWidthInPercent);
+  [CATransaction commit];
 }
 
-#pragma mark Setters
+#pragma mark - CAAnimationDelegate
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
+  if (anim != [self.spriteLayer animationForKey:kSpriteAnimationKey]) {
+    return;
+  }
+  void (^block)(BOOL cancelled) = self.pendingCompletionBlock;
+  self.pendingCompletionBlock = nil;
+
+  if (block) {
+    block(finished);
+  }
+}
+
+#pragma mark - Setters
 
 - (void)setTintColor:(UIColor *)tintColor {
   if (_tintColor == tintColor) {
@@ -178,6 +237,7 @@ static const NSInteger kSpriteFrameRateDefault = 60;
 }
 
 - (void)setSpriteSheetImage:(UIImage *)spriteSheetImage {
+  [self stop];
   if (!spriteSheetImage) {
     _spriteSheetImage = spriteSheetImage;
     return;
@@ -188,9 +248,8 @@ static const NSInteger kSpriteFrameRateDefault = 60;
   _numberOfFrames = (NSInteger)floor(spriteSheetSize.height / singleFrameWidth);
   _singleFrameWidthInPercent = 1.0f / _numberOfFrames;
   _spriteSheetImage = [self colorizedSpriteSheet:spriteSheetImage];
-
+  [self invalidateIntrinsicContentSize];
   [self updateSpriteAnimationLayer];
-  [self.spriteLayer removeAllAnimations];
 }
 
 @end

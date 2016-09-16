@@ -1,9 +1,7 @@
----
-title:  "Button Bar"
-layout: detail
-section: components
-excerpt: "The Button Bar component is a view that facilitates the creation and layout of a horizontally-aligned list of buttons."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ButtonBar/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ButtonBar">GitHub</a> for README documentation.{% endif %}-->
+
 # Button Bar
 
 <div class="ios-animation right" markdown="1">
@@ -17,8 +15,8 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCButtonBar.html">MDCButtonBar</a></li>
-  <li class="icon-link"><a href="apidocs/Protocols/MDCButtonBarDelegate.html">MDCButtonBarDelegate</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ButtonBar/apidocs/Classes/MDCButtonBar.html">MDCButtonBar</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ButtonBar/apidocs/Protocols/MDCButtonBarDelegate.html">MDCButtonBarDelegate</a></li>
 </ul>
 
 

@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,27 +14,22 @@
  limitations under the License.
  */
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 #import "MDCFlexibleHeaderViewController.h"
 
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
+#import "MDFTextAccessibility.h"
 
-static inline CGFloat LuminanceForColor(UIColor *color) {
-  // See http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
-  CGFloat luminance = 1;
-  CGFloat rgba[4];
-  if ([color getRed:&rgba[0] green:&rgba[1] blue:&rgba[2] alpha:&rgba[3]]) {
-    luminance = rgba[0] * 0.299f + rgba[1] * 0.587f + rgba[2] * 0.114f;
+static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
+  if (CGColorGetAlpha(color.CGColor) < 1) {
+    return NO;
   }
-  return luminance;
-}
 
-static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
-  return LuminanceForColor(color) < 0.55f;
+  // We assume that the light iOS status text is white and not big enough to be considered "large"
+  // text according to the W3CAG 2.0 spec.
+  return [MDFTextAccessibility textColor:[UIColor whiteColor]
+                 passesOnBackgroundColor:color
+                                 options:MDFTextAccessibilityOptionsNone];
 }
 
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
@@ -92,8 +87,9 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  return (ShouldUseLightOverlayForColor(_headerView.backgroundColor) ? UIStatusBarStyleLightContent
-                                                                     : UIStatusBarStyleDefault);
+  return (ShouldUseLightStatusBarOnBackgroundColor(_headerView.backgroundColor)
+              ? UIStatusBarStyleLightContent
+              : UIStatusBarStyleDefault);
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -176,3 +172,4 @@ static inline BOOL ShouldUseLightOverlayForColor(UIColor *color) {
 }
 
 @end
+

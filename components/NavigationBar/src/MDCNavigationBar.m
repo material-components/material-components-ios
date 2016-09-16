@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,10 +14,6 @@
  limitations under the License.
  */
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 #import "MDCNavigationBar.h"
 
 #import "MaterialButtonBar.h"
@@ -25,13 +21,22 @@
 #import "MaterialTypography.h"
 
 #import <objc/runtime.h>
-#import <tgmath.h>
 
-#undef ceil
-#define ceil(__x) __tg_ceil(__tg_promote1((__x))(__x))
+static inline CGFloat Ceil(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return ceil(value);
+#else
+  return ceilf(value);
+#endif
+}
 
-#undef floor
-#define floor(__x) __tg_floor(__tg_promote1((__x))(__x))
+static inline CGFloat Floor(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return floor(value);
+#else
+  return floorf(value);
+#endif
+}
 
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarPadDefaultHeight = 64;
@@ -204,8 +209,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
                                                  attributes:attributes
                                                     context:NULL]
                          .size;
-  titleSize.width = ceil(titleSize.width);
-  titleSize.height = ceil(titleSize.height);
+  titleSize.width = Ceil(titleSize.width);
+  titleSize.height = Ceil(titleSize.height);
   CGRect titleFrame = (CGRect){{textFrame.origin.x, 0}, titleSize};
   titleFrame = MDCRectFlippedForRTL(titleFrame, self.bounds.size.width,
                                     self.mdc_effectiveUserInterfaceLayoutDirection);
@@ -301,7 +306,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       return (CGRect){{frame.origin.x, CGRectGetMaxY(bounds) - frame.size.height}, frame.size};
 
     case UIControlContentVerticalAlignmentCenter: {
-      CGFloat centeredY = floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
+      CGFloat centeredY = Floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
       return (CGRect){{frame.origin.x, centeredY}, frame.size};
     }
 
@@ -341,7 +346,13 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 #pragma mark Public
 
 - (void)setTitle:(NSString *)title {
-  _titleLabel.text = title;
+  // |self.titleTextAttributes| can only be set if |title| is set
+  if (self.titleTextAttributes && title.length > 0) {
+    _titleLabel.attributedText =
+        [[NSAttributedString alloc] initWithString:title attributes:_titleTextAttributes];
+  } else {
+    _titleLabel.text = title;
+  }
   [self setNeedsLayout];
 }
 
@@ -370,6 +381,28 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     _observedNavigationItem.titleView = [[MDCNavigationBarSandbagView alloc] init];
   } else if (_observedNavigationItem.titleView) {
     _observedNavigationItem.titleView = nil;
+  }
+}
+
+- (void)setTitleTextAttributes:(NSDictionary<NSString *, id> *)titleTextAttributes {
+  // If title dictionary is equivalent, no need to make changes
+  if ([_titleTextAttributes isEqualToDictionary:titleTextAttributes]) {
+    return;
+  }
+
+  // Copy attributes dictionary
+  _titleTextAttributes = [titleTextAttributes copy];
+  if (_titleLabel) {
+    // |_titleTextAttributes| can only be set if |self.title| is set
+    if (_titleTextAttributes && self.title.length > 0) {
+      // Set label text as newly created attributed string with attributes if non-nil
+      _titleLabel.attributedText =
+          [[NSAttributedString alloc] initWithString:self.title attributes:_titleTextAttributes];
+    } else {
+      // Otherwise set titleLabel text property
+      _titleLabel.text = self.title;
+    }
+    [self setNeedsLayout];
   }
 }
 
