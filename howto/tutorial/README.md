@@ -180,9 +180,6 @@ Build and run your app. It should display a scrollable, touchable collection vie
 Add the property declaration to the top of the class:
 
 ~~~ swift
-import UIKit
-import MaterialComponents.MaterialCollections
-
 class ViewController: MDCCollectionViewController {
 
   let appBar = MDCAppBar()
