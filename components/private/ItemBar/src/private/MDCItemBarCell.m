@@ -23,10 +23,10 @@ static const CGFloat kMDCItemBarCellBadgeTopPadding = 6;
 static const CGFloat kMDCItemBarCellBadgeMaxWidth = 22;
 
 /// File name of the bundle (without the '.bundle' extension) containing resources.
-static NSString *const kMDCItemBarCellResourceBundleName = @"GoogleKitTabs";
+static NSString *const kMDCItemBarCellResourceBundleName = @"MaterialItemBar";
 
 /// String table name containing localized strings.
-static NSString *const kMDCItemBarCellStringTableName = @"GoogleKitTabs";
+static NSString *const kMDCItemBarCellStringTableName = @"MaterialItemBar";
 
 /// Scale factor applied to the title of bottom navigation items when selected.
 const CGFloat kMDCItemBarCellSelectedNavigationTitleScaleFactor = (16.0f / 14.0f);

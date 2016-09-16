@@ -114,7 +114,7 @@
   _shortTabBar.tintColor = [UIColor whiteColor];
   _shortTabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
   _shortTabBar.autoresizingMask =
-  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [_shortTabBar sizeToFit];
   [self.view addSubview:_shortTabBar];
 }

@@ -187,6 +187,14 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   [self updateItemBarStyle];
 }
 
+- (CGSize)intrinsicContentSize {
+  return _itemBar.intrinsicContentSize;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  return [_itemBar sizeThatFits:size];
+}
+
 #pragma mark - Private
 
 + (MDCItemBarStyle *)defaultStyleForItemAppearance:(MDCTabBarItemAppearance)appearance {
