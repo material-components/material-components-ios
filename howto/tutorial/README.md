@@ -119,28 +119,16 @@ then set its reuse identifier to `cell`:
 In `viewDidLoad`, configure the collection view’s appearance:
 
 ~~~swift
-import UIKit
-import MaterialComponents.MaterialCollections
-
-class ViewController: MDCCollectionViewController {
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
     styler.cellStyle = .card
   }
-
-}
 ~~~
         
 Below `viewDidLoad`, add a mock datasource:
 
 ~~~ swift
-import UIKit
-import MaterialComponents.MaterialCollections
-
-class ViewController: MDCCollectionViewController {
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -168,8 +156,6 @@ class ViewController: MDCCollectionViewController {
 
     return cell
   }
-
-}
 ~~~
         
 Build and run your app. It should display a scrollable, touchable collection view:
