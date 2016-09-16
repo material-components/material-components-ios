@@ -181,26 +181,21 @@ class ViewController: MDCCollectionViewController {
 Configure the app bar in `viewDidLoad`:
 
 ~~~ swift
-import UIKit
-import MaterialComponents
+let appBar = MDCAppBar()
 
-class ViewController: MDCCollectionViewController {
+override func viewDidLoad() {
+  super.viewDidLoad()
 
-  let appBar = MDCAppBar()
+  styler.cellStyle = .card
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  addChildViewController(appBar.headerViewController)
+  appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
 
-    styler.cellStyle = .card
+  appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+  appBar.addSubviewsToParent()
 
-    addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
-
-    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
-    appBar.addSubviewsToParent()
-
-    title = "Material Components"
-  }
+  title = "Material Components"
+}
 ~~~
     
 Build and run your app. It should display a white rectangle above the collection view: 
