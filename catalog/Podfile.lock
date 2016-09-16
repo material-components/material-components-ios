@@ -27,6 +27,7 @@ PODS:
     - MaterialComponents/Snackbar (= 13.4.0)
     - MaterialComponents/SpritedAnimationView (= 13.4.0)
     - MaterialComponents/Switch (= 13.4.0)
+    - MaterialComponents/TabBar (= 13.4.0)
     - MaterialComponents/Typography (= 13.4.0)
   - MaterialComponents/ActivityIndicator (13.4.0):
     - MaterialComponents/private/RTL
@@ -87,6 +88,7 @@ PODS:
   - MaterialComponents/private (13.4.0):
     - MaterialComponents/private/Color (= 13.4.0)
     - MaterialComponents/private/Icons (= 13.4.0)
+    - MaterialComponents/private/ItemBar (= 13.4.0)
     - MaterialComponents/private/KeyboardWatcher (= 13.4.0)
     - MaterialComponents/private/Overlay (= 13.4.0)
     - MaterialComponents/private/RTL (= 13.4.0)
@@ -116,6 +118,11 @@ PODS:
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/Icons/ic_reorder (13.4.0):
     - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/ItemBar (13.4.0):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/Ink
+    - MaterialComponents/private/RTL
+    - MaterialComponents/Typography
   - MaterialComponents/private/KeyboardWatcher (13.4.0)
   - MaterialComponents/private/Overlay (13.4.0)
   - MaterialComponents/private/RTL (13.4.0)
@@ -144,6 +151,10 @@ PODS:
   - MaterialComponents/Switch (13.4.0):
     - MaterialComponents/private/RTL
     - MaterialComponents/private/ThumbTrack
+  - MaterialComponents/TabBar (13.4.0):
+    - MaterialComponents/Ink
+    - MaterialComponents/private/ItemBar
+    - MaterialComponents/Typography
   - MaterialComponents/Typography (13.4.0)
   - MaterialComponentsCatalog (13.4.0):
     - MaterialComponents
@@ -160,15 +171,15 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: "../"
+    :path: ../
   MaterialComponentsCatalog:
-    :path: "../"
+    :path: ../
   MaterialComponentsUnitTests:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
-  MaterialComponents: 1b7ff584a0dbdf9c99856d06beca85373209bc49
+  MaterialComponents: 88e4b6792342b68b3e78c781211746acc17d4dbd
   MaterialComponentsCatalog: a1d2732055be3d6259c24f6954a2014ada38c570
   MaterialComponentsUnitTests: 59c656fa442ecd8819e9d62e3cfff4a9336a67d1
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e

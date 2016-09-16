@@ -1,4 +1,4 @@
-#import <UIKit.h>
+#import <UIKit/UIKit.h>
 
 #import "MDCItemBarAlignment.h"
 
@@ -11,7 +11,10 @@
  This is the private shared implementation of MDCTabBar and MDCBottomNavigationBar. It should not
  be used directly and is not guaranteed to have a stable API.
  */
-@interface MDCItemBar : UIView<MDCItemBarItemStyling>
+@interface MDCItemBar : UIView
+
+/** Return the default height for the item bar given a style. */
++ (CGFloat)defaultHeightForStyle:(nonnull MDCItemBarStyle *)style;
 
 /**
  Items displayed in bar.
@@ -49,7 +52,7 @@
 #pragma mark - Styling
 
 /** Updates the bar to use the given style properties. */
-- (void)applyStyle:(MDCItemBarStyle *)itemStyle;
+- (void)applyStyle:(nonnull MDCItemBarStyle *)itemStyle;
 
 @end
 
@@ -60,9 +63,31 @@
 @protocol MDCItemBarDelegate <NSObject>
 
 /**
+ Called before the selected item changes by user action. This method is not called for programmatic
+ changes to the bar's selected item.
+ */
+- (void)itemBar:(nonnull MDCItemBar *)itemBar willSelectItem:(nonnull UITabBarItem *)item;
+
+/**
  Called when the selected item changes by user action. This method is not called for programmatic
  changes to the bar's selected item.
  */
 - (void)itemBar:(nonnull MDCItemBar *)itemBar didSelectItem:(nonnull UITabBarItem *)item;
+
+@end
+
+#pragma mark -
+
+/** Accessibility-related methods on MDCItemBar. */
+@interface MDCItemBar (MDCItemBarAccessibility)
+
+/**
+ * Get the accessibility element representing the given item. Returns nil if item is not in `items`
+ * or if the item is not on screen.
+ *
+ * The accessibility element returned from this method may be used as the focused element after a
+ * run loop iteration.
+ */
+- (nullable id)accessibilityElementForItem:(nonnull UITabBarItem *)item;
 
 @end

@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-#import "MDCTabBarItemAlignment.h"
+#import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
 
 @class MDCTabBarItem;
@@ -44,7 +44,7 @@ IB_DESIGNABLE
  Tint color for the tab bar, which determines the color of the tab indicator bar. If
  selectedItemTintColor is nil, tintColor also affects tinting of selected item titles and images.
  */
-@property(nonatomic, null_resettable) UIColor *tintColor;
+@property(nonatomic, strong, null_resettable) UIColor *tintColor;
 
 /**
  Tint color for selected items. If nil, selected items will be tinted using the tab bar's
@@ -54,6 +54,9 @@ IB_DESIGNABLE
 
 /** Tint color for unselected items. Default: Semi-transparent white. */
 @property(nonatomic, nonnull) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
+
+/** Ink color for taps on tab bar items. Default: Semi-transparent white. */
+@property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 /**
  Tint color to apply to the tab bar background.
@@ -67,6 +70,12 @@ IB_DESIGNABLE
  MDCTabBarAlignmentLeading.
  */
 @property(nonatomic) MDCTabBarAlignment alignment;
+
+/**
+ Appearance of tabs within the tab bar. Changes are not animated. Default appearance is
+ MDCTabBarItemAppearanceTitles.
+ */
+@property(nonatomic) MDCTabBarItemAppearance itemAppearance;
 
 /**
  Indicates if all tab titles should be uppercased for display. If NO, item titles will be

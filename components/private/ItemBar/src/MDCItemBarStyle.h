@@ -1,7 +1,12 @@
 #import <UIKit/UIKit.h>
 
+#import "MaterialInk.h"
+
 /** Describes the visual style of individual items in an item bar. */
 @interface MDCItemBarStyle : NSObject <NSCopying>
+
+/** The default height of the bar. */
+@property(nonatomic) CGFloat defaultHeight;
 
 /** Determines if the selection indicator bar should be shown. */
 @property(nonatomic) BOOL shouldDisplaySelectionIndicator;
@@ -11,12 +16,6 @@
 
 /** The maximum width for individual items within the bar. If zero, items have no maximum width. */
 @property(nonatomic) CGFloat maximumItemWidth;
-
-/**
- Determines if the collection should always allow horizontal scrolling, even when its content is
- narrower than the view.
- */
-@property(nonatomic) BOOL alwaysBounceHorizontal;
 
 #pragma mark - Item Style
 
@@ -50,8 +49,13 @@
 /** Padding in points between the title and image components, according to the MD spec. */
 @property(nonatomic) CGFloat titleImagePadding;
 
-/** Text transformation applied to titled for display. */
-@property(nonatomic) MDCItemBarTextTransform textTransform;
+/**
+ Indicates if all tab titles should be uppercased for display. If NO, item titles will be
+ displayed verbatim.
+
+ Default is YES and is recommended whenever possible.
+ */
+@property(nonatomic) BOOL displaysUppercaseTitles;
 
 @end
 

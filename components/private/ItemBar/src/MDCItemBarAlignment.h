@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 /** Alignment styles for items in a tab bar. */
-typedef NS_ENUM(NSInteger, MDCTabBarAlignment) {
+typedef NS_ENUM(NSInteger, MDCItemBarAlignment) {
   /** Items are aligned on the leading edge and sized to fit their content. */
   MDCItemBarAlignmentLeading,
 
