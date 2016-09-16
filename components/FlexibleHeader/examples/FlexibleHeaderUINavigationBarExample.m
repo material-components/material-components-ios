@@ -23,7 +23,7 @@
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
-@interface FlexibleHeaderUINavigationBarExample ()
+@interface FlexibleHeaderUINavigationBarExample () <UIScrollViewDelegate>
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
 @property(nonatomic) UIButton *button;

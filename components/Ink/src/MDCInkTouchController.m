@@ -211,7 +211,10 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
     // is deprecated and only provided for legacy support.
     id<MDCInkTouchControllerLegacyDelegate> legacyDelegate =
         (id<MDCInkTouchControllerLegacyDelegate>)_delegate;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     return [legacyDelegate shouldInkTouchControllerProcessInkTouches:self];
+#pragma clang diagnostic pop
   }
   return YES;
 }
