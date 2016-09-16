@@ -191,7 +191,7 @@ class ViewController: MDCCollectionViewController {
     super.viewDidLoad()
 
     styler.cellStyle = .card
-  }
+  }...
 ~~~
 
 Configure the app bar in `viewDidLoad`:
@@ -216,7 +216,7 @@ class ViewController: MDCCollectionViewController {
     appBar.addSubviewsToParent()
 
     title = "Material Components"
-}
+  }
 ~~~
     
 Build and run your app. It should display a white rectangle above the collection view: 
