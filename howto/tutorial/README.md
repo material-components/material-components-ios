@@ -191,7 +191,8 @@ class ViewController: MDCCollectionViewController {
     super.viewDidLoad()
 
     styler.cellStyle = .card
-  }...
+  }
+...
 ~~~
 
 Configure the app bar in `viewDidLoad`:
