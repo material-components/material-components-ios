@@ -79,6 +79,7 @@ Pod::Spec.new do |s|
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
+    ss.dependency 'MDFTextAccessibility'
     ss.dependency "MaterialComponents/Ink"
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
@@ -158,7 +159,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
-    ss.dependency 'MDFTextAccessibility', '~> 1.1'
+    ss.dependency 'MDFTextAccessibility'
   end
 
   s.subspec "FontDiskLoader" do |ss|

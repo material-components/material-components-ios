@@ -16,6 +16,7 @@
 
 #import "MDCButton.h"
 
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
@@ -639,14 +640,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 
   if (![self isTransparentColor:[self effectiveBackgroundColor]]) {
-    //    QTMColorGroupTextOptions options = 0;
-    //    if ([MDCTypography isLargeForContrastRatios:self.titleLabel.font]) {
-    //      options = kQTMColorGroupTextLargeFont;
-    //    }
-    //    UIColor *color = [QTMColorGroup textColorOnColor:[self effectiveBackgroundColor]
-    //                                           textAlpha:[MDCTypography buttonFontOpacity]
-    //                                             options:options];
-    //    [self setTitleColor:color forState:UIControlStateNormal];
+    MDFTextAccessibilityOptions options = 0;
+    if ([MDFTextAccessibility isLargeForContrastRatios:self.titleLabel.font]) {
+      options = MDFTextAccessibilityOptionsLargeFont;
+    }
+    UIColor *color =
+        [MDFTextAccessibility textColorOnBackgroundColor:[self effectiveBackgroundColor]
+                                         targetTextAlpha:[MDCTypography buttonFontOpacity]
+                                                 options:options];
+    [self setTitleColor:color forState:UIControlStateNormal];
   }
 }
 
