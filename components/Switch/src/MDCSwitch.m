@@ -16,21 +16,40 @@
 
 #import "MDCSwitch.h"
 
+#import "MaterialInk.h"
 #import "MaterialRTL.h"
-#import "MaterialThumbTrack.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
 
 static const CGSize MDCSwitchIntrinsicSize = {.width = 36.0f, .height = 27.0f};
 
 static const CGFloat kSwitchThumbRadius = 10.0f;
 static const CGFloat kSwitchTrackHeight = 14.0f;
 static const CGFloat kSwitchMinTouchSize = 48.0f;
+static const CGFloat kSwitchTrackOnAlpha = 0.5f;
 static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
-@interface MDCSwitch () <MDCThumbTrackDelegate>
+@interface MDCSwitch () <MDCInkTouchControllerDelegate>
+
+@property(nonatomic, readonly) CGFloat thumbPanRange;
+@property(nonatomic, readonly) UIColor *thumbColor;
+@property(nonatomic, readonly) UIColor *trackColor;
+
+- (void)setIcon:(nullable UIImage *)icon;
+
 @end
 
 @implementation MDCSwitch {
-  MDCThumbTrack *_thumbTrack;
+  UIImageView *_iconView;
+  UIImageView *_thumbView;
+  UIImageView *_trackView;
+  UIView *_thumbShadowView;
+  MDCInkTouchController *_inkController;
+  BOOL _didChangeValueDuringPan;
+  BOOL _isTouching;
+  BOOL _lastDispatchedState;
+  CGFloat _thumbTrackPanValue;
+  CGFloat _panThumbGrabPosition;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -53,23 +72,8 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 - (void)commonMDCSwitchInit {
   // TODO(iangordon): Set a sane default in the UIAppearance Proxy
   UIColor *color = [MDCSwitch defaultOnTintColor];
-  _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:color];
-  [_thumbTrack addTarget:self
-                  action:@selector(thumbTrackValueChanged:)
-        forControlEvents:UIControlEventValueChanged];
-  _thumbTrack.continuousUpdateEvents = NO;
-  _thumbTrack.trackHeight = kSwitchTrackHeight;
-  _thumbTrack.thumbRadius = kSwitchThumbRadius;
-  _thumbTrack.thumbMaxRippleRadius = kInkMaxRippleRadiusFactor * kSwitchThumbRadius;
-  _thumbTrack.trackEndsAreRounded = YES;
-  _thumbTrack.interpolateOnOffColors = YES;
-  _thumbTrack.numDiscreteValues = 2;
-  _thumbTrack.thumbView.borderWidth = 0;
-  _thumbTrack.thumbView.hasShadow = YES;
-  _thumbTrack.panningAllowedOnEntireControl = YES;
-  _thumbTrack.tapsAllowedOnThumb = YES;
-  _thumbTrack.delegate = self;
-  [self addSubview:_thumbTrack];
+
+  self.multipleTouchEnabled = NO;
 
   self.onTintColor = color;
 
@@ -88,13 +92,37 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   [self updateAccessibilityValues];
 
   [self setNeedsLayout];
+
+  _thumbShadowView = [[UIView alloc] initWithFrame:CGRectZero];
+  [_thumbShadowView.layer addSublayer:[[self class] thumbShadowLayer]];
+  [self addSubview:_thumbShadowView];
+
+  _trackView = [[UIImageView alloc] initWithImage:[[self class] trackImage]];
+  _trackView.tintColor = self.trackColor;
+  [self addSubview:_trackView];
+
+  _thumbView = [[UIImageView alloc] initWithImage:[[self class] thumbImage]];
+  _thumbView.tintColor = self.thumbColor;
+  _thumbView.userInteractionEnabled = YES;
+  [self addSubview:_thumbView];
+
+  _inkController = [[MDCInkTouchController alloc] initWithView:_thumbView];
+  _inkController.delegate = self;
+  [_inkController addInkView];
+  _inkController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
+  _inkController.defaultInkView.maxRippleRadius = kInkMaxRippleRadiusFactor * kSwitchThumbRadius;
+  _inkController.defaultInkView.inkColor =
+      [self.onTintColor colorWithAlphaComponent:kSwitchTrackOnAlpha];
 }
 
 // TODO(iangordon): Remove/Re-enable setSwitchStyle after Theme decision
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  _thumbTrack.frame = self.bounds;
+
+  CGPoint trackPosition = [self trackPositionForState:self.on];
+  _thumbShadowView.center = trackPosition;
+  _thumbView.center = trackPosition;
 
   // If necessary, flip for RTL.
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
@@ -102,59 +130,42 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   }
 }
 
-- (UIColor *)onTintColor {
-  return _thumbTrack.primaryColor;
-}
-
 - (void)setOnTintColor:(UIColor *)onTintColor {
   if (onTintColor == nil) {
     onTintColor = [[self class] defaultOnTintColor];
   }
-  _thumbTrack.primaryColor = onTintColor;
-}
+  _onTintColor = onTintColor;
 
-- (UIColor *)offThumbColor {
-  return _thumbTrack.thumbOffColor;
+  _inkController.defaultInkView.inkColor =
+      [_onTintColor colorWithAlphaComponent:kSwitchTrackOnAlpha];
 }
 
 - (void)setOffThumbColor:(UIColor *)offThumbColor {
   if (offThumbColor == nil) {
     offThumbColor = [[self class] defaultOffThumbColor];
   }
-  _thumbTrack.thumbOffColor = offThumbColor;
-}
-
-- (UIColor *)disabledThumbColor {
-  return _thumbTrack.thumbDisabledColor;
+  _offThumbColor = offThumbColor;
 }
 
 - (void)setDisabledThumbColor:(UIColor *)disabledThumbColor {
   if (disabledThumbColor == nil) {
     disabledThumbColor = [MDCSwitch defaultDisabledThumbColor];
   }
-  _thumbTrack.thumbDisabledColor = disabledThumbColor;
-}
-
-- (UIColor *)offTrackColor {
-  return _thumbTrack.trackOffColor;
+  _disabledThumbColor = disabledThumbColor;
 }
 
 - (void)setOffTrackColor:(UIColor *)offTrackColor {
   if (offTrackColor == nil) {
     offTrackColor = [MDCSwitch defaultOffTrackColor];
   }
-  _thumbTrack.trackOffColor = offTrackColor;
-}
-
-- (UIColor *)disabledTrackColor {
-  return _thumbTrack.trackDisabledColor;
+  _offTrackColor = offTrackColor;
 }
 
 - (void)setDisabledTrackColor:(UIColor *)disabledTrackColor {
   if (disabledTrackColor == nil) {
     disabledTrackColor = [MDCSwitch defaultDisabledTrackColor];
   }
-  _thumbTrack.trackDisabledColor = disabledTrackColor;
+  _disabledTrackColor = disabledTrackColor;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -192,14 +203,14 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 - (void)setOnImage:(UIImage *)onImage {
   _onImage = onImage;
   if (self.on) {
-    [_thumbTrack setIcon:onImage];
+    [self setIcon:onImage];
   }
 }
 
 - (void)setOffImage:(UIImage *)offImage {
   _offImage = offImage;
   if (!self.on) {
-    [_thumbTrack setIcon:offImage];
+    [self setIcon:offImage];
   }
 }
 
@@ -207,8 +218,8 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
-  _thumbTrack.enabled = enabled;
 
+  [self updateColors];
   [self updateAccessibilityValues];
 }
 
@@ -220,36 +231,82 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
 - (void)setOn:(BOOL)on animated:(BOOL)animated {
   _on = on;
+  _thumbTrackPanValue = _on ? 1.0 : 0.0;
 
-  CGFloat value = _on ? _thumbTrack.maximumValue : _thumbTrack.minimumValue;
-  [_thumbTrack setValue:value
-                   animated:animated
-      animateThumbAfterMove:animated
-              userGenerated:NO
-                 completion:NULL];
+  // TODO(iangordon): Find a nicer way to smoothly animate between the on/off image.
+  if (_on) {
+    [self setIcon:_onImage];
+  } else {
+    [self setIcon:_offImage];
+  }
 
+  [self setNeedsLayout];
+
+  void (^updateBlock)() = ^{
+    [self layoutIfNeeded];
+    [self updateColors];
+  };
+
+  if (animated) {
+    UIViewAnimationOptions options =
+        UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionAllowUserInteraction;
+    [UIView animateWithDuration:0.25 delay:0 options:options animations:updateBlock completion:nil];
+  } else {
+    updateBlock();
+  }
+
+  [self sendDiscreteChangeAction];
   [self updateAccessibilityValues];
 }
 
 #pragma mark - Private Methods
 
-#pragma mark MDCThumbTrackDelegate
+- (void)updateColors {
+  _trackView.tintColor = self.trackColor;
+  _thumbView.tintColor = self.thumbColor;
+}
 
-- (void)thumbTrack:(MDCThumbTrack *)thumbTrack willJumpToValue:(CGFloat)value {
-  // TODO(iangordon): Find a nicer way to smoothly animate between the on/off image.
-  if (0.5 < value) {
-    [_thumbTrack setIcon:_onImage];
+- (UIColor *)thumbColor {
+  if (!self.enabled) {
+    return self.disabledThumbColor;
+  } else if (self.isOn) {
+    return self.onTintColor;
   } else {
-    [_thumbTrack setIcon:_offImage];
+    return self.offThumbColor;
   }
+}
 
-  [self toggleStateFromThumbTrack:thumbTrack withValue:value];
-  [self updateAccessibilityValues];
+- (UIColor *)trackColor {
+  if (!self.enabled) {
+    return self.disabledTrackColor;
+  } else if (self.isOn) {
+    return [self.onTintColor colorWithAlphaComponent:kSwitchTrackOnAlpha];
+  } else {
+    return self.offTrackColor;
+  }
+}
+
+- (void)setIcon:(nullable UIImage *)icon {
+  if (icon == _iconView.image || [icon isEqual:_iconView.image])
+    return;
+
+  if (_iconView) {
+    [_iconView removeFromSuperview];
+    _iconView = nil;
+  }
+  if (icon) {
+    _iconView = [[UIImageView alloc] initWithImage:icon];
+    [_thumbView addSubview:_iconView];
+    // Calculate the inner square of the thumbs circle.
+    CGFloat sideLength = (CGFloat)sin(45.0 / 180.0 * M_PI) * kSwitchThumbRadius * 2;
+    CGSize thumbSize = _thumbView.image.size;
+    _iconView.frame = CGRectMake(thumbSize.width / 2 - sideLength / 2,
+                                 thumbSize.height / 2 - sideLength / 2, sideLength, sideLength);
+  }
 }
 
 - (void)updateAccessibilityValues {
   // Accessibility value handled in -accessibilityValue method
-
   if (self.enabled) {
     self.accessibilityTraits &= ~UIAccessibilityTraitNotEnabled;
     self.accessibilityHint = [[self class] defaultA11yHintString];
@@ -259,39 +316,196 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   }
 }
 
-- (BOOL)toggleStateFromThumbTrack:(MDCThumbTrack *)thumbTrack withValue:(CGFloat)value {
-  // TODO(ajsecord): When the track supports multiple discrete locations, get the location directly.
-  BOOL allSignsPointToYes = value >= (thumbTrack.minimumValue + thumbTrack.maximumValue) / 2;
-  return allSignsPointToYes;
+#pragma mark - MDCInkTouchControllerDelegate
+
+- (BOOL)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
+  return YES;
 }
 
-#pragma mark - Handle gestures
+#pragma mark Thumb Tracking Helpers
 
-- (void)thumbTrackValueChanged:(MDCThumbTrack *)thumbTrack {
-  BOOL toggleState = [self toggleStateFromThumbTrack:thumbTrack withValue:thumbTrack.value];
-  if (_on != toggleState) {
-    _on = toggleState;
+- (BOOL)stateForPanValue:(CGFloat)value {
+  return value >= 0.5;
+}
+
+- (CGPoint)thumbPosition {
+  return _thumbView.center;
+}
+
+- (CGFloat)valueForThumbPosition:(CGPoint)position {
+  CGFloat value = (position.x - kSwitchThumbRadius) / self.thumbPanRange;
+  return MAX(0, MIN(value, 1));
+}
+
+// Describes where on the track the specified state would fall.
+- (CGPoint)trackPositionForState:(BOOL)on {
+  return CGPointMake(kSwitchThumbRadius + (on ? self.thumbPanRange : 0),
+                     self.frame.size.height / 2);
+}
+
+- (CGFloat)thumbPanRange {
+  return MDCSwitchIntrinsicSize.width - 2 * kSwitchThumbRadius;
+}
+
+- (void)sendDiscreteChangeAction {
+  if (_lastDispatchedState != _on) {
+    _lastDispatchedState = _on;
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
-  [self updateAccessibilityValues];
 }
+
+#pragma mark - UIResponder Events
+
+/*
+ Much of this code is based off of MDCThumbTrack as a means to optimize and simplify MDCSwitch.
+
+ Like MDCThumbTrack, we implement our own touch handling here instead of using gesture recognizers.
+ This allows more fine grained control over how the thumb view behaves, including more specific
+ logic over what counts as a tap vs. a drag.
+
+ Note that we must use -touchesBegan:, -touchesMoves:, etc here, rather than the UIControl methods
+ -beginDraggingWithTouch:withEvent:, -continueDraggingWithTouch:withEvent:, etc. This is because
+ with those events, we are forced to disable user interaction on our subviews else the events could
+ be swallowed up by their event handlers and not ours. We can't do this because the we have an ink
+ controller attached to the thumb view, and that needs to receive touch events in order to know when
+ to display ink.
+
+ Using -touchesBegan:, etc. solves this problem because we can handle touches ourselves as well as
+ continue to have them pass through to the contained thumb view. So we get our custom event handling
+ without disabling the ink display, hurray!
+
+ Because we set `multipleTouchEnabled = NO`, the sets of touches in these methods will always be of
+ size 1. For this reason, we can simply call `-anyObject` on the set instead of iterating through
+ every touch.
+ */
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  NSLog(@"touchesBegan: %@", touches);
+  if (!self.enabled || _isTouching) {
+    return;
+  }
+
+  CGPoint touchLoc = [[touches anyObject] locationInView:self];
+  _isTouching = YES;
+  _didChangeValueDuringPan = NO;
+  _panThumbGrabPosition = touchLoc.x - self.thumbPosition.x;
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  NSLog(@"touchesMoved: %@", touches);
+  if (!self.enabled || !_isTouching) {
+    return;
+  }
+
+  UITouch *touch = [touches anyObject];
+  CGPoint touchLoc = [touch locationInView:self];
+  CGFloat thumbPosition = touchLoc.x - _panThumbGrabPosition;
+  CGFloat previousPanValue = _thumbTrackPanValue;
+  _thumbTrackPanValue = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
+
+  if (_thumbTrackPanValue != previousPanValue) {
+    // We made a move, now this action can't later count as a tap
+    _didChangeValueDuringPan = YES;
+  }
+
+  BOOL state = [self stateForPanValue:_thumbTrackPanValue];
+  if (state != _on) {
+    [self setOn:state animated:YES];
+  }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  NSLog(@"touchesCancelled: %@", touches);
+  _isTouching = NO;
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  UITouch *touch = [touches anyObject];
+  if (!self.enabled || !_isTouching) {
+    return;
+  }
+
+  _isTouching = NO;
+
+  CGPoint touchLoc = [touch locationInView:self];
+  if ([self pointInside:touchLoc withEvent:nil]) {
+    if (!_didChangeValueDuringPan) {
+      // Treat it like a tap
+      [self setOn:!self.on animated:YES];
+    }
+  }
+}
+
+#pragma mark - UIControl Methods
 
 - (BOOL)isTracking {
-  return _thumbTrack.isTracking;
+  return _isTouching;
 }
 
-#pragma mark - Animation tracking
+#pragma mark - Appearance Generation
 
-- (void)thumbTrack:(MDCThumbTrack *)thumbTrack willAnimateToValue:(CGFloat)value {
-  // While the thumb animates VO announces "the old value", telling it we update "frequently"
-  // prevents that
-  self.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently;
++ (UIImage *)trackImage {
+  static UIImage *trackImage;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    CGRect trackRect = CGRectMake(0, MDCSwitchIntrinsicSize.height / 2 - kSwitchTrackHeight / 2,
+                                  MDCSwitchIntrinsicSize.width, kSwitchTrackHeight);
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    layer.fillColor = [UIColor whiteColor].CGColor;
+    layer.path = CGPathCreateWithRoundedRect(trackRect, kSwitchTrackHeight / 2,
+                                             kSwitchTrackHeight / 2, NULL);
+
+    UIGraphicsBeginImageContextWithOptions(MDCSwitchIntrinsicSize, NO, 0);
+    [layer renderInContext:UIGraphicsGetCurrentContext()];
+    trackImage = [UIGraphicsGetImageFromCurrentImageContext()
+        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+    UIGraphicsEndImageContext();
+  });
+
+  return trackImage;
 }
 
-- (void)thumbTrack:(MDCThumbTrack *)thumbTrack didAnimateToValue:(CGFloat)value {
-  // After the thumb is done animating we want the NEW value to get announced, so we give up
-  // on this "frequently" stuff
-  self.accessibilityTraits &= ~UIAccessibilityTraitUpdatesFrequently;
++ (MDCShadowLayer *)thumbShadowLayer {
+  CGRect thumbRect = CGRectMake(-kSwitchThumbRadius, -kSwitchThumbRadius, kSwitchThumbRadius * 2,
+                                kSwitchThumbRadius * 2);
+  MDCShadowLayer *layer = [[MDCShadowLayer alloc] init];
+  layer.shouldRasterize = YES;
+  layer.rasterizationScale = [UIScreen mainScreen].scale;
+  layer.shadowMaskEnabled = NO;
+  [layer setElevation:MDCShadowElevationCardResting];
+  layer.shadowPath = CGPathCreateWithEllipseInRect(thumbRect, NULL);
+
+  // Unfortunately we can't cache the MDCShadowLayer as an image as CALayer:renderInContext doesn't
+  // support rendering a layer that consists only of a shadowPath. Rasterizing the layer is a
+  // reasonable compromise.
+
+  return layer;
+}
+
++ (UIImage *)thumbImage {
+  static UIImage *thumbImage;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    CGFloat edgeLength = MIN(MDCSwitchIntrinsicSize.width, MDCSwitchIntrinsicSize.height);
+    CGSize size = CGSizeMake(edgeLength, edgeLength);
+    CGRect thumbRect =
+        CGRectMake(edgeLength / 2 - kSwitchThumbRadius, edgeLength / 2 - kSwitchThumbRadius,
+                   kSwitchThumbRadius * 2, kSwitchThumbRadius * 2);
+    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
+    layer.fillColor = [UIColor whiteColor].CGColor;
+    layer.path = CGPathCreateWithEllipseInRect(thumbRect, NULL);
+
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    [layer renderInContext:UIGraphicsGetCurrentContext()];
+    thumbImage = [UIGraphicsGetImageFromCurrentImageContext()
+        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+    UIGraphicsEndImageContext();
+  });
+
+  return thumbImage;
 }
 
 #pragma mark - Accessibility Strings
