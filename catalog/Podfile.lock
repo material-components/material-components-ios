@@ -1,5 +1,6 @@
 PODS:
   - CatalogByConvention (1.0.1)
+  - EarlGrey (1.3.0)
   - MaterialComponents (13.4.0):
     - MaterialComponents/ActivityIndicator (= 13.4.0)
     - MaterialComponents/AnimationTiming (= 13.4.0)
@@ -48,6 +49,7 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
+    - MDFTextAccessibility
   - MaterialComponents/CollectionCells (13.4.0):
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
@@ -73,7 +75,7 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
   - MaterialComponents/FlexibleHeader (13.4.0):
-    - MDFTextAccessibility (~> 1.1)
+    - MDFTextAccessibility
   - MaterialComponents/FontDiskLoader (13.4.0)
   - MaterialComponents/HeaderStackView (13.4.0)
   - MaterialComponents/Ink (13.4.0)
@@ -154,6 +156,7 @@ PODS:
 
 DEPENDENCIES:
   - CatalogByConvention
+  - EarlGrey
   - MaterialComponents (from `../`)
   - MaterialComponentsCatalog (from `../`)
   - MaterialComponentsUnitTests (from `../`)
@@ -168,11 +171,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
-  MaterialComponents: 1b7ff584a0dbdf9c99856d06beca85373209bc49
+  EarlGrey: a75bceccb337860996e968f7f6239fd04c52d5d4
+  MaterialComponents: f750694f9ba60b95470baeb7592ff542689d738d
   MaterialComponentsCatalog: a1d2732055be3d6259c24f6954a2014ada38c570
   MaterialComponentsUnitTests: 59c656fa442ecd8819e9d62e3cfff4a9336a67d1
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
 
-PODFILE CHECKSUM: d8e6d6aab517ce9f15b570bd45e131bbde872b51
+PODFILE CHECKSUM: 1c3d28cd4a8eabaf24b108992ed48dd76f3efd0d
 
 COCOAPODS: 1.0.1
