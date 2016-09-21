@@ -47,6 +47,7 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
+    - MDFTextAccessibility
   - MaterialComponents/CollectionCells (13.4.0):
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
@@ -72,7 +73,7 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
   - MaterialComponents/FlexibleHeader (13.4.0):
-    - MDFTextAccessibility (~> 1.1)
+    - MDFTextAccessibility
   - MaterialComponents/FontDiskLoader (13.4.0)
   - MaterialComponents/HeaderStackView (13.4.0)
   - MaterialComponents/Ink (13.4.0)
@@ -154,7 +155,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 1b7ff584a0dbdf9c99856d06beca85373209bc49
+  MaterialComponents: f750694f9ba60b95470baeb7592ff542689d738d
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
 
 PODFILE CHECKSUM: 44e7c616a05bb4ce24db557c3de4bfbe915c2f56
