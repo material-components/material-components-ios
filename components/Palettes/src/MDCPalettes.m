@@ -546,7 +546,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
       NSAssert(NO, @"Missing accent colors for the following keys: %@.", requiredTintKeys);
       NSMutableDictionary *replacementTints =
           [NSMutableDictionary dictionaryWithDictionary:_accents];
-      for (const NSString *tintKey in requiredTintKeys) {
+      for (NSString *tintKey in requiredTintKeys) {
         [replacementTints setObject:[UIColor clearColor] forKey:tintKey];
       }
       allTints = replacementTints;
