@@ -195,12 +195,12 @@ static const float kAmbientShadowOpacity = 0.08f;
 
   UIBezierPath *path = [UIBezierPath bezierPathWithRect:maskRect];
   UIBezierPath *innerPath = nil;
-  if (layer.shadowPath != nil) {
-    innerPath = [UIBezierPath bezierPathWithCGPath:(_Nonnull CGPathRef)layer.shadowPath];
-  } else if (layer.cornerRadius > 0) {
-    innerPath = [UIBezierPath bezierPathWithRoundedRect:bounds cornerRadius:layer.cornerRadius];
+  if (self.shadowPath != nil) {
+    innerPath = [UIBezierPath bezierPathWithCGPath:(_Nonnull CGPathRef)self.shadowPath];
+  } else if (self.cornerRadius > 0) {
+    innerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.cornerRadius];
   } else {
-    innerPath = [UIBezierPath bezierPathWithRect:bounds];
+    innerPath = [UIBezierPath bezierPathWithRect:self.bounds];
   }
   [path appendPath:innerPath];
   [path setUsesEvenOddFillRule:YES];
