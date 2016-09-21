@@ -14,14 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Install tools used by contributors.
+# Install EarlGrey.
 #
 # This is not required for anyone but core team members.
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-"$DIR/install_clang_format"
-"$DIR/install_proselint"
-"$DIR/install_jazzy"
-"$DIR/install_earlgrey"
-"$DIR/install_arc.sh" "$@"
+sudo gem install earlgrey
