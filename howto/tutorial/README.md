@@ -11,53 +11,53 @@ This tutorial will teach you how to link Material Components to an application, 
 
 ## 1.  Create a new Xcode application:
 
-Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`. 
+Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`.
 
 In the template window, select `iOS` as the platform and `Single View Application` as the Application type. Click `Next`.
-  
+
 Name your project `MDC-Tutorial` and choose your preferred language. Click `Next`.
-  
+
 Choose a place to save your new project that you can remember. Click `Create`.
-  
+
 Close your new project by going to menu `File -> Close Project` or holding `option + command + w`. We’ll come back to the project in a minute.
-  
+
 ## 2.  Setup CocoaPods:
 Open `Terminal`.
 
 If you do not already have CocoaPods installed on this system, run:
 
 ~~~ bash
-        
+
 sudo gem install cocoapods
 ~~~
 
 Navigate to your project's directory and create a `Podfile` by running:
 
 ~~~ bash
-        
+
 cd [directory of your project]
 pod init
-~~~ 
+~~~
 
 Open the new `Podfile` in a text editor or by running:
 
 ~~~ bash
-        
+
 open -a Xcode Podfile
 ~~~
 
 Add the `Material Components` pod to the `Podfile`:
 
 ~~~ ruby
-        
-target 'MDC-Tutorial' 
+
+target 'MDC-Tutorial'
 use_frameworks!
-    
+
 # Pods for MDC-Tutorial
 pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
-    
+
 end
-~~~ 
+~~~
 
 **NOTE:** If the language you’re using in this project is Objective-C, comment out `use_frameworks` by adding a `#` in front of it.
 
@@ -66,7 +66,7 @@ Save the `Podfile`.
 Back in `Terminal`, install your new pod and open the generated workspace:
 
 ~~~ bash
-        
+
 pod install
 open MDC-Tutorial.xcworkspace
 ~~~
@@ -75,7 +75,7 @@ open MDC-Tutorial.xcworkspace
 
 
 ## 3.  Add a Material Collection View:
-In Xcode, select `ViewController.swift` or `ViewController.h`. 
+In Xcode, select `ViewController.swift` or `ViewController.h`.
 
 ![Selecting the correct view controller file in Xcode's file navigator](docs/assets/Xcode-Select-File.gif)
 
@@ -107,10 +107,10 @@ class ViewController: MDCCollectionViewController {
 
 @end
 ~~~
-        
-Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
-    
-Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
+
+Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`.
+
+Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`,
 
 then set its reuse identifier to `cell`:
 
@@ -125,7 +125,7 @@ override func viewDidLoad() {
   styler.cellStyle = .card
 }
 ~~~
-        
+
 Below `viewDidLoad`, add a mock datasource:
 
 ~~~ swift
@@ -157,7 +157,7 @@ override func collectionView(_ collectionView: UICollectionView, cellForItemAt i
   return cell
 }
 ~~~
-        
+
 Build and run your app. It should display a scrollable, touchable collection view:
 
 ![Running the app to show a working collection of cells](docs/assets/App-Collection-No-AppBar.gif)
@@ -197,8 +197,8 @@ override func viewDidLoad() {
   title = "Material Components"
 }
 ~~~
-    
-Build and run your app. It should display a white rectangle above the collection view: 
+
+Build and run your app. It should display a white rectangle above the collection view:
 
 ![Running the app to show the new app bar](docs/assets/App-Collection-No-Flexing.gif)
 
@@ -250,7 +250,7 @@ class ViewController: MDCCollectionViewController {
   }
 
   // MARK: UIScrollViewDelegate
-    
+
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == appBar.headerViewController.headerView.trackingScrollView {
       appBar.headerViewController.headerView.trackingScrollDidScroll()
@@ -269,7 +269,7 @@ class ViewController: MDCCollectionViewController {
       headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
     }
   }
-    
+
   override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     if scrollView == appBar.headerViewController.headerView.trackingScrollView {
       let headerView = appBar.headerViewController.headerView
