@@ -20,7 +20,7 @@
 
 #import "MaterialFlexibleHeader.h"
 
-@interface FlexibleHeaderWrappedExample ()
+@interface FlexibleHeaderWrappedExample () <UIScrollViewDelegate>
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
 @property(nonatomic) UILabel *label;

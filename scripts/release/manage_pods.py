@@ -51,8 +51,11 @@ def update_podfile_dir(directory):
   Args:
     directory: The directory to use.
   """
-  cmd = ['pod', 'update', '--project-directory=%s' % directory]
-  subprocess.check_call(cmd)
+  # We can't use --project-directory because of https://github.com/google/EarlGrey/issues/287
+  # cmd = ['pod', 'update', '--project-directory=%s' % directory]
+  cmd = 'cd ' + directory + '; pod update'
+  # Remove shell=True when https://github.com/google/EarlGrey/issues/287 is fixed
+  subprocess.check_call(cmd, shell=True)
 
 
 def update_all_podfile_dirs(directory):
@@ -72,10 +75,14 @@ def install_podfile_dir(directory, fast_install):
     directory: The directory to use.
     fast_install: If True, then skip updating the podspec repo.
   """
-  cmd = ['pod', 'install', '--project-directory=%s' % directory]
+  # We can't use --project-directory because of https://github.com/google/EarlGrey/issues/287
+  # cmd = ['pod', 'install', '--project-directory=%s' % directory]
+  cmd = 'cd ' + directory + '; pod install '
+  print(cmd)
   if fast_install:
     cmd.append("--no-repo-update")
-  subprocess.check_call(cmd)
+  # Remove shell=True when https://github.com/google/EarlGrey/issues/287 is fixed
+  subprocess.check_call(cmd, shell=True)
 
 
 def install_all_podfile_dirs(directory, fast_install):

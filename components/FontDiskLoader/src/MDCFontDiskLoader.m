@@ -226,30 +226,4 @@ static dispatch_queue_t gLoadedFontsQueue;
   }
 }
 
-#pragma mark - Deprecated methods
-
-- (instancetype)initWithName:(NSString *)fontName URL:(NSURL *)fontURL {
-  return [self initWithFontName:fontName fontURL:fontURL];
-}
-
-- (BOOL)registerFont {
-  return [self load];
-}
-
-- (BOOL)unregisterFont {
-  return [self unload];
-}
-
-- (BOOL)isRegistered {
-  return self.loaded;
-}
-
-- (BOOL)hasFailedRegistration {
-  return _loadFailed;
-}
-
-- (void)setFontName:(NSString *)fontName {
-  _fontName = [fontName copy];
-}
-
 @end

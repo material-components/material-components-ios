@@ -95,7 +95,7 @@ static const CGFloat kSwitchStressTestColumnWidth = 50;
 
   CFTimeInterval now = CFAbsoluteTimeGetCurrent();
   for (NSInteger i = 0; i < kSwitchStressTestNumSwitches; i++) {
-    MDCSwitch *aSwitch = [self makeSwitch];
+    UIView *aSwitch = [self makeSwitch];
     [self.view addSubview:aSwitch];
     [_switches addObject:aSwitch];
   }
@@ -104,7 +104,7 @@ static const CGFloat kSwitchStressTestColumnWidth = 50;
   [self layoutSwitches];
 
   NSString *message = [NSString
-      stringWithFormat:@"Created %d switches in %.2fms", _switches.count, (then - now) * 1000];
+      stringWithFormat:@"Created %d switches in %.2fms", (int)_switches.count, (then - now) * 1000];
   [MDCSnackbarManager showMessage:[MDCSnackbarMessage messageWithText:message]];
 
   _switchType++;

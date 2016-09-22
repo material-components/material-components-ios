@@ -37,10 +37,6 @@
 
 @implementation FlexibleHeaderFABExample (Supplemental)
 
-- (void)didTap:(id)button {
-  NSLog(@"FAB Tapped.");
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
 }
