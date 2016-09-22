@@ -29,22 +29,20 @@ Open `Terminal`.
 If you do not already have CocoaPods installed on this system, run:
 
 ~~~ 
-
 sudo gem install cocoapods
 ~~~
 
 Navigate to your project's directory and create a `Podfile` by running:
 
 ~~~
-        
+      
 cd [directory of your project]
 pod init
 ~~~ 
 
 Open the new `Podfile` in a text editor or by running:
 
-~~~
-        
+~~~        
 open -a Xcode Podfile
 ~~~
 
@@ -68,7 +66,6 @@ Save the `Podfile`.
 Back in `Terminal`, install your new pod and open the generated workspace:
 
 ~~~
-        
 pod install
 open MDC-Tutorial.xcworkspace
 ~~~
