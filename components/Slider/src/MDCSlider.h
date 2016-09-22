@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCThumbTrack.h"
-
 @protocol MDCSliderDelegate;
 
 /**
@@ -38,7 +36,7 @@
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
  */
 IB_DESIGNABLE
-@interface MDCSlider : UIControl <NSCoding, MDCThumbTrackDelegate>
+@interface MDCSlider : UIControl <NSCoding>
 
 /** The delegate for the slider. */
 @property(nullable, nonatomic, weak) id<MDCSliderDelegate> delegate;
