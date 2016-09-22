@@ -35,7 +35,6 @@ sudo gem install cocoapods
 Navigate to your project's directory and create a `Podfile` by running:
 
 ~~~
-      
 cd [directory of your project]
 pod init
 ~~~ 
