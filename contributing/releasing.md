@@ -186,16 +186,24 @@ on the topic.
 
 #### Inspect the diff
 
+##### Diff just the components/*/src
+
 The final sanity check is to visually inspect the diff. In general we only care about changes to the
 component source.
+Note that scripts/release/diff takes a `--use_diff_tool` option to use your configured GUI
+`git difftool`.
 
 To filter the diff to only component changes, run:
 
     scripts/release/diff components/*/src/
 
+##### Public header file changes
+
 To generate a list of component **public header file** changes, run:
 
     scripts/release/changed_public_headers
+
+##### Diff everything
 
 To see all changes that are part of this release, run:
 
