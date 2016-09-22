@@ -16,7 +16,7 @@
 
 #import "MDCButton.h"
 
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
+#import "MDFTextAccessibility.h"
 #import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"

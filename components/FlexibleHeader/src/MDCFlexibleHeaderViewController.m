@@ -16,9 +16,9 @@
 
 #import "MDCFlexibleHeaderViewController.h"
 
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
+#import "MDFTextAccessibility.h"
 
 static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
   if (CGColorGetAlpha(color.CGColor) < 1) {
