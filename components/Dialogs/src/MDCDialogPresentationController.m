@@ -243,7 +243,11 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 #pragma mark - Internal
 
 - (void)dismiss:(UIGestureRecognizer *)gesture {
-  if (gesture.state == UIGestureRecognizerStateRecognized) {
+  BOOL shouldDismiss = gesture.state == UIGestureRecognizerStateRecognized;
+  if (self.presentationControllerBlock) {
+    shouldDismiss = shouldDismiss && self.presentationControllerBlock(self);
+  }
+  if (shouldDismiss) {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
   }
 }

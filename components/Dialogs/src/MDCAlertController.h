@@ -21,6 +21,9 @@
 #endif
 
 @class MDCAlertAction;
+@class MDCDialogPresentationController;
+
+typedef BOOL (^MDCDialogPresentationControllerBlock)(MDCDialogPresentationController *_Nonnull presentationController);
 
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
@@ -48,6 +51,18 @@
 + (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)title
                                          message:(nullable NSString *)message;
 
+/**
+ Similar to `alertControllerWithTitle:message`, but this method allows the caller to specify a presentationControllerBlock too.
+ 
+ @param title The title of the alert.
+ @param message Descriptive text that summarizes a decision in a sentence of two.
+ @param presentationControllerBlock a block which defines whether or not to close the dialog when the user taps on the dimmed view behind the alert controller.
+ @return An initialized MDCAlertController object.
+ */
++ (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)title
+                                         message:(nullable NSString *)message
+                  presentationControllerBlock:(nullable MDCDialogPresentationControllerBlock)presentationControllerBlock;
+
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
                                  bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
@@ -67,6 +82,11 @@
  @param action Will be added to the end of MDCAlertController.actions.
  */
 - (void)addAction:(nonnull MDCAlertAction *)action;
+
+/**
+  The callback block. Dictates whether or not the controller should be dismissed if the user taps on the dimmed view behind the alert controller.
+ */
+@property(nonatomic, copy, nullable) MDCDialogPresentationControllerBlock presentationControllerBlock;
 
 /**
  The actions that the user can take in response to the alert.
