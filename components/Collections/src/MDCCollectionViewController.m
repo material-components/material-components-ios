@@ -433,7 +433,7 @@
 - (BOOL)collectionView:(UICollectionView *)collectionView
     canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
   return ([self collectionViewAllowsEditing:collectionView] &&
-          [self collectionViewAllowsReordering:collectionView]);
+          [self collectionViewAllowsReordering:collectionView]);  // Here, this can be bypassed by people overriding ~canMoveItemAtIndexPath:.
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
