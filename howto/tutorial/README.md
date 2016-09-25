@@ -4,14 +4,20 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documen
 
 ## Tutorial
 
-This tutorial will teach you how to link Material Components to an application, use a material collection view, and add an expandable app bar at the top of your controller.
+Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
+
+This tutorial will teach you how to link Material Components to an application, use a material collection view, and add an expandable header to the top of your controller.
+
+When you're done, you'll have an app that looks like this:
 
 ![Goal app with collections and a flexible header.](docs/assets/App-Collection-With-Flexing.gif)
 
 ---
 
+#### NOTE: If you've already linked the MaterialComponents CocoaPod to your project, you can skip to Step 3. 
 
 ## 1.  Create a new Xcode application:
+Let's make a simple app to play in.
 
 Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`. 
 
@@ -24,6 +30,8 @@ Choose a place to save your new project that you can remember. Click `Create`.
 Close your new project by going to menu `File -> Close Project` or holding `option + command + w`. We’ll come back to the project in a minute.
   
 ## 2.  Setup CocoaPods:
+[CocoaPods](https://cocoapods.org/) is a delightful way to add libraries and frameworks to apps. If you've used it before, this will look familiar to you.
+
 Open `Terminal`.
 
 If you do not already have CocoaPods installed on this system, run:
@@ -32,7 +40,7 @@ If you do not already have CocoaPods installed on this system, run:
 sudo gem install cocoapods
 ~~~
 
-Navigate to your project's directory and create a `Podfile` by running:
+Navigate to your MDC-Tutorial project's directory and create a `Podfile` by running:
 
 ~~~
 cd [directory of your project]
@@ -45,9 +53,11 @@ Open the new `Podfile` in a text editor or by running:
 open -a Xcode Podfile
 ~~~
 
-Add the `Material Components` pod to the `Podfile`:
+Add the `Material Components` pod to the `Podfile` by copying:
 
-~~~ ruby
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
         
 target 'MDC-Tutorial' 
 use_frameworks!
@@ -58,11 +68,22 @@ pod 'MaterialComponents', :git => 'https://github.com/google/material-components
 end
 ~~~ 
 
-**NOTE:** If the language you’re using in this project is Objective-C, comment out `use_frameworks` by adding a `#` in front of it.
+#### Objective-C
+~~~ objc
+
+target 'MDC-Tutorial' 
+#use_frameworks!
+
+# Pods for MDC-Tutorial
+pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
+
+end
+~~~ 
+<!--</div>-->
 
 Save the `Podfile`.
 
-Back in `Terminal`, install your new pod and open the generated workspace:
+Back in `Terminal`, install your new pod and open the new workspace:
 
 ~~~
 pod install
@@ -70,6 +91,10 @@ open MDC-Tutorial.xcworkspace
 ~~~
 
 ![CocoaPods installation script and opening of workspace into Xcode](docs/assets/Terminal-Pod-Installation.jpg)
+
+CocoaPods has downloaded and linked MaterialComponents to your project!
+
+If you'd like to learn more about CocoaPods, there's a great [video](https://youtu.be/iEAjvNRdZa0) that puts it all in black and white.
 
 
 ## 3.  Add a Material Collection View:
