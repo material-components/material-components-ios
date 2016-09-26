@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCInkGestureRecognizer;
 @class MDCInkTouchController;
 @class MDCInkView;
 @protocol MDCInkTouchControllerDelegate;
@@ -67,6 +68,9 @@
  dragCancelDistance then the gesture is cancelled.
  */
 @property(nonatomic) CGRect targetBounds;
+
+/** Gesture recognizer used to bind touch events to ink. */
+@property(nonatomic, strong, readonly, nonnull) MDCInkGestureRecognizer *gestureRecognizer;
 
 /** Unavailable, please use initWithView: instead. */
 - (nonnull instancetype)init NS_UNAVAILABLE;

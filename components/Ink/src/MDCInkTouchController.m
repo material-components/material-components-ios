@@ -24,7 +24,6 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 @interface MDCInkTouchController ()
 @property(nonatomic, strong) MDCInkView *addedInkView;
 @property(nonatomic, strong) MDCInkView *defaultInkView;
-@property(nonatomic, strong) MDCInkGestureRecognizer *gestureRecognizer;
 @property(nonatomic, assign) BOOL shouldRespondToTouch;
 @property(nonatomic, assign) CGPoint previousLocation;
 @end
