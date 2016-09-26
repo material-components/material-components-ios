@@ -106,6 +106,9 @@
 @property(nonatomic, strong, nullable) UIBarButtonItem *leadingBarButtonItem;
 @property(nonatomic, strong, nullable) UIBarButtonItem *trailingBarButtonItem;
 
+/** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
+@property(nonatomic) NSTextAlignment textAlignment;
+
 #pragma mark Observing UINavigationItem instances
 
 /**

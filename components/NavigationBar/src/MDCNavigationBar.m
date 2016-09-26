@@ -217,6 +217,18 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   UIControlContentVerticalAlignment titleAlignment = [self titleAlignment];
   _titleLabel.frame =
       [self mdc_frameAlignedVertically:titleFrame withinBounds:textFrame alignment:titleAlignment];
+  if (_titleLabel.textAlignment == NSTextAlignmentCenter) {
+    _titleLabel.center = CGPointMake(CGRectGetMidX(self.bounds), _titleLabel.center.y);
+    if (CGRectGetMaxX(_titleLabel.frame) > CGRectGetMaxX(textFrame)) {
+      CGPoint center = _titleLabel.center;
+      center.x -= CGRectGetMaxX(_titleLabel.frame) - CGRectGetMaxX(textFrame);
+      _titleLabel.center = center;
+    } else if (CGRectGetMinX(_titleLabel.frame) < CGRectGetMinX(textFrame)) {
+      CGPoint center = _titleLabel.center;
+      center.x += CGRectGetMinX(textFrame) - CGRectGetMinX(_titleLabel.frame);
+      _titleLabel.center = center;
+    }
+  }
   self.titleView.frame = textFrame;
 
   // Button and title label alignment
@@ -247,6 +259,15 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
   CGFloat height = (isPad ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight);
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
+}
+
+- (NSTextAlignment)textAlignment {
+  return _titleLabel.textAlignment;
+}
+
+- (void)setTextAlignment:(NSTextAlignment)textAlignment {
+  _titleLabel.textAlignment = textAlignment;
+  [self setNeedsLayout];
 }
 
 #pragma mark Private
