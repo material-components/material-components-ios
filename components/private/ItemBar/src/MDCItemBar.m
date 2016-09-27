@@ -6,25 +6,25 @@
 #import "private/MDCItemBarCell.h"
 
 /// Height in points of the bar shown under selected items.
-static const CGFloat kMDCSelectionIndicatorHeight = 2.0f;
+static const CGFloat kSelectionIndicatorHeight = 2.0f;
 
 /// Cell reuse identifier for item bar cells.
-static NSString *const kMDCItemReuseID = @"MDCItem";
+static NSString *const kItemReuseID = @"MDCItem";
 
 /// Default duration in seconds for selection change animations.
-static const NSTimeInterval kMDCItemBarDefaultAnimationDuration = 0.3f;
+static const NSTimeInterval kDefaultAnimationDuration = 0.3f;
 
 /// Placeholder width for cells, which get per-item sizing.
-static const CGFloat kMDCItemBarPlaceholderCellWidth = 10.0f;
+static const CGFloat kPlaceholderCellWidth = 10.0f;
 
 /// Horizontal insets in regular size class layouts.
-static const CGFloat kMDCItemBarRegularInset = 56.0f;
+static const CGFloat kRegularInset = 56.0f;
 
 /// Horizontal insets in compact size class layouts.
-static const CGFloat kMDCItemBarCompactInset = 8.0f;
+static const CGFloat kCompactInset = 8.0f;
 
 /// KVO context pointer identifying changes in MDCItemBarItem properties.
-static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
+static void *kItemPropertyContext = &kItemPropertyContext;
 
 /// Custom flow layout for item content. Selectively works around bugs with RTL and flow layout:
 /// Radar 22828797: "UICollectionView with variable-sized items does not reverse item order in RTL."
@@ -104,14 +104,14 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   collectionView.delegate = self;
   collectionView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  [collectionView registerClass:[MDCItemBarCell class] forCellWithReuseIdentifier:kMDCItemReuseID];
+  [collectionView registerClass:[MDCItemBarCell class] forCellWithReuseIdentifier:kItemReuseID];
 
   _collectionView = collectionView;
   [self addSubview:_collectionView];
 
   // Configure the selection indicator view.
   _selectionIndicator =
-      [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, kMDCSelectionIndicatorHeight)];
+      [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, kSelectionIndicatorHeight)];
   _selectionIndicator.backgroundColor = [UIColor whiteColor];
   _selectionIndicator.opaque = YES;
   [_collectionView addSubview:_selectionIndicator];
@@ -219,7 +219,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-  if (context == kMDCItemBarItemPropertyContext) {
+  if (context == kItemPropertyContext) {
     // MDCItemBarItem change, must be on the main thread.
     NSAssert([NSThread isMainThread], @"Item bar items may only be updated on the main thread.");
     NSAssert([object isKindOfClass:[UITabBarItem class]], @"Change in unexpected object type");
@@ -344,7 +344,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSParameterAssert(_collectionView == collectionView);
 
-  MDCItemBarCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCItemReuseID
+  MDCItemBarCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:kItemReuseID
                                                                        forIndexPath:indexPath];
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
 
@@ -409,7 +409,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
   for (UITabBarItem *item in _items) {
     for (NSString *key in [[self class] observableItemKeys]) {
-      [item addObserver:self forKeyPath:key options:0 context:kMDCItemBarItemPropertyContext];
+      [item addObserver:self forKeyPath:key options:0 context:kItemPropertyContext];
     }
   }
 }
@@ -419,7 +419,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
   for (UITabBarItem *item in _items) {
     for (NSString *key in [[self class] observableItemKeys]) {
-      [item removeObserver:self forKeyPath:key context:kMDCItemBarItemPropertyContext];
+      [item removeObserver:self forKeyPath:key context:kItemPropertyContext];
     }
   }
 }
@@ -461,7 +461,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 - (UICollectionViewFlowLayout *)generatedFlowLayout {
   UICollectionViewFlowLayout *flowLayout = [[MDCItemBarFlowLayout alloc] init];
   CGFloat itemHeight = CGRectGetHeight(self.bounds);
-  flowLayout.itemSize = CGSizeMake(kMDCItemBarPlaceholderCellWidth, itemHeight);
+  flowLayout.itemSize = CGSizeMake(kPlaceholderCellWidth, itemHeight);
   flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
   flowLayout.sectionInset = UIEdgeInsetsZero;
   flowLayout.minimumInteritemSpacing = 0.0f;
@@ -478,7 +478,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
     CAMediaTimingFunction *easeInOutFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
     [UIView mdc_animateWithTimingFunction:easeInOutFunction
-                                 duration:kMDCItemBarDefaultAnimationDuration
+                                 duration:kDefaultAnimationDuration
                                     delay:0
                                   options:UIViewAnimationOptionBeginFromCurrentState
                                animations:animationBlock
@@ -508,12 +508,12 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
   // Size selection indicator to a fixed height, equal in width to the selected item's cell.
   CGRect selectionIndicatorBounds = attributes.bounds;
-  selectionIndicatorBounds.size.height = kMDCSelectionIndicatorHeight;
+  selectionIndicatorBounds.size.height = kSelectionIndicatorHeight;
 
   // Center selection indicator under cell.
   CGPoint selectionIndicatorCenter = attributes.center;
   selectionIndicatorCenter.y =
-      CGRectGetMaxY(_collectionView.bounds) - (kMDCSelectionIndicatorHeight / 2.0f);
+      CGRectGetMaxY(_collectionView.bounds) - (kSelectionIndicatorHeight / 2.0f);
 
   _selectionIndicator.bounds = selectionIndicatorBounds;
   _selectionIndicator.center = selectionIndicatorCenter;
@@ -528,7 +528,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
     CAMediaTimingFunction *easeInOutFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
     [UIView mdc_animateWithTimingFunction:easeInOutFunction
-                                 duration:kMDCItemBarDefaultAnimationDuration
+                                 duration:kDefaultAnimationDuration
                                     delay:0.0f
                                   options:UIViewAnimationOptionBeginFromCurrentState
                                animations:animationBlock
@@ -596,7 +596,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
 - (UIEdgeInsets)leadingAlignedInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
   const BOOL isRegular = (sizeClass == UIUserInterfaceSizeClassRegular);
-  const CGFloat inset = isRegular ? kMDCItemBarRegularInset : kMDCItemBarCompactInset;
+  const CGFloat inset = isRegular ? kRegularInset : kCompactInset;
   return UIEdgeInsetsMake(0.0f, inset, 0.0f, inset);
 }
 
