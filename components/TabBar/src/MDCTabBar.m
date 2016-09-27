@@ -141,6 +141,14 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   [_itemBar setAlignment:MDCItemBarAlignmentForTabBarAlignment(alignment) animated:animated];
 }
 
+- (void)setItemAppearance:(MDCTabBarItemAppearance)itemAppearance {
+  if (itemAppearance != _itemAppearance) {
+    _itemAppearance = itemAppearance;
+
+    [self updateItemBarStyle];
+  }
+}
+
 - (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
   if (_selectedItemTintColor != selectedItemTintColor &&
       ![_selectedItemTintColor isEqual:selectedItemTintColor]) {

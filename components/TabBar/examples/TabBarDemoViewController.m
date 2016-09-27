@@ -95,16 +95,17 @@
   const CGRect bounds = self.view.bounds;
 
   // Short tab bar with a small number of items.
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  UIImage *infoImage =
+      [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
+  UIImage *starImage =
+      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
   _shortTabBar =
       [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds)-20.0f, 0)];
   _shortTabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 150);
   _shortTabBar.items = @[
-      [[UITabBarItem alloc] initWithTitle:@"Two"
-                                    image:[UIImage imageNamed:@"TabBarDemo_ic_info"]
-                                      tag:0],
-      [[UITabBarItem alloc] initWithTitle:@"Tabs"
-                                    image:[UIImage imageNamed:@"TabBarDemo_ic_star"]
-                                      tag:1]
+      [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
+      [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:1]
   ];
 
   // Give the last item a badge
@@ -138,8 +139,9 @@
   _longTabBar.displaysUppercaseTitles = NO;
 
   // Give it a white appearance to show dark text and customize the unselected title color.
+  _longTabBar.selectedItemTintColor = [UIColor blackColor];
   _longTabBar.unselectedItemTintColor = [UIColor grayColor];
-  _longTabBar.tintColor = [UIColor blackColor];
+  _longTabBar.tintColor = [UIColor redColor];
   _longTabBar.barTintColor = [UIColor whiteColor];
   _longTabBar.inkColor = [UIColor colorWithWhite:0.0 alpha:0.1];
 
