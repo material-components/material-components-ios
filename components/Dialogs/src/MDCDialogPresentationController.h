@@ -40,6 +40,13 @@
 @interface MDCDialogPresentationController : UIPresentationController
 
 /**
+ Should a tap on the dimmed background view dismiss the presented controller.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL dismissOnBackgroundTap;
+
+/**
  Returns the size of the specified child view controller's content.
 
  The size is initially based on container.preferredSize. Width is will have a minimum of 280 and a
