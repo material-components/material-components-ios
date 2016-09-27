@@ -7,35 +7,35 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
-// Detail in spec: https://spec.googleplex.com/quantum/components/containers/tabs
-static const CGFloat kGOOTabViewBottomPadding = 20.0f;
+/// Padding between the bottom of the cell and its content, in points.
+static const CGFloat kBottomPadding = 20.0f;
 
-/// Size of a tab image in points.
-static const CGSize kMDCItemBarCellImageSize = {24, 24};
+/// Size of image in points.
+static const CGSize kImageSize = {24, 24};
 
 /// Font point size for badges.
-static const CGFloat kMDCItemBarCellBadgeFontSize = 12;
+static const CGFloat kBadgeFontSize = 12;
 
-/// Padding between top of the tab bar and the badge.
-static const CGFloat kMDCItemBarCellBadgeTopPadding = 6;
+/// Padding between top of the cell and the badge.
+static const CGFloat kBadgeTopPadding = 6;
 
 /// Maximum width of a badge. This allows for 3 characters before truncation.
-static const CGFloat kMDCItemBarCellBadgeMaxWidth = 22;
+static const CGFloat kBadgeMaxWidth = 22;
 
 /// File name of the bundle (without the '.bundle' extension) containing resources.
-static NSString *const kMDCItemBarCellResourceBundleName = @"MaterialItemBar";
+static NSString *const kResourceBundleName = @"MaterialItemBar";
 
 /// String table name containing localized strings.
-static NSString *const kMDCItemBarCellStringTableName = @"MaterialItemBar";
+static NSString *const kStringTableName = @"MaterialItemBar";
 
 /// Scale factor applied to the title of bottom navigation items when selected.
-const CGFloat kMDCItemBarCellSelectedNavigationTitleScaleFactor = (16.0f / 14.0f);
+const CGFloat kSelectedNavigationTitleScaleFactor = (16.0f / 14.0f);
 
 /// Vertical translation applied to image components bottom navigation items when selected.
-const CGFloat kMDCItemBarCellSelectedNavigationImageYOffset = -2;
+const CGFloat kSelectedNavigationImageYOffset = -2;
 
 /// Duration of selection animations in applicable content styles.
-static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
+static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 @implementation MDCItemBarCell {
   UILabel *_titleLabel;
@@ -91,7 +91,7 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
 
   CGRect textBounds = CGRectZero;
 
-  // Only compute text bounding rect if necessary (all except image-only tabs)
+  // Only compute text bounding rect if necessary (all except image-only items)
   if (style.shouldDisplayTitle) {
     UIFont *font = style.titleFont;
     NSDictionary *titleAttributes = @{NSFontAttributeName : font};
@@ -106,7 +106,7 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
   // Only compute badge bounding rect if necessary.
   NSString *badge = item.badgeValue;
   if (style.shouldDisplayBadge && badge.length > 0) {
-    UIFont *badgeFont = [[MDCTypography fontLoader] regularFontOfSize:kMDCItemBarCellBadgeFontSize];
+    UIFont *badgeFont = [[MDCTypography fontLoader] regularFontOfSize:kBadgeFontSize];
     NSDictionary *badgeAttributes = @{NSFontAttributeName : badgeFont};
     badgeBounds = [badge boundingRectWithSize:size
                                       options:NSStringDrawingTruncatesLastVisibleLine
@@ -119,10 +119,8 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
   if (style.shouldDisplayTitle) {
     if (style.shouldDisplayImage) {
       // Title and image
-      bounds.size.width =
-          MAX(textBounds.size.width, kMDCItemBarCellImageSize.width + badgeBounds.size.width * 2);
-      bounds.size.height =
-          textBounds.size.height + style.titleImagePadding + kMDCItemBarCellImageSize.height;
+      bounds.size.width = MAX(textBounds.size.width, kImageSize.width + badgeBounds.size.width * 2);
+      bounds.size.height = textBounds.size.height + style.titleImagePadding + kImageSize.height;
     } else {
       // Just title
       bounds = textBounds;
@@ -130,7 +128,7 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
   } else {
     if (style.shouldDisplayImage) {
       // Image only.
-      bounds.size = kMDCItemBarCellImageSize;
+      bounds.size = kImageSize;
       bounds.size.width += badgeBounds.size.width * 2;
     } else {
       // No image or title: NOP.
@@ -207,7 +205,7 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
   CGRect badgeBounds = CGRectZero;
 
   // Image has a fixed size and is horizontally centered, regardless of content style.
-  imageBounds.size = kMDCItemBarCellImageSize;
+  imageBounds.size = kImageSize;
   imageCenter.x = (float)round(CGRectGetMidX(contentBounds));
 
   CGSize titleSize = [_titleLabel sizeThatFits:contentBounds.size];
@@ -220,7 +218,7 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
 
   // Horizontally align the badge.
   CGSize badgeSize = [_badgeLabel sizeThatFits:contentBounds.size];
-  badgeSize.width = MIN(kMDCItemBarCellBadgeMaxWidth, badgeSize.width);
+  badgeSize.width = MIN(kBadgeMaxWidth, badgeSize.width);
   badgeBounds.size = badgeSize;
 
   if (_style.shouldDisplayBadge) {
@@ -231,7 +229,7 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
     }
 
     badgeCenter.x = imageCenter.x + badgeOffset;
-    badgeCenter.y = kMDCItemBarCellBadgeTopPadding + ((float)badgeSize.height / 2.0f);
+    badgeCenter.y = kBadgeTopPadding + ((float)badgeSize.height / 2.0f);
   }
 
   // Place components vertically
@@ -239,18 +237,17 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
     if (_style.shouldDisplayImage) {
       // Image and title, center both vertically together.
       const CGFloat padding = _style.titleImagePadding;
-      const CGFloat totalHeight = titleSize.height + padding + kMDCItemBarCellImageSize.height;
+      const CGFloat totalHeight = titleSize.height + padding + kImageSize.height;
       const CGFloat yOrigin = (float)round(CGRectGetMidY(contentBounds) - totalHeight / 2.0f);
-      imageCenter.y = yOrigin + ((float)kMDCItemBarCellImageSize.height / 2.0f);
-      titleCenter.y =
-          yOrigin + kMDCItemBarCellImageSize.height + padding + ((float)titleSize.height / 2.0f);
+      imageCenter.y = yOrigin + ((float)kImageSize.height / 2.0f);
+      titleCenter.y = yOrigin + kImageSize.height + padding + ((float)titleSize.height / 2.0f);
       titleCenter.y = roundf((float)titleCenter.y);
 
     } else {
       // Title only, center vertically.
       // +1 for slight adjustment to font baseline for centered title labels.
       const CGFloat centeredTitleYOffset = 1.0f;
-      titleCenter.y = contentBounds.size.height - kGOOTabViewBottomPadding - titleSize.height +
+      titleCenter.y = contentBounds.size.height - kBottomPadding - titleSize.height +
                       centeredTitleYOffset + ((float)titleSize.height / 2.0f);
       titleCenter.y = roundf((float)titleCenter.y);
     }
@@ -360,9 +357,9 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
 + (NSString *)localizedStringWithKey:(NSString *)key {
   NSBundle *containingBundle = [NSBundle bundleForClass:self];
   NSURL *resourceBundleURL =
-      [containingBundle URLForResource:kMDCItemBarCellResourceBundleName withExtension:@"bundle"];
+      [containingBundle URLForResource:kResourceBundleName withExtension:@"bundle"];
   NSBundle *resourceBundle = [NSBundle bundleWithURL:resourceBundleURL];
-  return [resourceBundle localizedStringForKey:key value:nil table:kMDCItemBarCellStringTableName];
+  return [resourceBundle localizedStringForKey:key value:nil table:kStringTableName];
 }
 
 + (NSString *)displayedTitleForTitle:(NSString *)title style:(MDCItemBarStyle *)style {
@@ -429,8 +426,7 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
     if (!_badgeLabel) {
       _badgeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
       _badgeLabel.numberOfLines = 1;
-      _badgeLabel.font =
-          [[MDCTypography fontLoader] regularFontOfSize:kMDCItemBarCellBadgeFontSize];
+      _badgeLabel.font = [[MDCTypography fontLoader] regularFontOfSize:kBadgeFontSize];
       [self.contentView addSubview:_badgeLabel];
       _badgeLabel.text = _badgeValue;
     }
@@ -465,10 +461,8 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
 
   // Apply transforms to the selected item if appropriate.
   if (_style.shouldGrowOnSelection) {
-    const CGFloat titleScaleFactor =
-        self.selected ? kMDCItemBarCellSelectedNavigationTitleScaleFactor : 1;
-    const CGFloat imageYTransform =
-        self.selected ? kMDCItemBarCellSelectedNavigationImageYOffset : 0;
+    const CGFloat titleScaleFactor = self.selected ? kSelectedNavigationTitleScaleFactor : 1;
+    const CGFloat imageYTransform = self.selected ? kSelectedNavigationImageYOffset : 0;
 
     /// Vertical offset in points from the bottom of the label to its baseline.
     const CGFloat titleBaselineOffset = 3.5;
@@ -510,7 +504,7 @@ static const NSTimeInterval kMDCItemBarCellSelectionAnimationDuration = 0.3f;
     CAMediaTimingFunction *translateTimingFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslate];
     [UIView mdc_animateWithTimingFunction:translateTimingFunction
-                                 duration:kMDCItemBarCellSelectionAnimationDuration
+                                 duration:kSelectionAnimationDuration
                                     delay:0
                                   options:0
                                animations:performAnimations
