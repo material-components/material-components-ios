@@ -568,4 +568,10 @@ static const CGFloat kSwitchLightThemeTrackDisabledAlpha = 0.12f;
   return [[UIColor blackColor] colorWithAlphaComponent:kSwitchLightThemeTrackDisabledAlpha];
 }
 
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+  return YES;
+}
+
 @end

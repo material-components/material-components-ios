@@ -299,6 +299,12 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   }
 }
 
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+  return YES;
+}
+
 #pragma mark - Private
 
 - (void)thumbTrackValueChanged:(MDCThumbTrack *)thumbTrack {
