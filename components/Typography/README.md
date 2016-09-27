@@ -214,10 +214,12 @@ self.label.sizeToFit()
 ## Advanced Usage
 
 ### Custom Fonts
-Material Components for iOS allows you to set your own font instead of Roboto. Since all of the
-other components in our framework requests fonts through the Typography component, it is possible to
-switch the font used by all of Material Components for iOS. If you want to use the system font use
-`MDCSystemFontLoader` which already conforms to the `MDCTypographyFontLoading` protocol.
+Material Components for iOS allows you to set your own font for all of the components. Use the class
+method `setFontLoader:` on MDCTypography to specify a loader that conforms to the
+`MDCTypographyFontLoading` protocol.
+
+If you want to use the system font use `MDCSystemFontLoader` which already conforms to the
+`MDCTypographyFontLoading` protocol. It is used if no font loader is set.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C

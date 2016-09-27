@@ -88,14 +88,33 @@ UIFont *font = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
 #### Swift
 ~~~ swift
 let myFont:UIFont = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
-}
 ~~~
 <!--</div>-->
 
 ## Advanced Usage
-### Typography's weak dependency
-When included in your build the Roboto Font Loader is used by the Typography component. This runtime
-check occurs when no specific Font Loader is set on Typography, resulting in Roboto being used for
-Material Typography.
+### Typography
+
+Set the `MDCRobotoFontLoader` as `MDCTypography`'s fontLoader in order to use Roboto for all
+components.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+- (BOOL)application:(UIApplication *)application
+    willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [MDCTypography setFontLoader:[MDCRobotoFontLoader sharedInstance]];
+    ...
+}
+~~~
+
+#### Swift
+~~~ swift
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  MDCTypography.setFontLoader(MDCRobotoFontLoader.sharedInstance())
+  ...
+}
+~~~
+<!--</div>-->
+
 For more information see
 [Typography](https://github.com/google/material-components-ios/tree/develop/components/Typography).
