@@ -49,6 +49,5 @@ We learn about upcoming API breakages in UIKit as early as everyone else through
 
 ### How large is the upload size of the library?
 
-Material Components for iOS increases the size of your app by about 5.3MB without Roboto or about 7MB with Roboto.
-
+If you import all the components, the size of your app will increase by about 5.3MB. However, you don't have to add the entire library! You can add as many or as few of the 25+ individual components as you like. And that averages to less than .2MB per component.
 
