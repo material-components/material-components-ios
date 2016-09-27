@@ -449,8 +449,12 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
                                   MDCSwitchIntrinsicSize.width, kSwitchTrackHeight);
     CAShapeLayer *layer = [CAShapeLayer layer];
     layer.fillColor = [UIColor whiteColor].CGColor;
-    layer.path = CGPathCreateWithRoundedRect(trackRect, kSwitchTrackHeight / 2,
-                                             kSwitchTrackHeight / 2, NULL);
+
+    // Local variable used here to avoid analyzer warnings about a potential leak on XCode 7.
+    CGPathRef path = CGPathCreateWithRoundedRect(trackRect, kSwitchTrackHeight / 2,
+                                                 kSwitchTrackHeight / 2, NULL);
+    layer.path = path;
+    CGPathRelease(path);
 
     UIGraphicsBeginImageContextWithOptions(MDCSwitchIntrinsicSize, NO, 0);
     [layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -471,7 +475,11 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   layer.rasterizationScale = [UIScreen mainScreen].scale;
   layer.shadowMaskEnabled = NO;
   [layer setElevation:MDCShadowElevationCardResting];
-  layer.shadowPath = CGPathCreateWithEllipseInRect(thumbRect, NULL);
+
+  // Local variable used here to avoid analyzer warnings about a potential leak on XCode 7.
+  CGPathRef path = CGPathCreateWithEllipseInRect(thumbRect, NULL);
+  layer.shadowPath = path;
+  CGPathRelease(path);
 
   // Unfortunately we can't cache the MDCShadowLayer as an image as CALayer:renderInContext doesn't
   // support rendering a layer that consists only of a shadowPath. Rasterizing the layer is a
@@ -491,7 +499,11 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
                    kSwitchThumbRadius * 2, kSwitchThumbRadius * 2);
     CAShapeLayer *layer = [[CAShapeLayer alloc] init];
     layer.fillColor = [UIColor whiteColor].CGColor;
-    layer.path = CGPathCreateWithEllipseInRect(thumbRect, NULL);
+
+    // Local variable used here to avoid analyzer warnings about a potential leak on XCode 7.
+    CGPathRef path = CGPathCreateWithEllipseInRect(thumbRect, NULL);
+    layer.path = path;
+    CGPathRelease(path);
 
     UIGraphicsBeginImageContextWithOptions(size, NO, 0);
     [layer renderInContext:UIGraphicsGetCurrentContext()];
