@@ -95,32 +95,7 @@
  */
 - (BOOL)unload;
 
-/** Deprecated please use: @c initWithFontName:fontURL:. */
-- (nonnull instancetype)initWithName:(nonnull NSString *)fontName
-                                 URL:(nonnull NSURL *)fontURL
-    __deprecated_msg("Use initWithFontName:fontURL: instead.");
-
 /** A convience method for getting a font. */
 - (nullable UIFont *)fontOfSize:(CGFloat)fontSize;
-
-/** Deprecated please use: @c load. */
-- (BOOL)registerFont __deprecated_msg("Use load instead.");
-
-/** Deprecated please use: @c unload. */
-- (BOOL)unregisterFont __deprecated_msg("Use unload instead.");
-
-/** Deprecated please use: @c loaded. */
-@property(nonatomic, readonly) BOOL isRegistered __deprecated_msg("Use loaded instead.");
-
-/** Deprecated please use: @c loadFailed. */
-@property(nonatomic, readonly)
-    BOOL hasFailedRegistration __deprecated_msg("Use loadFailed instead.");
-
-/**
- Deprecated: This class should not be mutated. Create a new instance if you
- need to specifiy a different font name.
- */
-- (void)setFontName:(NSString *_Nonnull)fontName
-    __deprecated_msg("Create a new instance if you need to specifiy a different font name.");
 
 @end

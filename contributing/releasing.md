@@ -27,6 +27,8 @@ After the announced time has passed, cut the release branch.
 Run the following command to cut a release:
 
     scripts/release/cut
+    git add CHANGELOG.md
+    git commit -m "Cut release candidate."
 
 You will now have a local `release-candidate` branch and a new section in CHANGELOG.md titled
 "release-candidate".
@@ -34,6 +36,14 @@ You will now have a local `release-candidate` branch and a new section in CHANGE
 ### Send the release cut email
 
 `scripts/release/cut` will output the body of an email you should now send.
+
+### Create a release-candidate diff
+
+Create a diff but mark it as `--plan-changes` so it does not go into peoples needs review inboxes.
+
+    arc diff origin/master --nolint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt
+
+Do NOT `arc land` this diff, its purpose is to have someone sanity check the release.
 
 ### Test the release branch
 
@@ -171,21 +181,29 @@ Commit the final results to your branch.
 #### Identify visual changes
 
 We do not presently have an automated way to identify visual changes between releases. See
-[GitHub issue #290](https://github.com/google/material-components-ios/issues/290) for a discussio
+[GitHub issue #290](https://github.com/google/material-components-ios/issues/290) for a discussion
 on the topic.
 
 #### Inspect the diff
 
+##### Diff just the components/*/src
+
 The final sanity check is to visually inspect the diff. In general we only care about changes to the
 component source.
+Note that scripts/release/diff takes a `--use_diff_tool` option to use your configured GUI
+`git difftool`.
 
 To filter the diff to only component changes, run:
 
     scripts/release/diff components/*/src/
 
+##### Public header file changes
+
 To generate a list of component **public header file** changes, run:
 
     scripts/release/changed_public_headers
+
+##### Diff everything
 
 To see all changes that are part of this release, run:
 
@@ -245,18 +263,9 @@ Send the release-candidate branch out for review:
 
     git fetch
     git checkout release-candidate
-    arc diff origin/master --no-lint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt --no-amend
-
-Check off each item in the diff's checklist.
+    arc diff origin/master --nolint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt
 
 Get a reviewer to approve the change.
-
-Do NOT arc land this diff, its purpose is to have someone sanity check the release.
-
-If you need to make changes you have to explicity specify which diff you are modifying because we
-use the `--no-amend` option on the previous `arc diff` command.
-
-    arc diff origin/master --no-lint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt --no-amend --update <revision_id>
 
 ## Merge the release candidate branch
 

@@ -32,7 +32,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
-@interface FlexibleHeaderPageControlExample ()
+@interface FlexibleHeaderPageControlExample () <UIScrollViewDelegate>
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
 @property(nonatomic) MDCPageControl *pageControl;

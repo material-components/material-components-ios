@@ -37,6 +37,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
+@interface MDCSlider () <MDCThumbTrackDelegate>
+
+@end
+
 @implementation MDCSlider
 
 - (instancetype)initWithFrame:(CGRect)frame {

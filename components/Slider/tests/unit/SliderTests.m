@@ -33,6 +33,12 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
+@interface MDCSlider (TestInterface)
+
+- (NSString *)thumbTrack:(MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value;
+
+@end
+
 @interface SliderTests : XCTestCase
 
 @end

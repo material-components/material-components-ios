@@ -24,7 +24,6 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 @interface MDCInkTouchController ()
 @property(nonatomic, strong) MDCInkView *addedInkView;
 @property(nonatomic, strong) MDCInkView *defaultInkView;
-@property(nonatomic, strong) MDCInkGestureRecognizer *gestureRecognizer;
 @property(nonatomic, assign) BOOL shouldRespondToTouch;
 @property(nonatomic, assign) CGPoint previousLocation;
 @end
@@ -211,7 +210,10 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
     // is deprecated and only provided for legacy support.
     id<MDCInkTouchControllerLegacyDelegate> legacyDelegate =
         (id<MDCInkTouchControllerLegacyDelegate>)_delegate;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     return [legacyDelegate shouldInkTouchControllerProcessInkTouches:self];
+#pragma clang diagnostic pop
   }
   return YES;
 }

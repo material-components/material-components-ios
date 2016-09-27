@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0730"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "664524B21C6BA62A001ADBF8"
-               BuildableName = "MDCCatalog.app"
-               BlueprintName = "MDCCatalog"
-               ReferencedContainer = "container:MDCCatalog.xcodeproj">
+               BlueprintIdentifier = "20AA6A9B1D4A5D0C0062273A"
+               BuildableName = "Bare.app"
+               BlueprintName = "Bare"
+               ReferencedContainer = "container:Bare.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,34 +28,14 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "66CB712B1C853DB30099B932"
-               BuildableName = "MDCUnitTests.xctest"
-               BlueprintName = "MDCUnitTests"
-               ReferencedContainer = "container:MDCUnitTests.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0B50E1981D91B0BD00DED250"
-               BuildableName = "MDCInteractionTests.xctest"
-               BlueprintName = "MDCInteractionTests"
-               ReferencedContainer = "container:MDCCatalog.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "664524B21C6BA62A001ADBF8"
-            BuildableName = "MDCCatalog.app"
-            BlueprintName = "MDCCatalog"
-            ReferencedContainer = "container:MDCCatalog.xcodeproj">
+            BlueprintIdentifier = "20AA6A9B1D4A5D0C0062273A"
+            BuildableName = "Bare.app"
+            BlueprintName = "Bare"
+            ReferencedContainer = "container:Bare.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "664524B21C6BA62A001ADBF8"
-            BuildableName = "MDCCatalog.app"
-            BlueprintName = "MDCCatalog"
-            ReferencedContainer = "container:MDCCatalog.xcodeproj">
+            BlueprintIdentifier = "20AA6A9B1D4A5D0C0062273A"
+            BuildableName = "Bare.app"
+            BlueprintName = "Bare"
+            ReferencedContainer = "container:Bare.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "664524B21C6BA62A001ADBF8"
-            BuildableName = "MDCCatalog.app"
-            BlueprintName = "MDCCatalog"
-            ReferencedContainer = "container:MDCCatalog.xcodeproj">
+            BlueprintIdentifier = "20AA6A9B1D4A5D0C0062273A"
+            BuildableName = "Bare.app"
+            BlueprintName = "Bare"
+            ReferencedContainer = "container:Bare.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
