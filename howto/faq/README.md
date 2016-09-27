@@ -2,9 +2,7 @@
 See <a href="https://material-ext.appspot.com/mdc-ios-preview/howto/faq/">MDC site documentation</a> for richer experience.
 <!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/howto/faq">GitHub</a> for README documentation.{% endif %}-->
 
-# Frequently Asked Questions
-
-- - -
+## Frequently Asked Questions
 
 ### How do we stay true to our brand while using material design?
 
