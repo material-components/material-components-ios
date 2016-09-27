@@ -5,10 +5,10 @@
 #import "MaterialRTL.h"
 #import "private/MDCItemBarCell.h"
 
-/// Height in points of the bar shown under selected tabs.
+/// Height in points of the bar shown under selected items.
 static const CGFloat kMDCSelectionIndicatorHeight = 2.0f;
 
-/// Cell reuse identifier for tab bar cells.
+/// Cell reuse identifier for item bar cells.
 static NSString *const kMDCItemReuseID = @"MDCItem";
 
 /// Default duration in seconds for selection change animations.
@@ -26,7 +26,7 @@ static const CGFloat kMDCItemBarCompactInset = 8.0f;
 /// KVO context pointer identifying changes in MDCItemBarItem properties.
 static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
-/// Custom flow layout for tab content. Selectively works around bugs with RTL and flow layout:
+/// Custom flow layout for item content. Selectively works around bugs with RTL and flow layout:
 /// Radar 22828797: "UICollectionView with variable-sized items does not reverse item order in RTL."
 /// - On iOS 9.0 and later when a UICollectionViewFlow layout has custom-sized items via
 ///   collectionView:layout:sizeForItemAtIndexPath:, it does not perform automatic right-to-left
@@ -45,28 +45,27 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 @end
 
 @implementation MDCItemBar {
-  // Collection view and layout for tabs.
-  UICollectionView *_tabCollectionView;
-  UICollectionViewFlowLayout *_tabFlowLayout;
+  // Collection view and layout for items.
+  UICollectionView *_collectionView;
+  UICollectionViewFlowLayout *_flowLayout;
 
-  /// Underline displayed under the active tab.
+  /// Underline displayed under the active item.
   UIView *_selectionIndicator;
 
-  /// Index path of the previously selected tab.
+  /// Index path of the previously selected item.
   NSIndexPath *_lastSelectedIndexPath;
 
   /// Size of the view at last layout, for deduplicating changes.
   CGSize _lastSize;
 
-  /// Horizontal size class at the last tab metrics update. Used to calculate deltas.
-  UIUserInterfaceSizeClass _horizontalSizeClassAtLastTabFlowMetricsUpdate;
+  /// Horizontal size class at the last item metrics update. Used to calculate deltas.
+  UIUserInterfaceSizeClass _horizontalSizeClassAtLastMetricsUpdate;
 
   /// Current style properties.
   MDCItemBarStyle *_style;
 }
 
 + (CGFloat)defaultHeightForStyle:(nonnull MDCItemBarStyle *)style {
-  // Heights based on the spec: https://www.google.com/design/spec/components/tabs.html
   return style.defaultHeight;
 }
 
@@ -90,12 +89,12 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   _alignment = MDCItemBarAlignmentLeading;
   _style = [[MDCItemBarStyle alloc] init];
   _items = @[];
-  _horizontalSizeClassAtLastTabFlowMetricsUpdate = UIUserInterfaceSizeClassUnspecified;
+  _horizontalSizeClassAtLastMetricsUpdate = UIUserInterfaceSizeClassUnspecified;
 
   // Configure the collection view.
-  _tabFlowLayout = [self generatedTabFlowLayout];
+  _flowLayout = [self generatedFlowLayout];
   UICollectionView *collectionView =
-      [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:_tabFlowLayout];
+      [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:_flowLayout];
   collectionView.backgroundColor = [UIColor clearColor];
   collectionView.clipsToBounds = YES;
   collectionView.scrollsToTop = NO;
@@ -107,15 +106,15 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [collectionView registerClass:[MDCItemBarCell class] forCellWithReuseIdentifier:kMDCItemReuseID];
 
-  _tabCollectionView = collectionView;
-  [self addSubview:_tabCollectionView];
+  _collectionView = collectionView;
+  [self addSubview:_collectionView];
 
   // Configure the selection indicator view.
   _selectionIndicator =
       [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, kMDCSelectionIndicatorHeight)];
   _selectionIndicator.backgroundColor = [UIColor whiteColor];
   _selectionIndicator.opaque = YES;
-  [_tabCollectionView addSubview:_selectionIndicator];
+  [_collectionView addSubview:_selectionIndicator];
 
   // Set initial properties.
   [self updateAlignmentAnimated:NO];
@@ -128,7 +127,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   // Clear out item observations.
   [self stopObservingItems];
 
-  _tabCollectionView.delegate = nil;
+  _collectionView.delegate = nil;
 }
 
 #pragma mark - Public
@@ -158,7 +157,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
     [self reload];
 
-    // Reset selection to a valid tab.
+    // Reset selection to a valid item.
     if (![_items containsObject:_selectedItem]) {
       self.selectedItem = [_items firstObject];
     }
@@ -194,7 +193,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
     }
 
     _selectedItem = selectedItem;
-    [self selectTabAtIndex:itemIndex animated:animated];
+    [self selectItemAtIndex:itemIndex animated:animated];
   }
 }
 
@@ -203,12 +202,12 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 - (id)accessibilityElementForItem:(UITabBarItem *)item {
   NSUInteger index = [_items indexOfObject:item];
   if (index != NSNotFound) {
-    NSArray *visibleTabs = [_tabCollectionView indexPathsForVisibleItems];
-    NSIndexPath *indexPath = [self indexPathForTabAtIndex:index];
-    if ([visibleTabs containsObject:indexPath]) {
-      MDCItemBarCell *tabCell =
-          (MDCItemBarCell *)[_tabCollectionView cellForItemAtIndexPath:indexPath];
-      return tabCell;
+    NSArray<NSIndexPath *> *visibleItems = [_collectionView indexPathsForVisibleItems];
+    NSIndexPath *indexPath = [self indexPathForItemAtIndex:index];
+    if ([visibleItems containsObject:indexPath]) {
+      MDCItemBarCell *itemCell =
+          (MDCItemBarCell *)[_collectionView cellForItemAtIndexPath:indexPath];
+      return itemCell;
     }
   }
   return nil;
@@ -222,21 +221,21 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
                        context:(void *)context {
   if (context == kMDCItemBarItemPropertyContext) {
     // MDCItemBarItem change, must be on the main thread.
-    NSAssert([NSThread isMainThread], @"Tab bar items may only be updated on the main thread.");
+    NSAssert([NSThread isMainThread], @"Item bar items may only be updated on the main thread.");
     NSAssert([object isKindOfClass:[UITabBarItem class]], @"Change in unexpected object type");
 
     UITabBarItem *item = object;
-    NSInteger tabIndex = [_items indexOfObject:item];
-    NSAssert(tabIndex != NSNotFound, @"Inconsistency: Change in unowned tab bar item.");
+    NSInteger itemIndex = [_items indexOfObject:item];
+    NSAssert(itemIndex != NSNotFound, @"Inconsistency: Change in unowned item bar item.");
 
     // Update the cell for the given item if it's visible.
-    if (tabIndex != NSNotFound) {
-      NSIndexPath *indexPath = [self indexPathForTabAtIndex:tabIndex];
-      UICollectionViewCell *cell = [_tabCollectionView cellForItemAtIndexPath:indexPath];
+    if (itemIndex != NSNotFound) {
+      NSIndexPath *indexPath = [self indexPathForItemAtIndex:itemIndex];
+      UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
       if (cell) {
         NSAssert([cell isKindOfClass:[MDCItemBarCell class]], @"All cells must be MDCItemBarCell");
-        MDCItemBarCell *tabCell = (MDCItemBarCell *)cell;
-        [tabCell updateWithItem:item atIndex:tabIndex count:_items.count];
+        MDCItemBarCell *itemCell = (MDCItemBarCell *)cell;
+        [itemCell updateWithItem:item atIndex:itemIndex count:_items.count];
       }
     }
   } else {
@@ -251,15 +250,15 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
   const CGRect bounds = self.bounds;
 
-  _tabCollectionView.frame = bounds;
+  _collectionView.frame = bounds;
 
   // Update collection metrics if the size has changed.
   if (!CGSizeEqualToSize(bounds.size, _lastSize)) {
-    [self updateTabFlowLayoutMetrics];
+    [self updateFlowLayoutMetrics];
 
     if (_lastSelectedIndexPath) {
-      // Ensure selected tab is aligned properly on resize.
-      [self selectTabAtIndex:_lastSelectedIndexPath.item animated:NO];
+      // Ensure selected item is aligned properly on resize.
+      [self selectItemAtIndex:_lastSelectedIndexPath.item animated:NO];
     }
   }
   _lastSize = bounds.size;
@@ -278,14 +277,14 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   [super didMoveToWindow];
 
   // New window: Update for potentially updated size class.
-  [self updateTabFlowLayoutMetrics];
+  [self updateFlowLayoutMetrics];
 }
 
 - (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
   // Update metrics for potentially updated size class.
-  [self updateTabFlowLayoutMetrics];
+  [self updateFlowLayoutMetrics];
 }
 
 - (void)tintColorDidChange {
@@ -298,13 +297,13 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
     shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-  if (_tabCollectionView == collectionView) {
-    UITabBarItem *tabBarItem = [self tabBarItemAtIndexPath:indexPath];
+  if (_collectionView == collectionView) {
+    UITabBarItem *item = [self itemAtIndexPath:indexPath];
 
     // Notify delegate of impending selection.
     id<MDCItemBarDelegate> delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(itemBar:willSelectItem:)]) {
-      [delegate itemBar:self willSelectItem:tabBarItem];
+      [delegate itemBar:self willSelectItem:item];
     }
   }
   return YES;
@@ -312,20 +311,20 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-  if (_tabCollectionView == collectionView) {
+  if (_collectionView == collectionView) {
     // Update selected item.
-    UITabBarItem *tabBarItem = [self tabBarItemAtIndexPath:indexPath];
-    _selectedItem = tabBarItem;
+    UITabBarItem *item = [self itemAtIndexPath:indexPath];
+    _selectedItem = item;
 
     // Notify delegate of new selection.
     id<MDCItemBarDelegate> delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(itemBar:didSelectItem:)]) {
-      [delegate itemBar:self didSelectItem:tabBarItem];
+      [delegate itemBar:self didSelectItem:item];
     }
 
-    // Update UI to reflect newly selected tab.
-    [self didSelectTabAtIndexPath:indexPath animateTransition:YES];
-    [_tabCollectionView scrollToItemAtIndexPath:indexPath
+    // Update UI to reflect newly selected item.
+    [self didSelectItemAtIndexPath:indexPath animateTransition:YES];
+    [_collectionView scrollToItemAtIndexPath:indexPath
                                atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                        animated:YES];
   }
@@ -335,7 +334,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  if ((_tabCollectionView == collectionView) && section == 0) {
+  if ((_collectionView == collectionView) && section == 0) {
     return [_items count];
   }
   return 0;
@@ -343,16 +342,16 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSParameterAssert(_tabCollectionView == collectionView);
+  NSParameterAssert(_collectionView == collectionView);
 
-  MDCItemBarCell *tabCell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCItemReuseID
-                                                                      forIndexPath:indexPath];
-  UITabBarItem *tabBarItem = [self tabBarItemAtIndexPath:indexPath];
+  MDCItemBarCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCItemReuseID
+                                                                       forIndexPath:indexPath];
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
 
-  [self configureCell:tabCell];
-  [tabCell updateWithItem:tabBarItem atIndex:indexPath.item count:_items.count];
+  [self configureCell:itemCell];
+  [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
 
-  return tabCell;
+  return itemCell;
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -360,12 +359,12 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 - (CGSize)collectionView:(UICollectionView *)collectionView
                     layout:(UICollectionViewLayout *)collectionViewLayout
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSParameterAssert(_tabCollectionView == collectionView);
+  NSParameterAssert(_collectionView == collectionView);
 
-  UITabBarItem *item = [self tabBarItemAtIndexPath:indexPath];
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
 
-  const CGFloat tabHeight = CGRectGetHeight(self.bounds);
-  CGSize size = CGSizeMake(CGFLOAT_MAX, tabHeight);
+  const CGFloat itemHeight = CGRectGetHeight(self.bounds);
+  CGSize size = CGSizeMake(CGFLOAT_MAX, itemHeight);
 
   // Size cell to fit content.
   size = [MDCItemBarCell sizeThatFits:size
@@ -373,10 +372,10 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
                                  item:item
                                 style:_style];
 
-  // Divide justified tabs evenly across the view.
+  // Divide justified items evenly across the view.
   if (_alignment == MDCItemBarAlignmentJustified) {
-    NSInteger count = [self collectionView:_tabCollectionView numberOfItemsInSection:0];
-    size.width = _tabCollectionView.bounds.size.width / MAX(count, 1);
+    NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
+    size.width = _collectionView.bounds.size.width / MAX(count, 1);
   }
 
   // Constrain width if necessary.
@@ -385,28 +384,14 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   }
 
   // Force height to our height.
-  size.height = tabHeight;
+  size.height = itemHeight;
 
   return size;
 }
 
-#pragma mark - MDCItemBarCellDelegate
-
-- (NSInteger)tabIndexForTabViewCell:(MDCItemBarCell *)cell {
-  NSIndexPath *cellIndexPath = [_tabCollectionView indexPathForCell:cell];
-  if (cellIndexPath) {
-    return cellIndexPath.item;
-  }
-  return NSNotFound;
-}
-
-- (NSInteger)tabCountForTabViewCell:(MDCItemBarCell *)cell {
-  return _items.count;
-}
-
 #pragma mark - Private
 
-+ (NSArray *)observableTabBarKeys {
++ (NSArray *)observableItemKeys {
   static dispatch_once_t onceToken;
   static NSArray *s_keys = nil;
   dispatch_once(&onceToken, ^{
@@ -423,7 +408,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   NSAssert([NSThread isMainThread], @"Main thread required for KVO registration");
 
   for (UITabBarItem *item in _items) {
-    for (NSString *key in [[self class] observableTabBarKeys]) {
+    for (NSString *key in [[self class] observableItemKeys]) {
       [item addObserver:self forKeyPath:key options:0 context:kMDCItemBarItemPropertyContext];
     }
   }
@@ -433,7 +418,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   NSAssert([NSThread isMainThread], @"Main thread required for KVO unregistration");
 
   for (UITabBarItem *item in _items) {
-    for (NSString *key in [[self class] observableTabBarKeys]) {
+    for (NSString *key in [[self class] observableItemKeys]) {
       [item removeObserver:self forKeyPath:key context:kMDCItemBarItemPropertyContext];
     }
   }
@@ -450,33 +435,33 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   return isPad ? UIUserInterfaceSizeClassRegular : UIUserInterfaceSizeClassCompact;
 }
 
-- (void)selectTabAtIndex:(NSInteger)index animated:(BOOL)animated {
+- (void)selectItemAtIndex:(NSInteger)index animated:(BOOL)animated {
   NSParameterAssert(index >= 0 && index < (NSInteger)[_items count]);
 
-  NSIndexPath *indexPath = [self indexPathForTabAtIndex:index];
-  [_tabCollectionView selectItemAtIndexPath:indexPath
+  NSIndexPath *indexPath = [self indexPathForItemAtIndex:index];
+  [_collectionView selectItemAtIndexPath:indexPath
                                    animated:animated
                              scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
-  [self didSelectTabAtIndexPath:indexPath animateTransition:animated];
+  [self didSelectItemAtIndexPath:indexPath animateTransition:animated];
 }
 
-- (UITabBarItem *)tabBarItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UITabBarItem *)itemAtIndexPath:(NSIndexPath *)indexPath {
   return _items[indexPath.item];
 }
 
-- (NSIndexPath *)indexPathForTabAtIndex:(NSInteger)index {
+- (NSIndexPath *)indexPathForItemAtIndex:(NSInteger)index {
   return [NSIndexPath indexPathForItem:index inSection:0];
 }
 
 - (void)reload {
-  [_tabCollectionView reloadData];
-  [self updateTabFlowLayoutMetrics];
+  [_collectionView reloadData];
+  [self updateFlowLayoutMetrics];
 }
 
-- (UICollectionViewFlowLayout *)generatedTabFlowLayout {
+- (UICollectionViewFlowLayout *)generatedFlowLayout {
   UICollectionViewFlowLayout *flowLayout = [[MDCItemBarFlowLayout alloc] init];
-  CGFloat tabHeight = CGRectGetHeight(self.bounds);
-  flowLayout.itemSize = CGSizeMake(kMDCItemBarPlaceholderCellWidth, tabHeight);
+  CGFloat itemHeight = CGRectGetHeight(self.bounds);
+  flowLayout.itemSize = CGSizeMake(kMDCItemBarPlaceholderCellWidth, itemHeight);
   flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
   flowLayout.sectionInset = UIEdgeInsetsZero;
   flowLayout.minimumInteritemSpacing = 0.0f;
@@ -484,7 +469,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   return flowLayout;
 }
 
-- (void)didSelectTabAtIndexPath:(NSIndexPath *)indexPath animateTransition:(BOOL)animate {
+- (void)didSelectItemAtIndexPath:(NSIndexPath *)indexPath animateTransition:(BOOL)animate {
   void (^animationBlock)(void) = ^{
     [self updateSelectionIndicatorToIndexPath:indexPath];
   };
@@ -507,10 +492,10 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
 - (void)updateAlignmentAnimated:(BOOL)animated {
   [self updateScrollProperties];
-  [self updateTabFlowLayoutMetricsAnimated:animated];
+  [self updateFlowLayoutMetricsAnimated:animated];
 }
 
-/// Sets _selectionIndicator's bounds and center to display under the tab at the given index path
+/// Sets _selectionIndicator's bounds and center to display under the item at the given index path
 /// with no animation. May be called from an animation block to animate the transition.
 - (void)updateSelectionIndicatorToIndexPath:(NSIndexPath *)indexPath {
   if (!indexPath) {
@@ -519,24 +504,24 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
   // Use layout attributes as the cell may not be visible or loaded yet.
   UICollectionViewLayoutAttributes *attributes =
-      [_tabFlowLayout layoutAttributesForItemAtIndexPath:indexPath];
+      [_flowLayout layoutAttributesForItemAtIndexPath:indexPath];
 
-  // Size selection indicator to a fixed height, equal in width to the selected tab's cell.
+  // Size selection indicator to a fixed height, equal in width to the selected item's cell.
   CGRect selectionIndicatorBounds = attributes.bounds;
   selectionIndicatorBounds.size.height = kMDCSelectionIndicatorHeight;
 
-  // Center selection indicator under tab cell.
+  // Center selection indicator under cell.
   CGPoint selectionIndicatorCenter = attributes.center;
   selectionIndicatorCenter.y =
-      CGRectGetMaxY(_tabCollectionView.bounds) - (kMDCSelectionIndicatorHeight / 2.0f);
+      CGRectGetMaxY(_collectionView.bounds) - (kMDCSelectionIndicatorHeight / 2.0f);
 
   _selectionIndicator.bounds = selectionIndicatorBounds;
   _selectionIndicator.center = selectionIndicatorCenter;
 }
 
-- (void)updateTabFlowLayoutMetricsAnimated:(BOOL)animate {
+- (void)updateFlowLayoutMetricsAnimated:(BOOL)animate {
   void (^animationBlock)() = ^{
-    [self updateTabFlowLayoutMetrics];
+    [self updateFlowLayoutMetrics];
   };
 
   if (animate) {
@@ -554,10 +539,10 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 }
 
 - (void)updateScrollProperties {
-  _tabCollectionView.alwaysBounceHorizontal = (_alignment != MDCItemBarAlignmentJustified);
+  _collectionView.alwaysBounceHorizontal = (_alignment != MDCItemBarAlignmentJustified);
 }
 
-- (void)updateTabFlowLayoutMetrics {
+- (void)updateFlowLayoutMetrics {
   // Layout metrics cannot be updated while offscreen.
   if (!self.window) {
     return;
@@ -568,23 +553,23 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   UIEdgeInsets newSectionInset = UIEdgeInsetsZero;
   switch (_alignment) {
     case MDCItemBarAlignmentLeading:
-      newSectionInset = [self leadingAlignedTabInsetsForHorizontalSizeClass:horizontalSizeClass];
+      newSectionInset = [self leadingAlignedInsetsForHorizontalSizeClass:horizontalSizeClass];
       break;
     case MDCItemBarAlignmentJustified:
-      newSectionInset = [self justifiedTabInsets];
+      newSectionInset = [self justifiedInsets];
       break;
     case MDCItemBarAlignmentCenter:
-      newSectionInset = [self centeredTabInsetsForHorizontalSizeClass:horizontalSizeClass];
+      newSectionInset = [self centeredInsetsForHorizontalSizeClass:horizontalSizeClass];
       break;
     case MDCItemBarAlignmentCenterSelected:
-      newSectionInset = [self centerSelectedTabInsets];
+      newSectionInset = [self centerSelectedInsets];
       break;
   }
 
-  UIEdgeInsets oldSectionInset = _tabFlowLayout.sectionInset;
+  UIEdgeInsets oldSectionInset = _flowLayout.sectionInset;
   if (UIEdgeInsetsEqualToEdgeInsets(oldSectionInset, newSectionInset) &&
       _alignment != MDCItemBarAlignmentJustified) {
-    // No change - can bail early, except when the tab alignment is "justified". When justified,
+    // No change - can bail early, except when the item alignment is "justified". When justified,
     // the layout metrics need updating due to change in view size or orientation.
     return;
   }
@@ -592,61 +577,61 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   // Rather than just updating the sectionInset on the existing flowLayout, a new layout object
   // is created. This gives more control over whether the change is animated or not - as there is
   // no control when updating flow layout sectionInset (it's always animated).
-  UICollectionViewFlowLayout *flowLayout = [self generatedTabFlowLayout];
+  UICollectionViewFlowLayout *flowLayout = [self generatedFlowLayout];
   flowLayout.sectionInset = newSectionInset;
-  _tabFlowLayout = flowLayout;
+  _flowLayout = flowLayout;
 
-  // This is not animated because -updateTabFlowLayoutMetrics may be called in an animation block
-  // and the change will be still get animated anyway - using NO avoids 'double' animation and
-  // allows this method to be used without animation.
-  NSAssert(_tabCollectionView.window, @"Collection view must be in a window to update layout");
-  [_tabCollectionView setCollectionViewLayout:_tabFlowLayout animated:NO];
+  // This is not animated because -updateFlowLayoutMetrics may be called in an animation block and
+  // the change will be still get animated anyway - using NO avoids 'double' animation and allows
+  // this method to be used without animation.
+  NSAssert(_collectionView.window, @"Collection view must be in a window to update layout");
+  [_collectionView setCollectionViewLayout:_flowLayout animated:NO];
 
   // Update selection indicator to potentially new location and size
   // Not animated for the same reason as mentioned above.
   [self updateSelectionIndicatorToIndexPath:_lastSelectedIndexPath];
 
-  _horizontalSizeClassAtLastTabFlowMetricsUpdate = horizontalSizeClass;
+  _horizontalSizeClassAtLastMetricsUpdate = horizontalSizeClass;
 }
 
-- (UIEdgeInsets)leadingAlignedTabInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
+- (UIEdgeInsets)leadingAlignedInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
   const BOOL isRegular = (sizeClass == UIUserInterfaceSizeClassRegular);
   const CGFloat inset = isRegular ? kMDCItemBarRegularInset : kMDCItemBarCompactInset;
   return UIEdgeInsetsMake(0.0f, inset, 0.0f, inset);
 }
 
-- (UIEdgeInsets)justifiedTabInsets {
-  // Center tabs, which will be at most the width of the view.
-  CGFloat tabWidths = [self totalWidthOfAllTabs];
-  CGFloat sideInsets = floorf((float)(_tabCollectionView.bounds.size.width - tabWidths) / 2.0f);
+- (UIEdgeInsets)justifiedInsets {
+  // Center items, which will be at most the width of the view.
+  CGFloat itemWidths = [self totalWidthOfAllItems];
+  CGFloat sideInsets = floorf((float)(_collectionView.bounds.size.width - itemWidths) / 2.0f);
   return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
 }
 
-- (UIEdgeInsets)centeredTabInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
-  CGFloat tabWidths = [self totalWidthOfAllTabs];
-  CGFloat viewWidth = _tabCollectionView.bounds.size.width;
-  UIEdgeInsets insets = [self leadingAlignedTabInsetsForHorizontalSizeClass:sizeClass];
-  if (tabWidths <= (viewWidth - insets.left - insets.right)) {
-    CGFloat sideInsets = (_tabCollectionView.bounds.size.width - tabWidths) / 2.0f;
+- (UIEdgeInsets)centeredInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
+  CGFloat itemWidths = [self totalWidthOfAllItems];
+  CGFloat viewWidth = _collectionView.bounds.size.width;
+  UIEdgeInsets insets = [self leadingAlignedInsetsForHorizontalSizeClass:sizeClass];
+  if (itemWidths <= (viewWidth - insets.left - insets.right)) {
+    CGFloat sideInsets = (_collectionView.bounds.size.width - itemWidths) / 2.0f;
     return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
   }
   return insets;
 }
 
-- (UIEdgeInsets)centerSelectedTabInsets {
+- (UIEdgeInsets)centerSelectedInsets {
   UIEdgeInsets sectionInset = UIEdgeInsetsZero;
 
-  NSInteger count = [self collectionView:_tabCollectionView numberOfItemsInSection:0];
+  NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
   if (count > 0) {
-    CGRect bounds = _tabCollectionView.bounds;
+    CGRect bounds = _collectionView.bounds;
     CGFloat halfBoundsWidth = bounds.size.width / 2.0f;
 
-    CGSize firstSize = [self collectionView:_tabCollectionView
-                                     layout:_tabFlowLayout
-                     sizeForItemAtIndexPath:[self indexPathForTabAtIndex:0]];
-    CGSize lastSize = [self collectionView:_tabCollectionView
-                                    layout:_tabFlowLayout
-                    sizeForItemAtIndexPath:[self indexPathForTabAtIndex:count - 1]];
+    CGSize firstSize = [self collectionView:_collectionView
+                                     layout:_flowLayout
+                     sizeForItemAtIndexPath:[self indexPathForItemAtIndex:0]];
+    CGSize lastSize = [self collectionView:_collectionView
+                                    layout:_flowLayout
+                    sizeForItemAtIndexPath:[self indexPathForItemAtIndex:count - 1]];
 
     // Left inset is equal to the space to the left of the first item when centered.
     CGFloat halfFirstWidth = firstSize.width / 2.0f;
@@ -659,28 +644,28 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   return sectionInset;
 }
 
-- (CGFloat)totalWidthOfAllTabs {
-  CGFloat tabWidths = 0;
-  NSInteger count = [self collectionView:_tabCollectionView numberOfItemsInSection:0];
+- (CGFloat)totalWidthOfAllItems {
+  CGFloat itemWidths = 0;
+  NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
   for (NSInteger itemIndex = 0; itemIndex < count; itemIndex++) {
-    CGSize tabSize = [self collectionView:_tabCollectionView
-                                   layout:_tabFlowLayout
-                   sizeForItemAtIndexPath:[self indexPathForTabAtIndex:itemIndex]];
-    tabWidths += tabSize.width;
+    CGSize itemSize = [self collectionView:_collectionView
+                                    layout:_flowLayout
+                    sizeForItemAtIndexPath:[self indexPathForItemAtIndex:itemIndex]];
+    itemWidths += itemSize.width;
   }
-  return tabWidths;
+  return itemWidths;
 }
 
-- (void)configureCell:(MDCItemBarCell *)tabCell {
+- (void)configureCell:(MDCItemBarCell *)cell {
   // Configure content style
-  [tabCell applyStyle:_style];
+  [cell applyStyle:_style];
 }
 
 - (void)configureVisibleCells {
-  for (UICollectionViewCell *cell in _tabCollectionView.visibleCells) {
+  for (UICollectionViewCell *cell in _collectionView.visibleCells) {
     if ([cell isKindOfClass:[MDCItemBarCell class]]) {
-      MDCItemBarCell *tabCell = (MDCItemBarCell *)cell;
-      [self configureCell:tabCell];
+      MDCItemBarCell *itemCell = (MDCItemBarCell *)cell;
+      [self configureCell:itemCell];
     }
   }
 }
@@ -839,8 +824,8 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 /// layout ordering from superclass-generated layout frames. When there's no error (item frames are
 /// already arranged RTL), this returns NO. We use this approach for two purposes:
 /// * Robustly detecting the error condition. The bug occurs under specific conditions that would be
-///   difficult to detect reliably, and given tab bars are simple linear layouts it's more robust to
-///   detect the error and correct it.
+///   difficult to detect reliably, and given item bars are simple linear layouts it's more robust
+///   to detect the error and correct it.
 /// * Automatically disabling this workaround if the underlying bug is fixed in an unknown future OS
 ///   version. At time of writing (iOS 9.2) the bug has not been fixed. Detecting the error directly
 ///   and correcting it should allow this implementation to continue to produce correct results

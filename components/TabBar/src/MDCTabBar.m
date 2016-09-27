@@ -5,10 +5,21 @@
 #import "MaterialTypography.h"
 
 /// Padding between image and title in points, according to the spec.
-static const CGFloat kMDCTabBarItemImageTitleSpecPadding = 10;
+static const CGFloat kImageTitleSpecPadding = 10;
 
 /// Adjustment added to spec measurements to compensate for internal paddings.
-static const CGFloat kMDCTabBarItemImageTitlePaddingAdjustment = -3;
+static const CGFloat kImageTitlePaddingAdjustment = -3;
+
+// Heights based on the spec: https://www.google.com/design/spec/components/tabs.html
+
+/// Height for image-only tab bars, in points.
+static const CGFloat kImageOnlyBarHeight = 48;
+
+/// Height for image-only tab bars, in points.
+static const CGFloat kTitleOnlyBarHeight = 48;
+
+/// Height for image-and-title tab bars, in points.
+static const CGFloat kTitledImageBarHeight = 72;
 
 static MDCTabBarAlignment MDCTabBarAlignmentForItemBarAlignment(MDCItemBarAlignment alignment) {
   switch (alignment) {
@@ -214,24 +225,25 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.titleFont = [MDCTypography buttonFont];
   style.inkStyle = MDCInkStyleBounded;
   style.titleImagePadding =
-      (kMDCTabBarItemImageTitleSpecPadding + kMDCTabBarItemImageTitlePaddingAdjustment);
+      (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
+
   switch (appearance) {
     case MDCTabBarItemAppearanceImages:
       style.shouldDisplayImage = YES;
       style.shouldDisplayTitle = NO;
-      style.defaultHeight = 48;
+      style.defaultHeight = kImageOnlyBarHeight;
       break;
 
     case MDCTabBarItemAppearanceTitles:
       style.shouldDisplayImage = NO;
       style.shouldDisplayTitle = YES;
-      style.defaultHeight = 48;
+      style.defaultHeight = kTitleOnlyBarHeight;
       break;
 
     case MDCTabBarItemAppearanceTitledImages:
       style.shouldDisplayImage = YES;
       style.shouldDisplayTitle = YES;
-      style.defaultHeight = 72;
+      style.defaultHeight = kTitledImageBarHeight;
       break;
   }
 
