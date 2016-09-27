@@ -47,7 +47,6 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   MDCInkTouchController *_inkController;
   BOOL _didChangeValueDuringPan;
   BOOL _isTouching;
-  BOOL _lastDispatchedState;
   CGFloat _thumbTrackPanValue;
   CGFloat _panThumbGrabPosition;
 }
@@ -230,6 +229,10 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 }
 
 - (void)setOn:(BOOL)on animated:(BOOL)animated {
+  [self setOn:on animated:animated userGenerated:NO];
+}
+
+- (void)setOn:(BOOL)on animated:(BOOL)animated userGenerated:(BOOL)userGenerated {
   _on = on;
   _thumbTrackPanValue = _on ? 1.0 : 0.0;
 
@@ -255,7 +258,10 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
     updateBlock();
   }
 
-  [self sendDiscreteChangeAction];
+  if (userGenerated) {
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+  }
+
   [self updateAccessibilityValues];
 }
 
@@ -348,13 +354,6 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   return MDCSwitchIntrinsicSize.width - 2 * kSwitchThumbRadius;
 }
 
-- (void)sendDiscreteChangeAction {
-  if (_lastDispatchedState != _on) {
-    _lastDispatchedState = _on;
-    [self sendActionsForControlEvents:UIControlEventValueChanged];
-  }
-}
-
 #pragma mark - UIResponder Events
 
 /*
@@ -381,7 +380,6 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
  */
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  NSLog(@"touchesBegan: %@", touches);
   if (!self.enabled || _isTouching) {
     return;
   }
@@ -393,7 +391,6 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  NSLog(@"touchesMoved: %@", touches);
   if (!self.enabled || !_isTouching) {
     return;
   }
@@ -411,12 +408,11 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
   BOOL state = [self stateForPanValue:_thumbTrackPanValue];
   if (state != _on) {
-    [self setOn:state animated:YES];
+    [self setOn:state animated:YES userGenerated:YES];
   }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  NSLog(@"touchesCancelled: %@", touches);
   _isTouching = NO;
 }
 
@@ -432,7 +428,7 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   if ([self pointInside:touchLoc withEvent:nil]) {
     if (!_didChangeValueDuringPan) {
       // Treat it like a tap
-      [self setOn:!self.on animated:YES];
+      [self setOn:!self.on animated:YES userGenerated:YES];
     }
   }
 }
