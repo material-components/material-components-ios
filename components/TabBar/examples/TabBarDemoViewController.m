@@ -17,7 +17,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The Tab Bar is TBD TBD.";
+  return @"The tab bar is a component for switching between views of grouped content.";
 }
 
 @end
