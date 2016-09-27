@@ -1,12 +1,15 @@
 #import "MDCItemBarStyle.h"
 
-/** Describes the visual style of individual items in an item bar. */
 @implementation MDCItemBarStyle
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    
+    _titleColor = [UIColor whiteColor];
+    _inkColor = [UIColor colorWithWhite:1.0 alpha:0.25];
+    _displaysUppercaseTitles = YES;
+    _shouldDisplayTitle = YES;
+    _shouldDisplaySelectionIndicator = YES;
   }
   return self;
 }
@@ -34,4 +37,3 @@
 }
 
 @end
-

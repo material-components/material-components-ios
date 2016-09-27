@@ -55,10 +55,9 @@
   [_alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
   [_alignmentButton sizeToFit];
   _alignmentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), 100);
-  _alignmentButton.autoresizingMask =
-      UIViewAutoresizingFlexibleLeftMargin |
-      UIViewAutoresizingFlexibleBottomMargin |
-      UIViewAutoresizingFlexibleRightMargin;
+  _alignmentButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
+                                      UIViewAutoresizingFlexibleBottomMargin |
+                                      UIViewAutoresizingFlexibleRightMargin;
   [_alignmentButton addTarget:self
                        action:@selector(changeAlignment:)
              forControlEvents:UIControlEventTouchUpInside];
@@ -74,7 +73,7 @@
 
 - (void)incrementBadges:(id)sender {
   // Increment all numeric badge values to show cells updating when their item's properties are set.
-  for (MDCTabBar *tabBar in @[_longTabBar, _shortTabBar]) {
+  for (MDCTabBar *tabBar in @[ _longTabBar, _shortTabBar ]) {
     for (UITabBarItem *item in tabBar.items) {
       NSString *badgeValue = item.badgeValue;
       if (badgeValue) {
@@ -101,11 +100,11 @@
   UIImage *starImage =
       [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
   _shortTabBar =
-      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds)-20.0f, 0)];
+      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
   _shortTabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 150);
   _shortTabBar.items = @[
-      [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
-      [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:1]
+    [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:1]
   ];
 
   // Give the last item a badge
@@ -125,14 +124,14 @@
 
   // Long tab bar with lots of items of varying length. Also demonstrates configurable accent color.
   _longTabBar =
-      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds)-20.0f, 0)];
+      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
   _longTabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 250);
   _longTabBar.items = @[
-      [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
-      [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
-      [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
-      [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
-      [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
   ];
 
   // Make entire tab bar non-uppercased
@@ -152,31 +151,31 @@
 }
 
 - (void)changeAlignment:(id)sender {
-  UIAlertController *alignmentSheet =
+  UIAlertController *sheet =
       [UIAlertController alertControllerWithTitle:nil
                                           message:nil
                                    preferredStyle:UIAlertControllerStyleActionSheet];
-  [alignmentSheet addAction:[UIAlertAction actionWithTitle:@"Leading"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                     [self setAlignment:MDCTabBarAlignmentLeading];
-                                                   }]];
-  [alignmentSheet addAction:[UIAlertAction actionWithTitle:@"Center"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                     [self setAlignment:MDCTabBarAlignmentCenter];
-                                                   }]];
-  [alignmentSheet addAction:[UIAlertAction actionWithTitle:@"Justified"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                     [self setAlignment:MDCTabBarAlignmentJustified];
-                                                   }]];
-  [alignmentSheet addAction:[UIAlertAction actionWithTitle:@"Selected Center"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                     [self setAlignment:MDCTabBarAlignmentCenterSelected];
-                                                   }]];
-  [self presentViewController:alignmentSheet animated:YES completion:nil];
+  [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
+                                            style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction *_Nonnull action) {
+                                            [self setAlignment:MDCTabBarAlignmentLeading];
+                                          }]];
+  [sheet addAction:[UIAlertAction actionWithTitle:@"Center"
+                                            style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction *_Nonnull action) {
+                                            [self setAlignment:MDCTabBarAlignmentCenter];
+                                          }]];
+  [sheet addAction:[UIAlertAction actionWithTitle:@"Justified"
+                                            style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction *_Nonnull action) {
+                                            [self setAlignment:MDCTabBarAlignmentJustified];
+                                          }]];
+  [sheet addAction:[UIAlertAction actionWithTitle:@"Selected Center"
+                                            style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction *_Nonnull action) {
+                                            [self setAlignment:MDCTabBarAlignmentCenterSelected];
+                                          }]];
+  [self presentViewController:sheet animated:YES completion:nil];
 }
 
 - (void)setAlignment:(MDCTabBarAlignment)alignment {

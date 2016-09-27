@@ -8,12 +8,12 @@
 
 /**
  A material tab bar for switching between views of grouped content.
- 
+
  Clients are responsible for responding to changes to the selected tab and updating the selected
  tab as necessary.
- 
+
  Note: This class is not intended to be subclassed.
- 
+
  @see https://www.google.com/design/spec/components/tabs.html
  */
 IB_DESIGNABLE

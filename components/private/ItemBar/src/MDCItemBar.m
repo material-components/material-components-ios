@@ -41,7 +41,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
 #pragma mark -
 
-@interface MDCItemBar ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface MDCItemBar () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @end
 
 @implementation MDCItemBar {
@@ -345,8 +345,8 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSParameterAssert(_tabCollectionView == collectionView);
 
-  MDCItemBarCell *tabCell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kMDCItemReuseID forIndexPath:indexPath];
+  MDCItemBarCell *tabCell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCItemReuseID
+                                                                      forIndexPath:indexPath];
   UITabBarItem *tabBarItem = [self tabBarItemAtIndexPath:indexPath];
 
   [self configureCell:tabCell];
@@ -410,10 +410,11 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   static dispatch_once_t onceToken;
   static NSArray *s_keys = nil;
   dispatch_once(&onceToken, ^{
-    s_keys = @[NSStringFromSelector(@selector(title)),
-               NSStringFromSelector(@selector(image)),
-               NSStringFromSelector(@selector(badgeValue)),
-               NSStringFromSelector(@selector(accessibilityIdentifier))];
+    s_keys = @[
+      NSStringFromSelector(@selector(title)), NSStringFromSelector(@selector(image)),
+      NSStringFromSelector(@selector(badgeValue)),
+      NSStringFromSelector(@selector(accessibilityIdentifier))
+    ];
   });
   return s_keys;
 }
@@ -760,7 +761,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 }
 
 - (nullable UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:
-    (NSIndexPath *)indexPath {
+        (NSIndexPath *)indexPath {
   if (_correctedAttributesForIndexPath) {
     return _correctedAttributesForIndexPath[indexPath];
   }
@@ -773,7 +774,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   if (_correctedAttributesForIndexPath) {
     NSPredicate *predicate =
         [NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes *layoutAttributes,
-                                              NSDictionary * __nullable bindings) {
+                                              NSDictionary *__nullable bindings) {
           return CGRectIntersectsRect(layoutAttributes.frame, rect);
         }];
     return [_correctedAttributesForIndexPath.allValues filteredArrayUsingPredicate:predicate];
@@ -802,15 +803,14 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 
 /// Computes RTL-flipped attributes given superclass-calculated attributes.
 - (UICollectionViewLayoutAttributes *)flippedAttributesFromAttributes:
-    (UICollectionViewLayoutAttributes *)attributes {
+        (UICollectionViewLayoutAttributes *)attributes {
   UICollectionViewLayoutAttributes *newAttributes = [attributes copy];
 
   CGRect itemFrame = attributes.frame;
 
   // Must call super here to ensure we have the original collection bounds.
   CGRect collectionBounds = {CGPointZero, [super collectionViewContentSize]};
-  newAttributes.frame = MDCRectFlippedForRTL(itemFrame,
-                                             CGRectGetWidth(collectionBounds),
+  newAttributes.frame = MDCRectFlippedForRTL(itemFrame, CGRectGetWidth(collectionBounds),
                                              UIUserInterfaceLayoutDirectionRightToLeft);
 
   return newAttributes;
@@ -825,7 +825,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
   if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
       [processInfo isOperatingSystemAtLeastVersion:iOS9Version]) {
     if (self.collectionView.mdc_effectiveUserInterfaceLayoutDirection ==
-            UIUserInterfaceLayoutDirectionRightToLeft) {
+        UIUserInterfaceLayoutDirectionRightToLeft) {
       enforceRTL = YES;
     }
   }
@@ -901,7 +901,7 @@ static void *kMDCItemBarItemPropertyContext = &kMDCItemBarItemPropertyContext;
 }
 
 - (UICollectionViewLayoutAttributes *)paddedAttributesFromAttributes:
-    (UICollectionViewLayoutAttributes *)attributes {
+        (UICollectionViewLayoutAttributes *)attributes {
   // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
   CGRect scrollBounds = self.collectionView.bounds;

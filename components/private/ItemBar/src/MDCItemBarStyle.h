@@ -58,4 +58,3 @@
 @property(nonatomic) BOOL displaysUppercaseTitles;
 
 @end
-

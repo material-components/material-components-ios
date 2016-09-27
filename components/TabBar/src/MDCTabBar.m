@@ -1,7 +1,7 @@
 #import "MDCTabBar.h"
 
-#import "MaterialItemBar.h"
 #import "MaterialInk.h"
+#import "MaterialItemBar.h"
 #import "MaterialTypography.h"
 
 /// Padding between image and title in points, according to the spec.
@@ -42,7 +42,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
-@interface MDCTabBar ()<MDCItemBarDelegate>
+@interface MDCTabBar () <MDCItemBarDelegate>
 @end
 
 @implementation MDCTabBar {
