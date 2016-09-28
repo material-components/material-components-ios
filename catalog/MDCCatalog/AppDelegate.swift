@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import CatalogByConvention
-import UIKit
 import MaterialComponents
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
