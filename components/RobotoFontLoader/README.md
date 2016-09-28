@@ -118,3 +118,18 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
 For more information see
 [Typography](https://github.com/google/material-components-ios/tree/develop/components/Typography).
+
+### The font bundle
+If you are not using `RobotoFontLoader` it is recommended that you not depend on it in your App's
+podspec. We make this recommendation because the subspec comes with a 1.1mb bundle holding the
+fonts. This means you should not depend on the entire Material Components for iOS spec and you
+should just pull in the components, the subspecs, that you use.
+
+The easiest way to determine if you are depending on RobotoFontLoader is by checking if your
+Podfile.lock has:
+
+~~~ bash
+MaterialComponents/RobotoFontLoader
+~~~
+
+If it does, one of your specs depends on RobotoFontLoader and its fonts will be added to your App.
