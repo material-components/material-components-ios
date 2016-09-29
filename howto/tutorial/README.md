@@ -132,7 +132,7 @@ class ViewController: MDCCollectionViewController {
 Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
     
 <!--{% if site.link_to_site == "true" %}-->
-[![In the storyboard, replacing the default view controller](docs/assets/Xcode-Storyboard-Replace-Controller.jpg)](docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
+[![In the storyboard, replacing the default view controller](docs/assets/Xcode-Storyboard-Replace-Controller.jpg)](https://material-ext.appspot.com/mdc-ios-preview/howto/docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
 <!--{% else %}<div class="ios-animation large" markdown="1">
  <video src="docs/assets/Xcode-Storyboard-Replace-Controller.m4v" autoplay loop></video>
  </div>{% endif %}-->
