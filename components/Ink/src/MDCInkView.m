@@ -66,6 +66,9 @@
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
+  if (inkColor == nil) {
+    return;
+  }
   self.inkLayer.inkColor = inkColor;
 }
 

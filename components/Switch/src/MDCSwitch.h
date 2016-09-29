@@ -29,7 +29,7 @@ CG_EXTERN CGSize MDCSwitchSizeThatFits(CGSize size);
  */
 NS_CLASS_AVAILABLE_IOS(7_0)
 IB_DESIGNABLE
-@interface MDCSwitch : UIControl <NSCoding>
+@interface MDCSwitch : UIControl <NSSecureCoding>
 
 // TODO(iangordon): Unify our Color handling over all of our components
 /** The color of the thumb and track in the on position. */

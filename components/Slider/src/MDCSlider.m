@@ -37,6 +37,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
+@interface MDCSlider () <MDCThumbTrackDelegate>
+
+@end
+
 @implementation MDCSlider
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -293,6 +297,12 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+  return YES;
 }
 
 #pragma mark - Private
