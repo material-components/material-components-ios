@@ -330,13 +330,16 @@ Use our examples and catalog apps to try out other components and other ways to 
 
 *   [Shrine: A demo shopping app, incorporating a flexible header, custom typography, and collections.](https://github.com/google/material-components-ios/tree/master/demos/Shrine)
 
-<div class="ios-animation right" markdown="1">
+<!--{% if site.link_to_site == "true" %}-->
+<img src="docs/assets/Pesto.gif">
+<img src="docs/assets/Shrine.gif">
+<!--{% else %}<div class="ios-animation right" markdown="1">
 <img src="docs/assets/Shrine.gif">
 </div>
 
 <div class="ios-animation left" markdown="1">
 <img src="docs/assets/Pesto.gif">
-</div>
+</div> {% endif %}-->
 
 ---
 
