@@ -133,7 +133,7 @@ Open `Main.storyboard` and delete the default view controller that came with it.
     
 <div class="ios-animation large" markdown="1">
 <video src="docs/assets/Xcode-Storyboard-Replace-Controller.m4v" autoplay loop></video>
-[![In the storyboard, replacing the default view controller]()](docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
+[![In the storyboard, replacing the default view controller](docs/assets/Xcode-Storyboard-Replace-Controller.jpg)](docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
 </div>
 
 Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
@@ -142,7 +142,7 @@ then set its reuse identifier to `cell`:
 
 <div class="ios-animation large" markdown="1">
 <video src="docs/assets/Xcode-Storyboard-Define-Cell.m4v" autoplay loop></video>
-[![In the storyboard, changing the cell class and identifier]()](docs/assets/Xcode-Storyboard-Define-Cell.m4v)
+[![In the storyboard, changing the cell class and identifier](docs/assets/Xcode-Storyboard-Define-Cell.jpg)](docs/assets/Xcode-Storyboard-Define-Cell.m4v)
 </div>
 
 
