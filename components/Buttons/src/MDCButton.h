@@ -61,7 +61,7 @@
 
 /*
  Maximum radius of the button's ink. If the radius <= 0 then half the length of the diagonal of
- self.bounds is used.
+ self.bounds is used. This value is ignored is button's @c inkStyle is set to |MDCInkStyleBounded|.
  */
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius;
 

@@ -364,7 +364,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [super layoutSublayers];
   _compositeRipple.frame = self.frame;
   CGFloat radius = MDCInkLayerRectHypotenuse(self.bounds) / 2.f;
-  if (_maxRippleRadius > 0) {
+  if (_maxRippleRadius > 0 && !_bounded) {
     radius = _maxRippleRadius;
   }
   CGRect rippleFrame =
@@ -400,7 +400,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 
   CGFloat radius = MDCInkLayerRectHypotenuse(self.bounds) / 2.f;
-  if (_maxRippleRadius > 0) {
+  if (_maxRippleRadius > 0 && !_bounded) {
     radius = _maxRippleRadius;
   }
 
