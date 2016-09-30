@@ -14,7 +14,24 @@
  limitations under the License.
  */
 
-#import "MDCAlertController.h"
-#import "MDCDialogPresentationController.h"
-#import "MDCDialogTransitionController.h"
-#import "UIViewController+MaterialDialogs.h"
+#import <UIKit/UIKit.h>
+
+#if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
+#error "This component only supports iOS 8.0 and above."
+#endif
+
+@class MDCDialogPresentationController;
+
+/**
+ Material Dialog UIViewController Category
+ */
+@interface UIViewController (MaterialDialogs)
+
+/**
+ The material dialog presentation controller that is managing the current view controller.
+
+ @return nil if the view controller is not managed by a material dialog presentaiton controller.
+ */
+@property(nonatomic, readonly) MDCDialogPresentationController *mdc_dialogPresentationController;
+
+@end

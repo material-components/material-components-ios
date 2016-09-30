@@ -43,6 +43,21 @@
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
+- (IBAction)didTapModalProgrammatic:(id)sender {
+  UIViewController *viewController =
+      [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
+  viewController.modalPresentationStyle = UIModalPresentationCustom;
+  viewController.transitioningDelegate = self.transitionController;
+
+  [self presentViewController:viewController animated:YES completion:NULL];
+
+  MDCDialogPresentationController *presentationController =
+      viewController.mdc_dialogPresentationController;
+  if (presentationController) {
+    presentationController.dismissOnBackgroundTap = NO;
+  }
+}
+
 - (IBAction)didTapStoryboard:(id)sender {
   // If you are using this code outside of the MDCCatalog in your own app, your bundle may be nil.
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];

@@ -131,19 +131,26 @@ class ViewController: MDCCollectionViewController {
         
 Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
     
-<div class="ios-animation large" markdown="1">
-<video src="docs/assets/Xcode-Storyboard-Replace-Controller.m4v" autoplay loop></video>
-[![In the storyboard, replacing the default view controller]()](docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![In the storyboard, replacing the default view controller](docs/assets/Xcode-Storyboard-Replace-Controller.jpg)](https://material-ext.appspot.com/mdc-ios-preview/howto/tutorial/docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
+<!--{% else %}<div class="ios-animation large" markdown="1">
+ <video src="docs/assets/Xcode-Storyboard-Replace-Controller.m4v" autoplay loop></video>
+ </div>
+ {% endif %}-->
+
+
+
 
 Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
 
 then set its reuse identifier to `cell`:
 
-<div class="ios-animation large" markdown="1">
+<!--{% if site.link_to_site == "true" %}-->
+[![In the storyboard, changing the cell class and identifier](docs/assets/Xcode-Storyboard-Define-Cell.jpg)](https://material-ext.appspot.com/mdc-ios-preview/howto/tutorial/docs/assets/Xcode-Storyboard-Define-Cell.m4v)
+<!--{% else %}<div class="ios-animation large" markdown="1">
 <video src="docs/assets/Xcode-Storyboard-Define-Cell.m4v" autoplay loop></video>
-[![In the storyboard, changing the cell class and identifier]()](docs/assets/Xcode-Storyboard-Define-Cell.m4v)
 </div>
+ {% endif %}-->
 
 
 In `viewDidLoad`, configure the collection view’s appearance:
@@ -151,7 +158,6 @@ In `viewDidLoad`, configure the collection view’s appearance:
 ~~~swift
 override func viewDidLoad() {
   super.viewDidLoad()
-
   styler.cellStyle = .card
 }
 ~~~
@@ -161,7 +167,6 @@ Below `viewDidLoad`, add a mock datasource:
 ~~~ swift
 override func viewDidLoad() {
   super.viewDidLoad()
-
   styler.cellStyle = .card
 }
 
@@ -201,7 +206,6 @@ class ViewController: MDCCollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     styler.cellStyle = .card
   }
 ...
@@ -212,7 +216,6 @@ Configure the app bar in `viewDidLoad`:
 ~~~ swift
 override func viewDidLoad() {
   super.viewDidLoad()
-
   styler.cellStyle = .card
 
   addChildViewController(appBar.headerViewController)
@@ -244,7 +247,6 @@ class ViewController: MDCCollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     styler.cellStyle = .card
 
     addChildViewController(appBar.headerViewController)
@@ -323,9 +325,23 @@ Use our examples and catalog apps to try out other components and other ways to 
 ### Sample Code
 
 
-
 *   [Pesto: A simple recipe app, incorporating a flexible header, floating action button, and collections.](https://github.com/google/material-components-ios/tree/master/demos/Pesto)
+
+
 *   [Shrine: A demo shopping app, incorporating a flexible header, custom typography, and collections.](https://github.com/google/material-components-ios/tree/master/demos/Shrine)
+
+<!--{% if site.link_to_site == "true" %}-->
+<img src="docs/assets/Pesto.gif">
+<img src="docs/assets/Shrine.gif">
+<!--{% else %}<div class="ios-animation right" markdown="1">
+<img src="docs/assets/Shrine.gif">
+</div>
+
+<div class="ios-animation left" markdown="1">
+<img src="docs/assets/Pesto.gif">
+</div> {% endif %}-->
+
+---
 
 ### For more information:
 
