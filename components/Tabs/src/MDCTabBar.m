@@ -92,7 +92,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonTabBarInit];
+    [self commonMDCTabBarInit];
   }
   return self;
 }
@@ -100,12 +100,12 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonTabBarInit];
+    [self commonMDCTabBarInit];
   }
   return self;
 }
 
-- (void)commonTabBarInit {
+- (void)commonMDCTabBarInit {
   _itemAppearance = MDCTabBarItemAppearanceTitles;
   _selectedItemTintColor = [UIColor whiteColor];
   _unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
