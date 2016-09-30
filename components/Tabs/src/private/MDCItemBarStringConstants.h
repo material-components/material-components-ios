@@ -1,8 +1,8 @@
 
 static NSString *const kMDCItemBarStringKeyAccessibilityTabElementLabel =
-    @"MaterialItemBarAccessibilityTabElementLabel";
+    @"MaterialTabsAccessibilityTabElementLabel";
 
 static NSString *const kMDCItemBarStringKeyAccessibilityTabPositionFormat =
-    @"MaterialItemBarAccessibilityTabPositionFormat";
+    @"MaterialTabsAccessibilityTabPositionFormat";
 
 static NSString *const kMDCItemBarStringsTableName = @"MaterialTabs";
