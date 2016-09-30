@@ -300,15 +300,18 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/RTL"
   end
 
-  s.subspec "TabBar" do |ss|
+  s.subspec "Tabs" do |ss|
     ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src"
-
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.resource_bundles = {
+      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
+    }
+      
+    ss.dependency "MaterialComponents/AnimationTiming"
     ss.dependency "MaterialComponents/Ink"
     ss.dependency "MaterialComponents/Typography"
-    ss.dependency "MaterialComponents/private/ItemBar"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "Typography" do |ss|
@@ -330,21 +333,6 @@ Pod::Spec.new do |s|
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
-    end
-
-    pss.subspec "ItemBar" do |ss|
-      ss.ios.deployment_target = '7.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
-      ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
-      ss.resource_bundles = {
-        "Material#{ss.base_name}" => ["components/private/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-      }
-      
-      ss.dependency "MaterialComponents/AnimationTiming"
-      ss.dependency "MaterialComponents/Ink"
-      ss.dependency "MaterialComponents/Typography"
-      ss.dependency "MaterialComponents/private/RTL"
     end
 
     pss.subspec "KeyboardWatcher" do |ss|
