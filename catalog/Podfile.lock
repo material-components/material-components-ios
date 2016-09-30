@@ -1,6 +1,6 @@
 PODS:
-  - CatalogByConvention (2.0.0)
-  - EarlGrey (1.3.1)
+  - CatalogByConvention (1.0.1)
+  - EarlGrey (1.3.0)
   - MaterialComponents (14.0.0):
     - MaterialComponents/ActivityIndicator (= 14.0.0)
     - MaterialComponents/AnimationTiming (= 14.0.0)
@@ -28,7 +28,6 @@ PODS:
     - MaterialComponents/Snackbar (= 14.0.0)
     - MaterialComponents/SpritedAnimationView (= 14.0.0)
     - MaterialComponents/Switch (= 14.0.0)
-    - MaterialComponents/TabBar (= 14.0.0)
     - MaterialComponents/Typography (= 14.0.0)
   - MaterialComponents/ActivityIndicator (14.0.0):
     - MaterialComponents/private/RTL
@@ -90,7 +89,6 @@ PODS:
   - MaterialComponents/private (14.0.0):
     - MaterialComponents/private/Color (= 14.0.0)
     - MaterialComponents/private/Icons (= 14.0.0)
-    - MaterialComponents/private/ItemBar (= 14.0.0)
     - MaterialComponents/private/KeyboardWatcher (= 14.0.0)
     - MaterialComponents/private/Overlay (= 14.0.0)
     - MaterialComponents/private/RTL (= 14.0.0)
@@ -120,11 +118,6 @@ PODS:
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/Icons/ic_reorder (14.0.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/ItemBar (14.0.0):
-    - MaterialComponents/AnimationTiming
-    - MaterialComponents/Ink
-    - MaterialComponents/private/RTL
-    - MaterialComponents/Typography
   - MaterialComponents/private/KeyboardWatcher (14.0.0)
   - MaterialComponents/private/Overlay (14.0.0)
   - MaterialComponents/private/RTL (14.0.0)
@@ -153,17 +146,13 @@ PODS:
   - MaterialComponents/Switch (14.0.0):
     - MaterialComponents/private/RTL
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/TabBar (14.0.0):
-    - MaterialComponents/Ink
-    - MaterialComponents/private/ItemBar
-    - MaterialComponents/Typography
   - MaterialComponents/Typography (14.0.0)
   - MaterialComponentsCatalog (14.0.0):
     - MaterialComponents
   - MaterialComponentsUnitTests (14.0.0):
     - MaterialComponents
     - MDFTextAccessibility
-  - MDFTextAccessibility (1.1.3)
+  - MDFTextAccessibility (1.1.1)
 
 DEPENDENCIES:
   - CatalogByConvention
@@ -174,19 +163,19 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../
+    :path: "../"
   MaterialComponentsCatalog:
-    :path: ../
+    :path: "../"
   MaterialComponentsUnitTests:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
-  EarlGrey: 7bb7cd9afba450bfc90dc56f7ecab3b05e0d7555
-  MaterialComponents: df5c57e2c3cf62f819daf5f0e2185904d108c4c0
+  CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
+  EarlGrey: a75bceccb337860996e968f7f6239fd04c52d5d4
+  MaterialComponents: 2e9e691a79578348d0c1468204387193cd0c0859
   MaterialComponentsCatalog: b9884eaca58aa3c5b62b124860362b1f76b9a94f
   MaterialComponentsUnitTests: 9bdf33e2cea304a5789a21c17c15e1cf9811cfa6
-  MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
+  MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
 
 PODFILE CHECKSUM: 522d8a942cbc2d1a94e939e565f528cc83468b01
 
