@@ -1,7 +1,7 @@
 #import "MDCTabBar.h"
 
 #import "MaterialInk.h"
-#import "MaterialItemBar.h"
+#import "MaterialTabs.h"
 #import "MaterialTypography.h"
 
 /// Padding between image and title in points, according to the spec.

@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
-#import "MaterialTabBar.h"
+#import "MaterialTabs.h"
 
 @interface TabBarDemoViewController : UIViewController
 @end

@@ -5,4 +5,4 @@ static NSString *const kMDCItemBarStringKeyAccessibilityTabElementLabel =
 static NSString *const kMDCItemBarStringKeyAccessibilityTabPositionFormat =
     @"MaterialItemBarAccessibilityTabPositionFormat";
 
-static NSString *const kMDCItemBarStringsTableName = @"MaterialItemBar";
+static NSString *const kMDCItemBarStringsTableName = @"MaterialTabs";

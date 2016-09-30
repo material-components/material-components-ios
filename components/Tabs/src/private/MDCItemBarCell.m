@@ -23,10 +23,10 @@ static const CGFloat kBadgeTopPadding = 6;
 static const CGFloat kBadgeMaxWidth = 22;
 
 /// File name of the bundle (without the '.bundle' extension) containing resources.
-static NSString *const kResourceBundleName = @"MaterialItemBar";
+static NSString *const kResourceBundleName = @"MaterialTabs";
 
 /// String table name containing localized strings.
-static NSString *const kStringTableName = @"MaterialItemBar";
+static NSString *const kStringTableName = @"MaterialTabs";
 
 /// Scale factor applied to the title of bottom navigation items when selected.
 const CGFloat kSelectedNavigationTitleScaleFactor = (16.0f / 14.0f);
