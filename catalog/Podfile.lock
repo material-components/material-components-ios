@@ -178,7 +178,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
   EarlGrey: a75bceccb337860996e968f7f6239fd04c52d5d4
-  MaterialComponents: 93b2c5d4ade111902fe63afb293b1d0ff48e4e81
+  MaterialComponents: 2e546055134c272f6cc6d26ab4ea697611c94a8b
   MaterialComponentsCatalog: fe35be22863a94075d9c25b205dead8df53df0ae
   MaterialComponentsUnitTests: 5eca3cb1a741ab815a1f820f88119f90696fbdcb
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
