@@ -53,6 +53,9 @@ static MDCTabBarAlignment MDCTabBarAlignmentForItemBarAlignment(MDCItemBarAlignm
     case MDCItemBarAlignmentCenterSelected:
       return MDCTabBarAlignmentCenterSelected;
   }
+
+  NSCAssert(0, @"Invalid alignment value %zd", alignment);
+  return MDCTabBarAlignmentLeading;
 }
 
 static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignment alignment) {
@@ -69,6 +72,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     case MDCTabBarAlignmentCenterSelected:
       return MDCItemBarAlignmentCenterSelected;
   }
+
+  NSCAssert(0, @"Invalid alignment value %zd", alignment);
+  return MDCItemBarAlignmentLeading;
 }
 
 @interface MDCTabBar () <MDCItemBarDelegate>
@@ -262,6 +268,13 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
       style.shouldDisplayImage = YES;
       style.shouldDisplayTitle = YES;
       style.defaultHeight = kTitledImageBarHeight;
+      break;
+
+    default:
+      NSAssert(0, @"Invalid appearance value %zd", appearance);
+      style.shouldDisplayImage = NO;
+      style.shouldDisplayTitle = YES;
+      style.defaultHeight = kTitleOnlyBarHeight;
       break;
   }
 
