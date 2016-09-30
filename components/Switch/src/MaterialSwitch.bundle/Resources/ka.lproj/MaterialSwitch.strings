@@ -1,8 +1,8 @@
 /* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
 "MDCSwitchAccessibilityHint" = "ორჯერ შეეხეთ, პარამეტრის გადასართავად";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityLabelOn" = "ჩართული";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityValueOn" = "ჩართული";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityLabelOff" = "გამორთული";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityValueOff" = "გამორთული";

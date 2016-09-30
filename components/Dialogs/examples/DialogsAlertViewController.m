@@ -22,6 +22,9 @@
 @implementation DialogsAlertViewController
 
 - (IBAction)didTapShowAlert:(id)sender {
+  [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
+      setCustomTitleColor:[UIColor purpleColor]];
+
   NSString *titleString = @"Using material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
 

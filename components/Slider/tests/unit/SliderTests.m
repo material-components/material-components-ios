@@ -33,6 +33,12 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
+@interface MDCSlider (TestInterface)
+
+- (NSString *)thumbTrack:(MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value;
+
+@end
+
 @interface SliderTests : XCTestCase
 
 @end
@@ -76,8 +82,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)testMaximumDefault {
-  // Given
-
   // When
   MDCSlider *slider = [[MDCSlider alloc] init];
 
@@ -138,23 +142,45 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 - (void)testSetMaximumToLowerThanMinimum {
   // Given
   MDCSlider *slider = [[MDCSlider alloc] init];
+  CGFloat newMax = slider.minimumValue - [self randomNumber];
 
   // When
-  slider.maximumValue = slider.minimumValue - [self randomNumber];
+  slider.maximumValue = newMax;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.maximumValue, slider.minimumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(slider.maximumValue, slider.minimumValue, kEpsilonAccuracy,
+                             @"setting the slider's max to lower than the max must equal the min");
+  XCTAssertEqualWithAccuracy(
+      newMax, slider.minimumValue, kEpsilonAccuracy,
+      @"setting the slider's max must change the min when smaller than the min");
+  XCTAssertEqualWithAccuracy(
+      newMax, slider.maximumValue, kEpsilonAccuracy,
+      @"setting the slider's max must equal the value gotten even when smaller than the minimum");
+  XCTAssertEqualWithAccuracy(
+      newMax, slider.value, kEpsilonAccuracy,
+      @"setting the slider's min to lower than the value must change the value also");
 }
 
 - (void)testSetMinimumToLowerThanMaximum {
   // Given
   MDCSlider *slider = [[MDCSlider alloc] init];
+  CGFloat newMin = slider.maximumValue + [self randomNumber];
 
   // When
-  slider.minimumValue = slider.maximumValue + [self randomNumber];
+  slider.minimumValue = newMin;
 
   // Then
-  XCTAssertEqualWithAccuracy(slider.minimumValue, slider.maximumValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(slider.minimumValue, slider.maximumValue, kEpsilonAccuracy,
+                             @"setting the slider's min to higher than the max must equal the max");
+  XCTAssertEqualWithAccuracy(
+      newMin, slider.minimumValue, kEpsilonAccuracy,
+      @"setting the slider's min must equal the value gotten even when larger than the maximum");
+  XCTAssertEqualWithAccuracy(
+      newMin, slider.maximumValue, kEpsilonAccuracy,
+      @"setting the slider's min to larger than the max must change the max also");
+  XCTAssertEqualWithAccuracy(
+      newMin, slider.value, kEpsilonAccuracy,
+      @"setting the slider's min to higher than the value must change the value also");
 }
 
 - (void)testDiscreteValues2 {
@@ -417,8 +443,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   MDCSlider *slider = [[MDCSlider alloc] init];
   slider.enabled =
       arc4random_uniform(2);  // It does not matter if the slider is enabled or disabled.
-
-  // When
 
   // Then
   XCTAssertTrue(slider.accessibilityTraits & UIAccessibilityTraitAdjustable);

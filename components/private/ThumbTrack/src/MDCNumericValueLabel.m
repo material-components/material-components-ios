@@ -109,6 +109,7 @@ static const CGFloat kLabelInsetSize = 6.f;
   CGPathCloseSubpath(path);
 
   _marker.path = path;
+  CGPathRelease(path);
 
   // Place the label as well
   _label.frame = CGRectInset(CGRectMake(0, 0, width, width), kLabelInsetSize, kLabelInsetSize);

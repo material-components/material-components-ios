@@ -85,7 +85,7 @@ static const float kAmbientShadowOpacity = 0.08f;
 
 @implementation MDCShadowLayer
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     _elevation = 0;
@@ -118,23 +118,6 @@ static const float kAmbientShadowOpacity = 0.08f;
     _topShadow.shadowPath = nil;
     [self setNeedsLayout];
   }
-}
-
-- (void)renderInContext:(CGContextRef)ctx {
-  [self commonLayoutSublayers];
-
-  // The CAShapeLayers won't draw shadows unless it determines there is content upon which to cast
-  // a shadow. We set the background color (along with the mask) and clear it after we're done.
-  self.topShadow.backgroundColor = self.backgroundColor;
-  self.bottomShadow.backgroundColor = self.backgroundColor;
-
-  [super renderInContext:ctx];
-  [self.topShadow renderInContext:ctx];
-  [self.bottomShadow renderInContext:ctx];
-
-  // Reclear the background colors.
-  self.topShadow.backgroundColor = [UIColor clearColor].CGColor;
-  self.bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
 }
 
 #pragma mark - CALayer change monitoring.
@@ -189,8 +172,8 @@ static const float kAmbientShadowOpacity = 0.08f;
 
 #pragma mark - Pseudo Shadow Masks
 
-- (void)setApplyShadowMask:(BOOL)applyShadowMask {
-  _shadowMaskEnabled = applyShadowMask;
+- (void)setShadowMaskEnabled:(BOOL)shadowMaskEnabled {
+  _shadowMaskEnabled = shadowMaskEnabled;
   if (_shadowMaskEnabled) {
     _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
     _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
@@ -212,12 +195,12 @@ static const float kAmbientShadowOpacity = 0.08f;
 
   UIBezierPath *path = [UIBezierPath bezierPathWithRect:maskRect];
   UIBezierPath *innerPath = nil;
-  if (layer.shadowPath != nil) {
-    innerPath = [UIBezierPath bezierPathWithCGPath:(_Nonnull CGPathRef)layer.shadowPath];
-  } else if (layer.cornerRadius > 0) {
-    innerPath = [UIBezierPath bezierPathWithRoundedRect:bounds cornerRadius:layer.cornerRadius];
+  if (self.shadowPath != nil) {
+    innerPath = [UIBezierPath bezierPathWithCGPath:(_Nonnull CGPathRef)self.shadowPath];
+  } else if (self.cornerRadius > 0) {
+    innerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.cornerRadius];
   } else {
-    innerPath = [UIBezierPath bezierPathWithRect:bounds];
+    innerPath = [UIBezierPath bezierPathWithRect:self.bounds];
   }
   [path appendPath:innerPath];
   [path setUsesEvenOddFillRule:YES];

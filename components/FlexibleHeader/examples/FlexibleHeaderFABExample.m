@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
-@interface FlexibleHeaderFABExample ()
+@interface FlexibleHeaderFABExample () <UIScrollViewDelegate>
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
 @property(nonatomic) MDCFloatingButton *floatingButton;
@@ -112,6 +112,12 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   self.floatingButton.center =
       CGPointMake(size.width - self.floatingButton.frame.size.width, self.floatingButton.center.y);
+}
+
+#pragma mark -
+
+- (void)didTap:(id)sender {
+  NSLog(@"Button was tapped.");
 }
 
 #pragma mark - <UIScrollViewDelegate>

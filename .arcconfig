@@ -21,6 +21,6 @@
     "coverage": {
       "product": "MaterialComponents.framework/MaterialComponents"
     },
-    "pre-build": "pod install --project-directory=catalog/ --no-repo-update"
+    "pre-build": "pushd catalog; pod install; popd"
   }
 }

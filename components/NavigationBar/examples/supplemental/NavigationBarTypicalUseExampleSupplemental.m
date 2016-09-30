@@ -128,7 +128,7 @@
     NSParagraphStyleAttributeName : style
   };
 
-  NSString *instructionText = @"SWIPE RIGHT\n\n\n\nto go back\n\n\n\n\n\n";
+  NSString *instructionText = @"SWIPE RIGHT\n\n\n\nfrom left edge to go back\n\n\n\n\n\n";
   NSMutableAttributedString *instructionsAttributedString =
       [[NSMutableAttributedString alloc] initWithString:instructionText];
   [instructionsAttributedString setAttributes:instructionAttributes1 range:NSMakeRange(0, 11)];

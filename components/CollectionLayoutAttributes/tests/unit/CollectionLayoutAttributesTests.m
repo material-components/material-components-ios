@@ -45,8 +45,6 @@
 }
 
 - (void)testCopying {
-  // Given
-
   // When
   MDCCollectionViewLayoutAttributes *copy = [_attributes copy];
 
@@ -69,8 +67,6 @@
 }
 
 - (void)testEqualAfterCopying {
-  // Given
-
   // When
   MDCCollectionViewLayoutAttributes *copy = [_attributes copy];
 
@@ -79,8 +75,6 @@
 }
 
 - (void)testEqualHashesAfterCopying {
-  // Given
-
   // When
   MDCCollectionViewLayoutAttributes *copy = [_attributes copy];
 

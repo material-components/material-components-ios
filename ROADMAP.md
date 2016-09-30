@@ -5,7 +5,6 @@ High priority:
 - Snackbar
 - Text fields
 - Progress and Activity Indicator
-- Dialogs
 - Animation Curves
 
 Next priority:

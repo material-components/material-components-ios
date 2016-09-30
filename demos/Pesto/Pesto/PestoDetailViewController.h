@@ -16,12 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PestoDetailViewController : UIViewController
+@interface PestoDetailViewController : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic) UIImage *image;
-@property(nonatomic, copy) NSString *iconImageName;
-@property(nonatomic, copy) NSString *descText;
-
-- (void)loadImage;
+@property(nonatomic, strong, nullable) UIScrollView *scrollView;
+@property(nonatomic, strong, nullable) UIImageView *imageView;
+@property(nonatomic, copy, nullable) NSString *descText;
+@property(nonatomic, copy, nullable) NSString *iconImageName;
 
 @end

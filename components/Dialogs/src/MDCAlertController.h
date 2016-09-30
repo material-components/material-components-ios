@@ -90,7 +90,8 @@
 @property(nonatomic, nullable, copy) NSString *message;
 
 /** MDCAlertController handles its own transitioning delegate. */
-- (void)setTransitioningDelegate:(_Nullable id)transitioningDelegate NS_UNAVAILABLE;
+- (void)setTransitioningDelegate:
+        (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
 
 /** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
@@ -118,7 +119,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
                                 handler:(__nullable MDCActionHandler)handler;
 
 /** Alert actions must be created with actionWithTitle:handler: */
-- (nullable instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
  Title of the button shown on the alert dialog.

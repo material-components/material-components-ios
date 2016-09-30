@@ -178,11 +178,12 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
 - (void)animateStep1:(MDCProgressView *)progressView {
   progressView.progress = 0;
+  __weak MDCProgressView *weakProgressView = progressView;
   [progressView setHidden:NO
                  animated:YES
                completion:^(BOOL finished) {
                  [self performSelector:@selector(animateStep2:)
-                            withObject:progressView
+                            withObject:weakProgressView
                             afterDelay:MDCProgressViewAnimationDuration];
                }];
 }
@@ -202,22 +203,24 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 }
 
 - (void)animateStep4:(MDCProgressView *)progressView {
+  __weak MDCProgressView *weakProgressView = progressView;
   [progressView setHidden:YES
                  animated:YES
                completion:^(BOOL finished) {
                  [self performSelector:@selector(animateStep1:)
-                            withObject:progressView
+                            withObject:weakProgressView
                             afterDelay:MDCProgressViewAnimationDuration];
                }];
 }
 
 - (void)animateBackwardProgressView {
+  __weak ProgressViewExample *weakSelf = self;
   [_backwardProgressView setProgress:1 - _backwardProgressView.progress
                             animated:YES
                           completion:^(BOOL finished) {
-                            [self performSelector:@selector(animateBackwardProgressView)
-                                       withObject:nil
-                                       afterDelay:MDCProgressViewAnimationDuration];
+                            [weakSelf performSelector:@selector(animateBackwardProgressView)
+                                           withObject:nil
+                                           afterDelay:MDCProgressViewAnimationDuration];
                           }];
 }
 

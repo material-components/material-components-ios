@@ -66,6 +66,8 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 }
 
 - (void)viewDidLoad {
+  [super viewDidLoad];
+  
   self.minimumHeaderHeight = self.fhvc.headerView.minimumHeight;
 
   self.fhvc.headerView.trackingScrollView = self.tableView;
@@ -111,7 +113,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
     [sections addObject:items ?: @[]];
   };
 
-  createSection(@"Swipe right to go back", nil);
+  createSection(@"Swipe right from left edge to go back", nil);
 
   createSection(@"Basic behavior", @[
     switchItem(@"Can over-extend", FlexibleHeaderConfiguratorFieldCanOverExtend),

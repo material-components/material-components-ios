@@ -28,6 +28,7 @@
 @implementation DialogsTypicalUseViewController
 
 - (void)viewDidLoad {
+  [super viewDidLoad];
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
@@ -40,6 +41,21 @@
   viewController.transitioningDelegate = self.transitionController;
 
   [self presentViewController:viewController animated:YES completion:NULL];
+}
+
+- (IBAction)didTapModalProgrammatic:(id)sender {
+  UIViewController *viewController =
+      [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
+  viewController.modalPresentationStyle = UIModalPresentationCustom;
+  viewController.transitioningDelegate = self.transitionController;
+
+  [self presentViewController:viewController animated:YES completion:NULL];
+
+  MDCDialogPresentationController *presentationController =
+      viewController.mdc_dialogPresentationController;
+  if (presentationController) {
+    presentationController.dismissOnBackgroundTap = NO;
+  }
 }
 
 - (IBAction)didTapStoryboard:(id)sender {

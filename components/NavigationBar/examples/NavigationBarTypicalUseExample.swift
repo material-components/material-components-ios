@@ -29,6 +29,8 @@ public class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample
     navBar = MDCNavigationBar()
     navBar!.observeNavigationItem(navigationItem)
     navBar!.tintColor = .whiteColor()
+    navBar!.titleTextAttributes =
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
 
     // Light blue 500
     navBar!.backgroundColor = UIColor.init(red: 0.012, green: 0.663, blue: 0.957, alpha: 1)

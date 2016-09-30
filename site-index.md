@@ -109,7 +109,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     #### Swift
 
     ~~~swift
-    import material_components_ios
+    import MaterialComponents
 
     class MDCBuildTestViewController: UIViewController {
 
