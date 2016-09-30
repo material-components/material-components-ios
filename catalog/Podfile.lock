@@ -28,6 +28,7 @@ PODS:
     - MaterialComponents/Snackbar (= 14.0.0)
     - MaterialComponents/SpritedAnimationView (= 14.0.0)
     - MaterialComponents/Switch (= 14.0.0)
+    - MaterialComponents/Tabs (= 14.0.0)
     - MaterialComponents/Typography (= 14.0.0)
   - MaterialComponents/ActivityIndicator (14.0.0):
     - MaterialComponents/private/RTL
@@ -146,6 +147,11 @@ PODS:
   - MaterialComponents/Switch (14.0.0):
     - MaterialComponents/private/RTL
     - MaterialComponents/private/ThumbTrack
+  - MaterialComponents/Tabs (14.0.0):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/Ink
+    - MaterialComponents/private/RTL
+    - MaterialComponents/Typography
   - MaterialComponents/Typography (14.0.0)
   - MaterialComponentsCatalog (14.0.0):
     - MaterialComponents
@@ -172,7 +178,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
   EarlGrey: a75bceccb337860996e968f7f6239fd04c52d5d4
-  MaterialComponents: 2e9e691a79578348d0c1468204387193cd0c0859
+  MaterialComponents: ce2cc03ccbee084b0cd8ea56ceea60e8a5be4699
   MaterialComponentsCatalog: b9884eaca58aa3c5b62b124860362b1f76b9a94f
   MaterialComponentsUnitTests: 9bdf33e2cea304a5789a21c17c15e1cf9811cfa6
   MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
