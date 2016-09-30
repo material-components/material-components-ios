@@ -6,22 +6,6 @@
 @interface TabBarDemoViewController : UIViewController
 @end
 
-@implementation TabBarDemoViewController (CatalogByConvention)
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"Tab Bar" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
-}
-
-@end
-
 @implementation TabBarDemoViewController {
   MDCTabBar *_shortTabBar;
   MDCTabBar *_longTabBar;
@@ -181,6 +165,22 @@
 - (void)setAlignment:(MDCTabBarAlignment)alignment {
   [_longTabBar setAlignment:alignment animated:YES];
   [_shortTabBar setAlignment:alignment animated:YES];
+}
+
+@end
+
+@implementation TabBarDemoViewController (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Tab Bar", @"Tab Bar" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
++ (NSString *)catalogDescription {
+  return @"The tab bar is a component for switching between views of grouped content.";
 }
 
 @end
