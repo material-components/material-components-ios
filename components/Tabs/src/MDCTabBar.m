@@ -1,8 +1,10 @@
 #import "MDCTabBar.h"
 
 #import "MaterialInk.h"
-#import "MaterialTabs.h"
 #import "MaterialTypography.h"
+#import "private/MDCItemBar.h"
+#import "private/MDCItemBarAlignment.h"
+#import "private/MDCItemBarStyle.h"
 
 /// Padding between image and title in points, according to the spec.
 static const CGFloat kImageTitleSpecPadding = 10;

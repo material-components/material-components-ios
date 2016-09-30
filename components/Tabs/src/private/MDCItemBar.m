@@ -1,9 +1,9 @@
 #import "MDCItemBar.h"
 
+#import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialRTL.h"
-#import "private/MDCItemBarCell.h"
 
 /// Height in points of the bar shown under selected items.
 static const CGFloat kSelectionIndicatorHeight = 2.0f;
