@@ -16,6 +16,8 @@
 
 #import "MDCActivityIndicator.h"
 
+#import "MaterialRTL.h"
+
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
 static const NSTimeInterval kMDCActivityIndicatorAnimateOutDuration = 0.1f;
 static const NSTimeInterval kMDCActivityIndicatorPointCycleDuration = 4.0f / 3.0f;
@@ -100,18 +102,18 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
 #pragma mark - Init
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInitializer];
+    [self commonMDCActivityIndicatorInit];
   }
   return self;
 }
 
-- (id)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    [self commonInitializer];
+    [self commonMDCActivityIndicatorInit];
   }
   return self;
 }
@@ -136,9 +138,13 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   }];
 }
 
-- (void)commonInitializer {
+- (void)commonMDCActivityIndicatorInit {
   // Register notifications for foreground and background if needed.
   [self registerForegroundAndBackgroundNotificationObserversIfNeeded];
+
+  // The activity indicator reflects the passage of time (a spatial semantic context) and so
+  // will not be mirrored in RTL languages.
+  self.mdc_semanticContentAttribute = UISemanticContentAttributeSpatial;
 
   _cycleStartIndex = 0;
   _indicatorMode = MDCActivityIndicatorModeIndeterminate;
@@ -284,9 +290,9 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [self updateStrokePath];
 }
 
-- (void)setSpinnerRadius:(CGFloat)spinnerRadius {
+- (void)setRadius:(CGFloat)radius {
   // Constrain radius to range [8dp, 72dp].
-  _radius = MIN(MAX(spinnerRadius, 8.0f), 72.0f);
+  _radius = MIN(MAX(radius, 8.0f), 72.0f);
 
   [self updateStrokePath];
 }

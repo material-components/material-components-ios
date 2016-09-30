@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCThumbTrack.h"
-
 @protocol MDCSliderDelegate;
 
 /**
@@ -38,7 +36,7 @@
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
  */
 IB_DESIGNABLE
-@interface MDCSlider : UIControl <NSCoding, MDCThumbTrackDelegate>
+@interface MDCSlider : UIControl <NSSecureCoding>
 
 /** The delegate for the slider. */
 @property(nullable, nonatomic, weak) id<MDCSliderDelegate> delegate;
@@ -93,8 +91,10 @@ IB_DESIGNABLE
 /**
  The minimum value of the slider.
 
- If you change the value of this property and the current value of the receiver is below the new
- minimum, the current value will be adjusted to match the new minimum value.
+ If you change the value of this property and the @c value of the receiver is below the new minimum,
+ the current value will be adjusted to match the new minimum value.
+ If you change the value of this property and @c maximumValue of the receiver is below the new
+ minimum, the @c maximumValue will also be set to this new minimum value.
 
  The default value of this property is 0.0.
  */
@@ -103,8 +103,10 @@ IB_DESIGNABLE
 /**
  The maximum value of the slider.
 
- If you change the value of this property and the current value of the receiver is above the new
- maximum, the current value will be adjusted to match the new maximum value.
+ If you change the value of this property and the @c value of the receiver is above the new maximum,
+ the current value will be adjusted to match the new maximum value.
+ If you change the value of this property and @c minimumValue of the receiver is above the new
+ maximum, the @c minimumValue will also be set to this new maximum value.
 
  The default value of this property is 1.0.
  */
@@ -121,11 +123,47 @@ IB_DESIGNABLE
  */
 @property(nonatomic, assign, getter=isContinuous) BOOL continuous;
 
+/**
+ The value from which the filled part of the track is anchored. If set to a value between
+ minimumValue and maximumValue, then the filled/colored part of the track extends from the
+ trackAnchorValue to the thumb. Values beyond the minimum/maximum values are effectively capped.
+
+ The default value is -CGFLOAT_MAX, so the filled part of the track extends from the minimum value
+ to the thumb.
+ */
+@property(nonatomic, assign) CGFloat filledTrackAnchorValue;
+
+/**
+ Whether or not to show the numeric value label when dragging a discrete slider. If YES, consider
+ implementing MDCSliderDelegate's @c -slider:displayedStringForValue: method to customize the string
+ displayed for each discrete value.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
+
+/**
+ Whether or not the thumb view should be a hollow circle when at the minimum value. For sliders
+ where the minimum value indicates that the associated property is off (for example a volume slider
+ where a value of 0 = muted), this should be set to YES. In cases where this doesn't make sense (for
+ instance a scrubber of an audio or video file), this should be set to NO.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign, getter=isThumbHollowAtStart) BOOL thumbHollowAtStart;
+
 @end
 
 /** MDCSlider delegate which allows setting custom behavior. */
 @protocol MDCSliderDelegate <NSObject>
 @optional
+
+/**
+ Called when the user taps on the MDCSlider.
+
+ If not implemented, the MDCSlider will always be allowed to jump to any value.
+ */
+- (BOOL)slider:(nonnull MDCSlider *)slider shouldJumpToValue:(CGFloat)value;
 
 /**
  For discrete sliders, called when the slider is determining the string label to display for a given

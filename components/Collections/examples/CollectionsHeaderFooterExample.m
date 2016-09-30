@@ -126,4 +126,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return CGSizeZero;
 }
 
+#pragma mark - <MDCCollectionViewStylingDelegate>
+
+-(BOOL)collectionView:(UICollectionView *)collectionView shouldHideFooterBackgroundForSection:(NSInteger)section {
+  return (section == 2);
+}
+
 @end

@@ -18,7 +18,10 @@
 
 #import "MaterialSwitch.h"
 
-@implementation SwitchSimpleExampleViewController
+@implementation SwitchSimpleExampleViewController {
+  MDCSwitch *_materialSwitch;
+  UISwitch *_vanillaSwitch;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -26,37 +29,38 @@
   self.view.backgroundColor = [UIColor whiteColor];
 
   // Load your Material Component here.
-  MDCSwitch *mdcSwitch = [[MDCSwitch alloc] init];
-  [mdcSwitch addTarget:self
-                action:@selector(didChangeSliderValue:)
-      forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:mdcSwitch];
+  _materialSwitch = [[MDCSwitch alloc] init];
+  [_materialSwitch addTarget:self
+                      action:@selector(didChangeSliderValue:)
+            forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:_materialSwitch];
   CGFloat xOffset = CGRectGetMidX(self.view.bounds);
-  CGFloat yOffset = CGRectGetMidY(self.view.bounds) - 2 * mdcSwitch.frame.size.height;
-  mdcSwitch.center = CGPointMake(xOffset, yOffset);
+  CGFloat yOffset = CGRectGetMidY(self.view.bounds) - 2 * _materialSwitch.frame.size.height;
+  _materialSwitch.center = CGPointMake(xOffset, yOffset);
 
   UILabel *label = [[UILabel alloc] init];
   label.text = @"MDCSwitch";
   [label sizeToFit];
   [self.view addSubview:label];
-  label.center = CGPointMake(mdcSwitch.center.x, mdcSwitch.center.y + 2 * label.frame.size.height);
+  label.center =
+      CGPointMake(_materialSwitch.center.x, _materialSwitch.center.y + 2 * label.frame.size.height);
 
   // Vanilla  UISlider for comparison.
-  UISwitch *uiSwitch = [[UISwitch alloc] init];
-  [uiSwitch addTarget:self
-                action:@selector(didChangeSliderValue:)
-      forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:uiSwitch];
+  _vanillaSwitch = [[UISwitch alloc] init];
+  [_vanillaSwitch addTarget:self
+                     action:@selector(didChangeSliderValue:)
+           forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:_vanillaSwitch];
   xOffset = CGRectGetMidX(self.view.bounds);
-  yOffset = CGRectGetMidY(self.view.bounds) + 4 * uiSwitch.frame.size.height;
-  uiSwitch.center = CGPointMake(xOffset, yOffset);
+  yOffset = CGRectGetMidY(self.view.bounds) + 4 * _vanillaSwitch.frame.size.height;
+  _vanillaSwitch.center = CGPointMake(xOffset, yOffset);
 
   UILabel *uiSliderLabel = [[UILabel alloc] init];
   uiSliderLabel.text = @"UISwitch";
   [uiSliderLabel sizeToFit];
   [self.view addSubview:uiSliderLabel];
-  xOffset = uiSwitch.center.x;
-  yOffset = uiSwitch.center.y + 2 * uiSliderLabel.frame.size.height;
+  xOffset = _vanillaSwitch.center.x;
+  yOffset = _vanillaSwitch.center.y + 2 * uiSliderLabel.frame.size.height;
   uiSliderLabel.center = CGPointMake(xOffset, yOffset);
 }
 

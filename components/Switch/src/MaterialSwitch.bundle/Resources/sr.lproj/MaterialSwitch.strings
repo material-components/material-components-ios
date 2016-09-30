@@ -1,8 +1,8 @@
 /* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
 "MDCSwitchAccessibilityHint" = "Двапут додирните да бисте укључили/искључили подешавање";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityLabelOn" = "Укључено";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityValueOn" = "Укључено";
 
-/* Accessibility label for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityLabelOff" = "Искључено";
+/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityValueOff" = "Искључено";

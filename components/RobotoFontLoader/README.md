@@ -1,9 +1,7 @@
----
-title:  "Roboto Font Loader"
-layout: detail
-section: components
-excerpt: "The Roboto Font Loader lazy loads the Robot font."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/RobotoFontLoader/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/RobotoFontLoader">GitHub</a> for README documentation.{% endif %}-->
+
 # Roboto Font Loader
 
 The Roboto Font Loader lazy loads the Roboto font.
@@ -28,7 +26,7 @@ The Roboto Font Loader lazy loads the Roboto font.
 
 <ul class="icon-list">
   <li class="icon-link">
-    <a href="apidocs/Classes/MDCRobotoFontLoader.html">
+    <a href="https://material-ext.appspot.com/mdc-ios-preview/components/RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">
       MDCRobotoFontLoader
     </a>
   </li>
@@ -90,14 +88,48 @@ UIFont *font = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
 #### Swift
 ~~~ swift
 let myFont:UIFont = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
-}
 ~~~
 <!--</div>-->
 
 ## Advanced Usage
-### Typography's weak dependency
-When included in your build the Roboto Font Loader is used by the Typography component. This runtime
-check occurs when no specific Font Loader is set on Typography, resulting in Roboto being used for
-Material Typography.
+### Typography
+
+Set the `MDCRobotoFontLoader` as `MDCTypography`'s fontLoader in order to use Roboto for all
+components.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+- (BOOL)application:(UIApplication *)application
+    willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [MDCTypography setFontLoader:[MDCRobotoFontLoader sharedInstance]];
+    ...
+}
+~~~
+
+#### Swift
+~~~ swift
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  MDCTypography.setFontLoader(MDCRobotoFontLoader.sharedInstance())
+  ...
+}
+~~~
+<!--</div>-->
+
 For more information see
 [Typography](https://github.com/google/material-components-ios/tree/develop/components/Typography).
+
+### The font bundle
+If you are not using `RobotoFontLoader` it is recommended that you not depend on it in your App's
+podspec. We make this recommendation because the subspec comes with a 1.1mb bundle holding the
+fonts. This means you should not depend on the entire Material Components for iOS spec and you
+should just pull in the components, the subspecs, that you use.
+
+The easiest way to determine if you are depending on RobotoFontLoader is by checking if your
+Podfile.lock has:
+
+~~~ bash
+MaterialComponents/RobotoFontLoader
+~~~
+
+If it does, one of your specs depends on RobotoFontLoader and its fonts will be added to your App.

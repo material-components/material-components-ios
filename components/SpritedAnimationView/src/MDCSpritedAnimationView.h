@@ -72,6 +72,17 @@
 - (nonnull instancetype)initWithSpriteSheetImage:(nullable UIImage *)spriteSheetImage
     NS_DESIGNATED_INITIALIZER;
 
+/**
+ Creates an animated sprite view. Use this initializer if your images are non-square.
+
+ @param spriteSheetImage A vertical sprite sheet of images.
+ @param numberOfFrames The number of frames in the sprite sheet image. Used for calculating
+      the size of each frame.
+ @return Initialized sprited animation view.
+ */
+- (nonnull instancetype)initWithSpriteSheetImage:(nullable UIImage *)spriteSheetImage
+                                  numberOfFrames:(NSInteger)numberOfFrames;
+
 /** Please use initWithSpriteSheetImage:. */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
