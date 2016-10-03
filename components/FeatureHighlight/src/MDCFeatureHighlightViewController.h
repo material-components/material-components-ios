@@ -23,7 +23,7 @@
 
  @param accepted Whether the highlight was accepted or rejected
  */
-typedef id (^MDCFeatureHighlightCompletion)(BOOL accepted);
+typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 
 /**
  MDCFeatureHighlightViewController highlights an element of a UI to introduce features or
