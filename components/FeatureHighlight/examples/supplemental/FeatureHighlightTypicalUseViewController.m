@@ -15,8 +15,12 @@
  */
 
 #import "FeatureHighlightTypicalUseViewController.h"
+#import "MaterialFeatureHighlight.h"
+#import "MaterialButtons.h"
 
-@implementation FeatureHighlightTypicalUseViewController
+@implementation FeatureHighlightTypicalUseViewController {
+  UIButton *_button;
+}
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Feature Highlight", @"Feature Highlight" ];
@@ -34,6 +38,30 @@
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor whiteColor];
+
+  _button = [[MDCRaisedButton alloc] init];
+  [_button setTitle:@"GO!" forState:UIControlStateNormal];
+  [_button sizeToFit];
+  [_button addTarget:self
+                action:@selector(didTapButton:)
+      forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_button];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  [_button sizeToFit];
+  CGRect frame = _button.frame;
+  frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
+  frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
+  _button.frame = frame;
+}
+
+- (void)didTapButton:(id)sender {
+  MDCFeatureHighlightViewController *vc =
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
+                                                              completion:nil];
 }
 
 @end

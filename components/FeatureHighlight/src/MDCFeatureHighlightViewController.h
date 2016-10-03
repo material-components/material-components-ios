@@ -46,9 +46,9 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
  @param displayedView Added to the highlight view and centered at the |center| of |highlightedView|
  @param completion The completion block called when the highlight is dismissed
  */
-- (nullable instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
-                                     andShowView:(nonnull UIView *)displayedView
-                                      completion:(nullable MDCFeatureHighlightCompletion)completion
+- (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
+                                    andShowView:(nonnull UIView *)displayedView
+                                     completion:(nullable MDCFeatureHighlightCompletion)completion
     NS_DESIGNATED_INITIALIZER;
 
 /**
@@ -59,9 +59,16 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 
  @param highlightedView The highlight will be presented above the |center| of |highlightedView|
  */
-- (nullable instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
-                                      completion:(nullable MDCFeatureHighlightCompletion)completion
-    NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
+                                     completion:(nullable MDCFeatureHighlightCompletion)completion;
+
+/**
+ Feature Highlight controllers must be created with either initWithHighlightedView: constructor.
+ */
+- (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
+                                 bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
  Sets the text to be displayed as the header of the help text.
