@@ -16,6 +16,8 @@
 
 #import "MDCFeatureHighlightViewController.h"
 
+#import "private/MDCFeatureHighlightView.h"
+
 @implementation MDCFeatureHighlightViewController
 
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
@@ -32,6 +34,11 @@
   return [self initWithHighlightedView:highlightedView
                            andShowView:[highlightedView snapshotViewAfterScreenUpdates:YES]
                             completion:completion];
+}
+
+- (void)loadView {
+  MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
+  self.view = view;
 }
 
 - (UIColor *)outerHighlightColor {
