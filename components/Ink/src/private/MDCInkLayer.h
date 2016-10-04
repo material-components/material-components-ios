@@ -34,9 +34,8 @@
 /** Clips the ripple to the bounds of the layer. */
 @property(nonatomic, assign, getter=isBounded) BOOL bounded;
 
-/** Maximum radius of the ink. No maximum if radius is 0 or less.
-
- This value is ignored if @c bounded is set to |YES|.*/
+/** Maximum radius of the ink. No maximum if radius is 0 or less. This value is ignored if
+ @c bounded is set to |YES|.*/
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 
 /** Set the foreground color of the ink. */
