@@ -127,6 +127,11 @@ CG_EXTERN const NSString *_Nonnull MDCPaletteAccent700Name;
 + (nonnull MDCPalette *)blueGreyPalette;
 
 /**
+ Returns a palette "expanded" from a single target 500 tint color.
+ */
++ (nonnull instancetype)paletteExpandedFromColor:(nonnull UIColor *)tintColor;
+
+/**
  Returns a palette with a custom set of tints and accents.
 
  The tints dictionary must have values for each key matching MDCPaletteTint.*Name. The accents

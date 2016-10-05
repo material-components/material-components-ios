@@ -527,6 +527,10 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   return palette;
 }
 
++ (instancetype)paletteExpandedFromColor:(nonnull UIColor *)tintColor {
+  return nil;
+}
+
 + (instancetype)paletteWithTints:(NSDictionary<NSString *, UIColor *> *)tints
                          accents:(NSDictionary<NSString *, UIColor *> *)accents {
   return [[self alloc] initWithTints:tints accents:accents];

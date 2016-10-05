@@ -43,6 +43,24 @@ class PaletteTests: XCTestCase {
     XCTAssertNil(brownPalette.accent100)
   }
 
+  func testExpandedPalette() {
+    let palette = MDCPalette.init(expandedFromColor: UIColor(red: 1, green: 0, blue: 0, alpha: 1))
+    XCTAssertNotNil(palette.tint50)
+    XCTAssertNotNil(palette.tint100)
+    XCTAssertNotNil(palette.tint200)
+    XCTAssertNotNil(palette.tint300)
+    XCTAssertNotNil(palette.tint400)
+    XCTAssertNotNil(palette.tint500)
+    XCTAssertNotNil(palette.tint600)
+    XCTAssertNotNil(palette.tint700)
+    XCTAssertNotNil(palette.tint800)
+    XCTAssertNotNil(palette.tint900)
+    XCTAssertNotNil(palette.accent100)
+    XCTAssertNotNil(palette.accent200)
+    XCTAssertNotNil(palette.accent400)
+    XCTAssertNotNil(palette.accent700)
+  }
+
   func testCustomPalette() {
     let tints = [
       MDCPaletteTint50Name : UIColor(white: 0, alpha: 1),
