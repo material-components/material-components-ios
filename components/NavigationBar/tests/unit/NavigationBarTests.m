@@ -35,7 +35,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   navBar.title = @"this is a Title";
 
   // When
-  navBar.textAlignment = NSTextAlignmentCenter;
+  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
   [navBar layoutIfNeeded];
 
   // Then
@@ -57,7 +57,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   navBar.trailingBarButtonItems = @[ button ];
 
   // When
-  navBar.textAlignment = NSTextAlignmentCenter;
+  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
   [navBar layoutIfNeeded];
 
   // Then
@@ -78,7 +78,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   navBar.leadingBarButtonItems = @[ button ];
 
   // When
-  navBar.textAlignment = NSTextAlignmentCenter;
+  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
   [navBar layoutIfNeeded];
 
   // Then
@@ -90,7 +90,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   navBar.frame = CGRectMake(0, 0, 300, 25);
   navBar.title = @"this is a Title";
-  navBar.textAlignment = NSTextAlignmentCenter;
+  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
 
   // When
   navBar.title = @"..";
@@ -106,11 +106,11 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   navBar.frame = CGRectMake(0, 0, 200, 25);
   navBar.title = @"this is a Title";
-  navBar.textAlignment = NSTextAlignmentCenter;
+  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
   [navBar layoutIfNeeded];
 
   // When
-  navBar.textAlignment = NSTextAlignmentLeft;
+  navBar.titleAlignment = MDCNavigationBarTitleAlignmentLeading;
   [navBar layoutIfNeeded];
 
   // Then
