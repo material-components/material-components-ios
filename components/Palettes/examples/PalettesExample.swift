@@ -63,7 +63,7 @@ class PalettesExampleViewController: UITableViewController {
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     let palette = palettes[section].1()
-    return palette.accent200 != nil ? 5 : 4;
+    return palette.accent400 != nil ? 5 : 4;
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -84,7 +84,7 @@ class PalettesExampleViewController: UITableViewController {
   }
 
   convenience init() {
-    self.init(style: .Plain)
+    self.init(style: .Grouped)
   }
 
   override init(style: UITableViewStyle) {
@@ -105,7 +105,7 @@ class PalettesExampleViewController: UITableViewController {
 // MARK: Catalog by convention
 extension PalettesExampleViewController {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Palettes", "Palettes"]
+    return ["Palettes", "Standard Palettes"]
   }
 
   class func catalogDescription() -> String {
