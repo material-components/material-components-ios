@@ -529,7 +529,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   return palette;
 }
 
-+ (instancetype)paletteExpandedFromColor:(nonnull UIColor *)target500Color {
++ (instancetype)paletteGeneratedFromColor:(nonnull UIColor *)target500Color {
   NSArray *tintNames = @[
     MDCPaletteTint50Name, MDCPaletteTint100Name, MDCPaletteTint200Name, MDCPaletteTint300Name,
     MDCPaletteTint400Name, MDCPaletteTint500Name, MDCPaletteTint600Name, MDCPaletteTint700Name,

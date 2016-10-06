@@ -43,8 +43,8 @@ class PaletteTests: XCTestCase {
     XCTAssertNil(brownPalette.accent100)
   }
 
-  func testExpandedPalette() {
-    let palette = MDCPalette.init(expandedFromColor: UIColor(red: 1, green: 0, blue: 0, alpha: 1))
+  func testGeneratedPalette() {
+    let palette = MDCPalette.init(generatedFromColor: UIColor(red: 1, green: 0, blue: 0, alpha: 1))
     XCTAssertNotNil(palette.tint50)
     XCTAssertNotNil(palette.tint100)
     XCTAssertNotNil(palette.tint200)
