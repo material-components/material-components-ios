@@ -20,12 +20,13 @@ typedef void(^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
 @interface MDCFeatureHighlightView : UIView
 
+@property (nonatomic, assign) CGPoint highlightPoint;
 @property (nonatomic, strong) UIView *displayedView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *bodyLabel;
 @property (nonatomic, strong) MDCFeatureHighlightInteractionBlock interactionBlock;
 
-- (void)animateDiscover:(CGPoint)center;
+- (void)animateDiscover;
 - (void)animatePulse;
 - (void)animateAccepted;
 - (void)animateRejected;

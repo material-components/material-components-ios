@@ -34,6 +34,11 @@
     _displayedView = displayedView;
     _completion = completion;
 
+    [_highlightedView addObserver:self
+                       forKeyPath:@"frame"
+                          options:NSKeyValueObservingOptionNew
+                          context:nil];
+
     self.modalPresentationStyle = UIModalPresentationOverFullScreen;
   }
   return self;
@@ -48,6 +53,7 @@
 
 - (void)dealloc {
   [_pulseTimer invalidate];
+  [_highlightedView removeObserver:self forKeyPath:@"frame"];
 }
 
 - (void)loadView {
@@ -67,8 +73,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                                    toView:_displayedView];
-  [_featureHighlightView animateDiscover:point];
+                                                    toView:_featureHighlightView];
+  _featureHighlightView.highlightPoint = point;
+  [_featureHighlightView animateDiscover];
 
   _pulseTimer = [NSTimer scheduledTimerWithTimeInterval:1.5
                                                  target:_featureHighlightView
@@ -116,6 +123,18 @@
       }
     }];
   });
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context {
+  if (object == _highlightedView && [keyPath isEqualToString:@"frame"]) {
+    CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
+                                                      toView:_featureHighlightView];
+    _featureHighlightView.highlightPoint = point;
+    [_featureHighlightView layoutIfNeeded];
+  }
 }
 
 @end

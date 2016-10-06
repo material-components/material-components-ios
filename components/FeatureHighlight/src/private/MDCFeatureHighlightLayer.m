@@ -16,9 +16,21 @@
 
 #import "MDCFeatureHighlightLayer.h"
 
-@implementation MDCFeatureHighlightLayer
+@implementation MDCFeatureHighlightLayer {
+  CGFloat _radius;
+}
+
+- (void)setCenter:(CGPoint)center {
+  _center = center;
+
+  CGRect circleRect = CGRectMake(center.x - _radius, center.y - _radius, _radius * 2, _radius * 2);
+  self.path = CGPathCreateWithEllipseInRect(circleRect, NULL);
+}
 
 - (void)setCenter:(CGPoint)center radius:(CGFloat)radius animated:(BOOL)animated {
+  _center = center;
+  _radius = radius;
+
   CGRect circleRect = CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2);
   if (animated) {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];

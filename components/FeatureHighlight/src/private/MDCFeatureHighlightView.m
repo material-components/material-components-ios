@@ -87,15 +87,28 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
   _displayedView.layer.mask = _displayMaskLayer;
 }
 
-- (void)animateDiscover:(CGPoint)center {
-  _highlightPoint = center;
+- (void)setHighlightPoint:(CGPoint)highlightPoint {
+  _highlightPoint = highlightPoint;
+
+  [_innerLayer removeAllAnimations];
+  [_outerLayer removeAllAnimations];
+  [_pulseLayer removeAllAnimations];
+
+  _innerLayer.center = highlightPoint;
+  _outerLayer.center = highlightPoint;
+  _pulseLayer.center = highlightPoint;
+
+  [self setNeedsLayout];
+}
+
+- (void)animateDiscover {
   [self setNeedsLayout];
   [self layoutIfNeeded];
 
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.0].CGColor];
 
-  _displayedView.center = center;
+  _displayedView.center = _highlightPoint;
   CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
                                           _displayedView.frame.size.height/2);
 
@@ -157,6 +170,7 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
 }
 
 - (void)layoutSubviews {
+  _displayedView.center = _highlightPoint;
   CGFloat textWidth = self.frame.size.width - 2 * kMDCFeatureHighlightTextPadding;
   CGSize titleSize = [_titleLabel sizeThatFits:CGSizeMake(textWidth, 1000.0)];
   CGRect titleFrame = (CGRect) {
