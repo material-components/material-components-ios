@@ -529,7 +529,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   return palette;
 }
 
-+ (instancetype)paletteExpandedFromColor:(nonnull UIColor *)tintColor {
++ (instancetype)paletteExpandedFromColor:(nonnull UIColor *)target500Color {
   NSArray *tintNames = @[
     MDCPaletteTint50Name, MDCPaletteTint100Name, MDCPaletteTint200Name, MDCPaletteTint300Name,
     MDCPaletteTint400Name, MDCPaletteTint500Name, MDCPaletteTint600Name, MDCPaletteTint700Name,
@@ -539,7 +539,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
   NSMutableDictionary *tints = [[NSMutableDictionary alloc] init];
   for (NSString *name in tintNames) {
-    [tints setObject:MDCPaletteTintFromTargetColor(tintColor, name) forKey:name];
+    [tints setObject:MDCPaletteTintFromTargetColor(target500Color, name) forKey:name];
   }
 
   NSArray *accentNames = @[
@@ -548,7 +548,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   ];
   NSMutableDictionary *accents = [[NSMutableDictionary alloc] init];
   for (NSString *name in accentNames) {
-    [accents setObject:MDCPaletteTintFromTargetColor(tintColor, name) forKey:name];
+    [accents setObject:MDCPaletteAccentFromTargetColor(target500Color, name) forKey:name];
   }
 
   return [self paletteWithTints:tints accents:accents];
