@@ -16,5 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-UIColor* _Nonnull MDCTintFromTargetColor(UIColor* _Nonnull targetColor,
-                                         NSString* _Nonnull tintName);
+UIColor* _Nonnull MDCPaletteTintFromTargetColor(UIColor* _Nonnull targetColor,
+                                                NSString* _Nonnull tintName);
+
+UIColor* _Nonnull MDCPaletteAccentFromTargetColor(UIColor* _Nonnull targetColor,
+                                                  NSString* _Nonnull accentName);
