@@ -71,6 +71,10 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
     _bodyLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _bodyLabel.numberOfLines = 0;
     [self addSubview:_bodyLabel];
+
+    UITapGestureRecognizer *tapRecognizer =
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapView:)];
+    [self addGestureRecognizer:tapRecognizer];
   }
   return self;
 }
@@ -88,18 +92,16 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
   [self setNeedsLayout];
   [self layoutIfNeeded];
 
-  [_displayMaskLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor];
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.0].CGColor];
 
-
+  _displayedView.center = center;
   CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
                                           _displayedView.frame.size.height/2);
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:0.35];
-  [_displayMaskLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:1.0].CGColor animated:YES];
   [_displayMaskLayer setCenter:displayMaskCenter radius:kMDCFeatureHighlightInnerRadius animated:YES];
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:1.0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:kMDCFeatureHighlightInnerRadius animated:YES];
@@ -124,19 +126,33 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
   [CATransaction commit];
 }
 
-- (void)animateDismiss {
+- (void)animateAccepted {
   CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
                                           _displayedView.frame.size.height/2);
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:0.2];
-  [_displayMaskLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor animated:YES];
   [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.0].CGColor animated:YES];
   [_outerLayer setCenter:_highlightPoint radius:1.125 * _outerRadius animated:YES];
+  [CATransaction commit];
+}
+
+- (void)animateRejected {
+  CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
+                                          _displayedView.frame.size.height/2);
+
+  [CATransaction begin];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+  [CATransaction setAnimationDuration:0.2];
+  [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
+  [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor animated:YES];
+  [_innerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
+  [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.0].CGColor animated:YES];
+  [_outerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
   [CATransaction commit];
 }
 
@@ -161,6 +177,16 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
   CGFloat distX = MAX(ABS(CGRectGetMaxX(textFrames) - _highlightPoint.x), ABS(CGRectGetMinX(textFrames) - _highlightPoint.x));
   CGFloat distY = MAX(ABS(CGRectGetMaxY(textFrames) - _highlightPoint.y), ABS(CGRectGetMinY(textFrames) - _highlightPoint.y));
   _outerRadius = sqrt(distX * distX + distY * distY) + kMDCFeatureHighlightTextPadding;
+}
+
+- (void)didTapView:(UITapGestureRecognizer *)tapGestureRecognizer {
+  CGPoint pos = [tapGestureRecognizer locationInView:self];
+  CGFloat dist = sqrt(pow(pos.x - _highlightPoint.x, 2) + pow(pos.y - _highlightPoint.y, 2));
+  BOOL accepted = dist <= kMDCFeatureHighlightInnerRadius;
+
+  if (self.interactionBlock) {
+    self.interactionBlock(accepted);
+  }
 }
 
 @end

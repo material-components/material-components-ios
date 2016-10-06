@@ -16,14 +16,18 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
+
 @interface MDCFeatureHighlightView : UIView
 
 @property (nonatomic, strong) UIView *displayedView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *bodyLabel;
+@property (nonatomic, strong) MDCFeatureHighlightInteractionBlock interactionBlock;
 
 - (void)animateDiscover:(CGPoint)center;
 - (void)animatePulse;
-- (void)animateDismiss;
+- (void)animateAccepted;
+- (void)animateRejected;
 
 @end

@@ -62,6 +62,7 @@
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
                                                               completion:nil];
+  [self presentViewController:vc animated:NO completion:nil];
 }
 
 @end

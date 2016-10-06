@@ -18,13 +18,23 @@
 
 #import "private/MDCFeatureHighlightView.h"
 
-@implementation MDCFeatureHighlightViewController
+@implementation MDCFeatureHighlightViewController {
+  MDCFeatureHighlightCompletion _completion;
+  MDCFeatureHighlightView *_featureHighlightView;
+  NSTimer *_pulseTimer;
+  UIView *_displayedView;
+  UIView *_highlightedView;
+}
 
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
                                     andShowView:(nonnull UIView *)displayedView
                                      completion:(nullable MDCFeatureHighlightCompletion)completion {
   if (self = [super initWithNibName:nil bundle:nil]) {
+    _highlightedView = highlightedView;
+    _displayedView = displayedView;
+    _completion = completion;
 
+    self.modalPresentationStyle = UIModalPresentationOverFullScreen;
   }
   return self;
 }
@@ -36,9 +46,39 @@
                             completion:completion];
 }
 
+- (void)dealloc {
+  [_pulseTimer invalidate];
+}
+
 - (void)loadView {
-  MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
-  self.view = view;
+  _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
+  _featureHighlightView.displayedView = _displayedView;
+  _featureHighlightView.titleLabel.text = @"Title";
+  _featureHighlightView.bodyLabel.text = @"Description text goes here.";
+
+  __weak typeof(self) weakSelf = self;
+  _featureHighlightView.interactionBlock = ^(BOOL accepted) {
+    typeof(self) strongSelf = weakSelf;
+    [strongSelf dismiss:accepted];
+  };
+
+  self.view = _featureHighlightView;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
+                                                    toView:_displayedView];
+  [_featureHighlightView animateDiscover:point];
+
+  _pulseTimer = [NSTimer scheduledTimerWithTimeInterval:1.5
+                                                 target:_featureHighlightView
+                                               selector:@selector(animatePulse)
+                                               userInfo:NULL
+                                                repeats:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [_pulseTimer invalidate];
 }
 
 - (UIColor *)outerHighlightColor {
@@ -56,11 +96,26 @@
 }
 
 - (void)acceptFeature {
-
+  [self dismiss:YES];
 }
 
 - (void)rejectFeature {
+  [self dismiss:NO];
+}
 
+- (void)dismiss:(BOOL)accepted {
+  if (accepted) {
+    [_featureHighlightView animateAccepted];
+  } else {
+    [_featureHighlightView animateRejected];
+  }
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [self dismissViewControllerAnimated:YES completion:^() {
+      if (_completion) {
+        _completion(YES);
+      }
+    }];
+  });
 }
 
 @end
