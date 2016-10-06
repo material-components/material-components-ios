@@ -26,12 +26,12 @@ private func generateRandomPalettes(count: Int) -> [(name: String, palette: MDCP
     let rgb = [randomFloat(), randomFloat(), randomFloat()]
     let name = String(format: "Generated from #%2X%2X%2X", Int(rgb[0] * 255), Int(rgb[1] * 255), Int(rgb[2] * 255))
     let color = UIColor.init(red: rgb[0], green: rgb[1], blue: rgb[2], alpha: 1)
-    palettes.append((name, MDCPalette.init(expandedFromColor: color)))
+    palettes.append((name, MDCPalette.init(generatedFromColor: color)))
   }
   return palettes
 }
 
-class PalettesExpandedExampleViewController: PalettesExampleViewController {
+class PalettesGeneratedExampleViewController: PalettesExampleViewController {
   private let numPalettes = 10
 
   convenience init() {
@@ -41,9 +41,9 @@ class PalettesExpandedExampleViewController: PalettesExampleViewController {
 }
 
 // MARK: Catalog by convention
-extension PalettesExpandedExampleViewController {
+extension PalettesGeneratedExampleViewController {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Palettes", "Expanded Palettes"]
+    return ["Palettes", "Generated Palettes"]
   }
 
   class func catalogDescription() -> String {
