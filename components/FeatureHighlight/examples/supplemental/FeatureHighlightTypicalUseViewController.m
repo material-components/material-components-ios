@@ -15,10 +15,13 @@
  */
 
 #import "FeatureHighlightTypicalUseViewController.h"
-#import "MaterialFeatureHighlight.h"
+
 #import "MaterialButtons.h"
+#import "MaterialFeatureHighlight.h"
+#import "MaterialTypography.h"
 
 @implementation FeatureHighlightTypicalUseViewController {
+  UILabel *_infoLabel;
   UIButton *_button;
 }
 
@@ -46,6 +49,17 @@
                 action:@selector(didTapButton:)
       forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_button];
+
+  UITapGestureRecognizer *tapRecognizer =
+      [[UITapGestureRecognizer alloc] initWithTarget:self
+                                              action:@selector(didTapBackground:)];
+  [self.view addGestureRecognizer:tapRecognizer];
+
+  _infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _infoLabel.text = @"Tap anywhere to move the button.";
+  _infoLabel.font = [MDCTypography subheadFont];
+  _infoLabel.textColor = [_infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
+  [self.view addSubview:_infoLabel];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -56,6 +70,12 @@
   frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
   frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
   _button.frame = frame;
+
+  CGSize labelSize = [_infoLabel sizeThatFits:self.view.frame.size];
+  _infoLabel.frame = (CGRect){
+    CGPointMake(self.view.frame.size.width/2 - labelSize.width / 2, 20),
+    labelSize
+  };
 }
 
 - (void)didTapButton:(id)sender {
@@ -63,6 +83,13 @@
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
                                                               completion:nil];
   [self presentViewController:vc animated:NO completion:nil];
+}
+
+- (void)didTapBackground:(UITapGestureRecognizer *)recognizer {
+  CGPoint location = [recognizer locationInView:recognizer.view];
+  location.x -= _button.frame.size.width / 2;
+  location.y -= _button.frame.size.height / 2;
+  _button.frame = (CGRect) { location, _button.frame.size };
 }
 
 @end
