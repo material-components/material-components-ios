@@ -158,7 +158,7 @@ In `viewDidLoad`, configure the collection view’s appearance:
 ~~~swift
 override func viewDidLoad() {
   super.viewDidLoad()
-  styler.cellStyle = .card
+  styler.cellStyle = .Card
 }
 ~~~
         
@@ -167,7 +167,7 @@ Below `viewDidLoad`, add a mock datasource:
 ~~~ swift
 override func viewDidLoad() {
   super.viewDidLoad()
-  styler.cellStyle = .card
+  styler.cellStyle = .Card
 }
 
 override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -206,7 +206,7 @@ class ViewController: MDCCollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    styler.cellStyle = .card
+    styler.cellStyle = .Card
   }
 ...
 ~~~
@@ -216,7 +216,7 @@ Configure the app bar in `viewDidLoad`:
 ~~~ swift
 override func viewDidLoad() {
   super.viewDidLoad()
-  styler.cellStyle = .card
+  styler.cellStyle = .Card
 
   addChildViewController(appBar.headerViewController)
   appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
@@ -247,7 +247,7 @@ class ViewController: MDCCollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    styler.cellStyle = .card
+    styler.cellStyle = .Card
 
     addChildViewController(appBar.headerViewController)
     appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
