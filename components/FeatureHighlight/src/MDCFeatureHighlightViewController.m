@@ -59,8 +59,8 @@
 - (void)loadView {
   _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
   _featureHighlightView.displayedView = _displayedView;
-  _featureHighlightView.titleLabel.text = @"Title";
-  _featureHighlightView.bodyLabel.text = @"Description text goes here.";
+  _featureHighlightView.titleLabel.text = self.titleText;
+  _featureHighlightView.bodyLabel.text = self.bodyText;
 
   __weak typeof(self) weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
