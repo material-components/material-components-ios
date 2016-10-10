@@ -12,6 +12,9 @@ howto:
         - name: Build environment
           url: "/howto/build-env/"
           markdown: "howto/build-env/README.md"
+        - name: FAQ
+          url: "/howto/faq/"
+          markdown: "howto/faq/README.md"
 contributing:
   markdown: "contributing/README.md"
   children:
