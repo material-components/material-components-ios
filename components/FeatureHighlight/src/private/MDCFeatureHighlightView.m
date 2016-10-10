@@ -189,34 +189,45 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
       _highlightCenter.y = _highlightPoint.y - kMDCFeatureHighlightInnerRadius - textHeight/2;
     }
     if (leftHalf) {
-      _highlightCenter.x = _highlightPoint.x - 20;
-    } else {
       _highlightCenter.x = _highlightPoint.x + 20;
+    } else {
+      _highlightCenter.x = _highlightPoint.x - 20;
     }
   }
 
+  _displayedView.center = _highlightPoint;
   _innerLayer.center = _highlightPoint;
   _pulseLayer.center = _highlightPoint;
   _outerLayer.center = _highlightCenter;
 
-  _displayedView.center = _highlightPoint;
+  CGPoint titlePos = CGPointMake(0, 0);
+  if (leftHalf) {
+    titlePos.x = kMDCFeatureHighlightTextPadding;
+  } else {
+    titlePos.x = self.frame.size.width - MAX(titleSize.width, detailSize.width) - kMDCFeatureHighlightTextPadding;
+  }
+  if (topHalf) {
+    titlePos.y = _highlightPoint.y + kMDCFeatureHighlightInnerPadding + kMDCFeatureHighlightInnerRadius;
+  } else {
+    titlePos.y = _highlightPoint.y - kMDCFeatureHighlightInnerPadding - kMDCFeatureHighlightInnerRadius - textHeight;
+  }
 
   CGRect titleFrame = (CGRect) {
-    CGPointMake(kMDCFeatureHighlightTextPadding, _highlightPoint.y + kMDCFeatureHighlightInnerPadding + kMDCFeatureHighlightInnerRadius),
+    titlePos,
     titleSize
   };
   _titleLabel.frame = titleFrame;
 
   CGRect detailFrame = (CGRect) {
-    CGPointMake(kMDCFeatureHighlightTextPadding, CGRectGetMaxY(titleFrame)),
+    CGPointMake(titlePos.x, CGRectGetMaxY(titleFrame)),
     detailSize
   };
   _bodyLabel.frame = detailFrame;
 
   // calculating the distance between center and the corner of the titleLabel furthest from the center
   CGRect textFrames = CGRectUnion(_titleLabel.frame, _bodyLabel.frame);
-  CGFloat distX = MAX(ABS(CGRectGetMaxX(textFrames) - _highlightPoint.x), ABS(CGRectGetMinX(textFrames) - _highlightPoint.x));
-  CGFloat distY = MAX(ABS(CGRectGetMaxY(textFrames) - _highlightPoint.y), ABS(CGRectGetMinY(textFrames) - _highlightPoint.y));
+  CGFloat distX = MAX(ABS(CGRectGetMaxX(textFrames) - _highlightCenter.x), ABS(CGRectGetMinX(textFrames) - _highlightCenter.x));
+  CGFloat distY = MAX(ABS(CGRectGetMaxY(textFrames) - _highlightCenter.y), ABS(CGRectGetMinY(textFrames) - _highlightCenter.y));
   _outerRadius = sqrt(distX * distX + distY * distY) + kMDCFeatureHighlightTextPadding;
 }
 
