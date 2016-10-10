@@ -117,4 +117,15 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertLessThan(navBar.titleLabel.center.x, CGRectGetMidX(navBar.bounds));
 }
 
+- (void)testDefaultTextAlignment {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+
+  // When
+  MDCNavigationBarTitleAlignment alignment = navBar.titleAlignment;
+
+  // Then
+  XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentLeading);
+}
+
 @end
