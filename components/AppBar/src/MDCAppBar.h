@@ -27,6 +27,10 @@
 
  Learn more at the [Material
  spec](https://www.google.com/design/spec/patterns/scrolling-techniques.html)
+
+ ### Dependencies
+
+ AppBar depends on the FlexibleHeader, HeaderStackView, and NavigationBar material components.
  */
 @interface MDCAppBar : NSObject
 

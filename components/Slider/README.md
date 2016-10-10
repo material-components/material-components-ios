@@ -1,9 +1,7 @@
----
-title:  "Slider"
-layout: detail
-section: components
-excerpt: "The Slider component provides a material design control for selecting a value from a continuous range or discrete set of values."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Slider/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Slider">GitHub</a> for README documentation.{% endif %}-->
+
 # Slider
 
 <div class="ios-animation right" markdown="1">
@@ -24,7 +22,7 @@ or discrete set of values.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCSlider.html">MDCSlider</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Slider/apidocs/Classes/MDCSlider.html">MDCSlider</a></li>
 </ul>
 
 - - -

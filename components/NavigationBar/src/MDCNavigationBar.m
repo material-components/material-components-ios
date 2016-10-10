@@ -217,6 +217,18 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   UIControlContentVerticalAlignment titleAlignment = [self titleAlignment];
   _titleLabel.frame =
       [self mdc_frameAlignedVertically:titleFrame withinBounds:textFrame alignment:titleAlignment];
+  if (_titleLabel.textAlignment == NSTextAlignmentCenter) {
+    _titleLabel.center = CGPointMake(CGRectGetMidX(self.bounds), _titleLabel.center.y);
+    if (CGRectGetMaxX(_titleLabel.frame) > CGRectGetMaxX(textFrame)) {
+      CGPoint center = _titleLabel.center;
+      center.x -= CGRectGetMaxX(_titleLabel.frame) - CGRectGetMaxX(textFrame);
+      _titleLabel.center = center;
+    } else if (CGRectGetMinX(_titleLabel.frame) < CGRectGetMinX(textFrame)) {
+      CGPoint center = _titleLabel.center;
+      center.x += CGRectGetMinX(textFrame) - CGRectGetMinX(_titleLabel.frame);
+      _titleLabel.center = center;
+    }
+  }
   self.titleView.frame = textFrame;
 
   // Button and title label alignment
@@ -247,6 +259,15 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
   CGFloat height = (isPad ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight);
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
+}
+
+- (NSTextAlignment)textAlignment {
+  return _titleLabel.textAlignment;
+}
+
+- (void)setTextAlignment:(NSTextAlignment)textAlignment {
+  _titleLabel.textAlignment = textAlignment;
+  [self setNeedsLayout];
 }
 
 #pragma mark Private
@@ -346,7 +367,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 #pragma mark Public
 
 - (void)setTitle:(NSString *)title {
-  if (self.titleTextAttributes) {
+  // |self.titleTextAttributes| can only be set if |title| is set
+  if (self.titleTextAttributes && title.length > 0) {
     _titleLabel.attributedText =
         [[NSAttributedString alloc] initWithString:title attributes:_titleTextAttributes];
   } else {
@@ -392,7 +414,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // Copy attributes dictionary
   _titleTextAttributes = [titleTextAttributes copy];
   if (_titleLabel) {
-    if (_titleTextAttributes) {
+    // |_titleTextAttributes| can only be set if |self.title| is set
+    if (_titleTextAttributes && self.title.length > 0) {
       // Set label text as newly created attributed string with attributes if non-nil
       _titleLabel.attributedText =
           [[NSAttributedString alloc] initWithString:self.title attributes:_titleTextAttributes];

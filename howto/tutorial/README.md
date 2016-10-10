@@ -1,787 +1,351 @@
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
+
+## Tutorial
+
+Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
+
+This tutorial will teach you how to link Material Components to an application, use a material collection view, and add an expandable header to the top of your controller.
+
+When you're done, you'll have an app that looks like this:
+
+![Goal app with collections and a flexible header.](docs/assets/App-Collection-With-Flexing.gif)
+
 ---
-title:  "Material Components Development Guide"
-layout: landing
-section: howto
----
 
-# Material Components Development Guide
+#### NOTE: If you've already linked the MaterialComponents CocoaPod to your project, you can skip to Step 3. 
 
-Material Components for iOS is a set of components that help iOS app developers
-build material design apps. These are the same components Google uses to build
-apps like Google Maps, Calendar, Chrome and many more.
+## 1.  Create a new Xcode application:
+Let's make a simple app to play in.
 
-Individually, the components bring material design principles to common UI
-elements and behaviors, but tailored for iOS. Our team has taken care to design
-the APIs to feel natural on iOS.
+Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`. 
 
-Our goal is to make implementing material design as easy as possible. The
-components are easy to assemble and be used piecemeal.
+In the template window, select `iOS` as the platform and `Single View Application` as the Application type. Click `Next`.
+  
+Name your project `MDC-Tutorial` and choose your preferred language. Click `Next`.
+  
+Choose a place to save your new project that you can remember. Click `Create`.
+  
+Close your new project by going to menu `File -> Close Project` or holding `option + command + w`. We’ll come back to the project in a minute.
+  
+## 2.  Setup CocoaPods:
+[CocoaPods](https://cocoapods.org/) is a delightful way to add libraries and frameworks to apps. If you've used it before, this will look familiar to you.
 
-This tutorial will take you through building an example app called Abstractor
-and show some of the neat features and benefits of using our components to
-build your app. In order to get through this tutorial, Swift and iOS
-development knowledge is required.
+Open `Terminal`.
 
-- - -
+If you do not already have CocoaPods installed on this system, run:
 
-## Getting Started
-
-### Tutorial Setup
-
-Material Components for iOS can be integrated like any other shared code
-library on iOS. The preferred method of integration is through CocoaPods.
-
-To help get started quickly, `git clone` this skeleton new project which the
-rest of the tutorial will use.
-
-~~~ bash
-git clone https://github.com/google/material-components-ios-example/
+~~~ 
+sudo gem install cocoapods
 ~~~
 
-This project is similar to a new project created using Xcode's new project
-template except with a small number of changes:
+Navigate to your MDC-Tutorial project's directory and create a `Podfile` by running:
 
-1. Removes the Main.storyboard and references to it in favor of
-   programmatically creating the UI.
-2. Adds a bridging header (BridgingHeader.h) and the Xcode configuration for it.
-3. Adds a simple String class extension for creating sample text.
-4. Adds two icons (search and add) from
-   [Material Icons](https://github.io/google/material-icons)
-5. Creates a new MainViewController.swift.
+~~~
+cd [directory of your project]
+pod init
+~~~ 
 
-#### CocoaPods
+Open the new `Podfile` in a text editor or by running:
 
-The first step is to add Material Components through CocoaPods. The
-[Material Components quickstart](https://materialcomponents.org/) has detailed
-instructions, but in short, create a Podfile in the root of the example with
-the following contents:
-
-~~~ ruby
-target 'Abstractor' do
-  pod 'MaterialComponents'
-end
+~~~        
+open -a Xcode Podfile
 ~~~
 
-Run `pod install` in that directory and open up `Abstractor.xcworkspace`.
-
-#### Bridging for Swift
-
-Material Components is written in Objective-C and is completely usable from
-Swift. In order to make the classes visible to Swift, the headers need to be
-added to the `BridgingHeaders.h`. Open up `BridgingHeaders.h` and add the
-following lines.
-
-~~~ objc
-#import "MaterialAppBar.h"
-#import "MaterialButtons.h"
-#import "MaterialCollections.h"
-#import "MaterialFlexibleHeader.h"
-~~~
-
-#### Building and running the app
-
-The Abstractor project should be now set up and ready to run. Building and
-running the project should show you a fairly boring app with a yellow
-background with no contents. That is our skeleton project the rest of the
-tutorial will use.
-
-**TODO: Insert image of the app.**
-
-
-- - -
-
-## Material Headers
-
-Headers exist in nearly all apps we see to provide framing and navigation. The
-header and scrolling behavior is well defined in the
-[Material Design Guidelines](https://www.google.com/design/spec/TODO) but it is
-tricky to get right.
-
-Material Components for iOS provides both a higher level and lower level
-component that allow developers to easily customize the right behavior for the
-view controller they are building. Both implementations provide a responsive
-header that can expand and contract in response to scrolling behaviors to
-maximize the content area or show high level information to the user.
-
-The [App Bar](https://materialcomponents.org/components/appbar/) is the first
-way to implement a response header. It uses the familiar UINavigationItem
-properties of a UIViewController to derive the contents of the header view.
-
-The
-[Flexible Header](https://materialcomponents.org/components/flexible-header/)
-is the second way to implement the responsive header. This component is what
-the App Bar is built on and is perfect if the developer would like fine grained
-control over its contents and behavior. For example, the flexible header can
-contain a fully custom view that would respond to size changes as the user
-scrolled.
-
-If you are used to UINavigationController's UINavigationBar, the fundamental
-difference in design is that your UIViewController owns the header in its own
-view hierarchy. This contrasts with UINavigationBar being part of
-UINavigationController's view hierarchy. The different view hierarchy gives
-developers more flexibility when animating between view controllers or
-customizing unique behaviors when the size of the header changes.
-
-- - -
-
-## Starting with App Bar
-
-In the Abstractor project, there is a view controller already created called
-MainViewController. To start, we will add a scroll view to the
-MainViewController since the AppBar works best with a scroll view.
-
-Modify the MainViewController.swift by adding a UIScrollView. Make the
-following changes to the MainViewController:
+Add the `Material Components` pod to the `Podfile` by copying:
 
 <!--<div class="material-code-render" markdown="1">-->
-
 #### Swift
-
 ~~~ swift
-class MainViewController : UIViewController {
-  var scrollView: UIScrollView?
+        
+target 'MDC-Tutorial' 
+use_frameworks!
+    
+# Pods for MDC-Tutorial
+pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
+    
+end
+~~~ 
 
+#### Objective-C
+~~~ objc
+
+target 'MDC-Tutorial' 
+#use_frameworks!
+
+# Pods for MDC-Tutorial
+pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
+
+end
+~~~ 
+<!--</div>-->
+
+Save the `Podfile`.
+
+Back in `Terminal`, install your new pod and open the new workspace:
+
+~~~
+pod install
+open MDC-Tutorial.xcworkspace
+~~~
+
+![CocoaPods installation script and opening of workspace into Xcode](docs/assets/Terminal-Pod-Installation.jpg)
+
+CocoaPods has downloaded and linked MaterialComponents to your project!
+
+If you'd like to learn more about CocoaPods, there's a great [video](https://youtu.be/iEAjvNRdZa0) that puts it all in black and white.
+
+
+## 3.  Add a Material Collection View:
+In Xcode, select `ViewController.swift` or `ViewController.h`. 
+
+![Selecting the correct view controller file in Xcode's file navigator](docs/assets/Xcode-Select-File.gif)
+
+Then import Material Collections and set `ViewController`’s superclass to `MDCCollectionViewController`:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift (ViewController.swift)
+~~~ swift
+import UIKit
+import MaterialComponents.MaterialCollections
+
+class ViewController: MDCCollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    // Create and initialize a blank scroll view.
-    scrollView = UIScrollView(frame: view.bounds)
-    scrollView!.contentSize = CGSize(width: view.bounds.size.width, height: 1000)
-    scrollView!.backgroundColor = UIColor.whiteColor()
-    view.addSubview(scrollView!)
   }
 }
 ~~~
+
+#### Objective-C (ViewController.h)
+~~~ objc
+#import <UIKit/UIKit.h>
+#import "MaterialCollections.h"
+
+@interface ViewController : MDCCollectionViewController
+
+@end
+~~~
 <!--</div>-->
 
-This snippet is basic UIKit code to create a scroll view, setting the size of
-the scroll view to be at least 1000 points tall so it will scroll further off
-screen.
+        
+Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
+    
+<!--{% if site.link_to_site == "true" %}-->
+[![In the storyboard, replacing the default view controller](docs/assets/Xcode-Storyboard-Replace-Controller.jpg)](https://material-ext.appspot.com/mdc-ios-preview/howto/tutorial/docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
+<!--{% else %}<div class="ios-animation large" markdown="1">
+ <video src="docs/assets/Xcode-Storyboard-Replace-Controller.m4v" autoplay loop></video>
+ </div>
+ {% endif %}-->
 
-To actually add the App Bar, we create an instance of one:
 
-<!--<div class="material-code-render" markdown="1">-->
 
-#### Swift
+
+Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
+
+then set its reuse identifier to `cell`:
+
+<!--{% if site.link_to_site == "true" %}-->
+[![In the storyboard, changing the cell class and identifier](docs/assets/Xcode-Storyboard-Define-Cell.jpg)](https://material-ext.appspot.com/mdc-ios-preview/howto/tutorial/docs/assets/Xcode-Storyboard-Define-Cell.m4v)
+<!--{% else %}<div class="ios-animation large" markdown="1">
+<video src="docs/assets/Xcode-Storyboard-Define-Cell.m4v" autoplay loop></video>
+</div>
+ {% endif %}-->
+
+
+In `viewDidLoad`, configure the collection view’s appearance:
+
+~~~swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+  styler.cellStyle = .card
+}
+~~~
+        
+Below `viewDidLoad`, add a mock datasource:
 
 ~~~ swift
-class MainViewController : UIViewController {
-  var scrollView: UIScrollView?
+override func viewDidLoad() {
+  super.viewDidLoad()
+  styler.cellStyle = .card
+}
+
+override func numberOfSections(in collectionView: UICollectionView) -> Int {
+  return 5
+}
+
+override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  return 4
+}
+
+override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+
+  if let textCell = cell as? MDCCollectionViewTextCell {
+
+  // Add some mock text to the cell.
+  let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
+  textCell.textLabel?.text = animals[indexPath.item]
+  }
+
+  return cell
+}
+~~~
+        
+Build and run your app. It should display a scrollable, touchable collection view:
+
+![Running the app to show a working collection of cells](docs/assets/App-Collection-No-AppBar.gif)
+
+## 4.  Add an app bar:
+Add the property declaration to the top of the class:
+
+~~~ swift
+class ViewController: MDCCollectionViewController {
 
   let appBar = MDCAppBar()
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
-    addChildViewController(appBar.headerViewController)
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    styler.cellStyle = .card
   }
+...
+~~~
 
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
+Configure the app bar in `viewDidLoad`:
 
-    addChildViewController(appBar.headerViewController)
-  }
+~~~ swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+  styler.cellStyle = .card
+
+  addChildViewController(appBar.headerViewController)
+  appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
+
+  appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+  appBar.addSubviewsToParent()
+
+  title = "Material Components"
+}
+~~~
+    
+Build and run your app. It should display a white rectangle above the collection view: 
+
+![Running the app to show the new app bar](docs/assets/App-Collection-No-Flexing.gif)
+
+But if you pull down, it doesn’t expand at all.
+
+## 5.  Make the app bar flexible by forwarding scroll view delegate methods:
+Implement the UIScrollViewDelegate methods:
+
+~~~swift
+import UIKit
+import MaterialComponents
+
+class ViewController: MDCCollectionViewController {
+
+  let appBar = MDCAppBar()
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    styler.cellStyle = .card
 
-    // Create and initialize a blank scroll view.
-    scrollView = UIScrollView(frame: view.bounds)
-    scrollView!.contentSize = CGSize(width: view.bounds.size.width, height: 1000)
-    scrollView!.backgroundColor = UIColor.whiteColor()
-    view.addSubview(scrollView!)
+    addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
 
+    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
     appBar.addSubviewsToParent()
+
+    title = "Material Components"
   }
-}
 
-~~~
-<!--</div>-->
-
-At this point, the app will add a grey header bar at the top of the view, but
-the scroll view will live under the header bar. You can observe this by
-scrolling the view and seeing the scroll indicator go below the grey header bar.
-
-
-**TODO: Add image of the grey header**
-
-The MDCFlexibleHeaderViewController that is now exposed as a property of the
-MDCAppBar instance doesn't know about the scroll view and therefore it cannot
-adjust any scroll view insets the scroll view needs to render below the bar. To
-rectify this, simply tell the headerView in the MDCFlexibleHeaderViewController
-about the scroll view in viewDidLoad():
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-class MainViewController : UIViewController, MDCAppBarParenting {
-  // ...
-  override func viewDidLoad() {
-    // ...
-
-    // Connect scroll view with the header view controller.
-    appBar.headerViewController.headerView.trackingScrollView = contentScrollView
-    appBar.headerViewController.headerView.behavior = .EnabledWithStatusBar
-    scrollView.delegate = appBar.headerViewController
+  override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 5
   }
-~~~
-<!--</div>-->
 
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 4
+  }
 
-Now the scroll view correctly aligns to the bottom of the header bar. Notice
-that `headerView` had a property called `behavior` which is set to
-EnabledWithStatusBar. This behavior controls how the header view reacts to
-scrolling. When `Enabled`, the header will collapse to maximize the content
-area. Developers can choose whether the status bar should also be hidden.
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
 
-**TODO: Add animation of the grey header collapsing.**
+    if let textCell = cell as? MDCCollectionViewTextCell {
+      
+      // Add some mock text to the cell.
+      let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
+      textCell.textLabel?.text = animals[indexPath.item]
+    }
 
-The status bar is not hiding yet, and the reason is by default UIViewController
-does not hide the status bar. In order for `headerViewController` to assume
-control of the status bar, override the method
-`childViewControllerForStatusBarHidden` to use the headerViewController as the
-childViewController (see the FlexibleHeader component documentation for more
-details):
+    return cell
+  }
 
-<!--<div class="material-code-render" markdown="1">-->
+  // MARK: UIScrollViewDelegate
+    
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidScroll()
+    }
+  }
 
-#### Swift
+  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+    }
+  }
 
-~~~ swift
-class MainViewController : UIViewController, MDCAppBarParenting {
-  // ...
-  override func childViewControllerForStatusBarHidden() -> UIViewController {
-    return appBar.headerViewController
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      let headerView = appBar.headerViewController.headerView
+      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+    }
+  }
+    
+  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      let headerView = appBar.headerViewController.headerView
+      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+    }
   }
 }
 ~~~
-<!--</div>-->
 
+Build and run your app. The app bar should now flex when the collection view is scrolled too far:
 
-**TODO: Add animation of the status bar correctly collapsing.**
+![Running the app to show the new app bar and its flex behavior](docs/assets/App-Collection-With-Flexing.gif)
 
-To complete the integration, let's set a proper color and some items on to the
-header bar.
+---
 
-To set the color of the header, we can directly manipulate the headerView in
-viewDidLoad:
 
-<!--<div class="material-code-render" markdown="1">-->
+## **Next steps**
 
-#### Swift
+This tutorial gives a glimpse of what MDC can do. But there are a lot more components for you to discover.
 
-~~~ swift
-class MainViewController : UIViewController, MDCAppBarParenting {
-  // ...
-  override func viewDidLoad() {
-    // ...
+Use our examples and catalog apps to try out other components and other ways to integrate them into apps.
 
-    // Set color using UIColor extension in UIColorAbstractor.swift
-    appBar.headerViewController.headerView.backgroundColor = UIColor.materialOrange700()
-    appBar.headerViewController.headerView.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.87)
-  }
+### Sample Code
 
-  // Set the status bar to white.
-  override func preferredStatusBarStyle() -> UIStatusBarStyle {
-    return .LightContent
-  }
-}
-~~~
-<!--</div>-->
 
+*   [Pesto: A simple recipe app, incorporating a flexible header, floating action button, and collections.](https://github.com/google/material-components-ios/tree/master/demos/Pesto)
 
-And finally put some buttons in to the header bar.
 
-<!--<div class="material-code-render" markdown="1">-->
+*   [Shrine: A demo shopping app, incorporating a flexible header, custom typography, and collections.](https://github.com/google/material-components-ios/tree/master/demos/Shrine)
 
-#### Swift
+<!--{% if site.link_to_site == "true" %}-->
+<img src="docs/assets/Pesto.gif">
+<img src="docs/assets/Shrine.gif">
+<!--{% else %}<div class="ios-animation right" markdown="1">
+<img src="docs/assets/Shrine.gif">
+</div>
 
-~~~ swift
-class MainViewController : UIViewController, MDCAppBarParenting {
-  override func viewDidLoad() {
-    // ...
+<div class="ios-animation left" markdown="1">
+<img src="docs/assets/Pesto.gif">
+</div> {% endif %}-->
 
-    // Set up UINavigationItems
-    navigationItem.title = "Abstractor".blackout()
-    navigationItem.rightBarButtonItem = UIBarButtonItem(
-      image: UIImage(named: "ic_search")?.imageWithRenderingMode(.AlwaysTemplate),
-      style: .Plain,
-      target: self,
-      action: #selector(MainViewController.search(_:)))
+---
 
-     // Last step in viewDidLoad
-    appBar.addSubviewsToParent()
-  }
+### For more information:
 
-  // Implement the callback method for the search button.
-  func search(target: AnyObject) {
-  }
-}
-~~~
-<!--</div>-->
 
 
-And there you have a responsive header that reacts to the scroll view and
-collapses to maximize the content.
-
-
-- - -
-
-## Flexible Header
-
-One advantage of the App Bar component is its compatibility with
-UINavigationItem. If developers would like to customize the actual contents
-inside the header, they need to look at the powerful Flexible Header component.
-
-Observant developers would already have noticed that App Bar uses Flexible
-Header to create the behavior. Imagine instead that we would like to lock the
-title to the bottom of the header but keep search button attached to the top.
-
-### Create a custom header view
-
-The first thing to do is to create a custom view that will be placed inside the
-FlexibleHeader. This can be in conjunction with the App Bar or completed
-without. Notice in the previous steps, another property we added is the
-`MDCNavigationBar` that provides the logic to layout the single line button bar.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-class CustomHeaderView : UIView {
-  var titleLabel = UILabel()
-  var iconView = UIImageView()
-
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-
-    let icon = UIImage(named: "ic_search")!.imageWithRenderingMode(.AlwaysTemplate)
-    iconView.image = icon
-    iconView.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
-    titleLabel.textColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
-
-    self.addSubview(iconView)
-    self.addSubview(titleLabel)
-  }
-
-  required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    // not implementated
-  }
-
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    // Some fancying arithmetic : TODO replace with autolayout
-    titleLabel.frame = CGRect(x: 16, y: self.bounds.size.height - 40, width: 128, height: 24)
-    iconView.frame = CGRect(x: self.bounds.size.width - 24 - 16, y: 20 + 16, width: 24, height: 24)
-  }
-}
-~~~
-<!--</div>-->
-
-
-This header view creates a similar view as the one in the App Bar, for
-simplicity, but the layoutSubviews logic locks the titleLabel to the bottom of
-the header while the iconView stays locks to the top right.
-
-
-### Adding Flexible Header
-
-Integrating the Flexible Header is about the same amount of work as App Bar:
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-class MainViewController : UIViewController, MDCFlexibleHeaderViewLayoutDelegate {
-  var headerViewController: MDCFlexibleHeaderViewController
-  var customHeaderView = CustomHeaderView()
-
-  //...
-}
-~~~
-<!--</div>-->
-
-Override the initialize to add the MDCFlexibleHeaderViewController to the view
-controller as a childViewController, similar to how we were doing before with
-the App Bar:
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-   headerViewController = MDCFlexibleHeaderViewController()
-   super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-   self.addChildViewController(headerViewController)
- }
-
- required init?(coder aDecoder: NSCoder) {
-   headerViewController = MDCFlexibleHeaderViewController()
-   super.init(coder: aDecoder)
-   self.addChildViewController(headerViewController)
- }
-~~~
-<!--</div>-->
-
-Initialize the customHeaderView and connect the headerViewController's
-headerView to the UIViewController's hierarchy. This replaces
-`appBar.addSubviewsToParent()` was doing except this is not creating any
-observing of the UINavigationItem.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-override func viewDidLoad() {
-  super.viewDidLoad()
-
-  // ...
-
-  // Remove setting up UINavigationItem and appBar.addSubviewsToParent().
-
-  // Initialize the customHeaderView
-  var headerViewInitialFrame = headerViewController.headerView.contentView!.bounds
-  headerViewInitialFrame.size.height = 56 + 20
-  customHeaderView.frame = headerViewInitialFrame
-  headerViewController.headerView.contentView?.addSubview(customHeaderView)
-
-  // Connect headerViewController to this viewController's view hierarchy
-  view.addSubview(headerViewController!.headerView)
-  headerViewController.didMoveToParentViewController(self)
-  headerViewController.layoutDelegate = self
-}
-~~~
-<!--</div>-->
-
-One final thing that is added is to add this viewController as the
-layoutDelegate. This allows us to listen for events when the header is resized.
-And we can implement a simple way to update the header view contents when the
-layout is changed.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-// MDCFlexibleHeaderViewLayoutDelegate
- func flexibleHeaderViewController(flexibleHeaderViewController: MDCFlexibleHeaderViewController,
-                                   flexibleHeaderViewFrameDidChange headerView: MDCFlexibleHeaderView) {
-   customHeaderView.frame = headerView.contentView!.bounds
- }
-~~~
-<!--</div>-->
-
-
-
-
-
-- - -
-
-## Material Collection Views
-
-In previous examples, we used a scroll view rather than any content. In
-Material Components, there is a sophisticated collection view addition that
-we've added which implements many of the Material design styled layout and
-transitions.
-
-In order for styling to be done in a compartmentalized way,
-MDCCollectionViewController has an abstraction called MDCCollectionViewModel.
-The model is an implementation of the UICollectionViewDataSource. The model
-implements storage for a model objects that contain the data for rendering the
-cells.
-
-Apps can use the MDCCollectionViewController without the model API and still
-get the same styling, but there is more plumbing that needs to be implemented.
-In some cases, working without the model API is required if more fine grained
-control is required.
-
-The following steps will use the MDCCollectionViewModel to build up a simple
-collection view
-
-### Using the MDCCollectionViewController
-
-MDCCollectionViewController is a subclass of the UICollectionViewController and
-can be used in place of a UIViewController base class. Using this is the
-easiest way to get started with Material collection views.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-class MainViewController : MDCCollectionViewController, MDCAppBarParenting {
-
-}
-~~~
-<!--</div>-->
-
-The collection view will replace the scroll view that was in the App Bar
-example earlier. In place of the scroll view, a model is initialized:
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-override func viewDidLoad() {
-  super.viewDidLoad()
-
-  // Remove initialization of the scrollView.
-
-  // Initialize the collection view.
-  let thisCollectionView = collectionView as UICollectionView!
-  thisCollectionView.mdc_styleController.cellStyle = .Grouped
-  thisCollectionView.frame = view.bounds
-  thisCollectionView.delegate = self
-  view.addSubview(collectionView!)
-
-  // Setup the collection view as the scroll view for the App Bar header to track.
-  headerViewController?.headerView.trackingScrollView = thisCollectionView
-
-  // Setup the model.
-  model = MDCCollectionViewModel(delegate: self)
-  model.setHeader(MDCCellModel.objectWithHeader("Inbox".blackout()), forSection: 0)
-  // Add 100 rows.
-  for 0..100 {
-    model.addItem(MDCCellModel.objectWithTitle("Hello there".blackout()), toSection: 0)
-  }
-
-  // ...
-  MDCAppBarAddViews(self)
-}
-~~~
-<!--</div>-->
-
-Unlike with the simple example with the App Bar above, the
-UICollectionViewController is the delegate for the UICollectionView, we cannot
-just do a simple delegate assignment like we did with the App Bar to forward
-scroll view events.
-
-Instead, we need to manually forward four additional UIScrollViewDelegate
-methods to the MDCFlexibleHeaderView to preserve our collapsing header
-functionality.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-
-  override func childViewControllerForStatusBarHidden() -> UIViewController {
-    return headerViewController!
-  }
-
-  // UIScrollViewDelegate
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
-    headerViewController?.headerView.trackingScrollViewDidScroll()
-  }
-
-  override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-    headerViewController?.headerView.trackingScrollViewDidEndDecelerating()
-  }
-
-  override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    headerViewController?.headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
-  }
-
-  override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    headerViewController?.headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity, targetContentOffset: targetContentOffset)
-  }
-~~~
-<!--</div>-->
-
-If these are omitted, the header will continue to work, but there will not be
-any collapsing and expanding behavior.
-
-If you prefer to use not use the model, see the Material Collection View
-component documentation for more detail. This component also handles editing
-and moving of rows, which is also covered in the component documentation.
-
-### Handling taps on a row
-
-The final step is to handle taps on a row. It is similar to the normal
-UICollectionViewDelegate way of doing things
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-  super.collectionView(collectionView, didSelectItemAtIndexPath: indexPath)
-  let vc = ViewControllerWithCollections(nibName: nil, bundle: nil)
-  self.navigationController?.pushViewController(vc, animated: true)
-}
-~~~
-<!--</div>-->
-
-
-### Bonus: Custom cells
-
-[TODO]
-
-
-- - -
-
-## Material Buttons
-
-Material Components has several styled buttons depending on where they are
-placed. For Floating Action Buttons (spec), the Material Buttons component has
-a class called MDCShapedButton that allows for creating a simple rounded button
-that contains an icon.
-
-To add this to the Abstract app, the button should be initialized at
-viewDidLoad and then added to the view controller's root view so it stays
-floated in the corner.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-override func viewDidLoad() {
-
-  button = MDCFloatingButton(shape: .Default)
-  button!.sizeToFit()
-  var buttonFrame = button!.frame
-  buttonFrame.origin.x = view.bounds.size.width - buttonFrame.size.width - 24
-  buttonFrame.origin.y = view.bounds.size.height - buttonFrame.size.height - 24
-  button!.setBackgroundColor(UIColor(red: 1.0, green: 0.562, blue: 0, alpha:1.0), forState: .Normal)
-  button!.frame = buttonFrame
-  button!.setImage(UIImage(named: "ic_add")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-  button!.tintColor = UIColor.whiteColor()
-  button!.alpha = 0
-  button!.addTarget(self,
-                    action: #selector(ViewControllerWithCollections.add(_:)),
-                    forControlEvents: .TouchUpInside)
-}
-
-override func viewDidAppear {
-  super.viewDidAppear()
-  weak var weakButton = button
-  UIView.animateWithDuration(0.2, animations: {
-    weakButton!.alpha = 1
-  })
-}
-
-~~~
-<!--</div>-->
-
-When the floating action button is tapped on, the `add:` selector is called and
-it will add a row to the collection view. Collection views can animate any
-changes using MDCCollectionViewModel.performBatchOperations
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-func add(target: AnyObject) {
-  weak var weakModel = model
-  model.performBatchUpdates({
-    weakModel?.insertItem(
-      MDCCellModel.objectWithTitle("I got added".blackout(),
-      subtitle: "More text".blackout()),
-      atIndexPath: NSIndexPath(forRow: 0, inSection: 0))
-    },
-    withCollectionView: collectionView,
-    completion: nil)
-}
-~~~
-<!--</div>-->
-
-
-
-- - -
-
-## Bonus : Proper view controller transitions
-
-One odd artifact with this app is the floating action button animates with the
-rest of the view controller. The intention of the design is it floats on top of
-all the views, but for convenience we've added it to the view controller.
-
-Rather, when a view controller transition happens, the floating action button
-should be removed from the view hierarchy and animated in when the view
-controller appears.
-
-Fading in to the view controller:
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
- override func viewDidAppear(animated: Bool) {
-   weak var weakButton = button
-   UIView.animateWithDuration(0.2, animations: {
-     weakButton!.alpha = 1
-   })
- }
-~~~
-<!--</div>-->
-
-Fading out when the view controller changes, replace the
-`collectionView:didSelectItemAtIndexPath` to pushViewController with an
-animation to FAB.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-~~~ swift
-override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-  super.collectionView(collectionView, didSelectItemAtIndexPath: indexPath)
-  let vc = ViewControllerWithCollections(nibName: nil, bundle: nil)
-
-  weak var weakButton = button
-  weak var weakSelf = self
-  UIView.animateWithDuration(0.2, animations: {
-    weakButton!.alpha = 0
-    }) { (completed) in
-      weakSelf?.navigationController?.pushViewController(vc, animated: true)
-  }
-}
-
-~~~
-<!--</div>-->
-
-
-- - -
-
-## Next steps
-
-This tutorial has taken you through implementing a basic material design style
-app with some of our components. There are a lot more components that are not
-covered which are covered in our component documentation.
-
-Also see our examples and catalog apps that are in the project to show how to
-use some of the more advanced features.
-
-- [Read the Component Documentation]({{ site.folder }}/components/)
-  <!--{: .icon-components }-->
-
-- [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
-  <!--{: .icon-stackoverflow }-->
-<!--{: .icon-list }-->
-
-- - -
-
-## Sample Code
-
-- [**Pesto**
-  A simple recipe app, incorporating a flexible header, floating action button, and collections.
-  ](https://github.com/google/material-components-ios/tree/master/demos/Pesto)
-  <!--{: .icon-pesto }-->
-
-- [**Shrine**
-  A demo shopping app, incorporating a flexible header, custom typography, and collections.
-  ](https://github.com/google/material-components-ios/tree/master/demos/Shrine)
-  <!--{: .icon-shrine }-->
-<!--{: .icon-list .large-format }-->
+*   [Read the Component Documentation](https://github.com/google/material-components-ios/blob/develop/howto/tutorial/%7B%7B%20site.folder%20%7D%7D/components)
+*   [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)

@@ -51,6 +51,11 @@ static const CGFloat kValueLabelFontSize = 12.f;
   return self;
 }
 
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+  [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect {
   [super drawRect:rect];
 
@@ -143,6 +148,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   MDCDiscreteDotView *_discreteDots;
   BOOL _shouldDisplayInk;
   MDCNumericValueLabel *_valueLabel;
+  UIPanGestureRecognizer *_dummyPanRecognizer;
 
   // Attributes to handle interaction. To associate touches to previous touches, we keep a reference
   // to the current touch, since the system reuses the same memory address when sending subsequent
@@ -205,6 +211,21 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     self.primaryColor = onTintColor;
     _clearColor = [UIColor colorWithWhite:1.0f alpha:0.0f];
 
+    // We add this UIPanGestureRecognizer to our view so that any superviews of the thumb track know
+    // when we are dragging the thumb track, and can treat it accordingly. Specifically, without
+    // this if a ThumbTrack is contained within a UIScrollView, the scroll view will cancel any
+    // touch events sent to the thumb track whenever the view is scrolling, regardless of whether or
+    // not we're in the middle of dragging the thumb. Adding a dummy gesture recognizer lets the
+    // scroll view know that we are in the middle of dragging, so those touch events shouldn't be
+    // cancelled.
+    //
+    // Note that an alternative to this would be to set canCancelContentTouches = NO on the
+    // UIScrollView, but because we can't guarantee that the thumb track will always be contained in
+    // scroll views configured like that, we have to handle it within the thumb track.
+    _dummyPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:nil];
+    _dummyPanRecognizer.cancelsTouchesInView = NO;
+    [self updateDummyPanRecognizerTarget];
+
     [self setValue:_minimumValue animated:NO];
   }
   return self;
@@ -222,6 +243,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGRect rect = CGRectInset(self.bounds, dx, dx);
   return CGRectContainsPoint(rect, point);
 }
+
+#pragma mark - Properties
 
 - (void)setPrimaryColor:(UIColor *)primaryColor {
   if (primaryColor == nil) {
@@ -302,10 +325,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)setMinimumValue:(CGFloat)minimumValue {
-  _minimumValue = MIN(_maximumValue, minimumValue);
+  _minimumValue = minimumValue;
   CGFloat previousValue = _value;
   if (_value < _minimumValue) {
     _value = _minimumValue;
+  }
+  if (_maximumValue < _minimumValue) {
+    _maximumValue = _minimumValue;
   }
   [self updateThumbTrackAnimated:NO
            animateThumbAfterMove:NO
@@ -314,10 +340,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (void)setMaximumValue:(CGFloat)maximumValue {
-  _maximumValue = MAX(_minimumValue, maximumValue);
+  _maximumValue = maximumValue;
   CGFloat previousValue = _value;
   if (_value > _maximumValue) {
     _value = _maximumValue;
+  }
+  if (_minimumValue > _maximumValue) {
+    _minimumValue = _maximumValue;
   }
   [self updateThumbTrackAnimated:NO
            animateThumbAfterMove:NO
@@ -332,6 +361,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _trackView.layer.cornerRadius = _trackHeight / 2;
   } else {
     _trackView.layer.cornerRadius = 0;
+  }
+}
+
+- (void)setPanningAllowedOnEntireControl:(BOOL)panningAllowedOnEntireControl {
+  if (_panningAllowedOnEntireControl != panningAllowedOnEntireControl) {
+    _panningAllowedOnEntireControl = panningAllowedOnEntireControl;
+    [self updateDummyPanRecognizerTarget];
   }
 }
 
@@ -405,55 +441,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _touchController.defaultInkView.maxRippleRadius = thumbMaxRippleRadius;
 }
 
-- (CGPoint)thumbPosition {
-  return _thumbView.center;
-}
-
-- (CGPoint)thumbPositionForValue:(CGFloat)value {
-  CGFloat relValue = [self relativeValueForValue:value];
-  return CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
-}
-
-/**
- Gives the point on the thumb track that we should set as the "center" of the numeric value label.
- Keep in mind that this doesn't actually correspond to the geometric center of the label, but rather
- the anchor point which falls to the bottom of the label. So by setting this point to be on the
- track we automatically get the property of the numeric value label hovering slightly above the
- track.
- */
-- (CGPoint)numericValueLabelPositionForValue:(CGFloat)value {
-  CGFloat relValue = [self relativeValueForValue:value];
-
-  // To account for the discrete dots on the left and right sides
-  CGFloat range = self.thumbPanRange - _trackHeight;
-  return CGPointMake(_thumbRadius + (_trackHeight / 2) + range * relValue,
-                     self.frame.size.height / 2);
-}
-
-- (CGFloat)valueForThumbPosition:(CGPoint)position {
-  CGFloat relValue = (position.x - _thumbRadius) / self.thumbPanRange;
-  relValue = MAX(0, MIN(relValue, 1));
-  return (1 - relValue) * _minimumValue + relValue * _maximumValue;
-}
-
-// Describes where on the track the specified value would fall. Differs from
-// -thumbPositionForValue: because it varies by whether or not the track ends are inset. Note that
-// if the edges are inset, the two values are equivalent, but if not, this point's x value can
-// differ from the thumb's x value by at most _thumbRadius.
-- (CGPoint)trackPositionForValue:(CGFloat)value {
-  if (_trackEndsAreInset) {
-    return [self thumbPositionForValue:value];
-  }
-
-  CGFloat xValue = [self relativeValueForValue:value] * self.bounds.size.width;
-  return CGPointMake(xValue, self.frame.size.height / 2);
-}
-
 - (void)setIcon:(nullable UIImage *)icon {
   [_thumbView setIcon:icon];
 }
-
-#pragma mark - Enabled state
 
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
@@ -470,11 +460,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return _shouldDisplayInk;
 }
 
-#pragma mark - Private
-
-- (BOOL)isValueAtMinimum {
-  return _value == _minimumValue;
-}
+#pragma mark - Animation helpers
 
 - (CAMediaTimingFunction *)timingFunctionFromUIViewAnimationOptions:
         (UIViewAnimationOptions)options {
@@ -498,13 +484,18 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return [CAMediaTimingFunction functionWithName:name];
 }
 
-- (CGFloat)thumbPanOffset {
-  return _thumbView.frame.origin.x / self.thumbPanRange;
+- (void)interruptAnimation {
+  if (_thumbView.layer.presentationLayer) {
+    _thumbView.layer.position = [(CALayer *)_thumbView.layer.presentationLayer position];
+    _valueLabel.layer.position = [(CALayer *)_valueLabel.layer.presentationLayer position];
+  }
+  [_thumbView.layer removeAllAnimations];
+  [_trackView.layer removeAllAnimations];
+  [_valueLabel.layer removeAllAnimations];
+  [_trackOnLayer removeAllAnimations];
 }
 
-- (CGFloat)thumbPanRange {
-  return self.bounds.size.width - (self.thumbRadius * 2);
-}
+#pragma mark - Layout and animation
 
 /**
  Updates the state of the thumb track. First updates the views with properties that should change
@@ -842,6 +833,70 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGPathRelease(path);
 }
 
+#pragma mark - Interaction Helpers
+
+- (CGPoint)thumbPosition {
+  return _thumbView.center;
+}
+
+- (CGPoint)thumbPositionForValue:(CGFloat)value {
+  CGFloat relValue = [self relativeValueForValue:value];
+  return CGPointMake(_thumbRadius + self.thumbPanRange * relValue, self.frame.size.height / 2);
+}
+
+/**
+ Gives the point on the thumb track that we should set as the "center" of the numeric value label.
+ Keep in mind that this doesn't actually correspond to the geometric center of the label, but rather
+ the anchor point which falls to the bottom of the label. So by setting this point to be on the
+ track we automatically get the property of the numeric value label hovering slightly above the
+ track.
+ */
+- (CGPoint)numericValueLabelPositionForValue:(CGFloat)value {
+  CGFloat relValue = [self relativeValueForValue:value];
+
+  // To account for the discrete dots on the left and right sides
+  CGFloat range = self.thumbPanRange - _trackHeight;
+  return CGPointMake(_thumbRadius + (_trackHeight / 2) + range * relValue,
+                     self.frame.size.height / 2);
+}
+
+- (CGFloat)valueForThumbPosition:(CGPoint)position {
+  CGFloat relValue = (position.x - _thumbRadius) / self.thumbPanRange;
+  relValue = MAX(0, MIN(relValue, 1));
+  return (1 - relValue) * _minimumValue + relValue * _maximumValue;
+}
+
+// Describes where on the track the specified value would fall. Differs from
+// -thumbPositionForValue: because it varies by whether or not the track ends are inset. Note that
+// if the edges are inset, the two values are equivalent, but if not, this point's x value can
+// differ from the thumb's x value by at most _thumbRadius.
+- (CGPoint)trackPositionForValue:(CGFloat)value {
+  if (_trackEndsAreInset) {
+    return [self thumbPositionForValue:value];
+  }
+
+  CGFloat xValue = [self relativeValueForValue:value] * self.bounds.size.width;
+  return CGPointMake(xValue, self.frame.size.height / 2);
+}
+
+- (BOOL)isPointOnThumb:(CGPoint)point {
+  // Note that we let the thumb's draggable area extend beyond its actual view to account for
+  // the imprecise nature of hit targets on device.
+  return DistanceFromPointToPoint(point, _thumbView.center) <= (_thumbRadius * kThumbSlopFactor);
+}
+
+- (BOOL)isValueAtMinimum {
+  return _value == _minimumValue;
+}
+
+- (CGFloat)thumbPanOffset {
+  return _thumbView.frame.origin.x / self.thumbPanRange;
+}
+
+- (CGFloat)thumbPanRange {
+  return self.bounds.size.width - (self.thumbRadius * 2);
+}
+
 - (CGFloat)relativeValueForValue:(CGFloat)value {
   value = MAX(_minimumValue, MIN(value, _maximumValue));
   if (CGFloatEqual(_minimumValue, _maximumValue)) {
@@ -862,6 +917,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat snappedValue =
       Round((_numDiscreteValues - 1) * scaledTargetValue) / (_numDiscreteValues - 1.0f);
   return (1 - snappedValue) * _minimumValue + snappedValue * _maximumValue;
+}
+
+- (void)updateDummyPanRecognizerTarget {
+  [_dummyPanRecognizer.view removeGestureRecognizer:_dummyPanRecognizer];
+  UIView *panTarget = _panningAllowedOnEntireControl ? self : _thumbView;
+  [panTarget addGestureRecognizer:_dummyPanRecognizer];
 }
 
 #pragma mark - UIResponder Events
@@ -957,6 +1018,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _isDraggingThumb = NO;
     _currentTouch = nil;
 
+    if (wasDragging) {
+      // Shrink the thumb
+      [self updateThumbTrackAnimated:NO
+               animateThumbAfterMove:YES
+                       previousValue:_value
+                          completion:nil];
+    }
+
     [self sendActionsForControlEvents:UIControlEventTouchCancel];
 
     if (!_continuousUpdateEvents && wasDragging) {
@@ -1003,12 +1072,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
-- (BOOL)isPointOnThumb:(CGPoint)point {
-  // Note that we let the thumb's draggable area extend beyond its actual view to account for
-  // the imprecise nature of hit targets on device.
-  return DistanceFromPointToPoint(point, _thumbView.center) <= (_thumbRadius * kThumbSlopFactor);
-}
-
 - (void)setValueFromThumbPosition:(CGPoint)position isTap:(BOOL)isTap {
   // Having two discrete values is a special case (e.g. the switch) in which any tap just flips the
   // value between the two discrete values, irrespective of the tap location.
@@ -1045,6 +1108,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                  }];
 }
 
+#pragma mark - Events
+
 - (void)sendContinuousChangeAction {
   if (_continuousUpdateEvents && _value != _lastDispatchedValue) {
     [self sendActionsForControlEvents:UIControlEventValueChanged];
@@ -1063,19 +1128,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (BOOL)isTracking {
   return _isDraggingThumb;
-}
-
-#pragma mark - Private
-
-- (void)interruptAnimation {
-  if (_thumbView.layer.presentationLayer) {
-    _thumbView.layer.position = [(CALayer *)_thumbView.layer.presentationLayer position];
-    _valueLabel.layer.position = [(CALayer *)_valueLabel.layer.presentationLayer position];
-  }
-  [_thumbView.layer removeAllAnimations];
-  [_trackView.layer removeAllAnimations];
-  [_valueLabel.layer removeAllAnimations];
-  [_trackOnLayer removeAllAnimations];
 }
 
 @end

@@ -42,7 +42,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 @property(nonatomic) BOOL animatingHide;
 // A UIProgressView to return the same format for the accessibility value. For example, when
 // progress is 0.497, it reports "fifty per cent".
-@property(nonatomic, strong) UIProgressView *accessibilityProgressView;
+@property(nonatomic, readonly) UIProgressView *accessibilityProgressView;
 @end
 
 @implementation MDCProgressView
@@ -205,9 +205,15 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 #pragma mark Accessibility
 
 - (UIProgressView *)accessibilityProgressView {
-  if (!_accessibilityProgressView)
-    _accessibilityProgressView = [[UIProgressView alloc] init];
-  return _accessibilityProgressView;
+  // Accessibility values are determined by querying a UIProgressView set to the same value as our
+  // MDCProgressView.
+  static UIProgressView *accessibilityProgressView;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    accessibilityProgressView = [[UIProgressView alloc] init];
+  });
+
+  return accessibilityProgressView;
 }
 
 - (NSString *)accessibilityValue {

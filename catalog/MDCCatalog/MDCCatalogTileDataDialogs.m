@@ -29,6 +29,7 @@
 /* Auto-generated code using PaintCode and formatted with clang-format. */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
+#pragma clang diagnostic ignored "-Wassign-enum"
 + (void)draw:(CGRect)frame {
   CGContextRef context = UIGraphicsGetCurrentContext();
 

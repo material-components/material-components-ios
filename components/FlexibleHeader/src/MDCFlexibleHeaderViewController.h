@@ -53,7 +53,13 @@
  */
 - (BOOL)prefersStatusBarHidden;
 
-/** Calculates the status bar style based on the header view's background color. */
+/**
+ Calculates the status bar style based on the header view's background color.
+
+ Light background colors use the default black status bar and dark background colors use the light
+ status bar. If the header view's background color is not fully-opaque, then this returns
+ UIStatusBarStyleDefault.
+ */
 - (UIStatusBarStyle)preferredStatusBarStyle;
 
 @end
