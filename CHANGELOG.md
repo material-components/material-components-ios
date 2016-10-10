@@ -53,20 +53,6 @@ From *private/MDCInkGestureRecognizer.h* to *MDCInkGestureRecognizer.h*.
 
 * [Switch to custom enum rather that reuse the NSTextAlignment so that we can strict our external API surface to the two options we want: Left and Center.](https://github.com/google/material-components-ios/commit/531a53b72ad42b40d16b1677729e33b7205dd6ab) (randallli)
 
-### RobotoFontLoader
-
-#### Changes
-
-* [Revert "[Typography] Removes the runtime inspection that uses Roboto if it can be found (via MDCRobotoFontLoader) (#712)"](https://github.com/google/material-components-ios/commit/56c220b098ce093d9646ec9ae2fd5433bb38cfca) (randallli)
-* [[Typography] Removes the runtime inspection that uses Roboto if it can be found (via MDCRobotoFontLoader) (#712)](https://github.com/google/material-components-ios/commit/6c9c77a0415664854851f6c9c8b808d2d2c58c3d) (Randall Li)
-
-### Typography
-
-#### Changes
-
-* [Removes the runtime inspection that uses Roboto if it can be found (via MDCRobotoFontLoader) (#712)](https://github.com/google/material-components-ios/commit/6c9c77a0415664854851f6c9c8b808d2d2c58c3d) (Randall Li)
-* [Revert "Removes the runtime inspection that uses Roboto if it can be found (via MDCRobotoFontLoader) (#712)"](https://github.com/google/material-components-ios/commit/56c220b098ce093d9646ec9ae2fd5433bb38cfca) (randallli)
-
 # 15.0.0
 
 ## API diffs
