@@ -18,6 +18,14 @@
 
 @protocol MDCButtonBarDelegate;
 
+/** Specifies the title alignment of the |MDCNavigationBar|. */
+typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
+  /** Aligns the title to the center of the NavigationBar. */
+  MDCNavigationBarTitleAlignmentCenter,
+  /** Aligns the title to the left/leading of the NavigationBar. */
+  MDCNavigationBarTitleAlignmentLeading
+};
+
 /**
  This protocol defines all of the properties on UINavigationItem that can be listened to by
  MDCNavigationBar.
@@ -106,8 +114,11 @@
 @property(nonatomic, strong, nullable) UIBarButtonItem *leadingBarButtonItem;
 @property(nonatomic, strong, nullable) UIBarButtonItem *trailingBarButtonItem;
 
-/** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
-@property(nonatomic) NSTextAlignment textAlignment;
+/**
+ The horizontal text alignment of the navigation bar title. Defaults to
+ MDCNavigationBarTitleAlignmentLeading.
+ */
+@property(nonatomic) MDCNavigationBarTitleAlignment titleAlignment;
 
 #pragma mark Observing UINavigationItem instances
 
@@ -147,5 +158,8 @@
 
 /* Equivalent to leadingItemsSupplementBackButton. */
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
+
+/** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
+@property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
 
 @end

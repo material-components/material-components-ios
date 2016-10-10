@@ -342,6 +342,15 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
           [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]);
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(UITouch *)touch {
+  if (self.isEditing) {
+    return YES;
+  } else {
+    return NO;
+  }
+}
+
 #pragma mark - LongPress Gesture Handling
 
 - (void)handleLongPressGesture:(UILongPressGestureRecognizer *)recognizer {

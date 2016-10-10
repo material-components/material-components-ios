@@ -16,7 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCInkGestureRecognizer;
+#import "MDCInkGestureRecognizer.h"
+
 @class MDCInkTouchController;
 @class MDCInkView;
 @protocol MDCInkTouchControllerDelegate;
