@@ -75,8 +75,12 @@
   CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
                                                     toView:_featureHighlightView];
   _featureHighlightView.highlightPoint = point;
-  [_featureHighlightView animateDiscover];
+}
 
+// TODO: this should trigger at the same time as viewWillAppear so that the discover animation
+// occurs during the native presentation animation time.
+- (void)viewDidAppear:(BOOL)animated {
+  [_featureHighlightView animateDiscover];
   _pulseTimer = [NSTimer scheduledTimerWithTimeInterval:1.5
                                                  target:_featureHighlightView
                                                selector:@selector(animatePulse)

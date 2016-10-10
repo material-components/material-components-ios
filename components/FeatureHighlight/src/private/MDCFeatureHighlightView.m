@@ -24,9 +24,12 @@ const CGFloat kMDCFeatureHighlightInnerRadius = 44.0;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0;
 const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
 
+const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
+
 @implementation MDCFeatureHighlightView {
   UIView *_highlightView;
   CGPoint _highlightPoint;
+  CGPoint _highlightCenter;
   CGPoint _outerCenter;
   CGFloat _outerRadius;
   MDCFeatureHighlightLayer *_outerLayer;
@@ -90,14 +93,6 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
 - (void)setHighlightPoint:(CGPoint)highlightPoint {
   _highlightPoint = highlightPoint;
 
-  [_innerLayer removeAllAnimations];
-  [_outerLayer removeAllAnimations];
-  [_pulseLayer removeAllAnimations];
-
-  _innerLayer.center = highlightPoint;
-  _outerLayer.center = highlightPoint;
-  _pulseLayer.center = highlightPoint;
-
   [self setNeedsLayout];
 }
 
@@ -107,6 +102,7 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
 
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.0].CGColor];
+  [_outerLayer setCenter:_highlightPoint];
 
   _displayedView.center = _highlightPoint;
   CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
@@ -119,7 +115,7 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:1.0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:kMDCFeatureHighlightInnerRadius animated:YES];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.96].CGColor animated:YES];
-  [_outerLayer setCenter:_highlightPoint radius:_outerRadius animated:YES];
+  [_outerLayer setCenter:_highlightCenter radius:_outerRadius animated:YES];
   [CATransaction commit];
 }
 
@@ -150,7 +146,7 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.0].CGColor animated:YES];
-  [_outerLayer setCenter:_highlightPoint radius:1.125 * _outerRadius animated:YES];
+  [_outerLayer setCenter:_highlightCenter radius:1.125 * _outerRadius animated:YES];
   [CATransaction commit];
 }
 
@@ -170,16 +166,47 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
 }
 
 - (void)layoutSubviews {
-  _displayedView.center = _highlightPoint;
+  [_innerLayer removeAllAnimations];
+  [_outerLayer removeAllAnimations];
+  [_pulseLayer removeAllAnimations];
+
+  BOOL leftHalf = _highlightPoint.x < self.frame.size.width/2;
+  BOOL topHalf = _highlightPoint.y < self.frame.size.height/2;
+
   CGFloat textWidth = self.frame.size.width - 2 * kMDCFeatureHighlightTextPadding;
   CGSize titleSize = [_titleLabel sizeThatFits:CGSizeMake(textWidth, 1000.0)];
+  CGSize detailSize = [_bodyLabel sizeThatFits:CGSizeMake(textWidth, 1000.0)];
+  CGFloat textHeight = titleSize.height + detailSize.height;
+
+  if (_highlightPoint.y <= kMDCFeatureHighlightConcentricBound) {
+    _highlightCenter = _highlightPoint;
+  } else if (_highlightPoint.y >= self.frame.size.height - kMDCFeatureHighlightConcentricBound) {
+    _highlightCenter = _highlightPoint;
+  } else {
+    if (topHalf) {
+      _highlightCenter.y = _highlightPoint.y + kMDCFeatureHighlightInnerRadius + textHeight/2;
+    } else {
+      _highlightCenter.y = _highlightPoint.y - kMDCFeatureHighlightInnerRadius - textHeight/2;
+    }
+    if (leftHalf) {
+      _highlightCenter.x = _highlightPoint.x - 20;
+    } else {
+      _highlightCenter.x = _highlightPoint.x + 20;
+    }
+  }
+
+  _innerLayer.center = _highlightPoint;
+  _pulseLayer.center = _highlightPoint;
+  _outerLayer.center = _highlightCenter;
+
+  _displayedView.center = _highlightPoint;
+
   CGRect titleFrame = (CGRect) {
     CGPointMake(kMDCFeatureHighlightTextPadding, _highlightPoint.y + kMDCFeatureHighlightInnerPadding + kMDCFeatureHighlightInnerRadius),
     titleSize
   };
   _titleLabel.frame = titleFrame;
 
-  CGSize detailSize = [_bodyLabel sizeThatFits:CGSizeMake(textWidth, 1000.0)];
   CGRect detailFrame = (CGRect) {
     CGPointMake(kMDCFeatureHighlightTextPadding, CGRectGetMaxY(titleFrame)),
     detailSize
