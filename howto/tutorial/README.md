@@ -165,6 +165,8 @@ override func viewDidLoad() {
 Below `viewDidLoad`, add a mock datasource:
 
 ~~~ swift
+class ViewController: MDCCollectionViewController {
+
 override func viewDidLoad() {
   super.viewDidLoad()
   styler.cellStyle = .Card
