@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */; };
+		0B50E19C1D91B0BD00DED250 /* MDCInteractionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B50E19B1D91B0BD00DED250 /* MDCInteractionTests.m */; };
+		0B50E1A81D91B63800DED250 /* EarlGrey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		403860EF1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 403860EE1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m */; };
 		5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D090E341C9AEB8C0061344A /* Localizable.strings */; };
+		5D2B1DB2BD8D444E630A80AC /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B61C6BA62A001ADBF8 /* AppDelegate.swift */; };
 		664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
@@ -17,6 +20,7 @@
 		66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */; };
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
+		868350BCFBA83A90EA697FB4 /* libPods-MDCInteractionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */; };
 		DE1944861CBD9E40009E0321 /* MDCCatalogTileData.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1944681CBD9E40009E0321 /* MDCCatalogTileData.m */; };
 		DE1944871CBD9E40009E0321 /* MDCCatalogTileDataAppBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DE19446A1CBD9E40009E0321 /* MDCCatalogTileDataAppBar.m */; };
 		DE1944881CBD9E40009E0321 /* MDCCatalogTileDataButtonBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DE19446C1CBD9E40009E0321 /* MDCCatalogTileDataButtonBar.m */; };
@@ -39,8 +43,45 @@
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0B50E19E1D91B0BD00DED250 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 664524AB1C6BA62A001ADBF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 664524B21C6BA62A001ADBF8;
+			remoteInfo = MDCCatalog;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0B50E1A31D91B33400DED250 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(TEST_HOST)/..";
+			dstSubfolderSpec = 0;
+			files = (
+				0B50E1A81D91B63800DED250 /* EarlGrey.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2803A5C8087DD84ECDB4148E /* EarlGrey Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(TEST_HOST)/../";
+			dstSubfolderSpec = 0;
+			files = (
+				5D2B1DB2BD8D444E630A80AC /* EarlGrey.framework in EarlGrey Copy Files */,
+			);
+			name = "EarlGrey Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogWindow.swift; sourceTree = "<group>"; };
+		0B50E1991D91B0BD00DED250 /* MDCInteractionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDCInteractionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B50E19B1D91B0BD00DED250 /* MDCInteractionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDCInteractionTests.m; sourceTree = "<group>"; };
+		0B50E19D1D91B0BD00DED250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCCatalog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		403860ED1D24328A00FB8216 /* MDCCatalogTileDataDialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataDialogs.h; sourceTree = "<group>"; };
 		403860EE1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileDataDialogs.m; sourceTree = "<group>"; };
@@ -88,7 +129,10 @@
 		66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCInkTouchController+Injection.m"; sourceTree = "<group>"; };
 		665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDCCatalog-Bridging-Header.h"; sourceTree = "<group>"; };
 		6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileView.swift; sourceTree = "<group>"; };
+		76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCInteractionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FBFFE5E47AD9F7C0D7E3DAA /* Pods-MDCInteractionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCInteractionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
+		B751AB4E0A8D312CE6977EDB /* Pods-MDCInteractionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCInteractionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests.release.xcconfig"; sourceTree = "<group>"; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		DE1944671CBD9E40009E0321 /* MDCCatalogTileData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileData.h; sourceTree = "<group>"; };
 		DE1944681CBD9E40009E0321 /* MDCCatalogTileData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileData.m; sourceTree = "<group>"; };
@@ -129,9 +173,18 @@
 		DE8261D41D23000600D75992 /* MDCCatalogTileDataSnackbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataSnackbar.h; sourceTree = "<group>"; };
 		DE8261D51D23000600D75992 /* MDCCatalogTileDataSnackbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileDataSnackbar.m; sourceTree = "<group>"; };
 		DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
+		E94681B7591B9CD40924C92C /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = "${SRCROOT}/Pods/EarlGrey/EarlGrey/EarlGrey.framework"; sourceTree = SRCROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0B50E1961D91B0BD00DED250 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				868350BCFBA83A90EA697FB4 /* libPods-MDCInteractionTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		664524B01C6BA62A001ADBF8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -143,6 +196,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B50E19A1D91B0BD00DED250 /* MDCInteractionTests */ = {
+			isa = PBXGroup;
+			children = (
+				0B50E19B1D91B0BD00DED250 /* MDCInteractionTests.m */,
+				0B50E19D1D91B0BD00DED250 /* Info.plist */,
+			);
+			path = MDCInteractionTests;
+			sourceTree = "<group>";
+		};
 		5D090E331C9AEB8C0061344A /* Localizable */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				664524B51C6BA62A001ADBF8 /* MDCCatalog */,
+				0B50E19A1D91B0BD00DED250 /* MDCInteractionTests */,
 				664524B41C6BA62A001ADBF8 /* Products */,
 				E165A9868676B4998575E09A /* Pods */,
 				C18E275F798D7A4D3C533DF1 /* Frameworks */,
@@ -165,6 +228,8 @@
 			isa = PBXGroup;
 			children = (
 				664524B31C6BA62A001ADBF8 /* MDCCatalog.app */,
+				0B50E1991D91B0BD00DED250 /* MDCInteractionTests.xctest */,
+				E94681B7591B9CD40924C92C /* EarlGrey.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -202,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */,
+				76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -257,6 +323,8 @@
 			children = (
 				90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */,
 				C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */,
+				8FBFFE5E47AD9F7C0D7E3DAA /* Pods-MDCInteractionTests.debug.xcconfig */,
+				B751AB4E0A8D312CE6977EDB /* Pods-MDCInteractionTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -264,6 +332,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0B50E1981D91B0BD00DED250 /* MDCInteractionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B50E1A21D91B0BD00DED250 /* Build configuration list for PBXNativeTarget "MDCInteractionTests" */;
+			buildPhases = (
+				82C64B6BDC3E7B5783054EF2 /* [CP] Check Pods Manifest.lock */,
+				0B50E1951D91B0BD00DED250 /* Sources */,
+				0B50E1961D91B0BD00DED250 /* Frameworks */,
+				0B50E1971D91B0BD00DED250 /* Resources */,
+				518980600242B56A76B32094 /* [CP] Embed Pods Frameworks */,
+				A7D47BD9A3C62120038127E5 /* [CP] Copy Pods Resources */,
+				0B50E1A31D91B33400DED250 /* CopyFiles */,
+				2803A5C8087DD84ECDB4148E /* EarlGrey Copy Files */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B50E19F1D91B0BD00DED250 /* PBXTargetDependency */,
+			);
+			name = MDCInteractionTests;
+			productName = MDCInteractionTests;
+			productReference = 0B50E1991D91B0BD00DED250 /* MDCInteractionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		664524B21C6BA62A001ADBF8 /* MDCCatalog */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 664524C51C6BA62A001ADBF8 /* Build configuration list for PBXNativeTarget "MDCCatalog" */;
@@ -294,6 +385,10 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Google;
 				TargetAttributes = {
+					0B50E1981D91B0BD00DED250 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 664524B21C6BA62A001ADBF8;
+					};
 					664524B21C6BA62A001ADBF8 = {
 						CreatedOnToolsVersion = 7.3;
 						LastSwiftMigration = 0800;
@@ -347,11 +442,19 @@
 			projectRoot = "";
 			targets = (
 				664524B21C6BA62A001ADBF8 /* MDCCatalog */,
+				0B50E1981D91B0BD00DED250 /* MDCInteractionTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0B50E1971D91B0BD00DED250 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		664524B11C6BA62A001ADBF8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -365,6 +468,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		518980600242B56A76B32094 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		72ACDAA295D1F2087113246F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -395,6 +513,36 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		82C64B6BDC3E7B5783054EF2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A7D47BD9A3C62120038127E5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		D34F9C3373AD1979FBA3F8E0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -413,6 +561,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0B50E1951D91B0BD00DED250 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B50E19C1D91B0BD00DED250 /* MDCInteractionTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		664524AF1C6BA62A001ADBF8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -447,6 +603,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0B50E19F1D91B0BD00DED250 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 664524B21C6BA62A001ADBF8 /* MDCCatalog */;
+			targetProxy = 0B50E19E1D91B0BD00DED250 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5D090E341C9AEB8C0061344A /* Localizable.strings */ = {
@@ -501,6 +665,36 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0B50E1A01D91B0BD00DED250 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FBFFE5E47AD9F7C0D7E3DAA /* Pods-MDCInteractionTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = MDCInteractionTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCInteractionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MDCCatalog.app/MDCCatalog";
+			};
+			name = Debug;
+		};
+		0B50E1A11D91B0BD00DED250 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B751AB4E0A8D312CE6977EDB /* Pods-MDCInteractionTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = MDCInteractionTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCInteractionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MDCCatalog.app/MDCCatalog";
+			};
+			name = Release;
+		};
 		664524C31C6BA62A001ADBF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -620,6 +814,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0B50E1A21D91B0BD00DED250 /* Build configuration list for PBXNativeTarget "MDCInteractionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B50E1A01D91B0BD00DED250 /* Debug */,
+				0B50E1A11D91B0BD00DED250 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		664524AE1C6BA62A001ADBF8 /* Build configuration list for PBXProject "MDCCatalog" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

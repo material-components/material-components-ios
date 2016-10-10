@@ -478,4 +478,11 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
   return size;
 }
 
+#pragma mark - UIAccessibilityAction
+
+- (BOOL)accessibilityPerformEscape {
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+  return YES;
+}
+
 @end

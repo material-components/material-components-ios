@@ -21,8 +21,12 @@
 #import "MDFTextAccessibility.h"
 
 static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
-  // We assume that the light iOS status text is pure white and not big enough to be considered
-  // "large" text according to the W3CAG 2.0 spec.
+  if (CGColorGetAlpha(color.CGColor) < 1) {
+    return NO;
+  }
+
+  // We assume that the light iOS status text is white and not big enough to be considered "large"
+  // text according to the W3CAG 2.0 spec.
   return [MDFTextAccessibility textColor:[UIColor whiteColor]
                  passesOnBackgroundColor:color
                                  options:MDFTextAccessibilityOptionsNone];

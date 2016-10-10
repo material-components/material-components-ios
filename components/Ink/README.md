@@ -1,9 +1,7 @@
----
-title:  "Ink"
-layout: detail
-section: components
-excerpt: "The Ink component provides a radial action in the form of a visual ripple of ink expanding outward from the user's touch."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Ink">GitHub</a> for README documentation.{% endif %}-->
+
 # Ink
 
 <div class="ios-animation right" markdown="1">
@@ -24,9 +22,9 @@ outward from the user's touch.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCInkTouchController.html">MDCInkTouchController</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCInkView.html">MDCInkView</a></li>
-  <li class="icon-link"><a href="apidocs/Protocols/MDCInkTouchControllerDelegate.html">MDCInkTouchControllerDelegate</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/apidocs/Classes/MDCInkTouchController.html">MDCInkTouchController</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/apidocs/Classes/MDCInkView.html">MDCInkView</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/apidocs/Protocols/MDCInkTouchControllerDelegate.html">MDCInkTouchControllerDelegate</a></li>
 </ul>
 
 

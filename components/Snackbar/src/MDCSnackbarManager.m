@@ -45,7 +45,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
         tokens.
  */
 @property(nonatomic)
-    NSMutableDictionary<NSString *, NSMutableSet<MDCSnackbarManagerSuspensionToken *> *>
+    NSMutableDictionary<NSString *, NSMutableSet<NSUUID *> *>
         *suspensionTokens;
 
 /**

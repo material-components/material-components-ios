@@ -1,9 +1,7 @@
----
-title:  "Typography"
-layout: detail
-section: components
-excerpt: "The Typography component provides methods for displaying text using the type sizes and opacities from the material design specifications."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Typography">GitHub</a> for README documentation.{% endif %}-->
+
 # Typography
 
 <div class="ios-animation right" markdown="1">
@@ -24,11 +22,9 @@ from the material design specifications.
 ### API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
-<li class="icon-link"><a href="../FontDiskLoader/apidocs/Classes/MDCFontDiskLoader.html">MDCFontDiskLoader</a></li>
-<li class="icon-link"><a href="../RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a></li>
-<li class="icon-link"><a href="apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
-<li class="icon-link"><a href="apidocs/Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FontDiskLoader/apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Protocols/MDCTypographyFontLoading.html">MDCTypographyFontLoading</a></li>
 </ul>
 
 ## Installation
@@ -218,10 +214,12 @@ self.label.sizeToFit()
 ## Advanced Usage
 
 ### Custom Fonts
-Material Components for iOS allows you to set your own font instead of Roboto. Since all of the
-other components in our framework requests fonts through the Typography component, it is possible to
-switch the font used by all of Material Components for iOS. If you want to use the system font use
-`MDCSystemFontLoader` which already conforms to the `MDCTypographyFontLoading` protocol.
+Material Components for iOS allows you to set your own font for all of the components. Use the class
+method `setFontLoader:` on MDCTypography to specify a loader that conforms to the
+`MDCTypographyFontLoading` protocol.
+
+If you want to use the system font use `MDCSystemFontLoader` which already conforms to the
+`MDCTypographyFontLoading` protocol. It is used if no font loader is set.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
@@ -284,20 +282,3 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 }
 ~~~
 <!--</div>-->
-
-#### The default FontLoaer
-If no font loader has been set, Typography attempts to use the Material
-[RobotoFontLoader](../FontDiskLoader/)
-which results in Roboto fonts being used when text styles are requested. If that runtime check
-fails to find MDCRobotoFontLoader, the Material MDCSystemFontLoader font is used resulting in San
-Francisco or Helvetica being used.
-
-If your Podfile.lock has:
-
-~~~ bash
-MaterialComponents/RobotoFontLoader
-~~~
-
-Then one of your specs depends on RobotoFontLoader and the Roboto will be used if no font loader has
-been set. If you set your own Font Loader it is recomened that you not pull in the Roboto Font
-Loader Component because that will add font assets to your app that you will not use.

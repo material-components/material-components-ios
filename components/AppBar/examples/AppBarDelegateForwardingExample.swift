@@ -31,6 +31,8 @@ class AppBarDelegateForwardingExample: UITableViewController {
     super.init(style: style)
 
     self.appBar.navigationBar.tintColor = UIColor.whiteColor()
+    appBar.navigationBar.titleTextAttributes =
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
 
     self.addChildViewController(appBar.headerViewController)
 

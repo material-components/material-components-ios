@@ -1,12 +1,12 @@
 /*
  Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,9 +18,10 @@
 
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
-
 #import "MaterialButtons.h"
-
+#import "MDCSnackbarOverlayView.h"
+#import "MaterialAnimationTiming.h"
+#import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
@@ -100,6 +101,11 @@ static const CGFloat kButtonHeightVerticalLayout = 48.0f;
  The ink radius of the action button.
  */
 static const CGFloat kButtonInkRadius = 64.0f;
+
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCSnackbarMessageView () <CAAnimationDelegate>
+@end
+#endif
 
 @interface MDCSnackbarMessageView ()
 
@@ -243,19 +249,19 @@ static const CGFloat kButtonInkRadius = 64.0f;
   if (self) {
     _message = message;
     _dismissalHandler = [handler copy];
-    
+
     // styling the snackbar message view
     _snackbarMessageViewShadowColor = MDCRGBAColor(0x00, 0x00, 0x00, 1.0f);
     _snackbarMessageViewBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1.0f);
     _snackbarMessageViewTextColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f);
-    
+
     self.backgroundColor = [UIColor clearColor];
     self.layer.cornerRadius = kCornerRadius;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
     self.layer.shadowOpacity = kShadowAlpha;
     self.layer.shadowOffset = kShadowOffset;
     self.layer.shadowRadius = kShadowSpread;
-    
+
     // Borders are drawn inside of the bounds of a layer. Because our border is translucent, we need
     // to have a view with transparent background and border only (@c self). Inside will be a
     // content view that has the dark grey color.
@@ -271,6 +277,18 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [_containerView addTarget:self
                        action:@selector(handleBackgroundTapped:)
              forControlEvents:UIControlEventTouchUpInside];
+
+    UISwipeGestureRecognizer *swipeRightGesture =
+        [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                  action:@selector(handleBackgroundSwipedRight:)];
+    [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionRight];
+    [_containerView addGestureRecognizer:swipeRightGesture];
+
+    UISwipeGestureRecognizer *swipeLeftGesture =
+        [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                  action:@selector(handleBackgroundSwipedLeft:)];
+    [swipeRightGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [_containerView addGestureRecognizer:swipeLeftGesture];
 
     _contentView = [[UIView alloc] init];
     [_contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -305,7 +323,10 @@ static const CGFloat kButtonInkRadius = 64.0f;
     // Apply 'global' attributes along the whole string.
     [self addColorToMessageLabel:_snackbarMessageViewTextColor];
     _label.backgroundColor = [UIColor clearColor];
-    _label.textAlignment = NSTextAlignmentNatural;
+    _label.textAlignment = NSTextAlignmentLeft;
+
+    // TODO: Add support for RTL languages so @c _label renders correctly.
+
     _label.attributedText = messageString;
     _label.numberOfLines = 0;
     [_label setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -853,12 +874,44 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 #pragma mark - Event Handlers
 
+- (void)handleBackgroundSwipedRight:(UIButton *)sender {
+  CABasicAnimation *translationAnimation =
+      [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
+  translationAnimation.toValue = [NSNumber numberWithDouble:-self.frame.size.width];
+  translationAnimation.duration = MDCSnackbarTransitionDuration;
+  translationAnimation.timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
+  translationAnimation.delegate = self;
+  translationAnimation.fillMode = kCAFillModeForwards;
+  translationAnimation.removedOnCompletion = NO;
+  [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
+}
+
+- (void)handleBackgroundSwipedLeft:(UIButton *)sender {
+  CABasicAnimation *translationAnimation =
+      [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
+  translationAnimation.toValue = [NSNumber numberWithDouble:self.frame.size.width];
+  translationAnimation.duration = MDCSnackbarTransitionDuration;
+  translationAnimation.timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
+  translationAnimation.delegate = self;
+  translationAnimation.fillMode = kCAFillModeForwards;
+  translationAnimation.removedOnCompletion = NO;
+  [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
+}
+
 - (void)handleBackgroundTapped:(UIButton *)sender {
   [self dismissWithAction:nil userInitiated:YES];
 }
 
 - (void)handleButtonTapped:(UIButton *)sender {
   [self dismissWithAction:self.message.action userInitiated:YES];
+}
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
+  if (flag) {
+    [self dismissWithAction:nil userInitiated:YES];
+  }
 }
 
 #pragma mark - Accessibility

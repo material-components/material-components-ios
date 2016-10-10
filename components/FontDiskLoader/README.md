@@ -1,9 +1,7 @@
----
-title:  "FontDiskLoader"
-layout: detail
-section: components
-excerpt: "Registers a single custom font asset from disk."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/FontDiskLoader/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/FontDiskLoader">GitHub</a> for README documentation.{% endif %}-->
+
 #FontDiskLoader
 
 Registers a single custom font asset from disk
@@ -23,7 +21,7 @@ Registers a single custom font asset from disk
 
 <ul class="icon-list">
   <li class="icon-link">
-    <a href="apidocs/<FontDiskLoader>/Classes/MDCFontDiskLoader.html">
+    <a href="https://material-ext.appspot.com/mdc-ios-preview/components/FontDiskLoader/apidocs/Classes/MDCFontDiskLoader.html">
       MDCFontDiskLoader
     </a>
   </li>
@@ -57,13 +55,13 @@ pod install
 
 ### Importing
 
-Before using Roboto Font Loader, you'll need to import it:
+Before using Font Disk Loader, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
-#import "MaterialRobotoFontLoader.h"
+#import "MaterialFontDiskLoader.h"
 ~~~
 
 #### Swift
@@ -76,7 +74,7 @@ import MaterialComponents
 
 Make sure to add your font (or the bundle it is in) to your app target. The FontDiskLoader will lazy
 register the font using a CoreText API so adding a the font to your `info.plist` is not necessary.
-All you need to do is intialize the loader with the font name and url to the file and ask for the
+All you need to do is initialize the loader with the font name and url to the file and ask for the
 font.
 
 ## Code snippets
@@ -85,13 +83,13 @@ font.
 #### Objective-C
 ~~~ objc
   MDCFontDiskLoader *fontDiskLoader =
-      [[MDCFontDiskLoader alloc] initWithName:nameOfFontInFile URL:fontURLOnDisk];
+      [[MDCFontDiskLoader alloc] initWithFontName:nameOfFontInFile URL:fontURLOnDisk];
   UIFont *font = [fontDiskLoader fontOfSize:16];
 ~~~
 
 #### Swift
 ~~~ swift
-    let fontLoader = MDCFontDiskLoader.init(name: nameOfFontInFile, URL: fontURLOnDisk);
+    let fontLoader = MDCFontDiskLoader.init(fontName: nameOfFontInFile, fontURL: fontURLOnDisk);
     let myFont:UIFont = fontLoader.fontOfSize(16)!;
 ~~~
 <!--</div>-->

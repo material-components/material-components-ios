@@ -24,7 +24,6 @@ class ShrineDetailView: UIScrollView {
   private var remoteImageService = RemoteImageService()
   private var label = UILabel()
   private var labelDesc = UILabel()
-  private var floatingButton = MDCFloatingButton()
   private var imageView = UIImageView()
 
   override func layoutSubviews() {
@@ -83,23 +82,30 @@ class ShrineDetailView: UIScrollView {
     labelDesc.sizeToFit()
     labelDesc.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     self.addSubview(labelDesc)
-
-    floatingButton.setTitle("+", forState: UIControlState.Normal)
-    floatingButton.backgroundColor =
-      UIColor(red: 0.086, green: 0.941, blue: 0.941, alpha: 1)
-    floatingButton.sizeToFit()
-    floatingButton.frame = CGRectMake(self.frame.width - floatingButton.frame.width - labelPadding,
-      500, floatingButton.frame.width, floatingButton.frame.height)
-    self.addSubview(floatingButton)
   }
 
 }
 
 class ShrineDetailViewController: UIViewController {
 
+  let fabPadding:CGFloat = 25
   var productTitle = ""
   var desc = ""
   var imageName = "popsicle.png"
+  private let appBar = MDCAppBar()
+  private let floatingButton = MDCFloatingButton()
+
+  init() {
+    super.init(nibName: nil, bundle: nil)
+
+    self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor.clearColor()
+    appBar.navigationBar.tintColor = UIColor.blackColor()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+  }
 
   override func viewDidLoad() {
     let detailView = ShrineDetailView(frame: self.view.frame)
@@ -109,14 +115,27 @@ class ShrineDetailViewController: UIViewController {
     detailView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     self.view.addSubview(detailView)
 
-    let dismissBtn = MDCFlatButton()
-    dismissBtn.setTitle("Back", forState: UIControlState.Normal)
-    dismissBtn.customTitleColor = UIColor.grayColor()
-    dismissBtn.sizeToFit()
-    dismissBtn.frame = CGRectMake(8, 28, dismissBtn.frame.width, dismissBtn.frame.height)
-    dismissBtn.addTarget(self, action: #selector(dismissDetails),
-                         forControlEvents: .TouchUpInside)
-    self.view.addSubview(dismissBtn)
+    appBar.addSubviewsToParent()
+    let backButton = UIBarButtonItem(title:"",
+                                     style:.Done,
+                                     target:self,
+                                     action:#selector(dismissDetails))
+    let backImage = UIImage(named:MDCIcons.pathFor_ic_arrow_back())
+    backButton.image = backImage
+    appBar.navigationBar.leftBarButtonItem = backButton
+
+    floatingButton.setTitle("+", forState: UIControlState.Normal)
+    floatingButton.backgroundColor =
+      UIColor(red: 0.086, green: 0.941, blue: 0.941, alpha: 1)
+    floatingButton.sizeToFit()
+    view.addSubview(floatingButton)
+  }
+
+  override func viewWillLayoutSubviews() {
+    floatingButton.frame = CGRectMake(view.frame.width - floatingButton.frame.width - fabPadding,
+                                      view.frame.height - floatingButton.frame.height - fabPadding,
+                                      floatingButton.frame.width,
+                                      floatingButton.frame.height)
   }
 
   func dismissDetails() {

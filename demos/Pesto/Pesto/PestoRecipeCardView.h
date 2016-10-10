@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PestoRecipeCardView : UIScrollView
+@interface PestoRecipeCardView : UIView
 
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, copy) NSString *iconImageName;

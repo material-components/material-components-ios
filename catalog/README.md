@@ -21,7 +21,7 @@ together in the hierarchy defined by all the bread crumbs.
 
 In the `catalog` directory,
 
-    pod install
+    pod update
     open MDCCatalog.xcworkspace
 
 Build and run the `MDCCatalog` target.

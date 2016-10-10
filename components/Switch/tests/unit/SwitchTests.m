@@ -50,6 +50,36 @@
   XCTAssertEqual(testSwitch.on, NO, @"MDCSwitch.on should be NO");
 }
 
+- (void)testAccessibilityOnValue {
+  MDCSwitch *testSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+  testSwitch.on = YES;
+
+  XCTAssertNotNil([testSwitch accessibilityValue], @"MDCSwitch accessibility label should != nil");
+}
+
+- (void)testAccessibilityOffValue {
+  MDCSwitch *testSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+  testSwitch.on = NO;
+
+  XCTAssertNotNil([testSwitch accessibilityValue], @"MDCSwitch accessibility label should != nil");
+}
+
+- (void)testCustomAccessibilityOnValue {
+  MDCSwitch *testSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+  testSwitch.on = YES;
+  testSwitch.onAccessibilityValue = @"1";
+
+  XCTAssertEqual([testSwitch accessibilityValue], @"1", @"MDCSwitch accessibility on value");
+}
+
+- (void)testCustomAccessibilityOffValue {
+  MDCSwitch *testSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+  testSwitch.on = NO;
+  testSwitch.offAccessibilityValue = @"0";
+
+  XCTAssertEqual([testSwitch accessibilityValue], @"0", @"MDCSwitch accessibility off value");
+}
+
 - (void)testConstantSize {
   MDCSwitch *testZeroSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
   MDCSwitch *testSmallSwitch = [[MDCSwitch alloc] initWithFrame:CGRectMake(0.0, 0.0, 4.0, 4.0)];

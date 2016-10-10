@@ -25,4 +25,21 @@ if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   exit 1
 fi
 
-git diff origin/master..release-candidate "$@"
+useDiffTool=false;
+
+while test $# -gt 0; do
+  case "$1" in
+    --use_diff_tool)
+      useDiffTool=true;
+      shift
+      ;;
+  esac
+done
+
+if $useDiffTool; then
+  diffTool=difftool
+else
+  diffTool=diff
+fi
+
+git $diffTool origin/master..release-candidate "$@"

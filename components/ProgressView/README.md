@@ -1,9 +1,7 @@
----
-title:  "Progress View"
-layout: detail
-section: components
-excerpt: "Progress View is a determinate and linear progress indicator that implements material design animation and layout."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ProgressView/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ProgressView">GitHub</a> for README documentation.{% endif %}-->
+
 # Progress View
 
 <div class="ios-animation right" markdown="1">
@@ -26,7 +24,7 @@ few key methods required to achieve the desired animation of the control.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="/components/ProgressView/apidocs/Classes/MDCProgressView.html">MDCProgressView</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ProgressView/apidocs/Classes/MDCProgressView.html">MDCProgressView</a></li>
 </ul>
 
 - - -

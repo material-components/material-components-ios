@@ -36,9 +36,21 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 @end
 
-@implementation MDCDialogPresentationController
+@implementation MDCDialogPresentationController {
+  UITapGestureRecognizer *_dismissGestureRecognizer;
+}
 
 #pragma mark - UIPresentationController
+
+// dismissOnBackgroundTap wraps the enable property of our gesture recognizer to
+// avoid duplication.
+- (void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
+  _dismissGestureRecognizer.enabled = dismissOnBackgroundTap;
+}
+
+- (BOOL)dismissOnBackgroundTap {
+  return _dismissGestureRecognizer.enabled;
+}
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController {
@@ -48,9 +60,9 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
     _dimmingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
     _dimmingView.alpha = 0.0f;
-    UITapGestureRecognizer *tap =
+    _dismissGestureRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
-    [_dimmingView addGestureRecognizer:tap];
+    [_dimmingView addGestureRecognizer:_dismissGestureRecognizer];
 
     _trackingView = [[MDCDialogShadowedView alloc] init];
 
