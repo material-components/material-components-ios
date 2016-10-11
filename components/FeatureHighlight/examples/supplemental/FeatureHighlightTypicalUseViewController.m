@@ -84,7 +84,7 @@
                                                               completion:nil];
   vc.titleText = @"Hey a title";
   vc.bodyText = @"This is the description of the feature highlight view controller.";
-  [self presentViewController:vc animated:NO completion:nil];
+  [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)didTapBackground:(UITapGestureRecognizer *)recognizer {

@@ -16,9 +16,14 @@
 
 #import "MDCFeatureHighlightViewController.h"
 
+#import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView.h"
 
+@interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
+@end
+
 @implementation MDCFeatureHighlightViewController {
+  MDCFeatureHighlightAnimationController *_animationController;
   MDCFeatureHighlightCompletion _completion;
   MDCFeatureHighlightView *_featureHighlightView;
   NSTimer *_pulseTimer;
@@ -33,15 +38,29 @@
     _highlightedView = highlightedView;
     _displayedView = displayedView;
     _completion = completion;
+    _animationController = [[MDCFeatureHighlightAnimationController alloc] init];
 
     [_highlightedView addObserver:self
                        forKeyPath:@"frame"
                           options:NSKeyValueObservingOptionNew
                           context:nil];
 
-    self.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    super.transitioningDelegate = self;
+    super.modalPresentationStyle = UIModalPresentationCustom;
   }
   return self;
+}
+
+/* Disable setter. Always use internal transition controller */
+- (void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+  NSAssert(NO, @"MDCAlertController.transitioningDelegate cannot be changed.");
+  return;
+}
+
+/* Disable setter. Always use custom presentation style */
+- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle {
+  NSAssert(NO, @"MDCAlertController.modalPresentationStyle cannot be changed.");
+  return;
 }
 
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
@@ -77,10 +96,7 @@
   _featureHighlightView.highlightPoint = point;
 }
 
-// TODO: this should trigger at the same time as viewWillAppear so that the discover animation
-// occurs during the native presentation animation time.
 - (void)viewDidAppear:(BOOL)animated {
-  [_featureHighlightView animateDiscover];
   _pulseTimer = [NSTimer scheduledTimerWithTimeInterval:1.5
                                                  target:_featureHighlightView
                                                selector:@selector(animatePulse)
@@ -116,17 +132,15 @@
 
 - (void)dismiss:(BOOL)accepted {
   if (accepted) {
-    [_featureHighlightView animateAccepted];
+    _animationController.dismissStyle = MDCFeatureHighlightDismissAccepted;
   } else {
-    [_featureHighlightView animateRejected];
+    _animationController.dismissStyle = MDCFeatureHighlightDismissRejected;
   }
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    [self dismissViewControllerAnimated:YES completion:^() {
-      if (_completion) {
-        _completion(YES);
-      }
-    }];
-  });
+  [self dismissViewControllerAnimated:YES completion:^() {
+    if (_completion) {
+      _completion(accepted);
+    }
+  }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -139,6 +153,26 @@
     _featureHighlightView.highlightPoint = point;
     [_featureHighlightView layoutIfNeeded];
   }
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)
+    animationControllerForPresentedController:(UIViewController *)presented
+                         presentingController:(UIViewController *)presenting
+                             sourceController:(UIViewController *)source {
+  if (presented == self) {
+    return _animationController;
+  }
+  return nil;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)
+    animationControllerForDismissedController:(UIViewController *)dismissed {
+  if (dismissed == self) {
+    return _animationController;
+  }
+  return nil;
 }
 
 @end

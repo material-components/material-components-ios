@@ -40,7 +40,7 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
-    self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.5];
 
     _outerLayer = [[MDCFeatureHighlightLayer alloc] init];
     _outerLayer.fillColor = [self.tintColor colorWithAlphaComponent:0.96].CGColor;
