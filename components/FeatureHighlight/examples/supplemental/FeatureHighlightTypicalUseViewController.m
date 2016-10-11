@@ -42,6 +42,12 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
+  _infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _infoLabel.text = @"Tap anywhere to move the button.";
+  _infoLabel.font = [MDCTypography subheadFont];
+  _infoLabel.textColor = [_infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
+  [self.view addSubview:_infoLabel];
+
   _button = [[MDCRaisedButton alloc] init];
   [_button setTitle:@"GO!" forState:UIControlStateNormal];
   [_button sizeToFit];
@@ -54,12 +60,6 @@
       [[UITapGestureRecognizer alloc] initWithTarget:self
                                               action:@selector(didTapBackground:)];
   [self.view addGestureRecognizer:tapRecognizer];
-
-  _infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _infoLabel.text = @"Tap anywhere to move the button.";
-  _infoLabel.font = [MDCTypography subheadFont];
-  _infoLabel.textColor = [_infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
-  [self.view addSubview:_infoLabel];
 }
 
 - (void)viewDidLayoutSubviews {
