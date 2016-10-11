@@ -23,6 +23,7 @@
 const CGFloat kMDCFeatureHighlightInnerRadius = 44.0;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0;
 const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
+const CGFloat kMDCFeatureHighlightTextMaxWidth = 300.0;
 
 const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
 
@@ -185,7 +186,7 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   BOOL leftHalf = _highlightPoint.x < self.frame.size.width/2;
   BOOL topHalf = _highlightPoint.y < self.frame.size.height/2;
 
-  CGFloat textWidth = self.frame.size.width - 2 * kMDCFeatureHighlightTextPadding;
+  CGFloat textWidth = MIN(self.frame.size.width - 2 * kMDCFeatureHighlightTextPadding, kMDCFeatureHighlightTextMaxWidth);
   CGSize titleSize = [_titleLabel sizeThatFits:CGSizeMake(textWidth, 1000.0)];
   CGSize detailSize = [_bodyLabel sizeThatFits:CGSizeMake(textWidth, 1000.0)];
   CGFloat textHeight = titleSize.height + detailSize.height;
