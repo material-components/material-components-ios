@@ -39,6 +39,7 @@
     _displayedView = displayedView;
     _completion = completion;
     _animationController = [[MDCFeatureHighlightAnimationController alloc] init];
+    _animationController.presenting = YES;
 
     [_highlightedView addObserver:self
                        forKeyPath:@"frame"
@@ -131,6 +132,7 @@
 }
 
 - (void)dismiss:(BOOL)accepted {
+  _animationController.presenting = NO;
   if (accepted) {
     _animationController.dismissStyle = MDCFeatureHighlightDismissAccepted;
   } else {

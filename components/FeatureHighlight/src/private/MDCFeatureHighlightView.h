@@ -26,9 +26,12 @@ typedef void(^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 @property (nonatomic, strong) UILabel *bodyLabel;
 @property (nonatomic, strong) MDCFeatureHighlightInteractionBlock interactionBlock;
 
-- (void)animateDiscover;
+- (void)layoutAppearing;
+- (void)layoutDisappearing;
+
+- (void)animateDiscover:(CGFloat)duration;
+- (void)animateAccepted:(CGFloat)duration;
+- (void)animateRejected:(CGFloat)duration;
 - (void)animatePulse;
-- (void)animateAccepted;
-- (void)animateRejected;
 
 @end

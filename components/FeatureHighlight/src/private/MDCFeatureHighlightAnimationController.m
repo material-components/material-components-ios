@@ -14,74 +14,61 @@
 @implementation MDCFeatureHighlightAnimationController
 
 - (NSTimeInterval)transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
-  return 0.5;
+  return self.presenting ? 0.35 : 0.2;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
-  UIViewController *fromViewController =
-      [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   UIViewController *toViewController =
       [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
   UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
 
-  MDCFeatureHighlightViewController *highlightController = nil;
   MDCFeatureHighlightView *highlightView = nil;
-  UIViewController *presentingController = nil;
-  if ([fromViewController isKindOfClass:[MDCFeatureHighlightViewController class]]) {
-    highlightController = (MDCFeatureHighlightViewController *)fromViewController;
+  if ([fromView isKindOfClass:[MDCFeatureHighlightView class]]) {
     highlightView = (MDCFeatureHighlightView *)fromView;
-    presentingController = toViewController;
   } else {
-    highlightController = (MDCFeatureHighlightViewController *)toViewController;
     highlightView = (MDCFeatureHighlightView *)toView;
-    presentingController = fromViewController;
   }
 
-  BOOL presenting = (highlightController == toViewController);
-
-  if (presenting) {
+  if (self.presenting) {
     [transitionContext.containerView addSubview:toView];
-    toView.frame = [transitionContext finalFrameForViewController:highlightController];
+    toView.frame = [transitionContext finalFrameForViewController:toViewController];
   }
 
   NSTimeInterval transitionDuration = [self transitionDuration:transitionContext];
-  UIViewAnimationOptions options =
-      UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState;
 
-  if (presenting) {
-    [highlightView animateDiscover];
+  [highlightView layoutIfNeeded];
+  if (self.presenting) {
+    [highlightView animateDiscover:transitionDuration];
   } else {
     switch (self.dismissStyle) {
       case MDCFeatureHighlightDismissAccepted:
-        [highlightView animateAccepted];
+        [highlightView animateAccepted:transitionDuration];
         break;
 
       case MDCFeatureHighlightDismissRejected:
-        [highlightView animateRejected];
+        [highlightView animateRejected:transitionDuration];
         break;
     }
   }
   [UIView animateWithDuration:transitionDuration
                         delay:0.0
-                      options:options
+                      options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^{
-                     if (!presenting) {
-                       fromView.transform = CGAffineTransformIdentity;
+                     // We have to perform an animation on highlightView in this block or else UIKit
+                     // will not know we are performing an animation and will cancel our
+                     // CAAnimations.
+                     if (self.presenting) {
+                       [highlightView layoutAppearing];
+                     } else {
+                       [highlightView layoutDisappearing];
                      }
                    }
                    completion:^(BOOL finished) {
                      // If we're dismissing, remove the highlight view from the hierarchy
-                     if (!presenting) {
+                     if (!self.presenting) {
                        [fromView removeFromSuperview];
                      }
-
-                     // UIViewController's presented with a modalPresentationStyle other than
-                     // UIModalPresentationFullScreen don't receive frame updates for status bar
-                     // height changes.
-                     // TODO(samnm): cache the original value
-//                     highlightController.modalPresentationStyle = UIModalPresentationFullScreen;
-
                      [transitionContext completeTransition:YES];
                    }];
 }

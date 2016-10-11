@@ -27,6 +27,7 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
 const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
 
 @implementation MDCFeatureHighlightView {
+  BOOL _highlighting;
   UIView *_highlightView;
   CGPoint _highlightPoint;
   CGPoint _highlightCenter;
@@ -40,7 +41,7 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
-    self.backgroundColor = [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.5];
+    self.backgroundColor = [UIColor clearColor];
 
     _outerLayer = [[MDCFeatureHighlightLayer alloc] init];
     _outerLayer.fillColor = [self.tintColor colorWithAlphaComponent:0.96].CGColor;
@@ -82,6 +83,16 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   return self;
 }
 
+- (void)layoutAppearing {
+  _titleLabel.alpha = 1;
+  _bodyLabel.alpha = 1;
+}
+
+- (void)layoutDisappearing {
+  _titleLabel.alpha = 0;
+  _bodyLabel.alpha = 0;
+}
+
 - (void)setDisplayedView:(UIView *)displayedView {
   _displayedView.layer.mask = nil;
   [_displayedView removeFromSuperview];
@@ -96,27 +107,24 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   [self setNeedsLayout];
 }
 
-- (void)animateDiscover {
-  [self setNeedsLayout];
-  [self layoutIfNeeded];
-
+- (void)animateDiscover:(CGFloat)duration {
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.0].CGColor];
-  [_outerLayer setCenter:_highlightPoint];
 
-  _displayedView.center = _highlightPoint;
   CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
                                           _displayedView.frame.size.height/2);
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-  [CATransaction setAnimationDuration:0.35];
+  [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setCenter:displayMaskCenter radius:kMDCFeatureHighlightInnerRadius animated:YES];
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:1.0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:kMDCFeatureHighlightInnerRadius animated:YES];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.96].CGColor animated:YES];
   [_outerLayer setCenter:_highlightCenter radius:_outerRadius animated:YES];
   [CATransaction commit];
+
+  _highlighting = YES;
 }
 
 - (void)animatePulse {
@@ -135,34 +143,38 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   [CATransaction commit];
 }
 
-- (void)animateAccepted {
+- (void)animateAccepted:(CGFloat)duration {
   CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
                                           _displayedView.frame.size.height/2);
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-  [CATransaction setAnimationDuration:0.2];
+  [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.0].CGColor animated:YES];
   [_outerLayer setCenter:_highlightCenter radius:1.125 * _outerRadius animated:YES];
   [CATransaction commit];
+
+  _highlighting = NO;
 }
 
-- (void)animateRejected {
+- (void)animateRejected:(CGFloat)duration {
   CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
                                           _displayedView.frame.size.height/2);
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-  [CATransaction setAnimationDuration:0.2];
+  [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
   [_innerLayer setFillColor:[UIColor colorWithWhite:1.0 alpha:0.0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
   [_outerLayer setFillColor:[self.tintColor colorWithAlphaComponent:0.0].CGColor animated:YES];
   [_outerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
   [CATransaction commit];
+
+  _highlighting = NO;
 }
 
 - (void)layoutSubviews {
@@ -198,7 +210,12 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   _displayedView.center = _highlightPoint;
   _innerLayer.center = _highlightPoint;
   _pulseLayer.center = _highlightPoint;
-  _outerLayer.center = _highlightCenter;
+
+  if (_highlighting) {
+    _outerLayer.center = _highlightCenter;
+  } else {
+    _outerLayer.center = _highlightPoint;
+  }
 
   CGPoint titlePos = CGPointMake(0, 0);
   if (leftHalf) {
