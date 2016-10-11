@@ -28,7 +28,7 @@
 
 @interface MDCCollectionViewController () <MDCCollectionInfoBarViewDelegate,
                                            MDCInkTouchControllerDelegate>
-
+@property(nonatomic, assign) BOOL currentlyActiveInk;
 @end
 
 @implementation MDCCollectionViewController {
@@ -268,7 +268,9 @@
     shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
   // Only store touch location and do not allow ink processing. This ink location will be used when
   // manually starting/stopping the ink animation during cell highlight/unhighlight states.
-  _inkTouchLocation = location;
+  if (!self.currentlyActiveInk) {
+    _inkTouchLocation = location;
+  }
   return NO;
 }
 
@@ -352,6 +354,7 @@
       inkView.inkColor = inkView.defaultInkColor;
     }
   }
+  self.currentlyActiveInk = YES;
   [inkView startTouchBeganAnimationAtPoint:location completion:nil];
 }
 
@@ -362,6 +365,7 @@
       [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
+  self.currentlyActiveInk = NO;
   [inkView startTouchEndedAnimationAtPoint:location completion:nil];
 }
 
@@ -398,6 +402,11 @@
 }
 
 - (void)collectionViewWillBeginEditing:(UICollectionView *)collectionView {
+  if (self.currentlyActiveInk) {
+    MDCInkView *activeInkView =
+        [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
+    [activeInkView startTouchEndedAnimationAtPoint:_inkTouchLocation completion:nil];
+  }
   // Inlay all items.
   _styler.allowsItemInlay = YES;
   _styler.allowsMultipleItemInlays = YES;
