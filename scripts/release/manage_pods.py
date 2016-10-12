@@ -27,7 +27,7 @@ import subprocess
 import sys
 
 
-COMMANDS = ['install', 'clean', 'update']
+COMMANDS = ['clean', 'install', 'list', 'update']
 
 def find_podfile_dirs(directory):
   """Return a list of directories that contain Podfile files.
@@ -95,6 +95,16 @@ def install_all_podfile_dirs(directory, fast_install):
   dirs = find_podfile_dirs(directory)
   for d in dirs:
     install_podfile_dir(d, fast_install)
+
+def list_all_podfile_dirs(directory):
+  """Print all directories containing a Podfile.
+
+  Args:
+    directory: The directory to use.
+  """
+  dirs = find_podfile_dirs(directory)
+  for d in dirs:
+    print(d)
 
 
 def clean_all_pods_dirs(directory):
@@ -173,12 +183,14 @@ def main():
   stderr_printer = lambda x: print(x, file=sys.stderr)
 
   # TODO: Avoid this duplication of the COMMANDS strings.
-  if args.command == 'install':
+  if args.command == 'clean':
+    clean_all_pods_dirs(args.directory)
+  elif args.command == 'install':
     install_all_podfile_dirs(args.directory, args.fast_pod_install)
+  elif args.command == 'list':
+    list_all_podfile_dirs(args.directory)
   elif args.command == 'update':
     update_all_podfile_dirs(args.directory)
-  elif args.command == 'clean':
-    clean_all_pods_dirs(args.directory)
   else:
     print('Internal mismatch in the list of possible commands, aborting.',
           file=sys.stderr)
