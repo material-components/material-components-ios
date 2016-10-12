@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsCatalog"
-  s.version      = "15.1.0"
+  s.version      = "15.2.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
