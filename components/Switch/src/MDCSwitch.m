@@ -270,10 +270,12 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
 - (void)fireHapticFeedback {
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-  // This matches the feedback used on UISwitch.
-  UIImpactFeedbackGenerator *generator =
-      [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
-  [generator impactOccurred];
+  if ([UIImpactFeedbackGenerator class]) {
+    // This matches the feedback used on UISwitch.
+    UIImpactFeedbackGenerator *generator =
+        [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+    [generator impactOccurred];
+  }
 #endif
 }
 
