@@ -106,6 +106,7 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   _highlightPoint = highlightPoint;
 
   [self setNeedsLayout];
+  [self layoutIfNeeded];
 }
 
 - (void)animateDiscover:(CGFloat)duration {
@@ -191,11 +192,13 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   CGSize detailSize = [_bodyLabel sizeThatFits:CGSizeMake(textWidth, 1000.0)];
   CGFloat textHeight = titleSize.height + detailSize.height;
 
+  BOOL centered = YES;
   if (_highlightPoint.y <= kMDCFeatureHighlightConcentricBound) {
     _highlightCenter = _highlightPoint;
   } else if (_highlightPoint.y >= self.frame.size.height - kMDCFeatureHighlightConcentricBound) {
     _highlightCenter = _highlightPoint;
   } else {
+    centered = NO;
     if (topHalf) {
       _highlightCenter.y = _highlightPoint.y + kMDCFeatureHighlightInnerRadius + textHeight/2;
     } else {
@@ -219,10 +222,15 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   }
 
   CGPoint titlePos = CGPointMake(0, 0);
-  if (leftHalf) {
-    titlePos.x = kMDCFeatureHighlightTextPadding;
+  CGFloat leftTextBound = kMDCFeatureHighlightTextPadding;
+  CGFloat rightTextBound = self.frame.size.width - MAX(titleSize.width, detailSize.width) - kMDCFeatureHighlightTextPadding;
+  if (!centered) {
+    titlePos.x = (_highlightCenter.x - (20 + textWidth)/2) + 20;
+    titlePos.x = MIN(MAX(titlePos.x, leftTextBound), rightTextBound);
+  } else if (leftHalf) {
+    titlePos.x = leftTextBound;
   } else {
-    titlePos.x = self.frame.size.width - MAX(titleSize.width, detailSize.width) - kMDCFeatureHighlightTextPadding;
+    titlePos.x = rightTextBound;
   }
   if (topHalf) {
     titlePos.y = _highlightPoint.y + kMDCFeatureHighlightInnerPadding + kMDCFeatureHighlightInnerRadius;
