@@ -81,6 +81,7 @@
   _featureHighlightView.displayedView = _displayedView;
   _featureHighlightView.titleLabel.text = self.titleText;
   _featureHighlightView.bodyLabel.text = self.bodyText;
+  _featureHighlightView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   __weak typeof(self) weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
@@ -92,12 +93,16 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
   CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
                                                     toView:_featureHighlightView];
   _featureHighlightView.highlightPoint = point;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
   _pulseTimer = [NSTimer scheduledTimerWithTimeInterval:1.5
                                                  target:_featureHighlightView
                                                selector:@selector(animatePulse)
@@ -106,6 +111,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+
   [_pulseTimer invalidate];
 }
 
