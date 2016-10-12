@@ -4,8 +4,8 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Dialogs
 
 # Dialogs
 
-Dialogs provides a presentation controller that will display a modal dialog according to the
-material spec. Additionally, an alert controller is provided that will display a simple alert.
+Dialogs provides both a presentation controller for displaying a modal dialog and an alert
+controller that will display a simple modal alert.
 
 ### Material Design Specifications
 
@@ -26,7 +26,7 @@ UIViewControllerTransitioningDelegate to vend the presentation controller during
 
 #### Alert Controller
 
-MDCAlertController provides a simple interface for developers to present a simple modal dialog
+MDCAlertController provides a simple interface for developers to present a modal dialog
 according to the material spec.
 
 ## Installation
@@ -44,7 +44,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 pod 'MaterialComponents/Dialogs'
 ~~~
 
-Then, run the following command:
+Then run the following command:
 
 ~~~ bash
 pod install
