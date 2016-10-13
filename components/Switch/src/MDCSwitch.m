@@ -34,6 +34,9 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 @property(nonatomic, readonly) CGFloat thumbPanRange;
 @property(nonatomic, readonly) UIColor *thumbColor;
 @property(nonatomic, readonly) UIColor *trackColor;
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@property(nonatomic) UIImpactFeedbackGenerator *feedbackGenerator;
+#endif
 
 - (void)setIcon:(nullable UIImage *)icon;
 
@@ -245,6 +248,10 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
   [self setNeedsLayout];
 
+  if (userGenerated) {
+    [self fireHapticFeedback];
+  }
+
   void (^updateBlock)() = ^{
     [self layoutIfNeeded];
     [self updateColors];
@@ -260,7 +267,6 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
   if (userGenerated) {
     [self sendActionsForControlEvents:UIControlEventValueChanged];
-    [self fireHapticFeedback];
   }
 
   [self updateAccessibilityValues];
@@ -268,14 +274,30 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
 #pragma mark - Private Methods
 
+- (void)prepareHapticFeedback {
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+  if ([UIImpactFeedbackGenerator class]) {
+    if (!self.feedbackGenerator) {
+      // This matches the feedback used on UISwitch.
+      self.feedbackGenerator =
+          [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+    }
+    [self.feedbackGenerator impactOccurred];
+  }
+#endif
+}
+
 - (void)fireHapticFeedback {
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
   if ([UIImpactFeedbackGenerator class]) {
-    // This matches the feedback used on UISwitch.
-    UIImpactFeedbackGenerator *generator =
-        [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
-    [generator impactOccurred];
+    [self.feedbackGenerator impactOccurred];
   }
+#endif
+}
+
+- (void)releaseHapticFeedback {
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+  self.feedbackGenerator = nil;
 #endif
 }
 
@@ -400,6 +422,8 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
   _isTouching = YES;
   _didChangeValueDuringPan = NO;
   _panThumbGrabPosition = touchLoc.x - self.thumbPosition.x;
+
+  [self prepareHapticFeedback];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -426,6 +450,7 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   _isTouching = NO;
+  [self releaseHapticFeedback];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -443,6 +468,8 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
       [self setOn:!self.on animated:YES userGenerated:YES];
     }
   }
+
+  [self releaseHapticFeedback];
 }
 
 #pragma mark - UIControl Methods
