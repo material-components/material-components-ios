@@ -157,7 +157,13 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
       break;
     }
     case UIGestureRecognizerStateCancelled:
+      [_addedInkView cancelAllAnimationsAnimated:YES];
+      _shouldRespondToTouch = NO;
+      break;
     case UIGestureRecognizerStateRecognized:
+      [_addedInkView startTouchEndedAnimationAtPoint:touchLocation completion:nil];
+      _shouldRespondToTouch = NO;
+      break;
     case UIGestureRecognizerStateFailed:
       [_addedInkView cancelAllAnimationsAnimated:YES];
       _shouldRespondToTouch = NO;
