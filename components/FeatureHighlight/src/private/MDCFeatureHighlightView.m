@@ -25,8 +25,8 @@ const CGFloat kMDCFeatureHighlightInnerRadius = 44.0;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0;
 const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
 const CGFloat kMDCFeatureHighlightTextMaxWidth = 300.0;
-
 const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
+const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
 
 @implementation MDCFeatureHighlightView {
   BOOL _highlighting;
@@ -46,15 +46,12 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
     self.backgroundColor = [UIColor clearColor];
 
     _outerLayer = [[MDCFeatureHighlightLayer alloc] init];
-    _outerLayer.fillColor = [self.tintColor colorWithAlphaComponent:0.96].CGColor;
     [self.layer addSublayer:_outerLayer];
 
     _pulseLayer = [[MDCFeatureHighlightLayer alloc] init];
-    _pulseLayer.fillColor = [UIColor whiteColor].CGColor;
     [self.layer addSublayer:_pulseLayer];
 
     _innerLayer = [[MDCFeatureHighlightLayer alloc] init];
-    _innerLayer.fillColor = [UIColor whiteColor].CGColor;
     [self.layer addSublayer:_innerLayer];
 
     _displayMaskLayer = [[MDCFeatureHighlightLayer alloc] init];
@@ -62,7 +59,6 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _titleLabel.font = [[MDCTypography fontLoader] regularFontOfSize:20.0];
-    _titleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:[MDCTypography titleFontOpacity]];
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
@@ -70,7 +66,6 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _bodyLabel.font = [MDCTypography subheadFont];
-    _bodyLabel.textColor = [UIColor colorWithWhite:1.0 alpha:[MDCTypography captionFontOpacity]];
     _bodyLabel.shadowColor = nil;
     _bodyLabel.shadowOffset = CGSizeZero;
     _bodyLabel.textAlignment = NSTextAlignmentNatural;
@@ -81,6 +76,9 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
     UITapGestureRecognizer *tapRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapView:)];
     [self addGestureRecognizer:tapRecognizer];
+
+    self.outerHighlightColor = [UIColor blueColor];
+    self.innerHighlightColor = [UIColor whiteColor];
   }
   return self;
 }
@@ -96,17 +94,19 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
 }
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
-  _outerHighlightColor = outerHighlightColor;
+  _outerHighlightColor =
+      [outerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightOuterAlpha];
 
-  _outerLayer.fillColor = [_outerHighlightColor colorWithAlphaComponent:0.96].CGColor;
+  _outerLayer.fillColor = _outerHighlightColor.CGColor;
 
   MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
   if ([MDFTextAccessibility isLargeForContrastRatios:_bodyLabel.font]) {
     options |= MDFTextAccessibilityOptionsLargeFont;
   }
 
+  UIColor *outerColor = [_outerHighlightColor colorWithAlphaComponent:1.0];
   _bodyLabel.textColor =
-      [MDFTextAccessibility textColorOnBackgroundColor:_outerHighlightColor
+      [MDFTextAccessibility textColorOnBackgroundColor:outerColor
                                        targetTextAlpha:[MDCTypography captionFontOpacity]
                                                   options:options];
 
@@ -117,7 +117,7 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   // Since MDFTextAccessibility can return either a dark value or light value color we want to
   // guarantee that the title and body have the same value.
   CGFloat titleAlpha = [MDFTextAccessibility minAlphaOfTextColor:_bodyLabel.textColor
-                                               onBackgroundColor:_outerHighlightColor
+                                               onBackgroundColor:outerColor
                                                          options:options];
   titleAlpha = MAX([MDCTypography titleFontOpacity], titleAlpha);
   _titleLabel.textColor = [_bodyLabel.textColor colorWithAlphaComponent:titleAlpha];
@@ -158,7 +158,7 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   [_displayMaskLayer setCenter:displayMaskCenter radius:kMDCFeatureHighlightInnerRadius animated:YES];
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:1.0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:kMDCFeatureHighlightInnerRadius animated:YES];
-  [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0.96].CGColor animated:YES];
+  [_outerLayer setFillColor:_outerHighlightColor.CGColor animated:YES];
   [_outerLayer setCenter:_highlightCenter radius:_outerRadius animated:YES];
   [CATransaction commit];
 
