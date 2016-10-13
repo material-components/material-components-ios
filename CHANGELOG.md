@@ -1,3 +1,39 @@
+# 15.2.0
+
+## API diffs
+
+### Palettes
+
+- [new] [`MDCPalette.paletteGeneratedFromColor](https://github.com/google/material-components-ios/blob/fad8519b6a1ba5c29a0368fb470cca3c6da74431/components/Palettes/src/MDCPalettes.h#L137)
+
+## Component changes
+
+### FlexibleHeader
+
+#### Changes
+
+* [MDC_#121 - Added write-up for re-applying swipe to go back feature on MDCFlexibleHeaderController with hidden navigation bar in README.md](https://github.com/google/material-components-ios/commit/1aadd7f468d1d00b7fcbc6c4f9979986229f3df7) (Justin Shephard)
+
+### Ink
+
+#### Changes
+
+* [Added emphasis to reference count warning.](https://github.com/google/material-components-ios/commit/6a7a48a9ebb2cb94cdb253e06298a07132db92bd) (Will Larche)
+* [Handling lack of strong reference to ink touch controller in both examples and instructions.](https://github.com/google/material-components-ios/commit/ca5b9a9ef775e06234cec8f64477402d65153670) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [[NavBar] Corrected mapping of NSTextAlignment to MDCNavigationBarTitleAligment](https://github.com/google/material-components-ios/commit/fdf1ff083d3c27c00263251c7fac5738317ce896) (randallli)
+
+### Palettes
+
+#### Changes
+
+* [Added missing example initializer.](https://github.com/google/material-components-ios/commit/f5378746668facc793bf31c96a27a4e6b47324d3) (Adrian Secord)
+* [Generate palettes to match a target color (#729)](https://github.com/google/material-components-ios/commit/fad8519b6a1ba5c29a0368fb470cca3c6da74431) (Adrian Secord)
+
 # 15.1.0
 
 ## API diffs
