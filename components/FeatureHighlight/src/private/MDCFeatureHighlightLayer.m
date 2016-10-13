@@ -39,7 +39,8 @@
     if (self.path) {
       animation.fromValue = (__bridge id)self.path;
     } else {
-      animation.fromValue = (__bridge id)CGPathCreateWithEllipseInRect(CGRectMake(center.x, center.y, 0, 0), NULL);
+      animation.fromValue =
+          (__bridge id)CGPathCreateWithEllipseInRect(CGRectMake(center.x, center.y, 0, 0), NULL);
     }
     self.path = CGPathCreateWithEllipseInRect(circleRect, NULL);
     [self addAnimation:animation forKey:@"path"];
@@ -61,7 +62,9 @@
   }
 }
 
-- (void)animateRadiusOverKeyframes:(NSArray *)radii keyTimes:(NSArray *)keyTimes center:(CGPoint)center {
+- (void)animateRadiusOverKeyframes:(NSArray *)radii
+                          keyTimes:(NSArray *)keyTimes
+                            center:(CGPoint)center {
   NSMutableArray *values = [NSMutableArray arrayWithCapacity:radii.count];
   for (NSNumber *radius in radii) {
     CGFloat r = radius.floatValue;

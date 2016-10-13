@@ -21,7 +21,8 @@
 
 @implementation MDCFeatureHighlightAnimationController
 
-- (NSTimeInterval)transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
+- (NSTimeInterval)
+    transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
   return self.presenting ? 0.35 : 0.2;
 }
 

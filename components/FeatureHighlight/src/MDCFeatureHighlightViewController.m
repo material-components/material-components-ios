@@ -81,7 +81,8 @@
   _featureHighlightView.displayedView = _displayedView;
   _featureHighlightView.titleLabel.text = self.titleText;
   _featureHighlightView.bodyLabel.text = self.bodyText;
-  _featureHighlightView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _featureHighlightView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _featureHighlightView.outerHighlightColor = self.outerHighlightColor;
   _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
 
