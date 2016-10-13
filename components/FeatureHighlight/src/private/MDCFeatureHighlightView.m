@@ -267,18 +267,11 @@ const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
     _outerLayer.center = _highlightPoint;
   }
 
-  CGPoint titlePos = CGPointMake(0, 0);
   CGFloat leftTextBound = kMDCFeatureHighlightTextPadding;
   CGFloat rightTextBound = self.frame.size.width - MAX(titleSize.width, detailSize.width) -
       kMDCFeatureHighlightTextPadding;
-  if (!centered) {
-    titlePos.x = (_highlightCenter.x - (20 + textWidth)/2) + 20;
-    titlePos.x = MIN(MAX(titlePos.x, leftTextBound), rightTextBound);
-  } else if (leftHalf) {
-    titlePos.x = leftTextBound;
-  } else {
-    titlePos.x = rightTextBound;
-  }
+  CGPoint titlePos = CGPointMake(0, 0);
+  titlePos.x = MIN(MAX(_highlightCenter.x - textWidth/2, leftTextBound), rightTextBound);
   if (topHalf) {
     titlePos.y = _highlightPoint.y + kMDCFeatureHighlightInnerPadding +
         kMDCFeatureHighlightInnerRadius;
