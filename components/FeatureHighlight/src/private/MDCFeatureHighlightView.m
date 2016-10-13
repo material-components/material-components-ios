@@ -19,6 +19,7 @@
 #import "MaterialTypography.h"
 
 #import "MDCFeatureHighlightLayer.h"
+#import "MDFTextAccessibility.h"
 
 const CGFloat kMDCFeatureHighlightInnerRadius = 44.0;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0;
@@ -98,6 +99,28 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
   _outerHighlightColor = outerHighlightColor;
 
   _outerLayer.fillColor = [_outerHighlightColor colorWithAlphaComponent:0.96].CGColor;
+
+  MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
+  if ([MDFTextAccessibility isLargeForContrastRatios:_bodyLabel.font]) {
+    options |= MDFTextAccessibilityOptionsLargeFont;
+  }
+
+  _bodyLabel.textColor =
+      [MDFTextAccessibility textColorOnBackgroundColor:_outerHighlightColor
+                                       targetTextAlpha:[MDCTypography captionFontOpacity]
+                                                  options:options];
+
+  options = MDFTextAccessibilityOptionsPreferLighter;
+  if ([MDFTextAccessibility isLargeForContrastRatios:_titleLabel.font]) {
+    options |= MDFTextAccessibilityOptionsLargeFont;
+  }
+  // Since MDFTextAccessibility can return either a dark value or light value color we want to
+  // guarantee that the title and body have the same value.
+  CGFloat titleAlpha = [MDFTextAccessibility minAlphaOfTextColor:_bodyLabel.textColor
+                                               onBackgroundColor:_outerHighlightColor
+                                                         options:options];
+  titleAlpha = MAX([MDCTypography titleFontOpacity], titleAlpha);
+  _titleLabel.textColor = [_bodyLabel.textColor colorWithAlphaComponent:titleAlpha];
 }
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {

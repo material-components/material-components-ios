@@ -120,7 +120,7 @@
 
 - (UIColor *)outerHighlightColor {
   if (!_outerHighlightColor) {
-    return self.view.tintColor;
+    return [UIColor blueColor];
   }
   return _outerHighlightColor;
 }
