@@ -292,13 +292,11 @@ const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
   };
   _bodyLabel.frame = detailFrame;
 
-  // Calculating the distance between center of the highlight and the corner of the titleLabel
-  // furthest from the center.
+  // Calculating the radius required for a circle centered at _highlightCenter that fully encircles
+  // both labels.
   CGRect textFrames = CGRectUnion(_titleLabel.frame, _bodyLabel.frame);
-  CGFloat distX = MAX(ABS(CGRectGetMaxX(textFrames) - _highlightCenter.x),
-                      ABS(CGRectGetMinX(textFrames) - _highlightCenter.x));
-  CGFloat distY = MAX(ABS(CGRectGetMaxY(textFrames) - _highlightCenter.y),
-                      ABS(CGRectGetMinY(textFrames) - _highlightCenter.y));
+  CGFloat distX = ABS(CGRectGetMidX(textFrames) - _highlightCenter.x) + textFrames.size.width/2;
+  CGFloat distY = ABS(CGRectGetMidY(textFrames) - _highlightCenter.y) + textFrames.size.height/2;
   _outerRadius = sqrt(distX * distX + distY * distY) + kMDCFeatureHighlightTextPadding;
 }
 
