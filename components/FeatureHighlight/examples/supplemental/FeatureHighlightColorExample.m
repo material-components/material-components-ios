@@ -101,6 +101,8 @@ static NSString * const reuseIdentifier = @"Cell";
   MDCFeatureHighlightViewController *highlightController =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:cell.accessoryView
                                                               completion:nil];
+  highlightController.titleText = @"So pretty!";
+  highlightController.bodyText = @"What a nice color you've chosen.";
   highlightController.outerHighlightColor = cell.accessoryView.backgroundColor;
   [self presentViewController:highlightController animated:YES completion:nil];
 }

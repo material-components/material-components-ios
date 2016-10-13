@@ -20,6 +20,9 @@ typedef void(^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
 @interface MDCFeatureHighlightView : UIView
 
+@property (nonatomic, strong) UIColor *outerHighlightColor;
+@property (nonatomic, strong) UIColor *innerHighlightColor;
+
 @property (nonatomic, assign) CGPoint highlightPoint;
 @property (nonatomic, strong) UIView *displayedView;
 @property (nonatomic, strong) UILabel *titleLabel;

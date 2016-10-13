@@ -82,6 +82,8 @@
   _featureHighlightView.titleLabel.text = self.titleText;
   _featureHighlightView.bodyLabel.text = self.bodyText;
   _featureHighlightView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _featureHighlightView.outerHighlightColor = self.outerHighlightColor;
+  _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
 
   __weak typeof(self) weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
@@ -123,11 +125,11 @@
   return _outerHighlightColor;
 }
 
-- (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
-  if (!innerHighlightColor) {
-    innerHighlightColor = [UIColor whiteColor];
+- (UIColor *)innerHighlightColor {
+  if (!_innerHighlightColor) {
+    return [UIColor whiteColor];
   }
-  _innerHighlightColor = innerHighlightColor;
+  return _innerHighlightColor;
 }
 
 - (void)acceptFeature {
