@@ -228,7 +228,7 @@ override func viewDidLoad() {
 }
 ~~~
     
-Build and run your app. It should display a white rectangle above the collection view: 
+Build and run your app. It should display a yellow rectangle above the collection view: 
 
 ![Running the app to show the new app bar](docs/assets/App-Collection-No-Flexing.gif)
 
