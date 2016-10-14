@@ -428,7 +428,6 @@ We want the fab to float above the bottom right corner, so we'll add it as a sub
     fab.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
     fab.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0).isActive = true
   }
-...
 ~~~
 
 **NOTE:** We used margins of 16 points to match the guidelines found in the [material design spec](https://material.google.com/components/buttons-floating-action-button.html#buttons-floating-action-button-floating-action-button). Lots of suggestions for padding, sizing and alignment choices can be found [there](https://material.google.com/layout/metrics-keylines.html#metrics-keylines-baseline-grids).
