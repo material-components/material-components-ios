@@ -26,7 +26,16 @@ const CGFloat kMDCFeatureHighlightInnerPadding = 20.0;
 const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
 const CGFloat kMDCFeatureHighlightTextMaxWidth = 300.0;
 const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
+const CGFloat kMDCFeatureHighlightNonconcentricOffset = 20.0;
 const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
+const CGFloat kMDCFeatureHighlightMaxTextHeight = 1000.0;
+const CGFloat kMDCFeatureHighlightTitleFontSize = 20.0;
+
+// Animation consts
+const CGFloat kMDCFeatureHighlightInnerRadiusFactor = 1.1;
+const CGFloat kMDCFeatureHighlightOuterRadiusFactor = 1.125;
+const CGFloat kMDCFeatureHighlightPulseRadiusFactor = 2.0;
+const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
 
 @implementation MDCFeatureHighlightView {
   BOOL _highlighting;
@@ -58,7 +67,8 @@ const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleLabel.font = [[MDCTypography fontLoader] regularFontOfSize:20.0];
+    _titleLabel.font =
+        [[MDCTypography fontLoader] regularFontOfSize:kMDCFeatureHighlightTitleFontSize];
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
@@ -169,7 +179,8 @@ const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
 
 - (void)animatePulse {
   NSArray *keyTimes = @[@0, @0.5, @1];
-  id pulseColorStart = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0.54].CGColor;
+  id pulseColorStart = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:
+                                         kMDCFeatureHighlightPulseStartAlpha].CGColor;
   id pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
   CGFloat radius = kMDCFeatureHighlightInnerRadius;
 
@@ -177,10 +188,14 @@ const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
   [CATransaction setAnimationDuration:1.0f];
   [CATransaction setAnimationTimingFunction:
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-  [_innerLayer animateRadiusOverKeyframes:@[@(radius), @(radius * 1.1), @(radius)]
+  NSArray *innerKeyframes =
+      @[@(radius), @(radius * kMDCFeatureHighlightInnerRadiusFactor), @(radius)];
+  [_innerLayer animateRadiusOverKeyframes:innerKeyframes
                                  keyTimes:keyTimes
                                    center:_highlightPoint];
-  [_pulseLayer animateRadiusOverKeyframes:@[@(radius), @(radius), @(radius * 2.0)]
+  NSArray *pulseKeyframes =
+      @[@(radius), @(radius), @(radius * kMDCFeatureHighlightPulseRadiusFactor)];
+  [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes
                                  keyTimes:keyTimes
                                    center:_highlightPoint];
   [_pulseLayer animateFillColorOverKeyframes:@[pulseColorStart, pulseColorStart, pulseColorEnd]
@@ -198,9 +213,11 @@ const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
   [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
+  [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
   [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
-  [_outerLayer setCenter:_highlightCenter radius:1.125 * _outerRadius animated:YES];
+  [_outerLayer setCenter:_highlightCenter
+                  radius:kMDCFeatureHighlightOuterRadiusFactor * _outerRadius
+                animated:YES];
   [CATransaction commit];
 
   _highlighting = NO;
@@ -214,11 +231,11 @@ const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
   [CATransaction setAnimationTimingFunction:
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
+  [_displayMaskLayer setCenter:displayMaskCenter radius:0 animated:YES];
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
+  [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
   [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
-  [_outerLayer setCenter:_highlightPoint radius:0.0 animated:YES];
+  [_outerLayer setCenter:_highlightPoint radius:0 animated:YES];
   [CATransaction commit];
 
   _highlighting = NO;
@@ -234,8 +251,10 @@ const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
 
   CGFloat textWidth = MIN(self.frame.size.width - 2 * kMDCFeatureHighlightTextPadding,
                           kMDCFeatureHighlightTextMaxWidth);
-  CGSize titleSize = [_titleLabel sizeThatFits:CGSizeMake(textWidth, 1000.0)];
-  CGSize detailSize = [_bodyLabel sizeThatFits:CGSizeMake(textWidth, 1000.0)];
+  CGSize titleSize = [_titleLabel sizeThatFits:CGSizeMake(textWidth,
+                                                          kMDCFeatureHighlightMaxTextHeight)];
+  CGSize detailSize = [_bodyLabel sizeThatFits:CGSizeMake(textWidth,
+                                                          kMDCFeatureHighlightMaxTextHeight)];
   CGFloat textHeight = titleSize.height + detailSize.height;
 
   BOOL centered = YES;
@@ -251,9 +270,9 @@ const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
       _highlightCenter.y = _highlightPoint.y - kMDCFeatureHighlightInnerRadius - textHeight/2;
     }
     if (leftHalf) {
-      _highlightCenter.x = _highlightPoint.x + 20;
+      _highlightCenter.x = _highlightPoint.x + kMDCFeatureHighlightNonconcentricOffset;
     } else {
-      _highlightCenter.x = _highlightPoint.x - 20;
+      _highlightCenter.x = _highlightPoint.x - kMDCFeatureHighlightNonconcentricOffset;
     }
   }
 
