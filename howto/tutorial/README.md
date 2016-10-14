@@ -139,8 +139,6 @@ Open `Main.storyboard` and delete the default view controller that came with it.
  {% endif %}-->
 
 
-
-
 Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
 
 then set its reuse identifier to `cell`:
@@ -161,6 +159,8 @@ override func viewDidLoad() {
   styler.cellStyle = .card
 }
 ~~~
+
+**NOTE:** See MaterialCollectionCells, MaterialCollectionLayoutAttributes and MaterialCollectionViewStyler to learn about all the options included for styling. Or make your own! Any part of the collection view can be completely customized to your needs.  
         
 Below `viewDidLoad`, add a mock datasource:
 
@@ -315,8 +315,201 @@ Build and run your app. The app bar should now flex when the collection view is 
 
 ![Running the app to show the new app bar and its flex behavior](docs/assets/App-Collection-With-Flexing.gif)
 
----
+## 6.  Add a button to the app bar:
+MDC's collections component has a beautiful, out-of-the-box animation when you toggle isEditing. Let's put a button in the app bar that does just that.
 
+First, write the function the button will call:
+
+~~~Swift
+class ViewController: MDCCollectionViewController {
+
+  let appBar = MDCAppBar()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    styler.cellStyle = .card
+
+    addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
+
+    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+    appBar.addSubviewsToParent()
+
+    title = "Material Components"
+  }
+
+  func barButtonDidTap(sender: UIBarButtonItem) {
+    editor.isEditing = !editor.isEditing
+
+    navigationItem.rightBarButtonItem.title = editor.isEditing ? "Cancel" : "Edit"
+  }
+...
+~~~
+
+This function toggles editing mode on the collectionView and toggles the text the bar button displays.
+
+Now let's add a bar button property and add it to the right side of the appBar:
+
+~~~Swift
+class ViewController: MDCCollectionViewController {
+
+  let appBar = MDCAppBar()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    styler.cellStyle = .card
+
+    addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
+
+    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+    appBar.addSubviewsToParent()
+
+    title = "Material Components"
+
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+  }
+
+  func barButtonDidTap(sender: UIBarButtonItem) {
+    editor.isEditing = !editor.isEditing
+
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+  }
+...
+~~~
+
+**NOTE:** Notice that we added the right bar button to the app bar the same way you would for a UINavigationBar. That's because inside the app bar is an MDCNavigationBar. Navigation bars react to changes in the navigationItem, like adding buttons and changing title, by updating their button bar. 
+
+Build and run your app:
+
+TODO: INSERT IMAGE
+
+
+
+## 7. Add a floating action button:
+
+When you really want to call attention to an important action, consider using floating action buttons. They are cicles floating above the UI and have built-in motion behaviors that include morphing and launching. They are also known as "fabs".
+
+Add a property for the fab and make a new function that will toggle the selected state of the fab when tapped:
+
+~~~Swift
+class ViewController: MDCCollectionViewController {
+
+  let appBar = MDCAppBar()
+  let fab = MDCFloatingButton()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    styler.cellStyle = .card
+
+    addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
+
+    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+    appBar.addSubviewsToParent()
+
+    title = "Material Components"
+
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+  }
+
+  func fabDidTap(sender: UIButton) {
+    sender.isSelected = !sender.isSelected
+  }
+...
+~~~
+
+We want the fab to float above the bottom right corner so we'll add it as a subview and set some constraints:
+
+~~~Swift
+class ViewController: MDCCollectionViewController {
+
+  let appBar = MDCAppBar()
+  let fab = MDCFloatingButton()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    styler.cellStyle = .card
+
+    addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
+
+    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+    appBar.addSubviewsToParent()
+
+    title = "Material Components"
+
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+
+    view.addSubview(fab)
+    fab.translatesAutoresizingMaskIntoConstraints = false
+    fab.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
+    fab.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0).isActive = true
+  }
+
+  func fabDidTap(sender: UIButton) {
+    sender.isSelected = !sender.isSelected
+  }
+...
+~~~
+
+**NOTE:** We used margins of 16 points to match the guidelines found in the [material design spec](https://material.google.com/components/buttons-floating-action-button.html#buttons-floating-action-button-floating-action-button). Lots of suggestions for padding, sizing and alignment choices can be found [there](https://material.google.com/layout/metrics-keylines.html#metrics-keylines-baseline-grids).
+
+Build and run your app. The fab shows up but it doesn't do anything yet.
+
+Add target / action for the button and titles for selected and unselected states:
+
+~~~Swift
+class ViewController: MDCCollectionViewController {
+
+  let appBar = MDCAppBar()
+  let fab = MDCFloatingButton()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    styler.cellStyle = .card
+
+    addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
+
+    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+    appBar.addSubviewsToParent()
+
+    title = "Material Components"
+
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+
+    appBar.navigationBar.tintColor = UIColor.black
+
+    view.addSubview(fab)
+    fab.translatesAutoresizingMaskIntoConstraints = false
+    fab.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
+    fab.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0).isActive = true
+
+    fab.setTitle("+", for: .normal)
+    fab.setTitle("-", for: .selected)
+    fab.addTarget(self, action: #selector(ViewController.fabDidTap(sender:)), for: .touchUpInside)
+  }
+
+  func barButtonDidTap(sender: UIBarButtonItem) {
+    editor.isEditing = !editor.isEditing
+
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+  }
+
+  func fabDidTap(sender: UIButton) {
+    sender.isSelected = !sender.isSelected
+  }
+...
+~~~
+
+Build and run your app. The floating action button responds to your taps:
+
+TODO Insert image
+
+**NOTE:** While we're using text for the + and - inside the fab, to get proper sizing, you should use icons. The material design website has a great [library](https://design.google.com/icons/) of icons that can be exported specifically bundled and sized for iOS.
+
+---
 
 ## **Next steps**
 
