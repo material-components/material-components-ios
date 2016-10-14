@@ -409,11 +409,6 @@ class ViewController: MDCCollectionViewController {
 We want the fab to float above the bottom right corner, so we'll add it as a subview and then set some constraints:
 
 ~~~Swift
-class ViewController: MDCCollectionViewController {
-
-  let appBar = MDCAppBar()
-  let fab = MDCFloatingButton()
-
   override func viewDidLoad() {
     super.viewDidLoad()
     styler.cellStyle = .card
@@ -432,10 +427,6 @@ class ViewController: MDCCollectionViewController {
     fab.translatesAutoresizingMaskIntoConstraints = false
     fab.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
     fab.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0).isActive = true
-  }
-
-  func fabDidTap(sender: UIButton) {
-    sender.isSelected = !sender.isSelected
   }
 ...
 ~~~
