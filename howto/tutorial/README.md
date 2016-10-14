@@ -160,13 +160,11 @@ override func viewDidLoad() {
 }
 ~~~
 
-**NOTE:** See MaterialCollectionCells, MaterialCollectionLayoutAttributes and MaterialCollectionViewStyler to learn about all the options included for styling. Or make your own! Any part of the collection view can be completely customized to your needs.  
+**NOTE:** See MaterialCollectionCells, MaterialCollectionLayoutAttributes and MaterialCollectionViewStyler to for other options included for styling. Or make your own! Any part of the collection view can be completely customized to your needs.  
         
 Below `viewDidLoad`, add a mock datasource:
 
 ~~~ swift
-class ViewController: MDCCollectionViewController {
-
 override func viewDidLoad() {
   super.viewDidLoad()
   styler.cellStyle = .card
@@ -199,7 +197,7 @@ Build and run your app. It should display a scrollable, touchable collection vie
 ![Running the app to show a working collection of cells](docs/assets/App-Collection-No-AppBar.gif)
 
 ## 4.  Add an app bar:
-Add the property declaration to the top of the class:
+Add the app bar property declaration to the top of the class:
 
 ~~~ swift
 class ViewController: MDCCollectionViewController {
@@ -234,7 +232,7 @@ Build and run your app. It should display a white rectangle above the collection
 
 ![Running the app to show the new app bar](docs/assets/App-Collection-No-Flexing.gif)
 
-But if you pull down, it doesn’t expand at all.
+But if you pull down, it doesn’t expand at all. It's not flexible.
 
 ## 5.  Make the app bar flexible by forwarding scroll view delegate methods:
 Implement the UIScrollViewDelegate methods:
@@ -341,14 +339,14 @@ class ViewController: MDCCollectionViewController {
   func barButtonDidTap(sender: UIBarButtonItem) {
     editor.isEditing = !editor.isEditing
 
-    navigationItem.rightBarButtonItem.title = editor.isEditing ? "Cancel" : "Edit"
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
   }
 ...
 ~~~
 
-This function toggles editing mode on the collectionView and toggles the text the bar button displays.
+This function will toggle editing mode on the collectionView and toggle the title.
 
-Now let's add a bar button property and add it to the right side of the appBar:
+Now let's add a bar button to the right side of the app bar:
 
 ~~~Swift
 class ViewController: MDCCollectionViewController {
@@ -388,7 +386,7 @@ TODO: INSERT IMAGE
 
 ## 7. Add a floating action button:
 
-When you really want to call attention to an important action, consider using floating action buttons. They are cicles floating above the UI and have built-in motion behaviors that include morphing and launching. They are also known as "fabs".
+When you really want to call attention to an important action, consider using floating action buttons. They are circles floating above the UI and have built-in motion behaviors that include morphing and launching. They are also known as "fabs".
 
 Add a property for the fab and make a new function that will toggle the selected state of the fab when tapped:
 
@@ -419,7 +417,7 @@ class ViewController: MDCCollectionViewController {
 ...
 ~~~
 
-We want the fab to float above the bottom right corner so we'll add it as a subview and set some constraints:
+We want the fab to float above the bottom right corner, so we'll add it as a subview and then set some constraints:
 
 ~~~Swift
 class ViewController: MDCCollectionViewController {
@@ -460,6 +458,9 @@ Build and run your app. The fab shows up but it doesn't do anything yet.
 Add target / action for the button and titles for selected and unselected states:
 
 ~~~Swift
+import UIKit
+import MaterialComponents
+
 class ViewController: MDCCollectionViewController {
 
   let appBar = MDCAppBar()
@@ -500,14 +501,62 @@ class ViewController: MDCCollectionViewController {
   func fabDidTap(sender: UIButton) {
     sender.isSelected = !sender.isSelected
   }
-...
+
+  override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 5
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 4
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+
+    if let textCell = cell as? MDCCollectionViewTextCell {
+
+      // Add some mock text to the cell.
+      let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
+      textCell.textLabel?.text = animals[indexPath.item]
+    }
+    
+    return cell
+  }
+
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidScroll()
+    }
+  }
+
+  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+    }
+  }
+
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      let headerView = appBar.headerViewController.headerView
+      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+    }
+  }
+
+  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      let headerView = appBar.headerViewController.headerView
+      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+    }
+  }
+
+}
 ~~~
 
 Build and run your app. The floating action button responds to your taps:
 
-TODO Insert image
+TODO INSERT IMAGE
 
-**NOTE:** While we're using text for the + and - inside the fab, to get proper sizing, you should use icons. The material design website has a great [library](https://design.google.com/icons/) of icons that can be exported specifically bundled and sized for iOS.
+**NOTE:** While we're using text for the + and - inside the fab, to get proper sizing, you should use icons. The material design website has a great [library](https://design.google.com/icons/) of icons that can be exported bundled and sized specifically for iOS.
 
 ---
 
