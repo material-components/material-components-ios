@@ -349,10 +349,6 @@ This function will toggle editing mode on the collectionView and toggle the titl
 Now let's add a bar button to the right side of the app bar:
 
 ~~~Swift
-class ViewController: MDCCollectionViewController {
-
-  let appBar = MDCAppBar()
-
   override func viewDidLoad() {
     super.viewDidLoad()
     styler.cellStyle = .card
@@ -367,13 +363,6 @@ class ViewController: MDCCollectionViewController {
 
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
   }
-
-  func barButtonDidTap(sender: UIBarButtonItem) {
-    editor.isEditing = !editor.isEditing
-
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
-  }
-...
 ~~~
 
 **NOTE:** Notice that we added the right bar button to the app bar the same way you would for a UINavigationBar. That's because inside the app bar is an MDCNavigationBar. Navigation bars react to changes in the navigationItem, like adding buttons and changing title, by updating their button bar. 
