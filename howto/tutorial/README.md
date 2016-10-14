@@ -371,7 +371,7 @@ Build and run your app:
 
 TODO: INSERT IMAGE
 
-
+Tap on the EDIT button and the cards separate. Tap on CANCEL and the meld back together.
 
 ## 7. Add a floating action button:
 
