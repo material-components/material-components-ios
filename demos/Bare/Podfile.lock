@@ -145,7 +145,7 @@ PODS:
     - MaterialComponents/private/RTL
     - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Typography (15.2.0)
-  - MDFTextAccessibility (1.1.1)
+  - MDFTextAccessibility (1.1.3)
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
@@ -156,7 +156,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MaterialComponents: afa91c7e2ac6b4de1406035a86dd26fb178a9243
-  MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
+  MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
 PODFILE CHECKSUM: 44e7c616a05bb4ce24db557c3de4bfbe915c2f56
 
