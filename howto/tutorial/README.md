@@ -318,7 +318,7 @@ MDC's collections component has a beautiful, out-of-the-box animation when you t
 
 First, write the function the button will call when tapped:
 
-~~~Swift
+~~~swift
 class ViewController: MDCCollectionViewController {
 
   let appBar = MDCAppBar()
@@ -348,7 +348,7 @@ This function will toggle editing mode on the collectionView and toggle the titl
 
 Now let's add a bar button to the right side of the app bar:
 
-~~~Swift
+~~~swift
   override func viewDidLoad() {
     super.viewDidLoad()
     styler.cellStyle = .card
@@ -379,7 +379,7 @@ When you really want to call attention to an important action, consider using fl
 
 Add a property for the fab and make a new function that will toggle the selected state of the fab when tapped:
 
-~~~Swift
+~~~swift
 class ViewController: MDCCollectionViewController {
 
   let appBar = MDCAppBar()
@@ -408,7 +408,7 @@ class ViewController: MDCCollectionViewController {
 
 We want the fab to float above the bottom right corner, so we'll add it as a subview and then set some constraints:
 
-~~~Swift
+~~~swift
   override func viewDidLoad() {
     super.viewDidLoad()
     styler.cellStyle = .card
@@ -436,7 +436,7 @@ Build and run your app. The fab shows up but it doesn't do anything yet.
 
 Add target / action for the button and titles for selected and unselected states:
 
-~~~Swift
+~~~swift
 import UIKit
 import MaterialComponents
 
