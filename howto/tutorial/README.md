@@ -316,7 +316,7 @@ Build and run your app. The app bar should now flex when the collection view is 
 ## 6.  Add a button to the app bar:
 MDC's collections component has a beautiful, out-of-the-box animation when you toggle isEditing. Let's put a button in the app bar that does just that.
 
-First, write the function the button will call:
+First, write the function the button will call when tapped:
 
 ~~~Swift
 class ViewController: MDCCollectionViewController {
