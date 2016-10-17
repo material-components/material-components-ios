@@ -533,7 +533,7 @@ class ViewController: MDCCollectionViewController {
 
 Build and run your app. The floating action button responds to your taps:
 
-TODO INSERT IMAGE
+![Finished app with floating action button.](docs/assets/App-Complete.gif)
 
 **NOTE:** While we're using text for the + and - inside the fab, to get proper sizing, you should use icons. The material design website has a great [library](https://design.google.com/icons/) of icons that can be exported bundled and sized specifically for iOS.
 
