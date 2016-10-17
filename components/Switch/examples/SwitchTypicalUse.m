@@ -38,8 +38,8 @@
   // Switch custom color
 
   self.colorSwitchComponent = [[MDCSwitch alloc] init];
-  self.colorSwitchComponent.onTintColor = [UIColor colorWithRed:0 green:0.47f blue:0.9f alpha:1];
   [self.colorSwitchComponent setOn:YES];
+  self.colorSwitchComponent.onTintColor = [UIColor colorWithRed:0 green:0.47f blue:0.9f alpha:1];
   [self.colorSwitchComponent addTarget:self
                                 action:@selector(didChangeSwitchValue:)
                       forControlEvents:UIControlEventValueChanged];
