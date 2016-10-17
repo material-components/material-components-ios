@@ -10,7 +10,7 @@ This tutorial will teach you how to link Material Components to an application, 
 
 When you're done, you'll have an app that looks like this:
 
-![Goal app with collections and a flexible header.](docs/assets/App-Collection-With-Flexing.gif)
+![Goal app with collections and a flexible header.](docs/assets/App-Complete.gif)
 
 ---
 
