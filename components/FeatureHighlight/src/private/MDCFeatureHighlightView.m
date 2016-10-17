@@ -93,6 +93,7 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
 }
 
 - (void)layoutAppearing {
+  // TODO: Mask the labels during the presentation and dismissal animations.
   _titleLabel.alpha = 1;
   _bodyLabel.alpha = 1;
 }
