@@ -17,7 +17,6 @@
 #import "MDCFeatureHighlightView.h"
 
 #import "MaterialTypography.h"
-
 #import "MDCFeatureHighlightLayer.h"
 #import "MDFTextAccessibility.h"
 
@@ -37,7 +36,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusFactor = 2.0;
 const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
 
 @implementation MDCFeatureHighlightView {
-  BOOL _highlighting;
+  BOOL _forceConcentricLayout;
   UIView *_highlightView;
   CGPoint _highlightPoint;
   CGPoint _highlightCenter;
@@ -88,6 +87,10 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
 
     self.outerHighlightColor = [UIColor blueColor];
     self.innerHighlightColor = [UIColor whiteColor];
+
+    // We want the inner and outer highlights to animate from the same origin so we start them from
+    // a concentric position.
+    _forceConcentricLayout = YES;
   }
   return self;
 }
@@ -172,7 +175,7 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
   [_outerLayer setCenter:_highlightCenter radius:_outerRadius animated:YES];
   [CATransaction commit];
 
-  _highlighting = YES;
+  _forceConcentricLayout = NO;
 }
 
 - (void)animatePulse {
@@ -210,7 +213,6 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
-  [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
   [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
   [_outerLayer setCenter:_highlightCenter
@@ -218,7 +220,7 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
                 animated:YES];
   [CATransaction commit];
 
-  _highlighting = NO;
+  _forceConcentricLayout = YES;
 }
 
 - (void)animateRejected:(CGFloat)duration {
@@ -230,13 +232,12 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setCenter:displayMaskCenter radius:0 animated:YES];
-  [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
   [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
   [_outerLayer setCenter:_highlightPoint radius:0 animated:YES];
   [CATransaction commit];
 
-  _highlighting = NO;
+  _forceConcentricLayout = NO;
 }
 
 - (void)layoutSubviews {
@@ -255,13 +256,10 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
                                                           kMDCFeatureHighlightMaxTextHeight)];
   CGFloat textHeight = titleSize.height + detailSize.height;
 
-  BOOL centered = YES;
-  if (_highlightPoint.y <= kMDCFeatureHighlightConcentricBound) {
-    _highlightCenter = _highlightPoint;
-  } else if (_highlightPoint.y >= self.frame.size.height - kMDCFeatureHighlightConcentricBound) {
+  if ((_highlightPoint.y <= kMDCFeatureHighlightConcentricBound)
+      || (_highlightPoint.y >= self.frame.size.height - kMDCFeatureHighlightConcentricBound)) {
     _highlightCenter = _highlightPoint;
   } else {
-    centered = NO;
     if (topHalf) {
       _highlightCenter.y = _highlightPoint.y + kMDCFeatureHighlightInnerRadius + textHeight/2;
     } else {
@@ -278,10 +276,10 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
   _innerLayer.center = _highlightPoint;
   _pulseLayer.center = _highlightPoint;
 
-  if (_highlighting) {
-    _outerLayer.center = _highlightCenter;
-  } else {
+  if (_forceConcentricLayout) {
     _outerLayer.center = _highlightPoint;
+  } else {
+    _outerLayer.center = _highlightCenter;
   }
 
   CGFloat leftTextBound = kMDCFeatureHighlightTextPadding;
