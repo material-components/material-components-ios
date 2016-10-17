@@ -19,6 +19,8 @@
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView.h"
 
+const CGFloat kMDCFeatureHighlightBackgroundAlpha = 0.96;
+
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
 @end
 
@@ -121,7 +123,7 @@
 
 - (UIColor *)outerHighlightColor {
   if (!_outerHighlightColor) {
-    return [UIColor blueColor];
+    return [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightBackgroundAlpha];
   }
   return _outerHighlightColor;
 }

@@ -16,6 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
+/** The default alpha for the outer highlight circle. */
+extern const CGFloat kMDCFeatureHighlightOuterHighlightAlpha;
+
 /**
  Called when the feature highlight is dismissed either by calling |acceptFeature| or
  |rejectFeature| on the feature highlight or the user accepts or rejects the highlight by tapping
@@ -86,12 +89,17 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 @property(nonatomic, copy, nullable) NSString *bodyText;
 
 /**
- Sets the color to be used for the outer highlight. If unset, returns |tintColor|.
+ Sets the color to be used for the outer highlight. Defaults to blue with an alpha of
+ kMDCFeatureHighlightOuterHighlightAlpha.
+ 
+ Alpha should be set to kMDCFeatureHighlightOuterHighlightAlpha.
  */
 @property(nonatomic, strong, null_resettable) UIColor *outerHighlightColor;
 
 /**
  Sets the color to be used for the inner highlight. Defaults to white.
+ 
+ Should be opaque.
  */
 @property(nonatomic, strong, null_resettable) UIColor *innerHighlightColor;
 

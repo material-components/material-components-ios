@@ -27,7 +27,6 @@ const CGFloat kMDCFeatureHighlightTextPadding = 40.0;
 const CGFloat kMDCFeatureHighlightTextMaxWidth = 300.0;
 const CGFloat kMDCFeatureHighlightConcentricBound = 88.0;
 const CGFloat kMDCFeatureHighlightNonconcentricOffset = 20.0;
-const CGFloat kMDCFeatureHighlightOuterAlpha = 0.96;
 const CGFloat kMDCFeatureHighlightMaxTextHeight = 1000.0;
 const CGFloat kMDCFeatureHighlightTitleFontSize = 20.0;
 
@@ -104,9 +103,7 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
 }
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
-  _outerHighlightColor =
-      [outerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightOuterAlpha];
-
+  _outerHighlightColor = outerHighlightColor;
   _outerLayer.fillColor = _outerHighlightColor.CGColor;
 
   MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
