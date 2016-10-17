@@ -61,10 +61,6 @@ static NSString * const reuseIdentifier = @"Cell";
   return @[ @"Feature Highlight", @"Colors" ];
 }
 
-+ (NSString *)catalogDescription {
-  return @"Boop ba doop dee doo.";
-}
-
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
 }

@@ -30,7 +30,8 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"Boop ba doop dee doo.";
+  return @"The Feature Highlight component is used to introduce users to new features and"
+  " functionality at contextually relevant moments.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -45,7 +46,8 @@
   _infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _infoLabel.text = @"Tap anywhere to move the button.";
   _infoLabel.font = [MDCTypography subheadFont];
-  _infoLabel.textColor = [_infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
+  _infoLabel.textColor =
+      [_infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
   [self.view addSubview:_infoLabel];
 
   _button = [[MDCRaisedButton alloc] init];
