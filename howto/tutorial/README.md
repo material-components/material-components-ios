@@ -160,7 +160,7 @@ override func viewDidLoad() {
 }
 ~~~
 
-**NOTE:** See MaterialCollectionCells, MaterialCollectionLayoutAttributes and MaterialCollectionViewStyler to for other options included for styling. Or make your own! Any part of the collection view can be completely customized to your needs.  
+**NOTE:** See MaterialCollectionCells, MaterialCollectionLayoutAttributes and MaterialCollectionViewStyler for other options included for styling. Or make your own! Any part of the collection view can be completely customized to your needs.  
         
 Below `viewDidLoad`, add a mock datasource:
 
