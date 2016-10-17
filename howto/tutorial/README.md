@@ -369,7 +369,7 @@ Now let's add a bar button to the right side of the app bar:
 
 Build and run your app:
 
-TODO: INSERT IMAGE
+![Running the app to show a button on the top right and editing animations.](docs/assets/App-Collection-With-Bar-Button.gif)
 
 Tap on the EDIT button and the cards separate. Tap on CANCEL and they meld back together.
 
