@@ -26,6 +26,25 @@ static inline CGPoint MDCInkLayerInterpolatePoint(CGPoint start,
   return centerOffsetPoint;
 }
 
+static inline CGFloat MDCInkLayerRadiusBounds(CGFloat maxRippleRadius,
+                                              CGFloat inkLayerRectHypotenuse,
+                                              BOOL bounded) {
+#ifdef INK_UPDATE
+  if (!bounded) {
+    return maxRippleRadius;
+  } else {
+    NSLog(@"Implementation of MDCInkView with |MDCInkStyle| MDCInkStyleBounded and "
+          "maxRippleRadius is deprecated.\n\n"
+          @"Future releases of MDCInkView will ignore maxRippleRadius for bounded ink views. "
+          @"Please use unbounded ink type to continue using maxRippleRadius. "
+          @"For implementation questions, please email shepj@google.com");
+    return inkLayerRectHypotenuse;
+  }
+#else
+  return maxRippleRadius;
+#endif
+}
+
 static inline CGFloat MDCInkLayerRandom() {
   const uint32_t max_value = 10000;
   return (CGFloat)arc4random_uniform(max_value + 1) / max_value;
@@ -364,8 +383,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [super layoutSublayers];
   _compositeRipple.frame = self.frame;
   CGFloat radius = MDCInkLayerRectHypotenuse(self.bounds) / 2.f;
-  if (_maxRippleRadius > 0 && !_bounded) {
-    radius = _maxRippleRadius;
+  if (_maxRippleRadius > 0) {
+    radius = MDCInkLayerRadiusBounds(_maxRippleRadius, radius, _bounded);
   }
   CGRect rippleFrame =
       CGRectMake(-(radius * 2.f - self.bounds.size.width) / 2.f,
@@ -400,8 +419,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 
   CGFloat radius = MDCInkLayerRectHypotenuse(self.bounds) / 2.f;
-  if (_maxRippleRadius > 0 && !_bounded) {
-    radius = _maxRippleRadius;
+  if (_maxRippleRadius > 0) {
+    radius = MDCInkLayerRadiusBounds(_maxRippleRadius, radius, _bounded);
   }
 
   _backgroundRipple = [[MDCInkLayerBackgroundRipple alloc] init];
