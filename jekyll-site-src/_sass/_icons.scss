@@ -166,6 +166,9 @@ ul.icon-list {
   .icon-community a::before {
     background-image: url(https://www.gstatic.com/images/icons/material/system/svg/people_24px.svg);
   }
+  .icon-activityindicator a::before {
+    background-image: url(#{$root_folder}/images/custom_icons/ic_activityindicator_24px.svg);
+  }
   .icon-appbar a::before {
     background-image: url(#{$root_folder}/images/custom_icons/ic_appbar_24px.svg);
   }
@@ -177,6 +180,9 @@ ul.icon-list {
   }
   .icon-collections a::before {
     background-image: url(https://www.gstatic.com/images/icons/material/system/svg/view_module_24px.svg);
+  }
+  .icon-dialogs a::before {
+    background-image: url(#{$root_folder}/images/custom_icons/ic_dialogs_24px.svg);
   }
   .icon-flexibleheader a::before {
     background-image: url(#{$root_folder}/images/custom_icons/ic_flexibleheader_24px.svg);
@@ -193,6 +199,9 @@ ul.icon-list {
   .icon-pagecontrol a::before {
     background-image: url(#{$root_folder}/images/custom_icons/ic_pagecontrol_24px.svg);
   }
+  .icon-progressview a::before {
+    background-image: url(#{$root_folder}/images/custom_icons/ic_progressview_24px.svg);
+  }
   .icon-shadowelevations a::before {
     background-image: url(https://www.gstatic.com/images/icons/material/system/svg/flip_to_front_24px.svg);
   }
@@ -201,6 +210,9 @@ ul.icon-list {
   }
   .icon-slider a::before {
     background-image: url(#{$root_folder}/images/custom_icons/ic_slider_24px.svg);
+  }
+  .icon-snackbar a::before {
+    background-image: url(#{$root_folder}/images/custom_icons/ic_snackbar_24px.svg);
   }
   .icon-switch a::before {
     background-image: url(#{$root_folder}/images/custom_icons/ic_switch_24px.svg);
