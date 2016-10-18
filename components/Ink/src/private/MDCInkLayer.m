@@ -30,14 +30,14 @@ static inline CGFloat MDCInkLayerRadiusBounds(CGFloat maxRippleRadius,
                                               CGFloat inkLayerRectHypotenuse,
                                               BOOL bounded) {
   if (maxRippleRadius > 0) {
-#ifdef INK_UPDATE
+#ifdef MDC_INK_UPDATE
     if (!bounded) {
       return maxRippleRadius;
     } else {
       static dispatch_once_t onceToken;
       dispatch_once(&onceToken, ^{
         NSLog(@"Implementation of MDCInkView with |MDCInkStyle| MDCInkStyleBounded and "
-              "maxRippleRadius has changed.\n\n"
+               "maxRippleRadius has changed.\n\n"
               @"MDCInkStyleBounded ignores maxRippleRadius. "
               @"Please use |MDCInkStyle| MDCInkStyleUnbounded to continue using maxRippleRadius. "
               @"For implementation questions, please email shepj@google.com");
@@ -389,9 +389,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (void)layoutSublayers {
   [super layoutSublayers];
   _compositeRipple.frame = self.frame;
-  CGFloat radius =  MDCInkLayerRadiusBounds(_maxRippleRadius,
-                                            MDCInkLayerRectHypotenuse(self.bounds) / 2.f,
-                                            _bounded);
+  CGFloat radius = MDCInkLayerRadiusBounds(_maxRippleRadius,
+                                           MDCInkLayerRectHypotenuse(self.bounds) / 2.f, _bounded);
 
   CGRect rippleFrame =
       CGRectMake(-(radius * 2.f - self.bounds.size.width) / 2.f,
@@ -426,8 +425,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 
   CGFloat radius = MDCInkLayerRadiusBounds(_maxRippleRadius,
-                                           MDCInkLayerRectHypotenuse(self.bounds) / 2.f,
-                                           _bounded);
+                                           MDCInkLayerRectHypotenuse(self.bounds) / 2.f, _bounded);
 
   _backgroundRipple = [[MDCInkLayerBackgroundRipple alloc] init];
   _backgroundRipple.inkLayer = _compositeRipple;
