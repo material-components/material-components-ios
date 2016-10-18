@@ -127,6 +127,11 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](Switch/)
   <!--{: .icon-switch }-->
 
+- [**Tabs**
+  Description TBD.
+  ](Tabs/)
+  <!--{: .icon-tabs }-->
+
 - [**Typography**
   Text styles for material fonts and opacities.
   ](Typography/)
