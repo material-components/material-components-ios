@@ -30,7 +30,7 @@ static inline CGFloat MDCInkLayerRadiusBounds(CGFloat maxRippleRadius,
                                               CGFloat inkLayerRectHypotenuse,
                                               BOOL bounded) {
   if (maxRippleRadius > 0) {
-#ifdef INK_UPDATE
+#ifdef MDC_INK_UPDATE
     if (!bounded) {
       return maxRippleRadius;
     } else {
