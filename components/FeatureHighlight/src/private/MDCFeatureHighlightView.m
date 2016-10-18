@@ -254,6 +254,9 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
                                                           kMDCFeatureHighlightMaxTextHeight)];
   CGSize detailSize = [_bodyLabel sizeThatFits:CGSizeMake(textWidth,
                                                           kMDCFeatureHighlightMaxTextHeight)];
+  titleSize.width = MAX(titleSize.width, detailSize.width);
+  detailSize.width = titleSize.width;
+
   CGFloat textHeight = titleSize.height + detailSize.height;
 
   if ((_highlightPoint.y <= kMDCFeatureHighlightConcentricBound)
