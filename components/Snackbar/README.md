@@ -4,6 +4,11 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Snackba
 
 # Snackbar
 
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/snackbar.mp4" autoplay loop></video>
+  [![Switch](docs/assets/snackbar.png)](docs/assets/snackbar.mp4)
+</div>
+
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
 contain a text action, but no icons.
@@ -74,6 +79,7 @@ Before using Snackbar, you'll need to import it:
 
 ### Display a Snackbar Message
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
@@ -89,9 +95,11 @@ let message = MDCSnackbarMessage()
 message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
 MDCSnackbarManager.showMessage(message)
 ~~~
+<!--</div>-->
 
 ### Display a Snackbar Message with an Action
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
@@ -119,3 +127,4 @@ action.handler = actionHandler
 action.title = "OK"
 message.action = action
 ~~~
+<!--</div>-->
