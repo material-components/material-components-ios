@@ -114,7 +114,7 @@
   [self.inkLayer evaporateWithCompletion:completionBlock];
 }
 
-- (void)cancelAllAnimationsAnimated:(BOOL)animated {
+- (void)cancelAllAnimations {
   [self.inkLayer reset];
 }
 
