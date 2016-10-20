@@ -220,8 +220,17 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   [self addAnimation:_foregroundScaleAnim forKey:kInkLayerForegroundScaleAnim];
 }
 
-- (void)exit {
+- (void)exit:(BOOL)animated {
   [super exit];
+
+  if (!animated) {
+    [self removeAllAnimations];
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.opacity = 0;
+    [CATransaction commit];
+    return;
+  }
 
   if (self.bounded) {
     _foregroundOpacityAnim.values = @[ @1, @0 ];
@@ -313,8 +322,18 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [self addAnimation:_backgroundOpacityAnim forKey:kInkLayerBackgroundOpacityAnim];
 }
 
-- (void)exit {
+- (void)exit:(BOOL)animated {
   [super exit];
+
+  if (!animated) {
+    [self removeAllAnimations];
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.opacity = 0;
+    [CATransaction commit];
+    return;
+  }
+
   NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kInkLayerOpacity];
   if (!opacityVal) {
     opacityVal = [NSNumber numberWithFloat:0];
@@ -378,9 +397,9 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   _compositeRipple.mask = rippleMaskLayer;
 }
 
-- (void)reset {
-  [_foregroundRipple exit];
-  [_backgroundRipple exit];
+- (void)reset:(BOOL)animated {
+  [_foregroundRipple exit:animated];
+  [_backgroundRipple exit:animated];
   _foregroundRipple = nil;
   _backgroundRipple = nil;
 }
@@ -433,13 +452,13 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 - (void)evaporateWithCompletion:(void (^)())completionBlock {
   _evaporateCompletionBlock = completionBlock;
-  [self reset];
+  [self reset:YES];
 }
 
 - (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock {
   _evaporateToPointCompletionBlock = completionBlock;
   _foregroundRipple.point = point;
-  [self reset];
+  [self reset:YES];
 }
 
 #pragma mark - MDCInkLayerRippleDelegate

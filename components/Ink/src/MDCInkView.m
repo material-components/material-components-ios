@@ -115,7 +115,7 @@
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
-  [self.inkLayer reset];
+  [self.inkLayer reset:animated];
 }
 
 - (UIColor *)defaultInkColor {
