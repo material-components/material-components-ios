@@ -1,4 +1,52 @@
-# release-candidate TODO: Replace me with version number. 
+# 16.0.0
+
+## API diffs
+
+### InkTouchController
+
+- [deleted] [`MDCInkTouchController.inkView`](https://github.com/google/material-components-ios/blob/c39811a2344114302327b6fa64d86346bacbea9a/components/Ink/src/MDCInkTouchController.h#L119)
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Let the content view controller decide orientation](https://github.com/google/material-components-ios/commit/1a3069ff8de8eb406c037a1ff6738093c57efeee) (Louis Romero)
+
+### Dialogs
+
+#### Changes
+
+* [Documentation Updates](https://github.com/google/material-components-ios/commit/f1b983465f304efc52d8c792af19b76d88a4a7b2) (Ian Gordon)
+
+### Ink
+
+#### Changes
+
+* [Remove deprecated inkView property](https://github.com/google/material-components-ios/commit/2ce6d648292b8dcae90241a5c39405bfa368e1e4) (Junius Gunaratne)
+* [define UIGestureRecognizerStateRecognized (#751)](https://github.com/google/material-components-ios/commit/4873362130f5d5c1893383dd9f6bfc71506dbbd9) (Junius Gunaratne)
+
+### ShadowElevations
+
+#### Changes
+
+* [Documentation Updates](https://github.com/google/material-components-ios/commit/f1b983465f304efc52d8c792af19b76d88a4a7b2) (Ian Gordon)
+
+### ShadowLayer
+
+#### Changes
+
+* [Documentation Updates](https://github.com/google/material-components-ios/commit/f1b983465f304efc52d8c792af19b76d88a4a7b2) (Ian Gordon)
+
+### Switch
+
+#### Changes
+
+* [Update colours of MDCSwitch when changing tint color. (#758)](https://github.com/google/material-components-ios/commit/6f7b4ebf2b8c0225f02ef27779c204cc181d3abb) (Sylvain Defresne)
+* [[MDCSwitch] Update objective-c example to match swift (#777)](https://github.com/google/material-components-ios/commit/ceeba259683892b63c474c6d51f86ee20aae0e07) (Chuck Hays)
+
+
 
 # 15.2.0
 
