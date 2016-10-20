@@ -64,8 +64,12 @@
  */
 @property(nonatomic, assign) BOOL userLinearExpansion;
 
-/** Reset any ink applied to the layer. */
-- (void)reset;
+/**
+ Reset any ink applied to the layer.
+
+ @param animated Enables the ink ripple fade out animation.
+ */
+- (void)reset:(BOOL)animated;
 
 /**
  Spreads the ink over the whole view.
