@@ -4,6 +4,11 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Snackba
 
 # Snackbar
 
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/snackbar.mp4" autoplay loop></video>
+  [![Switch](docs/assets/snackbar.png)](docs/assets/snackbar.mp4)
+</div>
+
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
 contain a text action, but no icons.
@@ -14,20 +19,7 @@ contain a text action, but no icons.
 <li class="icon-link"><a href="https://material.google.com/components/snackbars-toasts.html">Snackbars</a></li>
 </ul>
 
-### Snackbar Classes
-
-#### Snackbar Manager and Message
-
-Snackbar is comprised of two classes: MDCSnackbarManager and MDCSnackbarMessage. Snackbar messages
-contain text to be displayed to a user. Messages are passed to the manager. The manager decides when
-it is appropriate to show a message to the user.
-
-#### Suspending and Resuming Display of Messages
-
-Snackbar manager can be instructed to suspend and resume displaying messages as needed. When
-messages are suspended the manager provides a suspension token that the client must keep as long as
-messages are suspended. When the client releases the suspension token or calls the manager's resume
-method with the suspension token, then messages will resume being displayed.
+- - -
 
 ## Installation
 
@@ -52,6 +44,23 @@ pod install
 
 - - -
 
+## Overview
+
+### Snackbar Manager and Message
+
+Snackbar is comprised of two classes: MDCSnackbarManager and MDCSnackbarMessage. Snackbar messages
+contain text to be displayed to a user. Messages are passed to the manager. The manager decides when
+it is appropriate to show a message to the user.
+
+### Suspending and Resuming Display of Messages
+
+Snackbar manager can be instructed to suspend and resume displaying messages as needed. When
+messages are suspended the manager provides a suspension token that the client must keep as long as
+messages are suspended. When the client releases the suspension token or calls the manager's resume
+method with the suspension token, then messages will resume being displayed.
+
+- - -
+
 ## Usage
 
 Displaying a snackbar requires using two classes: MDCSnackbarManager and MDCSnackbarMessage.
@@ -70,10 +79,13 @@ Before using Snackbar, you'll need to import it:
 #import "MaterialSnackbar.h"
 ~~~
 
+- - -
+
 ## Examples
 
 ### Display a Snackbar Message
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
@@ -89,9 +101,11 @@ let message = MDCSnackbarMessage()
 message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
 MDCSnackbarManager.showMessage(message)
 ~~~
+<!--</div>-->
 
 ### Display a Snackbar Message with an Action
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
@@ -119,3 +133,4 @@ action.handler = actionHandler
 action.title = "OK"
 message.action = action
 ~~~
+<!--</div>-->
