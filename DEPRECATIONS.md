@@ -1,4 +1,4 @@
-# deprecations 
+# Deprecations 
 
 TODO: For more information
 
