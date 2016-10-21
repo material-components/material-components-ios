@@ -55,7 +55,7 @@ Map this schedule onto reality:
 
 ## Do the work
 
-Before announcing the deprecation, add it to the [Active Deprecations](http://github.com/google/material-components-ios/DEPRECATIONS.md) document. Include the rationale, the schedule, what client teams have to do, and which Issue in GitHub represents it. That Issue will stay open until the deletion PR is submitted.
+Before announcing the deprecation, create an Issue in GitHub that represents it. That Issue will stay open until the deletion PR is submitted.
 
 TODO: Include announcement instructions. Generally, this is done via blog.
 
