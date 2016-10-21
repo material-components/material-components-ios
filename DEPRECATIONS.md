@@ -12,4 +12,4 @@ We are planning on removing support for XYZ. Announcement will be made on **MMM 
 
 ### Drop support for ABC
 
-Support for XYZ removed on or after **MMM DD, YYY** in Release n.n.n. [Issue #n](http://github.com/google/material-components-ios/issues/x)
+Support for ABC removed on or after **MMM DD, YYY** in Release n.n.n. [Issue #n](http://github.com/google/material-components-ios/issues/x)
