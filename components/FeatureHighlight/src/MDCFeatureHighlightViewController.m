@@ -21,6 +21,8 @@
 
 const CGFloat kMDCFeatureHighlightBackgroundAlpha = 0.96;
 
+static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5;
+
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
 @end
 
@@ -108,7 +110,7 @@ const CGFloat kMDCFeatureHighlightBackgroundAlpha = 0.96;
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
-  _pulseTimer = [NSTimer scheduledTimerWithTimeInterval:1.5
+  _pulseTimer = [NSTimer scheduledTimerWithTimeInterval:kMDCFeatureHighlightPulseAnimationInterval
                                                  target:_featureHighlightView
                                                selector:@selector(animatePulse)
                                                userInfo:NULL

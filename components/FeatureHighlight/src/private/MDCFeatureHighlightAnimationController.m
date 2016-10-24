@@ -16,14 +16,20 @@
 
 #import "MDCFeatureHighlightAnimationController.h"
 
-#import "../MDCFeatureHighlightViewController.h"
 #import "MDCFeatureHighlightView.h"
+
+const CGFloat kMDCFeatureHighlightPresentationDuration = 0.35;
+const CGFloat kMDCFeatureHighlightDismissalDuration = 0.2;
 
 @implementation MDCFeatureHighlightAnimationController
 
 - (NSTimeInterval)
     transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
-  return self.presenting ? 0.35 : 0.2;
+  if (self.presenting) {
+    return kMDCFeatureHighlightPresentationDuration;
+  } else {
+    return kMDCFeatureHighlightDismissalDuration;
+  }
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
@@ -35,7 +41,7 @@
   MDCFeatureHighlightView *highlightView = nil;
   if ([fromView isKindOfClass:[MDCFeatureHighlightView class]]) {
     highlightView = (MDCFeatureHighlightView *)fromView;
-  } else {
+  } else if ([toView isKindOfClass:[MDCFeatureHighlightView class]]) {
     highlightView = (MDCFeatureHighlightView *)toView;
   }
 

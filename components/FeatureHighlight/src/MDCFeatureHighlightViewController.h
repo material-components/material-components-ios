@@ -20,8 +20,8 @@
 extern const CGFloat kMDCFeatureHighlightOuterHighlightAlpha;
 
 /**
- Called when the feature highlight is dismissed either by calling |acceptFeature| or
- |rejectFeature| on the feature highlight or the user accepts or rejects the highlight by tapping
+ Completion block called when the feature highlight is dismissed either by calling |acceptFeature|
+ or |rejectFeature| on the feature highlight or the user accepts or rejects the highlight by tapping
  somewhere on the highlight view.
 
  @param accepted Whether the highlight was accepted or rejected
