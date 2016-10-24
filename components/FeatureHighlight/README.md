@@ -4,7 +4,7 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Feature
 
 # Feature Highlight
 
-The Feature Highlight component is a way visually highlight a part of the screen in order to introduce users to new features and functionality.
+The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
 
 ### Material Design Specifications
 
@@ -91,7 +91,7 @@ self.present(viewController: highlightController, animated: true)
 ~~~
 <!--</div>-->
 
-Often when highlighting a view you will want to display a different view to the one you are highlighting. For example flipping the primary and secondary colors in the presented version.
+Often when highlighting a view you will want to display a different view to the one you are highlighting. For example, flipping the primary and secondary colors in the presented version.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
