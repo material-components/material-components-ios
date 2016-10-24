@@ -6,52 +6,41 @@ However, the price paid in disruption and maintenance is real; deprecating witho
 
 ## Get the 'thumbs up'
 
-Propose your deprecation on GitHub as an issue with the label 'type:Deprecation'. Much like a feature proposal, the contributors have a responsibility to carefully judge the consequences of breaking changes against possible gains. 
+Propose your deprecation on GitHub as an issue where the title's first phrase is "Deprecation [Component Name]". Much like a feature proposal, the contributors have a responsibility to carefully judge the consequences of breaking changes against possible gains. 
 
 We should collaboratively answer the following questions:
 
 1. Should this code be deprecated? Is it really worth the time and effort for everyone?
 1. Why is the code being deprecated? Why should clients switch?
 1. What are clients supposed to replace the code with?
-1. What is the impact?
-    1. How much is the current code being used? (Show your numbers.)
-    1. How much work will it be for clients to switch? (Is the change automatable, etc.)
 1. What is a good deprecation timeline?
-    1. Small/automatable changes can be done in a month.
-    1. Larger/manual changes can be done in a quarter/three months.
+    1. Small changes can be done in a month.
+    1. Larger changes can be done in a quarter/three months.
     1. Adjust up or down based on the size/complexity of the change.
 1. Who’s on point? It’s good to have a single person to keep track of things.
 
 ## Make sure replacement code is ready
 
-* For minor changes, has the catalog been updated to use and demo it? 
-* For major changes, has the new code had time to bake and is there at least one client team using it without problems?  
-* Is the new code documented in the headers and site?
+1. Has the catalog been updated to use and demo it? 
+1. Is the new code documented in the headers and site?
 
 ## Pin down the schedule
 
 Assuming that you’re looking at a one-month deprecation, then the schedule looks roughly like this:
 
-1. *T minus 4 weeks*: Deprecation is announced but no breaking or behavior changes are introduced. If new code is being added, do so now.
+1. *T minus 4 weeks*: Deprecation is announced but no breaking or behavior changes are introduced.
 1. *T minus 3 weeks*: Old code is marked as deprecated, generating warnings.
-1. *T minus one day*: Impending breakage is announced.
-1. *T minus zero*: Breaking changes are made.
-1. *T plus one week*: Possible rollbacks or fixes for clients.
 
-A three-month deprecation is similar with more time for switching client code:
+A three-month deprecation is similar with more time for clients to adjust code:
 
 1. *T minus 12 weeks*: Announce.
 1. *T minus 9 weeks*: Mark code as deprecated.
-1. *T minus one week*: Announce breakage.
-1. *T minus zero*: Breaking changes are made.
-1. *T plus one week*: Possible rollbacks or fixes for clients.
 
 Map this schedule onto reality: 
 
-* Is there a holiday/conference coming up that would prevent clients from being able to work with you? 
-* Is the change simple but affects many teams so more time might be required? 
-* Is the to-be-replaced code particularly problematic for some reason? 
-* Does the deprecation fall near a release of the operating system or new devices?
+1. Is there a holiday/conference coming up that would prevent clients from being able to collaborate and comment? 
+1. Is the to-be-replaced code particularly problematic for some reason? 
+1. Does the deprecation fall near a release of the operating system or new devices?
 
 ## Do the work
 
@@ -68,18 +57,24 @@ For any code that should be eventually deleted, add the following comment nearby
 
 Once you submit the breaking PR, don’t immediately pile on subsequent PRs that would conflict with an emergency rollback.
 
+## Versioning
+
+If the deprecation is a deletion only, the release number should have a minor increment.
+
+If it's a change/replacement, then the release number should have a mjor increment.
+
 ## Checklist
 
 This is an idealized summary of how to replace old code with new code.
 
-1. Create an alternative
-1. Discuss the change via GitHub issue.
-1. Create and vet the new code.
-1. Document the old code so new users don’t start using it.
-1. Publicize and do the deprecation
-1. Create a schedule.
-1. Mark the old code as deprecated.
+1. Create an alternative.
+    1. Discuss the reasoning via GitHub issue.
+    1. Discuss the change via GitHub pull request.
+1. Publicize and do the deprecation.
+    1. Document the old code so new users don’t start using it.
+    1. Create a breaking change schedule. 
+    1. Mark the old code as deprecated.
 1. Clean up
-1. Delete the old code.
-1. Handle any unexpected fallout.
-1. Close the issue.
+    1. Delete the old code.
+    1. Close the issue.
+    1. Release
