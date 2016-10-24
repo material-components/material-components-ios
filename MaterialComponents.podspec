@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
   s.license      = "Apache 2.0"
-  s.source       = { :git => "https://github.com/google/material-components-ios.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/google/material-components-ios.git", :tag => "v#{s.version}" }
   s.platform     = :ios
   s.requires_arc = true
 
