@@ -85,13 +85,13 @@ import MaterialComponents
 
   MDCSwitch *mdcSwitch = [[MDCSwitch alloc] init];
   [mdcSwitch addTarget:self
-                action:@selector(didChangeSliderValue:)
+                action:@selector(didChangeSwitchValue:)
       forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:mdcSwitch];
   mdcSwitch.center = CGPointMake(50, 50);
 }
 
-- (void)didChangeSliderValue:(id)sender {
+- (void)didChangeSwitchValue:(id)sender {
   ...
 }
 ~~~

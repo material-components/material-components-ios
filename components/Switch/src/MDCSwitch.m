@@ -137,6 +137,7 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
   _inkController.defaultInkView.inkColor =
       [_onTintColor colorWithAlphaComponent:kSwitchTrackOnAlpha];
+  [self updateColors];
 }
 
 - (void)setOffThumbColor:(UIColor *)offThumbColor {

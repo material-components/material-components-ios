@@ -4,7 +4,7 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowE
 
 # Shadow Elevations
 
-This component provides the most commonly used material design elevations.
+This component provides commonly used material design elevations.
 <!--{: .intro }-->
 
 ### Design Specifications
@@ -56,18 +56,7 @@ Before using Shadow Elevations, you'll need to import it:
 #### Objective-C
 ~~~ objc
 #import "MaterialShadowElevations.h"
-~~~
 
-#### Swift
-~~~ swift
-import MaterialComponents
-~~~
-
-<!--</div>-->
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
 @interface ShadowedView: UIView
 
 @end
@@ -91,6 +80,8 @@ import MaterialComponents
 
 #### Swift
 ~~~ swift
+import MaterialComponents
+
 class ShadowedView: UIView {
 
   override class func layerClass() -> AnyClass {

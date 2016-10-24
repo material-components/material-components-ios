@@ -115,13 +115,6 @@
 */
 - (MDCInkView *_Nullable)inkViewAtTouchLocation:(CGPoint)location;
 
-#pragma mark - Deprecations
-
-@property(nonatomic, strong, readonly, nonnull) MDCInkView *inkView __deprecated_msg(
-    "To configure ink views before display, use defaultInkView or your delegate's "
-    "inkTouchController:inkViewAtTouchLocation:. To find an ink view at a "
-    "particular location, use inkViewAtTouchLocation: instead.");
-
 @end
 
 /** Delegate methods for MDCInkTouchController. */
