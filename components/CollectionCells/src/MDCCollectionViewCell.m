@@ -318,7 +318,8 @@ static const uint32_t kCellRedColor = 0xF44336;
   }
   _shouldAnimateEditingViews = animated;
   _editing = editing;
-  [self updateInterfaceForEditing];
+  [self setNeedsLayout];
+  [self layoutIfNeeded];
 }
 
 - (void)updateInterfaceForEditing {
