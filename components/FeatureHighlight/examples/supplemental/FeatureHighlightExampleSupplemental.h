@@ -18,6 +18,11 @@
 
 #import "MaterialCollections.h"
 
-@interface FeatureHighlightColorExample : MDCCollectionViewController
+@interface FeatureHighlightTypicalUseViewController : UIViewController
+@property(nonatomic) UILabel *infoLabel;
+@property(nonatomic) UIButton *button;
+@end
 
+@interface FeatureHighlightColorExample : MDCCollectionViewController
+@property(nonatomic) NSArray *colors;
 @end

@@ -14,71 +14,11 @@
  limitations under the License.
  */
 
-#import "FeatureHighlightTypicalUseViewController.h"
+#import "FeatureHighlightExampleSupplemental.h"
 
-#import "MaterialButtons.h"
 #import "MaterialFeatureHighlight.h"
-#import "MaterialTypography.h"
 
-@implementation FeatureHighlightTypicalUseViewController {
-  UILabel *_infoLabel;
-  UIButton *_button;
-}
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Feature Highlight" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Feature Highlight component is used to introduce users to new features and"
-  " functionality at contextually relevant moments.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  self.view.backgroundColor = [UIColor whiteColor];
-
-  _infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _infoLabel.text = @"Tap anywhere to move the button.";
-  _infoLabel.font = [MDCTypography subheadFont];
-  _infoLabel.textColor =
-      [_infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
-  [self.view addSubview:_infoLabel];
-
-  _button = [[MDCRaisedButton alloc] init];
-  [_button setTitle:@"GO!" forState:UIControlStateNormal];
-  [_button sizeToFit];
-  [_button addTarget:self
-                action:@selector(didTapButton:)
-      forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_button];
-
-  UITapGestureRecognizer *tapRecognizer =
-      [[UITapGestureRecognizer alloc] initWithTarget:self
-                                              action:@selector(didTapBackground:)];
-  [self.view addGestureRecognizer:tapRecognizer];
-}
-
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-
-  [_button sizeToFit];
-  CGRect frame = _button.frame;
-  frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
-  frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
-  _button.frame = frame;
-
-  CGSize labelSize = [_infoLabel sizeThatFits:self.view.frame.size];
-  _infoLabel.frame = (CGRect){
-    CGPointMake(self.view.frame.size.width/2 - labelSize.width / 2, 20),
-    labelSize
-  };
-}
+@implementation FeatureHighlightTypicalUseViewController
 
 - (void)didTapButton:(id)sender {
   MDCFeatureHighlightViewController *vc =
@@ -87,13 +27,6 @@
   vc.titleText = @"Hey a title";
   vc.bodyText = @"This is the description of the feature highlight view controller.";
   [self presentViewController:vc animated:YES completion:nil];
-}
-
-- (void)didTapBackground:(UITapGestureRecognizer *)recognizer {
-  CGPoint location = [recognizer locationInView:recognizer.view];
-  location.x -= _button.frame.size.width / 2;
-  location.y -= _button.frame.size.height / 2;
-  _button.frame = (CGRect) { location, _button.frame.size };
 }
 
 @end
