@@ -189,6 +189,11 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   }
 }
 
+- (CGSize)intrinsicContentSize {
+  CGFloat edge = 2 * _radius + _strokeWidth;
+  return CGSizeMake(edge, edge);
+}
+
 #pragma mark - Public methods
 
 - (void)startAnimating {
