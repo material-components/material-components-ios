@@ -30,14 +30,14 @@ static inline CGFloat MDCInkLayerRadiusBounds(CGFloat maxRippleRadius,
                                               CGFloat inkLayerRectHypotenuse,
                                               BOOL bounded) {
   if (maxRippleRadius > 0) {
-#ifdef MDC_INK_UPDATE
+#ifdef MDC_BOUNDED_INK_IGNORES_MAX_RIPPLE_RADIUS
     if (!bounded) {
       return maxRippleRadius;
     } else {
       static dispatch_once_t onceToken;
       dispatch_once(&onceToken, ^{
         NSLog(@"Implementation of MDCInkView with |MDCInkStyle| MDCInkStyleBounded and "
-               "maxRippleRadius has changed.\n\n"
+              @"maxRippleRadius has changed.\n\n"
               @"MDCInkStyleBounded ignores maxRippleRadius. "
               @"Please use |MDCInkStyle| MDCInkStyleUnbounded to continue using maxRippleRadius. "
               @"For implementation questions, please email shepj@google.com");
