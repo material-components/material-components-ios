@@ -42,6 +42,17 @@
 + (void)showMessage:(MDCSnackbarMessage *)message;
 
 /**
+ MDCSnackbarManager will display the messages in this view.
+
+ By default, MDCSnackbar will attempt to find a suitable view by stepping through the application
+ windows. Explicitly providing a @c presentationHostView is only required if you need to manually
+ manage the view hierarchy, or are inside a UIApplication extension.
+
+ @note This method must be called from the main thread.
+ */
++ (void)setPresentationHostView:(UIView *)hostView;
+
+/**
  Bypasses showing the messages of the given @c category.
 
  Completion blocks are called, but the UI won't show any queued messages and will dismiss any
