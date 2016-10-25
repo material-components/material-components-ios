@@ -476,6 +476,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
   _backgroundColors[@(state)] = backgroundColor;
+  [self updateTitleColor];
   [self updateAlphaAndBackgroundColorAnimated:NO];
 }
 
