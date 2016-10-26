@@ -19,14 +19,14 @@ import UIKit
 class ShrineCollectionViewController: UICollectionViewController {
 
   var headerViewController:MDCFlexibleHeaderViewController!
-  private let shrineData:ShrineData
-  private var headerContentView = ShrineHeaderContentView(frame: CGRectZero)
+  fileprivate let shrineData:ShrineData
+  fileprivate var headerContentView = ShrineHeaderContentView(frame: CGRect.zero)
 
   override init(collectionViewLayout layout: UICollectionViewLayout) {
     self.shrineData = ShrineData()
     self.shrineData.readJSON()
     super.init(collectionViewLayout: layout)
-    self.collectionView?.registerClass(ShrineCollectionViewCell.self, forCellWithReuseIdentifier: "ShrineCollectionViewCell")
+    self.collectionView?.register(ShrineCollectionViewCell.self, forCellWithReuseIdentifier: "ShrineCollectionViewCell")
     self.collectionView?.backgroundColor = UIColor(white: 0.97, alpha: 1)
   }
 
@@ -34,19 +34,19 @@ class ShrineCollectionViewController: UICollectionViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+  override func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
   }
 
-  override func collectionView(collectionView: UICollectionView,
+  override func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
     return self.shrineData.titles.count
   }
 
-  override func collectionView(collectionView: UICollectionView,
-                               cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ShrineCollectionViewCell", forIndexPath: indexPath) as! ShrineCollectionViewCell
-    let itemNum:NSInteger = indexPath.row;
+  override func collectionView(_ collectionView: UICollectionView,
+                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShrineCollectionViewCell", for: indexPath) as! ShrineCollectionViewCell
+    let itemNum:NSInteger = (indexPath as NSIndexPath).row;
 
     let title = self.shrineData.titles[itemNum] as! String
     let imageName = self.shrineData.imageNames[itemNum] as! String
@@ -58,39 +58,39 @@ class ShrineCollectionViewController: UICollectionViewController {
     return cell
   }
 
-  func collectionView(collectionView: UICollectionView,
+  func collectionView(_ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
-    sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
       let cellWidth = floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5);
       let cellHeight = cellWidth * 1.2
-      return CGSizeMake(cellWidth, cellHeight);
+      return CGSize(width: cellWidth, height: cellHeight);
   }
 
-  override func collectionView(collectionView: UICollectionView,
-                               didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    let itemNum:NSInteger = indexPath.row;
+  override func collectionView(_ collectionView: UICollectionView,
+                               didSelectItemAt indexPath: IndexPath) {
+    let itemNum:NSInteger = (indexPath as NSIndexPath).row;
 
     let detailVC = ShrineDetailViewController()
     detailVC.productTitle = self.shrineData.titles[itemNum] as! String
     detailVC.desc = self.shrineData.descriptions[itemNum] as! String
     detailVC.imageName = self.shrineData.imageNames[itemNum] as! String
 
-    self.presentViewController(detailVC, animated: true, completion: nil)
+    self.present(detailVC, animated: true, completion: nil)
   }
 
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     headerViewController.scrollViewDidScroll(scrollView);
     let scrollOffsetY = scrollView.contentOffset.y;
     let duration = 0.5
     if (scrollOffsetY > -240) {
-      UIView.animateWithDuration(duration, animations: {
+      UIView.animate(withDuration: duration, animations: {
         self.headerContentView.scrollView.alpha = 0
         self.headerContentView.pageControl.alpha = 0
         self.headerContentView.logoImageView.alpha = 0
         self.headerContentView.logoTextImageView.alpha = 1
       })
     } else {
-      UIView.animateWithDuration(duration, animations: {
+      UIView.animate(withDuration: duration, animations: {
         self.headerContentView.scrollView.alpha = 1
         self.headerContentView.pageControl.alpha = 1
         self.headerContentView.logoImageView.alpha = 1
@@ -101,7 +101,7 @@ class ShrineCollectionViewController: UICollectionViewController {
 
   func sizeHeaderView() {
     let headerView = headerViewController.headerView
-    let bounds = UIScreen.mainScreen().bounds
+    let bounds = UIScreen.main.bounds
     if (bounds.size.width < bounds.size.height) {
       headerView.maximumHeight = 440;
       headerView.minimumHeight = 72;
@@ -111,12 +111,12 @@ class ShrineCollectionViewController: UICollectionViewController {
     }
   }
 
-  override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation:UIInterfaceOrientation, duration: NSTimeInterval) {
+  override func willAnimateRotation(to toInterfaceOrientation:UIInterfaceOrientation, duration: TimeInterval) {
     sizeHeaderView()
     collectionView?.collectionViewLayout.invalidateLayout()
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     sizeHeaderView()
     collectionView?.collectionViewLayout.invalidateLayout()
   }
@@ -126,11 +126,11 @@ class ShrineCollectionViewController: UICollectionViewController {
     headerView.trackingScrollView = collectionView
     headerView.maximumHeight = 440;
     headerView.minimumHeight = 72;
-    headerView.backgroundColor = UIColor.whiteColor()
-    headerView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    headerView.backgroundColor = UIColor.white
+    headerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     headerContentView.frame = (headerView.frame)
-    headerContentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    headerContentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     headerView.addSubview(headerContentView)
   }
 
