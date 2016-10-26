@@ -8,6 +8,12 @@ development, where the default branch is called `develop`. `master` is reserved 
 `develop` branch is periodically copied to a release branch, tested, and then merged into `master`,
 which serves as the stable "vetted" branch.
 
+## Issues affecting the release process
+
+Occasionally there are temporary issues with the release process, check the
+["release" tag](https://github.com/google/material-components-ios/labels/where%3ARelease)
+for anything that might be affecting the release.
+
 ## Cutting the release
 
 ### Check the release milestone
