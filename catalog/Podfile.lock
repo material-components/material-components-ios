@@ -163,11 +163,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../
+    :path: "../"
   MaterialComponentsCatalog:
-    :path: ../
+    :path: "../"
   MaterialComponentsUnitTests:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
