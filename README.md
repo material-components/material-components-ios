@@ -115,8 +115,8 @@ Choose from Objective-C or Swift:
 
 #### Swift
 
-~~~swift
-import MaterialComponents
+~~~ swift
+import MaterialComponents.MaterialButtons
 
 class MDCBuildTestViewController: UIViewController {
 
