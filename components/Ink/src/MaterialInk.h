@@ -14,5 +14,6 @@
  limitations under the License.
  */
 
+#import "MDCInkGestureRecognizer.h"
 #import "MDCInkTouchController.h"
 #import "MDCInkView.h"

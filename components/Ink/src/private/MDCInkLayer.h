@@ -34,7 +34,8 @@
 /** Clips the ripple to the bounds of the layer. */
 @property(nonatomic, assign, getter=isBounded) BOOL bounded;
 
-/** Maximum radius of the ink. No maximum if radius is 0 or less. */
+/** Maximum radius of the ink. No maximum if radius is 0 or less. This value is ignored if
+ @c bounded is set to |YES|.*/
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 
 /** Set the foreground color of the ink. */
@@ -64,8 +65,12 @@
  */
 @property(nonatomic, assign) BOOL userLinearExpansion;
 
-/** Reset any ink applied to the layer. */
-- (void)reset;
+/**
+ Reset any ink applied to the layer.
+
+ @param animated Enables the ink ripple fade out animation.
+ */
+- (void)reset:(BOOL)animated;
 
 /**
  Spreads the ink over the whole view.

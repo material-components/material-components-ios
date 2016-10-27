@@ -63,6 +63,7 @@ view controller from the root controller to display it as a modal dialog.
 
 Before using Dialogs, you'll need to import it:
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
@@ -74,11 +75,13 @@ Before using Dialogs, you'll need to import it:
 ~~~ swift
 import MaterialComponents
 ~~~
+<!--</div>-->
 
 ## Examples
 
 ### Display a modal dialog
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
@@ -109,9 +112,11 @@ modalDialogViewController.transitioningDelegate = dialogTransitionController
 presentViewController(myDialogViewController animated:YES ...)
 
 ~~~
+<!--</div>-->
 
 ### Present an alert
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
@@ -144,3 +149,4 @@ alertController.addAction(action)
 self.presentViewController(alertController, animated:true, completion:nil)
 
 ~~~
+<!--</div>-->
