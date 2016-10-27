@@ -24,19 +24,19 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
   var scrollView = UIScrollView()
   var logoImageView = UIImageView(image: UIImage(named: "ShrineLogo"))
   var logoTextImageView = UIImageView(image: UIImage(named: "ShrineTextLogo"))
-  private var pages = NSMutableArray()
-  private var label = UILabel()
-  private var labelDesc = UILabel()
-  private var label2 = UILabel()
-  private var labelDesc2 = UILabel()
-  private var label3 = UILabel()
-  private var labelDesc3 = UILabel()
-  private var cyanBox = UIView()
-  private var cyanBox2 = UIView()
-  private var cyanBox3 = UIView()
-  private var imageView = UIImageView()
-  private var imageView2 = UIImageView()
-  private var imageView3 = UIImageView()
+  fileprivate var pages = NSMutableArray()
+  fileprivate var label = UILabel()
+  fileprivate var labelDesc = UILabel()
+  fileprivate var label2 = UILabel()
+  fileprivate var labelDesc2 = UILabel()
+  fileprivate var label3 = UILabel()
+  fileprivate var labelDesc3 = UILabel()
+  fileprivate var cyanBox = UIView()
+  fileprivate var cyanBox2 = UIView()
+  fileprivate var cyanBox3 = UIView()
+  fileprivate var imageView = UIImageView()
+  fileprivate var imageView2 = UIImageView()
+  fileprivate var imageView3 = UIImageView()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -48,34 +48,34 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
   }
 
   func commonInit() {
-    let boundsWidth = CGRectGetWidth(self.bounds)
-    let boundsHeight = CGRectGetHeight(self.bounds)
-    scrollView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    let boundsWidth = self.bounds.width
+    let boundsHeight = self.bounds.height
+    scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     scrollView.delegate = self
-    scrollView.pagingEnabled = true
+    scrollView.isPagingEnabled = true
     scrollView.showsHorizontalScrollIndicator = false
     self.addSubview(scrollView)
-    self.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     for i in 0...2 {
       let boundsLeft = CGFloat(i) * boundsWidth
-      let pageFrame = CGRectOffset(self.bounds, boundsLeft, 0)
+      let pageFrame = self.bounds.offsetBy(dx: boundsLeft, dy: 0)
       let page = UIView(frame:pageFrame)
       page.clipsToBounds = true
-      page.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-      pages.addObject(page)
+      page.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+      pages.add(page)
       scrollView.addSubview(page)
     }
 
     pageControl.numberOfPages = 3
-    pageControl.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    pageControl.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     let pageControlSize = pageControl.sizeThatFits(self.bounds.size)
-    pageControl.frame = CGRectMake(0,
-      boundsHeight - pageControlSize.height,
-      boundsWidth,
-      pageControlSize.height)
+    pageControl.frame = CGRect(x: 0,
+      y: boundsHeight - pageControlSize.height,
+      width: boundsWidth,
+      height: pageControlSize.height)
     pageControl.addTarget(self, action: #selector(didChangePage),
-                          forControlEvents: UIControlEvents.ValueChanged)
+                          for: UIControlEvents.valueChanged)
     self.addSubview(pageControl)
 
     addPageContent()
@@ -87,13 +87,13 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     let firstPage = pages[0]
     let secondPage = pages[1]
     let thirdPage = pages[2]
-    imageView.contentMode = UIViewContentMode.ScaleAspectFill
-    imageView.autoresizingMask = .FlexibleHeight
-    firstPage.addSubview(imageView)
-    let url = NSURL(string: ShrineData.baseURL + "chair.png")
-    remoteImageService.fetchImageAndThumbnailFromURL(url) { (image:UIImage!,
-      thumbnailImage:UIImage!) -> Void in
-      dispatch_async(dispatch_get_main_queue(), {
+    imageView.contentMode = UIViewContentMode.scaleAspectFill
+    imageView.autoresizingMask = .flexibleHeight
+    (firstPage as AnyObject).addSubview(imageView)
+    let url = URL(string: ShrineData.baseURL + "chair.png")
+    remoteImageService.fetchImageAndThumbnail(from: url) { (image:UIImage?,
+      thumbnailImage:UIImage?) -> Void in
+      DispatchQueue.main.async(execute: {
         self.imageView.image = image;
         self.imageView.setNeedsDisplay()
       })
@@ -108,34 +108,34 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
     label.font = fontAbril
     label.textColor = textColor
-    label.lineBreakMode = .ByWordWrapping
+    label.lineBreakMode = .byWordWrapping
     label.numberOfLines = 2
     label.attributedText = attributedString("Green \ncomfort chair", lineHeightMultiple: 0.8)
     label.sizeToFit();
-    firstPage.addSubview(label)
+    (firstPage as AnyObject).addSubview(label)
 
-    labelDesc.lineBreakMode = .ByWordWrapping
+    labelDesc.lineBreakMode = .byWordWrapping
     labelDesc.numberOfLines = 3
     labelDesc.font = fontHelvetica
     labelDesc.textColor = descColor
     labelDesc.attributedText = attributedString(descString, lineHeightMultiple: 1.2)
-    labelDesc.autoresizingMask = .FlexibleWidth
-    firstPage.addSubview(labelDesc)
+    labelDesc.autoresizingMask = .flexibleWidth
+    (firstPage as AnyObject).addSubview(labelDesc)
 
     cyanBox.backgroundColor = cyanBoxColor
-    firstPage.addSubview(cyanBox)
+    (firstPage as AnyObject).addSubview(cyanBox)
 
-    let inkOverlay = ShrineInkOverlay(frame: firstPage.bounds)
-    inkOverlay.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    firstPage.addSubview(inkOverlay)
+    let inkOverlay = ShrineInkOverlay(frame: (firstPage as AnyObject).bounds)
+    inkOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    (firstPage as AnyObject).addSubview(inkOverlay)
 
-    imageView2.contentMode = UIViewContentMode.ScaleAspectFill
-    imageView2.autoresizingMask = .FlexibleHeight
-    secondPage.addSubview(imageView2)
-    let url2 = NSURL(string: ShrineData.baseURL + "backpack.png")
-    remoteImageService.fetchImageAndThumbnailFromURL(url2) { (image:UIImage!,
-      thumbnailImage:UIImage!) -> Void in
-      dispatch_async(dispatch_get_main_queue(), {
+    imageView2.contentMode = UIViewContentMode.scaleAspectFill
+    imageView2.autoresizingMask = .flexibleHeight
+    (secondPage as AnyObject).addSubview(imageView2)
+    let url2 = URL(string: ShrineData.baseURL + "backpack.png")
+    remoteImageService.fetchImageAndThumbnail(from: url2) { (image:UIImage?,
+      thumbnailImage:UIImage?) -> Void in
+      DispatchQueue.main.async(execute: {
         self.imageView2.image = image;
         self.imageView2.setNeedsDisplay()
       })
@@ -143,33 +143,33 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
     label2.font = fontAbril
     label2.textColor = textColor
-    label2.lineBreakMode = .ByWordWrapping
+    label2.lineBreakMode = .byWordWrapping
     label2.numberOfLines = 2
     label2.attributedText = attributedString("Best gift for \nthe traveler",
       lineHeightMultiple: 0.8)
-    secondPage.addSubview(label2)
+    (secondPage as AnyObject).addSubview(label2)
 
-    labelDesc2.lineBreakMode = .ByWordWrapping
+    labelDesc2.lineBreakMode = .byWordWrapping
     labelDesc2.numberOfLines = 2
     labelDesc2.font = fontHelvetica
     labelDesc2.textColor = descColor
     labelDesc2.attributedText = attributedString(descString, lineHeightMultiple: 1.2)
-    secondPage.addSubview(labelDesc2)
+    (secondPage as AnyObject).addSubview(labelDesc2)
 
     cyanBox2.backgroundColor = cyanBoxColor
-    secondPage.addSubview(cyanBox2)
+    (secondPage as AnyObject).addSubview(cyanBox2)
 
-    let inkOverlay2 = ShrineInkOverlay(frame: secondPage.bounds)
-    inkOverlay2.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    secondPage.addSubview(inkOverlay2)
+    let inkOverlay2 = ShrineInkOverlay(frame: (secondPage as AnyObject).bounds)
+    inkOverlay2.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    (secondPage as AnyObject).addSubview(inkOverlay2)
 
-    imageView3.contentMode = UIViewContentMode.ScaleAspectFill
-    imageView3.autoresizingMask = .FlexibleHeight
-    thirdPage.addSubview(imageView3)
-    let url3 = NSURL(string: ShrineData.baseURL + "heels.png")
-    remoteImageService.fetchImageAndThumbnailFromURL(url3) { (image:UIImage!,
-      thumbnailImage:UIImage!) -> Void in
-      dispatch_async(dispatch_get_main_queue(), {
+    imageView3.contentMode = UIViewContentMode.scaleAspectFill
+    imageView3.autoresizingMask = .flexibleHeight
+    (thirdPage as AnyObject).addSubview(imageView3)
+    let url3 = URL(string: ShrineData.baseURL + "heels.png")
+    remoteImageService.fetchImageAndThumbnail(from: url3) { (image:UIImage?,
+      thumbnailImage:UIImage?) -> Void in
+      DispatchQueue.main.async(execute: {
         self.imageView3.image = image;
         self.imageView3.setNeedsDisplay()
       })
@@ -177,56 +177,56 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
     label3.font = fontAbril
     label3.textColor = textColor
-    label3.lineBreakMode = .ByWordWrapping
+    label3.lineBreakMode = .byWordWrapping
     label3.numberOfLines = 2
     label3.attributedText = attributedString("Better \nwearing heels", lineHeightMultiple: 0.8)
-    thirdPage.addSubview(label3)
+    (thirdPage as AnyObject).addSubview(label3)
 
-    labelDesc3.lineBreakMode = .ByWordWrapping
+    labelDesc3.lineBreakMode = .byWordWrapping
     labelDesc3.numberOfLines = 2
     labelDesc3.font = fontHelvetica
     labelDesc3.textColor = descColor
     labelDesc3.attributedText = attributedString(descString, lineHeightMultiple: 1.2)
-    thirdPage.addSubview(labelDesc3)
+    (thirdPage as AnyObject).addSubview(labelDesc3)
 
     cyanBox3.backgroundColor = cyanBoxColor
-    thirdPage.addSubview(cyanBox3)
+    (thirdPage as AnyObject).addSubview(cyanBox3)
 
-    let inkOverlay3 = ShrineInkOverlay(frame: thirdPage.bounds)
-    inkOverlay3.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    thirdPage.addSubview(inkOverlay3)
+    let inkOverlay3 = ShrineInkOverlay(frame: (thirdPage as AnyObject).bounds)
+    inkOverlay3.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    (thirdPage as AnyObject).addSubview(inkOverlay3)
   }
 
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    let boundsWidth = CGRectGetWidth(self.bounds)
-    let boundsHeight = CGRectGetHeight(self.bounds)
+    let boundsWidth = self.bounds.width
+    let boundsHeight = self.bounds.height
     for i in 0...pages.count - 1 {
       let boundsLeft = CGFloat(i) * boundsWidth
-      let pageFrame = CGRectOffset(self.bounds, boundsLeft, 0)
+      let pageFrame = self.bounds.offsetBy(dx: boundsLeft, dy: 0)
       let page = pages[i] as! UIView
       page.frame = pageFrame
     }
     let pageControlSize = pageControl.sizeThatFits(self.bounds.size)
-    pageControl.frame = CGRectMake(0, boundsHeight - pageControlSize.height, boundsWidth,
-      pageControlSize.height)
+    pageControl.frame = CGRect(x: 0, y: boundsHeight - pageControlSize.height, width: boundsWidth,
+      height: pageControlSize.height)
     let scrollWidth:CGFloat = boundsWidth * CGFloat(pages.count)
-    scrollView.frame = CGRectMake(0, 0, boundsWidth, boundsHeight)
-    scrollView.contentSize = CGSizeMake(scrollWidth, boundsHeight)
+    scrollView.frame = CGRect(x: 0, y: 0, width: boundsWidth, height: boundsHeight)
+    scrollView.contentSize = CGSize(width: scrollWidth, height: boundsHeight)
 
     let scrollViewOffsetX = CGFloat(pageControl.currentPage) * boundsWidth
-    scrollView.setContentOffset(CGPointMake(scrollViewOffsetX, 0), animated: false)
-    logoImageView.center = CGPointMake((self.frame.size.width) / 2, 44)
-    logoTextImageView.center = CGPointMake((self.frame.size.width) / 2, 44)
+    scrollView.setContentOffset(CGPoint(x: scrollViewOffsetX, y: 0), animated: false)
+    logoImageView.center = CGPoint(x: (self.frame.size.width) / 2, y: 44)
+    logoTextImageView.center = CGPoint(x: (self.frame.size.width) / 2, y: 44)
 
     let labelWidth = CGFloat(250)
-    let labelWidthFrame = CGRectMake(self.frame.size.width - labelWidth,
-      90, labelWidth, label.frame.size.height)
+    let labelWidthFrame = CGRect(x: self.frame.size.width - labelWidth,
+      y: 90, width: labelWidth, height: label.frame.size.height)
 
     let labelDescWidth = CGFloat(200)
-    let labelDescWidthFrame = CGRectMake(self.frame.size.width - labelDescWidth - 10,
-      190, labelDescWidth, 40)
+    let labelDescWidthFrame = CGRect(x: self.frame.size.width - labelDescWidth - 10,
+      y: 190, width: labelDescWidth, height: 40)
 
     label.frame = labelWidthFrame
     labelDesc.frame = labelDescWidthFrame
@@ -235,17 +235,17 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     label3.frame = labelWidthFrame
     labelDesc3.frame = labelDescWidthFrame
 
-    let cyanBoxFrame = CGRectMake(self.frame.size.width - 210, 180, 100, 8)
+    let cyanBoxFrame = CGRect(x: self.frame.size.width - 210, y: 180, width: 100, height: 8)
     cyanBox.frame = cyanBoxFrame
     cyanBox2.frame = cyanBoxFrame
     cyanBox3.frame = cyanBoxFrame
 
-    imageView.frame = CGRectMake(-180, 120, 420, self.frame.size.height)
-    imageView2.frame = CGRectMake(-220, 110, 420, self.frame.size.height)
-    imageView3.frame = CGRectMake(-180, 40, 420, self.frame.size.height)
+    imageView.frame = CGRect(x: -180, y: 120, width: 420, height: self.frame.size.height)
+    imageView2.frame = CGRect(x: -220, y: 110, width: 420, height: self.frame.size.height)
+    imageView3.frame = CGRect(x: -180, y: 40, width: 420, height: self.frame.size.height)
   }
 
-  func attributedString(string: String, lineHeightMultiple: CGFloat) -> NSMutableAttributedString {
+  func attributedString(_ string: String, lineHeightMultiple: CGFloat) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineHeightMultiple = lineHeightMultiple
     let attrString = NSMutableAttributedString(string: string)
@@ -254,19 +254,19 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     return attrString
   }
 
-  func scrollViewDidScroll(scrollView: UIScrollView) {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
     pageControl.scrollViewDidScroll(scrollView)
   }
 
-  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     pageControl.scrollViewDidEndDecelerating(scrollView)
   }
 
-  func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+  func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
     pageControl.scrollViewDidEndScrollingAnimation(scrollView)
   }
 
-  func didChangePage(sender: MDCPageControl) {
+  func didChangePage(_ sender: MDCPageControl) {
     var offset = scrollView.contentOffset
     offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width
     scrollView.setContentOffset(offset, animated: true)
