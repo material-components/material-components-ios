@@ -59,9 +59,11 @@ Once you submit the breaking PR, don’t immediately pile on subsequent PRs that
 
 ## Versioning
 
-If the deprecation is a deletion only, the release number should have a minor increment.
+Adding the deprecation *warning* (no breaking change) is a minor version bump.
 
-If it's a change/replacement, then the release number should have a mjor increment.
+Actually changing the code (breaking change) is a major version bump.
+
+Changes that don't break anyone (or change behavior surprisingly) don't need a deprecation.
 
 ## Checklist
 
