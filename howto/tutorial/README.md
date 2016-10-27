@@ -75,6 +75,7 @@ target 'MDC-Tutorial' do
 
   # Pods for MDC-Tutorial
   pod 'MaterialComponents/AppBar', :git => 'git@github.com:google/material-components-ios.git'
+  pod 'MaterialComponents/Buttons', :git => 'git@github.com:google/material-components-ios.git'
   pod 'MaterialComponents/Collections', :git => 'git@github.com:google/material-components-ios.git'
 end
 ~~~ 
@@ -159,7 +160,6 @@ override func viewDidLoad() {
   super.viewDidLoad()
   styler.cellStyle = .card
 }
-end
 ~~~ 
 
 #### Objective-C
@@ -178,6 +178,8 @@ Below `viewDidLoad`, add a mock datasource:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
+// MARK: UICollectionViewDataSource
+
 override func numberOfSections(in collectionView: UICollectionView) -> Int {
   return 5
 }
@@ -189,11 +191,10 @@ override func collectionView(_ collectionView: UICollectionView, numberOfItemsIn
 override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
 
-  if let textCell = cell as? MDCCollectionViewTextCell {
-
   // Add some mock text to the cell.
-  let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
-  textCell.textLabel?.text = animals[indexPath.item]
+  if let textCell = cell as? MDCCollectionViewTextCell {
+    let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
+    textCell.textLabel?.text = animals[indexPath.item]
   }
 
   return cell
@@ -202,6 +203,8 @@ override func collectionView(_ collectionView: UICollectionView, cellForItemAt i
 
 #### Objective-C
 ~~~ objc
+#pragma mark - UICollectionViewDataSource
+
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
   return 5;
 }
@@ -231,6 +234,7 @@ Add the app bar property declaration to the top of the class:
 #### Swift
 ~~~ swift
 import UIKit
+import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialCollections
 
 class ViewController: MDCCollectionViewController {
@@ -242,6 +246,7 @@ class ViewController: MDCCollectionViewController {
 ~~~ objc
 #import "ViewController.h"
 #import "MaterialAppBar.h"
+#import "MaterialCollections.h"
 
 @interface ViewController ()
 @property MDCAppBar *appBar;
@@ -300,33 +305,33 @@ Implement the UIScrollViewDelegate methods in your ViewController:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-  // MARK: UIScrollViewDelegate
-    
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
+// MARK: UIScrollViewDelegate
+  
+override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+  if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+    appBar.headerViewController.headerView.trackingScrollDidScroll()
   }
+}
 
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
-    }
+override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+  if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+    appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
   }
+}
 
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      let headerView = appBar.headerViewController.headerView
-      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
-    }
+override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+    let headerView = appBar.headerViewController.headerView
+    headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
   }
-    
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      let headerView = appBar.headerViewController.headerView
-      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
-    }
+}
+  
+override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+    let headerView = appBar.headerViewController.headerView
+    headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
   }
+}
 ~~~ 
 
 #### Objective-C
@@ -376,7 +381,10 @@ func barButtonDidTap(sender: UIBarButtonItem) {
   editor.isEditing = !editor.isEditing
 
   let buttonTitle =  editor.isEditing ? "Cancel" : "Edit"
-  navigationItem.rightBarButtonItem = UIBarButtonItem(title: buttonTitle, style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+  navigationItem.rightBarButtonItem = UIBarButtonItem(title: buttonTitle,
+                                                      style: .plain,
+                                                      target: self,
+                                                      action: #selector(ViewController.barButtonDidTap(sender:)))
 }
 ~~~ 
 
@@ -402,7 +410,10 @@ Now let's add a bar button to the right side of the app bar by modifying ViewCon
 ~~~ swift
 override func viewDidLoad() {
   ...
-  navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+  navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit",
+                                                      style: .plain,
+                                                      target: self,
+                                                      action: #selector(ViewController.barButtonDidTap(sender:)))
 }
 ~~~ 
 
@@ -435,8 +446,12 @@ Add a property for the fab and make a new function that will toggle the selected
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-class ViewController: MDCCollectionViewController {
+import UIKit
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialCollections
 
+class ViewController: MDCCollectionViewController {
   let appBar = MDCAppBar()
   let fab = MDCFloatingButton()
 
@@ -449,6 +464,11 @@ class ViewController: MDCCollectionViewController {
 
 #### Objective-C
 ~~~ objc
+#import "ViewController.h"
+#import "MaterialAppBar.h"
+#import "MaterialButtons.h"
+#import "MaterialCollections.h"
+
 @interface ViewController ()
 @property MDCAppBar *appBar;
 @property MDCFloatingButton *fab;
@@ -531,13 +551,227 @@ override func viewDidLoad() {
 }
 ~~~ 
 <!--</div>-->
-~~~
 
 Build and run your app. The floating action button responds to your taps:
 
 ![Finished app with floating action button.](docs/assets/App-Complete.gif)
 
 **NOTE:** While we're using text for the + and - inside the fab, to get proper sizing, you should use icons. The material design website has a great [library](https://design.google.com/icons/) of icons that can be exported bundled and sized specifically for iOS.
+
+## Full source
+
+If you've been following along with the above steps, your ViewController implementation should look roughly like:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import UIKit
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialCollections
+
+class ViewController: MDCCollectionViewController {
+  let appBar = MDCAppBar()
+  let fab = MDCFloatingButton()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    styler.cellStyle = .card
+
+    addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0)
+
+    appBar.headerViewController.headerView.trackingScrollView = self.collectionView
+    appBar.addSubviewsToParent()
+
+    title = "Material Components"
+
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+
+    appBar.navigationBar.tintColor = UIColor.black
+
+    view.addSubview(fab)
+    fab.translatesAutoresizingMaskIntoConstraints = false
+    fab.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
+    fab.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0).isActive = true
+
+    fab.setTitle("+", for: .normal)
+    fab.setTitle("-", for: .selected)
+    fab.addTarget(self, action: #selector(ViewController.fabDidTap(sender:)), for: .touchUpInside)
+  }
+
+  func barButtonDidTap(sender: UIBarButtonItem) {
+    editor.isEditing = !editor.isEditing
+
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+  }
+
+  func fabDidTap(sender: UIButton) {
+    sender.isSelected = !sender.isSelected
+  }
+
+  // MARK: UICollectionViewDataSource
+
+  override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 5
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 4
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+
+    if let textCell = cell as? MDCCollectionViewTextCell {
+
+      // Add some mock text to the cell.
+      let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
+      textCell.textLabel?.text = animals[indexPath.item]
+    }
+    
+    return cell
+  }
+
+  // MARK: UIScrollViewDelegate
+
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidScroll()
+    }
+  }
+
+  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+    }
+  }
+
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      let headerView = appBar.headerViewController.headerView
+      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+    }
+  }
+
+  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      let headerView = appBar.headerViewController.headerView
+      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+    }
+  }
+}
+~~~ 
+
+#### Objective-C
+~~~ objc
+#import "ViewController.h"
+#import "MaterialAppBar.h"
+#import "MaterialButtons.h"
+#import "MaterialCollections.h"
+
+@interface ViewController ()
+@property MDCAppBar *appBar;
+@property MDCFloatingButton *fab;
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  self.styler.cellStyle = MDCCollectionViewCellStyleCard;
+
+  self.appBar = [[MDCAppBar alloc] init];
+  [self addChildViewController:self.appBar.headerViewController];
+
+  self.appBar.headerViewController.headerView.backgroundColor = [UIColor colorWithRed:1.0 green:0.76 blue:0.03 alpha:1.0];
+  self.appBar.headerViewController.headerView.trackingScrollView = self.collectionView;
+  self.appBar.navigationBar.tintColor = [UIColor blackColor];
+  [self.appBar addSubviewsToParent];
+
+  self.title = @"Material Components";
+
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(barButtonDidTap:)];
+
+  self.fab = [[MDCFloatingButton alloc] initWithFrame:CGRectZero];
+  [self.view addSubview:self.fab];
+
+  self.fab.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-16.0].active = YES;
+  [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant: -16.0].active = YES;
+  [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant: -16.0].active = YES;
+
+  [self.fab setTitle:@"+" forState:UIControlStateNormal];
+  [self.fab setTitle:@"-" forState:UIControlStateSelected];
+  [self.fab addTarget:self action:@selector(fabDidTap:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+  return 5;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+  return 4;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+  MDCCollectionViewTextCell *textCell = (MDCCollectionViewTextCell *)cell;
+  NSArray<NSString *> *animals = @[@"Lions", @"Tigers", @"Bears", @"Monkeys"];
+  textCell.textLabel.text = animals[indexPath.row];
+  return textCell;
+}
+
+- (void)barButtonDidTap:(id)sender {
+  self.editor.editing = !self.editor.editing;
+  NSString *buttonTitle = self.editor.editing ? @"Cancel" : @"Edit";
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:buttonTitle
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(barButtonDidTap:)];
+}
+
+- (void)fabDidTap:(id)sender {
+  MDCFloatingButton *button = (MDCFloatingButton *)sender;
+  button.selected = !button.isSelected;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                                                           targetContentOffset:targetContentOffset];
+  }
+}
+
+@end
+~~~ 
+<!--</div>-->
+
 
 ---
 
