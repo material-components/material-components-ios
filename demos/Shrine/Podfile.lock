@@ -152,12 +152,12 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../../
+    :path: "../../"
 
 SPEC CHECKSUMS:
   MaterialComponents: 5c73b785d39aa619bbe7c8819596aebedfb3444b
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
-PODFILE CHECKSUM: b585ca32a2884e050823cc1f861e8b7246f7dcc1
+PODFILE CHECKSUM: 373a3739f21488f38fec1d26286a437133ecc02d
 
 COCOAPODS: 1.0.1
