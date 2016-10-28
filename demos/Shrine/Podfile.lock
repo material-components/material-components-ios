@@ -9,6 +9,7 @@ PODS:
     - MaterialComponents/CollectionLayoutAttributes (= 16.1.0)
     - MaterialComponents/Collections (= 16.1.0)
     - MaterialComponents/Dialogs (= 16.1.0)
+    - MaterialComponents/FeatureHighlight (= 16.1.0)
     - MaterialComponents/FlexibleHeader (= 16.1.0)
     - MaterialComponents/FontDiskLoader (= 16.1.0)
     - MaterialComponents/HeaderStackView (= 16.1.0)
@@ -72,6 +73,7 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
+  - MaterialComponents/FeatureHighlight (16.1.0)
   - MaterialComponents/FlexibleHeader (16.1.0):
     - MDFTextAccessibility
   - MaterialComponents/FontDiskLoader (16.1.0)
@@ -155,9 +157,9 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 5c73b785d39aa619bbe7c8819596aebedfb3444b
+  MaterialComponents: 414b9fb02f5108a562a337f023e5a8291912f403
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
-PODFILE CHECKSUM: 373a3739f21488f38fec1d26286a437133ecc02d
+PODFILE CHECKSUM: a99960e6ab1c7128ff71f25989ec0d58da87580e
 
 COCOAPODS: 1.0.1
