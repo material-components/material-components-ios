@@ -135,7 +135,7 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54;
 }
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
-  _innerHighlightColor = [UIColor whiteColor];
+  _innerHighlightColor = innerHighlightColor;
 
   _pulseLayer.fillColor = _innerHighlightColor.CGColor;
   _innerLayer.fillColor = _innerHighlightColor.CGColor;
