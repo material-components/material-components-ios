@@ -15,6 +15,7 @@
  */
 
 import UIKit
+import MaterialComponents
 
 class ShrineCollectionViewController: UICollectionViewController {
 
