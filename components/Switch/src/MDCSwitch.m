@@ -249,6 +249,7 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 
   [self setNeedsLayout];
 
+  // This occurs early to reduce the delay in the haptic feedback.
   if (userGenerated) {
     [self fireHapticFeedback];
   }
@@ -283,7 +284,6 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
       self.feedbackGenerator =
           [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
     }
-    [self.feedbackGenerator impactOccurred];
   }
 #endif
 }
