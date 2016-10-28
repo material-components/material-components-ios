@@ -1,3 +1,47 @@
+# 16.1.0
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Implement intrinsicContentSize (#795)](https://github.com/google/material-components-ios/commit/731eb321d94eb4957613e1059570cae17a584133) (Louis Romero)
+
+### Buttons
+
+#### Changes
+
+* [MDC #329 - Bounded ink should ignore the maxRippleRadius property (#771)](https://github.com/google/material-components-ios/commit/01b73cf1478083baeb9976d4af12a67f02f9cb82) (Justin Shephard)
+
+### Dialogs
+
+#### Changes
+
+* [Improve snackbar and dialogs docs (#785)](https://github.com/google/material-components-ios/commit/386964baf25fa9264516f9f0c9ed19410873f1fe) (Sam Morrison)
+
+### Ink
+
+#### Changes
+
+* [Added MDCInkGestureRecognizer.h to Ink's umbrella header. (#801)](https://github.com/google/material-components-ios/commit/d24532bc40e0082dc8383d6431feceafa38ec050) (Adrian Secord)
+* [MDC #329 - Bounded ink should ignore the maxRippleRadius property (#771)](https://github.com/google/material-components-ios/commit/01b73cf1478083baeb9976d4af12a67f02f9cb82) (Justin Shephard)
+* [[MDCInkView] cancelAllAnimationsAnimated should support disabling animation (#786)](https://github.com/google/material-components-ios/commit/8008e82bd7bea04534ad7ecb2c3aa1903254553e) (Junius Gunaratne)
+
+### ProgressView
+
+#### Changes
+
+* [[MDCProgressView] Execute completion block when setHidden:animated:completion is called sequentially (#787)](https://github.com/google/material-components-ios/commit/45c0b06275e88c65c7aae8bba1b78889cba2f93c) (Junius Gunaratne)
+
+### Snackbar
+
+#### Changes
+
+* [Improve snackbar and dialogs docs (#785)](https://github.com/google/material-components-ios/commit/386964baf25fa9264516f9f0c9ed19410873f1fe) (Sam Morrison)
+
+
+
 # 16.0.0
 
 ## API diffs

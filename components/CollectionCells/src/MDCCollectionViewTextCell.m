@@ -47,6 +47,44 @@ static const CGFloat kCellTextWithImagePaddingLeading = 72;
 // Cell image view padding.
 static const CGFloat kCellImagePaddingLeading = 16;
 
+static inline CGFloat Ceil(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return ceil(value);
+#else
+  return ceilf(value);
+#endif
+}
+
+static inline CGFloat Floor(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return floor(value);
+#else
+  return floorf(value);
+#endif
+}
+
+// Returns the closest pixel-aligned value higher than |value|, taking the scale factor into
+// account. At a scale of 1, equivalent to Ceil().
+static inline CGFloat AlignValueToUpperPixel(CGFloat value) {
+  CGFloat scale = [[UIScreen mainScreen] scale];
+  return (CGFloat)Ceil(value * scale) / scale;
+}
+
+// Returns the closest pixel-aligned value lower than |value|, taking the scale factor into
+// account. At a scale of 1, equivalent to Floor().
+static inline CGFloat AlignValueToLowerPixel(CGFloat value) {
+  CGFloat scale = [[UIScreen mainScreen] scale];
+  return (CGFloat)Floor(value * scale) / scale;
+}
+
+// Returns the rect resulting from applying AlignSizeToUpperPixel to the rect size.
+static inline CGRect AlignRectToUpperPixel(CGRect rect) {
+  rect = CGRectStandardize(rect);
+  return CGRectMake(AlignValueToLowerPixel(rect.origin.x), AlignValueToLowerPixel(rect.origin.y),
+                    AlignValueToUpperPixel(rect.size.width),
+                    AlignValueToUpperPixel(rect.size.height));
+}
+
 @implementation MDCCollectionViewTextCell {
   UIView *_contentWrapper;
 }
@@ -184,11 +222,14 @@ static const CGFloat kCellImagePaddingLeading = 16;
       detailFrame.origin.y = (boundsHeight / 2) - (detailFrame.size.height / 2);
     }
   }
-  _textLabel.frame = MDCRectFlippedForRTL(textFrame, CGRectGetWidth(_contentWrapper.bounds),
-                                          self.mdc_effectiveUserInterfaceLayoutDirection);
-  _detailTextLabel.frame = MDCRectFlippedForRTL(detailFrame, CGRectGetWidth(_contentWrapper.bounds),
+  _textLabel.frame =
+      MDCRectFlippedForRTL(AlignRectToUpperPixel(textFrame), CGRectGetWidth(_contentWrapper.bounds),
+                           self.mdc_effectiveUserInterfaceLayoutDirection);
+  _detailTextLabel.frame = MDCRectFlippedForRTL(AlignRectToUpperPixel(detailFrame),
+                                                CGRectGetWidth(_contentWrapper.bounds),
                                                 self.mdc_effectiveUserInterfaceLayoutDirection);
-  _imageView.frame = MDCRectFlippedForRTL(imageFrame, CGRectGetWidth(self.contentView.bounds),
+  _imageView.frame = MDCRectFlippedForRTL(AlignRectToUpperPixel(imageFrame),
+                                          CGRectGetWidth(self.contentView.bounds),
                                           self.mdc_effectiveUserInterfaceLayoutDirection);
 }
 
