@@ -19,7 +19,7 @@
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView.h"
 
-const CGFloat kMDCFeatureHighlightBackgroundAlpha = 0.96;
+const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96;
 
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5;
 
@@ -125,7 +125,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5;
 
 - (UIColor *)outerHighlightColor {
   if (!_outerHighlightColor) {
-    return [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightBackgroundAlpha];
+    return [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
   }
   return _outerHighlightColor;
 }
@@ -153,15 +153,15 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5;
     _animationController.dismissStyle = MDCFeatureHighlightDismissRejected;
   }
   [self dismissViewControllerAnimated:YES completion:^() {
-    if (_completion) {
-      _completion(accepted);
+    if (self->_completion) {
+      self->_completion(accepted);
     }
   }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                        change:(NSDictionary *)change
                        context:(void *)context {
   if (object == _highlightedView && [keyPath isEqualToString:@"frame"]) {
     CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
