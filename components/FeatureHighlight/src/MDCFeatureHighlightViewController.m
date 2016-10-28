@@ -161,7 +161,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
-                        change:(NSDictionary *)change
+                        change:(NSDictionary<NSString *,id> *)change
                        context:(void *)context {
   if (object == _highlightedView && [keyPath isEqualToString:@"frame"]) {
     CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
