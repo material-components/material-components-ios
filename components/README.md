@@ -71,6 +71,11 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](Dialogs/)
   <!--{: .icon-dialogs }-->
 
+- [**FeatureHighlight**
+  Highlights a part of the screen in order to draw users' attention.
+  ](FeatureHighlight/)
+  <!--{: .icon-featurehighlight }-->
+
 - [**FlexibleHeader**
   A container view whose height and vertical offset react to UIScrollViewDelegate events.
   ](FlexibleHeader/)
