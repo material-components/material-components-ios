@@ -15,7 +15,7 @@
  */
 
 import UIKit
-import MaterialComponents
+import MaterialComponents.MaterialIcons
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

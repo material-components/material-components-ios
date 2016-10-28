@@ -15,7 +15,7 @@
  */
 
 import UIKit
-import MaterialComponents
+import MaterialComponents.MaterialInk
 
 class ShrineInkOverlay: UIView, MDCInkTouchControllerDelegate {
 

@@ -15,7 +15,7 @@
  */
 
 import UIKit
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
 
 class ShrineDetailView: UIScrollView {
 
