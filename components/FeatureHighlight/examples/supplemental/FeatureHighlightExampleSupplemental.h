@@ -14,4 +14,15 @@
  limitations under the License.
  */
 
-#import "RemoteImageService.h"
+#import <UIKit/UIKit.h>
+
+#import "MaterialCollections.h"
+
+@interface FeatureHighlightTypicalUseViewController : UIViewController
+@property(nonatomic) UILabel *infoLabel;
+@property(nonatomic) UIButton *button;
+@end
+
+@interface FeatureHighlightColorExample : MDCCollectionViewController
+@property(nonatomic) NSArray *colors;
+@end

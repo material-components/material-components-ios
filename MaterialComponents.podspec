@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
   s.license      = "Apache 2.0"
-  s.source       = { :git => "https://github.com/google/material-components-ios.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/google/material-components-ios.git", :tag => "v#{s.version}" }
   s.platform     = :ios
   s.requires_arc = true
 
@@ -21,8 +21,8 @@ Pod::Spec.new do |s|
   #
   # ## Optional properties
   #
-  # resource_bundles     => If your component has a bundle, add a dictionary mapping from the bundle
-  #                         name to the bundle path.
+  # resources    		 => If your component has a bundle, add a dictionary mapping from the bundle
+  #                         name to the bundle path. NOTE: Do not use resource_bundle property.
   #
   # # Template subspec
   #
@@ -32,9 +32,8 @@ Pod::Spec.new do |s|
   #    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   #
   #    # Only if you have a resource bundle
-  #    ss.resource_bundles = {
-  #      "Material#{ss.base_name}" => ["components/#{ss.base_name}/Material#{ss.base_name}.bundle/*"]
-  #    }
+  #    ss.resources = ["components/#{ss.base_name}/Material#{ss.base_name}.bundle"]
+  #    
   #  end
   #
 
@@ -128,9 +127,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-    }
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
     ss.framework = "CoreGraphics", "QuartzCore"
 
@@ -152,6 +149,13 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
     ss.dependency "MaterialComponents/private/KeyboardWatcher"
+  end
+
+  s.subspec "FeatureHighlight" do |ss|
+    ss.ios.deployment_target = '7.0'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "FlexibleHeader" do |ss|
@@ -208,9 +212,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-    }
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
   end
 
   s.subspec "Palettes" do |ss|
@@ -236,9 +238,7 @@ Pod::Spec.new do |s|
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     # Only if you have a resource bundle
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-    }
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
     ss.dependency "MaterialComponents/FontDiskLoader"
     ss.dependency "MaterialComponents/Typography"
@@ -292,9 +292,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-    }
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
     ss.dependency "MaterialComponents/private/ThumbTrack"
     ss.dependency "MaterialComponents/private/RTL"

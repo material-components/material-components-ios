@@ -13,6 +13,7 @@
 		403860EF1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 403860EE1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m */; };
 		5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D090E341C9AEB8C0061344A /* Localizable.strings */; };
 		5D2B1DB2BD8D444E630A80AC /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		645594551D9F03E80072AB06 /* MDCCatalogTileDataFeatureHighlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 645594541D9F03E80072AB06 /* MDCCatalogTileDataFeatureHighlight.m */; };
 		664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B61C6BA62A001ADBF8 /* AppDelegate.swift */; };
 		664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
@@ -119,6 +120,8 @@
 		5D090E541C9AEB8D0061344A /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E551C9AEB8D0061344A /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E561C9AEB8D0061344A /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		645594531D9F03E80072AB06 /* MDCCatalogTileDataFeatureHighlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTileDataFeatureHighlight.h; sourceTree = "<group>"; };
+		645594541D9F03E80072AB06 /* MDCCatalogTileDataFeatureHighlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTileDataFeatureHighlight.m; sourceTree = "<group>"; };
 		664524B31C6BA62A001ADBF8 /* MDCCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDCCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		664524B61C6BA62A001ADBF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCNodeListViewController.swift; sourceTree = "<group>"; };
@@ -289,6 +292,8 @@
 				DE7A17C41CCAC1EA00B66230 /* MDCCatalogTileDataCollections.m */,
 				403860ED1D24328A00FB8216 /* MDCCatalogTileDataDialogs.h */,
 				403860EE1D24328A00FB8216 /* MDCCatalogTileDataDialogs.m */,
+				645594531D9F03E80072AB06 /* MDCCatalogTileDataFeatureHighlight.h */,
+				645594541D9F03E80072AB06 /* MDCCatalogTileDataFeatureHighlight.m */,
 				DE19446F1CBD9E40009E0321 /* MDCCatalogTileDataFlexibleHeader.h */,
 				DE1944701CBD9E40009E0321 /* MDCCatalogTileDataFlexibleHeader.m */,
 				DE1944711CBD9E40009E0321 /* MDCCatalogTileDataHeaderStackView.h */,
@@ -575,6 +580,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE1944901CBD9E40009E0321 /* MDCCatalogTileDataShadowLayer.m in Sources */,
+				645594551D9F03E80072AB06 /* MDCCatalogTileDataFeatureHighlight.m in Sources */,
 				DE1944911CBD9E40009E0321 /* MDCCatalogTileDataSlider.m in Sources */,
 				DE19448E1CBD9E40009E0321 /* MDCCatalogTileDataNavigationBar.m in Sources */,
 				DE19448F1CBD9E40009E0321 /* MDCCatalogTileDataPageControl.m in Sources */,

@@ -347,6 +347,8 @@ static const uint32_t kCellRedColor = 0xF44336;
       _editingReorderImageView.frame = MDCRectFlippedForRTL(
           frame, CGRectGetWidth(self.bounds), self.mdc_effectiveUserInterfaceLayoutDirection);
       _editingReorderImageView.transform = transform;
+      _editingReorderImageView.alpha = 1.0f;
+    } else {
       _editingReorderImageView.alpha = 0.0f;
     }
 
@@ -371,9 +373,14 @@ static const uint32_t kCellRedColor = 0xF44336;
       _editingSelectorImageView.frame = MDCRectFlippedForRTL(
           frame, CGRectGetWidth(self.bounds), self.mdc_effectiveUserInterfaceLayoutDirection);
       _editingSelectorImageView.transform = transform;
+      _editingSelectorImageView.alpha = 1.0f;
+    } else {
       _editingSelectorImageView.alpha = 0.0f;
     }
     [CATransaction commit];
+  } else {
+    _editingReorderImageView.alpha = 0.0f;
+    _editingSelectorImageView.alpha = 0.0f;
   }
 
   // Update accessory view.

@@ -15,10 +15,11 @@
  */
 
 import UIKit
+import MaterialComponents
 
 class ShrineInkOverlay: UIView, MDCInkTouchControllerDelegate {
 
-  private var inkTouchController:MDCInkTouchController?
+  fileprivate var inkTouchController:MDCInkTouchController?
 
   override init(frame: CGRect) {
     super.init(frame: frame)

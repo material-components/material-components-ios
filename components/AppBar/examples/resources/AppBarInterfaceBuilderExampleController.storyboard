@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Interface Builder (Swift)-->
+        <!--Interface Builder-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Interface Builder (Swift)" id="BYZ-38-t0r" customClass="AppBarInterfaceBuilderSwiftExample" customModule="MaterialComponentsCatalog" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Interface Builder" id="BYZ-38-t0r" customClass="AppBarInterfaceBuilderSwiftExample" customModule="MaterialComponentsCatalog" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -25,7 +25,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXR-vF-blI">
                                                 <rect key="frame" x="8" y="8" width="556" height="801"/>
-                                                <mutableString key="text">Suspendisse vulputate tristique rhoncus. Aliquam erat volutpat. Nulla blandit bibendum nibh, sed imperdiet quam convallis ut. Nullam a massa accumsan, imperdiet justo vitae, tempor metus. Quisque tristique lectus dapibus leo auctor blandit. Morbi mattis, eros a gravida consequat, sem sapien imperdiet magna, vitae venenatis augue mi at purus. Etiam interdum magna sit amet enim tempus rhoncus. Vestibulum commodo tristique nulla tempor ullamcorper. Cras tincidunt odio fermentum pulvinar lobortis. Aenean porttitor viverra velit at ornare. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at euismod urna. Nullam imperdiet non est ut venenatis. Suspendisse tristique egestas erat, in placerat eros tincidunt interdum. Sed nec risus dolor.
+                                                <string key="text">Suspendisse vulputate tristique rhoncus. Aliquam erat volutpat. Nulla blandit bibendum nibh, sed imperdiet quam convallis ut. Nullam a massa accumsan, imperdiet justo vitae, tempor metus. Quisque tristique lectus dapibus leo auctor blandit. Morbi mattis, eros a gravida consequat, sem sapien imperdiet magna, vitae venenatis augue mi at purus. Etiam interdum magna sit amet enim tempus rhoncus. Vestibulum commodo tristique nulla tempor ullamcorper. Cras tincidunt odio fermentum pulvinar lobortis. Aenean porttitor viverra velit at ornare. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at euismod urna. Nullam imperdiet non est ut venenatis. Suspendisse tristique egestas erat, in placerat eros tincidunt interdum. Sed nec risus dolor.
 
 Duis lobortis ac turpis sit amet fringilla. Maecenas mattis nibh eget nulla tempus porta. Praesent ac rutrum elit, id porttitor mi. Sed ac tincidunt lectus, vel ullamcorper risus. Fusce nec vulputate dui. Sed vitae posuere tellus. Cras quis nisl ultricies, pulvinar justo at, sodales mi. 
 
@@ -39,7 +39,7 @@ Duis lobortis ac turpis sit amet fringilla. Maecenas mattis nibh eget nulla temp
 
 Suspendisse vulputate tristique rhoncus. Aliquam erat volutpat. Nulla blandit bibendum nibh, sed imperdiet quam convallis ut. Nullam a massa accumsan, imperdiet justo vitae, tempor metus. Quisque tristique lectus dapibus leo auctor blandit. Morbi mattis, eros a gravida consequat, sem sapien imperdiet magna, vitae venenatis augue mi at purus. Etiam interdum magna sit amet enim tempus rhoncus. Vestibulum commodo tristique nulla tempor ullamcorper. Cras tincidunt odio fermentum pulvinar lobortis. Aenean porttitor viverra velit at ornare. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at euismod urna. Nullam imperdiet non est ut venenatis. Suspendisse tristique egestas erat, in placerat eros tincidunt interdum. Sed nec risus dolor.
 
-Duis lobortis ac turpis sit amet fringilla. Maecenas mattis nibh eget nulla tempus porta. Praesent ac rutrum elit, id porttitor mi. Sed ac tincidunt lectus, vel ullamcorper risus. Fusce nec vulputate dui. Sed vitae posuere tellus. Cras quis nisl ultricies, pulvinar justo at, sodales mi. </mutableString>
+Duis lobortis ac turpis sit amet fringilla. Maecenas mattis nibh eget nulla tempus porta. Praesent ac rutrum elit, id porttitor mi. Sed ac tincidunt lectus, vel ullamcorper risus. Fusce nec vulputate dui. Sed vitae posuere tellus. Cras quis nisl ultricies, pulvinar justo at, sodales mi. </string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>

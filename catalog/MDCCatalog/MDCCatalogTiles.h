@@ -20,6 +20,7 @@
 #import "MDCCatalogTileDataButtonBar.h"
 #import "MDCCatalogTileDataButtons.h"
 #import "MDCCatalogTileDataCollections.h"
+#import "MDCCatalogTileDataFeatureHighlight.h"
 #import "MDCCatalogTileDataFlexibleHeader.h"
 #import "MDCCatalogTileDataHeaderStackView.h"
 #import "MDCCatalogTileDataInk.h"
