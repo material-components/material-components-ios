@@ -48,7 +48,7 @@ Before announcing the deprecation, create an issue in GitHub that represents it.
 
 TODO: Include announcement instructions. Generally, this is done via blog.
 
-Deprecate APIs using the macro provide by Apple in AvailabilityMacros.h that includes a message:
+Deprecate APIs using the macro provided by Apple in AvailabilityMacros.h that includes a message:
 * DEPRECATED_MSG_ATTRIBUTE(msg)
 
 This macro requires an explanation string which should be similar to: ”This API will be removed on D/M/YYYY. Please use XYZ instead. See issue #n for more details.”
@@ -80,3 +80,9 @@ This is an idealized summary of how to replace old code with new code.
     1. Delete the old code.
     1. Close the issue.
     1. Release
+
+## Compiler warnings
+
+If you are treating warnings as errors in your application via the `-Werror` compiler flag, you may need to disable this functionality for deprecated code warnings.
+
+This can be done by adding the `-Wno-error=deprecated` and `-Wno-error=deprecated-implementations` compiler flags to your application target via an .xcconfig or under "Other C Flags" in your Build Settings. Xcode will still issue the warning during compilation, but they will not be treated as errors.
