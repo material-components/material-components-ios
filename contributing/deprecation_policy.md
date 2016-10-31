@@ -81,8 +81,8 @@ This is an idealized summary of how to replace old code with new code.
     1. Close the issue.
     1. Release
 
-## A note about compiler warnings
+## Compiler warnings
 
-If you are treating warnings as errors in your application via the -Werror compiler flag you may need to disable this functionality for deprecated code warnings.
+If you are treating warnings as errors in your application via the `-Werror compiler` flag you may need to disable this functionality for deprecated code warnings.
 
-This can be done by adding the -Wno-error=deprecated and -Wno-error=deprecated-implementations compiler flags to your application target via an .xcconfig or under "Other C Flags" in your Build Settings. They will still issue the warning during compilation, but they will not be treated as errors.
+This can be done by adding the `-Wno-error=deprecated` and `-Wno-error=deprecated-implementations` compiler flags to your application target via an .xcconfig or under "Other C Flags" in your Build Settings. They will still issue the warning during compilation, but they will not be treated as errors.
