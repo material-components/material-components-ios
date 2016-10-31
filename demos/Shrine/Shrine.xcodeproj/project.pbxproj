@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D8FBC45E0B69CDCA8F63587 /* Pods_Shrine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24CA2B3B8F74979E79FE3DDE /* Pods_Shrine.framework */; };
 		DE064E731C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */; };
 		DE34DEBB1C88E90000E04B65 /* ShrineInkOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE34DEBA1C88E90000E04B65 /* ShrineInkOverlay.swift */; };
 		DE34DEBF1C8A34B100E04B65 /* ShrineHeaderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE34DEBE1C8A34B100E04B65 /* ShrineHeaderContentView.swift */; };
@@ -21,13 +22,12 @@
 		DE6887EA1C849C7C0074A8C5 /* AbrilFatface-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE6887E91C849C7C0074A8C5 /* AbrilFatface-Regular.ttf */; };
 		DE6887F11C849F7F0074A8C5 /* RemoteImageService.m in Sources */ = {isa = PBXBuildFile; fileRef = DE6887F01C849F7F0074A8C5 /* RemoteImageService.m */; };
 		DE6887F31C84FCD40074A8C5 /* ShrineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6887F21C84FCD40074A8C5 /* ShrineData.swift */; };
-		E30DA9E4A1B6883CF2A6D767 /* libPods-Shrine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F6BAB7EBA92D35902D7E2D2 /* libPods-Shrine.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C7F50E40E35B48C29C884F8 /* Pods-Shrine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.release.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.release.xcconfig"; sourceTree = "<group>"; };
+		24CA2B3B8F74979E79FE3DDE /* Pods_Shrine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shrine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D22DA7C0F576B707C1CA5BE /* Pods-Shrine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.debug.xcconfig"; sourceTree = "<group>"; };
-		6F6BAB7EBA92D35902D7E2D2 /* libPods-Shrine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Shrine.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineFlexibleHeaderContainerViewController.swift; sourceTree = "<group>"; };
 		DE34DEBA1C88E90000E04B65 /* ShrineInkOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineInkOverlay.swift; sourceTree = "<group>"; };
 		DE34DEBE1C8A34B100E04B65 /* ShrineHeaderContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineHeaderContentView.swift; sourceTree = "<group>"; };
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E30DA9E4A1B6883CF2A6D767 /* libPods-Shrine.a in Frameworks */,
+				0D8FBC45E0B69CDCA8F63587 /* Pods_Shrine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,7 +63,7 @@
 		642D1F1EA5C73400CE64F5A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6F6BAB7EBA92D35902D7E2D2 /* libPods-Shrine.a */,
+				24CA2B3B8F74979E79FE3DDE /* Pods_Shrine.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
