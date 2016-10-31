@@ -85,4 +85,4 @@ This is an idealized summary of how to replace old code with new code.
 
 If you are treating warnings as errors in your application via the -Werror compiler flag you may need to disable this functionality for deprecated code warnings.
 
-This can be done by adding the -Wno-error=deprecated -Wno-error=deprecated-implementations compiler flags to your application target via an .xcconfig or under "Other C Flags" in your Build Settings.
+This can be done by adding the -Wno-error=deprecated and -Wno-error=deprecated-implementations compiler flags to your application target via an .xcconfig or under "Other C Flags" in your Build Settings.
