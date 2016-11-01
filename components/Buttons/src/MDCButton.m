@@ -198,8 +198,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Set up title label attributes.
   self.titleLabel.font = [MDCTypography buttonFont];
-  [self updateTitleColor];
-  [self updateDisabledTitleColor];
   [self updateAlphaAndBackgroundColorAnimated:NO];
 
   // Default content insets
@@ -250,8 +248,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setUnderlyingColorHint:(UIColor *)underlyingColorHint {
   _underlyingColorHint = underlyingColorHint;
-  [self updateTitleColor];
-  [self updateDisabledTitleColor];
   [self updateAlphaAndBackgroundColorAnimated:NO];
 }
 
@@ -316,11 +312,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 #pragma mark - UIButton methods
-
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-  [super setBackgroundColor:backgroundColor];
-  [self updateTitleColor];
-}
 
 - (void)setEnabled:(BOOL)enabled {
   [self setEnabled:enabled animated:NO];
@@ -495,8 +486,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // TODO(ajsecord): Move to MDCFlatButton and update this comment.
   if (state == UIControlStateNormal) {
     [self updateAlphaAndBackgroundColorAnimated:NO];
-    [self updateTitleColor];
-    [self updateDisabledTitleColor];
   }
 }
 
@@ -621,6 +610,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   //                                                  : _disabledBackgroundColorDark;
   //    }
   //  }
+  [self updateTitleColor];
+  [self updateDisabledTitleColor];
   super.backgroundColor = self.currentBackgroundColor;
 }
 
