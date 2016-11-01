@@ -20,11 +20,11 @@ Tabs are bars of buttons used to navigate between groups of content.
       Tabs
     </a>
   </li>
-  <li class="icon-link">
-    <a href="https://material.google.com/components/bottom-navigation.html">
-      Bottom navigation
-    </a>
-  </li>
+<!--  <li class="icon-link">-->
+<!--    <a href="https://material.google.com/components/bottom-navigation.html">-->
+<!--      Bottom navigation-->
+<!--    </a>-->
+<!--  </li>-->
 </ul>
 
 - - -
