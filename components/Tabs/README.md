@@ -1,12 +1,15 @@
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Tabs/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Tabs">GitHub</a> for README documentation.{% endif %}-->
+
 # Tabs
 
-TODO(willlarche)
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/tab_bar.mp4" autoplay loop></video>
+  [![Tab Bar](docs/assets/tab_bar.png)](docs/assets/tab_bar.mp4)
+</div>
 
-TODO: screenshot.png is made on iPhone 5 simulator
-![TODO: ComponentName](docs/assets/screenshot.png)
-<!--{: .ios-screenshot .right }-->
-
-TODO: Single sentence description of the component.
+Tabs are bars of buttons used to navigate between groups of content.
 <!--{: .intro :}-->
 
 ### Material Design Specifications
