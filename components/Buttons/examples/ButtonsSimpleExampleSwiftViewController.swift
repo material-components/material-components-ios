@@ -18,6 +18,8 @@ import Foundation
 import MaterialComponents
 
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
+  
+  let floatingButtonPlusDimension = CGFloat(24)
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -25,6 +27,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     self.view.backgroundColor = UIColor.whiteColor()
 
     let raisedButton = MDCRaisedButton()
+    raisedButton.customTitleColor = UIColor.whiteColor()
     raisedButton.setElevation(4, forState: .Normal)
     raisedButton.setTitle("Tap Me Too", forState: .Normal)
     raisedButton.sizeToFit()
@@ -44,6 +47,15 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
+    
+    let plusShape = CAShapeLayer();
+    plusShape.path = plusShapePath().CGPath;
+    plusShape.fillColor = UIColor.whiteColor().CGColor;
+    plusShape.position =
+      CGPointMake((floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
+                  (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2);
+    floatingButton.layer.addSublayer(plusShape);
+
     self.view.addSubview(floatingButton)
 
     let views = [
@@ -75,6 +87,25 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
         options: .AlignAllCenterX,
         metrics: nil,
         views: views))
+  }
+  
+  func plusShapePath() -> UIBezierPath {
+    let bezierPath = UIBezierPath()
+    bezierPath.moveToPoint(CGPoint(x: 19, y: 13))
+    bezierPath.addLineToPoint(CGPoint(x: 13, y: 13))
+    bezierPath.addLineToPoint(CGPoint(x: 13, y: 19))
+    bezierPath.addLineToPoint(CGPoint(x: 11, y: 19))
+    bezierPath.addLineToPoint(CGPoint(x: 11, y: 13))
+    bezierPath.addLineToPoint(CGPoint(x: 5, y: 13))
+    bezierPath.addLineToPoint(CGPoint(x: 5, y: 11))
+    bezierPath.addLineToPoint(CGPoint(x: 11, y: 11))
+    bezierPath.addLineToPoint(CGPoint(x: 11, y: 5))
+    bezierPath.addLineToPoint(CGPoint(x: 13, y: 5))
+    bezierPath.addLineToPoint(CGPoint(x: 13, y: 11))
+    bezierPath.addLineToPoint(CGPoint(x: 19, y: 11))
+    bezierPath.addLineToPoint(CGPoint(x: 19, y: 13))
+    bezierPath.closePath()
+    return bezierPath;
   }
 
   override func didReceiveMemoryWarning() {

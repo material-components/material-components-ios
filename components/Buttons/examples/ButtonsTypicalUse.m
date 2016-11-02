@@ -85,6 +85,16 @@
                      action:@selector(didTap:)
            forControlEvents:UIControlEventTouchUpInside];
   floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
+
+  CGFloat floatingButtonPlusDimension = 24.0f;
+  CAShapeLayer *plusShape = [CAShapeLayer layer];
+  plusShape.path = [self plusShapePath].CGPath;
+  plusShape.fillColor = [UIColor whiteColor].CGColor;
+  plusShape.position =
+      CGPointMake((floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
+                  (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2);
+  [floatingButton.layer addSublayer:plusShape];
+
   [self.view addSubview:floatingButton];
 
   NSDictionary *views = @{

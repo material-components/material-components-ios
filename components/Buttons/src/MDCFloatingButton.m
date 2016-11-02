@@ -21,11 +21,9 @@
 
 static const CGFloat MDCFloatingButtonDefaultDimension = 56.0f;
 static const CGFloat MDCFloatingButtonMiniDimension = 40.0f;
-static const CGFloat MDCFloatingButtonPlusDimension = 24.0f;
 static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 
 @implementation MDCFloatingButton {
-  CAShapeLayer *_plusShape;
   MDCFloatingButtonShape _shape;
 }
 
@@ -48,7 +46,6 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 - (instancetype)initWithFrame:(CGRect)frame shape:(MDCFloatingButtonShape)shape {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonFloatingButtonInit];
     _shape = shape;
     // The superclass sets contentEdgeInsets from defaultContentEdgeInsets before the _shape is set.
     // Set contentEdgeInsets again to ensure the defaults are for the correct shape.
@@ -62,7 +59,6 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonFloatingButtonInit];
     _shape = [aDecoder decodeIntegerForKey:MDCFloatingButtonShapeKey];
   }
   return self;
@@ -91,39 +87,6 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
     case MDCFloatingButtonShapeMini:
       return CGSizeMake([[self class] miniDimension], [[self class] miniDimension]);
   }
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  _plusShape.position =
-      CGPointMake((self.frame.size.width - MDCFloatingButtonPlusDimension) / 2,
-                  (self.frame.size.height - MDCFloatingButtonPlusDimension) / 2);
-}
-
-- (void)commonFloatingButtonInit {
-  _plusShape = [CAShapeLayer layer];
-  _plusShape.path = [self plusShapePath].CGPath;
-  _plusShape.fillColor = [UIColor whiteColor].CGColor;
-  [self.layer addSublayer:_plusShape];
-}
-
-- (UIBezierPath *)plusShapePath {
-  UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-  [bezierPath moveToPoint: CGPointMake(19, 13)];
-  [bezierPath addLineToPoint: CGPointMake(13, 13)];
-  [bezierPath addLineToPoint: CGPointMake(13, 19)];
-  [bezierPath addLineToPoint: CGPointMake(11, 19)];
-  [bezierPath addLineToPoint: CGPointMake(11, 13)];
-  [bezierPath addLineToPoint: CGPointMake(5, 13)];
-  [bezierPath addLineToPoint: CGPointMake(5, 11)];
-  [bezierPath addLineToPoint: CGPointMake(11, 11)];
-  [bezierPath addLineToPoint: CGPointMake(11, 5)];
-  [bezierPath addLineToPoint: CGPointMake(13, 5)];
-  [bezierPath addLineToPoint: CGPointMake(13, 11)];
-  [bezierPath addLineToPoint: CGPointMake(19, 11)];
-  [bezierPath addLineToPoint: CGPointMake(19, 13)];
-  [bezierPath closePath];
-  return bezierPath;
 }
 
 #pragma mark - Subclassing
