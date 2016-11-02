@@ -41,7 +41,6 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     self.view.addSubview(flatButton)
 
     let floatingButton = MDCFloatingButton()
-    floatingButton.setTitle("+", forState: .Normal)
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)

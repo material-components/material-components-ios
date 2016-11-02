@@ -80,7 +80,6 @@
   // Floating action button
 
   MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
-  [floatingButton setTitle:@"+" forState:UIControlStateNormal];
   [floatingButton sizeToFit];
   [floatingButton addTarget:self
                      action:@selector(didTap:)

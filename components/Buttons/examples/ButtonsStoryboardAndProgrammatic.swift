@@ -59,7 +59,6 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
     flatButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(flatButton)
 
-    floatingButton.setTitle("+", forState: .Normal)
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
