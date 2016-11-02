@@ -484,7 +484,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 + (void)setPresentationHostView:(UIView *)hostView {
-  NSParameterAssert([NSThread isMainThread]);
+  NSAssert([NSThread isMainThread], @"setPresentationHostView must be called on main thread.");
 
   MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
   manager.presentationHostView = hostView;
@@ -502,7 +502,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 + (void)setBottomOffset:(CGFloat)offset {
-  NSParameterAssert([NSThread isMainThread]);
+  NSAssert([NSThread isMainThread], @"setBottomOffset must be called on main thread.");
 
   MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
   manager.overlayView.bottomOffset = offset;
