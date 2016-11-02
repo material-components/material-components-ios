@@ -1,10 +1,51 @@
 # 16.2.0
 
-## Component changes
+## API diffs
 
 ### FeatureHighlight 
 
 * [FeatureHighlight](https://github.com/google/material-components-ios/commit/d4806473e49e65f0e9cc52139e39c3f1eba4f499) is a new component that lets you highlight a particular feature of your interface to the user.
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Ensure typical use examples match for Objective C and Swift (#815)](https://github.com/google/material-components-ios/commit/09fb272376e814677f2936651906fd764618ea05) (Junius Gunaratne)
+
+### CollectionCells
+
+#### Changes
+
+* [Align text labels frames to the upper pixel.](https://github.com/google/material-components-ios/commit/5a1a23d3c69c1c652b317219e1bb51d163000d4d) (Louis Romero)
+* [Show/hide the editing box as entering/leaving edit](https://github.com/google/material-components-ios/commit/12206c44e72bd133f77a8d7373614f19cc73ec88) (Louis Romero)
+
+### Collections
+
+#### Changes
+
+* [Fix -[MDCCollectionViewFlowLayout updateCellStateMaskWithAttribute:] (#732)](https://github.com/google/material-components-ios/commit/f2b93ae1119b28ee0685b780ccdd7e2a8044da2d) (Jackie Quinn)
+
+### FeatureHighlight
+
+#### Changes
+
+* [MDCFeatureHighlightViewController implementation (#765)](https://github.com/google/material-components-ios/commit/d4806473e49e65f0e9cc52139e39c3f1eba4f499) (Sam Morrison)
+* [Minor feature highlight fixes (#814)](https://github.com/google/material-components-ios/commit/b1c814d038b2cccaed76a7048deac1ae3771d7cd) (Sam Morrison)
+
+### NavigationBar
+
+#### Changes
+
+* [Setting default state of textAlignment (#817)](https://github.com/google/material-components-ios/commit/9e947eba06b09ab8ad901af9d2a8001fac824daf) (Randall Li)
+* [[Navigation Bar] Fixed text alignment in a better way that accepts the pre iOS8 default. (#820)](https://github.com/google/material-components-ios/commit/328631c19a2b89b0f4d8c11c24796ad0963976ee) (Randall Li)
+
+### Switch
+
+#### Changes
+
+* [Added haptic feedback to MDCSwitch (#812)](https://github.com/google/material-components-ios/commit/6aae38dfa70db77929ef2952ff3b8fce3caea60b) (Adrian Secord)
 
 # 16.1.0
 
