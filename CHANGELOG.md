@@ -1,4 +1,10 @@
-# release-candidate TODO: Replace me with version number. 
+# 16.2.0
+
+## Component changes
+
+### FeatureHighlight 
+
+* [FeatureHighlight](https://github.com/google/material-components-ios/commit/d4806473e49e65f0e9cc52139e39c3f1eba4f499) is a new component that lets you highlight a particular feature of your interface to the user.
 
 # 16.1.0
 
