@@ -384,7 +384,7 @@ func barButtonDidTap(sender: UIBarButtonItem) {
   navigationItem.rightBarButtonItem = UIBarButtonItem(title: buttonTitle,
                                                       style: .plain,
                                                       target: self,
-                                                      action: #selector(ViewController.barButtonDidTap(sender:)))
+                                                      action: #selector(ViewController.barButtonDidTap(_:)))
 }
 ~~~ 
 
