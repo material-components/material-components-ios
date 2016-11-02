@@ -52,6 +52,7 @@
  required if you need to manually manage the view hierarchy, or are inside a UIApplication extension.
 
  @note This method must be called from the main thread.
+ @note Calling setPresentationHostView will not change the parent of the currently visible message.
  */
 + (void)setPresentationHostView:(UIView *)hostView;
 
