@@ -23,7 +23,7 @@
 
 static NSString *const kBundleName = @"MaterialIcons_ic_arrow_back";
 static NSString *const kIconName = @"ic_arrow_back";
-NSString *const kNewIconName = @"ic_arrow_back_ios";
+static NSString *const kNewIconName = @"ic_arrow_back_ios";
 
 static NSString *__icArrowBackIconName = @"ic_arrow_back_ios";
 
