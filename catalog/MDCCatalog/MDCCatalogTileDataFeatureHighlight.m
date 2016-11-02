@@ -14,4 +14,13 @@
  limitations under the License.
  */
 
-#import "RemoteImageService.h"
+#import "MDCCatalogTileDataFeatureHighlight.h"
+
+@implementation MDCCatalogTileDataFeatureHighlight
+
++ (UIImage *)drawTileImage:(CGRect)frame {
+  return [self drawImageWithFrame:frame drawBlock:^(CGRect blockFrame) {
+  }];
+}
+
+@end

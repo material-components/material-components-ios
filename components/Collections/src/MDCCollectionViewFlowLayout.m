@@ -505,7 +505,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
 - (void)updateCellStateMaskWithAttribute:(MDCCollectionViewLayoutAttributes *)attr {
   attr.shouldShowSelectorStateMask = NO;
-  attr.shouldShowSelectorStateMask = NO;
+  attr.shouldShowReorderStateMask = NO;
 
   // Determine proper state to show cell if editing.
   if (attr.editing) {
