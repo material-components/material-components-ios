@@ -44,9 +44,12 @@
 /**
  MDCSnackbarManager will display the messages in this view.
 
- By default, MDCSnackbar will attempt to find a suitable view by stepping through the application
- windows. Explicitly providing a @c presentationHostView is only required if you need to manually
- manage the view hierarchy, or are inside a UIApplication extension.
+ Call this method to choose where in the view hierarchy snackbar messages will be presented. It is
+ only necessary to provide a host view if the default behavior is unable to find one on it's own,
+ most commonly when using MDCSnackbarManager inside an application extension. By default, if you use
+ MDCSnackbarManager without calling @c setPresentationHostView, the manager will attempt to find a
+ suitable view by stepping through the application windows. Explicitly providing a host view is only
+ required if you need to manually manage the view hierarchy, or are inside a UIApplication extension.
 
  @note This method must be called from the main thread.
  */
