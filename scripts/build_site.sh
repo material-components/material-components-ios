@@ -1,3 +1,5 @@
+set -x
+
 #!/bin/bash
 #
 # Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
@@ -39,7 +41,7 @@ while test $# -gt 0; do
       shift 1
     ;;
     "-h" | "--help")
-      echo "Usage: site-build.sh <command>"
+      echo "Usage: build_site.sh <command>"
       echo ""
       echo "options:"
       echo "-b, --build=TARGET        Specify target to build."
@@ -54,7 +56,7 @@ while test $# -gt 0; do
       exit 0
     ;;
     *)
-      echo "For available options: site-build.sh -h[--help]."
+      echo "For available options: build_site.sh -h[--help]."
       exit 0
     ;;
   esac
