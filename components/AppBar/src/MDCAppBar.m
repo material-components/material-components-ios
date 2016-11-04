@@ -29,6 +29,19 @@ static NSString *const kBarStackKey = @"barStack";
 static NSString *const kStatusBarHeightKey = @"statusBarHeight";
 static const CGFloat kStatusBarHeight = 20;
 
+@implementation MDCAppBarAccessibilityConfigurator
+
+- (nonnull instancetype)init {
+  self = [super init];
+  return self;
+}
+
+- (void)applyAccessibilityConfigurationOnAppBar:(nonnull MDCAppBar *)appBar {
+  
+}
+
+@end
+
 @interface MDCAppBarViewController : UIViewController
 
 @property(nonatomic, strong) MDCHeaderStackView *headerStackView;
