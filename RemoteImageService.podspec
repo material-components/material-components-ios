@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name         = "RemoteImageService"
   s.version      = "0.0.1"
   s.summary      = "A helper image class for the MDC demos."
-  s.description  = "This spec is made for use in the MDC demos."
+  s.description  = "This spec is made for use in the MDC demos. It gets images via url."
   s.homepage     = "https://github.com/google/material-components-ios"
   s.license      = "Apache 2.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
