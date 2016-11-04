@@ -68,7 +68,7 @@ echo
 echo "    scripts/api_diff"
 
 path_api_diff() {
-  $SCRIPTS_PATH/material-motion-apidiff/src/pathapidiff "$@"
+  $SCRIPTS_PATH/external/material-motion-apidiff/src/pathapidiff "$@"
 }
 
 # Run new pathdiff script on each umbrella header in array
