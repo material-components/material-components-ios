@@ -16,7 +16,7 @@
 
 import UIKit
 import MaterialComponents.MaterialPageControl
-import RemoteImage
+import RemoteImageService
 
 class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
