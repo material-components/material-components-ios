@@ -3,4 +3,5 @@ use_frameworks!
 
 target 'Shrine' do
   pod 'MaterialComponents', :path => '../../'
+  pod 'RemoteImage', :path => '../..'
 end

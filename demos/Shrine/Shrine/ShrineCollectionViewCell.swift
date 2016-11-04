@@ -15,6 +15,7 @@
  */
 
 import UIKit
+import RemoteImage
 
 class ShrineCollectionViewCell: UICollectionViewCell {
 
