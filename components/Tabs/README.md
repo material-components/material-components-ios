@@ -61,6 +61,8 @@ When a user taps a tab, the content should change to match the selected subject 
 
 Rather, the tabs report to their delegate when there is a tab selection. The delegate can then handle the changing of views.
 
+Tabs can also show a badge (usually a number) like UITabBar.
+
 ### Component detail
 
 TODO(brianjmoore)
