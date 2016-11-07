@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,10 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 #import "MDCAppBarButtonBarBuilder.h"
 
@@ -40,7 +36,7 @@ static const CGFloat kEdgeButtonAdditionalMarginPad = 12.f;
 // The default MDCButton's alpha for display state is 0.1f which in the context of bar buttons
 // makes it practically invisible. Setting button to a higher opacity is closer to what the
 // button should look like when it is disabled.
-static const CGFloat kDisabledButtonAlpha = 0.7f;
+static const CGFloat kDisabledButtonAlpha = 0.45f;
 
 // Content insets for text-only buttons.
 static const UIEdgeInsets kTextOnlyButtonInset = {0, 24.f, 0, 24.f};

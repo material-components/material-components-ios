@@ -2,13 +2,13 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "12.0.1"
+  s.version      = "16.2.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/google/material-components-ios"
   s.license      = "Apache 2.0"
-  s.source       = { :git => "https://github.com/google/material-components-ios.git", :tag => s.version.to_s }
-  s.platform     = :ios, "7.0"
+  s.source       = { :git => "https://github.com/google/material-components-ios.git", :tag => "v#{s.version}" }
+  s.platform     = :ios
   s.requires_arc = true
 
   # # Subspec explanation
@@ -21,8 +21,8 @@ Pod::Spec.new do |s|
   #
   # ## Optional properties
   #
-  # resource_bundles     => If your component has a bundle, add a dictionary mapping from the bundle
-  #                         name to the bundle path.
+  # resources    		 => If your component has a bundle, add a dictionary mapping from the bundle
+  #                         name to the bundle path. NOTE: Do not use resource_bundle property.
   #
   # # Template subspec
   #
@@ -32,19 +32,22 @@ Pod::Spec.new do |s|
   #    ss.header_mappings_dir = "components/#{ss.base_name}/src"
   #
   #    # Only if you have a resource bundle
-  #    ss.resource_bundles = {
-  #      "Material#{ss.base_name}" => ["components/#{ss.base_name}/Material#{ss.base_name}.bundle/*"]
-  #    }
+  #    ss.resources = ["components/#{ss.base_name}/Material#{ss.base_name}.bundle"]
+  #    
   #  end
   #
 
   s.subspec "ActivityIndicator" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src/*"
+
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "AppBar" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
@@ -63,11 +66,19 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/RTL"
   end
 
+  s.subspec "AnimationTiming" do |ss|
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
+  end
+
   s.subspec "Buttons" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
+    ss.dependency 'MDFTextAccessibility'
     ss.dependency "MaterialComponents/Ink"
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
@@ -75,6 +86,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "ButtonBar" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
@@ -84,6 +96,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "CollectionCells" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
@@ -103,18 +116,18 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "CollectionLayoutAttributes" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "Collections" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-    }
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
     ss.framework = "CoreGraphics", "QuartzCore"
 
@@ -126,13 +139,37 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/Typography"
   end
 
-  s.subspec "FlexibleHeader" do |ss|
+  s.subspec "Dialogs" do |ss|
+    ss.ios.deployment_target = '8.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
+
+    ss.dependency "MaterialComponents/Buttons"
+    ss.dependency "MaterialComponents/ShadowElevations"
+    ss.dependency "MaterialComponents/ShadowLayer"
+    ss.dependency "MaterialComponents/private/KeyboardWatcher"
+  end
+
+  s.subspec "FeatureHighlight" do |ss|
+    ss.ios.deployment_target = '7.0'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
+    ss.dependency "MaterialComponents/Typography"
+    ss.dependency "MDFTextAccessibility"
+  end
+
+  s.subspec "FlexibleHeader" do |ss|
+    ss.ios.deployment_target = '7.0'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
+    ss.dependency 'MDFTextAccessibility'
   end
 
   s.subspec "FontDiskLoader" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
@@ -141,18 +178,21 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "HeaderStackView" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "Ink" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "NavigationBar" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
@@ -163,53 +203,65 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "OverlayWindow" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "PageControl" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-    }
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
   end
 
   s.subspec "Palettes" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
+  s.subspec "ProgressView" do |ss|
+    ss.ios.deployment_target = '7.0'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+    ss.header_mappings_dir = "components/#{ss.base_name}/src"
+
+    ss.dependency "MaterialComponents/private/RTL"
+  end
+
   s.subspec "RobotoFontLoader" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
     # Only if you have a resource bundle
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-    }
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
     ss.dependency "MaterialComponents/FontDiskLoader"
     ss.dependency "MaterialComponents/Typography"
   end
 
   s.subspec "ShadowElevations" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "ShadowLayer" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "Slider" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
@@ -218,10 +270,12 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "Snackbar" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
+    ss.dependency "MaterialComponents/AnimationTiming"
     ss.dependency "MaterialComponents/Buttons"
     ss.dependency "MaterialComponents/OverlayWindow"
     ss.dependency "MaterialComponents/private/KeyboardWatcher"
@@ -229,23 +283,25 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "SpritedAnimationView" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
   end
 
   s.subspec "Switch" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
-    ss.resource_bundles = {
-      "Material#{ss.base_name}" => ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle/*"]
-    }
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
     ss.dependency "MaterialComponents/private/ThumbTrack"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "Typography" do |ss|
+    ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
@@ -259,30 +315,35 @@ Pod::Spec.new do |s|
     registerIcons(pss)
 
     pss.subspec "Color" do |ss|
+      ss.ios.deployment_target = '7.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
     end
 
     pss.subspec "KeyboardWatcher" do |ss|
+      ss.ios.deployment_target = '7.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
     end
 
     pss.subspec "Overlay" do |ss|
+      ss.ios.deployment_target = '7.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
     end
 
     pss.subspec "RTL" do |ss|
+      ss.ios.deployment_target = '7.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
     end
 
     pss.subspec "ThumbTrack" do |ss|
+      ss.ios.deployment_target = '7.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
       ss.header_mappings_dir = "components/private/#{ss.base_name}/src"
@@ -290,6 +351,7 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/Ink"
       ss.dependency "MaterialComponents/ShadowElevations"
       ss.dependency "MaterialComponents/ShadowLayer"
+      ss.dependency "MaterialComponents/Typography"
       ss.dependency "MaterialComponents/private/Color"
     end
 

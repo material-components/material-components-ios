@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 /** IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
- instructions. It is not necessary to import this file to implement any Material Design Components.
+ instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
 #import "FlexibleHeaderConfiguratorSupplemental.h"
@@ -66,6 +66,8 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 }
 
 - (void)viewDidLoad {
+  [super viewDidLoad];
+  
   self.minimumHeaderHeight = self.fhvc.headerView.minimumHeight;
 
   self.fhvc.headerView.trackingScrollView = self.tableView;
@@ -111,7 +113,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
     [sections addObject:items ?: @[]];
   };
 
-  createSection(@"Swipe right to go back", nil);
+  createSection(@"Swipe right from left edge to go back", nil);
 
   createSection(@"Basic behavior", @[
     switchItem(@"Can over-extend", FlexibleHeaderConfiguratorFieldCanOverExtend),

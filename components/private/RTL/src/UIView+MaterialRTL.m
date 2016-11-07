@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -51,17 +51,23 @@ static inline UIUserInterfaceLayoutDirection
 @implementation UIView (MaterialRTL)
 
 - (UISemanticContentAttribute)mdc_semanticContentAttribute {
+#if MDC_BASE_SDK_EQUAL_OR_ABOVE(9_0)
   if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
     return self.semanticContentAttribute;
-  } else {
+  } else
+#endif  // MDC_BASE_SDK_EQUAL_OR_ABOVE(9_0)
+  {
     return self.mdc_associatedSemanticContentAttribute;
   }
 }
 
 - (void)mdc_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+#if MDC_BASE_SDK_EQUAL_OR_ABOVE(9_0)
   if ([self respondsToSelector:@selector(semanticContentAttribute)]) {
     self.semanticContentAttribute = semanticContentAttribute;
-  } else {
+  } else
+#endif  // MDC_BASE_SDK_EQUAL_OR_ABOVE(9_0)
+  {
     self.mdc_associatedSemanticContentAttribute = semanticContentAttribute;
   }
 
@@ -85,10 +91,13 @@ static inline UIUserInterfaceLayoutDirection
 
 + (UIUserInterfaceLayoutDirection)mdc_userInterfaceLayoutDirectionForSemanticContentAttribute:
         (UISemanticContentAttribute)attribute {
+#if MDC_BASE_SDK_EQUAL_OR_ABOVE(9_0)
   if ([self
           respondsToSelector:@selector(userInterfaceLayoutDirectionForSemanticContentAttribute:)]) {
     return [self userInterfaceLayoutDirectionForSemanticContentAttribute:attribute];
-  } else {
+  } else
+#endif  // MDC_BASE_SDK_EQUAL_OR_ABOVE(9_0)
+  {
     // Use a default of Left-to-Right, as UIKit in iOS 8 and below doesn't support native RTL
     // layout.
     UIUserInterfaceLayoutDirection applicationLayoutDirection =

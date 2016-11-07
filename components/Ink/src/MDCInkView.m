@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -66,6 +66,9 @@
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
+  if (inkColor == nil) {
+    return;
+  }
   self.inkLayer.inkColor = inkColor;
 }
 
@@ -112,7 +115,7 @@
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
-  [self.inkLayer reset];
+  [self.inkLayer reset:animated];
 }
 
 - (UIColor *)defaultInkColor {

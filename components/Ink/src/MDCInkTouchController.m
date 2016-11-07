@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,16 +17,28 @@
 #import "MDCInkTouchController.h"
 
 #import "MDCInkView.h"
-#import "private/MDCInkGestureRecognizer.h"
 
 static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 
 @interface MDCInkTouchController ()
 @property(nonatomic, strong) MDCInkView *addedInkView;
 @property(nonatomic, strong) MDCInkView *defaultInkView;
-@property(nonatomic, strong) MDCInkGestureRecognizer *gestureRecognizer;
 @property(nonatomic, assign) BOOL shouldRespondToTouch;
 @property(nonatomic, assign) CGPoint previousLocation;
+@end
+
+@protocol MDCInkTouchControllerLegacyDelegate <NSObject>
+@optional
+
+/**
+ This protocol is private and declares an old method signature that will be removed once legacy code
+ has been migrated to the new delegate protocol.
+ */
+- (BOOL)shouldInkTouchControllerProcessInkTouches:
+        (nonnull MDCInkTouchController *)inkTouchController
+    __deprecated_msg("shouldInkTouchControllerProcessInkTouches has been replaced with "
+                     "inkTouchController:shouldProcessInkTouchesAtTouchLocation.");
+
 @end
 
 @implementation MDCInkTouchController
@@ -145,7 +157,13 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
       break;
     }
     case UIGestureRecognizerStateCancelled:
+      [_addedInkView cancelAllAnimationsAnimated:YES];
+      _shouldRespondToTouch = NO;
+      break;
     case UIGestureRecognizerStateRecognized:
+      [_addedInkView startTouchEndedAnimationAtPoint:touchLocation completion:nil];
+      _shouldRespondToTouch = NO;
+      break;
     case UIGestureRecognizerStateFailed:
       [_addedInkView cancelAllAnimationsAnimated:YES];
       _shouldRespondToTouch = NO;
@@ -192,6 +210,15 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
                                         shouldProcessInkTouchesAtTouchLocation:)]) {
     CGPoint touchLocation = [gestureRecognizer locationInView:_view];
     return [_delegate inkTouchController:self shouldProcessInkTouchesAtTouchLocation:touchLocation];
+  } else if ([_delegate respondsToSelector:@selector(shouldInkTouchControllerProcessInkTouches:)]) {
+    // Please use inkTouchController:shouldProcessInkTouchesAtTouchLocation. The delegate call below
+    // is deprecated and only provided for legacy support.
+    id<MDCInkTouchControllerLegacyDelegate> legacyDelegate =
+        (id<MDCInkTouchControllerLegacyDelegate>)_delegate;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    return [legacyDelegate shouldInkTouchControllerProcessInkTouches:self];
+#pragma clang diagnostic pop
   }
   return YES;
 }

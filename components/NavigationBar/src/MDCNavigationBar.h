@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,6 +17,14 @@
 #import <UIKit/UIKit.h>
 
 @protocol MDCButtonBarDelegate;
+
+/** Specifies the title alignment of the |MDCNavigationBar|. */
+typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
+  /** Aligns the title to the center of the NavigationBar. */
+  MDCNavigationBarTitleAlignmentCenter,
+  /** Aligns the title to the left/leading of the NavigationBar. */
+  MDCNavigationBarTitleAlignmentLeading
+};
 
 /**
  This protocol defines all of the properties on UINavigationItem that can be listened to by
@@ -61,6 +69,15 @@
  */
 @property(nonatomic, strong, nullable) UIView *titleView;
 
+/**
+ Display attributes for the titleView's title text.
+
+ Setting this property will render an NSAttributedString with the assigned attributes across the
+ entire text.
+ */
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
 
@@ -96,6 +113,12 @@
  */
 @property(nonatomic, strong, nullable) UIBarButtonItem *leadingBarButtonItem;
 @property(nonatomic, strong, nullable) UIBarButtonItem *trailingBarButtonItem;
+
+/**
+ The horizontal text alignment of the navigation bar title. Defaults to
+ MDCNavigationBarTitleAlignmentLeading.
+ */
+@property(nonatomic) MDCNavigationBarTitleAlignment titleAlignment;
 
 #pragma mark Observing UINavigationItem instances
 
@@ -135,5 +158,8 @@
 
 /* Equivalent to leadingItemsSupplementBackButton. */
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
+
+/** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
+@property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
 
 @end

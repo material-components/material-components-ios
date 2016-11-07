@@ -1,3 +1,1569 @@
+# 16.2.0
+
+## API diffs
+
+### FeatureHighlight 
+
+* [FeatureHighlight](https://github.com/google/material-components-ios/commit/d4806473e49e65f0e9cc52139e39c3f1eba4f499) is a new component that lets you highlight a particular feature of your interface to the user.
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Ensure typical use examples match for Objective C and Swift (#815)](https://github.com/google/material-components-ios/commit/09fb272376e814677f2936651906fd764618ea05) (Junius Gunaratne)
+
+### CollectionCells
+
+#### Changes
+
+* [Align text labels frames to the upper pixel.](https://github.com/google/material-components-ios/commit/5a1a23d3c69c1c652b317219e1bb51d163000d4d) (Louis Romero)
+* [Show/hide the editing box as entering/leaving edit](https://github.com/google/material-components-ios/commit/12206c44e72bd133f77a8d7373614f19cc73ec88) (Louis Romero)
+
+### Collections
+
+#### Changes
+
+* [Fix -[MDCCollectionViewFlowLayout updateCellStateMaskWithAttribute:] (#732)](https://github.com/google/material-components-ios/commit/f2b93ae1119b28ee0685b780ccdd7e2a8044da2d) (Jackie Quinn)
+
+### FeatureHighlight
+
+#### Changes
+
+* [MDCFeatureHighlightViewController implementation (#765)](https://github.com/google/material-components-ios/commit/d4806473e49e65f0e9cc52139e39c3f1eba4f499) (Sam Morrison)
+* [Minor feature highlight fixes (#814)](https://github.com/google/material-components-ios/commit/b1c814d038b2cccaed76a7048deac1ae3771d7cd) (Sam Morrison)
+
+### NavigationBar
+
+#### Changes
+
+* [Setting default state of textAlignment (#817)](https://github.com/google/material-components-ios/commit/9e947eba06b09ab8ad901af9d2a8001fac824daf) (Randall Li)
+* [[Navigation Bar] Fixed text alignment in a better way that accepts the pre iOS8 default. (#820)](https://github.com/google/material-components-ios/commit/328631c19a2b89b0f4d8c11c24796ad0963976ee) (Randall Li)
+
+### Switch
+
+#### Changes
+
+* [Added haptic feedback to MDCSwitch (#812)](https://github.com/google/material-components-ios/commit/6aae38dfa70db77929ef2952ff3b8fce3caea60b) (Adrian Secord)
+
+# 16.1.0
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Implement intrinsicContentSize (#795)](https://github.com/google/material-components-ios/commit/731eb321d94eb4957613e1059570cae17a584133) (Louis Romero)
+
+### Buttons
+
+#### Changes
+
+* [MDC #329 - Bounded ink should ignore the maxRippleRadius property (#771)](https://github.com/google/material-components-ios/commit/01b73cf1478083baeb9976d4af12a67f02f9cb82) (Justin Shephard)
+
+### Dialogs
+
+#### Changes
+
+* [Improve snackbar and dialogs docs (#785)](https://github.com/google/material-components-ios/commit/386964baf25fa9264516f9f0c9ed19410873f1fe) (Sam Morrison)
+
+### Ink
+
+#### Changes
+
+* [Added MDCInkGestureRecognizer.h to Ink's umbrella header. (#801)](https://github.com/google/material-components-ios/commit/d24532bc40e0082dc8383d6431feceafa38ec050) (Adrian Secord)
+* [MDC #329 - Bounded ink should ignore the maxRippleRadius property (#771)](https://github.com/google/material-components-ios/commit/01b73cf1478083baeb9976d4af12a67f02f9cb82) (Justin Shephard)
+* [[MDCInkView] cancelAllAnimationsAnimated should support disabling animation (#786)](https://github.com/google/material-components-ios/commit/8008e82bd7bea04534ad7ecb2c3aa1903254553e) (Junius Gunaratne)
+
+### ProgressView
+
+#### Changes
+
+* [[MDCProgressView] Execute completion block when setHidden:animated:completion is called sequentially (#787)](https://github.com/google/material-components-ios/commit/45c0b06275e88c65c7aae8bba1b78889cba2f93c) (Junius Gunaratne)
+
+### Snackbar
+
+#### Changes
+
+* [Improve snackbar and dialogs docs (#785)](https://github.com/google/material-components-ios/commit/386964baf25fa9264516f9f0c9ed19410873f1fe) (Sam Morrison)
+
+
+
+# 16.0.0
+
+## API diffs
+
+### InkTouchController
+
+- [deleted] [`MDCInkTouchController.inkView`](https://github.com/google/material-components-ios/blob/c39811a2344114302327b6fa64d86346bacbea9a/components/Ink/src/MDCInkTouchController.h#L119)
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Let the content view controller decide orientation](https://github.com/google/material-components-ios/commit/1a3069ff8de8eb406c037a1ff6738093c57efeee) (Louis Romero)
+
+### Dialogs
+
+#### Changes
+
+* [Documentation Updates](https://github.com/google/material-components-ios/commit/f1b983465f304efc52d8c792af19b76d88a4a7b2) (Ian Gordon)
+
+### Ink
+
+#### Changes
+
+* [Remove deprecated inkView property](https://github.com/google/material-components-ios/commit/2ce6d648292b8dcae90241a5c39405bfa368e1e4) (Junius Gunaratne)
+* [define UIGestureRecognizerStateRecognized (#751)](https://github.com/google/material-components-ios/commit/4873362130f5d5c1893383dd9f6bfc71506dbbd9) (Junius Gunaratne)
+
+### ShadowElevations
+
+#### Changes
+
+* [Documentation Updates](https://github.com/google/material-components-ios/commit/f1b983465f304efc52d8c792af19b76d88a4a7b2) (Ian Gordon)
+
+### ShadowLayer
+
+#### Changes
+
+* [Documentation Updates](https://github.com/google/material-components-ios/commit/f1b983465f304efc52d8c792af19b76d88a4a7b2) (Ian Gordon)
+
+### Switch
+
+#### Changes
+
+* [Update colours of MDCSwitch when changing tint color. (#758)](https://github.com/google/material-components-ios/commit/6f7b4ebf2b8c0225f02ef27779c204cc181d3abb) (Sylvain Defresne)
+* [[MDCSwitch] Update objective-c example to match swift (#777)](https://github.com/google/material-components-ios/commit/ceeba259683892b63c474c6d51f86ee20aae0e07) (Chuck Hays)
+
+
+
+# 15.2.0
+
+## API diffs
+
+### Palettes
+
+- [new] [`MDCPalette.paletteGeneratedFromColor](https://github.com/google/material-components-ios/blob/fad8519b6a1ba5c29a0368fb470cca3c6da74431/components/Palettes/src/MDCPalettes.h#L137)
+
+## Component changes
+
+### FlexibleHeader
+
+#### Changes
+
+* [MDC_#121 - Added write-up for re-applying swipe to go back feature on MDCFlexibleHeaderController with hidden navigation bar in README.md](https://github.com/google/material-components-ios/commit/1aadd7f468d1d00b7fcbc6c4f9979986229f3df7) (Justin Shephard)
+
+### Ink
+
+#### Changes
+
+* [Added emphasis to reference count warning.](https://github.com/google/material-components-ios/commit/6a7a48a9ebb2cb94cdb253e06298a07132db92bd) (Will Larche)
+* [Handling lack of strong reference to ink touch controller in both examples and instructions.](https://github.com/google/material-components-ios/commit/ca5b9a9ef775e06234cec8f64477402d65153670) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [[NavBar] Corrected mapping of NSTextAlignment to MDCNavigationBarTitleAligment](https://github.com/google/material-components-ios/commit/fdf1ff083d3c27c00263251c7fac5738317ce896) (randallli)
+
+### Palettes
+
+#### Changes
+
+* [Added missing example initializer.](https://github.com/google/material-components-ios/commit/f5378746668facc793bf31c96a27a4e6b47324d3) (Adrian Secord)
+* [Generate palettes to match a target color (#729)](https://github.com/google/material-components-ios/commit/fad8519b6a1ba5c29a0368fb470cca3c6da74431) (Adrian Secord)
+
+# 15.1.0
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 203562553800ed3d3b5eebfd1dd76cda875d833c -n f8e2c8b5e87d0414f6b08f691949ecebfaca41b8
+
+### Ink
+
+- [moved] [`MDCInkGestureRecognizer`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/Ink/src/MDCInkGestureRecognizer.h#L26).
+From *private/MDCInkGestureRecognizer.h* to *MDCInkGestureRecognizer.h*.
+
+### NavigationBar
+
+- [new] [`MDCNavigationBar.titleAlignment`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L121)
+- [new] [`MDCNavigationBarTitleAlignmentCenter`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L24)
+- [new] [`MDCNavigationBarTitleAlignmentLeading`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L26)
+- [new] [`MDCNavigationBarTitleAlignment`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L22)
+- [deprecated] [`MDCNavigationBar.textAlignment`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L163).
+*Use titleAlignment instead.*
+
+## Component changes
+
+### ButtonBar
+
+#### Changes
+
+* [Better disabled look (#704)](https://github.com/google/material-components-ios/commit/853a3c5d7591b76ffdd3618baf8890f4c391e61c) (Louis Romero)
+
+### CollectionCells
+
+#### Changes
+
+* [MDC_#803 - Fixed multi touch handling in MDCCollectionViews](https://github.com/google/material-components-ios/commit/b5b128784c6182b5ed9de546adaaed8e9b44fcfa) (Justin Shephard)
+
+### Collections
+
+#### Changes
+
+* [MDC_#803 - Fixed multi touch handling in MDCCollectionViews](https://github.com/google/material-components-ios/commit/b5b128784c6182b5ed9de546adaaed8e9b44fcfa) (Justin Shephard)
+* [Showcase a collectionView footer that does not have card style background in a card style collectionView. (#709)](https://github.com/google/material-components-ios/commit/68651011a0e6072daa9802f1cf2eef812f4c4d64) (Ed Chin)
+
+### Ink
+
+#### Changes
+
+* [Make MDCInkGestureRecognizer public](https://github.com/google/material-components-ios/commit/5ec47cef81370919d92f4561e756ab85f849c19c) (Junius Gunaratne)
+
+### NavigationBar
+
+#### Breaking changes
+
+* [Switch to custom enum rather that reuse the NSTextAlignment so that we can strict our external API surface to the two options we want: Left and Center.](https://github.com/google/material-components-ios/commit/531a53b72ad42b40d16b1677729e33b7205dd6ab) (randallli)
+
+# 15.0.0
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 1926458f491c928adfb573a6eda38b6d5b5bc55e -n c39811a2344114302327b6fa64d86346bacbea9a
+
+### Dialogs
+
+- [new] [`MDCDialogPresentationController.dismissOnBackgroundTap`](https://github.com/google/material-components-ios/blob/c39811a2344114302327b6fa64d86346bacbea9a/components/Dialogs/src/MDCDialogPresentationController.h#L47)
+- [new] [`UIViewController (MaterialDialogs)`](https://github.com/google/material-components-ios/blob/c39811a2344114302327b6fa64d86346bacbea9a/components/Dialogs/src/UIViewController+MaterialDialogs.h#L28)
+- [new] [`UIViewController.mdc_dialogPresentationController`](https://github.com/google/material-components-ios/blob/c39811a2344114302327b6fa64d86346bacbea9a/components/Dialogs/src/UIViewController+MaterialDialogs.h#L35)
+
+### Ink
+
+- [new] [`MDCInkTouchController.gestureRecognizer`](https://github.com/google/material-components-ios/blob/c39811a2344114302327b6fa64d86346bacbea9a/components/Ink/src/MDCInkTouchController.h#L73)
+
+### NavigationBar
+
+- [new] [`MDCNavigationBar.textAlignment`](https://github.com/google/material-components-ios/blob/c39811a2344114302327b6fa64d86346bacbea9a/components/NavigationBar/src/MDCNavigationBar.h#L110)
+
+### Switch
+
+- [protocols changed] [`MDCSwitch`](https://github.com/google/material-components-ios/blob/c39811a2344114302327b6fa64d86346bacbea9a/components/Switch/src/MDCSwitch.h#L32).
+Removed *NSCoding*.
+Added *NSSecureCoding*.
+
+## Component changes
+
+### Collections
+
+#### Changes
+
+* [- Added autoscroll functionality to MDCCollectionViewEditor class](https://github.com/google/material-components-ios/commit/54e319f6ab8ed52bb7e6810d3fae3c7829396f75) (Justin Shephard)
+
+### Dialogs
+
+#### Changes
+
+* [Add disable background dismiss property](https://github.com/google/material-components-ios/commit/0e3b8b2a3521ebc3961df0938e8089b9969e9fa9) (Ian Gordon)
+* [[Catalog] Restore Xcode 7 compatibility](https://github.com/google/material-components-ios/commit/7f596f6f2a82bf13e1392a3611ff885c04ce3c1e) (Ian Gordon)
+
+### Ink
+
+#### Changes
+
+* [Expose ink gesture recognizer in MDCInkTouchController, prevent inkLayer color from being set to nil](https://github.com/google/material-components-ios/commit/868fa6677d6b4a9dd05e7231ce35fd693ecf3d97) (Junius Gunaratne)
+
+### NavigationBar
+
+#### Changes
+
+* [[MDCNavigationBar] Add ability to center title based on iOS design guidelines](https://github.com/google/material-components-ios/commit/2afee9916a8ca37706d408b46e3fe64100cd56db) (randallli)
+
+### Slider
+
+#### Changes
+
+* [Change MDCSlider and MDCSwitch to use NSSecureCoding](https://github.com/google/material-components-ios/commit/19a06ed4251e66f04e9fe8a0184e0937066270e0) (Sam Morrison)
+* [MDC_#767 - Removed bad import and changed public delegate declaration of MDCThumbTrackDelegate to private.](https://github.com/google/material-components-ios/commit/4a7ee8154e7b175c91715b4f53217decabdb12ee) (Justin Shephard)
+
+### Snackbar
+
+#### Changes
+
+* [Fix incorrect type annotation found by clang static analyzer. (#700)](https://github.com/google/material-components-ios/commit/e92b8bcecaaa9ad8347ee1eaba944cd37edeefa2) (Sylvain Defresne)
+
+### Switch
+
+#### Changes
+
+* [Change MDCSlider and MDCSwitch to use NSSecureCoding](https://github.com/google/material-components-ios/commit/19a06ed4251e66f04e9fe8a0184e0937066270e0) (Sam Morrison)
+* [Fixed Xcode 7 analyzer warnings about leaking CGPaths in MDCSwitch.](https://github.com/google/material-components-ios/commit/c2b4b3d258add88da728ed5016b50f94ef72ceff) (Adrian Secord)
+* [[MDCSwitch] Only dispatch control events for user generated changes](https://github.com/google/material-components-ios/commit/90d54bcd555495aaa2c0a038b26e032636a00377) (Sam Morrison)
+
+# 14.0.0
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 52692216832dc446ae2471bd2f42a40cd8746bbe -n 9ecf191c8d5fa6d8afc7ba119f4cb0ebe926483c
+
+### FontDiskLoader
+
+- [deleted] [`-[MDCFontDiskLoader initWithName:URL:]`](https://github.com/google/material-components-ios/blob/52692216832dc446ae2471bd2f42a40cd8746bbe/components/FontDiskLoader/src/MDCFontDiskLoader.h#L99)
+- [deleted] [`-[MDCFontDiskLoader registerFont]`](https://github.com/google/material-components-ios/blob/52692216832dc446ae2471bd2f42a40cd8746bbe/components/FontDiskLoader/src/MDCFontDiskLoader.h#L107)
+- [deleted] [`-[MDCFontDiskLoader setFontName:]`](https://github.com/google/material-components-ios/blob/52692216832dc446ae2471bd2f42a40cd8746bbe/components/FontDiskLoader/src/MDCFontDiskLoader.h#L123)
+- [deleted] [`-[MDCFontDiskLoader unregisterFont]`](https://github.com/google/material-components-ios/blob/52692216832dc446ae2471bd2f42a40cd8746bbe/components/FontDiskLoader/src/MDCFontDiskLoader.h#L110)
+- [deleted] [`MDCFontDiskLoader.hasFailedRegistration`](https://github.com/google/material-components-ios/blob/52692216832dc446ae2471bd2f42a40cd8746bbe/components/FontDiskLoader/src/MDCFontDiskLoader.h#L117)
+- [deleted] [`MDCFontDiskLoader.isRegistered`](https://github.com/google/material-components-ios/blob/52692216832dc446ae2471bd2f42a40cd8746bbe/components/FontDiskLoader/src/MDCFontDiskLoader.h#L113)
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [MDC_#67 - Updated accessibility for titleColor on MDCButton.m](https://github.com/google/material-components-ios/commit/eb40e5e56f652ba0ddef1f6bcaecdbfe3a9a8f10) (Justin Shephard)
+
+### Collections
+
+#### Changes
+
+* [Removed all warnings from the build.](https://github.com/google/material-components-ios/commit/0b57f48e1dd7e5260d45a13ac5c2650860ce2913) (Adrian Secord)
+
+### FlexibleHeader
+
+#### Changes
+
+* [MDC_#67 - Updated accessibility for titleColor on MDCButton.m](https://github.com/google/material-components-ios/commit/eb40e5e56f652ba0ddef1f6bcaecdbfe3a9a8f10) (Justin Shephard)
+* [Removed all warnings from the build.](https://github.com/google/material-components-ios/commit/0b57f48e1dd7e5260d45a13ac5c2650860ce2913) (Adrian Secord)
+
+### FontDiskLoader
+
+#### Breaking changes
+
+* [**Breaking**:  Deleted deprecated API.](https://github.com/google/material-components-ios/commit/da386bb06fca7b7696162d2058c883bb40abeac7) (randallli)
+
+### Ink
+
+#### Changes
+
+* [Removed all warnings from the build.](https://github.com/google/material-components-ios/commit/0b57f48e1dd7e5260d45a13ac5c2650860ce2913) (Adrian Secord)
+
+### Palettes
+
+#### Changes
+
+* [Fix tintKey parameter type in MDCPalettes.m (#699)](https://github.com/google/material-components-ios/commit/e9c24ed27f0ea130b7d8ab7f42181b11da263ff2) (Jackie Quinn)
+
+### ProgressView
+
+#### Changes
+
+* [Removed all warnings from the build.](https://github.com/google/material-components-ios/commit/0b57f48e1dd7e5260d45a13ac5c2650860ce2913) (Adrian Secord)
+* [Use a proper singleton for our accessibility proxy.](https://github.com/google/material-components-ios/commit/5d39f92db51f4982150a6968f85a797b4061ab5a) (Ian Gordon)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [Revert "Trim fonts for mobile use (#674)"](https://github.com/google/material-components-ios/commit/0607e7a1f41d3411dc3132b1c18a802e503b7525) (randallli)
+* [Trim fonts for mobile use (#674)](https://github.com/google/material-components-ios/commit/88f30a4bd6b7e7df241c5d1bddfc47e5c0df5296) (rsheeter)
+
+### ShadowLayer
+
+#### Changes
+
+* [Fix calculation of masks for the shadows. (#698)](https://github.com/google/material-components-ios/commit/0b2b4feec8486ed074701b5195b1e176e5af4034) (Simon Forsyth)
+
+### Switch
+
+#### Changes
+
+* [Optimize and simplify MDCSwitch](https://github.com/google/material-components-ios/commit/cd1ac75d8fcadd328aa93e9b661e7b063ebda6d4) (Sam Morrison)
+* [Removed all warnings from the build.](https://github.com/google/material-components-ios/commit/0b57f48e1dd7e5260d45a13ac5c2650860ce2913) (Adrian Secord)
+
+# 13.4.0 
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o fb77a9716a80ba4ee2a9f92a81a89335570366e3 -n 8fa99ffb150b99597f19783d54203ff77a4219d2
+
+### FontDiskLoader
+
+- [deprecated] [`-[MDCFontDiskLoader initWithName:URL:]`](https://github.com/google/material-components-ios/blob/8fa99ffb150b99597f19783d54203ff77a4219d2/components/FontDiskLoader/src/MDCFontDiskLoader.h#L99).
+*Use initWithFontName:fontURL: instead.*
+- [deprecated] [`-[MDCFontDiskLoader registerFont]`](https://github.com/google/material-components-ios/blob/8fa99ffb150b99597f19783d54203ff77a4219d2/components/FontDiskLoader/src/MDCFontDiskLoader.h#L107).
+*Use load instead.*
+- [deprecated] [`-[MDCFontDiskLoader setFontName:]`](https://github.com/google/material-components-ios/blob/8fa99ffb150b99597f19783d54203ff77a4219d2/components/FontDiskLoader/src/MDCFontDiskLoader.h#L123).
+*Create a new instance if you need to specifiy a different font name.*
+- [deprecated] [`-[MDCFontDiskLoader unregisterFont]`](https://github.com/google/material-components-ios/blob/8fa99ffb150b99597f19783d54203ff77a4219d2/components/FontDiskLoader/src/MDCFontDiskLoader.h#L110).
+*Use unload instead.*
+- [deprecated] [`MDCFontDiskLoader.hasFailedRegistration`](https://github.com/google/material-components-ios/blob/8fa99ffb150b99597f19783d54203ff77a4219d2/components/FontDiskLoader/src/MDCFontDiskLoader.h#L117).
+*Use loadFailed instead.*
+- [deprecated] [`MDCFontDiskLoader.isRegistered`](https://github.com/google/material-components-ios/blob/8fa99ffb150b99597f19783d54203ff77a4219d2/components/FontDiskLoader/src/MDCFontDiskLoader.h#L113).
+*Use loaded instead.*
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Removed reference to deleted MDCAppBarParenting.](https://github.com/google/material-components-ios/commit/80d36a3500ecab7ab45e94fb7405069460cd6692) (Adrian Secord)
+* [[MDCAppBar | MDCDialog | MDCInk] Nullability Clashing](https://github.com/google/material-components-ios/commit/7633f1e4307d36c32afc62e866f9e40765a81fc3) (Sean O'Shea)
+
+### Dialogs
+
+#### Changes
+
+* [Correct analyzer and compiler warnings.](https://github.com/google/material-components-ios/commit/4a0986a38919dc2a030cc451da490359721837d5) (Ian Gordon)
+* [[MDCAppBar | MDCDialog | MDCInk] Nullability Clashing](https://github.com/google/material-components-ios/commit/7633f1e4307d36c32afc62e866f9e40765a81fc3) (Sean O'Shea)
+
+### FontDiskLoader
+
+#### Changes
+
+* [Fixed readme reference to new initializer](https://github.com/google/material-components-ios/commit/d973f1b86dbbf1f2dfb5f37fe2a0445fd70402fa) (randallli)
+* [[FontDiskLoader]? Marked API deprecated that we were planing on deprecating from previous readbility change](https://github.com/google/material-components-ios/commit/a58c236f831ef151c0eafd47dd9bac8684f28fdb) (randallli)
+
+### Ink
+
+#### Changes
+
+* [[MDCAppBar | MDCDialog | MDCInk] Nullability Clashing](https://github.com/google/material-components-ios/commit/7633f1e4307d36c32afc62e866f9e40765a81fc3) (Sean O'Shea)
+* [[MDCInkTouchController] Improve comments to clarify method and protocol behavior](https://github.com/google/material-components-ios/commit/51ced6a4a2fc663516b6581e81a4351344e0dace) (Junius Gunaratne)
+
+### Slider
+
+#### Changes
+
+* [Changed clamping behaviour of the min setter to mutate the max instead of clamping to its value.](https://github.com/google/material-components-ios/commit/f3288569659d85a41e939005cac40915ffece286) (randallli)
+
+### Switch
+
+#### Changes
+
+* [Remove SKDisplayLinkInterface left over in MDCSwitch stress test](https://github.com/google/material-components-ios/commit/f19a6c92a1c59c846a191f08fd587aebf099d596) (Sam Morrison)
+* [Stress test for MDCSwitch](https://github.com/google/material-components-ios/commit/63d907e24ea53a4e31ac668b0ac982ab83868311) (Sam Morrison)
+
+# 13.3.0 
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 51fbbacdf98a1f086cdbf6210f849c8133e91183 -n dd3d2622f6935e70854d3ccb72677b09e19e045a
+
+### FontDiskLoader
+
+- [new] [`-[MDCFontDiskLoader initWithFontName:fontURL:]`](https://github.com/google/material-components-ios/blob/dd3d2622f6935e70854d3ccb72677b09e19e045a/components/FontDiskLoader/src/MDCFontDiskLoader.h#L36)
+- [new] [`-[MDCFontDiskLoader load]`](https://github.com/google/material-components-ios/blob/dd3d2622f6935e70854d3ccb72677b09e19e045a/components/FontDiskLoader/src/MDCFontDiskLoader.h#L87)
+- [new] [`-[MDCFontDiskLoader unload]`](https://github.com/google/material-components-ios/blob/dd3d2622f6935e70854d3ccb72677b09e19e045a/components/FontDiskLoader/src/MDCFontDiskLoader.h#L96)
+- [new] [`MDCFontDiskLoader.loadFailed`](https://github.com/google/material-components-ios/blob/dd3d2622f6935e70854d3ccb72677b09e19e045a/components/FontDiskLoader/src/MDCFontDiskLoader.h#L76)
+- [new] [`MDCFontDiskLoader.loaded`](https://github.com/google/material-components-ios/blob/dd3d2622f6935e70854d3ccb72677b09e19e045a/components/FontDiskLoader/src/MDCFontDiskLoader.h#L69)
+- [property attribute change] [`MDCFontDiskLoader.fontName`](https://github.com/google/material-components-ios/blob/dd3d2622f6935e70854d3ccb72677b09e19e045a/components/FontDiskLoader/src/MDCFontDiskLoader.h#L59).
+Removed *strong*.
+Added *readonly, copy*.
+- [property attribute change] [`MDCFontDiskLoader.fontURL`](https://github.com/google/material-components-ios/blob/dd3d2622f6935e70854d3ccb72677b09e19e045a/components/FontDiskLoader/src/MDCFontDiskLoader.h#L62).
+Removed *strong, nullable*.
+Added *copy, nonnull*.
+- [declaration changed] [`-[MDCFontDiskLoader setFontName:]`](https://github.com/google/material-components-ios/blob/dd3d2622f6935e70854d3ccb72677b09e19e045a/components/FontDiskLoader/src/MDCFontDiskLoader.h#L120).
+```
+@property (nonatomic, strong, nonnull) NSString *fontName
+- (void)setFontName:(nonnull NSString *)fontName
+```
+
+### RobotoFontLoader
+
+- [declaration changed] [`+[MDCRobotoFontLoader sharedInstance]`](https://github.com/google/material-components-ios/blob/dd3d2622f6935e70854d3ccb72677b09e19e045a/components/RobotoFontLoader/src/MDCRobotoFontLoader.h#L27).
+```
++ (nonnull instancetype)sharedInstance
++ (nonnull MDCRobotoFontLoader *)sharedInstance
+```
+
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [MDC_#758 - Updated incorrectly named setter](https://github.com/google/material-components-ios/commit/ad8986dc35203851861ee5004ca723465fd20cff) (Justin Shephard)
+
+### Buttons
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### Dialogs
+
+#### Changes
+
+* [Dismiss the dialog when we recive the Z A11y gesture](https://github.com/google/material-components-ios/commit/f2f95d647cbf345b665c2ab683a8b9179821b682) (Felix Emiliano)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Added `-Wnewline-eof` warning to MDC and MDFTextAccessibility, fix one issue.](https://github.com/google/material-components-ios/commit/89e7306d03f33f503e778d5c1444c4699921d1a4) (Adrian Secord)
+
+### FontDiskLoader
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### Slider
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+### Typography
+
+#### Changes
+
+* [[FontDiskLoader, RobotoFontLoader, Typography] The results of some readability code reviews from some googlers.](https://github.com/google/material-components-ios/commit/ffd56e6d3017c5e107de5e537fc1510f1e4ee88e) (randallli)
+
+# 13.2.1
+
+## API diffs
+
+### Icons
+
+- [new] [Added method to enable testing of new back button style](https://github.com/google/material-components-ios/commit/e9175eddabea93bd367e04e97d24cb71900430d1) (Sam Morrison)
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Adding link to MDCAppBar.h apidoc to the README](https://github.com/google/material-components-ios/commit/b3c17a6ab23e758ff058946eb2f3dfdabada08c5) (Will Larche)
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+* [AppBar dependency warning](https://github.com/google/material-components-ios/commit/585343e5fed11a83f48a6929a47b91453f4ddb2e) (Will Larche)
+
+### ButtonBar
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Buttons
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### CollectionCells
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Collections
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Dialogs
+
+#### Changes
+
+* [Some examples are missing super calls to viewDidLoad (#681)](https://github.com/google/material-components-ios/commit/ef7d60b174f7114a37c9387a7bc3ed70cb730e28) (Sean O'Shea)
+
+### FlexibleHeader
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+* [Some examples are missing super calls to viewDidLoad (#681)](https://github.com/google/material-components-ios/commit/ef7d60b174f7114a37c9387a7bc3ed70cb730e28) (Sean O'Shea)
+
+### FontDiskLoader
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### HeaderStackView
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Ink
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### PageControl
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Palettes
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### ProgressView
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### ShadowElevations
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### ShadowLayer
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+* [Small MDCShadowLayer fixes](https://github.com/google/material-components-ios/commit/592ce9d54d6328dbfb8aa14f58d5b0b16953aefb) (Sam Morrison)
+
+### Slider
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Switch
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [API docs links were broken in READMEs](https://github.com/google/material-components-ios/commit/7a4c71801fd17d7a6250b9fbe4fa8dafc1ca04be) (Will Larche)
+* [Typo in README](https://github.com/google/material-components-ios/commit/32c499aee17e9f881dcb8f0ae922d20fc9da1736) (Will Larche)
+
+# 13.2.0
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 6b00b97156fcd8ed5a661c736df6b363cf4c8457 -n 9ef47c149996f078e5f6a4ed3474688e187ab573
+
+### Slider
+
+- [new] [Property for whether or not thumb is hollow at minimum value](https://github.com/google/material-components-ios/commit/19ab4675a6d76fdcfb53b528df8be5c9d34e3ce4)
+
+### SpritedAnimationView
+
+- [new] [`-[MDCSpritedAnimationView initWithSpriteSheetImage:numberOfFrames:]`](https://github.com/google/material-components-ios/blob/9ef47c149996f078e5f6a4ed3474688e187ab573/components/SpritedAnimationView/src/MDCSpritedAnimationView.h#L83)
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### AnimationTiming
+
+#### Changes
+
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### AppBar
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### ButtonBar
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### Buttons
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+* [Updating the button README to remove references to Ink. (#675)](https://github.com/google/material-components-ios/commit/1b9fd332422517a26de92bd45e7b25b88e4656da) (Sean O'Shea)
+
+### CollectionCells
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### Collections
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### Dialogs
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### FlexibleHeader
+
+#### Changes
+
+* [MDC_#391_Copy_Change - Made modifications to copy on limited number of controllers without a back button](https://github.com/google/material-components-ios/commit/5c01be1f355e9474449f53e1fd473023fd1c36ec) (Justin Shephard)
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### FontDiskLoader
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### HeaderStackView
+
+#### Changes
+
+* [MDC_#391_Copy_Change - Made modifications to copy on limited number of controllers without a back button](https://github.com/google/material-components-ios/commit/5c01be1f355e9474449f53e1fd473023fd1c36ec) (Justin Shephard)
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### Ink
+
+#### Changes
+
+* [Fix build. Delegate cast was incorrect and invoked on the wrong object.](https://github.com/google/material-components-ios/commit/9ef47c149996f078e5f6a4ed3474688e187ab573) (randallli)
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+* [[MDCInkTouchController] Provide legacy support for shouldInkTouchControllerProcessInkTouches during transition to inkTouchController:shouldProcessInkTouchesAtTouchLocation](https://github.com/google/material-components-ios/commit/6f76c3de6ec24c82d0e649ff6b8f41ef7bc251b0) (Junius Gunaratne)
+
+### NavigationBar
+
+#### Changes
+
+* [MDC_#391_Copy_Change - Made modifications to copy on limited number of controllers without a back button](https://github.com/google/material-components-ios/commit/5c01be1f355e9474449f53e1fd473023fd1c36ec) (Justin Shephard)
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### OverlayWindow
+
+#### Changes
+
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### PageControl
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### Palettes
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### ProgressView
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### ShadowElevations
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### ShadowLayer
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### Slider
+
+#### Changes
+
+* [Expanded slider demo within a collection view.](https://github.com/google/material-components-ios/commit/72088f48cba399b0daa55bcc44e725774790db84) (Max Luzuriaga)
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Property for whether or not thumb is hollow at minimum value](https://github.com/google/material-components-ios/commit/19ab4675a6d76fdcfb53b528df8be5c9d34e3ce4) (Max Luzuriaga)
+* [Rename thumbIsHollowAtStart to isThumbHollowAtStart](https://github.com/google/material-components-ios/commit/14e1943f44107be086c842d38f1c2e5194caab3b) (Max Luzuriaga)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+* [ThumbHollowAtStart property better named with obj-c conventions](https://github.com/google/material-components-ios/commit/eebab2557dc1678e947581fe1953827301c5aac9) (Max Luzuriaga)
+
+### Snackbar
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### SpritedAnimationView
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+* [[Sprited Animation View] Support non-square sprite images. (#683)](https://github.com/google/material-components-ios/commit/0570c6cbd6d4940718a3cc3c2b5ce4e054fa9799) (Jason Ting)
+
+### Switch
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+### Typography
+
+#### Changes
+
+* [MDC_#546 - Start of separation of README.md and yaml](https://github.com/google/material-components-ios/commit/685ea43198ef084b45cd7c6c29e57beb096b3d1d) (Justin Shephard)
+* [Site_Readme_Links - Added Jekyll conditional with links to site/github documentation](https://github.com/google/material-components-ios/commit/f53506ea2802215375a60b3c429f9d6f5b219026) (Justin Shephard)
+
+# 13.1.1
+
+## Component changes
+
+### Snackbar
+
+#### Changes
+
+* [iOS10+ hotfix.](https://github.com/google/material-components-ios/commit/dd2de7c8573ab353274bec4f069a3538f2108a17) (Peter Lee)
+
+
+# 13.1.0
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 5d7ad466b9e1429ad6242272958b149ded34da63 -n 205b1b49fd311af9246133e1499007dec0957e4b
+
+### AnimationTiming
+
+**New component.**
+
+### Switch
+
+- [new] [`MDCSwitch.offAccessibilityValue`](https://github.com/google/material-components-ios/blob/205b1b49fd311af9246133e1499007dec0957e4b/components/Switch/src/MDCSwitch.h#L78)
+- [new] [`MDCSwitch.onAccessibilityValue`](https://github.com/google/material-components-ios/blob/205b1b49fd311af9246133e1499007dec0957e4b/components/Switch/src/MDCSwitch.h#L70)
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Add RTL to activity indicator.](https://github.com/google/material-components-ios/commit/457ea7c3cb49cfb954b2f42ea2ff7cde0b5bda8d) (Ian Gordon)
+* [Fix commonInit method.](https://github.com/google/material-components-ios/commit/fc4e0a4827c7f265d827fb9d7e46c8f5acd79cc8) (Ian Gordon)
+* [Removing the last few remaining references to using id as a return type (#671)](https://github.com/google/material-components-ios/commit/bee2af6211586a044415a57e1a66b737df21beb3) (Sean O'Shea)
+
+### AnimationTiming
+
+#### Changes
+
+* [Add animation timing curves and examples, update use of animation timing in snackbar](https://github.com/google/material-components-ios/commit/22cfb756faf4e6c6e39913ca6b88e43839af447f) (Junius Gunaratne)
+
+### AppBar
+
+#### Changes
+
+* [[Catalog, NavigationBar] Update catalog to set custom title color using titleTextAttributes; only set attributedText when title is set](https://github.com/google/material-components-ios/commit/205b1b49fd311af9246133e1499007dec0957e4b) (Junius Gunaratne)
+
+### Buttons
+
+#### Changes
+
+* [[MDCButton] Add UI_APPEARANCE_SELECTOR to customTextColor.](https://github.com/google/material-components-ios/commit/1aaa85381dfd1416f8e43a1b33ae6e8e5e53927b) (Ian Gordon)
+
+### CollectionCells
+
+#### Changes
+
+* [Fix RTL layout for Collection Cells](https://github.com/google/material-components-ios/commit/9a0804f8ab2062429c4fe15c19dafc0649b245cb) (Ed Chin)
+
+### Dialogs
+
+#### Changes
+
+* [Minor formatting issues which mostly impact the catalog app. (#666)](https://github.com/google/material-components-ios/commit/a944e1f354e0b05a78c207c69ce73eadbd985be2) (Sean O'Shea)
+* [[MDCButton] Add UI_APPEARANCE_SELECTOR to customTextColor.](https://github.com/google/material-components-ios/commit/1aaa85381dfd1416f8e43a1b33ae6e8e5e53927b) (Ian Gordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add example with UIKit components in flexible header](https://github.com/google/material-components-ios/commit/93171fa87c87fd79572805fa9dc861ace2fda4ef) (Junius Gunaratne)
+* [Add page control in flexible header example](https://github.com/google/material-components-ios/commit/b118dcd97e25c9a18b7574142962c1ba904929d7) (Junius Gunaratne)
+* [Add wrapped view controller example](https://github.com/google/material-components-ios/commit/41feee6549aefa64c8386e1e2bcc68d228fecc08) (Junius Gunaratne)
+* [Prevent retain cycle in CADisplayLink in shift behavior.](https://github.com/google/material-components-ios/commit/1432c3cb78a51120815b32741456a55526c763fb) (randallli)
+* [Update legal text to include Material Components for iOS authors](https://github.com/google/material-components-ios/commit/09cfde15ac055ca7d270556016b41c421659e3d1) (Junius Gunaratne)
+
+### NavigationBar
+
+#### Changes
+
+* [[Catalog, NavigationBar] Update catalog to set custom title color using titleTextAttributes; only set attributedText when title is set](https://github.com/google/material-components-ios/commit/205b1b49fd311af9246133e1499007dec0957e4b) (Junius Gunaratne)
+* [[MDCNavigationBar] Allow tintColor to change navigation bar title text by applying titleTextAttributes](https://github.com/google/material-components-ios/commit/d6b8c54ab09bfa14574c69154c610bcbbe5178ee) (Junius Gunaratne)
+* [[MDCNavigationBar] Revert change that sets titleTextAttributes when tintColorDidChange is called](https://github.com/google/material-components-ios/commit/0591ee9f62360f9acc40c263a41669a5e4c67b0e) (Junius Gunaratne)
+
+### OverlayWindow
+
+#### Changes
+
+* [Removing the last few remaining references to using id as a return type (#671)](https://github.com/google/material-components-ios/commit/bee2af6211586a044415a57e1a66b737df21beb3) (Sean O'Shea)
+
+### PageControl
+
+#### Changes
+
+* [Removing the last few remaining references to using id as a return type (#671)](https://github.com/google/material-components-ios/commit/bee2af6211586a044415a57e1a66b737df21beb3) (Sean O'Shea)
+
+### ShadowLayer
+
+#### Changes
+
+* [Removing the last few remaining references to using id as a return type (#671)](https://github.com/google/material-components-ios/commit/bee2af6211586a044415a57e1a66b737df21beb3) (Sean O'Shea)
+
+### Slider
+
+#### Changes
+
+* [Delegate method for shouldJumpToValue:](https://github.com/google/material-components-ios/commit/2d6fc623edb90a9150e59f657635a9538227fa93) (Max Luzuriaga)
+* [Expose filled track anchor value property](https://github.com/google/material-components-ios/commit/9b0d87f07f12653436269bdb86695dc01fa7bd9b) (Max Luzuriaga)
+* [Expose thumbTrack to subclasses of MDCSlider](https://github.com/google/material-components-ios/commit/7045fa4e68eb1c1e5165ca803e7a5c870d24ba7f) (Max Luzuriaga)
+* [Property for displaying discrete value label or not](https://github.com/google/material-components-ios/commit/eaff59d916e64a298a4ca10a83c6ca81eb549d12) (Max Luzuriaga)
+
+### Snackbar
+
+#### Changes
+
+* [Minor formatting issues which mostly impact the catalog app. (#666)](https://github.com/google/material-components-ios/commit/a944e1f354e0b05a78c207c69ce73eadbd985be2) (Sean O'Shea)
+* [[AnimationTiming] Add animation timing curves and examples, update use of animation timing in snackbar](https://github.com/google/material-components-ios/commit/22cfb756faf4e6c6e39913ca6b88e43839af447f) (Junius Gunaratne)
+* [[README] Changing documentation to aid with compilation (#667)](https://github.com/google/material-components-ios/commit/acda73aff13e62ac72e1646ff7193116f4ac56a8) (Sean O'Shea)
+
+### Switch
+
+#### Changes
+
+* [Add RTL support to Switch](https://github.com/google/material-components-ios/commit/8ab45d01b359e759ce7554a8fd7ec8c1b0c61a13) (Ian Gordon)
+* [Custom accessibility labels](https://github.com/google/material-components-ios/commit/09b9fcc739329cf8f1a281b66ead482e0d7ded55) (Max Luzuriaga)
+* [Switch init cleanup.](https://github.com/google/material-components-ios/commit/934b367452a432587669747a5c8aceadf2f5cf4d) (Ian Gordon)
+
+
+# 13.0.2
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 313365e03bc6f74f43910264ee31d1e2721db36b -n e66a70dc0cd3bb40eb0f4ff3d5867bafba20db3a
+
+No public API changes detected.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [Pass last state by parameter instead of saving as iVar](https://github.com/google/material-components-ios/commit/b19cdb58759a848520b4e81607046a8f776e05ef) (David Couturier)
+* [Ran arc lint.](https://github.com/google/material-components-ios/commit/ba4b193c60a338aa64895a0777016b14e47c1b1d) (Adrian Secord)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+### AppBar
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### ButtonBar
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### Buttons
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+### CollectionCells
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [Relayout the text cells on prepareForReuse.](https://github.com/google/material-components-ios/commit/163e839c879a0669a7bf9202fa9d34151958d752) (Louis Romero)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### Collections
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [Removes unnecessary method overrides that only call super.](https://github.com/google/material-components-ios/commit/f8847a2e26cdc80f23bebebdbd748112a38a30ca) (Chris Cox)
+
+### Dialogs
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [[Catalog] Add a dialog with an input field for keyboard testing](https://github.com/google/material-components-ios/commit/26719621fc6697761c5475738dba98efd7af01c8) (Ian Gordon)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add flexible header demo with FAB](https://github.com/google/material-components-ios/commit/4dff6c81702906b145dcc146121bcfc5ca449ea2) (Junius Gunaratne)
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [Use MDFTextAccessibility for determining whether or not to use the light status bar.](https://github.com/google/material-components-ios/commit/f1b4a2a48eddbca41057241f80ce840cd20a21f2) (Adrian Secord)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+### FontDiskLoader
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+### Ink
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+### NavigationBar
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [Changed CGFloat macros to static inline functions.](https://github.com/google/material-components-ios/commit/d953ea0e314c4123ad29206ec92e8c5a3132caa0) (Adrian Secord)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+### OverlayWindow
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### PageControl
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### Palettes
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### ProgressView
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### ShadowElevations
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### ShadowLayer
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### Slider
+
+#### Changes
+
+* [Add discrete numeric value label](https://github.com/google/material-components-ios/commit/b4ee4184463fae0ff3eade460f21ca76e2075255) (Max Luzuriaga)
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [Make tests language-agnosti](https://github.com/google/material-components-ios/commit/8211a449216dc087f97554e54ca2e59bab0bb7e3) (Max Luzuriaga)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+### Snackbar
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+
+### SpritedAnimationView
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [Fix SpritedAnimationViewTests](https://github.com/google/material-components-ios/commit/716ad830108e727b8e400ca7d3d50ea886fc9b49) (Sam Morrison)
+
+### Switch
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+### Typography
+
+#### Changes
+
+* [Adding AUTHORS and removing CONTRIBUTORS.txt.](https://github.com/google/material-components-ios/commit/8c3af252bedffef4ca09bd99a6b3de007d4f64ae) (Adrian Secord)
+* [[Docs] Replaced incorrect name of the product. Material Components *for* iOS](https://github.com/google/material-components-ios/commit/681cc2b6f7a28ff81def1f2ff9baf8f7f51dbffe) (randallli)
+
+# 13.0.1
+
+Hotfix for Xcode 8.0 beta 3 (8S174q) compilation.
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 50ed805a58529c8cd3a0bfe56a9b99937134ad2c -n e8dbfebbb20f3d1314b5396e6cc1f76f9d23beb2
+
+No public API changes detected.
+
+## Component changes
+
+### Collections
+
+#### Changes
+
+* [Source changes to fix Xcode 8 compilation.](https://github.com/google/material-components-ios/commit/6ce08f4c0fd500c18becb89b990c9a6ffeb89de7) (Adrian Secord)
+* [Undo Xcode 8 changes to CollectionsStoryboardExample.storyboard.](https://github.com/google/material-components-ios/commit/e8dbfebbb20f3d1314b5396e6cc1f76f9d23beb2) (Adrian Secord)
+
+### ProgressView
+
+#### Changes
+
+* [Source changes to fix Xcode 8 compilation.](https://github.com/google/material-components-ios/commit/6ce08f4c0fd500c18becb89b990c9a6ffeb89de7) (Adrian Secord)
+
+### Snackbar
+
+#### Changes
+
+* [Source changes to fix Xcode 8 compilation.](https://github.com/google/material-components-ios/commit/6ce08f4c0fd500c18becb89b990c9a6ffeb89de7) (Adrian Secord)
+
+### SpritedAnimationView
+
+#### Changes
+
+* [Source changes to fix Xcode 8 compilation.](https://github.com/google/material-components-ios/commit/6ce08f4c0fd500c18becb89b990c9a6ffeb89de7) (Adrian Secord)
+
+# 13.0.0
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 0c7bda2e69db44668360b89e3403a7ad9e16c3aa -n 10e4a258fa529178d1aa6ae8962193eb18b43d20
+
+### Dialogs
+
+- [new] [`+[MDCAlertAction actionWithTitle:handler:]`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L117)
+- [new] [`+[MDCAlertController alertControllerWithTitle:message:]`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L48)
+- [new] [`-[MDCAlertController addAction:]`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L69)
+- [new] [`MDCActionHandler`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L103)
+- [new] [`MDCAlertAction.title`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L128)
+- [new] [`MDCAlertAction`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L108)
+- [new] [`MDCAlertController.actions`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L76)
+- [new] [`MDCAlertController.message`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L90)
+- [new] [`MDCAlertController.title`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L87)
+- [new] [`MDCAlertController`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/Dialogs/src/MDCAlertController.h#L35)
+
+### SpritedAnimationView
+
+- [declaration changed] [`-[MDCSpritedAnimationView startAnimatingWithCompletion:]`](https://github.com/google/material-components-ios/blob/10e4a258fa529178d1aa6ae8962193eb18b43d20/components/SpritedAnimationView/src/MDCSpritedAnimationView.h#L85).
+```
+- (void)startAnimatingWithCompletion:(nullable void (^)())completion
+- (void)startAnimatingWithCompletion:(nullable void (^)(BOOL))completion
+```
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+
+### AppBar
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+
+### ButtonBar
+
+#### Changes
+
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+
+### Buttons
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+
+### CollectionCells
+
+#### Changes
+
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+* [Various bug fixes for MDCCollectionViewCells](https://github.com/google/material-components-ios/commit/c7aa271784550c9b14c44c9f2815ea27bf5af225) (Sam Morrison)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+
+### Collections
+
+#### Changes
+
+* [Fix delegate calls for moving an item](https://github.com/google/material-components-ios/commit/ed084ccbad4303321a8a87958c98e932a9050583) (randallli)
+* [Fix storyboard usage of MDCCollectionViews](https://github.com/google/material-components-ios/commit/36164cd6e548ac4efed23df99848f62e003298a1) (Eric Shieh)
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+
+### Dialogs
+
+#### Changes
+
+* [Add Alert Controller](https://github.com/google/material-components-ios/commit/1fe4ac3f647727aeb75749d25bc5341bf751e8f6) (Ian Gordon)
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Use migrated keyboard watcher code](https://github.com/google/material-components-ios/commit/df6016a51cc157fd0b9f62444e428a43a704d9fc) (Ian Gordon)
+* [[KeyboardWatcher] Extract values from a notification](https://github.com/google/material-components-ios/commit/3bfc5f9c9058e0423d22d09ca2b9fdc69ffb0a70) (Ian Gordon)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+* [[MDC #624] Correctly initialize the shifterStatusBar when creating a MDCFlexibleHeaderView](https://github.com/google/material-components-ios/commit/f146473416188434ae2fb6b837bd9ce71863ea70) (Sam Morrison)
+
+### HeaderStackView
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+
+### Ink
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [MDC_#495 - Removed unused declaration of startPoint](https://github.com/google/material-components-ios/commit/f5e940c743836ff4bd589c81d9d12fae9af08c0b) (Justin Shephard)
+
+### NavigationBar
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+
+### PageControl
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+
+### ProgressView
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+
+### ShadowElevations
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+
+### ShadowLayer
+
+#### Changes
+
+* [Add additional detail clarifying the difference between CALayer.zPosition and MDCShadowLayer.elevation.](https://github.com/google/material-components-ios/commit/56a519186f344e26f92122eaf1871a4530fa3a4f) (Ian Gordon)
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+
+### Slider
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [[ThumbTrack] Slider and Switch implement `isTracking` UIControl method](https://github.com/google/material-components-ios/commit/7cfaf9b0969e19b8820d5b23dab154c4c317d647) (Max Luzuriaga)
+
+### Snackbar
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+
+### SpritedAnimationView
+
+#### Breaking changes
+
+* [**Breaking**:  Add 'finished' bool to animation completion block](https://github.com/google/material-components-ios/commit/d8a2d93ebcd4f284f576c05c7a186d54fe2d6319) (Sam Morrison)
+
+#### Changes
+
+* [Fix SpritedAnimationViewTests](https://github.com/google/material-components-ios/commit/10e4a258fa529178d1aa6ae8962193eb18b43d20) (Sam Morrison)
+
+### Switch
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [[ThumbTrack] Slider and Switch implement `isTracking` UIControl method](https://github.com/google/material-components-ios/commit/7cfaf9b0969e19b8820d5b23dab154c4c317d647) (Max Luzuriaga)
+
+### Typography
+
+#### Changes
+
+* [Lowercase "material design" in text.](https://github.com/google/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Remove ARC guards from MDC](https://github.com/google/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
+
+
+# 12.2.0
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o c6523eae8e811b1c89d94073b9153a03390b1950 -n edab0db4908985cd0b56003b4341d5f064f98d6a
+
+### Dialogs
+
+**New component.**
+
+## Component changes
+
+### Dialogs
+
+#### Changes
+
+* [Initial Import](https://github.com/google/material-components-ios/commit/3742dd4849c64e334a46e6b027ddfa9c75e6034c) (Ian Gordon)
+* [Add missing website API and usage docs.](https://github.com/google/material-components-ios/commit/493331502c44f6e844ffbdfdf21d439ce4ba455b) (Adrian Secord)
+
+### Ink
+
+#### Changes
+
+* [Arc lint changes.](https://github.com/google/material-components-ios/commit/7bedb6183cb47017763bfa8b4d50265b4530ebd9) (Adrian Secord)
+
+### ProgressView
+
+#### Changes
+
+* [Add missing website API and usage docs.](https://github.com/google/material-components-ios/commit/493331502c44f6e844ffbdfdf21d439ce4ba455b) (Adrian Secord)
+
+### Slider
+
+#### Changes
+
+* [[Catalog] Bigger sliders in component example](https://github.com/google/material-components-ios/commit/e1b7f86879cfc09abfc057344e8a484447ec7766) (Max Luzuriaga)
+
+### Snackbar
+
+#### Changes
+
+* [Add missing website API and usage docs.](https://github.com/google/material-components-ios/commit/493331502c44f6e844ffbdfdf21d439ce4ba455b) (Adrian Secord)
+
+
+# 12.1.1
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o ec923edf948c5c0ef8cef52f3a3b26a21cbf29d9 -n 34f12cf42f45e30bada83ff6c4c67d5104201a00
+
+No public API changes detected.
+
+## Component changes
+
+### SpritedAnimationView
+
+#### Changes
+
+* [Added intrinsicContentSize.](https://github.com/google/material-components-ios/commit/34f12cf42f45e30bada83ff6c4c67d5104201a00) (randallli)
+
+
+# 12.1.0
+
+## API diffs
+
+### NavigationBar
+
+- [new] [`MDCNavigationBar.titleTextAttributes`](https://github.com/google/material-components-ios/blob/4687c48a55316f2ff6aa6ea5edeb73ea3a3173c5/components/NavigationBar/src/MDCNavigationBar.h#L71)
+
+### ProgressView
+
+**New component.**
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Added missing Jazzy configs by running scripts/generate_jazzy_yamls.sh.](https://github.com/google/material-components-ios/commit/2b8ef4160fdafd9d103b09c6842d647d41b00780) (Adrian Secord)
+
+### Collections
+
+#### Changes
+
+* [Add more conformances to CAAnimationDelegate on iOS 10 SDK](https://github.com/google/material-components-ios/commit/8f4a71ea54ff2a7ae01850109919181474bd8104) (Brian Moore)
+* [Adds storyboard example.](https://github.com/google/material-components-ios/commit/627206634f45721c547eec155f4426c59f5fb2e5) (Chris Cox)
+
+### Ink
+
+#### Changes
+
+* [Add conformances to CAAnimationDelegate on iOS 10 SDK](https://github.com/google/material-components-ios/commit/d4ee92a107ebc3d0801cb62d60e5b38e06c9a1dc) (Brian Moore)
+
+### NavigationBar
+
+#### Changes
+
+* [MDC_#623 - Added titleTextAttributes property to MDCNavigationBar](https://github.com/google/material-components-ios/commit/1309e628b6aac1e5e83a2e19759e45edb787e061) (Justin Shephard)
+
+### OverlayWindow
+
+#### Changes
+
+* [Added missing Jazzy configs by running scripts/generate_jazzy_yamls.sh.](https://github.com/google/material-components-ios/commit/2b8ef4160fdafd9d103b09c6842d647d41b00780) (Adrian Secord)
+
+### Palettes
+
+#### Changes
+
+* [Added missing Jazzy configs by running scripts/generate_jazzy_yamls.sh.](https://github.com/google/material-components-ios/commit/2b8ef4160fdafd9d103b09c6842d647d41b00780) (Adrian Secord)
+
+### ProgressView
+
+#### Changes
+
+* [Add the ProgressView component.](https://github.com/google/material-components-ios/commit/a806413bd6414f684899c9a0fae10c3fc8aa54fd) (Louis Romero)
+
+### Snackbar
+
+#### Changes
+
+* [Add more conformances to CAAnimationDelegate on iOS 10 SDK](https://github.com/google/material-components-ios/commit/8f4a71ea54ff2a7ae01850109919181474bd8104) (Brian Moore)
+* [Added missing Jazzy configs by running scripts/generate_jazzy_yamls.sh.](https://github.com/google/material-components-ios/commit/2b8ef4160fdafd9d103b09c6842d647d41b00780) (Adrian Secord)
+* [Align text correctly in RTL layout](https://github.com/google/material-components-ios/commit/112ff5446f567374324e5e7c685625f7ada238bd) (Louis Romero)
+* [The button a11y identifier is the action's](https://github.com/google/material-components-ios/commit/b92d724d906f6c0f072bca17f92177db819651c5) (Louis Romero)
+
 # 12.0.1
 
 ## API diffs
@@ -5,7 +1571,7 @@
 Auto-generated by running:
 
     scripts/api_diff -o bdc034da8700a9cbd6064823dc045b511d622f8c -n f9f6d8e87d6cdaf884ac2d3ad462403bdb2fd008
-	
+
 No public API changes detected.
 
 ## Component changes
@@ -559,7 +2125,7 @@ Added *NSCopying*.
 
 ## Infrastructure
 
-Material Components iOS now [requires Cocoapods 1.0.0](https://groups.google.com/d/topic/material-components-ios-discuss/FnipGJXMeww/discussion).
+Material Components for iOS now [requires Cocoapods 1.0.0](https://groups.google.com/d/topic/material-components-ios-discuss/FnipGJXMeww/discussion).
 
 ## API diffs
 
@@ -2082,7 +3648,7 @@ Auto-generated by running:
 * [Pesto] Corrections for build warnings (Will Larche)
 * [Pesto] making string and URL propertys 'copy' (Will Larche)
 * [Pesto] Style update: @property ivars (larche)
-* [Pesto] Update card zoom animation to be more Material Design like (Junius Gunaratne)
+* [Pesto] Update card zoom animation to be more material design like (Junius Gunaratne)
 
 ###### Docs and site
 * [Docs] Minor touchups to FlexibleHeader readme. (Jeff Verkoeyen)

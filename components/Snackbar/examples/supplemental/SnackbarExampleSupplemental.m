@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@
 
 + (NSString *)catalogDescription {
   return @"Snackbars provide brief feedback about an operation through a message at the bottom of"
-          "the screen.";
+          " the screen.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

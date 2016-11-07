@@ -1,5 +1,5 @@
 /*
-Copyright 2015-present Google Inc. All Rights Reserved.
+Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -77,6 +77,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     self.addChildViewController(appBar.headerViewController)
     appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
+    appBar.navigationBar.titleAlignment = .Center
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -167,14 +168,57 @@ class MDCNodeListViewController: CBCNodeListViewController {
     label.frame =
       CGRectMake(20, 0, tableView.frame.size.width - 20, additionalExamplesSectionHeight)
     label.font = MDCTypography.body2Font()
+    label.translatesAutoresizingMaskIntoConstraints = false
     sectionView.addSubview(label)
+
+    _ = NSLayoutConstraint(
+      item: label,
+      attribute: .Leading,
+      relatedBy: .Equal,
+      toItem: sectionView,
+      attribute: .Leading,
+      multiplier: 1.0,
+      constant: 20).active = true
+
+    _ = NSLayoutConstraint(
+      item: label,
+      attribute: .Trailing,
+      relatedBy: .Equal,
+      toItem: sectionView,
+      attribute: .Trailing,
+      multiplier: 1.0,
+      constant: 0).active = true
+
+    _ = NSLayoutConstraint(
+      item: label,
+      attribute: .Top,
+      relatedBy: .Equal,
+      toItem: sectionView,
+      attribute: .Top,
+      multiplier: 1.0,
+      constant: 0).active = true
+
+    _ = NSLayoutConstraint(
+      item: label,
+      attribute: .Height,
+      relatedBy: .Equal,
+      toItem: nil,
+      attribute: .NotAnAttribute,
+      multiplier: 1.0,
+      constant: additionalExamplesSectionHeight).active = true
 
     if (section == 0) {
       let textView = UITextView()
       textView.text = componentDescription
       textView.font = MDCTypography.captionFont()
       textView.alpha = MDCTypography.captionFontOpacity()
-      textView.contentInset = UIEdgeInsetsMake(-8, -5, -8, -5)
+
+      if (UIApplication.sharedApplication().userInterfaceLayoutDirection == .LeftToRight) {
+          textView.contentInset = UIEdgeInsetsMake(-8, -5, -8, 5)
+      } else {
+          textView.contentInset = UIEdgeInsetsMake(-8, 5, -8, -5)
+      }
+
       textView.editable = false
       textView.translatesAutoresizingMaskIntoConstraints = false
       sectionViewFrame = CGRectMake(0, 0, tableView.frame.size.width, descriptionSectionHeight)
@@ -187,7 +231,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
           textView.leadingAnchor.constraintEqualToAnchor(sectionView.leadingAnchor, constant: 20),
           textView.trailingAnchor.constraintEqualToAnchor(sectionView.trailingAnchor,
               constant: -20),
-          textView.topAnchor.constraintEqualToAnchor(sectionView.leadingAnchor, constant: 40),
+          textView.topAnchor.constraintEqualToAnchor(sectionView.topAnchor, constant: 40),
           textView.heightAnchor.constraintEqualToConstant(textViewHeight)
         ])
       } else {
@@ -272,6 +316,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
         vc = contentVC
       } else {
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
+        container.appBar.navigationBar.titleAlignment = .Center
 
         // TODO(featherless): Remove once
         // https://github.com/google/material-components-ios/issues/367 is resolved.

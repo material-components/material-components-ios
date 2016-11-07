@@ -1,5 +1,5 @@
 /*
-Copyright 2015-present Google Inc. All Rights Reserved.
+Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
   }
 
   class func catalogDescription() -> String {
-    return "Shadow Layer implements the Material Design specifications for elevation and shadows."
+    return "Shadow Layer implements the material design specifications for elevation and shadows."
   }
 
   class func catalogIsPrimaryDemo() -> Bool {

@@ -1,5 +1,5 @@
 /*
-Copyright 2016-present Google Inc. All Rights Reserved.
+Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,27 +29,28 @@ class MDCCatalogWindow: MDCOverlayWindow {
   private var views = [NSNumber: UIView]()
 
   override func sendEvent(event: UIEvent) {
-    let touches = event.allTouches()!
-    for touch in touches {
-      switch touch.phase {
-      case .Began:
-        if (enabled) {
-          beginDisplayingTouch(touch)
+    if let touches = event.allTouches() {
+      for touch in touches {
+        switch touch.phase {
+        case .Began:
+          if (enabled) {
+            beginDisplayingTouch(touch)
+          }
+          continue
+        case .Moved:
+          updateTouch(touch)
+          continue
+        case .Stationary:
+          continue
+        case .Ended:
+          if (touch.tapCount == 3) {
+            enabled = !enabled
+          }
+          fallthrough
+        case .Cancelled:
+          endDisplayingTouch(touch)
+          continue
         }
-        continue
-      case .Moved:
-        updateTouch(touch)
-        continue
-      case .Stationary:
-        continue
-      case .Ended:
-        if (touch.tapCount == 3) {
-          enabled = !enabled
-        }
-        fallthrough
-      case .Cancelled:
-        endDisplayingTouch(touch)
-        continue
       }
     }
 

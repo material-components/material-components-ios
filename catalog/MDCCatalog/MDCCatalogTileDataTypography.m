@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -26,6 +26,9 @@
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
+#pragma clang diagnostic ignored "-Wassign-enum"
 + (void)draw:(CGRect)frame {
   UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
 
@@ -118,5 +121,6 @@
   [fillColor setFill];
   [bezier2Path fill];
 }
+#pragma clang diagnostic pop
 
 @end

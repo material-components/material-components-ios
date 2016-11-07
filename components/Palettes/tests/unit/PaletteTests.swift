@@ -1,5 +1,5 @@
 /*
-Copyright 2016-present Google Inc. All Rights Reserved.
+Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,6 +41,24 @@ class PaletteTests: XCTestCase {
   func testAccentlessPalette() {
     let brownPalette = MDCPalette.brownPalette()
     XCTAssertNil(brownPalette.accent100)
+  }
+
+  func testGeneratedPalette() {
+    let palette = MDCPalette.init(generatedFromColor: UIColor(red: 1, green: 0, blue: 0, alpha: 1))
+    XCTAssertNotNil(palette.tint50)
+    XCTAssertNotNil(palette.tint100)
+    XCTAssertNotNil(palette.tint200)
+    XCTAssertNotNil(palette.tint300)
+    XCTAssertNotNil(palette.tint400)
+    XCTAssertNotNil(palette.tint500)
+    XCTAssertNotNil(palette.tint600)
+    XCTAssertNotNil(palette.tint700)
+    XCTAssertNotNil(palette.tint800)
+    XCTAssertNotNil(palette.tint900)
+    XCTAssertNotNil(palette.accent100)
+    XCTAssertNotNil(palette.accent200)
+    XCTAssertNotNil(palette.accent400)
+    XCTAssertNotNil(palette.accent700)
   }
 
   func testCustomPalette() {

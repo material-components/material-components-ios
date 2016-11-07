@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -125,6 +125,16 @@ CG_EXTERN const NSString *_Nonnull MDCPaletteAccent700Name;
 
 /** The blue grey palette (no accents). */
 + (nonnull MDCPalette *)blueGreyPalette;
+
+/**
+ Returns a palette generated from a single target 500 tint color.
+
+ TODO(ajsecord): Document the algorithm used to generate the palette.
+
+ @param target500Color The target "500" color in the palette.
+ @return A palette generated with a 500 color matching the target color.
+ */
++ (nonnull instancetype)paletteGeneratedFromColor:(nonnull UIColor *)target500Color;
 
 /**
  Returns a palette with a custom set of tints and accents.

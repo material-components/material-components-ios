@@ -1,12 +1,10 @@
----
-title:  "Shadow Elevations"
-layout: detail
-section: components
-excerpt: "The Shadow Elevations component provides the most commonly-used Material Design elevations."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowElevations/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ShadowElevations">GitHub</a> for README documentation.{% endif %}-->
+
 # Shadow Elevations
 
-This component provides the most commonly-used Material Design elevations.
+This component provides commonly used material design elevations.
 <!--{: .intro }-->
 
 ### Design Specifications
@@ -18,7 +16,7 @@ This component provides the most commonly-used Material Design elevations.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Constants.html">ShadowElevations Constants</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowElevations/apidocs/Constants.html">ShadowElevations Constants</a></li>
 </ul>
 
 
@@ -58,18 +56,7 @@ Before using Shadow Elevations, you'll need to import it:
 #### Objective-C
 ~~~ objc
 #import "MaterialShadowElevations.h"
-~~~
 
-#### Swift
-~~~ swift
-import MaterialComponents
-~~~
-
-<!--</div>-->
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
 @interface ShadowedView: UIView
 
 @end
@@ -93,6 +80,8 @@ import MaterialComponents
 
 #### Swift
 ~~~ swift
+import MaterialComponents
+
 class ShadowedView: UIView {
 
   override class func layerClass() -> AnyClass {

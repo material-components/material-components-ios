@@ -1,9 +1,7 @@
----
-title:  "Buttons"
-layout: detail
-section: components
-excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Buttons">GitHub</a> for README documentation.{% endif %}-->
+
 # Buttons
 
 <div class="ios-animation right" markdown="1">
@@ -11,7 +9,7 @@ excerpt: "Buttons is a collection of Material Design buttons, including a flat b
   [![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
 </div>
 
-Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
+Buttons is a collection of material design buttons, including a flat button, a raised button and a
 floating action button.
 <!--{: .intro }-->
 
@@ -25,10 +23,10 @@ floating action button.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
-  <li class="icon-link"><a href="apidocs/Classes.html#/c:objc(cs)MDCRaisedButton">MDCRaisedButton</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCButton.html">MDCButton</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes.html#/c:objc(cs)MDCRaisedButton">MDCRaisedButton</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes/MDCButton.html">MDCButton</a></li>
 </ul>
 
 
@@ -86,13 +84,13 @@ pod install
 
 ### Importing
 
-Before using Ink, you'll need to import it:
+Before using a Button, you'll need to import the button you want to use:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 
 ~~~ objc
-#import "MaterialInk.h"
+#import "MDCButton.h"
 ~~~
 
 #### Swift

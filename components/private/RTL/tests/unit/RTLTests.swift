@@ -1,5 +1,5 @@
 /*
-Copyright 2016-present Google Inc. All Rights Reserved.
+Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,6 +27,19 @@ class RTLTests: XCTestCase {
   func testMDCRectFlippedForRTLRightToLeft() {
     let frame = MDCRectFlippedForRTL(CGRect(x: 10, y: 20, width: 50, height: 30), 100, .RightToLeft)
     XCTAssertEqual(frame, CGRect(x: 40, y: 20, width: 50, height: 30))
+  }
+
+  func testMDCRectFlippedForRTLNegativeLeftToRight() {
+    let originalFrame = CGRect(x: 60, y: 50, width: -50, height: -30)
+    let frame = MDCRectFlippedForRTL(originalFrame, 100, .LeftToRight)
+    XCTAssertTrue(CGRectEqualToRect(frame, originalFrame))
+  }
+
+  func testMDCRectFlippedForRTLNegativeRightToLeft() {
+    let originalFrame = CGRect(x: 60, y: 50, width: -50, height: -30)
+    let frame = MDCRectFlippedForRTL(originalFrame, 100.0, .RightToLeft)
+    XCTAssertTrue(
+      CGRectEqualToRect(frame.standardized, CGRect(x: 40, y: 20, width: 50, height: 30)))
   }
 
   func testMDCInsetsMakeWithLayoutDirectionLeftToRight() {
@@ -59,12 +72,12 @@ class RTLTests: XCTestCase {
     UIGraphicsBeginImageContext(rect.size)
     let context = UIGraphicsGetCurrentContext();
 
-    CGContextSetFillColorWithColor(context, UIColor.blueColor().CGColor);
-    CGContextFillRect(context, rect);
+    CGContextSetFillColorWithColor(context!, UIColor.blueColor().CGColor);
+    CGContextFillRect(context!, rect);
 
     let image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return image;
+    return image!;
   }
 }

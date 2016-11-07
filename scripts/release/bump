@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2016-present Google Inc. All Rights Reserved.
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -154,7 +154,7 @@ def main():
     update_podspec_file(verbose_printer, p, args.version)
 
   # Update all pod files.
-  manage_pods.update_all_podfile_dirs(args.directory, args.fast_pod_install)
+  manage_pods.install_all_podfile_dirs(args.directory, args.fast_pod_install)
 
 if __name__ == '__main__':
   main()

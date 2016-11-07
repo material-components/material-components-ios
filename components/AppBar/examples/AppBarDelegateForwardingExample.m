@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -95,6 +95,8 @@
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
+    _appBar.navigationBar.titleTextAttributes =
+        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     [self addChildViewController:_appBar.headerViewController];
 
     self.title = @"Delegate Forwarding";

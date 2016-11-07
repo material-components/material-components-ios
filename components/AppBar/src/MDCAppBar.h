@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -27,6 +27,10 @@
 
  Learn more at the [Material
  spec](https://www.google.com/design/spec/patterns/scrolling-techniques.html)
+
+ ### Dependencies
+
+ AppBar depends on the FlexibleHeader, HeaderStackView, and NavigationBar material components.
  */
 @interface MDCAppBar : NSObject
 

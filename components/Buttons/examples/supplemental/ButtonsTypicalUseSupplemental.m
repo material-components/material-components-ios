@@ -1,6 +1,6 @@
 /* IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
- instructions. It is not necessary to import this file to implement any Material Design Components.
+ instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
 #import <Foundation/Foundation.h>
@@ -18,7 +18,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"Buttons is a collection of Material Design buttons, including a flat button, a raised"
+  return @"Buttons is a collection of material design buttons, including a flat button, a raised"
           " button and a floating action button.";
 }
 

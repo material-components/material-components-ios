@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,35 +15,35 @@
  */
 
 import UIKit
+import MaterialComponents
 
 class ShrineDetailView: UIScrollView {
 
   var title = ""
   var desc = ""
   var imageName = "popsicle.png"
-  private var remoteImageService = RemoteImageService()
-  private var label = UILabel()
-  private var labelDesc = UILabel()
-  private var floatingButton = MDCFloatingButton()
-  private var imageView = UIImageView()
+  fileprivate var remoteImageService = RemoteImageService()
+  fileprivate var label = UILabel()
+  fileprivate var labelDesc = UILabel()
+  fileprivate var imageView = UIImageView()
 
   override func layoutSubviews() {
     super.layoutSubviews()
-    self.backgroundColor = UIColor.whiteColor()
+    self.backgroundColor = UIColor.white
     let minContentHeight = CGFloat(640)
-    self.contentSize = CGSizeMake(self.frame.width, minContentHeight)
+    self.contentSize = CGSize(width: self.frame.width, height: minContentHeight)
 
     let labelPadding:CGFloat = 50
-    imageView.frame = CGRectMake(labelPadding, labelPadding,
-      self.frame.size.width - 2 * labelPadding, 220)
-    imageView.contentMode = UIViewContentMode.ScaleAspectFit
-    imageView.autoresizingMask = .FlexibleHeight
+    imageView.frame = CGRect(x: labelPadding, y: labelPadding,
+      width: self.frame.size.width - 2 * labelPadding, height: 220)
+    imageView.contentMode = UIViewContentMode.scaleAspectFit
+    imageView.autoresizingMask = .flexibleHeight
     self.addSubview(imageView)
     let urlString:String = ShrineData.baseURL + imageName
-    let url = NSURL(string: urlString)
-    remoteImageService.fetchImageAndThumbnailFromURL(url) { (image:UIImage!,
-      thumbnailImage:UIImage!) -> Void in
-      dispatch_async(dispatch_get_main_queue(), {
+    let url = URL(string: urlString)
+    remoteImageService.fetchImageAndThumbnail(from: url) { (image:UIImage?,
+      thumbnailImage:UIImage?) -> Void in
+      DispatchQueue.main.async(execute: {
         self.imageView.image = image
         self.imageView.setNeedsDisplay()
       })
@@ -51,7 +51,7 @@ class ShrineDetailView: UIScrollView {
 
     label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
     label.textColor = UIColor(red: 0.039, green: 0.192, blue: 0.259, alpha: 1)
-    label.lineBreakMode = .ByWordWrapping
+    label.lineBreakMode = .byWordWrapping
     label.numberOfLines = 2
 
     let paragraphStyle = NSMutableParagraphStyle()
@@ -62,12 +62,12 @@ class ShrineDetailView: UIScrollView {
       range:NSMakeRange(0, attrString.length))
     label.attributedText = attrString
     label.sizeToFit();
-    label.frame = CGRectMake(labelPadding,
-      280, label.frame.size.width, label.frame.size.height)
-    label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    label.frame = CGRect(x: labelPadding,
+      y: 280, width: label.frame.size.width, height: label.frame.size.height)
+    label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     self.addSubview(label)
 
-    labelDesc.lineBreakMode = .ByWordWrapping
+    labelDesc.lineBreakMode = .byWordWrapping
     labelDesc.numberOfLines = 5
     labelDesc.font = UIFont(name: "Helvetica", size: 14)
     labelDesc.textColor = UIColor(white: 0.54, alpha: 1)
@@ -78,49 +78,69 @@ class ShrineDetailView: UIScrollView {
       value:descParagraphStyle,
       range:NSMakeRange(0, descAttrString.length))
     labelDesc.attributedText = descAttrString
-    labelDesc.frame = CGRectMake(labelPadding,
-      360, self.frame.size.width - 2 * labelPadding, 160)
+    labelDesc.frame = CGRect(x: labelPadding,
+      y: 360, width: self.frame.size.width - 2 * labelPadding, height: 160)
     labelDesc.sizeToFit()
-    labelDesc.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    labelDesc.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     self.addSubview(labelDesc)
-
-    floatingButton.setTitle("+", forState: UIControlState.Normal)
-    floatingButton.backgroundColor =
-      UIColor(red: 0.086, green: 0.941, blue: 0.941, alpha: 1)
-    floatingButton.sizeToFit()
-    floatingButton.frame = CGRectMake(self.frame.width - floatingButton.frame.width - labelPadding,
-      500, floatingButton.frame.width, floatingButton.frame.height)
-    self.addSubview(floatingButton)
   }
 
 }
 
 class ShrineDetailViewController: UIViewController {
 
+  let fabPadding:CGFloat = 25
   var productTitle = ""
   var desc = ""
   var imageName = "popsicle.png"
+  fileprivate let appBar = MDCAppBar()
+  fileprivate let floatingButton = MDCFloatingButton()
+
+  init() {
+    super.init(nibName: nil, bundle: nil)
+
+    self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor.clear
+    appBar.navigationBar.tintColor = UIColor.black
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+  }
 
   override func viewDidLoad() {
     let detailView = ShrineDetailView(frame: self.view.frame)
     detailView.title = productTitle
     detailView.desc = desc
     detailView.imageName = imageName
-    detailView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    detailView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     self.view.addSubview(detailView)
 
-    let dismissBtn = MDCFlatButton()
-    dismissBtn.setTitle("Back", forState: UIControlState.Normal)
-    dismissBtn.customTitleColor = UIColor.grayColor()
-    dismissBtn.sizeToFit()
-    dismissBtn.frame = CGRectMake(8, 28, dismissBtn.frame.width, dismissBtn.frame.height)
-    dismissBtn.addTarget(self, action: #selector(dismissDetails),
-                         forControlEvents: .TouchUpInside)
-    self.view.addSubview(dismissBtn)
+    appBar.addSubviewsToParent()
+    let backButton = UIBarButtonItem(title:"",
+                                     style:.done,
+                                     target:self,
+                                     action:#selector(dismissDetails))
+    let backImage = UIImage(named:MDCIcons.pathFor_ic_arrow_back())
+    backButton.image = backImage
+    appBar.navigationBar.leftBarButtonItem = backButton
+
+    floatingButton.setTitle("+", for: UIControlState())
+    floatingButton.backgroundColor =
+      UIColor(red: 0.086, green: 0.941, blue: 0.941, alpha: 1)
+    floatingButton.sizeToFit()
+    view.addSubview(floatingButton)
+  }
+
+  override func viewWillLayoutSubviews() {
+    floatingButton.frame = CGRect(x: view.frame.width - floatingButton.frame.width - fabPadding,
+                                      y: view.frame.height - floatingButton.frame.height - fabPadding,
+                                      width: floatingButton.frame.width,
+                                      height: floatingButton.frame.height)
   }
 
   func dismissDetails() {
-    self.dismissViewControllerAnimated(true, completion: nil)
+    self.dismiss(animated: true, completion: nil)
   }
 
 }

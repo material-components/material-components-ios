@@ -1,9 +1,7 @@
----
-title:  "Flexible Header"
-layout: detail
-section: components
-excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/FlexibleHeader">GitHub</a> for README documentation.{% endif %}-->
+
 # Flexible Header
 
 <div class="ios-animation right" markdown="1">
@@ -26,11 +24,11 @@ UIScrollViewDelegate events.
 ### API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="apidocs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
-  <li class="icon-link"><a href="apidocs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
-  <li class="icon-link"><a href="apidocs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
-  <li class="icon-link"><a href="apidocs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
 </ul>
 
 
@@ -430,6 +428,10 @@ UIViewController appearance events: `viewWillAppear:` or `viewWillDisappear:`. C
 navigation bar's visibility during these events gives the highest likelihood of your navigation bar
 animating in/out in a reasonable manner.
 
+> Important: Hiding UINavigationController's navigationBar nullifies UINavigationController's swipe-
+> to-go-back feature. To continue using this feature whilst hiding the navigationBar, read the
+> section on [Enabling Swipe to Go Back With Hidden NavigationBar](#enabling-swipe-to-go-back-with-hidden-navigationbar).
+
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 ~~~ objc
@@ -486,6 +488,96 @@ UINavigationController *navigationController = ...;
 #### Swift
 ~~~ swift
 navigationController.setNavigationBarHidden(false, animated: false)
+~~~
+<!--</div>-->
+
+### Enabling Swipe to Go Back With Hidden NavigationBar
+
+When using MDCFlexibileHeaderController within a UINavigationController, setting the
+UINavigationController's navigationBarHidden property to `YES` results in the loss of the
+swipe-to-go-back feature associated with the controller.
+
+To re-enable this feature whilst hiding the navigation controller's navigationBar we recommend
+setting a pointer to the current interactivePopGestureRecognizer's delegate in the `viewWillAppear:`
+method before setting the navigationBarHidden property to `YES`, setting the
+interactivePopGestureRecognizer's delegate to `nil` while the MDCFlexibileHeaderController's parent
+controller is actively on-screen in `viewDidAppear:`, then re-setting the
+interactivePopGestureRecognizer's delegate to the held pointer in the `viewWillDisappear:` method.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+~~~ objc
+@interface MyViewController ()
+
+// Create pointer to hold active interactivePopGestureRecognizer delegate
+@property(nonatomic, strong) id <UIGestureRecognizerDelegate> existingInteractivePopGestureRecognizerDelegate;
+
+@end
+
+@implementation
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  // Hold reference to current interactivePopGestureRecognizer delegate
+  if (self.navigationController.interactivePopGestureRecognizer.delegate) {
+      self.existingInteractivePopGestureRecognizerDelegate =
+          self.navigationController.interactivePopGestureRecognizer.delegate;
+  }
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  // Set interactivePopGestureRecognizer delegate to nil
+  self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+
+  // Return interactivePopGestureRecognizer delegate to previously held object
+  if (self.existingInteractivePopGestureRecognizerDelegate) {
+      self.navigationController.interactivePopGestureRecognizer.delegate =
+          self.existingInteractivePopGestureRecognizerDelegate;
+  }
+}
+
+@end
+
+~~~
+
+#### Swift
+~~~ swift
+// Create pointer to hold active interactivePopGestureRecognizer delegate
+var existingInteractivePopGestureRecognizerDelegate : UIGestureRecognizerDelegate?
+
+override func viewWillAppear(animated: Bool) {
+  super.viewWillAppear(animated)
+
+  // Hold reference to current interactivePopGestureRecognizer delegate
+  if navigationController?.interactivePopGestureRecognizer?.delegate != nil {
+      existingInteractivePopGestureRecognizerDelegate = navigationController?.interactivePopGestureRecognizer?.delegate!
+  }
+  navigationController?.setNavigationBarHidden(true, animated: animated)
+}
+
+override func viewDidAppear(animated: Bool) {
+  super.viewDidAppear(animated)
+
+  // Set interactivePopGestureRecognizer delegate to nil
+  navigationController?.interactivePopGestureRecognizer?.delegate = nil
+}
+
+override func viewWillDisappear(animated: Bool) {
+  super.viewWillDisappear(animated)
+
+  // Return interactivePopGestureRecognizer delegate to previously held object
+  if existingInteractivePopGestureRecognizerDelegate != nil {
+      navigationController?.interactivePopGestureRecognizer?.delegate = existingInteractivePopGestureRecognizerDelegate!
+  }
+}
 ~~~
 <!--</div>-->
 

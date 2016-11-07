@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2016-present Google Inc. All Rights Reserved.
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,4 +23,5 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 "$DIR/install_clang_format"
 "$DIR/install_proselint"
 "$DIR/install_jazzy"
+"$DIR/install_earlgrey"
 "$DIR/install_arc.sh" "$@"

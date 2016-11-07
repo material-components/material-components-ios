@@ -1,9 +1,7 @@
----
-title:  "Sprited Animation View"
-layout: detail
-section: components
-excerpt: "The Sprited Animation View component provides an alternative to animating an array of images with an UIImageView."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/SpritedAnimationView/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/SpritedAnimationView">GitHub</a> for README documentation.{% endif %}-->
+
 # SpritedAnimationView
 
 ![SpritedAnimationView](docs/assets/spritedanimationview_screenshot.png)
@@ -55,7 +53,7 @@ animation completes for each state, and be replaced with the other sprite image.
 
 ```objectivec
 // Animate the sprited view.
-[_animationView startAnimatingWithCompletion:^{
+[_animationView startAnimatingWithCompletion:^(BOOL finished) {
 
   // When animation completes, toggle image.
   _toggle = !_toggle;
@@ -97,7 +95,7 @@ animationView.tintColor = [UIColor blueColor];
 [self.view addSubview:animationView];
 
 // To Animate.
-[animationView startAnimatingWithCompletion:^{
+[animationView startAnimatingWithCompletion:^(BOOL finished) {
     NSLog(@"Done animating.");
 }];
 ```

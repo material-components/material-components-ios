@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,12 +14,9 @@
  limitations under the License.
  */
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 #import "MDCButton.h"
 
+#import "MDFTextAccessibility.h"
 #import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
@@ -643,14 +640,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 
   if (![self isTransparentColor:[self effectiveBackgroundColor]]) {
-    //    QTMColorGroupTextOptions options = 0;
-    //    if ([MDCTypography isLargeForContrastRatios:self.titleLabel.font]) {
-    //      options = kQTMColorGroupTextLargeFont;
-    //    }
-    //    UIColor *color = [QTMColorGroup textColorOnColor:[self effectiveBackgroundColor]
-    //                                           textAlpha:[MDCTypography buttonFontOpacity]
-    //                                             options:options];
-    //    [self setTitleColor:color forState:UIControlStateNormal];
+    MDFTextAccessibilityOptions options = 0;
+    if ([MDFTextAccessibility isLargeForContrastRatios:self.titleLabel.font]) {
+      options = MDFTextAccessibilityOptionsLargeFont;
+    }
+    UIColor *color =
+        [MDFTextAccessibility textColorOnBackgroundColor:[self effectiveBackgroundColor]
+                                         targetTextAlpha:[MDCTypography buttonFontOpacity]
+                                                 options:options];
+    [self setTitleColor:color forState:UIControlStateNormal];
   }
 }
 

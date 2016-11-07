@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2016-present Google Inc. All Rights Reserved.
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ if [[ `git status --porcelain` ]]; then
   exit 1
 fi
 
-merge_to_branch() {
+check_sync_of_branch() {
   git fetch
   git checkout $1 2> /dev/null || git checkout -b $1 origin/$1
 
@@ -41,10 +41,17 @@ merge_to_branch() {
     echo "    git rebase origin/$1"
     exit 1
   fi
+}
+
+merge_to_branch() {
+  check_sync_of_branch $1
 
   git merge --no-ff release-candidate -m "Merge branch 'release-candidate'" \
     || { echo "Failed to merge cleanly."; exit 1; }
 }
+
+check_sync_of_branch develop
+check_sync_of_branch master
 
 merge_to_branch develop
 merge_to_branch master

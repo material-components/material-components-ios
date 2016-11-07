@@ -1,9 +1,7 @@
----
-title:  "Typography"
-layout: detail
-section: components
-excerpt: "The Typography component provides methods for displaying text using the type sizes and opacities from the Material Design specifications."
----
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Typography">GitHub</a> for README documentation.{% endif %}-->
+
 # Typography
 
 <div class="ios-animation right" markdown="1">
@@ -12,7 +10,7 @@ excerpt: "The Typography component provides methods for displaying text using th
 </div>
 
 The Typography component provides methods for displaying text using the type sizes and opacities
-from the Material Design specifications.
+from the material design specifications.
 <!--{: .intro }-->
 
 ### Design Specifications
@@ -24,11 +22,9 @@ from the Material Design specifications.
 ### API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
-<li class="icon-link"><a href="../FontDiskLoader/apidocs/Classes/MDCFontDiskLoader.html">MDCFontDiskLoader</a></li>
-<li class="icon-link"><a href="../RobotoFontLoader/apidocs/Classes/MDCRobotoFontLoader.html">MDCRobotoFontLoader</a></li>
-<li class="icon-link"><a href="apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
-<li class="icon-link"><a href="apidocs/Protocols/MDCTypographyFontLoader.html">MDCTypographyFontLoader</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FontDiskLoader/apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Protocols/MDCTypographyFontLoading.html">MDCTypographyFontLoading</a></li>
 </ul>
 
 ## Installation
@@ -73,20 +69,20 @@ import MaterialComponents
 
 ### Font
 Select a font most appropriate to its usage and set it as your label's font. All fonts are returned
-from class methods beginning with the font's Material Design type style and ending with 'Font'.
+from class methods beginning with the font's material design type style and ending with 'Font'.
 Material Typography should be used consistently throughout the entire UI.
 
 ### Opacity
 Each font has a respective opacity (alpha) value returned by class methods beginning with the
-font's Material Design type style and ending with 'FontOpacity'. These CGFloats should be set on the
+font's material design type style and ending with 'FontOpacity'. These CGFloats should be set on the
 label's alpha property. If animating alpha, it should be the maximum value reached.
 
 ## Type Sizes and Opacities
 
 `MDCTypography` provides a `UIFont` font and a `CGFloat` opacity for each of the standard type
-settings in the Material Design specifications.
+settings in the material design specifications.
 
-### Material Design type styles and their respective `MDCTypography` methods
+### Material design type styles and their respective `MDCTypography` methods
 
 | Material Design Type | MDCTypography Font | MDCTypography Opacity |
 | -------------------- | ------------------ | --------------------- |
@@ -103,13 +99,13 @@ settings in the Material Design specifications.
 <!--{: .data-table }-->
 
 ### Font size reference
-![Material Design Type Size](docs/assets/style_typography_styles_scale.png "Shows the Material Design font
-                             sizes")
+![Material Design Type Size](docs/assets/style_typography_styles_scale.png
+                             "Shows the material design font sizes")
 <!--{: .illustration }-->
 
 ### Font opacity reference
-![Material Design Type Opacity](docs/assets/style_typography_styles_contrast.png "Shows the Material Design font
-                                opacities")
+![Material Design Type Opacity](docs/assets/style_typography_styles_contrast.png
+                                "Shows the material design font opacities")
 <!--{: .illustration }-->
 
 ## Examples
@@ -218,11 +214,10 @@ self.label.sizeToFit()
 ## Advanced Usage
 
 ### Custom Fonts
-Material Components iOS allows you to set your own font instead of Roboto. Since all of the other
-Material Component font requests funnel through the Typography component, it is possible to switch
-the font used by all of Material Components. If you want to use the system font for Material
-Components use `MDCSystemFontLoader` which already conforms to the `MDCTypographyFontLoading`
-protocol.
+Material Components for iOS allows you to set your own font instead of Roboto. Since all of the
+other components in our framework requests fonts through the Typography component, it is possible to
+switch the font used by all of Material Components for iOS. If you want to use the system font use
+`MDCSystemFontLoader` which already conforms to the `MDCTypographyFontLoading` protocol.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
@@ -286,7 +281,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 ~~~
 <!--</div>-->
 
-#### The default FontLoaer
+#### The default FontLoader
 If no font loader has been set, Typography attempts to use the Material
 [RobotoFontLoader](../FontDiskLoader/)
 which results in Roboto fonts being used when text styles are requested. If that runtime check

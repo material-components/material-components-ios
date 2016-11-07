@@ -1,4 +1,4 @@
-/*Copyright 2016-present Google Inc. All Rights Reserved.
+/*Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  */
 /* IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
- instructions. It is not necessary to import this file to implement any Material Design Components.
+ instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
 #import <Foundation/Foundation.h>
@@ -128,7 +128,7 @@
     NSParagraphStyleAttributeName : style
   };
 
-  NSString *instructionText = @"SWIPE RIGHT\n\n\n\nto go back\n\n\n\n\n\n";
+  NSString *instructionText = @"SWIPE RIGHT\n\n\n\nfrom left edge to go back\n\n\n\n\n\n";
   NSMutableAttributedString *instructionsAttributedString =
       [[NSMutableAttributedString alloc] initWithString:instructionText];
   [instructionsAttributedString setAttributes:instructionAttributes1 range:NSMakeRange(0, 11)];

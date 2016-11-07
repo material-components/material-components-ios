@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present Google Inc. All Rights Reserved.
+ Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -38,8 +38,8 @@
   // Switch custom color
 
   self.colorSwitchComponent = [[MDCSwitch alloc] init];
-  self.colorSwitchComponent.onTintColor = [UIColor colorWithRed:0 green:0.47f blue:0.9f alpha:1];
   [self.colorSwitchComponent setOn:YES];
+  self.colorSwitchComponent.onTintColor = [UIColor colorWithRed:0 green:0.47f blue:0.9f alpha:1];
   [self.colorSwitchComponent addTarget:self
                                 action:@selector(didChangeSwitchValue:)
                       forControlEvents:UIControlEventValueChanged];

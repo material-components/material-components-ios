@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,10 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 #import "MDCCollectionViewEditor.h"
 
@@ -44,6 +40,19 @@ static const CGFloat kDismissalSwipeFriction = 0.05f;
 static const NSTimeInterval kDismissalAnimationDuration = 0.3;
 static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 
+// Distance from collection view bounds that reorder panning should trigger autoscroll.
+static const CGFloat kMDCAutoscrollPanningBuffer = 60.0f;
+
+// Distance collection view should offset during autoscroll.
+static const CGFloat kMDCAutoscrollPanningOffset = 10.0f;
+
+/** Autoscroll panning direction. */
+typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
+  kMDCAutoscrollPanningDirectionNone,
+  kMDCAutoscrollPanningDirectionUp,
+  kMDCAutoscrollPanningDirectionDown
+};
+
 /** A view that uses an MDCShadowLayer as its sublayer. */
 @interface ShadowedSnapshotView : UIView
 @end
@@ -57,12 +66,19 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 @interface MDCCollectionViewEditor () <UIGestureRecognizerDelegate>
 @end
 
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+@interface MDCCollectionViewEditor () <CAAnimationDelegate>
+@end
+#endif
+
 @implementation MDCCollectionViewEditor {
   UILongPressGestureRecognizer *_longPressGestureRecognizer;
   UIPanGestureRecognizer *_panGestureRecognizer;
   CGPoint _selectedCellLocation;
   CGPoint _initialCellLocation;
   ShadowedSnapshotView *_cellSnapshot;
+  CADisplayLink *_autoscrollTimer;
+  MDCAutoscrollPanningDirection _autoscrollPanningDirection;
 }
 
 @synthesize collectionView = _collectionView;
@@ -326,6 +342,15 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
           [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]);
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(UITouch *)touch {
+  if (self.isEditing) {
+    return YES;
+  } else {
+    return NO;
+  }
+}
+
 #pragma mark - LongPress Gesture Handling
 
 - (void)handleLongPressGesture:(UILongPressGestureRecognizer *)recognizer {
@@ -359,6 +384,8 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
     }
     case UIGestureRecognizerStateCancelled:
     case UIGestureRecognizerStateEnded: {
+      // Stop autoscroll.
+      [self stopAutoscroll];
       NSIndexPath *currentIndexPath = _reorderingCellIndexPath;
       if (currentIndexPath) {
         UICollectionViewLayoutAttributes *attributes = [_collectionView.collectionViewLayout
@@ -417,6 +444,18 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
       return;
     }
 
+    // Autoscroll if the cell is dragged out of the collectionView's bounds.
+    CGFloat buffer = kMDCAutoscrollPanningBuffer;
+    if (_selectedCellLocation.y < CGRectGetMinY(self.collectionView.bounds) + buffer) {
+      [self startAutoscroll];
+      _autoscrollPanningDirection = kMDCAutoscrollPanningDirectionUp;
+    } else if (_selectedCellLocation.y > (CGRectGetMaxY(self.collectionView.bounds) - buffer)) {
+      [self startAutoscroll];
+      _autoscrollPanningDirection = kMDCAutoscrollPanningDirectionDown;
+    } else {
+      [self stopAutoscroll];
+    }
+
     // Check delegate for permission to move item.
     if ([_delegate
             respondsToSelector:@selector(collectionView:canMoveItemAtIndexPath:toIndexPath:)]) {
@@ -432,15 +471,14 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
           [_delegate collectionView:_collectionView
               willMoveItemAtIndexPath:previousIndexPath
                           toIndexPath:newIndexPath];
+        }
 
-          // Notify delegate item did move.
-          if ([_delegate respondsToSelector:@selector(collectionView:
-                                                didMoveItemAtIndexPath:
-                                                           toIndexPath:)]) {
-            [_delegate collectionView:_collectionView
-                didMoveItemAtIndexPath:previousIndexPath
-                           toIndexPath:newIndexPath];
-          }
+        // Notify delegate item did move.
+        if ([_delegate
+                respondsToSelector:@selector(collectionView:didMoveItemAtIndexPath:toIndexPath:)]) {
+          [_delegate collectionView:_collectionView
+              didMoveItemAtIndexPath:previousIndexPath
+                         toIndexPath:newIndexPath];
         }
       } else {
         // Exit if delegate will not allow this indexPath to move.
@@ -722,6 +760,60 @@ static const NSTimeInterval kRestoreAnimationDuration = 0.2;
   CGFloat adjustedThreshold = [self distanceThresholdForDismissal] - kDismissalDistanceBeforeFading;
   CGFloat dismissalPercentage = (CGFloat)MIN(1, fabs(translationX) / adjustedThreshold);
   return kDismissalMinimumAlpha + (1 - kDismissalMinimumAlpha) * (1 - dismissalPercentage);
+}
+
+#pragma mark - Reordering Autoscroll
+
+- (void)startAutoscroll {
+  if (_autoscrollTimer) {
+    [self stopAutoscroll];
+  }
+  _autoscrollTimer = [CADisplayLink displayLinkWithTarget:self selector:@selector(autoscroll:)];
+  [_autoscrollTimer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+}
+
+- (void)stopAutoscroll {
+  if (_autoscrollTimer) {
+    [_autoscrollTimer invalidate];
+    _autoscrollTimer = nil;
+    _autoscrollPanningDirection = kMDCAutoscrollPanningDirectionNone;
+  }
+}
+
+- (void)autoscroll:(CADisplayLink *)sender {
+  // Scrolls at each tick of CADisplayLink by setting scroll contentOffset. Animation is performed
+  // within UIView animation block rather than directly calling -setContentOffset:animated: method
+  // in order to prevent jerkiness in scrolling.
+  BOOL isPanningDown = _autoscrollPanningDirection == kMDCAutoscrollPanningDirectionDown;
+  CGFloat yOffset = kMDCAutoscrollPanningOffset * (isPanningDown ? 1 : -1);
+  CGFloat contentYOffset = self.collectionView.contentOffset.y;
+
+  // Quit early if scrolling past collection view bounds.
+  if ((!isPanningDown && contentYOffset <= 0) ||
+      (isPanningDown &&
+       contentYOffset >=
+           self.collectionView.contentSize.height - CGRectGetHeight(self.collectionView.bounds))) {
+    [self stopAutoscroll];
+    return;
+  }
+
+  // When autoscrolling, keep cell snapshot transform to longpress position.
+  CGAffineTransform snapshotTransform =
+      CATransform3DGetAffineTransform(_cellSnapshot.layer.transform);
+  snapshotTransform.ty += yOffset;
+
+  [UIView animateWithDuration:0.3
+                        delay:0
+                      options:UIViewAnimationOptionBeginFromCurrentState
+                   animations:^{
+                     self.collectionView.contentOffset =
+                         CGPointMake(0, MAX(0, contentYOffset + yOffset));
+
+                     // Transform snapshot position when panning.
+                     _cellSnapshot.layer.transform =
+                         CATransform3DMakeAffineTransform(snapshotTransform);
+                   }
+                   completion:nil];
 }
 
 @end

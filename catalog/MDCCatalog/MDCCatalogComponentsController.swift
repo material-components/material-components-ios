@@ -1,5 +1,5 @@
 /*
-Copyright 2015-present Google Inc. All Rights Reserved.
+Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -51,6 +51,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.collectionView?.registerClass(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
     self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
+
+    MDCIcons.ic_arrow_backUseNewStyle(true);
   }
 
   convenience init(node: CBCNode) {
@@ -89,8 +91,44 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       width: containerView.bounds.size.width,
       height: titleSize.height)
     titleLabel.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
     containerView.addSubview(titleLabel)
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .Leading,
+      relatedBy: .Equal,
+      toItem: containerView,
+      attribute: .Leading,
+      multiplier: 1.0,
+      constant: titleInsets.left).active = true
+
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .Trailing,
+      relatedBy: .Equal,
+      toItem: containerView,
+      attribute: .Trailing,
+      multiplier: 1.0,
+      constant: 0).active = true
+
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .Bottom,
+      relatedBy: .Equal,
+      toItem: containerView,
+      attribute: .Bottom,
+      multiplier: 1.0,
+      constant: -titleInsets.bottom).active = true
+
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .Height,
+      relatedBy: .Equal,
+      toItem: nil,
+      attribute: .NotAnAttribute,
+      multiplier: 1.0,
+      constant: titleSize.height).active = true
 
     self.headerViewController.headerView.addSubview(containerView)
 

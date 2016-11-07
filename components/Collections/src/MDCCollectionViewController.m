@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,10 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 #import "MDCCollectionViewController.h"
 
@@ -32,7 +28,7 @@
 
 @interface MDCCollectionViewController () <MDCCollectionInfoBarViewDelegate,
                                            MDCInkTouchControllerDelegate>
-
+@property(nonatomic, assign) BOOL currentlyActiveInk;
 @end
 
 @implementation MDCCollectionViewController {
@@ -45,37 +41,22 @@
 
 @synthesize collectionViewLayout = _collectionViewLayout;
 
+- (instancetype)init {
+  return [self initWithCollectionViewLayout:self.collectionViewLayout];
+}
+
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self commonMDCCollectionViewControllerInit:layout];
+    _collectionViewLayout = layout;
   }
   return self;
-}
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithCollectionViewLayout:self.collectionViewLayout];
-  if (self) {
-    [self commonMDCCollectionViewControllerInit:self.collectionViewLayout];
-  }
-  return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCollectionViewLayout:self.collectionViewLayout];
-  if (self) {
-    [self commonMDCCollectionViewControllerInit:self.collectionViewLayout];
-  }
-  return self;
-}
-
-- (void)commonMDCCollectionViewControllerInit:(UICollectionViewLayout *)layout {
-  _collectionViewLayout = layout;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.alwaysBounceVertical = YES;
 
@@ -287,7 +268,9 @@
     shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
   // Only store touch location and do not allow ink processing. This ink location will be used when
   // manually starting/stopping the ink animation during cell highlight/unhighlight states.
-  _inkTouchLocation = location;
+  if (!self.currentlyActiveInk) {
+    _inkTouchLocation = location;
+  }
   return NO;
 }
 
@@ -371,6 +354,7 @@
       inkView.inkColor = inkView.defaultInkColor;
     }
   }
+  self.currentlyActiveInk = YES;
   [inkView startTouchBeganAnimationAtPoint:location completion:nil];
 }
 
@@ -381,6 +365,7 @@
       [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
+  self.currentlyActiveInk = NO;
   [inkView startTouchEndedAnimationAtPoint:location completion:nil];
 }
 
@@ -417,6 +402,11 @@
 }
 
 - (void)collectionViewWillBeginEditing:(UICollectionView *)collectionView {
+  if (self.currentlyActiveInk) {
+    MDCInkView *activeInkView =
+        [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
+    [activeInkView startTouchEndedAnimationAtPoint:_inkTouchLocation completion:nil];
+  }
   // Inlay all items.
   _styler.allowsItemInlay = YES;
   _styler.allowsMultipleItemInlays = YES;

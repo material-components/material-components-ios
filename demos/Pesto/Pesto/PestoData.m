@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -40,10 +40,9 @@ NSString *const PestoDataBaseURL = @"https://www.gstatic.com/angular/material-ad
   ];
 
   _titles = @[
-    @"Pesto bruchetta", @"Rustic purple mash", @"Bacon sprouts", @"Oven sausage",
-    @"Chicken tostadas", @"Coconut rice", @"Sicilian-style sardines", @"Seared sesame fish",
-    @"Herb artichoke", @"Pesto bruschetta", @"Garlic bok choy", @"Fresh fettuccine",
-    @"Gin basil cocktail"
+    @"Pesto bruchetta", @"Rustic mash", @"Bacon sprouts", @"Oven sausage", @"Chicken tostadas",
+    @"Coconut rice", @"Sicilian-style sardines", @"Seared sesame fish", @"Herb artichoke",
+    @"Pesto bruschetta", @"Garlic bok choy", @"Fresh fettuccine", @"Gin basil cocktail"
   ];
 
   _authors = @[

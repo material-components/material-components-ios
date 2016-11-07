@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@
 @end
 
 @interface SnackbarSimpleExample : SnackbarExample
-
+- (void)handleShowSnackbarButtonTapped:(id)sender;
 @end
 
 @interface SnackbarSuspensionExample : SnackbarExample
@@ -60,5 +60,8 @@
 @property(nonatomic) UILabel *groupALabel;
 @property(nonatomic) UILabel *groupBLabel;
 @property(nonatomic) UILabel *allLabel;
+
+- (void)handleShowTapped:(id)sender;
+- (void)handleSuspendStateChanged:(MDCSwitch *)sender;
 
 @end

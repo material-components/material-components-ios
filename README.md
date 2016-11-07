@@ -1,3 +1,7 @@
+<!--{% if site.link_to_site == "true" %}-->
+See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documentation</a> for richer experience.
+<!--{% else %}See <a href="https://github.com/google/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
+
 Material Components is a collection of standalone production-quality components.
 
 Material Components’ visual style is based on the
@@ -48,16 +52,16 @@ pod init
 ### 3. Edit Podfile
 
 Once you've initialized CocoaPods, add the
-[Material Components iOS Pod](https://cocoapods.org/pods/MaterialComponentsIOS)
+[Material Components for iOS Pod](https://cocoapods.org/pods/MaterialComponentsIOS)
 to your target in your Podfile:
 
 ~~~ ruby
 target "MyApp" do
   ...
-  # Until Material Components iOS is public:
+  # Until Material Components for iOS is public:
   pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
 
-  # After Material Components iOS is public:
+  # After Material Components for iOS is public:
   # pod 'MaterialComponents'
 end
 ~~~
@@ -111,8 +115,8 @@ Choose from Objective-C or Swift:
 
 #### Swift
 
-~~~swift
-import material_components_ios
+~~~ swift
+import MaterialComponents.MaterialButtons
 
 class MDCBuildTestViewController: UIViewController {
 
@@ -142,10 +146,16 @@ class MDCBuildTestViewController: UIViewController {
 
 ## Attributions
 
-Material Components iOS uses
-[Material Design icons](https://github.com/google/material-design-icons),
+Material Components for iOS uses
+[material design icons](https://github.com/google/material-design-icons),
 copyright Google Inc. and licensed under
 [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+
+Several components use
+[MDFTextAccessibility](https://github.com/material-foundation/material-text-accessibility-ios),
+copyright Google Inc. and licensed under
+[Apache 2.0](https://github.com/material-foundation/material-text-accessibility-ios/blob/master/LICENSE)
+without a NOTICE file.
 
 Roboto Font Loader uses the
 [Roboto font](https://github.com/google/fonts/tree/master/apache/roboto),

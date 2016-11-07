@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,21 +15,23 @@
  */
 
 #import "MDCPalettes.h"
+#import "private/MDCPaletteExpansions.h"
+#import "private/MDCPaletteNames.h"
 
-const NSString *MDCPaletteTint50Name = @"50";
-const NSString *MDCPaletteTint100Name = @"100";
-const NSString *MDCPaletteTint200Name = @"200";
-const NSString *MDCPaletteTint300Name = @"300";
-const NSString *MDCPaletteTint400Name = @"400";
-const NSString *MDCPaletteTint500Name = @"500";
-const NSString *MDCPaletteTint600Name = @"600";
-const NSString *MDCPaletteTint700Name = @"700";
-const NSString *MDCPaletteTint800Name = @"800";
-const NSString *MDCPaletteTint900Name = @"900";
-const NSString *MDCPaletteAccent100Name = @"A100";
-const NSString *MDCPaletteAccent200Name = @"A200";
-const NSString *MDCPaletteAccent400Name = @"A400";
-const NSString *MDCPaletteAccent700Name = @"A700";
+const NSString *MDCPaletteTint50Name = MDC_PALETTE_TINT_50_INTERNAL_NAME;
+const NSString *MDCPaletteTint100Name = MDC_PALETTE_TINT_100_INTERNAL_NAME;
+const NSString *MDCPaletteTint200Name = MDC_PALETTE_TINT_200_INTERNAL_NAME;
+const NSString *MDCPaletteTint300Name = MDC_PALETTE_TINT_300_INTERNAL_NAME;
+const NSString *MDCPaletteTint400Name = MDC_PALETTE_TINT_400_INTERNAL_NAME;
+const NSString *MDCPaletteTint500Name = MDC_PALETTE_TINT_500_INTERNAL_NAME;
+const NSString *MDCPaletteTint600Name = MDC_PALETTE_TINT_600_INTERNAL_NAME;
+const NSString *MDCPaletteTint700Name = MDC_PALETTE_TINT_700_INTERNAL_NAME;
+const NSString *MDCPaletteTint800Name = MDC_PALETTE_TINT_800_INTERNAL_NAME;
+const NSString *MDCPaletteTint900Name = MDC_PALETTE_TINT_900_INTERNAL_NAME;
+const NSString *MDCPaletteAccent100Name = MDC_PALETTE_ACCENT_100_INTERNAL_NAME;
+const NSString *MDCPaletteAccent200Name = MDC_PALETTE_ACCENT_200_INTERNAL_NAME;
+const NSString *MDCPaletteAccent400Name = MDC_PALETTE_ACCENT_400_INTERNAL_NAME;
+const NSString *MDCPaletteAccent700Name = MDC_PALETTE_ACCENT_700_INTERNAL_NAME;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
@@ -527,6 +529,31 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   return palette;
 }
 
++ (instancetype)paletteGeneratedFromColor:(nonnull UIColor *)target500Color {
+  NSArray *tintNames = @[
+    MDCPaletteTint50Name, MDCPaletteTint100Name, MDCPaletteTint200Name, MDCPaletteTint300Name,
+    MDCPaletteTint400Name, MDCPaletteTint500Name, MDCPaletteTint600Name, MDCPaletteTint700Name,
+    MDCPaletteTint800Name, MDCPaletteTint900Name, MDCPaletteAccent100Name, MDCPaletteAccent200Name,
+    MDCPaletteAccent400Name, MDCPaletteAccent700Name
+  ];
+
+  NSMutableDictionary *tints = [[NSMutableDictionary alloc] init];
+  for (NSString *name in tintNames) {
+    [tints setObject:MDCPaletteTintFromTargetColor(target500Color, name) forKey:name];
+  }
+
+  NSArray *accentNames = @[
+    MDCPaletteAccent100Name, MDCPaletteAccent200Name, MDCPaletteAccent400Name,
+    MDCPaletteAccent700Name
+  ];
+  NSMutableDictionary *accents = [[NSMutableDictionary alloc] init];
+  for (NSString *name in accentNames) {
+    [accents setObject:MDCPaletteAccentFromTargetColor(target500Color, name) forKey:name];
+  }
+
+  return [self paletteWithTints:tints accents:accents];
+}
+
 + (instancetype)paletteWithTints:(NSDictionary<NSString *, UIColor *> *)tints
                          accents:(NSDictionary<NSString *, UIColor *> *)accents {
   return [[self alloc] initWithTints:tints accents:accents];
@@ -547,7 +574,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
       NSAssert(NO, @"Missing accent colors for the following keys: %@.", requiredTintKeys);
       NSMutableDictionary<const NSString *, UIColor *> *replacementTints =
           [NSMutableDictionary dictionaryWithDictionary:_accents];
-      for (const NSString *tintKey in requiredTintKeys) {
+      for (NSString *tintKey in requiredTintKeys) {
         [replacementTints setObject:[UIColor clearColor] forKey:tintKey];
       }
       allTints = replacementTints;

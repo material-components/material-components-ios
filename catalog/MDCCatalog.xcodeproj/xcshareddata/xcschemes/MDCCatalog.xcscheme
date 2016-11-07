@@ -38,6 +38,16 @@
                ReferencedContainer = "container:MDCUnitTests.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0B50E1981D91B0BD00DED250"
+               BuildableName = "MDCInteractionTests.xctest"
+               BlueprintName = "MDCInteractionTests"
+               ReferencedContainer = "container:MDCCatalog.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

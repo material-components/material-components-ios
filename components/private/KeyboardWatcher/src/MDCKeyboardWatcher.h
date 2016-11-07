@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present Google Inc. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -36,6 +36,13 @@ OBJC_EXTERN NSString *const MDCKeyboardWatcherKeyboardWillChangeFrameNotificatio
  Shared singleton instance of MDCKeyboardWatcher.
  */
 + (instancetype)sharedKeyboardWatcher;
+
+/** Extract the animation duration from the keyboard notification */
++ (NSTimeInterval)animationDurationFromKeyboardNotification:(NSNotification *)notification;
+
+/** Extract the animation curve option from the keyboard notification */
++ (UIViewAnimationOptions)animationCurveOptionFromKeyboardNotification:
+        (NSNotification *)notification;
 
 /**
  The distance from the top of the keyboard to the bottom of the screen.
