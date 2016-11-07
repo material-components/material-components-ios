@@ -19,10 +19,10 @@
 #import "MaterialButtons.h"
 #import "MaterialTabs.h"
 
-@interface TabBarDemoViewController : UIViewController
+@interface TabBarTextOnlyDemoViewController : UIViewController
 @end
 
-@implementation TabBarDemoViewController {
+@implementation TabBarTextOnlyDemoViewController {
   MDCTabBar *_shortTabBar;
   MDCTabBar *_longTabBar;
   MDCRaisedButton *_alignmentButton;
@@ -34,10 +34,10 @@
     self.title = @"Tab Bars";
 
     UIBarButtonItem *badgeIncrementItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Increment"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(incrementBadges:)];
+    [[UIBarButtonItem alloc] initWithTitle:@"Increment"
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(incrementBadges:)];
     self.navigationItem.rightBarButtonItem = badgeIncrementItem;
   }
   return self;
@@ -56,8 +56,8 @@
   [_alignmentButton sizeToFit];
   _alignmentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), 100);
   _alignmentButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-                                      UIViewAutoresizingFlexibleBottomMargin |
-                                      UIViewAutoresizingFlexibleRightMargin;
+  UIViewAutoresizingFlexibleBottomMargin |
+  UIViewAutoresizingFlexibleRightMargin;
   [_alignmentButton addTarget:self
                        action:@selector(changeAlignment:)
              forControlEvents:UIControlEventTouchUpInside];
@@ -96,16 +96,16 @@
   // Short tab bar with a small number of items.
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIImage *infoImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
+  [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
   UIImage *starImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
+  [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
   _shortTabBar =
-      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
+  [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
   _shortTabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 150);
   _shortTabBar.items = @[
-    [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:1]
-  ];
+                         [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
+                         [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:1]
+                         ];
 
   // Give the last item a badge
   [[_shortTabBar.items lastObject] setBadgeValue:@"1"];
@@ -114,7 +114,7 @@
   _shortTabBar.tintColor = [UIColor whiteColor];
   _shortTabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
   _shortTabBar.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [_shortTabBar sizeToFit];
   [self.view addSubview:_shortTabBar];
 }
@@ -124,15 +124,15 @@
 
   // Long tab bar with lots of items of varying length. Also demonstrates configurable accent color.
   _longTabBar =
-      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
+  [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
   _longTabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 250);
   _longTabBar.items = @[
-    [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
-  ];
+                        [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
+                        [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
+                        [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
+                        [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
+                        [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
+                        ];
 
   // Make entire tab bar non-uppercased
   _longTabBar.displaysUppercaseTitles = NO;
@@ -145,16 +145,16 @@
   _longTabBar.inkColor = [UIColor colorWithWhite:0.0 alpha:0.1];
 
   _longTabBar.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [_longTabBar sizeToFit];
   [self.view addSubview:_longTabBar];
 }
 
 - (void)changeAlignment:(id)sender {
   UIAlertController *sheet =
-      [UIAlertController alertControllerWithTitle:nil
-                                          message:nil
-                                   preferredStyle:UIAlertControllerStyleActionSheet];
+  [UIAlertController alertControllerWithTitle:nil
+                                      message:nil
+                               preferredStyle:UIAlertControllerStyleActionSheet];
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
@@ -185,7 +185,7 @@
 
 @end
 
-@implementation TabBarDemoViewController (CatalogByConvention)
+@implementation TabBarTextOnlyDemoViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Tab Bar", @"Tab Bar" ];
