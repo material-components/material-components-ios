@@ -15,7 +15,6 @@
  */
 
 import UIKit
-import MaterialComponents
 
 class ShrineCollectionViewCell: UICollectionViewCell {
 
