@@ -441,6 +441,16 @@ static const uint32_t kCellRedColor = 0xF44336;
   }
 }
 
+#pragma mark - Accessibility
+
+- (UIAccessibilityTraits)accessibilityTraits {
+  UIAccessibilityTraits accessibilityTraits = [super accessibilityTraits];
+  if (self.accessoryType == MDCCollectionViewCellAccessoryCheckmark) {
+    accessibilityTraits |= UIAccessibilityTraitSelected;
+  }
+  return accessibilityTraits;
+}
+
 #pragma mark - Private
 
 - (CGRect)contentViewFrame {
