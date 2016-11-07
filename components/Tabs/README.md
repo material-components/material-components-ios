@@ -55,8 +55,6 @@ pod install
 
 ## Overview
 
-TODO(willlarche)
-
 When a user taps a tab, the content should change to match the selected subject in the tabs. This is similar to a UITabBarViewController's behavior. But unlike a UITabBarViewController, tabs does not provide an interface for switching the views or view controllers. There is no array of view controllers like UITabBarViewController's array of view controllers.
 
 Rather, the tabs report to their delegate when there is a tab selection. The delegate can then handle the changing of views.
