@@ -23,7 +23,6 @@
 @end
 
 @implementation TabBarTextOnlyDemoViewController {
-  MDCTabBar *_shortTabBar;
   MDCTabBar *_longTabBar;
   MDCRaisedButton *_alignmentButton;
 }
@@ -65,7 +64,6 @@
 
   self.view.tintColor = [UIColor purpleColor];
 
-  [self loadShortTabBar];
   [self loadLongTabBar];
 }
 
@@ -73,7 +71,7 @@
 
 - (void)incrementBadges:(id)sender {
   // Increment all numeric badge values to show cells updating when their item's properties are set.
-  for (MDCTabBar *tabBar in @[ _longTabBar, _shortTabBar ]) {
+  for (MDCTabBar *tabBar in @[ _longTabBar ]) {
     for (UITabBarItem *item in tabBar.items) {
       NSString *badgeValue = item.badgeValue;
       if (badgeValue) {
@@ -89,35 +87,6 @@
 }
 
 #pragma mark - Private
-
-- (void)loadShortTabBar {
-  const CGRect bounds = self.view.bounds;
-
-  // Short tab bar with a small number of items.
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  UIImage *infoImage =
-  [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
-  UIImage *starImage =
-  [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
-  _shortTabBar =
-  [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
-  _shortTabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 150);
-  _shortTabBar.items = @[
-                         [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
-                         [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:1]
-                         ];
-
-  // Give the last item a badge
-  [[_shortTabBar.items lastObject] setBadgeValue:@"1"];
-
-  _shortTabBar.barTintColor = [UIColor blueColor];
-  _shortTabBar.tintColor = [UIColor whiteColor];
-  _shortTabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  _shortTabBar.autoresizingMask =
-  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-  [_shortTabBar sizeToFit];
-  [self.view addSubview:_shortTabBar];
-}
 
 - (void)loadLongTabBar {
   const CGRect bounds = self.view.bounds;
@@ -180,7 +149,6 @@
 
 - (void)setAlignment:(MDCTabBarAlignment)alignment {
   [_longTabBar setAlignment:alignment animated:YES];
-  [_shortTabBar setAlignment:alignment animated:YES];
 }
 
 @end

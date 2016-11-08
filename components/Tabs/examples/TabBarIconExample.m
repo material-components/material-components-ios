@@ -24,7 +24,6 @@
 
 @implementation TabBarIconDemoViewController {
   MDCTabBar *_shortTabBar;
-  MDCTabBar *_longTabBar;
   MDCRaisedButton *_alignmentButton;
 }
 
@@ -64,14 +63,13 @@
   self.view.tintColor = [UIColor purpleColor];
 
   [self loadShortTabBar];
-  [self loadLongTabBar];
 }
 
 #pragma mark - Action
 
 - (void)incrementBadges:(id)sender {
   // Increment all numeric badge values to show cells updating when their item's properties are set.
-  for (MDCTabBar *tabBar in @[ _longTabBar, _shortTabBar ]) {
+  for (MDCTabBar *tabBar in @[ _shortTabBar ]) {
     for (UITabBarItem *item in tabBar.items) {
       NSString *badgeValue = item.badgeValue;
       if (badgeValue) {
@@ -117,37 +115,6 @@
   [self.view addSubview:_shortTabBar];
 }
 
-- (void)loadLongTabBar {
-  const CGRect bounds = self.view.bounds;
-
-  // Long tab bar with lots of items of varying length. Also demonstrates configurable accent color.
-  _longTabBar =
-      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
-  _longTabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 250);
-  _longTabBar.items = @[
-    [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
-  ];
-
-  // Make entire tab bar non-uppercased
-  _longTabBar.displaysUppercaseTitles = NO;
-
-  // Give it a white appearance to show dark text and customize the unselected title color.
-  _longTabBar.selectedItemTintColor = [UIColor blackColor];
-  _longTabBar.unselectedItemTintColor = [UIColor grayColor];
-  _longTabBar.tintColor = [UIColor redColor];
-  _longTabBar.barTintColor = [UIColor whiteColor];
-  _longTabBar.inkColor = [UIColor colorWithWhite:0.0 alpha:0.1];
-
-  _longTabBar.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-  [_longTabBar sizeToFit];
-  [self.view addSubview:_longTabBar];
-}
-
 - (void)changeAlignment:(id)sender {
   UIAlertController *sheet =
       [UIAlertController alertControllerWithTitle:nil
@@ -177,7 +144,6 @@
 }
 
 - (void)setAlignment:(MDCTabBarAlignment)alignment {
-  [_longTabBar setAlignment:alignment animated:YES];
   [_shortTabBar setAlignment:alignment animated:YES];
 }
 
