@@ -15,7 +15,7 @@
  */
 
 import UIKit
-import MaterialComponents
+import MaterialComponents.MaterialPageControl
 
 class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 

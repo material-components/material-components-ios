@@ -384,7 +384,7 @@ func barButtonDidTap(sender: UIBarButtonItem) {
   navigationItem.rightBarButtonItem = UIBarButtonItem(title: buttonTitle,
                                                       style: .plain,
                                                       target: self,
-                                                      action: #selector(ViewController.barButtonDidTap(sender:)))
+                                                      action: #selector(ViewController.barButtonDidTap(_:)))
 }
 ~~~ 
 
@@ -413,7 +413,7 @@ override func viewDidLoad() {
   navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit",
                                                       style: .plain,
                                                       target: self,
-                                                      action: #selector(ViewController.barButtonDidTap(sender:)))
+                                                      action: #selector(ViewController.barButtonDidTap(_:)))
 }
 ~~~ 
 
@@ -534,7 +534,7 @@ override func viewDidLoad() {
 
   fab.setTitle("+", for: .normal)
   fab.setTitle("-", for: .selected)
-  fab.addTarget(self, action: #selector(ViewController.fabDidTap(sender:)), for: .touchUpInside)
+  fab.addTarget(self, action: #selector(ViewController.fabDidTap(_:)), for: .touchUpInside)
 }
 ~~~ 
 
@@ -586,7 +586,7 @@ class ViewController: MDCCollectionViewController {
 
     title = "Material Components"
 
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(_:)))
 
     appBar.navigationBar.tintColor = UIColor.black
 
@@ -597,13 +597,13 @@ class ViewController: MDCCollectionViewController {
 
     fab.setTitle("+", for: .normal)
     fab.setTitle("-", for: .selected)
-    fab.addTarget(self, action: #selector(ViewController.fabDidTap(sender:)), for: .touchUpInside)
+    fab.addTarget(self, action: #selector(ViewController.fabDidTap(_:)), for: .touchUpInside)
   }
 
   func barButtonDidTap(sender: UIBarButtonItem) {
     editor.isEditing = !editor.isEditing
 
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(_:)))
   }
 
   func fabDidTap(sender: UIButton) {

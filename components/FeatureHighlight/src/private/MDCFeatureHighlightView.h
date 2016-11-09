@@ -32,9 +32,9 @@ typedef void(^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 - (void)layoutAppearing;
 - (void)layoutDisappearing;
 
-- (void)animateDiscover:(CGFloat)duration;
-- (void)animateAccepted:(CGFloat)duration;
-- (void)animateRejected:(CGFloat)duration;
+- (void)animateDiscover:(NSTimeInterval)duration;
+- (void)animateAccepted:(NSTimeInterval)duration;
+- (void)animateRejected:(NSTimeInterval)duration;
 - (void)animatePulse;
 
 @end
