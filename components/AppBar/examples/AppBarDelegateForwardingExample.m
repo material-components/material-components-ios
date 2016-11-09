@@ -104,7 +104,7 @@
                                      alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
     MDCAppBarAccessibilityConfigurator *config = [[MDCAppBarAccessibilityConfigurator alloc] init];
-    [config applyAccessibilityConfigurationOnAppBar:_appBar];
+    [config applyAccessibilityTitleColorOnAppBar:_appBar];
   }
   return self;
 }

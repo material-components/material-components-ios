@@ -45,7 +45,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
     let config = MDCAppBarAccessibilityConfigurator()
-    config.applyAccessibilityConfigurationOnAppBar(appBar)
+    config.applyAccessibilityTitleColorOnAppBar(appBar)
   }
 
   override func viewDidLoad() {

@@ -22,7 +22,7 @@
 @interface MDCAppBarAccessibilityConfigurator : NSObject
 
 - (nonnull instancetype)init;
-- (void)applyAccessibilityConfigurationOnAppBar:(nonnull MDCAppBar *)appBar;
+- (void)applyAccessibilityTitleColorOnAppBar:(nonnull MDCAppBar *)appBar;
 
 @end
 
