@@ -51,7 +51,6 @@ static const uint32_t kCellRedColor = 0xF44336;
   BOOL _usesCellSeparatorHiddenOverride;
   BOOL _usesCellSeparatorInsetOverride;
   BOOL _shouldAnimateEditingViews;
-  CAShapeLayer *_separatorLayer;
   UIView *_separatorView;
   UIImageView *_backgroundImageView;
   UIImageView *_editingReorderImageView;
@@ -289,19 +288,13 @@ static const uint32_t kCellRedColor = 0xF44336;
 
   if (!hideSeparator) {
     UIEdgeInsets insets = _attr.backgroundImageViewInsets;
-    CGFloat separatorOriginX;
-    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
-      case UIUserInterfaceLayoutDirectionLeftToRight:
-        separatorOriginX = insets.left;
-        break;
-      case UIUserInterfaceLayoutDirectionRightToLeft:
-        separatorOriginX = insets.right;
-        break;
-    }
+    // Compute the frame in LTR.
     CGRect separatorFrame = CGRectMake(
-        separatorOriginX, CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
+        insets.left, CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
         CGRectGetWidth(self.bounds) - insets.left - insets.right, _attr.separatorLineHeight);
-    _separatorView.frame = UIEdgeInsetsInsetRect(separatorFrame, separatorInset);
+    separatorFrame = UIEdgeInsetsInsetRect(separatorFrame, separatorInset);
+    _separatorView.frame = MDCRectFlippedForRTL(separatorFrame, CGRectGetWidth(self.bounds),
+                                                self.mdc_effectiveUserInterfaceLayoutDirection);
     _separatorView.backgroundColor = _attr.separatorColor;
   }
 }
