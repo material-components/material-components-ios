@@ -12,6 +12,9 @@ howto:
         - name: Build environment
           url: "/howto/build-env/"
           markdown: "howto/build-env/README.md"
+        - name: FAQ
+          url: "/howto/faq/"
+          markdown: "howto/faq/README.md"
 contributing:
   markdown: "contributing/README.md"
   children:
@@ -40,68 +43,85 @@ contributing:
 components:
   markdown: components/README.md
   children:
-    - name: AppBar
-      url: "/components/AppBar/"
-      markdown: components/AppBar/README.md
-    - name: ButtonBar
-      url: "/components/ButtonBar/"
-      markdown: components/ButtonBar/README.md
-    - name: Buttons
-      url: "/components/Buttons/"
-      markdown: components/Buttons/README.md
-    - name: CollectionCells
-      url: "/components/CollectionCells/"
-      markdown: components/CollectionCells/README.md
-    - name: CollectionLayoutAttributes
-      url: "/components/CollectionLayoutAttributes/"
-      markdown: components/CollectionLayoutAttributes/README.md
-    - name: Collections
-      url: "/components/Collections/"
-      markdown: components/Collections/README.md
+    - name: Structure
       children:
-        - name: Styling
-          url: "/components/Collections/styling/"
-          markdown: components/Collections/styling/README.md
-        - name: Editing
-          url: "/components/Collections/editing/"
-          markdown: components/Collections/editing/README.md
-    - name: FlexibleHeader
-      url: "/components/FlexibleHeader/"
-      markdown: components/FlexibleHeader/README.md
-    - name: HeaderStackView
-      url: "/components/HeaderStackView/"
-      markdown: components/HeaderStackView/README.md
-    - name: Ink
-      url: "/components/Ink/"
-      markdown: components/Ink/README.md
-    - name: NavigationBar
-      url: "/components/NavigationBar/"
-      markdown: components/NavigationBar/README.md
-    - name: PageControl
-      url: "/components/PageControl/"
-      markdown: components/PageControl/README.md
-    - name: Palettes
-      url: "/components/Palettes/"
-      markdown: components/Palettes/README.md
-    - name: ShadowElevations
-      url: "/components/ShadowElevations/"
-      markdown: components/ShadowElevations/README.md
-    - name: ShadowLayer
-      url: "/components/ShadowLayer/"
-      markdown: components/ShadowLayer/README.md
-    - name: Slider
-      url: "/components/Slider/"
-      markdown: components/Slider/README.md
-    - name: Switch
-      url: "/components/Switch/"
-      markdown: components/Switch/README.md
-    - name: Typography
-      url: "/components/Typography/"
-      markdown: components/Typography/README.md
-      children:
-        - name: RobotoFontLoader
-          url: "/components/RobotoFontLoader/"
-          markdown: components/RobotoFontLoader/README.md
+        - name: CollectionCells
+          url: "/components/CollectionCells/"
+          markdown: components/CollectionCells/README.md
+        - name: CollectionLayoutAttributes
+          url: "/components/CollectionLayoutAttributes/"
+          markdown: components/CollectionLayoutAttributes/README.md
+        - name: Collections
+          url: "/components/Collections/"
+          markdown: components/Collections/README.md
+          children:
+            - name: Styling
+              url: "/components/Collections/styling/"
+              markdown: components/Collections/styling/README.md
+            - name: Editing
+              url: "/components/Collections/editing/"
+              markdown: components/Collections/editing/README.md
+        - name: FlexibleHeader
+          url: "/components/FlexibleHeader/"
+          markdown: components/FlexibleHeader/README.md
         - name: FontDiskLoader
           url: "/components/FontDiskLoader/"
           markdown: components/FontDiskLoader/README.md
+        - name: HeaderStackView
+          url: "/components/HeaderStackView/"
+          markdown: components/HeaderStackView/README.md
+        - name: ShadowLayer
+          url: "/components/ShadowLayer/"
+          markdown: components/ShadowLayer/README.md
+        - name: Typography
+          url: "/components/Typography/"
+          markdown: components/Typography/README.md
+    - name: Style
+      children:
+        - name: Ink
+          url: "/components/Ink/"
+          markdown: components/Ink/README.md
+        - name: Palettes
+          url: "/components/Palettes/"
+          markdown: components/Palettes/README.md
+        - name: RobotoFontLoader
+          url: "/components/RobotoFontLoader/"
+          markdown: components/RobotoFontLoader/README.md
+        - name: ShadowElevations
+          url: "/components/ShadowElevations/"
+          markdown: components/ShadowElevations/README.md
+    - name: Components
+      children:
+        - name: ActivityIndicator
+          url: "/components/ActivityIndicator/"
+          markdown: components/ActivityIndicator/README.md
+        - name: AppBar
+          url: "/components/AppBar/"
+          markdown: components/AppBar/README.md
+        - name: ButtonBar
+          url: "/components/ButtonBar/"
+          markdown: components/ButtonBar/README.md
+        - name: Buttons
+          url: "/components/Buttons/"
+          markdown: components/Buttons/README.md
+        - name: Dialogs
+          url: "/components/Dialogs/"
+          markdown: components/Dialogs/README.md
+        - name: NavigationBar
+          url: "/components/NavigationBar/"
+          markdown: components/NavigationBar/README.md
+        - name: PageControl
+          url: "/components/PageControl/"
+          markdown: components/PageControl/README.md
+        - name: ProgressView
+          url: "/components/ProgressView/"
+          markdown: components/ProgressView/README.md
+        - name: Slider
+          url: "/components/Slider/"
+          markdown: components/Slider/README.md
+        - name: Snackbar
+          url: "/components/Snackbar/"
+          markdown: components/Snackbar/README.md
+        - name: Switch
+          url: "/components/Switch/"
+          markdown: components/Switch/README.md

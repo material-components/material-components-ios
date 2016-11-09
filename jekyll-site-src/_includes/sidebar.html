@@ -8,31 +8,42 @@
 {% endcase %}
 <nav id="sidenav">
   <ul>
-    {% for item in section.children %}
-      {% assign lcpage = page.url | downcase %}
-      {% assign lcitem = item.url | downcase %}
-      {% assign activepage = "" %}
-      {% if lcpage == lcitem %}
-        {% assign activepage = "active" %}
-      {% else %}
-        {% for child in item.children %}
-          {% assign lcchild = child.url | downcase %}
-          {% if lcpage == lcchild %}
-            {% assign activepage = "active" %}
-          {% endif %}
-        {% endfor %}
-      {% endif %}
-      <li class="toplevel {{ activepage }}">
-        <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ item.url }}">{{ item.name }}</a>
-          {% if item.children %}
-            <ul>
-            {% for child in item.children %}
-              <li class="sublevel">
-                <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ child.url }}">{{ child.name }}</a>
-              </li>
-            {% endfor %}
-            </ul>
-          {% endif %}
+    {% for top in section.children %}
+      <li class="toplevel">
+        <a {% if top.url %} href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ top.url }}" {% endif %}>
+          {{ top.name }}
+        </a>
+        {% if top.children %}
+          <ul>
+          {% for second in top.children %}
+            {% assign lcpage = page.url | downcase %}
+            {% assign lcitem = second.url | downcase %}
+            {% assign activepage = "" %}
+            {% if lcpage == lcitem %}
+              {% assign activepage = "active" %}
+            {% else %}
+              {% for third in second.children %}
+                {% assign lcchild = third.url | downcase %}
+                {% if lcpage == lcchild %}
+                  {% assign activepage = "active" %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+            <li class="sublevel {{ activepage }}">
+              <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ second.url }}">{{ second.name }}</a>
+              {% if second.children %}
+                <ul>
+                {% for third in second.children %}
+                  <li class="thirdlevel">
+                    <a href="{{ site.url | prepend: site.github.url }}{{ site.folder }}{{ third.url }}">{{ third.name }}</a>
+                  </li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+          </ul>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>

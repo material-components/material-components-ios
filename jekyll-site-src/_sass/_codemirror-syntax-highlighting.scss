@@ -1,7 +1,7 @@
 // Globals used in this file
 $code-background-color: $grey-50;
 $code-divider-color: rgba(0, 0, 0, 0.1);
-$code-font-family: Roboto Mono;
+$code-font-family: Roboto Mono, monospace;
 $code-text-color: $black-54;
 $code-text-size: 12px;
 $code-text-weight: 500;
@@ -26,7 +26,9 @@ $pink-900: #880E4F;
   margin: 24px 0;
   background: $code-background-color;
   border: none;
-  @extend .code-text-style;
+  pre {
+    @extend .code-text-style;
+  }
 }
 
 // Override the standard codemirror margins

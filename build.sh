@@ -89,12 +89,16 @@ else
         read -p "Are you sure you want to deploy to production environment?" -n 1 -r
         echo ""
         if [[ $REPLY =~ ^[Yy]$ ]]; then
-          gsutil -m cp -r $DIR/site-build/* gs://mdc-ios-preview
+          gsutil -m rsync -d -r -c $DIR/site-build gs://mdc-ios-preview
           if [[ $? = 0 ]]; then
             echo -e "\033[32m*********************************************************************"
             echo -e "\033[32m*****                                                           *****"
             echo -e "\033[32m*****  ¸¸♬·¯·♩¸¸Successfully deploy to cloud storage♪·¯·♫¸¸     *****"
             echo -e "\033[32m*****  Visit https://material-ext.appspot.com/mdc-ios-preview   *****"
+            echo -e "\033[32m*****                                                           *****"
+            echo -e "\033[32m*****   If the site is showing 404 errors for assets, you may   *****"
+            echo -e "\033[32m*****  be able to corrrect that by quitting ur localhost server *****"
+            echo -e "\033[32m*****             and redeploying to production.                *****"
             echo -e "\033[32m*****                                                           *****"
             echo -e "\033[32m*********************************************************************"
             echo -e "\033[0m"
