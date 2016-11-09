@@ -24,6 +24,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+#import "MDFTextAccessibility.h"
 
 static NSString *const kBarStackKey = @"barStack";
 static NSString *const kStatusBarHeightKey = @"statusBarHeight";
@@ -37,7 +38,22 @@ static const CGFloat kStatusBarHeight = 20;
 }
 
 - (void)applyAccessibilityConfigurationOnAppBar:(nonnull MDCAppBar *)appBar {
-  
+
+  // Determine what is the appropriate background color
+  UIColor *backgroundColor = appBar.headerViewController.headerView.backgroundColor ?: appBar.navigationBar.backgroundColor;
+  if (!backgroundColor) {
+    return;
+  }
+
+  // Update title label color based on navigationBar backgroundColor
+  NSMutableDictionary *textAttr = [NSMutableDictionary dictionaryWithDictionary:[appBar.navigationBar titleTextAttributes]];
+  UIColor *textColor = [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor targetTextAlpha:1.0 font:[textAttr objectForKey:NSFontAttributeName]];
+  [textAttr setObject:textColor forKey:NSForegroundColorAttributeName];
+  [appBar.navigationBar setTitleTextAttributes:textAttr];
+
+  // Update button's tint color based on navigationBar backgroundColor
+  appBar.navigationBar.tintColor = textColor;
+
 }
 
 @end

@@ -94,9 +94,6 @@
   self = [super init];
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     [self addChildViewController:_appBar.headerViewController];
 
     self.title = @"Delegate Forwarding";
@@ -106,6 +103,8 @@
                                       blue:(CGFloat)0xF4 / (CGFloat)255
                                      alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
+    MDCAppBarAccessibilityConfigurator *config = [[MDCAppBarAccessibilityConfigurator alloc] init];
+    [config applyAccessibilityConfigurationOnAppBar:_appBar];
   }
   return self;
 }
