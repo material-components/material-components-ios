@@ -14,15 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Install tools used by contributors.
-#
-# This is not required for anyone but core team members.
+# Installs SourceKitten, required for api diff process
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-"$DIR/install_clang_format"
-"$DIR/install_proselint"
-"$DIR/install_jazzy"
-"$DIR/install_earlgrey"
-"$DIR/install_arc.sh" "$@"
-"$DIR/install_source_kitten.sh"
+"$DIR/install_brew"
+if ! sourcekitten version >/dev/null 2>&1; then
+  brew install sourcekitten
+fi
