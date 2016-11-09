@@ -85,11 +85,15 @@ for d in $NEW_ROOT_PATH/components/*/src; do
     continue
   fi
 
-  path_api_diff \
-  $OLD_ROOT_PATH \
-  $NEW_ROOT_PATH \
-  objc \
-  "/components/$component/src/Material$component.h"
+  if [ $component == "Ink" ] || [ $component == "Snackbar" ]; then
+    echo "**THIS COMPONENT DIFF MUST BE DONE MANUALLY**"
+  else
+    path_api_diff \
+    $OLD_ROOT_PATH \
+    $NEW_ROOT_PATH \
+    objc \
+    "/components/$component/src/Material$component.h"
+  fi
 done
 
 if [ ! -z "$TMP_PATH" ]; then
