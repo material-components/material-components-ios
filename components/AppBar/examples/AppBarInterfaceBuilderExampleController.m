@@ -46,13 +46,12 @@
 }
 
 - (void)commonAppBarInterfaceBuilderExampleSetup {
-  self.appBar.navigationBar.tintColor = [UIColor whiteColor];
-  self.appBar.navigationBar.titleTextAttributes =
-      @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
-
   [self addChildViewController:self.appBar.headerViewController];
   UIColor *headerColor = [UIColor colorWithRed:0.01 green:0.67 blue:0.96 alpha:1.0];
   self.appBar.headerViewController.headerView.backgroundColor = headerColor;
+
+  MDCAppBarAccessibilityConfigurator *config = [[MDCAppBarAccessibilityConfigurator alloc] init];
+  [config applyAccessibilityConfigurationOnAppBar:_appBar];
 }
 
 - (void)viewDidLoad {
