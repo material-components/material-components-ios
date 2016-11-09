@@ -73,7 +73,9 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/FeatureHighlight (16.2.0)
+  - MaterialComponents/FeatureHighlight (16.2.0):
+    - MaterialComponents/Typography
+    - MDFTextAccessibility
   - MaterialComponents/FlexibleHeader (16.2.0):
     - MDFTextAccessibility
   - MaterialComponents/FontDiskLoader (16.2.0)
@@ -157,7 +159,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 4c676a55ac7ac303bc9df78ffe9598f848a3ee46
+  MaterialComponents: 67078639fc22834145049ab777516086556a35c0
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
 PODFILE CHECKSUM: a99960e6ab1c7128ff71f25989ec0d58da87580e

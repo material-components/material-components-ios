@@ -75,7 +75,9 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/FeatureHighlight (16.2.0)
+  - MaterialComponents/FeatureHighlight (16.2.0):
+    - MaterialComponents/Typography
+    - MDFTextAccessibility
   - MaterialComponents/FlexibleHeader (16.2.0):
     - MDFTextAccessibility
   - MaterialComponents/FontDiskLoader (16.2.0)
@@ -174,7 +176,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: 763d04569f96d910cf17e4fe5aa0d3842e07c0b4
-  MaterialComponents: 4c676a55ac7ac303bc9df78ffe9598f848a3ee46
+  MaterialComponents: 67078639fc22834145049ab777516086556a35c0
   MaterialComponentsCatalog: c66a111e2a412232c67b36b333c14f6cf746dcf5
   MaterialComponentsUnitTests: 9bdcf1262f7a911c832b1b9787133480f52015f4
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
