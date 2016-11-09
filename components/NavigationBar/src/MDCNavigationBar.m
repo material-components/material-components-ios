@@ -288,12 +288,13 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 + (MDCNavigationBarTitleAlignment)titleAlignmentFromTextAlignment:(NSTextAlignment)textAlignment {
   switch (textAlignment) {
-    case NSTextAlignmentNatural:
-      return MDCNavigationBarTitleAlignmentLeading;
-      break;
     default:
       NSAssert(NO, @"textAlignment not supported: %li", (long)textAlignment);
-    // Intentional fall through logic
+      // Intentional fall through logic
+    case NSTextAlignmentNatural:
+    case NSTextAlignmentLeft:
+      return MDCNavigationBarTitleAlignmentLeading;
+      break;
     case NSTextAlignmentCenter:
       return MDCNavigationBarTitleAlignmentCenter;
       break;
