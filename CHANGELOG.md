@@ -1,4 +1,36 @@
-# release-candidate TODO: Replace me with version number. 
+# 16.3.0
+
+## API diffs
+
+### Snackbar
+
+- [new] [`MDCSnackbar setPresentationHostView:`](https://github.com/google/material-components-ios/commit/ee84a40885724453da69ca90bfa6a874008dc0b0)
+
+## Component changes
+
+### CollectionCells
+
+#### Changes
+
+* [[CollectionViewCell] Call |layoutSubviews| when editing (#798)](https://github.com/google/material-components-ios/commit/393d6214e08b1ff5bc359a1cfc6f816abe7b2e67) (Gauthier Ambard)
+
+### Collections
+
+#### Changes
+
+* [Change layout invalidation in MDCCollectionViewStyler (#790)](https://github.com/google/material-components-ios/commit/82f7758bad9d4573f49d3656816df128642a8968) (Gauthier Ambard)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Convert CGFloats to float for 32 bit compilation (#834)](https://github.com/google/material-components-ios/commit/28f1d43595cd2a3fa109acb275214e50c810e94d) (Sam Morrison)
+
+### Snackbar
+
+#### Changes
+
+* [[MDCSnackbar]! Add presentationHostView property to snackbar (#784)](https://github.com/google/material-components-ios/commit/ee84a40885724453da69ca90bfa6a874008dc0b0) (Sam Morrison)
 
 # 16.2.0
 
@@ -149,7 +181,7 @@
 
 ### Palettes
 
-- [new] [`MDCPalette.paletteGeneratedFromColor](https://github.com/google/material-components-ios/blob/fad8519b6a1ba5c29a0368fb470cca3c6da74431/components/Palettes/src/MDCPalettes.h#L137)
+- [new] [`MDCPalette.paletteGeneratedFromColor`](https://github.com/google/material-components-ios/blob/fad8519b6a1ba5c29a0368fb470cca3c6da74431/components/Palettes/src/MDCPalettes.h#L137)
 
 ## Component changes
 
