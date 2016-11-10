@@ -19,60 +19,23 @@
 #import "MaterialButtons.h"
 #import "MaterialTabs.h"
 
-@interface TabBarTextOnlyDemoViewController : UIViewController
-@end
+#import "TabBarTextOnlyExampleSupplemental.h"
 
-@implementation TabBarTextOnlyDemoViewController {
-  MDCTabBar *_longTabBar;
-  MDCRaisedButton *_alignmentButton;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    self.title = @"Tab Bars";
-
-    UIBarButtonItem *badgeIncrementItem =
-    [[UIBarButtonItem alloc] initWithTitle:@"Increment"
-                                     style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(incrementBadges:)];
-    self.navigationItem.rightBarButtonItem = badgeIncrementItem;
-  }
-  return self;
-}
-
-#pragma mark - UIViewController
+@implementation TabBarTextOnlyExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
+  [self setupExampleViews];
 
-  // Button to change tab alignments.
-  _alignmentButton = [[MDCRaisedButton alloc] init];
-  [_alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
-  [_alignmentButton sizeToFit];
-  _alignmentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), 100);
-  _alignmentButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-  UIViewAutoresizingFlexibleBottomMargin |
-  UIViewAutoresizingFlexibleRightMargin;
-  [_alignmentButton addTarget:self
-                       action:@selector(changeAlignment:)
-             forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_alignmentButton];
-
-  self.view.tintColor = [UIColor purpleColor];
-
-  [self loadLongTabBar];
+  [self loadTabBar];
 }
 
 #pragma mark - Action
 
 - (void)incrementBadges:(id)sender {
   // Increment all numeric badge values to show cells updating when their item's properties are set.
-  for (MDCTabBar *tabBar in @[ _longTabBar ]) {
-    for (UITabBarItem *item in tabBar.items) {
+    for (UITabBarItem *item in self.tabBar.items) {
       NSString *badgeValue = item.badgeValue;
       if (badgeValue) {
         NSInteger badgeNumber = badgeValue.integerValue;
@@ -83,19 +46,18 @@
         }
       }
     }
-  }
 }
 
 #pragma mark - Private
 
-- (void)loadLongTabBar {
+- (void)loadTabBar {
   const CGRect bounds = self.view.bounds;
 
   // Long tab bar with lots of items of varying length. Also demonstrates configurable accent color.
-  _longTabBar =
+  self.tabBar =
   [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
-  _longTabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 250);
-  _longTabBar.items = @[
+  self.tabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 250);
+  self.tabBar.items = @[
                         [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
                         [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
                         [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
@@ -104,19 +66,19 @@
                         ];
 
   // Make entire tab bar non-uppercased
-  _longTabBar.displaysUppercaseTitles = NO;
+  self.tabBar.displaysUppercaseTitles = NO;
 
   // Give it a white appearance to show dark text and customize the unselected title color.
-  _longTabBar.selectedItemTintColor = [UIColor blackColor];
-  _longTabBar.unselectedItemTintColor = [UIColor grayColor];
-  _longTabBar.tintColor = [UIColor redColor];
-  _longTabBar.barTintColor = [UIColor whiteColor];
-  _longTabBar.inkColor = [UIColor colorWithWhite:0.0 alpha:0.1];
+  self.tabBar.selectedItemTintColor = [UIColor blackColor];
+  self.tabBar.unselectedItemTintColor = [UIColor grayColor];
+  self.tabBar.tintColor = [UIColor redColor];
+  self.tabBar.barTintColor = [UIColor whiteColor];
+  self.tabBar.inkColor = [UIColor colorWithWhite:0.0 alpha:0.1];
 
-  _longTabBar.autoresizingMask =
+  self.tabBar.autoresizingMask =
   UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-  [_longTabBar sizeToFit];
-  [self.view addSubview:_longTabBar];
+  [self.tabBar sizeToFit];
+  [self.view addSubview:self.tabBar];
 }
 
 - (void)changeAlignment:(id)sender {
@@ -148,23 +110,7 @@
 }
 
 - (void)setAlignment:(MDCTabBarAlignment)alignment {
-  [_longTabBar setAlignment:alignment animated:YES];
-}
-
-@end
-
-@implementation TabBarTextOnlyDemoViewController (CatalogByConvention)
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"Tab Bar" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
+  [self.tabBar setAlignment:alignment animated:YES];
 }
 
 @end

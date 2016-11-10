@@ -16,61 +16,25 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
 #import "MaterialTabs.h"
 
-@interface TabBarIconDemoViewController : UIViewController
-@end
+#import "TabBarIconExampleSupplemental.h"
 
-@implementation TabBarIconDemoViewController {
-  MDCTabBar *_shortTabBar;
-  MDCRaisedButton *_alignmentButton;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    UIBarButtonItem *badgeIncrementItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Increment"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(incrementBadges:)];
-    self.navigationItem.rightBarButtonItem = badgeIncrementItem;
-  }
-  return self;
-}
-
-#pragma mark - UIViewController
+@implementation TabBarIconExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
+  [self setupExampleViews];
 
-  // Button to change tab alignments.
-  _alignmentButton = [[MDCRaisedButton alloc] init];
-  [_alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
-  [_alignmentButton sizeToFit];
-  _alignmentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), 100);
-  _alignmentButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-                                      UIViewAutoresizingFlexibleBottomMargin |
-                                      UIViewAutoresizingFlexibleRightMargin;
-  [_alignmentButton addTarget:self
-                       action:@selector(changeAlignment:)
-             forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_alignmentButton];
-
-  self.view.tintColor = [UIColor purpleColor];
-
-  [self loadShortTabBar];
+  [self loadTabBar];
 }
 
 #pragma mark - Action
 
 - (void)incrementBadges:(id)sender {
   // Increment all numeric badge values to show cells updating when their item's properties are set.
-  for (MDCTabBar *tabBar in @[ _shortTabBar ]) {
-    for (UITabBarItem *item in tabBar.items) {
+    for (UITabBarItem *item in self.tabBar.items) {
       NSString *badgeValue = item.badgeValue;
       if (badgeValue) {
         NSInteger badgeNumber = badgeValue.integerValue;
@@ -81,12 +45,11 @@
         }
       }
     }
-  }
 }
 
 #pragma mark - Private
 
-- (void)loadShortTabBar {
+- (void)loadTabBar {
   const CGRect bounds = self.view.bounds;
 
   // Short tab bar with a small number of items.
@@ -95,24 +58,24 @@
       [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
   UIImage *starImage =
       [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
-  _shortTabBar =
+  self.tabBar =
       [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
-  _shortTabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 150);
-  _shortTabBar.items = @[
+  self.tabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 150);
+  self.tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:1]
   ];
 
   // Give the last item a badge
-  [[_shortTabBar.items lastObject] setBadgeValue:@"1"];
+  [[self.tabBar.items lastObject] setBadgeValue:@"1"];
 
-  _shortTabBar.barTintColor = [UIColor blueColor];
-  _shortTabBar.tintColor = [UIColor whiteColor];
-  _shortTabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  _shortTabBar.autoresizingMask =
+  self.tabBar.barTintColor = [UIColor blueColor];
+  self.tabBar.tintColor = [UIColor whiteColor];
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-  [_shortTabBar sizeToFit];
-  [self.view addSubview:_shortTabBar];
+  [self.tabBar sizeToFit];
+  [self.view addSubview:self.tabBar];
 }
 
 - (void)changeAlignment:(id)sender {
@@ -144,23 +107,7 @@
 }
 
 - (void)setAlignment:(MDCTabBarAlignment)alignment {
-  [_shortTabBar setAlignment:alignment animated:YES];
-}
-
-@end
-
-@implementation TabBarIconDemoViewController (CatalogByConvention)
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"Tab Bar" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
+  [self.tabBar setAlignment:alignment animated:YES];
 }
 
 @end
