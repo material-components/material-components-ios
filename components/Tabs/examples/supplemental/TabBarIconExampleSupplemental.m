@@ -22,20 +22,19 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
-#import "MaterialTabs.h"
 #import "MaterialButtons.h"
+#import "MaterialTabs.h"
 
 @implementation TabBarIconExample (Supplemental)
 
 - (void)setupExampleViews {
-
   self.view.backgroundColor = [UIColor whiteColor];
 
   UIBarButtonItem *badgeIncrementItem =
-  [[UIBarButtonItem alloc] initWithTitle:@"Increment"
-                                   style:UIBarButtonItemStylePlain
-                                  target:self
-                                  action:@selector(incrementBadges:)];
+      [[UIBarButtonItem alloc] initWithTitle:@"Increment"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(incrementBadges:)];
   self.navigationItem.rightBarButtonItem = badgeIncrementItem;
 
   // Button to change tab alignments.
@@ -44,8 +43,8 @@
   [self.alignmentButton sizeToFit];
   self.alignmentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), 100);
   self.alignmentButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-  UIViewAutoresizingFlexibleBottomMargin |
-  UIViewAutoresizingFlexibleRightMargin;
+                                          UIViewAutoresizingFlexibleBottomMargin |
+                                          UIViewAutoresizingFlexibleRightMargin;
   [self.alignmentButton addTarget:self
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];
