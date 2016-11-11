@@ -379,23 +379,4 @@
   }
 }
 
-- (UIBezierPath *)plusShapePath {
-  UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-  [bezierPath moveToPoint: CGPointMake(19, 13)];
-  [bezierPath addLineToPoint: CGPointMake(13, 13)];
-  [bezierPath addLineToPoint: CGPointMake(13, 19)];
-  [bezierPath addLineToPoint: CGPointMake(11, 19)];
-  [bezierPath addLineToPoint: CGPointMake(11, 13)];
-  [bezierPath addLineToPoint: CGPointMake(5, 13)];
-  [bezierPath addLineToPoint: CGPointMake(5, 11)];
-  [bezierPath addLineToPoint: CGPointMake(11, 11)];
-  [bezierPath addLineToPoint: CGPointMake(11, 5)];
-  [bezierPath addLineToPoint: CGPointMake(13, 5)];
-  [bezierPath addLineToPoint: CGPointMake(13, 11)];
-  [bezierPath addLineToPoint: CGPointMake(19, 11)];
-  [bezierPath addLineToPoint: CGPointMake(19, 13)];
-  [bezierPath closePath];
-  return bezierPath;
-}
-
 @end

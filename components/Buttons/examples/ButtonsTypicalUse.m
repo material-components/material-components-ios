@@ -87,14 +87,8 @@
   floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
 
   CGFloat floatingButtonPlusDimension = 24.0f;
-  CAShapeLayer *plusShape = [CAShapeLayer layer];
-  plusShape.path = [self plusShapePath].CGPath;
-  plusShape.fillColor = [UIColor whiteColor].CGColor;
-  plusShape.position =
-      CGPointMake((floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
-                  (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2);
-  [floatingButton.layer addSublayer:plusShape];
-
+  UIImage *plusImage = [UIImage imageNamed:@"Plus"];
+  [floatingButton setImage:plusImage forState:UIControlStateNormal];
   [self.view addSubview:floatingButton];
 
   NSDictionary *views = @{
