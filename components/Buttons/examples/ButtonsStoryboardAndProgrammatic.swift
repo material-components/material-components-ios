@@ -112,18 +112,8 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
         views: views))
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-
   @IBAction func tap(sender: AnyObject) {
     print("\(sender.dynamicType) was tapped.")
   }
 
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-
-
-  }
 }
