@@ -1,5 +1,6 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights
+ Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -33,18 +34,19 @@
 #pragma mark - Action
 
 - (void)incrementBadges:(id)sender {
-  // Increment all numeric badge values to show cells updating when their item's properties are set.
-    for (UITabBarItem *item in self.tabBar.items) {
-      NSString *badgeValue = item.badgeValue;
-      if (badgeValue) {
-        NSInteger badgeNumber = badgeValue.integerValue;
-        if (badgeNumber > 0) {
-          // Update badge value directly - the cell should update immediately.
-          item.badgeValue = [NSNumberFormatter localizedStringFromNumber:@(badgeNumber + 1)
-                                                             numberStyle:NSNumberFormatterNoStyle];
-        }
+  // Increment all numeric badge values to show cells updating when their item's
+  // properties are set.
+  for (UITabBarItem *item in self.tabBar.items) {
+    NSString *badgeValue = item.badgeValue;
+    if (badgeValue) {
+      NSInteger badgeNumber = badgeValue.integerValue;
+      if (badgeNumber > 0) {
+        // Update badge value directly - the cell should update immediately.
+        item.badgeValue = [NSNumberFormatter localizedStringFromNumber:@(badgeNumber + 1)
+                                                           numberStyle:NSNumberFormatterNoStyle];
       }
     }
+  }
 }
 
 #pragma mark - Private
