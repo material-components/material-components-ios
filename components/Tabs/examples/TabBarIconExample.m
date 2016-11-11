@@ -57,34 +57,34 @@
   // Short tab bar with a small number of items.
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIImage *infoImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
+  [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
   UIImage *starImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
+  [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
   self.tabBar =
-      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
+  [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
   self.tabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 150);
   self.tabBar.items = @[
-    [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:1]
-  ];
+                        [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
+                        [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:0]
+                        ];
 
-  // Give the last item a badge
-  [[self.tabBar.items lastObject] setBadgeValue:@"1"];
+  // Give the first item a badge
+  [[self.tabBar.items firstObject] setBadgeValue:@"1"];
 
   self.tabBar.barTintColor = [UIColor blueColor];
   self.tabBar.tintColor = [UIColor whiteColor];
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
   self.tabBar.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.tabBar sizeToFit];
   [self.view addSubview:self.tabBar];
 }
 
 - (void)changeAlignment:(id)sender {
   UIAlertController *sheet =
-      [UIAlertController alertControllerWithTitle:nil
-                                          message:nil
-                                   preferredStyle:UIAlertControllerStyleActionSheet];
+  [UIAlertController alertControllerWithTitle:nil
+                                      message:nil
+                               preferredStyle:UIAlertControllerStyleActionSheet];
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
