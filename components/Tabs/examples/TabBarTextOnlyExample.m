@@ -35,17 +35,17 @@
 
 - (void)incrementBadges:(id)sender {
   // Increment all numeric badge values to show cells updating when their item's properties are set.
-    for (UITabBarItem *item in self.tabBar.items) {
-      NSString *badgeValue = item.badgeValue;
-      if (badgeValue) {
-        NSInteger badgeNumber = badgeValue.integerValue;
-        if (badgeNumber > 0) {
-          // Update badge value directly - the cell should update immediately.
-          item.badgeValue = [NSNumberFormatter localizedStringFromNumber:@(badgeNumber + 1)
-                                                             numberStyle:NSNumberFormatterNoStyle];
-        }
+  for (UITabBarItem *item in self.tabBar.items) {
+    NSString *badgeValue = item.badgeValue;
+    if (badgeValue) {
+      NSInteger badgeNumber = badgeValue.integerValue;
+      if (badgeNumber > 0) {
+        // Update badge value directly - the cell should update immediately.
+        item.badgeValue = [NSNumberFormatter localizedStringFromNumber:@(badgeNumber + 1)
+                                                           numberStyle:NSNumberFormatterNoStyle];
       }
     }
+  }
 }
 
 #pragma mark - Private
@@ -55,15 +55,15 @@
 
   // Long tab bar with lots of items of varying length. Also demonstrates configurable accent color.
   self.tabBar =
-  [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
+      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
   self.tabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 250);
   self.tabBar.items = @[
-                        [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
-                        [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
-                        [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
-                        [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
-                        [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
-                        ];
+    [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Tab Bar" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
+  ];
 
   // Make entire tab bar non-uppercased
   self.tabBar.displaysUppercaseTitles = NO;
@@ -76,16 +76,16 @@
   self.tabBar.inkColor = [UIColor colorWithWhite:0.0 alpha:0.1];
 
   self.tabBar.autoresizingMask =
-  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.tabBar sizeToFit];
   [self.view addSubview:self.tabBar];
 }
 
 - (void)changeAlignment:(id)sender {
   UIAlertController *sheet =
-  [UIAlertController alertControllerWithTitle:nil
-                                      message:nil
-                               preferredStyle:UIAlertControllerStyleActionSheet];
+      [UIAlertController alertControllerWithTitle:nil
+                                          message:nil
+                                   preferredStyle:UIAlertControllerStyleActionSheet];
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
