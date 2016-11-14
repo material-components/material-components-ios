@@ -18,6 +18,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialTabs.h"
+#import "MaterialAppBar.h"
+@import MaterialComponents.MaterialPalettes;
 
 #import "TabBarIconExampleSupplemental.h"
 
@@ -52,32 +54,28 @@
 #pragma mark - Private
 
 - (void)loadTabBar {
-  const CGRect bounds = self.view.bounds;
+  self.tabBar = [MDCTabBar new];
 
-  // Short tab bar with a small number of items.
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIImage *infoImage =
   [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
   UIImage *starImage =
   [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
-  self.tabBar =
-  [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
-  self.tabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 150);
   self.tabBar.items = @[
-                        [[UITabBarItem alloc] initWithTitle:@"Two" image:infoImage tag:0],
-                        [[UITabBarItem alloc] initWithTitle:@"Tabs" image:starImage tag:0]
+                        [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
+                        [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]
                         ];
 
   // Give the first item a badge
-  [[self.tabBar.items firstObject] setBadgeValue:@"1"];
+  [self.tabBar.items[1] setBadgeValue:@"1"];
 
-  self.tabBar.barTintColor = [UIColor blueColor];
+  UIColor *color = [[MDCPalette bluePalette] tint500];
+
+  self.tabBar.barTintColor = color;
   self.tabBar.tintColor = [UIColor whiteColor];
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  self.tabBar.autoresizingMask =
-  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-  [self.tabBar sizeToFit];
-  [self.view addSubview:self.tabBar];
+
+  self.appBar.headerStackView.bottomBar = self.tabBar;
 }
 
 - (void)changeAlignment:(id)sender {

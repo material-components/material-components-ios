@@ -21,11 +21,13 @@
 
 @class MDCTabBar;
 @class MDCRaisedButton;
+@class MDCAppBar;
 
 @interface TabBarIconExample : UIViewController
 
 @property MDCTabBar *_Nullable tabBar;
 @property MDCRaisedButton *_Nullable alignmentButton;
+@property MDCAppBar *_Nullable appBar;
 
 @end
 

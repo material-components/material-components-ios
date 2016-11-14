@@ -24,24 +24,40 @@
 
 #import "MaterialButtons.h"
 #import "MaterialTabs.h"
+#import "MaterialAppBar.h"
+@import MaterialComponents.MaterialPalettes;
 
 @implementation TabBarIconExample (Supplemental)
 
 - (void)setupExampleViews {
   self.view.backgroundColor = [UIColor whiteColor];
 
+  self.appBar = [[MDCAppBar alloc] init];
+  [self addChildViewController:self.appBar.headerViewController];
+
+  UIColor *color = [[MDCPalette bluePalette] tint500];
+  self.appBar.headerViewController.headerView.backgroundColor = color;
+  self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
+
+  self.appBar.navigationBar.tintColor = [UIColor whiteColor];
+  self.appBar.navigationBar.titleTextAttributes =
+  @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+
+  [self.appBar addSubviewsToParent];
+
   UIBarButtonItem *badgeIncrementItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Increment"
+      [[UIBarButtonItem alloc] initWithTitle:@"Stars"
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(incrementBadges:)];
   self.navigationItem.rightBarButtonItem = badgeIncrementItem;
+  self.title = @"Tabs With Icons";
 
   // Button to change tab alignments.
   self.alignmentButton = [[MDCRaisedButton alloc] init];
   [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
   [self.alignmentButton sizeToFit];
-  self.alignmentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), 100);
+  self.alignmentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), 76 + 72 + 100);
   self.alignmentButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
                                           UIViewAutoresizingFlexibleBottomMargin |
                                           UIViewAutoresizingFlexibleRightMargin;
@@ -49,6 +65,10 @@
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.alignmentButton];
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.appBar.headerViewController;
 }
 
 @end
@@ -65,6 +85,10 @@
 
 + (NSString *)catalogDescription {
   return @"The tab bar is a component for switching between views of grouped content.";
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end
