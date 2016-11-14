@@ -55,8 +55,10 @@ static const CGFloat kMaxAnchorLengthQuickSwipe = 25;
 // view finishes decelerating with the header partially shifted.
 static const CGFloat kMinimumVisibleProportion = 0.25;
 
-static inline MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderStatusBarBehaviorExtension(MDCFlexibleHeaderShiftBehavior intendedShiftBehavior) {
-  if (![[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"] || intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled) {
+static inline MDCFlexibleHeaderShiftBehavior
+ MDCFlexibleHeaderStatusBarBehaviorFunction(MDCFlexibleHeaderShiftBehavior intendedShiftBehavior) {
+  if (![[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"] ||
+      intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled) {
     return intendedShiftBehavior;
   }
   return MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
@@ -906,7 +908,7 @@ static inline MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderStatusBarBehaviorE
   }
   BOOL needsShiftOnScreen = (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
                              shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled);
-  _shiftBehavior = MDCFlexibleHeaderStatusBarBehaviorExtension(shiftBehavior);
+  _shiftBehavior = MDCFlexibleHeaderStatusBarBehaviorFunction(shiftBehavior);
 
   _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 
