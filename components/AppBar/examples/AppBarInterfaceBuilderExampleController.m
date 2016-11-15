@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MDCAppBarAccessibilityEnforcer.h"
 
 @interface AppBarInterfaceBuilderExample : UIViewController <UIScrollViewDelegate>
 
@@ -50,8 +51,8 @@
   UIColor *headerColor = [UIColor colorWithRed:0.01 green:0.67 blue:0.96 alpha:1.0];
   self.appBar.headerViewController.headerView.backgroundColor = headerColor;
 
-  MDCAppBarAccessibilityConfigurator *config = [[MDCAppBarAccessibilityConfigurator alloc] init];
-  [config applyAccessibilityTitleColorOnAppBar:_appBar];
+  MDCAppBarAccessibilityEnforcer *enforcer = [[MDCAppBarAccessibilityEnforcer alloc] init];
+  [enforcer enforceAccessibility:_appBar];
 }
 
 - (void)viewDidLoad {

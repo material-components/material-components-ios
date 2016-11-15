@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MDCAppBarAccessibilityEnforcer.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 
@@ -42,8 +43,9 @@
                                       blue:(CGFloat)0xF4 / (CGFloat)255
                                      alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
-    MDCAppBarAccessibilityConfigurator *config = [[MDCAppBarAccessibilityConfigurator alloc] init];
-    [config applyAccessibilityTitleColorOnAppBar:_appBar];
+    _appBar.navigationBar.backgroundColor = [UIColor redColor];
+    MDCAppBarAccessibilityEnforcer *enforcer = [[MDCAppBarAccessibilityEnforcer alloc] init];
+    [enforcer enforceAccessibility:_appBar];
   }
   return self;
 }

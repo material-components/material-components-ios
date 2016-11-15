@@ -18,14 +18,6 @@
 #import "MaterialHeaderStackView.h"
 #import "MaterialNavigationBar.h"
 
-@class MDCAppBar;
-@interface MDCAppBarAccessibilityConfigurator : NSObject
-
-- (nonnull instancetype)init;
-- (void)applyAccessibilityTitleColorOnAppBar:(nonnull MDCAppBar *)appBar;
-
-@end
-
 /**
  The MDCAppBar class creates and configures the constellation of components required to represent a
  Material App Bar.

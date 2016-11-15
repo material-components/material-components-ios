@@ -40,8 +40,8 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     let headerColor = UIColor(red: 0.01, green: 0.67, blue: 0.96, alpha: 1.0)
     appBar.headerViewController.headerView.backgroundColor = headerColor
 
-    let config = MDCAppBarAccessibilityConfigurator()
-    config.applyAccessibilityTitleColorOnAppBar(appBar)
+    let enforcer = MDCAppBarAccessibilityEnforcer()
+    enforcer.enforceAccessibility(appBar)
   }
 
 
