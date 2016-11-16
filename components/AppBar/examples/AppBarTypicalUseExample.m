@@ -43,7 +43,6 @@
                                       blue:(CGFloat)0xF4 / (CGFloat)255
                                      alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
-    _appBar.navigationBar.backgroundColor = [UIColor redColor];
     MDCAppBarAccessibilityEnforcer *enforcer = [[MDCAppBarAccessibilityEnforcer alloc] init];
     [enforcer enforceAccessibility:_appBar];
   }
