@@ -29,6 +29,7 @@ void MDCCatalogDrawButtonBarTile(CGRect frame);
 void MDCCatalogDrawButtonsTile(CGRect frame);
 void MDCCatalogDrawCollectionsTile(CGRect frame);
 void MDCCatalogDrawDialogsTile(CGRect frame);
+void MDCCatalogDrawFeatureHighlightTile(CGRect frame);
 void MDCCatalogDrawFlexibleHeaderTile(CGRect frame);
 void MDCCatalogDrawHeaderStackViewTile(CGRect frame);
 void MDCCatalogDrawInkTile(CGRect frame);
