@@ -2287,6 +2287,87 @@ void MDCCatalogDrawPageControlTile(CGRect frame) {
   CGColorSpaceRelease(colorSpace);
 }
 
+void MDCCatalogDrawProgressViewTile(CGRect frame) {
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  UIColor* fillColor = [UIColor colorWithRed:0.008 green:0.467 blue:0.741 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* gradientColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.1];
+
+  CGFloat gradientLocations[] = {0.14, 1};
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef) @[ (id)gradientColor.CGColor, (id)UIColor.clearColor.CGColor ],
+      gradientLocations);
+
+  CGRect progressViewGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24,
+                                        floor((CGRectGetWidth(frame) - 24.5) * 0.85015 + 0.5),
+                                        floor((CGRectGetHeight(frame) - 24) * 0.61069 + 0.5));
+
+  {
+    CGRect gradientRectangleRect = CGRectMake(
+        CGRectGetMinX(progressViewGroup) + floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+        CGRectGetMinY(progressViewGroup) +
+            floor(CGRectGetHeight(progressViewGroup) * 0.30500 + 0.5),
+        floor(CGRectGetWidth(progressViewGroup) * 1.00000 + 0.5) -
+            floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+        floor(CGRectGetHeight(progressViewGroup) * 1.00000 - 0.1) -
+            floor(CGRectGetHeight(progressViewGroup) * 0.30500 + 0.5) + 0.6);
+    UIBezierPath* gradientRectanglePath = [UIBezierPath bezierPathWithRect:gradientRectangleRect];
+    CGContextSaveGState(context);
+    [gradientRectanglePath addClip];
+    CGContextDrawLinearGradient(
+        context, gradient,
+        CGPointMake(CGRectGetMidX(gradientRectangleRect), CGRectGetMinY(gradientRectangleRect)),
+        CGPointMake(CGRectGetMidX(gradientRectangleRect), CGRectGetMaxY(gradientRectangleRect)), 0);
+    CGContextRestoreGState(context);
+
+    UIBezierPath* whiteProgressBackgroundRectanglePath = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(progressViewGroup) +
+                                          floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                                      CGRectGetMinY(progressViewGroup) +
+                                          floor(CGRectGetHeight(progressViewGroup) * 0.36250) + 0.5,
+                                      floor(CGRectGetWidth(progressViewGroup) * 1.00000 + 0.5) -
+                                          floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                                      floor(CGRectGetHeight(progressViewGroup) * 0.41875 + 0.5) -
+                                          floor(CGRectGetHeight(progressViewGroup) * 0.36250) -
+                                          0.5)];
+    [UIColor.whiteColor setFill];
+    [whiteProgressBackgroundRectanglePath fill];
+
+    UIBezierPath* headerRectanglePath = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(progressViewGroup) +
+                                   floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(progressViewGroup) +
+                                   floor(CGRectGetHeight(progressViewGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetWidth(progressViewGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetHeight(progressViewGroup) * 0.36250 + 0.5) -
+                                   floor(CGRectGetHeight(progressViewGroup) * 0.00000 + 0.5))];
+    [fillColor2 setFill];
+    [headerRectanglePath fill];
+
+    UIBezierPath* progressRectanglePath = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(progressViewGroup) +
+                                   floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(progressViewGroup) +
+                                   floor(CGRectGetHeight(progressViewGroup) * 0.35625 + 0.5),
+                               floor(CGRectGetWidth(progressViewGroup) * 0.79209 + 0.4) -
+                                   floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5) + 0.1,
+                               floor(CGRectGetHeight(progressViewGroup) * 0.41250) -
+                                   floor(CGRectGetHeight(progressViewGroup) * 0.35625 + 0.5) +
+                                   0.5)];
+    [fillColor setFill];
+    [progressRectanglePath fill];
+  }
+
+  CGGradientRelease(gradient);
+  CGColorSpaceRelease(colorSpace);
+}
+
 void MDCCatalogDrawShadowLayerTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
