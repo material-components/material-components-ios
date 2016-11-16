@@ -80,6 +80,8 @@ class MDCCatalogTileView: UIView {
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonBarTile)
     case "Buttons":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonsTile)
+    case "Collection Cells":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionCellsTile)
     case "Collections":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionsTile)
     case "Feature Highlight":

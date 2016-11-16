@@ -1124,6 +1124,91 @@ void MDCCatalogDrawButtonsTile(CGRect frame) {
   [ovalPath fill];
 }
 
+void MDCCatalogDrawCollectionCellsTile(CGRect frame) {
+  //// General Declarations
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  //// Color Declarations
+  UIColor* fillColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0];
+  UIColor* fillColor2 = [UIColor colorWithRed: 0.012 green: 0.663 blue: 0.957 alpha: 0.1];
+  UIColor* color = [UIColor colorWithRed: 0.506 green: 0.831 blue: 0.98 alpha: 1];
+  UIColor* gradientColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0.1];
+
+  //// Gradient Declarations
+  CGFloat gradientLocations[] = {0.14, 0.5, 1};
+  CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)@[(id)fillColor2.CGColor, (id)[fillColor2 blendedColorWithFraction: 0.5 ofColor: gradientColor].CGColor, (id)gradientColor.CGColor], gradientLocations);
+
+
+  //// Subframes
+  CGRect collectionCellsGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24, floor((CGRectGetWidth(frame) - 24.5) * 0.84404 + 0.5), floor((CGRectGetHeight(frame) - 24) * 0.61069 + 0.5));
+
+
+  //// Collection Cells Group
+  {
+    //// Stripe Low Drawing
+    UIBezierPath* stripeLowPath = [UIBezierPath bezierPath];
+    [stripeLowPath moveToPoint: CGPointMake(CGRectGetMinX(collectionCellsGroup) + 0.00000 * CGRectGetWidth(collectionCellsGroup), CGRectGetMinY(collectionCellsGroup) + 0.75626 * CGRectGetHeight(collectionCellsGroup))];
+    [stripeLowPath addLineToPoint: CGPointMake(CGRectGetMinX(collectionCellsGroup) + 1.00000 * CGRectGetWidth(collectionCellsGroup), CGRectGetMinY(collectionCellsGroup) + 0.75626 * CGRectGetHeight(collectionCellsGroup))];
+    stripeLowPath.miterLimit = 4;
+
+    [fillColor setFill];
+    [stripeLowPath fill];
+    [color setStroke];
+    stripeLowPath.lineWidth = 1;
+    [stripeLowPath stroke];
+
+
+    //// Stripe Middle Drawing
+    UIBezierPath* stripeMiddlePath = [UIBezierPath bezierPath];
+    [stripeMiddlePath moveToPoint: CGPointMake(CGRectGetMinX(collectionCellsGroup) + 0.00000 * CGRectGetWidth(collectionCellsGroup), CGRectGetMinY(collectionCellsGroup) + 0.50376 * CGRectGetHeight(collectionCellsGroup))];
+    [stripeMiddlePath addLineToPoint: CGPointMake(CGRectGetMinX(collectionCellsGroup) + 1.00000 * CGRectGetWidth(collectionCellsGroup), CGRectGetMinY(collectionCellsGroup) + 0.50376 * CGRectGetHeight(collectionCellsGroup))];
+    stripeMiddlePath.miterLimit = 4;
+
+    [fillColor setFill];
+    [stripeMiddlePath fill];
+    [color setStroke];
+    stripeMiddlePath.lineWidth = 1;
+    [stripeMiddlePath stroke];
+
+
+    //// Stripe High Drawing
+    UIBezierPath* stripeHighPath = [UIBezierPath bezierPath];
+    [stripeHighPath moveToPoint: CGPointMake(CGRectGetMinX(collectionCellsGroup) + 0.00000 * CGRectGetWidth(collectionCellsGroup), CGRectGetMinY(collectionCellsGroup) + 0.25126 * CGRectGetHeight(collectionCellsGroup))];
+    [stripeHighPath addLineToPoint: CGPointMake(CGRectGetMinX(collectionCellsGroup) + 1.00000 * CGRectGetWidth(collectionCellsGroup), CGRectGetMinY(collectionCellsGroup) + 0.25126 * CGRectGetHeight(collectionCellsGroup))];
+    stripeHighPath.miterLimit = 4;
+
+    [fillColor setFill];
+    [stripeHighPath fill];
+    [color setStroke];
+    stripeHighPath.lineWidth = 1;
+    [stripeHighPath stroke];
+
+
+    //// Gradient Rectangle Drawing
+    CGRect gradientRectangleRect = CGRectMake(CGRectGetMinX(collectionCellsGroup) + floor(CGRectGetWidth(collectionCellsGroup) * 0.00000 + 0.5), CGRectGetMinY(collectionCellsGroup) + floor(CGRectGetHeight(collectionCellsGroup) * 0.76250 + 0.5), floor(CGRectGetWidth(collectionCellsGroup) * 1.00000 + 0.5) - floor(CGRectGetWidth(collectionCellsGroup) * 0.00000 + 0.5), floor(CGRectGetHeight(collectionCellsGroup) * 1.00000 + 0.5) - floor(CGRectGetHeight(collectionCellsGroup) * 0.76250 + 0.5));
+    UIBezierPath* gradientRectanglePath = [UIBezierPath bezierPathWithRect: gradientRectangleRect];
+    CGContextSaveGState(context);
+    [gradientRectanglePath addClip];
+    CGContextDrawLinearGradient(context, gradient,
+                                CGPointMake(CGRectGetMidX(gradientRectangleRect), CGRectGetMinY(gradientRectangleRect)),
+                                CGPointMake(CGRectGetMidX(gradientRectangleRect), CGRectGetMaxY(gradientRectangleRect)),
+                                0);
+    CGContextRestoreGState(context);
+
+
+    //// Solid Rectangle Drawing
+    UIBezierPath* solidRectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(collectionCellsGroup) + floor(CGRectGetWidth(collectionCellsGroup) * 0.00000 + 0.5), CGRectGetMinY(collectionCellsGroup) + floor(CGRectGetHeight(collectionCellsGroup) * 0.00000 + 0.5), floor(CGRectGetWidth(collectionCellsGroup) * 1.00000 + 0.5) - floor(CGRectGetWidth(collectionCellsGroup) * 0.00000 + 0.5), floor(CGRectGetHeight(collectionCellsGroup) * 0.76250 + 0.5) - floor(CGRectGetHeight(collectionCellsGroup) * 0.00000 + 0.5))];
+    [fillColor2 setFill];
+    [solidRectanglePath fill];
+  }
+
+
+  //// Cleanup
+  CGGradientRelease(gradient);
+  CGColorSpaceRelease(colorSpace);
+}
+
 void MDCCatalogDrawCollectionsTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
