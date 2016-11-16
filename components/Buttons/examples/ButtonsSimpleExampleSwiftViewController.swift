@@ -48,13 +48,8 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
 
-    let plusShape = CAShapeLayer();
-    plusShape.path = ButtonsTypicalUseSupplemental.plusShapePath().CGPath;
-    plusShape.fillColor = UIColor.whiteColor().CGColor;
-    plusShape.position =
-      CGPointMake((floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
-                  (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2);
-    floatingButton.layer.addSublayer(plusShape);
+    let plusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton);
+    floatingButton.layer.addSublayer(plusShapeLayer);
 
     self.view.addSubview(floatingButton)
 
