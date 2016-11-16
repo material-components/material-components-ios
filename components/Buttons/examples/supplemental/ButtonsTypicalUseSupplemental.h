@@ -18,6 +18,5 @@
 @interface ButtonsTypicalUseViewController (Supplemental)
 
 - (void)setupExampleViews;
-- (UIBezierPath *)plusShapePath;
 
 @end
