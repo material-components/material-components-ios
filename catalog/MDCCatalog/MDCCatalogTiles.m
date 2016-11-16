@@ -1742,7 +1742,7 @@ void MDCCatalogDrawMiscTile(CGRect frame) {
   }
 }
 
-void MDCCatalogDrawFeatureHighlight(CGRect frame) {
+void MDCCatalogDrawFeatureHighlightTile(CGRect frame) {
   //// General Declarations
   CGContextRef context = UIGraphicsGetCurrentContext();
 
