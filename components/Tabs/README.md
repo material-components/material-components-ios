@@ -86,7 +86,6 @@ import MaterialComponents
 
 Conform your class to the MDCTabBarDelegate protocol and set it as the tab bar's delegate to handle updating the UI when the user selects a tab. 
 
-<<<<<<< HEAD
 ### Selected item
 
 Update the selected tab programmatically by setting `selectedItem`, optionally with an animation. Delegate methods are not called for programmatic changes, so callers are responsible for updating UI as needed after updating the selected item.
@@ -97,16 +96,6 @@ Set the `itemAppearance` property on the tab bar to switch between item display 
 
 ### Styling
 
-=======
-### Selected Item
-
-### Appearance
-
-Set the `itemAppearance` property on the tab bar to switch between item display modes. Items can be displayed as titles (the default), icons, or combined.
-
-### Styling
-
->>>>>>> e4f9af2bf23dbffd0da9004c37119ab7a7e2bcaa
 By default, the tab bar is configured to display items with white text and icons. To customize the color of the tab bar, set `tintColor`, `selectedItemTintColor`, `unselectedItemTintColor`, `inkColor`, and `barTintColor` properties. If `selectedItemTintColor` is nil, the tab bar's `tintColor` will be used automatically for selected items.
 
 Configure where items are placed in the tab bar's by setting the `alignment` property.
