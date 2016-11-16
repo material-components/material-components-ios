@@ -18,7 +18,7 @@ import XCTest
 import MaterialComponents
 
 // Tests confirming contract with a tracking scroll view that has scrolled
-class FlexibleHeaderTrackingScrollViewDidScroll: XCTestCase {
+class FlexibleHeaderTrackingScrollViewDidScroll: XCTestCase, UIScrollViewDelegate {
 
   // Implicitly unwrapped to indicate the contract of creating these values in setUp and make our
   // accessors cleaner in tests.
@@ -38,6 +38,7 @@ class FlexibleHeaderTrackingScrollViewDidScroll: XCTestCase {
     scrollView = UIScrollView()
     scrollView.contentSize = CGSize(width: originalFrame.size.width, height: 1000)
     scrollView.frame = CGRect(x: 0, y: 0, width: originalFrame.size.width, height: 250)
+    scrollView.delegate = self
 
     view.trackingScrollView = scrollView
   }

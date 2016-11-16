@@ -81,6 +81,7 @@ static const uint32_t kCellRedColor = 0xF44336;
   // Accessory defaults.
   _accessoryType = MDCCollectionViewCellAccessoryNone;
   _accessoryInset = kAccessoryInsetDefault;
+  _editingSelectorColor = HEXCOLOR(kCellRedColor);
 }
 
 #pragma mark - Layout
@@ -391,7 +392,7 @@ static const uint32_t kCellRedColor = 0xF44336;
   if (selected) {
     _editingSelectorImageView.image =
         [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_check_circle]];
-    _editingSelectorImageView.tintColor = HEXCOLOR(kCellRedColor);
+    _editingSelectorImageView.tintColor = self.editingSelectorColor;
   } else {
     _editingSelectorImageView.image =
         [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_radio_button_unchecked]];
@@ -399,6 +400,13 @@ static const uint32_t kCellRedColor = 0xF44336;
   }
   _editingSelectorImageView.image =
       [_editingSelectorImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
+- (void)setEditingSelectorColor:(UIColor *)editingSelectorColor {
+  if (editingSelectorColor == nil) {
+    editingSelectorColor = HEXCOLOR(kCellRedColor);
+  }
+  _editingSelectorColor = editingSelectorColor;
 }
 
 #pragma mark - Cell Appearance Animation
@@ -431,6 +439,16 @@ static const uint32_t kCellRedColor = 0xF44336;
   if ([_accessoryView isKindOfClass:[MDCAccessoryTypeImageView class]]) {
     self.accessoryType = self.accessoryType;
   }
+}
+
+#pragma mark - Accessibility
+
+- (UIAccessibilityTraits)accessibilityTraits {
+  UIAccessibilityTraits accessibilityTraits = [super accessibilityTraits];
+  if (self.accessoryType == MDCCollectionViewCellAccessoryCheckmark) {
+    accessibilityTraits |= UIAccessibilityTraitSelected;
+  }
+  return accessibilityTraits;
 }
 
 #pragma mark - Private

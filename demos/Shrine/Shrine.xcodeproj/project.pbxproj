@@ -20,7 +20,6 @@
 		DE5D2A5A1C81092D00C9C650 /* ShrineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5D2A591C81092D00C9C650 /* ShrineCollectionViewCell.swift */; };
 		DE5D2A5C1C810E6600C9C650 /* ShrineCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5D2A5B1C810E6600C9C650 /* ShrineCollectionViewController.swift */; };
 		DE6887EA1C849C7C0074A8C5 /* AbrilFatface-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE6887E91C849C7C0074A8C5 /* AbrilFatface-Regular.ttf */; };
-		DE6887F11C849F7F0074A8C5 /* RemoteImageService.m in Sources */ = {isa = PBXBuildFile; fileRef = DE6887F01C849F7F0074A8C5 /* RemoteImageService.m */; };
 		DE6887F31C84FCD40074A8C5 /* ShrineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6887F21C84FCD40074A8C5 /* ShrineData.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,8 +42,6 @@
 		DE5D2A5B1C810E6600C9C650 /* ShrineCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineCollectionViewController.swift; sourceTree = "<group>"; };
 		DE6887E91C849C7C0074A8C5 /* AbrilFatface-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AbrilFatface-Regular.ttf"; path = "Shrine/Resources/AbrilFatface-Regular.ttf"; sourceTree = "<group>"; };
 		DE6887EE1C849F7E0074A8C5 /* Shrine-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Shrine-Bridging-Header.h"; sourceTree = "<group>"; };
-		DE6887EF1C849F7F0074A8C5 /* RemoteImageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteImageService.h; sourceTree = "<group>"; };
-		DE6887F01C849F7F0074A8C5 /* RemoteImageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteImageService.m; sourceTree = "<group>"; };
 		DE6887F21C84FCD40074A8C5 /* ShrineData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,8 +101,6 @@
 				DE5D2A531C81068100C9C650 /* Info.plist */,
 				DE5D2A501C81068100C9C650 /* LaunchScreen.storyboard */,
 				DE5D2A4B1C81068100C9C650 /* Main.storyboard */,
-				DE6887EF1C849F7F0074A8C5 /* RemoteImageService.h */,
-				DE6887F01C849F7F0074A8C5 /* RemoteImageService.m */,
 				DE6887EE1C849F7E0074A8C5 /* Shrine-Bridging-Header.h */,
 				DE5D2A591C81092D00C9C650 /* ShrineCollectionViewCell.swift */,
 				DE5D2A5B1C810E6600C9C650 /* ShrineCollectionViewController.swift */,
@@ -261,7 +256,6 @@
 				DE064E731C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift in Sources */,
 				DE6887F31C84FCD40074A8C5 /* ShrineData.swift in Sources */,
 				DE34DEBB1C88E90000E04B65 /* ShrineInkOverlay.swift in Sources */,
-				DE6887F11C849F7F0074A8C5 /* RemoteImageService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
