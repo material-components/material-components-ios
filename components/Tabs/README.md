@@ -61,24 +61,77 @@ Rather, the tabs report to their delegate when there is a tab selection. The del
 
 Tabs can also show a badge (usually a number) like UITabBar.
 
-### Component detail
-
-TODO(brianjmoore)
-
 - - -
 
 ## Usage
 
-TODO(brianjmoore): Stub out
-TODO(willlarche): Flesh out
+### Importing
 
-TODO **Required section**. Provide essential integration steps here.
+To use the tab bar in your code, import the MaterialTabs component.
 
-Remember that the audience for this section is someone completely new to using Material
-components; don't assume or expect the reader to have read another component's README. At best
-you can assume that the reader read the Quick Start guide.
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
 
-### Additional information section
+~~~ objc
+#import "MaterialTabs.h"
+~~~
 
-TODO **Recommended section**. These breakout sections are a perfect opportunity to talk about
-edge case behaviors.
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+<!--</div>-->
+
+### Delegate
+
+Conform your class to the MDCTabBarDelegate protocol and set it as the tab bar's delegate to handle updating the UI when the user selects a tab. 
+
+### Selected item
+
+Update the selected tab programmatically by setting `selectedItem`, optionally with an animation. Delegate methods are not called for programmatic changes, so callers are responsible for updating UI as needed after updating the selected item.
+
+### Appearance
+
+Set the `itemAppearance` property on the tab bar to switch between item display modes. Items can be displayed as titles (the default), icons, or combined.
+
+### Styling
+
+By default, the tab bar is configured to display items with white text and icons. To customize the color of the tab bar, set `tintColor`, `selectedItemTintColor`, `unselectedItemTintColor`, `inkColor`, and `barTintColor` properties. If `selectedItemTintColor` is nil, the tab bar's `tintColor` will be used automatically for selected items.
+
+Configure where items are placed in the tab bar's by setting the `alignment` property.
+
+- - -
+
+## Example
+
+### Creating a tab bar
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
+MDCTabBar *tabBar = [[MDCTabBar alloc] initWitFrame:self.view.bounds];
+tabBar.items = @[
+    [[UITabBarItem alloc] initWithTitle:@"Recents" image:[UIImage imageNamed:@"phone"] tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Favorites" image:[UIImage imageNamed:@"heart"] tag:0],
+];
+tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+tabBar.autoresizingMask =
+    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+[tabBar sizeToFit];
+[self.view addSubview:tabBar];
+~~~
+
+#### Swift
+~~~ swift
+let tabBar = MDCTabBar(frame: view.bounds)
+tabBar.items = [
+    UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
+    UITabBarItem(title: "Favorites", image: UIImage(named: "heart"), tag: 0),
+]
+tabBar.itemAppearance = .titledImages
+tabBar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
+tabBar.sizeToFit()
+view.addSubview(tabBar)
+~~~
+<!--</div>-->
