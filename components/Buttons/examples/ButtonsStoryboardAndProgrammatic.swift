@@ -59,11 +59,17 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
     flatButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(flatButton)
 
-    floatingButton.setTitle("+", forState: .Normal)
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
+
+    let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    floatingButton.layer.addSublayer(floatingPlusShapeLayer)
     self.view.addSubview(floatingButton)
+
+    let storyboardPlusShapeLayer =
+      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
 
     let views = [
       "raised": raisedButton,
@@ -96,18 +102,8 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
         views: views))
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-
   @IBAction func tap(sender: AnyObject) {
     print("\(sender.dynamicType) was tapped.")
   }
 
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-
-
-  }
 }
