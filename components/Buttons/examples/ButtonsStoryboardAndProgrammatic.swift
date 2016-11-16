@@ -30,7 +30,6 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
   let raisedButton = MDCRaisedButton()
   let flatButton = MDCFlatButton()
   let floatingButton = MDCFloatingButton()
-  let floatingButtonPlusDimension = CGFloat(24)
 
   @IBOutlet weak var storyboardRaised: MDCRaisedButton!
   @IBOutlet weak var storyboardFlat: MDCFlatButton!
@@ -64,22 +63,13 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
 
-    let plusShape = CAShapeLayer()
-    plusShape.path = ButtonsTypicalUseSupplemental.plusShapePath().CGPath
-    plusShape.fillColor = UIColor.whiteColor().CGColor
-    plusShape.position =
-      CGPointMake((floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
-                  (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2)
-    floatingButton.layer.addSublayer(plusShape)
+    let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    floatingButton.layer.addSublayer(floatingPlusShapeLayer)
     self.view.addSubview(floatingButton)
 
-    let plusStoryboardShape = CAShapeLayer()
-    plusStoryboardShape.path = ButtonsTypicalUseSupplemental.plusShapePath().CGPath
-    plusStoryboardShape.fillColor = UIColor.whiteColor().CGColor
-    plusStoryboardShape.position =
-      CGPointMake((storyboardFloating.frame.size.width - floatingButtonPlusDimension) / 2,
-                  (storyboardFloating.frame.size.height - floatingButtonPlusDimension) / 2)
-    storyboardFloating.layer.addSublayer(plusStoryboardShape)
+    let storyboardPlusShapeLayer =
+      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
 
     let views = [
       "raised": raisedButton,

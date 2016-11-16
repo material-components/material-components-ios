@@ -16,6 +16,8 @@
 
 class ButtonsTypicalUseSupplemental: NSObject {
 
+  static let floatingButtonPlusDimension = CGFloat(24)
+
   static func plusShapePath() -> UIBezierPath {
     let bezierPath = UIBezierPath()
     bezierPath.moveToPoint(CGPoint(x: 19, y: 13))
@@ -33,6 +35,16 @@ class ButtonsTypicalUseSupplemental: NSObject {
     bezierPath.addLineToPoint(CGPoint(x: 19, y: 13))
     bezierPath.closePath()
     return bezierPath;
+  }
+
+  static func createPlusShapeLayer(floatingButton: MDCFloatingButton) -> CAShapeLayer {
+    let plusShape = CAShapeLayer()
+    plusShape.path = ButtonsTypicalUseSupplemental.plusShapePath().CGPath
+    plusShape.fillColor = UIColor.whiteColor().CGColor
+    plusShape.position =
+      CGPointMake((floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
+                  (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2)
+    return plusShape;
   }
 
 }
