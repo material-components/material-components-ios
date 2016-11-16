@@ -96,9 +96,9 @@ Set the `itemAppearance` property on the tab bar to switch between item display 
 
 ### Styling
 
-By default, the tab bar is configured to display items with white text and icons. To customize the color of the tab bar, set `tintColor`, `selectedItemTintColor`, `unselectedItemTintColor`, `inkColor`, and `barTintColor` properties. If `selectedItemTintColor` is nil, the tab bar's `tintColor` will be used automatically for selected items.
+By default, the tab bar is configured to display items with white text and icons. To customize the color of the tab bar, set the `tintColor`, `selectedItemTintColor`, `unselectedItemTintColor`, `inkColor`, and `barTintColor` properties. If `selectedItemTintColor` is nil, the tab bar's `tintColor` will be used automatically for selected items.
 
-Configure where items are placed in the tab bar's by setting the `alignment` property.
+Configure where items are placed in the tab bar by setting the `alignment` property.
 
 - - -
 
