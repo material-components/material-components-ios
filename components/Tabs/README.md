@@ -67,7 +67,7 @@ Tabs can also show a badge (usually a number) like UITabBar.
 
 ### Importing
 
-To use the tab bar in your code, import the MaterialTabs component.
+To use the tab bar in your code, import the MaterialTabs umbrella header (Objective-C) or MaterialComponents module (Swift).
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
