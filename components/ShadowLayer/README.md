@@ -19,7 +19,7 @@ elevation.
 ### MDCShadowLayer
 
 `MDCShadowLayer` provides a Core Animation `CALayer` that will render a shadow based on its
-elevation property. `UIViews` can easily utilize this by overriding their layerClass method to
+elevation property. `UIViews` can utilize this by overriding their layerClass method to
 return `MDCShadowLayer`.
 
 `elevation` sets the diffusion level of the shadow. The higher the shadow elevation, the more

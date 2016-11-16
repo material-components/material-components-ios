@@ -1,3 +1,271 @@
+# 16.3.0
+
+## API diffs
+
+### Snackbar
+
+- [new] [`MDCSnackbar setPresentationHostView:`](https://github.com/google/material-components-ios/commit/ee84a40885724453da69ca90bfa6a874008dc0b0)
+
+## Component changes
+
+### CollectionCells
+
+#### Changes
+
+* [[CollectionViewCell] Call |layoutSubviews| when editing (#798)](https://github.com/google/material-components-ios/commit/393d6214e08b1ff5bc359a1cfc6f816abe7b2e67) (Gauthier Ambard)
+
+### Collections
+
+#### Changes
+
+* [Change layout invalidation in MDCCollectionViewStyler (#790)](https://github.com/google/material-components-ios/commit/82f7758bad9d4573f49d3656816df128642a8968) (Gauthier Ambard)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Convert CGFloats to float for 32 bit compilation (#834)](https://github.com/google/material-components-ios/commit/28f1d43595cd2a3fa109acb275214e50c810e94d) (Sam Morrison)
+
+### Snackbar
+
+#### Changes
+
+* [[MDCSnackbar]! Add presentationHostView property to snackbar (#784)](https://github.com/google/material-components-ios/commit/ee84a40885724453da69ca90bfa6a874008dc0b0) (Sam Morrison)
+
+# 16.2.0
+
+## API diffs
+
+### FeatureHighlight 
+
+* [FeatureHighlight](https://github.com/google/material-components-ios/commit/d4806473e49e65f0e9cc52139e39c3f1eba4f499) is a new component that lets you highlight a particular feature of your interface to the user.
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Ensure typical use examples match for Objective C and Swift (#815)](https://github.com/google/material-components-ios/commit/09fb272376e814677f2936651906fd764618ea05) (Junius Gunaratne)
+
+### CollectionCells
+
+#### Changes
+
+* [Align text labels frames to the upper pixel.](https://github.com/google/material-components-ios/commit/5a1a23d3c69c1c652b317219e1bb51d163000d4d) (Louis Romero)
+* [Show/hide the editing box as entering/leaving edit](https://github.com/google/material-components-ios/commit/12206c44e72bd133f77a8d7373614f19cc73ec88) (Louis Romero)
+
+### Collections
+
+#### Changes
+
+* [Fix -[MDCCollectionViewFlowLayout updateCellStateMaskWithAttribute:] (#732)](https://github.com/google/material-components-ios/commit/f2b93ae1119b28ee0685b780ccdd7e2a8044da2d) (Jackie Quinn)
+
+### FeatureHighlight
+
+#### Changes
+
+* [MDCFeatureHighlightViewController implementation (#765)](https://github.com/google/material-components-ios/commit/d4806473e49e65f0e9cc52139e39c3f1eba4f499) (Sam Morrison)
+* [Minor feature highlight fixes (#814)](https://github.com/google/material-components-ios/commit/b1c814d038b2cccaed76a7048deac1ae3771d7cd) (Sam Morrison)
+
+### NavigationBar
+
+#### Changes
+
+* [Setting default state of textAlignment (#817)](https://github.com/google/material-components-ios/commit/9e947eba06b09ab8ad901af9d2a8001fac824daf) (Randall Li)
+* [[Navigation Bar] Fixed text alignment in a better way that accepts the pre iOS8 default. (#820)](https://github.com/google/material-components-ios/commit/328631c19a2b89b0f4d8c11c24796ad0963976ee) (Randall Li)
+
+### Switch
+
+#### Changes
+
+* [Added haptic feedback to MDCSwitch (#812)](https://github.com/google/material-components-ios/commit/6aae38dfa70db77929ef2952ff3b8fce3caea60b) (Adrian Secord)
+
+# 16.1.0
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Implement intrinsicContentSize (#795)](https://github.com/google/material-components-ios/commit/731eb321d94eb4957613e1059570cae17a584133) (Louis Romero)
+
+### Buttons
+
+#### Changes
+
+* [MDC #329 - Bounded ink should ignore the maxRippleRadius property (#771)](https://github.com/google/material-components-ios/commit/01b73cf1478083baeb9976d4af12a67f02f9cb82) (Justin Shephard)
+
+### Dialogs
+
+#### Changes
+
+* [Improve snackbar and dialogs docs (#785)](https://github.com/google/material-components-ios/commit/386964baf25fa9264516f9f0c9ed19410873f1fe) (Sam Morrison)
+
+### Ink
+
+#### Changes
+
+* [Added MDCInkGestureRecognizer.h to Ink's umbrella header. (#801)](https://github.com/google/material-components-ios/commit/d24532bc40e0082dc8383d6431feceafa38ec050) (Adrian Secord)
+* [MDC #329 - Bounded ink should ignore the maxRippleRadius property (#771)](https://github.com/google/material-components-ios/commit/01b73cf1478083baeb9976d4af12a67f02f9cb82) (Justin Shephard)
+* [[MDCInkView] cancelAllAnimationsAnimated should support disabling animation (#786)](https://github.com/google/material-components-ios/commit/8008e82bd7bea04534ad7ecb2c3aa1903254553e) (Junius Gunaratne)
+
+### ProgressView
+
+#### Changes
+
+* [[MDCProgressView] Execute completion block when setHidden:animated:completion is called sequentially (#787)](https://github.com/google/material-components-ios/commit/45c0b06275e88c65c7aae8bba1b78889cba2f93c) (Junius Gunaratne)
+
+### Snackbar
+
+#### Changes
+
+* [Improve snackbar and dialogs docs (#785)](https://github.com/google/material-components-ios/commit/386964baf25fa9264516f9f0c9ed19410873f1fe) (Sam Morrison)
+
+
+
+# 16.0.0
+
+## API diffs
+
+### InkTouchController
+
+- [deleted] [`MDCInkTouchController.inkView`](https://github.com/google/material-components-ios/blob/c39811a2344114302327b6fa64d86346bacbea9a/components/Ink/src/MDCInkTouchController.h#L119)
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Let the content view controller decide orientation](https://github.com/google/material-components-ios/commit/1a3069ff8de8eb406c037a1ff6738093c57efeee) (Louis Romero)
+
+### Dialogs
+
+#### Changes
+
+* [Documentation Updates](https://github.com/google/material-components-ios/commit/f1b983465f304efc52d8c792af19b76d88a4a7b2) (Ian Gordon)
+
+### Ink
+
+#### Changes
+
+* [Remove deprecated inkView property](https://github.com/google/material-components-ios/commit/2ce6d648292b8dcae90241a5c39405bfa368e1e4) (Junius Gunaratne)
+* [define UIGestureRecognizerStateRecognized (#751)](https://github.com/google/material-components-ios/commit/4873362130f5d5c1893383dd9f6bfc71506dbbd9) (Junius Gunaratne)
+
+### ShadowElevations
+
+#### Changes
+
+* [Documentation Updates](https://github.com/google/material-components-ios/commit/f1b983465f304efc52d8c792af19b76d88a4a7b2) (Ian Gordon)
+
+### ShadowLayer
+
+#### Changes
+
+* [Documentation Updates](https://github.com/google/material-components-ios/commit/f1b983465f304efc52d8c792af19b76d88a4a7b2) (Ian Gordon)
+
+### Switch
+
+#### Changes
+
+* [Update colours of MDCSwitch when changing tint color. (#758)](https://github.com/google/material-components-ios/commit/6f7b4ebf2b8c0225f02ef27779c204cc181d3abb) (Sylvain Defresne)
+* [[MDCSwitch] Update objective-c example to match swift (#777)](https://github.com/google/material-components-ios/commit/ceeba259683892b63c474c6d51f86ee20aae0e07) (Chuck Hays)
+
+
+
+# 15.2.0
+
+## API diffs
+
+### Palettes
+
+- [new] [`MDCPalette.paletteGeneratedFromColor`](https://github.com/google/material-components-ios/blob/fad8519b6a1ba5c29a0368fb470cca3c6da74431/components/Palettes/src/MDCPalettes.h#L137)
+
+## Component changes
+
+### FlexibleHeader
+
+#### Changes
+
+* [MDC_#121 - Added write-up for re-applying swipe to go back feature on MDCFlexibleHeaderController with hidden navigation bar in README.md](https://github.com/google/material-components-ios/commit/1aadd7f468d1d00b7fcbc6c4f9979986229f3df7) (Justin Shephard)
+
+### Ink
+
+#### Changes
+
+* [Added emphasis to reference count warning.](https://github.com/google/material-components-ios/commit/6a7a48a9ebb2cb94cdb253e06298a07132db92bd) (Will Larche)
+* [Handling lack of strong reference to ink touch controller in both examples and instructions.](https://github.com/google/material-components-ios/commit/ca5b9a9ef775e06234cec8f64477402d65153670) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [[NavBar] Corrected mapping of NSTextAlignment to MDCNavigationBarTitleAligment](https://github.com/google/material-components-ios/commit/fdf1ff083d3c27c00263251c7fac5738317ce896) (randallli)
+
+### Palettes
+
+#### Changes
+
+* [Added missing example initializer.](https://github.com/google/material-components-ios/commit/f5378746668facc793bf31c96a27a4e6b47324d3) (Adrian Secord)
+* [Generate palettes to match a target color (#729)](https://github.com/google/material-components-ios/commit/fad8519b6a1ba5c29a0368fb470cca3c6da74431) (Adrian Secord)
+
+# 15.1.0
+
+## API diffs
+
+Auto-generated by running:
+
+    scripts/api_diff -o 203562553800ed3d3b5eebfd1dd76cda875d833c -n f8e2c8b5e87d0414f6b08f691949ecebfaca41b8
+
+### Ink
+
+- [moved] [`MDCInkGestureRecognizer`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/Ink/src/MDCInkGestureRecognizer.h#L26).
+From *private/MDCInkGestureRecognizer.h* to *MDCInkGestureRecognizer.h*.
+
+### NavigationBar
+
+- [new] [`MDCNavigationBar.titleAlignment`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L121)
+- [new] [`MDCNavigationBarTitleAlignmentCenter`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L24)
+- [new] [`MDCNavigationBarTitleAlignmentLeading`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L26)
+- [new] [`MDCNavigationBarTitleAlignment`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L22)
+- [deprecated] [`MDCNavigationBar.textAlignment`](https://github.com/google/material-components-ios/blob/f8e2c8b5e87d0414f6b08f691949ecebfaca41b8/components/NavigationBar/src/MDCNavigationBar.h#L163).
+*Use titleAlignment instead.*
+
+## Component changes
+
+### ButtonBar
+
+#### Changes
+
+* [Better disabled look (#704)](https://github.com/google/material-components-ios/commit/853a3c5d7591b76ffdd3618baf8890f4c391e61c) (Louis Romero)
+
+### CollectionCells
+
+#### Changes
+
+* [MDC_#803 - Fixed multi touch handling in MDCCollectionViews](https://github.com/google/material-components-ios/commit/b5b128784c6182b5ed9de546adaaed8e9b44fcfa) (Justin Shephard)
+
+### Collections
+
+#### Changes
+
+* [MDC_#803 - Fixed multi touch handling in MDCCollectionViews](https://github.com/google/material-components-ios/commit/b5b128784c6182b5ed9de546adaaed8e9b44fcfa) (Justin Shephard)
+* [Showcase a collectionView footer that does not have card style background in a card style collectionView. (#709)](https://github.com/google/material-components-ios/commit/68651011a0e6072daa9802f1cf2eef812f4c4d64) (Ed Chin)
+
+### Ink
+
+#### Changes
+
+* [Make MDCInkGestureRecognizer public](https://github.com/google/material-components-ios/commit/5ec47cef81370919d92f4561e756ab85f849c19c) (Junius Gunaratne)
+
+### NavigationBar
+
+#### Breaking changes
+
+* [Switch to custom enum rather that reuse the NSTextAlignment so that we can strict our external API surface to the two options we want: Left and Center.](https://github.com/google/material-components-ios/commit/531a53b72ad42b40d16b1677729e33b7205dd6ab) (randallli)
+
 # 15.0.0
 
 ## API diffs

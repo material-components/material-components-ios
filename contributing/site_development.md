@@ -111,7 +111,7 @@ cd site-source
 ```
 
 
-We recommand you to read appendix at the last of this document if you want to know how the sources
+We recommend you to read appendix at the last of this document if you want to know how the sources
 are organized.
 
 
@@ -140,7 +140,7 @@ modification is there.
 
 ## TODO: Modify the site build script
 
-## Appendix - How is the sources organized?
+## Appendix - How are the sources organized?
 
 ### Overview & Architecture Graph
 
@@ -201,12 +201,13 @@ developer.
 Although the structure seems hard to understand at first glance, it have several benefits once you
 get the gists.
 
-- Benefit of decouple
+- Benefits of decoupling
 
   The components developers and site developers' work should not ever interfere with each other. We
 need to ensure in the worst scenario that if one of them need to roll back several commits, the
 other team should not even notice that happened, which obviously cannot be achieved if the contents
 and templates lives in the same branch.
+
 - Single source of truth and clear responsibility
 
   There is only a single source of the truth for both the contents and templates. While the site
@@ -214,18 +215,21 @@ developer has the authority for styling the site as they like, they probably won
 the detailed contents that should be put on the website, component developers vise versa. We barely
 defined the syntax as the protocol for communication, so each party can work on its own thing and
 hold their absolute authority on that.
+
 - Preserve document on github
 
   Since we only have one set of truth for content and all the other are clearly copies of them, we
 preserve the README.md in the place that github can still find them, so you can read them directly
 on github and even if you are not linked to the internet, you will be able to see all document in
 your local repository
-- Benefit of non blocking
+
+- Benefit of non-blocking
 
   The component developers should never be blocked by the site developers when updating the content,
 nor should bother the site developers to stop what they are doing and help them with merely an
 content update. In this case, we are not only separating the authority but also make it possible for
 each party to update on their own pace.
+
 - Intuitively find what you need to update
 
   The site has exactly 1:1 map onto the source that generate the page. For example, if you are

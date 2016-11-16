@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import CatalogByConvention
-import MaterialComponents
 import UIKit
 
 @UIApplicationMain
@@ -24,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    MDCTypography.setFontLoader(MDCRobotoFontLoader.sharedInstance())
     self.window = MDCCatalogWindow(frame: UIScreen.mainScreen().bounds)
 
     let tree = CBCCreateNavigationTree()

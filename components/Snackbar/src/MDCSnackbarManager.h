@@ -42,6 +42,21 @@
 + (void)showMessage:(MDCSnackbarMessage *)message;
 
 /**
+ MDCSnackbarManager will display the messages in this view.
+
+ Call this method to choose where in the view hierarchy snackbar messages will be presented. It is
+ only necessary to provide a host view if the default behavior is unable to find one on it's own,
+ most commonly when using MDCSnackbarManager inside an application extension. By default, if you use
+ MDCSnackbarManager without calling @c setPresentationHostView, the manager will attempt to find a
+ suitable view by stepping through the application windows. Explicitly providing a host view is only
+ required if you need to manually manage the view hierarchy, or are inside a UIApplication extension.
+
+ @note This method must be called from the main thread.
+ @note Calling setPresentationHostView will not change the parent of the currently visible message.
+ */
++ (void)setPresentationHostView:(UIView *)hostView;
+
+/**
  Bypasses showing the messages of the given @c category.
 
  Completion blocks are called, but the UI won't show any queued messages and will dismiss any

@@ -56,4 +56,16 @@
   return self.appBar.headerViewController.preferredStatusBarStyle;
 }
 
+- (BOOL)shouldAutorotate {
+  return self.contentViewController.shouldAutorotate;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  return self.contentViewController.supportedInterfaceOrientations;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+  return self.contentViewController.preferredInterfaceOrientationForPresentation;
+}
+
 @end

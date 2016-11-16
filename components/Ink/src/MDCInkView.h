@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 
 /**
  Maximum radius of the ink. If the radius <= 0 then half the length of the diagonal of self.bounds
- is used.
+ is used. This value is ignored if @c inkStyle is set to |MDCInkStyleBounded|.
  */
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 

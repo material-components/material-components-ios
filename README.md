@@ -115,8 +115,8 @@ Choose from Objective-C or Swift:
 
 #### Swift
 
-~~~swift
-import MaterialComponents
+~~~ swift
+import MaterialComponents.MaterialButtons
 
 class MDCBuildTestViewController: UIViewController {
 
@@ -150,6 +150,12 @@ Material Components for iOS uses
 [material design icons](https://github.com/google/material-design-icons),
 copyright Google Inc. and licensed under
 [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+
+Several components use
+[MDFTextAccessibility](https://github.com/material-foundation/material-text-accessibility-ios),
+copyright Google Inc. and licensed under
+[Apache 2.0](https://github.com/material-foundation/material-text-accessibility-ios/blob/master/LICENSE)
+without a NOTICE file.
 
 Roboto Font Loader uses the
 [Roboto font](https://github.com/google/fonts/tree/master/apache/roboto),

@@ -16,7 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCInkGestureRecognizer;
+#import "MDCInkGestureRecognizer.h"
+
 @class MDCInkTouchController;
 @class MDCInkView;
 @protocol MDCInkTouchControllerDelegate;
@@ -29,7 +30,7 @@
  and gestureRecognizer:shouldReceiveTouch: methods to avoid breaking
  MDCInkTouchControllerDelegate.
 
- The controller does not keep a strong reference to the view to which it is attaching an ink view.
+ **NOTE:** The controller does not keep a strong reference to the view to which it is attaching an ink view.
  It is expected that the view will keep a strong reference to its own ink controller, or that the
  view controller controlling the view will keep a strong reference to that view's ink controller.
  */
@@ -113,13 +114,6 @@
  @return The ink view at the touch location, or nil.
 */
 - (MDCInkView *_Nullable)inkViewAtTouchLocation:(CGPoint)location;
-
-#pragma mark - Deprecations
-
-@property(nonatomic, strong, readonly, nonnull) MDCInkView *inkView __deprecated_msg(
-    "To configure ink views before display, use defaultInkView or your delegate's "
-    "inkTouchController:inkViewAtTouchLocation:. To find an ink view at a "
-    "particular location, use inkViewAtTouchLocation: instead.");
 
 @end
 

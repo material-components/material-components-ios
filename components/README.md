@@ -34,6 +34,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**ActivityIndicator**
   A circular rotating indicator for showing indeterminate or determinate progress.
   ](ActivityIndicator/)
+  <!--{: .icon-activityindicator }-->
 
 - [**AppBar**
   A flexible navigation bar, designed to provide a typical material navigation experience.
@@ -68,6 +69,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**Dialogs**
   A presentation controller that will display a material modal dialog.
   ](Dialogs/)
+  <!--{: .icon-dialogs }-->
+
+- [**FeatureHighlight**
+  Highlights a part of the screen in order to draw users' attention.
+  ](FeatureHighlight/)
+  <!--{: .icon-featurehighlight }-->
 
 - [**FlexibleHeader**
   A container view whose height and vertical offset react to UIScrollViewDelegate events.
@@ -102,6 +109,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**ProgressView**
   A determinate and linear progress indicator that implements material animation and layout.
   ](ProgressView/)
+  <!--{: .icon-progressview }-->
 
 - [**ShadowElevations**
   Provides the most commonly used elevations specified in material.
@@ -121,6 +129,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**Snackbar**
   A brief dismissible feedback message.
   ](Snackbar/)
+  <!--{: .icon-snackbar }-->
 
 - [**Switch**
   A material on/off switch with an interface similar to UISwitch.
