@@ -1335,6 +1335,116 @@ void MDCCatalogDrawCollectionsTile(CGRect frame) {
   }
 }
 
+void MDCCatalogDrawFeatureHighlightTile(CGRect frame) {
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  UIColor* fillColor = [UIColor colorWithRed:0.71 green:0.894 blue:0.98 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* white = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+
+  CGRect featureHighlightGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24,
+                                            floor((CGRectGetWidth(frame) - 24.5) * 0.85015 + 0.5),
+                                            floor((CGRectGetHeight(frame) - 24) * 0.61069 + 0.5));
+
+  {
+    CGContextSaveGState(context);
+    CGContextBeginTransparencyLayer(context, NULL);
+
+    UIBezierPath* clippingRectPath = [UIBezierPath
+                                      bezierPathWithRect:CGRectMake(
+                                                                    CGRectGetMinX(featureHighlightGroup) +
+                                                                    floor(CGRectGetWidth(featureHighlightGroup) * 0.00000 + 0.5),
+                                                                    CGRectGetMinY(featureHighlightGroup) +
+                                                                    floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5),
+                                                                    floor(CGRectGetWidth(featureHighlightGroup) * 1.00000 + 0.5) -
+                                                                    floor(CGRectGetWidth(featureHighlightGroup) * 0.00000 + 0.5),
+                                                                    floor(CGRectGetHeight(featureHighlightGroup) * 1.00000 + 0.5) -
+                                                                    floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5))];
+    [clippingRectPath addClip];
+
+    UIBezierPath* rectanglePath = [UIBezierPath
+                                   bezierPathWithRect:CGRectMake(
+                                                                 CGRectGetMinX(featureHighlightGroup) +
+                                                                 floor(CGRectGetWidth(featureHighlightGroup) * -0.00000 - 0.5) +
+                                                                 1,
+                                                                 CGRectGetMinY(featureHighlightGroup) +
+                                                                 floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5),
+                                                                 floor(CGRectGetWidth(featureHighlightGroup) * 1.00000 - 0.5) -
+                                                                 floor(CGRectGetWidth(featureHighlightGroup) * -0.00000 - 0.5),
+                                                                 floor(CGRectGetHeight(featureHighlightGroup) * 1.00000 + 0.5) -
+                                                                 floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5))];
+    [fillColor setFill];
+    [rectanglePath fill];
+
+    {
+      UIBezierPath* circlePath = [UIBezierPath
+                                  bezierPathWithOvalInRect:
+                                  CGRectMake(CGRectGetMinX(featureHighlightGroup) +
+                                             floor(CGRectGetWidth(featureHighlightGroup) * -0.06619 - 0.3) + 0.8,
+                                             CGRectGetMinY(featureHighlightGroup) +
+                                             floor(CGRectGetHeight(featureHighlightGroup) * -0.13625 + 0.4) + 0.1,
+                                             floor(CGRectGetWidth(featureHighlightGroup) * 0.36403 - 0.1) -
+                                             floor(CGRectGetWidth(featureHighlightGroup) * -0.06619 - 0.3) - 0.2,
+                                             floor(CGRectGetHeight(featureHighlightGroup) * 0.61125 - 0.4) -
+                                             floor(CGRectGetHeight(featureHighlightGroup) * -0.13625 + 0.4) + 0.8)];
+      [fillColor2 setFill];
+      [circlePath fill];
+
+      UIBezierPath* hamburgerLowPath = [UIBezierPath
+                                        bezierPathWithRect:CGRectMake(
+                                                                      CGRectGetMinX(featureHighlightGroup) +
+                                                                      floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                                                      0.3,
+                                                                      CGRectGetMinY(featureHighlightGroup) +
+                                                                      floor(CGRectGetHeight(featureHighlightGroup) * 0.27500) + 0.5,
+                                                                      floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) -
+                                                                      floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                                                      0.5,
+                                                                      floor(CGRectGetHeight(featureHighlightGroup) * 0.29375 + 0.5) -
+                                                                      floor(CGRectGetHeight(featureHighlightGroup) * 0.27500) -
+                                                                      0.5)];
+      [white setFill];
+      [hamburgerLowPath fill];
+
+      UIBezierPath* hamburgerMiddlePath = [UIBezierPath
+                                           bezierPathWithRect:CGRectMake(
+                                                                         CGRectGetMinX(featureHighlightGroup) +
+                                                                         floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                                                         0.3,
+                                                                         CGRectGetMinY(featureHighlightGroup) +
+                                                                         floor(CGRectGetHeight(featureHighlightGroup) * 0.22750 + 0.2) +
+                                                                         0.3,
+                                                                         floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) -
+                                                                         floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                                                         0.5,
+                                                                         floor(CGRectGetHeight(featureHighlightGroup) * 0.24625 - 0.3) -
+                                                                         floor(CGRectGetHeight(featureHighlightGroup) * 0.22750 + 0.2) +
+                                                                         0.5)];
+      [white setFill];
+      [hamburgerMiddlePath fill];
+      
+      UIBezierPath* hamburgerHighPath = [UIBezierPath
+                                         bezierPathWithRect:CGRectMake(
+                                                                       CGRectGetMinX(featureHighlightGroup) +
+                                                                       floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                                                       0.3,
+                                                                       CGRectGetMinY(featureHighlightGroup) +
+                                                                       floor(CGRectGetHeight(featureHighlightGroup) * 0.18125 + 0.5),
+                                                                       floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) -
+                                                                       floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                                                       0.5,
+                                                                       floor(CGRectGetHeight(featureHighlightGroup) * 0.20000) -
+                                                                       floor(CGRectGetHeight(featureHighlightGroup) * 0.18125 + 0.5) +
+                                                                       0.5)];
+      [white setFill];
+      [hamburgerHighPath fill];
+    }
+    
+    CGContextEndTransparencyLayer(context);
+    CGContextRestoreGState(context);
+  }
+}
+
 void MDCCatalogDrawDialogsTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -1845,116 +1955,6 @@ void MDCCatalogDrawMiscTile(CGRect frame) {
     [fillColor setFill];
     [bezier6Path fill];
     CGContextRestoreGState(context);
-
-    CGContextEndTransparencyLayer(context);
-    CGContextRestoreGState(context);
-  }
-}
-
-void MDCCatalogDrawFeatureHighlightTile(CGRect frame) {
-  CGContextRef context = UIGraphicsGetCurrentContext();
-
-  UIColor* fillColor = [UIColor colorWithRed:0.71 green:0.894 blue:0.98 alpha:1];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
-  UIColor* white = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
-
-  CGRect featureHighlightGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24,
-                                            floor((CGRectGetWidth(frame) - 24.5) * 0.85015 + 0.5),
-                                            floor((CGRectGetHeight(frame) - 24) * 0.61069 + 0.5));
-
-  {
-    CGContextSaveGState(context);
-    CGContextBeginTransparencyLayer(context, NULL);
-
-    UIBezierPath* clippingRectPath = [UIBezierPath
-        bezierPathWithRect:CGRectMake(
-                               CGRectGetMinX(featureHighlightGroup) +
-                                   floor(CGRectGetWidth(featureHighlightGroup) * 0.00000 + 0.5),
-                               CGRectGetMinY(featureHighlightGroup) +
-                                   floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5),
-                               floor(CGRectGetWidth(featureHighlightGroup) * 1.00000 + 0.5) -
-                                   floor(CGRectGetWidth(featureHighlightGroup) * 0.00000 + 0.5),
-                               floor(CGRectGetHeight(featureHighlightGroup) * 1.00000 + 0.5) -
-                                   floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5))];
-    [clippingRectPath addClip];
-
-    UIBezierPath* rectanglePath = [UIBezierPath
-        bezierPathWithRect:CGRectMake(
-                               CGRectGetMinX(featureHighlightGroup) +
-                                   floor(CGRectGetWidth(featureHighlightGroup) * -0.00000 - 0.5) +
-                                   1,
-                               CGRectGetMinY(featureHighlightGroup) +
-                                   floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5),
-                               floor(CGRectGetWidth(featureHighlightGroup) * 1.00000 - 0.5) -
-                                   floor(CGRectGetWidth(featureHighlightGroup) * -0.00000 - 0.5),
-                               floor(CGRectGetHeight(featureHighlightGroup) * 1.00000 + 0.5) -
-                                   floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5))];
-    [fillColor setFill];
-    [rectanglePath fill];
-
-    {
-      UIBezierPath* circlePath = [UIBezierPath
-          bezierPathWithOvalInRect:
-              CGRectMake(CGRectGetMinX(featureHighlightGroup) +
-                             floor(CGRectGetWidth(featureHighlightGroup) * -0.06619 - 0.3) + 0.8,
-                         CGRectGetMinY(featureHighlightGroup) +
-                             floor(CGRectGetHeight(featureHighlightGroup) * -0.13625 + 0.4) + 0.1,
-                         floor(CGRectGetWidth(featureHighlightGroup) * 0.36403 - 0.1) -
-                             floor(CGRectGetWidth(featureHighlightGroup) * -0.06619 - 0.3) - 0.2,
-                         floor(CGRectGetHeight(featureHighlightGroup) * 0.61125 - 0.4) -
-                             floor(CGRectGetHeight(featureHighlightGroup) * -0.13625 + 0.4) + 0.8)];
-      [fillColor2 setFill];
-      [circlePath fill];
-
-      UIBezierPath* hamburgerLowPath = [UIBezierPath
-          bezierPathWithRect:CGRectMake(
-                                 CGRectGetMinX(featureHighlightGroup) +
-                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
-                                     0.3,
-                                 CGRectGetMinY(featureHighlightGroup) +
-                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.27500) + 0.5,
-                                 floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) -
-                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
-                                     0.5,
-                                 floor(CGRectGetHeight(featureHighlightGroup) * 0.29375 + 0.5) -
-                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.27500) -
-                                     0.5)];
-      [white setFill];
-      [hamburgerLowPath fill];
-
-      UIBezierPath* hamburgerMiddlePath = [UIBezierPath
-          bezierPathWithRect:CGRectMake(
-                                 CGRectGetMinX(featureHighlightGroup) +
-                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
-                                     0.3,
-                                 CGRectGetMinY(featureHighlightGroup) +
-                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.22750 + 0.2) +
-                                     0.3,
-                                 floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) -
-                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
-                                     0.5,
-                                 floor(CGRectGetHeight(featureHighlightGroup) * 0.24625 - 0.3) -
-                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.22750 + 0.2) +
-                                     0.5)];
-      [white setFill];
-      [hamburgerMiddlePath fill];
-
-      UIBezierPath* hamburgerHighPath = [UIBezierPath
-          bezierPathWithRect:CGRectMake(
-                                 CGRectGetMinX(featureHighlightGroup) +
-                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
-                                     0.3,
-                                 CGRectGetMinY(featureHighlightGroup) +
-                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.18125 + 0.5),
-                                 floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) -
-                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
-                                     0.5,
-                                 floor(CGRectGetHeight(featureHighlightGroup) * 0.20000) -
-                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.18125 + 0.5) +
-                                     0.5)];
-      [white setFill];
-      [hamburgerHighPath fill];
-    }
 
     CGContextEndTransparencyLayer(context);
     CGContextRestoreGState(context);
