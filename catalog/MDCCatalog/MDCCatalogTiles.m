@@ -1133,11 +1133,12 @@ void MDCCatalogDrawCollectionCellsTile(CGRect frame) {
   UIColor* fillColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0];
   UIColor* fillColor2 = [UIColor colorWithRed: 0.012 green: 0.663 blue: 0.957 alpha: 0.1];
   UIColor* color = [UIColor colorWithRed: 0.506 green: 0.831 blue: 0.98 alpha: 1];
-  UIColor* gradientColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0.1];
+  UIColor* gradientColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0];
 
   //// Gradient Declarations
-  CGFloat gradientLocations[] = {0.14, 0.5, 1};
-  CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)@[(id)fillColor2.CGColor, (id)[fillColor2 blendedColorWithFraction: 0.5 ofColor: gradientColor].CGColor, (id)gradientColor.CGColor], gradientLocations);
+  // This gradient was adjusted by hand to not use macOS API
+  CGFloat gradientLocations[] = {0.14, 1};
+  CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)@[(id)fillColor2.CGColor, (id)gradientColor.CGColor], gradientLocations);
 
 
   //// Subframes
