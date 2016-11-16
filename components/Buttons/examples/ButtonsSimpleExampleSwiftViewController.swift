@@ -95,7 +95,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
   }
 
   func tap(sender: AnyObject) {
-//    print("\(type(of: )sender.dynamicType) was tapped.")
+    print("\(sender.dynamicType) was tapped.")
   }
 
   class func catalogBreadcrumbs() -> [String] {
