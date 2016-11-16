@@ -1,5 +1,49 @@
 # release-candidate TODO: Replace me with version number. 
 
+## API Diffs
+
+### Buttons
+
+
+## MDCButton
+
+*modified* method: `-setBackgroundColor:` in `MDCButton`
+
+| Type of change: | key.deprecation_message |
+|---|---|
+| From: | `Use setBackgroundColor:forState: instead.` |
+| To: | `  `
+
+*modified* method: `-setBackgroundColor:` in `MDCButton`
+
+| Type of change: | key.always_unavailable |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+*modified* method: `-setBackgroundColor:` in `MDCButton`
+
+| Type of change: | key.always_deprecated |
+|---|---|
+| From: | `1` |
+| To: | `0` |
+
+*modified* method: `-setBackgroundColor:` in `MDCButton`
+
+| Type of change: | declaration |
+|---|---|
+| From: | `- (void)setBackgroundColor:(nullable UIColor *)backgroundColor     __deprecated_msg("Use setBackgroundColor:forState: instead.");` |
+| To: | `- (void)setBackgroundColor:(nullable UIColor *)backgroundColor;` |
+
+### CollectionCells
+
+
+## MDCCollectionViewCell
+
+*new* property: `editingSelectorColor` in `MDCCollectionViewCell`
+
+
+
 # 16.3.0
 
 ## API diffs
