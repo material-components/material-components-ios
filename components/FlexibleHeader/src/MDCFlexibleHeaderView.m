@@ -57,11 +57,11 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
 static inline MDCFlexibleHeaderShiftBehavior
  ShiftBehaviorForCurrentAppContext(MDCFlexibleHeaderShiftBehavior intendedShiftBehavior) {
-  if (![[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"] ||
-      intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled) {
-    return intendedShiftBehavior;
-  }
-  return MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+   if ([[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"]
+       && intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
+     return MDCFlexibleHeaderShiftBehaviorEnabled;
+   }
+   return intendedShiftBehavior;
 }
 
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
