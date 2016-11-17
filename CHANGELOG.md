@@ -59,14 +59,6 @@
 * [Handle separator insets correctly in RTL](https://github.com/google/material-components-ios/commit/c6f6fb85460284463369d2e5fa220ecad597f616) (Louis Romero)
 * [Set checked cell's accessibility trait to Selected](https://github.com/google/material-components-ios/commit/bb78cbb9d463e16b5118a7826e81adb9a00a3ff0) (Louis Romero)
 
-### FlexibleHeader
-
-#### Changes
-
-* [MDC_#741 - Updated test case for MDCFlexibleHeaderView to include UIScrollViewDelegate conformance to class (#856)](https://github.com/google/material-components-ios/commit/86d3015d3cce879e575e5ebf9f1c9a9e3d5c98d3) (Justin Shephard)
-* [[MDCFlexibleHeaderView] - Enabling MDCFlexibleHeader in an app extension (#863)](https://github.com/google/material-components-ios/commit/fe06e665c6c2e22d707d1b39fbcf6a116f701f36) (Justin Shephard)
-
-
 
 
 # 16.3.0
