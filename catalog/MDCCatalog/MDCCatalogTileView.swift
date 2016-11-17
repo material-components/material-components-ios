@@ -99,7 +99,7 @@ class MDCCatalogTileView: UIView {
     case "Page Control":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPageControlTile)
     case "Palettes":
-      newImage = MDCDrawImage(centeredFrame, MDCCCatalogDrawPalettesTile)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPalettesTile)
     case "Progress View":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawProgressViewTile)
     case "Shadow":

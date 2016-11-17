@@ -2505,7 +2505,7 @@ void MDCCatalogDrawPageControlTile(CGRect frame) {
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCCatalogDrawPalettesTile(CGRect frame) {
+void MDCCatalogDrawPalettesTile(CGRect frame) {
   //// Color Declarations
   UIColor* textDark = [UIColor colorWithRed: 0.004 green: 0.341 blue: 0.608 alpha: 1];
   UIColor* textLight = [UIColor colorWithRed: 0.702 green: 0.898 blue: 0.988 alpha: 1];
