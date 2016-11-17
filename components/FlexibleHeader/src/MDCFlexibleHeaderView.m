@@ -55,15 +55,6 @@ static const CGFloat kMaxAnchorLengthQuickSwipe = 25;
 // view finishes decelerating with the header partially shifted.
 static const CGFloat kMinimumVisibleProportion = 0.25;
 
-static inline MDCFlexibleHeaderShiftBehavior
- ShiftBehaviorForCurrentAppContext(MDCFlexibleHeaderShiftBehavior intendedShiftBehavior) {
-   if ([[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"]
-       && intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
-     return MDCFlexibleHeaderShiftBehaviorEnabled;
-   }
-   return intendedShiftBehavior;
-}
-
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
 
 // The intensity strength of the shadow being displayed under the flexible header. Use this property
@@ -905,12 +896,12 @@ static inline MDCFlexibleHeaderShiftBehavior
 }
 
 - (void)setShiftBehavior:(MDCFlexibleHeaderShiftBehavior)shiftBehavior {
-  shiftBehavior = ShiftBehaviorForCurrentAppContext(shiftBehavior);
   if (_shiftBehavior == shiftBehavior) {
     return;
   }
   BOOL needsShiftOnScreen = (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
                              shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled);
+  _shiftBehavior = shiftBehavior;
 
   _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 
