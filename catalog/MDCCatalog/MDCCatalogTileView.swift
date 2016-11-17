@@ -84,6 +84,8 @@ class MDCCatalogTileView: UIView {
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionCellsTile)
     case "Collections":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionsTile)
+    case "Dialogs":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawDialogsTile)
     case "Feature Highlight":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawFeatureHighlightTile)
     case "Flexible Header":

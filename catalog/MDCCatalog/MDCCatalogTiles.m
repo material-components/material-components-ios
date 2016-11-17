@@ -1553,6 +1553,65 @@ void MDCCatalogDrawCollectionsTile(CGRect frame) {
   }
 }
 
+void MDCCatalogDrawDialogsTile(CGRect frame) {
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  UIColor* gradientColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.1];
+
+  // This gradient was adjusted by hand to not use macOS API
+  CGFloat gradientLocations[] = {0.13, 1};
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef) @[ (id)gradientColor.CGColor, (id)UIColor.clearColor.CGColor ],
+      gradientLocations);
+
+  NSShadow* shadow = [[NSShadow alloc] init];
+  [shadow setShadowColor:[UIColor.blackColor colorWithAlphaComponent:0.3]];
+  [shadow setShadowOffset:CGSizeMake(0.1, 2.1)];
+  [shadow setShadowBlurRadius:5];
+
+  CGRect dialogsGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24.1,
+                                   floor((CGRectGetWidth(frame) - 24.5) * 0.84404 + 0.5),
+                                   floor((CGRectGetHeight(frame) - 24.1) * 0.64095 + 23.7) - 23.2);
+
+  {
+    CGRect rectangleRect = CGRectMake(
+        CGRectGetMinX(dialogsGroup) + floor(CGRectGetWidth(dialogsGroup) * 0.00000 + 0.5),
+        CGRectGetMinY(dialogsGroup) + floor(CGRectGetHeight(dialogsGroup) * 0.00000 - 0.4) + 0.9,
+        floor(CGRectGetWidth(dialogsGroup) * 1.00000 + 0.5) -
+            floor(CGRectGetWidth(dialogsGroup) * 0.00000 + 0.5),
+        floor(CGRectGetHeight(dialogsGroup) * 0.95352 - 0.4) -
+            floor(CGRectGetHeight(dialogsGroup) * 0.00000 - 0.4));
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect:rectangleRect];
+    CGContextSaveGState(context);
+    [rectanglePath addClip];
+    CGContextDrawLinearGradient(
+        context, gradient, CGPointMake(CGRectGetMidX(rectangleRect), CGRectGetMinY(rectangleRect)),
+        CGPointMake(CGRectGetMidX(rectangleRect), CGRectGetMaxY(rectangleRect)), 0);
+    CGContextRestoreGState(context);
+
+    UIBezierPath* rectangle2Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(dialogsGroup) +
+                                          floor(CGRectGetWidth(dialogsGroup) * 0.14130) + 0.5,
+                                      CGRectGetMinY(dialogsGroup) +
+                                          floor(CGRectGetHeight(dialogsGroup) * 0.16567 + 0.5),
+                                      floor(CGRectGetWidth(dialogsGroup) * 0.86594) -
+                                          floor(CGRectGetWidth(dialogsGroup) * 0.14130),
+                                      floor(CGRectGetHeight(dialogsGroup) * 1.00000 + 0.5) -
+                                          floor(CGRectGetHeight(dialogsGroup) * 0.16567 + 0.5))];
+    CGContextSaveGState(context);
+    CGContextSetShadowWithColor(context, shadow.shadowOffset, shadow.shadowBlurRadius,
+                                [shadow.shadowColor CGColor]);
+    [UIColor.whiteColor setFill];
+    [rectangle2Path fill];
+    CGContextRestoreGState(context);
+  }
+
+  CGGradientRelease(gradient);
+  CGColorSpaceRelease(colorSpace);
+}
+
 void MDCCatalogDrawFeatureHighlightTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -1661,43 +1720,6 @@ void MDCCatalogDrawFeatureHighlightTile(CGRect frame) {
     CGContextEndTransparencyLayer(context);
     CGContextRestoreGState(context);
   }
-}
-
-void MDCCatalogDrawDialogsTile(CGRect frame) {
-  CGContextRef context = UIGraphicsGetCurrentContext();
-
-  UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
-
-  CGRect group = CGRectMake(
-      CGRectGetMinX(frame) + floor((CGRectGetWidth(frame) - 77.75) * 0.22200 + 0.02) + 0.48,
-      CGRectGetMinY(frame) + floor((CGRectGetHeight(frame) - 24.25) * 0.30382 + 0.47) + 0.03, 77.75,
-      24.25);
-  {
-    CGContextSaveGState(context);
-    CGContextSetAlpha(context, 0.95);
-    CGContextBeginTransparencyLayer(context, NULL);
-
-    UIBezierPath* rectanglePath =
-        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(CGRectGetMinX(group),
-                                                           CGRectGetMinY(group), 77.75, 24.25)
-                                   cornerRadius:3.4];
-    [fillColor setFill];
-    [rectanglePath fill];
-
-    CGContextEndTransparencyLayer(context);
-    CGContextRestoreGState(context);
-  }
-
-  UIBezierPath* ovalPath = [UIBezierPath
-      bezierPathWithOvalInRect:CGRectMake(
-                                   CGRectGetMinX(frame) +
-                                       floor((CGRectGetWidth(frame) - 49.8) * 0.82308 - 0.25) +
-                                       0.75,
-                                   CGRectGetMinY(frame) +
-                                       floor((CGRectGetHeight(frame) - 49.7) * 0.25641 + 0.2) + 0.3,
-                                   49.8, 49.7)];
-  [fillColor setFill];
-  [ovalPath fill];
 }
 
 void MDCCatalogDrawFlexibleHeaderTile(CGRect frame) {
@@ -2506,166 +2528,299 @@ void MDCCatalogDrawPageControlTile(CGRect frame) {
 }
 
 void MDCCatalogDrawPalettesTile(CGRect frame) {
-  //// Color Declarations
-  UIColor* textDark = [UIColor colorWithRed: 0.004 green: 0.341 blue: 0.608 alpha: 1];
-  UIColor* textLight = [UIColor colorWithRed: 0.702 green: 0.898 blue: 0.988 alpha: 1];
-  UIColor* fill200 = [UIColor colorWithRed: 0.506 green: 0.831 blue: 0.98 alpha: 1];
-  UIColor* fill300 = [UIColor colorWithRed: 0.31 green: 0.765 blue: 0.969 alpha: 1];
-  UIColor* fill400 = [UIColor colorWithRed: 0.161 green: 0.714 blue: 0.965 alpha: 1];
-  UIColor* fill500 = [UIColor colorWithRed: 0.012 green: 0.663 blue: 0.957 alpha: 1];
-  UIColor* fill600 = [UIColor colorWithRed: 0.012 green: 0.608 blue: 0.898 alpha: 1];
-  UIColor* fill700 = [UIColor colorWithRed: 0.008 green: 0.533 blue: 0.82 alpha: 1];
-  UIColor* fill800 = [UIColor colorWithRed: 0.008 green: 0.467 blue: 0.741 alpha: 1];
+  UIColor* textDark = [UIColor colorWithRed:0.004 green:0.341 blue:0.608 alpha:1];
+  UIColor* textLight = [UIColor colorWithRed:0.702 green:0.898 blue:0.988 alpha:1];
+  UIColor* fill200 = [UIColor colorWithRed:0.506 green:0.831 blue:0.98 alpha:1];
+  UIColor* fill300 = [UIColor colorWithRed:0.31 green:0.765 blue:0.969 alpha:1];
+  UIColor* fill400 = [UIColor colorWithRed:0.161 green:0.714 blue:0.965 alpha:1];
+  UIColor* fill500 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fill600 = [UIColor colorWithRed:0.012 green:0.608 blue:0.898 alpha:1];
+  UIColor* fill700 = [UIColor colorWithRed:0.008 green:0.533 blue:0.82 alpha:1];
+  UIColor* fill800 = [UIColor colorWithRed:0.008 green:0.467 blue:0.741 alpha:1];
 
+  CGRect palettesGroup = CGRectMake(CGRectGetMinX(frame) + 25, CGRectGetMinY(frame) + 24.1,
+                                    floor((CGRectGetWidth(frame) - 25) * 0.84663 + 0.5),
+                                    floor((CGRectGetHeight(frame) - 24.1) * 0.60733 + 23.7) - 23.2);
 
-  //// Subframes
-  CGRect palettesGroup = CGRectMake(CGRectGetMinX(frame) + 25, CGRectGetMinY(frame) + 24.1, floor((CGRectGetWidth(frame) - 25) * 0.84663 + 0.5), floor((CGRectGetHeight(frame) - 24.1) * 0.60733 + 23.7) - 23.2);
-
-
-  //// Palettes Group
   {
-    //// Rectangle 100 Drawing
-    UIBezierPath* rectangle100Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) + 0.9, floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5) - floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5), floor(CGRectGetHeight(palettesGroup) * 0.33459) - floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) - 0.4)];
+    UIBezierPath* rectangle100Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) + 0.9,
+                               floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.33459) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) - 0.4)];
     [textLight setFill];
     [rectangle100Path fill];
 
-
-    //// Rectangle 200 Drawing
-    UIBezierPath* rectangle200Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) + 0.9, floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5) - floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5), floor(CGRectGetHeight(palettesGroup) * 0.33459) - floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) - 0.4)];
+    UIBezierPath* rectangle200Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) + 0.9,
+                               floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.33459) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) - 0.4)];
     [fill200 setFill];
     [rectangle200Path fill];
 
-
-    //// Rectangle 300 Drawing
-    UIBezierPath* rectangle300Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) + 0.9, floor(CGRectGetWidth(palettesGroup) * 1.00000 + 0.5) - floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5), floor(CGRectGetHeight(palettesGroup) * 0.33459) - floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) - 0.4)];
+    UIBezierPath* rectangle300Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) + 0.9,
+                               floor(CGRectGetWidth(palettesGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.33459) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) - 0.4)];
     [fill300 setFill];
     [rectangle300Path fill];
 
-
-    //// Rectangle 400 Drawing
-    UIBezierPath* rectangle400Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.3, floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5) - floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5), floor(CGRectGetHeight(palettesGroup) * 0.66918 - 0.4) - floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.6)];
+    UIBezierPath* rectangle400Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.3,
+                               floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.66918 - 0.4) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.6)];
     [fill400 setFill];
     [rectangle400Path fill];
 
-
-    //// Rectangle 500 Drawing
-    UIBezierPath* rectangle500Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.3, floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5) - floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5), floor(CGRectGetHeight(palettesGroup) * 0.66918 - 0.4) - floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.6)];
+    UIBezierPath* rectangle500Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.3,
+                               floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.66918 - 0.4) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.6)];
     [fill500 setFill];
     [rectangle500Path fill];
 
-
-    //// Rectangle 600 Drawing
-    UIBezierPath* rectangle600Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.3, floor(CGRectGetWidth(palettesGroup) * 1.00000 + 0.5) - floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5), floor(CGRectGetHeight(palettesGroup) * 0.66918 - 0.4) - floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.6)];
+    UIBezierPath* rectangle600Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.3,
+                               floor(CGRectGetWidth(palettesGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.66918 - 0.4) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.6)];
     [fill600 setFill];
     [rectangle600Path fill];
 
-
-    //// Rectangle 700 Drawing
-    UIBezierPath* rectangle700Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5), floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5) - floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5), floor(CGRectGetHeight(palettesGroup) * 1.00000 - 0.1) - floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5) + 0.6)];
+    UIBezierPath* rectangle700Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(palettesGroup) +
+                                          floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                                      CGRectGetMinY(palettesGroup) +
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5),
+                                      floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5) -
+                                          floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                                      floor(CGRectGetHeight(palettesGroup) * 1.00000 - 0.1) -
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5) +
+                                          0.6)];
     [fill700 setFill];
     [rectangle700Path fill];
 
-
-    //// Rectangle 800 Drawing
-    UIBezierPath* rectangle800Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5), floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5) - floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5), floor(CGRectGetHeight(palettesGroup) * 1.00000 - 0.1) - floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5) + 0.6)];
+    UIBezierPath* rectangle800Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(palettesGroup) +
+                                          floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                                      CGRectGetMinY(palettesGroup) +
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5),
+                                      floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5) -
+                                          floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                                      floor(CGRectGetHeight(palettesGroup) * 1.00000 - 0.1) -
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5) +
+                                          0.6)];
     [fill800 setFill];
     [rectangle800Path fill];
 
-
-    //// Rectangle 900 Drawing
-    UIBezierPath* rectangle900Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5), floor(CGRectGetWidth(palettesGroup) * 1.00000 + 0.5) - floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5), floor(CGRectGetHeight(palettesGroup) * 1.00000 - 0.1) - floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5) + 0.6)];
+    UIBezierPath* rectangle900Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(palettesGroup) +
+                                          floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                                      CGRectGetMinY(palettesGroup) +
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5),
+                                      floor(CGRectGetWidth(palettesGroup) * 1.00000 + 0.5) -
+                                          floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                                      floor(CGRectGetHeight(palettesGroup) * 1.00000 - 0.1) -
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5) +
+                                          0.6)];
     [textDark setFill];
     [rectangle900Path fill];
 
-
-    //// Label 100 Drawing
-    CGRect label100Rect = CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.5, CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1) + 0.6, floor(CGRectGetWidth(palettesGroup) * 0.17769 - 0.02) - floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.02, floor(CGRectGetHeight(palettesGroup) * 0.31321 - 0.1) - floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1));
+    CGRect label100Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.17769 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.31321 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1));
     NSMutableParagraphStyle* label100Style = [NSMutableParagraphStyle new];
     label100Style.alignment = NSTextAlignmentLeft;
 
-    NSDictionary* label100FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: textDark, NSParagraphStyleAttributeName: label100Style};
+    NSDictionary* label100FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:UIFont.smallSystemFontSize],
+      NSForegroundColorAttributeName : textDark,
+      NSParagraphStyleAttributeName : label100Style
+    };
 
-    [@"100" drawInRect: label100Rect withAttributes: label100FontAttributes];
+    [@"100" drawInRect:label100Rect withAttributes:label100FontAttributes];
 
-
-    //// Label 200 Drawing
-    CGRect label200Rect = CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1) + 0.6, floor(CGRectGetWidth(palettesGroup) * 0.50740 + 0.48) - floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5) + 0.02, floor(CGRectGetHeight(palettesGroup) * 0.31321 - 0.1) - floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1));
+    CGRect label200Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5),
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.50740 + 0.48) -
+            floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.31321 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1));
     NSMutableParagraphStyle* label200Style = [NSMutableParagraphStyle new];
     label200Style.alignment = NSTextAlignmentLeft;
 
-    NSDictionary* label200FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: textDark, NSParagraphStyleAttributeName: label200Style};
+    NSDictionary* label200FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:UIFont.smallSystemFontSize],
+      NSForegroundColorAttributeName : textDark,
+      NSParagraphStyleAttributeName : label200Style
+    };
 
-    [@"200" drawInRect: label200Rect withAttributes: label200FontAttributes];
+    [@"200" drawInRect:label200Rect withAttributes:label200FontAttributes];
 
-
-    //// Label 300 Drawing
-    CGRect label300Rect = CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.5, CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1) + 0.6, floor(CGRectGetWidth(palettesGroup) * 0.83711 - 0.02) - floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.02, floor(CGRectGetHeight(palettesGroup) * 0.31321 - 0.1) - floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1));
+    CGRect label300Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.83711 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.31321 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1));
     NSMutableParagraphStyle* label300Style = [NSMutableParagraphStyle new];
     label300Style.alignment = NSTextAlignmentLeft;
 
-    NSDictionary* label300FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: textDark, NSParagraphStyleAttributeName: label300Style};
+    NSDictionary* label300FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:UIFont.smallSystemFontSize],
+      NSForegroundColorAttributeName : textDark,
+      NSParagraphStyleAttributeName : label300Style
+    };
 
-    [@"300" drawInRect: label300Rect withAttributes: label300FontAttributes];
+    [@"300" drawInRect:label300Rect withAttributes:label300FontAttributes];
 
-
-    //// Label 400 Drawing
-    CGRect label400Rect = CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.5, CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1) + 0.6, floor(CGRectGetWidth(palettesGroup) * 0.17769 - 0.02) - floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.02, floor(CGRectGetHeight(palettesGroup) * 0.65283 - 0.1) - floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1));
+    CGRect label400Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.17769 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.65283 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1));
     NSMutableParagraphStyle* label400Style = [NSMutableParagraphStyle new];
     label400Style.alignment = NSTextAlignmentLeft;
 
-    NSDictionary* label400FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: textDark, NSParagraphStyleAttributeName: label400Style};
+    NSDictionary* label400FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:UIFont.smallSystemFontSize],
+      NSForegroundColorAttributeName : textDark,
+      NSParagraphStyleAttributeName : label400Style
+    };
 
-    [@"400" drawInRect: label400Rect withAttributes: label400FontAttributes];
+    [@"400" drawInRect:label400Rect withAttributes:label400FontAttributes];
 
-
-    //// Label 500 Drawing
-    CGRect label500Rect = CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1) + 0.6, floor(CGRectGetWidth(palettesGroup) * 0.50740 + 0.48) - floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5) + 0.02, floor(CGRectGetHeight(palettesGroup) * 0.65283 - 0.1) - floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1));
+    CGRect label500Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5),
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.50740 + 0.48) -
+            floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.65283 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1));
     NSMutableParagraphStyle* label500Style = [NSMutableParagraphStyle new];
     label500Style.alignment = NSTextAlignmentLeft;
 
-    NSDictionary* label500FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: textLight, NSParagraphStyleAttributeName: label500Style};
+    NSDictionary* label500FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:UIFont.smallSystemFontSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label500Style
+    };
 
-    [@"500" drawInRect: label500Rect withAttributes: label500FontAttributes];
+    [@"500" drawInRect:label500Rect withAttributes:label500FontAttributes];
 
-
-    //// Label 600 Drawing
-    CGRect label600Rect = CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.5, CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1) + 0.6, floor(CGRectGetWidth(palettesGroup) * 0.83711 - 0.02) - floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.02, floor(CGRectGetHeight(palettesGroup) * 0.65283 - 0.1) - floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1));
+    CGRect label600Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.83711 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.65283 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1));
     NSMutableParagraphStyle* label600Style = [NSMutableParagraphStyle new];
     label600Style.alignment = NSTextAlignmentLeft;
 
-    NSDictionary* label600FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: textLight, NSParagraphStyleAttributeName: label600Style};
+    NSDictionary* label600FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:UIFont.smallSystemFontSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label600Style
+    };
 
-    [@"600" drawInRect: label600Rect withAttributes: label600FontAttributes];
+    [@"600" drawInRect:label600Rect withAttributes:label600FontAttributes];
 
-
-    //// Label 700 Drawing
-    CGRect label700Rect = CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.5, CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4) + 0.1, floor(CGRectGetWidth(palettesGroup) * 0.17769 - 0.02) - floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.02, floor(CGRectGetHeight(palettesGroup) * 0.98616 + 0.4) - floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4));
+    CGRect label700Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4) + 0.1,
+        floor(CGRectGetWidth(palettesGroup) * 0.17769 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.98616 + 0.4) -
+            floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4));
     NSMutableParagraphStyle* label700Style = [NSMutableParagraphStyle new];
     label700Style.alignment = NSTextAlignmentLeft;
 
-    NSDictionary* label700FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: textLight, NSParagraphStyleAttributeName: label700Style};
+    NSDictionary* label700FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:UIFont.smallSystemFontSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label700Style
+    };
 
-    [@"700" drawInRect: label700Rect withAttributes: label700FontAttributes];
+    [@"700" drawInRect:label700Rect withAttributes:label700FontAttributes];
 
-
-    //// Label 800 Drawing
-    CGRect label800Rect = CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5), CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4) + 0.1, floor(CGRectGetWidth(palettesGroup) * 0.50740 + 0.48) - floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5) + 0.02, floor(CGRectGetHeight(palettesGroup) * 0.98616 + 0.4) - floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4));
+    CGRect label800Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5),
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4) + 0.1,
+        floor(CGRectGetWidth(palettesGroup) * 0.50740 + 0.48) -
+            floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.98616 + 0.4) -
+            floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4));
     NSMutableParagraphStyle* label800Style = [NSMutableParagraphStyle new];
     label800Style.alignment = NSTextAlignmentLeft;
 
-    NSDictionary* label800FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: textLight, NSParagraphStyleAttributeName: label800Style};
+    NSDictionary* label800FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:UIFont.smallSystemFontSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label800Style
+    };
 
-    [@"800" drawInRect: label800Rect withAttributes: label800FontAttributes];
+    [@"800" drawInRect:label800Rect withAttributes:label800FontAttributes];
 
-
-    //// Label 900 Drawing
-    CGRect label900Rect = CGRectMake(CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.5, CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4) + 0.1, floor(CGRectGetWidth(palettesGroup) * 0.83711 - 0.02) - floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.02, floor(CGRectGetHeight(palettesGroup) * 0.98616 + 0.4) - floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4));
+    CGRect label900Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4) + 0.1,
+        floor(CGRectGetWidth(palettesGroup) * 0.83711 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.98616 + 0.4) -
+            floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4));
     NSMutableParagraphStyle* label900Style = [NSMutableParagraphStyle new];
     label900Style.alignment = NSTextAlignmentLeft;
 
-    NSDictionary* label900FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: textLight, NSParagraphStyleAttributeName: label900Style};
+    NSDictionary* label900FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:UIFont.smallSystemFontSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label900Style
+    };
 
-    [@"900" drawInRect: label900Rect withAttributes: label900FontAttributes];
+    [@"900" drawInRect:label900Rect withAttributes:label900FontAttributes];
   }
 }
 
