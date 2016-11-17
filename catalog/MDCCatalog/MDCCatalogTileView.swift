@@ -74,6 +74,8 @@ class MDCCatalogTileView: UIView {
     switch componentNameString {
     case "Activity Indicator":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawActivityIndicatorTile)
+    case "Animation Timing":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAnimationTimingTile)
     case "App Bar":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAppBarTile)
     case "Button Bar":

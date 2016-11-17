@@ -24,6 +24,7 @@ UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc);
 
 /* Draw various tiles. */
 void MDCCatalogDrawActivityIndicatorTile(CGRect frame);
+void MDCCatalogDrawAnimationTimingTile(CGRect frame);
 void MDCCatalogDrawAppBarTile(CGRect frame);
 void MDCCatalogDrawButtonBarTile(CGRect frame);
 void MDCCatalogDrawButtonsTile(CGRect frame);
