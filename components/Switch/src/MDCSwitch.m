@@ -198,8 +198,9 @@ static const CGFloat kInkMaxRippleRadiusFactor = 2.375f;
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  CGFloat dx = MIN(0, (self.bounds.size.height - kSwitchMinTouchSize) / 2);
-  CGRect rect = CGRectInset(self.bounds, dx, dx);
+  CGFloat dx = MIN(0, kSwitchThumbRadius - kSwitchMinTouchSize / 2);
+  CGFloat dy = MIN(0, (self.bounds.size.height - kSwitchMinTouchSize) / 2);
+  CGRect rect = CGRectInset(self.bounds, dx, dy);
   return CGRectContainsPoint(rect, point);
 }
 
