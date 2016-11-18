@@ -907,7 +907,6 @@ static inline MDCFlexibleHeaderShiftBehavior
   if (_shiftBehavior == shiftBehavior) {
     return;
   }
-
   BOOL needsShiftOnScreen = (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
                              shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled);
   _shiftBehavior = shiftBehavior;
