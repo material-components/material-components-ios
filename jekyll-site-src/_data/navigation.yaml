@@ -70,6 +70,9 @@ components:
         - name: HeaderStackView
           url: "/components/HeaderStackView/"
           markdown: components/HeaderStackView/README.md
+        - name: OverlayWindow
+          url: "/components/OverlayWindow/"
+          markdown: components/OverlayWindow/README.md
         - name: ShadowLayer
           url: "/components/ShadowLayer/"
           markdown: components/ShadowLayer/README.md
@@ -107,6 +110,9 @@ components:
         - name: Dialogs
           url: "/components/Dialogs/"
           markdown: components/Dialogs/README.md
+        - name: FeatureHighlight
+          url: "/components/FeatureHighlight/"
+          markdown: components/FeatureHighlight/README.md
         - name: NavigationBar
           url: "/components/NavigationBar/"
           markdown: components/NavigationBar/README.md
