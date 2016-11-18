@@ -910,8 +910,8 @@ static inline MDCFlexibleHeaderShiftBehavior
 
   BOOL needsShiftOnScreen = (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
                              shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled);
-
   _shiftBehavior = shiftBehavior;
+
   _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 
   if (needsShiftOnScreen) {
