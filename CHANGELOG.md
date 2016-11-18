@@ -5,7 +5,7 @@
 ### Buttons
 
 
-## MDCButton
+#### MDCButton
 
 *modified* method: `-setBackgroundColor:` in `MDCButton`
 
@@ -38,7 +38,7 @@
 ### CollectionCells
 
 
-## MDCCollectionViewCell
+#### MDCCollectionViewCell
 
 *new* property: `editingSelectorColor` in `MDCCollectionViewCell`
 
