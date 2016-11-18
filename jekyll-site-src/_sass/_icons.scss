@@ -184,6 +184,9 @@ ul.icon-list {
   .icon-dialogs a::before {
     background-image: url(#{$root_folder}/images/custom_icons/ic_dialogs_24px.svg);
   }
+  .icon-featurehighlight a::before {
+    background-image: url(#{$root_folder}/images/custom_icons/ic_featurehighlight_24px.svg);
+  }
   .icon-flexibleheader a::before {
     background-image: url(#{$root_folder}/images/custom_icons/ic_flexibleheader_24px.svg);
   }
