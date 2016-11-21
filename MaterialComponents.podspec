@@ -52,6 +52,9 @@ Pod::Spec.new do |s|
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
     ss.header_mappings_dir = "components/#{ss.base_name}/src"
 
+    # Accessibility Configurator
+    ss.dependency "MDFTextAccessibility"
+
     # Navigation bar contents
     ss.dependency "MaterialComponents/HeaderStackView"
     ss.dependency "MaterialComponents/NavigationBar"
@@ -64,16 +67,6 @@ Pod::Spec.new do |s|
 
     ss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
     ss.dependency "MaterialComponents/private/RTL"
-  end
-
-  s.subspec "AppBarAccessibilityEnforcer" do |ss|
-    ss.ios.deployment_target = '7.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.header_mappings_dir = "components/#{ss.base_name}/src"
-
-    ss.dependency "MaterialComponents/AppBar"
-    ss.dependency "MDFTextAccessibility"
   end
 
   s.subspec "AnimationTiming" do |ss|

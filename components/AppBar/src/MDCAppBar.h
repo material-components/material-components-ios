@@ -18,6 +18,30 @@
 #import "MaterialHeaderStackView.h"
 #import "MaterialNavigationBar.h"
 
+@class MDCAppBar;
+
+/**
+ The MDCAppBarAccessibilityEnforcer class creates an external object with which to work on an
+ instance of a Material App Bar to activate and esnure accessibility on its title and buttons.
+
+ ### Dependencies
+
+ Material AppBarAccessibilityEnforcer depends on the AppBar material component and
+ MDFTextAccessibility Framework.
+ */
+
+@interface MDCAppBarAccessibilityEnforcer : NSObject
+
+- (nonnull instancetype)init;
+
+/**
+ Mutates title text color and navigation items' tint colors based on background color of
+ app bar's navigation bar or header view background color.
+ */
+- (void)enforceAccessibility:(nonnull MDCAppBar *)appBar;
+
+@end
+
 /**
  The MDCAppBar class creates and configures the constellation of components required to represent a
  Material App Bar.

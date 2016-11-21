@@ -17,7 +17,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
-#import "MDCAppBarAccessibilityEnforcer.h"
 
 // This example builds upon AppBarTypicalUseExample.
 
