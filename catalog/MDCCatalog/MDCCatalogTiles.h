@@ -24,9 +24,11 @@ UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc);
 
 /* Draw various tiles. */
 void MDCCatalogDrawActivityIndicatorTile(CGRect frame);
+void MDCCatalogDrawAnimationTimingTile(CGRect frame);
 void MDCCatalogDrawAppBarTile(CGRect frame);
 void MDCCatalogDrawButtonBarTile(CGRect frame);
 void MDCCatalogDrawButtonsTile(CGRect frame);
+void MDCCatalogDrawCollectionCellsTile(CGRect frame);
 void MDCCatalogDrawCollectionsTile(CGRect frame);
 void MDCCatalogDrawDialogsTile(CGRect frame);
 void MDCCatalogDrawFeatureHighlightTile(CGRect frame);
@@ -36,6 +38,8 @@ void MDCCatalogDrawInkTile(CGRect frame);
 void MDCCatalogDrawMiscTile(CGRect frame);
 void MDCCatalogDrawNavigationBarTile(CGRect frame);
 void MDCCatalogDrawPageControlTile(CGRect frame);
+void MDCCatalogDrawPalettesTile(CGRect frame);
+void MDCCatalogDrawProgressViewTile(CGRect frame);
 void MDCCatalogDrawShadowLayerTile(CGRect frame);
 void MDCCatalogDrawSliderTile(CGRect frame);
 void MDCCatalogDrawSnackbarTile(CGRect frame);

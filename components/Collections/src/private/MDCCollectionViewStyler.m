@@ -313,7 +313,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 }
 
 - (BOOL)isItemInlaidAtIndexPath:(NSIndexPath *)indexPath {
-  return [[_inlaidIndexPathSet allObjects] containsObject:indexPath];
+  return [_inlaidIndexPathSet containsObject:indexPath];
 }
 
 - (void)applyInlayToItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {

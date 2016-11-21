@@ -57,11 +57,11 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
 static inline MDCFlexibleHeaderShiftBehavior
  ShiftBehaviorForCurrentAppContext(MDCFlexibleHeaderShiftBehavior intendedShiftBehavior) {
-  if (![[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"] ||
-      intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled) {
-    return intendedShiftBehavior;
+  if ([[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"] &&
+      intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
+    return MDCFlexibleHeaderShiftBehaviorEnabled;
   }
-  return MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+  return intendedShiftBehavior;
 }
 
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
@@ -813,6 +813,7 @@ static inline MDCFlexibleHeaderShiftBehavior
                                                   action:@selector(fhv_scrollViewDidPan:)];
   [trackingScrollView.panGestureRecognizer addTarget:self action:@selector(fhv_scrollViewDidPan:)];
 
+#if 0   // TODO(featherless): https://github.com/google/material-components-ios/issues/214
   // Verify existence of a delegate.
   NSAssert(!trackingScrollView || trackingScrollView.delegate,
            @"The provided tracking scroll view %@ has no delegate. Without a delegate, %@ will not"
@@ -820,6 +821,7 @@ static inline MDCFlexibleHeaderShiftBehavior
            @" This assertion will only fire in debug builds.",
            NSStringFromClass([trackingScrollView class]),
            NSStringFromClass([self class]));
+#endif  // #if 0
 #endif  // #if DEBUG
 
   // If this header is shared by many scroll views then we leave the insets when switching the
@@ -909,6 +911,7 @@ static inline MDCFlexibleHeaderShiftBehavior
   }
   BOOL needsShiftOnScreen = (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
                              shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled);
+  _shiftBehavior = shiftBehavior;
 
   _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 

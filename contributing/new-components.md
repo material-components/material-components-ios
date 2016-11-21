@@ -25,6 +25,12 @@ Check the other components for good examples of the above.
    1. A screenshot in `components/<name>/docs/assets/<name>.png`.
 1. Run `scripts/generate_jazzy_yamls.sh` to generate `components/<name>/.jazzy.yaml`, the
    configuration for [Jazzy](https://github.com/realm/jazzy), our code documentation generator.
-1. Add the YAML prefix (delimited by the `---` markers) to `components/<name>/README.md`. Use the
-components' name as the `title` and its description as the `excerpt`.
-[Example](https://raw.githubusercontent.com/google/material-components-ios/develop/components/AppBar/README.md).
+1. Create a YAML prefix file in `components/<name>/.jekyll_prefix.yaml`:
+   ~~~
+   ---
+   title:  "Activity Indicator"
+   layout: detail
+   section: components
+   excerpt: "Progress and activity indicators are visual indications of an app loading content."
+   --- 
+   ~~~

@@ -222,8 +222,9 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  CGFloat dx = MIN(0, (self.bounds.size.height - kSliderMinTouchSize) / 2);
-  CGRect rect = CGRectInset(self.bounds, dx, dx);
+  CGFloat dx = MIN(0, kSliderThumbRadius - kSliderMinTouchSize / 2);
+  CGFloat dy = MIN(0, (self.bounds.size.height - kSliderMinTouchSize) / 2);
+  CGRect rect = CGRectInset(self.bounds, dx, dy);
   return CGRectContainsPoint(rect, point);
 }
 
