@@ -31,15 +31,30 @@ class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
   }
 
   func testLightNavigationBarBackground() {
-
-  }
-
-  func testLightHeaderViewBackground() {
-
+    appBar.navigationBar.backgroundColor = UIColor.whiteColor()
+    enforcer.enforceAccessibility(appBar)
+    let fontColor =
+      appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    XCTAssertEqual(fontColor,
+                   MDFTextAccessibility.textColorOnBackgroundColor(UIColor.whiteColor(), targetTextAlpha: 1.0, font: nil))
   }
 
   func testDarkHeaderViewBackground() {
+    appBar.headerViewController.headerView.backgroundColor = UIColor.blackColor()
+    enforcer.enforceAccessibility(appBar)
+    let fontColor =
+      appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    XCTAssertEqual(fontColor,
+                   MDFTextAccessibility.textColorOnBackgroundColor(UIColor.blackColor(), targetTextAlpha: 1.0, font: nil))
+  }
 
+  func testLightHeaderViewBackground() {
+    appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
+    enforcer.enforceAccessibility(appBar)
+    let fontColor =
+      appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    XCTAssertEqual(fontColor,
+                   MDFTextAccessibility.textColorOnBackgroundColor(UIColor.whiteColor(), targetTextAlpha: 1.0, font: nil))
   }
 
   func testNoBackgroundColorSet() {
@@ -47,7 +62,13 @@ class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
   }
 
   func testConflightingHeaderViewNavigationBarBackgroundColors() {
-
+    appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
+    appBar.navigationBar.backgroundColor = UIColor.blackColor()
+    enforcer.enforceAccessibility(appBar)
+    let fontColor =
+      appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    XCTAssertEqual(fontColor,
+                   MDFTextAccessibility.textColorOnBackgroundColor(UIColor.blackColor(), targetTextAlpha: 1.0, font: nil))
   }
 
 }
