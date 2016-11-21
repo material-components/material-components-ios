@@ -38,7 +38,7 @@
  Mutates title text color and navigation items' tint colors based on background color of
  app bar's navigation bar or header view background color.
  */
-- (void)enforceAccessibility:(nonnull MDCAppBar *)appBar;
+- (void)enforceFontColorAccessibility:(nonnull MDCAppBar *)appBar;
 
 @end
 

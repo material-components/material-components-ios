@@ -37,7 +37,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
     let enforcer = MDCAppBarAccessibilityEnforcer()
-    enforcer.enforceAccessibility(appBar)
+    enforcer.enforceFontColorAccessibility(appBar)
   }
 
   required init?(coder aDecoder: NSCoder) {

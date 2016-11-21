@@ -37,7 +37,7 @@ static const CGFloat kStatusBarHeight = 20;
   return self;
 }
 
-- (void)enforceAccessibility:(nonnull MDCAppBar *)appBar {
+- (void)enforceFontColorAccessibility:(nonnull MDCAppBar *)appBar {
   // Determine what is the appropriate background color
   // Because navigation bar renders above headerview, it takes presedence
   UIColor *backgroundColor = appBar.navigationBar.backgroundColor ?:

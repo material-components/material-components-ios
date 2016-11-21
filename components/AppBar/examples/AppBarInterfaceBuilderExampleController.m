@@ -51,7 +51,7 @@
   self.appBar.headerViewController.headerView.backgroundColor = headerColor;
 
   MDCAppBarAccessibilityEnforcer *enforcer = [[MDCAppBarAccessibilityEnforcer alloc] init];
-  [enforcer enforceAccessibility:_appBar];
+  [enforcer enforceFontColorAccessibility:_appBar];
 }
 
 - (void)viewDidLoad {
