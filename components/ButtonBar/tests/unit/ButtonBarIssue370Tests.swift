@@ -20,7 +20,7 @@ import MaterialComponents
 // Tests confirming that the Button Bar respects UI appearance for bar button item
 // titleTextAttributes on iOS 9 and above.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/370
+// Based on issue https://github.com/material-components/material-components-ios/issues/370
 class ButtonBarIssue370Tests: XCTestCase {
 
   var buttonBar: MDCButtonBar!

@@ -28,7 +28,7 @@
       UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 
   // Consider using the named styles provided by the Typography component instead of specific font
-  // sizes. See https://github.com/google/material-components-ios/tree/develop/components/Typography
+  // sizes. See https://github.com/material-components/material-components-ios/tree/develop/components/Typography
   UILabel *label = [[UILabel alloc] init];
   label.text = @"This is Roboto regular 16";
   label.font = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];

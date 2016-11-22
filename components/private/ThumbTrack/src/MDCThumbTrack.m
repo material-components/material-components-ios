@@ -804,7 +804,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // particularly when that view's edges fall on a subpixel. Adding the extra pt on the top and
   // bottom accounts for this case here, and ensures that none of the _trackView appears where it
   // isn't supposed to.
-  // This fixes https://github.com/google/material-components-ios/issues/566 for all orientations.
+  // This fixes https://github.com/material-components/material-components-ios/issues/566 for all orientations.
   CGRect maskFrame = CGRectMake(0, -1, CGRectGetWidth(self.bounds), _trackHeight + 2);
 
   CGMutablePathRef path = CGPathCreateMutable();

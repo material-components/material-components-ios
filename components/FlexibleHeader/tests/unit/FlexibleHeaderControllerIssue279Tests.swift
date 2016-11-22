@@ -20,7 +20,7 @@ import MaterialComponents
 // Tests confirming that the flexible header view is always in front of other views when the
 // flexible header view is a subview of its tracking scroll view.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/279
+// Based on issue https://github.com/material-components/material-components-ios/issues/279
 class FlexibleHeaderControllerIssue279Tests: XCTestCase {
 
   var fhvc: MDCFlexibleHeaderViewController!

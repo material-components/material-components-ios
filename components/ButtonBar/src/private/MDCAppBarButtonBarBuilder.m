@@ -278,7 +278,7 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   [super layoutSubviews];
 
   // TODO(featherless): Remove this conditional and always set the max ripple radius once
-  // https://github.com/google/material-components-ios/issues/329 lands.
+  // https://github.com/material-components/material-components-ios/issues/329 lands.
   if (self.inkStyle == MDCInkStyleUnbounded) {
     self.inkMaxRippleRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
   } else {

@@ -1,6 +1,6 @@
 <!--{% if site.link_to_site == "true" %}-->
 See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/AppBar">GitHub</a> for README documentation.{% endif %}-->
+<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/AppBar">GitHub</a> for README documentation.{% endif %}-->
 
 # App Bar
 
@@ -75,7 +75,7 @@ outlined in the Usage docs below.
 
 Note that it is possible to create each of the above components yourself, though we only encourage
 doing so if the App Bar is limiting your ability to build something. In such a case we recommend
-also [filing an issue](https://github.com/google/material-components-ios/issues/new) so that we can
+also [filing an issue](https://github.com/material-components/material-components-ios/issues/new) so that we can
 identify whether your use case is something we can directly support.
 
 
@@ -231,13 +231,13 @@ Scenario: you've added a background image to your App Bar and you'd now like to 
 background image.
 
 This is not trivial to do with the App Bar APIs due to considerations being discussed in
-[Issue #184](https://github.com/google/material-components-ios/issues/184).
+[Issue #184](https://github.com/material-components/material-components-ios/issues/184).
 
 The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
 Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
 end up eating all of your touch events.
 
-Until [Issue #184](https://github.com/google/material-components-ios/issues/184) is resolved, our
+Until [Issue #184](https://github.com/material-components/material-components-ios/issues/184) is resolved, our
 recommendation for building interactive background views is the following:
 
 1. Do not use the App Bar component.
