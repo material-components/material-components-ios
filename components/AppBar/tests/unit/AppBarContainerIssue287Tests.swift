@@ -20,7 +20,7 @@ import MaterialComponents
 // Tests confirming that MDCAppBarContainerViewController doesn't loads its own view during
 // initialization.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/287
+// Based on issue https://github.com/material-components/material-components-ios/issues/287
 class AppBarContainerIssue287Tests: XCTestCase {
 
   var content: UIViewController!

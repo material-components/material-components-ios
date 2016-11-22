@@ -16,7 +16,7 @@ Measured on the 13.0.0 release.
 
 Bare uses [CocoaPods](https://cocoapods.org/) for dependency
 management. You will need CocoaPods as well as SSH access to
-[material-components-ios](https://github.com/google/material-components-ios).
+[material-components-ios](https://github.com/material-components/material-components-ios).
 Needing SSH access is only temporary until MDC launches publicly.
 
 To install/build, cd into this directory and run `pod install`.
