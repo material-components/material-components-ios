@@ -18,6 +18,10 @@ import XCTest
 import MaterialComponents
 import MDFTextAccessibility
 
+// Tests confirming that the App Bar Accessibility Enforcer correctly changes title font color and
+// tint color on App Bar's |navigationBar| to meet accepted accessibility values defined by
+// MDFTextAccessibility
+
 class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
 
   var appBar: MDCAppBar!
@@ -30,53 +34,113 @@ class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
   }
 
   func testDarkNavigationBarBackground() {
+    // Given
     appBar.navigationBar.backgroundColor = UIColor.blackColor()
+
+    // When
     enforcer.enforceFontColorAccessibility(appBar)
+
+    // Then
     let fontColor =
         appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
-    XCTAssertEqual(fontColor,
-                   MDFTextAccessibility.textColorOnBackgroundColor(UIColor.blackColor(), targetTextAlpha: 1.0, font: nil))
+    let tintColor = appBar.navigationBar.tintColor
+    let accessibleColor = MDFTextAccessibility.textColorOnBackgroundColor(UIColor.blackColor(),
+                                                                          targetTextAlpha: 1.0,
+                                                                          font: nil)
+
+    XCTAssertEqual(fontColor, accessibleColor)
+    XCTAssertEqual(tintColor, accessibleColor)
   }
 
   func testLightNavigationBarBackground() {
+    // Given
     appBar.navigationBar.backgroundColor = UIColor.whiteColor()
+
+    // When
     enforcer.enforceFontColorAccessibility(appBar)
+
+    // Then
     let fontColor =
-      appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
-    XCTAssertEqual(fontColor,
-                   MDFTextAccessibility.textColorOnBackgroundColor(UIColor.whiteColor(), targetTextAlpha: 1.0, font: nil))
+        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    let tintColor = appBar.navigationBar.tintColor
+    let accessibleColor = MDFTextAccessibility.textColorOnBackgroundColor(UIColor.whiteColor(),
+                                                                          targetTextAlpha: 1.0,
+                                                                          font: nil)
+    XCTAssertEqual(fontColor, accessibleColor)
+    XCTAssertEqual(tintColor, accessibleColor)
   }
 
   func testDarkHeaderViewBackground() {
+    // Given
     appBar.headerViewController.headerView.backgroundColor = UIColor.blackColor()
+
+    // When
     enforcer.enforceFontColorAccessibility(appBar)
+
+    // Then
     let fontColor =
-      appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
-    XCTAssertEqual(fontColor,
-                   MDFTextAccessibility.textColorOnBackgroundColor(UIColor.blackColor(), targetTextAlpha: 1.0, font: nil))
+        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    let tintColor = appBar.navigationBar.tintColor
+    let accessibleColor = MDFTextAccessibility.textColorOnBackgroundColor(UIColor.blackColor(),
+                                                                          targetTextAlpha: 1.0,
+                                                                          font: nil)
+    XCTAssertEqual(fontColor, accessibleColor)
+    XCTAssertEqual(tintColor, accessibleColor)
   }
 
   func testLightHeaderViewBackground() {
+    // Given
     appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
+
+    // When
     enforcer.enforceFontColorAccessibility(appBar)
+
+    // Then
     let fontColor =
-      appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
-    XCTAssertEqual(fontColor,
-                   MDFTextAccessibility.textColorOnBackgroundColor(UIColor.whiteColor(), targetTextAlpha: 1.0, font: nil))
+        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    let tintColor = appBar.navigationBar.tintColor
+    let accessibleColor = MDFTextAccessibility.textColorOnBackgroundColor(UIColor.whiteColor(),
+                                                                          targetTextAlpha: 1.0,
+                                                                          font: nil)
+    XCTAssertEqual(fontColor, accessibleColor)
+    XCTAssertEqual(tintColor, accessibleColor)
   }
 
   func testNoBackgroundColorSet() {
+    // Given
+    let defaultBackgroundColor = appBar.headerViewController.headerView.backgroundColor!
 
+    // When
+    enforcer.enforceFontColorAccessibility(appBar)
+
+    // Then
+    let fontColor =
+        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    let tintColor = appBar.navigationBar.tintColor
+    let accessibleColor = MDFTextAccessibility.textColorOnBackgroundColor(defaultBackgroundColor,
+                                                                          targetTextAlpha: 1.0,
+                                                                          font: nil)
+    XCTAssertEqual(fontColor, accessibleColor)
+    XCTAssertEqual(tintColor, accessibleColor)
   }
 
-  func testConflightingHeaderViewNavigationBarBackgroundColors() {
+  func testConflictingHeaderViewNavigationBarBackgroundColors() {
+    // Given
     appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
     appBar.navigationBar.backgroundColor = UIColor.blackColor()
+
+    // When
     enforcer.enforceFontColorAccessibility(appBar)
+
+    // Then
     let fontColor =
-      appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
-    XCTAssertEqual(fontColor,
-                   MDFTextAccessibility.textColorOnBackgroundColor(UIColor.blackColor(), targetTextAlpha: 1.0, font: nil))
+        appBar.navigationBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    let tintColor = appBar.navigationBar.tintColor
+    let accessibleColor = MDFTextAccessibility.textColorOnBackgroundColor(UIColor.blackColor(),
+                                                                          targetTextAlpha: 1.0,
+                                                                          font: nil)
+    XCTAssertEqual(fontColor, accessibleColor)
+    XCTAssertEqual(tintColor, accessibleColor)
   }
 
 }
