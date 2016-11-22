@@ -78,6 +78,13 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {
 @property(nonatomic, getter=isEditing) BOOL editing;
 
 /**
+ The color for the editing selector when the cell is selected.
+
+ The default is a red color.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *editingSelectorColor UI_APPEARANCE_SELECTOR;
+
+/**
  Set the editing state with optional animations.
 
  When set, the cell will shows/hide editing controls with/without animation.

@@ -1,3 +1,100 @@
+# 17.0.0
+
+## API Diffs
+
+### Buttons
+
+
+#### MDCButton
+
+*modified* method: `-setBackgroundColor:` in `MDCButton`
+
+| Type of change: | key.deprecation_message |
+|---|---|
+| From: | `Use setBackgroundColor:forState: instead.` |
+| To: | `  `
+
+*modified* method: `-setBackgroundColor:` in `MDCButton`
+
+| Type of change: | key.always_unavailable |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+*modified* method: `-setBackgroundColor:` in `MDCButton`
+
+| Type of change: | key.always_deprecated |
+|---|---|
+| From: | `1` |
+| To: | `0` |
+
+*modified* method: `-setBackgroundColor:` in `MDCButton`
+
+| Type of change: | declaration |
+|---|---|
+| From: | `- (void)setBackgroundColor:(nullable UIColor *)backgroundColor     __deprecated_msg("Use setBackgroundColor:forState: instead.");` |
+| To: | `- (void)setBackgroundColor:(nullable UIColor *)backgroundColor;` |
+
+### CollectionCells
+
+
+#### MDCCollectionViewCell
+
+*new* property: `editingSelectorColor` in `MDCCollectionViewCell`
+
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [[Button] Made setBackgroundColor unavailable and corrected updateTitle and update baoground order of operations. (#822)](https://github.com/google/material-components-ios/commit/33d4839bca3b253e1a4277418b0e47cc69a01e3e) (Randall Li)
+
+### CollectionCells
+
+#### Changes
+
+* [Add color property for editing selector in MDCCollectionViewCell (#844)](https://github.com/google/material-components-ios/commit/ba36035d48d37511d7c205eed3ab3a8bc171030f) (Gauthier Ambard)
+* [Handle separator insets correctly in RTL](https://github.com/google/material-components-ios/commit/c6f6fb85460284463369d2e5fa220ecad597f616) (Louis Romero)
+* [Set checked cell's accessibility trait to Selected](https://github.com/google/material-components-ios/commit/bb78cbb9d463e16b5118a7826e81adb9a00a3ff0) (Louis Romero)
+
+
+
+# 16.3.0
+
+## API diffs
+
+### Snackbar
+
+- [new] [`MDCSnackbar setPresentationHostView:`](https://github.com/google/material-components-ios/commit/ee84a40885724453da69ca90bfa6a874008dc0b0)
+
+## Component changes
+
+### CollectionCells
+
+#### Changes
+
+* [[CollectionViewCell] Call |layoutSubviews| when editing (#798)](https://github.com/google/material-components-ios/commit/393d6214e08b1ff5bc359a1cfc6f816abe7b2e67) (Gauthier Ambard)
+
+### Collections
+
+#### Changes
+
+* [Change layout invalidation in MDCCollectionViewStyler (#790)](https://github.com/google/material-components-ios/commit/82f7758bad9d4573f49d3656816df128642a8968) (Gauthier Ambard)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Convert CGFloats to float for 32 bit compilation (#834)](https://github.com/google/material-components-ios/commit/28f1d43595cd2a3fa109acb275214e50c810e94d) (Sam Morrison)
+
+### Snackbar
+
+#### Changes
+
+* [[MDCSnackbar]! Add presentationHostView property to snackbar (#784)](https://github.com/google/material-components-ios/commit/ee84a40885724453da69ca90bfa6a874008dc0b0) (Sam Morrison)
+
 # 16.2.0
 
 ## API diffs
@@ -147,7 +244,7 @@
 
 ### Palettes
 
-- [new] [`MDCPalette.paletteGeneratedFromColor](https://github.com/google/material-components-ios/blob/fad8519b6a1ba5c29a0368fb470cca3c6da74431/components/Palettes/src/MDCPalettes.h#L137)
+- [new] [`MDCPalette.paletteGeneratedFromColor`](https://github.com/google/material-components-ios/blob/fad8519b6a1ba5c29a0368fb470cca3c6da74431/components/Palettes/src/MDCPalettes.h#L137)
 
 ## Component changes
 

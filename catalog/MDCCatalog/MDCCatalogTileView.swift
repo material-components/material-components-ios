@@ -73,43 +73,53 @@ class MDCCatalogTileView: UIView {
 
     switch componentNameString {
     case "Activity Indicator":
-      newImage = MDCCatalogTileDataActivityIndicator.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawActivityIndicatorTile)
+    case "Animation Timing":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAnimationTimingTile)
     case "App Bar":
-      newImage = MDCCatalogTileDataAppBar.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAppBarTile)
     case "Button Bar":
-      newImage = MDCCatalogTileDataButtonBar.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonBarTile)
     case "Buttons":
-      newImage = MDCCatalogTileDataButtons.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonsTile)
+    case "Collection Cells":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionCellsTile)
     case "Collections":
-      newImage = MDCCatalogTileDataCollections.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionsTile)
+    case "Dialogs":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawDialogsTile)
     case "Feature Highlight":
-      newImage = MDCCatalogTileDataFeatureHighlight.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawFeatureHighlightTile)
     case "Flexible Header":
-      newImage = MDCCatalogTileDataFlexibleHeader.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawFlexibleHeaderTile)
     case "Header Stack View":
-      newImage = MDCCatalogTileDataHeaderStackView.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawHeaderStackViewTile)
     case "Ink":
-      newImage = MDCCatalogTileDataInk.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawInkTile)
     case "Navigation Bar":
-      newImage = MDCCatalogTileDataNavigationBar.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawNavigationBarTile)
     case "Misc":
-      newImage = MDCCatalogTileDataMisc.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawMiscTile)
     case "Page Control":
-      newImage = MDCCatalogTileDataPageControl.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPageControlTile)
+    case "Palettes":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPalettesTile)
+    case "Progress View":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawProgressViewTile)
     case "Shadow":
-      newImage = MDCCatalogTileDataShadowLayer.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawShadowLayerTile)
     case "Slider":
-      newImage = MDCCatalogTileDataSlider.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSliderTile)
     case "Snackbar":
-      newImage = MDCCatalogTileDataSnackbar.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSnackbarTile)
     case "Sprited Animation View":
-      newImage = MDCCatalogTileDataSpritedAnimationView.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSpritedAnimationViewTile)
     case "Switch":
-      newImage = MDCCatalogTileDataSwitch.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSwitchTile)
     case "Typography and Fonts":
-      newImage = MDCCatalogTileDataTypography.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawTypographyTile)
     default:
-      newImage = MDCCatalogTileDataMisc.drawTileImage(centeredFrame)
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawMiscTile)
     }
     imageCache.setObject(newImage, forKey: componentNameString)
     return newImage

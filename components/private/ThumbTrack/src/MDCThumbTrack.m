@@ -239,8 +239,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  CGFloat dx = MIN(0, (self.bounds.size.height - kMinTouchSize) / 2);
-  CGRect rect = CGRectInset(self.bounds, dx, dx);
+  CGFloat dx = MIN(0, kDefaultThumbRadius - kMinTouchSize / 2);
+  CGFloat dy = MIN(0, (self.bounds.size.height - kMinTouchSize) / 2);
+  CGRect rect = CGRectInset(self.bounds, dx, dy);
   return CGRectContainsPoint(rect, point);
 }
 

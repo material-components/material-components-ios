@@ -51,7 +51,6 @@ static const uint32_t kCellRedColor = 0xF44336;
   BOOL _usesCellSeparatorHiddenOverride;
   BOOL _usesCellSeparatorInsetOverride;
   BOOL _shouldAnimateEditingViews;
-  CAShapeLayer *_separatorLayer;
   UIView *_separatorView;
   UIImageView *_backgroundImageView;
   UIImageView *_editingReorderImageView;
@@ -82,6 +81,7 @@ static const uint32_t kCellRedColor = 0xF44336;
   // Accessory defaults.
   _accessoryType = MDCCollectionViewCellAccessoryNone;
   _accessoryInset = kAccessoryInsetDefault;
+  _editingSelectorColor = HEXCOLOR(kCellRedColor);
 }
 
 #pragma mark - Layout
@@ -289,19 +289,13 @@ static const uint32_t kCellRedColor = 0xF44336;
 
   if (!hideSeparator) {
     UIEdgeInsets insets = _attr.backgroundImageViewInsets;
-    CGFloat separatorOriginX;
-    switch (self.mdc_effectiveUserInterfaceLayoutDirection) {
-      case UIUserInterfaceLayoutDirectionLeftToRight:
-        separatorOriginX = insets.left;
-        break;
-      case UIUserInterfaceLayoutDirectionRightToLeft:
-        separatorOriginX = insets.right;
-        break;
-    }
+    // Compute the frame in LTR.
     CGRect separatorFrame = CGRectMake(
-        separatorOriginX, CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
+        insets.left, CGRectGetHeight(self.bounds) - _attr.separatorLineHeight,
         CGRectGetWidth(self.bounds) - insets.left - insets.right, _attr.separatorLineHeight);
-    _separatorView.frame = UIEdgeInsetsInsetRect(separatorFrame, separatorInset);
+    separatorFrame = UIEdgeInsetsInsetRect(separatorFrame, separatorInset);
+    _separatorView.frame = MDCRectFlippedForRTL(separatorFrame, CGRectGetWidth(self.bounds),
+                                                self.mdc_effectiveUserInterfaceLayoutDirection);
     _separatorView.backgroundColor = _attr.separatorColor;
   }
 }
@@ -318,7 +312,8 @@ static const uint32_t kCellRedColor = 0xF44336;
   }
   _shouldAnimateEditingViews = animated;
   _editing = editing;
-  [self updateInterfaceForEditing];
+  [self setNeedsLayout];
+  [self layoutIfNeeded];
 }
 
 - (void)updateInterfaceForEditing {
@@ -397,7 +392,7 @@ static const uint32_t kCellRedColor = 0xF44336;
   if (selected) {
     _editingSelectorImageView.image =
         [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_check_circle]];
-    _editingSelectorImageView.tintColor = HEXCOLOR(kCellRedColor);
+    _editingSelectorImageView.tintColor = self.editingSelectorColor;
   } else {
     _editingSelectorImageView.image =
         [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_radio_button_unchecked]];
@@ -405,6 +400,13 @@ static const uint32_t kCellRedColor = 0xF44336;
   }
   _editingSelectorImageView.image =
       [_editingSelectorImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
+- (void)setEditingSelectorColor:(UIColor *)editingSelectorColor {
+  if (editingSelectorColor == nil) {
+    editingSelectorColor = HEXCOLOR(kCellRedColor);
+  }
+  _editingSelectorColor = editingSelectorColor;
 }
 
 #pragma mark - Cell Appearance Animation
@@ -437,6 +439,16 @@ static const uint32_t kCellRedColor = 0xF44336;
   if ([_accessoryView isKindOfClass:[MDCAccessoryTypeImageView class]]) {
     self.accessoryType = self.accessoryType;
   }
+}
+
+#pragma mark - Accessibility
+
+- (UIAccessibilityTraits)accessibilityTraits {
+  UIAccessibilityTraits accessibilityTraits = [super accessibilityTraits];
+  if (self.accessoryType == MDCCollectionViewCellAccessoryCheckmark) {
+    accessibilityTraits |= UIAccessibilityTraitSelected;
+  }
+  return accessibilityTraits;
 }
 
 #pragma mark - Private

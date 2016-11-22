@@ -96,6 +96,10 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](NavigationBar/)
   <!--{: .icon-navigationbar }-->
 
+- [**OverlayWindow**
+  A window for managing sets of overlay views.
+  ](OverlayWindow/)
+
 - [**PageControl**
   A drop-in material replacement for UIPageControl.
   ](PageControl/)

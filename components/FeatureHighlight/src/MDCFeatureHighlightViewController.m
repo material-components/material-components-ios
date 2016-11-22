@@ -19,9 +19,9 @@
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView.h"
 
-const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96;
+const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
 
-static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5;
+static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
 @end

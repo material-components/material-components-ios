@@ -15,7 +15,7 @@
  */
 
 import UIKit
-import MaterialComponents
+import RemoteImageService
 
 class ShrineCollectionViewCell: UICollectionViewCell {
 
