@@ -296,8 +296,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 }
 
 - (void)setRadius:(CGFloat)radius {
-  // Constrain radius to range [8dp, 72dp].
-  _radius = MIN(MAX(radius, 8.0f), 72.0f);
+  _radius = MIN(MAX(radius, 5.0f), 72.0f);
 
   [self updateStrokePath];
 }
