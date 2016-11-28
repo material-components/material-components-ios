@@ -148,8 +148,10 @@ PODS:
     - MaterialComponents/private/Overlay
   - MaterialComponents/SpritedAnimationView (16.3.0)
   - MaterialComponents/Switch (16.3.0):
+    - MaterialComponents/Ink
     - MaterialComponents/private/RTL
-    - MaterialComponents/private/ThumbTrack
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
   - MaterialComponents/Typography (16.3.0)
   - MaterialComponentsCatalog (16.3.0):
     - MaterialComponents
@@ -176,9 +178,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: c45603e76cda710a29228a790d5139f404b908ea
-  MaterialComponents: 333d8168abf6d068f31e5e7875403053cd4abae1
-  MaterialComponentsCatalog: 51e6b7852dc8a679c8d7ff434b45421a8b676472
-  MaterialComponentsUnitTests: c548a83a7973727c70516c337e6b016518fff4f7
+  MaterialComponents: f3333a87433e2379a5a95eeb466ce450d18f7893
+  MaterialComponentsCatalog: e88e5bb9f70c403a080818ec5ab21a50fe63f9e6
+  MaterialComponentsUnitTests: 4254781fc30926356edb0c2619f7e3224177adc2
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
 PODFILE CHECKSUM: 522d8a942cbc2d1a94e939e565f528cc83468b01
