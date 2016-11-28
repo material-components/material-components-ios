@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIApplication (SafeApplication)
+@interface UIApplication (AppExtensions)
 
 /**
  Returns sharedApplication if it is available otherwise returns nil.

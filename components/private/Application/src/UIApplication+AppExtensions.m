@@ -16,7 +16,7 @@
 
 #import "UIApplication+AppExtensions.h"
 
-@implementation UIApplication (SafeApplication)
+@implementation UIApplication (AppExtensions)
 
 + (UIApplication *)mdc_safeApplication {
   static UIApplication *application;
