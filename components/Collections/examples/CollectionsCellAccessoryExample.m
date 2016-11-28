@@ -16,6 +16,8 @@
 
 #import "CollectionsCellAccessoryExample.h"
 
+#import "MaterialSwitch.h"
+
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsCellAccessoryExample {
@@ -74,7 +76,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   // Add accessory views.
   if (indexPath.section == 0) {
     // Add switch as accessory view.
-    UISwitch *editingSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    MDCSwitch *editingSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
     [editingSwitch addTarget:self
                       action:@selector(didSwitch:)
             forControlEvents:UIControlEventValueChanged];
@@ -109,7 +111,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 #pragma mark - UIControlEvents
 
 - (void)didSwitch:(id)sender {
-  UISwitch *switchControl = sender;
+  MDCSwitch *switchControl = sender;
   [self.editor setEditing:switchControl.isOn animated:YES];
 }
 

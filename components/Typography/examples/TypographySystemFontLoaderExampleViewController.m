@@ -16,10 +16,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MaterialRobotoFontLoader.h"
+#import "MaterialSwitch.h"
 #import "MaterialTypography.h"
 
 @interface TypographySystemFontLoaderExampleViewController : UIViewController
-@property(weak, nonatomic) IBOutlet UISwitch *uiSwitch;
+@property(weak, nonatomic) IBOutlet MDCSwitch *mdcSwitch;
 @property(weak, nonatomic) IBOutlet UILabel *label;
 
 @end
@@ -32,8 +33,7 @@
   self.view.backgroundColor = [UIColor whiteColor];
 
   // Load your Material Component here.
-  _uiSwitch.on = [[MDCRobotoFontLoader sharedInstance] isEqual:[MDCTypography fontLoader]];
-  _uiSwitch.enabled = YES;
+  _mdcSwitch.on = [[MDCRobotoFontLoader sharedInstance] isEqual:[MDCTypography fontLoader]];
 
   _label.font = [MDCTypography body1Font];
   _label.alpha = [MDCTypography body1FontOpacity];
@@ -41,7 +41,7 @@
 }
 
 - (IBAction)didChangeSwitchValue:(id)sender {
-  UISwitch *switchSender = sender;
+  MDCSwitch *switchSender = sender;
 
   // For the purposes of this example we are setting this at run time. Usually an app will set this
   // once, during the initalization of the app before any UI is called so that any Material

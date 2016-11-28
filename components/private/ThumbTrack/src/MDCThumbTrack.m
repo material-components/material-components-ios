@@ -937,8 +937,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  -beginDraggingWithTouch:withEvent:, -continueDraggingWithTouch:withEvent:, etc. This is because
  with those events, we are forced to disable user interaction on our subviews else the events could
  be swallowed up by their event handlers and not ours. We can't do this because the we have an ink
- controller attached to the thumb view, and that needs to receive touch events in order to know when
- to display ink.
+ controller attached to the thumb view for MDCSwitch, and that needs to receive touch events in
+ order to know when to display ink.
 
  Using -touchesBegan:, etc. solves this problem because we can handle touches ourselves as well as
  continue to have them pass through to the contained thumb view. So we get our custom event handling

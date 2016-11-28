@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BP3-cc-vpm">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BP3-cc-vpm">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--Typography System Font Loader Example View Controller-->
@@ -18,11 +13,11 @@
                         <viewControllerLayoutGuide type="bottom" id="nFg-Tt-mqT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="b4y-yS-roL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahQ-9a-AUz">
-                                <rect key="frame" x="77.5" y="305.5" width="220" height="96"/>
+                                <rect key="frame" x="190" y="272" width="220" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="b10-EO-2Wu"/>
                                     <constraint firstAttribute="height" constant="96" id="x1I-6M-qHl"/>
@@ -33,9 +28,9 @@ Material Components</string>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGa-Ax-miB" customClass="UISwitch">
-                                <rect key="frame" x="163.5" y="253.5" width="48" height="32"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGa-Ax-miB" customClass="MDCSwitch">
+                                <rect key="frame" x="276" y="220" width="48" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="7fW-ts-xXI"/>
                                     <constraint firstAttribute="height" constant="32" id="xHX-6C-a86"/>
@@ -48,7 +43,7 @@ Material Components</string>
                                 </connections>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="WGa-Ax-miB" firstAttribute="centerX" secondItem="b4y-yS-roL" secondAttribute="centerX" id="2JK-fS-sCr"/>
                             <constraint firstItem="WGa-Ax-miB" firstAttribute="centerY" secondItem="b4y-yS-roL" secondAttribute="centerY" constant="-64" id="7Sm-DG-dSv"/>
@@ -64,7 +59,7 @@ Material Components</string>
                     </view>
                     <connections>
                         <outlet property="label" destination="ahQ-9a-AUz" id="1nY-3O-DW7"/>
-                        <outlet property="uiSwitch" destination="WGa-Ax-miB" id="ilQ-Dm-GdN"/>
+                        <outlet property="mdcSwitch" destination="WGa-Ax-miB" id="EDS-GH-4Q5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LAp-qm-OAo" userLabel="First Responder" sceneMemberID="firstResponder"/>

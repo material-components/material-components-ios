@@ -16,6 +16,7 @@
 
 #import "CollectionCellsLayoutExample.h"
 
+#import "MaterialSwitch.h"
 #import "MaterialTypography.h"
 
 @interface SimpleModel : NSObject
@@ -147,7 +148,7 @@ static NSString *const kExampleDetailText =
   // Add accessory views.
   if (indexPath.item == 0) {
     // Add switch as accessory view.
-    UISwitch *editingSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    MDCSwitch *editingSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
     editingSwitch.on = self.editor.isEditing;
     [editingSwitch addTarget:self
                       action:@selector(didSwitch:)
@@ -214,7 +215,7 @@ static NSString *const kExampleDetailText =
 #pragma mark UIControlEvents
 
 - (void)didSwitch:(id)sender {
-  UISwitch *switchControl = sender;
+  MDCSwitch *switchControl = sender;
   [self.editor setEditing:switchControl.isOn animated:YES];
 }
 
