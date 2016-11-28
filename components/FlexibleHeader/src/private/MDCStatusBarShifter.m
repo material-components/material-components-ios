@@ -16,6 +16,8 @@
 
 #import "MDCStatusBarShifter.h"
 
+#import "UIApplication+AppExtensions.h"
+
 static CGFloat kStatusBarExpectedHeight = 20;
 static NSTimeInterval kStatusBarBecomesInvalidAnimationDuration = 0.2;
 
@@ -240,7 +242,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 }
 
 - (BOOL)canUpdateStatusBarFrame {
-  CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+  CGRect statusBarFrame = [[UIApplication mdc_safeApplication] statusBarFrame];
   CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
   return ((statusBarHeight == kStatusBarExpectedHeight) || _statusBarReplicaView ||
           _snapshotState == MDCStatusBarShifterStateInvalidSnapshot);

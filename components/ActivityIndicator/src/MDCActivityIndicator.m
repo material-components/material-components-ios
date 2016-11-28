@@ -17,6 +17,7 @@
 #import "MDCActivityIndicator.h"
 
 #import "MaterialRTL.h"
+#import "UIApplication+AppExtensions.h"
 
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
 static const NSTimeInterval kMDCActivityIndicatorAnimateOutDuration = 0.1f;
@@ -315,12 +316,12 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
  return UIApplicationStateBackground for |[UIApplication sharedApplication].applicationState|.)
  */
 - (void)registerForegroundAndBackgroundNotificationObserversIfNeeded {
-  if ([[self class] isExtension]) {
+  if ([UIApplication mdc_isAppExtension]) {
     return;
   }
 
   _backgrounded =
-      [UIApplication sharedApplication].applicationState == UIApplicationStateBackground;
+      [UIApplication mdc_safeApplication].applicationState == UIApplicationStateBackground;
   NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
   [notificationCenter addObserver:self
                          selector:@selector(controlAnimatingOnForegroundChange:)
@@ -764,11 +765,6 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   _cycleCount = 0;
   // However _animationInProgress represents the CATransaction that hasn't finished, so we leave it
   // alone here.
-}
-
-/** Returns whether this class is being executed in an extension or not. */
-+ (BOOL)isExtension {
-  return [[[NSBundle mainBundle] executablePath] rangeOfString:@".appex/"].location != NSNotFound;
 }
 
 + (CGFloat)defaultHeight {

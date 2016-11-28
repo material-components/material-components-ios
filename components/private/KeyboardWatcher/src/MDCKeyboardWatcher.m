@@ -15,6 +15,7 @@
  */
 
 #import "MDCKeyboardWatcher.h"
+#import "UIApplication+AppExtensions.h"
 
 NSString *const MDCKeyboardWatcherKeyboardWillShowNotification =
     @"MDCKeyboardWatcherKeyboardWillShowNotification";
@@ -127,7 +128,7 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
   CGRect screenBounds = [screen bounds];
   CGRect intersection = CGRectIntersection(screenBounds, keyboardRect);
 
-  UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+  UIInterfaceOrientation orientation = [[UIApplication mdc_safeApplication] statusBarOrientation];
 
   BOOL isDockedKeyboard = YES;
 
