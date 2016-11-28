@@ -20,7 +20,7 @@ import MaterialComponents
 // Tests confirming that setting the flexible header view's min or max height will bound the
 // corresponding value.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/324
+// Based on issue https://github.com/material-components/material-components-ios/issues/324
 class FlexibleHeaderView324Tests: XCTestCase {
 
   var headerView: MDCFlexibleHeaderView!

@@ -1,6 +1,6 @@
 <!--{% if site.link_to_site == "true" %}-->
 See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
+<!--{% else %}See <a href="https://github.com/material-components/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
 
 Material Components is a collection of standalone production-quality components.
 
@@ -59,7 +59,7 @@ to your target in your Podfile:
 target "MyApp" do
   ...
   # Until Material Components for iOS is public:
-  pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
+  pod 'MaterialComponents', :git => 'https://github.com/material-components/material-components-ios.git'
 
   # After Material Components for iOS is public:
   # pod 'MaterialComponents'

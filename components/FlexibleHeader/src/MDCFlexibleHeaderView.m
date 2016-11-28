@@ -813,7 +813,7 @@ static inline MDCFlexibleHeaderShiftBehavior
                                                   action:@selector(fhv_scrollViewDidPan:)];
   [trackingScrollView.panGestureRecognizer addTarget:self action:@selector(fhv_scrollViewDidPan:)];
 
-#if 0   // TODO(featherless): https://github.com/google/material-components-ios/issues/214
+#if 0   // TODO(featherless): https://github.com/material-components/material-components-ios/issues/214
   // Verify existence of a delegate.
   NSAssert(!trackingScrollView || trackingScrollView.delegate,
            @"The provided tracking scroll view %@ has no delegate. Without a delegate, %@ will not"

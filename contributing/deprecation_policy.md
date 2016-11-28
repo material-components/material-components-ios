@@ -53,7 +53,7 @@ Deprecate APIs using the macro provided by Apple in AvailabilityMacros.h that in
 
 This macro requires an explanation string which should be similar to: ”This API will be removed on D/M/YYYY. Please use XYZ instead. See issue #n for more details.”
 
-For any code that should be eventually deleted, add the following comment nearby to make it easier to find and remove the code: // DEPRECATION(github.com/google/material-components-ios/issues/n)
+For any code that should be eventually deleted, add the following comment nearby to make it easier to find and remove the code: // DEPRECATION(github.com/material-components/material-components-ios/issues/n)
 
 Once you submit the breaking PR, don’t immediately pile on subsequent PRs that would conflict with an emergency rollback.
 
