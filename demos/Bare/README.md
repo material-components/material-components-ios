@@ -66,6 +66,7 @@ target 'Bare' do
   pod 'MaterialComponents/Slider', :path => '../../'
   pod 'MaterialComponents/Snackbar', :path => '../../'
   pod 'MaterialComponents/SpritedAnimationView', :path => '../../'
+  pod 'MaterialComponents/Switch', :path => '../../'
   pod 'MaterialComponents/Typography', :path => '../../'
 end
 ```

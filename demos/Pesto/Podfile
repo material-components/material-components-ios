@@ -8,6 +8,7 @@ target 'Pesto' do
   pod 'MaterialComponents/ShadowElevations', :path => '../../'
   pod 'MaterialComponents/ShadowLayer', :path => '../../'
   pod 'MaterialComponents/SpritedAnimationView', :path => '../../'
+  pod 'MaterialComponents/Switch', :path => '../../'
   pod 'MaterialComponents/Typography', :path => '../../'
   
 end
