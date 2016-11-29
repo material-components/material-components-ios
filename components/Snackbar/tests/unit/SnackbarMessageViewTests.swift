@@ -38,26 +38,26 @@ class SnackbarMessageViewTests: XCTestCase {
   }
   
   func testSnackbarMessageViewBackgroundColor() {
-    let components = CGColorGetComponents(view.snackbarMessageViewBackgroundColor.CGColor)
+    let components = CGColorGetComponents(view.snackbarMessageViewBackgroundColor!.CGColor)
     let defaultComponents = CGColorGetComponents(defaultBackgroundColor.CGColor)
     
-    XCTAssert(CGColorGetNumberOfComponents(view.snackbarMessageViewBackgroundColor.CGColor) == 4)
+    XCTAssert(CGColorGetNumberOfComponents(view.snackbarMessageViewBackgroundColor!.CGColor) == 4)
     checkThatColorComponentsAreEqual(components, expectedComponents: defaultComponents)
   }
   
   func testSnackbarMessageViewShadowColor() {
-    let components = CGColorGetComponents(view.snackbarMessageViewShadowColor.CGColor)
+    let components = CGColorGetComponents(view.snackbarMessageViewShadowColor!.CGColor)
     let defaultComponents = CGColorGetComponents(defaultShadowColor.CGColor)
     
-    XCTAssert(CGColorGetNumberOfComponents(view.snackbarMessageViewBackgroundColor.CGColor) == 4)
+    XCTAssert(CGColorGetNumberOfComponents(view.snackbarMessageViewBackgroundColor!.CGColor) == 4)
     checkThatColorComponentsAreEqual(components, expectedComponents: defaultComponents)
   }
   
   func testSnackbarMessageViewTextColor() {
-    let components = CGColorGetComponents(view.snackbarMessageViewTextColor.CGColor)
+    let components = CGColorGetComponents(view.snackbarMessageViewTextColor!.CGColor)
     let defaultComponents = CGColorGetComponents(defaultTextColor.CGColor)
     
-    XCTAssert(CGColorGetNumberOfComponents(view.snackbarMessageViewTextColor.CGColor) == 4)
+    XCTAssert(CGColorGetNumberOfComponents(view.snackbarMessageViewTextColor!.CGColor) == 4)
     checkThatColorComponentsAreEqual(components, expectedComponents: defaultComponents)
   }
   

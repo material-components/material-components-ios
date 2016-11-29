@@ -21,12 +21,12 @@
 
 /**
  Called by the snackbar message view when the user interacts with the snackbar view.
-
+ 
  @c userInitiated indicates whether or not the handler is being called due to direct user
  interaction. @c action, if non-nil, indicates that the user chose to execute a specific action.
  */
 typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
-                                                 MDCSnackbarMessageAction *action);
+ MDCSnackbarMessageAction * _Nullable action);
 
 /**
  Class which provides the default implementation of a snackbar.
@@ -34,63 +34,43 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 @interface MDCSnackbarMessageView : UIView
 
 /**
- If the user has tapped on the snackbar or if @c dismissWithAction:userInitiated: has been called.
- */
-@property(nonatomic, getter=isDismissing) BOOL dismissing;
-
-/**
- The minimum width of the snackbar.
- */
-@property(nonatomic, readonly) CGFloat minimumWidth;
-
-/**
- The maximum width of the snackbar.
- */
-@property(nonatomic, readonly) CGFloat maximumWidth;
-
-/**
- Convenience pointer to the message used to create the view.
- */
-@property(nonatomic, readonly, strong) MDCSnackbarMessage *message;
-
-/**
  The color for the background of the snackbar message view.
  */
-@property(nonatomic, strong) UIColor *snackbarMessageViewBackgroundColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
  The color for the shadow color for the snackbar message view.
  */
-@property(nonatomic, strong) UIColor *snackbarMessageViewShadowColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor UI_APPEARANCE_SELECTOR;
 
 /**
  The color for the message text in the snackbar message view.
  */
-@property(nonatomic, strong) UIColor *snackbarMessageViewTextColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *snackbarMessageViewTextColor UI_APPEARANCE_SELECTOR;
 
 /**
  Creates a snackbar view to display @c message.
-
+ 
  The view will call @c handler when the user has interacted with the snackbar view in such a way
  that it needs to be dismissed prior to its timer-based dismissal time.
  */
-- (instancetype)initWithMessage:(MDCSnackbarMessage *)message
-                 dismissHandler:(MDCSnackbarMessageDismissHandler)handler;
+- (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage * _Nullable)message
+                 dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler;
 
 /**
  Dismisses the message view.
-
+ 
  Does not call the message's completion handler or any action handler. Must be called from the main
  thread.
-
+ 
  @param action The action that prompted the dismissal.
  @param userInitiated Whether or not this is a user-initiated dismissal or a programmatic one.
  */
-- (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated;
+- (void)dismissWithAction:(MDCSnackbarMessageAction * _Nullable)action userInitiated:(BOOL)userInitiated;
 
 /**
  When VoiceOver is enabled the view should wait for user action before dismissing.
-
+ 
  Default is YES.
  */
 - (BOOL)shouldWaitForDismissalDuringVoiceover;

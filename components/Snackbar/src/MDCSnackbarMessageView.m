@@ -23,6 +23,7 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "private/MDCSnackbarMessageViewInternal.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
     @"MDCSnackbarMessageTitleAutomationIdentifier";
@@ -149,11 +150,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
  the content of the message.
  */
 @property(nonatomic, assign) BOOL usesVerticalButtonLayout;
-
-/**
- The message to display.
- */
-@property(nonatomic, strong) MDCSnackbarMessage *message;
 
 /**
  Holds onto the dismissal handler, called when the snackbar should dismiss due to user interaction.
