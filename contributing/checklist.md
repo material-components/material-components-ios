@@ -7,7 +7,9 @@ Over time we have curated a growing checklist of things we feel improve the expe
 ## The steps
 
 
-### Api Review
+### API Review
+
+Before a component is built, the API
 
 
 ### README.md
@@ -28,6 +30,15 @@ Over time we have curated a growing checklist of things we feel improve the expe
 
 ### Site Icon
 
+The documentation site uses icons in an ordered list of the components. These icons are drawn by Google's Material Design department specifically for this purpose.
+
+1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic` + name of component lowercase + `_24.svg`.
+1. Make sure the site source's `_icons.scss` contains an entry for that icon for that component:
+~~~CSS
+  .icon-componentname a::before {
+    background-image: url(#{$root_folder}/images/custom_icons/ic_componentname_24px.svg);
+  }
+~~~
 
 ### Site Left Nav Presence
 
@@ -74,6 +85,14 @@ Example:
 
 ### Translations
 
+Google strives to support as many different written languages as possible.
+
+//TODO: Explain how to get translations
+
+1. Any strings that are added must be internationalized. Please don’t include English strings in code. We have language bundles for the various components. Add your English strings there and use a key to access it via code (key will be generated after compilation).
+1. Make sure strings are internationalized (takes about a week) and dumped before releasing a feature (manual process).
+  1. Edge case: Some strings are super long in some languages, make sure UI displays/handles long text correctly.
+1. Enter YES, NO or N/A
 
 ### Right-to-Left Language (RTL) Support
 
@@ -95,9 +114,18 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 
 ### Scrubbed Comments
 
+Comments are useful when used properly. In addition, they are necessary for the system of documentation generation used in MDC.
+
+1. Carefully review all comments for necessity and brevity.
+1. Make sure all classes have comments that comply with //TODO:
+1. Enter YES or NO
 
 ### Material Design Guidelines Review
 
+Every component has to support all features outlined for it in the Material Design guidelines. It can support additional features or customization.
+
+1. Review what the [Material Design Guidelines](https://material.google.com/) says about the component and make sure the component can *at least* satisfy those requirements.
+1. Enter YES or NO
 
 ### Test URLs
 
@@ -217,8 +245,8 @@ Classes that set ivar values or perform other commands from the initializer, sho
 1. Enter YES, NO or N/A
 
 
-#### Articles on Auto Layout:  
-[Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)  
+#### Articles on Auto Layout:
+[Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
 
 
