@@ -235,8 +235,9 @@ We use the UIAppearance proxy with our visible components to allow setting defau
 1. Enter YES, NO or N/A
 
 
-### IBDesignable Support for UIView Subclasses
-#### If possible
+### IBDesignable Support for UIView Subclasses (If possible)
+
+
 Consider adding support for IBDesignable.
 
 
