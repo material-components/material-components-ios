@@ -84,6 +84,10 @@ The documentation site uses icons in an [ordered list](https://material-ext.apps
 
 ### Site Left Nav Presence
 
+The component should have an entry in the left nav of [the documentation site](https://material-ext.appspot.com/mdc-ios-preview/components/). If missing, add it in the site source's `_data/navigation.yaml` file.
+
+1. Verify [the documentation site's](https://material-ext.appspot.com/mdc-ios-preview/components/) left nav contains a link to the component's docs.
+1. Enter YES or NO
 
 ### License Stanzas in Every Text-based File
 
