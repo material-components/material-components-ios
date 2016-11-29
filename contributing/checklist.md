@@ -23,8 +23,7 @@ Every component has a README.md file describing what it is, what it does, when t
 1. Enter YES or NO
 
 
-### Additional Usage Docs
-#### If necessary
+### Additional Usage Docs (If necessary)
 
 Sometimes, the inline comments and README.md will not be sufficient to describe usage of the component. In these cases, create additional README.md files in child folders of the component. See: [Collections](https://github.com/material-components/material-components-ios/tree/develop/components/Collections) for a good example.
 
@@ -96,7 +95,7 @@ Every file must have the Apache 2.0 license stanza at the top of the file.  The 
 You can do this manually or use a tool such as (autogen)[https://github.com/mbrukman/autogen] to add a license.
 
 
-Example:
+Sample:
 ```
 /*
  Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
