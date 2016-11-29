@@ -557,7 +557,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 }
 
 - (void)willRotate:(NSNotification *)notification {
-  UIApplication *application = [UIApplication mdc_safeApplication];
+  UIApplication *application = [UIApplication mdc_safeSharedApplication];
   UIInterfaceOrientation currentOrientation = application.statusBarOrientation;
   UIInterfaceOrientation targetOrientation =
       [notification.userInfo[UIApplicationStatusBarOrientationUserInfoKey] integerValue];

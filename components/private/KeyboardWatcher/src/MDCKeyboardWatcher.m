@@ -128,7 +128,8 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
   CGRect screenBounds = [screen bounds];
   CGRect intersection = CGRectIntersection(screenBounds, keyboardRect);
 
-  UIInterfaceOrientation orientation = [[UIApplication mdc_safeApplication] statusBarOrientation];
+  UIInterfaceOrientation orientation =
+      [[UIApplication mdc_safeSharedApplication] statusBarOrientation];
 
   BOOL isDockedKeyboard = YES;
 

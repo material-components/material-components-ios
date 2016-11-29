@@ -23,7 +23,7 @@
  
  This is a wrapper around sharedApplication which is safe to compile and use in app extensions.
  */
-+ (UIApplication *)mdc_safeApplication;
++ (UIApplication *)mdc_safeSharedApplication;
 
 /**
  Returns YES if called inside an application extension otherwise returns NO.

@@ -242,7 +242,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 }
 
 - (BOOL)canUpdateStatusBarFrame {
-  CGRect statusBarFrame = [[UIApplication mdc_safeApplication] statusBarFrame];
+  CGRect statusBarFrame = [[UIApplication mdc_safeSharedApplication] statusBarFrame];
   CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
   return ((statusBarHeight == kStatusBarExpectedHeight) || _statusBarReplicaView ||
           _snapshotState == MDCStatusBarShifterStateInvalidSnapshot);

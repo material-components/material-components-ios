@@ -18,7 +18,7 @@
 
 @implementation UIApplication (AppExtensions)
 
-+ (UIApplication *)mdc_safeApplication {
++ (UIApplication *)mdc_safeSharedApplication {
   static UIApplication *application;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{

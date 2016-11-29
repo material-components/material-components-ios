@@ -321,7 +321,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   }
 
   _backgrounded =
-      [UIApplication mdc_safeApplication].applicationState == UIApplicationStateBackground;
+      [UIApplication mdc_safeSharedApplication].applicationState == UIApplicationStateBackground;
   NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
   [notificationCenter addObserver:self
                          selector:@selector(controlAnimatingOnForegroundChange:)

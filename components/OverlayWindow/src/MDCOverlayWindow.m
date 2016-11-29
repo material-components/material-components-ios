@@ -86,7 +86,8 @@
            object:nil];
 
   // Set a sane initial position.
-  [self updateOverlayViewForOrientation:[[UIApplication mdc_safeApplication] statusBarOrientation]];
+  [self updateOverlayViewForOrientation:
+       [[UIApplication mdc_safeSharedApplication] statusBarOrientation]];
 
   // Set a sane hidden state.
   [self updateOverlayHiddenState];
