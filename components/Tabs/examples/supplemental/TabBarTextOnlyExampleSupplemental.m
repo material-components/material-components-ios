@@ -29,12 +29,12 @@
 - (void)setupExampleViews {
   self.view.backgroundColor = [UIColor whiteColor];
 
-  UIBarButtonItem *badgeIncrementItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Increment"
+  UIBarButtonItem *toggleCaseItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Toggle Case"
                                        style:UIBarButtonItemStylePlain
                                       target:self
-                                      action:@selector(incrementBadges:)];
-  self.navigationItem.rightBarButtonItem = badgeIncrementItem;
+                                      action:@selector(toggleCase:)];
+  self.navigationItem.rightBarButtonItem = toggleCaseItem;
 
   // Button to change tab alignments.
   self.alignmentButton = [[MDCRaisedButton alloc] init];

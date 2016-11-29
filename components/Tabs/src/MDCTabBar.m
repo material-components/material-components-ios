@@ -244,39 +244,44 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   MDCItemBarStyle *style = [[MDCItemBarStyle alloc] init];
 
   style.shouldDisplaySelectionIndicator = YES;
-  style.shouldDisplayBadge = YES;
   style.shouldGrowOnSelection = NO;
   style.titleFont = [MDCTypography buttonFont];
   style.inkStyle = MDCInkStyleBounded;
   style.titleImagePadding =
       (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
 
+  BOOL displayImage = NO;
+  BOOL displayTitle = NO;
+  CGFloat defaultHeight = 0;
   switch (appearance) {
     case MDCTabBarItemAppearanceImages:
-      style.shouldDisplayImage = YES;
-      style.shouldDisplayTitle = NO;
-      style.defaultHeight = kImageOnlyBarHeight;
+      displayImage = YES;
+      defaultHeight = kImageOnlyBarHeight;
       break;
 
     case MDCTabBarItemAppearanceTitles:
-      style.shouldDisplayImage = NO;
-      style.shouldDisplayTitle = YES;
-      style.defaultHeight = kTitleOnlyBarHeight;
+      displayTitle = YES;
+      defaultHeight = kTitleOnlyBarHeight;
       break;
 
     case MDCTabBarItemAppearanceTitledImages:
-      style.shouldDisplayImage = YES;
-      style.shouldDisplayTitle = YES;
-      style.defaultHeight = kTitledImageBarHeight;
+      displayImage = YES;
+      displayTitle = YES;
+      defaultHeight = kTitledImageBarHeight;
       break;
 
     default:
       NSAssert(0, @"Invalid appearance value %zd", appearance);
-      style.shouldDisplayImage = NO;
-      style.shouldDisplayTitle = YES;
-      style.defaultHeight = kTitleOnlyBarHeight;
+      displayTitle = YES;
+      defaultHeight = kTitleOnlyBarHeight;
       break;
   }
+  style.shouldDisplayImage = displayImage;
+  style.shouldDisplayTitle = displayTitle;
+  style.defaultHeight = defaultHeight;
+
+  // Only show badge with images.
+  style.shouldDisplayBadge = displayImage;
 
   return style;
 }

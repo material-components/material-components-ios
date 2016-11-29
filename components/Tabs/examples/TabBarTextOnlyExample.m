@@ -33,19 +33,8 @@
 
 #pragma mark - Action
 
-- (void)incrementBadges:(id)sender {
-  // Increment all numeric badge values to show cells updating when their item's properties are set.
-  for (UITabBarItem *item in self.tabBar.items) {
-    NSString *badgeValue = item.badgeValue;
-    if (badgeValue) {
-      NSInteger badgeNumber = badgeValue.integerValue;
-      if (badgeNumber > 0) {
-        // Update badge value directly - the cell should update immediately.
-        item.badgeValue = [NSNumberFormatter localizedStringFromNumber:@(badgeNumber + 1)
-                                                           numberStyle:NSNumberFormatterNoStyle];
-      }
-    }
-  }
+- (void)toggleCase:(id)sender {
+  self.tabBar.displaysUppercaseTitles = !self.tabBar.displaysUppercaseTitles;
 }
 
 #pragma mark - Private
@@ -64,9 +53,6 @@
     [[UITabBarItem alloc] initWithTitle:@"With" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
   ];
-
-  // Make entire tab bar non-uppercased
-  self.tabBar.displaysUppercaseTitles = NO;
 
   // Give it a white appearance to show dark text and customize the unselected title color.
   self.tabBar.selectedItemTintColor = [UIColor blackColor];
