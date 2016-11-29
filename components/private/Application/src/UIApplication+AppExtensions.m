@@ -23,6 +23,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     if (![self mdc_isAppExtension]) {
+      // We can't call sharedApplication directly or else this won't build for app extensions.
       application = [[UIApplication class] performSelector:@selector(sharedApplication)];
     }
   });
