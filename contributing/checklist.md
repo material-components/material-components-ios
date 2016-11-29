@@ -217,8 +217,8 @@ Classes that set ivar values or perform other commands from the initializer, sho
 1. Enter YES, NO or N/A
 
 
-#### Articles on Auto Layout:
-[Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)
+#### Articles on Auto Layout:  
+[Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)  
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
 
 
