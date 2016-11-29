@@ -91,12 +91,14 @@ PODS:
   - MaterialComponents/PageControl (16.3.0)
   - MaterialComponents/Palettes (16.3.0)
   - MaterialComponents/private (16.3.0):
+    - MaterialComponents/private/Application (= 16.3.0)
     - MaterialComponents/private/Color (= 16.3.0)
     - MaterialComponents/private/Icons (= 16.3.0)
     - MaterialComponents/private/KeyboardWatcher (= 16.3.0)
     - MaterialComponents/private/Overlay (= 16.3.0)
     - MaterialComponents/private/RTL (= 16.3.0)
     - MaterialComponents/private/ThumbTrack (= 16.3.0)
+  - MaterialComponents/private/Application (16.3.0)
   - MaterialComponents/private/Color (16.3.0)
   - MaterialComponents/private/Icons (16.3.0):
     - MaterialComponents/private/Icons/Base (= 16.3.0)
@@ -178,7 +180,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: c45603e76cda710a29228a790d5139f404b908ea
-  MaterialComponents: f3333a87433e2379a5a95eeb466ce450d18f7893
+  MaterialComponents: d9233a6db7af1602b8d1690a81dd15d8d1807eb6
   MaterialComponentsCatalog: e88e5bb9f70c403a080818ec5ab21a50fe63f9e6
   MaterialComponentsUnitTests: 4254781fc30926356edb0c2619f7e3224177adc2
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601

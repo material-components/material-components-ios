@@ -2,6 +2,8 @@
 
 #import <objc/runtime.h>
 
+#import "UIApplication+AppExtensions.h"
+
 /**
  A container view for overlay views.
 
@@ -84,7 +86,8 @@
            object:nil];
 
   // Set a sane initial position.
-  [self updateOverlayViewForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+  [self updateOverlayViewForOrientation:
+       [[UIApplication mdc_safeSharedApplication] statusBarOrientation]];
 
   // Set a sane hidden state.
   [self updateOverlayHiddenState];
