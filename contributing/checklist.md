@@ -126,7 +126,7 @@ Sample:
 
 //TODO
 
-### Interaction Tests
+### Interaction Tests (If necessary)
 
 Visual components should have interaction tests built with [Earl Grey](https://github.com/google/EarlGrey).
 
