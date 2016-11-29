@@ -20,6 +20,7 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlays.h"
+#import "UIApplication+AppExtensions.h"
 #import "MDCSnackbarMessageViewInternal.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
@@ -557,7 +558,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 }
 
 - (void)willRotate:(NSNotification *)notification {
-  UIApplication *application = [UIApplication sharedApplication];
+  UIApplication *application = [UIApplication mdc_safeSharedApplication];
   UIInterfaceOrientation currentOrientation = application.statusBarOrientation;
   UIInterfaceOrientation targetOrientation =
       [notification.userInfo[UIApplicationStatusBarOrientationUserInfoKey] integerValue];

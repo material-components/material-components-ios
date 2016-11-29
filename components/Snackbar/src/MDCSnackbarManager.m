@@ -18,9 +18,10 @@
 #import "MDCSnackbarMessage.h"
 #import "MaterialOverlayWindow.h"
 #import "MDCSnackbarMessageView.h"
-#import "private/MDCSnackbarMessageViewInternal.h"
+#import "UIApplication+AppExtensions.h"
 #import "private/MDCSnackbarMessageInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
+#import "private/MDCSnackbarMessageViewInternal.h"
 
 @class MDCSnackbarManagerSuspensionToken;
 
@@ -320,7 +321,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 - (UIWindow *)bestGuessWindow {
-  UIApplication *application = [UIApplication sharedApplication];
+  UIApplication *application = [UIApplication mdc_safeSharedApplication];
 
   // Check all of the windows in existence for an overlay window, because that's what we prefer to
   // present in.
@@ -340,11 +341,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   }
 
   // Default to the key window, since we couldn't find anything better.
-  return [[UIApplication sharedApplication] keyWindow];
+  return [[UIApplication mdc_safeSharedApplication] keyWindow];
 }
 
 - (void)deactivateOverlay:(UIView *)overlay {
-  UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+  UIWindow *window = [[UIApplication mdc_safeSharedApplication] keyWindow];
   if ([window isKindOfClass:[MDCOverlayWindow class]]) {
     MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)window;
     [overlayWindow deactivateOverlay:overlay];
