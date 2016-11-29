@@ -203,13 +203,13 @@ Classes that set ivar values or perform other commands from the initializer, sho
 * When adopting autolayout, be aware of performance implications, such as continually adding/removing subviews.
 
 
-#### Supporting Autolayout In Your Component:
+#### Supporting auto layout in your component:
 
 1. Implement `intrinsicContentSize` on your view. This will ensure that, if your view is used in an auto-layout-based hierarchy, that the system knows the view’s preferred size. This is analogous to implementing `sizeThatFits:`.
 1. If any size-impacting features of your view (i.e. new text, different image, etc) change, call `invalidateIntrinsicContentSize` to tell the layout engine that something changed.
 
 
-#### If your view adopts autolayout internally:
+#### If your view adopts auto layout internally:
 
 1. Make sure to use .leading and .trailing instead of .left and .right to support RTL languages correctly.
 1. If your view sets its constraints in `updateConstraints`, override `requiresConstraintBasedLayout` to return YES.
@@ -217,9 +217,8 @@ Classes that set ivar values or perform other commands from the initializer, sho
 1. Enter YES, NO or N/A
 
 
-Articles on AutoLayout:
-
-[Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)  
+#### Articles on Auto Layout:
+[Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
 
 
