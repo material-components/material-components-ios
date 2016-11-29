@@ -134,7 +134,7 @@ Visual components should have interaction tests built with [Earl Grey](https://g
 
 ### Translations (If necessary)
 
-Google strives to support as many different written languages as possible in components containing static text. The necessary translations must be written by Google's internal translators. To request translations, open an issue with all text and all requested langues.
+Google strives to support as many different written languages as possible in components containing static text. The necessary translations must be written by Google's internal translators. To request translations, open an issue with all text and all requested languages.
 
 
 1. Any strings that are added must be internationalized. Please don’t include English strings in code. We have language bundles for the various components. Add your English strings there and use a key to access it via code (key will be generated after compilation).
