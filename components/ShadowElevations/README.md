@@ -1,10 +1,13 @@
 <!--{% if site.link_to_site == "true" %}-->
 See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowElevations/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ShadowElevations">GitHub</a> for README documentation.{% endif %}-->
+<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/ShadowElevations">GitHub</a> for README documentation.{% endif %}-->
 
 # Shadow Elevations
 
-This component provides commonly used material design elevations.
+A shadow elevation specifies the degree of shadow intensity to be displayed beneath an object.
+Higher shadow elevations have greater shadow intensities, akin to raising an object above a
+surface resulting in a more prominent, albeit more diffuse, shadow. This component provides commonly
+used material design elevations for components.
 <!--{: .intro }-->
 
 ### Design Specifications

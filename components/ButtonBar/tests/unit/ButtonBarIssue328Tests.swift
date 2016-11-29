@@ -22,7 +22,7 @@ import MaterialComponents
 // - Bounded for buttons with text.
 // - Unbounded for icon-only buttons.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/328
+// Based on issue https://github.com/material-components/material-components-ios/issues/328
 class ButtonBarIssue328Tests: XCTestCase {
 
   var buttonBar: MDCButtonBar!

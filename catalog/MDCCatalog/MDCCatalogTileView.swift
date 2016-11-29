@@ -74,14 +74,20 @@ class MDCCatalogTileView: UIView {
     switch componentNameString {
     case "Activity Indicator":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawActivityIndicatorTile)
+    case "Animation Timing":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAnimationTimingTile)
     case "App Bar":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAppBarTile)
     case "Button Bar":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonBarTile)
     case "Buttons":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonsTile)
+    case "Collection Cells":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionCellsTile)
     case "Collections":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionsTile)
+    case "Dialogs":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawDialogsTile)
     case "Feature Highlight":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawFeatureHighlightTile)
     case "Flexible Header":
@@ -96,6 +102,10 @@ class MDCCatalogTileView: UIView {
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawMiscTile)
     case "Page Control":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPageControlTile)
+    case "Palettes":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPalettesTile)
+    case "Progress View":
+      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawProgressViewTile)
     case "Shadow":
       newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawShadowLayerTile)
     case "Slider":

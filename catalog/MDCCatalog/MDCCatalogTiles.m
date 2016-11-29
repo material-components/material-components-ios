@@ -18,11 +18,11 @@
 
 #import "MDCCatalogTiles.h"
 
-UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc) {
+UIImage* MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc) {
   CGFloat scale = [UIScreen mainScreen].scale;
   UIGraphicsBeginImageContextWithOptions(frame.size, false, scale);
   drawFunc(frame);
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return image;
 }
@@ -32,45 +32,657 @@ UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc) {
 #pragma clang diagnostic ignored "-Wassign-enum"
 #pragma clang diagnostic ignored "-Wconversion"
 void MDCCatalogDrawActivityIndicatorTile(CGRect frame) {
-  UIColor* fillColor = [UIColor colorWithRed:0 green:0.655 blue:0.969 alpha:1];
+  UIColor* fillColor = [UIColor colorWithRed:0.702 green:0.898 blue:0.988 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
 
-  UIBezierPath* bezierPath = [UIBezierPath bezierPath];
-  [bezierPath moveToPoint:CGPointMake(95.83, 25.66)];
-  [bezierPath addCurveToPoint:CGPointMake(94.83, 25.69)
-                controlPoint1:CGPointMake(95.5, 25.66)
-                controlPoint2:CGPointMake(95.17, 25.68)];
-  [bezierPath addLineToPoint:CGPointMake(94.83, 33.22)];
-  [bezierPath addCurveToPoint:CGPointMake(95.83, 33.2)
-                controlPoint1:CGPointMake(95.17, 33.21)
-                controlPoint2:CGPointMake(95.5, 33.2)];
-  [bezierPath addCurveToPoint:CGPointMake(125.97, 63.33)
-                controlPoint1:CGPointMake(112.45, 33.2)
-                controlPoint2:CGPointMake(125.97, 46.72)];
-  [bezierPath addCurveToPoint:CGPointMake(95.83, 93.47)
-                controlPoint1:CGPointMake(125.97, 79.95)
-                controlPoint2:CGPointMake(112.45, 93.47)];
-  [bezierPath addCurveToPoint:CGPointMake(65.7, 63.33)
-                controlPoint1:CGPointMake(79.22, 93.47)
-                controlPoint2:CGPointMake(65.7, 79.95)];
-  [bezierPath addCurveToPoint:CGPointMake(69.37, 48.93)
-                controlPoint1:CGPointMake(65.7, 58.12)
-                controlPoint2:CGPointMake(67.03, 53.21)];
-  [bezierPath addLineToPoint:CGPointMake(62.44, 45.92)];
-  [bezierPath addCurveToPoint:CGPointMake(58.16, 63.33)
-                controlPoint1:CGPointMake(59.71, 51.13)
-                controlPoint2:CGPointMake(58.16, 57.05)];
-  [bezierPath addCurveToPoint:CGPointMake(95.83, 101)
-                controlPoint1:CGPointMake(58.16, 84.13)
-                controlPoint2:CGPointMake(75.04, 101)];
-  [bezierPath addCurveToPoint:CGPointMake(133.5, 63.33)
-                controlPoint1:CGPointMake(116.63, 101)
-                controlPoint2:CGPointMake(133.5, 84.13)];
-  [bezierPath addCurveToPoint:CGPointMake(95.83, 25.66)
-                controlPoint1:CGPointMake(133.5, 42.54)
-                controlPoint2:CGPointMake(116.63, 25.66)];
-  [bezierPath closePath];
-  [fillColor setFill];
-  [bezierPath fill];
+  CGRect activityIndicatorGroup =
+      CGRectMake(CGRectGetMinX(frame) + 54, CGRectGetMinY(frame) + 24.1,
+                 floor((CGRectGetWidth(frame) - 54) * 0.59717 + 54.48) - 53.98,
+                 floor((CGRectGetHeight(frame) - 24.1) * 0.61055 + 23.7) - 23.2);
+
+  {
+    UIBezierPath* backgroundBezierPath = [UIBezierPath bezierPath];
+    [backgroundBezierPath
+        moveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                    0.48875 * CGRectGetWidth(activityIndicatorGroup),
+                                CGRectGetMinY(activityIndicatorGroup) +
+                                    0.00013 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.00013 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.51064 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.21258 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.00514 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        -0.00612 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.23411 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.51125 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.99987 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.00638 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.78716 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.23507 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        1.00613 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.99987 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.48811 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.78742 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.99361 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        1.00612 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.76464 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.48875 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.00013 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.99362 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.21284 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.76493 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        -0.00613 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath closePath];
+    [backgroundBezierPath
+        moveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                    0.50875 * CGRectGetWidth(activityIndicatorGroup),
+                                CGRectGetMinY(activityIndicatorGroup) +
+                                    0.91228 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.08761 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.50938 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.28131 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.91729 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.09261 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.73711 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.49125 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.08772 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.08261 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.28166 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.26381 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.09272 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.91239 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.49187 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.71869 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.08271 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.90739 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.26414 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.50875 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.91228 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.91739 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.71959 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.73619 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.90728 * CGRectGetHeight(activityIndicatorGroup))];
+    [backgroundBezierPath closePath];
+    backgroundBezierPath.miterLimit = 4;
+
+    [fillColor setFill];
+    [backgroundBezierPath fill];
+
+    UIBezierPath* progressBezierPath = [UIBezierPath bezierPath];
+    [progressBezierPath
+        moveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                    0.48875 * CGRectGetWidth(activityIndicatorGroup),
+                                CGRectGetMinY(activityIndicatorGroup) +
+                                    0.00013 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addLineToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                       0.49125 * CGRectGetWidth(activityIndicatorGroup),
+                                   CGRectGetMinY(activityIndicatorGroup) +
+                                       0.08772 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.91239 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.49187 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.71869 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.08271 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.90739 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.26414 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.50875 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.91353 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.91739 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.71959 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.73619 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.90853 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.08761 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.50938 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.28131 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.91729 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.09261 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.73711 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.29880 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.14027 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.08386 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.35048 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.17009 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.21159 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addLineToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                       0.25631 * CGRectGetWidth(activityIndicatorGroup),
+                                   CGRectGetMinY(activityIndicatorGroup) +
+                                       0.06394 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.00013 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.51064 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.10010 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.15153 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        -0.00362 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.31920 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.51125 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.99987 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.00638 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.78716 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.23507 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        1.00613 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.99987 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.48811 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.78742 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.99361 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        1.00612 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.76464 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath
+        addCurveToPoint:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.48875 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.00013 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint1:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.99362 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        0.21284 * CGRectGetHeight(activityIndicatorGroup))
+          controlPoint2:CGPointMake(CGRectGetMinX(activityIndicatorGroup) +
+                                        0.76493 * CGRectGetWidth(activityIndicatorGroup),
+                                    CGRectGetMinY(activityIndicatorGroup) +
+                                        -0.00613 * CGRectGetHeight(activityIndicatorGroup))];
+    [progressBezierPath closePath];
+    progressBezierPath.miterLimit = 4;
+
+    [fillColor2 setFill];
+    [progressBezierPath fill];
+  }
+}
+
+void MDCCatalogDrawAnimationTimingTile(CGRect frame) {
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  UIColor* strokeColor = [UIColor colorWithRed:0.649 green:0.873 blue:0.984 alpha:1];
+  UIColor* gradientColor = [UIColor colorWithRed:0.649 green:0.873 blue:0.984 alpha:1];
+  UIColor* gradientColor2 = [UIColor colorWithRed:0.149 green:0.65 blue:0.954 alpha:1];
+  UIColor* gradientColor3 = [UIColor colorWithRed:0.033 green:0.261 blue:0.537 alpha:1];
+  UIColor* fillColor1 = [UIColor colorWithRed:0.004 green:0.341 blue:0.608 alpha:0.9];
+  UIColor* fillColor2 = [UIColor colorWithRed:0.008 green:0.467 blue:0.741 alpha:0.9];
+  UIColor* fillColor3 = [UIColor colorWithRed:0.008 green:0.533 blue:0.82 alpha:0.9];
+  UIColor* fillColor4 = [UIColor colorWithRed:0.012 green:0.608 blue:0.898 alpha:0.9];
+  UIColor* fillColor5 = [UIColor colorWithRed:0.149 green:0.651 blue:0.955 alpha:1];
+  UIColor* fillColor6 = [UIColor colorWithRed:0.31 green:0.765 blue:0.969 alpha:0.9];
+  UIColor* fillColor7 = [UIColor colorWithRed:0.506 green:0.831 blue:0.98 alpha:0.9];
+  UIColor* fillColor8 = [UIColor colorWithRed:0.702 green:0.898 blue:0.988 alpha:0.9];
+  UIColor* fillColor9 = [fillColor8 colorWithAlphaComponent:0.5];
+
+  CGFloat gradientLocations[] = {0, 0, 0.52, 1};
+  CGGradientRef gradient =
+      CGGradientCreateWithColors(colorSpace,
+                                 (__bridge CFArrayRef) @[
+                                   (id)gradientColor.CGColor, (id)gradientColor.CGColor,
+                                   (id)gradientColor2.CGColor, (id)gradientColor3.CGColor
+                                 ],
+                                 gradientLocations);
+
+  CGRect animationTimingGroup =
+      CGRectMake(CGRectGetMinX(frame) + 25, CGRectGetMinY(frame) + 24.1,
+                 floor((CGRectGetWidth(frame) - 25) * 0.84479 + 24.8) - 24.3,
+                 floor((CGRectGetHeight(frame) - 24.1) * 0.61421 + 23.7) - 23.2);
+
+  {
+    {
+      CGContextSaveGState(context);
+      CGContextBeginTransparencyLayer(context, NULL);
+
+      UIBezierPath* curveClipPath = [UIBezierPath bezierPath];
+      [curveClipPath moveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                                 0.44801 * CGRectGetWidth(animationTimingGroup),
+                                             CGRectGetMinY(animationTimingGroup) +
+                                                 0.42305 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.39211 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.55362 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addCurveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.00000 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.91045 * CGRectGetHeight(animationTimingGroup))
+            controlPoint1:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.29457 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.78039 * CGRectGetHeight(animationTimingGroup))
+            controlPoint2:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.15166 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.91045 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.00000 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.91045 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.00000 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.94776 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addCurveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.40966 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.57571 * CGRectGetHeight(animationTimingGroup))
+            controlPoint1:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.15866 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.94776 * CGRectGetHeight(animationTimingGroup))
+            controlPoint2:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.30796 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.81216 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.40966 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.57571 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.46556 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.44514 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addCurveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.85694 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.08954 * CGRectGetHeight(animationTimingGroup))
+            controlPoint1:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.56256 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.21915 * CGRectGetHeight(animationTimingGroup))
+            controlPoint2:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.70521 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.08954 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.85694 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.08954 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.85694 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.05224 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath
+          addCurveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.44801 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.42305 * CGRectGetHeight(animationTimingGroup))
+            controlPoint1:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.69821 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.05224 * CGRectGetHeight(animationTimingGroup))
+            controlPoint2:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.54916 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.18738 * CGRectGetHeight(animationTimingGroup))];
+      [curveClipPath closePath];
+      [curveClipPath addClip];
+
+      UIBezierPath* curveBezierPath = [UIBezierPath bezierPath];
+      [curveBezierPath
+          moveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                      0.44801 * CGRectGetWidth(animationTimingGroup),
+                                  CGRectGetMinY(animationTimingGroup) +
+                                      0.42305 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.39211 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.55362 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addCurveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.00000 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.91045 * CGRectGetHeight(animationTimingGroup))
+            controlPoint1:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.29457 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.78039 * CGRectGetHeight(animationTimingGroup))
+            controlPoint2:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.15166 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.91045 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.00000 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.91045 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.00000 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.94776 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addCurveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.40966 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.57571 * CGRectGetHeight(animationTimingGroup))
+            controlPoint1:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.15866 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.94776 * CGRectGetHeight(animationTimingGroup))
+            controlPoint2:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.30796 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.81216 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.40966 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.57571 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.46556 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.44514 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addCurveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.85694 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.08954 * CGRectGetHeight(animationTimingGroup))
+            controlPoint1:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.56256 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.21915 * CGRectGetHeight(animationTimingGroup))
+            controlPoint2:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.70521 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.08954 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.85694 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.08954 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                         0.85694 * CGRectGetWidth(animationTimingGroup),
+                                     CGRectGetMinY(animationTimingGroup) +
+                                         0.05224 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath
+          addCurveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.44801 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.42305 * CGRectGetHeight(animationTimingGroup))
+            controlPoint1:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.69821 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.05224 * CGRectGetHeight(animationTimingGroup))
+            controlPoint2:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                          0.54916 * CGRectGetWidth(animationTimingGroup),
+                                      CGRectGetMinY(animationTimingGroup) +
+                                          0.18738 * CGRectGetHeight(animationTimingGroup))];
+      [curveBezierPath closePath];
+      CGContextSaveGState(context);
+      [curveBezierPath addClip];
+      CGRect curveBezierBounds = CGPathGetPathBoundingBox(curveBezierPath.CGPath);
+      CGContextDrawLinearGradient(
+          context, gradient,
+          CGPointMake(
+              CGRectGetMidX(curveBezierBounds) + -59 * CGRectGetWidth(curveBezierBounds) / 118,
+              CGRectGetMidY(curveBezierBounds) + -0 * CGRectGetHeight(curveBezierBounds) / 72),
+          CGPointMake(
+              CGRectGetMidX(curveBezierBounds) + 59 * CGRectGetWidth(curveBezierBounds) / 118,
+              CGRectGetMidY(curveBezierBounds) + -0 * CGRectGetHeight(curveBezierBounds) / 72),
+          kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
+      CGContextRestoreGState(context);
+
+      CGContextEndTransparencyLayer(context);
+      CGContextRestoreGState(context);
+    }
+
+    UIBezierPath* circle3Path = [UIBezierPath
+        bezierPathWithOvalInRect:
+            CGRectMake(CGRectGetMinX(animationTimingGroup) +
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.1,
+                       CGRectGetMinY(animationTimingGroup) +
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.15920 + 0.5),
+                       floor(CGRectGetWidth(animationTimingGroup) * 1.00000 - 0.2) -
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.6,
+                       floor(CGRectGetHeight(animationTimingGroup) * 0.30348 - 0.1) -
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.15920 + 0.5) + 0.6)];
+    [fillColor3 setFill];
+    [circle3Path fill];
+
+    UIBezierPath* circle2Path = [UIBezierPath
+        bezierPathWithOvalInRect:
+            CGRectMake(CGRectGetMinX(animationTimingGroup) +
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.1,
+                       CGRectGetMinY(animationTimingGroup) +
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.06343 - 0.2) + 0.7,
+                       floor(CGRectGetWidth(animationTimingGroup) * 1.00000 - 0.2) -
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.6,
+                       floor(CGRectGetHeight(animationTimingGroup) * 0.20771 + 0.2) -
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.06343 - 0.2) - 0.4)];
+    [fillColor2 setFill];
+    [circle2Path fill];
+
+    {
+      CGContextSaveGState(context);
+      CGContextSetAlpha(context, 0.9);
+      CGContextBeginTransparencyLayer(context, NULL);
+
+      UIBezierPath* circle1Path = [UIBezierPath
+          bezierPathWithOvalInRect:
+              CGRectMake(CGRectGetMinX(animationTimingGroup) +
+                             floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.1,
+                         CGRectGetMinY(animationTimingGroup) +
+                             floor(CGRectGetHeight(animationTimingGroup) * 0.00249 - 0.1) + 0.6,
+                         floor(CGRectGetWidth(animationTimingGroup) * 1.00000 - 0.2) -
+                             floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.6,
+                         floor(CGRectGetHeight(animationTimingGroup) * 0.14677 + 0.3) -
+                             floor(CGRectGetHeight(animationTimingGroup) * 0.00249 - 0.1) - 0.4)];
+      [fillColor1 setFill];
+      [circle1Path fill];
+
+      CGContextEndTransparencyLayer(context);
+      CGContextRestoreGState(context);
+    }
+
+    UIBezierPath* circle4Path = [UIBezierPath
+        bezierPathWithOvalInRect:
+            CGRectMake(CGRectGetMinX(animationTimingGroup) +
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.1,
+                       CGRectGetMinY(animationTimingGroup) +
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.29353 + 0.3) + 0.2,
+                       floor(CGRectGetWidth(animationTimingGroup) * 1.00000 - 0.2) -
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.6,
+                       floor(CGRectGetHeight(animationTimingGroup) * 0.43781 - 0.3) -
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.29353 + 0.3) + 0.6)];
+    [fillColor4 setFill];
+    [circle4Path fill];
+
+    UIBezierPath* circle5Path = [UIBezierPath
+        bezierPathWithOvalInRect:
+            CGRectMake(CGRectGetMinX(animationTimingGroup) +
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.1,
+                       CGRectGetMinY(animationTimingGroup) +
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.42910 + 0.2) + 0.3,
+                       floor(CGRectGetWidth(animationTimingGroup) * 1.00000 - 0.2) -
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.6,
+                       floor(CGRectGetHeight(animationTimingGroup) * 0.57338 - 0.4) -
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.42910 + 0.2) + 0.6)];
+    [fillColor5 setFill];
+    [circle5Path fill];
+
+    UIBezierPath* circle6Path = [UIBezierPath
+        bezierPathWithOvalInRect:
+            CGRectMake(CGRectGetMinX(animationTimingGroup) +
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.1,
+                       CGRectGetMinY(animationTimingGroup) +
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.56468 + 0.1) + 0.4,
+                       floor(CGRectGetWidth(animationTimingGroup) * 1.00000 - 0.2) -
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.6,
+                       floor(CGRectGetHeight(animationTimingGroup) * 0.70896 + 0.5) -
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.56468 + 0.1) - 0.4)];
+    [fillColor6 setFill];
+    [circle6Path fill];
+
+    UIBezierPath* circle8Path = [UIBezierPath
+        bezierPathWithOvalInRect:
+            CGRectMake(CGRectGetMinX(animationTimingGroup) +
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.1,
+                       CGRectGetMinY(animationTimingGroup) +
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.79478 - 0.4) + 0.9,
+                       floor(CGRectGetWidth(animationTimingGroup) * 1.00000 - 0.2) -
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.6,
+                       floor(CGRectGetHeight(animationTimingGroup) * 0.93905) -
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.79478 - 0.4) - 0.4)];
+    [fillColor8 setFill];
+    [circle8Path fill];
+
+    UIBezierPath* circle9Path = [UIBezierPath
+        bezierPathWithOvalInRect:
+            CGRectMake(CGRectGetMinX(animationTimingGroup) +
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.1,
+                       CGRectGetMinY(animationTimingGroup) +
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.85572 + 0.5),
+                       floor(CGRectGetWidth(animationTimingGroup) * 1.00000 - 0.2) -
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.6,
+                       floor(CGRectGetHeight(animationTimingGroup) * 1.00000 - 0.1) -
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.85572 + 0.5) + 0.6)];
+    [fillColor9 setFill];
+    [circle9Path fill];
+
+    UIBezierPath* circle7Path = [UIBezierPath
+        bezierPathWithOvalInRect:
+            CGRectMake(CGRectGetMinX(animationTimingGroup) +
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.1,
+                       CGRectGetMinY(animationTimingGroup) +
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.70025) + 0.5,
+                       floor(CGRectGetWidth(animationTimingGroup) * 1.00000 - 0.2) -
+                           floor(CGRectGetWidth(animationTimingGroup) * 0.91576 + 0.4) + 0.6,
+                       floor(CGRectGetHeight(animationTimingGroup) * 0.84453 + 0.4) -
+                           floor(CGRectGetHeight(animationTimingGroup) * 0.70025) - 0.4)];
+    [fillColor7 setFill];
+    [circle7Path fill];
+
+    UIBezierPath* axesBezierPath = [UIBezierPath bezierPath];
+    [axesBezierPath moveToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                                0.85694 * CGRectGetWidth(animationTimingGroup),
+                                            CGRectGetMinY(animationTimingGroup) +
+                                                0.99378 * CGRectGetHeight(animationTimingGroup))];
+    [axesBezierPath
+        addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                       0.00000 * CGRectGetWidth(animationTimingGroup),
+                                   CGRectGetMinY(animationTimingGroup) +
+                                       0.99378 * CGRectGetHeight(animationTimingGroup))];
+    [axesBezierPath
+        addLineToPoint:CGPointMake(CGRectGetMinX(animationTimingGroup) +
+                                       0.00000 * CGRectGetWidth(animationTimingGroup),
+                                   CGRectGetMinY(animationTimingGroup) +
+                                       0.00000 * CGRectGetHeight(animationTimingGroup))];
+    [strokeColor setStroke];
+    axesBezierPath.lineWidth = 3;
+    [axesBezierPath stroke];
+  }
+
+  CGGradientRelease(gradient);
+  CGColorSpaceRelease(colorSpace);
 }
 
 void MDCCatalogDrawAppBarTile(CGRect frame) {
@@ -1124,6 +1736,115 @@ void MDCCatalogDrawButtonsTile(CGRect frame) {
   [ovalPath fill];
 }
 
+void MDCCatalogDrawCollectionCellsTile(CGRect frame) {
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  UIColor* fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.1];
+  UIColor* color = [UIColor colorWithRed:0.506 green:0.831 blue:0.98 alpha:1];
+  UIColor* gradientColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
+
+  // This gradient was adjusted by hand to not use macOS API
+  CGFloat gradientLocations[] = {0.14, 1};
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace, (__bridge CFArrayRef) @[ (id)fillColor2.CGColor, (id)gradientColor.CGColor ],
+      gradientLocations);
+
+  CGRect collectionCellsGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24,
+                                           floor((CGRectGetWidth(frame) - 24.5) * 0.84404 + 0.5),
+                                           floor((CGRectGetHeight(frame) - 24) * 0.61069 + 0.5));
+
+  {
+    UIBezierPath* stripeLowPath = [UIBezierPath bezierPath];
+    [stripeLowPath moveToPoint:CGPointMake(CGRectGetMinX(collectionCellsGroup) +
+                                               0.00000 * CGRectGetWidth(collectionCellsGroup),
+                                           CGRectGetMinY(collectionCellsGroup) +
+                                               0.75626 * CGRectGetHeight(collectionCellsGroup))];
+    [stripeLowPath addLineToPoint:CGPointMake(CGRectGetMinX(collectionCellsGroup) +
+                                                  1.00000 * CGRectGetWidth(collectionCellsGroup),
+                                              CGRectGetMinY(collectionCellsGroup) +
+                                                  0.75626 * CGRectGetHeight(collectionCellsGroup))];
+    stripeLowPath.miterLimit = 4;
+
+    [fillColor setFill];
+    [stripeLowPath fill];
+    [color setStroke];
+    stripeLowPath.lineWidth = 1;
+    [stripeLowPath stroke];
+
+    UIBezierPath* stripeMiddlePath = [UIBezierPath bezierPath];
+    [stripeMiddlePath moveToPoint:CGPointMake(CGRectGetMinX(collectionCellsGroup) +
+                                                  0.00000 * CGRectGetWidth(collectionCellsGroup),
+                                              CGRectGetMinY(collectionCellsGroup) +
+                                                  0.50376 * CGRectGetHeight(collectionCellsGroup))];
+    [stripeMiddlePath
+        addLineToPoint:CGPointMake(CGRectGetMinX(collectionCellsGroup) +
+                                       1.00000 * CGRectGetWidth(collectionCellsGroup),
+                                   CGRectGetMinY(collectionCellsGroup) +
+                                       0.50376 * CGRectGetHeight(collectionCellsGroup))];
+    stripeMiddlePath.miterLimit = 4;
+
+    [fillColor setFill];
+    [stripeMiddlePath fill];
+    [color setStroke];
+    stripeMiddlePath.lineWidth = 1;
+    [stripeMiddlePath stroke];
+
+    UIBezierPath* stripeHighPath = [UIBezierPath bezierPath];
+    [stripeHighPath moveToPoint:CGPointMake(CGRectGetMinX(collectionCellsGroup) +
+                                                0.00000 * CGRectGetWidth(collectionCellsGroup),
+                                            CGRectGetMinY(collectionCellsGroup) +
+                                                0.25126 * CGRectGetHeight(collectionCellsGroup))];
+    [stripeHighPath
+        addLineToPoint:CGPointMake(CGRectGetMinX(collectionCellsGroup) +
+                                       1.00000 * CGRectGetWidth(collectionCellsGroup),
+                                   CGRectGetMinY(collectionCellsGroup) +
+                                       0.25126 * CGRectGetHeight(collectionCellsGroup))];
+    stripeHighPath.miterLimit = 4;
+
+    [fillColor setFill];
+    [stripeHighPath fill];
+    [color setStroke];
+    stripeHighPath.lineWidth = 1;
+    [stripeHighPath stroke];
+
+    CGRect gradientRectangleRect =
+        CGRectMake(CGRectGetMinX(collectionCellsGroup) +
+                       floor(CGRectGetWidth(collectionCellsGroup) * 0.00000 + 0.5),
+                   CGRectGetMinY(collectionCellsGroup) +
+                       floor(CGRectGetHeight(collectionCellsGroup) * 0.76250 + 0.5),
+                   floor(CGRectGetWidth(collectionCellsGroup) * 1.00000 + 0.5) -
+                       floor(CGRectGetWidth(collectionCellsGroup) * 0.00000 + 0.5),
+                   floor(CGRectGetHeight(collectionCellsGroup) * 1.00000 + 0.5) -
+                       floor(CGRectGetHeight(collectionCellsGroup) * 0.76250 + 0.5));
+    UIBezierPath* gradientRectanglePath = [UIBezierPath bezierPathWithRect:gradientRectangleRect];
+    CGContextSaveGState(context);
+    [gradientRectanglePath addClip];
+    CGContextDrawLinearGradient(
+        context, gradient,
+        CGPointMake(CGRectGetMidX(gradientRectangleRect), CGRectGetMinY(gradientRectangleRect)),
+        CGPointMake(CGRectGetMidX(gradientRectangleRect), CGRectGetMaxY(gradientRectangleRect)), 0);
+    CGContextRestoreGState(context);
+
+    UIBezierPath* solidRectanglePath = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(collectionCellsGroup) +
+                                   floor(CGRectGetWidth(collectionCellsGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(collectionCellsGroup) +
+                                   floor(CGRectGetHeight(collectionCellsGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetWidth(collectionCellsGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetWidth(collectionCellsGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetHeight(collectionCellsGroup) * 0.76250 + 0.5) -
+                                   floor(CGRectGetHeight(collectionCellsGroup) * 0.00000 + 0.5))];
+    [fillColor2 setFill];
+    [solidRectanglePath fill];
+  }
+
+  CGGradientRelease(gradient);
+  CGColorSpaceRelease(colorSpace);
+}
+
 void MDCCatalogDrawCollectionsTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -1227,40 +1948,172 @@ void MDCCatalogDrawCollectionsTile(CGRect frame) {
 }
 
 void MDCCatalogDrawDialogsTile(CGRect frame) {
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
+  UIColor* gradientColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.1];
 
-  CGRect group = CGRectMake(
-      CGRectGetMinX(frame) + floor((CGRectGetWidth(frame) - 77.75) * 0.22200 + 0.02) + 0.48,
-      CGRectGetMinY(frame) + floor((CGRectGetHeight(frame) - 24.25) * 0.30382 + 0.47) + 0.03, 77.75,
-      24.25);
+  // This gradient was adjusted by hand to not use macOS API
+  CGFloat gradientLocations[] = {0.13, 1};
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef) @[ (id)gradientColor.CGColor, (id)UIColor.clearColor.CGColor ],
+      gradientLocations);
+
+  NSShadow* shadow = [[NSShadow alloc] init];
+  [shadow setShadowColor:[UIColor.blackColor colorWithAlphaComponent:0.3]];
+  [shadow setShadowOffset:CGSizeMake(0.1, 2.1)];
+  [shadow setShadowBlurRadius:5];
+
+  CGRect dialogsGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24.1,
+                                   floor((CGRectGetWidth(frame) - 24.5) * 0.84404 + 0.5),
+                                   floor((CGRectGetHeight(frame) - 24.1) * 0.64095 + 23.7) - 23.2);
+
+  {
+    CGRect rectangleRect = CGRectMake(
+        CGRectGetMinX(dialogsGroup) + floor(CGRectGetWidth(dialogsGroup) * 0.00000 + 0.5),
+        CGRectGetMinY(dialogsGroup) + floor(CGRectGetHeight(dialogsGroup) * 0.00000 - 0.4) + 0.9,
+        floor(CGRectGetWidth(dialogsGroup) * 1.00000 + 0.5) -
+            floor(CGRectGetWidth(dialogsGroup) * 0.00000 + 0.5),
+        floor(CGRectGetHeight(dialogsGroup) * 0.95352 - 0.4) -
+            floor(CGRectGetHeight(dialogsGroup) * 0.00000 - 0.4));
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect:rectangleRect];
+    CGContextSaveGState(context);
+    [rectanglePath addClip];
+    CGContextDrawLinearGradient(
+        context, gradient, CGPointMake(CGRectGetMidX(rectangleRect), CGRectGetMinY(rectangleRect)),
+        CGPointMake(CGRectGetMidX(rectangleRect), CGRectGetMaxY(rectangleRect)), 0);
+    CGContextRestoreGState(context);
+
+    UIBezierPath* rectangle2Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(dialogsGroup) +
+                                          floor(CGRectGetWidth(dialogsGroup) * 0.14130) + 0.5,
+                                      CGRectGetMinY(dialogsGroup) +
+                                          floor(CGRectGetHeight(dialogsGroup) * 0.16567 + 0.5),
+                                      floor(CGRectGetWidth(dialogsGroup) * 0.86594) -
+                                          floor(CGRectGetWidth(dialogsGroup) * 0.14130),
+                                      floor(CGRectGetHeight(dialogsGroup) * 1.00000 + 0.5) -
+                                          floor(CGRectGetHeight(dialogsGroup) * 0.16567 + 0.5))];
+    CGContextSaveGState(context);
+    CGContextSetShadowWithColor(context, shadow.shadowOffset, shadow.shadowBlurRadius,
+                                [shadow.shadowColor CGColor]);
+    [UIColor.whiteColor setFill];
+    [rectangle2Path fill];
+    CGContextRestoreGState(context);
+  }
+
+  CGGradientRelease(gradient);
+  CGColorSpaceRelease(colorSpace);
+}
+
+void MDCCatalogDrawFeatureHighlightTile(CGRect frame) {
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  UIColor* fillColor = [UIColor colorWithRed:0.71 green:0.894 blue:0.98 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* white = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+
+  CGRect featureHighlightGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24,
+                                            floor((CGRectGetWidth(frame) - 24.5) * 0.85015 + 0.5),
+                                            floor((CGRectGetHeight(frame) - 24) * 0.61069 + 0.5));
+
   {
     CGContextSaveGState(context);
-    CGContextSetAlpha(context, 0.95);
     CGContextBeginTransparencyLayer(context, NULL);
 
-    UIBezierPath* rectanglePath =
-        [UIBezierPath bezierPathWithRoundedRect:CGRectMake(CGRectGetMinX(group),
-                                                           CGRectGetMinY(group), 77.75, 24.25)
-                                   cornerRadius:3.4];
+    UIBezierPath* clippingRectPath = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(featureHighlightGroup) +
+                                   floor(CGRectGetWidth(featureHighlightGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(featureHighlightGroup) +
+                                   floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetWidth(featureHighlightGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetWidth(featureHighlightGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetHeight(featureHighlightGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5))];
+    [clippingRectPath addClip];
+
+    UIBezierPath* rectanglePath = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(featureHighlightGroup) +
+                                   floor(CGRectGetWidth(featureHighlightGroup) * -0.00000 - 0.5) +
+                                   1,
+                               CGRectGetMinY(featureHighlightGroup) +
+                                   floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetWidth(featureHighlightGroup) * 1.00000 - 0.5) -
+                                   floor(CGRectGetWidth(featureHighlightGroup) * -0.00000 - 0.5),
+                               floor(CGRectGetHeight(featureHighlightGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5))];
     [fillColor setFill];
     [rectanglePath fill];
+
+    {
+      UIBezierPath* circlePath = [UIBezierPath
+          bezierPathWithOvalInRect:
+              CGRectMake(CGRectGetMinX(featureHighlightGroup) +
+                             floor(CGRectGetWidth(featureHighlightGroup) * -0.06619 - 0.3) + 0.8,
+                         CGRectGetMinY(featureHighlightGroup) +
+                             floor(CGRectGetHeight(featureHighlightGroup) * -0.13625 + 0.4) + 0.1,
+                         floor(CGRectGetWidth(featureHighlightGroup) * 0.36403 - 0.1) -
+                             floor(CGRectGetWidth(featureHighlightGroup) * -0.06619 - 0.3) - 0.2,
+                         floor(CGRectGetHeight(featureHighlightGroup) * 0.61125 - 0.4) -
+                             floor(CGRectGetHeight(featureHighlightGroup) * -0.13625 + 0.4) + 0.8)];
+      [fillColor2 setFill];
+      [circlePath fill];
+
+      UIBezierPath* hamburgerLowPath = [UIBezierPath
+          bezierPathWithRect:CGRectMake(
+                                 CGRectGetMinX(featureHighlightGroup) +
+                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                     0.3,
+                                 CGRectGetMinY(featureHighlightGroup) +
+                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.27500) + 0.5,
+                                 floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) -
+                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                     0.5,
+                                 floor(CGRectGetHeight(featureHighlightGroup) * 0.29375 + 0.5) -
+                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.27500) -
+                                     0.5)];
+      [white setFill];
+      [hamburgerLowPath fill];
+
+      UIBezierPath* hamburgerMiddlePath = [UIBezierPath
+          bezierPathWithRect:CGRectMake(
+                                 CGRectGetMinX(featureHighlightGroup) +
+                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                     0.3,
+                                 CGRectGetMinY(featureHighlightGroup) +
+                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.22750 + 0.2) +
+                                     0.3,
+                                 floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) -
+                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                     0.5,
+                                 floor(CGRectGetHeight(featureHighlightGroup) * 0.24625 - 0.3) -
+                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.22750 + 0.2) +
+                                     0.5)];
+      [white setFill];
+      [hamburgerMiddlePath fill];
+
+      UIBezierPath* hamburgerHighPath = [UIBezierPath
+          bezierPathWithRect:CGRectMake(
+                                 CGRectGetMinX(featureHighlightGroup) +
+                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                     0.3,
+                                 CGRectGetMinY(featureHighlightGroup) +
+                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.18125 + 0.5),
+                                 floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) -
+                                     floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) +
+                                     0.5,
+                                 floor(CGRectGetHeight(featureHighlightGroup) * 0.20000) -
+                                     floor(CGRectGetHeight(featureHighlightGroup) * 0.18125 + 0.5) +
+                                     0.5)];
+      [white setFill];
+      [hamburgerHighPath fill];
+    }
 
     CGContextEndTransparencyLayer(context);
     CGContextRestoreGState(context);
   }
-
-  UIBezierPath* ovalPath = [UIBezierPath
-      bezierPathWithOvalInRect:CGRectMake(
-                                   CGRectGetMinX(frame) +
-                                       floor((CGRectGetWidth(frame) - 49.8) * 0.82308 - 0.25) +
-                                       0.75,
-                                   CGRectGetMinY(frame) +
-                                       floor((CGRectGetHeight(frame) - 49.7) * 0.25641 + 0.2) + 0.3,
-                                   49.8, 49.7)];
-  [fillColor setFill];
-  [ovalPath fill];
 }
 
 void MDCCatalogDrawFlexibleHeaderTile(CGRect frame) {
@@ -1742,68 +2595,6 @@ void MDCCatalogDrawMiscTile(CGRect frame) {
   }
 }
 
-void MDCCatalogDrawFeatureHighlightTile(CGRect frame) {
-  //// General Declarations
-  CGContextRef context = UIGraphicsGetCurrentContext();
-
-  //// Color Declarations
-  UIColor* fillColor = [UIColor colorWithRed: 0.71 green: 0.894 blue: 0.98 alpha: 1];
-  UIColor* fillColor2 = [UIColor colorWithRed: 0.012 green: 0.663 blue: 0.957 alpha: 1];
-  UIColor* white = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
-
-
-  //// Subframes
-  CGRect featureHighlightGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24, floor((CGRectGetWidth(frame) - 24.5) * 0.85015 + 0.5), floor((CGRectGetHeight(frame) - 24) * 0.61069 + 0.5));
-
-
-  //// Feature Highlight Group
-  {
-    CGContextSaveGState(context);
-    CGContextBeginTransparencyLayer(context, NULL);
-
-    //// Clip Clipping Rect
-    UIBezierPath* clippingRectPath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(featureHighlightGroup) + floor(CGRectGetWidth(featureHighlightGroup) * 0.00000 + 0.5), CGRectGetMinY(featureHighlightGroup) + floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5), floor(CGRectGetWidth(featureHighlightGroup) * 1.00000 + 0.5) - floor(CGRectGetWidth(featureHighlightGroup) * 0.00000 + 0.5), floor(CGRectGetHeight(featureHighlightGroup) * 1.00000 + 0.5) - floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5))];
-    [clippingRectPath addClip];
-
-
-    //// Rectangle Drawing
-    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(featureHighlightGroup) + floor(CGRectGetWidth(featureHighlightGroup) * -0.00000 - 0.5) + 1, CGRectGetMinY(featureHighlightGroup) + floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5), floor(CGRectGetWidth(featureHighlightGroup) * 1.00000 - 0.5) - floor(CGRectGetWidth(featureHighlightGroup) * -0.00000 - 0.5), floor(CGRectGetHeight(featureHighlightGroup) * 1.00000 + 0.5) - floor(CGRectGetHeight(featureHighlightGroup) * 0.00000 + 0.5))];
-    [fillColor setFill];
-    [rectanglePath fill];
-
-
-    //// Detail Group
-    {
-      //// Circle Drawing
-      UIBezierPath* circlePath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(CGRectGetMinX(featureHighlightGroup) + floor(CGRectGetWidth(featureHighlightGroup) * -0.06619 - 0.3) + 0.8, CGRectGetMinY(featureHighlightGroup) + floor(CGRectGetHeight(featureHighlightGroup) * -0.13625 + 0.4) + 0.1, floor(CGRectGetWidth(featureHighlightGroup) * 0.36403 - 0.1) - floor(CGRectGetWidth(featureHighlightGroup) * -0.06619 - 0.3) - 0.2, floor(CGRectGetHeight(featureHighlightGroup) * 0.61125 - 0.4) - floor(CGRectGetHeight(featureHighlightGroup) * -0.13625 + 0.4) + 0.8)];
-      [fillColor2 setFill];
-      [circlePath fill];
-
-
-      //// Hamburger Low Drawing
-      UIBezierPath* hamburgerLowPath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(featureHighlightGroup) + floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) + 0.3, CGRectGetMinY(featureHighlightGroup) + floor(CGRectGetHeight(featureHighlightGroup) * 0.27500) + 0.5, floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) - floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) + 0.5, floor(CGRectGetHeight(featureHighlightGroup) * 0.29375 + 0.5) - floor(CGRectGetHeight(featureHighlightGroup) * 0.27500) - 0.5)];
-      [white setFill];
-      [hamburgerLowPath fill];
-
-
-      //// Hamburger Middle Drawing
-      UIBezierPath* hamburgerMiddlePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(featureHighlightGroup) + floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) + 0.3, CGRectGetMinY(featureHighlightGroup) + floor(CGRectGetHeight(featureHighlightGroup) * 0.22750 + 0.2) + 0.3, floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) - floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) + 0.5, floor(CGRectGetHeight(featureHighlightGroup) * 0.24625 - 0.3) - floor(CGRectGetHeight(featureHighlightGroup) * 0.22750 + 0.2) + 0.5)];
-      [white setFill];
-      [hamburgerMiddlePath fill];
-
-
-      //// Hamburger High Drawing
-      UIBezierPath* hamburgerHighPath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(featureHighlightGroup) + floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) + 0.3, CGRectGetMinY(featureHighlightGroup) + floor(CGRectGetHeight(featureHighlightGroup) * 0.18125 + 0.5), floor(CGRectGetWidth(featureHighlightGroup) * 0.20000 - 0.3) - floor(CGRectGetWidth(featureHighlightGroup) * 0.10288 + 0.2) + 0.5, floor(CGRectGetHeight(featureHighlightGroup) * 0.20000) - floor(CGRectGetHeight(featureHighlightGroup) * 0.18125 + 0.5) + 0.5)];
-      [white setFill];
-      [hamburgerHighPath fill];
-    }
-
-
-    CGContextEndTransparencyLayer(context);
-    CGContextRestoreGState(context);
-  }
-}
-
 void MDCCatalogDrawNavigationBarTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
@@ -2127,6 +2918,388 @@ void MDCCatalogDrawPageControlTile(CGRect frame) {
   }
 
   CGGradientRelease(gradient2);
+  CGColorSpaceRelease(colorSpace);
+}
+
+static NSString *const PalettesFontName = @"RobotoMono-Regular";
+
+void MDCCatalogDrawPalettesTile(CGRect frame) {
+  CGFloat PalettesFontPointSize = [UIScreen mainScreen].bounds.size.width / 320 * 7;
+
+  UIColor* textDark = [UIColor colorWithRed:0.004 green:0.341 blue:0.608 alpha:1];
+  UIColor* textLight = [UIColor colorWithRed:0.702 green:0.898 blue:0.988 alpha:1];
+  UIColor* fill200 = [UIColor colorWithRed:0.506 green:0.831 blue:0.98 alpha:1];
+  UIColor* fill300 = [UIColor colorWithRed:0.31 green:0.765 blue:0.969 alpha:1];
+  UIColor* fill400 = [UIColor colorWithRed:0.161 green:0.714 blue:0.965 alpha:1];
+  UIColor* fill500 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fill600 = [UIColor colorWithRed:0.012 green:0.608 blue:0.898 alpha:1];
+  UIColor* fill700 = [UIColor colorWithRed:0.008 green:0.533 blue:0.82 alpha:1];
+  UIColor* fill800 = [UIColor colorWithRed:0.008 green:0.467 blue:0.741 alpha:1];
+
+  CGRect palettesGroup = CGRectMake(CGRectGetMinX(frame) + 25, CGRectGetMinY(frame) + 24.1,
+                                    floor((CGRectGetWidth(frame) - 25) * 0.84663 + 0.5),
+                                    floor((CGRectGetHeight(frame) - 24.1) * 0.60733 + 23.7) - 23.2);
+
+  {
+    UIBezierPath* rectangle100Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) + 0.9,
+                               floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.33459) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) - 0.4)];
+    [textLight setFill];
+    [rectangle100Path fill];
+
+    UIBezierPath* rectangle200Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) + 0.9,
+                               floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.33459) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) - 0.4)];
+    [fill200 setFill];
+    [rectangle200Path fill];
+
+    UIBezierPath* rectangle300Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) + 0.9,
+                               floor(CGRectGetWidth(palettesGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.33459) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.00000 - 0.4) - 0.4)];
+    [fill300 setFill];
+    [rectangle300Path fill];
+
+    UIBezierPath* rectangle400Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.3,
+                               floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.66918 - 0.4) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.6)];
+    [fill400 setFill];
+    [rectangle400Path fill];
+
+    UIBezierPath* rectangle500Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.3,
+                               floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.66918 - 0.4) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.6)];
+    [fill500 setFill];
+    [rectangle500Path fill];
+
+    UIBezierPath* rectangle600Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(palettesGroup) +
+                                   floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                               CGRectGetMinY(palettesGroup) +
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.3,
+                               floor(CGRectGetWidth(palettesGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                               floor(CGRectGetHeight(palettesGroup) * 0.66918 - 0.4) -
+                                   floor(CGRectGetHeight(palettesGroup) * 0.33459 + 0.2) + 0.6)];
+    [fill600 setFill];
+    [rectangle600Path fill];
+
+    UIBezierPath* rectangle700Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(palettesGroup) +
+                                          floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                                      CGRectGetMinY(palettesGroup) +
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5),
+                                      floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5) -
+                                          floor(CGRectGetWidth(palettesGroup) * 0.00000 + 0.5),
+                                      floor(CGRectGetHeight(palettesGroup) * 1.00000 - 0.1) -
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5) +
+                                          0.6)];
+    [fill700 setFill];
+    [rectangle700Path fill];
+
+    UIBezierPath* rectangle800Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(palettesGroup) +
+                                          floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                                      CGRectGetMinY(palettesGroup) +
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5),
+                                      floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5) -
+                                          floor(CGRectGetWidth(palettesGroup) * 0.33333 + 0.5),
+                                      floor(CGRectGetHeight(palettesGroup) * 1.00000 - 0.1) -
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5) +
+                                          0.6)];
+    [fill800 setFill];
+    [rectangle800Path fill];
+
+    UIBezierPath* rectangle900Path = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(palettesGroup) +
+                                          floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                                      CGRectGetMinY(palettesGroup) +
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5),
+                                      floor(CGRectGetWidth(palettesGroup) * 1.00000 + 0.5) -
+                                          floor(CGRectGetWidth(palettesGroup) * 0.66667 + 0.5),
+                                      floor(CGRectGetHeight(palettesGroup) * 1.00000 - 0.1) -
+                                          floor(CGRectGetHeight(palettesGroup) * 0.66541 + 0.5) +
+                                          0.6)];
+    [textDark setFill];
+    [rectangle900Path fill];
+
+    CGRect label100Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.17769 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.31321 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1));
+    NSMutableParagraphStyle* label100Style = [NSMutableParagraphStyle new];
+    label100Style.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* label100FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
+      NSForegroundColorAttributeName : textDark,
+      NSParagraphStyleAttributeName : label100Style
+    };
+
+    [@"100" drawInRect:label100Rect withAttributes:label100FontAttributes];
+
+    CGRect label200Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5),
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.50740 + 0.48) -
+            floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.31321 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1));
+    NSMutableParagraphStyle* label200Style = [NSMutableParagraphStyle new];
+    label200Style.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* label200FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
+      NSForegroundColorAttributeName : textDark,
+      NSParagraphStyleAttributeName : label200Style
+    };
+
+    [@"200" drawInRect:label200Rect withAttributes:label200FontAttributes];
+
+    CGRect label300Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.83711 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.31321 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.12453 - 0.1));
+    NSMutableParagraphStyle* label300Style = [NSMutableParagraphStyle new];
+    label300Style.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* label300FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
+      NSForegroundColorAttributeName : textDark,
+      NSParagraphStyleAttributeName : label300Style
+    };
+
+    [@"300" drawInRect:label300Rect withAttributes:label300FontAttributes];
+
+    CGRect label400Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.17769 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.65283 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1));
+    NSMutableParagraphStyle* label400Style = [NSMutableParagraphStyle new];
+    label400Style.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* label400FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
+      NSForegroundColorAttributeName : textDark,
+      NSParagraphStyleAttributeName : label400Style
+    };
+
+    [@"400" drawInRect:label400Rect withAttributes:label400FontAttributes];
+
+    CGRect label500Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5),
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.50740 + 0.48) -
+            floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.65283 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1));
+    NSMutableParagraphStyle* label500Style = [NSMutableParagraphStyle new];
+    label500Style.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* label500FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label500Style
+    };
+
+    [@"500" drawInRect:label500Rect withAttributes:label500FontAttributes];
+
+    CGRect label600Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1) + 0.6,
+        floor(CGRectGetWidth(palettesGroup) * 0.83711 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.65283 - 0.1) -
+            floor(CGRectGetHeight(palettesGroup) * 0.46415 - 0.1));
+    NSMutableParagraphStyle* label600Style = [NSMutableParagraphStyle new];
+    label600Style.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* label600FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label600Style
+    };
+
+    [@"600" drawInRect:label600Rect withAttributes:label600FontAttributes];
+
+    CGRect label700Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4) + 0.1,
+        floor(CGRectGetWidth(palettesGroup) * 0.17769 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.03261) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.98616 + 0.4) -
+            floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4));
+    NSMutableParagraphStyle* label700Style = [NSMutableParagraphStyle new];
+    label700Style.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* label700FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label700Style
+    };
+
+    [@"700" drawInRect:label700Rect withAttributes:label700FontAttributes];
+
+    CGRect label800Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5),
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4) + 0.1,
+        floor(CGRectGetWidth(palettesGroup) * 0.50740 + 0.48) -
+            floor(CGRectGetWidth(palettesGroup) * 0.36232 + 0.5) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.98616 + 0.4) -
+            floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4));
+    NSMutableParagraphStyle* label800Style = [NSMutableParagraphStyle new];
+    label800Style.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* label800FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label800Style
+    };
+
+    [@"800" drawInRect:label800Rect withAttributes:label800FontAttributes];
+
+    CGRect label900Rect = CGRectMake(
+        CGRectGetMinX(palettesGroup) + floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.5,
+        CGRectGetMinY(palettesGroup) + floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4) + 0.1,
+        floor(CGRectGetWidth(palettesGroup) * 0.83711 - 0.02) -
+            floor(CGRectGetWidth(palettesGroup) * 0.69203) + 0.02,
+        floor(CGRectGetHeight(palettesGroup) * 0.98616 + 0.4) -
+            floor(CGRectGetHeight(palettesGroup) * 0.79749 + 0.4));
+    NSMutableParagraphStyle* label900Style = [NSMutableParagraphStyle new];
+    label900Style.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* label900FontAttributes = @{
+      NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
+      NSForegroundColorAttributeName : textLight,
+      NSParagraphStyleAttributeName : label900Style
+    };
+
+    [@"900" drawInRect:label900Rect withAttributes:label900FontAttributes];
+  }
+}
+
+void MDCCatalogDrawProgressViewTile(CGRect frame) {
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  UIColor* fillColor = [UIColor colorWithRed:0.008 green:0.467 blue:0.741 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* gradientColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.1];
+
+  CGFloat gradientLocations[] = {0.14, 1};
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef) @[ (id)gradientColor.CGColor, (id)UIColor.clearColor.CGColor ],
+      gradientLocations);
+
+  CGRect progressViewGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24,
+                                        floor((CGRectGetWidth(frame) - 24.5) * 0.85015 + 0.5),
+                                        floor((CGRectGetHeight(frame) - 24) * 0.61069 + 0.5));
+
+  {
+    CGRect gradientRectangleRect = CGRectMake(
+        CGRectGetMinX(progressViewGroup) + floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+        CGRectGetMinY(progressViewGroup) +
+            floor(CGRectGetHeight(progressViewGroup) * 0.30500 + 0.5),
+        floor(CGRectGetWidth(progressViewGroup) * 1.00000 + 0.5) -
+            floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+        floor(CGRectGetHeight(progressViewGroup) * 1.00000 - 0.1) -
+            floor(CGRectGetHeight(progressViewGroup) * 0.30500 + 0.5) + 0.6);
+    UIBezierPath* gradientRectanglePath = [UIBezierPath bezierPathWithRect:gradientRectangleRect];
+    CGContextSaveGState(context);
+    [gradientRectanglePath addClip];
+    CGContextDrawLinearGradient(
+        context, gradient,
+        CGPointMake(CGRectGetMidX(gradientRectangleRect), CGRectGetMinY(gradientRectangleRect)),
+        CGPointMake(CGRectGetMidX(gradientRectangleRect), CGRectGetMaxY(gradientRectangleRect)), 0);
+    CGContextRestoreGState(context);
+
+    UIBezierPath* whiteProgressBackgroundRectanglePath = [UIBezierPath
+        bezierPathWithRect:CGRectMake(CGRectGetMinX(progressViewGroup) +
+                                          floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                                      CGRectGetMinY(progressViewGroup) +
+                                          floor(CGRectGetHeight(progressViewGroup) * 0.36250) + 0.5,
+                                      floor(CGRectGetWidth(progressViewGroup) * 1.00000 + 0.5) -
+                                          floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                                      floor(CGRectGetHeight(progressViewGroup) * 0.41875 + 0.5) -
+                                          floor(CGRectGetHeight(progressViewGroup) * 0.36250) -
+                                          0.5)];
+    [UIColor.whiteColor setFill];
+    [whiteProgressBackgroundRectanglePath fill];
+
+    UIBezierPath* headerRectanglePath = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(progressViewGroup) +
+                                   floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(progressViewGroup) +
+                                   floor(CGRectGetHeight(progressViewGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetWidth(progressViewGroup) * 1.00000 + 0.5) -
+                                   floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                               floor(CGRectGetHeight(progressViewGroup) * 0.36250 + 0.5) -
+                                   floor(CGRectGetHeight(progressViewGroup) * 0.00000 + 0.5))];
+    [fillColor2 setFill];
+    [headerRectanglePath fill];
+
+    UIBezierPath* progressRectanglePath = [UIBezierPath
+        bezierPathWithRect:CGRectMake(
+                               CGRectGetMinX(progressViewGroup) +
+                                   floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
+                               CGRectGetMinY(progressViewGroup) +
+                                   floor(CGRectGetHeight(progressViewGroup) * 0.35625 + 0.5),
+                               floor(CGRectGetWidth(progressViewGroup) * 0.79209 + 0.4) -
+                                   floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5) + 0.1,
+                               floor(CGRectGetHeight(progressViewGroup) * 0.41250) -
+                                   floor(CGRectGetHeight(progressViewGroup) * 0.35625 + 0.5) +
+                                   0.5)];
+    [fillColor setFill];
+    [progressRectanglePath fill];
+  }
+
+  CGGradientRelease(gradient);
   CGColorSpaceRelease(colorSpace);
 }
 
@@ -2531,21 +3704,17 @@ void MDCCatalogDrawSliderTile(CGRect frame) {
     CGContextRestoreGState(context);
   }
 
-  //// Cleanup
   CGGradientRelease(gradient50);
   CGColorSpaceRelease(colorSpace);
 }
 
 void MDCCatalogDrawSnackbarTile(CGRect frame) {
-  //// General Declarations
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  //// Color Declarations
   UIColor* gradientColor = [UIColor colorWithRed:0.076 green:0.59 blue:0.945 alpha:1];
   UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
 
-  //// Gradient Declarations
   CGFloat gradientLocations[] = {0, 0.14, 1};
   CGGradientRef gradient = CGGradientCreateWithColors(
       colorSpace,
@@ -2553,19 +3722,16 @@ void MDCCatalogDrawSnackbarTile(CGRect frame) {
           @[ (id)gradientColor.CGColor, (id)gradientColor.CGColor, (id)gradientColor.CGColor ],
       gradientLocations);
 
-  //// Subframes
   CGRect group = CGRectMake(
       CGRectGetMinX(frame) + floor((CGRectGetWidth(frame) - 139) * 0.50000) + 0.5,
       CGRectGetMinY(frame) + floor((CGRectGetHeight(frame) - 55.6) * 0.21076 + 0.05) + 0.45, 139,
       55.6);
 
-  //// Group
   {
     CGContextSaveGState(context);
     CGContextSetAlpha(context, 0.1);
     CGContextBeginTransparencyLayer(context, NULL);
 
-    //// Rectangle Drawing
     CGRect rectangleRect = CGRectMake(CGRectGetMinX(group), CGRectGetMinY(group), 139, 55.6);
     UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect:rectangleRect];
     CGContextSaveGState(context);
@@ -2583,7 +3749,6 @@ void MDCCatalogDrawSnackbarTile(CGRect frame) {
     CGContextRestoreGState(context);
   }
 
-  //// Rectangle 2 Drawing
   UIBezierPath* rectangle2Path = [UIBezierPath
       bezierPathWithRect:CGRectMake(CGRectGetMinX(frame) +
                                         floor((CGRectGetWidth(frame) - 139) * 0.50000) + 0.5,
@@ -2594,7 +3759,6 @@ void MDCCatalogDrawSnackbarTile(CGRect frame) {
   [fillColor setFill];
   [rectangle2Path fill];
 
-  //// Cleanup
   CGGradientRelease(gradient);
   CGColorSpaceRelease(colorSpace);
 }

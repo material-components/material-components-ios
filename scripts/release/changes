@@ -42,7 +42,7 @@ find components -type d -name 'src' | while read path; do
 
   componentdiff() {
     git log \
-      --pretty="* [%s](https://github.com/google/material-components-ios/commit/%H) (%an)" \
+      --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
       --no-merges \
       origin/master..release-candidate \
       $folder
