@@ -218,6 +218,7 @@ Classes that set ivar values or perform other commands from the initializer, sho
 
 
 Articles on AutoLayout:
+
 [Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)
 
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
@@ -229,14 +230,11 @@ Articles on AutoLayout:
 We use the UIAppearance proxy with our visible components to allow setting default values of properties and state.
 
 
-General Recommendations
-	Attempt to name properties in line with Apple’s style: UISlider.thumbTintColor, UISlider.maximumTrackTintColor, UISwitch.onTintColor, UINavigationBar.barTintColor.
-	tintColor is not compatible with the UIAppearance proxy.  Avoid using tintColor unless we are implementing it as UIView does.
-	NSObject* properties should be nullable.
-Avoid “primary”, “secondary” or “accent” in our property names to avoid confusion with our color schemes.
-
-
-Enter YES, NO or N/A
+1. Attempt to name properties in line with Apple’s style: `UISlider.thumbTintColor`, `UISlider.maximumTrackTintColor`, `UISwitch.onTintColor`, `UINavigationBar.barTintColor`, etc.
+1. `tintColor` is not compatible with the `UIAppearance` proxy.  Avoid using `tintColor` unless we are implementing it as `UIView` does.
+1. `NSObject` properties should be nullable.
+1. Avoid “primary”, “secondary” or “accent” in your property names to avoid confusion with our color schemes.
+1. Enter YES, NO or N/A
 
 
 ### IBDesignable Support for UIView Subclasses
