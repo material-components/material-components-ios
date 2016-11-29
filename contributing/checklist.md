@@ -9,21 +9,42 @@ Over time we have curated a growing checklist of things we feel improve the expe
 
 ### API Review
 
-Before a component is built, the API
+Before a component is built, the API proposed must be agreed upon by the main contributors.
+
+1. Create a pull request with only the .h files of the proposed component linked back to the original issue for the component's creation.
+1. Enter the pull request # or NO
 
 
 ### README.md
+
+Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at //TODO: Link
+
+1. Verify the component has a filled out README.md
+1. Enter YES or NO
 
 
 ### Additional Usage Docs
 #### If necessary
 
+Sometimes, the inline comments and README.md will not be sufficient to describe usage of the component. In these cases, create additional README.md files in child folders of the component. See: [Collections](https://github.com/material-components/material-components-ios/tree/develop/components/Collections) for a good example.
+
+1. Verify the component has filled out README.md files in its child folders.
+1. Enter YES, NO or N/A
+
 
 ### Usage Video
 
+Each component must have a short video captured from either iPhone or iPhone simulator of it in action.
+
+1. Verify the component's `.../docs/assets` folder contains a video named `component_name.mp4`.
+1. Enter YES or NO
 
 ### Usage Still
 
+Each component must also have a still image to use when video cannot play.
+
+1. Verify the component's `.../docs/assets` folder contains a still named `component_name.png`.
+1. Enter YES or NO
 
 ### Catalog Tile
 
@@ -51,7 +72,7 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 
 ### Site Icon
 
-The documentation site uses icons in an ordered list of the components. These icons are created by Google's Material Design department specifically for this purpose.
+The documentation site uses icons in an [ordered list](https://material-ext.appspot.com/mdc-ios-preview/components/) of the components. These icons are created by Google's Material Design department specifically for this purpose.
 
 1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic` + name of component lowercase + `_24.svg`.
 1. Make sure the site source's `_icons.scss` contains an entry for that icon for that component:
