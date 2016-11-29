@@ -213,9 +213,7 @@ Classes that set ivar values or perform other commands from the initializer, sho
 
 1. Make sure to use .leading and .trailing instead of .left and .right to support RTL languages correctly.
 1. If your view sets its constraints in `updateConstraints`, override `requiresConstraintBasedLayout` to return YES.
-1. Make sure your view does not add constraints which force its width/height to be a specific value. Prefer `intrinsicContentSize` along with content hugging/compression settings (see: `UIView`.)
-
-
+1. Make sure your view does not add constraints which force its width/height to be a specific value. Prefer `intrinsicContentSize` along with content-hugging / compression settings (see: `UIView`.)
 1. Enter YES, NO or N/A
 
 
