@@ -125,9 +125,13 @@ Example:
 
 ### Unit Tests
 
+//TODO
 
 ### Interaction Tests
 
+Visual components should have interaction tests built with [Earl Grey](https://github.com/google/EarlGrey).
+
+//TODO and explain how
 
 ### Translations
 
@@ -154,9 +158,11 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 
 ### VoiceOver Support
 
+//TODO
 
 ### Text Accessibility
 
+//TODO
 
 ### Scrubbed Comments
 
@@ -175,8 +181,12 @@ Every component has to support all features outlined for it in the Material Desi
 
 ### Test URLs
 
+Both documentation and code can contain URLs to assets or additional text. Make sure they are converted to production values.
 
-------
+1. Verify all URLs inline are set to production values.
+1. Enter YES, NO or N/A
+
+
 ### Swift Examples
 
 
@@ -318,15 +328,13 @@ Consider adding support for IBDesignable.
 If you have created a public subclass of UIView this may be as simple as adding IB_DESIGNABLE above your @interface declaration.
 
 
-```
+```Objective-C
 IB_DESIGNABLE
 @interface MDCBrandNewView : UIView
 ```
 
-
-Mark YES, NO or N/A
-
-
+1. Verify inclusion of `IB_DESIGNABLE`.
+1. Mark YES, NO or N/A
 
 
 ### Asset Catalogs Support
@@ -338,27 +346,29 @@ Mark YES, NO or N/A
 
 ### Nullability
 
+Nullability annotations improve Swift usage of a component's APIs. Learn more in Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
 
-The work: add nullability annotations to every header of your component.
-The why: nullability annotations improve Swift usage of a component's APIs. Learn more
-Recommendations:
-We explicitly annotate all public APIs rather than use NS_ASSUME_NONNULL_BEGIN. This is an intentional deviation from Apple’s practice of using the ASSUME macros.
-Further reading:
-http://nshipster.com/swift-1.2/#nullability-annotations
+Material Components explicitly annotate all public APIs rather than use `NS_ASSUME_NONNULL_BEGIN`. This is an intentional deviation from Apple’s practice of using the `ASSUME` macros. [Further reading](http://nshipster.com/swift-1.2/#nullability-annotations)
 
 
+1. Add nullability annotations to every header of your component.
+1. Enter YES or NO
 
 
 ### Swift Name Overrides
 
+Swift naming conventions differ from ObjC. It's important to consider the experience of users implementing Material Components in Swift targets and add naming annotations accordingly. See Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
+
+1. Add `NS_SWIFT_NAME` annotations where appropriate.
+1. Use `typedef` for enums to allow truncation of enumeration value name prefixes.
+1. Enter YES, NO or N/A
 
 ### Verify Podspec is Accurate
 
+Material Components for iOS is built primarily for adoption with CocoaPods. There is `MaterialComponents.podspec` file in the root folder of the project. It contains information on component naming, dependencies, resources, etc. To learn more about `.podspec` files, go to [CocoaPods.org](https://guides.cocoapods.org/syntax/podspec.html)
 
-
-
-// TODO: Flesh out with more instruction
-
+1. Verify `MaterialComponents.podspec` contains a properly filled out entry for the component.
+1. Enter YES or NO
 
 ## Running the checklist
 
