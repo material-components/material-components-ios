@@ -92,7 +92,7 @@ The component should have an entry in the left nav of [the documentation site](h
 
 
 Every file must have the Apache 2.0 license stanza at the top of the file.  The copyright should be assigned to “the Material Components for iOS authors“.
-You can do this manually or use a tool such as (autogen)[https://github.com/mbrukman/autogen] to add a license.
+You can do this manually or use a tool such as [autogen](https://github.com/mbrukman/autogen) to add a license.
 
 
 Sample:
