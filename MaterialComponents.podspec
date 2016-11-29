@@ -287,6 +287,12 @@ Pod::Spec.new do |s|
     # and defined in scripts/generated/icons.rb
     registerIcons(pss)
 
+    pss.subspec "Application" do |ss|
+      ss.ios.deployment_target = '7.0'
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    end
+
     pss.subspec "Color" do |ss|
       ss.ios.deployment_target = '7.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
