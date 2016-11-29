@@ -18,7 +18,7 @@
 
 /** Appearance for content within tab bar items. */
 typedef NS_ENUM(NSInteger, MDCTabBarItemAppearance) {
-  /** Tabs are shown as titles. */
+  /** Tabs are shown as titles. Badges are not supported for this appearance. */
   MDCTabBarItemAppearanceTitles,
 
   /** Tabs are shown as images. */
