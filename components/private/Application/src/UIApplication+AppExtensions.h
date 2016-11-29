@@ -16,6 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ UIApplication extension for working with sharedApplication inside of app extensions.
+ */
 @interface UIApplication (AppExtensions)
 
 /**
