@@ -198,20 +198,23 @@ Classes that set ivar values or perform other commands from the initializer, sho
 
 
 General recommendations:
-1. Components should support autolayout (see: intrinsicContentSize)
-1. Components don’t have to adopt autolayout (adding constraints)
-1. When adopting autolayout, be aware of performance implications, such as continually adding/removing subviews.
+
+* Components should support autolayout (see: `intrinsicContentSize`.)
+* Components don’t have to adopt autolayout (adding constraints.)
+* When adopting autolayout, be aware of performance implications, such as continually adding/removing subviews.
 
 
 Supporting Autolayout In Your Component:
+
 1. Implement `intrinsicContentSize` on your view. This will ensure that, if your view is used in an auto-layout-based hierarchy, that the system knows the view’s preferred size. This is analogous to implementing `sizeThatFits:`.
 1. If any size-impacting features of your view (i.e. new text, different image, etc) change, call `invalidateIntrinsicContentSize` to tell the layout engine that something changed.
 
 
 If your view adopts autolayout internally:
+
 1. Make sure to use .leading and .trailing instead of .left and .right to support RTL languages correctly.
 1. If your view sets its constraints in `updateConstraints`, override `requiresConstraintBasedLayout` to return YES.
-1. Make sure your view does not add constraints which force its width/height to be a specific value. Prefer -intrinsicContentSize along with content hugging/compression settings (see: UIView).
+1. Make sure your view does not add constraints which force its width/height to be a specific value. Prefer `intrinsicContentSize` along with content hugging/compression settings (see: `UIView`.)
 
 
 1. Enter YES, NO or N/A
