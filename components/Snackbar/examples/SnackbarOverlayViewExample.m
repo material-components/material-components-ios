@@ -35,7 +35,6 @@ static const CGFloat kFABSideOffset = 24.0f;
   [manager addTarget:self action:@selector(handleOverlayTransition:)];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setTitle:@"+" forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   [self.view addSubview:self.floatingButton];
 

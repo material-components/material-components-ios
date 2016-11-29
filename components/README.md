@@ -1,6 +1,6 @@
 <!--{% if site.link_to_site == "true" %}-->
 See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components">GitHub</a> for README documentation.{% endif %}-->
+<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components">GitHub</a> for README documentation.{% endif %}-->
 
 # Component Documentation
 
@@ -10,7 +10,7 @@ interface components for iOS. These components implement Google's
 and are developed by a team of iOS engineers and UX designers at Google.
 
 
-- [GitHub](https://github.com/google/material-components-ios/)
+- [GitHub](https://github.com/material-components/material-components-ios/)
   <!--{: .icon-github }-->
 
 - [Development Guide]({{ site.folder }}/howto/)
@@ -34,6 +34,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**ActivityIndicator**
   A circular rotating indicator for showing indeterminate or determinate progress.
   ](ActivityIndicator/)
+  <!--{: .icon-activityindicator }-->
 
 - [**AppBar**
   A flexible navigation bar, designed to provide a typical material navigation experience.
@@ -68,6 +69,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**Dialogs**
   A presentation controller that will display a material modal dialog.
   ](Dialogs/)
+  <!--{: .icon-dialogs }-->
+
+- [**FeatureHighlight**
+  Highlights a part of the screen in order to draw users' attention.
+  ](FeatureHighlight/)
+  <!--{: .icon-featurehighlight }-->
 
 - [**FlexibleHeader**
   A container view whose height and vertical offset react to UIScrollViewDelegate events.
@@ -89,6 +96,10 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](NavigationBar/)
   <!--{: .icon-navigationbar }-->
 
+- [**OverlayWindow**
+  A window for managing sets of overlay views.
+  ](OverlayWindow/)
+
 - [**PageControl**
   A drop-in material replacement for UIPageControl.
   ](PageControl/)
@@ -102,6 +113,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**ProgressView**
   A determinate and linear progress indicator that implements material animation and layout.
   ](ProgressView/)
+  <!--{: .icon-progressview }-->
 
 - [**ShadowElevations**
   Provides the most commonly used elevations specified in material.
@@ -121,6 +133,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**Snackbar**
   A brief dismissible feedback message.
   ](Snackbar/)
+  <!--{: .icon-snackbar }-->
 
 - [**Switch**
   A material on/off switch with an interface similar to UISwitch.

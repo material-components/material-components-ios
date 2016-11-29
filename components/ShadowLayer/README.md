@@ -1,6 +1,6 @@
 <!--{% if site.link_to_site == "true" %}-->
 See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ShadowLayer">GitHub</a> for README documentation.{% endif %}-->
+<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/ShadowLayer">GitHub</a> for README documentation.{% endif %}-->
 
 # Shadow Layer
 
@@ -19,7 +19,7 @@ elevation.
 ### MDCShadowLayer
 
 `MDCShadowLayer` provides a Core Animation `CALayer` that will render a shadow based on its
-elevation property. `UIViews` can easily utilize this by overriding their layerClass method to
+elevation property. `UIViews` can utilize this by overriding their layerClass method to
 return `MDCShadowLayer`.
 
 `elevation` sets the diffusion level of the shadow. The higher the shadow elevation, the more

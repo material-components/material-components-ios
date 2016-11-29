@@ -1,6 +1,6 @@
 <!--{% if site.link_to_site == "true" %}-->
 See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Ink">GitHub</a> for README documentation.{% endif %}-->
+<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/Ink">GitHub</a> for README documentation.{% endif %}-->
 
 # Ink
 
@@ -79,7 +79,7 @@ feedback to the user:
 
 1. `MDCInkView` is a subclass of `UIView` that draws and animates ink ripples
 and can be placed anywhere in your view hierarchy.
-2. `MDCInkTouchController` combines a `MDCInkView` instance with a
+2. `MDCInkTouchController` bundles an `MDCInkView` instance with a
 `UITapGestureRecognizer` instance to conveniently drive the ink ripples from the
 user's touches.
 
@@ -92,18 +92,18 @@ The simplest method of using ink in your views is to use a
 
 #### Objective-C
 ~~~ objc
-UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
+self.myButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [myButton setTitle:@"Tap me" forState:UIControlStateNormal];
-MDCInkTouchController *inkTouchController =
+self.inkTouchController =
     [[MDCInkTouchController alloc] initWithView:myButton];
 [inkTouchController addInkView];
 ~~~
 
 #### Swift
 ~~~ swift
-let myButton = UIButton(type: .System)
+myButton = UIButton(type: .System)
 myButton.setTitle("Tap Me", forState: .Normal)
-let inkTouchController = MDCInkTouchController(view: myButton)
+inkTouchController = MDCInkTouchController(view: myButton)
 inkTouchController?.addInkView()
 ~~~
 
@@ -135,12 +135,12 @@ touches, the following code uses the delegate's
 
 ...
 
-UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
+self.myButton = [UIButton buttonWithType:UIButtonTypeSystem];
 MyDelegate *myDelegate = [[MyDelegate] alloc] init];
-MDCInkTouchController *inkTouchController =
+self.inkTouchController =
     [[MDCInkTouchController alloc] initWithView:myButton];
-inkTouchController.delegate = myDelegate;
-[inkTouchController addInkView];
+self.inkTouchController.delegate = myDelegate;
+[self.inkTouchController addInkView];
 
 ~~~
 
@@ -158,15 +158,18 @@ class MyDelegate: NSObject, MDCInkTouchControllerDelegate {
 
 ...
 
-let myButton = UIButton(type: .System)
+myButton = UIButton(type: .System)
 let myDelegate = MyDelegate()
-let inkTouchController = MDCInkTouchController(view: myButton)
+inkTouchController = MDCInkTouchController(view: myButton)
 inkTouchController?.delegate = myDelegate
 inkTouchController?.addInkView()
 
 ~~~
 
 <!--</div>-->
+
+**NOTE:** The ink touch controller does not keep a strong reference to the view to which it is attaching the ink view.
+An easy way to prevent the ink touch controller from being deallocated prematurely is to make it a property of a view controller (like in these examples.)
 
 ### MDCInkView
 

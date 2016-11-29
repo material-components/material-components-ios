@@ -21,6 +21,9 @@
 #import "PestoIcons/PestoIconHome.h"
 #import "PestoIcons/PestoIconTrending.h"
 
+#import "MaterialRobotoFontLoader.h"
+#import "MaterialTypography.h"
+
 @interface PestoAppDelegate ()
 
 @end
@@ -29,6 +32,8 @@
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [MDCTypography setFontLoader:[MDCRobotoFontLoader sharedInstance]];
+
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   [self.window makeKeyAndVisible];
 

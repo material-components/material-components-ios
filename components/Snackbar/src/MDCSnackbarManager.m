@@ -54,6 +54,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 @property(nonatomic) MDCSnackbarOverlayView *overlayView;
 
 /**
+ The view which contains the overlayView.
+ */
+@property(nonatomic) UIView *presentationHostView;
+
+/**
  The currently-showing snackbar.
  */
 @property(nonatomic) MDCSnackbarMessageView *currentSnackbar;
@@ -286,10 +291,13 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (void)activateOverlay:(UIView *)overlay {
   UIWindow *window = [self bestGuessWindow];
+  UIView *targetView = nil;
 
-  // If the application's window is an overlay window, take advantage of it. Otherwise, just add our
-  // overlay view into the main view controller's hierarchy.
-  if ([window isKindOfClass:[MDCOverlayWindow class]]) {
+  if (self.presentationHostView) {
+    targetView = self.presentationHostView;
+  } else if ([window isKindOfClass:[MDCOverlayWindow class]]) {
+    // If the application's window is an overlay window, take advantage of it. Otherwise, just add
+    // our overlay view into the main view controller's hierarchy.
     MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)window;
     [overlayWindow activateOverlay:overlay withLevel:UIWindowLevelNormal];
   } else {
@@ -298,8 +306,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     while ([topViewController presentedViewController]) {
       topViewController = [topViewController presentedViewController];
     }
-    UIView *targetView = [topViewController view];
+    targetView = [topViewController view];
+  }
 
+  if (targetView) {
     overlay.frame = targetView.bounds;
     overlay.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     overlay.translatesAutoresizingMaskIntoConstraints = YES;
@@ -473,6 +483,13 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   });
 }
 
++ (void)setPresentationHostView:(UIView *)hostView {
+  NSAssert([NSThread isMainThread], @"setPresentationHostView must be called on main thread.");
+
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  manager.presentationHostView = hostView;
+}
+
 + (void)dismissAndCallCompletionBlocksWithCategory:(NSString *)category {
   // Snag a copy now, we'll use that internally.
   NSString *categoryToDismiss = [category copy];
@@ -485,7 +502,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 + (void)setBottomOffset:(CGFloat)offset {
-  NSParameterAssert([NSThread isMainThread]);
+  NSAssert([NSThread isMainThread], @"setBottomOffset must be called on main thread.");
 
   MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
   manager.overlayView.bottomOffset = offset;

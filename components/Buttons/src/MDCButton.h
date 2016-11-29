@@ -61,7 +61,7 @@
 
 /*
  Maximum radius of the button's ink. If the radius <= 0 then half the length of the diagonal of
- self.bounds is used.
+ self.bounds is used. This value is ignored if button's @c inkStyle is set to |MDCInkStyleBounded|.
  */
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius;
 
@@ -157,8 +157,8 @@
 
 #pragma mark - Deprecated
 
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
-    __deprecated_msg("Use setBackgroundColor:forState: instead.");
+/** Use setBackgroundColor:forState: instead. */
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor NS_UNAVAILABLE;
 
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
