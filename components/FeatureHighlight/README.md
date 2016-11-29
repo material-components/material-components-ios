@@ -4,6 +4,11 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Feature
 
 # Feature Highlight
 
+<div class="ios-animation right" markdown="1">
+  <video src="docs/assets/feature_highlight.mp4" autoplay loop></video>
+  [![Flexible Header](docs/assets/feature_highlight.jpg)](docs/assets/feature_highlight.mp4)
+</div>
+
 The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
 
 ### Material Design Specifications
