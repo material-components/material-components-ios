@@ -217,9 +217,10 @@ Classes that set ivar values or perform other commands from the initializer, sho
 1. Enter YES, NO or N/A
 
 
-Articles on AutoLayout
-Advanced Auto Layout Toolbox
-Auto Layout Performance on iOS
+Articles on AutoLayout:
+[Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)
+
+[Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
 
 
 ### UIAppearance Support (If possible)
