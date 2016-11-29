@@ -132,18 +132,17 @@ Visual components should have interaction tests built with [Earl Grey](https://g
 
 //TODO and explain how
 
-### Translations
+### Translations (If necessary)
 
-Google strives to support as many different written languages as possible.
+Google strives to support as many different written languages as possible in components containing static text. The necessary translations must be written by Google's internal translators. To request translations, open an issue with all text and all requested langues.
 
-//TODO: Explain how to get translations
 
 1. Any strings that are added must be internationalized. Please don’t include English strings in code. We have language bundles for the various components. Add your English strings there and use a key to access it via code (key will be generated after compilation).
 1. Make sure strings are internationalized (takes about a week) and dumped before releasing a feature (manual process).
   1. Edge case: Some strings are super long in some languages, make sure UI displays/handles long text correctly.
 1. Enter YES, NO or N/A
 
-### Right-to-Left Language (RTL) Support
+### Right-to-Left Language (RTL) Support (If necessary)
 
 
 Any UI code that isn’t centered - e.g. has directionality - will need RTL support.
@@ -152,7 +151,7 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 1. Prefer .leading and .trailing over .left and .right when laying out view hierarchies.
 1. Prefer Natural or Left when setting the alignment of text fields and labels.
 1. Add an example to our catalog.
-1. Enter YES or NO
+1. Enter YES, NO or N/A
 
 
 ### VoiceOver Support
