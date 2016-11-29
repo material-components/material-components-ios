@@ -204,8 +204,7 @@ They should focus on educating thru the catalog’s visual result and the code i
 These examples must be direct ports to Objc of every Swift example. See “Swift Examples” for more information.
 
 
-### Interface Builder Support
-#### If possible
+### Interface Builder Support (If possible)
 
 
 Our users create their views both in code and in Interface Builder. It’s important to support both usages. Almost all components should be able to be added to a view hierarchy thru Interface Builder.
@@ -214,8 +213,7 @@ Our users create their views both in code and in Interface Builder. It’s impor
 1. Enter YES, NO or N/A
 
 
-### Interface Builder Examples
-#### If necessary
+### Interface Builder Examples (If necessary)
 
 
 If a component supports Interface Builder usage, then we need to show our users how to do that.
@@ -234,8 +232,7 @@ Sometimes the operating system changes in ways that cause unpredictable or surpr
 1. Enter YES or NO
 
 
-### Extensions Support
-#### If possible
+### Extensions Support (If possible)
 
 
 Many components could be sensibly used in an extension. But sometimes code prevents a component from working correctly in extensions (or at all.)
@@ -265,8 +262,7 @@ Conforming to NSCoding is necessary for Interface Builder support in views and c
 1. Enter YES or NO
 
 
-### commonMDCClassInit
-#### If necessary
+### commonMDCClassInit (If necessary)
 
 
 Classes that set ivar values or perform other commands from the initializer, should avoid duplicate code by writing a `common*MDCClass*init` method to call from all initializers.
@@ -336,8 +332,7 @@ IB_DESIGNABLE
 1. Mark YES, NO or N/A
 
 
-### Asset Catalogs Support
-#### If necessary
+### Asset Catalogs Support (If necessary)
 
 
 //TODO
