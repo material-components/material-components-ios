@@ -88,10 +88,10 @@ The component should have an entry in the left nav of [the documentation site](h
 1. Verify [the documentation site's](https://material-ext.appspot.com/mdc-ios-preview/components/) left nav contains a link to the component's docs.
 1. Enter YES or NO
 
-### License Stanzas in Every Text-based File
+### License Stanzas in Every Text-based Source File
 
 
-Every file must have the Apache 2.0 license stanza at the top of the file.  The copyright should be assigned to “the Material Components for iOS authors“.
+Every source file must have the Apache 2.0 license stanza at the top of the file.  The copyright should be assigned to “the Material Components for iOS authors“.
 You can do this manually or use a tool such as [autogen](https://github.com/mbrukman/autogen) to add a license.
 
 
