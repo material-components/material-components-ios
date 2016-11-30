@@ -927,4 +927,27 @@ static const CGFloat kButtonInkRadius = 64.0f;
   return buttonIndex + 1;
 }
 
+#pragma mark - Animation
+
+- (void)animateContentOpacityFrom:(CGFloat)fromOpacity
+                               to:(CGFloat)toOpacity
+                         duration:(NSTimeInterval)duration
+                   timingFunction:(CAMediaTimingFunction *)timingFunction {
+  [CATransaction begin];
+
+  CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+  opacityAnimation.duration = duration;
+  opacityAnimation.fromValue = @(fromOpacity);
+  opacityAnimation.toValue = @(toOpacity);
+  opacityAnimation.timingFunction = timingFunction;
+
+  // The text and the button do not share a common view that can be animated independently of the
+  // background color, so just animate them both independently here. If this becomes more
+  // complicated, refactor to add a containing view for both and animate that.
+  [self.contentView.layer addAnimation:opacityAnimation forKey:@"opacity"];
+  [self.buttonView.layer addAnimation:opacityAnimation forKey:@"opacity"];
+
+  [CATransaction commit];
+}
+
 @end
