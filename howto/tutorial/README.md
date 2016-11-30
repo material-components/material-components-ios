@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
-
 ## Tutorial
 
 Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
