@@ -766,7 +766,51 @@ class ViewController: MDCCollectionViewController {
 ~~~
 <!--</div>-->
 
+## 8. Add a floating action button and a snackbar:
 
+If you are using a floating action button a snackbar for displaying confirmation of an action, you need to make sure that the floating button moves up when the snackbar is shown and it moves down when the snackbar is hidden.
+Add a function for showing the snackbar, when the snackbar is shown call a function to move the floating button up and use the completionHandler to trigger a function that moves the floating button down:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    ...
+    //add here floating button configuration as above
+    ...
+    //set the floating button at the default position on the bottom right of the view
+    defaultFloatingButtonPosition()
+
+    self.view.addSubview(floatingButton)
+  }
+
+  func showSnackbar(message: String) {
+    let snackbarMessage = MDCSnackbarMessage()
+    snackbarMessage.completionHandler = updateSnackbarStatus
+    snackbarMessage.text = message
+    MDCSnackbarManager.show(snackbarMessage)
+    moveFloatingButton(paddingBottom: 50)
+  }
+
+  func updateSnackbarStatus(userTypes: Bool) {
+    defaultFloatingButtonPosition()
+  }
+
+  func moveFloatingButton(paddingBottom: CGFloat) {
+    floatingButton.frame = CGRect(x: view.frame.width - floatingButton.frame.width - fabPadding,
+                                  y: view.frame.height - floatingButton.frame.height - fabPadding - 50,
+                                  width: floatingButton.frame.width,
+                                  height: floatingButton.frame.height)
+  }
+
+  func defaultFloatingButtonPosition() {
+    moveFloatingButton(paddingBottom: 0)
+  }
+
+~~~
+<!--</div>-->
 ---
 
 ## **Next steps**
