@@ -1,5 +1,224 @@
 # release-candidate TODO: Replace me with version number. 
 
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Add missing license headers (#900)](https://github.com/material-components/material-components-ios/commit/dff304e062c317a6bf4e6ea8d9963de45ca26bc7) (Sam Morrison)
+* [Reduce minimum activity indicator radius to 5 pt. (#887)](https://github.com/material-components/material-components-ios/commit/cd4abc398c9ca2b89d237ee5484354f47efe1978) (Adrian Secord)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [Updated test to relect new radius of 5. (#907)](https://github.com/material-components/material-components-ios/commit/b2e811af5fd665a4085b93f3fe38ea324ec536b0) (Randall Li)
+* [Wrap sharedApplication calls so we can build for app extension targets (#897)](https://github.com/material-components/material-components-ios/commit/e69f038d883b6734a9b7e8312766fcccd742610c) (Sam Morrison)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### AnimationTiming
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### AppBar
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+
+### ButtonBar
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### Buttons
+
+#### Changes
+
+* [Add missing license headers (#900)](https://github.com/material-components/material-components-ios/commit/dff304e062c317a6bf4e6ea8d9963de45ca26bc7) (Sam Morrison)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[MDCFloatingButton] Floating action button should use a shape rather than text (#833)](https://github.com/material-components/material-components-ios/commit/4596b7c861229b22ca84574e189cf85b7671435c) (Junius Gunaratne)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### CollectionCells
+
+#### Changes
+
+* [Remove MDCSwitch examples and catalog usage. (#892)](https://github.com/material-components/material-components-ios/commit/171e5bfbc553585b1a798d22b269ce6c92afbcca) (Adrian Secord)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### Collections
+
+#### Changes
+
+* [Fixes NSString to enum comparison (#872)](https://github.com/material-components/material-components-ios/commit/fb3cd29dce2ab78a55b4664d0b87bf0b4eae4779) (Cezar Cocu)
+* [Remove MDCSwitch examples and catalog usage. (#892)](https://github.com/material-components/material-components-ios/commit/171e5bfbc553585b1a798d22b269ce6c92afbcca) (Adrian Secord)
+* [Remove unnecessary method call (#875)](https://github.com/material-components/material-components-ios/commit/c293f80d88430a7be9e33d5a49e4c4f1d1a88bf6) (ianegordon)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### Dialogs
+
+#### Changes
+
+* [Add missing license (#895)](https://github.com/material-components/material-components-ios/commit/58c910672b653d7e4611e3932ae57fa8a53bd324) (ianegordon)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Add Feature Highlight demo video and still (#899)](https://github.com/material-components/material-components-ios/commit/59d092d5f91db97eb0cbc519383abd5a1da4e47c) (Sam Morrison)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### FlexibleHeader
+
+#### Changes
+
+* [- MDCFlexibleHeader in an app extension (#878)](https://github.com/material-components/material-components-ios/commit/d6130d28e4abf0fdbe47d3b4cbc05e024615928b) (Justin Shephard)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [Wrap sharedApplication calls so we can build for app extension targets (#897)](https://github.com/material-components/material-components-ios/commit/e69f038d883b6734a9b7e8312766fcccd742610c) (Sam Morrison)
+* [[MDCFloatingButton] Floating action button should use a shape rather than text (#833)](https://github.com/material-components/material-components-ios/commit/4596b7c861229b22ca84574e189cf85b7671435c) (Junius Gunaratne)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### FontDiskLoader
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### HeaderStackView
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### Ink
+
+#### Changes
+
+* [Add missing license headers (#900)](https://github.com/material-components/material-components-ios/commit/dff304e062c317a6bf4e6ea8d9963de45ca26bc7) (Sam Morrison)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### OverlayWindow
+
+#### Changes
+
+* [Add OverlayWindow to the docs.](https://github.com/material-components/material-components-ios/commit/200d83fbd4172235228e03090a5b6827fd4dd22a) (Adrian Secord)
+* [Add missing license headers (#900)](https://github.com/material-components/material-components-ios/commit/dff304e062c317a6bf4e6ea8d9963de45ca26bc7) (Sam Morrison)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [Wrap sharedApplication calls so we can build for app extension targets (#897)](https://github.com/material-components/material-components-ios/commit/e69f038d883b6734a9b7e8312766fcccd742610c) (Sam Morrison)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### PageControl
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### Palettes
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### ProgressView
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### ShadowElevations
+
+#### Changes
+
+* [Improve shadow elevation description in read me (#879)](https://github.com/material-components/material-components-ios/commit/24a7c39db1102edc050d1d5d73d409b63d641df7) (Junius Gunaratne)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### ShadowLayer
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### Slider
+
+#### Changes
+
+* [Add missing license headers (#900)](https://github.com/material-components/material-components-ios/commit/dff304e062c317a6bf4e6ea8d9963de45ca26bc7) (Sam Morrison)
+* [Internal change 138179679. (#866)](https://github.com/material-components/material-components-ios/commit/9509c4182608bbca45ff43132f17f57e3ea9f5bc) (Adrian Secord)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### Snackbar
+
+#### Changes
+
+* [Remove MDCSwitch examples and catalog usage. (#892)](https://github.com/material-components/material-components-ios/commit/171e5bfbc553585b1a798d22b269ce6c92afbcca) (Adrian Secord)
+* [Removed Snackbar's vestigial vertical layout code. (#902)](https://github.com/material-components/material-components-ios/commit/2ce4475e53085cf9e9b28656adffbd6faf316b7e) (Adrian Secord)
+* [Snackbar animation (#903)](https://github.com/material-components/material-components-ios/commit/b899a2a62ccfc1ed39064375e3c491fe2299a8a5) (Adrian Secord)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [Wrap sharedApplication calls so we can build for app extension targets (#897)](https://github.com/material-components/material-components-ios/commit/e69f038d883b6734a9b7e8312766fcccd742610c) (Sam Morrison)
+* [[MDCFloatingButton] Floating action button should use a shape rather than text (#833)](https://github.com/material-components/material-components-ios/commit/4596b7c861229b22ca84574e189cf85b7671435c) (Junius Gunaratne)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### SpritedAnimationView
+
+#### Changes
+
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### Switch
+
+#### Changes
+
+* [Internal change 138179679. (#866)](https://github.com/material-components/material-components-ios/commit/9509c4182608bbca45ff43132f17f57e3ea9f5bc) (Adrian Secord)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Remove MDCSwitch examples and catalog usage. (#892)](https://github.com/material-components/material-components-ios/commit/171e5bfbc553585b1a798d22b269ce6c92afbcca) (Adrian Secord)
+* [Updated refs to GitHub repo with new location. (#885)](https://github.com/material-components/material-components-ios/commit/2997e50c4c502b97606f7511cc6951a0552a0523) (Adrian Secord)
+* [[Readme] Removing dead link in components.](https://github.com/material-components/material-components-ios/commit/5ca7c0bcf8e19f827b565911eaf3a3ef453525a3) (Will Larche)
+
 # 17.0.0
 
 ## API Diffs
