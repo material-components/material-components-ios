@@ -71,6 +71,8 @@
 @protocol MDCFlexibleHeaderViewLayoutDelegate <NSObject>
 @required
 
+@property(nonatomic) CGFloat flexibleHeaderHeight;
+@property(nonatomic, weak) id topLayoutGuideTopConstraint;
 /**
  Informs the receiver that the flexible header view's frame has changed.
 

@@ -69,6 +69,17 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
   } else {
     [_headerView trackingScrollViewDidScroll];
   }
+
+  for (NSLayoutConstraint *constraint in parent.view.constraints) {
+    // I think an equality check is the fastest check we can make here
+    // member check is to distinguish accidentally created constraints from _UILayoutSupportConstraints
+    if (constraint.firstItem == parent.topLayoutGuide && constraint.secondItem == nil) {
+      self.layoutDelegate.topLayoutGuideTopConstraint = constraint;
+    }
+  }
+
+  self.layoutDelegate.flexibleHeaderHeight = self.headerView.minimumHeight;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -167,6 +178,12 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
 }
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
+
+  CGFloat height =
+      MAX(headerView.frame.origin.y + headerView.frame.size.height,
+          headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ? 0 : 20);
+
+  [self.layoutDelegate.topLayoutGuideTopConstraint setConstant:height];
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];
 }
