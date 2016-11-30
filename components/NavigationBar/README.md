@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/NavigationBar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/NavigationBar">GitHub</a> for README documentation.{% endif %}-->
-
 # Navigation Bar
 
 <div class="ios-animation right" markdown="1">

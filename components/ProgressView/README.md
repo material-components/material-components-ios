@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ProgressView/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/ProgressView">GitHub</a> for README documentation.{% endif %}-->
-
 # Progress View
 
 <div class="ios-animation right" markdown="1">
