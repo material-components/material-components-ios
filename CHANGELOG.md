@@ -1,4 +1,15 @@
-# release-candidate TODO: Replace me with version number. 
+# 17.0.0
+
+## API diffs
+
+No public API changes in this release. Note that the 17.0.0 release was not published to CocoaPods, so if you are updating from 16.3.0 you will see the breaking change from 17.0.0.
+
+### Behavior changes in MDCSnackbar
+
+The behavior of MDCSnackbar has been changed to better match [the spec](https://material.google.com/components/snackbars-toasts.html#snackbars-toasts-specs):
+* Animation duration increased from 0.15s to 0.5s.
+* The snackbar no longer fades out, but translates down off screen.
+* The snackbar's text and button (but not the background) fade out during the animation.
 
 ## Component changes
 
