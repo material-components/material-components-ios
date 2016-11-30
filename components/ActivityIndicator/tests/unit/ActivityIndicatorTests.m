@@ -35,7 +35,7 @@ static CGFloat randomNumber() {
   indicator.radius = 2.0f;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 8.0f);
+  XCTAssertGreaterThanOrEqual(indicator.radius, 5.0f);
   XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
 }
 
