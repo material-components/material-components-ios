@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ProgressView/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/ProgressView">GitHub</a> for README documentation.{% endif %}-->
-
 # Progress View
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/progress_view.mp4" autoplay loop></video>
-  [![ScreenShot](docs/assets/progress_view.png)](docs/assets/progress_view.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Progress View](docs/assets/progress_view.png)](docs/assets/progress_view.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/progress_view.mp4" autoplay loop></video></div>{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIProgressView`, with a user experience
 influenced by [material design specifications](https://material.google.com/components/progress-activity.html#)

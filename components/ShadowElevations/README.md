@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowElevations/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/ShadowElevations">GitHub</a> for README documentation.{% endif %}-->
-
 # Shadow Elevations
 
 A shadow elevation specifies the degree of shadow intensity to be displayed beneath an object.

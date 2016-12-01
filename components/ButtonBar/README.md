@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ButtonBar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/ButtonBar">GitHub</a> for README documentation.{% endif %}-->
-
 # Button Bar
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/button_bar.mp4" autoplay loop></video>
-  [![Button Bar](docs/assets/button_bar.png)](docs/assets/button_bar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Button Bar](docs/assets/button_bar.png)](docs/assets/button_bar.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/button_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
 <!--{: .intro }-->

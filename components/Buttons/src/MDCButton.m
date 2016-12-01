@@ -40,7 +40,13 @@ static NSString *const MDCButtonShouldRaiseOnTouchKey = @"MDCButtonShouldRaiseOn
 static NSString *const MDCButtonUppercaseTitleKey = @"MDCButtonShouldCapitalizeTitleKey";
 // Previous value kept for backwards compatibility.
 static NSString *const MDCButtonUnderlyingColorHintKey = @"MDCButtonUnderlyingColorKey";
+static NSString *const MDCButtonDisableAlphaKey = @"MDCButtonDisableAlphaKey";
+static NSString *const MDCButtonCustomTitleColorKey = @"MDCButtonCustomTitleColorKey";
+static NSString *const MDCButtonAreaInsetKey = @"MDCButtonAreaInsetKey";
+
 static NSString *const MDCButtonUserElevationsKey = @"MDCButtonUserElevationsKey";
+static NSString *const MDCButtonBackgroundColorsKey = @"MDCButtonBackgroundColorsKey";
+static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilityLabelsKey";
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
@@ -160,8 +166,28 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       self.underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
     }
 
+    if ([aDecoder containsValueForKey:MDCButtonCustomTitleColorKey]) {
+      self.customTitleColor = [aDecoder decodeObjectForKey:MDCButtonCustomTitleColorKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
+      self.disabledAlpha = [aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonAreaInsetKey]) {
+      self.hitAreaInsets = [aDecoder decodeUIEdgeInsetsForKey:MDCButtonAreaInsetKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCButtonUserElevationsKey]) {
       _userElevations = [aDecoder decodeObjectForKey:MDCButtonUserElevationsKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonBackgroundColorsKey]) {
+      _backgroundColors = [aDecoder decodeObjectForKey:MDCButtonBackgroundColorsKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCButtonAccessibilityLabelsKey]) {
+      _accessibilityLabelForState = [aDecoder decodeObjectForKey:MDCButtonAccessibilityLabelsKey];
     }
   }
   return self;
@@ -181,7 +207,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (_underlyingColorHint) {
     [aCoder encodeObject:_underlyingColorHint forKey:MDCButtonUnderlyingColorHintKey];
   }
+  [aCoder encodeDouble:self.disabledAlpha forKey:MDCButtonDisableAlphaKey];
+  if (self.customTitleColor) {
+    [aCoder encodeObject:self.customTitleColor forKey:MDCButtonCustomTitleColorKey];
+  }
+  [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
+  [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
+  [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
 }
 
 - (void)commonButtonInit {

@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/FeatureHighlight/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/FeatureHighlight">GitHub</a> for README documentation.{% endif %}-->
-
 # Feature Highlight
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/feature_highlight.mp4" autoplay loop></video>
-  [![Flexible Header](docs/assets/feature_highlight.jpg)](docs/assets/feature_highlight.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Feature Highlight](docs/assets/feature_highlight.jpg)](docs/assets/feature_highlight.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/feature_highlight.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
 

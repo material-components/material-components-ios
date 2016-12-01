@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/AnimationTiming/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/AnimationTiming">GitHub</a> for README documentation.{% endif %}-->
-
 # Animation Timing
 
 Animation timing easing curves create smooth and consistent motion. Easing curves allow elements to

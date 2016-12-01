@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/FlexibleHeader">GitHub</a> for README documentation.{% endif %}-->
-
 # Flexible Header
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/flexible_header.mp4" autoplay loop></video>
-  [![Flexible Header](docs/assets/flexible_header.png)](docs/assets/flexible_header.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Flexible Header](docs/assets/flexible_header.png)](docs/assets/flexible_header.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/flexible_header.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Flexible Header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
