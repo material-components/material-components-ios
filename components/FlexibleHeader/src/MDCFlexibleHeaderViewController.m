@@ -33,6 +33,21 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
 }
 
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
+
+/**
+ The current height offset of the flexible header controller with the addition of the current status
+ bar state at any given time.
+
+ This property is used to determine the bottom point of the |flexibleHeaderView| within the window.
+ */
+@property(nonatomic) CGFloat flexibleHeaderViewControllerHeightOffset;
+
+/**
+ The NSLayoutConstraint attached to the flexible header view controller's parentViewController's
+ topLayoutGuide.
+*/
+@property(nonatomic, weak) id topLayoutGuideTopConstraint;
+
 @end
 
 @implementation MDCFlexibleHeaderViewController
@@ -71,15 +86,15 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
   }
 
   for (NSLayoutConstraint *constraint in parent.view.constraints) {
-    // I think an equality check is the fastest check we can make here
-    // member check is to distinguish accidentally created constraints from _UILayoutSupportConstraints
+    // Because topLayoutGuide is a readonly property on a viewController we must manipulate
+    // the present one via the NSLayoutConstraint attached to it. Thus we keep reference to it.
     if (constraint.firstItem == parent.topLayoutGuide && constraint.secondItem == nil) {
-      self.layoutDelegate.topLayoutGuideTopConstraint = constraint;
+      self.topLayoutGuideTopConstraint = constraint;
     }
   }
 
-  self.layoutDelegate.flexibleHeaderHeight = self.headerView.minimumHeight;
-
+  // On moving to parentViewController, we calculate the height
+  self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -171,6 +186,17 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
   }
 }
 
+- (void)updateTopLayoutGuide {
+  [self.topLayoutGuideTopConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+}
+
+- (CGFloat)headerViewControllerHeight {
+  CGFloat height =
+  MAX(_headerView.frame.origin.y + _headerView.frame.size.height,
+      _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ? 0 : 20);
+  return height;
+}
+
 #pragma mark MDCFlexibleHeaderViewDelegate
 
 - (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:(MDCFlexibleHeaderView *)headerView {
@@ -179,11 +205,13 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
 
-  CGFloat height =
-      MAX(headerView.frame.origin.y + headerView.frame.size.height,
-          headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ? 0 : 20);
+  // Whenever the flexibleHeaderView's frame changes, we update the value of the height offset
+  self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
 
-  [self.layoutDelegate.topLayoutGuideTopConstraint setConstant:height];
+  // We must change the constant of the constraint attached to our parentViewController's
+  // topLayoutGuide to trigger the re-layout of its subviews
+  [self.topLayoutGuideTopConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];
 }
