@@ -167,7 +167,7 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 Comments are useful when used properly. In addition, they are necessary for the system of documentation generation used in MDC.
 
 1. Carefully review all comments for necessity and brevity.
-1. Make sure all classes have comments that comply with //TODO:
+1. Make sure all classes have complete header comments that comply with [HeaderDoc](https://developer.apple.com/legacy/library/documentation/DeveloperTools/Conceptual/HeaderDoc/tags/tags.html) for [Jazzy](https://github.com/realm/jazzy) parsing. 
 1. Enter YES or NO
 
 ### Material Design Guidelines Review
