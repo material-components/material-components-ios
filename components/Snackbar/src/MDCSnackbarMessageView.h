@@ -83,6 +83,6 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 - (void)animateContentOpacityFrom:(CGFloat)fromOpacity
                                to:(CGFloat)toOpacity
                          duration:(NSTimeInterval)duration
-                   timingFunction:(CAMediaTimingFunction *)timingFunction;
+                   timingFunction:(CAMediaTimingFunction * _Nullable)timingFunction;
 
 @end
