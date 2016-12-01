@@ -17,7 +17,7 @@ Before a component is built, the API proposed must be agreed upon by the main co
 
 ### README.md
 
-Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at //TODO: Link
+Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at [writing_readmes](writing_readmes.md).
 
 1. Verify the component has a filled out README.md
 1. Enter YES or NO
