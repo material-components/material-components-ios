@@ -162,10 +162,6 @@ See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.co
 1. Test your control on a device in VoiceOver mode and ensure the bahavior is at least as robust as UIKit.
 1. Enter YES, NO or N/A
 
-### Text Accessibility
-
-//TODO
-
 ### Scrubbed Comments
 
 Comments are useful when used properly. In addition, they are necessary for the system of documentation generation used in MDC.
