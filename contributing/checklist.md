@@ -332,12 +332,6 @@ IB_DESIGNABLE
 1. Mark YES, NO or N/A
 
 
-### Asset Catalogs Support (If necessary)
-
-
-//TODO
-
-
 ### Nullability
 
 Nullability annotations improve Swift usage of a component's APIs. Learn more in Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
