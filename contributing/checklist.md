@@ -124,7 +124,19 @@ Sample:
 
 ### Unit Tests
 
-//TODO
+Unit tests in MDC are run by the developer, the continuous integration service, and the release engineer: the developer runs them regularly during development, the CI service when a pull request is submitted, and the release engineer as part of the release process prior to final merging. If a developer submits a PR with broken unit tests, the CI service will prevent merging thru GitHub.
+
+#### Writing unit tests
+
+1. Store unit test files for a component in the directory `components/ComponentName/tests/unit/`
+1. Unit tests may be written in either Objc or Swift. Swift is preferred as merely writing them can verify the Objc-to-Swift experience is seamless.
+1. //TODO: helpful ideas for tests
+
+1. Include unit tests for new functionality.
+1. Inlcude unit tests for bug fixes.
+1. Update existing unit tests for new changes.
+1. Ensure unit tests run with no errors.
+1. Enter YES or NO
 
 ### Interaction Tests (If necessary)
 
@@ -156,11 +168,11 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 
 ### VoiceOver Support
 
-//TODO
+Custom controls should support VoiceOver. 
+See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/iPhoneAccessibility/Accessibility_on_iPhone/Accessibility_on_iPhone.html) for further information.
 
-### Text Accessibility
-
-//TODO
+1. Test your control on a device in VoiceOver mode and ensure the bahavior is at least as robust as UIKit.
+1. Enter YES, NO or N/A
 
 ### Scrubbed Comments
 
