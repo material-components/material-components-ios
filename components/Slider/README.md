@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Slider/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/Slider">GitHub</a> for README documentation.{% endif %}-->
-
 # Slider
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/slider.mp4" autoplay loop></video>
-  [![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/slider.mp4" autoplay loop></video></div>{% endif %}-->
 
 The `MDCSlider` object is a material design control used to select a value from a continuous range
 or discrete set of values.

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import MaterialComponents
+import MaterialComponents.MaterialTypography
 
 // This example is primarily a visual example of the various Typography fonts. The code below is a
 // standard UIKit table view configuration using Auto Layout for height calculation.

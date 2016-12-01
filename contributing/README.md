@@ -1,16 +1,9 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/contributing/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/contributing">GitHub</a> for README documentation.{% endif %}-->
-
 Want to contribute? Great! First, read this page (including the [small print](#the-small-print)).
 
 # Contributing
 
 Material Components for iOS is intended to be a full open source project that accepts contributions
 from community members. We can work together to optimize material design on iOS.
-
-- [Slack Channel](http://mdc-private.slack.com)
-  <!--{: .icon-slack }-->
 
 - [GitHub Issues](https://github.com/material-components/material-components-ios/issues)
   <!--{: .icon-github }-->
@@ -26,8 +19,7 @@ from community members. We can work together to optimize material design on iOS.
 Members of the core team are engineers from Google, Inc. responsible for the strategic direction of
 Material Components and appointment of technical leaders from the community. The Core Team will
 work with the community to accept contributions in line with the [material design
-spec](http://www.google.com/design/spec). You can reach members of the core team on our [Slack
-discussion channel](http://mdc-private.slack.com).
+spec](http://www.google.com/design/spec).
 
 - - -
 
@@ -101,8 +93,6 @@ If you have questions about how to use Material Components for iOS:
 - Search previous questions that have been answered by visiting [Stack
   Overflow](http://stackoverflow.com/questions/tagged/material-components-ios).
 - Please post questions to Stack Overflow with the tag `material-components-ios`.
-- Join us on our [Slack discussion channel](https://mdc-private.slack.com/messages/mdc-ios/) for more
-  direct discussions with the team.
 
 - - -
 

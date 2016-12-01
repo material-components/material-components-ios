@@ -46,7 +46,6 @@ PODS:
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/private/Color (16.3.0)
   - MaterialComponents/private/Icons/Base (16.3.0)
   - MaterialComponents/private/Icons/ic_arrow_back (16.3.0):
     - MaterialComponents/private/Icons/Base
@@ -63,21 +62,12 @@ PODS:
   - MaterialComponents/private/Icons/ic_reorder (16.3.0):
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/RTL (16.3.0)
-  - MaterialComponents/private/ThumbTrack (16.3.0):
-    - MaterialComponents/Ink
-    - MaterialComponents/private/Color
-    - MaterialComponents/ShadowElevations
-    - MaterialComponents/ShadowLayer
-    - MaterialComponents/Typography
   - MaterialComponents/RobotoFontLoader (16.3.0):
     - MaterialComponents/FontDiskLoader
     - MaterialComponents/Typography
   - MaterialComponents/ShadowElevations (16.3.0)
   - MaterialComponents/ShadowLayer (16.3.0)
   - MaterialComponents/SpritedAnimationView (16.3.0)
-  - MaterialComponents/Switch (16.3.0):
-    - MaterialComponents/private/RTL
-    - MaterialComponents/private/ThumbTrack
   - MaterialComponents/Typography (16.3.0)
   - MDFTextAccessibility (1.1.3)
 
@@ -91,7 +81,6 @@ DEPENDENCIES:
   - MaterialComponents/ShadowElevations (from `../../`)
   - MaterialComponents/ShadowLayer (from `../../`)
   - MaterialComponents/SpritedAnimationView (from `../../`)
-  - MaterialComponents/Switch (from `../../`)
   - MaterialComponents/Typography (from `../../`)
 
 EXTERNAL SOURCES:
@@ -99,9 +88,9 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 333d8168abf6d068f31e5e7875403053cd4abae1
+  MaterialComponents: f3333a87433e2379a5a95eeb466ce450d18f7893
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
-PODFILE CHECKSUM: efdcd579d4fc62b798baaefabe7ac086d4413386
+PODFILE CHECKSUM: 5fb11f20fd57ca970cc72aa501b3ee3e360a9f23
 
 COCOAPODS: 1.0.1
