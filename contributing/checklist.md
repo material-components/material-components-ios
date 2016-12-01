@@ -156,7 +156,11 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 
 ### VoiceOver Support
 
-//TODO
+Custom controls should support VoiceOver. 
+See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/iPhoneAccessibility/Accessibility_on_iPhone/Accessibility_on_iPhone.html) for further information.
+
+1. Test your control on a device in VoiceOver mode and ensure the bahavior is at least as robust as UIKit.
+1. Enter YES, NO or N/A
 
 ### Text Accessibility
 
