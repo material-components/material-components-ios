@@ -265,29 +265,35 @@ static UIColor *randomColor() {
     [button setElevation:randomNumber() forState:controlState];
   }
   NSData *data = [NSKeyedArchiver archivedDataWithRootObject:button];
-  
+
   // When
   MDCButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-  
+
   // Then
   XCTAssertEqualObjects(button.inkColor, unarchivedButton.inkColor);
   XCTAssertEqual(button.uppercaseTitle, unarchivedButton.uppercaseTitle);
   XCTAssertEqual(button.inkStyle, unarchivedButton.inkStyle);
-  XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius, unarchivedButton.inkMaxRippleRadius, kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, unarchivedButton.disabledAlpha, kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom, unarchivedButton.hitAreaInsets.bottom, kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.top, unarchivedButton.hitAreaInsets.top, kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.right, unarchivedButton.hitAreaInsets.right, kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.left, unarchivedButton.hitAreaInsets.left, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius, unarchivedButton.inkMaxRippleRadius,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, unarchivedButton.disabledAlpha,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom, unarchivedButton.hitAreaInsets.bottom,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.top, unarchivedButton.hitAreaInsets.top,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.right, unarchivedButton.hitAreaInsets.right,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.hitAreaInsets.left, unarchivedButton.hitAreaInsets.left,
+                             kEpsilonAccuracy);
   XCTAssertEqual(button.customTitleColor, unarchivedButton.customTitleColor);
   XCTAssertEqual(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    XCTAssertEqualWithAccuracy([button elevationForState:controlState], [unarchivedButton elevationForState:controlState], kEpsilonAccuracy);
-    XCTAssertEqual([button backgroundColorForState:controlState], [unarchivedButton backgroundColorForState:controlState]);
+    XCTAssertEqualWithAccuracy([button elevationForState:controlState],
+                               [unarchivedButton elevationForState:controlState], kEpsilonAccuracy);
+    XCTAssertEqual([button backgroundColorForState:controlState],
+                   [unarchivedButton backgroundColorForState:controlState]);
   }
-  
 }
-
 
 #pragma mark - UIButton state changes
 
