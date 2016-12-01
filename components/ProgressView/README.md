@@ -2,7 +2,7 @@
 
 <div class="ios-animation right" markdown="1">
   <video src="docs/assets/progress_view.mp4" autoplay loop></video>
-  [![ScreenShot](docs/assets/progress_view.png)](docs/assets/progress_view.mp4)
+  <!-- [![ScreenShot](docs/assets/progress_view.png)](docs/assets/progress_view.mp4) -->
 </div>
 
 This control is designed to be a drop-in replacement for `UIProgressView`, with a user experience
