@@ -119,7 +119,7 @@ Sample:
 
 
 1. Add the license to every source and script file in your component.
-1. Enter YES or NO  // TODO Link
+1. Enter YES or NO
 
 
 ### Unit Tests
