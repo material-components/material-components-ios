@@ -58,7 +58,7 @@ Before using Typography, you'll need to import it:
 
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialTypography
 ~~~
 <!--</div>-->
 
@@ -129,6 +129,8 @@ label.alpha = [MDCTypography titleFontOpacity];
 #### Swift
 
 ~~~ swift
+import MaterialComponents.MaterialTypography
+
 let label = UILabel()
 label.text = "This is a title"
 label.font = MDCTypography.titleFont()
@@ -165,6 +167,8 @@ label.alpha = [MDCTypography display1FontOpacity];
 #### Swift
 
 ~~~ swift
+import MaterialComponents.MaterialTypography
+
 let label = UILabel()
 label.text = "Display 1"
 label.font = MDCTypography.display1Font()
@@ -197,6 +201,8 @@ self.label.alpha = [MDCTypography captionFontOpacity];
 #### Swift
 
 ~~~ swift
+import MaterialComponents.MaterialTypography
+
 self.label.font = MDCTypography.captionFont()
 self.label.alpha = MDCTypography.captionFontOpacity()
 
