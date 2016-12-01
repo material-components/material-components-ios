@@ -17,7 +17,7 @@ Before a component is built, the API proposed must be agreed upon by the main co
 
 ### README.md
 
-Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at //TODO: Link
+Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at [writing_readmes](writing_readmes.md).
 
 1. Verify the component has a filled out README.md
 1. Enter YES or NO
@@ -88,10 +88,10 @@ The component should have an entry in the left nav of [the documentation site](h
 1. Verify [the documentation site's](https://material-ext.appspot.com/mdc-ios-preview/components/) left nav contains a link to the component's docs.
 1. Enter YES or NO
 
-### License Stanzas in Every Text-based File
+### License Stanzas in Every Text-based Source File
 
 
-Every file must have the Apache 2.0 license stanza at the top of the file.  The copyright should be assigned to “the Material Components for iOS authors“.
+Every source file must have the Apache 2.0 license stanza at the top of the file.  The copyright should be assigned to “the Material Components for iOS authors“.
 You can do this manually or use a tool such as [autogen](https://github.com/mbrukman/autogen) to add a license.
 
 
@@ -119,7 +119,7 @@ Sample:
 
 
 1. Add the license to every source and script file in your component.
-1. Enter YES or NO  // TODO Link
+1. Enter YES or NO
 
 
 ### Unit Tests
@@ -167,7 +167,7 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 Comments are useful when used properly. In addition, they are necessary for the system of documentation generation used in MDC.
 
 1. Carefully review all comments for necessity and brevity.
-1. Make sure all classes have comments that comply with //TODO:
+1. Make sure all classes have complete header comments that comply with [HeaderDoc](https://developer.apple.com/legacy/library/documentation/DeveloperTools/Conceptual/HeaderDoc/tags/tags.html) for [Jazzy](https://github.com/realm/jazzy) parsing. 
 1. Enter YES or NO
 
 ### Material Design Guidelines Review

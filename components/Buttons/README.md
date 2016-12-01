@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/Buttons">GitHub</a> for README documentation.{% endif %}-->
-
 # Buttons
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/buttons.mp4" autoplay loop></video>
-  [![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/buttons.mp4" autoplay loop></video></div>{% endif %}-->
 
 Buttons is a collection of material design buttons, including a flat button, a raised button and a
 floating action button.

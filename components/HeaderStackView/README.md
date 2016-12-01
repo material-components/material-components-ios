@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/HeaderStackView/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/HeaderStackView">GitHub</a> for README documentation.{% endif %}-->
-
 # Header Stack View
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/header_stack_view.mp4" autoplay loop></video>
-  [![Header Stack View](docs/assets/header_stack_view.png)](docs/assets/header_stack_view.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Header Stack View](docs/assets/header_stack_view.png)](docs/assets/header_stack_view.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/header_stack_view.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Header Stack View component is a view that coordinates the layout of two vertically stacked
 bar views.

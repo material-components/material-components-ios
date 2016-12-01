@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/Collections">GitHub</a> for README documentation.{% endif %}-->
-
 # Collections
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/collections.mp4" autoplay loop></video>
-  [![App Bar](docs/assets/collections.png)](docs/assets/collections.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Collections](docs/assets/collections.png)](docs/assets/collections.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/collections.mp4" autoplay loop></video></div>{% endif %}-->
 
 Collection view classes that adhere to Material design layout and styling.
 <!--{: .intro :}-->
