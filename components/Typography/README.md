@@ -1,9 +1,8 @@
 # Typography
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/typography.mp4" autoplay loop></video>
-  [![Switch](docs/assets/typography.png)](docs/assets/typography.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Typography](docs/assets/typography.png)](docs/assets/typography.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/typography.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Typography component provides methods for displaying text using the type sizes and opacities
 from the material design specifications.

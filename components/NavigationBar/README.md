@@ -1,9 +1,8 @@
 # Navigation Bar
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/nav_bar.mp4" autoplay loop></video>
-  [![Navigation Bar](docs/assets/nav_bar.png)](docs/assets/nav_bar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Navigation Bar](docs/assets/nav_bar.png)](docs/assets/nav_bar.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/nav_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Navigation Bar component is a view composed of a left and right Button Bar and either a title
 label or a custom title view.

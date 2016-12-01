@@ -1,9 +1,8 @@
 # Page Control
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/page_control.mp4" autoplay loop></video>
-  [![Page Control](docs/assets/page_control.png)](docs/assets/page_control.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Page Control](docs/assets/page_control.png)](docs/assets/page_control.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/page_control.mp4" autoplay loop></video></div>{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
 influenced by material design specifications for animation and layout. The API methods are the
