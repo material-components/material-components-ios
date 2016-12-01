@@ -254,7 +254,8 @@ We want to avoid misuse of initializers both in the calling of existing classes 
 ### NSCoding Support
 
 
-Conforming to NSCoding is necessary for Interface Builder support in views and could be used to serialize non-view classes.
+Conforming to NSCoding is necessary for Interface Builder support in views and could be used to
+serialize non-view classes. Tip: write a unit test for this.
 
 1. Implement `initWithCoder:`.
 1. Implement `encodeWithCoder:`.
