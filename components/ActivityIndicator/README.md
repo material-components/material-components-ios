@@ -1,9 +1,8 @@
 # Activity Indicator
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/activity_indicator.mp4" autoplay loop></video>
-  [![App Bar](docs/assets/activity_indicator.png)](docs/assets/app_bar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Activity Indicator](docs/assets/activity_indicator.png)](docs/assets/activity_indicator.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/activity_indicator.mp4" autoplay loop></video></div>{% endif %}-->
 
 Activity indicators are visual indications of an app loading content. The Activity Indicator is a circular indicator that either rotates clockwise or fills to completion clockwise when displaying progress.
 <!--{: .intro :}-->
