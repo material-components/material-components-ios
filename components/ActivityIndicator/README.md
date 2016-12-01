@@ -146,5 +146,3 @@ activityIndicator.startAnimating()
 // Stop animation
 activityIndicator.stopAnimating()
 ~~~
-
-<!--</div>-->
