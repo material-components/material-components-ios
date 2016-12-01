@@ -26,7 +26,7 @@
  interaction. @c action, if non-nil, indicates that the user chose to execute a specific action.
  */
 typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
- MDCSnackbarMessageAction * _Nullable action);
+    MDCSnackbarMessageAction * _Nullable action);
 
 /**
  Class which provides the default implementation of a snackbar.
