@@ -4,10 +4,9 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/
 
 # App Bar
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/app_bar.mp4" autoplay loop></video>
-  [![App Bar](docs/assets/app_bar.png)](docs/assets/app_bar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![App Bar](docs/assets/app_bar.png)](docs/assets/app_bar.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/app_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.

@@ -75,4 +75,14 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  */
 - (BOOL)shouldWaitForDismissalDuringVoiceover;
 
+/**
+ Animate the opacity text and button content.
+
+ Creates and commits a CATransaction to perform the animation.
+ */
+- (void)animateContentOpacityFrom:(CGFloat)fromOpacity
+                               to:(CGFloat)toOpacity
+                         duration:(NSTimeInterval)duration
+                   timingFunction:(CAMediaTimingFunction *)timingFunction;
+
 @end

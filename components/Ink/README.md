@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/Ink">GitHub</a> for README documentation.{% endif %}-->
-
 # Ink
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/ink.mp4" autoplay loop></video>
-  [![Ink](docs/assets/ink.png)](docs/assets/ink.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Ink](docs/assets/ink.png)](docs/assets/ink.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/ink.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Ink component provides a radial action in the form of a visual ripple of ink expanding
 outward from the user's touch.

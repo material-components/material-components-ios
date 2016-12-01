@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Switch/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/Switch">GitHub</a> for README documentation.{% endif %}-->
-
 # Switch
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/switch.mp4" autoplay loop></video>
-  [![Switch](docs/assets/switch.png)](docs/assets/switch.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Switch](docs/assets/switch.png)](docs/assets/switch.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/switch.mp4" autoplay loop></video></div>{% endif %}-->
 
 Switch provides an material design on/off switch control with an interface similar to UISwitch. Note
 that `MDCSwitch` objects have an intrinsic size and are not resizable.

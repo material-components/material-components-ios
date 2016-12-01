@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Snackbar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/Snackbar">GitHub</a> for README documentation.{% endif %}-->
-
 # Snackbar
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/snackbar.mp4" autoplay loop></video>
-  [![Switch](docs/assets/snackbar.png)](docs/assets/snackbar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Snackbar](docs/assets/snackbar.png)](docs/assets/snackbar.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/snackbar.mp4" autoplay loop></video></div>{% endif %}-->
 
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may

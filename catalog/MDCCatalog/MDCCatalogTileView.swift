@@ -68,58 +68,57 @@ class MDCCatalogTileView: UIView {
     let defaultSize = CGRectMake(0, 0, 188, 155)
     let left = (self.frame.width - defaultSize.width) / 2
     let top = (self.frame.height - defaultSize.height) / 2
-    let centeredFrame = CGRectMake(left, top, defaultSize.width, defaultSize.height)
-    imageView.frame = centeredFrame
+    imageView.frame = CGRectMake(left, top, defaultSize.width, defaultSize.height)
 
     switch componentNameString {
     case "Activity Indicator":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawActivityIndicatorTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawActivityIndicatorTile)
     case "Animation Timing":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAnimationTimingTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawAnimationTimingTile)
     case "App Bar":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAppBarTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawAppBarTile)
     case "Button Bar":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonBarTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawButtonBarTile)
     case "Buttons":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonsTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawButtonsTile)
     case "Collection Cells":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionCellsTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawCollectionCellsTile)
     case "Collections":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionsTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawCollectionsTile)
     case "Dialogs":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawDialogsTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawDialogsTile)
     case "Feature Highlight":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawFeatureHighlightTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawFeatureHighlightTile)
     case "Flexible Header":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawFlexibleHeaderTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawFlexibleHeaderTile)
     case "Header Stack View":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawHeaderStackViewTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawHeaderStackViewTile)
     case "Ink":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawInkTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawInkTile)
     case "Navigation Bar":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawNavigationBarTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawNavigationBarTile)
     case "Misc":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawMiscTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile)
     case "Page Control":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPageControlTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawPageControlTile)
     case "Palettes":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPalettesTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawPalettesTile)
     case "Progress View":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawProgressViewTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawProgressViewTile)
     case "Shadow":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawShadowLayerTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawShadowLayerTile)
     case "Slider":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSliderTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSliderTile)
     case "Snackbar":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSnackbarTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSnackbarTile)
     case "Sprited Animation View":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSpritedAnimationViewTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSpritedAnimationViewTile)
     case "Switch":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSwitchTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSwitchTile)
     case "Typography and Fonts":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawTypographyTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTypographyTile)
     default:
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawMiscTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile)
     }
     imageCache.setObject(newImage, forKey: componentNameString)
     return newImage
