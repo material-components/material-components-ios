@@ -260,8 +260,10 @@ static UIColor *randomColor() {
   button.customTitleColor = randomColor();
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
-  [button setBackgroundColor:randomColor() forState:UIControlStateNormal];
-  [button setElevation:randomNumber() forState:UIControlStateNormal];
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    [button setBackgroundColor:randomColor() forState:controlState];
+    [button setElevation:randomNumber() forState:controlState];
+  }
   NSData *data = [NSKeyedArchiver archivedDataWithRootObject:button];
   
   // When
@@ -284,7 +286,6 @@ static UIColor *randomColor() {
     XCTAssertEqual([button backgroundColorForState:controlState], [unarchivedButton backgroundColorForState:controlState]);
   }
   
-  //XCTAssertEqualObjects(button, unarchivedButton);
 }
 
 
