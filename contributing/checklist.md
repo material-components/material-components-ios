@@ -124,7 +124,14 @@ Sample:
 
 ### Unit Tests
 
-//TODO
+Unit tests in MDC are run by the developer, the continuous integration service, and the release engineer: the developer runs them regularly during development, the CI service when a pull request is submitted, and the release engineer as part of the release process prior to final merging. If a developer submits a PR with broken unit tests, the CI service will prevent merging thru GitHub.
+
+#### Writing unit tests
+
+1. //TODO
+
+1. Include unit tests //TODO
+1. Enter YES or NO
 
 ### Interaction Tests (If necessary)
 
