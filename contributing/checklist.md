@@ -57,7 +57,7 @@ Each component must also have a still image to use when video cannot play.
 
 The included catalog application uses Core Graphics to draw landing page tiles for each component. These tiles are created by Google's Material Design department specifically for this purpose and then converted to Core Graphics code via [PaintCode](https://www.paintcodeapp.com/).
 
-#### To convert a raw asset to Core Graphics
+#### To convert a raw asset to Core Graphics:
 
 1. Set the canvass size to 188 x 155.
 1. Import the file (.svg or .ai) into PaintCode.
@@ -72,7 +72,7 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 1. Copy and paste the generated iOS Objc code into the function.
 1. In `catalog/MDCCatalog/MDCCatalogTileView.swift`, add a new case for the new component and have it create `newImage` from the new function.
 
-#### Verify a tile exists
+#### Verify a tile exists:
 
 1. Run the catalog application and look for the component. Make sure the tile shown is specific to the component and not a placeholder nor empty view.
 1. Enter YES or NO
@@ -140,13 +140,13 @@ Sample:
 
 Unit tests in MDC are run by the developer, the continuous integration service, and the release engineer: the developer runs them regularly during development, the CI service when a pull request is submitted, and the release engineer as part of the release process prior to final merging. If a developer submits a PR with broken unit tests, the CI service will prevent merging thru GitHub.
 
-#### Writing unit tests
+#### Writing unit tests:
 
 1. Store unit test files for a component in the directory `components/ComponentName/tests/unit/`
 1. Unit tests may be written in either Objc or Swift. Swift is preferred as merely writing them can verify the Objc-to-Swift experience is seamless.
 1. //TODO: helpful ideas for tests
 
-<!-- Terminate list -->
+#### Ensuring test sufficiency:
 
 1. Include unit tests for new functionality.
 1. Inlcude unit tests for bug fixes and changes initiated from GitHub issues. Name them `ClassNameIssue` + issue number + `Tests`. e.g. `AppBarContainerIssue246Tests`, `FlexibleHeaderControllerIssue176Tests`.
@@ -262,7 +262,7 @@ If a component supports Interface Builder usage, then we need to show our users 
 1. Enter YES, NO or N/A
 
 
-### Tested on Supported iOSs
+### Test on Supported iOSs
 
 
 Sometimes the operating system changes in ways that cause unpredictable or surprising behavior (even if your code is unchanged.)
