@@ -411,6 +411,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                      toY:(CGFloat)toY
       fromContentOpacity:(CGFloat)fromContentOpacity
         toContentOpacity:(CGFloat)toContentOpacity
+       notificationFrame:(CGRect)notificationFrame
               completion:(void (^)(void))completion {
   // Save off @c completion for when the CAAnimation completes.
   self.pendingCompletionBlock = completion;
@@ -433,14 +434,13 @@ static const CGFloat kMaximumHeight = 80.0f;
                                        to:toContentOpacity
                                  duration:translationAnimation.duration
                            timingFunction:translationAnimation.timingFunction];
+  [CATransaction commit];
 
   // Notify the overlay system.
-  [self notifyOverlayChangeWithFrame:[self snackbarRectInScreenCoordinates]
+  [self notifyOverlayChangeWithFrame:notificationFrame
                             duration:translationAnimation.duration
                                curve:0
                       timingFunction:translationAnimation.timingFunction];
-
-  [CATransaction commit];
 }
 
 - (void)slideInMessageView:(MDCSnackbarMessageView *)snackbarView
@@ -453,6 +453,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                      toY:0.0f
       fromContentOpacity:0
         toContentOpacity:1
+       notificationFrame:[self snackbarRectInScreenCoordinates]
               completion:completion];
 }
 
@@ -466,6 +467,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                      toY:snackbarView.bounds.size.height + [self staticBottomMargin]
       fromContentOpacity:1
         toContentOpacity:0
+       notificationFrame:CGRectNull
               completion:completion];
 }
 
