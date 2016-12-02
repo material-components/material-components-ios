@@ -37,7 +37,7 @@
 
  @param radius The radius of this indicator and track edges.
  */
-- (instancetype)initWithRadius:(CGFloat)radius;
+- (instancetype)initWithRadius:(CGFloat)radius NS_DESIGNATED_INITIALIZER;
 
 /**
  Draws a track with animation from the startpoint to endpoint.
