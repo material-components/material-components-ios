@@ -1,6 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components">GitHub</a> for README documentation.{% endif %}-->
 
 # Component Documentation
 
@@ -10,7 +7,7 @@ interface components for iOS. These components implement Google's
 and are developed by a team of iOS engineers and UX designers at Google.
 
 
-- [GitHub](https://github.com/google/material-components-ios/)
+- [GitHub](https://github.com/material-components/material-components-ios/)
   <!--{: .icon-github }-->
 
 - [Development Guide]({{ site.folder }}/howto/)

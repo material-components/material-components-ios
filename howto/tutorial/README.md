@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
-
 ## Tutorial
 
 Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
@@ -62,9 +58,9 @@ target 'MDC-Tutorial' do
   use_frameworks!
 
   # Pods for MDC-Tutorial
-  pod 'MaterialComponents/AppBar', :git => 'git@github.com:google/material-components-ios.git'
-  pod 'MaterialComponents/Buttons', :git => 'git@github.com:google/material-components-ios.git'
-  pod 'MaterialComponents/Collections', :git => 'git@github.com:google/material-components-ios.git'
+  pod 'MaterialComponents/AppBar', :git => 'git@github.com:material-components/material-components-ios.git'
+  pod 'MaterialComponents/Buttons', :git => 'git@github.com:material-components/material-components-ios.git'
+  pod 'MaterialComponents/Collections', :git => 'git@github.com:material-components/material-components-ios.git'
 end
 ~~~
 
@@ -74,9 +70,9 @@ target 'MDC-Tutorial' do
   #use_frameworks!
 
   # Pods for MDC-Tutorial
-  pod 'MaterialComponents/AppBar', :git => 'git@github.com:google/material-components-ios.git'
-  pod 'MaterialComponents/Buttons', :git => 'git@github.com:google/material-components-ios.git'
-  pod 'MaterialComponents/Collections', :git => 'git@github.com:google/material-components-ios.git'
+  pod 'MaterialComponents/AppBar', :git => 'git@github.com:material-components/material-components-ios.git'
+  pod 'MaterialComponents/Buttons', :git => 'git@github.com:material-components/material-components-ios.git'
+  pod 'MaterialComponents/Collections', :git => 'git@github.com:material-components/material-components-ios.git'
 end
 ~~~
 <!--</div>-->
@@ -778,10 +774,10 @@ Use our examples and catalog apps to try out other components and other ways to 
 ### Sample Code
 
 
-*   [Pesto: A simple recipe app, incorporating a flexible header, floating action button, and collections.](https://github.com/google/material-components-ios/tree/master/demos/Pesto)
+*   [Pesto: A simple recipe app, incorporating a flexible header, floating action button, and collections.](https://github.com/material-components/material-components-ios/tree/master/demos/Pesto)
 
 
-*   [Shrine: A demo shopping app, incorporating a flexible header, custom typography, and collections.](https://github.com/google/material-components-ios/tree/master/demos/Shrine)
+*   [Shrine: A demo shopping app, incorporating a flexible header, custom typography, and collections.](https://github.com/material-components/material-components-ios/tree/master/demos/Shrine)
 
 <!--{% if site.link_to_site == "true" %}-->
 <img src="docs/assets/Pesto.gif">
@@ -800,5 +796,5 @@ Use our examples and catalog apps to try out other components and other ways to 
 
 
 
-*   [Read the Component Documentation](https://github.com/google/material-components-ios/blob/develop/howto/tutorial/%7B%7B%20site.folder%20%7D%7D/components)
+*   [Read the Component Documentation](https://github.com/material-components/material-components-ios/blob/develop/howto/tutorial/%7B%7B%20site.folder%20%7D%7D/components)
 *   [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)

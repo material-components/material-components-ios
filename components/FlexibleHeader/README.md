@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/FlexibleHeader">GitHub</a> for README documentation.{% endif %}-->
-
 # Flexible Header
 
 <div class="ios-animation right" markdown="1">
@@ -86,7 +82,7 @@ It also has some technical disadvantages:
 
 - There is a cost to registering and owning a Flexible Header instance when compared to
   UINavigationController and the free availability of UINavigationBar. Improvements to this
-  are being discussed on [issue #268](https://github.com/google/material-components-ios/issues/268).
+  are being discussed on [issue #268](https://github.com/material-components/material-components-ios/issues/268).
 
 
 - - -

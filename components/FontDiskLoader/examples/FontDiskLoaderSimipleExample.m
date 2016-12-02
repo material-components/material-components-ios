@@ -41,7 +41,7 @@
       UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 
   // Consider using the named styles provided by the Typography component instead of specific font
-  // sizes. See https://github.com/google/material-components-ios/tree/develop/components/Typography
+  // sizes. See https://github.com/material-components/material-components-ios/tree/develop/components/Typography
 
   NSBundle *bundle = [NSBundle bundleForClass:[MDCRobotoFontLoader class]];
   MDCFontDiskLoader *fontDiskLoader =

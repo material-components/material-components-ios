@@ -319,7 +319,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
         container.appBar.navigationBar.titleAlignment = .Center
 
         // TODO(featherless): Remove once
-        // https://github.com/google/material-components-ios/issues/367 is resolved.
+        // https://github.com/material-components/material-components-ios/issues/367 is resolved.
         contentVC.title = node.title
 
         let headerView = container.appBar.headerViewController.headerView

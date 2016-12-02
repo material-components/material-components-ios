@@ -87,16 +87,6 @@ static const CGFloat kMinimumHeight = 48.0f;
 static const NSInteger kButtonTagStart = 20000;
 
 /**
- The tag used to find the separator in a button container.
- */
-static const NSInteger kSeparatorTag = 10000;
-
-/**
- The button height when laid out vertically.
- */
-static const CGFloat kButtonHeightVerticalLayout = 48.0f;
-
-/**
  The ink radius of the action button.
  */
 static const CGFloat kButtonInkRadius = 64.0f;
@@ -142,12 +132,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
  The view containing the title and image views.
  */
 @property(nonatomic, strong) UIView *contentView;
-
-/**
- Whether or not the buttons on this snackbar should go below the main content. Calculated based on
- the content of the message.
- */
-@property(nonatomic, assign) BOOL usesVerticalButtonLayout;
 
 /**
  The message to display.
@@ -417,26 +401,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
       [actions addObject:buttonView];
     }
 
-    // If we're using the vertical button layout. Add in the separator views.
-    if (self.usesVerticalButtonLayout) {
-      [actions enumerateObjectsWithOptions:NSEnumerationReverse
-                                usingBlock:^(UIView *buttonContainer, NSUInteger idx, BOOL *stop) {
-                                  UIButton *button = (UIButton *)[buttonContainer
-                                      viewWithTag:kButtonTagStart + idx];
-                                  button.contentHorizontalAlignment =
-                                      UIControlContentHorizontalAlignmentCenter;
-                                  UIView *separator = [[UIView alloc] init];
-                                  [separator setTranslatesAutoresizingMaskIntoConstraints:NO];
-                                  separator.tag = kSeparatorTag;
-                                  separator.backgroundColor = [self snackbarSeparatorColor];
-                                  [buttonContainer addSubview:separator];
-                                }];
-
-      // Set the width for the potentially multiline label so intrinsicContentSize returns the
-      // correct value.
-      self.label.preferredMaxLayoutWidth = availableTextWidth;
-    }
-
     self.buttons = actions;
   }
 
@@ -460,12 +424,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
   [constraints addObjectsFromArray:[self containerViewConstraints]];
   [constraints addObjectsFromArray:[self contentViewConstraints]];
-
-  if (self.usesVerticalButtonLayout) {
-    [constraints addObjectsFromArray:[self verticalButtonLayoutConstraints]];
-  } else {
-    [constraints addObjectsFromArray:[self horizontalButtonLayoutConstraints]];
-  }
+  [constraints addObjectsFromArray:[self horizontalButtonLayoutConstraints]];
 
   [self addConstraints:constraints];
   self.viewConstraints = constraints;
@@ -538,7 +497,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                                                                                views:views]];
   }
 
-  if (!hasButtons || self.usesVerticalButtonLayout) {
+  if (!hasButtons) {
     // There is nothing to the right of the content, so go ahead and pin it to the trailing edge of
     // the container view.
     formatString = @"H:[content]-(==kRightMargin)-|";
@@ -563,19 +522,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
     // Pin the content to the bottom of the container view, since there's nothing below.
     formatString = @"V:[content]-(==kBottomMargin)-|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-  }
-
-  if (hasButtons && self.usesVerticalButtonLayout) {
-    formatString = @"V:[content]-(==kBottomMargin)-[buttons]|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-    formatString = @"H:|[buttons]|";
     [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
                                                                              options:0
                                                                              metrics:metrics
@@ -651,99 +597,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
                                                                              metrics:metrics
                                                                                views:views]];
   }
-
-  return constraints;
-}
-
-/**
- Provides the constraints positioning buttons vertically within the button container.
- */
-- (NSArray *)verticalButtonLayoutConstraints {
-  NSMutableArray *constraints = [NSMutableArray array];
-
-  NSDictionary *metrics = @{
-    @"kLeftMargin" : @(kContentMargin.left),
-    @"kRightMargin" : @(kContentMargin.right),
-    @"kTopMargin" : @(kContentMargin.top),
-    @"kBottomMargin" : @(kContentMargin.bottom),
-    @"kTitleImagePadding" : @(kTitleImagePadding),
-    @"kBorderMargin" : @(kBorderWidth),
-    @"kTitleButtonPadding" : @(kTitleButtonPadding),
-    @"kSeparatorHeight" : [[UIScreen mainScreen] scale] > 1.0 ? @0.5f : @1.0f,
-    @"kButtonHeightVerticalLayout" : @(kButtonHeightVerticalLayout),
-  };
-
-  __block NSString *formatString = nil;  // Scratch variable.
-  __block UIView *previousButton = nil;
-  [self.buttons enumerateObjectsUsingBlock:^(UIView *button, NSUInteger idx, BOOL *stop) {
-    // Convenience dictionary of views.
-    NSMutableDictionary *views = [NSMutableDictionary dictionary];
-    views[@"buttonContainer"] = button;
-    views[@"button"] = [button viewWithTag:kButtonTagStart + idx];
-    views[@"separator"] = [button viewWithTag:kSeparatorTag];
-    if (previousButton) {
-      views[@"previousButton"] = previousButton;
-    }
-
-    // In a vertical layout, the button has a fixed height, rather than being the height of the
-    // snackbar.
-    formatString = @"V:|[separator(==kSeparatorHeight)][button(==kButtonHeightVerticalLayout)]|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-
-    // Pin the width of the separator to the whole button view.
-    formatString = @"H:|[separator]|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-
-    // Pin the width of the button to the whole button view.
-    formatString = @"H:|[button]|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-
-    // In a vertical layout, the button will take on the full width of the snackbar.
-    [constraints
-        addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[buttonContainer]|"
-                                                                    options:0
-                                                                    metrics:metrics
-                                                                      views:views]];
-
-    if (idx == 0) {
-      // The first button should be pinned to the top of the button view.
-      [constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:@"V:|[buttonContainer]"
-                                                               options:0
-                                                               metrics:metrics
-                                                                 views:views]];
-    }
-
-    if (idx == ([self.buttons count] - 1)) {
-      // The last button should be pinned to the bottom of the button view.
-      [constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:@"V:[buttonContainer]|"
-                                                               options:0
-                                                               metrics:metrics
-                                                                 views:views]];
-    }
-
-    if (previousButton) {
-      // If there was a button before this one, pin this button below it.
-      [constraints
-          addObjectsFromArray:[NSLayoutConstraint
-                                  constraintsWithVisualFormat:@"V:[previousButton][buttonContainer]"
-                                                      options:0
-                                                      metrics:metrics
-                                                        views:views]];
-    }
-
-    previousButton = button;
-  }];
 
   return constraints;
 }
@@ -843,12 +696,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
   // Images are forced to be no bigger than @c kMaximumImageSize.
   height = MAX(height, self.label.intrinsicContentSize.height);
 
-  // If there are buttons below the main content, then account for them.
-  if (self.usesVerticalButtonLayout && [self.buttons count] > 0) {
-    CGFloat separatorHeight = [[UIScreen mainScreen] scale] > 1.0 ? 0.5f : 1.0f;
-    height += ([self.buttons count] * (kButtonHeightVerticalLayout + separatorHeight));
-  }
-
   // Make sure that content margins are included in our calculation.
   height += kContentMargin.top + kContentMargin.bottom;
 
@@ -925,6 +772,29 @@ static const CGFloat kButtonInkRadius = 64.0f;
     return NSNotFound;
   }
   return buttonIndex + 1;
+}
+
+#pragma mark - Animation
+
+- (void)animateContentOpacityFrom:(CGFloat)fromOpacity
+                               to:(CGFloat)toOpacity
+                         duration:(NSTimeInterval)duration
+                   timingFunction:(CAMediaTimingFunction *)timingFunction {
+  [CATransaction begin];
+
+  CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+  opacityAnimation.duration = duration;
+  opacityAnimation.fromValue = @(fromOpacity);
+  opacityAnimation.toValue = @(toOpacity);
+  opacityAnimation.timingFunction = timingFunction;
+
+  // The text and the button do not share a common view that can be animated independently of the
+  // background color, so just animate them both independently here. If this becomes more
+  // complicated, refactor to add a containing view for both and animate that.
+  [self.contentView.layer addAnimation:opacityAnimation forKey:@"opacity"];
+  [self.buttonView.layer addAnimation:opacityAnimation forKey:@"opacity"];
+
+  [CATransaction commit];
 }
 
 @end

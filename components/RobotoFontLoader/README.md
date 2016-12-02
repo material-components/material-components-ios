@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/RobotoFontLoader/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/RobotoFontLoader">GitHub</a> for README documentation.{% endif %}-->
-
 # Roboto Font Loader
 
 The Roboto Font Loader lazy loads the Roboto font.
@@ -98,4 +94,4 @@ When included in your build the Roboto Font Loader is used by the Typography com
 check occurs when no specific Font Loader is set on Typography, resulting in Roboto being used for
 Material Typography.
 For more information see
-[Typography](https://github.com/google/material-components-ios/tree/develop/components/Typography).
+[Typography](https://github.com/material-components/material-components-ios/tree/develop/components/Typography).

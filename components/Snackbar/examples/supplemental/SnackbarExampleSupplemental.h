@@ -17,7 +17,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
-#import "MaterialSwitch.h"
 #import "MaterialTypography.h"
 
 @interface SnackbarExample : UIViewController
@@ -53,15 +52,15 @@
 @property(nonatomic) MDCRaisedButton *groupBButton;
 @property(nonatomic) MDCRaisedButton *allMessagesButton;
 
-@property(nonatomic) MDCSwitch *groupASwitch;
-@property(nonatomic) MDCSwitch *groupBSwitch;
-@property(nonatomic) MDCSwitch *allMessagesSwitch;
+@property(nonatomic) UISwitch *groupASwitch;
+@property(nonatomic) UISwitch *groupBSwitch;
+@property(nonatomic) UISwitch *allMessagesSwitch;
 
 @property(nonatomic) UILabel *groupALabel;
 @property(nonatomic) UILabel *groupBLabel;
 @property(nonatomic) UILabel *allLabel;
 
 - (void)handleShowTapped:(id)sender;
-- (void)handleSuspendStateChanged:(MDCSwitch *)sender;
+- (void)handleSuspendStateChanged:(UISwitch *)sender;
 
 @end

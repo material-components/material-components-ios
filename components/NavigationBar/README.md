@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/NavigationBar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/NavigationBar">GitHub</a> for README documentation.{% endif %}-->
-
 # Navigation Bar
 
 <div class="ios-animation right" markdown="1">
@@ -61,7 +57,7 @@ Navigation Bar is a drop-in replacement for UINavigationBar with a few notable e
 
 - No navigationItem stack. Instances of MDCNavigationBar must be explicitly provided with a back
   button. TODO(featherless): Explain how to create a back button with Navigation Bar once
-  https://github.com/google/material-components-ios/issues/340 lands.
+  https://github.com/material-components/material-components-ios/issues/340 lands.
 
 The MDCNavigationBar class is a composition of two [Button Bars](../ButtonBar) and a title label or
 title view. The left and right Button Bars are provided with the navigation item's corresponding bar
@@ -144,6 +140,6 @@ Navigation Bar as you'd expect, with the following exceptions:
 - None of the `animated:` method varients are supported because they do not implement KVO events.
   Use of these methods will result in the Navigation Bar becoming out of sync with the
   navigationItem properties.
-- `prompt` is not presently supported. https://github.com/google/material-components-ios/issues/230.
+- `prompt` is not presently supported. https://github.com/material-components/material-components-ios/issues/230.
 
 TODO(featherless): Describe the most common integration steps.

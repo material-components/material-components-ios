@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/FontDiskLoader/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/FontDiskLoader">GitHub</a> for README documentation.{% endif %}-->
-
 #FontDiskLoader
 
 Registers a single custom font asset from disk

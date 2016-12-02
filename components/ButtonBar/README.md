@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ButtonBar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ButtonBar">GitHub</a> for README documentation.{% endif %}-->
-
 # Button Bar
 
 <div class="ios-animation right" markdown="1">
@@ -171,7 +167,7 @@ TODO(featherless): File issues for each of these.
 
 - `style` is ignored.
 - instances initialized with `initWithBarButtonSystemItem:`. See
-  issue [#264](https://github.com/google/material-components-ios/issues/264) for more details.
+  issue [#264](https://github.com/material-components/material-components-ios/issues/264) for more details.
 - `landscapeImagePhone`
 - `imageInsets`
 - `landscapeImagePhoneInsets`

@@ -18,6 +18,8 @@ import Foundation
 import MaterialComponents
 
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
+  
+  let floatingButtonPlusDimension = CGFloat(24)
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -25,6 +27,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     self.view.backgroundColor = UIColor.whiteColor()
 
     let raisedButton = MDCRaisedButton()
+    raisedButton.customTitleColor = UIColor.whiteColor()
     raisedButton.setElevation(4, forState: .Normal)
     raisedButton.setTitle("Tap Me Too", forState: .Normal)
     raisedButton.sizeToFit()
@@ -41,10 +44,13 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     self.view.addSubview(flatButton)
 
     let floatingButton = MDCFloatingButton()
-    floatingButton.setTitle("+", forState: .Normal)
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
+
+    let plusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton);
+    floatingButton.layer.addSublayer(plusShapeLayer);
+
     self.view.addSubview(floatingButton)
 
     let views = [

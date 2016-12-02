@@ -22,7 +22,7 @@ import MaterialComponents
 // - From leading to trailing with MDCButtonBarLayoutPositionLeading.
 // - From trailing to leading with MDCButtonBarLayoutPositionTrailing.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/516
+// Based on issue https://github.com/material-components/material-components-ios/issues/516
 class ButtonBarIssue516Tests: XCTestCase {
 
   var buttonBar: MDCButtonBar!
