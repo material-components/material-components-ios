@@ -171,7 +171,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
-      self.disabledAlpha = [aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
+      self.disabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonAreaInsetKey]) {
