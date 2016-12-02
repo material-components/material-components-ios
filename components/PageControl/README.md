@@ -95,7 +95,7 @@ Before using Page Control, you'll need to import it:
 
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialPageControl
 ~~~
 <!--</div>-->
 
