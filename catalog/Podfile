@@ -28,6 +28,10 @@ target "MDCActionExtension" do
   use_frameworks!
 end
 
+pre_install do |installer|
+  `curl -fsSL https://raw.githubusercontent.com/google/EarlGrey/master/gem/lib/earlgrey/configure_earlgrey.rb > configure_earlgrey.rb`
+end
+
 # EarlGrey configuration
 PROJECT_NAME = 'MDCCatalog'
 TEST_TARGET = 'MDCInteractionTests'
@@ -50,7 +54,7 @@ post_install do |installer|
     "#{pod_dir}/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.debug.xcconfig",
     "#{pod_dir}/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.release.xcconfig",
   ]
-  
+
   # Note the path is relative to the xcconfig file being modified.
   # https://pewpewthespells.com/blog/xcconfig_guide.html
   mdc_xcconfigs.each do |mdc_xcconfig|
@@ -66,6 +70,6 @@ post_install do |installer|
   end
 
   # EarlGrey configuration
-  require 'earlgrey'
+  load 'configure_earlgrey.rb'
   configure_for_earlgrey(installer, PROJECT_NAME, TEST_TARGET, SCHEME_FILE)
 end
