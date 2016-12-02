@@ -16,17 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCSnackbarMessage;
-@class MDCSnackbarMessageAction;
-
-/**
- Called by the snackbar message view when the user interacts with the snackbar view.
- 
- @c userInitiated indicates whether or not the handler is being called due to direct user
- interaction. @c action, if non-nil, indicates that the user chose to execute a specific action.
- */
-typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
-    MDCSnackbarMessageAction * _Nullable action);
 
 /**
  Class which provides the default implementation of a snackbar.
@@ -47,42 +36,5 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  The color for the message text in the snackbar message view.
  */
 @property(nonatomic, strong, nullable) UIColor *snackbarMessageViewTextColor UI_APPEARANCE_SELECTOR;
-
-/**
- Creates a snackbar view to display @c message.
- 
- The view will call @c handler when the user has interacted with the snackbar view in such a way
- that it needs to be dismissed prior to its timer-based dismissal time.
- */
-- (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage * _Nullable)message
-                 dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler;
-
-/**
- Dismisses the message view.
- 
- Does not call the message's completion handler or any action handler. Must be called from the main
- thread.
- 
- @param action The action that prompted the dismissal.
- @param userInitiated Whether or not this is a user-initiated dismissal or a programmatic one.
- */
-- (void)dismissWithAction:(MDCSnackbarMessageAction * _Nullable)action userInitiated:(BOOL)userInitiated;
-
-/**
- When VoiceOver is enabled the view should wait for user action before dismissing.
- 
- Default is YES.
- */
-- (BOOL)shouldWaitForDismissalDuringVoiceover;
-
-/**
- Animate the opacity text and button content.
-
- Creates and commits a CATransaction to perform the animation.
- */
-- (void)animateContentOpacityFrom:(CGFloat)fromOpacity
-                               to:(CGFloat)toOpacity
-                         duration:(NSTimeInterval)duration
-                   timingFunction:(CAMediaTimingFunction * _Nullable)timingFunction;
 
 @end

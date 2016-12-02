@@ -161,6 +161,12 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 @implementation MDCSnackbarMessageView
 
++ (void)initialize {
+  [[self appearance] setSnackbarMessageViewShadowColor:MDCRGBAColor(0x00, 0x00, 0x00, 1.0f)];
+  [[self appearance] setSnackbarMessageViewBackgroundColor:MDCRGBAColor(0x32, 0x32, 0x32, 1.0f)];
+  [[self appearance] setSnackbarMessageViewTextColor:MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f)];
+}
+
 - (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
   if (self.dismissalHandler) {
     self.dismissalHandler(userInitiated, action);
@@ -212,7 +218,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 - (void)setSnackbarMessageViewTextColor:(UIColor *)snackbarMessageViewTextColor {
   _snackbarMessageViewTextColor = snackbarMessageViewTextColor;
-  [self addColorToMessageLabel:snackbarMessageViewTextColor];
+  self.label.textColor = _snackbarMessageViewTextColor;
 }
 
 - (void)addColorToMessageLabel:(UIColor *)color {
@@ -231,10 +237,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
     _dismissalHandler = [handler copy];
 
     // styling the snackbar message view
-    _snackbarMessageViewShadowColor = MDCRGBAColor(0x00, 0x00, 0x00, 1.0f);
-    _snackbarMessageViewBackgroundColor = MDCRGBAColor(0x32, 0x32, 0x32, 1.0f);
-    _snackbarMessageViewTextColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f);
-
     self.backgroundColor = [UIColor clearColor];
     self.layer.cornerRadius = kCornerRadius;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
@@ -301,7 +303,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
                 }];
 
     // Apply 'global' attributes along the whole string.
-    [self addColorToMessageLabel:_snackbarMessageViewTextColor];
     _label.backgroundColor = [UIColor clearColor];
     _label.textAlignment = NSTextAlignmentLeft;
 
@@ -343,6 +344,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
     UIColor *textColor = [self snackbarButtonTextColor];
     UIColor *textColorHighlighted = [self snackbarButtonTextColorHighlighted];
+
+    _label.textColor = textColor;
 
     if (message.buttonTextColor) {
       textColor = message.buttonTextColor;
