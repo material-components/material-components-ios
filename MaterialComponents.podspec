@@ -256,6 +256,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/AnimationTiming"
     ss.dependency "MaterialComponents/Buttons"
     ss.dependency "MaterialComponents/OverlayWindow"
+    ss.dependency "MaterialComponents/Typography"
     ss.dependency "MaterialComponents/private/Application"
     ss.dependency "MaterialComponents/private/KeyboardWatcher"
     ss.dependency "MaterialComponents/private/Overlay"
