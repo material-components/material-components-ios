@@ -9,6 +9,7 @@ Over time we have curated a growing checklist of things we feel improve the expe
 
 ### API Review
 
+
 Before a component is built, the API proposed must be agreed upon by the main contributors.
 
 1. Create a pull request with only the .h files of the proposed component linked back to the original issue for the component's creation.
@@ -16,6 +17,7 @@ Before a component is built, the API proposed must be agreed upon by the main co
 
 
 ### README.md
+
 
 Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at [writing_readmes](writing_readmes.md).
 
@@ -25,6 +27,7 @@ Every component has a README.md file describing what it is, what it does, when t
 
 ### Additional Usage Docs (If necessary)
 
+
 Sometimes, the inline comments and README.md will not be sufficient to describe usage of the component. In these cases, create additional README.md files in child folders of the component. See: [Collections](https://github.com/material-components/material-components-ios/tree/develop/components/Collections) for a good example.
 
 1. Verify the component has filled out README.md files in its child folders.
@@ -33,19 +36,24 @@ Sometimes, the inline comments and README.md will not be sufficient to describe 
 
 ### Usage Video
 
+
 Each component must have a short video captured from either iPhone or iPhone simulator of it in action.
 
 1. Verify the component's `.../docs/assets` folder contains a video named `component_name.mp4`.
 1. Enter YES or NO
 
+
 ### Usage Still
+
 
 Each component must also have a still image to use when video cannot play.
 
 1. Verify the component's `.../docs/assets` folder contains a still named `component_name.png`.
 1. Enter YES or NO
 
+
 ### Catalog Tile
+
 
 The included catalog application uses Core Graphics to draw landing page tiles for each component. These tiles are created by Google's Material Design department specifically for this purpose and then converted to Core Graphics code via [PaintCode](https://www.paintcodeapp.com/).
 
@@ -69,7 +77,9 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 1. Run the catalog application and look for the component. Make sure the tile shown is specific to the component and not a placeholder nor empty view.
 1. Enter YES or NO
 
+
 ### Site Icon
+
 
 The documentation site uses icons in an [ordered list](https://material-ext.appspot.com/mdc-ios-preview/components/) of the components. These icons are created by Google's Material Design department specifically for this purpose.
 
@@ -81,12 +91,15 @@ The documentation site uses icons in an [ordered list](https://material-ext.apps
   }
 ~~~
 
+
 ### Site Left Nav Presence
+
 
 The component should have an entry in the left nav of [the documentation site](https://material-ext.appspot.com/mdc-ios-preview/components/). If missing, add it in the site source's `_data/navigation.yaml` file.
 
 1. Verify [the documentation site's](https://material-ext.appspot.com/mdc-ios-preview/components/) left nav contains a link to the component's docs.
 1. Enter YES or NO
+
 
 ### License Stanzas in Every Text-based Source File
 
@@ -124,6 +137,7 @@ Sample:
 
 ### Unit Tests
 
+
 Unit tests in MDC are run by the developer, the continuous integration service, and the release engineer: the developer runs them regularly during development, the CI service when a pull request is submitted, and the release engineer as part of the release process prior to final merging. If a developer submits a PR with broken unit tests, the CI service will prevent merging thru GitHub.
 
 #### Writing unit tests
@@ -140,13 +154,17 @@ Unit tests in MDC are run by the developer, the continuous integration service, 
 1. Ensure unit tests run with no errors.
 1. Enter YES or NO
 
+
 ### Interaction Tests (If necessary)
+
 
 Visual components should have interaction tests built with [Earl Grey](https://github.com/google/EarlGrey).
 
 //TODO and explain how
 
+
 ### Translations (If necessary)
+
 
 Google strives to support as many different written languages as possible in components containing static text. The necessary translations must be written by Google's internal translators. To request translations, open an issue with all text and all requested languages.
 
@@ -155,6 +173,7 @@ Google strives to support as many different written languages as possible in com
 1. Make sure strings are internationalized (takes about a week) and dumped before releasing a feature (manual process).
   1. Edge case: Some strings are super long in some languages, make sure UI displays/handles long text correctly.
 1. Enter YES, NO or N/A
+
 
 ### Right-to-Left Language (RTL) Support (If necessary)
 
@@ -170,13 +189,16 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 
 ### VoiceOver Support
 
+
 Custom controls should support VoiceOver. 
 See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/iPhoneAccessibility/Accessibility_on_iPhone/Accessibility_on_iPhone.html) for further information.
 
 1. Test your control on a device in VoiceOver mode and ensure the bahavior is at least as robust as UIKit.
 1. Enter YES, NO or N/A
 
+
 ### Scrubbed Comments
+
 
 Comments are useful when used properly. In addition, they are necessary for the system of documentation generation used in MDC.
 
@@ -184,14 +206,18 @@ Comments are useful when used properly. In addition, they are necessary for the 
 1. Make sure all classes have complete header comments that comply with [HeaderDoc](https://developer.apple.com/legacy/library/documentation/DeveloperTools/Conceptual/HeaderDoc/tags/tags.html) for [Jazzy](https://github.com/realm/jazzy) parsing. 
 1. Enter YES or NO
 
+
 ### Material Design Guidelines Review
+
 
 Every component has to support all features outlined for it in the Material Design guidelines. It can support additional features or customization.
 
 1. Review what the [Material Design Guidelines](https://material.google.com/) says about the component and make sure the component can *at least* satisfy those requirements.
 1. Enter YES or NO
 
+
 ### Test URLs
+
 
 Both documentation and code can contain URLs to assets or additional text. Make sure they are converted to production values.
 
@@ -349,6 +375,7 @@ IB_DESIGNABLE
 
 ### Nullability
 
+
 Nullability annotations improve Swift usage of a component's APIs. Learn more in Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
 
 Material Components explicitly annotate all public APIs rather than use `NS_ASSUME_NONNULL_BEGIN`. This is an intentional deviation from Apple’s practice of using the `ASSUME` macros. [Further reading](http://nshipster.com/swift-1.2/#nullability-annotations)
@@ -360,18 +387,22 @@ Material Components explicitly annotate all public APIs rather than use `NS_ASSU
 
 ### Swift Name Overrides
 
+
 Swift naming conventions differ from ObjC. It's important to consider the experience of users implementing Material Components in Swift targets and add naming annotations accordingly. See Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
 
 1. Add `NS_SWIFT_NAME` annotations where appropriate.
 1. Use `typedef` for enums to allow truncation of enumeration value name prefixes.
 1. Enter YES, NO or N/A
 
+
 ### Verify Podspec is Accurate
+
 
 Material Components for iOS is built primarily for adoption with CocoaPods. There is `MaterialComponents.podspec` file in the root folder of the project. It contains information on component naming, dependencies, resources, etc. To learn more about `.podspec` files, go to [CocoaPods.org](https://guides.cocoapods.org/syntax/podspec.html)
 
 1. Verify `MaterialComponents.podspec` contains a properly filled out entry for the component.
 1. Enter YES or NO
+
 
 ## Running the checklist
 
