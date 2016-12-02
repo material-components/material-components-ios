@@ -132,6 +132,7 @@ Unit tests in MDC are run by the developer, the continuous integration service, 
 1. Unit tests may be written in either Objc or Swift. Swift is preferred as merely writing them can verify the Objc-to-Swift experience is seamless.
 1. //TODO: helpful ideas for tests
 
+<!-- Terminate list -->
 
 1. Include unit tests for new functionality.
 1. Inlcude unit tests for bug fixes and changes initiated from GitHub issues. Name them `ClassNameIssue` + issue number + `Tests`. e.g. `AppBarContainerIssue246Tests`, `FlexibleHeaderControllerIssue176Tests`.
