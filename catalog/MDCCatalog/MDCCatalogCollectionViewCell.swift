@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import UIKit
-import MaterialComponents
+import MaterialComponents.MaterialTypography
 
 class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
