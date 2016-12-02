@@ -256,10 +256,11 @@ Many components could be sensibly used in an extension. But sometimes code preve
 ### All Designated Initializers
 
 
-We want to avoid misuse of initializers both in the calling of existing classes and the implementation of our new classes.
+We want to avoid misuse of initializers both in the calling of existing classes and the implementation of our new classes. Don't forget that some classes have more than one designated initializer (e.g. `UIView`.)
 
-1. Add the `NS_DESIGNATED_INITIALIZER` macro in all new classes.
-1. Call convenience initializers that refer to the designated initializer or the designated initializer itself. Only call `init` if you know that it is, or refers to, the designated initializer
+1. Add the `NS_DESIGNATED_INITIALIZER` macro in all new classes (even private.) Designated initializers must call an initializer of the super class. All others (the convenience initializers) must call an initializer within the class (`self` level, not `super`).
+1. If a class provides one or more designated initializers, it must implement all of the designated initializers of its superclass.
+1. Call convenience initializers that refer to the designated initializer or the designated initializer itself. Only call `init` if you know that it is, or refers to, the designated initializer.
 1. Enter YES or NO
 
 
