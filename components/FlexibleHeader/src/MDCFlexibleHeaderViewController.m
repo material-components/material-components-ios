@@ -84,21 +84,21 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
   } else {
     [_headerView trackingScrollViewDidScroll];
   }
+}
 
-  for (NSLayoutConstraint *constraint in parent.view.constraints) {
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  for (NSLayoutConstraint *constraint in self.parentViewController.view.constraints) {
     // Because topLayoutGuide is a readonly property on a viewController we must manipulate
     // the present one via the NSLayoutConstraint attached to it. Thus we keep reference to it.
-    if (constraint.firstItem == parent.topLayoutGuide && constraint.secondItem == nil) {
+    if (constraint.firstItem == self.parentViewController.topLayoutGuide && constraint.secondItem == nil) {
       self.topLayoutGuideTopConstraint = constraint;
     }
   }
 
   // On moving to parentViewController, we calculate the height
   self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
 
 #if DEBUG
   NSAssert(![self.parentViewController.parentViewController
