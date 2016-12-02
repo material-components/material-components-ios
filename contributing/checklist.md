@@ -131,9 +131,8 @@ Unit tests in MDC are run by the developer, the continuous integration service, 
 1. Store unit test files for a component in the directory `components/ComponentName/tests/unit/`
 1. Unit tests may be written in either Objc or Swift. Swift is preferred as merely writing them can verify the Objc-to-Swift experience is seamless.
 1. //TODO: helpful ideas for tests
-
 1. Include unit tests for new functionality.
-1. Inlcude unit tests for bug fixes.
+1. Inlcude unit tests for bug fixes and changes initiated from GitHub issues. Name them `ClassNameIssue` + issue number + `Tests`. e.g. `AppBarContainerIssue246Tests`, `FlexibleHeaderControllerIssue176Tests`.
 1. Update existing unit tests for new changes.
 1. Ensure unit tests run with no errors.
 1. Enter YES or NO
