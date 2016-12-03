@@ -14,11 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-find components -type d -name 'src' | while read path; do
-  folder=$(dirname $path)
-  component=$(echo $folder | cut -d'/' -f2-)
+readonly COMPONENT_DIR=$1
 
-  if [ ! -f "$folder/README.md" ]; then
-    echo $component
+# Private components do not require a README.md.
+if [[ $COMPONENT_DIR != *"/private/"* ]]; then
+  if [ ! -f "$COMPONENT_DIR/README.md" ]; then
+    echo "Error: $COMPONENT_DIR is missing a README.md file."
+    exit -1
   fi
-done
+fi
