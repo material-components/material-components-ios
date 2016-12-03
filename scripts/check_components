@@ -22,6 +22,12 @@
 #
 # $ check_components path/to/component [path/to/component [...]]
 
+function verbose_echo() {
+  if [[ $VERBOSE -ne 0 ]]; then
+    echo "$*"
+  fi
+}
+
 # Check for verbosity command-line option.
 if [[ ( $# -gt 0 ) && ( "$1" -eq "-v" ) ]]; then
   readonly VERBOSE=1
@@ -32,22 +38,22 @@ fi
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR=$(dirname "$SCRIPTS_DIR")
-[[ $VERBOSE -eq 0 ]] || echo "SCRIPTS_DIR: $SCRIPTS_DIR"
-[[ $VERBOSE -eq 0 ]] || echo "ROOT_DIR: $ROOT_DIR"
+verbose_echo "SCRIPTS_DIR: $SCRIPTS_DIR"
+verbose_echo "ROOT_DIR: $ROOT_DIR"
 
 # If no component listed on the command line, find them all.
 if [[ $# -eq 0 ]]; then
-  readonly PUBLIC_COMPONENTS=$(cd $ROOT_DIR && find components -maxdepth 1 -type d | grep -v "components$" | grep -v "components/private$")
-  readonly PRIVATE_COMPONENTS=$(cd $ROOT_DIR && find components/private -maxdepth 1 -type d | grep -v "components/private$")
+  readonly PUBLIC_COMPONENTS=$(cd $ROOT_DIR && find components -maxdepth 1 -type d | grep -v "components$" | grep -v "components/private$" | xargs)
+  readonly PRIVATE_COMPONENTS=$(cd $ROOT_DIR && find components/private -maxdepth 1 -type d | grep -v "components/private$" | xargs)
   readonly COMPONENTS="$PUBLIC_COMPONENTS $PRIVATE_COMPONENTS"
 else
   readonly COMPONENTS=$*
 fi
-[[ $VERBOSE -eq 0 ]] || echo "COMPONENTS: $COMPONENTS"
+verbose_echo "COMPONENTS: $COMPONENTS"
 
 # Find all the check scripts.
 readonly CHECKS=$(find $SCRIPTS_DIR/check -type f -perm +111)
-[[ $VERBOSE -eq 0 ]] || echo "CHECKS: $CHECKS"
+verbose_echo "CHECKS: $CHECKS"
 
 # Run through each component, running each check in turn.
 # Keep track of the number that fail any check.
