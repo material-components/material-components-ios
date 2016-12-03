@@ -29,7 +29,7 @@ function verbose_echo() {
 }
 
 # Check for verbosity command-line option.
-if [[ ( $# -gt 0 ) && ( "$1" -eq "-v" ) ]]; then
+if [[ ( "$#" > 0 ) && ( "$1" == "-v" ) ]]; then
   readonly VERBOSE=1
   shift 1
 else
@@ -43,8 +43,8 @@ verbose_echo "ROOT_DIR: $ROOT_DIR"
 
 # If no component listed on the command line, find them all.
 if [[ $# -eq 0 ]]; then
-  readonly PUBLIC_COMPONENTS=$(cd $ROOT_DIR && find components -maxdepth 1 -type d | grep -v "components$" | grep -v "components/private$" | xargs)
-  readonly PRIVATE_COMPONENTS=$(cd $ROOT_DIR && find components/private -maxdepth 1 -type d | grep -v "components/private$" | xargs)
+  readonly PUBLIC_COMPONENTS=$(cd $ROOT_DIR && find components -maxdepth 1 -type d | grep -v "components$" | grep -v "components/private$")
+  readonly PRIVATE_COMPONENTS=$(cd $ROOT_DIR && find components/private -maxdepth 1 -type d | grep -v "components/private$")
   readonly COMPONENTS="$PUBLIC_COMPONENTS $PRIVATE_COMPONENTS"
 else
   readonly COMPONENTS=$*
@@ -59,6 +59,8 @@ verbose_echo "CHECKS: $CHECKS"
 # Keep track of the number that fail any check.
 failure_count=0
 for component in $COMPONENTS; do 
+  verbose_echo "Checking $component ..."
+
   all_checks_passed=1
   for check in $CHECKS; do
     $check $ROOT_DIR/$component
@@ -73,7 +75,7 @@ for component in $COMPONENTS; do
 done
 
 if [[ $failure_count -eq 0 ]]; then
-  echo All components pass.
+  echo Component checks passed.
 else
   echo $failure_count "component(s) failed the checks."
 fi
