@@ -67,6 +67,7 @@ def main():
   if objc_matcher.search(outside) or swift_matcher.search(outside):
     print ("'%s' contains example code outside of a 'material-code-render' "
            "section.") % readme
+    sys.exit(-1)
 
 
 if __name__ == '__main__':
