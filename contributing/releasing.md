@@ -21,8 +21,7 @@ for anything that might be affecting the release.
 We use weekly release milestones to track important issues that need to land in a given release.
 These issues may come from client teams that are shipping to the App Store on a given date.
 
-Open the [Milestones](https://github.com/material-components/material-components-ios/milestones) page and verify
-that there are no open issues in this release's milestone. If there are open issues you must
+Look in the [Tasks for Next Release milestone](https://github.com/material-components/material-components-ios/milestone/10) for issues that must be resolved before or during release If there are open issues you must
 identify why the issues are still open and either close them if resolved or determine whether it's
 acceptable to move the issue to a subsequent release.
 
