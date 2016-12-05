@@ -1,8 +1,8 @@
 # Shadow Layer
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Shadow Layer](docs/assets/shadow.png)](docs/assets/shadow.mp4)
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/shadow.mp4" autoplay loop></video></div>{% endif %}-->
+[![Shadow Layer](docs/assets/shadow_layer.png)](docs/assets/shadow_layer.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/shadow_layer.mp4" autoplay loop></video></div>{% endif %}-->
 
 Shadow Layer implements the material design specifications for elevation and shadows.
 By simulating the physical properties of paper, elevation and light source, shadows give
