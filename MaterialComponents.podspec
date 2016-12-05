@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "16.3.0"
+  s.version      = "17.1.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -40,6 +40,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
+    ss.dependency "MaterialComponents/private/Application"
     ss.dependency "MaterialComponents/private/RTL"
   end
 
@@ -153,6 +154,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.dependency 'MDFTextAccessibility'
+    ss.dependency "MaterialComponents/private/Application"
   end
 
   s.subspec "FontDiskLoader" do |ss|
@@ -189,6 +191,8 @@ Pod::Spec.new do |s|
     ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+
+    ss.dependency "MaterialComponents/private/Application"
   end
 
   s.subspec "PageControl" do |ss|
@@ -252,6 +256,8 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/AnimationTiming"
     ss.dependency "MaterialComponents/Buttons"
     ss.dependency "MaterialComponents/OverlayWindow"
+    ss.dependency "MaterialComponents/Typography"
+    ss.dependency "MaterialComponents/private/Application"
     ss.dependency "MaterialComponents/private/KeyboardWatcher"
     ss.dependency "MaterialComponents/private/Overlay"
   end
@@ -303,6 +309,8 @@ Pod::Spec.new do |s|
       ss.ios.deployment_target = '7.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+
+      ss.dependency "MaterialComponents/private/Application"
     end
 
     pss.subspec "Overlay" do |ss|

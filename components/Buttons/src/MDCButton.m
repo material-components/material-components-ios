@@ -115,7 +115,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonButtonInit];
+    [self commonMDCButtonInit];
   }
   return self;
 }
@@ -123,7 +123,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonButtonInit];
+    [self commonMDCButtonInit];
 
     // TODO(randallli): Add backward compatibility to background colors
     //    if ([aDecoder containsValueForKey:MDCButtonEnabledBackgroundColorKey]) {
@@ -171,7 +171,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
 
     if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
-      self.disabledAlpha = [aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
+      self.disabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
     }
 
     if ([aDecoder containsValueForKey:MDCButtonAreaInsetKey]) {
@@ -217,7 +217,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
 }
 
-- (void)commonButtonInit {
+- (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
