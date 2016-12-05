@@ -58,15 +58,15 @@ def main():
   for i in example_matcher.finditer(contents):
     example = i.group(1)
     if not (objc_matcher.search(example) and swift_matcher.search(example)):
-      print ("'%s' contains an example that is missing Objective-C or Swift "
-             "code.") % readme
+      print ("Error: '%s' contains an example that is missing Objective-C or "
+             "Swift code.") % readme
       sys.exit(-1)
 
   # Check that no example code appears outside of an example stanza.
   outside = delete_matching(contents, example_matcher)
   if objc_matcher.search(outside) or swift_matcher.search(outside):
-    print ("'%s' contains example code outside of a 'material-code-render' "
-           "section.") % readme
+    print ("Error: '%s' contains example code outside of a "
+           "'material-code-render' section.") % readme
     sys.exit(-1)
 
 
