@@ -316,7 +316,7 @@ and delete the release branch:
 1. Tag the release "vX.Y.Z".
 1. Select the master branch.
 1. Title the release "Release X.Y.Z".
-1. In the body of the release notes, paste the text from CHANGELOG.md for this release.
+1. In the body of the release notes, paste the text from [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/master/CHANGELOG.md) for this release.
 1. Publish the release.
 
 ### Regenerate the site
