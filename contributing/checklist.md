@@ -83,7 +83,7 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 
 The documentation site uses icons in an [ordered list](https://material-ext.appspot.com/mdc-ios-preview/components/) of the components. These icons are created by Google's Material Design department specifically for this purpose.
 
-1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic` + name of component lowercase + `_24.svg`.
+1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic_component_name_24.svg`.
 1. Make sure the site source's `_icons.scss` contains an entry for that icon for that component:
 ~~~CSS
   .icon-componentname a::before {
