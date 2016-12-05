@@ -192,8 +192,8 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
 
 - (CGFloat)headerViewControllerHeight {
   CGFloat height =
-  MAX(_headerView.frame.origin.y + _headerView.frame.size.height,
-      _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ? 0 : 20);
+      MAX(_headerView.frame.origin.y + _headerView.frame.size.height,
+          _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ? 0 : 20);
   return height;
 }
 

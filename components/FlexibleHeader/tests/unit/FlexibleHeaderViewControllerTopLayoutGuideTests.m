@@ -95,14 +95,14 @@
 
 @end
 
-@interface FlexibleHeaderViewControllerTopLayoutGuide : XCTestCase
+@interface FlexibleHeaderViewControllerTopLayoutGuideTests : XCTestCase
 
 @property(nonatomic, strong) UIWindow *window;
 @property(nonatomic, strong) TopLayoutGuideTestClass *vc;
 
 @end
 
-@implementation FlexibleHeaderViewControllerTopLayoutGuide
+@implementation FlexibleHeaderViewControllerTopLayoutGuideTests
 
 - (void)setUp {
   [super setUp];
@@ -126,14 +126,14 @@
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetSettingMinHeight {
 
   // When
-  CGFloat randomHeight = arc4random_uniform(200.0) + 20.0;
+  CGFloat randomHeight = arc4random_uniform(200.0) + 20.0; // Height Greater Than Status Bar
   self.vc.fhvc.headerView.minimumHeight = randomHeight;
 
   // Then
   XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, randomHeight);
 }
 
-- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingOffscreenKeepStatusBar {
+- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenKeepStatusBar {
 
   // When
   self.vc.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
@@ -143,7 +143,7 @@
   XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, 20);
 }
 
-- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingOffscreenHideBar {
+- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenHideBar {
 
   // When
   self.vc.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
@@ -153,15 +153,17 @@
   XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, 0);
 }
 
-- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffScrollingUpRelease {
+- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffPullDownRelease {
 
   // When
   CGFloat randomHeight = arc4random_uniform(200.0) + 20.0;
   self.vc.fhvc.headerView.maximumHeight = randomHeight;
+  CGFloat initialYOffset = self.vc.scrollView.contentInset.top;
+
   // Pull Down
-  [self.vc.scrollView scrollRectToVisible:CGRectMake(0, -300, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:NO];
+  [self.vc.scrollView scrollRectToVisible:CGRectMake(0, -500, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:NO];
   // Release
-  [self.vc.scrollView scrollRectToVisible:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:NO];
+  [self.vc.scrollView scrollRectToVisible:CGRectMake(0, -initialYOffset, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:NO];
 
   // Then
   XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, randomHeight);
