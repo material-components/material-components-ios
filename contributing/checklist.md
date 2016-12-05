@@ -87,7 +87,7 @@ The documentation site uses icons in an [ordered list](https://material-ext.apps
 1. Make sure the site source's `_icons.scss` contains an entry for that icon for that component:
 ~~~CSS
   .icon-componentname a::before {
-    background-image: url(#{$root_folder}/images/custom_icons/ic_componentname_24px.svg);
+    background-image: url(#{$root_folder}/images/custom_icons/ic_component_name_24px.svg);
   }
 ~~~
 
