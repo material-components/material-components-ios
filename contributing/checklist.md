@@ -286,8 +286,9 @@ Many components could be sensibly used in an extension. But sometimes code preve
 
 We want to avoid misuse of initializers both in the calling of existing classes and the implementation of our new classes. Aside from being a best practice in Objc, it is mandatory in Swift. Don't forget that some classes have more than one designated initializer (e.g. `UIView`.)
 
-1. Add the `NS_DESIGNATED_INITIALIZER` macro in all new classes (even private.) Designated initializers must call an initializer of the super class. All others (the convenience initializers) must call an initializer within the class (`self` level, not `super`).
-1. If a class provides one or more designated initializers, it must implement all of the designated initializers of its superclass; it does not need to redelare them `NS_DESIGNATED_INITIALIZER`. If those initializers should no longer be called, declare them `NS_UNAVAILABLE`.
+1. Add the `NS_DESIGNATED_INITIALIZER` macro to new designated initializers in all new classes (even private.) Remember, designated initializers must call an initializer of the super class. All others (the convenience initializers) must call an initializer within the class (`self` level, not `super`).
+1. If a class provides one or more designated initializers, it must also implement all of the designated initializers of its superclass; it does not need to redelare them `NS_DESIGNATED_INITIALIZER`. If those initializers should no longer be called, declare them `NS_UNAVAILABLE`.
+1. If a class has no new designated initializers and no existing designated initializers have been marked `NS_UNAVAILABLE`, nothing needs to be done.
 1. Call convenience initializers that refer to the designated initializer or the designated initializer itself. Only call `init` if you know that it is, or refers to, the designated initializer.
 1. Enter YES or NO
 
@@ -406,73 +407,31 @@ Material Components for iOS is built primarily for adoption with CocoaPods. Ther
 
 ## Running the checklist
 
-
-To run the checklist, execute the following command from the root of this repo:
-
+We have automated some of the above checks in a set of scripts. To run all the checks against every component, run:
 
 ~~~bash
 scripts/check_components
 ~~~
 
-
-This command will run every check on every component. The output will look something like this:
-
-
-~~~
-<some check>:
-<component failing the check>
-<another component failing the check>
-<another check>:
-<a third check>:
-~~~
-
-
-Each check is expected to output each component that is failing the check.
-
-
-For example, our `missing_readme` check simply verifies whether each component has a README.md file
-in its root directory. If a component is missing a README.md, the check outputs the component's
-name, like so:
-
-
-~~~
-FontDiskLoader
-private/Color
-private/Icons/icons/ic_arrow_back
-private/ThumbTrack
-RobotoFontLoader
-~~~
-
-
-## Creating checks
-
-
-Creating a check is as simple creating an executable script in the `scripts/check/` directory. Your
-script will not be provided any arguments or stdin and is expected to output a components that fail
-the check, one component per line.
-
-
-### Snippets
-
-
-Use the following snippets to bootstrap your checks.
-
-
-*Find all components and perform a simple conditional*
-
+To run the checks against particular components, list their directories on the command line: 
 
 ~~~bash
-find components -type d -name 'src' | while read path; do
-  folder=$(dirname $path)
-  component=$(echo $folder | cut -d'/' -f2-)
-
-
-  if [ <your check logic> ]; then
-    echo $component # This component failed the check
-  fi
-done
+scripts/check_components components/ActivityIndicator components/Buttons
 ~~~
 
+Each check is a small script in the `scripts/check` directory. To run only particular checks, use the `-c` flag:
 
+~~~bash
+scripts/check_components -c scripts/check/readme -c scripts/check/video
+~~~
 
+Errors are printed out and summarized at the end of the checks:
 
+~~~bash
+Error: '/Users/ajsecord/Source/Git/mdc-fork/components/ActivityIndicator/examples' has no Swift examples.
+The following components failed: components/ActivityIndicator.
+~~~
+
+## Creating new checks
+
+To create a new check, see [`scripts/check/README.md`](../scripts/check/README.md).
