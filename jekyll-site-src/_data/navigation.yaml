@@ -81,6 +81,9 @@ components:
           markdown: components/Typography/README.md
     - name: Style
       children:
+        - name: AnimationTiming
+          url: "/components/AnimationTiming/"
+          markdown: components/AnimationTiming/README.md
         - name: Ink
           url: "/components/Ink/"
           markdown: components/Ink/README.md
