@@ -13,6 +13,14 @@ Activity indicators are visual indications of an app loading content. The Activi
   <li class="icon-link"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
 </ul>
 
+### API Documentation
+
+<ul class="icon-list">
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Classes/MDCActivityIndicator.html>MDCActivityIndicator</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Enums/MDCActivityIndicatorMode.html">MDCActivityIndicatorMode</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Protocols/MDCActivityIndicatorDelegate.html">MDCActivityIndicatorDelegate</a></li>
+</ul>
+
 - - -
 
 ## Activity Indicator Modes
