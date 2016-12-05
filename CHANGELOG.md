@@ -1,3 +1,9 @@
+# 17.1.1
+
+No public API or component changes.
+
+Added missing components/private/Application/src/MaterialApplication.h umbrella header.
+
 # 17.1.0
 
 ## API diffs
