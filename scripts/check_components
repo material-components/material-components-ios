@@ -88,7 +88,7 @@ verbose_echo "checks: $checks"
 verbose_echo
 failed=""
 for component in $components; do 
-  verbose_echo "Checking $component ..."
+  echo "Checking $component ..."
 
   all_checks_passed=1
   for check in $checks; do
@@ -101,11 +101,15 @@ for component in $components; do
   if [[ $all_checks_passed -ne 1 ]]; then
     failed="$failed $component"
   fi
+  echo
 done
-verbose_echo
+echo
 
 if [[ -z $failed ]]; then
   echo Component checks passed.
 else
-  echo "The following components failed: $failed."
+  echo "The following components failed:"
+  for i in $failed; do
+    echo $i
+  done
 fi
