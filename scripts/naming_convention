@@ -1,0 +1,112 @@
+#!/usr/bin/env python
+#
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from __future__ import print_function  # Print as function not keyword.
+
+import argparse
+import re
+import string
+import sys
+
+def create_arg_parser():
+  """Create a command-line argument parser."""
+  description='Convert a name between conventions.'
+  parser = argparse.ArgumentParser(description=description)
+  parser.add_argument('-c', '--check', action='store_true',
+                      help='exit with a status of 0 if the name matches mode.')
+  parser.add_argument('-p', '--print', action='store_true',
+                      help='print the mode and exit.')
+  parser.add_argument('-m', '--mode',
+                      choices=['camel', 'hyphen', 'period', 'underscore'],
+                      help=('the mode to convert to: '
+                            'FooBar, foo-bar, foo.bar, foo_bar')) 
+  parser.add_argument('name', help='the name to convert (in any mode)')
+  return parser
+
+
+def detect_mode(name):
+  """Detect the mode of a name."""
+  if '-' in name:
+    return 'hyphen'
+  elif '.' in name:
+    return 'period'
+  elif '_' in name:
+    return 'underscore'
+  else:
+    return 'camel'
+
+
+def split_name(name, mode):
+  """Split a name into its pieces based on mode."""
+  if mode == 'hyphen':
+    return string.split(name, '-')
+  elif mode == 'period':
+    return string.split(name, '.')
+  elif mode == 'underscore':
+    return string.split(name, '_')
+  else:
+    return camel_split(name)
+    
+
+def camel_split(name):
+  """Split a camel case name into pieces.
+
+  For example, 'fooBarBazX' should become ['foo', 'Bar', 'Baz, 'X']."""
+  pieces = []
+  index = 0
+  # Find transitions between lowercase and uppercase, or the same and the
+  # beginning/end of the string.
+  regex = r'([a-z]|\A)([A-Z]+|\Z)'
+  for i in re.finditer(regex, name):
+    if i.end(1) > 0: 
+      pieces.append(name[index:i.end(1)])
+    index = i.start(2)
+  if index < len(name):
+    pieces.append(name[index:])
+  return pieces
+
+
+def convert_name_to_mode(name, cur_mode, mode):
+  """Convert a name from cur_mode to mode."""
+  pieces = split_name(name, cur_mode)
+  if mode == 'hyphen':
+    return '-'.join(pieces).lower()
+  elif mode == 'period':
+    return '.'.join(pieces).lower()
+  elif mode == 'underscore':
+    return '_'.join(pieces).lower()
+  else:
+    return ''.join([s.capitalize() for s in pieces])
+
+
+def main():
+  parser = create_arg_parser()
+  args = parser.parse_args()
+
+  cur_mode = detect_mode(args.name)
+  exit_status = 0
+  if args.print:
+    print(cur_mode)
+  elif args.check:
+    exit_status = 0 if cur_mode == args.mode else 1
+  else:
+    print(convert_name_to_mode(args.name, cur_mode, args.mode))
+
+  sys.exit(exit_status)
+
+
+if __name__ == '__main__':
+  main()
