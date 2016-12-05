@@ -1,6 +1,6 @@
 # SpritedAnimationView
 
-![SpritedAnimationView](docs/assets/spritedanimationview_screenshot.png)
+![SpritedAnimationView](docs/assets/sprited_animation_view.png)
 <!--{: .ios-screenshot .right }-->
 
 This control provides an alternative to animating an array of images with an `UIImageView`. Only a
