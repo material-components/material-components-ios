@@ -34,16 +34,16 @@ pod install
 
 Before using animation timing, you'll need to import it:
 
-#### Objective-C
-
-~~~ objc
-#import "MaterialAnimationTiming.h"
-~~~
-
 #### Swift
 
 ~~~ swift
 import MaterialComponents
+~~~
+
+#### Objective-C
+
+~~~ objc
+#import "MaterialAnimationTiming.h"
 ~~~
 
 ## Examples
@@ -54,15 +54,6 @@ To use an animation timing curve select an appropriate a predefined MDCAnimation
 value. Use this value to look up an animation curve's timing function. The timing function can then
 be used in an animation.
 
-~~~ objc
-MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
-CAAnimationTimingFunction *timingFunction =
-    [CAAnimationTimingFunction mdc_functionWithAnimationTiming:materialCurve];
-
-CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
-animation.timingFunction = timingFunction
-~~~
-
 #### Swift
 
 ~~~ swift
@@ -70,5 +61,16 @@ let materialCurve = MDCAnimationTimingFunction.EaseOut
 let timingFunction = CAAnimationTimingFunction.mdc_functionWithAnimationTiming(materialCurve)
 
 let animation = CABasicAnimation(keyPath:"transform.translation.x")
+animation.timingFunction = timingFunction
+~~~
+
+#### Objc
+
+~~~ objc
+MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
+CAAnimationTimingFunction *timingFunction =
+    [CAAnimationTimingFunction mdc_functionWithAnimationTiming:materialCurve];
+
+CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
 animation.timingFunction = timingFunction
 ~~~
