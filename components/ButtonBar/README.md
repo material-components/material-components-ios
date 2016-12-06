@@ -40,7 +40,6 @@ pod install
 
 
 
-
 - - -
 
 ## Overview
@@ -64,15 +63,15 @@ Button Bar supports a subset of UIBarButtonItem's properties. Learn more by read
 Before using Button Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialButtonBar.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -80,24 +79,6 @@ import MaterialComponents
 Create an instance of MDCButtonBar and provide it with an array of UIBarButtonItems.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
-
-UIBarButtonItem *item =
-    [[UIBarButtonItem alloc] initWithTitle:@"<# title #>"
-                                     style:UIBarButtonItemStyleDone // ignored
-                                    target:self
-                                    action:@selector(<# selector #>)];
-
-buttonBar.items = @[ actionItem ];
-
-CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
-buttonBar.frame = (CGRect){<# origin #>, size};
-[self.view addSubview:buttonBar];
-~~~
-
 #### Swift
 ~~~ swift
 let buttonBar = MDCButtonBar()
@@ -114,6 +95,24 @@ buttonBar.items = [actionItem]
 let size = buttonBar.sizeThatFits(self.view.bounds.size)
 buttonBar.frame = CGRect(x: <# x #>, y: <# y #>, width: size.width, height: size.height)
 self.view.addSubview(buttonBar)
+~~~
+
+#### Objective-C
+
+~~~ objc
+MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
+
+UIBarButtonItem *item =
+    [[UIBarButtonItem alloc] initWithTitle:@"<# title #>"
+                                     style:UIBarButtonItemStyleDone // ignored
+                                    target:self
+                                    action:@selector(<# selector #>)];
+
+buttonBar.items = @[ actionItem ];
+
+CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
+buttonBar.frame = (CGRect){<# origin #>, size};
+[self.view addSubview:buttonBar];
 ~~~
 <!--</div>-->
 
@@ -140,6 +139,15 @@ Note: in order to make Button Bar reflect changes to not-observed properties you
 MDCButtonBar instance's `items` property and reset it, like so:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+item.target = <some other target>
+
+let items = buttonBar.items
+buttonBar.items = nil
+buttonBar.items = items
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -148,15 +156,6 @@ item.target = <some other target>;
 NSArray *items = buttonBar.items;
 buttonBar.items = nil;
 buttonBar.items = items;
-~~~
-
-#### Swift
-~~~ swift
-item.target = <some other target>
-
-let items = buttonBar.items
-buttonBar.items = nil
-buttonBar.items = items
 ~~~
 <!--</div>-->
 
