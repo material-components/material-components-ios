@@ -16,6 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ActionViewController : UIViewController
+@interface MDCActionViewController : UINavigationController
 
 @end

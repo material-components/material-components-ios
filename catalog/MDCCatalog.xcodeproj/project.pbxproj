@@ -15,7 +15,7 @@
 		4097C8B59D0DD1F00845D250 /* Pods_MDCActionExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */; };
 		5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D090E341C9AEB8C0061344A /* Localizable.strings */; };
 		5D2B1DB2BD8D444E630A80AC /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		64307B3C1DF74FEF004AE4AC /* ActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64307B3B1DF74FEF004AE4AC /* ActionViewController.m */; };
+		64307B3C1DF74FEF004AE4AC /* MDCActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64307B3B1DF74FEF004AE4AC /* MDCActionViewController.m */; };
 		64307B3F1DF74FEF004AE4AC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64307B3D1DF74FEF004AE4AC /* MainInterface.storyboard */; };
 		64307B431DF74FEF004AE4AC /* MDCActionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B61C6BA62A001ADBF8 /* AppDelegate.swift */; };
@@ -127,8 +127,8 @@
 		5D090E551C9AEB8D0061344A /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E561C9AEB8D0061344A /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MDCActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		64307B3A1DF74FEF004AE4AC /* ActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionViewController.h; sourceTree = "<group>"; };
-		64307B3B1DF74FEF004AE4AC /* ActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActionViewController.m; sourceTree = "<group>"; };
+		64307B3A1DF74FEF004AE4AC /* MDCActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDCActionViewController.h; sourceTree = "<group>"; };
+		64307B3B1DF74FEF004AE4AC /* MDCActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDCActionViewController.m; sourceTree = "<group>"; };
 		64307B3E1DF74FEF004AE4AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		64307B401DF74FEF004AE4AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		664524B31C6BA62A001ADBF8 /* MDCCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDCCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,8 +201,8 @@
 		64307B391DF74FEF004AE4AC /* MDCActionExtension */ = {
 			isa = PBXGroup;
 			children = (
-				64307B3A1DF74FEF004AE4AC /* ActionViewController.h */,
-				64307B3B1DF74FEF004AE4AC /* ActionViewController.m */,
+				64307B3A1DF74FEF004AE4AC /* MDCActionViewController.h */,
+				64307B3B1DF74FEF004AE4AC /* MDCActionViewController.m */,
 				64307B3D1DF74FEF004AE4AC /* MainInterface.storyboard */,
 				64307B401DF74FEF004AE4AC /* Info.plist */,
 			);
@@ -613,7 +613,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64307B3C1DF74FEF004AE4AC /* ActionViewController.m in Sources */,
+				64307B3C1DF74FEF004AE4AC /* MDCActionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
