@@ -19,6 +19,15 @@ target "MDCUnitTests" do
   use_frameworks!
 end
 
+target "MDCActionExtension" do
+  project 'MDCCatalog.xcodeproj'
+  pod 'MaterialComponentsCatalog', :path => '../'
+  pod 'MaterialComponents', :path => '../'
+  pod 'CatalogByConvention'
+
+  use_frameworks!
+end
+
 # EarlGrey configuration
 PROJECT_NAME = 'MDCCatalog'
 TEST_TARGET = 'MDCInteractionTests'
