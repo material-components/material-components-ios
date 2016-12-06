@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import UIKit
+
 import CatalogByConvention
-import MaterialComponents.MaterialTypography
 import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialTypography
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 

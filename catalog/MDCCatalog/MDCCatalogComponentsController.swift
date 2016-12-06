@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import CatalogByConvention
-import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialFlexibleHeader
 import MaterialComponents.MaterialIcons_ic_arrow_back
-import MaterialComponents.MaterialTypography
+import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialShadowLayer
+import MaterialComponents.MaterialTypography
 
 import UIKit
 
