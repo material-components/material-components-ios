@@ -14,6 +14,9 @@
 		360D6F7F1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */; };
 		5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D090E341C9AEB8C0061344A /* Localizable.strings */; };
 		5D2B1DB2BD8D444E630A80AC /* EarlGrey.framework in EarlGrey Copy Files */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		64307B3C1DF74FEF004AE4AC /* ActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64307B3B1DF74FEF004AE4AC /* ActionViewController.m */; };
+		64307B3F1DF74FEF004AE4AC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64307B3D1DF74FEF004AE4AC /* MainInterface.storyboard */; };
+		64307B431DF74FEF004AE4AC /* MDCActionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B61C6BA62A001ADBF8 /* AppDelegate.swift */; };
 		664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
@@ -33,6 +36,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 664524B21C6BA62A001ADBF8;
 			remoteInfo = MDCCatalog;
+		};
+		64307B411DF74FEF004AE4AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 664524AB1C6BA62A001ADBF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64307B371DF74FEF004AE4AC;
+			remoteInfo = MDCActionExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -56,6 +66,17 @@
 				5D2B1DB2BD8D444E630A80AC /* EarlGrey.framework in EarlGrey Copy Files */,
 			);
 			name = "EarlGrey Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64307B471DF74FEF004AE4AC /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				64307B431DF74FEF004AE4AC /* MDCActionExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -102,6 +123,11 @@
 		5D090E541C9AEB8D0061344A /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E551C9AEB8D0061344A /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E561C9AEB8D0061344A /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MDCActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		64307B3A1DF74FEF004AE4AC /* ActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionViewController.h; sourceTree = "<group>"; };
+		64307B3B1DF74FEF004AE4AC /* ActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActionViewController.m; sourceTree = "<group>"; };
+		64307B3E1DF74FEF004AE4AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		64307B401DF74FEF004AE4AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		664524B31C6BA62A001ADBF8 /* MDCCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDCCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		664524B61C6BA62A001ADBF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCNodeListViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +155,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				868350BCFBA83A90EA697FB4 /* libPods-MDCInteractionTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64307B351DF74FEF004AE4AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,11 +193,23 @@
 			path = Localizable;
 			sourceTree = "<group>";
 		};
+		64307B391DF74FEF004AE4AC /* MDCActionExtension */ = {
+			isa = PBXGroup;
+			children = (
+				64307B3A1DF74FEF004AE4AC /* ActionViewController.h */,
+				64307B3B1DF74FEF004AE4AC /* ActionViewController.m */,
+				64307B3D1DF74FEF004AE4AC /* MainInterface.storyboard */,
+				64307B401DF74FEF004AE4AC /* Info.plist */,
+			);
+			path = MDCActionExtension;
+			sourceTree = "<group>";
+		};
 		664524AA1C6BA62A001ADBF8 = {
 			isa = PBXGroup;
 			children = (
 				664524B51C6BA62A001ADBF8 /* MDCCatalog */,
 				0B50E19A1D91B0BD00DED250 /* MDCInteractionTests */,
+				64307B391DF74FEF004AE4AC /* MDCActionExtension */,
 				664524B41C6BA62A001ADBF8 /* Products */,
 				E165A9868676B4998575E09A /* Pods */,
 				C18E275F798D7A4D3C533DF1 /* Frameworks */,
@@ -177,6 +222,7 @@
 				664524B31C6BA62A001ADBF8 /* MDCCatalog.app */,
 				0B50E1991D91B0BD00DED250 /* MDCInteractionTests.xctest */,
 				E94681B7591B9CD40924C92C /* EarlGrey.framework */,
+				64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -258,6 +304,23 @@
 			productReference = 0B50E1991D91B0BD00DED250 /* MDCInteractionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		64307B371DF74FEF004AE4AC /* MDCActionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 64307B461DF74FEF004AE4AC /* Build configuration list for PBXNativeTarget "MDCActionExtension" */;
+			buildPhases = (
+				64307B341DF74FEF004AE4AC /* Sources */,
+				64307B351DF74FEF004AE4AC /* Frameworks */,
+				64307B361DF74FEF004AE4AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MDCActionExtension;
+			productName = MDCActionExtension;
+			productReference = 64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		664524B21C6BA62A001ADBF8 /* MDCCatalog */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 664524C51C6BA62A001ADBF8 /* Build configuration list for PBXNativeTarget "MDCCatalog" */;
@@ -268,10 +331,12 @@
 				664524B11C6BA62A001ADBF8 /* Resources */,
 				72ACDAA295D1F2087113246F /* [CP] Embed Pods Frameworks */,
 				8164F6F5D8C80F373A698031 /* [CP] Copy Pods Resources */,
+				64307B471DF74FEF004AE4AC /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				64307B421DF74FEF004AE4AC /* PBXTargetDependency */,
 			);
 			name = MDCCatalog;
 			productName = MDCCatalog;
@@ -291,6 +356,11 @@
 					0B50E1981D91B0BD00DED250 = {
 						CreatedOnToolsVersion = 7.3.1;
 						TestTargetID = 664524B21C6BA62A001ADBF8;
+					};
+					64307B371DF74FEF004AE4AC = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = EQHXZ8M8AV;
+						ProvisioningStyle = Automatic;
 					};
 					664524B21C6BA62A001ADBF8 = {
 						CreatedOnToolsVersion = 7.3;
@@ -347,6 +417,7 @@
 			targets = (
 				664524B21C6BA62A001ADBF8 /* MDCCatalog */,
 				0B50E1981D91B0BD00DED250 /* MDCInteractionTests */,
+				64307B371DF74FEF004AE4AC /* MDCActionExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -356,6 +427,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64307B361DF74FEF004AE4AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64307B3F1DF74FEF004AE4AC /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +553,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		64307B341DF74FEF004AE4AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64307B3C1DF74FEF004AE4AC /* ActionViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		664524AF1C6BA62A001ADBF8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -496,6 +583,11 @@
 			isa = PBXTargetDependency;
 			target = 664524B21C6BA62A001ADBF8 /* MDCCatalog */;
 			targetProxy = 0B50E19E1D91B0BD00DED250 /* PBXContainerItemProxy */;
+		};
+		64307B421DF74FEF004AE4AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 64307B371DF74FEF004AE4AC /* MDCActionExtension */;
+			targetProxy = 64307B411DF74FEF004AE4AC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -541,6 +633,14 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		64307B3D1DF74FEF004AE4AC /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				64307B3E1DF74FEF004AE4AC /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -579,6 +679,40 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCInteractionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MDCCatalog.app/MDCCatalog";
+			};
+			name = Release;
+		};
+		64307B441DF74FEF004AE4AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				INFOPLIST_FILE = MDCActionExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.mdc-catalog.MDCActionExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		64307B451DF74FEF004AE4AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				INFOPLIST_FILE = MDCActionExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.mdc-catalog.MDCActionExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -711,6 +845,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		64307B461DF74FEF004AE4AC /* Build configuration list for PBXNativeTarget "MDCActionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64307B441DF74FEF004AE4AC /* Debug */,
+				64307B451DF74FEF004AE4AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		664524AE1C6BA62A001ADBF8 /* Build configuration list for PBXProject "MDCCatalog" */ = {
 			isa = XCConfigurationList;
