@@ -50,7 +50,8 @@
 
   self.scrollView.delegate = self;
   self.scrollView.frame = self.view.bounds;
-  self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  self.scrollView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 2000);
   [self.view addSubview:self.scrollView];
   self.fhvc.headerView.trackingScrollView = self.scrollView;
@@ -89,7 +90,7 @@
               targetContentOffset:(inout CGPoint *)targetContentOffset {
   if (scrollView == self.fhvc.headerView.trackingScrollView) {
     [self.fhvc.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                                                    targetContentOffset:targetContentOffset];
+                                                    targetContentOffset:targetContentOffset];
   }
 }
 
@@ -133,21 +134,29 @@
   XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, randomHeight);
 }
 
-- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenKeepStatusBar {
+- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenKeepStatus {
 
   // When
   self.vc.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
-  [self.vc.scrollView scrollRectToVisible:CGRectMake(0, 400, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:NO];
+  CGRect offScreenScroll = CGRectMake(0,
+                                      [UIScreen mainScreen].bounds.size.height,
+                                      [UIScreen mainScreen].bounds.size.width,
+                                      [UIScreen mainScreen].bounds.size.height);
+  [self.vc.scrollView scrollRectToVisible:offScreenScroll animated:NO];
 
   // Then
   XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, 20);
 }
 
-- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenHideBar {
+- (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenHideStatus {
 
   // When
   self.vc.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
-  [self.vc.scrollView scrollRectToVisible:CGRectMake(0, 400, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:NO];
+  CGRect offScreenScroll = CGRectMake(0,
+                                      [UIScreen mainScreen].bounds.size.height,
+                                      [UIScreen mainScreen].bounds.size.width,
+                                      [UIScreen mainScreen].bounds.size.height);
+  [self.vc.scrollView scrollRectToVisible:offScreenScroll animated:NO];
 
   // Then
   XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, 0);
@@ -158,12 +167,20 @@
   // When
   CGFloat randomHeight = arc4random_uniform(200.0) + 20.0;
   self.vc.fhvc.headerView.maximumHeight = randomHeight;
-  CGFloat initialYOffset = self.vc.scrollView.contentInset.top;
+  CGFloat initialYOffset = -self.vc.scrollView.contentInset.top;
+  CGRect initialFrame = CGRectMake(0,
+                                   self.vc.scrollView.contentInset.top,
+                                   [UIScreen mainScreen].bounds.size.width,
+                                   [UIScreen mainScreen].bounds.size.height);
+  CGRect pulledFrame = CGRectMake(0,
+                                  -600,
+                                  [UIScreen mainScreen].bounds.size.width,
+                                  [UIScreen mainScreen].bounds.size.height);
 
   // Pull Down
-  [self.vc.scrollView scrollRectToVisible:CGRectMake(0, -500, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:NO];
+  [self.vc.scrollView scrollRectToVisible:pulledFrame animated:NO];
   // Release
-  [self.vc.scrollView scrollRectToVisible:CGRectMake(0, -initialYOffset, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:NO];
+  [self.vc.scrollView scrollRectToVisible:initialFrame animated:NO];
 
   // Then
   XCTAssertEqual(self.vc.fhvc.flexibleHeaderViewControllerHeightOffset, randomHeight);
