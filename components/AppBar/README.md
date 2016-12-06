@@ -88,15 +88,15 @@ identify whether your use case is something we can directly support.
 Before using App Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialAppBar.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -119,6 +119,17 @@ Step 1: **Create an instance of MDCAppBar**.
 You must also add the `headerViewController` as a child view controller.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let appBar = MDCAppBar()
+
+override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+  self.addChildViewController(appBar.headerViewController)
+}
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -136,17 +147,6 @@ You must also add the `headerViewController` as a child view controller.
   return self;
 }
 ~~~
-
-#### Swift
-~~~ swift
-let appBar = MDCAppBar()
-
-override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-  super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
-  self.addChildViewController(appBar.headerViewController)
-}
-~~~
 <!--</div>-->
 
 Step 2: **Inform the App Bar that your view controller's view has loaded**.
@@ -155,6 +155,16 @@ Ideally you will do this after all views have been added to your controller's vi
 ensure that the App Bar's Flexible Header is in front of all other views.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+
+  // After all other views have been registered.
+  appBar.addSubviewsToParent()
+}
+~~~
+
 #### Objective-C
 ~~~ objc
 - (void)viewDidLoad {
@@ -164,16 +174,6 @@ ensure that the App Bar's Flexible Header is in front of all other views.
 
   // After all other views have been registered.
   [self.appBar addSubviewsToParent];
-}
-~~~
-
-#### Swift
-~~~ swift
-override func viewDidLoad() {
-  super.viewDidLoad()
-
-  // After all other views have been registered.
-  appBar.addSubviewsToParent()
 }
 ~~~
 <!--</div>-->
