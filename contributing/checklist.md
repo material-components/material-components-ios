@@ -83,11 +83,11 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 
 The documentation site uses icons in an [ordered list](https://material-ext.appspot.com/mdc-ios-preview/components/) of the components. These icons are created by Google's Material Design department specifically for this purpose.
 
-1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic` + name of component lowercase + `_24.svg`.
+1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic_component_name_24.svg`.
 1. Make sure the site source's `_icons.scss` contains an entry for that icon for that component:
 ~~~CSS
   .icon-componentname a::before {
-    background-image: url(#{$root_folder}/images/custom_icons/ic_componentname_24px.svg);
+    background-image: url(#{$root_folder}/images/custom_icons/ic_component_name_24px.svg);
   }
 ~~~
 
@@ -287,7 +287,7 @@ Many components could be sensibly used in an extension. But sometimes code preve
 We want to avoid misuse of initializers both in the calling of existing classes and the implementation of our new classes. Aside from being a best practice in Objc, it is mandatory in Swift. Don't forget that some classes have more than one designated initializer (e.g. `UIView`.)
 
 1. Add the `NS_DESIGNATED_INITIALIZER` macro to new designated initializers in all new classes (even private.) Remember, designated initializers must call an initializer of the super class. All others (the convenience initializers) must call an initializer within the class (`self` level, not `super`).
-1. If a class provides one or more designated initializers, it must also implement all of the designated initializers of its superclass; it does not need to redelare them `NS_DESIGNATED_INITIALIZER`. If those initializers should no longer be called, declare them `NS_UNAVAILABLE`.
+1. If a class provides one or more designated initializers, it must also implement all of the designated initializers of its superclass; mark them `NS_DESIGNATED_INITIALIZER` if you want them to still to be designated. If those initializers should no longer be called, declare them `NS_UNAVAILABLE`.
 1. If a class has no new designated initializers and no existing designated initializers have been marked `NS_UNAVAILABLE`, nothing needs to be done.
 1. Call convenience initializers that refer to the designated initializer or the designated initializer itself. Only call `init` if you know that it is, or refers to, the designated initializer.
 1. Enter YES or NO
