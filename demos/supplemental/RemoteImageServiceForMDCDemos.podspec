@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "RemoteImageService"
+  s.name         = "RemoteImageServiceForMDCDemos"
   s.version      = "17.1.1"
   s.summary      = "A helper image class for the MDC demos."
   s.description  = "This spec is made for use in the MDC demos. It gets images via url."
