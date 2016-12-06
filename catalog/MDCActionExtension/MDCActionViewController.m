@@ -15,8 +15,8 @@
  */
 
 #import "MDCActionViewController.h"
+
 #import <CatalogByConvention/CatalogByConvention.h>
-#import <MobileCoreServices/MobileCoreServices.h>
 
 @implementation MDCActionViewController
 
