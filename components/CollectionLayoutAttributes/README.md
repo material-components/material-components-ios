@@ -41,14 +41,14 @@ pod install
 Before using Collection Layout Attributes, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-#import "MaterialCollectionLayoutAttributes.h"
-~~~
-
 #### Swift
 ~~~ swift
 import MaterialComponents.MaterialCollectionLayoutAttributes
+~~~
+
+#### Objective-C
+~~~ objc
+#import "MaterialCollectionLayoutAttributes.h"
 ~~~
 <!--</div>-->
 
@@ -57,6 +57,19 @@ view layout. Override the `-applyLayoutAttributes` method of any `UICollectionRe
 `UICollectionViewCell` subclasses, then apply any of the properties of the attributes class.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+  super.applyLayoutAttributes(layoutAttributes)
+  if let attr = layoutAttributes as? MDCCollectionViewLayoutAttributes {
+    if (attr.representedElementCategory == .Cell) {
+
+      // Example to set a background image to the cell background view.
+      self.backgroundView = UIImageView(image: attr.backgroundImage)
+    }
+  }
+}
+~~~
 #### Objective-C
 ~~~ objc
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
@@ -67,20 +80,6 @@ view layout. Override the `-applyLayoutAttributes` method of any `UICollectionRe
 
       // Example to set a background image to the cell background view.
       self.backgroundView = [[UIImageView alloc] initWithImage:attr.backgroundImage];
-    }
-  }
-}
-~~~
-
-#### Swift
-~~~ swift
-override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
-  super.applyLayoutAttributes(layoutAttributes)
-  if let attr = layoutAttributes as? MDCCollectionViewLayoutAttributes {
-    if (attr.representedElementCategory == .Cell) {
-
-      // Example to set a background image to the cell background view.
-      self.backgroundView = UIImageView(image: attr.backgroundImage)
     }
   }
 }
