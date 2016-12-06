@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import MaterialComponents
 import UIKit
+
+import MaterialComponents.MaterialOverlayWindow
 
 /**
  A custom UIWindow that displays the user's touches for recording video or demos.

@@ -15,7 +15,12 @@ limitations under the License.
 */
 
 import CatalogByConvention
-import MaterialComponents
+import MaterialComponents.MaterialFlexibleHeader
+import MaterialComponents.MaterialIcons_ic_arrow_back
+import MaterialComponents.MaterialInk
+import MaterialComponents.MaterialShadowLayer
+import MaterialComponents.MaterialTypography
+
 import UIKit
 
 class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchControllerDelegate {
