@@ -707,7 +707,6 @@
 				64307B3E1DF74FEF004AE4AC /* Base */,
 			);
 			name = MainInterface.storyboard;
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */ = {
@@ -755,6 +754,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 183654B47DCDF28C315C006B /* Pods-MDCActionExtension.debug.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -772,6 +772,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1259AD212C335B693CDA9EEA /* Pods-MDCActionExtension.release.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
