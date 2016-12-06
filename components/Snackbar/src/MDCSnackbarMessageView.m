@@ -233,10 +233,15 @@ static const CGFloat kButtonInkRadius = 64.0f;
                  dismissHandler:(MDCSnackbarMessageDismissHandler)handler {
   self = [super init];
   if (self) {
+    
     _message = message;
     _dismissalHandler = [handler copy];
 
     // styling the snackbar message view
+    [self setSnackbarMessageViewShadowColor:MDCRGBAColor(0x00, 0x00, 0x00, 1.0f)];
+    [self setSnackbarMessageViewBackgroundColor:MDCRGBAColor(0x32, 0x32, 0x32, 1.0f)];
+    [self setSnackbarMessageViewTextColor:MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f)];
+    
     self.backgroundColor = [UIColor clearColor];
     self.layer.cornerRadius = kCornerRadius;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
