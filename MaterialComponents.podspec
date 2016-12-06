@@ -43,6 +43,12 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Application"
     ss.dependency "MaterialComponents/private/RTL"
   end
+  
+  s.subspec "AnimationTiming" do |ss|
+    ss.ios.deployment_target = '7.0'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  end
 
   s.subspec "AppBar" do |ss|
     ss.ios.deployment_target = '7.0'
@@ -61,11 +67,6 @@ Pod::Spec.new do |s|
 
     ss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
     ss.dependency "MaterialComponents/private/RTL"
-  end
-
-  s.subspec "AnimationTiming" do |ss|
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
   end
 
   s.subspec "Buttons" do |ss|
