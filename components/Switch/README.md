@@ -57,21 +57,38 @@ pod install
 Before using Switch, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialSwitch.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
 ### Setup
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = UIColor.whiteColor()
+
+    switchComponent.on = true
+    switchComponent.addTarget(self, action: Selector("didChangeSwitchValue:"), forControlEvents: UIControlEvents.ValueChanged)
+    view.addSubview(switchComponent)
+    switchComponent.center = CGPointMake(50, 50);
+  }
+
+  func didChangeSwitchValue(senderSwitch:MDCSwitch) {
+    NSLog("did change value: %@", senderSwitch.on);
+  }
+~~~
+
 ### Objective C
 
 ~~~ objc
@@ -89,22 +106,5 @@ import MaterialComponents
 - (void)didChangeSwitchValue:(id)sender {
   ...
 }
-~~~
-
-#### Swift
-~~~ swift
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.backgroundColor = UIColor.whiteColor()
-
-    switchComponent.on = true
-    switchComponent.addTarget(self, action: Selector("didChangeSwitchValue:"), forControlEvents: UIControlEvents.ValueChanged)
-    view.addSubview(switchComponent)
-    switchComponent.center = CGPointMake(50, 50);
-  }
-
-  func didChangeSwitchValue(senderSwitch:MDCSwitch) {
-    NSLog("did change value: %@", senderSwitch.on);
-  }
 ~~~
 <!--</div>-->
