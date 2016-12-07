@@ -32,6 +32,11 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
                                  options:MDFTextAccessibilityOptionsNone];
 }
 
+static NSString *const MDCFlexibleHeaderViewControllerHeaderViewKey =
+    @"MDCFlexibleHeaderViewControllerHeaderViewKey";
+static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
+    @"MDCFlexibleHeaderViewControllerLayoutDelegateKey";
+
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
 @end
 
@@ -40,13 +45,38 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    MDCFlexibleHeaderView *headerView =
-        [[MDCFlexibleHeaderView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    headerView.delegate = self;
-    _headerView = headerView;
+    [self commonMDCFlexibleHeaderViewControllerInit];
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerHeaderViewKey]) {
+      _headerView = [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerHeaderViewKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey]) {
+      _layoutDelegate = [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
+    }
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  [aCoder encodeObject:self.headerView forKey:MDCFlexibleHeaderViewControllerHeaderViewKey];
+  [aCoder encodeConditionalObject:self.layoutDelegate
+                           forKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
+}
+
+- (void)commonMDCFlexibleHeaderViewControllerInit {
+  MDCFlexibleHeaderView *headerView =
+      [[MDCFlexibleHeaderView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  headerView.delegate = self;
+  _headerView = headerView;
 }
 
 - (void)loadView {
