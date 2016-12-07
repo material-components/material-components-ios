@@ -78,15 +78,15 @@ UIBarButtonItem properties.
 Before using Navigation Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialNavgiationBar.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -106,28 +106,28 @@ with a few exceptions outlined below.
 To begin observing a UINavigationItem instance you must call `observeNavigationItem:`.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-[navigationBar observeNavigationItem:viewController.navigationItem];
-~~~
-
 #### Swift
 ~~~ swift
 navigationBar.observeNavigationItem(viewController.navigationItem)
+~~~
+
+#### Objective-C
+~~~ objc
+[navigationBar observeNavigationItem:viewController.navigationItem];
 ~~~
 <!--</div>-->
 
 #### Stopping observation
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-[navigationBar unobserveNavigationItem];
-~~~
-
 #### Swift
 ~~~ swift
 navigationBar.unobserveNavigationItem()
+~~~
+
+#### Objective-C
+~~~ objc
+[navigationBar unobserveNavigationItem];
 ~~~
 <!--</div>-->
 
