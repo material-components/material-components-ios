@@ -225,9 +225,9 @@ Both documentation and code can contain URLs to assets or additional text. Make 
 1. Enter YES, NO or N/A
 
 
-### Swift Examples
+### Examples
 
-Each component must have its own standalone examples in Swift and/or Objective-C. If you only include a single example, use Swift. If you are including multiple examples, it's preferable to use Swift for some and Objective-C for others so our users can get a feel for how the component works in both languages.
+Each component must have its own standalone examples in Swift and Objective-C. If you only include a single example, use Swift. If you are including multiple examples, it's preferable to use Swift for some and Objective-C for others so our users can get a feel for how the component works in both languages.
 
 Examples will appear automatically in MDCCatalog if they are placed on disk in conformance to the “Catalog by Convention.” These examples should follow the format set forth in // TODO: Link to doc on examples and supplemental
 
