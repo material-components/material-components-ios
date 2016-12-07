@@ -55,15 +55,15 @@ pod install
 Before using Slider, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialSlider.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -72,6 +72,22 @@ import MaterialComponents
 MDCSlider can be be used like a standard `UIControl`.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+override func viewDidLoad() {
+  let slider = MDCSlider(frame: CGRectMake(50, 50, 100, 27))
+  slider.addTarget(self,
+      action: Selector("didChangeSliderValue:"),
+      forControlEvents: .ValueChanged)
+  view.addSubview(slider)
+}
+
+func didChangeSliderValue(senderSlider:MDCSlider) {
+  NSLog("Did change slider value to: %@", senderSlider.value)
+}
+~~~
+
 #### Objective C
 
 ~~~ objc
@@ -86,22 +102,6 @@ MDCSlider can be be used like a standard `UIControl`.
 
 - (void)didChangeSliderValue:(MDCSlider *)slider {
   NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
-}
-~~~
-
-#### Swift
-
-~~~ swift
-override func viewDidLoad() {
-  let slider = MDCSlider(frame: CGRectMake(50, 50, 100, 27))
-  slider.addTarget(self,
-      action: Selector("didChangeSliderValue:"),
-      forControlEvents: .ValueChanged)
-  view.addSubview(slider)
-}
-
-func didChangeSliderValue(senderSlider:MDCSlider) {
-  NSLog("Did change slider value to: %@", senderSlider.value)
 }
 ~~~
 <!--</div>-->
