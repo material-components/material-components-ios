@@ -7,6 +7,6 @@ Pod::Spec.new do |s|
   s.license      = "Apache 2.0"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "#{s.version}" }
-  s.source_files  = "demos/supplemental/RemoteImageService/*.{h,m}"
-  s.public_header_files = "demos/supplemental/RemoteImageService/*.h"
+  s.source_files  = "RemoteImageService/*.{h,m}"
+  s.public_header_files = "RemoteImageService/*.h"
 end
