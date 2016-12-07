@@ -81,7 +81,30 @@ Now you’re ready to add a component (e.g. Buttons) to your app!
 Include the Material Components header for the component you're interested
 in to your app (detailed below) to get all of the required classes.
 
-Choose from Objective-C or Swift:
+Choose from Swift or Objective-C:
+
+#### Swift
+
+~~~ swift
+import MaterialComponents.MaterialButtons
+
+class MDCBuildTestViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let raiseButton = MDCRaisedButton.init();
+        raiseButton.setTitle("Raised Button", forState: .Normal);
+        raiseButton.sizeToFit();
+        raiseButton.addTarget(self, action: #selector(tapped), forControlEvents: .TouchUpInside);
+        self.view.addSubview(raiseButton);
+    }
+
+    func tapped(sender: UIButton!){
+        NSLog("Button was tapped!");
+    }
+
+}
+~~~
 
 #### Objective-C
 
@@ -110,28 +133,6 @@ Choose from Objective-C or Swift:
 @end
 ~~~
 
-#### Swift
-
-~~~ swift
-import MaterialComponents.MaterialButtons
-
-class MDCBuildTestViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let raiseButton = MDCRaisedButton.init();
-        raiseButton.setTitle("Raised Button", forState: .Normal);
-        raiseButton.sizeToFit();
-        raiseButton.addTarget(self, action: #selector(tapped), forControlEvents: .TouchUpInside);
-        self.view.addSubview(raiseButton);
-    }
-
-    func tapped(sender: UIButton!){
-        NSLog("Button was tapped!");
-    }
-
-}
-~~~
 
 ### 5. What's next?
 
