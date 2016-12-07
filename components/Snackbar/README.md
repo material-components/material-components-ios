@@ -68,11 +68,17 @@ visible to the user.
 
 Before using Snackbar, you'll need to import it:
 
-#### Objective-C
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialSnackbar
+~~~
 
+#### Objective-C
 ~~~ objc
 #import "MaterialSnackbar.h"
 ~~~
+<!--</div>-->
 
 - - -
 
@@ -81,14 +87,6 @@ Before using Snackbar, you'll need to import it:
 ### Display a Snackbar Message
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
-[MDCSnackbarManager showMessage:message];
-~~~
-
 #### Swift
 
 ~~~ swift
@@ -96,25 +94,19 @@ let message = MDCSnackbarMessage()
 message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
 MDCSnackbarManager.showMessage(message)
 ~~~
+
+#### Objective-C
+
+~~~ objc
+MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
+[MDCSnackbarManager showMessage:message];
+~~~
 <!--</div>-->
 
 ### Display a Snackbar Message with an Action
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-void (^actionHandler)() = ^() {
-  MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
-  answerMessage.text = @"A lot";
-  [MDCSnackbarManager showMessage:answerMessage];
-};
-action.handler = actionHandler;
-action.title = @"Answer";
-message.action = action;
-~~~
-
 #### Swift
 
 ~~~ swift
@@ -127,5 +119,19 @@ let actionHandler = {() in
 action.handler = actionHandler
 action.title = "OK"
 message.action = action
+~~~
+
+#### Objective-C
+
+~~~ objc
+MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+void (^actionHandler)() = ^() {
+  MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
+  answerMessage.text = @"A lot";
+  [MDCSnackbarManager showMessage:answerMessage];
+};
+action.handler = actionHandler;
+action.title = @"Answer";
+message.action = action;
 ~~~
 <!--</div>-->

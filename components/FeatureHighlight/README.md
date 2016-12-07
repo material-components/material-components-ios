@@ -44,20 +44,35 @@ pod install
 Before using Feature Highlight, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-#import "MaterialFeatureHighlight.h"
-~~~
-
 #### Swift
 ~~~ swift
 import MaterialComponents
+~~~
+
+#### Objective-C
+~~~ objc
+#import "MaterialFeatureHighlight.h"
 ~~~
 <!--</div>-->
 
 ### Highlighting a view
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let completion = {(accepted) in
+  // perform analytics here
+  // and record whether the highlight was accepted
+}
+let highlightController = MDCFeatureHighlightViewController.init(highlightedView: highlightedView
+                                                                 completion: completion)
+highlightController.titleText = "Just how you want it"
+highlightController.bodyText = "Tap the menu button to switch accounts, change settings & more."
+highlightController.outerHighlightColor =
+    UIColor.blue.withAlphaComponent(kMDCFeatureHighlightBackgroundAlpha)
+self.present(viewController: highlightController, animated: true)
+~~~
+
 #### Objective-C
 ~~~ objc
 MDCFeatureHighlightCompletion completion = ^(accepted) {
@@ -70,34 +85,31 @@ MDCFeatureHighlightViewController *highlightController =
                                                               completion:completion];
 highlightController.titleText = @"Just how you want it";
 highlightController.bodyText = @"Tap the menu button to switch accounts, change settings & more.";
-highlightController.outerHighlightColor = 
+highlightController.outerHighlightColor =
     [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightBackgroundAlpha]
 [self presentViewController:highlightController animated:YES completion:nil];
-~~~
-
-#### Swift
-~~~ swift
-let completion = {(accepted) in
-  // perform analytics here
-  // and record whether the highlight was accepted
-}
-let highlightController = MDCFeatureHighlightViewController.init(highlightedView: highlightedView
-                                                                 completion: completion)
-highlightController.titleText = "Just how you want it"
-highlightController.bodyText = "Tap the menu button to switch accounts, change settings & more."
-highlightController.outerHighlightColor = 
-    UIColor.blue.withAlphaComponent(kMDCFeatureHighlightBackgroundAlpha)
-self.present(viewController: highlightController, animated: true)
 ~~~
 <!--</div>-->
 
 Often when highlighting a view you will want to display a different view to the one you are highlighting. For example, flipping the primary and secondary colors in the presented version.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let displayedButton = UIButton(type: .system)
+displayedButton.setTitle(highlightedButton.titleForState(.normal), for: .normal)
+displayedButton.setTitleColor(highlightedButton.backgroundColor, for: .normal)
+displayedButton.backgroundColor = highlightedButton.titleColorForState(.normal)
+
+let highlightController =
+    MDCFeatureHighlightViewController.init(highlightedView: highlightedButton,
+                                           displayedView: displayedButton)
+~~~
+
 #### Objective-C
 ~~~ objc
 UIButton *displayedButton = [UIButton buttonType:UIButtonTypeSystem];
-[displayedButton setTitle:[highlightedButton titleForState:UIControlStateNormal] 
+[displayedButton setTitle:[highlightedButton titleForState:UIControlStateNormal]
                  forState:UIControlStateNormal];
 [displayedButton setTitleColor:highlightedButton.backgroundColor forState:UIControlStateNormal];
 displayedButton.backgroundColor = [highlightedButton titleColorForState:UIControlStateNormal];
@@ -105,16 +117,5 @@ MDCFeatureHighlightViewController *highlightController =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:highlightedButton
                                                              andShowView:displayedView
                                                               completion:completion];
-~~~
-
-~~~ swift
-let displayedButton = UIButton(type: .system)
-displayedButton.setTitle(highlightedButton.titleForState(.normal), for: .normal)
-displayedButton.setTitleColor(highlightedButton.backgroundColor, for: .normal)
-displayedButton.backgroundColor = highlightedButton.titleColorForState(.normal)
-
-let highlightController = 
-    MDCFeatureHighlightViewController.init(highlightedView: highlightedButton, 
-                                           displayedView: displayedButton)
 ~~~
 <!--</div>-->

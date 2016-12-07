@@ -67,15 +67,15 @@ The top bar is typically a navigation bar. The bottom bar, when provided, is typ
 Before using Header Stack View, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialHeaderStackView.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -83,44 +83,44 @@ import MaterialComponents
 Header Stack View provides MDCHeaderStackView, which is a UIView subclass.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let headerStackView = MDCHeaderStackView()
+~~~
+
 #### Objective-C
 
 ~~~ objc
 MDCHeaderStackView *headerStackView = [[MDCHeaderStackView alloc] init];
-~~~
-
-#### Swift
-~~~ swift
-let headerStackView = MDCHeaderStackView()
 ~~~
 <!--</div>-->
 
 You may provide a top bar:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+headerStackView.topBar = navigationBar
+~~~
+
 #### Objective-C
 
 ~~~ objc
 headerStackView.topBar = navigationBar;
-~~~
-
-#### Swift
-~~~ swift
-headerStackView.topBar = navigationBar
 ~~~
 <!--</div>-->
 
 You may provide a bottom bar:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+headerStackView.bottomBar = tabBar
+~~~
+
 #### Objective-C
 
 ~~~ objc
 headerStackView.bottomBar = tabBar;
-~~~
-
-#### Swift
-~~~ swift
-headerStackView.bottomBar = tabBar
 ~~~
 <!--</div>-->
