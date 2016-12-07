@@ -96,7 +96,7 @@ import MaterialComponents
 Example of a custom button based on UIButton with material design shadows:
 
 <!--<div class="material-code-render" markdown="1">-->
-### Swift
+#### Swift
 ~~~ swift
 class ShadowButton: UIButton {
 
@@ -107,7 +107,7 @@ class ShadowButton: UIButton {
 }
 ~~~
 
-### Objective C
+#### Objective C
 ~~~ objc
 @interface ShadowButton : UIButton
 
@@ -127,7 +127,7 @@ class ShadowButton: UIButton {
 Add the custom button to view:
 
 <!--<div class="material-code-render" markdown="1">-->
-### Swift
+#### Swift
 ~~~ swift
 let button: ShadowButton = ShadowButton.init(type: UIButtonType.System)
 button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
@@ -137,7 +137,7 @@ self.addSubview(button)
 
 ~~~
 
-### Objective C
+#### Objective C
 ~~~ objc
 ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
 button.frame = CGRectMake(100, 100, 200, 50);
@@ -152,7 +152,7 @@ button.frame = CGRectMake(100, 100, 200, 50);
 Creating a custom UIView with a shadow:
 
 <!--<div class="material-code-render" markdown="1">-->
-### Swift
+#### Swift
 ~~~ swift
 class ShadowedView: UIView {
 
@@ -171,7 +171,7 @@ class ShadowedView: UIView {
 }
 ~~~
 
-### Objective C
+#### Objective C
 ~~~ objc
 @interface ShadowedView : UIView
 @end
@@ -199,7 +199,7 @@ To improve performance, consider rasterizing MDCShadowLayer when the view using 
 animating or changing size.
 
 <!--<div class="material-code-render" markdown="1">-->
-### Swift
+#### Swift
 ~~~ swift
 
 self.layer.shouldRasterize = true;
@@ -207,7 +207,7 @@ self.layer.rasterizationScale = UIScreen.mainScreen().scale
 
 ~~~
 
-### Objective C
+#### Objective C
 ~~~ objc
 
 self.layer.shouldRasterize = YES;
