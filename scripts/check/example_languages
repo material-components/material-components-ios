@@ -20,7 +20,7 @@ import sys
 
 def example_regex():
   """Return a regex that matches a README's example stanza."""
-  pattern = '<!--<div class="material-code-render" markdown="1">-->(.*)<!--</div>-->'  
+  pattern = '<!--<div class="material-code-render" markdown="1">-->(.*?)<!--</div>-->'  
   return re.compile(pattern, re.MULTILINE | re.DOTALL)
 
 
