@@ -140,6 +140,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
     ss.dependency "MaterialComponents/private/KeyboardWatcher"
+    ss.dependency "MaterialComponents/private/RTL"
   end
 
   s.subspec "FeatureHighlight" do |ss|

@@ -74,6 +74,7 @@ PODS:
   - MaterialComponents/Dialogs (17.1.1):
     - MaterialComponents/Buttons
     - MaterialComponents/private/KeyboardWatcher
+    - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
   - MaterialComponents/FeatureHighlight (17.1.1):
@@ -186,7 +187,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: c45603e76cda710a29228a790d5139f404b908ea
-  MaterialComponents: a12d5ceb61374c68107a96f199db6237cfc5b05a
+  MaterialComponents: 0bd28ac1305e3e5a31d8f753d025eed1bbad0b1d
   MaterialComponentsCatalog: 8a7b315e25a159f4758f009113fc98b690c565f8
   MaterialComponentsUnitTests: f1b0a0ab2aa178523d7d235bf3587356637e6dd9
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
