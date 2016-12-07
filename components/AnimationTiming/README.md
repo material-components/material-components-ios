@@ -34,6 +34,7 @@ pod install
 
 Before using animation timing, you'll need to import it:
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
@@ -45,6 +46,7 @@ import MaterialComponents
 ~~~ objc
 #import "MaterialAnimationTiming.h"
 ~~~
+<!--</div>-->
 
 ## Examples
 
@@ -54,6 +56,7 @@ To use an animation timing curve select an appropriate a predefined MDCAnimation
 value. Use this value to look up an animation curve's timing function. The timing function can then
 be used in an animation.
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
@@ -74,3 +77,4 @@ CAAnimationTimingFunction *timingFunction =
 CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
 animation.timingFunction = timingFunction
 ~~~
+<!--</div>-->

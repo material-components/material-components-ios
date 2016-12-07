@@ -96,6 +96,7 @@ Determinate indicators display how long an operation will take.
 ### Indeterminate indicators
 When indicators are indeterminate they request that the user wait while something finishes when it's not necessary to indicate how long it will take. This is the default mode and no additional parameters need to be set.
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
 let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
@@ -121,10 +122,12 @@ MDCActivityIndicator *activityIndicator =
 // Stop animation
 [activityIndicator stopAnimating];
 ~~~
+<!--</div>-->
 
 ### Determinate indicators
 When indicators are determinate they indicate how long an operation will take when the percentage complete is detectable. The indicator mode must be set to determinate and a progress amount must be provided as a float in the range [0,1].
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
 let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
@@ -154,3 +157,4 @@ activityIndicator.progress = 0.5;
 // Stop animation
 [activityIndicator stopAnimating];
 ~~~
+<!--</div>-->
