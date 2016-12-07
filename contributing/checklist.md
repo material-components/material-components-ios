@@ -360,7 +360,7 @@ We use the UIAppearance proxy with our visible components to allow setting defau
 ### IBDesignable Support for UIView Subclasses (If possible)
 
 
-Consider adding support for IBDesignable. If you have created a public subclass of UIView this may be as simple as adding IB_DESIGNABLE above your @interface declaration. **Note:** Do not include @IBIspectable as it interferes with UIAppearance support.
+Consider adding support for [IBDesignable](http://nshipster.com/ibinspectable-ibdesignable/). If you have created a public subclass of UIView this may be as simple as adding IB_DESIGNABLE above your @interface declaration. **Note:** Do not include @IBInspectable as it interferes with UIAppearance support.
 
 
 ```Objective-C
