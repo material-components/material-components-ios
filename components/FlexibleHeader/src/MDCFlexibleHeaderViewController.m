@@ -73,7 +73,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   MDCFlexibleHeaderView *headerView =
-  [[MDCFlexibleHeaderView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+      [[MDCFlexibleHeaderView alloc] initWithFrame:[UIScreen mainScreen].bounds];
   headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   headerView.delegate = self;
   _headerView = headerView;
