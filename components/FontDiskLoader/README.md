@@ -54,15 +54,15 @@ pod install
 Before using Font Disk Loader, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialFontDiskLoader.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -76,16 +76,16 @@ font.
 ## Code snippets
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+    let fontLoader = MDCFontDiskLoader.init(fontName: nameOfFontInFile, fontURL: fontURLOnDisk);
+    let myFont:UIFont = fontLoader.fontOfSize(16)!;
+~~~
+
 #### Objective-C
 ~~~ objc
   MDCFontDiskLoader *fontDiskLoader =
       [[MDCFontDiskLoader alloc] initWithFontName:nameOfFontInFile URL:fontURLOnDisk];
   UIFont *font = [fontDiskLoader fontOfSize:16];
-~~~
-
-#### Swift
-~~~ swift
-    let fontLoader = MDCFontDiskLoader.init(fontName: nameOfFontInFile, fontURL: fontURLOnDisk);
-    let myFont:UIFont = fontLoader.fontOfSize(16)!;
 ~~~
 <!--</div>-->
