@@ -83,11 +83,11 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 
 The documentation site uses icons in an [ordered list](https://material-ext.appspot.com/mdc-ios-preview/components/) of the components. These icons are created by Google's Material Design department specifically for this purpose.
 
-1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic` + name of component lowercase + `_24.svg`.
+1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic_component_name_24.svg`.
 1. Make sure the site source's `_icons.scss` contains an entry for that icon for that component:
 ~~~CSS
   .icon-componentname a::before {
-    background-image: url(#{$root_folder}/images/custom_icons/ic_componentname_24px.svg);
+    background-image: url(#{$root_folder}/images/custom_icons/ic_component_name_24px.svg);
   }
 ~~~
 
@@ -225,10 +225,11 @@ Both documentation and code can contain URLs to assets or additional text. Make 
 1. Enter YES, NO or N/A
 
 
-### Swift Examples
+### Examples
 
+Each component must have its own standalone examples in Swift and Objective-C. If you only include a single example, use Swift. If you are including multiple examples, it's preferable to use Swift for some and Objective-C for others so our users can get a feel for how the component works in both languages.
 
-Each component must have its own standalone examples in Swift. They must appear in the MDCCatalog by conforming to the “Catalog by Convention.” These examples should follow the format set forth in // TODO: Link to doc on examples and supplemental
+Examples will appear automatically in MDCCatalog if they are placed on disk in conformance to the “Catalog by Convention.” These examples should follow the format set forth in // TODO: Link to doc on examples and supplemental
 
 They should focus on educating thru the catalog’s visual result and the code itself. Include comments when helpful.
 
@@ -236,19 +237,13 @@ They should focus on educating thru the catalog’s visual result and the code i
 1. Include examples of additional features of the component, if possible.
 1. Enter YES or NO
 
-
-### Objc Examples
-
-
-These examples must be direct ports to Objc of every Swift example. See “Swift Examples” for more information.
-
-
 ### Interface Builder Support (If possible)
 
 
 Our users create their views both in code and in Interface Builder. It’s important to support both usages. Almost all components should be able to be added to a view hierarchy thru Interface Builder.
 
 1. UIView subclasses must support initWithCoder along with initWithFrame. The recommended practice is to override both init methods and have them both call a commonInit method with required initialization logic.
+1. Do not include @IBIspectable as it interferes with UIAppearance support.
 1. Enter YES, NO or N/A
 
 
@@ -286,8 +281,9 @@ Many components could be sensibly used in an extension. But sometimes code preve
 
 We want to avoid misuse of initializers both in the calling of existing classes and the implementation of our new classes. Aside from being a best practice in Objc, it is mandatory in Swift. Don't forget that some classes have more than one designated initializer (e.g. `UIView`.)
 
-1. Add the `NS_DESIGNATED_INITIALIZER` macro in all new classes (even private.) Designated initializers must call an initializer of the super class. All others (the convenience initializers) must call an initializer within the class (`self` level, not `super`).
-1. If a class provides one or more designated initializers, it must implement all of the designated initializers of its superclass; it does not need to redelare them `NS_DESIGNATED_INITIALIZER`. If those initializers should no longer be called, declare them `NS_UNAVAILABLE`.
+1. Add the `NS_DESIGNATED_INITIALIZER` macro to new designated initializers in all new classes (even private.) Remember, designated initializers must call an initializer of the super class. All others (the convenience initializers) must call an initializer within the class (`self` level, not `super`).
+1. If a class provides one or more designated initializers, it must also implement all of the designated initializers of its superclass; mark them `NS_DESIGNATED_INITIALIZER` if you want them to still to be designated. If those initializers should no longer be called, declare them `NS_UNAVAILABLE`.
+1. If a class has no new designated initializers and no existing designated initializers have been marked `NS_UNAVAILABLE`, nothing needs to be done.
 1. Call convenience initializers that refer to the designated initializer or the designated initializer itself. Only call `init` if you know that it is, or refers to, the designated initializer.
 1. Enter YES or NO
 
@@ -358,10 +354,7 @@ We use the UIAppearance proxy with our visible components to allow setting defau
 ### IBDesignable Support for UIView Subclasses (If possible)
 
 
-Consider adding support for IBDesignable.
-
-
-If you have created a public subclass of UIView this may be as simple as adding IB_DESIGNABLE above your @interface declaration.
+Consider adding support for [IBDesignable](http://nshipster.com/ibinspectable-ibdesignable/). If you have created a public subclass of UIView this may be as simple as adding IB_DESIGNABLE above your @interface declaration. **Note:** Do not include @IBInspectable as it interferes with UIAppearance support.
 
 
 ```Objective-C
@@ -406,73 +399,31 @@ Material Components for iOS is built primarily for adoption with CocoaPods. Ther
 
 ## Running the checklist
 
-
-To run the checklist, execute the following command from the root of this repo:
-
+We have automated some of the above checks in a set of scripts. To run all the checks against every component, run:
 
 ~~~bash
 scripts/check_components
 ~~~
 
-
-This command will run every check on every component. The output will look something like this:
-
-
-~~~
-<some check>:
-<component failing the check>
-<another component failing the check>
-<another check>:
-<a third check>:
-~~~
-
-
-Each check is expected to output each component that is failing the check.
-
-
-For example, our `missing_readme` check simply verifies whether each component has a README.md file
-in its root directory. If a component is missing a README.md, the check outputs the component's
-name, like so:
-
-
-~~~
-FontDiskLoader
-private/Color
-private/Icons/icons/ic_arrow_back
-private/ThumbTrack
-RobotoFontLoader
-~~~
-
-
-## Creating checks
-
-
-Creating a check is as simple creating an executable script in the `scripts/check/` directory. Your
-script will not be provided any arguments or stdin and is expected to output a components that fail
-the check, one component per line.
-
-
-### Snippets
-
-
-Use the following snippets to bootstrap your checks.
-
-
-*Find all components and perform a simple conditional*
-
+To run the checks against particular components, list their directories on the command line: 
 
 ~~~bash
-find components -type d -name 'src' | while read path; do
-  folder=$(dirname $path)
-  component=$(echo $folder | cut -d'/' -f2-)
-
-
-  if [ <your check logic> ]; then
-    echo $component # This component failed the check
-  fi
-done
+scripts/check_components components/ActivityIndicator components/Buttons
 ~~~
 
+Each check is a small script in the `scripts/check` directory. To run only particular checks, use the `-c` flag:
 
+~~~bash
+scripts/check_components -c scripts/check/readme -c scripts/check/video
+~~~
 
+Errors are printed out and summarized at the end of the checks:
 
+~~~bash
+Error: '/Users/ajsecord/Source/Git/mdc-fork/components/ActivityIndicator/examples' has no Swift examples.
+The following components failed: components/ActivityIndicator.
+~~~
+
+## Creating new checks
+
+To create a new check, see [`scripts/check/README.md`](../scripts/check/README.md).

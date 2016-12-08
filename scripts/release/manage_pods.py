@@ -27,23 +27,35 @@ import subprocess
 import sys
 
 
-COMMANDS = ['install', 'clean', 'update']
+COMMANDS = ['install', 'clean', 'update', 'list']
+BLACKLIST_DIRS = {'external', 'third_party', 'site-sourec', '.git'}
 
-def find_podfile_dirs(directory):
-  """Return a list of directories that contain Podfile files.
+def find_matching_dirs(root, target_name, blacklist):
+  """Return a list of directories that contain an entry with a particular name.
+
+  Paths have a directory matching anything in blacklist are excluded.
 
   Args:
     directory: Path to the directory to recursively search.
+    target_name: Name of a file/dir that, if it exists, marks its parent for
+                 inclusion.
+    blacklist: A set of directories that cannot appear in the paths.
 
   Returns:
     A list of file paths.
   """
   paths = []
-  for dirpath, unused_dirnames, filenames in os.walk(directory):
-    if 'Podfile' in filenames:
+  for dirpath, dirnames, filenames in os.walk(root, topdown=True):
+    if target_name in filenames or target_name in dirnames:
       paths.append(dirpath)
 
+    # Remove directories that we never want to explore further.
+    # Note that we have to modify dirnames in place, not replace it.
+    for p in set(dirnames) & blacklist:
+      dirnames.remove(p)
+
   return paths
+
 
 def update_podfile_dir(directory):
   """Run `pod update` in a directory.
@@ -55,15 +67,17 @@ def update_podfile_dir(directory):
   subprocess.check_call(cmd)
 
 
-def update_all_podfile_dirs(directory):
+def update_all_podfile_dirs(directory, blacklist):
   """Run `pod update` in all directories containing a Podfile.
 
   Args:
     directory: The directory to use.
+    blacklist: A set of directories that cannot appear in the paths of podfiles.
   """
-  dirs = find_podfile_dirs(directory)
+  dirs = find_matching_dirs(directory, 'Podfile', blacklist)
   for d in dirs:
     update_podfile_dir(d)
+
 
 def install_podfile_dir(directory, fast_install):
   """Run `pod install` in a directory.
@@ -78,28 +92,40 @@ def install_podfile_dir(directory, fast_install):
   subprocess.check_call(cmd)
 
 
-def install_all_podfile_dirs(directory, fast_install):
+def install_all_podfile_dirs(directory, fast_install, blacklist):
   """Run `pod install` in all directories containing a Podfile.
 
   Args:
     directory: The directory to use.
     fast_install: If True, then skip updating the podspec repo.
+    blacklist: A set of directories that cannot appear in the paths of podfiles.
   """
-  dirs = find_podfile_dirs(directory)
+  dirs = find_matching_dirs(directory, 'Podfile', blacklist)
   for d in dirs:
     install_podfile_dir(d, fast_install)
 
 
-def clean_all_pods_dirs(directory):
+def list_all_podfile_dirs(directory, blacklist):
+  """Print all directories containing a Podfile.
+
+  Args:
+    directory: The directory to use.
+    blacklist: A set of directories that cannot appear in the paths of podfiles.
+  """
+  dirs = find_matching_dirs(directory, 'Podfile', blacklist)
+  for d in dirs:
+    print(d)
+
+
+def clean_all_pods_dirs(directory, blacklist):
   """Remove all Pods directories.
 
   Args:
     directory: The directory to search.
+    blacklist: A set of directories that cannot appear in the paths of podfiles.
   """
-  paths = []
-  for dirpath, unused_dirnames, filenames in os.walk(directory):
-    if os.path.split(dirpath)[-1] == 'Pods':
-      paths.append(dirpath)
+  paths = find_matching_dirs(directory, 'Pods', blacklist)
+  paths = [os.path.join(p, 'Pods') for p in paths]
 
   for p in paths:
     shutil.rmtree(p, ignore_errors=True)
@@ -119,6 +145,7 @@ possible commands are:
   install: Run `pod install` in every directory with a Podfile.
   update: Run `pod update` in every directory with a Podfile.
   clean: Recursively remove all Pods directories.
+  list: Print a list of directories with Podfiles.
   """
   parser = argparse.ArgumentParser(description=('Runs `pod` commands in all '
                                                 'directories containing a '
@@ -167,11 +194,13 @@ def main():
 
   # TODO: Avoid this duplication of the COMMANDS strings.
   if args.command == 'install':
-    install_all_podfile_dirs(args.directory, args.fast_pod_install)
+    install_all_podfile_dirs(args.directory, args.fast_pod_install, BLACKLIST_DIRS)
   elif args.command == 'update':
-    update_all_podfile_dirs(args.directory)
+    update_all_podfile_dirs(args.directory, BLACKLIST_DIRS)
+  elif args.command == 'list':
+    list_all_podfile_dirs(args.directory, BLACKLIST_DIRS)
   elif args.command == 'clean':
-    clean_all_pods_dirs(args.directory)
+    clean_all_pods_dirs(args.directory, BLACKLIST_DIRS)
   else:
     print('Internal mismatch in the list of possible commands, aborting.',
           file=sys.stderr)

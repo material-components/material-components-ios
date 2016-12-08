@@ -15,7 +15,7 @@
  */
 
 import UIKit
-import RemoteImageService
+import RemoteImageServiceForMDCDemos
 
 class ShrineCollectionViewCell: UICollectionViewCell {
 

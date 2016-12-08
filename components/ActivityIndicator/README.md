@@ -13,6 +13,14 @@ Activity indicators are visual indications of an app loading content. The Activi
   <li class="icon-link"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
 </ul>
 
+### API Documentation
+
+<ul class="icon-list">
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Classes/MDCActivityIndicator.html>MDCActivityIndicator</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Enums/MDCActivityIndicatorMode.html">MDCActivityIndicatorMode</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Protocols/MDCActivityIndicatorDelegate.html">MDCActivityIndicatorDelegate</a></li>
+</ul>
+
 - - -
 
 ## Activity Indicator Modes
@@ -61,15 +69,15 @@ Progress and activity indicators are visual indications of an app loading conten
 Before using Activity Indicator, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialActivityIndicator.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -88,6 +96,19 @@ Determinate indicators display how long an operation will take.
 ### Indeterminate indicators
 When indicators are indeterminate they request that the user wait while something finishes when it's not necessary to indicate how long it will take. This is the default mode and no additional parameters need to be set.
 
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
+view.addSubview(activityIndicator)
+
+// Start animation
+activityIndicator.startAnimating()
+...
+// Stop animation
+activityIndicator.stopAnimating()
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -101,10 +122,17 @@ MDCActivityIndicator *activityIndicator =
 // Stop animation
 [activityIndicator stopAnimating];
 ~~~
+<!--</div>-->
 
+### Determinate indicators
+When indicators are determinate they indicate how long an operation will take when the percentage complete is detectable. The indicator mode must be set to determinate and a progress amount must be provided as a float in the range [0,1].
+
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
 let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
+activityIndicator.indicatorMode = .ModeDeterminate
+activityIndicator.progress = 0.5
 view.addSubview(activityIndicator)
 
 // Start animation
@@ -113,9 +141,6 @@ activityIndicator.startAnimating()
 // Stop animation
 activityIndicator.stopAnimating()
 ~~~
-
-### Determinate indicators
-When indicators are determinate they indicate how long an operation will take when the percentage complete is detectable. The indicator mode must be set to determinate and a progress amount must be provided as a float in the range [0,1].
 
 #### Objective-C
 
@@ -132,17 +157,4 @@ activityIndicator.progress = 0.5;
 // Stop animation
 [activityIndicator stopAnimating];
 ~~~
-
-#### Swift
-~~~ swift
-let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
-activityIndicator.indicatorMode = .ModeDeterminate
-activityIndicator.progress = 0.5
-view.addSubview(activityIndicator)
-
-// Start animation
-activityIndicator.startAnimating()
-...
-// Stop animation
-activityIndicator.stopAnimating()
-~~~
+<!--</div>-->

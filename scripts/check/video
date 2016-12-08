@@ -14,11 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-find components -type d -name 'src' | while read path; do
-  folder=$(dirname $path)
-  component=$(echo $folder | cut -d'/' -f2-)
+readonly COMPONENT_DIR=$1
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-  if [ ! -f "$folder/README.md" ]; then
-    echo $component
+# Private components do not require a README.md.
+if [[ $COMPONENT_DIR != *"/private/"* ]]; then
+  readonly COMPONENT_NAME=$(basename $COMPONENT_DIR)
+  readonly VIDEO_NAME="docs/assets/$($SCRIPTS_DIR/../naming_convention -m underscore $COMPONENT_NAME).mp4"
+  if [ ! -f "$COMPONENT_DIR/$VIDEO_NAME" ]; then
+    echo "Error: '$COMPONENT_DIR' is missing '$VIDEO_NAME'."
+    exit -1
   fi
-done
+fi

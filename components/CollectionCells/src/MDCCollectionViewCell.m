@@ -393,10 +393,12 @@ static const uint32_t kCellRedColor = 0xF44336;
     _editingSelectorImageView.image =
         [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_check_circle]];
     _editingSelectorImageView.tintColor = self.editingSelectorColor;
+    self.accessibilityTraits |= UIAccessibilityTraitSelected;
   } else {
     _editingSelectorImageView.image =
         [UIImage imageWithContentsOfFile:[MDCIcons pathFor_ic_radio_button_unchecked]];
     _editingSelectorImageView.tintColor = HEXCOLOR(kCellGrayColor);
+    self.accessibilityTraits &= ~UIAccessibilityTraitSelected;
   }
   _editingSelectorImageView.image =
       [_editingSelectorImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

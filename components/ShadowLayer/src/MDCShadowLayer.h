@@ -36,7 +36,6 @@
  @param elevation The shadow's elevation in points.
  @return The shadow metrics.
  */
-// TODO(iangordon): Determine why Swift works even without the nonnull annotation below
 + (nonnull MDCShadowMetrics *)metricsWithElevation:(CGFloat)elevation;
 @end
 

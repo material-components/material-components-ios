@@ -48,15 +48,15 @@ pod install
 Before using Palettes, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialPalettes.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -73,16 +73,15 @@ scheme.
 ## Examples
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-view.backgroundColor = [MDCPalettes greenPalette].tint500;
-~~~
-
 #### Swift
 
 ~~~ swift
 view.backgroundColor = MDCPalettes.greenPalette().tint500;
 ~~~
 
+#### Objective-C
+
+~~~ objc
+view.backgroundColor = [MDCPalettes greenPalette].tint500;
+~~~
 <!--</div>-->

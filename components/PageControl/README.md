@@ -87,15 +87,15 @@ Page control showing new current page.
 Before using Page Control, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents.MaterialPageControl
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialPageControl.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents.MaterialPageControl
 ~~~
 <!--</div>-->
 
@@ -110,6 +110,38 @@ to fire off the `UIControlEventValueChanged` events in which the scroll view wou
 notified of page changes.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDelegate {
+
+  let pageControl = MDCPageControl()
+  let scrollView = UIScrollView()
+  let pages = NSMutableArray()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    scrollView.delegate = self
+    view.addSubview(scrollView)
+
+    pageControl.numberOfPages = pageColors.count
+
+    let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
+    pageControl.frame = CGRectMake(0, view.bounds.height - pageControlSize.height, view.bounds.width, pageControlSize.height);
+    pageControl.addTarget(self, action: "didChangePage:", forControlEvents: .ValueChanged)
+    pageControl.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth];
+    view.addSubview(pageControl)
+  }
+
+  func didChangePage(sender: MDCPageControl){
+    var offset = scrollView.contentOffset
+    offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width;
+    scrollView.setContentOffset(offset, animated: true)
+  }
+
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -146,38 +178,6 @@ notified of page changes.
   [_scrollView setContentOffset:offset animated:YES];
 }
 ~~~
-
-#### Swift
-
-~~~ swift
-class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDelegate {
-
-  let pageControl = MDCPageControl()
-  let scrollView = UIScrollView()
-  let pages = NSMutableArray()
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    scrollView.delegate = self
-    view.addSubview(scrollView)
-
-    pageControl.numberOfPages = pageColors.count
-
-    let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
-    pageControl.frame = CGRectMake(0, view.bounds.height - pageControlSize.height, view.bounds.width, pageControlSize.height);
-    pageControl.addTarget(self, action: "didChangePage:", forControlEvents: .ValueChanged)
-    pageControl.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth];
-    view.addSubview(pageControl)
-  }
-
-  func didChangePage(sender: MDCPageControl){
-    var offset = scrollView.contentOffset
-    offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width;
-    scrollView.setContentOffset(offset, animated: true)
-  }
-
-~~~
 <!--</div>-->
 
 ### Step 2: Forwarding the required scroll view delegate methods
@@ -189,22 +189,6 @@ to the page control (`-scrollViewDidScroll`, `-scrollViewDidEndDecelerating`, an
 scrolling movement of the designated scroll view.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  [_pageControl scrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  [_pageControl scrollViewDidEndDecelerating:scrollView];
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-  [_pageControl scrollViewDidEndScrollingAnimation:scrollView];
-}
-~~~
-
 #### Swift
 
 ~~~ swift
@@ -221,4 +205,19 @@ func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
 }
 ~~~
 
+#### Objective-C
+
+~~~ objc
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  [_pageControl scrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  [_pageControl scrollViewDidEndDecelerating:scrollView];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+  [_pageControl scrollViewDidEndScrollingAnimation:scrollView];
+}
+~~~
 <!--</div>-->

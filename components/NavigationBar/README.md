@@ -1,8 +1,8 @@
 # Navigation Bar
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Navigation Bar](docs/assets/nav_bar.png)](docs/assets/nav_bar.mp4)
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/nav_bar.mp4" autoplay loop></video></div>{% endif %}-->
+[![Navigation Bar](docs/assets/navigation_bar.png)](docs/assets/navigation_bar.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/navigation_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Navigation Bar component is a view composed of a left and right Button Bar and either a title
 label or a custom title view.
@@ -78,15 +78,15 @@ UIBarButtonItem properties.
 Before using Navigation Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialNavgiationBar.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -106,28 +106,28 @@ with a few exceptions outlined below.
 To begin observing a UINavigationItem instance you must call `observeNavigationItem:`.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-[navigationBar observeNavigationItem:viewController.navigationItem];
-~~~
-
 #### Swift
 ~~~ swift
 navigationBar.observeNavigationItem(viewController.navigationItem)
+~~~
+
+#### Objective-C
+~~~ objc
+[navigationBar observeNavigationItem:viewController.navigationItem];
 ~~~
 <!--</div>-->
 
 #### Stopping observation
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-[navigationBar unobserveNavigationItem];
-~~~
-
 #### Swift
 ~~~ swift
 navigationBar.unobserveNavigationItem()
+~~~
+
+#### Objective-C
+~~~ objc
+[navigationBar unobserveNavigationItem];
 ~~~
 <!--</div>-->
 

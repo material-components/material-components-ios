@@ -82,15 +82,15 @@ pod install
 Before using a Button, you'll need to import the button you want to use:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MDCButton.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -122,6 +122,16 @@ simultaneously interacting with a button and other UI elements.
 ### Create a Flat Button
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let flatButton = MDCFlatButton()
+flatButton.customTitleColor = UIColor.grayColor()
+flatButton.setTitle("Tap me", forState: .Normal)
+flatButton.sizeToFit()
+flatButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+self.view.addSubview(flatButton)
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -134,16 +144,6 @@ MDCFlatButton *flatButton = [MDCFlatButton new];
      forControlEvents:UIControlEventTouchUpInside];
 [self.view addSubview:flatButton];
 ~~~
-
-#### Swift
-~~~ swift
-let flatButton = MDCFlatButton()
-flatButton.customTitleColor = UIColor.grayColor()
-flatButton.setTitle("Tap me", forState: .Normal)
-flatButton.sizeToFit()
-flatButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
-self.view.addSubview(flatButton)
-~~~
 <!--</div>-->
 
 
@@ -154,18 +154,6 @@ Create a Raised button and change its default elevation.
 The default elevation for _raised buttons_ in resting state is 2 dp.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-MDCRaisedButton *raisedButton = [MDCRaisedButton new];
-// See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
-[raisedButton setElevation:4.0f forState:UIControlStateNormal];
-[raisedButton setTitle:@"Tap Me Too" forState:UIControlStateNormal];
-[raisedButton sizeToFit];
-[raisedButton addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
-[self.view addSubview:raisedButton];
-~~~
-
 #### Swift
 ~~~ swift
 let raisedButton = MDCRaisedButton()
@@ -177,6 +165,17 @@ raisedButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
 self.view.addSubview(raisedButton)
 ~~~
 
+#### Objective-C
+
+~~~ objc
+MDCRaisedButton *raisedButton = [MDCRaisedButton new];
+// See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+[raisedButton setElevation:4.0f forState:UIControlStateNormal];
+[raisedButton setTitle:@"Tap Me Too" forState:UIControlStateNormal];
+[raisedButton sizeToFit];
+[raisedButton addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
+[self.view addSubview:raisedButton];
+~~~
 <!--</div>-->
 
 
@@ -184,6 +183,16 @@ self.view.addSubview(raisedButton)
 ### Create a Floating Action Button
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+let floatingButton = MDCFloatingButton()
+floatingButton.setTitle("+", forState: .Normal)
+floatingButton.sizeToFit()
+floatingButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+self.view.addSubview(floatingButton)
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -195,15 +204,4 @@ MDCFloatingButton *floatingButton = [MDCFloatingButton new];
          forControlEvents:UIControlEventTouchUpInside];
 [self.view addSubview:floatingButton];
 ~~~
-
-#### Swift
-
-~~~ swift
-let floatingButton = MDCFloatingButton()
-floatingButton.setTitle("+", forState: .Normal)
-floatingButton.sizeToFit()
-floatingButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
-self.view.addSubview(floatingButton)
-~~~
-
 <!--</div>-->
