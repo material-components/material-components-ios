@@ -34,7 +34,8 @@
   static BOOL isAppExtension;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    isAppExtension = [[[NSBundle mainBundle] executablePath] containsString:@".appex/"];
+    isAppExtension =
+        [[[NSBundle mainBundle] executablePath] rangeOfString:@".appex/"].location != NSNotFound;
   });
   return isAppExtension;
 }
