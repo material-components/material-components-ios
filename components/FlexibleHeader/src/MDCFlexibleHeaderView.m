@@ -216,8 +216,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderVisibleShadowOpacityKey]) {
-      _visibleShadowOpacity =
-          (CGFloat)[aDecoder decodeFloatForKey:MDCFlexibleHeaderVisibleShadowOpacityKey];
+      _visibleShadowOpacity = [aDecoder decodeFloatForKey:MDCFlexibleHeaderVisibleShadowOpacityKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderTrackingScrollViewKey]) {
