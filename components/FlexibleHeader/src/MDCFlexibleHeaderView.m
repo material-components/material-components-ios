@@ -202,7 +202,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderContentImportanceKey]) {
-      _headerContentImportance = [aDecoder decodeIntegerForKey:MDCFlexibleHeaderContentImportanceKey];
+      _headerContentImportance =
+          [aDecoder decodeIntegerForKey:MDCFlexibleHeaderContentImportanceKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderCanOverExtendKey]) {
@@ -210,7 +211,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderStatusBarCanOverlapKey]) {
-      _statusBarHintCanOverlapHeader = [aDecoder decodeBoolForKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
+      _statusBarHintCanOverlapHeader =
+          [aDecoder decodeBoolForKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderVisibleShadowOpacityKey]) {
@@ -222,11 +224,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey]) {
-      _inFrontOfInfiniteContent = [aDecoder decodeBoolForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
+      _inFrontOfInfiniteContent =
+          [aDecoder decodeBoolForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey]) {
-      _sharedWithManyScrollViews = [aDecoder decodeBoolForKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
+      _sharedWithManyScrollViews =
+          [aDecoder decodeBoolForKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderContentIsTranslucentKey]) {
@@ -248,13 +252,17 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   [aCoder encodeInteger:self.shiftBehavior forKey:MDCFlexibleHeaderShiftBehaviorKey];
   [aCoder encodeInteger:self.headerContentImportance forKey:MDCFlexibleHeaderContentImportanceKey];
   [aCoder encodeBool:self.canOverExtend forKey:MDCFlexibleHeaderCanOverExtendKey];
-  [aCoder encodeBool:self.statusBarHintCanOverlapHeader forKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
+  [aCoder encodeBool:self.statusBarHintCanOverlapHeader
+              forKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
   [aCoder encodeFloat:self.visibleShadowOpacity forKey:MDCFlexibleHeaderVisibleShadowOpacityKey];
-  [aCoder encodeBool:self.inFrontOfInfiniteContent forKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
-  [aCoder encodeBool:self.sharedWithManyScrollViews forKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
+  [aCoder encodeBool:self.inFrontOfInfiniteContent
+              forKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
+  [aCoder encodeBool:self.sharedWithManyScrollViews
+              forKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
   [aCoder encodeBool:self.contentIsTranslucent forKey:MDCFlexibleHeaderContentIsTranslucentKey];
   if (self.trackingScrollView) {
-    [aCoder encodeConditionalObject:self.trackingScrollView forKey:MDCFlexibleHeaderTrackingScrollViewKey];
+    [aCoder encodeConditionalObject:self.trackingScrollView
+                             forKey:MDCFlexibleHeaderTrackingScrollViewKey];
   }
   if (self.delegate) {
     [aCoder encodeConditionalObject:self.delegate forKey:MDCFlexibleHeaderDelegateKey];

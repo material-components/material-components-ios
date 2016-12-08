@@ -14,21 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Generates a diff from the last release to the current one.
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
+readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=latest'
+readonly LOG=test_all_log.txt
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-MDC_ROOT="$(cd "$DIR" && git rev-parse --show-toplevel | tail -n1)"
-cd $MDC_ROOT
-
-if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
-  echo "Please cut a release first by running scripts/release/cut."
-  exit 1
+# Expand (or script) this out as needed in the future.
+(cd "$ROOT_DIR/catalog" && xcodebuild test -workspace MDCCatalog.xcworkspace -scheme MDCCatalog -destination "$DESTINATION") > $LOG 2>&1
+if [[ $? -ne 0 ]]; then
+  echo "Testing failed, leaving log output in $LOG."
+else
+  rm $LOG
 fi
-
-git_diff=diff
-if [ "$1" == "--use_diff_tool" ]; then
-  git_diff=difftool
-  shift 1
-fi
-
-git $git_diff origin/master..release-candidate "$@"
