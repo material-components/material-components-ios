@@ -67,6 +67,6 @@ post_install do |installer|
 
   # EarlGrey configuration
   `git submodule update --init`
-  load 'catalog/third_party/EarlGrey/gem/lib/earlgrey/configure_earlgrey.rb'
+  load "#{File.dirname(__FILE__)}/third_party/EarlGrey/gem/lib/earlgrey/configure_earlgrey.rb"
   configure_for_earlgrey(installer, PROJECT_NAME, TEST_TARGET, SCHEME_FILE)
 end
