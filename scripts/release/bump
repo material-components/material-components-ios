@@ -154,7 +154,8 @@ def main():
     update_podspec_file(verbose_printer, p, args.version)
 
   # Update all pod files.
-  manage_pods.install_all_podfile_dirs(args.directory, args.fast_pod_install)
+  manage_pods.install_all_podfile_dirs(args.directory, args.fast_pod_install,
+                                       manage_pods.BLACKLIST_DIRS)
 
 if __name__ == '__main__':
   main()
