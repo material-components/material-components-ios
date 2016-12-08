@@ -1,40 +1,40 @@
 PODS:
   - CatalogByConvention (2.0.0)
   - EarlGrey (1.5.3)
-  - MaterialComponents (17.1.1):
-    - MaterialComponents/ActivityIndicator (= 17.1.1)
-    - MaterialComponents/AnimationTiming (= 17.1.1)
-    - MaterialComponents/AppBar (= 17.1.1)
-    - MaterialComponents/ButtonBar (= 17.1.1)
-    - MaterialComponents/Buttons (= 17.1.1)
-    - MaterialComponents/CollectionCells (= 17.1.1)
-    - MaterialComponents/CollectionLayoutAttributes (= 17.1.1)
-    - MaterialComponents/Collections (= 17.1.1)
-    - MaterialComponents/Dialogs (= 17.1.1)
-    - MaterialComponents/FeatureHighlight (= 17.1.1)
-    - MaterialComponents/FlexibleHeader (= 17.1.1)
-    - MaterialComponents/FontDiskLoader (= 17.1.1)
-    - MaterialComponents/HeaderStackView (= 17.1.1)
-    - MaterialComponents/Ink (= 17.1.1)
-    - MaterialComponents/NavigationBar (= 17.1.1)
-    - MaterialComponents/OverlayWindow (= 17.1.1)
-    - MaterialComponents/PageControl (= 17.1.1)
-    - MaterialComponents/Palettes (= 17.1.1)
-    - MaterialComponents/private (= 17.1.1)
-    - MaterialComponents/ProgressView (= 17.1.1)
-    - MaterialComponents/RobotoFontLoader (= 17.1.1)
-    - MaterialComponents/ShadowElevations (= 17.1.1)
-    - MaterialComponents/ShadowLayer (= 17.1.1)
-    - MaterialComponents/Slider (= 17.1.1)
-    - MaterialComponents/Snackbar (= 17.1.1)
-    - MaterialComponents/SpritedAnimationView (= 17.1.1)
-    - MaterialComponents/Switch (= 17.1.1)
-    - MaterialComponents/Typography (= 17.1.1)
-  - MaterialComponents/ActivityIndicator (17.1.1):
+  - MaterialComponents (17.2.0):
+    - MaterialComponents/ActivityIndicator (= 17.2.0)
+    - MaterialComponents/AnimationTiming (= 17.2.0)
+    - MaterialComponents/AppBar (= 17.2.0)
+    - MaterialComponents/ButtonBar (= 17.2.0)
+    - MaterialComponents/Buttons (= 17.2.0)
+    - MaterialComponents/CollectionCells (= 17.2.0)
+    - MaterialComponents/CollectionLayoutAttributes (= 17.2.0)
+    - MaterialComponents/Collections (= 17.2.0)
+    - MaterialComponents/Dialogs (= 17.2.0)
+    - MaterialComponents/FeatureHighlight (= 17.2.0)
+    - MaterialComponents/FlexibleHeader (= 17.2.0)
+    - MaterialComponents/FontDiskLoader (= 17.2.0)
+    - MaterialComponents/HeaderStackView (= 17.2.0)
+    - MaterialComponents/Ink (= 17.2.0)
+    - MaterialComponents/NavigationBar (= 17.2.0)
+    - MaterialComponents/OverlayWindow (= 17.2.0)
+    - MaterialComponents/PageControl (= 17.2.0)
+    - MaterialComponents/Palettes (= 17.2.0)
+    - MaterialComponents/private (= 17.2.0)
+    - MaterialComponents/ProgressView (= 17.2.0)
+    - MaterialComponents/RobotoFontLoader (= 17.2.0)
+    - MaterialComponents/ShadowElevations (= 17.2.0)
+    - MaterialComponents/ShadowLayer (= 17.2.0)
+    - MaterialComponents/Slider (= 17.2.0)
+    - MaterialComponents/Snackbar (= 17.2.0)
+    - MaterialComponents/SpritedAnimationView (= 17.2.0)
+    - MaterialComponents/Switch (= 17.2.0)
+    - MaterialComponents/Typography (= 17.2.0)
+  - MaterialComponents/ActivityIndicator (17.2.0):
     - MaterialComponents/private/Application
     - MaterialComponents/private/RTL
-  - MaterialComponents/AnimationTiming (17.1.1)
-  - MaterialComponents/AppBar (17.1.1):
+  - MaterialComponents/AnimationTiming (17.2.0)
+  - MaterialComponents/AppBar (17.2.0):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -43,16 +43,16 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (17.1.1):
+  - MaterialComponents/ButtonBar (17.2.0):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/Buttons (17.1.1):
+  - MaterialComponents/Buttons (17.2.0):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/CollectionCells (17.1.1):
+  - MaterialComponents/CollectionCells (17.2.0):
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/private/Icons/ic_check
@@ -63,91 +63,91 @@ PODS:
     - MaterialComponents/private/Icons/ic_reorder
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/CollectionLayoutAttributes (17.1.1)
-  - MaterialComponents/Collections (17.1.1):
+  - MaterialComponents/CollectionLayoutAttributes (17.2.0)
+  - MaterialComponents/Collections (17.2.0):
     - MaterialComponents/CollectionCells
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/Dialogs (17.1.1):
+  - MaterialComponents/Dialogs (17.2.0):
     - MaterialComponents/Buttons
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/FeatureHighlight (17.1.1):
+  - MaterialComponents/FeatureHighlight (17.2.0):
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader (17.1.1):
+  - MaterialComponents/FlexibleHeader (17.2.0):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/FontDiskLoader (17.1.1)
-  - MaterialComponents/HeaderStackView (17.1.1)
-  - MaterialComponents/Ink (17.1.1)
-  - MaterialComponents/NavigationBar (17.1.1):
+  - MaterialComponents/FontDiskLoader (17.2.0)
+  - MaterialComponents/HeaderStackView (17.2.0)
+  - MaterialComponents/Ink (17.2.0)
+  - MaterialComponents/NavigationBar (17.2.0):
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/OverlayWindow (17.1.1):
+  - MaterialComponents/OverlayWindow (17.2.0):
     - MaterialComponents/private/Application
-  - MaterialComponents/PageControl (17.1.1)
-  - MaterialComponents/Palettes (17.1.1)
-  - MaterialComponents/private (17.1.1):
-    - MaterialComponents/private/Application (= 17.1.1)
-    - MaterialComponents/private/Color (= 17.1.1)
-    - MaterialComponents/private/Icons (= 17.1.1)
-    - MaterialComponents/private/KeyboardWatcher (= 17.1.1)
-    - MaterialComponents/private/Overlay (= 17.1.1)
-    - MaterialComponents/private/RTL (= 17.1.1)
-    - MaterialComponents/private/ThumbTrack (= 17.1.1)
-  - MaterialComponents/private/Application (17.1.1)
-  - MaterialComponents/private/Color (17.1.1)
-  - MaterialComponents/private/Icons (17.1.1):
-    - MaterialComponents/private/Icons/Base (= 17.1.1)
-    - MaterialComponents/private/Icons/ic_arrow_back (= 17.1.1)
-    - MaterialComponents/private/Icons/ic_check (= 17.1.1)
-    - MaterialComponents/private/Icons/ic_check_circle (= 17.1.1)
-    - MaterialComponents/private/Icons/ic_chevron_right (= 17.1.1)
-    - MaterialComponents/private/Icons/ic_info (= 17.1.1)
-    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 17.1.1)
-    - MaterialComponents/private/Icons/ic_reorder (= 17.1.1)
-  - MaterialComponents/private/Icons/Base (17.1.1)
-  - MaterialComponents/private/Icons/ic_arrow_back (17.1.1):
+  - MaterialComponents/PageControl (17.2.0)
+  - MaterialComponents/Palettes (17.2.0)
+  - MaterialComponents/private (17.2.0):
+    - MaterialComponents/private/Application (= 17.2.0)
+    - MaterialComponents/private/Color (= 17.2.0)
+    - MaterialComponents/private/Icons (= 17.2.0)
+    - MaterialComponents/private/KeyboardWatcher (= 17.2.0)
+    - MaterialComponents/private/Overlay (= 17.2.0)
+    - MaterialComponents/private/RTL (= 17.2.0)
+    - MaterialComponents/private/ThumbTrack (= 17.2.0)
+  - MaterialComponents/private/Application (17.2.0)
+  - MaterialComponents/private/Color (17.2.0)
+  - MaterialComponents/private/Icons (17.2.0):
+    - MaterialComponents/private/Icons/Base (= 17.2.0)
+    - MaterialComponents/private/Icons/ic_arrow_back (= 17.2.0)
+    - MaterialComponents/private/Icons/ic_check (= 17.2.0)
+    - MaterialComponents/private/Icons/ic_check_circle (= 17.2.0)
+    - MaterialComponents/private/Icons/ic_chevron_right (= 17.2.0)
+    - MaterialComponents/private/Icons/ic_info (= 17.2.0)
+    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 17.2.0)
+    - MaterialComponents/private/Icons/ic_reorder (= 17.2.0)
+  - MaterialComponents/private/Icons/Base (17.2.0)
+  - MaterialComponents/private/Icons/ic_arrow_back (17.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check (17.1.1):
+  - MaterialComponents/private/Icons/ic_check (17.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check_circle (17.1.1):
+  - MaterialComponents/private/Icons/ic_check_circle (17.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_chevron_right (17.1.1):
+  - MaterialComponents/private/Icons/ic_chevron_right (17.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_info (17.1.1):
+  - MaterialComponents/private/Icons/ic_info (17.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_radio_button_unchecked (17.1.1):
+  - MaterialComponents/private/Icons/ic_radio_button_unchecked (17.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_reorder (17.1.1):
+  - MaterialComponents/private/Icons/ic_reorder (17.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/KeyboardWatcher (17.1.1):
+  - MaterialComponents/private/KeyboardWatcher (17.2.0):
     - MaterialComponents/private/Application
-  - MaterialComponents/private/Overlay (17.1.1)
-  - MaterialComponents/private/RTL (17.1.1)
-  - MaterialComponents/private/ThumbTrack (17.1.1):
+  - MaterialComponents/private/Overlay (17.2.0)
+  - MaterialComponents/private/RTL (17.2.0)
+  - MaterialComponents/private/ThumbTrack (17.2.0):
     - MaterialComponents/Ink
     - MaterialComponents/private/Color
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ProgressView (17.1.1):
+  - MaterialComponents/ProgressView (17.2.0):
     - MaterialComponents/private/RTL
-  - MaterialComponents/RobotoFontLoader (17.1.1):
+  - MaterialComponents/RobotoFontLoader (17.2.0):
     - MaterialComponents/FontDiskLoader
     - MaterialComponents/Typography
-  - MaterialComponents/ShadowElevations (17.1.1)
-  - MaterialComponents/ShadowLayer (17.1.1)
-  - MaterialComponents/Slider (17.1.1):
+  - MaterialComponents/ShadowElevations (17.2.0)
+  - MaterialComponents/ShadowLayer (17.2.0)
+  - MaterialComponents/Slider (17.2.0):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Snackbar (17.1.1):
+  - MaterialComponents/Snackbar (17.2.0):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Buttons
     - MaterialComponents/OverlayWindow
@@ -155,16 +155,16 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Overlay
     - MaterialComponents/Typography
-  - MaterialComponents/SpritedAnimationView (17.1.1)
-  - MaterialComponents/Switch (17.1.1):
+  - MaterialComponents/SpritedAnimationView (17.2.0)
+  - MaterialComponents/Switch (17.2.0):
     - MaterialComponents/Ink
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/Typography (17.1.1)
-  - MaterialComponentsCatalog (17.1.1):
+  - MaterialComponents/Typography (17.2.0)
+  - MaterialComponentsCatalog (17.2.0):
     - MaterialComponents
-  - MaterialComponentsUnitTests (17.1.1):
+  - MaterialComponentsUnitTests (17.2.0):
     - MaterialComponents
     - MDFTextAccessibility
   - MDFTextAccessibility (1.1.3)
@@ -187,9 +187,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: c45603e76cda710a29228a790d5139f404b908ea
-  MaterialComponents: 0bd28ac1305e3e5a31d8f753d025eed1bbad0b1d
-  MaterialComponentsCatalog: 8a7b315e25a159f4758f009113fc98b690c565f8
-  MaterialComponentsUnitTests: f1b0a0ab2aa178523d7d235bf3587356637e6dd9
+  MaterialComponents: 432b1d23723d013175e5e0dd638c28adbbe484d3
+  MaterialComponentsCatalog: 111ea0f74b8dc6afc4b8346077788ee02585188b
+  MaterialComponentsUnitTests: 74fb12ec9925b7002a3789eef7a9ca3993910eae
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
 PODFILE CHECKSUM: ffdd1aa8c02b3d6be32f07aabc4648c7b12d107c
