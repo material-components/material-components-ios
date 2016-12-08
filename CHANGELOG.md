@@ -1,3 +1,193 @@
+# 17.2.0
+
+## API Changes
+
+### FlexibleHeader
+
+* `MDCFlexibleHeaderView` is now marked `IB_DESIGNABLE`.
+
+### Switch
+
+* `MDCSwitch` is completely deprecated and will be removed in the next release. We recommend apps use UISwitch instead. 
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Add missing language switcher comments to READMEs (#963)](https://github.com/material-components/material-components-ios/commit/d246914c96d2b831cb213d9dc8d2caf4afb1dbfd) (Sam Morrison)
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+* [[MDCActivityIndicator] Add API documentation links to README.md (#950)](https://github.com/material-components/material-components-ios/commit/7da34bbff7b17e72c6dc104e41e99ba38aa1bf07) (Junius Gunaratne)
+
+### AnimationTiming
+
+#### Changes
+
+* [Add jekyll file and update pod spec](https://github.com/material-components/material-components-ios/commit/060db3e5966f1bfdfec57e85a3dedde0bc482c49) (Junius Gunaratne)
+* [Add missing language switcher comments to READMEs (#963)](https://github.com/material-components/material-components-ios/commit/d246914c96d2b831cb213d9dc8d2caf4afb1dbfd) (Sam Morrison)
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### AppBar
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### ButtonBar
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### Buttons
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### CollectionCells
+
+#### Changes
+
+* [Add "selected" accessibility trait when cell is selected in edit mode (#967)](https://github.com/material-components/material-components-ios/commit/3730aa2c580d358322a3efab6f71f40825bbf283) (Jackie Quinn)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### Collections
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### Dialogs
+
+#### Changes
+
+* [Add RTL Support (#972)](https://github.com/material-components/material-components-ios/commit/b13df7f1391c24ea13a53a772c77b68d8ef144e6) (ianegordon)
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Fix .png and .mp4 file names to match `scripts/check_components` (#946)](https://github.com/material-components/material-components-ios/commit/850faf828b220b467589b4b16315e9c4b0bbd12b) (Adrian Secord)
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### FlexibleHeader
+
+#### Changes
+
+* [- Added NSCoding compliance to component, IBDesignab… (#973)](https://github.com/material-components/material-components-ios/commit/db4b55a54e0dde591e5e171b8a17bfe11ed3ed8d) (Justin Shephard)
+* [Fixed double/CGFloat conversion error and formatting in MDCFlexibleHeaderView.m.](https://github.com/material-components/material-components-ios/commit/96ada23f183fd319e6e3b9bd068abdd1ddd67fb4) (Adrian Secord)
+* [Undid CGFloat cast for one property.](https://github.com/material-components/material-components-ios/commit/7640a0a567b42832842b5aa2888c297eebbc8900) (Adrian Secord)
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### FontDiskLoader
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### Ink
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [Fix .png and .mp4 file names to match `scripts/check_components` (#946)](https://github.com/material-components/material-components-ios/commit/850faf828b220b467589b4b16315e9c4b0bbd12b) (Adrian Secord)
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### OverlayWindow
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### PageControl
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### Palettes
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### ProgressView
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### RobotoFontLoader
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### ShadowElevations
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### ShadowLayer
+
+#### Changes
+
+* [Fix .png and .mp4 file names to match `scripts/check_components` (#946)](https://github.com/material-components/material-components-ios/commit/850faf828b220b467589b4b16315e9c4b0bbd12b) (Adrian Secord)
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+* [[Shadows] Scrub comments (#948)](https://github.com/material-components/material-components-ios/commit/d8df05828047510bb19f0f6ed1e793c55298a0f3) (ianegordon)
+
+### Slider
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### Snackbar
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### SpritedAnimationView
+
+#### Changes
+
+* [Fix .png and .mp4 file names to match `scripts/check_components` (#946)](https://github.com/material-components/material-components-ios/commit/850faf828b220b467589b4b16315e9c4b0bbd12b) (Adrian Secord)
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### Switch
+
+#### Changes
+
+* [Deprecated Switch and removed its examples. (#951)](https://github.com/material-components/material-components-ios/commit/b9fdbd6b11f1766b75f2fbd774ec33997d17fa54) (Adrian Secord)
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [[Documentation] Putting Swift snippets before Objc (#960)](https://github.com/material-components/material-components-ios/commit/1080e894229e18a7fae391d5e53ccdc7800fcd19) (Will Larche)
+
 # 17.1.1
 
 No public API or component changes.

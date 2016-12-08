@@ -52,6 +52,27 @@ pod install
 Before using Shadow Elevations, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+
+class ShadowedView: UIView {
+
+  override class func layerClass() -> AnyClass {
+    return MDCShadowLayer.self
+  }
+
+  var shadowLayer: MDCShadowLayer {
+    return self.layer as! MDCShadowLayer
+  }
+
+  func setDefaultElevation() {
+    self.shadowLayer.elevation = MDCShadowElevationCardResting
+  }
+
+}
+~~~
+
 #### Objective-C
 ~~~ objc
 #import "MaterialShadowElevations.h"
@@ -75,26 +96,5 @@ Before using Shadow Elevations, you'll need to import it:
 }
 
 @end
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
-
-class ShadowedView: UIView {
-
-  override class func layerClass() -> AnyClass {
-    return MDCShadowLayer.self
-  }
-
-  var shadowLayer: MDCShadowLayer {
-    return self.layer as! MDCShadowLayer
-  }
-
-  func setDefaultElevation() {
-    self.shadowLayer.elevation = MDCShadowElevationCardResting
-  }
-
-}
 ~~~
 <!--</div>-->

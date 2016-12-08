@@ -16,9 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-/*
- * This example is only intended to be used for performance testing and should not be used as an
- * example of how to use MDCSwitch.
- */
-@interface SwitchStressTestViewController : UIViewController
+@interface MDCActionViewController : UINavigationController
+
 @end

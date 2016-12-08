@@ -18,6 +18,7 @@
 
 #import "MDCDialogTransitionController.h"
 #import "MaterialButtons.h"
+#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 @interface MDCAlertAction ()
@@ -316,8 +317,6 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
         buttonCenter.y -= MDCDialogActionsVerticalPadding;
       }
     }
-
-    // TODO RTL Support by mirroring button rects
   } else {
     CGPoint buttonOrigin = CGPointZero;
     buttonOrigin.x = self.actionsScrollView.contentSize.width - MDCDialogActionsInsets.right;
@@ -332,6 +331,18 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
 
       if (button != [self.actionButtons lastObject]) {
         buttonOrigin.x -= MDCDialogActionsHorizontalPadding;
+      }
+    }
+    // Handle RTL
+    if (self.view.mdc_effectiveUserInterfaceLayoutDirection ==
+        UIUserInterfaceLayoutDirectionRightToLeft){
+      for (UIButton *button in self.actionButtons) {
+        CGRect buttonRect = button.frame;
+        CGRect flippedRect =
+            MDCRectFlippedForRTL(buttonRect,
+                                 CGRectGetWidth(self.view.bounds),
+                                 UIUserInterfaceLayoutDirectionRightToLeft);
+        button.frame = flippedRect;
       }
     }
   }

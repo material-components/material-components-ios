@@ -99,6 +99,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  This view relies on you informing it of certain UIScrollViewDelegate events as they happen. These
  events are listed in the UIScrollViewDelegate events section.
  */
+IB_DESIGNABLE
 @interface MDCFlexibleHeaderView : UIView
 
 #pragma mark Custom shadow

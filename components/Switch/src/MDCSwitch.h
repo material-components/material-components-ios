@@ -14,10 +14,12 @@
  limitations under the License.
  */
 
+#import <AvailabilityMacros.h>
 #import <UIKit/UIKit.h>
 
 // TODO(iangordon): Switch to class method?
 /** Returns the size of a @c MDCSwitch. */
+DEPRECATED_MSG_ATTRIBUTE("Use -[UISwitch sizeThatFits:] instead.")
 CG_EXTERN CGSize MDCSwitchSizeThatFits(CGSize size);
 
 /**
@@ -29,6 +31,7 @@ CG_EXTERN CGSize MDCSwitchSizeThatFits(CGSize size);
  */
 NS_CLASS_AVAILABLE_IOS(7_0)
 IB_DESIGNABLE
+DEPRECATED_MSG_ATTRIBUTE("Use UISwitch instead.")
 @interface MDCSwitch : UIControl <NSSecureCoding>
 
 // TODO(iangordon): Unify our Color handling over all of our components

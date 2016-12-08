@@ -22,6 +22,7 @@ Before a component is built, the API proposed must be agreed upon by the main co
 Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at [writing_readmes](writing_readmes.md).
 
 1. Verify the component has a filled out README.md
+1. Verify Swift code samples appear before Objc samples.
 1. Enter YES or NO
 
 
@@ -225,10 +226,11 @@ Both documentation and code can contain URLs to assets or additional text. Make 
 1. Enter YES, NO or N/A
 
 
-### Swift Examples
+### Examples
 
+Each component must have its own standalone examples in Swift and Objective-C. If you only include a single example, use Swift. If you are including multiple examples, it's preferable to use Swift for some and Objective-C for others so our users can get a feel for how the component works in both languages.
 
-Each component must have its own standalone examples in Swift. They must appear in the MDCCatalog by conforming to the “Catalog by Convention.” These examples should follow the format set forth in // TODO: Link to doc on examples and supplemental
+Examples will appear automatically in MDCCatalog if they are placed on disk in conformance to the “Catalog by Convention.” These examples should follow the format set forth in // TODO: Link to doc on examples and supplemental
 
 They should focus on educating thru the catalog’s visual result and the code itself. Include comments when helpful.
 
@@ -236,19 +238,13 @@ They should focus on educating thru the catalog’s visual result and the code i
 1. Include examples of additional features of the component, if possible.
 1. Enter YES or NO
 
-
-### Objc Examples
-
-
-These examples must be direct ports to Objc of every Swift example. See “Swift Examples” for more information.
-
-
 ### Interface Builder Support (If possible)
 
 
 Our users create their views both in code and in Interface Builder. It’s important to support both usages. Almost all components should be able to be added to a view hierarchy thru Interface Builder.
 
 1. UIView subclasses must support initWithCoder along with initWithFrame. The recommended practice is to override both init methods and have them both call a commonInit method with required initialization logic.
+1. Do not include @IBIspectable as it interferes with UIAppearance support.
 1. Enter YES, NO or N/A
 
 
@@ -359,10 +355,7 @@ We use the UIAppearance proxy with our visible components to allow setting defau
 ### IBDesignable Support for UIView Subclasses (If possible)
 
 
-Consider adding support for IBDesignable.
-
-
-If you have created a public subclass of UIView this may be as simple as adding IB_DESIGNABLE above your @interface declaration.
+Consider adding support for [IBDesignable](http://nshipster.com/ibinspectable-ibdesignable/). If you have created a public subclass of UIView this may be as simple as adding IB_DESIGNABLE above your @interface declaration. **Note:** Do not include @IBInspectable as it interferes with UIAppearance support.
 
 
 ```Objective-C

@@ -59,15 +59,15 @@ Typography Component for font styles recomended by Material spec.
 Before using Roboto Font Loader, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialRobotoFontLoader.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -76,15 +76,15 @@ import MaterialComponents
 The Roboto Font Loader Component depends on the FontDiskLoader Component.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-UIFont *font = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
-~~~
-
 #### Swift
 ~~~ swift
 let myFont:UIFont = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
 }
+~~~
+
+#### Objective-C
+~~~ objc
+UIFont *font = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
 ~~~
 <!--</div>-->
 
