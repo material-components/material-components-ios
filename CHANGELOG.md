@@ -1,5 +1,15 @@
 # release-candidate TODO: Replace me with version number. 
 
+## API Changes
+
+### FlexibleHeader
+
+* `MDCFlexibleHeaderView` is now marked `IB_DESIGNABLE`.
+
+### Switch
+
+* `MDCSwitch` is completely deprecated and will be removed in the next release. We recommend apps use UISwitch instead. 
+
 ## Component changes
 
 ### ActivityIndicator
