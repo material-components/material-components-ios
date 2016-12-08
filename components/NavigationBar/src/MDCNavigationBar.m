@@ -76,6 +76,18 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   return forwardingKeyPaths;
 }
 
+static NSString *const MDCNavigationBarTitleKey = @"MDCNavigationBarTitleKey";
+static NSString *const MDCNavigationBarTitleViewKey = @"MDCNavigationBarTitleViewKey";
+static NSString *const MDCNavigationBarTitleTextAttributesKey =
+    @"MDCNavigationBarTitleTextAttributesKey";
+static NSString *const MDCNavigationBarBackItemKey = @"MDCNavigationBarBackItemKey";
+static NSString *const MDCNavigationBarHidesBackButtonKey = @"MDCNavigationBarHidesBackButtonKey";
+static NSString *const MDCNavigationBarLeadingBarItemsKey = @"MDCNavigationBarLeadingBarItemsKey";
+static NSString *const MDCNavigationBarTrailingBarItemsKey = @"MDCNavigationBarTrailingBarItemsKey";
+static NSString *const MDCNavigationBarLeadingButtonSupplementsBackButtonKey =
+    @"MDCNavigationBarLeadingButtonSupplementsBackButtonKey";
+static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTitleAlignmentKey";
+
 /**
  Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
  and UINavigationItem.titleView are normally transferred to UINavigationController but we plan to
@@ -138,6 +150,44 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCNavigationBarInit];
+    if ([aDecoder containsValueForKey:MDCNavigationBarTitleKey]) {
+      self.title = [aDecoder decodeObjectForKey:MDCNavigationBarTitleKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarTitleViewKey]) {
+      self.titleView = [aDecoder decodeObjectForKey:MDCNavigationBarTitleViewKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarTitleTextAttributesKey]) {
+      self.titleTextAttributes =
+          [aDecoder decodeObjectForKey:MDCNavigationBarTitleTextAttributesKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarBackItemKey]) {
+      self.backItem = [aDecoder decodeObjectForKey:MDCNavigationBarBackItemKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarHidesBackButtonKey]) {
+      self.hidesBackButton = [aDecoder decodeBoolForKey:MDCNavigationBarHidesBackButtonKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarLeadingBarItemsKey]) {
+      self.leadingBarButtonItems = [aDecoder decodeObjectForKey:MDCNavigationBarLeadingBarItemsKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarTrailingBarItemsKey]) {
+      self.trailingBarButtonItems =
+          [aDecoder decodeObjectForKey:MDCNavigationBarTrailingBarItemsKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey]) {
+      self.leadingItemsSupplementBackButton =
+          [aDecoder decodeBoolForKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarTitleAlignmentKey]) {
+      self.titleAlignment = [aDecoder decodeBoolForKey:MDCNavigationBarTitleAlignmentKey];
+    }
   }
   return self;
 }
@@ -148,6 +198,40 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     [self commonMDCNavigationBarInit];
   }
   return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+
+  if (self.title) {
+    [aCoder encodeObject:self.title forKey:MDCNavigationBarTitleKey];
+  }
+
+  if (self.titleView) {
+    [aCoder encodeObject:self.titleView forKey:MDCNavigationBarTitleViewKey];
+  }
+
+  if (self.titleTextAttributes) {
+    [aCoder encodeObject:self.titleTextAttributes forKey:MDCNavigationBarTitleTextAttributesKey];
+  }
+
+  if (self.backItem) {
+    [aCoder encodeObject:self.backItem forKey:MDCNavigationBarBackItemKey];
+  }
+
+  [aCoder encodeBool:self.hidesBackButton forKey:MDCNavigationBarHidesBackButtonKey];
+
+  if (self.leadingBarButtonItems && self.leadingBarButtonItems.count > 0) {
+    [aCoder encodeObject:self.leadingBarButtonItems forKey:MDCNavigationBarLeadingBarItemsKey];
+  }
+
+  if (self.trailingBarButtonItems && self.trailingBarButtonItems.count > 0) {
+    [aCoder encodeObject:self.trailingBarButtonItems forKey:MDCNavigationBarTrailingBarItemsKey];
+  }
+
+  [aCoder encodeBool:self.leadingItemsSupplementBackButton
+              forKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey];
+  [aCoder encodeInteger:self.titleAlignment forKey:MDCNavigationBarTitleAlignmentKey];
 }
 
 #pragma mark Accessibility
