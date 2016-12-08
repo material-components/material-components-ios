@@ -190,11 +190,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   if (self) {
     [self commonMDCFlexibleHeaderViewInit];
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderMinimumHeightKey]) {
-      _minimumHeight = [aDecoder decodeDoubleForKey:MDCFlexibleHeaderMinimumHeightKey];
+      _minimumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMinimumHeightKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderMaximumHeightKey]) {
-      _maximumHeight = [aDecoder decodeDoubleForKey:MDCFlexibleHeaderMaximumHeightKey];
+      _maximumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMaximumHeightKey];
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderShiftBehaviorKey]) {
