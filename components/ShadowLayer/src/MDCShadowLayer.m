@@ -20,6 +20,10 @@ static const CGFloat kShadowElevationDialog = 24.0;
 static const float kKeyShadowOpacity = 0.26f;
 static const float kAmbientShadowOpacity = 0.08f;
 
+static NSString *const MDCShadowLayerElevationKey = @"MDCShadowLayerElevationKey";
+static NSString *const MDCShadowLayerShadowMaskEnabledKey =
+    @"MDCShadowLayerShadowMaskEnabledKey";
+
 @implementation MDCShadowMetrics
 
 + (MDCShadowMetrics *)metricsWithElevation:(CGFloat)elevation {
@@ -103,6 +107,68 @@ static const float kAmbientShadowOpacity = 0.08f;
   }
   return self;
 }
+
+- (instancetype)initWithLayer:(id)layer {
+  self = [super initWithLayer:layer];
+  if (self) {
+    if ([layer isKindOfClass:[MDCShadowLayer class]]) {
+      MDCShadowLayer *shadowLayer = (MDCShadowLayer *)layer;
+      _elevation = shadowLayer.elevation;
+      _shadowMaskEnabled = shadowLayer.shadowMaskEnabled;
+
+      _bottomShadow = [shadowLayer.bottomShadow copy];
+      [self addSublayer:_bottomShadow];
+
+      _topShadow = [shadowLayer.topShadow copy];
+      [self addSublayer:_topShadow];
+    }
+  }
+  return self;
+}
+
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    if ([aDecoder containsValueForKey:MDCShadowLayerElevationKey]) {
+      _elevation = (CGFloat)[aDecoder decodeDoubleForKey:MDCShadowLayerElevationKey];
+    }
+    if ([aDecoder containsValueForKey:MDCShadowLayerShadowMaskEnabledKey]) {
+      _shadowMaskEnabled =
+          [aDecoder decodeBoolForKey:MDCShadowLayerShadowMaskEnabledKey];
+    }
+
+    _bottomShadow = [CAShapeLayer layer];
+    _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
+    _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
+    [self addSublayer:_bottomShadow];
+
+    _topShadow = [CAShapeLayer layer];
+    _topShadow.backgroundColor = [UIColor clearColor].CGColor;
+    _topShadow.shadowColor = [UIColor blackColor].CGColor;
+    [self addSublayer:_topShadow];
+
+    MDCShadowMetrics *shadowMetrics = [MDCShadowMetrics metricsWithElevation:_elevation];
+    _topShadow.shadowOffset = shadowMetrics.topShadowOffset;
+    _topShadow.shadowRadius = shadowMetrics.topShadowRadius;
+    _topShadow.shadowOpacity = shadowMetrics.topShadowOpacity;
+    _bottomShadow.shadowOffset = shadowMetrics.bottomShadowOffset;
+    _bottomShadow.shadowRadius = shadowMetrics.bottomShadowRadius;
+    _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
+
+    if (_shadowMaskEnabled) {
+      _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
+      _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
+    }
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  [aCoder encodeDouble:_elevation forKey:MDCShadowLayerElevationKey];
+  [aCoder encodeBool:_shadowMaskEnabled forKey:MDCShadowLayerShadowMaskEnabledKey];
+}
+
 
 - (void)layoutSublayers {
   [super layoutSublayers];
