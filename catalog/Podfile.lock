@@ -1,6 +1,6 @@
 PODS:
   - CatalogByConvention (2.0.0)
-  - EarlGrey (1.5.3)
+  - EarlGrey (1.6.0)
   - MaterialComponents (17.2.0):
     - MaterialComponents/ActivityIndicator (= 17.2.0)
     - MaterialComponents/AnimationTiming (= 17.2.0)
@@ -186,12 +186,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
-  EarlGrey: c45603e76cda710a29228a790d5139f404b908ea
+  EarlGrey: 75b2e9359c57d56c9b7f333e17761c6bff35a9ea
   MaterialComponents: 432b1d23723d013175e5e0dd638c28adbbe484d3
   MaterialComponentsCatalog: 111ea0f74b8dc6afc4b8346077788ee02585188b
   MaterialComponentsUnitTests: 74fb12ec9925b7002a3789eef7a9ca3993910eae
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
-PODFILE CHECKSUM: ca96993888e065402fc178989c3f9ece5829c2ea
+PODFILE CHECKSUM: ffdd1aa8c02b3d6be32f07aabc4648c7b12d107c
 
 COCOAPODS: 1.0.1
