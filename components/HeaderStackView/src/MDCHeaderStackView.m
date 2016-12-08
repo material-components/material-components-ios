@@ -16,7 +16,34 @@
 
 #import "MDCHeaderStackView.h"
 
+static NSString *const MDCHeaderStackViewTopBarKey = @"MDCHeaderStackViewTopBarKey";
+static NSString *const MDCHeaderStackViewBottomBarKey = @"MDCHeaderStackViewBottomBarKey";
+
 @implementation MDCHeaderStackView
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    if ([aDecoder containsValueForKey:MDCHeaderStackViewTopBarKey]) {
+      _topBar = [aDecoder decodeObjectForKey:MDCHeaderStackViewTopBarKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCHeaderStackViewBottomBarKey]) {
+      _bottomBar = [aDecoder decodeObjectForKey:MDCHeaderStackViewBottomBarKey];
+    }
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  if (self.topBar) {
+    [aCoder encodeObject:self.topBar forKey:MDCHeaderStackViewTopBarKey];
+  }
+  if (self.bottomBar) {
+    [aCoder encodeObject:self.bottomBar forKey:MDCHeaderStackViewBottomBarKey];
+  }
+}
 
 - (CGSize)sizeThatFits:(CGSize)size {
   if (_bottomBar) {
