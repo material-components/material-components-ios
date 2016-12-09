@@ -263,14 +263,15 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
   CGRect leadingButtonBarFrame =
-      (CGRect){.origin = {0, self.bounds.origin.y}, .size = leadingButtonBarSize};
+      CGRectMake(0, self.bounds.origin.y, leadingButtonBarSize.width, leadingButtonBarSize.height);
   _leadingButtonBar.frame = MDCRectFlippedForRTL(leadingButtonBarFrame, self.bounds.size.width,
                                                  self.mdc_effectiveUserInterfaceLayoutDirection);
 
   CGSize trailingButtonBarSize = [_trailingButtonBar sizeThatFits:self.bounds.size];
-  CGRect trailingButtonBarFrame = (CGRect){
-      .origin = {self.bounds.size.width - trailingButtonBarSize.width, self.bounds.origin.y},
-      .size = trailingButtonBarSize};
+  CGRect trailingButtonBarFrame = CGRectMake(self.bounds.size.width - trailingButtonBarSize.width,
+                                             self.bounds.origin.y,
+                                             trailingButtonBarSize.width,
+                                             trailingButtonBarSize.height);
   _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame, self.bounds.size.width,
                                                   self.mdc_effectiveUserInterfaceLayoutDirection);
 
@@ -293,7 +294,9 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                                                     context:NULL].size;
   titleSize.width = Ceil(titleSize.width);
   titleSize.height = Ceil(titleSize.height);
-  CGRect titleFrame = (CGRect){{textFrame.origin.x, 0}, titleSize};
+  CGRect titleFrame = CGRectMake(textFrame.origin.x, 0, titleSize.width, titleSize.height);
+  titleFrame = MDCRectFlippedForRTL(titleFrame, self.bounds.size.width,
+                                    self.mdc_effectiveUserInterfaceLayoutDirection);
   UIControlContentVerticalAlignment titleVerticalAlignment = UIControlContentVerticalAlignmentTop;
   CGRect alignedFrame = [self mdc_frameAlignedVertically:titleFrame
                                             withinBounds:textFrame
@@ -419,12 +422,9 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                         withinBounds:(CGRect)bounds
                            alignment:(UIControlContentVerticalAlignment)alignment {
   switch (alignment) {
-    case UIControlContentVerticalAlignmentBottom: {
-      return CGRectMake(frame.origin.x,
-                        CGRectGetMaxY(bounds) - frame.size.height,
-                        frame.size.width,
-                        frame.size.height);
-    }
+    case UIControlContentVerticalAlignmentBottom:
+      return CGRectMake(frame.origin.x, CGRectGetMaxY(bounds) - frame.size.height,
+                        frame.size.width, frame.size.height);
 
     case UIControlContentVerticalAlignmentCenter: {
       CGFloat centeredY = Floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
