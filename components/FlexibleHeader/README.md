@@ -393,6 +393,34 @@ headerViewController.layoutDelegate = self;
 ~~~
 <!--</div>-->
 
+### Utilizing Top Layout Guide on Parent View Controller
+
+When pairing  MDCFlexibleHeaderViewController with a view controller, it may be desirable to utilize
+the paired view controller's `topLayoutGuide` to constrain additionals views. To constrain the
+`topLayoutGuide` to the bottom point of the MDCFlexibleHeaderViewController, call 
+updateTopLayoutGuide on the flexible header view controller within the paird view controller's 
+viewWillLayoutSubviews method.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self.headerViewController updateLayoutGuide];
+}
+
+~~~
+
+#### Swift
+
+override func viewWillLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    headerViewController.updateTopLayoutGuide()
+}
+
+~~~
+<!--</div>-->
+
 ### Take care when subclassing
 
 A subclass of your view controller may add additional views in their viewDidLoad, potentially
