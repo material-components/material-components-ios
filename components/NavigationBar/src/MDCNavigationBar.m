@@ -419,16 +419,26 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                         withinBounds:(CGRect)bounds
                            alignment:(UIControlContentVerticalAlignment)alignment {
   switch (alignment) {
-    case UIControlContentVerticalAlignmentBottom:
-      return (CGRect){{frame.origin.x, CGRectGetMaxY(bounds) - frame.size.height}, frame.size};
+    case UIControlContentVerticalAlignmentBottom: {
+      return CGRectMake(frame.origin.x,
+                        CGRectGetMaxY(bounds) - frame.size.height,
+                        frame.size.width,
+                        frame.size.height);
+    }
 
     case UIControlContentVerticalAlignmentCenter: {
       CGFloat centeredY = Floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
-      return (CGRect){{frame.origin.x, centeredY}, frame.size};
+      return CGRectMake(frame.origin.x,
+                        centeredY,
+                        frame.size.width,
+                        frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentTop: {
-      return (CGRect){{frame.origin.x, bounds.origin.y}, frame.size};
+      return CGRectMake(frame.origin.x,
+                        bounds.origin.y,
+                        frame.size.width,
+                        frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentFill: {
@@ -441,11 +451,16 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                              alignment:(MDCNavigationBarTitleAlignment)alignment {
   switch (alignment) {
     case MDCNavigationBarTitleAlignmentCenter:
-      return (CGRect){{CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2, frame.origin.y},
-        frame.size};
+      return CGRectMake(CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2,
+                        frame.origin.y,
+                        frame.size.width,
+                        frame.size.height);
 
     case MDCNavigationBarTitleAlignmentLeading:
-      return (CGRect){{frame.origin.x, frame.origin.y}, frame.size};
+      return CGRectMake(frame.origin.x,
+                        frame.origin.y,
+                        frame.size.width,
+                        frame.size.height);
   }
 }
 
