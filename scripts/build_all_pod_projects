@@ -16,24 +16,22 @@
 
 set -o errexit
 
-build_log=build_log.txt
-find * -name 'Podfile' | while read path; do
-  project_dir=$(dirname $path)
-  echo "Building in $project_dir..."
-  pushd $(dirname $path) >/dev/null
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly BUILD_LOG=build_log.txt
 
-  rm -rf Pods
-  pod install --silent
+readonly PODFILE_DIRS=$("$SCRIPTS_DIR"/release/manage_pods.py list)
+for i in $PODFILE_DIRS; do
+  echo "Building in $i..."
+  pushd $i >/dev/null
 
   workspace=$(find . -d 1 -name '*.xcworkspace')
   scheme=$(xcodebuild build -workspace $workspace -list | grep "Information about workspace" | cut -d'"' -f2)
-  xcodebuild clean -workspace $workspace -scheme $scheme >/dev/null
   
-  if ! xcodebuild build -workspace $workspace -scheme $scheme >$build_log 2>&1; then
-    echo "Failed to build $scheme in $workspace, log left in $project_dir/$build_log."
+  if ! xcodebuild build -workspace $workspace -scheme $scheme >$BUILD_LOG 2>&1; then
+    echo "Failed to build $scheme in $workspace, log left in $i/$BUILD_LOG."
     echo "Continuing with next project..."
   else
-    rm $build_log
+    rm $BUILD_LOG
     echo "Done."
   fi
 
