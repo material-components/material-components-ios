@@ -1,8 +1,0 @@
-/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
-"MDCSwitchAccessibilityHint" = "Dvaput dodirnite da biste uključili/isključili postavku";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityValueOn" = "Uključeno";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityValueOff" = "Isključeno";
