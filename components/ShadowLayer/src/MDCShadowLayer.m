@@ -80,6 +80,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
 
 @end
 
+
 @interface MDCShadowLayer ()
 
 @property(nonatomic, strong) CAShapeLayer *topShadow;
@@ -95,22 +96,58 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
     _elevation = 0;
     _shadowMaskEnabled = YES;
 
-    _bottomShadow = [CAShapeLayer layer];
-    _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
-    _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
-    [self addSublayer:_bottomShadow];
-
-    _topShadow = [CAShapeLayer layer];
-    _topShadow.backgroundColor = [UIColor clearColor].CGColor;
-    _topShadow.shadowColor = [UIColor blackColor].CGColor;
-    [self addSublayer:_topShadow];
+    [self commonMDCShadowLayerInit];
   }
   return self;
+}
+
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    if ([aDecoder containsValueForKey:MDCShadowLayerElevationKey]) {
+      _elevation = (CGFloat)[aDecoder decodeDoubleForKey:MDCShadowLayerElevationKey];
+    }
+    if ([aDecoder containsValueForKey:MDCShadowLayerShadowMaskEnabledKey]) {
+      _shadowMaskEnabled =
+        [aDecoder decodeBoolForKey:MDCShadowLayerShadowMaskEnabledKey];
+    }
+
+    [self commonMDCShadowLayerInit];
+
+    if (_shadowMaskEnabled) {
+      _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
+      _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
+    }
+  }
+  return self;
+}
+
+- (void)commonMDCShadowLayerInit {
+  _bottomShadow = [CAShapeLayer layer];
+  _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
+  _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
+  [self addSublayer:_bottomShadow];
+
+  _topShadow = [CAShapeLayer layer];
+  _topShadow.backgroundColor = [UIColor clearColor].CGColor;
+  _topShadow.shadowColor = [UIColor blackColor].CGColor;
+  [self addSublayer:_topShadow];
+
+  // Setup state based off _elevation and _shadowMaskEnabled
+  MDCShadowMetrics *shadowMetrics = [MDCShadowMetrics metricsWithElevation:_elevation];
+  _topShadow.shadowOffset = shadowMetrics.topShadowOffset;
+  _topShadow.shadowRadius = shadowMetrics.topShadowRadius;
+  _topShadow.shadowOpacity = shadowMetrics.topShadowOpacity;
+  _bottomShadow.shadowOffset = shadowMetrics.bottomShadowOffset;
+  _bottomShadow.shadowRadius = shadowMetrics.bottomShadowRadius;
+  _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
 }
 
 - (instancetype)initWithLayer:(id)layer {
   self = [super initWithLayer:layer];
   if (self) {
+    // We do not call commonInit since this method is essentially a specialized copy-constructor.
+
     if ([layer isKindOfClass:[MDCShadowLayer class]]) {
       MDCShadowLayer *shadowLayer = (MDCShadowLayer *)layer;
       _elevation = shadowLayer.elevation;
@@ -126,47 +163,12 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
   return self;
 }
 
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    if ([aDecoder containsValueForKey:MDCShadowLayerElevationKey]) {
-      _elevation = (CGFloat)[aDecoder decodeDoubleForKey:MDCShadowLayerElevationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCShadowLayerShadowMaskEnabledKey]) {
-      _shadowMaskEnabled =
-          [aDecoder decodeBoolForKey:MDCShadowLayerShadowMaskEnabledKey];
-    }
-
-    _bottomShadow = [CAShapeLayer layer];
-    _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
-    _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
-    [self addSublayer:_bottomShadow];
-
-    _topShadow = [CAShapeLayer layer];
-    _topShadow.backgroundColor = [UIColor clearColor].CGColor;
-    _topShadow.shadowColor = [UIColor blackColor].CGColor;
-    [self addSublayer:_topShadow];
-
-    MDCShadowMetrics *shadowMetrics = [MDCShadowMetrics metricsWithElevation:_elevation];
-    _topShadow.shadowOffset = shadowMetrics.topShadowOffset;
-    _topShadow.shadowRadius = shadowMetrics.topShadowRadius;
-    _topShadow.shadowOpacity = shadowMetrics.topShadowOpacity;
-    _bottomShadow.shadowOffset = shadowMetrics.bottomShadowOffset;
-    _bottomShadow.shadowRadius = shadowMetrics.bottomShadowRadius;
-    _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
-
-    if (_shadowMaskEnabled) {
-      _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
-      _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
-    }
-  }
-  return self;
-}
-
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
   [aCoder encodeDouble:_elevation forKey:MDCShadowLayerElevationKey];
   [aCoder encodeBool:_shadowMaskEnabled forKey:MDCShadowLayerShadowMaskEnabledKey];
+  // Additional state is calculated at deserialization time based on _elevation and
+  // _shadowMaskEnabled so we don't need to store them.
 }
 
 
