@@ -65,7 +65,7 @@ static NSString *const MDCHeaderStackViewBottomBarKey = @"MDCHeaderStackViewBott
   CGFloat remainingHeight = boundsSize.height - topBarSize.height - bottomBarSize.height;
 
   CGRect topBarFrame = CGRectMake(0, 0, topBarSize.width, topBarSize.height);
-  CGRect bottomBarFrame = CGRectMake(0, 0, bottomBarSize.width, bottombarSize.height);
+  CGRect bottomBarFrame = CGRectMake(0, 0, bottomBarSize.width, bottomBarSize.height);
 
   if (remainingHeight > 0) {
     // Expand the top bar to fill the remaining height.
