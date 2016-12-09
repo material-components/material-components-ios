@@ -457,7 +457,10 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                         frame.size.height);
 
     case MDCNavigationBarTitleAlignmentLeading:
-      return frame;
+      return CGRectMake(frame.origin.x,
+                        frame.origin.y,
+                        frame.size.width,
+                        frame.size.height);
   }
 }
 
