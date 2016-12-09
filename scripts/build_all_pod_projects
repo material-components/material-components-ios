@@ -16,10 +16,9 @@
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$SCRIPTS_DIR/.."
-readonly BUILD_LOG=build_log.txt
 
 # Build a list of workspaces to build.
-# For the moment, we only have CocoaPods projects.
+# For the moment, we only have workspaces from CocoaPods projects.
 readonly PODFILE_DIRS=$("$SCRIPTS_DIR"/release/manage_pods.py --dir "$ROOT_DIR" list)
 workspaces=""
 for i in ${PODFILE_DIRS}; do
@@ -27,24 +26,27 @@ for i in ${PODFILE_DIRS}; do
 done
 
 for workspace in $workspaces; do
-  echo "Building schemes in $workspace..."
-
   # Gather a list of schemes in the workspace.
-  # This regex is dumb but works for now.
+  # This regex is admittably dumb.
   schemes=$(xcodebuild -workspace "$workspace" -list | grep "^        ")
 
   # While it looks like OMG we're building way too much, note that xcodebuild is
   # caching build results, so if scheme A depends on scheme B and scheme B is
   # built first, then scheme A won't rebuild it again.
+  echo "Building schemes in $workspace."
   for scheme in $schemes; do 
-    log_file=$(dirname "$workspace")/"$BUILD_LOG"
-    if ! xcodebuild build -workspace "$workspace" -scheme "$scheme" \
-          >"$log_file" 2>&1; then
+    log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
+
+    # The 'skip' option is to skip test-only schemes without a failure.
+    # TODO: Check for 'is not configured for Running' and skip if so.
+    options="-skipUnavailableActions -workspace $workspace -scheme $scheme"
+    echo xcodebuild build $options
+    if ! xcodebuild build $options >"$log_file" 2>&1; then
       echo "Failed to build $scheme in $workspace, log left in $log_file."
       echo "Continuing with next build..."
     else
-      rm $BUILD_LOG
-      echo "Done."
+      rm "$log_file"
     fi
   done
+  echo "Done."
 done
