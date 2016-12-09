@@ -18,6 +18,7 @@ readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly BUILD_LOG=build_log.txt
 
 # Build a list of workspaces to build.
+# For now, we just have CocoaPods projects to worry about.
 readonly PODFILE_DIRS=$("$SCRIPTS_DIR"/release/manage_pods.py list)
 
 
