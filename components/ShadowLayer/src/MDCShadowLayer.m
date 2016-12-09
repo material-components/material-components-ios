@@ -143,26 +143,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
   _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
 }
 
-- (instancetype)initWithLayer:(id)layer {
-  self = [super initWithLayer:layer];
-  if (self) {
-    // We do not call commonInit since this method is essentially a specialized copy-constructor.
-
-    if ([layer isKindOfClass:[MDCShadowLayer class]]) {
-      MDCShadowLayer *shadowLayer = (MDCShadowLayer *)layer;
-      _elevation = shadowLayer.elevation;
-      _shadowMaskEnabled = shadowLayer.shadowMaskEnabled;
-
-      _bottomShadow = [shadowLayer.bottomShadow copy];
-      [self addSublayer:_bottomShadow];
-
-      _topShadow = [shadowLayer.topShadow copy];
-      [self addSublayer:_topShadow];
-    }
-  }
-  return self;
-}
-
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
   [aCoder encodeDouble:_elevation forKey:MDCShadowLayerElevationKey];
