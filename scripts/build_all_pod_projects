@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -o errexit
-
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly BUILD_LOG=build_log.txt
 
+# Build a list of workspaces to build.
 readonly PODFILE_DIRS=$("$SCRIPTS_DIR"/release/manage_pods.py list)
+
+
 for i in $PODFILE_DIRS; do
   echo "Building in $i..."
   pushd $i >/dev/null
