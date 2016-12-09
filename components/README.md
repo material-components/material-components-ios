@@ -32,6 +32,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**AnimationTiming**
   Animation timing easing curves create smooth and consistent motion.
   ](AnimationTiming/)
+  <!--{: .icon-animationtiming }-->
 
 - [**AppBar**
   A flexible navigation bar, designed to provide a typical material navigation experience.
