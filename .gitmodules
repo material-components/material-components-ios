@@ -16,3 +16,6 @@
 [submodule "scripts/external/material-motion-apidiff"]
 	path = scripts/external/material-motion-apidiff
 	url = https://github.com/material-motion/material-motion-apidiff.git
+[submodule "catalog/third_party/EarlGrey"]
+	path = catalog/third_party/EarlGrey
+	url = git@github.com:google/EarlGrey.git
