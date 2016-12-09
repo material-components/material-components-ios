@@ -15,26 +15,36 @@
 # limitations under the License.
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly ROOT_DIR="$SCRIPTS_DIR/.."
 readonly BUILD_LOG=build_log.txt
 
 # Build a list of workspaces to build.
-readonly PODFILE_DIRS=$("$SCRIPTS_DIR"/release/manage_pods.py list)
+# For the moment, we only have CocoaPods projects.
+readonly PODFILE_DIRS=$("$SCRIPTS_DIR"/release/manage_pods.py --dir "$ROOT_DIR" list)
+workspaces=""
+for i in ${PODFILE_DIRS}; do
+  workspaces="$workspaces $(find "$i" -d 1 -name '*.xcworkspace')"
+done
 
+for workspace in $workspaces; do
+  echo "Building schemes in $workspace..."
 
-for i in $PODFILE_DIRS; do
-  echo "Building in $i..."
-  pushd $i >/dev/null
+  # Gather a list of schemes in the workspace.
+  # This regex is dumb but works for now.
+  schemes=$(xcodebuild -workspace "$workspace" -list | grep "^        ")
 
-  workspace=$(find . -d 1 -name '*.xcworkspace')
-  scheme=$(xcodebuild build -workspace $workspace -list | grep "Information about workspace" | cut -d'"' -f2)
-  
-  if ! xcodebuild build -workspace $workspace -scheme $scheme >$BUILD_LOG 2>&1; then
-    echo "Failed to build $scheme in $workspace, log left in $i/$BUILD_LOG."
-    echo "Continuing with next project..."
-  else
-    rm $BUILD_LOG
-    echo "Done."
-  fi
-
-  popd >/dev/null
+  # While it looks like OMG we're building way too much, note that xcodebuild is
+  # caching build results, so if scheme A depends on scheme B and scheme B is
+  # built first, then scheme A won't rebuild it again.
+  for scheme in $schemes; do 
+    log_file=$(dirname "$workspace")/"$BUILD_LOG"
+    if ! xcodebuild build -workspace "$workspace" -scheme "$scheme" \
+          >"$log_file" 2>&1; then
+      echo "Failed to build $scheme in $workspace, log left in $log_file."
+      echo "Continuing with next build..."
+    else
+      rm $BUILD_LOG
+      echo "Done."
+    fi
+  done
 done
