@@ -290,29 +290,17 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGSize titleSize = [_titleLabel.text boundingRectWithSize:textFrame.size
                                                     options:NSStringDrawingTruncatesLastVisibleLine
                                                  attributes:attributes
-                                                    context:NULL]
-                         .size;
+                                                    context:NULL].size;
   titleSize.width = Ceil(titleSize.width);
   titleSize.height = Ceil(titleSize.height);
   CGRect titleFrame = (CGRect){{textFrame.origin.x, 0}, titleSize};
-  titleFrame = MDCRectFlippedForRTL(titleFrame, self.bounds.size.width,
-                                    self.mdc_effectiveUserInterfaceLayoutDirection);
   UIControlContentVerticalAlignment titleVerticalAlignment = UIControlContentVerticalAlignmentTop;
-  _titleLabel.frame = [self mdc_frameAlignedVertically:titleFrame
-                                          withinBounds:textFrame
-                                             alignment:titleVerticalAlignment];
-  if (self.titleAlignment == MDCNavigationBarTitleAlignmentCenter) {
-    _titleLabel.center = CGPointMake(CGRectGetMidX(self.bounds), _titleLabel.center.y);
-    if (CGRectGetMaxX(_titleLabel.frame) > CGRectGetMaxX(textFrame)) {
-      CGPoint center = _titleLabel.center;
-      center.x -= CGRectGetMaxX(_titleLabel.frame) - CGRectGetMaxX(textFrame);
-      _titleLabel.center = center;
-    } else if (CGRectGetMinX(_titleLabel.frame) < CGRectGetMinX(textFrame)) {
-      CGPoint center = _titleLabel.center;
-      center.x += CGRectGetMinX(textFrame) - CGRectGetMinX(_titleLabel.frame);
-      _titleLabel.center = center;
-    }
-  }
+  CGRect alignedFrame = [self mdc_frameAlignedVertically:titleFrame
+                                            withinBounds:textFrame
+                                               alignment:titleVerticalAlignment];
+  alignedFrame = [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
+  _titleLabel.frame = MDCRectFlippedForRTL(alignedFrame, self.bounds.size.width,
+                                           self.mdc_effectiveUserInterfaceLayoutDirection);
   self.titleView.frame = textFrame;
 
   // Button and title label alignment
@@ -323,7 +311,6 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   if (_titleLabel.hidden || titleTextRectHeight <= 0) {
     _leadingButtonBar.buttonTitleBaseline = 0;
     _trailingButtonBar.buttonTitleBaseline = 0;
-
   } else {
     // Assumes that the title is center-aligned vertically.
     CGFloat titleTextOriginY = (_titleLabel.frame.size.height - titleTextRectHeight) / 2;
@@ -432,21 +419,48 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                         withinBounds:(CGRect)bounds
                            alignment:(UIControlContentVerticalAlignment)alignment {
   switch (alignment) {
-    case UIControlContentVerticalAlignmentBottom:
-      return (CGRect){{frame.origin.x, CGRectGetMaxY(bounds) - frame.size.height}, frame.size};
+    case UIControlContentVerticalAlignmentBottom: {
+      return CGRectMake(frame.origin.x,
+                        CGRectGetMaxY(bounds) - frame.size.height,
+                        frame.size.width,
+                        frame.size.height);
+    }
 
     case UIControlContentVerticalAlignmentCenter: {
       CGFloat centeredY = Floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
-      return (CGRect){{frame.origin.x, centeredY}, frame.size};
+      return CGRectMake(frame.origin.x,
+                        centeredY,
+                        frame.size.width,
+                        frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentTop: {
-      return (CGRect){{frame.origin.x, bounds.origin.y}, frame.size};
+      return CGRectMake(frame.origin.x,
+                        bounds.origin.y,
+                        frame.size.width,
+                        frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentFill: {
       return bounds;
     }
+  }
+}
+
+- (CGRect)mdc_frameAlignedHorizontally:(CGRect)frame
+                             alignment:(MDCNavigationBarTitleAlignment)alignment {
+  switch (alignment) {
+    case MDCNavigationBarTitleAlignmentCenter:
+      return CGRectMake(CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2,
+                        frame.origin.y,
+                        frame.size.width,
+                        frame.size.height);
+
+    case MDCNavigationBarTitleAlignmentLeading:
+      return CGRectMake(frame.origin.x,
+                        frame.origin.y,
+                        frame.size.width,
+                        frame.size.height);
   }
 }
 
