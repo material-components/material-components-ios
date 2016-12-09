@@ -1,8 +1,0 @@
-/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
-"MDCSwitchAccessibilityHint" = "הקש פעמיים להחלפת הגדרה";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityValueOn" = "מופעל";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityValueOff" = "מושבת";

@@ -1,8 +1,0 @@
-/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
-"MDCSwitchAccessibilityHint" = "Appuyez deux fois pour modifier le paramètre";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityValueOn" = "Activé";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityValueOff" = "Désactivé";
