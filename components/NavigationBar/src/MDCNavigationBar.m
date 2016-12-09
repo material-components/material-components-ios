@@ -11,7 +11,7 @@
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
- limitations under the License.RTL
+ limitations under the License.
  */
 
 #import "MDCNavigationBar.h"
@@ -303,12 +303,12 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   _titleLabel.frame = MDCRectFlippedForRTL(alignedFrame, self.bounds.size.width,
                                            self.mdc_effectiveUserInterfaceLayoutDirection);
   self.titleView.frame = textFrame;
-  self.titleView.backgroundColor = [UIColor redColor];
 
   // Button and title label alignment
 
   CGFloat titleTextRectHeight =
       [_titleLabel textRectForBounds:_titleLabel.bounds limitedToNumberOfLines:0].size.height;
+
   if (_titleLabel.hidden || titleTextRectHeight <= 0) {
     _leadingButtonBar.buttonTitleBaseline = 0;
     _trailingButtonBar.buttonTitleBaseline = 0;
