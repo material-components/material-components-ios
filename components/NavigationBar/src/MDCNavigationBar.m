@@ -443,6 +443,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     case MDCNavigationBarTitleAlignmentCenter:
       return (CGRect){{CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2, frame.origin.y},
         frame.size};
+
     case MDCNavigationBarTitleAlignmentLeading:
       return (CGRect){{frame.origin.x, frame.origin.y}, frame.size};
   }
