@@ -26,7 +26,6 @@ PODS:
     - MaterialComponents/Slider (= 17.2.0)
     - MaterialComponents/Snackbar (= 17.2.0)
     - MaterialComponents/SpritedAnimationView (= 17.2.0)
-    - MaterialComponents/Switch (= 17.2.0)
     - MaterialComponents/Typography (= 17.2.0)
   - MaterialComponents/ActivityIndicator (17.2.0):
     - MaterialComponents/private/Application
@@ -154,11 +153,6 @@ PODS:
     - MaterialComponents/private/Overlay
     - MaterialComponents/Typography
   - MaterialComponents/SpritedAnimationView (17.2.0)
-  - MaterialComponents/Switch (17.2.0):
-    - MaterialComponents/Ink
-    - MaterialComponents/private/RTL
-    - MaterialComponents/ShadowElevations
-    - MaterialComponents/ShadowLayer
   - MaterialComponents/Typography (17.2.0)
   - MDFTextAccessibility (1.1.3)
 
@@ -170,7 +164,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 432b1d23723d013175e5e0dd638c28adbbe484d3
+  MaterialComponents: 6c525c8aaabf376c20a10530ce6785833ff96225
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
 PODFILE CHECKSUM: 44e7c616a05bb4ce24db557c3de4bfbe915c2f56

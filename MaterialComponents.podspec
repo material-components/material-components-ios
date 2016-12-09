@@ -270,18 +270,6 @@ Pod::Spec.new do |s|
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
   end
 
-  s.subspec "Switch" do |ss|
-    ss.ios.deployment_target = '7.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
-
-    ss.dependency "MaterialComponents/Ink"
-    ss.dependency "MaterialComponents/ShadowElevations"
-    ss.dependency "MaterialComponents/ShadowLayer"
-    ss.dependency "MaterialComponents/private/RTL"
-  end
-
   s.subspec "Typography" do |ss|
     ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
