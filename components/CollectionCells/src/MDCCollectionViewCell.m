@@ -112,9 +112,8 @@ static const uint32_t kCellRedColor = 0xF44336;
   [super layoutSubviews];
 
   // Layout the accessory view and the content view.
-  [self layoutForegroundSubviews];
-
   [self updateInterfaceForEditing];
+  [self layoutForegroundSubviews];
 
   void (^editingViewLayout)() = ^() {
     CGFloat txReorderTransform;
