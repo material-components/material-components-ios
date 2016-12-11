@@ -32,7 +32,7 @@ class AppBarContainerTests: XCTestCase {
 
     // Ancestry should now be fully-configured
     XCTAssertNotNil(contentViewController.view.superview)
-    XCTAssertEqual(contentViewController.parentViewController, appBarContainerViewController)
-    XCTAssertTrue(contentViewController.view.isDescendantOfView(appBarContainerViewController.view))
+    XCTAssertEqual(contentViewController.parent, appBarContainerViewController)
+    XCTAssertTrue(contentViewController.view.isDescendant(of: appBarContainerViewController.view))
   }
 }

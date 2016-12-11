@@ -26,29 +26,29 @@ import MaterialComponents.MaterialOverlayWindow
 class MDCCatalogWindow: MDCOverlayWindow {
   var enabled = false
 
-  private let fadeDuration: NSTimeInterval = 0.2
-  private var views = [NSNumber: UIView]()
+  fileprivate let fadeDuration: TimeInterval = 0.2
+  fileprivate var views = [NSNumber: UIView]()
 
-  override func sendEvent(event: UIEvent) {
-    if let touches = event.allTouches() {
+  override func sendEvent(_ event: UIEvent) {
+    if let touches = event.allTouches {
       for touch in touches {
         switch touch.phase {
-        case .Began:
+        case .began:
           if (enabled) {
             beginDisplayingTouch(touch)
           }
           continue
-        case .Moved:
+        case .moved:
           updateTouch(touch)
           continue
-        case .Stationary:
+        case .stationary:
           continue
-        case .Ended:
+        case .ended:
           if (touch.tapCount == 3) {
             enabled = !enabled
           }
           fallthrough
-        case .Cancelled:
+        case .cancelled:
           endDisplayingTouch(touch)
           continue
         }
@@ -58,22 +58,22 @@ class MDCCatalogWindow: MDCOverlayWindow {
     super.sendEvent(event)
   }
 
-  private func beginDisplayingTouch(touch: UITouch) {
+  fileprivate func beginDisplayingTouch(_ touch: UITouch) {
     let view = MDCTouchView()
-    view.center = touch.locationInView(self)
+    view.center = touch.location(in: self)
     views[touch.hash] = view
     self.addSubview(view)
   }
 
-  private func updateTouch(touch: UITouch) {
-    views[touch.hash]?.center = touch.locationInView(self)
+  fileprivate func updateTouch(_ touch: UITouch) {
+    views[touch.hash]?.center = touch.location(in: self)
   }
 
-  private func endDisplayingTouch(touch: UITouch) {
+  fileprivate func endDisplayingTouch(_ touch: UITouch) {
     let view = views[touch.hash]
     views[touch.hash] = nil
 
-    UIView.animateWithDuration(fadeDuration,
+    UIView.animate(withDuration: fadeDuration,
                                animations: {
                                  view?.alpha = 0
                                },
@@ -85,11 +85,11 @@ class MDCCatalogWindow: MDCOverlayWindow {
 
 /** A circular view that represents a user's touch. */
 class MDCTouchView: UIView {
-  private let touchCircleSize: CGFloat = 80
-  private let touchCircleAlpha: CGFloat = 0.25
-  private let touchCircleColor = UIColor.redColor()
-  private let touchCircleBorderColor = UIColor.blackColor()
-  private let touchCircleBorderWidth: CGFloat = 1
+  fileprivate let touchCircleSize: CGFloat = 80
+  fileprivate let touchCircleAlpha: CGFloat = 0.25
+  fileprivate let touchCircleColor = UIColor.red
+  fileprivate let touchCircleBorderColor = UIColor.black
+  fileprivate let touchCircleBorderWidth: CGFloat = 1
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -101,12 +101,12 @@ class MDCTouchView: UIView {
     commonMDCTouchViewInit()
   }
 
-  private func commonMDCTouchViewInit() {
+  fileprivate func commonMDCTouchViewInit() {
     self.backgroundColor = touchCircleColor
     self.alpha = touchCircleAlpha
-    self.frame.size = CGSizeMake(touchCircleSize, touchCircleSize)
+    self.frame.size = CGSize(width: touchCircleSize, height: touchCircleSize)
     self.layer.cornerRadius = touchCircleSize / 2
-    self.layer.borderColor = touchCircleBorderColor.CGColor
+    self.layer.borderColor = touchCircleBorderColor.cgColor
     self.layer.borderWidth = touchCircleBorderWidth
   }
 }

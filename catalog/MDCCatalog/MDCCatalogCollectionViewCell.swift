@@ -22,7 +22,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   var label = UILabel()
   let pad = CGFloat(14)
-  let tile = MDCCatalogTileView(frame: CGRectZero)
+  let tile = MDCCatalogTileView(frame: CGRect.zero)
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -32,7 +32,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     self.clipsToBounds = true
 
     tile.frame = self.bounds
-    tile.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+    tile.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     self.addSubview(tile)
   }
 
@@ -40,8 +40,8 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     super.init(coder: coder)!
   }
 
-  override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
-    super.applyLayoutAttributes(layoutAttributes)
+  override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+    super.apply(layoutAttributes)
   }
 
   override func layoutSubviews() {
@@ -60,7 +60,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     label.text = ""
   }
 
-  func populateView(componentName: String) {
+  func populateView(_ componentName: String) {
     label.text = componentName
     tile.componentName = componentName
   }

@@ -27,7 +27,7 @@ class ScrollViewContentOffsetSideEffectTests: XCTestCase {
 
   // Calculates the estimated contentOffset given the proposed new contentInsets and current value
   // of contentOffset + contentSize.
-  class func estimatedContentOffsetForScrollView(scrollView: UIScrollView, withNewInsets newInsets: UIEdgeInsets) -> CGPoint {
+  class func estimatedContentOffsetForScrollView(_ scrollView: UIScrollView, withNewInsets newInsets: UIEdgeInsets) -> CGPoint {
     let minimumPossibleYOffset = -newInsets.top
     let maximumPossibleYOffset = (scrollView.contentSize.height + newInsets.bottom) - scrollView.bounds.height
     let estimatedYOffset = max(minimumPossibleYOffset, min(maximumPossibleYOffset, scrollView.contentOffset.y))
@@ -87,7 +87,7 @@ class ScrollViewContentOffsetSideEffectTests: XCTestCase {
     }
   }
 
-  func enumerateHeightRangeWithInsets(before before: UIEdgeInsets, after: UIEdgeInsets, work: (UIScrollView, CGPoint) -> Void) {
+  func enumerateHeightRangeWithInsets(before: UIEdgeInsets, after: UIEdgeInsets, work: (UIScrollView, CGPoint) -> Void) {
     for contentHeight in -1...Int(bounds.height * 3) {
       let scrollView = UITableView(frame: bounds)
 
@@ -96,7 +96,7 @@ class ScrollViewContentOffsetSideEffectTests: XCTestCase {
       scrollView.contentOffset = initialOffset
       scrollView.contentSize = CGSize(width: 0, height: CGFloat(contentHeight))
 
-      let estimatedContentOffset = self.dynamicType.estimatedContentOffsetForScrollView(scrollView,
+      let estimatedContentOffset = type(of: self).estimatedContentOffsetForScrollView(scrollView,
         withNewInsets: after
       )
 

@@ -20,30 +20,30 @@ class ButtonsTypicalUseSupplemental: NSObject {
 
   static func plusShapePath() -> UIBezierPath {
     let bezierPath = UIBezierPath()
-    bezierPath.moveToPoint(CGPoint(x: 19, y: 13))
-    bezierPath.addLineToPoint(CGPoint(x: 13, y: 13))
-    bezierPath.addLineToPoint(CGPoint(x: 13, y: 19))
-    bezierPath.addLineToPoint(CGPoint(x: 11, y: 19))
-    bezierPath.addLineToPoint(CGPoint(x: 11, y: 13))
-    bezierPath.addLineToPoint(CGPoint(x: 5, y: 13))
-    bezierPath.addLineToPoint(CGPoint(x: 5, y: 11))
-    bezierPath.addLineToPoint(CGPoint(x: 11, y: 11))
-    bezierPath.addLineToPoint(CGPoint(x: 11, y: 5))
-    bezierPath.addLineToPoint(CGPoint(x: 13, y: 5))
-    bezierPath.addLineToPoint(CGPoint(x: 13, y: 11))
-    bezierPath.addLineToPoint(CGPoint(x: 19, y: 11))
-    bezierPath.addLineToPoint(CGPoint(x: 19, y: 13))
-    bezierPath.closePath()
+    bezierPath.move(to: CGPoint(x: 19, y: 13))
+    bezierPath.addLine(to: CGPoint(x: 13, y: 13))
+    bezierPath.addLine(to: CGPoint(x: 13, y: 19))
+    bezierPath.addLine(to: CGPoint(x: 11, y: 19))
+    bezierPath.addLine(to: CGPoint(x: 11, y: 13))
+    bezierPath.addLine(to: CGPoint(x: 5, y: 13))
+    bezierPath.addLine(to: CGPoint(x: 5, y: 11))
+    bezierPath.addLine(to: CGPoint(x: 11, y: 11))
+    bezierPath.addLine(to: CGPoint(x: 11, y: 5))
+    bezierPath.addLine(to: CGPoint(x: 13, y: 5))
+    bezierPath.addLine(to: CGPoint(x: 13, y: 11))
+    bezierPath.addLine(to: CGPoint(x: 19, y: 11))
+    bezierPath.addLine(to: CGPoint(x: 19, y: 13))
+    bezierPath.close()
     return bezierPath;
   }
 
-  static func createPlusShapeLayer(floatingButton: MDCFloatingButton) -> CAShapeLayer {
+  static func createPlusShapeLayer(_ floatingButton: MDCFloatingButton) -> CAShapeLayer {
     let plusShape = CAShapeLayer()
-    plusShape.path = ButtonsTypicalUseSupplemental.plusShapePath().CGPath
-    plusShape.fillColor = UIColor.whiteColor().CGColor
+    plusShape.path = ButtonsTypicalUseSupplemental.plusShapePath().cgPath
+    plusShape.fillColor = UIColor.white.cgColor
     plusShape.position =
-      CGPointMake((floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
-                  (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2)
+      CGPoint(x: (floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
+                  y: (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2)
     return plusShape;
   }
 

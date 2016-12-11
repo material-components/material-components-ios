@@ -35,7 +35,7 @@ class FlexibleHeaderControllerIssue279Tests: XCTestCase {
 
     fhvc.headerView.trackingScrollView = tableViewController.tableView
 
-    fhvc.didMoveToParentViewController(tableViewController)
+    fhvc.didMove(toParentViewController: tableViewController)
   }
 
   func testIsFrontMostView() {
