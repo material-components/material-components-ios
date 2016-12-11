@@ -27,7 +27,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
   var enabled = false
 
   fileprivate let fadeDuration: TimeInterval = 0.2
-  fileprivate var views = [NSNumber: UIView]()
+  fileprivate var views = [Int: UIView]()
 
   override func sendEvent(_ event: UIEvent) {
     if let touches = event.allTouches {
