@@ -21,6 +21,7 @@ readonly ROOT_DIR="$SCRIPTS_DIR/.."
 # failure is expected and can be ignored, or exit with non-zero status
 # otherwise.
 function is_expected_failure() {
+  # A test target was specified with the 'build' command.
   grep --quiet "is not configured for Running" "$1" 
 }
 
@@ -28,6 +29,12 @@ function is_expected_failure() {
 # failure.
 function guess_failure() {
   grep --after-context=2 "The following build commands failed:" "$1"
+}
+
+# Given the name of a scheme in $1, exit with status 0 if we should use it.
+function is_useable_scheme() {
+  # Assume that CocoaPods schemes only exist to support some other scheme.
+  [[ $1 != Pods-* ]] 
 }
 
 readonly WORKSPACES=$("$SCRIPTS_DIR"/list_xcode_workspaces)
@@ -40,10 +47,14 @@ for workspace in $WORKSPACES; do
   # it might seem.
   echo "Building schemes in $workspace."
   for scheme in $schemes; do 
+    if ! is_useable_scheme $scheme; then
+      continue
+    fi
+
     printf "."
     log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
     options="-workspace $workspace -scheme $scheme"
-    if xcodebuild build $options >"$log_file" 2>&1 || \
+    if xcodebuild $options $1 >"$log_file" 2>&1 || \
        is_expected_failure "$log_file"; then
       rm "$log_file"
     else
