@@ -40,7 +40,7 @@ class ButtonBarIssue516Tests: XCTestCase {
     buttonBar.layoutSubviews()
 
     var buttons = buttonBar.subviews.filter { $0 is MDCButton }
-    buttons.sort { (button1, button2) -> Bool in
+    buttons = buttons.sorted { (button1, button2) -> Bool in
       return button1.frame.origin.x < button2.frame.origin.x
     }
     XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControlState()), "LEFT")
@@ -57,7 +57,7 @@ class ButtonBarIssue516Tests: XCTestCase {
     buttonBar.layoutSubviews()
 
     var buttons = buttonBar.subviews.filter { $0 is MDCButton }
-    buttons.sort { (button1, button2) -> Bool in
+    buttons = buttons.sorted { (button1, button2) -> Bool in
       return button1.frame.origin.x < button2.frame.origin.x
     }
     XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControlState()), "LEFT")
@@ -74,7 +74,7 @@ class ButtonBarIssue516Tests: XCTestCase {
     buttonBar.layoutSubviews()
 
     var buttons = buttonBar.subviews.filter { $0 is MDCButton }
-    buttons.sort { (button1, button2) -> Bool in
+    buttons = buttons.sorted { (button1, button2) -> Bool in
       return button1.frame.origin.x < button2.frame.origin.x
     }
     XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControlState()), "RIGHT")
