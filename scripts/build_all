@@ -17,36 +17,43 @@
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$SCRIPTS_DIR/.."
 
-# Build a list of workspaces to build.
-# For the moment, we only have workspaces from CocoaPods projects.
-readonly PODFILE_DIRS=$("$SCRIPTS_DIR"/release/manage_pods.py --dir "$ROOT_DIR" list)
-workspaces=""
-for i in ${PODFILE_DIRS}; do
-  workspaces="$workspaces $(find "$i" -d 1 -name '*.xcworkspace')"
-done
+# Given a path to an Xcode log file in $1, exit with status 0 if looks like the
+# failure is expected and can be ignored, or exit with non-zero status
+# otherwise.
+function is_expected_failure() {
+  grep --quiet "is not configured for Running" "$1" 
+}
 
-for workspace in $workspaces; do
+# Given a path to an Xcode log file in $1, print a guess at what caused the
+# failure.
+function guess_failure() {
+  grep --after-context=2 "The following build commands failed:" "$1"
+}
+
+readonly WORKSPACES=$("$SCRIPTS_DIR"/list_xcode_workspaces)
+for workspace in $WORKSPACES; do
   # Gather a list of schemes in the workspace.
   # This regex is admittably dumb.
   schemes=$(xcodebuild -workspace "$workspace" -list | grep "^        ")
 
-  # While it looks like OMG we're building way too much, note that xcodebuild is
-  # caching build results, so if scheme A depends on scheme B and scheme B is
-  # built first, then scheme A won't rebuild it again.
+  # Xcode caches build results, so building all schemes isn't as expensive as
+  # it might seem.
   echo "Building schemes in $workspace."
   for scheme in $schemes; do 
+    printf "."
     log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
-
-    # The 'skip' option is to skip test-only schemes without a failure.
-    # TODO: Check for 'is not configured for Running' and skip if so.
-    options="-skipUnavailableActions -workspace $workspace -scheme $scheme"
-    echo xcodebuild build $options
-    if ! xcodebuild build $options >"$log_file" 2>&1; then
-      echo "Failed to build $scheme in $workspace, log left in $log_file."
-      echo "Continuing with next build..."
-    else
+    options="-workspace $workspace -scheme $scheme"
+    if xcodebuild build $options >"$log_file" 2>&1 || \
+       is_expected_failure "$log_file"; then
       rm "$log_file"
+    else
+      echo
+      echo "Failed to build $scheme in $workspace:"
+      guess_failure "$log_file"
+      echo "Log left in $log_file."
+      echo "Continuing with next build..."
     fi
   done
+  echo
   echo "Done."
 done
