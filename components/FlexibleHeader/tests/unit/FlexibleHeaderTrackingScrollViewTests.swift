@@ -25,8 +25,8 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   var view: MDCFlexibleHeaderView!
   var beforeFrame: CGRect!
   var scrollView: UIScrollView!
-  var contentOffset: CGPoint
-  var contentOffsetPtr: UnsafeMutablePointer<CGPoint>
+  var contentOffset = CGPoint(x: 0, y: 0)
+  var contentOffsetPtr: UnsafeMutablePointer<CGPoint>?
 
   override func setUp() {
     view = MDCFlexibleHeaderView()
@@ -44,8 +44,6 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
     scrollView.delegate = self
 
     view.trackingScrollView = scrollView
-
-    contentOffset = CGPoint(x: 0, y: 0)
     contentOffsetPtr = UnsafeMutablePointer<CGPoint>(&contentOffset)
   }
 
@@ -78,7 +76,7 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   func testWillEndDraggingWithZeroVelocity() {
     view.trackingScrollWillEndDragging(
       withVelocity: CGPoint.zero,
-      targetContentOffset: contentOffsetPtr)
+      targetContentOffset: contentOffsetPtr!)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
@@ -86,7 +84,7 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   func testWillEndDraggingWithPositiveVelocity() {
     view.trackingScrollWillEndDragging(
       withVelocity: CGPoint(x: 0, y: 10),
-      targetContentOffset: contentOffsetPtr)
+      targetContentOffset: contentOffsetPtr!)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
@@ -94,7 +92,7 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   func testWillEndDraggingWithNegativeVelocity() {
     view.trackingScrollWillEndDragging(
       withVelocity: CGPoint(x: 0, y: 10),
-      targetContentOffset: contentOffsetPtr)
+      targetContentOffset: contentOffsetPtr!)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
