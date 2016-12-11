@@ -43,7 +43,7 @@ extension NavigationBarTypicalUseSwiftExample {
     return true
   }
 
-  override public func setupExampleViews() {
+  override open func setupExampleViews() {
     /// Both self.viewDidLoad() and super.viewDidLoad() will add NavigationBars to the hierarchy.
     /// We only want to keep one.
 
