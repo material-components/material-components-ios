@@ -49,8 +49,8 @@ static const CGFloat kOpacityMedium = 0.87f;
   id<MDCTypographyFontLoading> fontLoader = [MDCTypography fontLoader];
 
   // Then
-  XCTAssertTrue([fontLoader isKindOfClass:[MDCRobotoFontLoader class]],
-                @"Default fontLoader must be Roboto.");
+  XCTAssertTrue([fontLoader isKindOfClass:[MDCSystemFontLoader class]],
+                @"Default fontLoader must be the system font loader.");
 }
 @end
 
@@ -63,9 +63,14 @@ static const CGFloat kOpacityMedium = 0.87f;
 
 @implementation TypographyFontLoaderSetTest
 
-- (void)tearDown {
+- (void)setUp {
   // Since we are using a singleton we need to restore the custom fontLoader back for other tests
   [MDCTypography setFontLoader:[MDCRobotoFontLoader sharedInstance]];
+}
+
+- (void)tearDown {
+  // Since we are using a singleton we need to restore the custom fontLoader back for other tests
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 }
 
 #pragma mark - Font opacity
