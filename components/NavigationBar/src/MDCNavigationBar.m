@@ -136,6 +136,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = [MDCTypography titleFont];
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
+  _titleLabel.textAlignment = NSTextAlignmentCenter;
   _leadingButtonBar = [[MDCButtonBar alloc] init];
   _leadingButtonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
   _trailingButtonBar = [[MDCButtonBar alloc] init];
