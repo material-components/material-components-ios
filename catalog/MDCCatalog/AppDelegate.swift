@@ -17,6 +17,8 @@ limitations under the License.
 import UIKit
 
 import CatalogByConvention
+import MaterialComponents.MaterialTypography
+import MaterialComponents.MaterialRobotoFontLoader
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
