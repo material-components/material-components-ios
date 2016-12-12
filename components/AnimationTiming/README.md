@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/AnimationTiming/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/AnimationTiming">GitHub</a> for README documentation.{% endif %}-->
-
 # Animation Timing
 
 Animation timing easing curves create smooth and consistent motion. Easing curves allow elements to
@@ -38,17 +34,19 @@ pod install
 
 Before using animation timing, you'll need to import it:
 
-#### Objective-C
-
-~~~ objc
-#import "MaterialAnimationTiming.h"
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
 import MaterialComponents
 ~~~
+
+#### Objective-C
+
+~~~ objc
+#import "MaterialAnimationTiming.h"
+~~~
+<!--</div>-->
 
 ## Examples
 
@@ -58,15 +56,7 @@ To use an animation timing curve select an appropriate a predefined MDCAnimation
 value. Use this value to look up an animation curve's timing function. The timing function can then
 be used in an animation.
 
-~~~ objc
-MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
-CAAnimationTimingFunction *timingFunction =
-    [CAAnimationTimingFunction mdc_functionWithAnimationTiming:materialCurve];
-
-CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
-animation.timingFunction = timingFunction
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
@@ -76,3 +66,15 @@ let timingFunction = CAAnimationTimingFunction.mdc_functionWithAnimationTiming(m
 let animation = CABasicAnimation(keyPath:"transform.translation.x")
 animation.timingFunction = timingFunction
 ~~~
+
+#### Objc
+
+~~~ objc
+MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
+CAAnimationTimingFunction *timingFunction =
+    [CAAnimationTimingFunction mdc_functionWithAnimationTiming:materialCurve];
+
+CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
+animation.timingFunction = timingFunction
+~~~
+<!--</div>-->

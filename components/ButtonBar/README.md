@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ButtonBar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ButtonBar">GitHub</a> for README documentation.{% endif %}-->
-
 # Button Bar
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/button_bar.mp4" autoplay loop></video>
-  [![Button Bar](docs/assets/button_bar.png)](docs/assets/button_bar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Button Bar](docs/assets/button_bar.png)](docs/assets/button_bar.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/button_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
 <!--{: .intro }-->
@@ -45,7 +40,6 @@ pod install
 
 
 
-
 - - -
 
 ## Overview
@@ -69,15 +63,15 @@ Button Bar supports a subset of UIBarButtonItem's properties. Learn more by read
 Before using Button Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialButtonBar.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -85,24 +79,6 @@ import MaterialComponents
 Create an instance of MDCButtonBar and provide it with an array of UIBarButtonItems.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
-
-UIBarButtonItem *item =
-    [[UIBarButtonItem alloc] initWithTitle:@"<# title #>"
-                                     style:UIBarButtonItemStyleDone // ignored
-                                    target:self
-                                    action:@selector(<# selector #>)];
-
-buttonBar.items = @[ actionItem ];
-
-CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
-buttonBar.frame = (CGRect){<# origin #>, size};
-[self.view addSubview:buttonBar];
-~~~
-
 #### Swift
 ~~~ swift
 let buttonBar = MDCButtonBar()
@@ -119,6 +95,24 @@ buttonBar.items = [actionItem]
 let size = buttonBar.sizeThatFits(self.view.bounds.size)
 buttonBar.frame = CGRect(x: <# x #>, y: <# y #>, width: size.width, height: size.height)
 self.view.addSubview(buttonBar)
+~~~
+
+#### Objective-C
+
+~~~ objc
+MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
+
+UIBarButtonItem *item =
+    [[UIBarButtonItem alloc] initWithTitle:@"<# title #>"
+                                     style:UIBarButtonItemStyleDone // ignored
+                                    target:self
+                                    action:@selector(<# selector #>)];
+
+buttonBar.items = @[ actionItem ];
+
+CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
+buttonBar.frame = CGRectMake(origin.x, origin.y, size.width, size.height);
+[self.view addSubview:buttonBar];
 ~~~
 <!--</div>-->
 
@@ -145,6 +139,15 @@ Note: in order to make Button Bar reflect changes to not-observed properties you
 MDCButtonBar instance's `items` property and reset it, like so:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+item.target = <some other target>
+
+let items = buttonBar.items
+buttonBar.items = nil
+buttonBar.items = items
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -154,15 +157,6 @@ NSArray *items = buttonBar.items;
 buttonBar.items = nil;
 buttonBar.items = items;
 ~~~
-
-#### Swift
-~~~ swift
-item.target = <some other target>
-
-let items = buttonBar.items
-buttonBar.items = nil
-buttonBar.items = items
-~~~
 <!--</div>-->
 
 #### Unsupported
@@ -171,7 +165,7 @@ TODO(featherless): File issues for each of these.
 
 - `style` is ignored.
 - instances initialized with `initWithBarButtonSystemItem:`. See
-  issue [#264](https://github.com/google/material-components-ios/issues/264) for more details.
+  issue [#264](https://github.com/material-components/material-components-ios/issues/264) for more details.
 - `landscapeImagePhone`
 - `imageInsets`
 - `landscapeImagePhoneInsets`

@@ -103,7 +103,7 @@ static NSString *const kCategoryB = @"CategoryB";
   }
 }
 
-- (void)handleSuspendStateChanged:(MDCSwitch *)sender {
+- (void)handleSuspendStateChanged:(UISwitch *)sender {
   BOOL suspended = sender.on;
 
   // Figure out which token we're dealing with based on which switch sent this message.

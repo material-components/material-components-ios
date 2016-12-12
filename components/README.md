@@ -1,6 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components">GitHub</a> for README documentation.{% endif %}-->
 
 # Component Documentation
 
@@ -9,14 +6,10 @@ interface components for iOS. These components implement Google's
 [material design](http://www.google.com/design/spec/material-design/introduction.html) specification
 and are developed by a team of iOS engineers and UX designers at Google.
 
-
-- [GitHub](https://github.com/google/material-components-ios/)
-  <!--{: .icon-github }-->
-
-- [Development Guide]({{ site.folder }}/howto/)
+- [Development Guide](https://github.com/material-components/material-components-ios/tree/master/howto)
   <!--{: .icon-guide }-->
 
-- [Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
+- [Tutorial](https://github.com/material-components/material-components-ios/tree/master/howto/tutorial)
   <!--{: .icon-sample }-->
 
 - [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
@@ -35,6 +28,11 @@ and are developed by a team of iOS engineers and UX designers at Google.
   A circular rotating indicator for showing indeterminate or determinate progress.
   ](ActivityIndicator/)
   <!--{: .icon-activityindicator }-->
+
+- [**AnimationTiming**
+  Animation timing easing curves create smooth and consistent motion.
+  ](AnimationTiming/)
+  <!--{: .icon-animationtiming }-->
 
 - [**AppBar**
   A flexible navigation bar, designed to provide a typical material navigation experience.

@@ -58,26 +58,26 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
     // Step 3: Register the App Bar views.
     appBar.addSubviewsToParent()
 
-    self.tableView.layoutMargins = UIEdgeInsetsZero
-    self.tableView.separatorInset = UIEdgeInsetsZero
+    self.tableView.layoutMargins = UIEdgeInsets.zero
+    self.tableView.separatorInset = UIEdgeInsets.zero
     
     self.navigationItem.rightBarButtonItem =
-      UIBarButtonItem(title: "Right", style: .Done, target: nil, action: nil)
+      UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
   }
 
   // Optional step: If you allow the header view to hide the status bar you must implement this
   //                method and return the headerViewController.
-  override func childViewControllerForStatusBarHidden() -> UIViewController? {
+  override var childViewControllerForStatusBarHidden : UIViewController? {
     return appBar.headerViewController
   }
 
   // Optional step: The Header View Controller does basic inspection of the header view's background
   //                color to identify whether the status bar should be light or dark-themed.
-  override func childViewControllerForStatusBarStyle() -> UIViewController? {
+  override var childViewControllerForStatusBarStyle : UIViewController? {
     return appBar.headerViewController
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
@@ -101,18 +101,18 @@ extension AppBarTypicalUseSwiftExample {
 // MARK: UITableViewDataSource
 extension AppBarTypicalUseSwiftExample {
 
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 50
   }
 
   override func tableView(
-    tableView: UITableView,
-    cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-      var cell = self.tableView.dequeueReusableCellWithIdentifier("cell")
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      var cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
       if cell == nil {
-        cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+        cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
       }
-      cell!.layoutMargins = UIEdgeInsetsZero
+      cell!.layoutMargins = UIEdgeInsets.zero
       return cell!
   }
 

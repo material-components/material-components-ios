@@ -66,7 +66,7 @@
                                       action:@selector(didTapToggleButton:)];
 
   // Set the title text attributes before assigning to buttonBar.items
-  // because of https://github.com/google/material-components-ios/issues/277
+  // because of https://github.com/material-components/material-components-ios/issues/277
   [moreButton setTitleTextAttributes:[self itemTitleTextAttributes] forState:UIControlStateNormal];
   self.navBar.trailingBarButtonItems = @[ moreButton ];
 }

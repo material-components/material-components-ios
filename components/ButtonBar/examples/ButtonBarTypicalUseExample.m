@@ -46,7 +46,7 @@
   NSArray *items = @[ actionItem, secondActionItem ];
 
   // Set the title text attributes before assigning to buttonBar.items
-  // because of https://github.com/google/material-components-ios/issues/277
+  // because of https://github.com/material-components/material-components-ios/issues/277
   for (UIBarButtonItem *item in items) {
     [item setTitleTextAttributes:[self itemTitleTextAttributes] forState:UIControlStateNormal];
   }
@@ -57,7 +57,7 @@
   CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
   CGFloat x = (self.view.bounds.size.width - size.width) / 2;
   CGFloat y = self.view.bounds.size.height / 2 - size.height;
-  buttonBar.frame = (CGRect){x, y, size};
+  buttonBar.frame = CGRectMake(x, y, size.width, size.height);
   buttonBar.autoresizingMask =
       (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
        UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);

@@ -68,7 +68,7 @@ echo "Body:"
 echo "I am about to cut the release for $today."
 echo
 echo "The release is being cut at $RELEASE_SHA."
-echo "View this SHA on GitHub at https://github.com/google/material-components-ios/commit/$RELEASE_SHA"
+echo "View this SHA on GitHub at https://github.com/material-components/material-components-ios/commit/$RELEASE_SHA"
 echo
 echo "We encourage clients to test out this release before it lands. To do so, check out the"
 echo "release-candidate branch like so:"

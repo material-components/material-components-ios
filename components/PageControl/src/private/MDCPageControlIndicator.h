@@ -33,7 +33,7 @@
  @param center The layer position for this indicator.
  @param radius The radius of this indicator circle.
  */
-- (instancetype)initWithCenter:(CGPoint)center radius:(CGFloat)radius;
+- (instancetype)initWithCenter:(CGPoint)center radius:(CGFloat)radius NS_DESIGNATED_INITIALIZER;
 
 /** Reveals the indicator by scaling from zero to full size while fading in. */
 - (void)revealIndicator;

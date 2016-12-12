@@ -47,6 +47,7 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
  If any of the above properties change, the MDCButtonBar will immediately reflect the change
  in the visible UIButton instance.
  */
+IB_DESIGNABLE
 @interface MDCButtonBar : UIView
 
 #pragma mark Button Items
@@ -84,7 +85,7 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 
  - (void)didTap:(UIBarButtonItem *)item event:(UIEvent *)event button:(UIButton *)button;
  */
-@property(nonatomic, copy) NSArray<UIBarButtonItem *> *items;
+@property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *items;
 
 /**
  If greater than zero, will ensure that any UIButton with a title is aligned to the provided
@@ -139,8 +140,8 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
 @required
 
 /** Asks the receiver to return a view that represents the given bar button item. */
-- (UIView *)buttonBar:(MDCButtonBar *)buttonBar
-          viewForItem:(UIBarButtonItem *)barButtonItem
+- (nonnull UIView *)buttonBar:(nonnull MDCButtonBar *)buttonBar
+          viewForItem:(nonnull UIBarButtonItem *)barButtonItem
           layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;
 
 @end

@@ -27,24 +27,24 @@ class CollectionsSimpleSwiftDemo: MDCCollectionViewController {
     super.viewDidLoad()
 
     // Register cell class.
-    self.collectionView?.registerClass(MDCCollectionViewTextCell.self,
+    self.collectionView?.register(MDCCollectionViewTextCell.self,
                                        forCellWithReuseIdentifier: reusableIdentifierItem)
 
     // Customize collection view settings.
-    self.styler.cellStyle = .Card
+    self.styler.cellStyle = .card
   }
 
   // MARK: UICollectionViewDataSource
 
-  override func collectionView(collectionView: UICollectionView,
+  override func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
     return colors.count
   }
 
-  override func collectionView(collectionView: UICollectionView,
-                               cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifierItem,
-                                                                     forIndexPath: indexPath)
+  override func collectionView(_ collectionView: UICollectionView,
+                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifierItem,
+                                                                     for: indexPath)
     if let cell = cell as? MDCCollectionViewTextCell {
       cell.textLabel?.text = colors[indexPath.item]
     }

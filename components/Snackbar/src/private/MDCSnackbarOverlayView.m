@@ -14,17 +14,20 @@
  limitations under the License.
  */
 
+#import <Foundation/Foundation.h>
+
 #import "MDCSnackbarOverlayView.h"
 
 #import "MDCSnackbarMessageView.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlays.h"
+#import "UIApplication+AppExtensions.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the snackbar.
-NSTimeInterval const MDCSnackbarTransitionDuration = 0.15f;
+NSTimeInterval const MDCSnackbarTransitionDuration = 0.5f;
 
 // How far from the bottom of the screen should the snackbar be.
 static const CGFloat MDCSnackbarBottomMargin_iPhone = 0;
@@ -303,7 +306,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   return result;
 }
 
-- (void)triggersnackbarLayoutchange {
+- (void)triggerSnackbarLayoutChange {
   self.manualLayoutChange = YES;
   [self layoutIfNeeded];
   self.manualLayoutChange = NO;
@@ -333,21 +336,13 @@ static const CGFloat kMaximumHeight = 80.0f;
 
 #pragma mark - Presentation/Dismissal
 
-- (BOOL)shouldUseFadeAnimationForShow {
-  return NO;
-}
-
 - (void)showSnackbarView:(MDCSnackbarMessageView *)snackbarView
                 animated:(BOOL)animated
               completion:(void (^)(void))completion {
   self.snackbarView = snackbarView;  // Install the snackbar.
 
   if (animated) {
-    if ([self shouldUseFadeAnimationForShow]) {
-      [self fadeInsnackbarView:snackbarView completion:completion];
-    } else {
-      [self slideInsnackbarView:snackbarView completion:completion];
-    }
+    [self slideInMessageView:snackbarView completion:completion];
   } else {
     if (completion) {
       completion();
@@ -357,7 +352,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 
 - (void)dismissSnackbarViewAnimated:(BOOL)animated completion:(void (^)(void))completion {
   if (animated) {
-    [self fadeOutsnackbarView:self.snackbarView
+    [self slideOutMessageView:self.snackbarView
                    completion:^{
                      self.snackbarView = nil;  // Uninstall the snackbar
 
@@ -380,7 +375,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   snackbarView.alpha = 0;
 
   // Make sure that the snackbar has been properly sized before fading in.
-  [self triggersnackbarLayoutchange];
+  [self triggerSnackbarLayoutChange];
 
   void (^animations)(void) = ^{
     self.snackbarView.alpha = 1.0;
@@ -409,66 +404,71 @@ static const CGFloat kMaximumHeight = 80.0f;
                       timingFunction:function];
 }
 
-- (void)fadeOutsnackbarView:(MDCSnackbarMessageView *)snackbarView
-                 completion:(void (^)(void))completion {
-  void (^animations)(void) = ^{
-    self.snackbarView.alpha = 0;
-  };
-  void (^realCompletion)(BOOL) = ^(BOOL finished) {
-    if (completion) {
-      completion();
-    }
-  };
-
-  UIViewAnimationCurve curve = UIViewAnimationCurveEaseInOut;
-  CAMediaTimingFunction *function = nil;
-
-  MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseIn;
-  function = [CAMediaTimingFunction mdc_functionWithType:materialCurve];
-
-  [MDCSnackbarOverlayView animateWithDuration:MDCSnackbarTransitionDuration
-                                        curve:materialCurve
-                                   animations:animations
-                                   completion:realCompletion];
-
-  // Notify the overlay system.
-  [self notifyOverlayChangeWithFrame:CGRectNull
-                            duration:MDCSnackbarTransitionDuration
-                               curve:curve
-                      timingFunction:function];
-}
-
 #pragma mark - Slide Animation
 
-- (void)slideInsnackbarView:(MDCSnackbarMessageView *)snackbarView
-                 completion:(void (^)(void))completion {
-  // Make sure that the snackbar has been properly sized to calculate the translation value.
-  [self triggersnackbarLayoutchange];
-
+- (void)slideMessageView:(MDCSnackbarMessageView *)snackbarView
+                   fromY:(CGFloat)fromY
+                     toY:(CGFloat)toY
+      fromContentOpacity:(CGFloat)fromContentOpacity
+        toContentOpacity:(CGFloat)toContentOpacity
+       notificationFrame:(CGRect)notificationFrame
+              completion:(void (^)(void))completion {
   // Save off @c completion for when the CAAnimation completes.
   self.pendingCompletionBlock = completion;
 
   [CATransaction begin];
 
+  // Move the snackbar.
   CABasicAnimation *translationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
   translationAnimation.duration = MDCSnackbarTransitionDuration;
-  translationAnimation.fromValue = @(snackbarView.bounds.size.height + [self staticBottomMargin]);
-  translationAnimation.toValue = @(0.0f);
+  translationAnimation.fromValue = @(fromY);
+  translationAnimation.toValue = @(toY);
   translationAnimation.delegate = self;
-
   translationAnimation.timingFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseOut];
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
 
   [snackbarView.layer addAnimation:translationAnimation forKey:@"translation"];
 
+  [snackbarView animateContentOpacityFrom:fromContentOpacity
+                                       to:toContentOpacity
+                                 duration:translationAnimation.duration
+                           timingFunction:translationAnimation.timingFunction];
+  [CATransaction commit];
+
   // Notify the overlay system.
-  [self notifyOverlayChangeWithFrame:[self snackbarRectInScreenCoordinates]
+  [self notifyOverlayChangeWithFrame:notificationFrame
                             duration:translationAnimation.duration
                                curve:0
                       timingFunction:translationAnimation.timingFunction];
+}
 
-  [CATransaction commit];
+- (void)slideInMessageView:(MDCSnackbarMessageView *)snackbarView
+                completion:(void (^)(void))completion {
+  // Make sure that the snackbar has been properly sized to calculate the translation value.
+  [self triggerSnackbarLayoutChange];
+
+  [self slideMessageView:snackbarView
+                   fromY:snackbarView.bounds.size.height + [self staticBottomMargin]
+                     toY:0.0f
+      fromContentOpacity:0
+        toContentOpacity:1
+       notificationFrame:[self snackbarRectInScreenCoordinates]
+              completion:completion];
+}
+
+- (void)slideOutMessageView:(MDCSnackbarMessageView *)snackbarView
+                 completion:(void (^)(void))completion {
+  // Make sure that the snackbar has been properly sized to calculate the translation value.
+  [self triggerSnackbarLayoutChange];
+
+  [self slideMessageView:snackbarView
+                   fromY:0.0f
+                     toY:snackbarView.bounds.size.height + [self staticBottomMargin]
+      fromContentOpacity:1
+        toContentOpacity:0
+       notificationFrame:CGRectNull
+              completion:completion];
 }
 
 #pragma mark - CAAnimationDelegate
@@ -488,7 +488,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   // Always set the bottom constraint, even if there isn't a snackbar currently displayed.
   void (^updateBlock)(void) = ^{
     self.bottomConstraint.constant = -[self dynamicBottomMargin];
-    [self triggersnackbarLayoutchange];
+    [self triggerSnackbarLayoutChange];
   };
 
   if (self.snackbarView) {
@@ -532,7 +532,7 @@ static const CGFloat kMaximumHeight = 80.0f;
     _bottomOffset = bottomOffset;
 
     self.bottomConstraint.constant = -[self dynamicBottomMargin];
-    [self triggersnackbarLayoutchange];
+    [self triggerSnackbarLayoutChange];
   }
 }
 
@@ -556,7 +556,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 }
 
 - (void)willRotate:(NSNotification *)notification {
-  UIApplication *application = [UIApplication sharedApplication];
+  UIApplication *application = [UIApplication mdc_safeSharedApplication];
   UIInterfaceOrientation currentOrientation = application.statusBarOrientation;
   UIInterfaceOrientation targetOrientation =
       [notification.userInfo[UIApplicationStatusBarOrientationUserInfoKey] integerValue];

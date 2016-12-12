@@ -14,16 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CatalogByConvention
 import UIKit
+
+import CatalogByConvention
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    self.window = MDCCatalogWindow(frame: UIScreen.mainScreen().bounds)
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
 
     let tree = CBCCreateNavigationTree()
 
@@ -34,10 +35,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // ensure that the edge-swipe pop gesture can still take effect. This may be overly-assumptive
     // but we'll explore other alternatives when we have a concrete example of this approach causing
     // problems.
-    navigationController.interactivePopGestureRecognizer?.delegate = nil
+    navigationController.interactivePopGestureRecognizer?.delegate = navigationController
 
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
     return true
+  }
+}
+
+extension UINavigationController: UIGestureRecognizerDelegate {
+  public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    return viewControllers.count > 1
   }
 }

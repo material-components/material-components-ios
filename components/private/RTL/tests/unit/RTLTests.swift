@@ -20,60 +20,60 @@ import MaterialComponents
 class RTLTests: XCTestCase {
 
   func testMDCRectFlippedForRTLLeftToRight() {
-    let frame = MDCRectFlippedForRTL(CGRect(x: 10, y: 20, width: 50, height: 30), 100, .LeftToRight)
+    let frame = MDCRectFlippedForRTL(CGRect(x: 10, y: 20, width: 50, height: 30), 100, .leftToRight)
     XCTAssertEqual(frame, CGRect(x: 10, y: 20, width: 50, height: 30))
   }
 
   func testMDCRectFlippedForRTLRightToLeft() {
-    let frame = MDCRectFlippedForRTL(CGRect(x: 10, y: 20, width: 50, height: 30), 100, .RightToLeft)
+    let frame = MDCRectFlippedForRTL(CGRect(x: 10, y: 20, width: 50, height: 30), 100, .rightToLeft)
     XCTAssertEqual(frame, CGRect(x: 40, y: 20, width: 50, height: 30))
   }
 
   func testMDCRectFlippedForRTLNegativeLeftToRight() {
     let originalFrame = CGRect(x: 60, y: 50, width: -50, height: -30)
-    let frame = MDCRectFlippedForRTL(originalFrame, 100, .LeftToRight)
-    XCTAssertTrue(CGRectEqualToRect(frame, originalFrame))
+    let frame = MDCRectFlippedForRTL(originalFrame, 100, .leftToRight)
+    XCTAssertTrue(frame.equalTo(originalFrame))
   }
 
   func testMDCRectFlippedForRTLNegativeRightToLeft() {
     let originalFrame = CGRect(x: 60, y: 50, width: -50, height: -30)
-    let frame = MDCRectFlippedForRTL(originalFrame, 100.0, .RightToLeft)
+    let frame = MDCRectFlippedForRTL(originalFrame, 100.0, .rightToLeft)
     XCTAssertTrue(
-      CGRectEqualToRect(frame.standardized, CGRect(x: 40, y: 20, width: 50, height: 30)))
+      frame.standardized.equalTo(CGRect(x: 40, y: 20, width: 50, height: 30)))
   }
 
   func testMDCInsetsMakeWithLayoutDirectionLeftToRight() {
-    let insets = MDCInsetsMakeWithLayoutDirection(10, 20, 30, 40, .LeftToRight)
+    let insets = MDCInsetsMakeWithLayoutDirection(10, 20, 30, 40, .leftToRight)
     XCTAssertEqual(insets.left, 20)
   }
 
   func testMDCInsetsMakeWithLayoutDirectionRightToLeft() {
-    let insets = MDCInsetsMakeWithLayoutDirection(10, 20, 30, 40, .LeftToRight)
+    let insets = MDCInsetsMakeWithLayoutDirection(10, 20, 30, 40, .leftToRight)
     XCTAssertEqual(insets.right, 40)
   }
 
   func testMDCRTLFlippedImagePortsRenderingMode() {
     let image = RTLTests.testImage()
-    XCTAssertTrue(image.renderingMode == .Automatic)
-    XCTAssertTrue(image.mdc_imageFlippedForRightToLeftLayoutDirection().renderingMode == .Automatic)
+    XCTAssertTrue(image.renderingMode == .automatic)
+    XCTAssertTrue(image.mdc_imageFlippedForRightToLeftLayoutDirection().renderingMode == .automatic)
 
-    let templateImage = image.imageWithRenderingMode(.AlwaysTemplate)
+    let templateImage = image.withRenderingMode(.alwaysTemplate)
     XCTAssertTrue(templateImage.mdc_imageFlippedForRightToLeftLayoutDirection().renderingMode ==
-                      .AlwaysTemplate)
+                      .alwaysTemplate)
 
-    let originalImage = image.imageWithRenderingMode(.AlwaysOriginal)
+    let originalImage = image.withRenderingMode(.alwaysOriginal)
     XCTAssertTrue(originalImage.mdc_imageFlippedForRightToLeftLayoutDirection().renderingMode ==
-                      .AlwaysOriginal)
+                      .alwaysOriginal)
   }
 
   // Returns a 1*1 test image.
   class func testImage() -> UIImage {
-    let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
+    let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
     UIGraphicsBeginImageContext(rect.size)
     let context = UIGraphicsGetCurrentContext();
 
-    CGContextSetFillColorWithColor(context!, UIColor.blueColor().CGColor);
-    CGContextFillRect(context!, rect);
+    context!.setFillColor(UIColor.blue.cgColor);
+    context!.fill(rect);
 
     let image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

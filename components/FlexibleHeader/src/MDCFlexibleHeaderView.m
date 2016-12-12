@@ -64,6 +64,26 @@ static inline MDCFlexibleHeaderShiftBehavior
   return intendedShiftBehavior;
 }
 
+static NSString *const MDCFlexibleHeaderMinimumHeightKey = @"MDCFlexibleHeaderMinimumHeightKey";
+static NSString *const MDCFlexibleHeaderMaximumHeightKey = @"MDCFlexibleHeaderMaximumHeightKey";
+static NSString *const MDCFlexibleHeaderShiftBehaviorKey = @"MDCFlexibleHeaderShiftBehaviorKey";
+static NSString *const MDCFlexibleHeaderContentImportanceKey =
+    @"MDCFlexibleHeaderContentImportanceKey";
+static NSString *const MDCFlexibleHeaderCanOverExtendKey = @"MDCFlexibleHeaderCanOverExtendKey";
+static NSString *const MDCFlexibleHeaderStatusBarCanOverlapKey =
+    @"MDCFlexibleHeaderStatusBarCanOverlapKey";
+static NSString *const MDCFlexibleHeaderVisibleShadowOpacityKey =
+    @"MDCFlexibleHeaderVisibleShadowOpacityKey";
+static NSString *const MDCFlexibleHeaderTrackingScrollViewKey =
+    @"MDCFlexibleHeaderTrackingScrollViewKey";
+static NSString *const MDCFlexibleHeaderInFrontOfInfiniteContentKey =
+    @"MDCFlexibleHeaderInFrontOfInfiniteContentKey";
+static NSString *const MDCFlexibleHeaderSharedWithManyScrollViewsKey =
+    @"MDCFlexibleHeaderSharedWithManyScrollViewsKey";
+static NSString *const MDCFlexibleHeaderContentIsTranslucentKey =
+    @"MDCFlexibleHeaderContentIsTranslucentKey";
+static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegateKey";
+
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
 
 // The intensity strength of the shadow being displayed under the flexible header. Use this property
@@ -160,55 +180,144 @@ static inline MDCFlexibleHeaderShiftBehavior
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _statusBarShifter = [[MDCStatusBarShifter alloc] init];
-    _statusBarShifter.delegate = self;
-    _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
-
-    NSPointerFunctionsOptions options =
-        (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
-    _forwardingViews = [NSHashTable hashTableWithOptions:options];
-
-    NSPointerFunctionsOptions keyOptions =
-        (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
-    NSPointerFunctionsOptions valueOptions =
-        (NSPointerFunctionsStrongMemory | NSPointerFunctionsObjectPointerPersonality);
-    _trackedScrollViews = [NSMapTable mapTableWithKeyOptions:keyOptions valueOptions:valueOptions];
-
-    _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
-    _statusBarHintCanOverlapHeader = YES;
-
-    _minimumHeight = kFlexibleHeaderDefaultHeight;
-    _maximumHeight = kFlexibleHeaderDefaultHeight;
-    _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
-    _canOverExtend = YES;
-
-    _defaultShadowLayer = [CALayer layer];
-    _defaultShadowLayer.shadowColor = [[UIColor blackColor] CGColor];
-    _defaultShadowLayer.shadowOffset = CGSizeMake(0, 1.f);
-    _defaultShadowLayer.shadowRadius = 4.f;
-    _defaultShadowLayer.shadowOpacity = 0;
-    _defaultShadowLayer.hidden = YES;
-    [self.layer addSublayer:_defaultShadowLayer];
-
-    // Allow for custom shadows to be used.
-    _customShadowLayer = [CALayer layer];
-    _customShadowLayer.hidden = YES;
-    [self.layer addSublayer:_customShadowLayer];
-
-    _contentView = [[UIView alloc] initWithFrame:self.bounds];
-    _contentView.autoresizingMask =
-        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    [super addSubview:_contentView];
-
-    self.backgroundColor = [UIColor lightGrayColor];
-    _defaultShadowLayer.backgroundColor = self.backgroundColor.CGColor;
-
-    self.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.layer.shadowOffset = CGSizeMake(0, 1);
-    self.layer.shadowRadius = 4.f;
-    self.layer.shadowOpacity = 0;
+    [self commonMDCFlexibleHeaderViewInit];
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCFlexibleHeaderViewInit];
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderMinimumHeightKey]) {
+      _minimumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMinimumHeightKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderMaximumHeightKey]) {
+      _maximumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMaximumHeightKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderShiftBehaviorKey]) {
+      _shiftBehavior = [aDecoder decodeIntegerForKey:MDCFlexibleHeaderShiftBehaviorKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderContentImportanceKey]) {
+      _headerContentImportance =
+          [aDecoder decodeIntegerForKey:MDCFlexibleHeaderContentImportanceKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderCanOverExtendKey]) {
+      _canOverExtend = [aDecoder decodeBoolForKey:MDCFlexibleHeaderCanOverExtendKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderStatusBarCanOverlapKey]) {
+      _statusBarHintCanOverlapHeader =
+          [aDecoder decodeBoolForKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderVisibleShadowOpacityKey]) {
+      _visibleShadowOpacity = [aDecoder decodeFloatForKey:MDCFlexibleHeaderVisibleShadowOpacityKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderTrackingScrollViewKey]) {
+      _trackingScrollView = [aDecoder decodeObjectForKey:MDCFlexibleHeaderTrackingScrollViewKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey]) {
+      _inFrontOfInfiniteContent =
+          [aDecoder decodeBoolForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey]) {
+      _sharedWithManyScrollViews =
+          [aDecoder decodeBoolForKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderContentIsTranslucentKey]) {
+      _contentIsTranslucent = [aDecoder decodeBoolForKey:MDCFlexibleHeaderContentIsTranslucentKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderDelegateKey]) {
+      _delegate = [aDecoder decodeObjectForKey:MDCFlexibleHeaderDelegateKey];
+    }
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+
+  [aCoder encodeDouble:self.minimumHeight forKey:MDCFlexibleHeaderMinimumHeightKey];
+  [aCoder encodeDouble:self.maximumHeight forKey:MDCFlexibleHeaderMaximumHeightKey];
+  [aCoder encodeInteger:self.shiftBehavior forKey:MDCFlexibleHeaderShiftBehaviorKey];
+  [aCoder encodeInteger:self.headerContentImportance forKey:MDCFlexibleHeaderContentImportanceKey];
+  [aCoder encodeBool:self.canOverExtend forKey:MDCFlexibleHeaderCanOverExtendKey];
+  [aCoder encodeBool:self.statusBarHintCanOverlapHeader
+              forKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
+  [aCoder encodeFloat:self.visibleShadowOpacity forKey:MDCFlexibleHeaderVisibleShadowOpacityKey];
+  [aCoder encodeBool:self.inFrontOfInfiniteContent
+              forKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
+  [aCoder encodeBool:self.sharedWithManyScrollViews
+              forKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
+  [aCoder encodeBool:self.contentIsTranslucent forKey:MDCFlexibleHeaderContentIsTranslucentKey];
+  if (self.trackingScrollView) {
+    [aCoder encodeConditionalObject:self.trackingScrollView
+                             forKey:MDCFlexibleHeaderTrackingScrollViewKey];
+  }
+  if (self.delegate) {
+    [aCoder encodeConditionalObject:self.delegate forKey:MDCFlexibleHeaderDelegateKey];
+  }
+
+}
+
+- (void)commonMDCFlexibleHeaderViewInit {
+  _statusBarShifter = [[MDCStatusBarShifter alloc] init];
+  _statusBarShifter.delegate = self;
+  _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
+
+  NSPointerFunctionsOptions options =
+  (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
+  _forwardingViews = [NSHashTable hashTableWithOptions:options];
+
+  NSPointerFunctionsOptions keyOptions =
+  (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
+  NSPointerFunctionsOptions valueOptions =
+  (NSPointerFunctionsStrongMemory | NSPointerFunctionsObjectPointerPersonality);
+  _trackedScrollViews = [NSMapTable mapTableWithKeyOptions:keyOptions valueOptions:valueOptions];
+
+  _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
+  _statusBarHintCanOverlapHeader = YES;
+
+  _minimumHeight = kFlexibleHeaderDefaultHeight;
+  _maximumHeight = kFlexibleHeaderDefaultHeight;
+  _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
+  _canOverExtend = YES;
+
+  _defaultShadowLayer = [CALayer layer];
+  _defaultShadowLayer.shadowColor = [[UIColor blackColor] CGColor];
+  _defaultShadowLayer.shadowOffset = CGSizeMake(0, 1.f);
+  _defaultShadowLayer.shadowRadius = 4.f;
+  _defaultShadowLayer.shadowOpacity = 0;
+  _defaultShadowLayer.hidden = YES;
+  [self.layer addSublayer:_defaultShadowLayer];
+
+  // Allow for custom shadows to be used.
+  _customShadowLayer = [CALayer layer];
+  _customShadowLayer.hidden = YES;
+  [self.layer addSublayer:_customShadowLayer];
+
+  _contentView = [[UIView alloc] initWithFrame:self.bounds];
+  _contentView.autoresizingMask =
+  (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  [super addSubview:_contentView];
+
+  self.backgroundColor = [UIColor lightGrayColor];
+  _defaultShadowLayer.backgroundColor = self.backgroundColor.CGColor;
+
+  self.layer.shadowColor = [[UIColor blackColor] CGColor];
+  self.layer.shadowOffset = CGSizeMake(0, 1);
+  self.layer.shadowRadius = 4.f;
+  self.layer.shadowOpacity = 0;
 }
 
 - (void)setVisibleShadowOpacity:(float)visibleShadowOpacity {
@@ -813,7 +922,7 @@ static inline MDCFlexibleHeaderShiftBehavior
                                                   action:@selector(fhv_scrollViewDidPan:)];
   [trackingScrollView.panGestureRecognizer addTarget:self action:@selector(fhv_scrollViewDidPan:)];
 
-#if 0   // TODO(featherless): https://github.com/google/material-components-ios/issues/214
+#if 0   // TODO(featherless): https://github.com/material-components/material-components-ios/issues/214
   // Verify existence of a delegate.
   NSAssert(!trackingScrollView || trackingScrollView.delegate,
            @"The provided tracking scroll view %@ has no delegate. Without a delegate, %@ will not"

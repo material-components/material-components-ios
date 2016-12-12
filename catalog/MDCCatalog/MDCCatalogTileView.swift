@@ -15,11 +15,10 @@ limitations under the License.
 */
 
 import UIKit
-import MaterialComponents
 
 class MDCCatalogTileView: UIView {
 
-  private var componentNameString = "Misc"
+  fileprivate var componentNameString = "Misc"
   var componentName:String {
     get {
       return componentNameString
@@ -30,12 +29,12 @@ class MDCCatalogTileView: UIView {
     }
   }
   let imageView = UIImageView()
-  let imageCache = NSCache()
+  let imageCache = NSCache<AnyObject, AnyObject>()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = UIColor.clearColor()
-    imageView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+    self.backgroundColor = UIColor.clear
+    imageView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     self.addSubview(imageView)
   }
 
@@ -47,12 +46,12 @@ class MDCCatalogTileView: UIView {
     imageView.image = getImage(componentNameString)
   }
 
-  func getImage(key: String) -> UIImage {
-    if let cachedImage = imageCache.objectForKey(key) as? UIImage {
-      let scale = UIScreen.mainScreen().scale
-      let pixelSize = CGSizeMake(frame.width * scale, frame.height * scale)
-      let cachedPixelSize = CGSizeMake(cachedImage.size.width * cachedImage.scale,
-                                       cachedImage.size.height * cachedImage.scale)
+  func getImage(_ key: String) -> UIImage {
+    if let cachedImage = imageCache.object(forKey: key as AnyObject) as? UIImage {
+      let scale = UIScreen.main.scale
+      let pixelSize = CGSize(width: frame.width * scale, height: frame.height * scale)
+      let cachedPixelSize = CGSize(width: cachedImage.size.width * cachedImage.scale,
+                                       height: cachedImage.size.height * cachedImage.scale)
       if (cachedPixelSize != pixelSize) {
         return createImage()
       }
@@ -65,63 +64,62 @@ class MDCCatalogTileView: UIView {
   func createImage() -> UIImage {
     var newImage = UIImage()
 
-    let defaultSize = CGRectMake(0, 0, 188, 155)
+    let defaultSize = CGRect(x: 0, y: 0, width: 188, height: 155)
     let left = (self.frame.width - defaultSize.width) / 2
     let top = (self.frame.height - defaultSize.height) / 2
-    let centeredFrame = CGRectMake(left, top, defaultSize.width, defaultSize.height)
-    imageView.frame = centeredFrame
+    imageView.frame = CGRect(x: left, y: top, width: defaultSize.width, height: defaultSize.height)
 
     switch componentNameString {
     case "Activity Indicator":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawActivityIndicatorTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawActivityIndicatorTile)
     case "Animation Timing":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAnimationTimingTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawAnimationTimingTile)
     case "App Bar":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawAppBarTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawAppBarTile)
     case "Button Bar":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonBarTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawButtonBarTile)
     case "Buttons":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawButtonsTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawButtonsTile)
     case "Collection Cells":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionCellsTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawCollectionCellsTile)
     case "Collections":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawCollectionsTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawCollectionsTile)
     case "Dialogs":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawDialogsTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawDialogsTile)
     case "Feature Highlight":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawFeatureHighlightTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawFeatureHighlightTile)
     case "Flexible Header":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawFlexibleHeaderTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawFlexibleHeaderTile)
     case "Header Stack View":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawHeaderStackViewTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawHeaderStackViewTile)
     case "Ink":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawInkTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawInkTile)
     case "Navigation Bar":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawNavigationBarTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawNavigationBarTile)
     case "Misc":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawMiscTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile)
     case "Page Control":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPageControlTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawPageControlTile)
     case "Palettes":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawPalettesTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawPalettesTile)
     case "Progress View":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawProgressViewTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawProgressViewTile)
     case "Shadow":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawShadowLayerTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawShadowLayerTile)
     case "Slider":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSliderTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSliderTile)
     case "Snackbar":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSnackbarTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSnackbarTile)
     case "Sprited Animation View":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSpritedAnimationViewTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSpritedAnimationViewTile)
     case "Switch":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawSwitchTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSwitchTile)
     case "Typography and Fonts":
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawTypographyTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTypographyTile)
     default:
-      newImage = MDCDrawImage(centeredFrame, MDCCatalogDrawMiscTile)
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile)
     }
-    imageCache.setObject(newImage, forKey: componentNameString)
+    imageCache.setObject(newImage, forKey: componentNameString as AnyObject)
     return newImage
   }
 

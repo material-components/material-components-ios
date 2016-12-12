@@ -7,7 +7,7 @@ happen off-schedule.
 We only support the latest tagged release on `origin/master`.
 
 TODO: Discuss how many releases back we actively support.
-https://github.com/google/material-components-ios/issues/294
+https://github.com/material-components/material-components-ios/issues/294
 
 ### Create a hotfix branch
 

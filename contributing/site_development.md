@@ -26,7 +26,7 @@ skip this step.**
 Make sure you are under **develop** branch and have the latest code pulled. Then run the following
 script.
 
-```scripts/build-site.sh --setup```
+```scripts/build_site.sh --setup```
 
 The sources of the site will be pulled under a folder called *site-source* under your root folder of
 the repository.
@@ -96,7 +96,7 @@ you are trying to modify the styling of the site, we suggest you to modify
 
 Run the following command and follow the hint in the command line.
 
-    scripts/build-site.sh
+    scripts/build_site.sh
 
 The site should be served at [127.0.0.1:4000](http://127.0.0.1:4000) after build by default.
 
@@ -131,7 +131,7 @@ exec -l $SHELL
 gcloud init
 
 # Deploy it!
-scripts/build-site.sh --deploy production
+scripts/build_site.sh --deploy production
 ```
 
 Open [Material Component site](https://material-ext.appspot.com/mdc-ios-preview) and make sure your

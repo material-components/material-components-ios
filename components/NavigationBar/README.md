@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/NavigationBar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/NavigationBar">GitHub</a> for README documentation.{% endif %}-->
-
 # Navigation Bar
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/nav_bar.mp4" autoplay loop></video>
-  [![Navigation Bar](docs/assets/nav_bar.png)](docs/assets/nav_bar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Navigation Bar](docs/assets/navigation_bar.png)](docs/assets/navigation_bar.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/navigation_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Navigation Bar component is a view composed of a left and right Button Bar and either a title
 label or a custom title view.
@@ -61,7 +56,7 @@ Navigation Bar is a drop-in replacement for UINavigationBar with a few notable e
 
 - No navigationItem stack. Instances of MDCNavigationBar must be explicitly provided with a back
   button. TODO(featherless): Explain how to create a back button with Navigation Bar once
-  https://github.com/google/material-components-ios/issues/340 lands.
+  https://github.com/material-components/material-components-ios/issues/340 lands.
 
 The MDCNavigationBar class is a composition of two [Button Bars](../ButtonBar) and a title label or
 title view. The left and right Button Bars are provided with the navigation item's corresponding bar
@@ -83,15 +78,15 @@ UIBarButtonItem properties.
 Before using Navigation Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialNavgiationBar.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -111,28 +106,28 @@ with a few exceptions outlined below.
 To begin observing a UINavigationItem instance you must call `observeNavigationItem:`.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-[navigationBar observeNavigationItem:viewController.navigationItem];
-~~~
-
 #### Swift
 ~~~ swift
 navigationBar.observeNavigationItem(viewController.navigationItem)
+~~~
+
+#### Objective-C
+~~~ objc
+[navigationBar observeNavigationItem:viewController.navigationItem];
 ~~~
 <!--</div>-->
 
 #### Stopping observation
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-[navigationBar unobserveNavigationItem];
-~~~
-
 #### Swift
 ~~~ swift
 navigationBar.unobserveNavigationItem()
+~~~
+
+#### Objective-C
+~~~ objc
+[navigationBar unobserveNavigationItem];
 ~~~
 <!--</div>-->
 
@@ -144,6 +139,6 @@ Navigation Bar as you'd expect, with the following exceptions:
 - None of the `animated:` method varients are supported because they do not implement KVO events.
   Use of these methods will result in the Navigation Bar becoming out of sync with the
   navigationItem properties.
-- `prompt` is not presently supported. https://github.com/google/material-components-ios/issues/230.
+- `prompt` is not presently supported. https://github.com/material-components/material-components-ios/issues/230.
 
 TODO(featherless): Describe the most common integration steps.

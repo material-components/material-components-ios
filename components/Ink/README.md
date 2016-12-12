@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Ink">GitHub</a> for README documentation.{% endif %}-->
-
 # Ink
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/ink.mp4" autoplay loop></video>
-  [![Ink](docs/assets/ink.png)](docs/assets/ink.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Ink](docs/assets/ink.png)](docs/assets/ink.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/ink.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Ink component provides a radial action in the form of a visual ripple of ink expanding
 outward from the user's touch.
@@ -61,17 +56,16 @@ pod install
 Before using Ink, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-#import "MaterialInk.h"
-~~~
-
 #### Swift
 ~~~ swift
 import MaterialComponents
 ~~~
 
+#### Objective-C
+
+~~~ objc
+#import "MaterialInk.h"
+~~~
 <!--</div>-->
 
 The Ink component exposes two interfaces that you can use to add material-like
@@ -89,6 +83,13 @@ The simplest method of using ink in your views is to use a
 `MDCInkTouchController`:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+myButton = UIButton(type: .System)
+myButton.setTitle("Tap Me", forState: .Normal)
+inkTouchController = MDCInkTouchController(view: myButton)
+inkTouchController?.addInkView()
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -98,15 +99,6 @@ self.inkTouchController =
     [[MDCInkTouchController alloc] initWithView:myButton];
 [inkTouchController addInkView];
 ~~~
-
-#### Swift
-~~~ swift
-myButton = UIButton(type: .System)
-myButton.setTitle("Tap Me", forState: .Normal)
-inkTouchController = MDCInkTouchController(view: myButton)
-inkTouchController?.addInkView()
-~~~
-
 <!--</div>-->
 
 
@@ -118,6 +110,28 @@ touches, the following code uses the delegate's
 `inkTouchController:shouldProcessInkTouchesAtTouchLocation:` method:
 
 <!--<div class="material-code-render" markdown="1">-->
+
+#### Swift
+~~~ swift
+class MyDelegate: NSObject, MDCInkTouchControllerDelegate {
+
+  func inkTouchController(inkTouchController: MDCInkTouchController,
+      shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
+    // Determine if we want to display the ink
+    return true
+  }
+
+}
+
+...
+
+myButton = UIButton(type: .System)
+let myDelegate = MyDelegate()
+inkTouchController = MDCInkTouchController(view: myButton)
+inkTouchController?.delegate = myDelegate
+inkTouchController?.addInkView()
+
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -143,29 +157,6 @@ self.inkTouchController.delegate = myDelegate;
 [self.inkTouchController addInkView];
 
 ~~~
-
-#### Swift
-~~~ swift
-class MyDelegate: NSObject, MDCInkTouchControllerDelegate {
-
-  func inkTouchController(inkTouchController: MDCInkTouchController,
-      shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
-    // Determine if we want to display the ink
-    return true
-  }
-
-}
-
-...
-
-myButton = UIButton(type: .System)
-let myDelegate = MyDelegate()
-inkTouchController = MDCInkTouchController(view: myButton)
-inkTouchController?.delegate = myDelegate
-inkTouchController?.addInkView()
-
-~~~
-
 <!--</div>-->
 
 **NOTE:** The ink touch controller does not keep a strong reference to the view to which it is attaching the ink view.
@@ -177,17 +168,6 @@ Alternatively, you can use MCDInkView directly to display ink ripples using your
 own touch processing:
 
 <!--<div class="material-code-render" markdown="1">-->
-
-#### Objective-C
-~~~ objc
-MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
-MDCInkView *inkView = [[MDCInkView alloc] init];
-inkView.inkColor = [UIColor redColor];
-[myCustomView addSubview:inkView];
-...
-[inkView spreadInkFromPoint:CGPointMake(100, 100) completion:NULL];
-~~~
-
 #### Swift
 ~~~ swift
 let myCustomView = MyCustomView(frame: CGRectZero)
@@ -198,4 +178,13 @@ myCustomView.addSubview(inkView)
 myCustomView.spreadInk(CGPoint(), completion:nil)
 ~~~
 
+#### Objective-C
+~~~ objc
+MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
+MDCInkView *inkView = [[MDCInkView alloc] init];
+inkView.inkColor = [UIColor redColor];
+[myCustomView addSubview:inkView];
+...
+[inkView spreadInkFromPoint:CGPointMake(100, 100) completion:NULL];
+~~~
 <!--</div>-->

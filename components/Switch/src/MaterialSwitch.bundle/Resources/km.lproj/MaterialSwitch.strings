@@ -1,8 +1,0 @@
-/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
-"MDCSwitchAccessibilityHint" = "ប៉ះ​ទ្វេ​ដង​ដើម្បី​បិទ/បើក​ការ​កំណត់";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityValueOn" = "បើក";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityValueOff" = "បិទ";

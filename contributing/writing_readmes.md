@@ -8,12 +8,6 @@ This is the basic template for a component's README.md. Parts that you, the writ
 fill out have been marked with `TODO` statements.
 
 
-    ---
-    title:  "TODO: ComponentName"
-    layout: detail
-    section: components
-    excerpt: "TODO: Single sentence description of the component."
-    ---
     # TODO: ComponentName
 
     TODO: screenshot.png is made on iPhone 5 simulator

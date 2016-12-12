@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ActivityIndicator">GitHub</a> for README documentation.{% endif %}-->
-
 # Activity Indicator
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/activity_indicator.mp4" autoplay loop></video>
-  [![App Bar](docs/assets/activity_indicator.png)](docs/assets/app_bar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Activity Indicator](docs/assets/activity_indicator.png)](docs/assets/activity_indicator.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/activity_indicator.mp4" autoplay loop></video></div>{% endif %}-->
 
 Activity indicators are visual indications of an app loading content. The Activity Indicator is a circular indicator that either rotates clockwise or fills to completion clockwise when displaying progress.
 <!--{: .intro :}-->
@@ -16,6 +11,14 @@ Activity indicators are visual indications of an app loading content. The Activi
 
 <ul class="icon-list">
   <li class="icon-link"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
+</ul>
+
+### API Documentation
+
+<ul class="icon-list">
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Classes/MDCActivityIndicator.html>MDCActivityIndicator</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Enums/MDCActivityIndicatorMode.html">MDCActivityIndicatorMode</a></li>
+<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Protocols/MDCActivityIndicatorDelegate.html">MDCActivityIndicatorDelegate</a></li>
 </ul>
 
 - - -
@@ -66,15 +69,15 @@ Progress and activity indicators are visual indications of an app loading conten
 Before using Activity Indicator, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialActivityIndicator.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -93,6 +96,19 @@ Determinate indicators display how long an operation will take.
 ### Indeterminate indicators
 When indicators are indeterminate they request that the user wait while something finishes when it's not necessary to indicate how long it will take. This is the default mode and no additional parameters need to be set.
 
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
+view.addSubview(activityIndicator)
+
+// Start animation
+activityIndicator.startAnimating()
+...
+// Stop animation
+activityIndicator.stopAnimating()
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -106,10 +122,17 @@ MDCActivityIndicator *activityIndicator =
 // Stop animation
 [activityIndicator stopAnimating];
 ~~~
+<!--</div>-->
 
+### Determinate indicators
+When indicators are determinate they indicate how long an operation will take when the percentage complete is detectable. The indicator mode must be set to determinate and a progress amount must be provided as a float in the range [0,1].
+
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
 let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
+activityIndicator.indicatorMode = .ModeDeterminate
+activityIndicator.progress = 0.5
 view.addSubview(activityIndicator)
 
 // Start animation
@@ -118,9 +141,6 @@ activityIndicator.startAnimating()
 // Stop animation
 activityIndicator.stopAnimating()
 ~~~
-
-### Determinate indicators
-When indicators are determinate they indicate how long an operation will take when the percentage complete is detectable. The indicator mode must be set to determinate and a progress amount must be provided as a float in the range [0,1].
 
 #### Objective-C
 
@@ -137,19 +157,4 @@ activityIndicator.progress = 0.5;
 // Stop animation
 [activityIndicator stopAnimating];
 ~~~
-
-#### Swift
-~~~ swift
-let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
-activityIndicator.indicatorMode = .ModeDeterminate
-activityIndicator.progress = 0.5
-view.addSubview(activityIndicator)
-
-// Start animation
-activityIndicator.startAnimating()
-...
-// Stop animation
-activityIndicator.stopAnimating()
-~~~
-
 <!--</div>-->

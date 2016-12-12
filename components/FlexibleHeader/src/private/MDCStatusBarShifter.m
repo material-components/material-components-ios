@@ -16,6 +16,8 @@
 
 #import "MDCStatusBarShifter.h"
 
+#import "UIApplication+AppExtensions.h"
+
 static CGFloat kStatusBarExpectedHeight = 20;
 static NSTimeInterval kStatusBarBecomesInvalidAnimationDuration = 0.2;
 
@@ -155,8 +157,8 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
       // Take a snapshot of the status bar.
       UIView *snapshotView = [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
       UIView *clippingView = [[UIView alloc] init];
-      clippingView.frame =
-          (CGRect){CGPointZero, {snapshotView.frame.size.width, kStatusBarExpectedHeight}};
+      clippingView.frame = CGRectMake(0, 0,
+                                      snapshotView.frame.size.width, kStatusBarExpectedHeight);
       clippingView.autoresizingMask =
           (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
       clippingView.clipsToBounds = YES;
@@ -240,7 +242,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 }
 
 - (BOOL)canUpdateStatusBarFrame {
-  CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+  CGRect statusBarFrame = [[UIApplication mdc_safeSharedApplication] statusBarFrame];
   CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
   return ((statusBarHeight == kStatusBarExpectedHeight) || _statusBarReplicaView ||
           _snapshotState == MDCStatusBarShifterStateInvalidSnapshot);

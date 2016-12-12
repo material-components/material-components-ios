@@ -20,7 +20,7 @@ import MaterialComponents
 // Tests confirming that the App Bar container view controller's app bar properties are non-nil
 // immediately after initialization.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/246
+// Based on issue https://github.com/material-components/material-components-ios/issues/246
 class AppBarContainerIssue246Tests: XCTestCase {
 
   func testNonNil() {
