@@ -27,7 +27,18 @@
 
 static NSString *const kBarStackKey = @"barStack";
 static NSString *const kStatusBarHeightKey = @"statusBarHeight";
+static NSString *const MDCAppBarHeaderViewControllerKey = @"MDCAppBarHeaderViewControllerKey";
+static NSString *const MDCAppBarNavigationBarKey = @"MDCAppBarNavigationBarKey";
+static NSString *const MDCAppBarHeaderStackViewKey = @"MDCAppBarHeaderStackViewKey";
 static const CGFloat kStatusBarHeight = 20;
+
+@class MDCAppBarViewController;
+
+@interface MDCAppBar ()
+
+@property(nonatomic, strong) MDCAppBarViewController *appBarController;
+
+@end
 
 @interface MDCAppBarViewController : UIViewController
 
@@ -41,33 +52,68 @@ static const CGFloat kStatusBarHeight = 20;
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _headerViewController = [[MDCFlexibleHeaderViewController alloc] init];
-
-    MDCFlexibleHeaderView *headerView = _headerViewController.headerView;
-
-    // Shadow layer
-
-    MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock =
-        ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
-          CGFloat elevation = MDCShadowElevationAppBar * intensity;
-          [(MDCShadowLayer *)shadowLayer setElevation:elevation];
-        };
-    [headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
-
-    // Header stack view + navigation bar
-    MDCAppBarViewController *appBarViewController = [[MDCAppBarViewController alloc] init];
-    [_headerViewController addChildViewController:appBarViewController];
-    appBarViewController.view.frame = _headerViewController.view.bounds;
-    [_headerViewController.view addSubview:appBarViewController.view];
-    [appBarViewController didMoveToParentViewController:_headerViewController];
-
-    [headerView forwardTouchEventsForView:appBarViewController.headerStackView];
-    [headerView forwardTouchEventsForView:appBarViewController.navigationBar];
-
-    _headerStackView = appBarViewController.headerStackView;
-    _navigationBar = appBarViewController.navigationBar;
+    [self commonMDCAppBarInit];
+    [self commonMDCAppBarViewSetup];
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super init];
+  if (self) {
+    [self commonMDCAppBarInit];
+
+    if ([aDecoder containsValueForKey:MDCAppBarHeaderViewControllerKey]) {
+      _headerViewController = [aDecoder decodeObjectForKey:MDCAppBarHeaderViewControllerKey];
+    }
+    
+    if ([aDecoder containsValueForKey:MDCAppBarNavigationBarKey]) {
+      _navigationBar = [aDecoder decodeObjectForKey:MDCAppBarNavigationBarKey];
+      _appBarController.navigationBar = _navigationBar;
+    }
+
+    if ([aDecoder containsValueForKey:MDCAppBarHeaderStackViewKey]) {
+      _headerStackView = [aDecoder decodeObjectForKey:MDCAppBarHeaderStackViewKey];
+      _appBarController.headerStackView = _headerStackView;
+    }
+    [self commonMDCAppBarViewSetup];
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeObject:self.headerViewController forKey:MDCAppBarHeaderViewControllerKey];
+  [aCoder encodeObject:self.navigationBar forKey:MDCAppBarNavigationBarKey];
+  [aCoder encodeObject:self.headerStackView forKey:MDCAppBarHeaderStackViewKey];
+}
+
+- (void)commonMDCAppBarInit {
+  _headerViewController = [[MDCFlexibleHeaderViewController alloc] init];
+
+  // Shadow layer
+  MDCFlexibleHeaderView *headerView = _headerViewController.headerView;
+  MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock =
+  ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
+    CGFloat elevation = MDCShadowElevationAppBar * intensity;
+    [(MDCShadowLayer *)shadowLayer setElevation:elevation];
+  };
+  [headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
+
+  // Header stack view + navigation bar
+  _appBarController = [[MDCAppBarViewController alloc] init];
+  _headerStackView = _appBarController.headerStackView;
+  _navigationBar = _appBarController.navigationBar;
+
+}
+
+- (void)commonMDCAppBarViewSetup {
+  [_headerViewController addChildViewController:_appBarController];
+  _appBarController.view.frame = _headerViewController.view.bounds;
+  [_headerViewController.view addSubview:_appBarController.view];
+  [_appBarController didMoveToParentViewController:_headerViewController];
+
+  [_headerViewController.headerView forwardTouchEventsForView:_appBarController.headerStackView];
+  [_headerViewController.headerView forwardTouchEventsForView:_appBarController.navigationBar];
 }
 
 - (void)addHeaderViewControllerToParentViewController:
