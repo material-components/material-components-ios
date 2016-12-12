@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+#
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import argparse
+import json
+import subprocess
+
+def _create_arg_parser():
+  """Create a command-line argument parser."""
+  description='List the contents of an Xcode workspace.'
+  parser = argparse.ArgumentParser(description=description)
+  parser.add_argument('mode', choices=['name', 'schemes'],
+                      help='what to list from the workspace')
+  parser.add_argument('workspace', help='workspace to list.')
+  return parser
+
+
+def _extract_workspace_json(workspace):
+  """Extract JSON-encoded information about a workspace."""
+  args = ['xcodebuild', '-list', '-json', '-workspace', workspace]
+  info = subprocess.check_output(args)
+  return json.loads(info)
+
+
+def _print_workspace_info(mode, workspace):
+  """Print information from Xcode workspaces."""
+  json = _extract_workspace_json(workspace)
+  if mode == 'name':
+    print json['workspace']['name']
+  elif mode == 'schemes':
+    print '\n'.join(json['workspace']['schemes'])
+  
+
+def main():
+  parser = _create_arg_parser()
+  args = parser.parse_args()
+  _print_workspace_info(args.mode, args.workspace)
+     
+
+if __name__ == '__main__':
+  main()
