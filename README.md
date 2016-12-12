@@ -34,10 +34,14 @@ To install CocoaPods, run the following commands:
 sudo gem install cocoapods
 ~~~
 
+### 2. Create Project
 
-### 2. Create Podfile
+Create a new empty project in Xcode, choosing the *Single View Application*
+template, naming it *MyApp*.
 
-Once you've created an iOS application in Xcode you can start using Material Components for iOS.
+### 3. Create Podfile
+
+Once you've created the application, you can start using Material Components for iOS.
 
 To initialize CocoaPods in your project, run the following commands:
 
@@ -46,7 +50,7 @@ cd your-project-directory
 pod init
 ~~~
 
-### 3. Edit Podfile
+### 4. Edit Podfile
 
 Once you've initialized CocoaPods, add the
 [Material Components for iOS Pod](https://cocoapods.org/pods/MaterialComponentsIOS)
@@ -75,7 +79,7 @@ open your-project.xcworkspace
 
 Now you're ready to get started in Xcode.
 
-### 4. Usage
+### 5. Usage
 
 Now you’re ready to add a component (e.g. Buttons) to your app!
 Include the Material Components header for the component you're interested
@@ -88,7 +92,7 @@ Choose from Swift or Objective-C:
 ~~~ swift
 import MaterialComponents.MaterialButtons
 
-class MDCBuildTestViewController: UIViewController {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
