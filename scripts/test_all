@@ -17,7 +17,6 @@
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
 readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=latest'
-readonly LOG=test_log.txt
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
@@ -27,7 +26,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
     continue
   fi
   echo $workspace $scheme
-  log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
+  log_file=$(dirname "$workspace")/"test_log_for_scheme_${scheme}.txt"
   if xcodebuild test -workspace "$workspace" -scheme "$scheme" -destination "$DESTINATION" $1 >"$log_file" 2>&1; then
     rm "$log_file"
   else
