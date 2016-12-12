@@ -24,72 +24,72 @@ import MaterialComponents
 class ButtonBarIssue370Tests: XCTestCase {
 
   var buttonBar: MDCButtonBar!
-  let globalAttributes = [NSForegroundColorAttributeName:UIColor.blueColor()]
-  let directAttributes = [NSForegroundColorAttributeName:UIColor.blueColor()]
-  let fontAttributes = [NSFontAttributeName:UIFont.systemFontOfSize(12)]
+  let globalAttributes = [NSForegroundColorAttributeName:UIColor.blue]
+  let directAttributes = [NSForegroundColorAttributeName:UIColor.blue]
+  let fontAttributes = [NSFontAttributeName:UIFont.systemFont(ofSize: 12)]
 
   override func setUp() {
     buttonBar = MDCButtonBar()
   }
 
   override func tearDown() {
-    UIBarButtonItem.appearance().setTitleTextAttributes(nil, forState: .Normal)
+    UIBarButtonItem.appearance().setTitleTextAttributes(nil, for: UIControlState())
   }
 
   func testDirectOnly() {
-    let item = UIBarButtonItem(title: "Text", style: .Plain, target: nil, action: nil)
-    item.setTitleTextAttributes(directAttributes, forState: .Normal)
+    let item = UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)
+    item.setTitleTextAttributes(directAttributes, for: UIControlState())
     buttonBar.items = [item]
 
     forEachButton { button in
-      let attributes = button.titleLabel?.attributedText?.attributesAtIndex(0, effectiveRange: nil)
-      XCTAssertTrue(NSDictionary(dictionary: self.directAttributes).isEqualToDictionary(attributes!))
+      let attributes = button.titleLabel?.attributedText?.attributes(at: 0, effectiveRange: nil)
+      XCTAssertTrue(NSDictionary(dictionary: self.directAttributes).isEqual(to: attributes!))
     }
   }
 
   func testGlobalAppearanceOnly() {
-    UIBarButtonItem.appearance().setTitleTextAttributes(globalAttributes, forState: .Normal)
+    UIBarButtonItem.appearance().setTitleTextAttributes(globalAttributes, for: UIControlState())
 
-    if UIBarButtonItem.appearance().titleTextAttributesForState(.Normal) == nil {
+    if UIBarButtonItem.appearance().titleTextAttributes(for: UIControlState()) == nil {
       // This feature is not supported on this OS
       return
     }
 
-    let item = UIBarButtonItem(title: "Text", style: .Plain, target: nil, action: nil)
+    let item = UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
 
     forEachButton { button in
-      let attributes = button.titleLabel?.attributedText?.attributesAtIndex(0, effectiveRange: nil)
-      XCTAssertTrue(NSDictionary(dictionary: self.globalAttributes).isEqualToDictionary(attributes!))
+      let attributes = button.titleLabel?.attributedText?.attributes(at: 0, effectiveRange: nil)
+      XCTAssertTrue(NSDictionary(dictionary: self.globalAttributes).isEqual(to: attributes!))
     }
   }
 
   func testGlobalAppearanceAndDirectOverwriting() {
-    UIBarButtonItem.appearance().setTitleTextAttributes(globalAttributes, forState: .Normal)
+    UIBarButtonItem.appearance().setTitleTextAttributes(globalAttributes, for: UIControlState())
 
-    let item = UIBarButtonItem(title: "Text", style: .Plain, target: nil, action: nil)
+    let item = UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)
 
     // Should take priority.
-    item.setTitleTextAttributes(directAttributes, forState: .Normal)
+    item.setTitleTextAttributes(directAttributes, for: UIControlState())
 
     buttonBar.items = [item]
 
     forEachButton { button in
-      let attributes = button.titleLabel?.attributedText?.attributesAtIndex(0, effectiveRange: nil)
-      XCTAssertTrue(NSDictionary(dictionary: self.directAttributes).isEqualToDictionary(attributes!))
+      let attributes = button.titleLabel?.attributedText?.attributes(at: 0, effectiveRange: nil)
+      XCTAssertTrue(NSDictionary(dictionary: self.directAttributes).isEqual(to: attributes!))
     }
   }
 
   func testGlobalAppearanceAndDirectMerging() {
-    UIBarButtonItem.appearance().setTitleTextAttributes(fontAttributes, forState: .Normal)
+    UIBarButtonItem.appearance().setTitleTextAttributes(fontAttributes, for: UIControlState())
 
-    if UIBarButtonItem.appearance().titleTextAttributesForState(.Normal) == nil {
+    if UIBarButtonItem.appearance().titleTextAttributes(for: UIControlState()) == nil {
       // This feature is not supported on this OS
       return
     }
 
-    let item = UIBarButtonItem(title: "Text", style: .Plain, target: nil, action: nil)
-    item.setTitleTextAttributes(directAttributes, forState: .Normal)
+    let item = UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)
+    item.setTitleTextAttributes(directAttributes, for: UIControlState())
     buttonBar.items = [item]
 
     var composite: [String: AnyObject] = fontAttributes
@@ -98,12 +98,12 @@ class ButtonBarIssue370Tests: XCTestCase {
     }
 
     self.forEachButton { button in
-      let attributes = button.titleLabel?.attributedText?.attributesAtIndex(0, effectiveRange: nil)
-      XCTAssertTrue(NSDictionary(dictionary: composite).isEqualToDictionary(attributes!))
+      let attributes = button.titleLabel?.attributedText?.attributes(at: 0, effectiveRange: nil)
+      XCTAssertTrue(NSDictionary(dictionary: composite).isEqual(to: attributes!))
     }
   }
 
-  func forEachButton(work: MDCButton -> Void) {
+  func forEachButton(_ work: (MDCButton) -> Void) {
     for view in buttonBar.subviews {
       if let button = view as? MDCButton {
         work(button)

@@ -19,7 +19,7 @@ import MaterialComponents
 
 class PaletteTests: XCTestCase {
   // Creates a UIColor from a 24-bit RGB color encoded as an integer.
-  func colorFromRGB(rgbValue: UInt32) -> UIColor {
+  func colorFromRGB(_ rgbValue: UInt32) -> UIColor {
     return UIColor(
       red:CGFloat((rgbValue & 0xFF0000) >> 16) / 255,
       green:CGFloat((rgbValue & 0x00FF00) >> 8) / 255,
@@ -28,23 +28,23 @@ class PaletteTests: XCTestCase {
   }
 
   func testBasics() {
-    let color = MDCPalette.redPalette().tint50
+    let color = MDCPalette.red().tint50
     XCTAssertEqual(color, colorFromRGB(0xFFEBEE))
   }
 
   func testCaching() {
-    let first = MDCPalette.redPalette()
-    let second = MDCPalette.redPalette()
+    let first = MDCPalette.red()
+    let second = MDCPalette.red()
     XCTAssertTrue(first === second)
   }
 
   func testAccentlessPalette() {
-    let brownPalette = MDCPalette.brownPalette()
+    let brownPalette = MDCPalette.brown()
     XCTAssertNil(brownPalette.accent100)
   }
 
   func testGeneratedPalette() {
-    let palette = MDCPalette.init(generatedFromColor: UIColor(red: 1, green: 0, blue: 0, alpha: 1))
+    let palette = MDCPalette.init(generatedFrom: UIColor(red: 1, green: 0, blue: 0, alpha: 1))
     XCTAssertNotNil(palette.tint50)
     XCTAssertNotNil(palette.tint100)
     XCTAssertNotNil(palette.tint200)

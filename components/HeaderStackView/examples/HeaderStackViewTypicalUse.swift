@@ -17,15 +17,15 @@
 import Foundation
 import MaterialComponents
 
-public class HeaderStackViewTypicalUseSwiftExample: HeaderStackViewTypicalUse {
+open class HeaderStackViewTypicalUseSwiftExample: HeaderStackViewTypicalUse {
 
-  override public func viewDidLoad() {
+  override open func viewDidLoad() {
 
     super.viewDidLoad()
     self.setupExampleViews()
 
     stackView = MDCHeaderStackView.init();
-    stackView!.autoresizingMask = .FlexibleWidth;
+    stackView!.autoresizingMask = .flexibleWidth;
     stackView!.topBar = topView;
     stackView!.bottomBar = navBar;
 
@@ -36,12 +36,12 @@ public class HeaderStackViewTypicalUseSwiftExample: HeaderStackViewTypicalUse {
     view.addSubview(stackView!)
   }
 
-  override public func viewWillAppear(animated: Bool) {
+  override open func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
   
-  override public func prefersStatusBarHidden() -> Bool {
+  override open var prefersStatusBarHidden : Bool {
     return true
   }
 }

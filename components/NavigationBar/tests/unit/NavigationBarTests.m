@@ -43,48 +43,6 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                              kEpsilonAccuracy);
 }
 
-- (void)
-    testSettingTextAlignmentToCenterWithTrailingBarButtonItemsMustNotCoverTheTrailingBarButtonItems {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.title = @"a Title";
-  UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"long button name"
-                                                             style:UIBarButtonItemStylePlain
-                                                            target:self
-                                                            action:nil];
-
-  navBar.trailingBarButtonItems = @[ button ];
-
-  // When
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
-  [navBar layoutIfNeeded];
-
-  // Then
-  XCTAssertLessThan(navBar.titleLabel.center.x, CGRectGetMidX(navBar.bounds));
-}
-
-- (void)
-    testSettingTextAlignmentToCenterWithLeadingBarButtonItemsMustNotCoverTheLeadingBarButtonItems {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.title = @"a Title";
-  UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"long button name"
-                                                             style:UIBarButtonItemStylePlain
-                                                            target:self
-                                                            action:nil];
-
-  navBar.leadingBarButtonItems = @[ button ];
-
-  // When
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
-  [navBar layoutIfNeeded];
-
-  // Then
-  XCTAssertGreaterThan(navBar.titleLabel.center.x, CGRectGetMidX(navBar.bounds));
-}
-
 - (void)testChangingTextOfACenterTextAlignmentMustCenterTheTitleLabel {
   // Given
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
@@ -125,7 +83,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCNavigationBarTitleAlignment alignment = navBar.titleAlignment;
 
   // Then
-  XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentCenter);
+  XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentLeading);
 }
 
 @end

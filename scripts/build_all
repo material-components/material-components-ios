@@ -1,0 +1,70 @@
+#!/bin/bash
+#
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly ROOT_DIR="$SCRIPTS_DIR/.."
+
+# Given a path to an Xcode log file in $1, exit with status 0 if looks like the
+# failure is expected and can be ignored, or exit with non-zero status
+# otherwise.
+function is_expected_failure() {
+  # A test target was specified with the 'build' command.
+  grep --quiet "is not configured for Running" "$1" 
+}
+
+# Given a path to an Xcode log file in $1, print a guess at what caused the
+# failure.
+function guess_failure() {
+  grep --after-context=2 "The following build commands failed:" "$1"
+}
+
+# Given the name of a scheme in $1, exit with status 0 if we should use it.
+function is_useable_scheme() {
+  # Assume that CocoaPods schemes only exist to support some other scheme.
+  [[ $1 != Pods-* ]] 
+}
+
+readonly WORKSPACES=$("$SCRIPTS_DIR"/list_xcode_workspaces)
+for workspace in $WORKSPACES; do
+  # Gather a list of schemes in the workspace.
+  # This regex is admittably dumb.
+  schemes=$(xcodebuild -workspace "$workspace" -list | grep "^        ")
+
+  # Xcode caches build results, so building all schemes isn't as expensive as
+  # it might seem.
+  echo "Building schemes in $workspace."
+  for scheme in $schemes; do 
+    if ! is_useable_scheme $scheme; then
+      continue
+    fi
+
+    printf "."
+    log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
+    options="-workspace $workspace -scheme $scheme"
+    if xcodebuild $options $1 >"$log_file" 2>&1 || \
+       is_expected_failure "$log_file"; then
+      rm "$log_file"
+    else
+      echo
+      echo "Failed to build $scheme in $workspace:"
+      guess_failure "$log_file"
+      echo "Log left in $log_file."
+      echo "Continuing with next build..."
+    fi
+  done
+  echo
+  echo "Done."
+done

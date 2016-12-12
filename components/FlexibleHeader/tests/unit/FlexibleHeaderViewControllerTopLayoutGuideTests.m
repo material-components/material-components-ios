@@ -165,7 +165,7 @@
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffPullDownRelease {
 
   // When
-  CGFloat randomHeight = arc4random_uniform(200.0) + 20.0;
+  CGFloat randomHeight = arc4random_uniform(50.0) + 20.0;
   self.vc.fhvc.headerView.maximumHeight = randomHeight;
   CGFloat initialYOffset = -self.vc.scrollView.contentInset.top;
   CGRect initialFrame = CGRectMake(0,
