@@ -89,20 +89,20 @@ Set the `MDCRobotoFontLoader` as `MDCTypography`'s fontLoader in order to use Ro
 components.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  MDCTypography.setFontLoader(MDCRobotoFontLoader.sharedInstance())
+  ...
+}
+~~~
+
 #### Objective-C
 ~~~ objc
 - (BOOL)application:(UIApplication *)application
     willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [MDCTypography setFontLoader:[MDCRobotoFontLoader sharedInstance]];
     ...
-}
-~~~
-
-#### Swift
-~~~ swift
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-  MDCTypography.setFontLoader(MDCRobotoFontLoader.sharedInstance())
-  ...
 }
 ~~~
 <!--</div>-->
