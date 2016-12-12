@@ -31,40 +31,23 @@ function guess_failure() {
   grep --after-context=2 "The following build commands failed:" "$1"
 }
 
-# Given the name of a scheme in $1, exit with status 0 if we should use it.
-function is_useable_scheme() {
-  # Assume that CocoaPods schemes only exist to support some other scheme.
-  [[ $1 != Pods-* ]] 
-}
-
-readonly WORKSPACES=$("$SCRIPTS_DIR"/list_xcode_workspaces)
-for workspace in $WORKSPACES; do
-  # Gather a list of schemes in the workspace.
-  # This regex is admittably dumb.
-  schemes=$(xcodebuild -workspace "$workspace" -list | grep "^        ")
-
-  # Xcode caches build results, so building all schemes isn't as expensive as
-  # it might seem.
-  echo "Building schemes in $workspace."
-  for scheme in $schemes; do 
-    if ! is_useable_scheme $scheme; then
-      continue
-    fi
-
-    printf "."
-    log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
-    options="-workspace $workspace -scheme $scheme"
-    if xcodebuild $options $1 >"$log_file" 2>&1 || \
-       is_expected_failure "$log_file"; then
-      rm "$log_file"
-    else
-      echo
-      echo "Failed to build $scheme in $workspace:"
-      guess_failure "$log_file"
-      echo "Log left in $log_file."
-      echo "Continuing with next build..."
-    fi
-  done
-  echo
-  echo "Done."
+readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+for workspace_scheme in $WORKSPACE_SCHEMES; do  
+  workspace=$(echo $workspace_scheme | cut -d: -f1)
+  scheme=$(echo $workspace_scheme | cut -d: -f2)
+  
+  echo "Building $scheme in $workspace."
+  log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
+  options="-workspace $workspace -scheme $scheme"
+  if xcodebuild $options $1 >"$log_file" 2>&1 || \
+     is_expected_failure "$log_file"; then
+    rm "$log_file"
+  else
+    echo
+    echo "Failed to build $scheme in $workspace:"
+    guess_failure "$log_file"
+    echo "Log left in $log_file."
+    echo "Continuing with next build..."
+    echo
+  fi
 done
