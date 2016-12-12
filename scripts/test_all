@@ -22,6 +22,8 @@ readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
   workspace=$(echo $workspace_scheme | cut -d: -f1)
   scheme=$(echo $workspace_scheme | cut -d: -f2)
+
+  # Assume any scheme with the name "*Tests*" is a testing scheme.
   if [[ $scheme != *Tests* ]]; then
     continue
   fi
