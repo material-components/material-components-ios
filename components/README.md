@@ -1,6 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components">GitHub</a> for README documentation.{% endif %}-->
 
 # Component Documentation
 
@@ -9,14 +6,10 @@ interface components for iOS. These components implement Google's
 [material design](http://www.google.com/design/spec/material-design/introduction.html) specification
 and are developed by a team of iOS engineers and UX designers at Google.
 
-
-- [GitHub](https://github.com/google/material-components-ios/)
-  <!--{: .icon-github }-->
-
-- [Development Guide]({{ site.folder }}/howto/)
+- [Development Guide](https://github.com/material-components/material-components-ios/tree/master/howto)
   <!--{: .icon-guide }-->
 
-- [Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
+- [Tutorial](https://github.com/material-components/material-components-ios/tree/master/howto/tutorial)
   <!--{: .icon-sample }-->
 
 - [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
@@ -34,6 +27,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**ActivityIndicator**
   A circular rotating indicator for showing indeterminate or determinate progress.
   ](ActivityIndicator/)
+  <!--{: .icon-activityindicator }-->
+
+- [**AnimationTiming**
+  Animation timing easing curves create smooth and consistent motion.
+  ](AnimationTiming/)
+  <!--{: .icon-animationtiming }-->
 
 - [**AppBar**
   A flexible navigation bar, designed to provide a typical material navigation experience.
@@ -68,6 +67,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**Dialogs**
   A presentation controller that will display a material modal dialog.
   ](Dialogs/)
+  <!--{: .icon-dialogs }-->
+
+- [**FeatureHighlight**
+  Highlights a part of the screen in order to draw users' attention.
+  ](FeatureHighlight/)
+  <!--{: .icon-featurehighlight }-->
 
 - [**FlexibleHeader**
   A container view whose height and vertical offset react to UIScrollViewDelegate events.
@@ -89,6 +94,10 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](NavigationBar/)
   <!--{: .icon-navigationbar }-->
 
+- [**OverlayWindow**
+  A window for managing sets of overlay views.
+  ](OverlayWindow/)
+
 - [**PageControl**
   A drop-in material replacement for UIPageControl.
   ](PageControl/)
@@ -102,6 +111,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**ProgressView**
   A determinate and linear progress indicator that implements material animation and layout.
   ](ProgressView/)
+  <!--{: .icon-progressview }-->
 
 - [**ShadowElevations**
   Provides the most commonly used elevations specified in material.
@@ -121,6 +131,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [**Snackbar**
   A brief dismissible feedback message.
   ](Snackbar/)
+  <!--{: .icon-snackbar }-->
 
 - [**Switch**
   A material on/off switch with an interface similar to UISwitch.

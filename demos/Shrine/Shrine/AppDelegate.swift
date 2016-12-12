@@ -15,13 +15,14 @@
  */
 
 import UIKit
+import MaterialComponents.MaterialIcons_ic_arrow_back
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
     let flexHeadVC = ShrineFlexibleHeaderContainerViewController()
     self.window?.rootViewController = flexHeadVC;

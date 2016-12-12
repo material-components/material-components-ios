@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ShadowLayer">GitHub</a> for README documentation.{% endif %}-->
-
 # Shadow Layer
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/shadow.mp4" autoplay loop></video>
-  [![Shadow Layer](docs/assets/shadow.png)](docs/assets/shadow.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Shadow Layer](docs/assets/shadow_layer.png)](docs/assets/shadow_layer.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/shadow_layer.mp4" autoplay loop></video></div>{% endif %}-->
 
 Shadow Layer implements the material design specifications for elevation and shadows.
 By simulating the physical properties of paper, elevation and light source, shadows give
@@ -19,7 +14,7 @@ elevation.
 ### MDCShadowLayer
 
 `MDCShadowLayer` provides a Core Animation `CALayer` that will render a shadow based on its
-elevation property. `UIViews` can easily utilize this by overriding their layerClass method to
+elevation property. `UIViews` can utilize this by overriding their layerClass method to
 return `MDCShadowLayer`.
 
 `elevation` sets the diffusion level of the shadow. The higher the shadow elevation, the more
@@ -84,26 +79,35 @@ pod install
 Before using Shadow Layer, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-#import "MaterialShadowLayer.h"
-~~~
-
 #### Swift
 
 ~~~ swift
 import MaterialComponents
 ~~~
 
+#### Objective-C
+
+~~~ objc
+#import "MaterialShadowLayer.h"
+~~~
 <!--</div>-->
 
 
 Example of a custom button based on UIButton with material design shadows:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+class ShadowButton: UIButton {
 
-### Objective C
+  override class func layerClass() -> AnyClass {
+    return MDCShadowLayer.self
+  }
+
+}
+~~~
+
+#### Objective C
 ~~~ objc
 @interface ShadowButton : UIButton
 
@@ -117,36 +121,13 @@ Example of a custom button based on UIButton with material design shadows:
 
 @end
 ~~~
-
-### Swift
-~~~ swift
-class ShadowButton: UIButton {
-
-  override class func layerClass() -> AnyClass {
-    return MDCShadowLayer.self
-  }
-
-}
-~~~
-
 <!--</div>-->
 
 
 Add the custom button to view:
 
 <!--<div class="material-code-render" markdown="1">-->
-
-### Objective C
-~~~ objc
-ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
-button.frame = CGRectMake(100, 100, 200, 50);
-[button setTitle: @"Button" forState:UIControlStateNormal];
-[(MDCShadowLayer *)button.layer setElevation:6.f];
-[self.view addSubview:button];
-
-~~~
-
-### Swift
+#### Swift
 ~~~ swift
 let button: ShadowButton = ShadowButton.init(type: UIButtonType.System)
 button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
@@ -156,14 +137,41 @@ self.addSubview(button)
 
 ~~~
 
+#### Objective C
+~~~ objc
+ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
+button.frame = CGRectMake(100, 100, 200, 50);
+[button setTitle: @"Button" forState:UIControlStateNormal];
+[(MDCShadowLayer *)button.layer setElevation:6.f];
+[self.view addSubview:button];
+
+~~~
 <!--</div>-->
 
 
 Creating a custom UIView with a shadow:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+class ShadowedView: UIView {
 
-### Objective C
+  override class func layerClass() -> AnyClass {
+    return MDCShadowLayer.self
+  }
+
+  var shadowLayer: MDCShadowLayer {
+    return self.layer as! MDCShadowLayer
+  }
+
+  func setElevation(points: CGFloat) {
+    self.shadowLayer.elevation = points
+  }
+
+}
+~~~
+
+#### Objective C
 ~~~ objc
 @interface ShadowedView : UIView
 @end
@@ -184,26 +192,6 @@ Creating a custom UIView with a shadow:
 
 @end
 ~~~
-
-### Swift
-~~~ swift
-class ShadowedView: UIView {
-
-  override class func layerClass() -> AnyClass {
-    return MDCShadowLayer.self
-  }
-
-  var shadowLayer: MDCShadowLayer {
-    return self.layer as! MDCShadowLayer
-  }
-
-  func setElevation(points: CGFloat) {
-    self.shadowLayer.elevation = points
-  }
-
-}
-~~~
-
 <!--</div>-->
 
 
@@ -211,16 +199,7 @@ To improve performance, consider rasterizing MDCShadowLayer when the view using 
 animating or changing size.
 
 <!--<div class="material-code-render" markdown="1">-->
-
-### Objective C
-~~~ objc
-
-self.layer.shouldRasterize = YES;
-self.layer.rasterizationScale = [UIScreen mainScreen].scale;
-
-~~~
-
-### Swift
+#### Swift
 ~~~ swift
 
 self.layer.shouldRasterize = true;
@@ -228,6 +207,13 @@ self.layer.rasterizationScale = UIScreen.mainScreen().scale
 
 ~~~
 
+#### Objective C
+~~~ objc
+
+self.layer.shouldRasterize = YES;
+self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+
+~~~
 <!--</div>-->
 
 Disable rasterization before animating MDCShadowLayer.

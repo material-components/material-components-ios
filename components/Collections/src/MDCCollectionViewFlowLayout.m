@@ -335,7 +335,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 #pragma mark - Private
 
 - (MDCCollectionViewLayoutAttributes *)updateAttribute:(MDCCollectionViewLayoutAttributes *)attr {
-  if (attr.representedElementKind == UICollectionElementCategoryCell) {
+  if (attr.representedElementCategory == UICollectionElementCategoryCell) {
     attr.editing = self.editor.isEditing;
   }
   attr.isGridLayout = NO;
@@ -380,9 +380,9 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   UIEdgeInsets insets = [self insetsAtSectionIndex:attr.indexPath.section];
   if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
     insetFrame = CGRectInset(insetFrame, insets.left / 2 + insets.right / 2, 0);
-    if (attr.representedElementKind == UICollectionElementKindSectionHeader) {
+    if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
       insetFrame.origin.y += insets.top;
-    } else if (attr.representedElementKind == UICollectionElementKindSectionFooter) {
+    } else if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionFooter]) {
       insetFrame.origin.y -= insets.bottom;
     }
     attr.frame = insetFrame;
@@ -505,7 +505,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
 - (void)updateCellStateMaskWithAttribute:(MDCCollectionViewLayoutAttributes *)attr {
   attr.shouldShowSelectorStateMask = NO;
-  attr.shouldShowSelectorStateMask = NO;
+  attr.shouldShowReorderStateMask = NO;
 
   // Determine proper state to show cell if editing.
   if (attr.editing) {

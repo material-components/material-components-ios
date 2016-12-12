@@ -32,7 +32,7 @@ If you are going to add new sections to the website, you need to modify the conf
 To set it up, run
 
 ```
-scripts/build-site.sh --setup
+scripts/build_site.sh --setup
 
 # Modify the navigation data file
 vim site-source/jekyll-site-src/_data/navigation.yaml
@@ -55,7 +55,7 @@ Material component for ios uses [jazzy](https://github.com/realm/jazzy) to trans
 
 Run the following command and follow the hint in the command line.
 
-    scripts/build-site.sh
+    scripts/build_site.sh
 
 The site should be served at [127.0.0.1:4000](http://127.0.0.1:4000) after build by default.
 
@@ -73,7 +73,7 @@ exec -l $SHELL
 gcloud init
 
 # Deploy it!
-scripts/build-site.sh --deploy production
+scripts/build_site.sh --deploy production
 ```
 
 Open [Material Component site](https://material-ext.appspot.com/mdc-ios-preview) and make sure your modification is there.

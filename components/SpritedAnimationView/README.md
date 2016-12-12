@@ -1,10 +1,6 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/SpritedAnimationView/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/SpritedAnimationView">GitHub</a> for README documentation.{% endif %}-->
-
 # SpritedAnimationView
 
-![SpritedAnimationView](docs/assets/spritedanimationview_screenshot.png)
+![SpritedAnimationView](docs/assets/sprited_animation_view.png)
 <!--{: .ios-screenshot .right }-->
 
 This control provides an alternative to animating an array of images with an `UIImageView`. Only a
@@ -70,21 +66,24 @@ animation completes for each state, and be replaced with the other sprite image.
 Before using Sprited Animation View, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialSpritedAnimationView.h"
 ~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
-~~~
 <!--</div>-->
 
 Integrating the `spritedAnimationView` is somewhat similar to adding an `UIImageView` to a view.
 
-```objectivec
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+~~~ objc
 #import "MaterialSpritedAnimationView.h"
 
 // Create a Sprited Animation View.
@@ -98,4 +97,5 @@ animationView.tintColor = [UIColor blueColor];
 [animationView startAnimatingWithCompletion:^(BOOL finished) {
     NSLog(@"Done animating.");
 }];
-```
+~~~
+<!--</div>-->

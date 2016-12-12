@@ -13,7 +13,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 <!--{: .subhead }-->
 
 [Get Started](#quickstart)
-[View on GitHub](https://github.com/google/material-components-ios)
+[View on GitHub](https://github.com/material-components/material-components-ios)
 <!--{: .button-getstarted }-->
 
 <a name="quickstart"></a>
@@ -108,8 +108,8 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     #### Swift
 
-    ~~~swift
-    import MaterialComponents
+    ~~~ swift
+    import MaterialComponents.MaterialButtons
 
     class MDCBuildTestViewController: UIViewController {
 
@@ -141,7 +141,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     - [Explore our Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
       <!--{: .icon-sample }-->
 
-    - [View the project on GitHub](https://github.com/google/material-components-ios/)
+    - [View the project on GitHub](https://github.com/material-components/material-components-ios/)
       <!--{: .icon-github }-->
     <!--{: .icon-list }-->
 <!--{: .step-sequence }-->

@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/contributing/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/contributing">GitHub</a> for README documentation.{% endif %}-->
-
 Want to contribute? Great! First, read this page (including the [small print](#the-small-print)).
 
 # Contributing
@@ -9,10 +5,7 @@ Want to contribute? Great! First, read this page (including the [small print](#t
 Material Components for iOS is intended to be a full open source project that accepts contributions
 from community members. We can work together to optimize material design on iOS.
 
-- [Slack Channel](http://mdc-private.slack.com)
-  <!--{: .icon-slack }-->
-
-- [GitHub Issues](https://github.com/google/material-components-ios/issues)
+- [GitHub Issues](https://github.com/material-components/material-components-ios/issues)
   <!--{: .icon-github }-->
 
 - [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
@@ -26,8 +19,7 @@ from community members. We can work together to optimize material design on iOS.
 Members of the core team are engineers from Google, Inc. responsible for the strategic direction of
 Material Components and appointment of technical leaders from the community. The Core Team will
 work with the community to accept contributions in line with the [material design
-spec](http://www.google.com/design/spec). You can reach members of the core team on our [Slack
-discussion channel](http://mdc-private.slack.com).
+spec](http://www.google.com/design/spec).
 
 - - -
 
@@ -38,7 +30,7 @@ through posting issues, updating documentation, submitting pull requests, provid
 comments and any other related activities.
 
 Communication through any of our material design channels
-([GitHub](http://github.com/google/material-components-ios), [Stack
+([GitHub](http://github.com/material-components/material-components-ios), [Stack
 Overflow](http://stackoverflow.com/questions/tagged/material-components-ios),
 [Google+](http://plus.google.com/+googledesign), [Twitter](https://twitter.com/googledesign), etc.)
 must be constructive and never resort to personal attacks, trolling, public or private harassment,
@@ -101,23 +93,21 @@ If you have questions about how to use Material Components for iOS:
 - Search previous questions that have been answered by visiting [Stack
   Overflow](http://stackoverflow.com/questions/tagged/material-components-ios).
 - Please post questions to Stack Overflow with the tag `material-components-ios`.
-- Join us on our [Slack discussion channel](https://mdc-private.slack.com/messages/mdc-ios/) for more
-  direct discussions with the team.
 
 - - -
 
 ## Found an Issue?
 
 If you find a bug in the source code or a mistake in the documentation, you can help us by
-[submitting an issue](https://github.com/google/material-components-ios/issues) to our GitHub
-repository. Even better: send a fix as a [pull request](https://github.com/google/material-components-ios/compare/)!
+[submitting an issue](https://github.com/material-components/material-components-ios/issues) to our GitHub
+repository. Even better: send a fix as a [pull request](https://github.com/material-components/material-components-ios/compare/)!
 
 - - -
 
 ## Feature Request?
 
 You can request a new feature by [submitting an
-issue](https://github.com/google/material-components-ios/issues) to our GitHub repository. If you
+issue](https://github.com/material-components/material-components-ios/issues) to our GitHub repository. If you
 would like to implement a new feature then consider what kind of change it is:
 
 - Major changes that you wish to contribute to the project should be discussed first on our [dev
@@ -125,14 +115,14 @@ would like to implement a new feature then consider what kind of change it is:
   can better coordinate our efforts, prevent duplication of work, and help you to craft the change
   so that it is successfully accepted into the project.
 - Small changes can be crafted and submitted to the GitHub Repository as a [pull request]
-(https://github.com/google/material-components-ios/compare/).
+(https://github.com/material-components/material-components-ios/compare/).
 
 - - -
 
 ## Submitting an Issue
 
 Before you submit your issue [search the
-archive](https://github.com/google/material-components-ios/issues) in case your question has
+archive](https://github.com/material-components/material-components-ios/issues) in case your question has
 already been answered. If your issue appears to be a bug, and hasn't been reported, open a new
 issue. Help us to maximize the effort we can spend fixing issues and adding new features, by not
 reporting duplicate issues. Providing the following information will increase the chances of your
@@ -167,7 +157,7 @@ changes to be accepted, the CLA must be signed. It's a quick process, we promise
 For major changes, it's worthwhile discussing the idea on our [mailing
 list](https://groups.google.com/forum/#!forum/material-components-ios-discuss)—that way you'll get
 early feedback on your idea and find out if the approach has been tried before or if someone else
-is working on it. [Search our GitHub](https://github.com/google/material-components-ios/issues)
+is working on it. [Search our GitHub](https://github.com/material-components/material-components-ios/issues)
 issues to see if anyone has proposed the idea before, too. Feature requests and bug fixes should be
 tracked with issues, so file one early on and assign it to yourself once you have started it.
 
@@ -228,10 +218,10 @@ Contributions made by corporations are covered by a different agreement than
 the one above, the
 [Software Grant and Corporate Contributor License Agreement](https://cla.developers.google.com/about/google-corporate).
 
-### Submitting a [Pull Request](https://github.com/google/material-components-ios/compare/)
+### Submitting a [Pull Request](https://github.com/material-components/material-components-ios/compare/)
 
-Once you have code that is ready to share, please create a [pull request](https://github.com/google/material-components-ios/compare/) against our [GitHub
-repo](https://github.com/google/material-components-ios). See [GitHub's documentation about pull
+Once you have code that is ready to share, please create a [pull request](https://github.com/material-components/material-components-ios/compare/) against our [GitHub
+repo](https://github.com/material-components/material-components-ios). See [GitHub's documentation about pull
 requests](https://help.github.com/articles/using-pull-requests) for more information.
 
 ### Subject Format
@@ -252,7 +242,7 @@ A good example of a title is:
 ~~~
 
 When referencing GitHub issues, use the full URL:
-`https://github.com/google/material-components-ios/issues/nnn` instead of the shorthand `#nnn`.
+`https://github.com/material-components/material-components-ios/issues/nnn` instead of the shorthand `#nnn`.
 
 Pull requests will be reviewed in [Phabricator's Differential code review
 tool](http://codereview.cc) instead of directly in GitHub. When you submit your pull request, a bot
@@ -285,7 +275,7 @@ Version 2.0, January 2004
 
 [http://www.apache.org/licenses](http://www.apache.org/licenses)
 
-[https://github.com/google/material-components-ios/blob/develop/LICENSE](https://github.com/google/material-components-ios/blob/develop/LICENSE)
+[https://github.com/material-components/material-components-ios/blob/develop/LICENSE](https://github.com/material-components/material-components-ios/blob/develop/LICENSE)
 
 Copyright and License in Source Code
 
@@ -310,6 +300,3 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 
 ~~~
-
-Each contributor is responsible for adding their name or company name to the CONTRIBUTORS.txt file
-at the project’s root and maintaining the contact information.

@@ -13,3 +13,9 @@
 [submodule "scripts/external/arc-regex-line-length-linter"]
 	path = scripts/external/arc-regex-line-length-linter
 	url = git@github.com:google/arc-regex-line-length-linter.git
+[submodule "scripts/external/material-motion-apidiff"]
+	path = scripts/external/material-motion-apidiff
+	url = https://github.com/material-motion/material-motion-apidiff.git
+[submodule "catalog/third_party/EarlGrey"]
+	path = catalog/third_party/EarlGrey
+	url = git@github.com:google/EarlGrey.git

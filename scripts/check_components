@@ -14,7 +14,102 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-for check in scripts/check/*; do
-  echo "Each of the following components is $(basename $check | sed 's/_/ /g'):"
-  $check
+# To check all components:
+#
+# $ check_components
+#
+# To check specific components:
+#
+# $ check_components path/to/component [path/to/component [...]]
+
+function verbose_echo() {
+  if [[ $verbose -ne 0 ]]; then
+    echo "$*"
+  fi
+}
+
+verbose=0
+checks=""
+components=""
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    "-h" | "--help")
+      echo "Usage: $0 [-h] [-v] [-c check_script ...] [path/to/component ...]"
+      echo
+      echo "Check all components with all checks:"
+      echo "\$ $0"
+      echo
+      echo "Do the same but report what is going on:"
+      echo "\$ $0 -v"
+      echo
+      echo "Check all components with scripts/check/script1 scripts/check/script2:"
+      echo "\$ $0 -c scripts/check/script1 -c scripts/check/script2"
+      echo
+      echo "Check only components/Foo and components/private/Bar:"
+      echo "\$ $0 components/Foo components/private/Bar"
+      exit 0
+    ;;
+    "-v" | "--verbose")
+      verbose=1
+      shift 1
+    ;;
+    "-c" | "--check")
+      checks="$checks $2"
+      shift 2
+    ;;
+    *)
+      components="$components $1"
+      shift 1
+    ;;
+  esac
 done
+
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly ROOT_DIR=$(dirname "$SCRIPTS_DIR")
+verbose_echo "SCRIPTS_DIR: $SCRIPTS_DIR"
+verbose_echo "ROOT_DIR: $ROOT_DIR"
+
+# If no component listed on the command line, find them all.
+if [[ -z "$components" ]]; then
+  readonly PUBLIC_COMPONENTS=$(cd $ROOT_DIR && find components -maxdepth 1 -type d | grep -v "components$" | grep -v "components/private$")
+  readonly PRIVATE_COMPONENTS=$(cd $ROOT_DIR && find components/private -maxdepth 1 -type d | grep -v "components/private$")
+  components="$PUBLIC_COMPONENTS $PRIVATE_COMPONENTS"
+fi
+verbose_echo "components: $components"
+
+# Find all the check scripts.
+if [[ -z "$checks" ]]; then
+  checks=$(find $SCRIPTS_DIR/check -type f -perm +111)
+fi 
+verbose_echo "checks: $checks"
+
+# Run through each component, running each check in turn.
+# Keep track of the number that fail any check.
+verbose_echo
+failed=""
+for component in $components; do 
+  echo "Checking $component ..."
+
+  all_checks_passed=1
+  for check in $checks; do
+    $check $ROOT_DIR/$component
+    if [[ $? -ne 0 ]]; then
+      all_checks_passed=0
+    fi
+  done
+
+  if [[ $all_checks_passed -ne 1 ]]; then
+    failed="$failed $component"
+  fi
+  echo
+done
+echo
+
+if [[ -z $failed ]]; then
+  echo Component checks passed.
+else
+  echo "The following components failed:"
+  for i in $failed; do
+    echo $i
+  done
+fi

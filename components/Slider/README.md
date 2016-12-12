@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Slider/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Slider">GitHub</a> for README documentation.{% endif %}-->
-
 # Slider
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/slider.mp4" autoplay loop></video>
-  [![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/slider.mp4" autoplay loop></video></div>{% endif %}-->
 
 The `MDCSlider` object is a material design control used to select a value from a continuous range
 or discrete set of values.
@@ -60,15 +55,15 @@ pod install
 Before using Slider, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialSlider.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -77,6 +72,22 @@ import MaterialComponents
 MDCSlider can be be used like a standard `UIControl`.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+override func viewDidLoad() {
+  let slider = MDCSlider(frame: CGRectMake(50, 50, 100, 27))
+  slider.addTarget(self,
+      action: Selector("didChangeSliderValue:"),
+      forControlEvents: .ValueChanged)
+  view.addSubview(slider)
+}
+
+func didChangeSliderValue(senderSlider:MDCSlider) {
+  NSLog("Did change slider value to: %@", senderSlider.value)
+}
+~~~
+
 #### Objective C
 
 ~~~ objc
@@ -91,22 +102,6 @@ MDCSlider can be be used like a standard `UIControl`.
 
 - (void)didChangeSliderValue:(MDCSlider *)slider {
   NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
-}
-~~~
-
-#### Swift
-
-~~~ swift
-override func viewDidLoad() {
-  let slider = MDCSlider(frame: CGRectMake(50, 50, 100, 27))
-  slider.addTarget(self,
-      action: Selector("didChangeSliderValue:"),
-      forControlEvents: .ValueChanged)
-  view.addSubview(slider)
-}
-
-func didChangeSliderValue(senderSlider:MDCSlider) {
-  NSLog("Did change slider value to: %@", senderSlider.value)
 }
 ~~~
 <!--</div>-->

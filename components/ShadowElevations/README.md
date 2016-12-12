@@ -1,10 +1,9 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowElevations/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ShadowElevations">GitHub</a> for README documentation.{% endif %}-->
-
 # Shadow Elevations
 
-This component provides the most commonly used material design elevations.
+A shadow elevation specifies the degree of shadow intensity to be displayed beneath an object.
+Higher shadow elevations have greater shadow intensities, akin to raising an object above a
+surface resulting in a more prominent, albeit more diffuse, shadow. This component provides commonly
+used material design elevations for components.
 <!--{: .intro }-->
 
 ### Design Specifications
@@ -53,21 +52,31 @@ pod install
 Before using Shadow Elevations, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-#import "MaterialShadowElevations.h"
-~~~
-
 #### Swift
 ~~~ swift
 import MaterialComponents
+
+class ShadowedView: UIView {
+
+  override class func layerClass() -> AnyClass {
+    return MDCShadowLayer.self
+  }
+
+  var shadowLayer: MDCShadowLayer {
+    return self.layer as! MDCShadowLayer
+  }
+
+  func setDefaultElevation() {
+    self.shadowLayer.elevation = MDCShadowElevationCardResting
+  }
+
+}
 ~~~
 
-<!--</div>-->
-
-<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 ~~~ objc
+#import "MaterialShadowElevations.h"
+
 @interface ShadowedView: UIView
 
 @end
@@ -87,24 +96,5 @@ import MaterialComponents
 }
 
 @end
-~~~
-
-#### Swift
-~~~ swift
-class ShadowedView: UIView {
-
-  override class func layerClass() -> AnyClass {
-    return MDCShadowLayer.self
-  }
-
-  var shadowLayer: MDCShadowLayer {
-    return self.layer as! MDCShadowLayer
-  }
-
-  func setDefaultElevation() {
-    self.shadowLayer.elevation = MDCShadowElevationCardResting
-  }
-
-}
 ~~~
 <!--</div>-->

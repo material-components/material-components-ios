@@ -23,7 +23,7 @@
  `imageOrientation`, `scale` or `resizingMode` for example). On iOS 8, the partial backporting
  actually flips the image, so this method should only be called when in an RTL environment already.
  TODO: consider solutions to complete the backporting to get the same behavior.
- https://github.com/google/material-components-ios/issues/599
+ https://github.com/material-components/material-components-ios/issues/599
  */
 
 @interface UIImage (MaterialRTL)

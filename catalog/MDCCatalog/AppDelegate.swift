@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CatalogByConvention
-import MaterialComponents
 import UIKit
+
+import CatalogByConvention
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,10 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // ensure that the edge-swipe pop gesture can still take effect. This may be overly-assumptive
     // but we'll explore other alternatives when we have a concrete example of this approach causing
     // problems.
-    navigationController.interactivePopGestureRecognizer?.delegate = nil
+    navigationController.interactivePopGestureRecognizer?.delegate = navigationController
 
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
     return true
+  }
+}
+
+extension UINavigationController: UIGestureRecognizerDelegate {
+  public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    return viewControllers.count > 1
   }
 }

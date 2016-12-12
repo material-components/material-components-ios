@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CatalogByConvention
-import MaterialComponents
 import UIKit
+
+import CatalogByConvention
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialTypography
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 
@@ -77,7 +79,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     self.addChildViewController(appBar.headerViewController)
     appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
-    appBar.navigationBar.textAlignment = .Center
+    appBar.navigationBar.titleAlignment = .Center
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -316,10 +318,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
         vc = contentVC
       } else {
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
-        container.appBar.navigationBar.textAlignment = .Center
+        container.appBar.navigationBar.titleAlignment = .Center
 
         // TODO(featherless): Remove once
-        // https://github.com/google/material-components-ios/issues/367 is resolved.
+        // https://github.com/material-components/material-components-ios/issues/367 is resolved.
         contentVC.title = node.title
 
         let headerView = container.appBar.headerViewController.headerView

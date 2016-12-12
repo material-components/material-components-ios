@@ -15,4 +15,4 @@ Next priority:
 - Date and Time Pickers
 
 
-For suggestions, please [file a GitHub issue](https://github.com/google/material-components-ios/issues).
+For suggestions, please [file a GitHub issue](https://github.com/material-components/material-components-ios/issues).

@@ -76,6 +76,18 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   return forwardingKeyPaths;
 }
 
+static NSString *const MDCNavigationBarTitleKey = @"MDCNavigationBarTitleKey";
+static NSString *const MDCNavigationBarTitleViewKey = @"MDCNavigationBarTitleViewKey";
+static NSString *const MDCNavigationBarTitleTextAttributesKey =
+    @"MDCNavigationBarTitleTextAttributesKey";
+static NSString *const MDCNavigationBarBackItemKey = @"MDCNavigationBarBackItemKey";
+static NSString *const MDCNavigationBarHidesBackButtonKey = @"MDCNavigationBarHidesBackButtonKey";
+static NSString *const MDCNavigationBarLeadingBarItemsKey = @"MDCNavigationBarLeadingBarItemsKey";
+static NSString *const MDCNavigationBarTrailingBarItemsKey = @"MDCNavigationBarTrailingBarItemsKey";
+static NSString *const MDCNavigationBarLeadingButtonSupplementsBackButtonKey =
+    @"MDCNavigationBarLeadingButtonSupplementsBackButtonKey";
+static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTitleAlignmentKey";
+
 /**
  Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
  and UINavigationItem.titleView are normally transferred to UINavigationController but we plan to
@@ -93,7 +105,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (UILabel *)titleLabel;
 - (MDCButtonBar *)leadingButtonBar;
 - (MDCButtonBar *)trailingButtonBar;
-- (UIControlContentVerticalAlignment)titleAlignment;
 
 @end
 
@@ -139,6 +150,44 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCNavigationBarInit];
+    if ([aDecoder containsValueForKey:MDCNavigationBarTitleKey]) {
+      self.title = [aDecoder decodeObjectForKey:MDCNavigationBarTitleKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarTitleViewKey]) {
+      self.titleView = [aDecoder decodeObjectForKey:MDCNavigationBarTitleViewKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarTitleTextAttributesKey]) {
+      self.titleTextAttributes =
+          [aDecoder decodeObjectForKey:MDCNavigationBarTitleTextAttributesKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarBackItemKey]) {
+      self.backItem = [aDecoder decodeObjectForKey:MDCNavigationBarBackItemKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarHidesBackButtonKey]) {
+      self.hidesBackButton = [aDecoder decodeBoolForKey:MDCNavigationBarHidesBackButtonKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarLeadingBarItemsKey]) {
+      self.leadingBarButtonItems = [aDecoder decodeObjectForKey:MDCNavigationBarLeadingBarItemsKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarTrailingBarItemsKey]) {
+      self.trailingBarButtonItems =
+          [aDecoder decodeObjectForKey:MDCNavigationBarTrailingBarItemsKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey]) {
+      self.leadingItemsSupplementBackButton =
+          [aDecoder decodeBoolForKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCNavigationBarTitleAlignmentKey]) {
+      self.titleAlignment = [aDecoder decodeBoolForKey:MDCNavigationBarTitleAlignmentKey];
+    }
   }
   return self;
 }
@@ -149,6 +198,40 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     [self commonMDCNavigationBarInit];
   }
   return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+
+  if (self.title) {
+    [aCoder encodeObject:self.title forKey:MDCNavigationBarTitleKey];
+  }
+
+  if (self.titleView) {
+    [aCoder encodeObject:self.titleView forKey:MDCNavigationBarTitleViewKey];
+  }
+
+  if (self.titleTextAttributes) {
+    [aCoder encodeObject:self.titleTextAttributes forKey:MDCNavigationBarTitleTextAttributesKey];
+  }
+
+  if (self.backItem) {
+    [aCoder encodeObject:self.backItem forKey:MDCNavigationBarBackItemKey];
+  }
+
+  [aCoder encodeBool:self.hidesBackButton forKey:MDCNavigationBarHidesBackButtonKey];
+
+  if (self.leadingBarButtonItems && self.leadingBarButtonItems.count > 0) {
+    [aCoder encodeObject:self.leadingBarButtonItems forKey:MDCNavigationBarLeadingBarItemsKey];
+  }
+
+  if (self.trailingBarButtonItems && self.trailingBarButtonItems.count > 0) {
+    [aCoder encodeObject:self.trailingBarButtonItems forKey:MDCNavigationBarTrailingBarItemsKey];
+  }
+
+  [aCoder encodeBool:self.leadingItemsSupplementBackButton
+              forKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey];
+  [aCoder encodeInteger:self.titleAlignment forKey:MDCNavigationBarTitleAlignmentKey];
 }
 
 #pragma mark Accessibility
@@ -207,28 +290,17 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   CGSize titleSize = [_titleLabel.text boundingRectWithSize:textFrame.size
                                                     options:NSStringDrawingTruncatesLastVisibleLine
                                                  attributes:attributes
-                                                    context:NULL]
-                         .size;
+                                                    context:NULL].size;
   titleSize.width = Ceil(titleSize.width);
   titleSize.height = Ceil(titleSize.height);
   CGRect titleFrame = (CGRect){{textFrame.origin.x, 0}, titleSize};
-  titleFrame = MDCRectFlippedForRTL(titleFrame, self.bounds.size.width,
-                                    self.mdc_effectiveUserInterfaceLayoutDirection);
-  UIControlContentVerticalAlignment titleAlignment = [self titleAlignment];
-  _titleLabel.frame =
-      [self mdc_frameAlignedVertically:titleFrame withinBounds:textFrame alignment:titleAlignment];
-  if (_titleLabel.textAlignment == NSTextAlignmentCenter) {
-    _titleLabel.center = CGPointMake(CGRectGetMidX(self.bounds), _titleLabel.center.y);
-    if (CGRectGetMaxX(_titleLabel.frame) > CGRectGetMaxX(textFrame)) {
-      CGPoint center = _titleLabel.center;
-      center.x -= CGRectGetMaxX(_titleLabel.frame) - CGRectGetMaxX(textFrame);
-      _titleLabel.center = center;
-    } else if (CGRectGetMinX(_titleLabel.frame) < CGRectGetMinX(textFrame)) {
-      CGPoint center = _titleLabel.center;
-      center.x += CGRectGetMinX(textFrame) - CGRectGetMinX(_titleLabel.frame);
-      _titleLabel.center = center;
-    }
-  }
+  UIControlContentVerticalAlignment titleVerticalAlignment = UIControlContentVerticalAlignmentTop;
+  CGRect alignedFrame = [self mdc_frameAlignedVertically:titleFrame
+                                            withinBounds:textFrame
+                                               alignment:titleVerticalAlignment];
+  alignedFrame = [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
+  _titleLabel.frame = MDCRectFlippedForRTL(alignedFrame, self.bounds.size.width,
+                                           self.mdc_effectiveUserInterfaceLayoutDirection);
   self.titleView.frame = textFrame;
 
   // Button and title label alignment
@@ -239,7 +311,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   if (_titleLabel.hidden || titleTextRectHeight <= 0) {
     _leadingButtonBar.buttonTitleBaseline = 0;
     _trailingButtonBar.buttonTitleBaseline = 0;
-
   } else {
     // Assumes that the title is center-aligned vertically.
     CGFloat titleTextOriginY = (_titleLabel.frame.size.height - titleTextRectHeight) / 2;
@@ -261,16 +332,45 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
-- (NSTextAlignment)textAlignment {
-  return _titleLabel.textAlignment;
+- (MDCNavigationBarTitleAlignment)titleAlignment {
+  return [MDCNavigationBar titleAlignmentFromTextAlignment:_titleLabel.textAlignment];
 }
 
-- (void)setTextAlignment:(NSTextAlignment)textAlignment {
-  _titleLabel.textAlignment = textAlignment;
+- (void)setTitleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
+  _titleLabel.textAlignment = [MDCNavigationBar textAlignmentFromTitleAlignment:titleAlignment];
   [self setNeedsLayout];
 }
 
 #pragma mark Private
+
++ (NSTextAlignment)textAlignmentFromTitleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
+  switch (titleAlignment) {
+    case MDCNavigationBarTitleAlignmentCenter:
+      return NSTextAlignmentCenter;
+      break;
+    default:
+      NSAssert(NO, @"titleAlignment not understood: %li", (long)titleAlignment);
+    // Intentional fall through logic
+    case MDCNavigationBarTitleAlignmentLeading:
+      return NSTextAlignmentNatural;
+      break;
+  }
+}
+
++ (MDCNavigationBarTitleAlignment)titleAlignmentFromTextAlignment:(NSTextAlignment)textAlignment {
+  switch (textAlignment) {
+    default:
+      NSAssert(NO, @"textAlignment not supported: %li", (long)textAlignment);
+      // Intentional fall through logic
+    case NSTextAlignmentNatural:
+    case NSTextAlignmentLeft:
+      return MDCNavigationBarTitleAlignmentLeading;
+      break;
+    case NSTextAlignmentCenter:
+      return MDCNavigationBarTitleAlignmentCenter;
+      break;
+  }
+}
 
 - (UILabel *)titleLabel {
   return _titleLabel;
@@ -282,10 +382,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 - (MDCButtonBar *)trailingButtonBar {
   return _trailingButtonBar;
-}
-
-- (UIControlContentVerticalAlignment)titleAlignment {
-  return UIControlContentVerticalAlignmentTop;
 }
 
 #pragma mark KVO
@@ -323,21 +419,48 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
                         withinBounds:(CGRect)bounds
                            alignment:(UIControlContentVerticalAlignment)alignment {
   switch (alignment) {
-    case UIControlContentVerticalAlignmentBottom:
-      return (CGRect){{frame.origin.x, CGRectGetMaxY(bounds) - frame.size.height}, frame.size};
+    case UIControlContentVerticalAlignmentBottom: {
+      return CGRectMake(frame.origin.x,
+                        CGRectGetMaxY(bounds) - frame.size.height,
+                        frame.size.width,
+                        frame.size.height);
+    }
 
     case UIControlContentVerticalAlignmentCenter: {
       CGFloat centeredY = Floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
-      return (CGRect){{frame.origin.x, centeredY}, frame.size};
+      return CGRectMake(frame.origin.x,
+                        centeredY,
+                        frame.size.width,
+                        frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentTop: {
-      return (CGRect){{frame.origin.x, bounds.origin.y}, frame.size};
+      return CGRectMake(frame.origin.x,
+                        bounds.origin.y,
+                        frame.size.width,
+                        frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentFill: {
       return bounds;
     }
+  }
+}
+
+- (CGRect)mdc_frameAlignedHorizontally:(CGRect)frame
+                             alignment:(MDCNavigationBarTitleAlignment)alignment {
+  switch (alignment) {
+    case MDCNavigationBarTitleAlignmentCenter:
+      return CGRectMake(CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2,
+                        frame.origin.y,
+                        frame.size.width,
+                        frame.size.height);
+
+    case MDCNavigationBarTitleAlignmentLeading:
+      return CGRectMake(frame.origin.x,
+                        frame.origin.y,
+                        frame.size.width,
+                        frame.size.height);
   }
 }
 
@@ -564,6 +687,16 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 - (void)setLeftItemsSupplementBackButton:(BOOL)leftItemsSupplementBackButton {
   self.leadingItemsSupplementBackButton = leftItemsSupplementBackButton;
+}
+
+#pragma mark deprecated
+
+- (void)setTextAlignment:(NSTextAlignment)textAlignment {
+  [self setTitleAlignment:[MDCNavigationBar titleAlignmentFromTextAlignment:textAlignment]];
+}
+
+- (NSTextAlignment)textAlignment {
+  return [MDCNavigationBar textAlignmentFromTitleAlignment:self.titleAlignment];
 }
 
 @end

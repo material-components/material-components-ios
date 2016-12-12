@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/HeaderStackView/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/HeaderStackView">GitHub</a> for README documentation.{% endif %}-->
-
 # Header Stack View
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/header_stack_view.mp4" autoplay loop></video>
-  [![Header Stack View](docs/assets/header_stack_view.png)](docs/assets/header_stack_view.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Header Stack View](docs/assets/header_stack_view.png)](docs/assets/header_stack_view.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/header_stack_view.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Header Stack View component is a view that coordinates the layout of two vertically stacked
 bar views.
@@ -72,15 +67,15 @@ The top bar is typically a navigation bar. The bottom bar, when provided, is typ
 Before using Header Stack View, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialHeaderStackView.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -88,44 +83,44 @@ import MaterialComponents
 Header Stack View provides MDCHeaderStackView, which is a UIView subclass.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let headerStackView = MDCHeaderStackView()
+~~~
+
 #### Objective-C
 
 ~~~ objc
 MDCHeaderStackView *headerStackView = [[MDCHeaderStackView alloc] init];
-~~~
-
-#### Swift
-~~~ swift
-let headerStackView = MDCHeaderStackView()
 ~~~
 <!--</div>-->
 
 You may provide a top bar:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+headerStackView.topBar = navigationBar
+~~~
+
 #### Objective-C
 
 ~~~ objc
 headerStackView.topBar = navigationBar;
-~~~
-
-#### Swift
-~~~ swift
-headerStackView.topBar = navigationBar
 ~~~
 <!--</div>-->
 
 You may provide a bottom bar:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+headerStackView.bottomBar = tabBar
+~~~
+
 #### Objective-C
 
 ~~~ objc
 headerStackView.bottomBar = tabBar;
-~~~
-
-#### Swift
-~~~ swift
-headerStackView.bottomBar = tabBar
 ~~~
 <!--</div>-->

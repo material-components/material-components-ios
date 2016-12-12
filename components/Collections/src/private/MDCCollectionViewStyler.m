@@ -313,7 +313,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 }
 
 - (BOOL)isItemInlaidAtIndexPath:(NSIndexPath *)indexPath {
-  return [[_inlaidIndexPathSet allObjects] containsObject:indexPath];
+  return [_inlaidIndexPathSet containsObject:indexPath];
 }
 
 - (void)applyInlayToItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {
@@ -405,12 +405,15 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 - (void)updateLayoutAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
   if (animated) {
     // Invalidate current layout while allowing animation to new layout.
-    [_collectionView performBatchUpdates:nil
-                              completion:^(BOOL finished) {
-                                if (completion) {
-                                  completion(finished);
-                                }
-                              }];
+    [UIView animateWithDuration:0
+                     animations:^{
+                       [_collectionView.collectionViewLayout invalidateLayout];
+                     }
+                     completion:^(BOOL finished) {
+                       if (completion) {
+                         completion(finished);
+                       }
+                     }];
   } else {
     _shouldInvalidateLayout = YES;
 

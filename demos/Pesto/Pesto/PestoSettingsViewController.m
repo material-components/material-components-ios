@@ -17,7 +17,6 @@
 #import "PestoSettingsViewController.h"
 
 #import "MaterialAppBar.h"
-#import "MaterialSwitch.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
@@ -100,7 +99,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.textLabel.text = _content[(NSUInteger)indexPath.section][(NSUInteger)indexPath.item];
-  MDCSwitch *editingSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+  UISwitch *editingSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
   cell.accessoryView = editingSwitch;
   return cell;
 }

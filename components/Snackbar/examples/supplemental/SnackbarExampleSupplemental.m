@@ -115,21 +115,21 @@
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   [self.view addSubview:self.allMessagesButton];
 
-  self.groupASwitch = [[MDCSwitch alloc] init];
+  self.groupASwitch = [[UISwitch alloc] init];
   self.groupASwitch.on = NO;
   [self.groupASwitch addTarget:self
                         action:@selector(handleSuspendStateChanged:)
               forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.groupASwitch];
 
-  self.groupBSwitch = [[MDCSwitch alloc] init];
+  self.groupBSwitch = [[UISwitch alloc] init];
   self.groupBSwitch.on = NO;
   [self.groupBSwitch addTarget:self
                         action:@selector(handleSuspendStateChanged:)
               forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.groupBSwitch];
 
-  self.allMessagesSwitch = [[MDCSwitch alloc] init];
+  self.allMessagesSwitch = [[UISwitch alloc] init];
   self.allMessagesSwitch.on = NO;
   [self.allMessagesSwitch addTarget:self
                              action:@selector(handleSuspendStateChanged:)

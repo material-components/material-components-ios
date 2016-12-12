@@ -20,7 +20,7 @@ import MaterialComponents
 // Tests confirming that MDCAppBarContainerViewController observes the content view controller's
 // navigation item.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/272
+// Based on issue https://github.com/material-components/material-components-ios/issues/272
 class AppBarContainerIssue272Tests: XCTestCase {
 
   var content: UIViewController!

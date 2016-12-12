@@ -8,6 +8,12 @@ development, where the default branch is called `develop`. `master` is reserved 
 `develop` branch is periodically copied to a release branch, tested, and then merged into `master`,
 which serves as the stable "vetted" branch.
 
+## Issues affecting the release process
+
+Occasionally there are temporary issues with the release process, check the
+["release" tag](https://github.com/material-components/material-components-ios/labels/where%3ARelease)
+for anything that might be affecting the release.
+
 ## Cutting the release
 
 ### Check the release milestone
@@ -15,8 +21,7 @@ which serves as the stable "vetted" branch.
 We use weekly release milestones to track important issues that need to land in a given release.
 These issues may come from client teams that are shipping to the App Store on a given date.
 
-Open the [Milestones](https://github.com/google/material-components-ios/milestones) page and verify
-that there are no open issues in this release's milestone. If there are open issues you must
+Look in the [Tasks for Next Release milestone](https://github.com/material-components/material-components-ios/milestone/10) for issues that must be resolved before or during release If there are open issues you must
 identify why the issues are still open and either close them if resolved or determine whether it's
 acceptable to move the issue to a subsequent release.
 
@@ -181,7 +186,7 @@ Commit the final results to your branch.
 #### Identify visual changes
 
 We do not presently have an automated way to identify visual changes between releases. See
-[GitHub issue #290](https://github.com/google/material-components-ios/issues/290) for a discussion
+[GitHub issue #290](https://github.com/material-components/material-components-ios/issues/290) for a discussion
 on the topic.
 
 #### Inspect the diff
@@ -305,12 +310,12 @@ and delete the release branch:
    all release-blocking clients are ready**. Otherwise you might publish a release that isn't
    actually stable.
 1. Visit our
-   [GitHub list of releases](https://github.com/google/material-components-ios/releases), click on
+   [GitHub list of releases](https://github.com/material-components/material-components-ios/releases), click on
    "Draft a new release".
 1. Tag the release "vX.Y.Z".
 1. Select the master branch.
 1. Title the release "Release X.Y.Z".
-1. In the body of the release notes, paste the text from CHANGELOG.md for this release.
+1. In the body of the release notes, paste the text from [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/master/CHANGELOG.md) for this release.
 1. Publish the release.
 
 ### Regenerate the site

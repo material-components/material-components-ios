@@ -1,6 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
 
 Material Components is a collection of standalone production-quality components.
 
@@ -59,7 +56,7 @@ to your target in your Podfile:
 target "MyApp" do
   ...
   # Until Material Components for iOS is public:
-  pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
+  pod 'MaterialComponents', :git => 'https://github.com/material-components/material-components-ios.git'
 
   # After Material Components for iOS is public:
   # pod 'MaterialComponents'
@@ -84,7 +81,30 @@ Now you’re ready to add a component (e.g. Buttons) to your app!
 Include the Material Components header for the component you're interested
 in to your app (detailed below) to get all of the required classes.
 
-Choose from Objective-C or Swift:
+Choose from Swift or Objective-C:
+
+#### Swift
+
+~~~ swift
+import MaterialComponents.MaterialButtons
+
+class MDCBuildTestViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let raiseButton = MDCRaisedButton.init();
+        raiseButton.setTitle("Raised Button", forState: .Normal);
+        raiseButton.sizeToFit();
+        raiseButton.addTarget(self, action: #selector(tapped), forControlEvents: .TouchUpInside);
+        self.view.addSubview(raiseButton);
+    }
+
+    func tapped(sender: UIButton!){
+        NSLog("Button was tapped!");
+    }
+
+}
+~~~
 
 #### Objective-C
 
@@ -113,28 +133,6 @@ Choose from Objective-C or Swift:
 @end
 ~~~
 
-#### Swift
-
-~~~swift
-import MaterialComponents
-
-class MDCBuildTestViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let raiseButton = MDCRaisedButton.init();
-        raiseButton.setTitle("Raised Button", forState: .Normal);
-        raiseButton.sizeToFit();
-        raiseButton.addTarget(self, action: #selector(tapped), forControlEvents: .TouchUpInside);
-        self.view.addSubview(raiseButton);
-    }
-
-    func tapped(sender: UIButton!){
-        NSLog("Button was tapped!");
-    }
-
-}
-~~~
 
 ### 5. What's next?
 
@@ -150,6 +148,12 @@ Material Components for iOS uses
 [material design icons](https://github.com/google/material-design-icons),
 copyright Google Inc. and licensed under
 [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+
+Several components use
+[MDFTextAccessibility](https://github.com/material-foundation/material-text-accessibility-ios),
+copyright Google Inc. and licensed under
+[Apache 2.0](https://github.com/material-foundation/material-text-accessibility-ios/blob/master/LICENSE)
+without a NOTICE file.
 
 Roboto Font Loader uses the
 [Roboto font](https://github.com/google/fonts/tree/master/apache/roboto),

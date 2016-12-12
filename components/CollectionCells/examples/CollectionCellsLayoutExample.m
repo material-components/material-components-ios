@@ -16,7 +16,6 @@
 
 #import "CollectionCellsLayoutExample.h"
 
-#import "MaterialSwitch.h"
 #import "MaterialTypography.h"
 
 @interface SimpleModel : NSObject
@@ -24,23 +23,39 @@
 @property(nonatomic, strong, nullable) NSString *detailText;
 @property(nonatomic) NSInteger textLines;
 @property(nonatomic) NSInteger detailTextLines;
-+ (instancetype)modelWithTextArray:(NSArray *)textArray textLineArray:(NSArray *)textLineArray;
+@property(nonatomic) BOOL checkMark;
+@property(nonatomic) BOOL circle;
++ (instancetype)modelWithTextArray:(NSArray *)textArray
+                     textLineArray:(NSArray *)textLineArray
+                         checkMark:(BOOL)checkmark
+                            circle:(BOOL)circle;
 @end
 
 @implementation SimpleModel
-- (instancetype)initWithTextArray:(NSArray *)textArray textLineArray:(NSArray *)textLineArray {
+- (instancetype)initWithTextArray:(NSArray *)textArray
+                    textLineArray:(NSArray *)textLineArray
+                        checkMark:(BOOL)checkmark
+                           circle:(BOOL)circle {
   self = [super init];
   if (self) {
     _text = textArray[0];
     _detailText = textArray[1];
     _textLines = [textLineArray[0] integerValue];
     _detailTextLines = [textLineArray[1] integerValue];
+    _checkMark = checkmark;
+    _circle = circle;
   }
   return self;
 }
 
-+ (instancetype)modelWithTextArray:(NSArray *)textArray textLineArray:(NSArray *)textLineArray {
-  return [[self alloc] initWithTextArray:textArray textLineArray:textLineArray];
++ (instancetype)modelWithTextArray:(NSArray *)textArray
+                     textLineArray:(NSArray *)textLineArray
+                         checkMark:(BOOL)checkmark
+                            circle:(BOOL)circle {
+  return [[self alloc] initWithTextArray:textArray
+                           textLineArray:textLineArray
+                               checkMark:checkmark
+                                  circle:circle];
 }
 
 @end
@@ -75,21 +90,37 @@ static NSString *const kExampleDetailText =
   // Populate content.
   _content = [NSMutableArray array];
   [_content addObject:[SimpleModel modelWithTextArray:@[ @"Show in Editing Mode", @"" ]
-                                        textLineArray:@[ @(1), @(0) ]]];
+                                        textLineArray:@[ @(1), @(0) ]
+                                            checkMark:NO
+                                               circle:NO]];
   [_content addObject:[SimpleModel modelWithTextArray:@[ @"Single line text", @"" ]
-                                        textLineArray:@[ @(1), @(0) ]]];
+                                        textLineArray:@[ @(1), @(0) ]
+                                            checkMark:NO
+                                               circle:NO]];
   [_content addObject:[SimpleModel modelWithTextArray:@[ kExampleText, @"" ]
-                                        textLineArray:@[ @(2), @(0) ]]];
+                                        textLineArray:@[ @(2), @(0) ]
+                                            checkMark:YES
+                                               circle:NO]];
   [_content addObject:[SimpleModel modelWithTextArray:@[ kExampleText, @"" ]
-                                        textLineArray:@[ @(3), @(0) ]]];
+                                        textLineArray:@[ @(3), @(0) ]
+                                            checkMark:NO
+                                               circle:NO]];
   [_content addObject:[SimpleModel modelWithTextArray:@[ @"", @"Detail text" ]
-                                        textLineArray:@[ @(0), @(1) ]]];
+                                        textLineArray:@[ @(0), @(1) ]
+                                            checkMark:NO
+                                               circle:NO]];
   [_content addObject:[SimpleModel modelWithTextArray:@[ kExampleText, kExampleDetailText ]
-                                        textLineArray:@[ @(1), @(1) ]]];
+                                        textLineArray:@[ @(1), @(1) ]
+                                            checkMark:NO
+                                               circle:YES]];
   [_content addObject:[SimpleModel modelWithTextArray:@[ kExampleText, kExampleDetailText ]
-                                        textLineArray:@[ @(1), @(2) ]]];
+                                        textLineArray:@[ @(1), @(2) ]
+                                            checkMark:NO
+                                               circle:YES]];
   [_content addObject:[SimpleModel modelWithTextArray:@[ kExampleText, @"Detail text" ]
-                                        textLineArray:@[ @(2), @(1) ]]];
+                                        textLineArray:@[ @(2), @(1) ]
+                                            checkMark:NO
+                                               circle:NO]];
 
   // Customize collection view settings.
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
@@ -116,7 +147,7 @@ static NSString *const kExampleDetailText =
   // Add accessory views.
   if (indexPath.item == 0) {
     // Add switch as accessory view.
-    MDCSwitch *editingSwitch = [[MDCSwitch alloc] initWithFrame:CGRectZero];
+    UISwitch *editingSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
     editingSwitch.on = self.editor.isEditing;
     [editingSwitch addTarget:self
                       action:@selector(didSwitch:)
@@ -124,9 +155,10 @@ static NSString *const kExampleDetailText =
     cell.accessoryView = editingSwitch;
   }
 
-  if (indexPath.item == 2) {
+  if (model.checkMark) {
     cell.accessoryType = MDCCollectionViewCellAccessoryCheckmark;
-  } else if (indexPath.item == 5 || indexPath.item == 6) {
+  }
+  if (model.circle) {
     cell.imageView.image =
         [self imageWithSize:CGSizeMake(40, 40) color:HEXCOLOR(0x80CBC4) cornerRadius:20];
   }
@@ -170,10 +202,19 @@ static NSString *const kExampleDetailText =
   return (indexPath.item != 0);
 }
 
+- (void)collectionView:(UICollectionView *)collectionView
+    willMoveItemAtIndexPath:(nonnull NSIndexPath *)indexPath
+                toIndexPath:(nonnull NSIndexPath *)newIndexPath {
+  // Update Model
+  SimpleModel *model = _content[indexPath.item];
+  [_content removeObjectAtIndex:indexPath.item];
+  [_content insertObject:model atIndex:newIndexPath.item];
+}
+
 #pragma mark UIControlEvents
 
 - (void)didSwitch:(id)sender {
-  MDCSwitch *switchControl = sender;
+  UISwitch *switchControl = sender;
   [self.editor setEditing:switchControl.isOn animated:YES];
 }
 

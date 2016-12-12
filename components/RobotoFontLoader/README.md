@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/RobotoFontLoader/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/RobotoFontLoader">GitHub</a> for README documentation.{% endif %}-->
-
 # Roboto Font Loader
 
 The Roboto Font Loader lazy loads the Roboto font.
@@ -63,15 +59,15 @@ Typography Component for font styles recomended by Material spec.
 Before using Roboto Font Loader, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialRobotoFontLoader.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -80,11 +76,6 @@ import MaterialComponents
 The Roboto Font Loader Component depends on the FontDiskLoader Component.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-UIFont *font = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
-~~~
-
 #### Swift
 ~~~ swift
 let myFont:UIFont = [[MDCRobotoFontLoader sharedInstance] regularFontOfSize:16];
@@ -117,7 +108,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 <!--</div>-->
 
 For more information see
-[Typography](https://github.com/google/material-components-ios/tree/develop/components/Typography).
+[Typography](https://github.com/material-components/material-components-ios/tree/develop/components/Typography).
 
 ### The font bundle
 If you are not using `RobotoFontLoader` it is recommended that you not depend on it in your App's

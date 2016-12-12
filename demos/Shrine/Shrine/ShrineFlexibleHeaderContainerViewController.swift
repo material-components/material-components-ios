@@ -15,6 +15,7 @@
  */
 
 import UIKit
+import MaterialComponents.MaterialFlexibleHeader
 
 class ShrineFlexibleHeaderContainerViewController: MDCFlexibleHeaderContainerViewController {
 

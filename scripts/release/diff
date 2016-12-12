@@ -16,8 +16,8 @@
 
 # Generates a diff from the last release to the current one.
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
-MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+MDC_ROOT="$(cd "$DIR" && git rev-parse --show-toplevel | tail -n1)"
 cd $MDC_ROOT
 
 if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
@@ -25,21 +25,10 @@ if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   exit 1
 fi
 
-useDiffTool=false;
-
-while test $# -gt 0; do
-  case "$1" in
-    --use_diff_tool)
-      useDiffTool=true;
-      shift
-      ;;
-  esac
-done
-
-if $useDiffTool; then
-  diffTool=difftool
-else
-  diffTool=diff
+git_diff=diff
+if [ "$1" == "--use_diff_tool" ]; then
+  git_diff=difftool
+  shift 1
 fi
 
-git $diffTool origin/master..release-candidate "$@"
+git $git_diff origin/master..release-candidate "$@"

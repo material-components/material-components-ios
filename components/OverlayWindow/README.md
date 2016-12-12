@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/OverlayWindow/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/OverlayWindow">GitHub</a> for README documentation.{% endif %}-->
-
 # Overlay Window
 
 Provides a window which can have an arbitrary number of overlay views that will sit above the root
@@ -41,17 +37,19 @@ pod install
 
 Before using the Overlay Window, you'll need to import it:
 
-#### Objective-C
-
-~~~ objc
-#import "MaterialOverlayWindow.h"
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
 import MaterialComponents
 ~~~
+
+#### Objective-C
+
+~~~ objc
+#import "MaterialOverlayWindow.h"
+~~~
+<!--</div>-->
 
 ## Examples
 
@@ -59,6 +57,19 @@ import MaterialComponents
 
 Using the Overlay Window requires that the App Delegate set the window as an Overlay Window or a
 subclass of Overlay Window.
+
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+func application(application: UIApplication, didFinishLaunchingWithOptions
+               launchOptions: [NSObject: AnyObject]?) -> Bool {
+  ...
+  self.window = MDCOverlayWindow(frame: (UIApplication.sharedApplication().keyWindow?.bounds)!)
+  ...
+}
+~~~
 
 #### Objective-C
 
@@ -71,34 +82,14 @@ subclass of Overlay Window.
   ...
 }
 ~~~
-
-#### Swift
-
-~~~ swift
-func application(application: UIApplication, didFinishLaunchingWithOptions
-               launchOptions: [NSObject: AnyObject]?) -> Bool {
-  ...
-  self.window = MDCOverlayWindow(frame: (UIApplication.sharedApplication().keyWindow?.bounds)!)
-  ...
-}
-~~~
+<!--</div>-->
 
 ### Using the Overlay Window
 
 Once the Overlay Window is set in the App Delegate, the client can use the Overlay Window to display
 views at the top most level of the view hierarchy.
 
-~~~ objc
-UIView *overlayView = [UIView alloc] init];
-...
-// Set up view to be displayed in the overlay window.
-...
-if ([window isKindOfClass:[MDCOverlayWindow class]]) {
-  MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)window;
-  [overlayWindow activateOverlay:overlayView withLevel:UIWindowLevelNormal];
-}
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
@@ -110,3 +101,17 @@ if (self.window?.isKindOfClass(UIWindow) != nil) {
   overlayWindow.activateOverlay(overlayView, level:UIWindowLevelNormal)
 }
 ~~~
+
+#### Objective-C
+
+~~~ objc
+UIView *overlayView = [UIView alloc] init];
+...
+// Set up view to be displayed in the overlay window.
+...
+if ([window isKindOfClass:[MDCOverlayWindow class]]) {
+  MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)window;
+  [overlayWindow activateOverlay:overlayView withLevel:UIWindowLevelNormal];
+}
+~~~
+<!--</div>-->

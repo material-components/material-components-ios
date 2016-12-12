@@ -48,12 +48,29 @@
   [_appBar.navigationBar observeNavigationItem:_contentViewController.navigationItem];
 }
 
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [_appBar.headerViewController updateTopLayoutGuide];
+}
+
 - (BOOL)prefersStatusBarHidden {
   return self.appBar.headerViewController.prefersStatusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return self.appBar.headerViewController.preferredStatusBarStyle;
+}
+
+- (BOOL)shouldAutorotate {
+  return self.contentViewController.shouldAutorotate;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  return self.contentViewController.supportedInterfaceOrientations;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+  return self.contentViewController.preferredInterfaceOrientationForPresentation;
 }
 
 @end

@@ -1,11 +1,7 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Dialogs/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Dialogs">GitHub</a> for README documentation.{% endif %}-->
-
 # Dialogs
 
-Dialogs provides a presentation controller that will display a modal dialog according to the
-material spec. Additionally, an alert controller is provided that will display a simple alert.
+Dialogs provides both a presentation controller for displaying a modal dialog and an alert
+controller that will display a simple modal alert.
 
 ### Material Design Specifications
 
@@ -26,7 +22,7 @@ UIViewControllerTransitioningDelegate to vend the presentation controller during
 
 #### Alert Controller
 
-MDCAlertController provides a simple interface for developers to present a simple modal dialog
+MDCAlertController provides a simple interface for developers to present a modal dialog
 according to the material spec.
 
 ## Installation
@@ -44,7 +40,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 pod 'MaterialComponents/Dialogs'
 ~~~
 
-Then, run the following command:
+Then run the following command:
 
 ~~~ bash
 pod install
@@ -63,37 +59,25 @@ view controller from the root controller to display it as a modal dialog.
 
 Before using Dialogs, you'll need to import it:
 
-#### Objective-C
-
-~~~ objc
-#import "MaterialDialogs.h"
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
 import MaterialComponents
 ~~~
 
+#### Objective-C
+
+~~~ objc
+#import "MaterialDialogs.h"
+~~~
+<!--</div>-->
+
 ## Examples
 
 ### Display a modal dialog
 
-#### Objective-C
-
-~~~ objc
-// self is the presenting view controller and which has the following property
-// defined to keep a reference to the transition controller.
-@property(nonatomic, strong) MDCDialogTransitionController *dialogTransitionController;
-
-// To present the dialog
-self.dialogTransitionController = [[MDCDialogTransitionController alloc] init];
-modalDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
-modalDialogViewController.transitioningDelegate = self.dialogTransitionController;
-[self presentViewController:myDialogViewController animated:YES completion:...];
-
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
@@ -110,7 +94,36 @@ presentViewController(myDialogViewController animated:YES ...)
 
 ~~~
 
+#### Objective-C
+
+~~~ objc
+// self is the presenting view controller and which has the following property
+// defined to keep a reference to the transition controller.
+@property(nonatomic, strong) MDCDialogTransitionController *dialogTransitionController;
+
+// To present the dialog
+self.dialogTransitionController = [[MDCDialogTransitionController alloc] init];
+modalDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
+modalDialogViewController.transitioningDelegate = self.dialogTransitionController;
+[self presentViewController:myDialogViewController animated:YES completion:...];
+
+~~~
+<!--</div>-->
+
 ### Present an alert
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+// Present a modal alert
+let alertController = MDCAlertController(title: titleString, message: messageString)
+let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
+alertController.addAction(action)
+
+self.presentViewController(alertController, animated:true, completion:nil)
+
+~~~
 
 #### Objective-C
 
@@ -132,15 +145,4 @@ MDCAlertAction *alertAction =
 [self presentViewController:alertController animated:YES completion:NULL];
 
 ~~~
-
-#### Swift
-
-~~~ swift
-// Present a modal alert
-let alertController = MDCAlertController(title: titleString, message: messageString)
-let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
-alertController.addAction(action)
-
-self.presentViewController(alertController, animated:true, completion:nil)
-
-~~~
+<!--</div>-->

@@ -156,8 +156,12 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 - (void)setHidden:(BOOL)hidden
          animated:(BOOL)animated
        completion:(void (^__nullable)(BOOL finished))completion {
-  if (hidden == self.hidden)
+  if (hidden == self.hidden) {
+    if (completion) {
+      completion(YES);
+    }
     return;
+  }
 
   void (^animations)(void);
 

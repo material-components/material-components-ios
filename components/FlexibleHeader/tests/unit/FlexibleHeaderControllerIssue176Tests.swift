@@ -20,7 +20,7 @@ import MaterialComponents
 // Tests confirming that the flexible header view's frame correctly reflects the target scroll
 // view's position immediately after being registered.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/176
+// Based on issue https://github.com/material-components/material-components-ios/issues/176
 class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
   var fhvc: MDCFlexibleHeaderViewController!
