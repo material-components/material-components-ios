@@ -32,36 +32,36 @@ class ButtonBarIssue328Tests: XCTestCase {
   }
 
   func testTextButtons() {
-    let items = [UIBarButtonItem(title: "Text", style: .Plain, target: nil, action: nil)]
+    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
     buttonBar.items = items
 
     for view in buttonBar.subviews {
       if let button = view as? MDCButton {
-        XCTAssertTrue(button.inkStyle == .Bounded)
+        XCTAssertTrue(button.inkStyle == .bounded)
       }
     }
   }
 
   func testIconButtons() {
-    let items = [UIBarButtonItem(image: UIImage(), style: .Plain, target: nil, action: nil)]
+    let items = [UIBarButtonItem(image: UIImage(), style: .plain, target: nil, action: nil)]
     buttonBar.items = items
 
     for view in buttonBar.subviews {
       if let button = view as? MDCButton {
-        XCTAssertTrue(button.inkStyle == .Unbounded)
+        XCTAssertTrue(button.inkStyle == .unbounded)
       }
     }
   }
 
   func testTextIconButtons() {
-    let item = UIBarButtonItem(image: UIImage(), style: .Plain, target: nil, action: nil)
+    let item = UIBarButtonItem(image: UIImage(), style: .plain, target: nil, action: nil)
     item.title = "Text"
     let items = [item]
     buttonBar.items = items
 
     for view in buttonBar.subviews {
       if let button = view as? MDCButton {
-        XCTAssertTrue(button.inkStyle == .Bounded)
+        XCTAssertTrue(button.inkStyle == .bounded)
       }
     }
   }

@@ -111,7 +111,7 @@ UIBarButtonItem *item =
 buttonBar.items = @[ actionItem ];
 
 CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
-buttonBar.frame = (CGRect){<# origin #>, size};
+buttonBar.frame = CGRectMake(origin.x, origin.y, size.width, size.height);
 [self.view addSubview:buttonBar];
 ~~~
 <!--</div>-->

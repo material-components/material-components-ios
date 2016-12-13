@@ -30,7 +30,7 @@
 
  ### Dependencies
 
- AppBar depends on the FlexibleHeader, HeaderStackView, and NavigationBar material components.
+ AppBar depends on the FlexibleHeader, HeaderStackView, and NavigationBar Material Components.
  */
 @interface MDCAppBar : NSObject
 

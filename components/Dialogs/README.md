@@ -23,7 +23,7 @@ UIViewControllerTransitioningDelegate to vend the presentation controller during
 #### Alert Controller
 
 MDCAlertController provides a simple interface for developers to present a modal dialog
-according to the material spec.
+according to the Material spec.
 
 ## Installation
 

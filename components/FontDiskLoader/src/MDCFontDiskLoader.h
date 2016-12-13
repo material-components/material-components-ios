@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import <AvailabilityMacros.h>
 #import <UIKit/UIKit.h>
 
 /**
@@ -25,6 +26,7 @@
  alter the state of the second MDCFontDiskLoader object. The same holds true for @c unload.
  This class is thread safe and can be called from any thread.
  */
+DEPRECATED_MSG_ATTRIBUTE("Use https://github.com/material-foundation/material-font-disk-loader-ios instead.")
 @interface MDCFontDiskLoader : NSObject <NSCopying>
 
 /**

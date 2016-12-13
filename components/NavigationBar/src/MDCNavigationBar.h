@@ -51,6 +51,7 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
  This view is not designed to have subviews added to it except via through its declared properties
  (e.g. titleView).
  */
+IB_DESIGNABLE
 @interface MDCNavigationBar : UIView
 
 #pragma mark Behavior
