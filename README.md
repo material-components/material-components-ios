@@ -17,7 +17,7 @@ Material Components for iOS are available in Objective-C and Swift, and support 
 
 ## Trying out Material Components
 
-Our catalog showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
+Our [catalog](catalog/) showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
 
 ~~~ bash
 pod try MaterialComponents
