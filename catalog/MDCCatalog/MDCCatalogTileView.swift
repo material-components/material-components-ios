@@ -98,6 +98,8 @@ class MDCCatalogTileView: UIView {
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawNavigationBarTile)
     case "Misc":
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile)
+    case "Overlay Window":
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawOverlayWindow)
     case "Page Control":
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawPageControlTile)
     case "Palettes":
