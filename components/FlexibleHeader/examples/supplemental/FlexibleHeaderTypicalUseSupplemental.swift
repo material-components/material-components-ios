@@ -14,34 +14,33 @@
  limitations under the License.
  */
 
+/* IMPORTANT:
+ This file contains supplemental code used to populate the examples with dummy data and/or
+ instructions. It is not necessary to import this file to use Material Components for iOS.
+ */
+
 import Foundation
 import MaterialComponents
 
-open class HeaderStackViewTypicalUseSwiftExample: HeaderStackViewTypicalUse {
+extension FlexibleHeaderTypicalUseViewControllerSwift {
 
-  override open func viewDidLoad() {
+  // (CatalogByConvention)
 
-    super.viewDidLoad()
-    self.setupExampleViews()
-
-    stackView = MDCHeaderStackView.init();
-    stackView!.autoresizingMask = .flexibleWidth;
-    stackView!.topBar = topView;
-    stackView!.bottomBar = navBar;
-
-    let frame = self.view.bounds;
-    stackView!.frame = frame;
-    stackView!.sizeToFit()
-
-    view.addSubview(stackView!)
+  class func catalogBreadcrumbs() -> [String] {
+    return [ "Flexible Header", "Flexible Header (Swift)" ]
   }
 
-  override open func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    navigationController?.setNavigationBarHidden(true, animated: animated)
+  class func catalogDescription() -> String {
+    return "The Flexible Header is a container view whose height and vertical offset react to"
+           " UIScrollViewDelegate events."
   }
-  
-  override open var prefersStatusBarHidden : Bool {
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
+  func catalogShouldHideNavigation() -> Bool {
     return true
   }
+  
 }

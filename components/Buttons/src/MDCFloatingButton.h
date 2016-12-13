@@ -20,7 +20,7 @@
 #import "MDCButton.h"
 
 /**
- Shapes for material Floating buttons.
+ Shapes for Material Floating buttons.
 
  The mini size should only be used when required for visual continuity with other elements on the
  screen.

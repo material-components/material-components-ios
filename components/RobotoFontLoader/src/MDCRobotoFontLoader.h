@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import <AvailabilityMacros.h>
 #import <UIKit/UIKit.h>
 
 #import "MaterialTypography.h"
@@ -21,6 +22,7 @@
 /**
  The MDCRobotoFontLoader class provides a central location where the Roboto fonts are lazily loaded.
  */
+DEPRECATED_MSG_ATTRIBUTE("Use https://github.com/material-foundation/material-roboto-font-loader-ios instead.")
 @interface MDCRobotoFontLoader : NSObject <MDCTypographyFontLoading>
 
 /** Shared singleton instance. */

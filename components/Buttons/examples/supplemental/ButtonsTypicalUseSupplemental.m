@@ -34,7 +34,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"Buttons is a collection of material design buttons, including a flat button, a raised"
+  return @"Buttons is a collection of Material Design buttons, including a flat button, a raised"
           " button and a floating action button.";
 }
 

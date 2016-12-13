@@ -18,27 +18,27 @@ import MaterialComponents
 
 class PalettesStandardExampleViewController: PalettesExampleViewController {
   convenience init() {
-    self.init(style: .Grouped)
+    self.init(style: .grouped)
     self.palettes = [
-      ("Red", MDCPalette.redPalette()),
-      ("Pink", MDCPalette.pinkPalette()),
-      ("Purple", MDCPalette.purplePalette()),
-      ("Deep Purple", MDCPalette.deepPurplePalette()),
-      ("Indigo", MDCPalette.indigoPalette()),
-      ("Blue", MDCPalette.bluePalette()),
-      ("Light Blue", MDCPalette.lightBluePalette()),
-      ("Cyan", MDCPalette.cyanPalette()),
-      ("Teal", MDCPalette.tealPalette()),
-      ("Green", MDCPalette.greenPalette()),
-      ("Light Green", MDCPalette.lightGreenPalette()),
-      ("Lime", MDCPalette.limePalette()),
-      ("Yellow", MDCPalette.yellowPalette()),
-      ("Amber", MDCPalette.amberPalette()),
-      ("Orange", MDCPalette.orangePalette()),
-      ("Deep Orange", MDCPalette.deepOrangePalette()),
-      ("Brown", MDCPalette.brownPalette()),
-      ("Grey", MDCPalette.greyPalette()),
-      ("Blue Grey", MDCPalette.blueGreyPalette()),
+      ("Red", MDCPalette.red()),
+      ("Pink", MDCPalette.pink()),
+      ("Purple", MDCPalette.purple()),
+      ("Deep Purple", MDCPalette.deepPurple()),
+      ("Indigo", MDCPalette.indigo()),
+      ("Blue", MDCPalette.blue()),
+      ("Light Blue", MDCPalette.lightBlue()),
+      ("Cyan", MDCPalette.cyan()),
+      ("Teal", MDCPalette.teal()),
+      ("Green", MDCPalette.green()),
+      ("Light Green", MDCPalette.lightGreen()),
+      ("Lime", MDCPalette.lime()),
+      ("Yellow", MDCPalette.yellow()),
+      ("Amber", MDCPalette.amber()),
+      ("Orange", MDCPalette.orange()),
+      ("Deep Orange", MDCPalette.deepOrange()),
+      ("Brown", MDCPalette.brown()),
+      ("Grey", MDCPalette.grey()),
+      ("Blue Grey", MDCPalette.blueGrey()),
     ]
   }
 }

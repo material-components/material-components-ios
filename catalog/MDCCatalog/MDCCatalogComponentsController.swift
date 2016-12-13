@@ -53,7 +53,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.headerViewController.headerView.maximumHeight = 128
     self.headerViewController.headerView.minimumHeight = 72
 
-    self.collectionView?.registerClass(MDCCatalogCollectionViewCell.self,
+    self.collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
     self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
@@ -77,10 +77,10 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     inkController!.delegate = self
 
     let containerView = UIView(frame: self.headerViewController.headerView.bounds)
-    containerView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     let titleLabel = UILabel()
-    titleLabel.text = self.title!.uppercaseString
+    titleLabel.text = self.title!.uppercased()
     titleLabel.textColor = UIColor(white: 0.46, alpha: 1)
     titleLabel.font = MDCTypography.titleFont()
     titleLabel.sizeToFit()
@@ -95,51 +95,51 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       y: containerView.bounds.size.height - titleSize.height - titleInsets.bottom,
       width: containerView.bounds.size.width,
       height: titleSize.height)
-    titleLabel.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth]
+    titleLabel.autoresizingMask = [.flexibleTopMargin, .flexibleWidth]
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
     containerView.addSubview(titleLabel)
     _ = NSLayoutConstraint(
       item: titleLabel,
-      attribute: .Leading,
-      relatedBy: .Equal,
+      attribute: .leading,
+      relatedBy: .equal,
       toItem: containerView,
-      attribute: .Leading,
+      attribute: .leading,
       multiplier: 1.0,
-      constant: titleInsets.left).active = true
+      constant: titleInsets.left).isActive = true
 
     _ = NSLayoutConstraint(
       item: titleLabel,
-      attribute: .Trailing,
-      relatedBy: .Equal,
+      attribute: .trailing,
+      relatedBy: .equal,
       toItem: containerView,
-      attribute: .Trailing,
+      attribute: .trailing,
       multiplier: 1.0,
-      constant: 0).active = true
+      constant: 0).isActive = true
 
     _ = NSLayoutConstraint(
       item: titleLabel,
-      attribute: .Bottom,
-      relatedBy: .Equal,
+      attribute: .bottom,
+      relatedBy: .equal,
       toItem: containerView,
-      attribute: .Bottom,
+      attribute: .bottom,
       multiplier: 1.0,
-      constant: -titleInsets.bottom).active = true
+      constant: -titleInsets.bottom).isActive = true
 
     _ = NSLayoutConstraint(
       item: titleLabel,
-      attribute: .Height,
-      relatedBy: .Equal,
+      attribute: .height,
+      relatedBy: .equal,
       toItem: nil,
-      attribute: .NotAnAttribute,
+      attribute: .notAnAttribute,
       multiplier: 1.0,
-      constant: titleSize.height).active = true
+      constant: titleSize.height).isActive = true
 
     self.headerViewController.headerView.addSubview(containerView)
 
-    self.headerViewController.headerView.forwardTouchEventsForView(containerView)
+    self.headerViewController.headerView.forwardTouchEvents(for: containerView)
 
-    self.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
+    self.headerViewController.headerView.backgroundColor = UIColor.white
     self.headerViewController.headerView.trackingScrollView = self.collectionView
 
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
@@ -148,45 +148,45 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     }
 
     self.view.addSubview(self.headerViewController.view)
-    self.headerViewController.didMoveToParentViewController(self)
+    self.headerViewController.didMove(toParentViewController: self)
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.collectionView?.collectionViewLayout.invalidateLayout()
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  override func willAnimateRotationToInterfaceOrientation(
-    toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+  override func willAnimateRotation(
+    to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
     self.collectionView?.collectionViewLayout.invalidateLayout()
   }
 
-  override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+  override func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
   }
 
-  override func collectionView(collectionView: UICollectionView,
+  override func collectionView(_ collectionView: UICollectionView,
     numberOfItemsInSection section: Int) -> Int {
     return node.children.count
   }
 
-  func inkViewForView(view: UIView) -> MDCInkView {
-    let foundInkView = MDCInkTouchController.injectedInkViewForView(view)
-    foundInkView.inkStyle = .Unbounded
+  func inkViewForView(_ view: UIView) -> MDCInkView {
+    let foundInkView = MDCInkTouchController.injectedInkView(for: view)
+    foundInkView.inkStyle = .unbounded
     foundInkView.inkColor = UIColor(red: 0.012, green: 0.663, blue: 0.957, alpha: 0.2)
     return foundInkView
   }
 
   // MARK: MDCInkTouchControllerDelegate
 
-  func inkTouchController(inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
-    return self.collectionView!.indexPathForItemAtPoint(location) != nil
+  func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
+    return self.collectionView!.indexPathForItem(at: location) != nil
   }
 
-  func inkTouchController(inkTouchController: MDCInkTouchController, inkViewAtTouchLocation location: CGPoint) -> MDCInkView {
-    if let indexPath = self.collectionView!.indexPathForItemAtPoint(location) {
-      let cell = self.collectionView!.cellForItemAtIndexPath(indexPath)
+  func inkTouchController(_ inkTouchController: MDCInkTouchController, inkViewAtTouchLocation location: CGPoint) -> MDCInkView {
+    if let indexPath = self.collectionView!.indexPathForItem(at: location) {
+      let cell = self.collectionView!.cellForItem(at: indexPath)
       return self.inkViewForView(cell!)
     }
     return MDCInkView()
@@ -194,10 +194,10 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   // MARK: UICollectionViewDelegate
 
-  override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MDCCatalogCollectionViewCell",
-      forIndexPath: indexPath)
-    cell.backgroundColor = UIColor.whiteColor()
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
+      for: indexPath)
+    cell.backgroundColor = UIColor.white
 
     let componentName = self.node.children[indexPath.row].title
     if let catalogCell = cell as? MDCCatalogCollectionViewCell {
@@ -205,12 +205,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     }
 
     // Ensure that ink animations aren't recycled.
-    MDCInkTouchController.injectedInkViewForView(view).cancelAllAnimationsAnimated(false)
+    MDCInkTouchController.injectedInkView(for: view).cancelAllAnimations(animated: false)
 
     return cell
   }
 
-  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)
     var cellWidth = (self.view.frame.size.width - 3 * pad) / 2
     if (self.view.frame.size.width > self.view.frame.size.height) {
@@ -219,8 +219,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return CGSize(width: cellWidth, height: cellWidth * 0.825)
   }
 
-  override func collectionView(collectionView: UICollectionView,
-    didSelectItemAtIndexPath indexPath: NSIndexPath) {
+  override func collectionView(_ collectionView: UICollectionView,
+    didSelectItemAt indexPath: IndexPath) {
     let node = self.node.children[indexPath.row]
     var vc: UIViewController
     if node.isExample() {
@@ -236,35 +236,35 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 // UIScrollViewDelegate
 extension MDCCatalogComponentsController {
 
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == self.headerViewController.headerView.trackingScrollView {
-      self.headerViewController.headerView.trackingScrollViewDidScroll()
+      self.headerViewController.headerView.trackingScrollDidScroll()
     }
   }
 
   override func scrollViewDidEndDragging(
-      scrollView: UIScrollView,
+      _ scrollView: UIScrollView,
       willDecelerate decelerate: Bool) {
     let headerView = self.headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
     }
   }
 
-  override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     if scrollView == self.headerViewController.headerView.trackingScrollView {
-      self.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
+      self.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
 
   override func scrollViewWillEndDragging(
-      scrollView: UIScrollView,
+      _ scrollView: UIScrollView,
       withVelocity velocity: CGPoint,
       targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let headerView = self.headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollViewWillEndDraggingWithVelocity(
-        velocity,
+      headerView.trackingScrollWillEndDragging(
+        withVelocity: velocity,
         targetContentOffset: targetContentOffset)
     }
   }

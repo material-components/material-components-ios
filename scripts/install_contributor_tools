@@ -18,10 +18,9 @@
 #
 # This is not required for anyone but core team members.
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-"$DIR/install_clang_format"
-"$DIR/install_proselint"
-"$DIR/install_jazzy"
-"$DIR/install_arc.sh" "$@"
-"$DIR/install_source_kitten.sh"
+"$SCRIPTS_DIR/install/install_clang_format"
+"$SCRIPTS_DIR/install/install_proselint"
+"$SCRIPTS_DIR/install/install_jazzy"
+"$SCRIPTS_DIR/install/install_source_kitten.sh"

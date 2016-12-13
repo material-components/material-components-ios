@@ -17,20 +17,20 @@ limitations under the License.
 import UIKit
 import MaterialComponents.MaterialNavigationBar
 
-public class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
+open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
 
-  override public func viewDidLoad() {
+  override open func viewDidLoad() {
 
     super.viewDidLoad()
-    view.backgroundColor = .whiteColor()
+    view.backgroundColor = .white
 
     title = "Navigation Bar (Swift)"
 
     navBar = MDCNavigationBar()
-    navBar!.observeNavigationItem(navigationItem)
-    navBar!.tintColor = .whiteColor()
+    navBar!.observe(navigationItem)
+    navBar!.tintColor = .white
     navBar!.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
+      [ NSForegroundColorAttributeName : UIColor.white ]
 
     // Light blue 500
     navBar!.backgroundColor = UIColor.init(red: 0.012, green: 0.663, blue: 0.957, alpha: 1)
@@ -41,21 +41,21 @@ public class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample
 
     let viewBindings = ["navBar" : navBar!]
 
-    var constraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[navBar]|",
+    var constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[navBar]|",
       options: [], metrics: nil, views: viewBindings)
-    constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|[navBar]",
+    constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[navBar]",
       options: [], metrics: nil, views: viewBindings)
 
     view.addConstraints(constraints)
     self.setupExampleViews()
   }
 
-  override public func viewWillAppear(animated: Bool) {
+  override open func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  override public func prefersStatusBarHidden() -> Bool {
+  override open var prefersStatusBarHidden : Bool {
     return true
   }
 }

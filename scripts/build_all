@@ -15,27 +15,39 @@
 # limitations under the License.
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
-readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=latest'
+readonly ROOT_DIR="$SCRIPTS_DIR/.."
+
+# Given a path to an Xcode log file in $1, exit with status 0 if looks like the
+# failure is expected and can be ignored, or exit with non-zero status
+# otherwise.
+function is_expected_failure() {
+  # A test target was specified with the 'build' command.
+  grep --quiet "is not configured for Running" "$1" 
+}
+
+# Given a path to an Xcode log file in $1, print a guess at what caused the
+# failure.
+function guess_failure() {
+  grep --after-context=2 "The following build commands failed:" "$1"
+}
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
   workspace=$(echo $workspace_scheme | cut -d: -f1)
   scheme=$(echo $workspace_scheme | cut -d: -f2)
-
-  # Assume any scheme with the name "*Tests*" is a testing scheme.
-  if [[ $scheme != *Tests* ]]; then
-    continue
-  fi
-  echo $workspace $scheme
-  log_file=$(dirname "$workspace")/"test_log_for_scheme_${scheme}.txt"
-  if xcodebuild test -workspace "$workspace" -scheme "$scheme" -destination "$DESTINATION" $1 >"$log_file" 2>&1; then
+  
+  echo "Building $scheme in $workspace."
+  log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
+  options="-workspace $workspace -scheme $scheme"
+  if xcodebuild $options $1 >"$log_file" 2>&1 || \
+     is_expected_failure "$log_file"; then
     rm "$log_file"
   else
     echo
-    echo "Failed to test $scheme in $workspace."
+    echo "Failed to build $scheme in $workspace:"
+    guess_failure "$log_file"
     echo "Log left in $log_file."
-    echo "Continuing with next test..."
+    echo "Continuing with next build..."
     echo
   fi
 done
