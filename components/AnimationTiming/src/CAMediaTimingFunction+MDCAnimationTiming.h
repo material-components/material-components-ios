@@ -18,7 +18,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- Material design easing curve animation values.
+ Material Design easing curve animation values.
 
  Use these easing curves to create smooth and consistent motion that conforms to Material Design.
  */
@@ -55,7 +55,7 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
 };
 
 /**
- Material design animation curves.
+ Material Design animation curves.
  */
 @interface CAMediaTimingFunction (MDCAnimationTiming)
 

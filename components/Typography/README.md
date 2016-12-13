@@ -77,7 +77,7 @@ label's alpha property. If animating alpha, it should be the maximum value reach
 `MDCTypography` provides a `UIFont` font and a `CGFloat` opacity for each of the standard type
 settings in the Material Design specifications.
 
-### Material design type styles and their respective `MDCTypography` methods
+### Material Design type styles and their respective `MDCTypography` methods
 
 | Material Design Type | MDCTypography Font | MDCTypography Opacity |
 | -------------------- | ------------------ | --------------------- |

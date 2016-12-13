@@ -80,7 +80,7 @@ _This code of conduct was adapted from the following sources:_
 - [Contributor covenant 1.3.0](http://contributor-covenant.org/version/1/3/0/), MIT Licensed.
 - [Angular code of
   conduct](https://github.com/angular/code-of-conduct/blob/master/CODE_OF_CONDUCT.md), MIT Licensed.
-- [Material design
+- [Material Design
   lite](https://github.com/google/material-design-lite/blob/master/CONTRIBUTING.md), Apache
   Licensed.
 

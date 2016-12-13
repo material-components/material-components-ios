@@ -2,7 +2,7 @@
 
 ### How do we stay true to our brand while using Material Design?
 
-Material design doesn’t imply a specific style. There are many good examples of products that have adopted Material Design while maintaining their brand identity. Brand-wise, working with Material Design is similar to working with Apple's built-in UIKit on iOS.
+Material Design doesn’t imply a specific style. There are many good examples of products that have adopted Material Design while maintaining their brand identity. Brand-wise, working with Material Design is similar to working with Apple's built-in UIKit on iOS.
 
 ### Can we keep our own branding and styles if we use Material Components for iOS in our app?
 
