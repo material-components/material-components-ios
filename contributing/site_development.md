@@ -117,7 +117,7 @@ are organized.
 
 ### Deploy the site to production
 
-You need to be one of the material component core members in order to deploy the site for the
+You need to be one of the Material component core members in order to deploy the site for the
 moment. However, we will incorporate the changes to the site for every weekly cut release as well.
 
 If you are able to deploy the site, run

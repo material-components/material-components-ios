@@ -4,7 +4,7 @@
 [![Collections](docs/assets/collections.png)](docs/assets/collections.mp4)
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/collections.mp4" autoplay loop></video></div>{% endif %}-->
 
-Collection view classes that adhere to Material design layout and styling.
+Collection view classes that adhere to Material Design layout and styling.
 <!--{: .intro :}-->
 
 ### Material Design Specifications
@@ -52,7 +52,7 @@ pod install
 ## Overview
 
 The Collections component consists of a set of collection view related classes that adhere to
-material design layout and styling. Typically you will subclass the `MDCCollectionViewController`,
+Material Design layout and styling. Typically you will subclass the `MDCCollectionViewController`,
 which in turn subclasses `UICollectionViewController`. This controller provides the collection view
 used as its content.
 

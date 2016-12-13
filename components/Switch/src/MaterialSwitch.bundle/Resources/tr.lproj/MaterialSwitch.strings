@@ -1,8 +1,0 @@
-/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
-"MDCSwitchAccessibilityHint" = "Ayarı değiştirmek için iki kez hafifçe vurun";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
-"MDCSwitchAccessibilityValueOn" = "Açık";
-
-/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
-"MDCSwitchAccessibilityValueOff" = "Kapalı";

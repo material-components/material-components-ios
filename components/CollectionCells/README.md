@@ -3,7 +3,7 @@
 ![Collections](docs/assets/collections_screenshot.png)
 <!--{: .ios-screenshot .right }-->
 
-Collection view cell classes that adhere to Material design layout and styling.
+Collection view cell classes that adhere to Material Design layout and styling.
 <!--{: .intro :}-->
 
 ### Material Design Specifications

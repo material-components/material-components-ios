@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {
 
 /**
  The MDCCollectionViewCell class provides an implementation of UICollectionViewCell that
- supports Material design layout and styling.
+ supports Material Design layout and styling.
  */
 @interface MDCCollectionViewCell : UICollectionViewCell
 
