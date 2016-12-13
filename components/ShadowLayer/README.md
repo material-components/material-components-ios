@@ -204,7 +204,7 @@ animating or changing size.
 ~~~ swift
 
 layer.shouldRasterize = true
-layer.rasterizationScale = UIScreen.mainScreen.scale
+layer.rasterizationScale = UIScreen.main.scale
 
 ~~~
 
