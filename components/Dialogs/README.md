@@ -63,7 +63,7 @@ Before using Dialogs, you'll need to import it:
 #### Swift
 
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialDialogs
 ~~~
 
 #### Objective-C
@@ -121,8 +121,7 @@ let alertController = MDCAlertController(title: titleString, message: messageStr
 let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
 alertController.addAction(action)
 
-self.presentViewController(alertController, animated:true, completion:nil)
-
+present(alertController, animated:true, completion:nil)
 ~~~
 
 #### Objective-C
@@ -130,19 +129,18 @@ self.presentViewController(alertController, animated:true, completion:nil)
 ~~~ objc
 // Present a modal alert
 MDCAlertController *alertController =
-    [MDCAlertController alertControllerWithTitle:titleString
-                                         message:messageString]
+[MDCAlertController alertControllerWithTitle:titleString
+                                     message:messageString];
 
 MDCAlertAction *alertAction =
-    [MDCAlertAction actionWithTitle:@"OK"
-                            handler:^(MDCAlertAction *action)
-                                {
-                                  NSLog(@"OK");
-                                }];
+[MDCAlertAction actionWithTitle:@"OK"
+                        handler:^(MDCAlertAction *action)
+ {
+   NSLog(@"OK");
+ }];
 
 [alertController addAction:alertAction];
 
 [self presentViewController:alertController animated:YES completion:NULL];
-
 ~~~
 <!--</div>-->
