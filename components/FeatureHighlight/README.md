@@ -46,7 +46,7 @@ Before using Feature Highlight, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialFeatureHighlight
 ~~~
 
 #### Objective-C
