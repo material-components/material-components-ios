@@ -129,12 +129,12 @@ Add the custom button to view:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-let button: ShadowButton = ShadowButton.init(type: UIButtonType.system)
+let button: ShadowButton = ShadowButton.init(type: .system)
 button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
-button.setTitle("Button", for: UIControlState.normal)
+button.setTitle("Button", for: .normal)
 let buttonLayer = button.layer as! MDCShadowLayer
 buttonLayer.elevation = 6.0
-self.view.addSubview(button)
+addSubview(button)
 
 ~~~
 
@@ -144,7 +144,7 @@ ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
 button.frame = CGRectMake(100, 100, 200, 50);
 [button setTitle: @"Button" forState:UIControlStateNormal];
 [(MDCShadowLayer *)button.layer setElevation:6.f];
-[self.view addSubview:button];
+[self addSubview:button];
 
 ~~~
 <!--</div>-->
@@ -203,8 +203,8 @@ animating or changing size.
 #### Swift
 ~~~ swift
 
-self.layer.shouldRasterize = true
-self.layer.rasterizationScale = UIScreen.mainScreen.scale
+layer.shouldRasterize = true
+layer.rasterizationScale = UIScreen.mainScreen.scale
 
 ~~~
 
