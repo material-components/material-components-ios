@@ -1,5 +1,3 @@
-set -x
-
 #!/bin/bash
 #
 # Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
@@ -83,8 +81,8 @@ if [[ -d ./$SITE_SOURCE_FOLDER ]]; then
   if $update ; then
     echo "Update site folder..."
     cd $SITE_SOURCE_FOLDER
-    git checkout $SITE_SOURCE_BRANCH >> /dev/null 2> /dev/null
-    git pull >> /dev/null 2> /dev/null
+    git checkout $SITE_SOURCE_BRANCH
+    git pull
     cd ..
   else
     echo -e "\033[31m*********************************************************************"
