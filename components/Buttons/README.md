@@ -90,7 +90,7 @@ import MaterialComponents
 #### Objective-C
 
 ~~~ objc
-#import "MDCButton.h"
+#import "MaterialButtons.h"
 ~~~
 <!--</div>-->
 
@@ -125,10 +125,10 @@ simultaneously interacting with a button and other UI elements.
 #### Swift
 ~~~ swift
 let flatButton = MDCFlatButton()
-flatButton.customTitleColor = UIColor.grayColor()
-flatButton.setTitle("Tap me", forState: .Normal)
+flatButton.customTitleColor = UIColor.gray
+flatButton.setTitle("Tap me", for: .normal)
 flatButton.sizeToFit()
-flatButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+flatButton.addTarget(self, action: "tap:", for: .touchUpInside)
 self.view.addSubview(flatButton)
 ~~~
 
@@ -158,10 +158,11 @@ The default elevation for _raised buttons_ in resting state is 2 dp.
 ~~~ swift
 let raisedButton = MDCRaisedButton()
 // See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
-raisedButton.setElevation(4, forState: .Normal)
-raisedButton.setTitle("Tap Me Too", forState: .Normal)
+
+raisedButton.setElevation(4, for: .normal)
+raisedButton.setTitle("Tap Me Too", for: .normal)
 raisedButton.sizeToFit()
-raisedButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+raisedButton.addTarget(self, action: "tap:", for: .touchUpInside)
 self.view.addSubview(raisedButton)
 ~~~
 
@@ -170,6 +171,7 @@ self.view.addSubview(raisedButton)
 ~~~ objc
 MDCRaisedButton *raisedButton = [MDCRaisedButton new];
 // See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+
 [raisedButton setElevation:4.0f forState:UIControlStateNormal];
 [raisedButton setTitle:@"Tap Me Too" forState:UIControlStateNormal];
 [raisedButton sizeToFit];
@@ -187,9 +189,9 @@ MDCRaisedButton *raisedButton = [MDCRaisedButton new];
 
 ~~~ swift
 let floatingButton = MDCFloatingButton()
-floatingButton.setTitle("+", forState: .Normal)
+floatingButton.setTitle("+", for: .normal)
 floatingButton.sizeToFit()
-floatingButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
+floatingButton.addTarget(self, action: "tap:", for: .touchUpInside)
 self.view.addSubview(floatingButton)
 ~~~
 
