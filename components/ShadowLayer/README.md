@@ -99,8 +99,8 @@ Example of a custom button based on UIButton with Material Design shadows:
 #### Swift
 ~~~ swift
 class ShadowButton: UIButton {
-
-  override class func layerClass() -> AnyClass {
+  
+  override class var layerClass: AnyClass {
     return MDCShadowLayer.self
   }
 
@@ -129,11 +129,12 @@ Add the custom button to view:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-let button: ShadowButton = ShadowButton.init(type: UIButtonType.System)
+let button: ShadowButton = ShadowButton.init(type: UIButtonType.system)
 button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
-button.setTitle("Button", forState: UIControlState.Normal)
-(button.layer as! MDCShadowLayer).setElevation(6.0)
-self.addSubview(button)
+button.setTitle("Button", for: UIControlState.normal)
+let buttonLayer = button.layer as! MDCShadowLayer
+buttonLayer.elevation = 6.0
+self.view.addSubview(button)
 
 ~~~
 
@@ -156,7 +157,7 @@ Creating a custom UIView with a shadow:
 ~~~ swift
 class ShadowedView: UIView {
 
-  override class func layerClass() -> AnyClass {
+  override class var layerClass: AnyClass {
     return MDCShadowLayer.self
   }
 
@@ -202,8 +203,8 @@ animating or changing size.
 #### Swift
 ~~~ swift
 
-self.layer.shouldRasterize = true;
-self.layer.rasterizationScale = UIScreen.mainScreen().scale
+self.layer.shouldRasterize = true
+self.layer.rasterizationScale = UIScreen.mainScreen.scale
 
 ~~~
 
