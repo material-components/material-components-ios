@@ -133,7 +133,7 @@ let colors = [ "red", "blue", "green", "black", "yellow", "purple" ]
 
 #### Objective-C
 ~~~ objc
-colors = @[ @"red", @"blue", @"green", @"black", @"yellow", @"purple" ];
+NSArray *colors = @[ @"red", @"blue", @"green", @"black", @"yellow", @"purple" ];
 ~~~
 <!--</div>-->
 
@@ -142,8 +142,8 @@ Step 3: **Register a cell class**.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-self.collectionView?.registerClass(MDCCollectionViewTextCell.self,
-                                   forCellWithReuseIdentifier: reusableIdentifierItem)
+self.collectionView?.register(MDCCollectionViewTextCell.self,
+                              forCellWithReuseIdentifier: reusableIdentifierItem)
 ~~~
 
 #### Objective-C
@@ -158,20 +158,20 @@ Step 4: **Override `UICollectionViewDataSource` protocol required methods**.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-override func collectionView(collectionView: UICollectionView,
+override func collectionView(_ collectionView: UICollectionView,
                              numberOfItemsInSection section: Int) -> Int {
   return colors.count
 }
 
-override func collectionView(collectionView: UICollectionView,
-                             cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-  var cell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifierItem,
-                                                                   forIndexPath: indexPath)
+override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+  var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifierItem, for: indexPath)
   if let cell = cell as? MDCCollectionViewTextCell {
     cell.textLabel?.text = colors[indexPath.item]
   }
 
   return cell
+
 }
 ~~~
 
