@@ -73,6 +73,6 @@
 
  Default is YES. Not animatable.
  */
-@property(nonatomic, getter=isShadowMaskEnabled, assign) BOOL shadowMaskEnabled;
+@property(nonatomic, assign) BOOL shadowMaskEnabled;
 
 @end

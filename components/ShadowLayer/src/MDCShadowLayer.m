@@ -20,10 +20,6 @@ static const CGFloat kShadowElevationDialog = 24.0;
 static const float kKeyShadowOpacity = 0.26f;
 static const float kAmbientShadowOpacity = 0.08f;
 
-static NSString *const MDCShadowLayerElevationKey = @"MDCShadowLayerElevationKey";
-static NSString *const MDCShadowLayerShadowMaskEnabledKey =
-    @"MDCShadowLayerShadowMaskEnabledKey";
-
 @implementation MDCShadowMetrics
 
 + (MDCShadowMetrics *)metricsWithElevation:(CGFloat)elevation {
@@ -80,7 +76,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
 
 @end
 
-
 @interface MDCShadowLayer ()
 
 @property(nonatomic, strong) CAShapeLayer *topShadow;
@@ -96,67 +91,17 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
     _elevation = 0;
     _shadowMaskEnabled = YES;
 
-    [self commonMDCShadowLayerInit];
+    _bottomShadow = [CAShapeLayer layer];
+    _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
+    _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
+    [self addSublayer:_bottomShadow];
+
+    _topShadow = [CAShapeLayer layer];
+    _topShadow.backgroundColor = [UIColor clearColor].CGColor;
+    _topShadow.shadowColor = [UIColor blackColor].CGColor;
+    [self addSublayer:_topShadow];
   }
   return self;
-}
-
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    if ([aDecoder containsValueForKey:MDCShadowLayerElevationKey]) {
-      _elevation = (CGFloat)[aDecoder decodeDoubleForKey:MDCShadowLayerElevationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCShadowLayerShadowMaskEnabledKey]) {
-      _shadowMaskEnabled =
-        [aDecoder decodeBoolForKey:MDCShadowLayerShadowMaskEnabledKey];
-    }
-
-    [self commonMDCShadowLayerInit];
-  }
-  return self;
-}
-
-
-/**
- commonMDCShadowLayerInit creates additional layers based on the values of _elevation and
- _shadowMaskEnabled.
- */
-- (void)commonMDCShadowLayerInit {
-  _bottomShadow = [CAShapeLayer layer];
-  _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
-  _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
-  [self addSublayer:_bottomShadow];
-
-  _topShadow = [CAShapeLayer layer];
-  _topShadow.backgroundColor = [UIColor clearColor].CGColor;
-  _topShadow.shadowColor = [UIColor blackColor].CGColor;
-  [self addSublayer:_topShadow];
-
-  // Setup shadow layer state based off _elevation and _shadowMaskEnabled
-  MDCShadowMetrics *shadowMetrics = [MDCShadowMetrics metricsWithElevation:_elevation];
-  _topShadow.shadowOffset = shadowMetrics.topShadowOffset;
-  _topShadow.shadowRadius = shadowMetrics.topShadowRadius;
-  _topShadow.shadowOpacity = shadowMetrics.topShadowOpacity;
-  _bottomShadow.shadowOffset = shadowMetrics.bottomShadowOffset;
-  _bottomShadow.shadowRadius = shadowMetrics.bottomShadowRadius;
-  _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
-
-  //TODO(#1021): We shouldn't be calling property accessors in an init method.
-  if (_shadowMaskEnabled) {
-    _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
-    _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
-  }
-}
-
-//TODO(#993): Implement missing initWithLayer:
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeDouble:_elevation forKey:MDCShadowLayerElevationKey];
-  [aCoder encodeBool:_shadowMaskEnabled forKey:MDCShadowLayerShadowMaskEnabledKey];
-  // Additional state is calculated at deserialization time based on _elevation and
-  // _shadowMaskEnabled so we don't need to store them.
 }
 
 - (void)layoutSublayers {
@@ -213,7 +158,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
 #pragma mark - Shadow Spread
 
 // Returns how far aware the shadow is spread from the edge of the layer.
-+ (CGSize)shadowSpreadForElevation:(CGFloat)elevation {
+- (CGSize)shadowSpreadForElevation:(CGFloat)elevation {
   MDCShadowMetrics *metrics = [MDCShadowMetrics metricsWithElevation:elevation];
 
   CGSize shadowSpread = CGSizeZero;
@@ -244,7 +189,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
 - (CAShapeLayer *)shadowLayerMaskForLayer:(CALayer *)layer {
   CAShapeLayer *maskLayer = [CAShapeLayer layer];
 
-  CGSize shadowSpread = [MDCShadowLayer shadowSpreadForElevation:kShadowElevationDialog];
+  CGSize shadowSpread = [self shadowSpreadForElevation:kShadowElevationDialog];
   CGRect bounds = layer.bounds;
   CGRect maskRect = CGRectInset(bounds, -shadowSpread.width * 2, -shadowSpread.height * 2);
 
