@@ -123,7 +123,7 @@ You must also add the `headerViewController` as a child view controller.
 ~~~ swift
 let appBar = MDCAppBar()
 
-override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
   super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
   self.addChildViewController(appBar.headerViewController)
@@ -133,9 +133,11 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
 #### Objective-C
 
 ~~~ objc
-@interface MyViewController ()
+@interface ObjcViewController ()
 @property(nonatomic, strong, nonnull) MDCAppBar *appBar;
 @end
+
+@implementation ObjcViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -146,6 +148,8 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
   }
   return self;
 }
+
+@end
 ~~~
 <!--</div>-->
 
