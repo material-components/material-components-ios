@@ -23,5 +23,52 @@ class AppBarEncodingTests: XCTestCase {
 
   func testEncoding() {
 
+    // Given
+    appBar.headerViewController.headerView.shiftBehavior = .enabledWithStatusBar
+    appBar.headerViewController.headerView.minimumHeight = 46.0
+    appBar.headerViewController.headerView.maximumHeight = 112.0
+    appBar.headerViewController.headerView.contentIsTranslucent = true
+    appBar.headerViewController.headerView.headerContentImportance = .high
+    appBar.navigationBar.backgroundColor = UIColor.black
+    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.title = "Title"
+    appBar.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.white ]
+    appBar.navigationBar.titleAlignment = .leading
+
+    // When
+    var data = NSKeyedArchiver.archivedData(withRootObject: appBar)
+    var unarchivedAppBar = NSKeyedUnarchiver.unarchiveObject(with: data) as? MDCAppBar
+
+    // Then
+    XCTAssertEqual(appBar.headerViewController.headerView.shiftBehavior,
+                   unarchivedAppBar?.headerViewController.headerView.shiftBehavior)
+
+    XCTAssertEqual(appBar.headerViewController.headerView.minimumHeight,
+                   unarchivedAppBar?.headerViewController.headerView.minimumHeight)
+
+    XCTAssertEqual(appBar.headerViewController.headerView.maximumHeight,
+                   unarchivedAppBar?.headerViewController.headerView.maximumHeight)
+
+    XCTAssertEqual(appBar.headerViewController.headerView.contentIsTranslucent,
+                   unarchivedAppBar?.headerViewController.headerView.contentIsTranslucent)
+
+    XCTAssertEqual(appBar.headerViewController.headerView.headerContentImportance,
+                   unarchivedAppBar?.headerViewController.headerView.headerContentImportance)
+
+    XCTAssertEqual(appBar.navigationBar.backgroundColor,
+                   unarchivedAppBar?.navigationBar.backgroundColor)
+
+    XCTAssertEqual(appBar.navigationBar.tintColor,
+                   unarchivedAppBar?.navigationBar.tintColor)
+
+    XCTAssertEqual(appBar.navigationBar.title,
+                   unarchivedAppBar?.navigationBar.title)
+
+    XCTAssertEqual(appBar.navigationBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor,
+                   unarchivedAppBar?.navigationBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor)
+
+    XCTAssertEqual(appBar.navigationBar.titleAlignment,
+                   unarchivedAppBar?.navigationBar.titleAlignment)
+
   }
 }
