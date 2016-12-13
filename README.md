@@ -10,7 +10,7 @@ Material Components for iOS are available in Objective-C and Swift, and support 
 - [All Components](components/)
 - [Demo Apps](demos/)
 - [Contributing](contributing/)
-- [Material.io](http://material.io "External ") (external site)
+- [Material.io](http://material.io) (external site)
 - [Material Design Guidelines](http://material.google.com) (external site)
   
 ## Trying out Material Components
