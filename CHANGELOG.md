@@ -91,6 +91,10 @@
 | From: | `0` |
 | To: | `1` |
 
+### Switch
+
+* MDCSwitch has been removed, please use UISwitch instead.
+
 ## Component changes
 
 ### ActivityIndicator
