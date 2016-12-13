@@ -102,7 +102,7 @@ For non-flat buttons, the background color is determined from the enabled, disab
 disabled-dark background color properties. Flat buttons have a transparent background.
 
 ### Disabled state
-When disabled, material buttons take on a specific semi-transparent appearance which depends on
+When disabled, Material buttons take on a specific semi-transparent appearance which depends on
 whether the button is on a light background or a dark background.
 
 ### Title and title color

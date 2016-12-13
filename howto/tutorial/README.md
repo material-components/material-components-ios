@@ -2,7 +2,7 @@
 
 Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
 
-This tutorial will teach you how to link Material Components to an application, use a material collection view, and add an expandable header to the top of your controller.
+This tutorial will teach you how to link Material Components to an application, use a Material collection view, and add an expandable header to the top of your controller.
 
 When you're done, you'll have an app that looks like this:
 

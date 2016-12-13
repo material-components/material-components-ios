@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- A material page control.
+ A Material page control.
 
  This control is designed to be a drop-in replacement for UIPageControl, but adhering to the
  Material Design specifications for animation and layout.
