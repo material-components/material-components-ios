@@ -88,10 +88,10 @@ strong var dialogTransitionController: MDCDialogTransitionController
 
 // To present the dialog myDialogViewController
 dialogTransitionController = MDCDialogTransitionController()
-myDialogViewController.modalPresentationStyle = UIModalPresentationCustom
+myDialogViewController.modalPresentationStyle = .custom
 myDialogViewController.transitioningDelegate = dialogTransitionController
-presentViewController(myDialogViewController animated:YES ...)
 
+present(myDialogViewController, animated: true, completion:...)
 ~~~
 
 #### Objective-C
@@ -99,7 +99,7 @@ presentViewController(myDialogViewController animated:YES ...)
 ~~~ objc
 // self is the presenting view controller and which has the following property
 // defined to keep a reference to the transition controller.
-@property(nonatomic, strong) MDCDialogTransitionController *dialogTransitionController;
+@property(nonatomic) MDCDialogTransitionController *dialogTransitionController;
 
 // To present the dialog myDialogViewController
 self.dialogTransitionController = [[MDCDialogTransitionController alloc] init];
@@ -121,7 +121,7 @@ let alertController = MDCAlertController(title: titleString, message: messageStr
 let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
 alertController.addAction(action)
 
-present(alertController, animated:true, completion:nil)
+present(alertController, animated:true, completion:...)
 ~~~
 
 #### Objective-C
@@ -141,6 +141,6 @@ MDCAlertAction *alertAction =
 
 [alertController addAction:alertAction];
 
-[self presentViewController:alertController animated:YES completion:NULL];
+[self presentViewController:alertController animated:YES completion:...];
 ~~~
 <!--</div>-->
