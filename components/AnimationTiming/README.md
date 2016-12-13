@@ -71,8 +71,7 @@ animation.timingFunction = timingFunction
 
 ~~~ objc
 MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
-CAMediaTimingFunction *timingFunction =
-[CAMediaTimingFunction mdc_functionWithType:materialCurve];
+CAMediaTimingFunction *timingFunction = [CAMediaTimingFunction mdc_functionWithType:materialCurve];
 
 CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
 animation.timingFunction = timingFunction;

@@ -64,8 +64,9 @@ let completion = {(accepted: Bool) in
   // perform analytics here
   // and record whether the highlight was accepted
 }
+
 let highlightController = MDCFeatureHighlightViewController(highlightedView: viewToHighlight,
-  completion: completion)
+                                                            completion: completion)
 highlightController.titleText = "Just how you want it"
 highlightController.bodyText = "Tap the menu button to switch accounts, change settings & more."
 highlightController.outerHighlightColor =
@@ -86,7 +87,7 @@ MDCFeatureHighlightViewController *highlightController =
 highlightController.titleText = @"Just how you want it";
 highlightController.bodyText = @"Tap the menu button to switch accounts, change settings & more.";
 highlightController.outerHighlightColor =
-[[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
+    [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
 [self presentViewController:highlightController animated:YES completion:nil];
 ~~~
 <!--</div>-->
@@ -106,14 +107,14 @@ let highlightController = MDCFeatureHighlightViewController(highlightedView: hig
 
 #### Objective-C
 ~~~ objc
-  UIButton *displayedButton = [UIButton buttonWithType:UIButtonTypeSystem];
-  [displayedButton setTitle:[highlightedButton titleForState:UIControlStateNormal]
-                   forState:UIControlStateNormal];
-  [displayedButton setTitleColor:highlightedButton.backgroundColor forState:UIControlStateNormal];
-  displayedButton.backgroundColor = [highlightedButton titleColorForState:UIControlStateNormal];
-  MDCFeatureHighlightViewController *highlightController =
-  [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:highlightedButton
-                                                         andShowView:displayedButton
-                                                          completion:completion];
+UIButton *displayedButton = [UIButton buttonWithType:UIButtonTypeSystem];
+[displayedButton setTitle:[highlightedButton titleForState:UIControlStateNormal]
+                 forState:UIControlStateNormal];
+[displayedButton setTitleColor:highlightedButton.backgroundColor forState:UIControlStateNormal];
+displayedButton.backgroundColor = [highlightedButton titleColorForState:UIControlStateNormal];
+MDCFeatureHighlightViewController *highlightController =
+[[MDCFeatureHighlightViewController alloc] initWithHighlightedView:highlightedButton
+                                                       andShowView:displayedButton
+                                                        completion:completion];
 ~~~
 <!--</div>-->

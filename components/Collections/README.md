@@ -143,7 +143,7 @@ Step 3: **Register a cell class**.
 #### Swift
 ~~~ swift
 self.collectionView?.register(MDCCollectionViewTextCell.self,
-                                       forCellWithReuseIdentifier: reusableIdentifierItem)
+                              forCellWithReuseIdentifier: reusableIdentifierItem)
 ~~~
 
 #### Objective-C

@@ -51,7 +51,7 @@ pod install
 ## Usage
 
 To display a modal using MaterialDialogs you set two properties on the view controller to be
-presentented. Set modalPresentationStyle to UIModalPresentationCustom and set
+presented. Set modalPresentationStyle to UIModalPresentationCustom and set
 transitioningDelegate to and instance of MDCDialogTransitionController. Then you present the
 view controller from the root controller to display it as a modal dialog.
 
@@ -133,11 +133,10 @@ MDCAlertController *alertController =
                                      message:messageString];
 
 MDCAlertAction *alertAction =
-[MDCAlertAction actionWithTitle:@"OK"
-                        handler:^(MDCAlertAction *action)
- {
-   NSLog(@"OK");
- }];
+    [MDCAlertAction actionWithTitle:@"OK"
+                            handler:^(MDCAlertAction *action) {
+       NSLog(@"OK");
+    }];
 
 [alertController addAction:alertAction];
 

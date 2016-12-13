@@ -95,8 +95,7 @@ inkTouchController?.addInkView()
 ~~~ objc
 UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [myButton setTitle:@"Tap me" forState:UIControlStateNormal];
-MDCInkTouchController *inkTouchController =
-[[MDCInkTouchController alloc] initWithView:myButton];
+MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:myButton];
 [inkTouchController addInkView];
 ~~~
 <!--</div>-->
@@ -154,8 +153,7 @@ inkTouchController?.addInkView()
 UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [myButton setTitle:@"Tap me" forState:UIControlStateNormal];
 MyDelegate *myDelegate = [[MyDelegate alloc] init];
-MDCInkTouchController *inkTouchController =
-[[MDCInkTouchController alloc] initWithView:myButton];
+MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:myButton];
 inkTouchController.delegate = myDelegate;
 [inkTouchController addInkView];
 ~~~
@@ -186,16 +184,15 @@ inkView.startTouchEndedAnimation(at: touchPoint, completion: nil)
 
 #### Objective-C
 ~~~ objc
-  MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
-  MDCInkView *inkView = [MDCInkView new];
-  inkView.inkColor = [UIColor redColor];
-  [myCustomView addSubview:inkView];
-  ...
-  // When the touches begin, there is one animation
-  [inkView startTouchBeganAnimationAtPoint:touchPoint completion:nil];
-
-  ...
-  // When the touches end, there is another animation
-  [inkView startTouchEndedAnimationAtPoint:touchPoint completion:nil];
+MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
+MDCInkView *inkView = [MDCInkView new];
+inkView.inkColor = [UIColor redColor];
+[myCustomView addSubview:inkView];
+...
+// When the touches begin, there is one animation
+[inkView startTouchBeganAnimationAtPoint:touchPoint completion:nil];
+...
+// When the touches end, there is another animation
+[inkView startTouchEndedAnimationAtPoint:touchPoint completion:nil];
 ~~~
 <!--</div>-->
