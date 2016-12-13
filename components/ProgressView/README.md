@@ -5,7 +5,7 @@
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/progress_view.mp4" autoplay loop></video></div>{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIProgressView`, with a user experience
-influenced by [material design specifications](https://material.google.com/components/progress-activity.html#)
+influenced by [Material Design specifications](https://material.google.com/components/progress-activity.html#)
 for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
 few key methods required to achieve the desired animation of the control.
 <!--{: .intro }-->

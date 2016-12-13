@@ -25,7 +25,7 @@
   [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
       setCustomTitleColor:[UIColor purpleColor]];
 
-  NSString *titleString = @"Using material alert controller?";
+  NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
 
   MDCAlertController *materialAlertController =
