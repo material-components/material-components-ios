@@ -96,7 +96,7 @@ Before using Flexible Header, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialFlexibleHeader
 ~~~
 
 #### Objective-C
@@ -128,7 +128,7 @@ controller to a MDCFlexibleHeaderView instance.
 ~~~ swift
 let headerViewController = MDCFlexibleHeaderViewController()
 
-override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
   super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
   addChildViewController(headerViewController)
@@ -144,9 +144,8 @@ required init?(coder aDecoder: NSCoder) {
 #### Objective-C
 
 ~~~ objc
-@implementation MyViewController {
-  MDCFlexibleHeaderViewController *_headerViewController;
-}
+@property(nonatomic) MDCFlexibleHeaderViewController *headerViewController;
+...
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -172,7 +171,7 @@ override func viewDidLoad() {
 
   headerViewController.view.frame = view.bounds
   view.addSubview(headerViewController.view)
-  headerViewController.didMoveToParentViewController(self)
+  headerViewController.didMove(toParentViewController: self)
 }
 ~~~
 
@@ -397,8 +396,8 @@ headerViewController.layoutDelegate = self;
 
 When pairing  MDCFlexibleHeaderViewController with a view controller, it may be desirable to utilize
 the paired view controller's `topLayoutGuide` to constrain additionals views. To constrain the
-`topLayoutGuide` to the bottom point of the MDCFlexibleHeaderViewController, call 
-updateTopLayoutGuide on the flexible header view controller within the paird view controller's 
+`topLayoutGuide` to the bottom point of the MDCFlexibleHeaderViewController, call
+updateTopLayoutGuide on the flexible header view controller within the paired view controller's
 viewWillLayoutSubviews method.
 
 <!--<div class="material-code-render" markdown="1">-->
