@@ -1,6 +1,6 @@
 # Icons
 
-This component provides a subset of the Material Design icons found at
+This component provides a subset of the Material design icons found at
 https://github.com/google/material-design-icons.
 
 Each Material icon is contained within its own bundle and can be individually added to a project.

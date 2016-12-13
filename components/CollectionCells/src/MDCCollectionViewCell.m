@@ -112,8 +112,9 @@ static const uint32_t kCellRedColor = 0xF44336;
   [super layoutSubviews];
 
   // Layout the accessory view and the content view.
-  [self updateInterfaceForEditing];
   [self layoutForegroundSubviews];
+
+  [self updateInterfaceForEditing];
 
   void (^editingViewLayout)() = ^() {
     CGFloat txReorderTransform;
@@ -337,8 +338,7 @@ static const uint32_t kCellRedColor = 0xF44336;
       CGAffineTransform transform = _editingReorderImageView.transform;
       _editingReorderImageView.transform = CGAffineTransformIdentity;
       CGSize size = _editingReorderImageView.image.size;
-      CGRect frame = CGRectMake(0, (CGRectGetHeight(self.bounds) - size.height) / 2,
-                                size.width, size.height);
+      CGRect frame = (CGRect){{0, (CGRectGetHeight(self.bounds) - size.height) / 2}, size};
       _editingReorderImageView.frame = MDCRectFlippedForRTL(
           frame, CGRectGetWidth(self.bounds), self.mdc_effectiveUserInterfaceLayoutDirection);
       _editingReorderImageView.transform = transform;

@@ -1,0 +1,8 @@
+/* Accessibility hint for a switch. Read as a hint when selecting just the switch. */
+"MDCSwitchAccessibilityHint" = "Muuta asetusta kaksoisnapauttamalla";
+
+/* Accessibility value for a switch. Read as the value of the switch when the switch is on. */
+"MDCSwitchAccessibilityValueOn" = "Päällä";
+
+/* Accessibility value for a switch. Read as the value of the switch when the switch is off. */
+"MDCSwitchAccessibilityValueOff" = "Pois";

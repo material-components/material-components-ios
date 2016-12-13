@@ -24,29 +24,29 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.view.backgroundColor = UIColor.white
+    self.view.backgroundColor = UIColor.whiteColor()
 
     let raisedButton = MDCRaisedButton()
-    raisedButton.customTitleColor = UIColor.white
-    raisedButton.setElevation(4, for: UIControlState())
-    raisedButton.setTitle("Tap Me Too", for: UIControlState())
+    raisedButton.customTitleColor = UIColor.whiteColor()
+    raisedButton.setElevation(4, forState: .Normal)
+    raisedButton.setTitle("Tap Me Too", forState: .Normal)
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
-    raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    raisedButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(raisedButton)
 
     let flatButton = MDCFlatButton()
-    flatButton.customTitleColor = UIColor.gray
-    flatButton.setTitle("Touch me", for: UIControlState())
+    flatButton.customTitleColor = UIColor.grayColor()
+    flatButton.setTitle("Touch me", forState: .Normal)
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
-    flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    flatButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(flatButton)
 
     let floatingButton = MDCFloatingButton()
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
-    floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
 
     let plusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton);
     floatingButton.layer.addSublayer(plusShapeLayer);
@@ -61,25 +61,25 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
     self.view.addConstraint(NSLayoutConstraint(
       item: flatButton,
-      attribute: .centerX,
-      relatedBy: .equal,
+      attribute: .CenterX,
+      relatedBy: .Equal,
       toItem: self.view,
-      attribute: .centerX,
+      attribute: .CenterX,
       multiplier: 1.0,
       constant: 0.0))
 
     self.view.addConstraint(NSLayoutConstraint(
       item: flatButton,
-      attribute: .centerY,
-      relatedBy: .equal,
+      attribute: .CenterY,
+      relatedBy: .Equal,
       toItem: self.view,
-      attribute: .centerY,
+      attribute: .CenterY,
       multiplier: 1.0,
       constant: 0.0))
 
     self.view.addConstraints(
-      NSLayoutConstraint.constraints(withVisualFormat: "V:[raised]-40-[flat]-40-[floating]",
-        options: .alignAllCenterX,
+      NSLayoutConstraint.constraintsWithVisualFormat("V:[raised]-40-[flat]-40-[floating]",
+        options: .AlignAllCenterX,
         metrics: nil,
         views: views))
   }
@@ -89,8 +89,8 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
 
-  func tap(_ sender: AnyObject) {
-    print("\(type(of: sender)) was tapped.")
+  func tap(sender: AnyObject) {
+    print("\(sender.dynamicType) was tapped.")
   }
 
   class func catalogBreadcrumbs() -> [String] {

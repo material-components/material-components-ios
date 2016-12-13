@@ -37,7 +37,7 @@
 
 + (NSString *)catalogDescription {
   return @"This control is designed to be a drop-in replacement for UIPageControl, with a user"
-          " experience influenced by Material Design.";
+          " experience influenced by material design.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

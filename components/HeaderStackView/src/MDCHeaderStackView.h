@@ -42,7 +42,6 @@
  sizeThatFits returns the fitted height for bottom bar if available, otherwise it returns the
  fitted height for topBar. The width will be whatever width was provided.
  */
-IB_DESIGNABLE
 @interface MDCHeaderStackView : UIView
 
 /** The top bar. Top aligned and vertically expands. */

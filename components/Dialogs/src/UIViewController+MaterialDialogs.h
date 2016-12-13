@@ -28,9 +28,9 @@
 @interface UIViewController (MaterialDialogs)
 
 /**
- The Material dialog presentation controller that is managing the current view controller.
+ The material dialog presentation controller that is managing the current view controller.
 
- @return nil if the view controller is not managed by a Material dialog presentaiton controller.
+ @return nil if the view controller is not managed by a material dialog presentaiton controller.
  */
 @property(nonatomic, readonly) MDCDialogPresentationController *mdc_dialogPresentationController;
 

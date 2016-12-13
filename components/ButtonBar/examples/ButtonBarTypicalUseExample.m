@@ -57,7 +57,7 @@
   CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
   CGFloat x = (self.view.bounds.size.width - size.width) / 2;
   CGFloat y = self.view.bounds.size.height / 2 - size.height;
-  buttonBar.frame = CGRectMake(x, y, size.width, size.height);
+  buttonBar.frame = (CGRect){x, y, size};
   buttonBar.autoresizingMask =
       (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
        UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);

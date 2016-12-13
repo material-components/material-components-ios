@@ -14,7 +14,6 @@
  limitations under the License.
  */
 
-#import <AvailabilityMacros.h>
 #import <UIKit/UIKit.h>
 
 /**
@@ -24,7 +23,6 @@
  a single image composed of individual sprite frames is used, and animation simply consists of
  updating the layer contentsRect.
  */
-DEPRECATED_MSG_ATTRIBUTE("Use https://github.com/material-foundation/material-sprited-animation-view-ios instead.")
 @interface MDCSpritedAnimationView : UIView
 
 /**

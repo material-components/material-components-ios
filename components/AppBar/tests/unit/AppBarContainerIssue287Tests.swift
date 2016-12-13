@@ -32,6 +32,6 @@ class AppBarContainerIssue287Tests: XCTestCase {
   }
 
   func testViewHasNotLoadedAfterInitialization() {
-    XCTAssertFalse(container.isViewLoaded)
+    XCTAssertFalse(container.isViewLoaded())
   }
 }

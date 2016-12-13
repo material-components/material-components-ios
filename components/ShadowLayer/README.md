@@ -4,7 +4,7 @@
 [![Shadow Layer](docs/assets/shadow_layer.png)](docs/assets/shadow_layer.mp4)
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/shadow_layer.mp4" autoplay loop></video></div>{% endif %}-->
 
-Shadow Layer implements the Material Design specifications for elevation and shadows.
+Shadow Layer implements the material design specifications for elevation and shadows.
 By simulating the physical properties of paper, elevation and light source, shadows give
 visual depth to components. Shadow Layer provides an elevation property which affects
 a shadow's depth and strength, automatically handling shadow diffusion based on the shadow's
@@ -28,7 +28,7 @@ This is enabled by default and the internal portion of the layer is cut out.
 ### MDCShadowMetrics
 
 `MDCShadowMetrics` is a series of properties used to set `MDCShadowLayer`. `MDCShadowLayer` consists
-of two distinct layers. The overlay of these two layers generates a single Material Design
+of two distinct layers. The overlay of these two layers generates a single material design
 shadow that adheres to defined height and light source principles.
 
 ### Design Specifications
@@ -93,7 +93,7 @@ import MaterialComponents
 <!--</div>-->
 
 
-Example of a custom button based on UIButton with Material Design shadows:
+Example of a custom button based on UIButton with material design shadows:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

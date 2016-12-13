@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- Metrics of the Material shadow effect.
+ Metrics of the material shadow effect.
 
  These can be used if you require your own shadow implementation but want to match the material
  spec.
@@ -40,7 +40,7 @@
 @end
 
 /**
- The Material shadow effect.
+ The material shadow effect.
 
  @see
  https://www.google.com/design/spec/what-is-material/elevation-shadows.html#elevation-shadows-shadows

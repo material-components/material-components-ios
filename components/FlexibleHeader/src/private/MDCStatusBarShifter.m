@@ -157,8 +157,8 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
       // Take a snapshot of the status bar.
       UIView *snapshotView = [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
       UIView *clippingView = [[UIView alloc] init];
-      clippingView.frame = CGRectMake(0, 0,
-                                      snapshotView.frame.size.width, kStatusBarExpectedHeight);
+      clippingView.frame =
+          (CGRect){CGPointZero, {snapshotView.frame.size.width, kStatusBarExpectedHeight}};
       clippingView.autoresizingMask =
           (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
       clippingView.clipsToBounds = YES;

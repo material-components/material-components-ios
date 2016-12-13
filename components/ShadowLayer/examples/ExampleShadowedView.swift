@@ -20,7 +20,7 @@ import MaterialComponents.MaterialShadowLayer
 
 class ExampleShadowedView: UIView {
 
-  override class var layerClass : AnyClass {
+  override class func layerClass() -> AnyClass {
     return MDCShadowLayer.self
   }
 
@@ -28,7 +28,7 @@ class ExampleShadowedView: UIView {
     return self.layer as! MDCShadowLayer
   }
 
-  func setElevation(_ points: CGFloat) {
+  func setElevation(points: CGFloat) {
     self.shadowLayer.elevation = points
   }
 

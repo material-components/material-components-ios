@@ -48,11 +48,6 @@
   [_appBar.navigationBar observeNavigationItem:_contentViewController.navigationItem];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  [_appBar.headerViewController updateTopLayoutGuide];
-}
-
 - (BOOL)prefersStatusBarHidden {
   return self.appBar.headerViewController.prefersStatusBarHidden;
 }

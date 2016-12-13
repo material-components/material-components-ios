@@ -1,270 +1,3 @@
-# 18.0.0
-
-## API diffs
-
-### ButtonBar
-
-* MDCButtonBar is now IB_DESIGNABLE.
-
-#### MDCButtonBarDelegate
-
-*modified* method: `-buttonBar:viewForItem:layoutHints:` in `MDCButtonBarDelegate`
-
-| Type of change: | swift declaration |
-|---|---|
-| From: | `func buttonBar(_ buttonBar: MDCButtonBar!, viewForItem barButtonItem: Any!, layoutHints: Any!) -> Any!` |
-| To: | `func buttonBar(_ buttonBar: MDCButtonBar, viewForItem barButtonItem: Any!, layoutHints: Any!) -> Any!` |
-
-*modified* method: `-buttonBar:viewForItem:layoutHints:` in `MDCButtonBarDelegate`
-
-| Type of change: | declaration |
-|---|---|
-| From: | `- (UIView *)buttonBar:(MDCButtonBar *)buttonBar           viewForItem:(UIBarButtonItem *)barButtonItem           layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;` |
-| To: | `- (nonnull UIView *)buttonBar:(nonnull MDCButtonBar *)buttonBar                   viewForItem:(nonnull UIBarButtonItem *)barButtonItem                   layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;` |
-
-#### MDCButtonBar
-
-*modified* property: `items` in `MDCButtonBar`
-
-| Type of change: | declaration |
-|---|---|
-| From: | `@property (readwrite, copy, nonatomic) NSArray<UIBarButtonItem *> *items;` |
-| To: | `@property (readwrite, copy, nonatomic, nullable)     NSArray<UIBarButtonItem *> *items;` |
-
-### FlexibleHeader
-#### MDCFlexibleHeaderViewController
-
-*new* method: `-updateTopLayoutGuide` in `MDCFlexibleHeaderViewController`
-
-### FontDiskLoader
-#### MDCFontDiskLoader
-
-*modified* class: `MDCFontDiskLoader`
-
-| Type of change: | key.deprecation_message |
-|---|---|
-| From: | `` |
-| To: | `Use https://github.com/material-foundation/material-font-disk-loader-ios instead.` |
-
-*modified* class: `MDCFontDiskLoader`
-
-| Type of change: | key.always_deprecated |
-|---|---|
-| From: | `0` |
-| To: | `1` |
-
-### HeaderStackView
-
-* MDCHeaderStackView is now IB_DESIGNABLE.
-
-### RobotoFontLoader
-#### MDCRobotoFontLoader
-
-*modified* class: `MDCRobotoFontLoader`
-
-| Type of change: | key.deprecation_message |
-|---|---|
-| From: | `` |
-| To: | `Use https://github.com/material-foundation/material-roboto-font-loader-ios instead.` |
-
-*modified* class: `MDCRobotoFontLoader`
-
-| Type of change: | key.always_deprecated |
-|---|---|
-| From: | `0` |
-| To: | `1` |
-
-### SpritedAnimationView
-#### MDCSpritedAnimationView
-
-*modified* class: `MDCSpritedAnimationView`
-
-| Type of change: | key.deprecation_message |
-|---|---|
-| From: | `` |
-| To: | `Use https://github.com/material-foundation/material-sprited-animation-view-ios instead.` |
-
-*modified* class: `MDCSpritedAnimationView`
-
-| Type of change: | key.always_deprecated |
-|---|---|
-| From: | `0` |
-| To: | `1` |
-
-### Switch
-
-* MDCSwitch has been removed, please use UISwitch instead.
-
-## Component changes
-
-### ActivityIndicator
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-
-### AnimationTiming
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-
-### AppBar
-
-#### Changes
-
-* [- Added NSCoding supprt, added commonInit and commonetViewSetup methods (#994)](https://github.com/material-components/material-components-ios/commit/875a8a9be22ae6c338da4fe104ec8201ffa4b159) (Justin Shephard)
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-* [Revert "- Added NSCoding supprt, added commonInit and commonetViewSetup methods (#994)" (#1005)](https://github.com/material-components/material-components-ios/commit/73e1549a8babb868b3ed7b387e59dacb992e36b9) (Justin Shephard)
-* [[FlexibleHeader] - Update TopLayoutGuide for Paired VC (#923)](https://github.com/material-components/material-components-ios/commit/0b466abfd29b3230448b3087d5a08776b9e82255) (Justin Shephard)
-
-### ButtonBar
-
-#### Changes
-
-* [- Adding NSCoding compliance to component, IBDesignable, nullability qualifiers (#980)](https://github.com/material-components/material-components-ios/commit/00733fa42c35676fbc677226e3c713d8b5200c01) (Justin Shephard)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-* [Remove struct hacks (#992)](https://github.com/material-components/material-components-ios/commit/8bc7a849ca6079eb1bb3cffdd9789dbea56d7caf) (Adrian Secord)
-
-### Buttons
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-
-### CollectionCells
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-* [Layout subviews after updating interface for editing (#989)](https://github.com/material-components/material-components-ios/commit/27c514f4b851f210d8f7ca173560f4862ab24ce0) (Jackie Quinn)
-* [Remove struct hacks (#992)](https://github.com/material-components/material-components-ios/commit/8bc7a849ca6079eb1bb3cffdd9789dbea56d7caf) (Adrian Secord)
-
-### Collections
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-
-### Dialogs
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-
-### FeatureHighlight
-
-#### Changes
-
-* [Remove struct hacks (#992)](https://github.com/material-components/material-components-ios/commit/8bc7a849ca6079eb1bb3cffdd9789dbea56d7caf) (Adrian Secord)
-
-### FlexibleHeader
-
-#### Changes
-
-* [- Added Swift Example (#1009)](https://github.com/material-components/material-components-ios/commit/68499f15b9c0745644851a0720a27dfef8752834) (Justin Shephard)
-* [- Update TopLayoutGuide for Paired VC (#923)](https://github.com/material-components/material-components-ios/commit/0b466abfd29b3230448b3087d5a08776b9e82255) (Justin Shephard)
-* [Add float cast to avoid warnings (#979)](https://github.com/material-components/material-components-ios/commit/f9c7955489f5a02b9c93ab09fc9e3570bd980a78) (ianegordon)
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-* [Remove struct hacks (#992)](https://github.com/material-components/material-components-ios/commit/8bc7a849ca6079eb1bb3cffdd9789dbea56d7caf) (Adrian Secord)
-
-### FontDiskLoader
-
-#### Changes
-
-* [Deprecate migrating components. (#1007)](https://github.com/material-components/material-components-ios/commit/d0202ebc37f0b4fc96ac5ba78b9ab1120a0331cc) (Adrian Secord)
-* [Removed FontDiskLoader tests. They were using font assets from another component RobotoFontLoader which is causing problems. Also the component is depreciated and moved into MDFFontDiskLoader. (#1016)](https://github.com/material-components/material-components-ios/commit/6fb5c3aa8fde9fba77260526800f3b2a617dc05d) (Randall Li)
-
-### HeaderStackView
-
-#### Changes
-
-* [- Added IB_Designable, NSCoding support, swift example (#983)](https://github.com/material-components/material-components-ios/commit/2ebebab53566bcaf3e17442ee3b6deb5b468c2ac) (Justin Shephard)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-* [Remove struct hacks (#992)](https://github.com/material-components/material-components-ios/commit/8bc7a849ca6079eb1bb3cffdd9789dbea56d7caf) (Adrian Secord)
-
-### Ink
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-
-### NavigationBar
-
-#### Changes
-
-* [- Added NSCoding support (#985)](https://github.com/material-components/material-components-ios/commit/20a629f5491a60ec86cc3540ee71a8fa340d2e5b) (Justin Shephard)
-* [- Component Checklist (#996)](https://github.com/material-components/material-components-ios/commit/40f2b257185cb9f892ddaff41f583da1b2b3070e) (Justin Shephard)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-* [Remove struct hacks (#992)](https://github.com/material-components/material-components-ios/commit/8bc7a849ca6079eb1bb3cffdd9789dbea56d7caf) (Adrian Secord)
-* [Update title frame then apply RTL for title alignment. #831 (#991)](https://github.com/material-components/material-components-ios/commit/d4ec6ee060c88cac48ceac1ce7e14158070f9ef3) (Junius Gunaratne)
-* [changed default title alignment to center (#831)](https://github.com/material-components/material-components-ios/commit/b2d95a86df3f311b0417afdc96910b7ea0b6e93e) (Randall Li)
-
-### PageControl
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-
-### Palettes
-
-#### Changes
-
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-
-### ProgressView
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-
-### RobotoFontLoader
-
-#### Changes
-
-* [Deprecate migrating components. (#1007)](https://github.com/material-components/material-components-ios/commit/d0202ebc37f0b4fc96ac5ba78b9ab1120a0331cc) (Adrian Secord)
-* [[Typography] Removes the runtime inspection that uses Roboto if it can be found (via MDCRobotoFontLoader) (#713)](https://github.com/material-components/material-components-ios/commit/6834ae3efc45a87933e6fb6cdfdc942c0ffbe509) (Randall Li)
-
-### ShadowElevations
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-
-### ShadowLayer
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-
-### Slider
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-
-### SpritedAnimationView
-
-#### Changes
-
-* [Deprecate migrating components. (#1007)](https://github.com/material-components/material-components-ios/commit/d0202ebc37f0b4fc96ac5ba78b9ab1120a0331cc) (Adrian Secord)
-
-### Typography
-
-#### Changes
-
-* [Capitalize "Material" in documentation (#1014)](https://github.com/material-components/material-components-ios/commit/e93a16ca029ca2bc68c9ecaaaeb83b996a79acf0) (Adrian Secord)
-* [Convert component examples to Swift 3 (#1002)](https://github.com/material-components/material-components-ios/commit/4842a362f50cd5a3f5b88bdddbbc973d6edf7446) (Adrian Secord)
-* [Removes the runtime inspection that uses Roboto if it can be found (via MDCRobotoFontLoader) (#713)](https://github.com/material-components/material-components-ios/commit/6834ae3efc45a87933e6fb6cdfdc942c0ffbe509) (Randall Li)
-
-
 # 17.2.0
 
 ## API Changes
@@ -2079,13 +1812,13 @@ Auto-generated by running:
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 
 ### AppBar
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [Remove ARC guards from MDC](https://github.com/material-components/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
 
 ### ButtonBar
@@ -2098,7 +1831,7 @@ Auto-generated by running:
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [Remove ARC guards from MDC](https://github.com/material-components/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
 
 ### CollectionCells
@@ -2120,7 +1853,7 @@ Auto-generated by running:
 
 * [Fix delegate calls for moving an item](https://github.com/material-components/material-components-ios/commit/ed084ccbad4303321a8a87958c98e932a9050583) (randallli)
 * [Fix storyboard usage of MDCCollectionViews](https://github.com/material-components/material-components-ios/commit/36164cd6e548ac4efed23df99848f62e003298a1) (Eric Shieh)
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [Remove ARC guards from MDC](https://github.com/material-components/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
 
 ### Dialogs
@@ -2128,7 +1861,7 @@ Auto-generated by running:
 #### Changes
 
 * [Add Alert Controller](https://github.com/material-components/material-components-ios/commit/1fe4ac3f647727aeb75749d25bc5341bf751e8f6) (Ian Gordon)
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [Use migrated keyboard watcher code](https://github.com/material-components/material-components-ios/commit/df6016a51cc157fd0b9f62444e428a43a704d9fc) (Ian Gordon)
 * [[KeyboardWatcher] Extract values from a notification](https://github.com/material-components/material-components-ios/commit/3bfc5f9c9058e0423d22d09ca2b9fdc69ffb0a70) (Ian Gordon)
 
@@ -2136,7 +1869,7 @@ Auto-generated by running:
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [Remove ARC guards from MDC](https://github.com/material-components/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
 * [[MDC #624] Correctly initialize the shifterStatusBar when creating a MDCFlexibleHeaderView](https://github.com/material-components/material-components-ios/commit/f146473416188434ae2fb6b837bd9ce71863ea70) (Sam Morrison)
 
@@ -2144,61 +1877,61 @@ Auto-generated by running:
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [Remove ARC guards from MDC](https://github.com/material-components/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
 
 ### Ink
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [MDC_#495 - Removed unused declaration of startPoint](https://github.com/material-components/material-components-ios/commit/f5e940c743836ff4bd589c81d9d12fae9af08c0b) (Justin Shephard)
 
 ### NavigationBar
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [Remove ARC guards from MDC](https://github.com/material-components/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
 
 ### PageControl
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 
 ### ProgressView
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [Remove ARC guards from MDC](https://github.com/material-components/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
 
 ### ShadowElevations
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 
 ### ShadowLayer
 
 #### Changes
 
 * [Add additional detail clarifying the difference between CALayer.zPosition and MDCShadowLayer.elevation.](https://github.com/material-components/material-components-ios/commit/56a519186f344e26f92122eaf1871a4530fa3a4f) (Ian Gordon)
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 
 ### Slider
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [[ThumbTrack] Slider and Switch implement `isTracking` UIControl method](https://github.com/material-components/material-components-ios/commit/7cfaf9b0969e19b8820d5b23dab154c4c317d647) (Max Luzuriaga)
 
 ### Snackbar
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 
 ### SpritedAnimationView
 
@@ -2214,14 +1947,14 @@ Auto-generated by running:
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [[ThumbTrack] Slider and Switch implement `isTracking` UIControl method](https://github.com/material-components/material-components-ios/commit/7cfaf9b0969e19b8820d5b23dab154c4c317d647) (Max Luzuriaga)
 
 ### Typography
 
 #### Changes
 
-* [Lowercase "Material Design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
+* [Lowercase "material design" in text.](https://github.com/material-components/material-components-ios/commit/65a05eed3112816c7441be4f6766d12099d0b0f3) (Adrian Secord)
 * [Remove ARC guards from MDC](https://github.com/material-components/material-components-ios/commit/10e11da725499e7bd6e07c034b875b4dcfa1e2fe) (Sam Morrison)
 
 
@@ -4440,7 +4173,7 @@ Auto-generated by running:
 * [Pesto] Corrections for build warnings (Will Larche)
 * [Pesto] making string and URL propertys 'copy' (Will Larche)
 * [Pesto] Style update: @property ivars (larche)
-* [Pesto] Update card zoom animation to be more Material Design like (Junius Gunaratne)
+* [Pesto] Update card zoom animation to be more material design like (Junius Gunaratne)
 
 ###### Docs and site
 * [Docs] Minor touchups to FlexibleHeader readme. (Jeff Verkoeyen)

@@ -24,15 +24,15 @@ class AppBarDelegateForwardingExample: UITableViewController {
   let appBar = MDCAppBar()
 
   convenience init() {
-    self.init(style: .plain)
+    self.init(style: .Plain)
   }
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
 
-    self.appBar.navigationBar.tintColor = UIColor.white
+    self.appBar.navigationBar.tintColor = UIColor.whiteColor()
     appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.white ]
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
 
     self.addChildViewController(appBar.headerViewController)
 
@@ -44,7 +44,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
       blue: CGFloat(0xF4) / CGFloat(255),
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.tintColor = UIColor.whiteColor()
   }
 
   override func viewDidLoad() {
@@ -57,42 +57,42 @@ class AppBarDelegateForwardingExample: UITableViewController {
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
     appBar.addSubviewsToParent()
 
-    self.tableView.layoutMargins = UIEdgeInsets.zero
-    self.tableView.separatorInset = UIEdgeInsets.zero
+    self.tableView.layoutMargins = UIEdgeInsetsZero
+    self.tableView.separatorInset = UIEdgeInsetsZero
   }
 
   // The following four methods must be forwarded to the tracking scroll view in order to implement
   // the Flexible Header's behavior.
 
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+  override func scrollViewDidScroll(scrollView: UIScrollView) {
     if scrollView == self.appBar.headerViewController.headerView.trackingScrollView {
-      self.appBar.headerViewController.headerView.trackingScrollDidScroll()
+      self.appBar.headerViewController.headerView.trackingScrollViewDidScroll()
     }
   }
 
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+  override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     if scrollView == self.appBar.headerViewController.headerView.trackingScrollView {
-      self.appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+      self.appBar.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
     }
   }
 
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     let headerView = self.appBar.headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+      headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
     }
   }
 
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let headerView = self.appBar.headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+      headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity, targetContentOffset: targetContentOffset)
     }
   }
 
   // MARK: Typical setup
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
     self.title = "Delegate Forwarding (Swift)"
@@ -105,7 +105,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
       blue: CGFloat(0xF4) / CGFloat(255),
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.tintColor = UIColor.whiteColor()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -124,15 +124,15 @@ extension AppBarDelegateForwardingExample {
 }
 
 extension AppBarDelegateForwardingExample {
-  override var childViewControllerForStatusBarHidden : UIViewController? {
+  override func childViewControllerForStatusBarHidden() -> UIViewController? {
     return appBar.headerViewController
   }
 
-  override var childViewControllerForStatusBarStyle : UIViewController? {
+  override func childViewControllerForStatusBarStyle() -> UIViewController? {
     return appBar.headerViewController
   }
 
-  override func viewWillAppear(_ animated: Bool) {
+  override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -144,18 +144,18 @@ extension AppBarDelegateForwardingExample {
 // MARK: UITableViewDataSource
 extension AppBarDelegateForwardingExample {
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 50
   }
 
   override func tableView(
-    _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      var cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
+    tableView: UITableView,
+    cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+      var cell = self.tableView.dequeueReusableCellWithIdentifier("cell")
       if cell == nil {
-        cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
       }
-      cell!.layoutMargins = UIEdgeInsets.zero
+      cell!.layoutMargins = UIEdgeInsetsZero
       return cell!
   }
 

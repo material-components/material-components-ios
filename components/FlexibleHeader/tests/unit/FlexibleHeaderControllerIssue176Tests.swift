@@ -30,7 +30,7 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
     fhvc.headerView.maximumHeight = fhvc.headerView.minimumHeight + 100
   }
 
-  func registerToParentViewController(_ parent: UIViewController) {
+  func registerToParentViewController(parent: UIViewController) {
     parent.addChildViewController(fhvc)
     parent.view.addSubview(fhvc.view)
   }
@@ -41,7 +41,7 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
     // NOTE: No tracking scroll view
 
-    fhvc.didMove(toParentViewController: parentVc)
+    fhvc.didMoveToParentViewController(parentVc)
 
     XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.minimumHeight)
   }
@@ -52,13 +52,13 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
     // iOS 8.3 and 8.4 do not provide a default frame for the view controller. The contentOffset for
     // a UIScrollView will only be modified if its bounds is sufficiently large, so we recreate the
     // expected behavior here.
-    parentVc.view.frame = UIScreen.main.bounds
+    parentVc.view.frame = UIScreen.mainScreen().bounds
 
     self.registerToParentViewController(parentVc)
 
     fhvc.headerView.trackingScrollView = parentVc.tableView
 
-    fhvc.didMove(toParentViewController: parentVc)
+    fhvc.didMoveToParentViewController(parentVc)
 
     XCTAssertEqual(fhvc.headerView.trackingScrollView!.contentOffset.y, -fhvc.headerView.maximumHeight)
     XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.maximumHeight)

@@ -26,7 +26,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     buttonBar.backgroundColor = self.buttonBarBackgroundColor()
 
     // MDCButtonBar ignores the style of UIBarButtonItem.
-    let ignored: UIBarButtonItemStyle = .done
+    let ignored: UIBarButtonItemStyle = .Done
 
     let actionItem = UIBarButtonItem(
       title: "Action",
@@ -47,7 +47,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     // Set the title text attributes before assigning to buttonBar.items
     // because of https://github.com/material-components/material-components-ios/issues/277
     for item in items {
-      item.setTitleTextAttributes(self.itemTitleTextAttributes(), for: UIControlState())
+      item.setTitleTextAttributes(self.itemTitleTextAttributes(), forState: .Normal)
     }
 
     buttonBar.items = items
@@ -58,14 +58,14 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     let y = self.view.bounds.size.height / 2 - size.height;
     buttonBar.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
     buttonBar.autoresizingMask =
-      [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+      [.FlexibleTopMargin, .FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin]
     self.view.addSubview(buttonBar)
 
     // Ensure that the controller's view isn't transparent.
-    self.view.backgroundColor = UIColor.white
+    self.view.backgroundColor = UIColor.whiteColor()
   }
 
-  func didTapActionButton(_ sender: AnyObject) {
+  func didTapActionButton(sender: AnyObject) {
     print("Did tap action item: \(sender)")
   }
 

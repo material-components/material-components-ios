@@ -22,7 +22,7 @@
 #import "MDCCollectionViewStylingDelegate.h"
 
 /**
- Controller that implements a collection view that adheres to Material Design layout
+ Controller that implements a collection view that adheres to Material design layout
  and animation styling.
  */
 @interface MDCCollectionViewController : UICollectionViewController <

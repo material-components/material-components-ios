@@ -380,7 +380,7 @@ IB_DESIGNABLE
  Whether or not the header is floating in front of an infinite stream of content.
 
  Enabling this behavior will cause the header to always appear to be floating "in front of" the
- content in Material space. This behavior should _only_ be enabled for content that has no top
+ content in material space. This behavior should _only_ be enabled for content that has no top
  edge, e.g. an infinite stream of vertical content.
 
  Default: NO

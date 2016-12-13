@@ -25,8 +25,6 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   var view: MDCFlexibleHeaderView!
   var beforeFrame: CGRect!
   var scrollView: UIScrollView!
-  var contentOffset = CGPoint(x: 0, y: 0)
-  var contentOffsetPtr: UnsafeMutablePointer<CGPoint>?
 
   override func setUp() {
     view = MDCFlexibleHeaderView()
@@ -44,55 +42,54 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
     scrollView.delegate = self
 
     view.trackingScrollView = scrollView
-    contentOffsetPtr = UnsafeMutablePointer<CGPoint>(&contentOffset)
   }
 
   // MARK: UIScrollViewDelegate events
 
   func testDidScroll() {
-    view.trackingScrollDidScroll()
+    view.trackingScrollViewDidScroll()
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
 
   func testDidEndDraggingWillDecelerate() {
-    view.trackingScrollDidEndDraggingWillDecelerate(true)
+    view.trackingScrollViewDidEndDraggingWillDecelerate(true)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
 
   func testDidEndDraggingWillNotDecelerate() {
-    view.trackingScrollDidEndDraggingWillDecelerate(false)
+    view.trackingScrollViewDidEndDraggingWillDecelerate(false)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
 
   func testDidEndDecelerating() {
-    view.trackingScrollDidEndDecelerating()
+    view.trackingScrollViewDidEndDecelerating()
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
 
   func testWillEndDraggingWithZeroVelocity() {
-    view.trackingScrollWillEndDragging(
-      withVelocity: CGPoint.zero,
-      targetContentOffset: contentOffsetPtr!)
+    view.trackingScrollViewWillEndDraggingWithVelocity(
+      CGPointZero,
+      targetContentOffset: nil)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
 
   func testWillEndDraggingWithPositiveVelocity() {
-    view.trackingScrollWillEndDragging(
-      withVelocity: CGPoint(x: 0, y: 10),
-      targetContentOffset: contentOffsetPtr!)
+    view.trackingScrollViewWillEndDraggingWithVelocity(
+      CGPointMake(0, 10),
+      targetContentOffset: nil)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
 
   func testWillEndDraggingWithNegativeVelocity() {
-    view.trackingScrollWillEndDragging(
-      withVelocity: CGPoint(x: 0, y: 10),
-      targetContentOffset: contentOffsetPtr!)
+    view.trackingScrollViewWillEndDraggingWithVelocity(
+      CGPointMake(0, 10),
+      targetContentOffset: nil)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
@@ -100,7 +97,7 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   // MARK: Changing the tracking scroll view
 
   func testWillChangeToNilScrollView() {
-    view.trackingScrollWillChange(toScroll: nil)
+    view.trackingScrollWillChangeToScrollView(nil)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
@@ -108,7 +105,7 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   // MARK: Shifting header on screen
 
   func testShiftHeaderOnScreen() {
-    view.shiftHeaderOnScreen(animated: false)
+    view.shiftHeaderOnScreenAnimated(false)
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
@@ -145,31 +142,31 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
 
   // MARK: UIScrollViewDelegate
 
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+  func scrollViewDidScroll(scrollView: UIScrollView) {
     if view.trackingScrollView == scrollView {
-      view.trackingScrollDidScroll()
+      view.trackingScrollViewDidScroll()
     }
   }
 
-  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     if view.trackingScrollView == scrollView {
-      view.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+      view.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
     }
   }
 
-  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     if view.trackingScrollView == scrollView {
-      view.trackingScrollDidEndDecelerating()
+      view.trackingScrollViewDidEndDecelerating()
     }
   }
 
   func scrollViewWillEndDragging(
-      _ scrollView: UIScrollView,
+      scrollView: UIScrollView,
       withVelocity velocity: CGPoint,
       targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     if view.trackingScrollView == scrollView {
-      view.trackingScrollWillEndDragging(
-        withVelocity: velocity,
+      view.trackingScrollViewWillEndDraggingWithVelocity(
+        velocity,
         targetContentOffset: targetContentOffset)
     }
   }

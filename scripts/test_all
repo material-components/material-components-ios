@@ -17,25 +17,12 @@
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
 readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=latest'
+readonly LOG=test_all_log.txt
 
-readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
-for workspace_scheme in $WORKSPACE_SCHEMES; do  
-  workspace=$(echo $workspace_scheme | cut -d: -f1)
-  scheme=$(echo $workspace_scheme | cut -d: -f2)
-
-  # Assume any scheme with the name "*Tests*" is a testing scheme.
-  if [[ $scheme != *Tests* ]]; then
-    continue
-  fi
-  echo $workspace $scheme
-  log_file=$(dirname "$workspace")/"test_log_for_scheme_${scheme}.txt"
-  if xcodebuild test -workspace "$workspace" -scheme "$scheme" -destination "$DESTINATION" $1 >"$log_file" 2>&1; then
-    rm "$log_file"
-  else
-    echo
-    echo "Failed to test $scheme in $workspace."
-    echo "Log left in $log_file."
-    echo "Continuing with next test..."
-    echo
-  fi
-done
+# Expand (or script) this out as needed in the future.
+(cd "$ROOT_DIR/catalog" && xcodebuild test -workspace MDCCatalog.xcworkspace -scheme MDCCatalog -destination "$DESTINATION") > $LOG 2>&1
+if [[ $? -ne 0 ]]; then
+  echo "Testing failed, leaving log output in $LOG."
+else
+  rm $LOG
+fi

@@ -22,7 +22,7 @@
 
 /**
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the
- Material spec.
+ material spec.
 
  https://material.google.com/components/dialogs.html
 

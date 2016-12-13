@@ -17,10 +17,10 @@
 #import <UIKit/UIKit.h>
 
 /**
- A Material page control.
+ A material page control.
 
  This control is designed to be a drop-in replacement for UIPageControl, but adhering to the
- Material Design specifications for animation and layout.
+ material design specifications for animation and layout.
 
  The UIControlEventValueChanged control event is sent when the user changes the current page.
 

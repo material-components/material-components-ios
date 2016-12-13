@@ -19,7 +19,7 @@
 @protocol MDCSliderDelegate;
 
 /**
- A Material slider.
+ A material slider.
 
  @see https://www.google.com/design/spec/components/sliders.html for full details.
 

@@ -24,30 +24,30 @@ class TypographyFontListExampleViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.tableView.separatorStyle = .none
+    self.tableView.separatorStyle = .None
 
     self.tableView.rowHeight = UITableViewAutomaticDimension
     self.tableView.estimatedRowHeight = 50
   }
 
-  override func numberOfSections(in tableView: UITableView) -> Int {
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return strings.count
   }
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return fonts.count
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    var cell = tableView.dequeueReusableCellWithIdentifier("cell")
     if cell == nil {
-      cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+      cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell")
     }
     cell!.textLabel!.text = strings[indexPath.section]
     cell!.textLabel!.font = fonts[indexPath.row]
     cell!.textLabel!.alpha = fontOpacities[indexPath.row]
     cell!.textLabel!.numberOfLines = 0
-    cell!.textLabel!.lineBreakMode = .byWordWrapping
+    cell!.textLabel!.lineBreakMode = .ByWordWrapping
 
     if cell!.textLabel!.font.pointSize > 100 && indexPath.section == 0 {
       cell!.textLabel!.text = "MDC"
@@ -56,13 +56,13 @@ class TypographyFontListExampleViewController: UITableViewController {
     cell!.detailTextLabel!.text = fontStyleNames[indexPath.row]
     cell!.detailTextLabel!.font = MDCTypography.captionFont()
     cell!.detailTextLabel!.alpha = MDCTypography.captionFontOpacity()
-    cell!.selectionStyle = .none
+    cell!.selectionStyle = .None
 
     return cell!
   }
 
   convenience init() {
-    self.init(style: .plain)
+    self.init(style: .Plain)
   }
 
   override init(style: UITableViewStyle) {
@@ -71,7 +71,7 @@ class TypographyFontListExampleViewController: UITableViewController {
     self.title = "Font list"
   }
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -151,7 +151,7 @@ extension TypographyFontListExampleViewController {
 
   class func catalogDescription() -> String {
     return "The Typography component provides methods for displaying text using the type sizes and"
-      + " opacities from the Material Design specifications."
+      + " opacities from the material design specifications."
   }
 
   class func catalogIsPrimaryDemo() -> Bool {

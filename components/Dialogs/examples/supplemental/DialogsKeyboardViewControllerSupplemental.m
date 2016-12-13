@@ -32,7 +32,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"Demonstrate Material dialog controller with an input field.";
+  return @"Demonstrate material dialog controller with an input field.";
 }
 
 + (NSString *)catalogStoryboardName {

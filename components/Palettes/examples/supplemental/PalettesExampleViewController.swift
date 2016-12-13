@@ -18,7 +18,7 @@ import MaterialComponents
 
 typealias ExampleTone = (name: String, tone: UIColor)
 
-func ExampleTonesForPalette(_ palette: MDCPalette) -> [ExampleTone] {
+func ExampleTonesForPalette(palette: MDCPalette) -> [ExampleTone] {
   var tones : [ExampleTone] = [
     (MDCPaletteTint100Name, palette.tint100),
     (MDCPaletteTint300Name, palette.tint300),
@@ -38,47 +38,47 @@ class PalettesExampleViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.tableView.separatorStyle = .none
+    self.tableView.separatorStyle = .None
     self.tableView.rowHeight = UITableViewAutomaticDimension
     self.tableView.estimatedRowHeight = 50
   }
 
-  override func numberOfSections(in tableView: UITableView) -> Int {
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return palettes.count
   }
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     let palette = palettes[section].palette
     return ExampleTonesForPalette(palette).count
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    var cell = tableView.dequeueReusableCellWithIdentifier("cell")
     if cell == nil {
-      cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+      cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
     }
     let paletteInfo = palettes[indexPath.section]
     let tones = ExampleTonesForPalette(paletteInfo.palette)
     cell!.textLabel!.text = tones[indexPath.row].name
     cell!.backgroundColor = tones[indexPath.row].tone
-    cell!.selectionStyle = .none
+    cell!.selectionStyle = .None
 
     return cell!
   }
 
-  override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+  override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return palettes[section].name
   }
 
   convenience init() {
-    self.init(style: .grouped)
+    self.init(style: .Grouped)
   }
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
   }
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 

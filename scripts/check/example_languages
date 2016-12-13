@@ -20,7 +20,7 @@ import sys
 
 def example_regex():
   """Return a regex that matches a README's example stanza."""
-  pattern = '<!--<div class="material-code-render" markdown="1">-->(.*?)<!--</div>-->'
+  pattern = '<!--<div class="material-code-render" markdown="1">-->(.*?)<!--</div>-->'  
   return re.compile(pattern, re.MULTILINE | re.DOTALL)
 
 
@@ -45,8 +45,8 @@ def main():
   # Private components aren't required to have examples.
   if 'private/' in sys.argv[1]:
     return
-
-  example_matcher = example_regex()
+  
+  example_matcher = example_regex() 
   objc_matcher = language_regex('objc')
   swift_matcher = language_regex('swift')
 
@@ -54,20 +54,12 @@ def main():
   with open(readme) as f:
     contents = f.read()
 
-  # Check each example stanza has both languages.
+  # Check each example stanza has both languages. 
   for i in example_matcher.finditer(contents):
     example = i.group(1)
-    objcMatch = objc_matcher.search(example)
-    swiftMatch = swift_matcher.search(example)
-    if not (objcMatch and swiftMatch):
+    if not (objc_matcher.search(example) and swift_matcher.search(example)):
       print ("Error: '%s' contains an example that is missing Objective-C or "
              "Swift code.") % readme
-      sys.exit(-1)
-
-    # Check each pair of examples has swift before objc.
-    elif not (swiftMatch.start() < objcMatch.start()):
-      print ("Error: '{}' has an Objc example before a Swift "
-             "example:\n{}".format(readme, example))
       sys.exit(-1)
 
   # Check that no example code appears outside of an example stanza.

@@ -47,7 +47,7 @@ class FlexibleHeaderTrackingScrollViewDidScroll: XCTestCase {
   func testFirstChangeDoesNothingNegative() {
     scrollView.setContentOffset(CGPoint(x: 0, y: -view.maximumHeight), animated: false)
 
-    view.trackingScrollDidScroll()
+    view.trackingScrollViewDidScroll()
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
@@ -55,7 +55,7 @@ class FlexibleHeaderTrackingScrollViewDidScroll: XCTestCase {
   func testFirstChangeDoesNothingPositive() {
     scrollView.setContentOffset(CGPoint(x: 0, y: 200), animated: false)
 
-    view.trackingScrollDidScroll()
+    view.trackingScrollViewDidScroll()
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
@@ -63,11 +63,11 @@ class FlexibleHeaderTrackingScrollViewDidScroll: XCTestCase {
   // MARK: Expansion on scroll to top.
 
   func testFullyExpandedOnScrollToTop() {
-    view.trackingScrollDidScroll()
+    view.trackingScrollViewDidScroll()
 
     view.maximumHeight = 200
     scrollView.setContentOffset(CGPoint(x: 0, y: -view.maximumHeight), animated: false)
-    view.trackingScrollDidScroll()
+    view.trackingScrollViewDidScroll()
 
     XCTAssertEqual(view.frame.size.height, view.maximumHeight)
   }

@@ -18,7 +18,7 @@ import UIKit
 
 class MDCCatalogTileView: UIView {
 
-  fileprivate var componentNameString = "Misc"
+  private var componentNameString = "Misc"
   var componentName:String {
     get {
       return componentNameString
@@ -29,12 +29,12 @@ class MDCCatalogTileView: UIView {
     }
   }
   let imageView = UIImageView()
-  let imageCache = NSCache<AnyObject, AnyObject>()
+  let imageCache = NSCache()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = UIColor.clear
-    imageView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    self.backgroundColor = UIColor.clearColor()
+    imageView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
     self.addSubview(imageView)
   }
 
@@ -46,12 +46,12 @@ class MDCCatalogTileView: UIView {
     imageView.image = getImage(componentNameString)
   }
 
-  func getImage(_ key: String) -> UIImage {
-    if let cachedImage = imageCache.object(forKey: key as AnyObject) as? UIImage {
-      let scale = UIScreen.main.scale
-      let pixelSize = CGSize(width: frame.width * scale, height: frame.height * scale)
-      let cachedPixelSize = CGSize(width: cachedImage.size.width * cachedImage.scale,
-                                       height: cachedImage.size.height * cachedImage.scale)
+  func getImage(key: String) -> UIImage {
+    if let cachedImage = imageCache.objectForKey(key) as? UIImage {
+      let scale = UIScreen.mainScreen().scale
+      let pixelSize = CGSizeMake(frame.width * scale, frame.height * scale)
+      let cachedPixelSize = CGSizeMake(cachedImage.size.width * cachedImage.scale,
+                                       cachedImage.size.height * cachedImage.scale)
       if (cachedPixelSize != pixelSize) {
         return createImage()
       }
@@ -64,10 +64,10 @@ class MDCCatalogTileView: UIView {
   func createImage() -> UIImage {
     var newImage = UIImage()
 
-    let defaultSize = CGRect(x: 0, y: 0, width: 188, height: 155)
+    let defaultSize = CGRectMake(0, 0, 188, 155)
     let left = (self.frame.width - defaultSize.width) / 2
     let top = (self.frame.height - defaultSize.height) / 2
-    imageView.frame = CGRect(x: left, y: top, width: defaultSize.width, height: defaultSize.height)
+    imageView.frame = CGRectMake(left, top, defaultSize.width, defaultSize.height)
 
     switch componentNameString {
     case "Activity Indicator":
@@ -119,7 +119,7 @@ class MDCCatalogTileView: UIView {
     default:
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawMiscTile)
     }
-    imageCache.setObject(newImage, forKey: componentNameString as AnyObject)
+    imageCache.setObject(newImage, forKey: componentNameString)
     return newImage
   }
 

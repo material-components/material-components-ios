@@ -33,51 +33,51 @@ class ButtonBarIssue516Tests: XCTestCase {
 
   func testLayoutPositionDefault() {
     let items = [
-      UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil),
-      UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil)
+      UIBarButtonItem(title: "LEFT", style: .Plain, target: nil, action: nil),
+      UIBarButtonItem(title: "RIGHT", style: .Plain, target: nil, action: nil)
     ]
     buttonBar.items = items
     buttonBar.layoutSubviews()
 
     var buttons = buttonBar.subviews.filter { $0 is MDCButton }
-    buttons = buttons.sorted { (button1, button2) -> Bool in
+    buttons.sortInPlace { (button1, button2) -> Bool in
       return button1.frame.origin.x < button2.frame.origin.x
     }
-    XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControlState()), "LEFT")
-    XCTAssertEqual((buttons[1] as! MDCButton).title(for: UIControlState()), "RIGHT")
+    XCTAssertEqual((buttons[0] as! MDCButton).titleForState(.Normal), "LEFT")
+    XCTAssertEqual((buttons[1] as! MDCButton).titleForState(.Normal), "RIGHT")
   }
 
   func testLayoutPositionLeading() {
     let items = [
-      UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil),
-      UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil)
+      UIBarButtonItem(title: "LEFT", style: .Plain, target: nil, action: nil),
+      UIBarButtonItem(title: "RIGHT", style: .Plain, target: nil, action: nil)
     ]
     buttonBar.items = items
-    buttonBar.layoutPosition = .leading
+    buttonBar.layoutPosition = .Leading
     buttonBar.layoutSubviews()
 
     var buttons = buttonBar.subviews.filter { $0 is MDCButton }
-    buttons = buttons.sorted { (button1, button2) -> Bool in
+    buttons.sortInPlace { (button1, button2) -> Bool in
       return button1.frame.origin.x < button2.frame.origin.x
     }
-    XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControlState()), "LEFT")
-    XCTAssertEqual((buttons[1] as! MDCButton).title(for: UIControlState()), "RIGHT")
+    XCTAssertEqual((buttons[0] as! MDCButton).titleForState(.Normal), "LEFT")
+    XCTAssertEqual((buttons[1] as! MDCButton).titleForState(.Normal), "RIGHT")
   }
 
   func testLayoutPositionTrailing() {
     let items = [
-      UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil),
-      UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil)
+      UIBarButtonItem(title: "LEFT", style: .Plain, target: nil, action: nil),
+      UIBarButtonItem(title: "RIGHT", style: .Plain, target: nil, action: nil)
     ]
     buttonBar.items = items
-    buttonBar.layoutPosition = .trailing
+    buttonBar.layoutPosition = .Trailing
     buttonBar.layoutSubviews()
 
     var buttons = buttonBar.subviews.filter { $0 is MDCButton }
-    buttons = buttons.sorted { (button1, button2) -> Bool in
+    buttons.sortInPlace { (button1, button2) -> Bool in
       return button1.frame.origin.x < button2.frame.origin.x
     }
-    XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControlState()), "RIGHT")
-    XCTAssertEqual((buttons[1] as! MDCButton).title(for: UIControlState()), "LEFT")
+    XCTAssertEqual((buttons[0] as! MDCButton).titleForState(.Normal), "RIGHT")
+    XCTAssertEqual((buttons[1] as! MDCButton).titleForState(.Normal), "LEFT")
   }
 }

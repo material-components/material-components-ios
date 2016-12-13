@@ -2,7 +2,7 @@
 
 Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
 
-This tutorial will teach you how to link Material Components to an application, use a Material collection view, and add an expandable header to the top of your controller.
+This tutorial will teach you how to link Material Components to an application, use a material collection view, and add an expandable header to the top of your controller.
 
 When you're done, you'll have an app that looks like this:
 
@@ -508,7 +508,7 @@ override func viewDidLoad() {
 ~~~
 <!--</div>-->
 
-**NOTE:** We used margins of 16 points to match the guidelines found in the [Material Design spec](https://material.google.com/components/buttons-floating-action-button.html#buttons-floating-action-button-floating-action-button). Lots of suggestions for padding, sizing and alignment choices can be found [there](https://material.google.com/layout/metrics-keylines.html#metrics-keylines-baseline-grids).
+**NOTE:** We used margins of 16 points to match the guidelines found in the [material design spec](https://material.google.com/components/buttons-floating-action-button.html#buttons-floating-action-button-floating-action-button). Lots of suggestions for padding, sizing and alignment choices can be found [there](https://material.google.com/layout/metrics-keylines.html#metrics-keylines-baseline-grids).
 
 Build and run your app. The fab shows up but it doesn't do anything yet.
 
@@ -546,7 +546,7 @@ Build and run your app. The floating action button responds to your taps:
 
 ![Finished app with floating action button.](docs/assets/App-Complete.gif)
 
-**NOTE:** While we're using text for the + and - inside the fab, to get proper sizing, you should use icons. The Material Design website has a great [library](https://design.google.com/icons/) of icons that can be exported bundled and sized specifically for iOS.
+**NOTE:** While we're using text for the + and - inside the fab, to get proper sizing, you should use icons. The material design website has a great [library](https://design.google.com/icons/) of icons that can be exported bundled and sized specifically for iOS.
 
 ## Full source
 

@@ -30,22 +30,22 @@ class AppBarImagerySwiftExample: UITableViewController {
     imageView.frame = headerView.bounds
 
     // Ensure that the image view resizes in reaction to the header view bounds changing.
-    imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
     // Ensure that the image view is below other App Bar views (headerStackView).
-    headerView.insertSubview(imageView, at: 0)
+    headerView.insertSubview(imageView, atIndex: 0)
 
     // Scales up the image while the header is over-extending.
-    imageView.contentMode = .scaleAspectFill
+    imageView.contentMode = .ScaleAspectFill
 
     // The header view does not clip to bounds by default so we ensure that the image is clipped.
     imageView.clipsToBounds = true
 
     // We want navigation bar + status bar tint color to be white, so we set tint color here and
     // implement -preferredStatusBarStyle.
-    headerView.tintColor = UIColor.white
+    headerView.tintColor = UIColor.whiteColor()
     appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.white ]
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
 
     // Allow the header to show more of the image.
     headerView.maximumHeight = 200
@@ -56,9 +56,9 @@ class AppBarImagerySwiftExample: UITableViewController {
     appBar.addSubviewsToParent()
   }
 
-  override var preferredStatusBarStyle : UIStatusBarStyle {
+  override func preferredStatusBarStyle() -> UIStatusBarStyle {
     // Ensure that our status bar is white.
-    return .lightContent
+    return .LightContent
   }
 
   // MARK: Typical configuration
@@ -76,8 +76,8 @@ class AppBarImagerySwiftExample: UITableViewController {
   }
 
   func headerBackgroundImage() -> UIImage {
-    let bundle = Bundle(for: AppBarImagerySwiftExample.self)
-    let imagePath = bundle.path(forResource: "mdc_theme", ofType: "png")!
+    let bundle = NSBundle(forClass: AppBarImagerySwiftExample.self)
+    let imagePath = bundle.pathForResource("mdc_theme", ofType: "png")!
     return UIImage(contentsOfFile: imagePath)!
   }
 }
@@ -97,18 +97,18 @@ extension AppBarImagerySwiftExample {
 // MARK: UITableViewDataSource
 extension AppBarImagerySwiftExample {
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 50
   }
 
   override func tableView(
-    _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      var cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
+    tableView: UITableView,
+    cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+      var cell = self.tableView.dequeueReusableCellWithIdentifier("cell")
       if cell == nil {
-        cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
       }
-      cell!.layoutMargins = UIEdgeInsets.zero
+      cell!.layoutMargins = UIEdgeInsetsZero
       return cell!
   }
 }

@@ -29,10 +29,6 @@ static char *const kKVOContextMDCButtonBar = "kKVOContextMDCButtonBar";
 // This is required because @selector(enabled) throws a compiler warning of unrecognized selector.
 static NSString *const kEnabledSelector = @"enabled";
 
-static NSString *const MDCButtonBarItemsKey = @"MDCButtonBarItemsKey";
-static NSString *const MDCButtonBarButtonTitleBaselineKey = @"MDCButtonBarButtonTitleBaselineKey";
-static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButtonLayoutPositionKey";
-
 @implementation MDCButtonBar {
   id _buttonItemsLock;
   NSArray<__kindof UIView *> *_buttonViews;
@@ -63,29 +59,8 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCButtonBarInit];
-    if ([coder containsValueForKey:MDCButtonBarItemsKey]) {
-      _items = [coder decodeObjectForKey:MDCButtonBarItemsKey];
-    }
-
-    if ([coder containsValueForKey:MDCButtonBarButtonTitleBaselineKey]) {
-      _buttonTitleBaseline = (CGFloat)[coder decodeDoubleForKey:MDCButtonBarButtonTitleBaselineKey];
-    }
-
-    if ([coder containsValueForKey:MDCButtonBarButtonLayoutPositionKey]) {
-      _layoutPosition = [coder decodeIntegerForKey:MDCButtonBarButtonLayoutPositionKey];
-    }
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  if (self.items && self.items.count > 0) {
-    [aCoder encodeObject:self.items forKey:MDCButtonBarItemsKey];
-  }
-  [aCoder encodeDouble:self.buttonTitleBaseline forKey:MDCButtonBarButtonTitleBaselineKey];
-  [aCoder encodeInteger:self.layoutPosition forKey:MDCButtonBarButtonLayoutPositionKey];
-
 }
 
 - (void)alignButtonBaseline:(UIButton *)button {

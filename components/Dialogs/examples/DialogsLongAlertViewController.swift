@@ -24,21 +24,21 @@ class DialogsLongAlertViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.white;
+    view.backgroundColor = UIColor.whiteColor();
 
-    flatButton.setTitle("PRESENT ALERT", for: UIControlState())
-    flatButton.setTitleColor(UIColor.blue, for: UIControlState());
+    flatButton.setTitle("PRESENT ALERT", forState: .Normal)
+    flatButton.setTitleColor(UIColor.blueColor(), forState: .Normal);
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
-    flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    flatButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
     self.view.addSubview(flatButton)
 
-    NSLayoutConstraint(item:flatButton, attribute:.centerX, relatedBy:.equal, toItem:self.view, attribute:.centerX, multiplier:1.0, constant: 0.0).isActive = true
+    NSLayoutConstraint(item:flatButton, attribute:.CenterX, relatedBy:.Equal, toItem:self.view, attribute:.CenterX, multiplier:1.0, constant: 0.0).active = true
 
-    NSLayoutConstraint(item:flatButton, attribute:.centerY, relatedBy:.equal, toItem:self.view, attribute:.centerY, multiplier:1.0, constant: 0.0).isActive = true
+    NSLayoutConstraint(item:flatButton, attribute:.CenterY, relatedBy:.Equal, toItem:self.view, attribute:.CenterY, multiplier:1.0, constant: 0.0).active = true
   }
 
-  func tap(_ sender: AnyObject) {
+  func tap(sender: AnyObject) {
     let messageString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
     "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
     "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
@@ -57,7 +57,7 @@ class DialogsLongAlertViewController: UIViewController {
 
     materialAlertController.addAction(action)
 
-    self.present(materialAlertController, animated: true, completion: nil)
+    self.presentViewController(materialAlertController, animated: true, completion: nil)
   }
 }
 

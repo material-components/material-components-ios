@@ -50,7 +50,7 @@ post_install do |installer|
     "#{pod_dir}/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.debug.xcconfig",
     "#{pod_dir}/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.release.xcconfig",
   ]
-
+  
   # Note the path is relative to the xcconfig file being modified.
   # https://pewpewthespells.com/blog/xcconfig_guide.html
   mdc_xcconfigs.each do |mdc_xcconfig|
@@ -59,9 +59,13 @@ post_install do |installer|
     File.write(mdc_xcconfig, new_xcconfig)
   end
 
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '2.3'
+    end
+  end
+
   # EarlGrey configuration
-  earl_grey_dir = "#{File.dirname(__FILE__)}/third_party/EarlGrey"
-  `git submodule update --init #{earl_grey_dir}`
-  load "#{earl_grey_dir}/gem/lib/earlgrey/configure_earlgrey.rb"
+  require 'earlgrey'
   configure_for_earlgrey(installer, PROJECT_NAME, TEST_TARGET, SCHEME_FILE)
 end

@@ -1,0 +1,23 @@
+{
+    "images": [
+        {
+            "filename": "mdc_sprite_grid__list.png",
+            "idiom": "universal",
+            "scale": "1x"
+        },
+        {
+            "filename": "mdc_sprite_grid__list@2x.png",
+            "idiom": "universal",
+            "scale": "2x"
+        },
+        {
+            "filename": "mdc_sprite_grid__list@3x.png",
+            "idiom": "universal",
+            "scale": "3x"
+        }
+    ],
+    "info": {
+        "author": "xcode",
+        "version": 1
+    }
+}

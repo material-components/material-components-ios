@@ -21,7 +21,7 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
   @IBOutlet weak var scrollView: UIScrollView!
   let appBar = MDCAppBar()
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     commonAppBarInterfaceBuilderSwiftExampleSetup()
   }
@@ -36,9 +36,9 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
   }
 
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
-    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.tintColor = UIColor.whiteColor()
     appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.white ]
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
 
     addChildViewController(appBar.headerViewController)
     let headerColor = UIColor(red: 0.01, green: 0.67, blue: 0.96, alpha: 1.0)
@@ -56,9 +56,9 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     appBar.addSubviewsToParent()
   }
 
-  override var preferredStatusBarStyle : UIStatusBarStyle {
+  override func preferredStatusBarStyle() -> UIStatusBarStyle {
     // Ensure that our status bar is white.
-    return .lightContent
+    return .LightContent
   }
 }
 

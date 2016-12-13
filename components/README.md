@@ -3,7 +3,7 @@
 
 Material Components is a collection of standalone, production-quality user
 interface components for iOS. These components implement Google's
-[Material Design](http://www.google.com/design/spec/material-design/introduction.html) specification
+[material design](http://www.google.com/design/spec/material-design/introduction.html) specification
 and are developed by a team of iOS engineers and UX designers at Google.
 
 - [Development Guide](https://github.com/material-components/material-components-ios/tree/master/howto)
@@ -35,7 +35,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-animationtiming }-->
 
 - [**AppBar**
-  A flexible navigation bar, designed to provide a typical Material navigation experience.
+  A flexible navigation bar, designed to provide a typical material navigation experience.
   ](AppBar/)
   <!--{: .icon-appbar }-->
 
@@ -50,7 +50,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-buttons }-->
 
 - [**CollectionCells**
-  Collection view cell classes that adhere to Material layout and styling.
+  Collection view cell classes that adhere to material layout and styling.
   ](CollectionCells/)
   <!--{: .icon-collections }-->
 
@@ -60,12 +60,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-collections }-->
 
 - [**Collections**
-  Collection view classes that adhere to Material layout and styling.
+  Collection view classes that adhere to material layout and styling.
   ](Collections/)
   <!--{: .icon-collections }-->
 
 - [**Dialogs**
-  A presentation controller that will display a Material modal dialog.
+  A presentation controller that will display a material modal dialog.
   ](Dialogs/)
   <!--{: .icon-dialogs }-->
 
@@ -99,17 +99,17 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](OverlayWindow/)
 
 - [**PageControl**
-  A drop-in Material replacement for UIPageControl.
+  A drop-in material replacement for UIPageControl.
   ](PageControl/)
   <!--{: .icon-pagecontrol }-->
 
 - [**Palettes**
-  Reference colors from Material palettes.
+  Reference colors from material palettes.
   ](Palettes/)
   <!--{: .icon-palette }-->
 
 - [**ProgressView**
-  A determinate and linear progress indicator that implements Material animation and layout.
+  A determinate and linear progress indicator that implements material animation and layout.
   ](ProgressView/)
   <!--{: .icon-progressview }-->
 
@@ -119,12 +119,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-shadowelevations }-->
 
 - [**ShadowLayer**
-  A shadow which uses Material principles for visualizing depth.
+  A shadow which uses material principles for visualizing depth.
   ](ShadowLayer/)
   <!--{: .icon-shadowlayer }-->
 
 - [**Slider**
-  A Material control for selecting from a range of values.
+  A material control for selecting from a range of values.
   ](Slider/)
   <!--{: .icon-slider }-->
 
@@ -134,12 +134,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-snackbar }-->
 
 - [**Switch**
-  A Material on/off switch with an interface similar to UISwitch.
+  A material on/off switch with an interface similar to UISwitch.
   ](Switch/)
   <!--{: .icon-switch }-->
 
 - [**Typography**
-  Text styles for Material fonts and opacities.
+  Text styles for material fonts and opacities.
   ](Typography/)
   <!--{: .icon-typography }-->
 <!--{: .icon-list .large-format }-->

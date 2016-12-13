@@ -55,11 +55,6 @@
   [self.headerViewController didMoveToParentViewController:self];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  [self.headerViewController updateTopLayoutGuide];
-}
-
 - (BOOL)prefersStatusBarHidden {
   return _headerViewController.prefersStatusBarHidden;
 }

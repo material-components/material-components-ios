@@ -3,7 +3,7 @@
 A shadow elevation specifies the degree of shadow intensity to be displayed beneath an object.
 Higher shadow elevations have greater shadow intensities, akin to raising an object above a
 surface resulting in a more prominent, albeit more diffuse, shadow. This component provides commonly
-used Material Design elevations for components.
+used material design elevations for components.
 <!--{: .intro }-->
 
 ### Design Specifications

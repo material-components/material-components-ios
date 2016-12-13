@@ -3,7 +3,7 @@ Want to contribute? Great! First, read this page (including the [small print](#t
 # Contributing
 
 Material Components for iOS is intended to be a full open source project that accepts contributions
-from community members. We can work together to optimize Material Design on iOS.
+from community members. We can work together to optimize material design on iOS.
 
 - [GitHub Issues](https://github.com/material-components/material-components-ios/issues)
   <!--{: .icon-github }-->
@@ -18,7 +18,7 @@ from community members. We can work together to optimize Material Design on iOS.
 
 Members of the core team are engineers from Google, Inc. responsible for the strategic direction of
 Material Components and appointment of technical leaders from the community. The Core Team will
-work with the community to accept contributions in line with the [Material Design
+work with the community to accept contributions in line with the [material design
 spec](http://www.google.com/design/spec).
 
 - - -
@@ -29,7 +29,7 @@ As contributors and maintainers of the project, we pledge to respect everyone wh
 through posting issues, updating documentation, submitting pull requests, providing feedback in
 comments and any other related activities.
 
-Communication through any of our Material Design channels
+Communication through any of our material design channels
 ([GitHub](http://github.com/material-components/material-components-ios), [Stack
 Overflow](http://stackoverflow.com/questions/tagged/material-components-ios),
 [Google+](http://plus.google.com/+googledesign), [Twitter](https://twitter.com/googledesign), etc.)
@@ -80,7 +80,7 @@ _This code of conduct was adapted from the following sources:_
 - [Contributor covenant 1.3.0](http://contributor-covenant.org/version/1/3/0/), MIT Licensed.
 - [Angular code of
   conduct](https://github.com/angular/code-of-conduct/blob/master/CODE_OF_CONDUCT.md), MIT Licensed.
-- [Material Design
+- [Material design
   lite](https://github.com/google/material-design-lite/blob/master/CONTRIBUTING.md), Apache
   Licensed.
 

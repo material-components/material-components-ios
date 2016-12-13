@@ -36,9 +36,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
       blue: CGFloat(0xF4) / CGFloat(255),
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.tintColor = UIColor.whiteColor()
     appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.white ]
+      [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -59,26 +59,26 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
     // Step 3: Register the App Bar views.
     appBar.addSubviewsToParent()
 
-    self.tableView.layoutMargins = UIEdgeInsets.zero
-    self.tableView.separatorInset = UIEdgeInsets.zero
+    self.tableView.layoutMargins = UIEdgeInsetsZero
+    self.tableView.separatorInset = UIEdgeInsetsZero
     
     self.navigationItem.rightBarButtonItem =
-      UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
+      UIBarButtonItem(title: "Right", style: .Done, target: nil, action: nil)
   }
 
   // Optional step: If you allow the header view to hide the status bar you must implement this
   //                method and return the headerViewController.
-  override var childViewControllerForStatusBarHidden : UIViewController? {
+  override func childViewControllerForStatusBarHidden() -> UIViewController? {
     return appBar.headerViewController
   }
 
   // Optional step: The Header View Controller does basic inspection of the header view's background
   //                color to identify whether the status bar should be light or dark-themed.
-  override var childViewControllerForStatusBarStyle : UIViewController? {
+  override func childViewControllerForStatusBarStyle() -> UIViewController? {
     return appBar.headerViewController
   }
 
-  override func viewWillAppear(_ animated: Bool) {
+  override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
     // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
@@ -102,18 +102,18 @@ extension AppBarTypicalUseSwiftExample {
 // MARK: UITableViewDataSource
 extension AppBarTypicalUseSwiftExample {
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 50
   }
 
   override func tableView(
-    _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      var cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
+    tableView: UITableView,
+    cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+      var cell = self.tableView.dequeueReusableCellWithIdentifier("cell")
       if cell == nil {
-        cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
       }
-      cell!.layoutMargins = UIEdgeInsets.zero
+      cell!.layoutMargins = UIEdgeInsetsZero
       return cell!
   }
 
