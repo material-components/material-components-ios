@@ -4,7 +4,7 @@
 [![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/buttons.mp4" autoplay loop></video></div>{% endif %}-->
 
-Buttons is a collection of material design buttons, including a flat button, a raised button and a
+Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
 <!--{: .intro }-->
 

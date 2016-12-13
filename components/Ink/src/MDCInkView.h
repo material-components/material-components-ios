@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 };
 
 /**
- A UIView that draws and animates the material design ink effect for touch interactions.
+ A UIView that draws and animates the Material Design ink effect for touch interactions.
 
  There are two kinds of ink:
 

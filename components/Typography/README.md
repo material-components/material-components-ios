@@ -5,7 +5,7 @@
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/typography.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Typography component provides methods for displaying text using the type sizes and opacities
-from the material design specifications.
+from the Material Design specifications.
 <!--{: .intro }-->
 
 ### Design Specifications
@@ -64,18 +64,18 @@ import MaterialComponents.MaterialTypography
 
 ### Font
 Select a font most appropriate to its usage and set it as your label's font. All fonts are returned
-from class methods beginning with the font's material design type style and ending with 'Font'.
+from class methods beginning with the font's Material Design type style and ending with 'Font'.
 Material Typography should be used consistently throughout the entire UI.
 
 ### Opacity
 Each font has a respective opacity (alpha) value returned by class methods beginning with the
-font's material design type style and ending with 'FontOpacity'. These CGFloats should be set on the
+font's Material Design type style and ending with 'FontOpacity'. These CGFloats should be set on the
 label's alpha property. If animating alpha, it should be the maximum value reached.
 
 ## Type Sizes and Opacities
 
 `MDCTypography` provides a `UIFont` font and a `CGFloat` opacity for each of the standard type
-settings in the material design specifications.
+settings in the Material Design specifications.
 
 ### Material design type styles and their respective `MDCTypography` methods
 
@@ -95,12 +95,12 @@ settings in the material design specifications.
 
 ### Font size reference
 ![Material Design Type Size](docs/assets/style_typography_styles_scale.png
-                             "Shows the material design font sizes")
+                             "Shows the Material Design font sizes")
 <!--{: .illustration }-->
 
 ### Font opacity reference
 ![Material Design Type Opacity](docs/assets/style_typography_styles_contrast.png
-                                "Shows the material design font opacities")
+                                "Shows the Material Design font opacities")
 <!--{: .illustration }-->
 
 ## Examples
