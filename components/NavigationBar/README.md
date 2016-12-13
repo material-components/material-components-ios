@@ -6,8 +6,6 @@
 
 The Navigation Bar component is a view composed of a left and right Button Bar and either a title
 label or a custom title view.
-
-Consistent with iOS design guidelines, the title in the navigation bar is centered by default. However, certain use cases may warrant use of a left aligned title such as: when there is a strong relationship between the title and additional content appearing in the navigation bar, or where centering the title causes ambiguity.
 <!--{: .intro }-->
 
 ### Material Design Specifications

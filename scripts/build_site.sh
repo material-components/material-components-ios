@@ -1,3 +1,5 @@
+set -x
+
 #!/bin/bash
 #
 # Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
