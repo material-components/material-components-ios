@@ -91,24 +91,26 @@ views at the top most level of the view hierarchy.
 #### Swift
 
 ~~~ swift
-let overlayView = UIView()
-...
 // Set up view to be displayed in the overlay window.
+let myOverlayView = UIView()
 ...
-if (self.window?.isKindOfClass(UIWindow) != nil) {
-  overlayWindow.activateOverlay(overlayView, level:UIWindowLevelNormal)
+
+// When you're ready to show the overlay, activate it
+if let overlayWindow = window as? MDCOverlayWindow {
+  overlayWindow.activateOverlay(myOverlayView, withLevel:UIWindowLevelNormal)
 }
 ~~~
 
 #### Objective-C
 
 ~~~ objc
-UIView *overlayView = [UIView alloc] init];
-...
 // Set up view to be displayed in the overlay window.
+UIView *overlayView = [[UIView alloc] init];
 ...
-if ([window isKindOfClass:[MDCOverlayWindow class]]) {
-  MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)window;
+
+// When you're ready to show the overlay, activate it
+if ([self.window isKindOfClass:[MDCOverlayWindow class]]) {
+  MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)self.window;
   [overlayWindow activateOverlay:overlayView withLevel:UIWindowLevelNormal];
 }
 ~~~
