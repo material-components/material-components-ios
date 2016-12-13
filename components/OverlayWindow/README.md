@@ -41,7 +41,7 @@ Before using the Overlay Window, you'll need to import it:
 #### Swift
 
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialOverlayWindow
 ~~~
 
 #### Objective-C
@@ -63,11 +63,10 @@ subclass of Overlay Window.
 #### Swift
 
 ~~~ swift
-func application(application: UIApplication, didFinishLaunchingWithOptions
-               launchOptions: [NSObject: AnyObject]?) -> Bool {
-  ...
-  self.window = MDCOverlayWindow(frame: (UIApplication.sharedApplication().keyWindow?.bounds)!)
-  ...
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+  window = MDCOverlayWindow(frame: (application.keyWindow?.bounds)!)
+
 }
 ~~~
 
@@ -76,10 +75,9 @@ func application(application: UIApplication, didFinishLaunchingWithOptions
 ~~~ objc
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  ...
-  self.window =
-    [[MDCOverlayWindow alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
-  ...
+
+  [[MDCOverlayWindow alloc] initWithFrame:application.keyWindow.bounds];
+
 }
 ~~~
 <!--</div>-->
