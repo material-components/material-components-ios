@@ -83,10 +83,10 @@ open your-project.xcworkspace
 
 ### Usage
 
-Now you’re ready to add a component (e.g. [Buttons](components/Buttons)) to your app!
-Include the Material Components header for the component you're interested in to your app (detailed below) to get all of the required classes.
+The components are built upon familiar UIKit classes and can be added to a view with just a couple familiar lines.
+Simply import the Material Components header for the component you're interested in and add it to your view.
 
-**Choose from Swift or Objective-C:**
+Include the Material Components header for the component you're interested in to your app (detailed below) to get all of the required classes.
 
 #### Swift
 
