@@ -141,4 +141,3 @@ Navigation Bar as you'd expect, with the following exceptions:
   navigationItem properties.
 - `prompt` is not presently supported. https://github.com/material-components/material-components-ios/issues/230.
 
-TODO(featherless): Describe the most common integration steps.
