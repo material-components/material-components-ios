@@ -50,7 +50,7 @@ Before using Palettes, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialPalettes
 ~~~
 
 #### Objective-C
@@ -76,12 +76,12 @@ scheme.
 #### Swift
 
 ~~~ swift
-view.backgroundColor = MDCPalettes.greenPalette().tint500;
+view.backgroundColor = MDCPalette.green().tint500;
 ~~~
 
 #### Objective-C
 
 ~~~ objc
-view.backgroundColor = [MDCPalettes greenPalette].tint500;
+self.view.backgroundColor = [MDCPalette greenPalette].tint500;
 ~~~
 <!--</div>-->

@@ -20,6 +20,13 @@ static id<MDCTypographyFontLoading> gFontLoader = nil;
 const CGFloat MDCTypographyStandardOpacity = 0.87f;
 const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
+// This protocal is not intended for actual use. It allows us to weakly reference MDCRoboto with
+// less warnings. @c defaultFontLoader
+@protocol MDCRobotoFontLoaderWeakLink
+// Shared singleton instance.
++ (nonnull instancetype)sharedInstance;
+@end
+
 @implementation MDCTypography
 
 #pragma mark - Font loader access
@@ -138,6 +145,10 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma mark - Private
 
 + (id<MDCTypographyFontLoading>)defaultFontLoader {
+  Class fontLoaderClass = NSClassFromString(@"MDCRobotoFontLoader");
+  if (fontLoaderClass && [fontLoaderClass respondsToSelector:@selector(sharedInstance)]) {
+    return [fontLoaderClass sharedInstance];
+  }
   return [[MDCSystemFontLoader alloc] init];
 }
 

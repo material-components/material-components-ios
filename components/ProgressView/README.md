@@ -64,7 +64,7 @@ Before using Progress View, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialProgressView
 ~~~
 
 #### Objective-C
@@ -86,38 +86,24 @@ Add the progress view to a view and set the desired progress and hidden state.
 #### Swift
 
 ~~~ swift
-class ProgressViewSwiftExampleViewController: UIViewController {
+let progressView = MDCProgressView()
+progressView.progress = 0
 
-  let progressView = MDCProgressView()
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    progressView.progress = 0
-
-    let progressViewHeight = CGFloat(2)
-    progressView.frame = CGRectMake(0, view.bounds.height - progressViewHeight, view.bounds.width, progressViewHeight);
-    view.addSubview(progressView)
-  }
-
+let progressViewHeight = CGFloat(2)
+progressView.frame = CGRect(x: 0, y: view.bounds.height - progressViewHeight, width: view.bounds.width, height: progressViewHeight)
+view.addSubview(progressView)
 ~~~
 
 #### Objective-C
 
 ~~~ objc
-@implementation ViewController {
-  MDCProgressView *_progressView;
-}
+@property(nonatomic) MDCProgressView *progressView;
+...
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  // Progress view configuration.
-  _progressView = [[MDCProgressView alloc] initWithFrame:myFrame];
-  _progressView.progress = 0;  // You can also set a greater progress for actions already started.
-  [self.view addSubview:_progressView];
-}
-
+// Progress view configuration.
+self.progressView = [[MDCProgressView alloc] initWithFrame:myframe];
+self.progressView.progress = 0;  // You can also set a greater progress for actions already started.
+[self.view addSubview:self.progressView];
 ~~~
 <!--</div>-->
 
@@ -129,14 +115,14 @@ Both the progress and the hidden state can be animated, with a completion block.
 #### Swift
 
 ~~~ swift
-func startAndShowProgressView {
+func startAndShowProgressView() {
   progressView.progress = 0
   progressView.setHidden(false, animated: true)
 }
 
-func completeAndHideProgressView {
-  progressView.setProgress(1, animated: true) { BOOL finished in
-    progressView.setHidden(true, animated: true)
+func completeAndHideProgressView() {
+  progressView.setProgress(1, animated: true) { (finished) in
+    self.progressView.setHidden(true, animated: true)
   }
 }
 ~~~
@@ -145,13 +131,14 @@ func completeAndHideProgressView {
 
 ~~~ objc
 - (void)startAndShowProgressView {
-  _progressView.progress = 0;
-  [_progressView setHidden:NO animated:YES completion:nil];
+  self.progressView.progress = 0;
+  [self.progressView setHidden:NO animated:YES completion:nil];
 }
 
 - (void)completeAndHideProgressView {
-  [_progressView setProgress:1 animated:YES completion:^(BOOL finished){
-    [_progressView setHidden:YES animated:YES completion:nil];
+  __weak __typeof__(self) weakSelf = self;
+  [self.progressView setProgress:1 animated:YES completion:^(BOOL finished){
+    [weakSelf.progressView setHidden:YES animated:YES completion:nil];
   }];
 }
 ~~~

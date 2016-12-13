@@ -69,7 +69,7 @@ Before using Header Stack View, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialHeaderStackView
 ~~~
 
 #### Objective-C
