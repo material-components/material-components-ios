@@ -83,8 +83,7 @@ open your-project.xcworkspace
 
 ### Usage
 
-The components are built upon familiar UIKit classes and can be added to a view with just a couple familiar lines.
-Simply import the Material Components header for the component you're interested in and add it to your view.
+The components are built upon familiar UIKit classes and can be added to a view with just a couple of lines. Simply import the Material Components header for the component you're interested in, and add it to your view.
 
 #### Swift
 
