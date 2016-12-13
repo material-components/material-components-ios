@@ -30,7 +30,7 @@ fi
 # Private components do not require an icon.
 if [[ $COMPONENT_DIR != *"/private/"* ]]; then
   # Check for the icon on disk.
-  readonly UNDERSCORE_NAME=$($SCRIPTS_DIR/naming_convention -m underscore $COMPONENT_NAME)
+  readonly UNDERSCORE_NAME=$($SCRIPTS_DIR/convert_name -m underscore $COMPONENT_NAME)
   readonly ICON_NAME="ic_${UNDERSCORE_NAME}_24px.svg"
   if [ ! -f "$ICONS_DIR/$ICON_NAME" ]; then
     echo "Error: '$ICONS_DIR' is missing '$ICON_NAME'."
