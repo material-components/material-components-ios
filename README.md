@@ -90,7 +90,7 @@ The components are built upon familiar UIKit classes and can be added to a view 
 ~~~ swift
 import MaterialComponents.MaterialButtons
 
-class MDCBuildTestViewController: UIViewController {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
