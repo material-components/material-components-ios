@@ -60,8 +60,8 @@ be used in an animation.
 #### Swift
 
 ~~~ swift
-let materialCurve = MDCAnimationTimingFunction.EaseOut
-let timingFunction = CAAnimationTimingFunction.mdc_functionWithAnimationTiming(materialCurve)
+let materialCurve = MDCAnimationTimingFunction.easeOut
+let timingFunction = CAMediaTimingFunction.mdc_function(withType: materialCurve)
 
 let animation = CABasicAnimation(keyPath:"transform.translation.x")
 animation.timingFunction = timingFunction
@@ -71,10 +71,10 @@ animation.timingFunction = timingFunction
 
 ~~~ objc
 MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
-CAAnimationTimingFunction *timingFunction =
-    [CAAnimationTimingFunction mdc_functionWithAnimationTiming:materialCurve];
+CAMediaTimingFunction *timingFunction =
+[CAMediaTimingFunction mdc_functionWithType:materialCurve];
 
 CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
-animation.timingFunction = timingFunction
+animation.timingFunction = timingFunction;
 ~~~
 <!--</div>-->
