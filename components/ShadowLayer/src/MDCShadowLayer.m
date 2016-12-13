@@ -142,6 +142,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
   _bottomShadow.shadowRadius = shadowMetrics.bottomShadowRadius;
   _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
 
+  //TODO(#1021): We shouldn't be calling property accessors in an init method.
   if (_shadowMaskEnabled) {
     _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
     _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
