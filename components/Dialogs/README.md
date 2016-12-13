@@ -82,14 +82,14 @@ import MaterialComponents
 
 ~~~ swift
 // The following is called from the presenting view controller and has the
-// following variable defined to keep a reference to the presentation
+// following variable defined to keep a reference to the transition
 // controller.
 strong var dialogTransitionController: MDCDialogTransitionController
 
-// To present the dialog
+// To present the dialog myDialogViewController
 dialogTransitionController = MDCDialogTransitionController()
-modalDialogViewController.modalPresentationStyle = UIModalPresentationCustom
-modalDialogViewController.transitioningDelegate = dialogTransitionController
+myDialogViewController.modalPresentationStyle = UIModalPresentationCustom
+myDialogViewController.transitioningDelegate = dialogTransitionController
 presentViewController(myDialogViewController animated:YES ...)
 
 ~~~
@@ -101,10 +101,10 @@ presentViewController(myDialogViewController animated:YES ...)
 // defined to keep a reference to the transition controller.
 @property(nonatomic, strong) MDCDialogTransitionController *dialogTransitionController;
 
-// To present the dialog
+// To present the dialog myDialogViewController
 self.dialogTransitionController = [[MDCDialogTransitionController alloc] init];
-modalDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
-modalDialogViewController.transitioningDelegate = self.dialogTransitionController;
+myDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
+myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 [self presentViewController:myDialogViewController animated:YES completion:...];
 
 ~~~
