@@ -16,7 +16,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCRobotoFontLoader.h"
 #import "MaterialTypography.h"
 
 static const CGFloat kEpsilon = 0.001f;
@@ -38,40 +37,7 @@ static const CGFloat kOpacityMedium = 0.87f;
 @interface TypographyTests : XCTestCase
 @end
 
-@interface MDCTypography (Testing)
-+ (id<MDCTypographyFontLoading>)fontLoader;
-@end
-
 @implementation TypographyTests
-
-- (void)testFontLoaderIsRoboto {
-  // When
-  id<MDCTypographyFontLoading> fontLoader = [MDCTypography fontLoader];
-
-  // Then
-  XCTAssertTrue([fontLoader isKindOfClass:[MDCSystemFontLoader class]],
-                @"Default fontLoader must be the system font loader.");
-}
-@end
-
-@interface TypographyFontLoaderSetTest : XCTestCase
-@end
-
-@interface MDCRobotoFontLoader (Testing)
-- (instancetype)initInternal;
-@end
-
-@implementation TypographyFontLoaderSetTest
-
-- (void)setUp {
-  // Since we are using a singleton we need to restore the custom fontLoader back for other tests
-  [MDCTypography setFontLoader:[MDCRobotoFontLoader sharedInstance]];
-}
-
-- (void)tearDown {
-  // Since we are using a singleton we need to restore the custom fontLoader back for other tests
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-}
 
 #pragma mark - Font opacity
 
@@ -181,8 +147,6 @@ static const CGFloat kOpacityMedium = 0.87f;
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 112, kEpsilon,
                              @"The font size of display 4 must be 112.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Light",
-                        @"The font name of display 4 must be Roboto-Light.");
 }
 
 - (void)testDisplay3Font {
@@ -193,8 +157,6 @@ static const CGFloat kOpacityMedium = 0.87f;
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 56, kEpsilon,
                              @"The font size of display 3 must be 56.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of display 3 must be Roboto-Regular.");
 }
 
 - (void)testDisplay2Font {
@@ -205,8 +167,6 @@ static const CGFloat kOpacityMedium = 0.87f;
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 45, kEpsilon,
                              @"The font size of display 2 must be 45.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of display 2 must be Roboto-Regular.");
 }
 
 - (void)testDisplay1Font {
@@ -217,8 +177,6 @@ static const CGFloat kOpacityMedium = 0.87f;
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 34, kEpsilon,
                              @"The font size of display 1 must be 32.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of display 1 must be Roboto-Regular.");
 }
 
 - (void)testHeadlineFont {
@@ -229,8 +187,6 @@ static const CGFloat kOpacityMedium = 0.87f;
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 24, kEpsilon,
                              @"The font size of headline must be 24.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of headline must be Roboto-Regular.");
 }
 
 - (void)testTitleFont {
@@ -240,8 +196,6 @@ static const CGFloat kOpacityMedium = 0.87f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 20, kEpsilon, @"The font size of title must be 20.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Medium",
-                        @"The font name of title must be Roboto-Medium.");
 }
 
 - (void)testSubheadFont {
@@ -250,8 +204,6 @@ static const CGFloat kOpacityMedium = 0.87f;
   UIFont *font = [MDCTypography subheadFont];
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 16, kEpsilon, @"The font size of subhead must be 16.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of subhead must be Roboto-Regular.");
 }
 
 - (void)testBody2Font {
@@ -261,8 +213,6 @@ static const CGFloat kOpacityMedium = 0.87f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon, @"The font size of body 2 must be 14.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Medium",
-                        @"The font name of body 2 must be Roboto-Medium.");
 }
 
 - (void)testBody1Font {
@@ -272,8 +222,6 @@ static const CGFloat kOpacityMedium = 0.87f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon, @"The font size of body 1 must be 14.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of body 1 must be Roboto-Regular.");
 }
 
 - (void)testCaptionFont {
@@ -283,8 +231,6 @@ static const CGFloat kOpacityMedium = 0.87f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 12, kEpsilon, @"The font size of caption must be 12.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Regular",
-                        @"The font name of caption must be Roboto-Regular.");
 }
 
 - (void)testButtonFont {
@@ -294,150 +240,6 @@ static const CGFloat kOpacityMedium = 0.87f;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon, @"The font size of button must be 14.");
-  XCTAssertEqualObjects(font.fontName, @"Roboto-Medium",
-                        @"The font name of button must be Roboto-Medium.");
-}
-
-#pragma mark - Setting a custom font loader
-
-- (void)testSystemFontDisplay4Font {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography display4Font];
-  // Then
-  XCTAssertEqualObjects(font, [UIFont systemFontOfSize:112],
-                        @"When the display 4 font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontDisplay3Font {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography display3Font];
-  // Then
-  XCTAssertEqualObjects(font, [UIFont systemFontOfSize:56],
-                        @"When the display 3 font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontDisplay2Font {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography display2Font];
-
-  // Then
-  XCTAssertEqualObjects(font, [UIFont systemFontOfSize:45],
-                        @"When the display 2 font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontDisplay1Font {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography display1Font];
-
-  // Then
-  XCTAssertEqualObjects(font, [UIFont systemFontOfSize:34],
-                        @"When the display 1 font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontHeadlineFont {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography headlineFont];
-
-  // Then
-  XCTAssertEqualObjects(font, [UIFont systemFontOfSize:24],
-                        @"When the headline font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontTitleFont {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography titleFont];
-
-  // Then
-  XCTAssertEqualObjects(font, [UIFont boldSystemFontOfSize:20],
-                        @"When the title font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontSubheadFont {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography subheadFont];
-
-  // Then
-  XCTAssertEqualObjects(font, [UIFont systemFontOfSize:16],
-                        @"When the subhead font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontBody2Font {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography body2Font];
-
-  // Then
-  XCTAssertEqualObjects(font, [UIFont boldSystemFontOfSize:14],
-                        @"When the body 2 font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontBody1Font {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography body1Font];
-  // Then
-  XCTAssertEqualObjects(font, [UIFont systemFontOfSize:14],
-                        @"When the body 1 font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontCaptionFont {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography captionFont];
-
-  // Then
-  XCTAssertEqualObjects(font, [UIFont systemFontOfSize:12],
-                        @"When the caption font fails to load we must load a system font of the"
-                        @"correct size.");
-}
-
-- (void)testSystemFontButtonFont {
-  // Given
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-
-  // When
-  UIFont *font = [MDCTypography buttonFont];
-
-  // Then
-  XCTAssertEqualObjects(font, [UIFont boldSystemFontOfSize:14],
-                        @"When the button font fails to load we must load a system font of the"
-                        @"correct size.");
 }
 
 @end
