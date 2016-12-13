@@ -1,6 +1,6 @@
 # Material Components for iOS
 
-Material Components for iOS (MDC-iOS) help developers execute [Material Design](http://material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps.
+Material Components for iOS (MDC-iOS) help developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps.
 
 Material Components for iOS are available in Objective-C and Swift, and support Interface Builder.
 
@@ -10,9 +10,9 @@ Material Components for iOS are available in Objective-C and Swift, and support 
 - [All Components](components/)
 - [Demo Apps](demos/)
 - [Contributing](contributing/)
-- [MDC-iOS on Stack Overflow](http://stackoverflow.com/questions/tagged/material-components-ios)
-- [Material.io](http://material.io) (external site)
-- [Material Design Guidelines](http://material.google.com) (external site)
+- [MDC-iOS on Stack Overflow](https://stackoverflow.com/questions/tagged/mdc-ios)
+- [Material.io](https://www.material.io) (external site)
+- [Material Design Guidelines](https://material.google.com) (external site)
   
 ## Trying out Material Components
 
@@ -141,7 +141,7 @@ class MDCBuildTestViewController: UIViewController {
 Material Components for iOS uses
 [Material Design icons](https://github.com/google/material-design-icons),
 copyright Google Inc. and licensed under
-[CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 Several components use
 [MDFTextAccessibility](https://github.com/material-foundation/material-text-accessibility-ios),
