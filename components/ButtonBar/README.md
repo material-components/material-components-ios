@@ -160,15 +160,3 @@ buttonBar.items = nil;
 buttonBar.items = items;
 ~~~
 <!--</div>-->
-
-#### Unsupported
-
-TODO(featherless): File issues for each of these.
-
-- `style` is ignored.
-- instances initialized with `initWithBarButtonSystemItem:`. See
-  issue [#264](https://github.com/material-components/material-components-ios/issues/264) for more details.
-- `landscapeImagePhone`
-- `imageInsets`
-- `landscapeImagePhoneInsets`
-- `possibleTitles`
