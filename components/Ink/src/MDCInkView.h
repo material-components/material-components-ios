@@ -26,13 +26,13 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 };
 
 /**
- A UIView that draws and animates the material design ink effect for touch interactions.
+ A UIView that draws and animates the Material Design ink effect for touch interactions.
 
  There are two kinds of ink:
 
  Bounded ink: Ink that spreads from a point and is contained in the bounds of a UI element such as a
  button. The ink is visually clipped to the bounds of the UI element. Bounded ink is the most
- commonly-used ink in the system. Examples include basic material buttons, list menu items, and tile
+ commonly-used ink in the system. Examples include basic Material buttons, list menu items, and tile
  grids.
 
  Unbounded ink: Ink that spreads out from a point "on top" of other UI elements. It typically

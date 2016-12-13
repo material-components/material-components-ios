@@ -19,24 +19,28 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import <Foundation/Foundation.h>
+import Foundation
+import MaterialComponents
 
-#import "DialogsKeyboardViewControllerSupplemental.h"
+extension FlexibleHeaderTypicalUseViewControllerSwift {
 
-#pragma mark - DialogsKeyboardViewController
+  // (CatalogByConvention)
 
-@implementation DialogsKeyboardViewController (CatalogByConvention)
+  class func catalogBreadcrumbs() -> [String] {
+    return [ "Flexible Header", "Flexible Header (Swift)" ]
+  }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Dialogs", @"Dialog with an Input Field" ];
+  class func catalogDescription() -> String {
+    return "The Flexible Header is a container view whose height and vertical offset react to"
+           " UIScrollViewDelegate events."
+  }
+
+  class func catalogIsPrimaryDemo() -> Bool {
+    return false
+  }
+
+  func catalogShouldHideNavigation() -> Bool {
+    return true
+  }
+  
 }
-
-+ (NSString *)catalogDescription {
-  return @"Demonstrate Material dialog controller with an input field.";
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"DialogsKeyboardViewController";
-}
-
-@end

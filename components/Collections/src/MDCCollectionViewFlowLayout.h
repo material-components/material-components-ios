@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- The MDCCollectionViewFlowLayout class provides a Material design layout implementation of a
+ The MDCCollectionViewFlowLayout class provides a Material Design layout implementation of a
  UICollectionViewFlowLayout layout.
 
  Learn more at the

@@ -83,7 +83,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   MDCNavigationBarTitleAlignment alignment = navBar.titleAlignment;
 
   // Then
-  XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentLeading);
+  XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentCenter);
 }
 
 @end

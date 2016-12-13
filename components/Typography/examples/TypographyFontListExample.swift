@@ -151,7 +151,7 @@ extension TypographyFontListExampleViewController {
 
   class func catalogDescription() -> String {
     return "The Typography component provides methods for displaying text using the type sizes and"
-      + " opacities from the material design specifications."
+      + " opacities from the Material Design specifications."
   }
 
   class func catalogIsPrimaryDemo() -> Bool {
