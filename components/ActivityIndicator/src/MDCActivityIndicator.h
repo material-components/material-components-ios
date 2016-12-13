@@ -34,12 +34,12 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorMode) {
 };
 
 /**
- A material design activity indicator.
+ A Material Design activity indicator.
 
  The activity indicator is a circular spinner that shows progress of an operation. By default the
  activity indicator assumes indeterminate progress of an unspecified length of time. In contrast to
  a standard UIActivityIndicator, MDCActivityIndicator supports showing determinate progress and uses
- custom material design animation for indeterminate progress.
+ custom Material Design animation for indeterminate progress.
 
  See https://www.google.com/design/spec/components/progress-activity.html
  */

@@ -4,7 +4,7 @@
 [![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/buttons.mp4" autoplay loop></video></div>{% endif %}-->
 
-Buttons is a collection of material design buttons, including a flat button, a raised button and a
+Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
 <!--{: .intro }-->
 
@@ -102,7 +102,7 @@ For non-flat buttons, the background color is determined from the enabled, disab
 disabled-dark background color properties. Flat buttons have a transparent background.
 
 ### Disabled state
-When disabled, material buttons take on a specific semi-transparent appearance which depends on
+When disabled, Material buttons take on a specific semi-transparent appearance which depends on
 whether the button is on a light background or a dark background.
 
 ### Title and title color

@@ -30,7 +30,7 @@ extern const CGFloat MDCCellDefaultThreeLineHeight;
 
 /**
  The MDCCollectionViewTextCell class provides an implementation of UICollectionViewCell that
- supports Material design layout and styling. It provides two labels for text as well as an
+ supports Material Design layout and styling. It provides two labels for text as well as an
  image view. The default layout specifications can be found at the following link.
 
  @see http://www.google.com/design/spec/components/lists.html#lists-specs
