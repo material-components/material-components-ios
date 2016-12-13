@@ -10,9 +10,9 @@ Material Components for iOS are available in Objective-C and Swift, and support 
 - [All Components](components/)
 - [Demo Apps](demos/)
 - [Contributing](contributing/)
-- <a href="https://www.material.io" target="_blank">Material.io</a> (external site)
-- <a href="https://material.google.com" target="_blank">Material Design Guidelines</a> (external site)
-
+- [Material.io](http://material.io "External ") (external site)
+- [Material Design Guidelines](http://material.google.com) (external site)
+  
 ## Trying out Material Components
 
 Our [catalog](catalog/) showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
