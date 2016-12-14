@@ -36,9 +36,8 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
       blue: CGFloat(0xF4) / CGFloat(255),
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.white ]
+    let enforcer = MDCAppBarAccessibilityEnforcer()
+    enforcer.enforceFontColorAccessibility(appBar)
   }
 
   required init?(coder aDecoder: NSCoder) {
