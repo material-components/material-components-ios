@@ -59,10 +59,10 @@ view layout. Override the `-applyLayoutAttributes` method of any `UICollectionRe
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
-  super.applyLayoutAttributes(layoutAttributes)
+override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+  super.apply(layoutAttributes)
   if let attr = layoutAttributes as? MDCCollectionViewLayoutAttributes {
-    if (attr.representedElementCategory == .Cell) {
+    if (attr.representedElementCategory == .cell) {
 
       // Example to set a background image to the cell background view.
       self.backgroundView = UIImageView(image: attr.backgroundImage)

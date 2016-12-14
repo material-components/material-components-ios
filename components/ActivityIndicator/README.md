@@ -99,7 +99,7 @@ When indicators are indeterminate they request that the user wait while somethin
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
+let activityIndicator = MDCActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
 view.addSubview(activityIndicator)
 
 // Start animation
@@ -130,8 +130,8 @@ When indicators are determinate they indicate how long an operation will take wh
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-let activityIndicator = MDCActivityIndicator(frame: CGRectMake(0, 0, 32, 32))
-activityIndicator.indicatorMode = .ModeDeterminate
+let activityIndicator = MDCActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+activityIndicator.indicatorMode = .determinate
 activityIndicator.progress = 0.5
 view.addSubview(activityIndicator)
 

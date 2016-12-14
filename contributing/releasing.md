@@ -318,12 +318,6 @@ and delete the release branch:
 1. In the body of the release notes, paste the text from [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/master/CHANGELOG.md) for this release.
 1. Publish the release.
 
-### Regenerate the site
-
-You can preview your changes by serving a local version of the Material component document site. Please refer to [Site Content Update](./site_content_update.md#build-and-preview-locally).
-
-However, you need to be one of the Material component core members in order to deploy the site for the moment. If you are able to run deploy the site, please refer to [Site Content Update](./site_content_update.md#deploy-to-production). Don't worry, we will incorporate the changes to the site for every weekly cut release as well.
-
 ### Fix clients
 
 #### Reply to the original release email message

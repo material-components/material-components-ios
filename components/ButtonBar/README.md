@@ -85,7 +85,7 @@ let buttonBar = MDCButtonBar()
 
 let actionItem = UIBarButtonItem(
   title: "<# title #>",
-  style: .Done, // ignored
+  style: .done, // ignored
   target: self,
   action: "<# selector #>"
 )
@@ -102,7 +102,7 @@ self.view.addSubview(buttonBar)
 ~~~ objc
 MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
 
-UIBarButtonItem *item =
+UIBarButtonItem *actionItem =
     [[UIBarButtonItem alloc] initWithTitle:@"<# title #>"
                                      style:UIBarButtonItemStyleDone // ignored
                                     target:self
@@ -111,8 +111,10 @@ UIBarButtonItem *item =
 buttonBar.items = @[ actionItem ];
 
 CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
+CGPoint origin = CGPointZero;
 buttonBar.frame = CGRectMake(origin.x, origin.y, size.width, size.height);
 [self.view addSubview:buttonBar];
+
 ~~~
 <!--</div>-->
 
@@ -141,7 +143,7 @@ MDCButtonBar instance's `items` property and reset it, like so:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-item.target = <some other target>
+actionItem.target = <some other target>
 
 let items = buttonBar.items
 buttonBar.items = nil
@@ -151,22 +153,10 @@ buttonBar.items = items
 #### Objective-C
 
 ~~~ objc
-item.target = <some other target>;
+actionItem.target = <some other target>;
 
 NSArray *items = buttonBar.items;
 buttonBar.items = nil;
 buttonBar.items = items;
 ~~~
 <!--</div>-->
-
-#### Unsupported
-
-TODO(featherless): File issues for each of these.
-
-- `style` is ignored.
-- instances initialized with `initWithBarButtonSystemItem:`. See
-  issue [#264](https://github.com/material-components/material-components-ios/issues/264) for more details.
-- `landscapeImagePhone`
-- `imageInsets`
-- `landscapeImagePhoneInsets`
-- `possibleTitles`

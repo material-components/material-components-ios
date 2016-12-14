@@ -20,7 +20,7 @@ readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Private components do not require a README.md.
 if [[ $COMPONENT_DIR != *"/private/"* ]]; then
   readonly COMPONENT_NAME=$(basename $COMPONENT_DIR)
-  readonly VIDEO_STILL_NAME="docs/assets/$($SCRIPTS_DIR/../naming_convention -m underscore $COMPONENT_NAME).png"
+  readonly VIDEO_STILL_NAME="docs/assets/$($SCRIPTS_DIR/../convert_name -m underscore $COMPONENT_NAME).png"
   if [ ! -f "$COMPONENT_DIR/$VIDEO_STILL_NAME" ]; then
     echo "Error: '$COMPONENT_DIR' is missing '$VIDEO_STILL_NAME'."
     exit -1

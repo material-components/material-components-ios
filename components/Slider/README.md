@@ -57,7 +57,7 @@ Before using Slider, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialSlider
 ~~~
 
 #### Objective-C
@@ -76,22 +76,23 @@ MDCSlider can be be used like a standard `UIControl`.
 
 ~~~ swift
 override func viewDidLoad() {
-  let slider = MDCSlider(frame: CGRectMake(50, 50, 100, 27))
+  super.viewDidLoad()
+
+  let slider = MDCSlider(frame: CGRect(x: 50, y: 50, width: 100, height: 27))
   slider.addTarget(self,
-      action: Selector("didChangeSliderValue:"),
-      forControlEvents: .ValueChanged)
+                   action: #selector(didChangeSliderValue(senderSlider:)),
+                   for: .valueChanged)
   view.addSubview(slider)
 }
 
 func didChangeSliderValue(senderSlider:MDCSlider) {
-  NSLog("Did change slider value to: %@", senderSlider.value)
+  print("Did change slider value to: %@", senderSlider.value)
 }
 ~~~
 
 #### Objective C
 
 ~~~ objc
-
 - (void)viewDidLoad {
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(50, 50, 100, 27)];
   [slider addTarget:self
@@ -122,4 +123,4 @@ Same features:
 
 New features:
 
-- making the slider a snap to discrete values via property numberOfDiscreteValues.
+- making the slider a snap to discrete values via property numberOfDiscreteValues

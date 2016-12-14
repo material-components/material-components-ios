@@ -6,6 +6,8 @@
 
 The Navigation Bar component is a view composed of a left and right Button Bar and either a title
 label or a custom title view.
+
+Consistent with iOS design guidelines, the title in the navigation bar is centered by default. However, certain use cases may warrant use of a left aligned title such as: when there is a strong relationship between the title and additional content appearing in the navigation bar, or where centering the title causes ambiguity.
 <!--{: .intro }-->
 
 ### Material Design Specifications
@@ -80,7 +82,7 @@ Before using Navigation Bar, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialNavigationBar
 ~~~
 
 #### Objective-C
@@ -108,12 +110,12 @@ To begin observing a UINavigationItem instance you must call `observeNavigationI
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-navigationBar.observeNavigationItem(viewController.navigationItem)
+navigationBar.observe(navigationItem)
 ~~~
 
 #### Objective-C
 ~~~ objc
-[navigationBar observeNavigationItem:viewController.navigationItem];
+[navigationBar observeNavigationItem:self.navigationItem];
 ~~~
 <!--</div>-->
 
@@ -141,4 +143,3 @@ Navigation Bar as you'd expect, with the following exceptions:
   navigationItem properties.
 - `prompt` is not presently supported. https://github.com/material-components/material-components-ios/issues/230.
 
-TODO(featherless): Describe the most common integration steps.
