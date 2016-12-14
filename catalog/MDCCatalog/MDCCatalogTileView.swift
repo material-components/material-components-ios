@@ -112,8 +112,6 @@ class MDCCatalogTileView: UIView {
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSliderTile)
     case "Snackbar":
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSnackbarTile)
-    case "Sprited Animation View":
-      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSpritedAnimationViewTile)
     case "Switch":
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSwitchTile)
     case "Typography and Fonts":
