@@ -1,4 +1,181 @@
-# release-candidate TODO: Replace me with version number. 
+# 19.0.0
+
+## API diffs
+
+The following components have been refactored out of MDC into their own repos:
+
+* MDCFontDiskLoader is now [MDFFontDiskLoader](https://github.com/material-foundation/material-font-disk-loader-ios).
+* MDCSpritedAnimationView is now [MDFSpritedAnimationView](https://github.com/material-foundation/material-sprited-animation-view-ios).
+* MDCRobotoFontLoader is now [MDFRobotoFontLoader](https://github.com/material-foundation/material-roboto-font-loader-ios).
+
+> Please note that while [MDC's
+> repo](https://github.com/material-components/material-components-ios) is
+> private, there is no way for
+> [MDFRobotoFontLoader](https://github.com/material-foundation/material-roboto-font-loader-ios/blob/stable/src/MDFRobotoFontLoader.h#L22)
+> to formally depend on
+> [MDCTypographyFontLoading](https://github.com/material-components/material-components-ios/blob/develop/components/Typography/src/MDCTypography.h#L27),
+> even though it informally implements the protocol. This means that
+> MDFRobotoFontLoader can't be used out of the box to configure Typography with
+> Roboto. Once we go public, a pull request to MDFFontDiskLoader will be
+> created to add this convenience. Until that time, you can manually extend
+> your local copy of MDFRobotoFontLoader to declare that it implements
+> MDCTypographyFontLoading. 
+
+### ShadowLayer
+#### MDCShadowLayer
+
+*modified* property: `shadowMaskEnabled` in `MDCShadowLayer`
+
+| Type of change: | declaration |
+|---|---|
+| From: | `@property (assign, readwrite, nonatomic) BOOL shadowMaskEnabled;` |
+| To: | `@property (getter=isShadowMaskEnabled, assign, readwrite, nonatomic)     BOOL shadowMaskEnabled;` |
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### AnimationTiming
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### AppBar
+
+#### Changes
+
+* [- Re-adding NSCoding Support (#1008)](https://github.com/material-components/material-components-ios/commit/9cb3c3055204cb83891eb9c3e3af7d9ea33e36ea) (Justin Shephard)
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### ButtonBar
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Buttons
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Collections
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Dialogs
+
+#### Changes
+
+* [Update README.md (#1028)](https://github.com/material-components/material-components-ios/commit/e648cf361000579ba2bd862257a735d74a66a768) (ianegordon)
+* [[Catalog] Update dialog storyboard to rotate properly (#1031)](https://github.com/material-components/material-components-ios/commit/2cbfa20b1bafc8b4c37de9a43d8a9cea1aca63ae) (ianegordon)
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Ink
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [Adding guidance to NavigationBar's docs about not using center-aligned titles (#1030)](https://github.com/material-components/material-components-ios/commit/9c9d6cee11d1916bb6eb6b2ea895fc8fff5fa758) (Junius Gunaratne)
+* [[AppBar] - Re-adding NSCoding Support (#1008)](https://github.com/material-components/material-components-ios/commit/9cb3c3055204cb83891eb9c3e3af7d9ea33e36ea) (Justin Shephard)
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### OverlayWindow
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### PageControl
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Palettes
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### ProgressView
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### ShadowElevations
+
+#### Changes
+
+* [Update ShadowElevation and ShadowLayer examples in README.md to Swift 3 (#1041)](https://github.com/material-components/material-components-ios/commit/1696df81a3b272c353caf6d9b242983bc143891e) (Junius Gunaratne)
+
+### ShadowLayer
+
+#### Changes
+
+* [Add NSCoder support.  (Mark 2) (#1045)](https://github.com/material-components/material-components-ios/commit/2c353f82c2eba4261fe5e1403cb6b974501d9a55) (ianegordon)
+* [Initial NSCoding support (#987)](https://github.com/material-components/material-components-ios/commit/4af729a8f3249f6d0511d97cce67a0edd7737747) (ianegordon)
+* [Revert "Initial NSCoding support (#987)"](https://github.com/material-components/material-components-ios/commit/e1f886db71be7b70ff07bf7681526334c766a06b) (Ian Gordon)
+* [Update ShadowElevation and ShadowLayer examples in README.md to Swift 3 (#1041)](https://github.com/material-components/material-components-ios/commit/1696df81a3b272c353caf6d9b242983bc143891e) (Junius Gunaratne)
+* [[Typography] Remove Font Loaders (#1035)](https://github.com/material-components/material-components-ios/commit/0f422df49a48fff7487a71ec2c11297f043f9835) (ianegordon)
+
+### Slider
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1050)](https://github.com/material-components/material-components-ios/commit/ae163f527c87869f8326bd159e74378d34a9bcb6) (Will Larche)
+
+### Snackbar
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1050)](https://github.com/material-components/material-components-ios/commit/ae163f527c87869f8326bd159e74378d34a9bcb6) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Remove Font Loaders (#1035)](https://github.com/material-components/material-components-ios/commit/0f422df49a48fff7487a71ec2c11297f043f9835) (ianegordon)
+* [Removed runtime check for MDCRoboto within typography. (#1055)](https://github.com/material-components/material-components-ios/commit/e02c9831365018772d9da1650d8e57e061a55bb9) (Randall Li)
+* [[Readmes] Snippets in Swift 3 (#1050)](https://github.com/material-components/material-components-ios/commit/ae163f527c87869f8326bd159e74378d34a9bcb6) (Will Larche)
+* [updated bare measurements. (#1063)](https://github.com/material-components/material-components-ios/commit/ab0f705a37d28a55a815106e8cbff3d2c49b9896) (Randall Li)
 
 # 18.0.0
 
