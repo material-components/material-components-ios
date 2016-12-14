@@ -19,6 +19,7 @@
 #import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
 #import "MaterialInk.h"
+#import "MaterialRTL.h"
 #import "UIColor+MDC.h"
 
 static const CGFloat kAnimationDuration = 0.25f;
@@ -864,6 +865,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (CGFloat)valueForThumbPosition:(CGPoint)position {
   CGFloat relValue = (position.x - _thumbRadius) / self.thumbPanRange;
   relValue = MAX(0, MIN(relValue, 1));
+  // For RTL we invert the value
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    relValue = 1 - relValue;
+  }
   return (1 - relValue) * _minimumValue + relValue * _maximumValue;
 }
 
@@ -903,7 +908,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (CGFloatEqual(_minimumValue, _maximumValue)) {
     return _minimumValue;
   }
-  return (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
+  CGFloat relValue = (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
+  // For RTL we invert the value
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    relValue = 1 - relValue;
+  }
+  return relValue;
 }
 
 - (CGFloat)closestValueToTargetValue:(CGFloat)targetValue {
