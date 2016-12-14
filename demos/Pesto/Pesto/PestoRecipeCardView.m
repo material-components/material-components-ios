@@ -25,7 +25,6 @@
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
-#import "MaterialSpritedAnimationView.h"
 #import "MaterialTypography.h"
 
 static CGFloat kPestoDetailDescTextHeight = 140;

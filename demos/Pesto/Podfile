@@ -4,7 +4,6 @@ target 'Pesto' do
   pod 'MaterialComponents/Collections', :path => '../../'
   pod 'MaterialComponents/FlexibleHeader', :path => '../../'
   pod 'MaterialComponents/Ink', :path => '../../'
-  pod 'MaterialComponents/RobotoFontLoader', :path => '../../'
   pod 'MaterialComponents/ShadowElevations', :path => '../../'
   pod 'MaterialComponents/ShadowLayer', :path => '../../'
   pod 'MaterialComponents/SpritedAnimationView', :path => '../../'
