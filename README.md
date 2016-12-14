@@ -149,7 +149,7 @@ copyright Google Inc. and licensed under
 [Apache 2.0](https://github.com/material-foundation/material-text-accessibility-ios/blob/master/LICENSE)
 without a NOTICE file.
 
-Roboto Font Loader uses the
+MDCCatalog uses the
 [Roboto font](https://github.com/google/fonts/tree/master/apache/roboto),
 copyright 2011 Google Inc. and licensed under
 [Apache 2.0](https://github.com/google/fonts/blob/master/apache/roboto/LICENSE.txt)
