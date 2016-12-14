@@ -2,14 +2,11 @@ For the coming months, the Material Components for iOS team is focused on develo
 components:
 
 High priority:
-- Snackbar
+- Tabs
 - Text fields
 - Progress and Activity Indicator
-- Animation Curves
 
 Next priority:
-- Tabs
-- Bottom Navigation
 - Bottom Sheets
 - Chips
 - Date and Time Pickers
