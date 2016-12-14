@@ -11,7 +11,6 @@ PODS:
     - MaterialComponents/Dialogs (= 19.0.0)
     - MaterialComponents/FeatureHighlight (= 19.0.0)
     - MaterialComponents/FlexibleHeader (= 19.0.0)
-    - MaterialComponents/FontDiskLoader (= 19.0.0)
     - MaterialComponents/HeaderStackView (= 19.0.0)
     - MaterialComponents/Ink (= 19.0.0)
     - MaterialComponents/NavigationBar (= 19.0.0)
@@ -20,12 +19,10 @@ PODS:
     - MaterialComponents/Palettes (= 19.0.0)
     - MaterialComponents/private (= 19.0.0)
     - MaterialComponents/ProgressView (= 19.0.0)
-    - MaterialComponents/RobotoFontLoader (= 19.0.0)
     - MaterialComponents/ShadowElevations (= 19.0.0)
     - MaterialComponents/ShadowLayer (= 19.0.0)
     - MaterialComponents/Slider (= 19.0.0)
     - MaterialComponents/Snackbar (= 19.0.0)
-    - MaterialComponents/SpritedAnimationView (= 19.0.0)
     - MaterialComponents/Typography (= 19.0.0)
   - MaterialComponents/ActivityIndicator (19.0.0):
     - MaterialComponents/private/Application
@@ -80,7 +77,6 @@ PODS:
   - MaterialComponents/FlexibleHeader (19.0.0):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/FontDiskLoader (19.0.0)
   - MaterialComponents/HeaderStackView (19.0.0)
   - MaterialComponents/Ink (19.0.0)
   - MaterialComponents/NavigationBar (19.0.0):
@@ -137,9 +133,6 @@ PODS:
     - MaterialComponents/Typography
   - MaterialComponents/ProgressView (19.0.0):
     - MaterialComponents/private/RTL
-  - MaterialComponents/RobotoFontLoader (19.0.0):
-    - MaterialComponents/FontDiskLoader
-    - MaterialComponents/Typography
   - MaterialComponents/ShadowElevations (19.0.0)
   - MaterialComponents/ShadowLayer (19.0.0)
   - MaterialComponents/Slider (19.0.0):
@@ -152,7 +145,6 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Overlay
     - MaterialComponents/Typography
-  - MaterialComponents/SpritedAnimationView (19.0.0)
   - MaterialComponents/Typography (19.0.0)
   - MDFTextAccessibility (1.1.3)
 
@@ -164,7 +156,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 529324e91a295147e2c6b70bf50a347b7d7be41c
+  MaterialComponents: 1f2ab60b91cbdc78d1ec967b177a0d68297fc1f3
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
 PODFILE CHECKSUM: 44e7c616a05bb4ce24db557c3de4bfbe915c2f56
