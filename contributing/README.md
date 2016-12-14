@@ -5,7 +5,7 @@ The Material Components contributing policies and procedures can be found in the
 
 ## iOS-specific Additions
 
-The iOS also abides by the following policy items. 
+The iOS team also abides by the following policy items. 
 
 
 ### Code Conventions
