@@ -2,15 +2,6 @@
 # Component Documentation
 
 Material Components is a collection of standalone, production-quality user interface components for iOS. These components implement Google's [Material Design](https://www.material.io) specification and are developed by a team of engineers and UX designers at Google.
-
-## Useful Links
-
-- [How To Use MDC-iOS](../howto/)
-- [Demo Apps](../demos/)
-- [Contributing](../contributing/)
-- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
-- [Material.io](https://www.material.io) (external site)
-- [Material Design Guidelines](https://material.google.com) (external site)
   
 - - -
 
@@ -138,3 +129,14 @@ Material Components is a collection of standalone, production-quality user inter
   ](Typography/)
   <!--{: .icon-typography }-->
 <!--{: .icon-list .large-format }-->
+
+- - -
+
+## Useful Links
+
+- [How To Use MDC-iOS](../howto/)
+- [Demo Apps](../demos/)
+- [Contributing](../contributing/)
+- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
+- [Material.io](https://www.material.io) (external site)
+- [Material Design Guidelines](https://material.google.com) (external site)
