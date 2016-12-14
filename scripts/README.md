@@ -16,9 +16,11 @@ Material Components follows Google's language standards for scripting. The follo
 be used for scripts:
 
 * [Bash](https://google.github.io/styleguide/shell.xml)
-* [Python](https://google.github.io/styleguide/pyguide.html)
+* [Python 2.7](https://google.github.io/styleguide/pyguide.html)
 
 Either language can be used for a particular purpose, but larger or more complex scripts should be
 written in (or converted to) Python. Bash scripts get unwieldy quickly and advanced Bash scripting
 knowledge is currently less common than advanced Python scripting knowledge.
+
+The intent is that the scripts will run on relatively current OS X machines with (only) Xcode installed.
 
