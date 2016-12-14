@@ -18,7 +18,6 @@ from the Material Design specifications.
 
 <ul class="icon-list">
 <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
-<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FontDiskLoader/apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
 <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Protocols/MDCTypographyFontLoading.html">MDCTypographyFontLoading</a></li>
 </ul>
 
@@ -210,15 +209,15 @@ If you want to use the system font use `MDCSystemFontLoader` which already confo
 ~~~ swift
 class CustomFontLoader: NSObject, MDCTypographyFontLoading {
   func regularFont(ofSize fontSize: CGFloat) -> UIFont {
-    // Consider using MDCFontDiskLoader to register your font.
+    // Consider using MDFFontDiskLoader to register your font.
     return UIFont.init(name: "yourCustomRegularFont", size: fontSize)!
   }
   func mediumFont(ofSize fontSize: CGFloat) -> UIFont {
-    // Consider using MDCFontDiskLoader to register your font.
+    // Consider using MDFFontDiskLoader to register your font.
     return UIFont.init(name: "yourCustomMediumFont", size: fontSize)!
   }
   func lightFont(ofSize fontSize: CGFloat) -> UIFont {
-    // Consider using MDCFontDiskLoader to register your font.
+    // Consider using MDFFontDiskLoader to register your font.
     return UIFont.init(name: "yourCustomLightFont", size: fontSize)!
   }
 }
@@ -242,17 +241,17 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 @implementation CustomFontLoader
 
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
-  // Consider using MDCFontDiskLoader to register your font.
+  // Consider using MDFFontDiskLoader to register your font.
   return [UIFont fontWithName:@"yourCustomRegularFont" size:fontSize];
 }
 
 - (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
-  // Consider using MDCFontDiskLoader to register your font.
+  // Consider using MDFFontDiskLoader to register your font.
   return [UIFont fontWithName:@"yourCustomMediumFont" size:fontSize];
 }
 
 - (UIFont *)lightFontOfSize:(CGFloat)fontSize {
-  // Consider using MDCFontDiskLoader to register your font.
+  // Consider using MDFFontDiskLoader to register your font.
   return [UIFont fontWithName:@"yourCustomLightFont" size:fontSize];
 }
 

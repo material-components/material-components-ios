@@ -77,7 +77,6 @@ DEPENDENCIES:
   - MaterialComponents/Ink (from `../../`)
   - MaterialComponents/ShadowElevations (from `../../`)
   - MaterialComponents/ShadowLayer (from `../../`)
-  - MaterialComponents/SpritedAnimationView (from `../../`)
   - MaterialComponents/Typography (from `../../`)
 
 EXTERNAL SOURCES:
@@ -88,6 +87,6 @@ SPEC CHECKSUMS:
   MaterialComponents: 529324e91a295147e2c6b70bf50a347b7d7be41c
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
-PODFILE CHECKSUM: 1f031b77ce0946953eab86a5dfc39b026806aa11
+PODFILE CHECKSUM: e404e8e0ceaadf0f71e379bb95f9a46dc9180b87
 
 COCOAPODS: 1.1.1
