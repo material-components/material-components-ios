@@ -44,6 +44,5 @@ void MDCCatalogDrawProgressViewTile(CGRect frame);
 void MDCCatalogDrawShadowLayerTile(CGRect frame);
 void MDCCatalogDrawSliderTile(CGRect frame);
 void MDCCatalogDrawSnackbarTile(CGRect frame);
-void MDCCatalogDrawSpritedAnimationViewTile(CGRect frame);
 void MDCCatalogDrawSwitchTile(CGRect frame);
 void MDCCatalogDrawTypographyTile(CGRect frame);
