@@ -42,4 +42,4 @@ If you import all the components, the size of your app will increase by about 5.
 
 ### Can we use Material Components for iOS with storyboards?
 
-Yes! Storyboards and nibs/xibs are great places to use Material Components for iOS. Almost every component has great support for Interface Builder development including IBDesignable support. **Note:** IBInspectable support is not supported as it conflicts with UIAppearance support.
+Yes! Storyboards and nibs/xibs are great places to use Material Components for iOS. Almost every component has support for Interface Builder development that includes IBDesignable. **Note:** IBInspectable support is not supported as it conflicts with UIAppearance support.
