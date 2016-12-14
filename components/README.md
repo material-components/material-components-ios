@@ -1,7 +1,9 @@
 
 # Component Documentation
 
-Material Components is a collection of standalone, production-quality user interface components for iOS. These components implement Google's [Material Design](https://www.material.io) specification and are developed by a team of engineers and UX designers at Google.
+Material Components for iOS (MDC-iOS) help developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps.
+
+Material Components for iOS are available in Objective-C and Swift, and support Interface Builder.
 
 ## Useful Links
 
