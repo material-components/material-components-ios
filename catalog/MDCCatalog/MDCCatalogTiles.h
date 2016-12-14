@@ -37,6 +37,7 @@ void MDCCatalogDrawHeaderStackViewTile(CGRect frame);
 void MDCCatalogDrawInkTile(CGRect frame);
 void MDCCatalogDrawMiscTile(CGRect frame);
 void MDCCatalogDrawNavigationBarTile(CGRect frame);
+void MDCCatalogDrawOverlayWindow(CGRect frame);
 void MDCCatalogDrawPageControlTile(CGRect frame);
 void MDCCatalogDrawPalettesTile(CGRect frame);
 void MDCCatalogDrawProgressViewTile(CGRect frame);

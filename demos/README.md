@@ -26,5 +26,5 @@ pod install --project-directory=catalog/
 - [How To Use MDC-iOS](../howto/)
 - [All Components](../components/) 
 - [Contributing](../contributing/)
-- [Material.io](http://material.io) (external site)
-- [Material Design Guidelines](http://material.google.com) (external site)
+- [Material.io](https://www.material.io) (external site)
+- [Material Design Guidelines](https://material.google.com) (external site)

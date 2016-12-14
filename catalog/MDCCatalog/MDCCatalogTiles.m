@@ -2785,6 +2785,123 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame) {
   CGColorSpaceRelease(colorSpace);
 }
 
+void MDCCatalogDrawOverlayWindow(CGRect frame) {
+  UIColor* fillColor = [UIColor colorWithRed:0.649 green:0.873 blue:0.984 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithRed:0.076 green:0.59 blue:0.945 alpha:1];
+  UIColor* fillColor3 = [UIColor colorWithRed:0.261 green:0.712 blue:0.959 alpha:1];
+
+  CGRect overlayWindowGroup = CGRectMake(CGRectGetMinX(frame) + 54, CGRectGetMinY(frame) + 38,
+                                         floor((CGRectGetWidth(frame) - 54) * 0.59701 + 0.5),
+                                         floor((CGRectGetHeight(frame) - 38) * 0.68376 + 0.5));
+
+  UIBezierPath* rightCornerPath = [UIBezierPath bezierPath];
+  [rightCornerPath moveToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                               1.00000 * CGRectGetWidth(overlayWindowGroup),
+                                           CGRectGetMinY(overlayWindowGroup) +
+                                               0.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.12500 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  0.87500 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.12500 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  0.87500 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  1.00000 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  1.00000 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath closePath];
+  rightCornerPath.miterLimit = 4;
+
+  [fillColor setFill];
+  [rightCornerPath fill];
+
+  UIBezierPath* leftCornerPath = [UIBezierPath bezierPath];
+  [leftCornerPath moveToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                              0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                          CGRectGetMinY(overlayWindowGroup) +
+                                              0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.15150 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.14588 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.00000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.00000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.27088 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.00000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.27650 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.00000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 1.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.65000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 1.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 1.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.77500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath closePath];
+  leftCornerPath.miterLimit = 4;
+
+  [fillColor2 setFill];
+  [leftCornerPath fill];
+
+  UIBezierPath* overlapRectanglePath = [UIBezierPath
+      bezierPathWithRect:CGRectMake(
+                             CGRectGetMinX(overlayWindowGroup) +
+                                 floor(CGRectGetWidth(overlayWindowGroup) * 0.12500 + 0.5),
+                             CGRectGetMinY(overlayWindowGroup) +
+                                 floor(CGRectGetHeight(overlayWindowGroup) * 0.12500 + 0.5),
+                             floor(CGRectGetWidth(overlayWindowGroup) * 0.87500 + 0.5) -
+                                 floor(CGRectGetWidth(overlayWindowGroup) * 0.12500 + 0.5),
+                             floor(CGRectGetHeight(overlayWindowGroup) * 0.87500 + 0.5) -
+                                 floor(CGRectGetHeight(overlayWindowGroup) * 0.12500 + 0.5))];
+  [fillColor3 setFill];
+  [overlapRectanglePath fill];
+}
+
 void MDCCatalogDrawPageControlTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
@@ -2921,7 +3038,7 @@ void MDCCatalogDrawPageControlTile(CGRect frame) {
   CGColorSpaceRelease(colorSpace);
 }
 
-static NSString *const PalettesFontName = @"RobotoMono-Regular";
+static NSString* const PalettesFontName = @"RobotoMono-Regular";
 
 void MDCCatalogDrawPalettesTile(CGRect frame) {
   CGFloat PalettesFontPointSize = [UIScreen mainScreen].bounds.size.width / 320 * 7;

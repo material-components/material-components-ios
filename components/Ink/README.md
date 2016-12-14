@@ -85,18 +85,17 @@ The simplest method of using ink in your views is to use a
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-myButton = UIButton(type: .System)
-myButton.setTitle("Tap Me", forState: .Normal)
-inkTouchController = MDCInkTouchController(view: myButton)
+let myButton = UIButton(type: .system)
+myButton.setTitle("Tap Me", for: .normal)
+let inkTouchController = MDCInkTouchController(view: myButton)
 inkTouchController?.addInkView()
 ~~~
 
 #### Objective-C
 ~~~ objc
-self.myButton = [UIButton buttonWithType:UIButtonTypeSystem];
+UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [myButton setTitle:@"Tap me" forState:UIControlStateNormal];
-self.inkTouchController =
-    [[MDCInkTouchController alloc] initWithView:myButton];
+MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:myButton];
 [inkTouchController addInkView];
 ~~~
 <!--</div>-->
@@ -115,8 +114,7 @@ touches, the following code uses the delegate's
 ~~~ swift
 class MyDelegate: NSObject, MDCInkTouchControllerDelegate {
 
-  func inkTouchController(inkTouchController: MDCInkTouchController,
-      shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
+  func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
     // Determine if we want to display the ink
     return true
   }
@@ -125,9 +123,12 @@ class MyDelegate: NSObject, MDCInkTouchControllerDelegate {
 
 ...
 
-myButton = UIButton(type: .System)
+let myButton = UIButton(type: .system)
+myButton.setTitle("Tap Me", for: .normal)
+
 let myDelegate = MyDelegate()
-inkTouchController = MDCInkTouchController(view: myButton)
+
+let inkTouchController = MDCInkTouchController(view: myButton)
 inkTouchController?.delegate = myDelegate
 inkTouchController?.addInkView()
 
@@ -135,27 +136,26 @@ inkTouchController?.addInkView()
 
 #### Objective-C
 ~~~ objc
-@interface MyDelegate <MDCInkTouchControllerDelegate>
+@interface MyDelegate: NSObject <MDCInkTouchControllerDelegate>
 @end
 
 @implementation MyDelegate
 
 - (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
     shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
-  return [self checkIfWeShouldDisplayInk];
+  return YES;
 }
 
 @end
 
 ...
 
-self.myButton = [UIButton buttonWithType:UIButtonTypeSystem];
-MyDelegate *myDelegate = [[MyDelegate] alloc] init];
-self.inkTouchController =
-    [[MDCInkTouchController alloc] initWithView:myButton];
-self.inkTouchController.delegate = myDelegate;
-[self.inkTouchController addInkView];
-
+UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
+[myButton setTitle:@"Tap me" forState:UIControlStateNormal];
+MyDelegate *myDelegate = [[MyDelegate alloc] init];
+MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:myButton];
+inkTouchController.delegate = myDelegate;
+[inkTouchController addInkView];
 ~~~
 <!--</div>-->
 
@@ -170,21 +170,29 @@ own touch processing:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-let myCustomView = MyCustomView(frame: CGRectZero)
+let myCustomView = MyCustomView(frame: CGRect.zero)
 let inkView = MDCInkView()
-inkView.inkColor = UIColor.redColor()
+inkView.inkColor = UIColor.red
 myCustomView.addSubview(inkView)
 ...
-myCustomView.spreadInk(CGPoint(), completion:nil)
+// When the touches begin, there is one animation
+inkView.startTouchBeganAnimation(at: touchPoint, completion: nil)
+...
+// When the touches end, there is another animation
+inkView.startTouchEndedAnimation(at: touchPoint, completion: nil)
 ~~~
 
 #### Objective-C
 ~~~ objc
 MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
-MDCInkView *inkView = [[MDCInkView alloc] init];
+MDCInkView *inkView = [MDCInkView new];
 inkView.inkColor = [UIColor redColor];
 [myCustomView addSubview:inkView];
 ...
-[inkView spreadInkFromPoint:CGPointMake(100, 100) completion:NULL];
+// When the touches begin, there is one animation
+[inkView startTouchBeganAnimationAtPoint:touchPoint completion:nil];
+...
+// When the touches end, there is another animation
+[inkView startTouchEndedAnimationAtPoint:touchPoint completion:nil];
 ~~~
 <!--</div>-->
