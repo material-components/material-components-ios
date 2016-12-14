@@ -49,7 +49,7 @@
 
 #pragma mark - Font loader access
 
-/** Set the font loader in order to use a non-Roboto or non-system font. */
+/** Set the font loader in order to use a non-system font. */
 + (void)setFontLoader:(nonnull id<MDCTypographyFontLoading>)fontLoader;
 
 /** Get the current font loader. */
