@@ -1,3 +1,19 @@
+# 19.0.1
+
+This point release fixes stale references to MDFFontDiskLoader, MDFSpritedAnimationView, and MDFRobotoFontLoader in our CocoaPods podspec.
+
+## API diffs
+
+None.
+
+## Component changes
+
+### Typography
+
+#### Changes
+
+* [Remove all references to removed components (#1067)](https://github.com/material-components/material-components-ios/commit/3405a9495b57b6f45180847e89f7e3f3d34b7fe1) (Adrian Secord)
+
 # 19.0.0
 
 ## API diffs
