@@ -24,7 +24,7 @@
 @implementation SliderCollectionViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @".Slider", @"Slider" ];
+  return @[ @"Slider", @"Slider" ];
 }
 
 + (NSString *)catalogDescription {
