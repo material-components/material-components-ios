@@ -187,7 +187,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     }
 
     if ([aDecoder containsValueForKey:MDCNavigationBarTitleAlignmentKey]) {
-      self.titleAlignment = [aDecoder decodeBoolForKey:MDCNavigationBarTitleAlignmentKey];
+      self.titleAlignment = [aDecoder decodeIntegerForKey:MDCNavigationBarTitleAlignmentKey];
     }
   }
   return self;
