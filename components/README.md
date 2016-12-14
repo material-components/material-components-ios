@@ -12,7 +12,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
 - [Tutorial](https://github.com/material-components/material-components-ios/tree/master/howto/tutorial)
   <!--{: .icon-sample }-->
 
-- [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
+- [Stack Overflow "material-components, ios"](http://stackoverflow.com/questions/tagged/material-components+ios)
   <!--{: .icon-stackoverflow }-->
 
 <!--{: .icon-list }-->
