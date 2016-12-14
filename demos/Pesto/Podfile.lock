@@ -40,7 +40,6 @@ PODS:
   - MaterialComponents/FlexibleHeader (18.0.0):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/FontDiskLoader (18.0.0)
   - MaterialComponents/HeaderStackView (18.0.0)
   - MaterialComponents/Ink (18.0.0)
   - MaterialComponents/NavigationBar (18.0.0):
@@ -64,9 +63,6 @@ PODS:
   - MaterialComponents/private/Icons/ic_reorder (18.0.0):
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/RTL (18.0.0)
-  - MaterialComponents/RobotoFontLoader (18.0.0):
-    - MaterialComponents/FontDiskLoader
-    - MaterialComponents/Typography
   - MaterialComponents/ShadowElevations (18.0.0)
   - MaterialComponents/ShadowLayer (18.0.0)
   - MaterialComponents/SpritedAnimationView (18.0.0)
@@ -79,7 +75,6 @@ DEPENDENCIES:
   - MaterialComponents/Collections (from `../../`)
   - MaterialComponents/FlexibleHeader (from `../../`)
   - MaterialComponents/Ink (from `../../`)
-  - MaterialComponents/RobotoFontLoader (from `../../`)
   - MaterialComponents/ShadowElevations (from `../../`)
   - MaterialComponents/ShadowLayer (from `../../`)
   - MaterialComponents/SpritedAnimationView (from `../../`)
@@ -93,6 +88,6 @@ SPEC CHECKSUMS:
   MaterialComponents: 7481e8d79607c47ff576e98cebe9abd81ddd8450
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
-PODFILE CHECKSUM: 5fb11f20fd57ca970cc72aa501b3ee3e360a9f23
+PODFILE CHECKSUM: 1f031b77ce0946953eab86a5dfc39b026806aa11
 
 COCOAPODS: 1.1.1
