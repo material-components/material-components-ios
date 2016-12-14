@@ -45,12 +45,13 @@ Occasionally it is necessary to hotfix the framework. See [hotfixing.md](hotfixi
 
 Contributions made by corporations are covered by a different agreement than the one above, the [Software Grant and Corporate Contributor License Agreement](https://cla.developers.google.com/about/google-corporate).
 
+- - -
 
 ## Useful Links
-- [Contributing](CONTRIBUTING.md)
-- [Filing an Issue](ISSUE_TEMPLATE.md)
-- [Components Request Policy](COMPONENTS_REQUEST_POLICY.md)
-- [Code of Conduct](CONDUCT.md)
-- [Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components) (external site)
+
+- [How To Use MDC-iOS](../howto/)
+- [All Components](../components/)
+- [Demo Apps](../demos/)
+- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.google.com) (external site)
