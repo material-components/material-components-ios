@@ -299,6 +299,7 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/ShadowLayer"
       ss.dependency "MaterialComponents/Typography"
       ss.dependency "MaterialComponents/private/Color"
+      ss.dependency "MaterialComponents/private/RTL"
     end
 
   end
