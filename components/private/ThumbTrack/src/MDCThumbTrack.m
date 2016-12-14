@@ -865,6 +865,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (CGFloat)valueForThumbPosition:(CGPoint)position {
   CGFloat relValue = (position.x - _thumbRadius) / self.thumbPanRange;
   relValue = MAX(0, MIN(relValue, 1));
+  // For RTL we invert the value
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     relValue = 1 - relValue;
   }
@@ -908,6 +909,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     return _minimumValue;
   }
   CGFloat relValue = (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
+  // For RTL we invert the value
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     relValue = 1 - relValue;
   }
