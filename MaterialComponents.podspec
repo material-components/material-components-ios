@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "19.0.0"
+  s.version      = "19.0.1"
   s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -159,14 +159,6 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Application"
   end
 
-  s.subspec "FontDiskLoader" do |ss|
-    ss.ios.deployment_target = '7.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    ss.framework = "CoreText"
-  end
-
   s.subspec "HeaderStackView" do |ss|
     ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
@@ -218,18 +210,6 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/RTL"
   end
 
-  s.subspec "RobotoFontLoader" do |ss|
-    ss.ios.deployment_target = '7.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    # Only if you have a resource bundle
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
-
-    ss.dependency "MaterialComponents/FontDiskLoader"
-    ss.dependency "MaterialComponents/Typography"
-  end
-
   s.subspec "ShadowElevations" do |ss|
     ss.ios.deployment_target = '7.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
@@ -262,12 +242,6 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Application"
     ss.dependency "MaterialComponents/private/KeyboardWatcher"
     ss.dependency "MaterialComponents/private/Overlay"
-  end
-
-  s.subspec "SpritedAnimationView" do |ss|
-    ss.ios.deployment_target = '7.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
   end
 
   s.subspec "Typography" do |ss|
