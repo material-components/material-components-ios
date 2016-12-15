@@ -48,7 +48,7 @@ You will now have a local `release-candidate` branch and a new section in CHANGE
 The `scripts/release/cut` script will output the body of an email you should now send so clients can
 test the release.
 
-### Test the release
+### Test the release branch
 
     scripts/release/manage_pods.py install
     scripts/build_all
