@@ -4,6 +4,7 @@ sudo: false
 # Only fire off builds for specific branches.
 branches:
   only:
+    - develop
     - stable
 env:
   global:
