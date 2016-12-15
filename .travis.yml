@@ -1,0 +1,25 @@
+language: objective-c
+osx_image: xcode8.1
+sudo: false
+# Only fire off builds for specific branches.
+branches:
+  only:
+    - stable
+env:
+  global:
+  - LC_CTYPE=en_US.UTF-8
+  - LANG=en_US.UTF-8
+  matrix:
+    - DESTINATION="OS=9.3,name=iPhone 6s" SDK=iphonesimulator9.3
+    - DESTINATION="OS=8.1,name=iPhone 4S" SDK=iphonesimulator9.3
+before_install:
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+script:
+  - set -o pipefail
+  - xcodebuild -version
+  - xcodebuild -showsdks
+  - scripts/release/manage_pods.py install
+  - scripts/build_all
+  - scripts/test_all
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
