@@ -1,5 +1,9 @@
 # 19.0.2
 
+## API changes
+
+* No API changes in this release.
+
 ## Component changes
 
 ### ActivityIndicator
