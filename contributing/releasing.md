@@ -1,7 +1,6 @@
 # Releasing
 
-These instructions describe how to cut a new release of the material-components-ios (MDC)
-repository.
+These instructions describe how to cut a new release.
 
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of
 development, where the default branch is called `develop`. `stable` (instead of the traditional
@@ -10,20 +9,22 @@ tested, and then merged into `stable`, which serves as the stable "vetted" branc
 
 ## Before you start
 
-### Issues affecting the release process
+### Check for issues that might affect the release process
 
-Occasionally there are temporary issues with the release process, check the
-["release" tag](https://github.com/material-components/material-components-ios/labels/where%3ARelease)
-for anything that might be affecting the release.
+Occasionally there are temporary issues with the release process, check the [`release`
+tag](https://github.com/material-components/material-components-ios/labels/where%3ARelease) for
+anything that might be affecting the release.
 
 ### Check the release milestone
 
 We use weekly release milestones to track important issues that need to land in a given release.
 These issues may come from client teams that are shipping to the App Store on a given date.
 
-Look in the [Tasks for Next Release milestone](https://github.com/material-components/material-components-ios/milestone/10) for issues that must be resolved before or during release If there are open issues you must
-identify why the issues are still open and either close them if resolved or determine whether it's
-acceptable to move the issue to a subsequent release.
+Look in the [Tasks for Next Release
+milestone](https://github.com/material-components/material-components-ios/milestone/10) for issues
+that must be resolved before or during release. If there are open issues you must identify why the
+issues are still open and either close them if resolved or determine whether it's acceptable to move
+the issue to a subsequent release.
 
 ## Cutting and testing the release
 
@@ -33,7 +34,7 @@ Releasing is important enough that we want to start with a clean slate:
 
     scripts/release/manage_pods.py clean
 
-### Cut a release branch
+### Cut a release branch and notify clients
 
 Run the following command to cut a release:
 
@@ -55,8 +56,8 @@ test the release.
 
 Identify why any failures occurred and resolve them before continuing.
 
-> Push `release-candidate` to GitHub with `git push origin release-candidate` as you make necessary
-> changes. This allows other people and machines to track the progress of the release.
+> Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
+> This allows other people and machines to track the progress of the release.
 
 #### Making changes
 
@@ -80,7 +81,7 @@ familiar with [MDC's version number policy](versioning.md), please review it now
 You will now begin adding release notes to
 [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/stable/CHANGELOG.md)
 in the "release-candidate" section. **You will not know the version number yet**, to figure it out
-you will need to examine the release's **changes**.
+you will need to examine the release's changes.
 
 You have several tools available for deciding if a release is major, minor, or a patch.
 
@@ -103,13 +104,10 @@ Commit the changes to the release branch.
     git commit -m "Added API diff to CHANGELOG.md."
     git push origin release-candidate
 
-> If any part of a public API is deleted or changed, then this release is a *major* release.
->
-> If any public API's nullability annotations have changed then this release is a *major* release.
->
-> Otherwise, if any public APIs added, then this release is a *minor* release.
->
-> Otherwise, this release *might* still be a bug fix release.
+1. If any part of a public API is deleted or changed, then this release is a *major* release.
+1. If any public API's nullability annotations have changed then this release is a *major* release.
+1. Otherwise, if any public APIs added, then this release is a *minor* release.
+1. Otherwise, this release *might* still be a bug fix release.
 
 ### Generate the change logs
 
@@ -141,43 +139,41 @@ discussion on the topic.
 
 ### Sanity check: inspect the changes
 
-#### Diff just the components/*/src
+#### Diff just the components
 
-The final sanity check is to visually inspect the diff. In general we only care about changes to the
-component source.
-Note that scripts/release/diff takes a `--use_diff_tool` option to use your configured GUI
-`git difftool`.
+The final sanity check is to visually inspect the diff.
 
-To filter the diff to only component changes, run:
+> If you have configured Git with a GUI diff tool (`git difftool`), then you can add
+> `--use_diff_tool` to `scripts/release/diff` below.
 
-    scripts/release/diff components/*/src/
-
-#### Public header file changes
-
-To generate a list of component **public header file** changes, run:
+Generate a list of component public header changes:
 
     scripts/release/changed_public_headers
 
-#### Diff everything
+Show changes to component headers:
 
-To see all changes that are part of this release, run:
+    scripts/release/diff components/*/src/*.h
+
+Show all changes to components:
+
+    scripts/release/diff components/*/src/
+
+Show all changes that are part of this release:
 
     scripts/release/diff
 
 ### Classify the release type
 
-Based on the information at your disposal you should now be able to identify the release type and
-determine the new version number.
+You should now be able to identify the release type and its new version number. Bump the release
+(change the version number everywhere):
 
-Bump the release by running `bump` with the release's version number:
+    scripts/release/bump <major.minor.patch>
 
-    scripts/release/bump <version number>
-
-Also rename CHANGELOG.md's "release-candidate" section with the name of this release.
+Add the version number to the change log in the "release-candidate" section:
 
     $EDITOR CHANGELOG.md
 
-Commit the results to your branch.
+Commit the results to your branch:
 
     git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
     git push origin release-candidate
