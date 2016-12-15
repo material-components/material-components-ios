@@ -3,12 +3,6 @@
 Allows passing layout attributes to the cells and supplementary views.
 <!--{: .intro :}-->
 
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/CollectionLayoutAttributes/apidocs/Classes/MDCCollectionViewLayoutAttributes.html">MDCCollectionViewLayoutAttributes</a></li>
-</ul>
-
 - - -
 
 ## Installation

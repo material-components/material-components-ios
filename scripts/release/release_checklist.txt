@@ -18,6 +18,6 @@ and did the following:
 - [] Marked this diff `needs review` in the web UI.
 - [] Got another MDC'er to approve the release.
 - [] Ran `scripts/release/merge`
-- [] Push to master
+- [] Push to stable
 - [] Push to develop
 - [] See this diff get automatically closed in the web UI (because it is watching GitHub)

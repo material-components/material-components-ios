@@ -1,36 +1,36 @@
 PODS:
   - CatalogByConvention (2.0.0)
   - EarlGrey (1.6.0)
-  - MaterialComponents (19.0.1):
-    - MaterialComponents/ActivityIndicator (= 19.0.1)
-    - MaterialComponents/AnimationTiming (= 19.0.1)
-    - MaterialComponents/AppBar (= 19.0.1)
-    - MaterialComponents/ButtonBar (= 19.0.1)
-    - MaterialComponents/Buttons (= 19.0.1)
-    - MaterialComponents/CollectionCells (= 19.0.1)
-    - MaterialComponents/CollectionLayoutAttributes (= 19.0.1)
-    - MaterialComponents/Collections (= 19.0.1)
-    - MaterialComponents/Dialogs (= 19.0.1)
-    - MaterialComponents/FeatureHighlight (= 19.0.1)
-    - MaterialComponents/FlexibleHeader (= 19.0.1)
-    - MaterialComponents/HeaderStackView (= 19.0.1)
-    - MaterialComponents/Ink (= 19.0.1)
-    - MaterialComponents/NavigationBar (= 19.0.1)
-    - MaterialComponents/OverlayWindow (= 19.0.1)
-    - MaterialComponents/PageControl (= 19.0.1)
-    - MaterialComponents/Palettes (= 19.0.1)
-    - MaterialComponents/private (= 19.0.1)
-    - MaterialComponents/ProgressView (= 19.0.1)
-    - MaterialComponents/ShadowElevations (= 19.0.1)
-    - MaterialComponents/ShadowLayer (= 19.0.1)
-    - MaterialComponents/Slider (= 19.0.1)
-    - MaterialComponents/Snackbar (= 19.0.1)
-    - MaterialComponents/Typography (= 19.0.1)
-  - MaterialComponents/ActivityIndicator (19.0.1):
+  - MaterialComponents (19.0.2):
+    - MaterialComponents/ActivityIndicator (= 19.0.2)
+    - MaterialComponents/AnimationTiming (= 19.0.2)
+    - MaterialComponents/AppBar (= 19.0.2)
+    - MaterialComponents/ButtonBar (= 19.0.2)
+    - MaterialComponents/Buttons (= 19.0.2)
+    - MaterialComponents/CollectionCells (= 19.0.2)
+    - MaterialComponents/CollectionLayoutAttributes (= 19.0.2)
+    - MaterialComponents/Collections (= 19.0.2)
+    - MaterialComponents/Dialogs (= 19.0.2)
+    - MaterialComponents/FeatureHighlight (= 19.0.2)
+    - MaterialComponents/FlexibleHeader (= 19.0.2)
+    - MaterialComponents/HeaderStackView (= 19.0.2)
+    - MaterialComponents/Ink (= 19.0.2)
+    - MaterialComponents/NavigationBar (= 19.0.2)
+    - MaterialComponents/OverlayWindow (= 19.0.2)
+    - MaterialComponents/PageControl (= 19.0.2)
+    - MaterialComponents/Palettes (= 19.0.2)
+    - MaterialComponents/private (= 19.0.2)
+    - MaterialComponents/ProgressView (= 19.0.2)
+    - MaterialComponents/ShadowElevations (= 19.0.2)
+    - MaterialComponents/ShadowLayer (= 19.0.2)
+    - MaterialComponents/Slider (= 19.0.2)
+    - MaterialComponents/Snackbar (= 19.0.2)
+    - MaterialComponents/Typography (= 19.0.2)
+  - MaterialComponents/ActivityIndicator (19.0.2):
     - MaterialComponents/private/Application
     - MaterialComponents/private/RTL
-  - MaterialComponents/AnimationTiming (19.0.1)
-  - MaterialComponents/AppBar (19.0.1):
+  - MaterialComponents/AnimationTiming (19.0.2)
+  - MaterialComponents/AppBar (19.0.2):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -39,16 +39,16 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (19.0.1):
+  - MaterialComponents/ButtonBar (19.0.2):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/Buttons (19.0.1):
+  - MaterialComponents/Buttons (19.0.2):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/CollectionCells (19.0.1):
+  - MaterialComponents/CollectionCells (19.0.2):
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/private/Icons/ic_check
@@ -59,87 +59,88 @@ PODS:
     - MaterialComponents/private/Icons/ic_reorder
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/CollectionLayoutAttributes (19.0.1)
-  - MaterialComponents/Collections (19.0.1):
+  - MaterialComponents/CollectionLayoutAttributes (19.0.2)
+  - MaterialComponents/Collections (19.0.2):
     - MaterialComponents/CollectionCells
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/Dialogs (19.0.1):
+  - MaterialComponents/Dialogs (19.0.2):
     - MaterialComponents/Buttons
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/FeatureHighlight (19.0.1):
+  - MaterialComponents/FeatureHighlight (19.0.2):
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader (19.0.1):
+  - MaterialComponents/FlexibleHeader (19.0.2):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/HeaderStackView (19.0.1)
-  - MaterialComponents/Ink (19.0.1)
-  - MaterialComponents/NavigationBar (19.0.1):
+  - MaterialComponents/HeaderStackView (19.0.2)
+  - MaterialComponents/Ink (19.0.2)
+  - MaterialComponents/NavigationBar (19.0.2):
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/OverlayWindow (19.0.1):
+  - MaterialComponents/OverlayWindow (19.0.2):
     - MaterialComponents/private/Application
-  - MaterialComponents/PageControl (19.0.1)
-  - MaterialComponents/Palettes (19.0.1)
-  - MaterialComponents/private (19.0.1):
-    - MaterialComponents/private/Application (= 19.0.1)
-    - MaterialComponents/private/Color (= 19.0.1)
-    - MaterialComponents/private/Icons (= 19.0.1)
-    - MaterialComponents/private/KeyboardWatcher (= 19.0.1)
-    - MaterialComponents/private/Overlay (= 19.0.1)
-    - MaterialComponents/private/RTL (= 19.0.1)
-    - MaterialComponents/private/ThumbTrack (= 19.0.1)
-  - MaterialComponents/private/Application (19.0.1)
-  - MaterialComponents/private/Color (19.0.1)
-  - MaterialComponents/private/Icons (19.0.1):
-    - MaterialComponents/private/Icons/Base (= 19.0.1)
-    - MaterialComponents/private/Icons/ic_arrow_back (= 19.0.1)
-    - MaterialComponents/private/Icons/ic_check (= 19.0.1)
-    - MaterialComponents/private/Icons/ic_check_circle (= 19.0.1)
-    - MaterialComponents/private/Icons/ic_chevron_right (= 19.0.1)
-    - MaterialComponents/private/Icons/ic_info (= 19.0.1)
-    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 19.0.1)
-    - MaterialComponents/private/Icons/ic_reorder (= 19.0.1)
-  - MaterialComponents/private/Icons/Base (19.0.1)
-  - MaterialComponents/private/Icons/ic_arrow_back (19.0.1):
+  - MaterialComponents/PageControl (19.0.2)
+  - MaterialComponents/Palettes (19.0.2)
+  - MaterialComponents/private (19.0.2):
+    - MaterialComponents/private/Application (= 19.0.2)
+    - MaterialComponents/private/Color (= 19.0.2)
+    - MaterialComponents/private/Icons (= 19.0.2)
+    - MaterialComponents/private/KeyboardWatcher (= 19.0.2)
+    - MaterialComponents/private/Overlay (= 19.0.2)
+    - MaterialComponents/private/RTL (= 19.0.2)
+    - MaterialComponents/private/ThumbTrack (= 19.0.2)
+  - MaterialComponents/private/Application (19.0.2)
+  - MaterialComponents/private/Color (19.0.2)
+  - MaterialComponents/private/Icons (19.0.2):
+    - MaterialComponents/private/Icons/Base (= 19.0.2)
+    - MaterialComponents/private/Icons/ic_arrow_back (= 19.0.2)
+    - MaterialComponents/private/Icons/ic_check (= 19.0.2)
+    - MaterialComponents/private/Icons/ic_check_circle (= 19.0.2)
+    - MaterialComponents/private/Icons/ic_chevron_right (= 19.0.2)
+    - MaterialComponents/private/Icons/ic_info (= 19.0.2)
+    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 19.0.2)
+    - MaterialComponents/private/Icons/ic_reorder (= 19.0.2)
+  - MaterialComponents/private/Icons/Base (19.0.2)
+  - MaterialComponents/private/Icons/ic_arrow_back (19.0.2):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check (19.0.1):
+  - MaterialComponents/private/Icons/ic_check (19.0.2):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check_circle (19.0.1):
+  - MaterialComponents/private/Icons/ic_check_circle (19.0.2):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_chevron_right (19.0.1):
+  - MaterialComponents/private/Icons/ic_chevron_right (19.0.2):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_info (19.0.1):
+  - MaterialComponents/private/Icons/ic_info (19.0.2):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_radio_button_unchecked (19.0.1):
+  - MaterialComponents/private/Icons/ic_radio_button_unchecked (19.0.2):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_reorder (19.0.1):
+  - MaterialComponents/private/Icons/ic_reorder (19.0.2):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/KeyboardWatcher (19.0.1):
+  - MaterialComponents/private/KeyboardWatcher (19.0.2):
     - MaterialComponents/private/Application
-  - MaterialComponents/private/Overlay (19.0.1)
-  - MaterialComponents/private/RTL (19.0.1)
-  - MaterialComponents/private/ThumbTrack (19.0.1):
+  - MaterialComponents/private/Overlay (19.0.2)
+  - MaterialComponents/private/RTL (19.0.2)
+  - MaterialComponents/private/ThumbTrack (19.0.2):
     - MaterialComponents/Ink
     - MaterialComponents/private/Color
+    - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ProgressView (19.0.1):
+  - MaterialComponents/ProgressView (19.0.2):
     - MaterialComponents/private/RTL
-  - MaterialComponents/ShadowElevations (19.0.1)
-  - MaterialComponents/ShadowLayer (19.0.1)
-  - MaterialComponents/Slider (19.0.1):
+  - MaterialComponents/ShadowElevations (19.0.2)
+  - MaterialComponents/ShadowLayer (19.0.2)
+  - MaterialComponents/Slider (19.0.2):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Snackbar (19.0.1):
+  - MaterialComponents/Snackbar (19.0.2):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Buttons
     - MaterialComponents/OverlayWindow
@@ -147,10 +148,10 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Overlay
     - MaterialComponents/Typography
-  - MaterialComponents/Typography (19.0.1)
-  - MaterialComponentsCatalog (19.0.1):
+  - MaterialComponents/Typography (19.0.2)
+  - MaterialComponentsCatalog (19.0.2):
     - MaterialComponents
-  - MaterialComponentsUnitTests (19.0.1):
+  - MaterialComponentsUnitTests (19.0.2):
     - MaterialComponents
     - MDFTextAccessibility
   - MDFTextAccessibility (1.1.3)
@@ -173,9 +174,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: 75b2e9359c57d56c9b7f333e17761c6bff35a9ea
-  MaterialComponents: 0f9dc6d4b097baf62083c0757b09f2b1af397d3a
-  MaterialComponentsCatalog: bc69c84fbb3f261a3d1d8958b2919ba90647a397
-  MaterialComponentsUnitTests: 5d649a33a85f69e244f28db9c968c6e8122ccbb4
+  MaterialComponents: a0c310c1c70be32f11977b756b509673a7d75ae6
+  MaterialComponentsCatalog: d109d7c342a6b5f9efa2867dde2e8f5c661ae93a
+  MaterialComponentsUnitTests: 78e9e2fa77a0e74dadba4c03d5e9dd5f886d8954
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
 PODFILE CHECKSUM: 0a93a34ae9af89654baaaa3a998126cb7d9e1198

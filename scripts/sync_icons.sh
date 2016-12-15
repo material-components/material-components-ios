@@ -96,7 +96,6 @@ def registerIcons(s)
     iss.subspec "Base" do |ss|
       ss.public_header_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.h"
       ss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/src/*.{h,m}"
-      ss.header_mappings_dir = "$ICONS_COMPONENT_RELATIVE_PATH/src"
     end
 EOL
 
@@ -139,7 +138,6 @@ for directory in $ICONS_COMPONENT_PATH/icons/*/; do
     iss.subspec "$icon_name" do |ss|
       ss.public_header_files = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/*.h"
       ss.source_files = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/*.{h,m}"
-      ss.header_mappings_dir = "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src"
       ss.resource_bundles = {
         "MaterialIcons_$icon_name" => [
           "$ICONS_COMPONENT_RELATIVE_PATH/icons/$icon_name/src/MaterialIcons_$icon_name.bundle/*.png",

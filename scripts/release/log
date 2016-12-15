@@ -31,4 +31,4 @@ if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   exit 1
 fi
 
-git --no-pager log origin/master..release-candidate "$@"
+git --no-pager log origin/stable..release-candidate "$@"

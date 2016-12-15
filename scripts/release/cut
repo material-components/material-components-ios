@@ -34,8 +34,8 @@ done
 if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   git fetch
   if $isHotFix; then
-    BRANCH_MESSAGE="This is a hotfix... branching off origin/master"
-    BRANCH=origin/master
+    BRANCH_MESSAGE="This is a hotfix... branching off origin/stable"
+    BRANCH=origin/stable
   else
     BRANCH_MESSAGE="This is a normal release... branching off origin/develop"
     BRANCH=origin/develop

@@ -30,7 +30,7 @@ validate_commit() {
 }
 
 # Verify commits
-old_commit=$(git rev-list -n 1 origin/master)
+old_commit=$(git rev-list -n 1 origin/stable)
 new_commit=$(git rev-list -n 1 release-candidate)
 
 if [[ -z "$old_commit" || -z "$new_commit" ]]; then

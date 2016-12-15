@@ -1,24 +1,10 @@
 
 # Component Documentation
 
-Material Components is a collection of standalone, production-quality user
-interface components for iOS. These components implement Google's
-[Material Design](http://www.google.com/design/spec/material-design/introduction.html) specification
-and are developed by a team of iOS engineers and UX designers at Google.
-
-- [Development Guide](https://github.com/material-components/material-components-ios/tree/master/howto)
-  <!--{: .icon-guide }-->
-
-- [Tutorial](https://github.com/material-components/material-components-ios/tree/master/howto/tutorial)
-  <!--{: .icon-sample }-->
-
-- [Stack Overflow "material-components, ios"](http://stackoverflow.com/questions/tagged/material-components+ios)
-  <!--{: .icon-stackoverflow }-->
-
-<!--{: .icon-list }-->
-
-- - -
-
+Material Components for iOS (MDC-iOS) help developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps.
+ 
+Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
+ 
 <a name="components"></a>
 <!--{: .jumplink }-->
 
@@ -143,3 +129,14 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](Typography/)
   <!--{: .icon-typography }-->
 <!--{: .icon-list .large-format }-->
+
+- - -
+
+## Useful Links
+
+- [How To Use MDC-iOS](../howto/)
+- [Demo Apps](../demos/)
+- [Contributing](../contributing/)
+- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
+- [Material.io](https://www.material.io) (external site)
+- [Material Design Guidelines](https://material.google.com) (external site)

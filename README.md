@@ -1,8 +1,8 @@
 # Material Components for iOS
 
-Material Components for iOS (MDC-iOS) help developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps.
+Material Components for iOS (MDC-iOS) helps developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps. Learn more about how Material Design supports design and usability best practices across platforms in the  [Material Design Platform Adaptation guidelines](https://material.io/guidelines/platforms/platform-adaptation.html).
 
-Material Components for iOS are available in Objective-C and Swift, and support Interface Builder.
+Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
 
 ## Useful Links
 
@@ -10,7 +10,7 @@ Material Components for iOS are available in Objective-C and Swift, and support 
 - [All Components](components/)
 - [Demo Apps](demos/)
 - [Contributing](contributing/)
-- [MDC-iOS on Stack Overflow](https://stackoverflow.com/questions/tagged/mdc-ios)
+- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.google.com) (external site)
   
@@ -91,7 +91,7 @@ The components are built upon familiar UIKit classes and can be added to a view 
 ~~~ swift
 import MaterialComponents.MaterialButtons
 
-class MDCBuildTestViewController: UIViewController {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
