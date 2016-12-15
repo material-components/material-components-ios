@@ -3,7 +3,7 @@ load 'scripts/generated/icons.rb'
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
   s.version      = "19.0.1"
-  s.authors      = { 'Apple platform engineering at Google' => 'appleplatforms@google.com' }
+  s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
   s.license      = "Apache 2.0"
