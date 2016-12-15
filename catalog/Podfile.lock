@@ -130,6 +130,7 @@ PODS:
   - MaterialComponents/private/ThumbTrack (19.0.1):
     - MaterialComponents/Ink
     - MaterialComponents/private/Color
+    - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
@@ -173,9 +174,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: 75b2e9359c57d56c9b7f333e17761c6bff35a9ea
-  MaterialComponents: 0f9dc6d4b097baf62083c0757b09f2b1af397d3a
-  MaterialComponentsCatalog: bc69c84fbb3f261a3d1d8958b2919ba90647a397
-  MaterialComponentsUnitTests: 5d649a33a85f69e244f28db9c968c6e8122ccbb4
+  MaterialComponents: 18135b30faa74d23c852a0e8bf614e79cc85d3b6
+  MaterialComponentsCatalog: cd6b1fc5e41a1e8b59bff0928c07997d5cdd01a0
+  MaterialComponentsUnitTests: 866fa5775fe45cea413d4a05e9e1c1669c15d77e
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
 PODFILE CHECKSUM: 0a93a34ae9af89654baaaa3a998126cb7d9e1198
