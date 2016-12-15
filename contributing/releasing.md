@@ -4,9 +4,9 @@ These instructions describe how to cut a new release of the material-components-
 repository.
 
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of
-development, where the default branch is called `develop`. `master` is reserved for releases. The
-`develop` branch is periodically copied to a release branch, tested, and then merged into `master`,
-which serves as the stable "vetted" branch.
+development, where the default branch is called `develop`. `stable` (instead of the traditional
+`master`) is reserved for releases. The `develop` branch is periodically copied to a release branch,
+tested, and then merged into `stable`, which serves as the stable "vetted" branch.
 
 ## Issues affecting the release process
 
@@ -42,36 +42,25 @@ You will now have a local `release-candidate` branch and a new section in CHANGE
 
 `scripts/release/cut` will output the body of an email you should now send.
 
-### Create a release-candidate diff
+### Reset your state
 
-Create a diff but mark it as `--plan-changes` so it does not go into peoples needs review inboxes.
+Releasing is important enough that we want to start with a clean slate.
 
-    arc diff origin/master --nolint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt
+  scripts/release/manage_pods.py clean
 
-Do NOT `arc land` this diff, its purpose is to have someone sanity check the release.
+### Test the release
 
-### Test the release branch
-
-To test the branch locally you can run:
-
-    arc unit --everything
-
-Verify that the unit tests do not fail.
-
-Build and run the catalog and demo applications:
-
-    scripts/build_all_pod_projects
+  scripts/release/manage_pods.py install
+  scripts/build_all
+  scripts/test_all
 
 Identify why any failures occurred and resolve them before continuing.
 
-### Push the release branch early and often
+> Push `release-candidate` to GitHub as you make necessary changes. This allows other people and
+> machines to track the progress of the release.
+> `git push origin release-candidate`
 
-Push `release-candidate` to GitHub as you make necessary changes. This allows other people and
-machines to track the progress of the release.
-
-    git push origin release-candidate
-
-#### How to address release feedback
+#### Making changes
 
 Clients subscribed to the mailing list can now begin testing the release candidate branch. Address
 concerns by making relevant changes to the `release-candidate` branch using the standard `arc diff`
@@ -236,7 +225,7 @@ Commit the results to your branch.
 
 ## Release-blocking clients
 
-Before you can merge the release branch into either develop or master you **must** get the release
+Before you can merge the release branch into either develop or stable you **must** get the release
 go-ahead from the following clients:
 
 - Google: must verify that the release branch passes all internal tests. If you are a Googler, see
@@ -268,14 +257,14 @@ Send the release-candidate branch out for review:
 
     git fetch
     git checkout release-candidate
-    arc diff origin/master --nolint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt
+    arc diff origin/stable --nolint --plan-changes  --excuse release --message-file scripts/release/release_checklist.txt
 
 Get a reviewer to approve the change.
 
 ## Merge the release candidate branch
 
 Once the release-candidate has passed all tests by clients, you may merge the release into the
-`develop` and `master` branches.
+`develop` and `stable` branches.
 
     # Did you listen to the dragon?
     #
@@ -284,12 +273,12 @@ Once the release-candidate has passed all tests by clients, you may merge the re
     #
     scripts/release/merge
 
-Once you've resolved any merge conflicts your local `develop` and `master` branches will both
+Once you've resolved any merge conflicts your local `develop` and `stable` branches will both
 include the latest changes from `release-candidate`.
 
 Before pushing these changes to GitHub it's a good idea to run a final sanity check:
 
-    git checkout master
+    git checkout stable
     arc unit --everything
 
     git checkout develop
@@ -297,7 +286,7 @@ Before pushing these changes to GitHub it's a good idea to run a final sanity ch
 
 You can now push both branches to GitHub:
 
-    git push origin master develop
+    git push origin stable develop
 
 and delete the release branch:
 
@@ -313,9 +302,9 @@ and delete the release branch:
    [GitHub list of releases](https://github.com/material-components/material-components-ios/releases), click on
    "Draft a new release".
 1. Tag the release "vX.Y.Z".
-1. Select the master branch.
+1. Select the stable branch.
 1. Title the release "Release X.Y.Z".
-1. In the body of the release notes, paste the text from [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/master/CHANGELOG.md) for this release.
+1. In the body of the release notes, paste the text from [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/stable/CHANGELOG.md) for this release.
 1. Publish the release.
 
 ### Fix clients

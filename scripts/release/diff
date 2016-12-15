@@ -31,4 +31,4 @@ if [ "$1" == "--use_diff_tool" ]; then
   shift 1
 fi
 
-git $git_diff origin/master..release-candidate "$@"
+git $git_diff origin/stable..release-candidate "$@"

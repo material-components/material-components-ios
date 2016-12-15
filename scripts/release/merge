@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Performs the final merge operations into master and develop for the current release.
+# Performs the final merge operations into stable and develop for the current release.
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"; pushd $DIR >> /dev/null
 MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
@@ -51,7 +51,7 @@ merge_to_branch() {
 }
 
 check_sync_of_branch develop
-check_sync_of_branch master
+check_sync_of_branch stable
 
 merge_to_branch develop
-merge_to_branch master
+merge_to_branch stable
