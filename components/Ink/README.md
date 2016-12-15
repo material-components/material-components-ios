@@ -17,15 +17,6 @@ api_doc_root: true
 The Ink component provides a radial action in the form of a visual ripple of ink expanding
 outward from the user's touch.
 
-## Design & API Documentation
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/animation/responsive-interaction.html#responsive-interaction-radial-action">Material Design guidelines: Radial Action</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/ink/api-docs/Classes/MDCInkGestureRecognizer.html">API: MDCInkGestureRecognizer</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/ink/api-docs/Classes/MDCInkTouchController.html">API: MDCInkTouchController</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/ink/api-docs/Classes/MDCInkView.html">API: MDCInkView</a></li>
-</ul>
-
 - - -
 
 ## Installation

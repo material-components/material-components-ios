@@ -16,15 +16,6 @@ api_doc_root: true
 
 Activity indicators are visual indications of an app loading content. The Activity Indicator is a circular indicator that either rotates clockwise or fills to completion clockwise when displaying progress.
 
-## Design & API Documentation
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/progress-activity.html">Material Design guidelines: Progress & activity</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicator.html">API: MDCActivityIndicator</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Enums/MDCActivityIndicatorMode.html">API: MDCActivityIndicatorMode</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Protocols/MDCActivityIndicatorDelegate.html">API: MDCActivityIndicatorDelegate</a></li>
-</ul>
-
 - - -
 
 ## Activity Indicator Modes
