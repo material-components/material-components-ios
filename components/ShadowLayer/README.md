@@ -37,14 +37,6 @@ shadow that adheres to defined height and light source principles.
   <li class="icon-link"><a href="https://www.google.com/design/spec/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
 </ul>
 
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/apidocs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/apidocs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
-</ul>
-
-
 - - -
 
 ## Installation

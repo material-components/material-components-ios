@@ -14,12 +14,6 @@ or discrete set of values.
   <li class="icon-link"><a href="https://www.google.com/design/spec/components/sliders.html">Sliders</a></li>
 </ul>
 
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Slider/apidocs/Classes/MDCSlider.html">MDCSlider</a></li>
-</ul>
-
 - - -
 
 ## Installation

@@ -16,12 +16,6 @@ few key methods required to achieve the desired animation of the control.
   <li class="icon-link"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
 </ul>
 
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ProgressView/apidocs/Classes/MDCProgressView.html">MDCProgressView</a></li>
-</ul>
-
 - - -
 
 ## Installation

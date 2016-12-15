@@ -79,29 +79,6 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 1. Enter YES or NO
 
 
-### Site Icon
-
-
-The documentation site uses icons in an [ordered list](https://material-ext.appspot.com/mdc-ios-preview/components/) of the components. These icons are created by Google's Material Design department specifically for this purpose.
-
-1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic_component_name_24.svg`.
-1. Make sure the site source's `_icons.scss` contains an entry for that icon for that component:
-~~~CSS
-  .icon-componentname a::before {
-    background-image: url(#{$root_folder}/images/custom_icons/ic_component_name_24px.svg);
-  }
-~~~
-
-
-### Site Left Nav Presence
-
-
-The component should have an entry in the left nav of [the documentation site](https://material-ext.appspot.com/mdc-ios-preview/components/). If missing, add it in the site source's `_data/navigation.yaml` file.
-
-1. Verify [the documentation site's](https://material-ext.appspot.com/mdc-ios-preview/components/) left nav contains a link to the component's docs.
-1. Enter YES or NO
-
-
 ### License Stanzas in Every Text-based Source File
 
 

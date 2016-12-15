@@ -14,15 +14,6 @@ outward from the user's touch.
   <li class="icon-link"><a href="https://www.google.com/design/spec/animation/responsive-interaction.html#responsive-interaction-radial-action">Radial Action</a></li>
 </ul>
 
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/apidocs/Classes/MDCInkTouchController.html">MDCInkTouchController</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/apidocs/Classes/MDCInkView.html">MDCInkView</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Ink/apidocs/Protocols/MDCInkTouchControllerDelegate.html">MDCInkTouchControllerDelegate</a></li>
-</ul>
-
-
 - - -
 
 ## Installation
