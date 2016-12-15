@@ -1,3 +1,5 @@
+# release-candidate TODO: Replace me with version number. 
+
 # 19.0.1
 
 This point release fixes stale references to MDFFontDiskLoader, MDFSpritedAnimationView, and MDFRobotoFontLoader in our CocoaPods podspec.
