@@ -12,13 +12,6 @@ used Material Design elevations for components.
   <li class="icon-link"><a href="https://www.google.com/design/spec/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
 </ul>
 
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowElevations/apidocs/Constants.html">ShadowElevations Constants</a></li>
-</ul>
-
-
 - - -
 
 ## Installation

@@ -14,13 +14,6 @@ from the Material Design specifications.
 <li class="icon-link"><a href="https://www.google.com/design/spec/style/typography.html">Typography</a></li>
 </ul>
 
-### API Documentation
-
-<ul class="icon-list">
-<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
-<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Protocols/MDCTypographyFontLoading.html">MDCTypographyFontLoading</a></li>
-</ul>
-
 ## Installation
 
 ### Requirements

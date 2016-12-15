@@ -10,14 +10,6 @@ same as a `UIPageControl`, with the addition of a few key methods required to ac
 desired animation of the control.
 <!--{: .intro }-->
 
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/PageControl/apidocs/Classes/MDCPageControl.html">MDCPageControl</a></li>
-</ul>
-
-
 - - -
 
 ## Installation
