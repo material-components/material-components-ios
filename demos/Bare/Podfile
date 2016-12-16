@@ -1,4 +1,4 @@
 target 'Bare' do
-  pod 'MaterialComponents', :path => '../../'
+  pod 'MaterialComponents'
 end
 

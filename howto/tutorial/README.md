@@ -58,9 +58,9 @@ target 'MDC-Tutorial' do
   use_frameworks!
 
   # Pods for MDC-Tutorial
-  pod 'MaterialComponents/AppBar', :git => 'git@github.com:material-components/material-components-ios.git'
-  pod 'MaterialComponents/Buttons', :git => 'git@github.com:material-components/material-components-ios.git'
-  pod 'MaterialComponents/Collections', :git => 'git@github.com:material-components/material-components-ios.git'
+  pod 'MaterialComponents/AppBar'
+  pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/Collections'
 end
 ~~~
 
@@ -70,9 +70,9 @@ target 'MDC-Tutorial' do
   #use_frameworks!
 
   # Pods for MDC-Tutorial
-  pod 'MaterialComponents/AppBar', :git => 'git@github.com:material-components/material-components-ios.git'
-  pod 'MaterialComponents/Buttons', :git => 'git@github.com:material-components/material-components-ios.git'
-  pod 'MaterialComponents/Collections', :git => 'git@github.com:material-components/material-components-ios.git'
+  pod 'MaterialComponents/AppBar'
+  pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/Collections'
 end
 ~~~
 <!--</div>-->
