@@ -1,3 +1,15 @@
+# 19.0.3
+
+This point release removes the examples from `private/ThumbTrack`; they didn't follow our normal conventions and was confusing `pod try`.
+
+## API changes
+
+* No API changes in this release.
+
+## Component changes
+
+* No component changes in this release.
+
 # 19.0.2
 
 ## API changes
