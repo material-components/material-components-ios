@@ -50,7 +50,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   MaterialComponents: 9220b6de86df24ef14fe8e8ce513291d2541637b
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
-  RemoteImageServiceForMDCDemos: 88f8bdc4477c98b78f540ebd97eb60dc1e1b6af0
+  RemoteImageServiceForMDCDemos: ec32688ce80715528e8be5422452cfc3aa3b89e0
 
 PODFILE CHECKSUM: bf9c85b3c93f3dcb2a3a18c8fa4d1e5711363673
 
