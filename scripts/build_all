@@ -32,6 +32,7 @@ function guess_failure() {
 }
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+all_builds_ok=1
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
   workspace=$(echo $workspace_scheme | cut -d: -f1)
   scheme=$(echo $workspace_scheme | cut -d: -f2)
@@ -43,6 +44,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
      is_expected_failure "$log_file"; then
     rm "$log_file"
   else
+    all_builds_ok=0
     echo
     echo "Failed to build $scheme in $workspace:"
     guess_failure "$log_file"
@@ -51,3 +53,11 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
     echo
   fi
 done
+
+# If any build failed, exit with a failure exit status so continuous integration 
+# tools can react appropriately.
+if [ "$all_builds_ok" -eq 1 ]; then
+  exit 0
+else
+  exit 1
+fi
