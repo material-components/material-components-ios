@@ -1,5 +1,5 @@
 PODS:
-  - MaterialComponents/AppBar (19.0.2):
+  - MaterialComponents/AppBar (19.0.3):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -8,35 +8,35 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (19.0.2):
+  - MaterialComponents/ButtonBar (19.0.3):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/Buttons (19.0.2):
+  - MaterialComponents/Buttons (19.0.3):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader (19.0.2):
+  - MaterialComponents/FlexibleHeader (19.0.3):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/HeaderStackView (19.0.2)
-  - MaterialComponents/Ink (19.0.2)
-  - MaterialComponents/NavigationBar (19.0.2):
+  - MaterialComponents/HeaderStackView (19.0.3)
+  - MaterialComponents/Ink (19.0.3)
+  - MaterialComponents/NavigationBar (19.0.3):
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/PageControl (19.0.2)
-  - MaterialComponents/private/Application (19.0.2)
-  - MaterialComponents/private/Icons/Base (19.0.2)
-  - MaterialComponents/private/Icons/ic_arrow_back (19.0.2):
+  - MaterialComponents/PageControl (19.0.3)
+  - MaterialComponents/private/Application (19.0.3)
+  - MaterialComponents/private/Icons/Base (19.0.3)
+  - MaterialComponents/private/Icons/ic_arrow_back (19.0.3):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/RTL (19.0.2)
-  - MaterialComponents/ShadowElevations (19.0.2)
-  - MaterialComponents/ShadowLayer (19.0.2)
-  - MaterialComponents/Typography (19.0.2)
+  - MaterialComponents/private/RTL (19.0.3)
+  - MaterialComponents/ShadowElevations (19.0.3)
+  - MaterialComponents/ShadowLayer (19.0.3)
+  - MaterialComponents/Typography (19.0.3)
   - MDFTextAccessibility (1.1.3)
-  - RemoteImageServiceForMDCDemos (19.0.2)
+  - RemoteImageServiceForMDCDemos (19.0.3)
 
 DEPENDENCIES:
   - MaterialComponents/AppBar (from `../../`)
@@ -50,9 +50,9 @@ EXTERNAL SOURCES:
     :path: "../supplemental"
 
 SPEC CHECKSUMS:
-  MaterialComponents: a0c310c1c70be32f11977b756b509673a7d75ae6
+  MaterialComponents: 9220b6de86df24ef14fe8e8ce513291d2541637b
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
-  RemoteImageServiceForMDCDemos: 0a63c5954e93f31d66ee325afa4018fe235877fb
+  RemoteImageServiceForMDCDemos: 88f8bdc4477c98b78f540ebd97eb60dc1e1b6af0
 
 PODFILE CHECKSUM: 5eb94d7fb8deeb6709b7300f5d0e0e1a75902cca
 
