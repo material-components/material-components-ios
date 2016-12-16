@@ -23,6 +23,12 @@ if [[ $? != 0 ]]; then
   exit 1
 fi
 
+IMAGEMAGICK_VERSION=`convert --version`
+if [[ $? != 0 ]]; then
+  echo "Cannot find ImageMagick.  To install try:"
+  echo "brew install imagemagick"
+  exit 1
+fi
 
 # Switching to the root folder of mdc
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -62,6 +68,15 @@ for i in ${FOLDERS[@]}; do
   for k in $(find "${i}"/* -type d -maxdepth 0); do
     if [ -d "${k}/docs" ]; then
       rsync -r "${k}/docs" "${TARGET}/${k}"
+      SCREENSHOT_NAME=$($ROOT_DIR/scripts/naming_convention -m underscore $( basename ${k}))
+      if [[ $? -eq 0 ]]; then
+        SCREENSHOT_FILE="${TARGET}/${k}/docs/assets/${SCREENSHOT_NAME}.png"
+        if [ -e "$SCREENSHOT_FILE" ]; then
+          ## Any screenshot file with height resolution greater than 1200 will be scaled to have aheight of 1200
+          ## Change value below to appropriate height if needed
+          convert $SCREENSHOT_FILE -resize x1200\>  $SCREENSHOT_FILE
+        fi
+      fi
     else
       if [ -d "${TARGET}/${k}/docs" ]; then
         rm -rf "${TARGET}/${k}/docs"
