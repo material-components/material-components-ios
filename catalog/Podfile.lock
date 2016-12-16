@@ -159,13 +159,11 @@ PODS:
 DEPENDENCIES:
   - CatalogByConvention
   - EarlGrey
-  - MaterialComponents (from `../`)
+  - MaterialComponents
   - MaterialComponentsCatalog (from `../`)
   - MaterialComponentsUnitTests (from `../`)
 
 EXTERNAL SOURCES:
-  MaterialComponents:
-    :path: "../"
   MaterialComponentsCatalog:
     :path: "../"
   MaterialComponentsUnitTests:
@@ -179,6 +177,6 @@ SPEC CHECKSUMS:
   MaterialComponentsUnitTests: 309cfdebd33a01f71c5a255a850dc057d1c038f8
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
-PODFILE CHECKSUM: 0a93a34ae9af89654baaaa3a998126cb7d9e1198
+PODFILE CHECKSUM: 3be27abdf2ad4d54a7553f4f43c27b5ec7131ce1
 
 COCOAPODS: 1.1.1
