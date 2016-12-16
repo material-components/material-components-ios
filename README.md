@@ -59,11 +59,7 @@ to your target in your Podfile:
 ~~~ ruby
 target "MyApp" do
   ...
-  # Until Material Components for iOS is public:
-  pod 'MaterialComponents', :git => 'https://github.com/material-components/material-components-ios.git'
-
-  # After Material Components for iOS is public:
-  # pod 'MaterialComponents'
+  pod 'MaterialComponents'
 end
 ~~~
 

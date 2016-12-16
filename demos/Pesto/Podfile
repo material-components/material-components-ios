@@ -7,6 +7,6 @@ target 'Pesto' do
   pod 'MaterialComponents/ShadowElevations', :path => '../../'
   pod 'MaterialComponents/ShadowLayer', :path => '../../'
   pod 'MaterialComponents/Typography', :path => '../../'
-  
+
 end
 

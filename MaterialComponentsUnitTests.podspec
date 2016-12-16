@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsUnitTests"
-  s.version      = "19.0.3"
+  s.version      = "19.0.4"
   s.authors      = "The Material Motion authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
