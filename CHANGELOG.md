@@ -1,3 +1,7 @@
+# 19.0.4
+
+This point release changes certain podfiles and instructions to refer to the published pod up at CocoaPods.
+
 # 19.0.3
 
 This point release removes the examples from `private/ThumbTrack`; they didn't follow our normal conventions and was confusing `pod try`.

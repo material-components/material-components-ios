@@ -4,7 +4,7 @@ project 'MDCCatalog.xcodeproj'
 target "MDCCatalog" do
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsCatalog', :path => '../'
-  pod 'MaterialComponents'
+  pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
 
   use_frameworks!
@@ -13,7 +13,7 @@ end
 target "MDCUnitTests" do
   project 'MDCUnitTests.xcodeproj'
   pod 'MaterialComponentsUnitTests', :path => '../'
-  pod 'MaterialComponents'
+  pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
 
   use_frameworks!
@@ -22,7 +22,7 @@ end
 target "MDCActionExtension" do
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsCatalog', :path => '../'
-  pod 'MaterialComponents'
+  pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention'
 
   use_frameworks!
