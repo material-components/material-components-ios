@@ -137,7 +137,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-switch }-->
 
 - [**Tabs**
-  Description TBD.
+  A material tab bar for switching between grouped content.
   ](Tabs/)
   <!--{: .icon-tabs }-->
 
