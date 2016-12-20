@@ -46,24 +46,30 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    raisedButton.setTitle("Programmatic", forState: .Normal)
+    raisedButton.setTitle("Programmatic", for: UIControlState())
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
-    raisedButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
+    raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     self.view.addSubview(raisedButton)
 
-    flatButton.customTitleColor = UIColor.grayColor()
-    flatButton.setTitle("Programmatic", forState: .Normal)
+    flatButton.customTitleColor = UIColor.gray
+    flatButton.setTitle("Programmatic", for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
-    flatButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
+    flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     self.view.addSubview(flatButton)
 
-    floatingButton.setTitle("+", forState: .Normal)
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
-    floatingButton.addTarget(self, action: #selector(tap), forControlEvents: .TouchUpInside)
+    floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+
+    let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    floatingButton.layer.addSublayer(floatingPlusShapeLayer)
     self.view.addSubview(floatingButton)
+
+    let storyboardPlusShapeLayer =
+      ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
 
     let views = [
       "raised": raisedButton,
@@ -73,41 +79,31 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
 
     self.view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
-      attribute: .Leading,
-      relatedBy: .Equal,
+      attribute: .leading,
+      relatedBy: .equal,
       toItem: self.view,
-      attribute: .Leading,
+      attribute: .leading,
       multiplier: 1.0,
       constant: 8.0))
 
     self.view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
-      attribute: .Top,
-      relatedBy: .Equal,
+      attribute: .top,
+      relatedBy: .equal,
       toItem: self.view,
-      attribute: .Top,
+      attribute: .top,
       multiplier: 1.0,
       constant: 22.0))
 
     self.view.addConstraints(
-      NSLayoutConstraint.constraintsWithVisualFormat("V:[raised]-22-[flat]-22-[floating]",
-        options: .AlignAllCenterX,
+      NSLayoutConstraint.constraints(withVisualFormat: "V:[raised]-22-[flat]-22-[floating]",
+        options: .alignAllCenterX,
         metrics: nil,
         views: views))
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  @IBAction func tap(_ sender: AnyObject) {
+    print("\(type(of: sender)) was tapped.")
   }
 
-  @IBAction func tap(sender: AnyObject) {
-    print("\(sender.dynamicType) was tapped.")
-  }
-
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-
-
-  }
 }

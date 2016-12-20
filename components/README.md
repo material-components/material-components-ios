@@ -1,31 +1,10 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components">GitHub</a> for README documentation.{% endif %}-->
 
 # Component Documentation
 
-Material Components is a collection of standalone, production-quality user
-interface components for iOS. These components implement Google's
-[material design](http://www.google.com/design/spec/material-design/introduction.html) specification
-and are developed by a team of iOS engineers and UX designers at Google.
-
-
-- [GitHub](https://github.com/google/material-components-ios/)
-  <!--{: .icon-github }-->
-
-- [Development Guide]({{ site.folder }}/howto/)
-  <!--{: .icon-guide }-->
-
-- [Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
-  <!--{: .icon-sample }-->
-
-- [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
-  <!--{: .icon-stackoverflow }-->
-
-<!--{: .icon-list }-->
-
-- - -
-
+Material Components for iOS (MDC-iOS) help developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps.
+ 
+Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
+ 
 <a name="components"></a>
 <!--{: .jumplink }-->
 
@@ -36,8 +15,13 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](ActivityIndicator/)
   <!--{: .icon-activityindicator }-->
 
+- [**AnimationTiming**
+  Animation timing easing curves create smooth and consistent motion.
+  ](AnimationTiming/)
+  <!--{: .icon-animationtiming }-->
+
 - [**AppBar**
-  A flexible navigation bar, designed to provide a typical material navigation experience.
+  A flexible navigation bar, designed to provide a typical Material navigation experience.
   ](AppBar/)
   <!--{: .icon-appbar }-->
 
@@ -52,7 +36,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-buttons }-->
 
 - [**CollectionCells**
-  Collection view cell classes that adhere to material layout and styling.
+  Collection view cell classes that adhere to Material layout and styling.
   ](CollectionCells/)
   <!--{: .icon-collections }-->
 
@@ -62,12 +46,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-collections }-->
 
 - [**Collections**
-  Collection view classes that adhere to material layout and styling.
+  Collection view classes that adhere to Material layout and styling.
   ](Collections/)
   <!--{: .icon-collections }-->
 
 - [**Dialogs**
-  A presentation controller that will display a material modal dialog.
+  A presentation controller that will display a Material modal dialog.
   ](Dialogs/)
   <!--{: .icon-dialogs }-->
 
@@ -96,18 +80,22 @@ and are developed by a team of iOS engineers and UX designers at Google.
   ](NavigationBar/)
   <!--{: .icon-navigationbar }-->
 
+- [**OverlayWindow**
+  A window for managing sets of overlay views.
+  ](OverlayWindow/)
+
 - [**PageControl**
-  A drop-in material replacement for UIPageControl.
+  A drop-in Material replacement for UIPageControl.
   ](PageControl/)
   <!--{: .icon-pagecontrol }-->
 
 - [**Palettes**
-  Reference colors from material palettes.
+  Reference colors from Material palettes.
   ](Palettes/)
   <!--{: .icon-palette }-->
 
 - [**ProgressView**
-  A determinate and linear progress indicator that implements material animation and layout.
+  A determinate and linear progress indicator that implements Material animation and layout.
   ](ProgressView/)
   <!--{: .icon-progressview }-->
 
@@ -117,12 +105,12 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-shadowelevations }-->
 
 - [**ShadowLayer**
-  A shadow which uses material principles for visualizing depth.
+  A shadow which uses Material principles for visualizing depth.
   ](ShadowLayer/)
   <!--{: .icon-shadowlayer }-->
 
 - [**Slider**
-  A material control for selecting from a range of values.
+  A Material control for selecting from a range of values.
   ](Slider/)
   <!--{: .icon-slider }-->
 
@@ -132,7 +120,7 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-snackbar }-->
 
 - [**Switch**
-  A material on/off switch with an interface similar to UISwitch.
+  A Material on/off switch with an interface similar to UISwitch.
   ](Switch/)
   <!--{: .icon-switch }-->
 
@@ -142,7 +130,18 @@ and are developed by a team of iOS engineers and UX designers at Google.
   <!--{: .icon-tabs }-->
 
 - [**Typography**
-  Text styles for material fonts and opacities.
+  Text styles for Material fonts and opacities.
   ](Typography/)
   <!--{: .icon-typography }-->
 <!--{: .icon-list .large-format }-->
+
+- - -
+
+## Useful Links
+
+- [How To Use MDC-iOS](../howto/)
+- [Demo Apps](../demos/)
+- [Contributing](../contributing/)
+- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
+- [Material.io](https://www.material.io) (external site)
+- [Material Design Guidelines](https://material.google.com) (external site)

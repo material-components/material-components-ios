@@ -1,16 +1,11 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ProgressView/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ProgressView">GitHub</a> for README documentation.{% endif %}-->
-
 # Progress View
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/progress_view.mp4" autoplay loop></video>
-  [![ScreenShot](docs/assets/progress_view.png)](docs/assets/progress_view.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Progress View](docs/assets/progress_view.png)](docs/assets/progress_view.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/progress_view.mp4" autoplay loop></video></div>{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIProgressView`, with a user experience
-influenced by [material design specifications](https://material.google.com/components/progress-activity.html#)
+influenced by [Material Design specifications](https://material.google.com/components/progress-activity.html#)
 for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
 few key methods required to achieve the desired animation of the control.
 <!--{: .intro }-->
@@ -19,12 +14,6 @@ few key methods required to achieve the desired animation of the control.
 
 <ul class="icon-list">
   <li class="icon-link"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ProgressView/apidocs/Classes/MDCProgressView.html">MDCProgressView</a></li>
 </ul>
 
 - - -
@@ -67,15 +56,15 @@ synchronize multistep animations.
 Before using Progress View, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents.MaterialProgressView
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialProgressView.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -88,41 +77,27 @@ best when the progress view is added at the bottom of a view, as showing (resp. 
 Add the progress view to a view and set the desired progress and hidden state.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-@implementation ViewController {
-  MDCProgressView *_progressView;
-}
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  // Progress view configuration.
-  _progressView = [[MDCProgressView alloc] initWithFrame:myFrame];
-  _progressView.progress = 0;  // You can also set a greater progress for actions already started.
-  [self.view addSubview:_progressView];
-}
-
-~~~
-
 #### Swift
 
 ~~~ swift
-class ProgressViewSwiftExampleViewController: UIViewController {
+let progressView = MDCProgressView()
+progressView.progress = 0
 
-  let progressView = MDCProgressView()
+let progressViewHeight = CGFloat(2)
+progressView.frame = CGRect(x: 0, y: view.bounds.height - progressViewHeight, width: view.bounds.width, height: progressViewHeight)
+view.addSubview(progressView)
+~~~
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+#### Objective-C
 
-    progressView.progress = 0
+~~~ objc
+@property(nonatomic) MDCProgressView *progressView;
+...
 
-    let progressViewHeight = CGFloat(2)
-    progressView.frame = CGRectMake(0, view.bounds.height - progressViewHeight, view.bounds.width, progressViewHeight);
-    view.addSubview(progressView)
-  }
-
+// Progress view configuration.
+self.progressView = [[MDCProgressView alloc] initWithFrame:myframe];
+self.progressView.progress = 0;  // You can also set a greater progress for actions already started.
+[self.view addSubview:self.progressView];
 ~~~
 <!--</div>-->
 
@@ -131,34 +106,34 @@ class ProgressViewSwiftExampleViewController: UIViewController {
 Both the progress and the hidden state can be animated, with a completion block.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-- (void)startAndShowProgressView {
-  _progressView.progress = 0;
-  [_progressView setHidden:NO animated:YES completion:nil];
-}
-
-- (void)completeAndHideProgressView {
-  [_progressView setProgress:1 animated:YES completion:^(BOOL finished){
-    [_progressView setHidden:YES animated:YES completion:nil];
-  }];
-}
-~~~
-
 #### Swift
 
 ~~~ swift
-func startAndShowProgressView {
+func startAndShowProgressView() {
   progressView.progress = 0
   progressView.setHidden(false, animated: true)
 }
 
-func completeAndHideProgressView {
-  progressView.setProgress(1, animated: true) { BOOL finished in
-    progressView.setHidden(true, animated: true)
+func completeAndHideProgressView() {
+  progressView.setProgress(1, animated: true) { (finished) in
+    self.progressView.setHidden(true, animated: true)
   }
 }
 ~~~
 
+#### Objective-C
+
+~~~ objc
+- (void)startAndShowProgressView {
+  self.progressView.progress = 0;
+  [self.progressView setHidden:NO animated:YES completion:nil];
+}
+
+- (void)completeAndHideProgressView {
+  __weak __typeof__(self) weakSelf = self;
+  [self.progressView setProgress:1 animated:YES completion:^(BOOL finished){
+    [weakSelf.progressView setHidden:YES animated:YES completion:nil];
+  }];
+}
+~~~
 <!--</div>-->

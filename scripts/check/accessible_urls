@@ -1,0 +1,56 @@
+#!/bin/bash
+#
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+readonly COMPONENT_DIR=$1
+
+# TODO: Remove this whitelist once our GitHub repo is publicly accessible.
+readonly WHITELIST_PATTERN1="github.com/material-components/material-components-ios"
+
+# Check source and documentation files.
+readonly FILES=$(find "$COMPONENT_DIR" -name '*.m' -or -name '*.h' -or -name '*.swift' -or -name '*.md')
+
+# Pull out a list of unique URLs found in the files.
+# TODO: A better URL matcher.
+readonly URL_PATTERN="http(s)?://[^'\" ()]+"
+readonly GREP_OPTIONS="--extended-regexp --only-matching"
+readonly URLS=$(grep $GREP_OPTIONS --no-filename "$URL_PATTERN" $FILES | sort -u)
+
+# Test each URL for basic accessibility. 
+# http://stackoverflow.com/questions/12199059/how-to-check-if-an-url-exists-with-the-shell-and-probably-curl
+readonly CURL_OPTIONS="--fail --silent --location --range 0-1"
+success=1
+for url in $URLS; do 
+  # Skip explicitly whitelisted URLs.
+  if [[ $url == *"$WHITELIST_PATTERN1"* ]]; then
+    continue
+  fi
+
+  curl $CURL_OPTIONS ${url} >> /dev/null
+  if [[ $? -ne 0 ]]; then
+    echo "Error: Could not access '$url'."
+    echo "Files with this URL include:"
+    grep $GREP_OPTIONS --files-with-matches "$url" $FILES
+    echo
+    success=0
+  fi
+done
+
+if [[ $success -eq 1 ]]; then
+  exit 0
+else 
+  exit -1
+fi
+

@@ -17,6 +17,7 @@
 #import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
 #import "MaterialOverlayWindow.h"
+#import "UIApplication+AppExtensions.h"
 #import "private/MDCSnackbarMessageInternal.h"
 #import "private/MDCSnackbarMessageView.h"
 #import "private/MDCSnackbarOverlayView.h"
@@ -52,6 +53,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  The view which will host our snackbar messages.
  */
 @property(nonatomic) MDCSnackbarOverlayView *overlayView;
+
+/**
+ The view which contains the overlayView.
+ */
+@property(nonatomic) UIView *presentationHostView;
 
 /**
  The currently-showing snackbar.
@@ -286,10 +292,13 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (void)activateOverlay:(UIView *)overlay {
   UIWindow *window = [self bestGuessWindow];
+  UIView *targetView = nil;
 
-  // If the application's window is an overlay window, take advantage of it. Otherwise, just add our
-  // overlay view into the main view controller's hierarchy.
-  if ([window isKindOfClass:[MDCOverlayWindow class]]) {
+  if (self.presentationHostView) {
+    targetView = self.presentationHostView;
+  } else if ([window isKindOfClass:[MDCOverlayWindow class]]) {
+    // If the application's window is an overlay window, take advantage of it. Otherwise, just add
+    // our overlay view into the main view controller's hierarchy.
     MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)window;
     [overlayWindow activateOverlay:overlay withLevel:UIWindowLevelNormal];
   } else {
@@ -298,8 +307,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     while ([topViewController presentedViewController]) {
       topViewController = [topViewController presentedViewController];
     }
-    UIView *targetView = [topViewController view];
+    targetView = [topViewController view];
+  }
 
+  if (targetView) {
     overlay.frame = targetView.bounds;
     overlay.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     overlay.translatesAutoresizingMaskIntoConstraints = YES;
@@ -309,7 +320,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 - (UIWindow *)bestGuessWindow {
-  UIApplication *application = [UIApplication sharedApplication];
+  UIApplication *application = [UIApplication mdc_safeSharedApplication];
 
   // Check all of the windows in existence for an overlay window, because that's what we prefer to
   // present in.
@@ -329,11 +340,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   }
 
   // Default to the key window, since we couldn't find anything better.
-  return [[UIApplication sharedApplication] keyWindow];
+  return [[UIApplication mdc_safeSharedApplication] keyWindow];
 }
 
 - (void)deactivateOverlay:(UIView *)overlay {
-  UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+  UIWindow *window = [[UIApplication mdc_safeSharedApplication] keyWindow];
   if ([window isKindOfClass:[MDCOverlayWindow class]]) {
     MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)window;
     [overlayWindow deactivateOverlay:overlay];
@@ -473,6 +484,13 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   });
 }
 
++ (void)setPresentationHostView:(UIView *)hostView {
+  NSAssert([NSThread isMainThread], @"setPresentationHostView must be called on main thread.");
+
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  manager.presentationHostView = hostView;
+}
+
 + (void)dismissAndCallCompletionBlocksWithCategory:(NSString *)category {
   // Snag a copy now, we'll use that internally.
   NSString *categoryToDismiss = [category copy];
@@ -485,7 +503,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 + (void)setBottomOffset:(CGFloat)offset {
-  NSParameterAssert([NSThread isMainThread]);
+  NSAssert([NSThread isMainThread], @"setBottomOffset must be called on main thread.");
 
   MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
   manager.overlayView.bottomOffset = offset;

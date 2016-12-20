@@ -14,22 +14,35 @@
  limitations under the License.
  */
 
-#import "MDCCatalogTileData.h"
-#import "MDCCatalogTileDataActivityIndicator.h"
-#import "MDCCatalogTileDataAppBar.h"
-#import "MDCCatalogTileDataButtonBar.h"
-#import "MDCCatalogTileDataButtons.h"
-#import "MDCCatalogTileDataCollections.h"
-#import "MDCCatalogTileDataFeatureHighlight.h"
-#import "MDCCatalogTileDataFlexibleHeader.h"
-#import "MDCCatalogTileDataHeaderStackView.h"
-#import "MDCCatalogTileDataInk.h"
-#import "MDCCatalogTileDataMisc.h"
-#import "MDCCatalogTileDataNavigationBar.h"
-#import "MDCCatalogTileDataPageControl.h"
-#import "MDCCatalogTileDataShadowLayer.h"
-#import "MDCCatalogTileDataSlider.h"
-#import "MDCCatalogTileDataSnackbar.h"
-#import "MDCCatalogTileDataSpritedAnimationView.h"
-#import "MDCCatalogTileDataSwitch.h"
-#import "MDCCatalogTileDataTypography.h"
+#import <UIKit/UIKit.h>
+
+/** A function that will perform drawing operations in @c frame. */
+typedef void (*MDCDrawFunc)(CGRect);
+
+/** Render the drawing operations in @c drawFunc into a new image. */
+UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc);
+
+/* Draw various tiles. */
+void MDCCatalogDrawActivityIndicatorTile(CGRect frame);
+void MDCCatalogDrawAnimationTimingTile(CGRect frame);
+void MDCCatalogDrawAppBarTile(CGRect frame);
+void MDCCatalogDrawButtonBarTile(CGRect frame);
+void MDCCatalogDrawButtonsTile(CGRect frame);
+void MDCCatalogDrawCollectionCellsTile(CGRect frame);
+void MDCCatalogDrawCollectionsTile(CGRect frame);
+void MDCCatalogDrawDialogsTile(CGRect frame);
+void MDCCatalogDrawFeatureHighlightTile(CGRect frame);
+void MDCCatalogDrawFlexibleHeaderTile(CGRect frame);
+void MDCCatalogDrawHeaderStackViewTile(CGRect frame);
+void MDCCatalogDrawInkTile(CGRect frame);
+void MDCCatalogDrawMiscTile(CGRect frame);
+void MDCCatalogDrawNavigationBarTile(CGRect frame);
+void MDCCatalogDrawOverlayWindow(CGRect frame);
+void MDCCatalogDrawPageControlTile(CGRect frame);
+void MDCCatalogDrawPalettesTile(CGRect frame);
+void MDCCatalogDrawProgressViewTile(CGRect frame);
+void MDCCatalogDrawShadowLayerTile(CGRect frame);
+void MDCCatalogDrawSliderTile(CGRect frame);
+void MDCCatalogDrawSnackbarTile(CGRect frame);
+void MDCCatalogDrawSwitchTile(CGRect frame);
+void MDCCatalogDrawTypographyTile(CGRect frame);

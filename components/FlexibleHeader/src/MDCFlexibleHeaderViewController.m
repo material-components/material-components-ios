@@ -32,7 +32,27 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
                                  options:MDFTextAccessibilityOptionsNone];
 }
 
+static NSString *const MDCFlexibleHeaderViewControllerHeaderViewKey =
+    @"MDCFlexibleHeaderViewControllerHeaderViewKey";
+static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
+    @"MDCFlexibleHeaderViewControllerLayoutDelegateKey";
+
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
+
+/**
+ The current height offset of the flexible header controller with the addition of the current status
+ bar state at any given time.
+
+ This property is used to determine the bottom point of the |flexibleHeaderView| within the window.
+ */
+@property(nonatomic) CGFloat flexibleHeaderViewControllerHeightOffset;
+
+/**
+ The NSLayoutConstraint attached to the flexible header view controller's parentViewController's
+ topLayoutGuide.
+*/
+@property(nonatomic, weak) id topLayoutGuideTopConstraint;
+
 @end
 
 @implementation MDCFlexibleHeaderViewController
@@ -40,13 +60,38 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    MDCFlexibleHeaderView *headerView =
-        [[MDCFlexibleHeaderView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    headerView.delegate = self;
-    _headerView = headerView;
+    [self commonMDCFlexibleHeaderViewControllerInit];
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerHeaderViewKey]) {
+      _headerView = [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerHeaderViewKey];
+    }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey]) {
+      _layoutDelegate = [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
+    }
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  [aCoder encodeObject:self.headerView forKey:MDCFlexibleHeaderViewControllerHeaderViewKey];
+  [aCoder encodeConditionalObject:self.layoutDelegate
+                           forKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
+}
+
+- (void)commonMDCFlexibleHeaderViewControllerInit {
+  MDCFlexibleHeaderView *headerView =
+      [[MDCFlexibleHeaderView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  headerView.delegate = self;
+  _headerView = headerView;
 }
 
 - (void)loadView {
@@ -73,6 +118,17 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+
+  for (NSLayoutConstraint *constraint in self.parentViewController.view.constraints) {
+    // Because topLayoutGuide is a readonly property on a viewController we must manipulate
+    // the present one via the NSLayoutConstraint attached to it. Thus we keep reference to it.
+    if (constraint.firstItem == self.parentViewController.topLayoutGuide && constraint.secondItem == nil) {
+      self.topLayoutGuideTopConstraint = constraint;
+    }
+  }
+
+  // On moving to parentViewController, we calculate the height
+  self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
 
 #if DEBUG
   NSAssert(![self.parentViewController.parentViewController
@@ -160,6 +216,17 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
   }
 }
 
+- (void)updateTopLayoutGuide {
+  [self.topLayoutGuideTopConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+}
+
+- (CGFloat)headerViewControllerHeight {
+  CGFloat height =
+      MAX(_headerView.frame.origin.y + _headerView.frame.size.height,
+          _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ? 0 : 20);
+  return height;
+}
+
 #pragma mark MDCFlexibleHeaderViewDelegate
 
 - (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:(MDCFlexibleHeaderView *)headerView {
@@ -167,6 +234,14 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
 }
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
+
+  // Whenever the flexibleHeaderView's frame changes, we update the value of the height offset
+  self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
+
+  // We must change the constant of the constraint attached to our parentViewController's
+  // topLayoutGuide to trigger the re-layout of its subviews
+  [self.topLayoutGuideTopConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];
 }

@@ -20,7 +20,7 @@ import MaterialComponents
 // Tests confirming that the flexible header view's frame correctly reflects the target scroll
 // view's position immediately after being registered.
 //
-// Based on issue https://github.com/google/material-components-ios/issues/176
+// Based on issue https://github.com/material-components/material-components-ios/issues/176
 class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
   var fhvc: MDCFlexibleHeaderViewController!
@@ -30,7 +30,7 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
     fhvc.headerView.maximumHeight = fhvc.headerView.minimumHeight + 100
   }
 
-  func registerToParentViewController(parent: UIViewController) {
+  func registerToParentViewController(_ parent: UIViewController) {
     parent.addChildViewController(fhvc)
     parent.view.addSubview(fhvc.view)
   }
@@ -41,7 +41,7 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
     // NOTE: No tracking scroll view
 
-    fhvc.didMoveToParentViewController(parentVc)
+    fhvc.didMove(toParentViewController: parentVc)
 
     XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.minimumHeight)
   }
@@ -52,13 +52,13 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
     // iOS 8.3 and 8.4 do not provide a default frame for the view controller. The contentOffset for
     // a UIScrollView will only be modified if its bounds is sufficiently large, so we recreate the
     // expected behavior here.
-    parentVc.view.frame = UIScreen.mainScreen().bounds
+    parentVc.view.frame = UIScreen.main.bounds
 
     self.registerToParentViewController(parentVc)
 
     fhvc.headerView.trackingScrollView = parentVc.tableView
 
-    fhvc.didMoveToParentViewController(parentVc)
+    fhvc.didMove(toParentViewController: parentVc)
 
     XCTAssertEqual(fhvc.headerView.trackingScrollView!.contentOffset.y, -fhvc.headerView.maximumHeight)
     XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.maximumHeight)

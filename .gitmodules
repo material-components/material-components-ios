@@ -1,15 +1,9 @@
-[submodule "scripts/external/arc-xcode-test-engine"]
-	path = scripts/external/arc-xcode-test-engine
-	url = git@github.com:google/arc-xcode-test-engine.git
 [submodule "scripts/external/clang-format-linter"]
 	path = scripts/external/clang-format-linter
-	url = git@github.com:vhbit/clang-format-linter.git
-[submodule "scripts/external/arc-proselint"]
-	path = scripts/external/arc-proselint
-	url = git@github.com:google/arc-proselint.git
-[submodule "scripts/external/arc-jazzy-linter"]
-	path = scripts/external/arc-jazzy-linter
-	url = git@github.com:google/arc-jazzy-linter.git
-[submodule "scripts/external/arc-regex-line-length-linter"]
-	path = scripts/external/arc-regex-line-length-linter
-	url = git@github.com:google/arc-regex-line-length-linter.git
+	url = https://github.com/vhbit/clang-format-linter.git
+[submodule "scripts/external/material-motion-apidiff"]
+	path = scripts/external/material-motion-apidiff
+	url = https://github.com/material-motion/material-motion-apidiff.git
+[submodule "catalog/third_party/EarlGrey"]
+	path = catalog/third_party/EarlGrey
+	url = https://github.com/google/EarlGrey.git 

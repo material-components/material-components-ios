@@ -1,17 +1,7 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/CollectionLayoutAttributes/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/CollectionLayoutAttributes">GitHub</a> for README documentation.{% endif %}-->
-
 # Collection Layout Attributes
 
 Allows passing layout attributes to the cells and supplementary views.
 <!--{: .intro :}-->
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/CollectionLayoutAttributes/apidocs/Classes/MDCCollectionViewLayoutAttributes.html">MDCCollectionViewLayoutAttributes</a></li>
-</ul>
 
 - - -
 
@@ -45,14 +35,14 @@ pod install
 Before using Collection Layout Attributes, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-#import "MaterialCollectionLayoutAttributes.h"
-~~~
-
 #### Swift
 ~~~ swift
 import MaterialComponents.MaterialCollectionLayoutAttributes
+~~~
+
+#### Objective-C
+~~~ objc
+#import "MaterialCollectionLayoutAttributes.h"
 ~~~
 <!--</div>-->
 
@@ -61,6 +51,19 @@ view layout. Override the `-applyLayoutAttributes` method of any `UICollectionRe
 `UICollectionViewCell` subclasses, then apply any of the properties of the attributes class.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+  super.apply(layoutAttributes)
+  if let attr = layoutAttributes as? MDCCollectionViewLayoutAttributes {
+    if (attr.representedElementCategory == .cell) {
+
+      // Example to set a background image to the cell background view.
+      self.backgroundView = UIImageView(image: attr.backgroundImage)
+    }
+  }
+}
+~~~
 #### Objective-C
 ~~~ objc
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
@@ -71,20 +74,6 @@ view layout. Override the `-applyLayoutAttributes` method of any `UICollectionRe
 
       // Example to set a background image to the cell background view.
       self.backgroundView = [[UIImageView alloc] initWithImage:attr.backgroundImage];
-    }
-  }
-}
-~~~
-
-#### Swift
-~~~ swift
-override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
-  super.applyLayoutAttributes(layoutAttributes)
-  if let attr = layoutAttributes as? MDCCollectionViewLayoutAttributes {
-    if (attr.representedElementCategory == .Cell) {
-
-      // Example to set a background image to the cell background view.
-      self.backgroundView = UIImageView(image: attr.backgroundImage)
     }
   }
 }

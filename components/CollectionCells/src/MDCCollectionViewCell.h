@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {
 
 /**
  The MDCCollectionViewCell class provides an implementation of UICollectionViewCell that
- supports Material design layout and styling.
+ supports Material Design layout and styling.
  */
 @interface MDCCollectionViewCell : UICollectionViewCell
 
@@ -76,6 +76,13 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {
  When set, the cell will shows/hide editing controls with/without animation.
  */
 @property(nonatomic, getter=isEditing) BOOL editing;
+
+/**
+ The color for the editing selector when the cell is selected.
+
+ The default is a red color.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *editingSelectorColor UI_APPEARANCE_SELECTOR;
 
 /**
  Set the editing state with optional animations.

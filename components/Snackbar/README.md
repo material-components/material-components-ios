@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Snackbar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Snackbar">GitHub</a> for README documentation.{% endif %}-->
-
 # Snackbar
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/snackbar.mp4" autoplay loop></video>
-  [![Switch](docs/assets/snackbar.png)](docs/assets/snackbar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Snackbar](docs/assets/snackbar.png)](docs/assets/snackbar.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/snackbar.mp4" autoplay loop></video></div>{% endif %}-->
 
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
@@ -73,11 +68,17 @@ visible to the user.
 
 Before using Snackbar, you'll need to import it:
 
-#### Objective-C
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents.MaterialSnackbar
+~~~
 
+#### Objective-C
 ~~~ objc
 #import "MaterialSnackbar.h"
 ~~~
+<!--</div>-->
 
 - - -
 
@@ -86,6 +87,14 @@ Before using Snackbar, you'll need to import it:
 ### Display a Snackbar Message
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+let message = MDCSnackbarMessage()
+message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
+MDCSnackbarManager.show(message)
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -93,19 +102,25 @@ MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
 message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
 [MDCSnackbarManager showMessage:message];
 ~~~
-
-#### Swift
-
-~~~ swift
-let message = MDCSnackbarMessage()
-message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
-MDCSnackbarManager.showMessage(message)
-~~~
 <!--</div>-->
 
 ### Display a Snackbar Message with an Action
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+let action = MDCSnackbarMessageAction()
+let actionHandler = {() in
+  let answerMessage = MDCSnackbarMessage()
+  answerMessage.text = "Fascinating"
+  MDCSnackbarManager.show(answerMessage)
+}
+action.handler = actionHandler
+action.title = "OK"
+message.action = action
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -118,19 +133,5 @@ void (^actionHandler)() = ^() {
 action.handler = actionHandler;
 action.title = @"Answer";
 message.action = action;
-~~~
-
-#### Swift
-
-~~~ swift
-let action = MDCSnackbarMessageAction()
-let actionHandler = {() in
-  let answerMessage = MDCSnackbarMessage()
-  answerMessage.text = "Fascinating"
-  MDCSnackbarManager.showMessage(answerMessage)
-}
-action.handler = actionHandler
-action.title = "OK"
-message.action = action
 ~~~
 <!--</div>-->

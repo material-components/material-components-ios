@@ -19,6 +19,7 @@
 #import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
 #import "MaterialInk.h"
+#import "MaterialRTL.h"
 #import "UIColor+MDC.h"
 
 static const CGFloat kAnimationDuration = 0.25f;
@@ -239,8 +240,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  CGFloat dx = MIN(0, (self.bounds.size.height - kMinTouchSize) / 2);
-  CGRect rect = CGRectInset(self.bounds, dx, dx);
+  CGFloat dx = MIN(0, kDefaultThumbRadius - kMinTouchSize / 2);
+  CGFloat dy = MIN(0, (self.bounds.size.height - kMinTouchSize) / 2);
+  CGRect rect = CGRectInset(self.bounds, dx, dy);
   return CGRectContainsPoint(rect, point);
 }
 
@@ -803,7 +805,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // particularly when that view's edges fall on a subpixel. Adding the extra pt on the top and
   // bottom accounts for this case here, and ensures that none of the _trackView appears where it
   // isn't supposed to.
-  // This fixes https://github.com/google/material-components-ios/issues/566 for all orientations.
+  // This fixes https://github.com/material-components/material-components-ios/issues/566 for all orientations.
   CGRect maskFrame = CGRectMake(0, -1, CGRectGetWidth(self.bounds), _trackHeight + 2);
 
   CGMutablePathRef path = CGPathCreateMutable();
@@ -863,6 +865,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (CGFloat)valueForThumbPosition:(CGPoint)position {
   CGFloat relValue = (position.x - _thumbRadius) / self.thumbPanRange;
   relValue = MAX(0, MIN(relValue, 1));
+  // For RTL we invert the value
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    relValue = 1 - relValue;
+  }
   return (1 - relValue) * _minimumValue + relValue * _maximumValue;
 }
 
@@ -902,7 +908,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (CGFloatEqual(_minimumValue, _maximumValue)) {
     return _minimumValue;
   }
-  return (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
+  CGFloat relValue = (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
+  // For RTL we invert the value
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    relValue = 1 - relValue;
+  }
+  return relValue;
 }
 
 - (CGFloat)closestValueToTargetValue:(CGFloat)targetValue {
@@ -936,8 +947,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  -beginDraggingWithTouch:withEvent:, -continueDraggingWithTouch:withEvent:, etc. This is because
  with those events, we are forced to disable user interaction on our subviews else the events could
  be swallowed up by their event handlers and not ours. We can't do this because the we have an ink
- controller attached to the thumb view for MDCSwitch, and that needs to receive touch events in
- order to know when to display ink.
+ controller attached to the thumb view, and that needs to receive touch events in order to know when
+ to display ink.
 
  Using -touchesBegan:, etc. solves this problem because we can handle touches ourselves as well as
  continue to have them pass through to the contained thumb view. So we get our custom event handling

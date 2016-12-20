@@ -21,21 +21,21 @@ MDC_ROOT="$(git rev-parse --show-toplevel | tail -n1)"; popd >> /dev/null
 cd $MDC_ROOT
 
 if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
-echo "Please cut a release first by running scripts/release/cut."
-exit 1
+  echo "Please cut a release first by running scripts/release/cut."
+  exit 1
 fi
 
 validate_commit() {
-git cat-file -t $1 >> /dev/null 2> /dev/null || { echo "$1 is not a valid commit."; exit 1; }
+  git cat-file -t $1 >> /dev/null 2> /dev/null || { echo "$1 is not a valid commit."; exit 1; }
 }
 
 # Verify commits
-old_commit=$(git rev-list -n 1 origin/master)
+old_commit=$(git rev-list -n 1 origin/stable)
 new_commit=$(git rev-list -n 1 release-candidate)
 
 if [[ -z "$old_commit" || -z "$new_commit" ]]; then
-# Change message to say commits are not present
-exit 0
+  # Change message to say commits are not present
+  exit 0
 fi
 
 validate_commit $old_commit
@@ -55,10 +55,10 @@ NEW_ROOT_PATH="$TMP_PATH/new"
 old_header_search_paths=""
 new_header_search_paths=""
 for d in $NEW_ROOT_PATH/components/*/src; do
-folder=$(dirname $d)
-component=$(basename $folder)
-old_header_search_paths="$old_header_search_paths --oldargs -I$OLD_ROOT_PATH/components/$component/src/ "
-new_header_search_paths="$new_header_search_paths --newargs -I$NEW_ROOT_PATH/components/$component/src/ "
+  folder=$(dirname $d)
+  component=$(basename $folder)
+  old_header_search_paths="$old_header_search_paths --oldargs -I$OLD_ROOT_PATH/components/$component/src/ "
+  new_header_search_paths="$new_header_search_paths --newargs -I$NEW_ROOT_PATH/components/$component/src/ "
 done
 
 echo "## API diffs"
@@ -68,32 +68,36 @@ echo
 echo "    scripts/api_diff"
 
 path_api_diff() {
-$SCRIPTS_PATH/material-motion-apidiff/src/pathapidiff "$@"
+  $SCRIPTS_PATH/external/material-motion-apidiff/src/pathapidiff "$@"
 }
 
 # Run new pathdiff script on each umbrella header in array
 for d in $NEW_ROOT_PATH/components/*/src; do
-folder=$(dirname $d)
-component=$(basename $folder)
+  folder=$(dirname $d)
+  component=$(basename $folder)
 
-echo
-echo "### $component"
-echo
+  echo
+  echo "### $component"
+  echo
 
-if [ ! -d "$OLD_ROOT_PATH/components/$component/src" ]; then
-echo "**New component.**"
-continue
-fi
+  if [ ! -d "$OLD_ROOT_PATH/components/$component/src" ]; then
+    echo "**New component.**"
+    continue
+  fi
 
-path_api_diff \
-$OLD_ROOT_PATH \
-$NEW_ROOT_PATH \
-objc \
-"/components/$component/src/Material$component.h"
+  if [ $component == "Ink" ] || [ $component == "Snackbar" ]; then
+    echo "**THIS COMPONENT DIFF MUST BE DONE MANUALLY**"
+  else
+    path_api_diff \
+    $OLD_ROOT_PATH \
+    $NEW_ROOT_PATH \
+    objc \
+    "/components/$component/src/Material$component.h"
+  fi
 done
 
 if [ ! -z "$TMP_PATH" ]; then
-echo "Cleaning up..."
-rm -rf $TMP_PATH
+  echo "Cleaning up..."
+  rm -rf $TMP_PATH
 fi
 

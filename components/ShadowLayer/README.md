@@ -1,15 +1,10 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ShadowLayer">GitHub</a> for README documentation.{% endif %}-->
-
 # Shadow Layer
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/shadow.mp4" autoplay loop></video>
-  [![Shadow Layer](docs/assets/shadow.png)](docs/assets/shadow.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Shadow Layer](docs/assets/shadow_layer.png)](docs/assets/shadow_layer.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/shadow_layer.mp4" autoplay loop></video></div>{% endif %}-->
 
-Shadow Layer implements the material design specifications for elevation and shadows.
+Shadow Layer implements the Material Design specifications for elevation and shadows.
 By simulating the physical properties of paper, elevation and light source, shadows give
 visual depth to components. Shadow Layer provides an elevation property which affects
 a shadow's depth and strength, automatically handling shadow diffusion based on the shadow's
@@ -33,7 +28,7 @@ This is enabled by default and the internal portion of the layer is cut out.
 ### MDCShadowMetrics
 
 `MDCShadowMetrics` is a series of properties used to set `MDCShadowLayer`. `MDCShadowLayer` consists
-of two distinct layers. The overlay of these two layers generates a single material design
+of two distinct layers. The overlay of these two layers generates a single Material Design
 shadow that adheres to defined height and light source principles.
 
 ### Design Specifications
@@ -41,14 +36,6 @@ shadow that adheres to defined height and light source principles.
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
 </ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/apidocs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/apidocs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
-</ul>
-
 
 - - -
 
@@ -84,26 +71,35 @@ pod install
 Before using Shadow Layer, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-#import "MaterialShadowLayer.h"
-~~~
-
 #### Swift
 
 ~~~ swift
 import MaterialComponents
 ~~~
 
+#### Objective-C
+
+~~~ objc
+#import "MaterialShadowLayer.h"
+~~~
 <!--</div>-->
 
 
-Example of a custom button based on UIButton with material design shadows:
+Example of a custom button based on UIButton with Material Design shadows:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+class ShadowButton: UIButton {
+  
+  override class var layerClass: AnyClass {
+    return MDCShadowLayer.self
+  }
 
-### Objective C
+}
+~~~
+
+#### Objective C
 ~~~ objc
 @interface ShadowButton : UIButton
 
@@ -117,53 +113,58 @@ Example of a custom button based on UIButton with material design shadows:
 
 @end
 ~~~
-
-### Swift
-~~~ swift
-class ShadowButton: UIButton {
-
-  override class func layerClass() -> AnyClass {
-    return MDCShadowLayer.self
-  }
-
-}
-~~~
-
 <!--</div>-->
 
 
 Add the custom button to view:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let button: ShadowButton = ShadowButton.init(type: .system)
+button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
+button.setTitle("Button", for: .normal)
+let buttonLayer = button.layer as! MDCShadowLayer
+buttonLayer.elevation = 6.0
+addSubview(button)
 
-### Objective C
+~~~
+
+#### Objective C
 ~~~ objc
 ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
 button.frame = CGRectMake(100, 100, 200, 50);
 [button setTitle: @"Button" forState:UIControlStateNormal];
 [(MDCShadowLayer *)button.layer setElevation:6.f];
-[self.view addSubview:button];
+[self addSubview:button];
 
 ~~~
-
-### Swift
-~~~ swift
-let button: ShadowButton = ShadowButton.init(type: UIButtonType.System)
-button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
-button.setTitle("Button", forState: UIControlState.Normal)
-(button.layer as! MDCShadowLayer).setElevation(6.0)
-self.addSubview(button)
-
-~~~
-
 <!--</div>-->
 
 
 Creating a custom UIView with a shadow:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+class ShadowedView: UIView {
 
-### Objective C
+  override class var layerClass: AnyClass {
+    return MDCShadowLayer.self
+  }
+
+  var shadowLayer: MDCShadowLayer {
+    return self.layer as! MDCShadowLayer
+  }
+
+  func setElevation(points: CGFloat) {
+    self.shadowLayer.elevation = points
+  }
+
+}
+~~~
+
+#### Objective C
 ~~~ objc
 @interface ShadowedView : UIView
 @end
@@ -184,26 +185,6 @@ Creating a custom UIView with a shadow:
 
 @end
 ~~~
-
-### Swift
-~~~ swift
-class ShadowedView: UIView {
-
-  override class func layerClass() -> AnyClass {
-    return MDCShadowLayer.self
-  }
-
-  var shadowLayer: MDCShadowLayer {
-    return self.layer as! MDCShadowLayer
-  }
-
-  func setElevation(points: CGFloat) {
-    self.shadowLayer.elevation = points
-  }
-
-}
-~~~
-
 <!--</div>-->
 
 
@@ -211,23 +192,21 @@ To improve performance, consider rasterizing MDCShadowLayer when the view using 
 animating or changing size.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
 
-### Objective C
+layer.shouldRasterize = true
+layer.rasterizationScale = UIScreen.main.scale
+
+~~~
+
+#### Objective C
 ~~~ objc
 
 self.layer.shouldRasterize = YES;
 self.layer.rasterizationScale = [UIScreen mainScreen].scale;
 
 ~~~
-
-### Swift
-~~~ swift
-
-self.layer.shouldRasterize = true;
-self.layer.rasterizationScale = UIScreen.mainScreen().scale
-
-~~~
-
 <!--</div>-->
 
 Disable rasterization before animating MDCShadowLayer.

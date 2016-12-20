@@ -1,8 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/FeatureHighlight/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/FeatureHighlight">GitHub</a> for README documentation.{% endif %}-->
-
 # Feature Highlight
+
+<!--{% if site.link_to_site == "true" %}-->
+[![Feature Highlight](docs/assets/feature_highlight.png)](docs/assets/feature_highlight.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/feature_highlight.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
 
@@ -44,77 +44,77 @@ pod install
 Before using Feature Highlight, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents.MaterialFeatureHighlight
+~~~
+
 #### Objective-C
 ~~~ objc
 #import "MaterialFeatureHighlight.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
 ### Highlighting a view
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let completion = {(accepted: Bool) in
+  // perform analytics here
+  // and record whether the highlight was accepted
+}
+
+let highlightController = MDCFeatureHighlightViewController(highlightedView: viewToHighlight,
+                                                            completion: completion)
+highlightController.titleText = "Just how you want it"
+highlightController.bodyText = "Tap the menu button to switch accounts, change settings & more."
+highlightController.outerHighlightColor =
+  UIColor.blue.withAlphaComponent(kMDCFeatureHighlightOuterHighlightAlpha)
+present(highlightController, animated: true, completion:nil)
+~~~
+
 #### Objective-C
 ~~~ objc
-MDCFeatureHighlightCompletion completion = ^(accepted) {
+MDCFeatureHighlightCompletion completion = ^(BOOL accepted) {
   // perform analytics here
   // and record whether the highlight was accepted
 };
 
 MDCFeatureHighlightViewController *highlightController =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:highlightedView
-                                                              completion:completion];
+[[MDCFeatureHighlightViewController alloc] initWithHighlightedView:viewToHighlight
+                                                        completion:completion];
 highlightController.titleText = @"Just how you want it";
 highlightController.bodyText = @"Tap the menu button to switch accounts, change settings & more.";
-highlightController.outerHighlightColor = 
-    [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightBackgroundAlpha]
+highlightController.outerHighlightColor =
+    [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
 [self presentViewController:highlightController animated:YES completion:nil];
-~~~
-
-#### Swift
-~~~ swift
-let completion = {(accepted) in
-  // perform analytics here
-  // and record whether the highlight was accepted
-}
-let highlightController = MDCFeatureHighlightViewController.init(highlightedView: highlightedView
-                                                                 completion: completion)
-highlightController.titleText = "Just how you want it"
-highlightController.bodyText = "Tap the menu button to switch accounts, change settings & more."
-highlightController.outerHighlightColor = 
-    UIColor.blue.withAlphaComponent(kMDCFeatureHighlightBackgroundAlpha)
-self.present(viewController: highlightController, animated: true)
 ~~~
 <!--</div>-->
 
 Often when highlighting a view you will want to display a different view to the one you are highlighting. For example, flipping the primary and secondary colors in the presented version.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let displayedButton = UIButton(type: .system)
+displayedButton.setTitle(highlightedButton.title(for: .normal), for: .normal)
+displayedButton.setTitleColor(highlightedButton.backgroundColor, for: .normal)
+displayedButton.backgroundColor = highlightedButton.titleColor(for: .normal)
+
+let highlightController = MDCFeatureHighlightViewController(highlightedView: highlightedButton, andShow: displayedButton, completion: completion)
+~~~
+
 #### Objective-C
 ~~~ objc
-UIButton *displayedButton = [UIButton buttonType:UIButtonTypeSystem];
-[displayedButton setTitle:[highlightedButton titleForState:UIControlStateNormal] 
+UIButton *displayedButton = [UIButton buttonWithType:UIButtonTypeSystem];
+[displayedButton setTitle:[highlightedButton titleForState:UIControlStateNormal]
                  forState:UIControlStateNormal];
 [displayedButton setTitleColor:highlightedButton.backgroundColor forState:UIControlStateNormal];
 displayedButton.backgroundColor = [highlightedButton titleColorForState:UIControlStateNormal];
 MDCFeatureHighlightViewController *highlightController =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:highlightedButton
-                                                             andShowView:displayedView
-                                                              completion:completion];
-~~~
-
-~~~ swift
-let displayedButton = UIButton(type: .system)
-displayedButton.setTitle(highlightedButton.titleForState(.normal), for: .normal)
-displayedButton.setTitleColor(highlightedButton.backgroundColor, for: .normal)
-displayedButton.backgroundColor = highlightedButton.titleColorForState(.normal)
-
-let highlightController = 
-    MDCFeatureHighlightViewController.init(highlightedView: highlightedButton, 
-                                           displayedView: displayedButton)
+[[MDCFeatureHighlightViewController alloc] initWithHighlightedView:highlightedButton
+                                                       andShowView:displayedButton
+                                                        completion:completion];
 ~~~
 <!--</div>-->

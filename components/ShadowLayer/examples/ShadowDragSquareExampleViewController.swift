@@ -36,7 +36,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
 
   // We store the offset from the initial touch to the center of the
   // view to properly update its location when dragged.
-  var movingViewOffset = CGPointZero
+  var movingViewOffset = CGPoint.zero
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -48,24 +48,24 @@ class ShadowDragSquareExampleViewController: UIViewController {
     self.blueView.addGestureRecognizer(longPressRecogniser)
   }
 
-  func longPressedInView(sender:UILongPressGestureRecognizer) {
+  func longPressedInView(_ sender:UILongPressGestureRecognizer) {
     // Elevation of the view is changed to indicate that it has been pressed or released.
     // view.center is changed to follow the touch events.
-    if (sender.state == .Began) {
+    if (sender.state == .began) {
       self.blueView.setElevation(kSelectedCardElevation)
 
-      let selfPoint = sender.locationInView(self.view)
+      let selfPoint = sender.location(in: self.view)
       movingViewOffset.x = selfPoint.x - self.blueView.center.x
       movingViewOffset.y = selfPoint.y - self.blueView.center.y
-    } else if (sender.state == .Changed) {
-      let selfPoint = sender.locationInView(self.view)
+    } else if (sender.state == .changed) {
+      let selfPoint = sender.location(in: self.view)
       let newCenterPoint =
           CGPoint(x: selfPoint.x - movingViewOffset.x, y: selfPoint.y - movingViewOffset.y)
       self.blueView.center = newCenterPoint
-    } else if (sender.state == .Ended) {
+    } else if (sender.state == .ended) {
       self.blueView.setElevation(kRestingCardElevation)
 
-      movingViewOffset = CGPointZero
+      movingViewOffset = CGPoint.zero
     }
   }
 
@@ -80,7 +80,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
   }
 
   class func catalogDescription() -> String {
-    return "Shadow Layer implements the material design specifications for elevation and shadows."
+    return "Shadow Layer implements the Material Design specifications for elevation and shadows."
   }
 
   class func catalogIsPrimaryDemo() -> Bool {

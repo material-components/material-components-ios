@@ -35,7 +35,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"Demonstrate material spec'd alert controllers.";
+  return @"Demonstrate Material spec'd alert controllers.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

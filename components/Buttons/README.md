@@ -1,15 +1,10 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Buttons">GitHub</a> for README documentation.{% endif %}-->
-
 # Buttons
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/buttons.mp4" autoplay loop></video>
-  [![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/buttons.mp4" autoplay loop></video></div>{% endif %}-->
 
-Buttons is a collection of material design buttons, including a flat button, a raised button and a
+Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
 <!--{: .intro }-->
 
@@ -19,16 +14,6 @@ floating action button.
 <ul class="icon-list">
   <li class="icon-link"><a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a></li>
 </ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes.html#/c:objc(cs)MDCRaisedButton">MDCRaisedButton</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes/MDCButton.html">MDCButton</a></li>
-</ul>
-
 
 - - -
 
@@ -87,15 +72,15 @@ pod install
 Before using a Button, you'll need to import the button you want to use:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-#import "MDCButton.h"
-~~~
-
 #### Swift
 ~~~ swift
 import MaterialComponents
+~~~
+
+#### Objective-C
+
+~~~ objc
+#import "MaterialButtons.h"
 ~~~
 <!--</div>-->
 
@@ -107,7 +92,7 @@ For non-flat buttons, the background color is determined from the enabled, disab
 disabled-dark background color properties. Flat buttons have a transparent background.
 
 ### Disabled state
-When disabled, material buttons take on a specific semi-transparent appearance which depends on
+When disabled, Material buttons take on a specific semi-transparent appearance which depends on
 whether the button is on a light background or a dark background.
 
 ### Title and title color
@@ -127,6 +112,16 @@ simultaneously interacting with a button and other UI elements.
 ### Create a Flat Button
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let flatButton = MDCFlatButton()
+flatButton.customTitleColor = UIColor.gray
+flatButton.setTitle("Tap me", for: .normal)
+flatButton.sizeToFit()
+flatButton.addTarget(self, action: "tap:", for: .touchUpInside)
+self.view.addSubview(flatButton)
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -139,16 +134,6 @@ MDCFlatButton *flatButton = [MDCFlatButton new];
      forControlEvents:UIControlEventTouchUpInside];
 [self.view addSubview:flatButton];
 ~~~
-
-#### Swift
-~~~ swift
-let flatButton = MDCFlatButton()
-flatButton.customTitleColor = UIColor.grayColor()
-flatButton.setTitle("Tap me", forState: .Normal)
-flatButton.sizeToFit()
-flatButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
-self.view.addSubview(flatButton)
-~~~
 <!--</div>-->
 
 
@@ -159,29 +144,30 @@ Create a Raised button and change its default elevation.
 The default elevation for _raised buttons_ in resting state is 2 dp.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let raisedButton = MDCRaisedButton()
+// See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+
+raisedButton.setElevation(4, for: .normal)
+raisedButton.setTitle("Tap Me Too", for: .normal)
+raisedButton.sizeToFit()
+raisedButton.addTarget(self, action: "tap:", for: .touchUpInside)
+self.view.addSubview(raisedButton)
+~~~
+
 #### Objective-C
 
 ~~~ objc
 MDCRaisedButton *raisedButton = [MDCRaisedButton new];
 // See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+
 [raisedButton setElevation:4.0f forState:UIControlStateNormal];
 [raisedButton setTitle:@"Tap Me Too" forState:UIControlStateNormal];
 [raisedButton sizeToFit];
 [raisedButton addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
 [self.view addSubview:raisedButton];
 ~~~
-
-#### Swift
-~~~ swift
-let raisedButton = MDCRaisedButton()
-// See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
-raisedButton.setElevation(4, forState: .Normal)
-raisedButton.setTitle("Tap Me Too", forState: .Normal)
-raisedButton.sizeToFit()
-raisedButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
-self.view.addSubview(raisedButton)
-~~~
-
 <!--</div>-->
 
 
@@ -189,6 +175,16 @@ self.view.addSubview(raisedButton)
 ### Create a Floating Action Button
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+let floatingButton = MDCFloatingButton()
+floatingButton.setTitle("+", for: .normal)
+floatingButton.sizeToFit()
+floatingButton.addTarget(self, action: "tap:", for: .touchUpInside)
+self.view.addSubview(floatingButton)
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -200,15 +196,4 @@ MDCFloatingButton *floatingButton = [MDCFloatingButton new];
          forControlEvents:UIControlEventTouchUpInside];
 [self.view addSubview:floatingButton];
 ~~~
-
-#### Swift
-
-~~~ swift
-let floatingButton = MDCFloatingButton()
-floatingButton.setTitle("+", forState: .Normal)
-floatingButton.sizeToFit()
-floatingButton.addTarget(self, action: "tap:", forControlEvents: .TouchUpInside)
-self.view.addSubview(floatingButton)
-~~~
-
 <!--</div>-->

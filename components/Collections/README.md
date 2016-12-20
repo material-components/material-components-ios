@@ -1,32 +1,16 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Collections">GitHub</a> for README documentation.{% endif %}-->
-
 # Collections
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/collections.mp4" autoplay loop></video>
-  [![App Bar](docs/assets/collections.png)](docs/assets/collections.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Collections](docs/assets/collections.png)](docs/assets/collections.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/collections.mp4" autoplay loop></video></div>{% endif %}-->
 
-Collection view classes that adhere to Material design layout and styling.
+Collection view classes that adhere to Material Design layout and styling.
 <!--{: .intro :}-->
 
 ### Material Design Specifications
 
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Classes/MDCCollectionViewController.html">MDCCollectionViewController</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Protocols/MDCCollectionViewEditing.html">MDCCollectionViewEditing</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Protocols/MDCCollectionViewEditingDelegate.html">MDCCollectionViewEditingDelegate</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Classes.html#/c:objc(cs)MDCCollectionViewFlowLayout">MDCCollectionViewFlowLayout</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Protocols/MDCCollectionViewStyling.html">MDCCollectionViewStyling</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Protocols/MDCCollectionViewStylingDelegate.html">MDCCollectionViewStylingDelegate</a></li>
 </ul>
 
 - - -
@@ -57,7 +41,7 @@ pod install
 ## Overview
 
 The Collections component consists of a set of collection view related classes that adhere to
-material design layout and styling. Typically you will subclass the `MDCCollectionViewController`,
+Material Design layout and styling. Typically you will subclass the `MDCCollectionViewController`,
 which in turn subclasses `UICollectionViewController`. This controller provides the collection view
 used as its content.
 
@@ -92,14 +76,14 @@ allowing your data to stay in sync with any edits.
 Before using Collections, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-#import "MaterialCollections.h"
-~~~
-
 #### Swift
 ~~~ swift
 import MaterialComponents.MaterialCollections
+~~~
+
+#### Objective-C
+~~~ objc
+#import "MaterialCollections.h"
 ~~~
 <!--</div>-->
 
@@ -111,14 +95,6 @@ subclass up and running.
 Step 1: **Subclass `MDCCollectionViewController` in your view controller interface**.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-#import "MaterialCollections.h"
-
-@interface MyCollectionsExample : MDCCollectionViewController
-@end
-~~~
-
 #### Swift
 ~~~ swift
 import MaterialComponents.MaterialCollections
@@ -126,41 +102,68 @@ import MaterialComponents.MaterialCollections
 class MyCollectionsExample: MDCCollectionViewController {
 }
 ~~~
+
+#### Objective-C
+~~~ objc
+#import "MaterialCollections.h"
+
+@interface MyCollectionsExample : MDCCollectionViewController
+@end
+~~~
 <!--</div>-->
 
 Step 2: **Setup your data**.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-colors = @[ @"red", @"blue", @"green", @"black", @"yellow", @"purple" ];
-~~~
-
 #### Swift
 ~~~ swift
 let colors = [ "red", "blue", "green", "black", "yellow", "purple" ]
+~~~
+
+#### Objective-C
+~~~ objc
+NSArray *colors = @[ @"red", @"blue", @"green", @"black", @"yellow", @"purple" ];
 ~~~
 <!--</div>-->
 
 Step 3: **Register a cell class**.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+self.collectionView?.register(MDCCollectionViewTextCell.self,
+                              forCellWithReuseIdentifier: reusableIdentifierItem)
+~~~
+
 #### Objective-C
 ~~~ objc
 [self.collectionView registerClass:[MDCCollectionViewTextCell class]
         forCellWithReuseIdentifier:kReusableIdentifierItem];
-~~~
-
-#### Swift
-~~~ swift
-self.collectionView?.registerClass(MDCCollectionViewTextCell.self,
-                                   forCellWithReuseIdentifier: reusableIdentifierItem)
 ~~~
 <!--</div>-->
 
 Step 4: **Override `UICollectionViewDataSource` protocol required methods**.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+override func collectionView(_ collectionView: UICollectionView,
+                             numberOfItemsInSection section: Int) -> Int {
+  return colors.count
+}
+
+override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+  var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifierItem, for: indexPath)
+  if let cell = cell as? MDCCollectionViewTextCell {
+    cell.textLabel?.text = colors[indexPath.item]
+  }
+
+  return cell
+
+}
+~~~
+
 #### Objective-C
 ~~~ objc
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -177,25 +180,6 @@ Step 4: **Override `UICollectionViewDataSource` protocol required methods**.
   return cell;
 }
 ~~~
-
-#### Swift
-~~~ swift
-override func collectionView(collectionView: UICollectionView,
-                             numberOfItemsInSection section: Int) -> Int {
-  return colors.count
-}
-
-override func collectionView(collectionView: UICollectionView,
-                             cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-  var cell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifierItem,
-                                                                   forIndexPath: indexPath)
-  if let cell = cell as? MDCCollectionViewTextCell {
-    cell.textLabel?.text = colors[indexPath.item]
-  }
-
-  return cell
-}
-~~~
 <!--</div>-->
 
 ### Provide own UICollectionView
@@ -205,18 +189,6 @@ It is possible to use the `MDCCollectionViewController` class while providing yo
 capabilities that the `MDCCollectionViewController` class provides.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-~~~ objc
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  // Here we are setting a custom collection view.
-  self.collectionView = [[CustomCollectionView alloc] initWithFrame:self.collectionView.frame
-                                               collectionViewLayout:self.collectionViewLayout];
-  ...
-}
-~~~
-
 #### Swift
 ~~~ swift
 override func viewDidLoad() {
@@ -225,6 +197,18 @@ override func viewDidLoad() {
   // Here we are setting a custom collection view.
   self.collectionView = CustomCollectionView(frame: (self.collectionView?.frame)!,
                                              collectionViewLayout: (self.collectionViewLayout))
+  ...
+}
+~~~
+
+#### Objective-C
+~~~ objc
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  // Here we are setting a custom collection view.
+  self.collectionView = [[CustomCollectionView alloc] initWithFrame:self.collectionView.frame
+                                               collectionViewLayout:self.collectionViewLayout];
   ...
 }
 ~~~

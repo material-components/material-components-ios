@@ -1,10 +1,9 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowElevations/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/ShadowElevations">GitHub</a> for README documentation.{% endif %}-->
-
 # Shadow Elevations
 
-This component provides commonly used material design elevations.
+A shadow elevation specifies the degree of shadow intensity to be displayed beneath an object.
+Higher shadow elevations have greater shadow intensities, akin to raising an object above a
+surface resulting in a more prominent, albeit more diffuse, shadow. This component provides commonly
+used Material Design elevations for components.
 <!--{: .intro }-->
 
 ### Design Specifications
@@ -12,13 +11,6 @@ This component provides commonly used material design elevations.
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
 </ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowElevations/apidocs/Constants.html">ShadowElevations Constants</a></li>
-</ul>
-
 
 - - -
 
@@ -53,6 +45,27 @@ pod install
 Before using Shadow Elevations, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+
+class ShadowedView: UIView {
+
+  override class var layerClass: AnyClass {
+    return MDCShadowLayer.self
+  }
+
+  var shadowLayer: MDCShadowLayer {
+    return self.layer as! MDCShadowLayer
+  }
+
+  func setDefaultElevation() {
+    self.shadowLayer.elevation = MDCShadowElevationCardResting
+  }
+
+}
+~~~
+
 #### Objective-C
 ~~~ objc
 #import "MaterialShadowElevations.h"
@@ -76,26 +89,5 @@ Before using Shadow Elevations, you'll need to import it:
 }
 
 @end
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
-
-class ShadowedView: UIView {
-
-  override class func layerClass() -> AnyClass {
-    return MDCShadowLayer.self
-  }
-
-  var shadowLayer: MDCShadowLayer {
-    return self.layer as! MDCShadowLayer
-  }
-
-  func setDefaultElevation() {
-    self.shadowLayer.elevation = MDCShadowElevationCardResting
-  }
-
-}
 ~~~
 <!--</div>-->

@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/howto/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/howto">GitHub</a> for README documentation.{% endif %}-->
-
 # How to use Material Components
 
 Material Components for iOS should be immediately useable out of the box with
@@ -16,3 +12,15 @@ Apple's standard development tool chain.
 - [FAQ](faq/)
   <!--{: .icon-guide }-->
 <!--{: .icon-list }-->
+
+- - -
+
+## Useful Links
+
+- [All Components](../components/)
+- [Demo Apps](../demos/)
+- [Contributing](../contributing/)
+- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
+- [Material.io](https://www.material.io) (external site)
+- [Material Design Guidelines](https://material.google.com) (external site)
+  

@@ -1,13 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/AppBar">GitHub</a> for README documentation.{% endif %}-->
-
 # App Bar
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/app_bar.mp4" autoplay loop></video>
-  [![App Bar](docs/assets/app_bar.png)](docs/assets/app_bar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![App Bar](docs/assets/app_bar.png)](docs/assets/app_bar.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/app_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.
@@ -18,13 +13,6 @@ navigation experience.
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar Structure</a></li>
   <li class="icon-link"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBar.html">MDCAppBar</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
 </ul>
 
 - - -
@@ -75,7 +63,7 @@ outlined in the Usage docs below.
 
 Note that it is possible to create each of the above components yourself, though we only encourage
 doing so if the App Bar is limiting your ability to build something. In such a case we recommend
-also [filing an issue](https://github.com/google/material-components-ios/issues/new) so that we can
+also [filing an issue](https://github.com/material-components/material-components-ios/issues/new) so that we can
 identify whether your use case is something we can directly support.
 
 
@@ -89,15 +77,15 @@ identify whether your use case is something we can directly support.
 Before using App Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialAppBar.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -120,12 +108,25 @@ Step 1: **Create an instance of MDCAppBar**.
 You must also add the `headerViewController` as a child view controller.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+let appBar = MDCAppBar()
+
+override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+  super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+  self.addChildViewController(appBar.headerViewController)
+}
+~~~
+
 #### Objective-C
 
 ~~~ objc
-@interface MyViewController ()
+@interface ObjcViewController ()
 @property(nonatomic, strong, nonnull) MDCAppBar *appBar;
 @end
+
+@implementation ObjcViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -136,17 +137,8 @@ You must also add the `headerViewController` as a child view controller.
   }
   return self;
 }
-~~~
 
-#### Swift
-~~~ swift
-let appBar = MDCAppBar()
-
-override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-  super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
-  self.addChildViewController(appBar.headerViewController)
-}
+@end
 ~~~
 <!--</div>-->
 
@@ -156,6 +148,16 @@ Ideally you will do this after all views have been added to your controller's vi
 ensure that the App Bar's Flexible Header is in front of all other views.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+
+  // After all other views have been registered.
+  appBar.addSubviewsToParent()
+}
+~~~
+
 #### Objective-C
 ~~~ objc
 - (void)viewDidLoad {
@@ -165,16 +167,6 @@ ensure that the App Bar's Flexible Header is in front of all other views.
 
   // After all other views have been registered.
   [self.appBar addSubviewsToParent];
-}
-~~~
-
-#### Swift
-~~~ swift
-override func viewDidLoad() {
-  super.viewDidLoad()
-
-  // After all other views have been registered.
-  appBar.addSubviewsToParent()
 }
 ~~~
 <!--</div>-->
@@ -231,13 +223,13 @@ Scenario: you've added a background image to your App Bar and you'd now like to 
 background image.
 
 This is not trivial to do with the App Bar APIs due to considerations being discussed in
-[Issue #184](https://github.com/google/material-components-ios/issues/184).
+[Issue #184](https://github.com/material-components/material-components-ios/issues/184).
 
 The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
 Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
 end up eating all of your touch events.
 
-Until [Issue #184](https://github.com/google/material-components-ios/issues/184) is resolved, our
+Until [Issue #184](https://github.com/material-components/material-components-ios/issues/184) is resolved, our
 recommendation for building interactive background views is the following:
 
 1. Do not use the App Bar component.

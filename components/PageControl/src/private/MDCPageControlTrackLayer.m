@@ -27,7 +27,7 @@ static NSString *const kPageControlAnimationKeyDraw = @"drawTrack";
 }
 
 - (instancetype)initWithRadius:(CGFloat)radius {
-  self = [self init];
+  self = [super init];
   if (self) {
     _trackHidden = YES;
     _radius = radius;

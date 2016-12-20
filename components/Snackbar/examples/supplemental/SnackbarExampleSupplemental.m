@@ -115,21 +115,21 @@
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   [self.view addSubview:self.allMessagesButton];
 
-  self.groupASwitch = [[MDCSwitch alloc] init];
+  self.groupASwitch = [[UISwitch alloc] init];
   self.groupASwitch.on = NO;
   [self.groupASwitch addTarget:self
                         action:@selector(handleSuspendStateChanged:)
               forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.groupASwitch];
 
-  self.groupBSwitch = [[MDCSwitch alloc] init];
+  self.groupBSwitch = [[UISwitch alloc] init];
   self.groupBSwitch.on = NO;
   [self.groupBSwitch addTarget:self
                         action:@selector(handleSuspendStateChanged:)
               forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.groupBSwitch];
 
-  self.allMessagesSwitch = [[MDCSwitch alloc] init];
+  self.allMessagesSwitch = [[UISwitch alloc] init];
   self.allMessagesSwitch.on = NO;
   [self.allMessagesSwitch addTarget:self
                              action:@selector(handleSuspendStateChanged:)
@@ -156,20 +156,21 @@
 }
 
 - (void)viewWillLayoutSubviews {
-  CGFloat labelWidth = 200.0f;
-  CGFloat labelHeight = 27.0f;
-  CGFloat labelXOffset = 48.0f;
-
   CGFloat buttonWidth = 250.0f;
   CGFloat buttonHeight = 40.0f;
   CGFloat buttonYOffset = 60.0f;
 
-  CGFloat switchWidth = 100.0f;
-  CGFloat switchYOffset = 40.0f;
+  CGFloat switchWidth = self.groupASwitch.frame.size.width;
+  CGFloat switchYOffset = 48.0f;
   if (self.view.frame.size.height > self.view.frame.size.width) {
     buttonYOffset = 80.f;
     switchYOffset = 50.0f;
   }
+
+  CGFloat labelWidth = 200.0f;
+  CGFloat labelHeight = 27.0f;
+  CGFloat labelXOffset = switchWidth + 5.0f;
+
   CGFloat spacing = self.view.frame.size.height / 3.5f;
 
   CGRect catAButtonFrame = CGRectMake(0, spacing - buttonYOffset, buttonWidth, buttonHeight);

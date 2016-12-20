@@ -1,35 +1,43 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
+# Material Components for iOS
 
-Material Components is a collection of standalone production-quality components.
+Material Components for iOS (MDC-iOS) helps developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps. Learn more about how Material Design supports design and usability best practices across platforms in the  [Material Design Platform Adaptation guidelines](https://material.io/guidelines/platforms/platform-adaptation.html).
 
-Material Components’ visual style is based on the
-[material design](http://www.google.com/design/spec/material-design/introduction.html)
-specification, developed by a team of iOS engineers and UX designers at Google.
+Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
 
-## Catalog
+## Useful Links
 
-Catalog is a demonstration application that showcases the Material Components.
+- [How To Use MDC-iOS](howto/)
+- [All Components](components/)
+- [Demo Apps](demos/)
+- [Contributing](contributing/)
+- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
+- [Material.io](https://www.material.io) (external site)
+- [Material Design Guidelines](https://material.google.com) (external site)
+  
+## Trying out Material Components
 
-### If you haven't checked out the repo yet:
+Our [catalog](catalog/) showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
 
 ~~~ bash
 pod try MaterialComponents
 ~~~
 
-### If you have checked out the repo:
+In case you have already checked out the repo, run the following command:
 
 ~~~ bash
-pod install --project-directory=catalog/ --no-repo-update
+pod install --project-directory=catalog/
 ~~~
 
-## Quickstart
+## Installation
 
-### 1. Install CocoaPods
+### Getting Started with a New Project
 
-[CocoaPods](https://cocoapods.org/) is the easiest way to get started. If you're new to CocoaPods,
-check out their [getting started documentation](https://guides.cocoapods.org/using/getting-started.html).
+Check out our [tutorial](howto/tutorial) for a step-by-step guide to setting up a new project using Material Components.
+
+### Adding Material Components to an Existing Project
+
+[CocoaPods](https://cocoapods.org/) is the easiest way to get started (if you're new to CocoaPods,
+check out their [getting started documentation](https://guides.cocoapods.org/using/getting-started.html).)
 
 To install CocoaPods, run the following commands:
 
@@ -37,32 +45,21 @@ To install CocoaPods, run the following commands:
 sudo gem install cocoapods
 ~~~
 
-
-### 2. Create Podfile
-
-Once you've created an iOS application in Xcode you can start using Material Components for iOS.
-
-To initialize CocoaPods in your project, run the following commands:
+To integrate Material Components in your existing application, first create a new Podfile:
 
 ~~~ bash
 cd your-project-directory
 pod init
 ~~~
 
-### 3. Edit Podfile
-
-Once you've initialized CocoaPods, add the
-[Material Components for iOS Pod](https://cocoapods.org/pods/MaterialComponentsIOS)
+Next, add the
+[Material Components for iOS pod](https://cocoapods.org/pods/MaterialComponentsIOS)
 to your target in your Podfile:
 
 ~~~ ruby
 target "MyApp" do
   ...
-  # Until Material Components for iOS is public:
-  pod 'MaterialComponents', :git => 'https://github.com/google/material-components-ios.git'
-
-  # After Material Components for iOS is public:
-  # pod 'MaterialComponents'
+  pod 'MaterialComponents'
 end
 ~~~
 
@@ -73,18 +70,40 @@ Then run the command:
 
 ~~~ bash
 pod install
+~~~
+
+Now you're ready to get started in Xcode. Don't forget to open the workspace Cocoapods created for you instead of the original project:
+
+~~~ bash
 open your-project.xcworkspace
 ~~~
 
-Now you're ready to get started in Xcode.
+### Usage
 
-### 4. Usage
+The components are built upon familiar UIKit classes and can be added to a view with just a couple of lines. Simply import the Material Components header for the component you're interested in, and add it to your view.
 
-Now you’re ready to add a component (e.g. Buttons) to your app!
-Include the Material Components header for the component you're interested
-in to your app (detailed below) to get all of the required classes.
+#### Swift
 
-Choose from Objective-C or Swift:
+~~~ swift
+import MaterialComponents.MaterialButtons
+
+class ViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let raiseButton = MDCRaisedButton.init();
+        raiseButton.setTitle("Raised Button", forState: .Normal);
+        raiseButton.sizeToFit();
+        raiseButton.addTarget(self, action: #selector(tapped), forControlEvents: .TouchUpInside);
+        self.view.addSubview(raiseButton);
+    }
+
+    func tapped(sender: UIButton!){
+        NSLog("Button was tapped!");
+    }
+
+}
+~~~
 
 #### Objective-C
 
@@ -113,43 +132,12 @@ Choose from Objective-C or Swift:
 @end
 ~~~
 
-#### Swift
-
-~~~ swift
-import MaterialComponents.MaterialButtons
-
-class MDCBuildTestViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let raiseButton = MDCRaisedButton.init();
-        raiseButton.setTitle("Raised Button", forState: .Normal);
-        raiseButton.sizeToFit();
-        raiseButton.addTarget(self, action: #selector(tapped), forControlEvents: .TouchUpInside);
-        self.view.addSubview(raiseButton);
-    }
-
-    func tapped(sender: UIButton!){
-        NSLog("Button was tapped!");
-    }
-
-}
-~~~
-
-### 5. What's next?
-
-- [Read the Development Guide](howto/)
-
-- [View the Component Documentation](components/)
-
-- [Explore our Code Samples](howto/tutorial/#sample-code)
-
 ## Attributions
 
 Material Components for iOS uses
-[material design icons](https://github.com/google/material-design-icons),
+[Material Design icons](https://github.com/google/material-design-icons),
 copyright Google Inc. and licensed under
-[CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 Several components use
 [MDFTextAccessibility](https://github.com/material-foundation/material-text-accessibility-ios),
@@ -157,7 +145,7 @@ copyright Google Inc. and licensed under
 [Apache 2.0](https://github.com/material-foundation/material-text-accessibility-ios/blob/master/LICENSE)
 without a NOTICE file.
 
-Roboto Font Loader uses the
+MDCCatalog uses the
 [Roboto font](https://github.com/google/fonts/tree/master/apache/roboto),
 copyright 2011 Google Inc. and licensed under
 [Apache 2.0](https://github.com/google/fonts/blob/master/apache/roboto/LICENSE.txt)

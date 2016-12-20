@@ -157,8 +157,8 @@
 
 #pragma mark - Deprecated
 
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
-    __deprecated_msg("Use setBackgroundColor:forState: instead.");
+/** Use setBackgroundColor:forState: instead. */
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor NS_UNAVAILABLE;
 
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")

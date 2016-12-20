@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+readonly COMPONENT_DIR=$1
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Private components do not require a README.md.
+if [[ $COMPONENT_DIR != *"/private/"* ]]; then
+  readonly COMPONENT_NAME=$(basename $COMPONENT_DIR)
+  readonly VIDEO_STILL_NAME="docs/assets/$($SCRIPTS_DIR/../convert_name -m underscore $COMPONENT_NAME).png"
+  if [ ! -f "$COMPONENT_DIR/$VIDEO_STILL_NAME" ]; then
+    echo "Error: '$COMPONENT_DIR' is missing '$VIDEO_STILL_NAME'."
+    exit -1
+  fi
+fi

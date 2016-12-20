@@ -15,7 +15,8 @@
  */
 
 import UIKit
-import MaterialComponents
+import MaterialComponents.MaterialPageControl
+import RemoteImageServiceForMDCDemos
 
 class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 

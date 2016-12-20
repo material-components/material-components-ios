@@ -1,7 +1,3 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/howto/build-env/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/howto/build-env">GitHub</a> for README documentation.{% endif %}-->
-
 # Build environment
 
 Material Components for iOS builds with the standard open-source iOS toolchain:
@@ -33,21 +29,21 @@ errors to allow the normal deprecation process to work:
 
 ### Xcode
 
-The core team uses **Xcode 7.2.1**, which corresponds to Swift 2.1. Once Swift
-has stablized we will track particular Swift versions independently of Xcode
-versions.
+The core team uses **Xcode 8.1 and Swift 3.0**
 
 ### iOS
 
-All components are expected to support **iOS 7.0 and above**.
+iOS 7.0 support is deprecated and will be removed January 20, 2017. See issue #841.
 
-#### iOS 8.0 and above components
+Engineering work should now support **iOS 8.0 and up**.
 
-* [Dialogs](https://github.com/google/material-components-ios/tree/develop/components/Dialogs)
+#### iOS 8.0 and above only components:
+
+* [Dialogs](https://github.com/material-components/material-components-ios/tree/develop/components/Dialogs)
 
 ### CocoaPods
 
-We are using CocoaPods 1.0.1.
+We are using CocoaPods 1.1.1.
 
 ### Ruby
 

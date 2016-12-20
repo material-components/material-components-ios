@@ -19,9 +19,9 @@
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView.h"
 
-const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96;
+const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
 
-static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5;
+static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
 @end
@@ -90,9 +90,9 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5;
   _featureHighlightView.outerHighlightColor = self.outerHighlightColor;
   _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
 
-  __weak typeof(self) weakSelf = self;
+  __weak __typeof__(self) weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
-    typeof(self) strongSelf = weakSelf;
+    __typeof__(self) strongSelf = weakSelf;
     [strongSelf dismiss:accepted];
   };
 

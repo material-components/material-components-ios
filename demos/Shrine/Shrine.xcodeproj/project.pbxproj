@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D8FBC45E0B69CDCA8F63587 /* Pods_Shrine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24CA2B3B8F74979E79FE3DDE /* Pods_Shrine.framework */; };
+		6B0C01BA37AC5D6B39F49F16 /* Pods_Shrine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E79DB3BB3A6DCA8E56C685D /* Pods_Shrine.framework */; };
 		DE064E731C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */; };
 		DE34DEBB1C88E90000E04B65 /* ShrineInkOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE34DEBA1C88E90000E04B65 /* ShrineInkOverlay.swift */; };
 		DE34DEBF1C8A34B100E04B65 /* ShrineHeaderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE34DEBE1C8A34B100E04B65 /* ShrineHeaderContentView.swift */; };
@@ -20,13 +20,12 @@
 		DE5D2A5A1C81092D00C9C650 /* ShrineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5D2A591C81092D00C9C650 /* ShrineCollectionViewCell.swift */; };
 		DE5D2A5C1C810E6600C9C650 /* ShrineCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5D2A5B1C810E6600C9C650 /* ShrineCollectionViewController.swift */; };
 		DE6887EA1C849C7C0074A8C5 /* AbrilFatface-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE6887E91C849C7C0074A8C5 /* AbrilFatface-Regular.ttf */; };
-		DE6887F11C849F7F0074A8C5 /* RemoteImageService.m in Sources */ = {isa = PBXBuildFile; fileRef = DE6887F01C849F7F0074A8C5 /* RemoteImageService.m */; };
 		DE6887F31C84FCD40074A8C5 /* ShrineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6887F21C84FCD40074A8C5 /* ShrineData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C7F50E40E35B48C29C884F8 /* Pods-Shrine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.release.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.release.xcconfig"; sourceTree = "<group>"; };
-		24CA2B3B8F74979E79FE3DDE /* Pods_Shrine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shrine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E79DB3BB3A6DCA8E56C685D /* Pods_Shrine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shrine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D22DA7C0F576B707C1CA5BE /* Pods-Shrine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.debug.xcconfig"; sourceTree = "<group>"; };
 		DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineFlexibleHeaderContainerViewController.swift; sourceTree = "<group>"; };
 		DE34DEBA1C88E90000E04B65 /* ShrineInkOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineInkOverlay.swift; sourceTree = "<group>"; };
@@ -43,8 +42,6 @@
 		DE5D2A5B1C810E6600C9C650 /* ShrineCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineCollectionViewController.swift; sourceTree = "<group>"; };
 		DE6887E91C849C7C0074A8C5 /* AbrilFatface-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AbrilFatface-Regular.ttf"; path = "Shrine/Resources/AbrilFatface-Regular.ttf"; sourceTree = "<group>"; };
 		DE6887EE1C849F7E0074A8C5 /* Shrine-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Shrine-Bridging-Header.h"; sourceTree = "<group>"; };
-		DE6887EF1C849F7F0074A8C5 /* RemoteImageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteImageService.h; sourceTree = "<group>"; };
-		DE6887F01C849F7F0074A8C5 /* RemoteImageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteImageService.m; sourceTree = "<group>"; };
 		DE6887F21C84FCD40074A8C5 /* ShrineData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,7 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D8FBC45E0B69CDCA8F63587 /* Pods_Shrine.framework in Frameworks */,
+				6B0C01BA37AC5D6B39F49F16 /* Pods_Shrine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,7 +60,7 @@
 		642D1F1EA5C73400CE64F5A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				24CA2B3B8F74979E79FE3DDE /* Pods_Shrine.framework */,
+				2E79DB3BB3A6DCA8E56C685D /* Pods_Shrine.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -104,8 +101,6 @@
 				DE5D2A531C81068100C9C650 /* Info.plist */,
 				DE5D2A501C81068100C9C650 /* LaunchScreen.storyboard */,
 				DE5D2A4B1C81068100C9C650 /* Main.storyboard */,
-				DE6887EF1C849F7F0074A8C5 /* RemoteImageService.h */,
-				DE6887F01C849F7F0074A8C5 /* RemoteImageService.m */,
 				DE6887EE1C849F7E0074A8C5 /* Shrine-Bridging-Header.h */,
 				DE5D2A591C81092D00C9C650 /* ShrineCollectionViewCell.swift */,
 				DE5D2A5B1C810E6600C9C650 /* ShrineCollectionViewController.swift */,
@@ -213,7 +208,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D1F846F8DE8314F37D7BCFC1 /* [CP] Embed Pods Frameworks */ = {
@@ -261,7 +256,6 @@
 				DE064E731C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift in Sources */,
 				DE6887F31C84FCD40074A8C5 /* ShrineData.swift in Sources */,
 				DE34DEBB1C88E90000E04B65 /* ShrineInkOverlay.swift in Sources */,
-				DE6887F11C849F7F0074A8C5 /* RemoteImageService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -91,7 +91,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setTitle:@"+" forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   self.floatingButton.center = CGPointMake(
       self.view.frame.size.width - self.floatingButton.frame.size.width, kFlexibleHeaderMinHeight);

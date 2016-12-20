@@ -99,6 +99,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  This view relies on you informing it of certain UIScrollViewDelegate events as they happen. These
  events are listed in the UIScrollViewDelegate events section.
  */
+IB_DESIGNABLE
 @interface MDCFlexibleHeaderView : UIView
 
 #pragma mark Custom shadow
@@ -379,7 +380,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  Whether or not the header is floating in front of an infinite stream of content.
 
  Enabling this behavior will cause the header to always appear to be floating "in front of" the
- content in material space. This behavior should _only_ be enabled for content that has no top
+ content in Material space. This behavior should _only_ be enabled for content that has no top
  edge, e.g. an infinite stream of vertical content.
 
  Default: NO

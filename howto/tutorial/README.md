@@ -1,12 +1,8 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios">GitHub</a> for README documentation.{% endif %}-->
-
 ## Tutorial
 
 Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
 
-This tutorial will teach you how to link Material Components to an application, use a material collection view, and add an expandable header to the top of your controller.
+This tutorial will teach you how to link Material Components to an application, use a Material collection view, and add an expandable header to the top of your controller.
 
 When you're done, you'll have an app that looks like this:
 
@@ -14,21 +10,21 @@ When you're done, you'll have an app that looks like this:
 
 ---
 
-#### NOTE: If you've already linked the MaterialComponents CocoaPod to your project, you can skip to Step 3. 
+#### NOTE: If you've already linked the MaterialComponents CocoaPod to your project, you can skip to Step 3.
 
 ## 1.  Create a new Xcode application:
 Let's make a simple app to play in.
 
-Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`. 
+Open Xcode. If the launch screen is present, click `Create a new Xcode project` or go to menu `File -> New -> Project…`.
 
 In the template window, select `iOS` as the platform and `Single View Application` as the Application type. Click `Next`.
-  
+
 Name your project `MDC-Tutorial` and choose your preferred language. Click `Next`.
-  
+
 Choose a place to save your new project that you can remember. Click `Create`.
-  
+
 Close your new project by going to menu `File -> Close Project` or holding `option + command + w`. We’ll come back to the project in a minute.
-  
+
 ## 2.  Setup CocoaPods:
 [CocoaPods](https://cocoapods.org/) is a delightful way to add libraries and frameworks to apps. If you've used it before, this will look familiar to you.
 
@@ -36,7 +32,7 @@ Open `Terminal`.
 
 If you do not already have CocoaPods installed on this system, run:
 
-~~~ 
+~~~
 sudo gem install cocoapods
 ~~~
 
@@ -45,11 +41,11 @@ Navigate to your MDC-Tutorial project's directory and create a `Podfile` by runn
 ~~~
 cd [directory of your project]
 pod init
-~~~ 
+~~~
 
 Open the new `Podfile` in a text editor or by running:
 
-~~~        
+~~~
 open -a Xcode Podfile
 ~~~
 
@@ -62,11 +58,11 @@ target 'MDC-Tutorial' do
   use_frameworks!
 
   # Pods for MDC-Tutorial
-  pod 'MaterialComponents/AppBar', :git => 'git@github.com:google/material-components-ios.git'
-  pod 'MaterialComponents/Buttons', :git => 'git@github.com:google/material-components-ios.git'
-  pod 'MaterialComponents/Collections', :git => 'git@github.com:google/material-components-ios.git'
+  pod 'MaterialComponents/AppBar'
+  pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/Collections'
 end
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -74,11 +70,11 @@ target 'MDC-Tutorial' do
   #use_frameworks!
 
   # Pods for MDC-Tutorial
-  pod 'MaterialComponents/AppBar', :git => 'git@github.com:google/material-components-ios.git'
-  pod 'MaterialComponents/Buttons', :git => 'git@github.com:google/material-components-ios.git'
-  pod 'MaterialComponents/Collections', :git => 'git@github.com:google/material-components-ios.git'
+  pod 'MaterialComponents/AppBar'
+  pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/Collections'
 end
-~~~ 
+~~~
 <!--</div>-->
 
 Save the `Podfile`.
@@ -98,7 +94,7 @@ If you'd like to learn more about CocoaPods, there's a great [video](https://you
 
 
 ## 3.  Add a Material Collection View:
-In Xcode, select `ViewController.swift` (Swift) or `ViewController.h` (Objective-C). 
+In Xcode, select `ViewController.swift` (Swift) or `ViewController.h` (Objective-C).
 
 ![Selecting the correct view controller file in Xcode's file navigator](docs/assets/Xcode-Select-File.gif)
 
@@ -128,27 +124,21 @@ class ViewController: MDCCollectionViewController {
 ~~~
 <!--</div>-->
 
-        
-Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`. 
-    
+
+Open `Main.storyboard` and delete the default view controller that came with it. Then drag a new Collection View Controller on to the storyboard, change the Custom Class of that view controller to `ViewController`, and set `Is Initial View Controller` to `true`.
+
 <!--{% if site.link_to_site == "true" %}-->
-[![In the storyboard, replacing the default view controller](docs/assets/Xcode-Storyboard-Replace-Controller.jpg)](https://material-ext.appspot.com/mdc-ios-preview/howto/tutorial/docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
-<!--{% else %}<div class="ios-animation large" markdown="1">
- <video src="docs/assets/Xcode-Storyboard-Replace-Controller.m4v" autoplay loop></video>
- </div>
- {% endif %}-->
+[![In the storyboard, replacing the default view controller](docs/assets/Xcode-Storyboard-Replace-Controller.jpg)](docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
+<!--{% else %}<div class="ios-animation large" markdown="1"><video src="docs/assets/Xcode-Storyboard-Replace-Controller.m4v" autoplay loop></video></div>{% endif %}-->
 
 
-Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`, 
+Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`,
 
 then set its reuse identifier to `cell`:
 
 <!--{% if site.link_to_site == "true" %}-->
-[![In the storyboard, changing the cell class and identifier](docs/assets/Xcode-Storyboard-Define-Cell.jpg)](https://material-ext.appspot.com/mdc-ios-preview/howto/tutorial/docs/assets/Xcode-Storyboard-Define-Cell.m4v)
-<!--{% else %}<div class="ios-animation large" markdown="1">
-<video src="docs/assets/Xcode-Storyboard-Define-Cell.m4v" autoplay loop></video>
-</div>
- {% endif %}-->
+[![In the storyboard, changing the cell class and identifier](docs/assets/Xcode-Storyboard-Define-Cell.jpg)](docs/assets/Xcode-Storyboard-Define-Cell.m4v)
+<!--{% else %}<div class="ios-animation large" markdown="1"><video src="docs/assets/Xcode-Storyboard-Define-Cell.m4v" autoplay loop></video></div>{% endif %}-->
 
 
 In `viewDidLoad`, configure the collection view’s appearance:
@@ -160,7 +150,7 @@ override func viewDidLoad() {
   super.viewDidLoad()
   styler.cellStyle = .card
 }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -168,11 +158,11 @@ override func viewDidLoad() {
   [super viewDidLoad];
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 }
-~~~ 
+~~~
 <!--</div>-->
 
-**NOTE:** See MaterialCollectionCells, MaterialCollectionLayoutAttributes and MaterialCollectionViewStyler for other options included for styling. Or make your own! Any part of the collection view can be completely customized to your needs.  
-        
+**NOTE:** See MaterialCollectionCells, MaterialCollectionLayoutAttributes and MaterialCollectionViewStyler for other options included for styling. Or make your own! Any part of the collection view can be completely customized to your needs.
+
 Below `viewDidLoad`, add a mock datasource:
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -199,7 +189,7 @@ override func collectionView(_ collectionView: UICollectionView, cellForItemAt i
 
   return cell
 }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -220,9 +210,9 @@ override func collectionView(_ collectionView: UICollectionView, cellForItemAt i
   textCell.textLabel.text = animals[indexPath.row];
   return textCell;
 }
-~~~ 
+~~~
 <!--</div>-->
-        
+
 Build and run your app. It should display a scrollable, touchable collection view:
 
 ![Running the app to show a working collection of cells](docs/assets/App-Collection-No-AppBar.gif)
@@ -240,7 +230,7 @@ import MaterialComponents.MaterialCollections
 class ViewController: MDCCollectionViewController {
   let appBar = MDCAppBar()
 ...
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -253,7 +243,7 @@ class ViewController: MDCCollectionViewController {
 @end
 
 ...
-~~~ 
+~~~
 <!--</div>-->
 
 Configure the app bar in `viewDidLoad`:
@@ -273,7 +263,7 @@ override func viewDidLoad() {
 
   title = "Material Components"
 }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -290,10 +280,10 @@ override func viewDidLoad() {
 
   self.title = @"Material Components";
 }
-~~~ 
+~~~
 <!--</div>-->
 
-Build and run your app. It should display a yellow rectangle above the collection view: 
+Build and run your app. It should display a yellow rectangle above the collection view:
 
 ![Running the app to show the new app bar](docs/assets/App-Collection-No-Flexing.gif)
 
@@ -306,7 +296,7 @@ Implement the UIScrollViewDelegate methods in your ViewController:
 #### Swift
 ~~~ swift
 // MARK: UIScrollViewDelegate
-  
+
 override func scrollViewDidScroll(_ scrollView: UIScrollView) {
   if scrollView == appBar.headerViewController.headerView.trackingScrollView {
     appBar.headerViewController.headerView.trackingScrollDidScroll()
@@ -325,14 +315,14 @@ override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerat
     headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
   }
 }
-  
+
 override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
   if scrollView == appBar.headerViewController.headerView.trackingScrollView {
     let headerView = appBar.headerViewController.headerView
     headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
   }
 }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -362,7 +352,7 @@ override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity
                                                                            targetContentOffset:targetContentOffset];
   }
 }
-~~~ 
+~~~
 <!--</div>-->
 
 Build and run your app. The app bar should now flex when the collection view is scrolled too far:
@@ -384,9 +374,9 @@ func barButtonDidTap(sender: UIBarButtonItem) {
   navigationItem.rightBarButtonItem = UIBarButtonItem(title: buttonTitle,
                                                       style: .plain,
                                                       target: self,
-                                                      action: #selector(ViewController.barButtonDidTap(sender:)))
+                                                      action: #selector(ViewController.barButtonDidTap(_:)))
 }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -398,7 +388,7 @@ func barButtonDidTap(sender: UIBarButtonItem) {
                                                                            target:self
                                                                            action:@selector(barButtonDidTap:)];
 }
-~~~ 
+~~~
 <!--</div>-->
 
 This function will toggle editing mode on the collectionView and toggle the title.
@@ -413,9 +403,9 @@ override func viewDidLoad() {
   navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit",
                                                       style: .plain,
                                                       target: self,
-                                                      action: #selector(ViewController.barButtonDidTap(sender:)))
+                                                      action: #selector(ViewController.barButtonDidTap(_:)))
 }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -426,10 +416,10 @@ override func viewDidLoad() {
                                                                            target:self
                                                                            action:@selector(barButtonDidTap:)];
 }
-~~~ 
+~~~
 <!--</div>-->
 
-**NOTE:** Notice that we added the right bar button to the app bar the same way you would for a UINavigationBar. That's because inside the app bar is an MDCNavigationBar. Navigation bars react to changes in the navigationItem, like adding buttons and changing title, by updating their button bar. 
+**NOTE:** Notice that we added the right bar button to the app bar the same way you would for a UINavigationBar. That's because inside the app bar is an MDCNavigationBar. Navigation bars react to changes in the navigationItem, like adding buttons and changing title, by updating their button bar.
 
 Build and run your app:
 
@@ -460,7 +450,7 @@ class ViewController: MDCCollectionViewController {
   func fabDidTap(sender: UIButton) {
     sender.isSelected = !sender.isSelected
   }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -480,7 +470,7 @@ class ViewController: MDCCollectionViewController {
   MDCFloatingButton *button = (MDCFloatingButton *)sender;
   button.selected = !button.isSelected;
 }
-~~~ 
+~~~
 <!--</div>-->
 
 We want the fab to float above the bottom right corner, so we'll add it as a subview and then set some constraints:
@@ -498,7 +488,7 @@ override func viewDidLoad() {
   fab.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
   fab.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0).isActive = true
 }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -515,10 +505,10 @@ override func viewDidLoad() {
   [self.fab.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant: -16.0].active = YES;
   [self.fab.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant: -16.0].active = YES;
 }
-~~~ 
+~~~
 <!--</div>-->
 
-**NOTE:** We used margins of 16 points to match the guidelines found in the [material design spec](https://material.google.com/components/buttons-floating-action-button.html#buttons-floating-action-button-floating-action-button). Lots of suggestions for padding, sizing and alignment choices can be found [there](https://material.google.com/layout/metrics-keylines.html#metrics-keylines-baseline-grids).
+**NOTE:** We used margins of 16 points to match the guidelines found in the [Material Design spec](https://material.google.com/components/buttons-floating-action-button.html#buttons-floating-action-button-floating-action-button). Lots of suggestions for padding, sizing and alignment choices can be found [there](https://material.google.com/layout/metrics-keylines.html#metrics-keylines-baseline-grids).
 
 Build and run your app. The fab shows up but it doesn't do anything yet.
 
@@ -534,9 +524,9 @@ override func viewDidLoad() {
 
   fab.setTitle("+", for: .normal)
   fab.setTitle("-", for: .selected)
-  fab.addTarget(self, action: #selector(ViewController.fabDidTap(sender:)), for: .touchUpInside)
+  fab.addTarget(self, action: #selector(ViewController.fabDidTap(_:)), for: .touchUpInside)
 }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -549,14 +539,14 @@ override func viewDidLoad() {
   [self.fab setTitle:@"-" forState:UIControlStateSelected];
   [self.fab addTarget:self action:@selector(fabDidTap:) forControlEvents:UIControlEventTouchUpInside];
 }
-~~~ 
+~~~
 <!--</div>-->
 
 Build and run your app. The floating action button responds to your taps:
 
 ![Finished app with floating action button.](docs/assets/App-Complete.gif)
 
-**NOTE:** While we're using text for the + and - inside the fab, to get proper sizing, you should use icons. The material design website has a great [library](https://design.google.com/icons/) of icons that can be exported bundled and sized specifically for iOS.
+**NOTE:** While we're using text for the + and - inside the fab, to get proper sizing, you should use icons. The Material Design website has a great [library](https://design.google.com/icons/) of icons that can be exported bundled and sized specifically for iOS.
 
 ## Full source
 
@@ -586,7 +576,7 @@ class ViewController: MDCCollectionViewController {
 
     title = "Material Components"
 
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(_:)))
 
     appBar.navigationBar.tintColor = UIColor.black
 
@@ -597,13 +587,13 @@ class ViewController: MDCCollectionViewController {
 
     fab.setTitle("+", for: .normal)
     fab.setTitle("-", for: .selected)
-    fab.addTarget(self, action: #selector(ViewController.fabDidTap(sender:)), for: .touchUpInside)
+    fab.addTarget(self, action: #selector(ViewController.fabDidTap(_:)), for: .touchUpInside)
   }
 
   func barButtonDidTap(sender: UIBarButtonItem) {
     editor.isEditing = !editor.isEditing
 
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(sender:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: editor.isEditing ? "Cancel" : "Edit", style: .plain, target: self, action: #selector(ViewController.barButtonDidTap(_:)))
   }
 
   func fabDidTap(sender: UIButton) {
@@ -629,7 +619,7 @@ class ViewController: MDCCollectionViewController {
       let animals = ["Lions", "Tigers", "Bears", "Monkeys"]
       textCell.textLabel?.text = animals[indexPath.item]
     }
-    
+
     return cell
   }
 
@@ -661,7 +651,7 @@ class ViewController: MDCCollectionViewController {
     }
   }
 }
-~~~ 
+~~~
 
 #### Objective-C
 ~~~ objc
@@ -769,7 +759,7 @@ class ViewController: MDCCollectionViewController {
 }
 
 @end
-~~~ 
+~~~
 <!--</div>-->
 
 
@@ -784,10 +774,10 @@ Use our examples and catalog apps to try out other components and other ways to 
 ### Sample Code
 
 
-*   [Pesto: A simple recipe app, incorporating a flexible header, floating action button, and collections.](https://github.com/google/material-components-ios/tree/master/demos/Pesto)
+*   [Pesto: A simple recipe app, incorporating a flexible header, floating action button, and collections.](https://github.com/material-components/material-components-ios/tree/stable/demos/Pesto)
 
 
-*   [Shrine: A demo shopping app, incorporating a flexible header, custom typography, and collections.](https://github.com/google/material-components-ios/tree/master/demos/Shrine)
+*   [Shrine: A demo shopping app, incorporating a flexible header, custom typography, and collections.](https://github.com/material-components/material-components-ios/tree/stable/demos/Shrine)
 
 <!--{% if site.link_to_site == "true" %}-->
 <img src="docs/assets/Pesto.gif">
@@ -806,5 +796,5 @@ Use our examples and catalog apps to try out other components and other ways to 
 
 
 
-*   [Read the Component Documentation](https://github.com/google/material-components-ios/blob/develop/howto/tutorial/%7B%7B%20site.folder%20%7D%7D/components)
+*   [Read the Component Documentation](https://github.com/material-components/material-components-ios/blob/develop/howto/tutorial/%7B%7B%20site.folder%20%7D%7D/components)
 *   [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)

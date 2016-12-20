@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- Metrics of the material shadow effect.
+ Metrics of the Material shadow effect.
 
  These can be used if you require your own shadow implementation but want to match the material
  spec.
@@ -36,12 +36,11 @@
  @param elevation The shadow's elevation in points.
  @return The shadow metrics.
  */
-// TODO(iangordon): Determine why Swift works even without the nonnull annotation below
 + (nonnull MDCShadowMetrics *)metricsWithElevation:(CGFloat)elevation;
 @end
 
 /**
- The material shadow effect.
+ The Material shadow effect.
 
  @see
  https://www.google.com/design/spec/what-is-material/elevation-shadows.html#elevation-shadows-shadows
@@ -74,6 +73,6 @@
 
  Default is YES. Not animatable.
  */
-@property(nonatomic, assign) BOOL shadowMaskEnabled;
+@property(nonatomic, getter=isShadowMaskEnabled, assign) BOOL shadowMaskEnabled;
 
 @end

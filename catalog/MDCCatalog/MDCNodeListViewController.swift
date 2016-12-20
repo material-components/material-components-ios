@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CatalogByConvention
-import MaterialComponents
 import UIKit
+
+import CatalogByConvention
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialTypography
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 
@@ -30,7 +32,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
     // Ensure subtitile text is proportionally less pronounced than the title label
     let textLabelFont = textLabel!.font
     detailTextLabel?.alpha = CGFloat(0.5)
-    detailTextLabel?.font = textLabelFont.fontWithSize(CGFloat(textLabelFont.pointSize * 0.5))
+    detailTextLabel?.font = textLabelFont?.withSize(CGFloat((textLabelFont?.pointSize)! * 0.5))
   }
 
   required init(coder: NSCoder) {
@@ -39,7 +41,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
 
   override func prepareForReuse() {
     super.prepareForReuse()
-    textLabel!.textColor = UIColor.blackColor()
+    textLabel!.textColor = UIColor.black
     imageView!.image = UIImage(named: "Demo")
   }
 }
@@ -53,8 +55,8 @@ class MDCNodeListViewController: CBCNodeListViewController {
   var componentDescription = ""
 
   enum Section: Int {
-    case Description = 0
-    case AdditionalExamples = 1
+    case description = 0
+    case additionalExamples = 1
   }
 
   override init(node: CBCNode) {
@@ -66,21 +68,21 @@ class MDCNodeListViewController: CBCNodeListViewController {
       if childNode.isExample() {
         let isPrimaryDemo = childNode.isPrimaryDemo()
         if isPrimaryDemo {
-          orderedNodes.insertObject(childNode, atIndex: 0)
+          orderedNodes.insert(childNode, at: 0)
           componentDescription = childNode.exampleDescription()
         } else {
-          orderedNodes.addObject(childNode)
+          orderedNodes.add(childNode)
         }
       }
     }
     node.children =  orderedNodes as NSArray as! [CBCNode]
 
     self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor()
-    appBar.navigationBar.titleAlignment = .Center
+    appBar.headerViewController.headerView.backgroundColor = UIColor.white
+    appBar.navigationBar.titleAlignment = .center
   }
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -91,15 +93,15 @@ class MDCNodeListViewController: CBCNodeListViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.tableView.backgroundColor = UIColor.whiteColor()
-    self.tableView.separatorStyle = .None
+    self.tableView.backgroundColor = UIColor.white
+    self.tableView.separatorStyle = .none
 
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
 
     appBar.addSubviewsToParent()
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -107,32 +109,32 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   // MARK: UIScrollViewDelegate
 
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollViewDidScroll()
+      appBar.headerViewController.headerView.trackingScrollDidScroll()
     }
   }
 
-  override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollViewDidEndDecelerating()
+      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
 
-  override func scrollViewDidEndDragging(scrollView: UIScrollView,
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
                                          willDecelerate decelerate: Bool) {
     if scrollView == appBar.headerViewController.headerView.trackingScrollView {
       let headerView = appBar.headerViewController.headerView
-      headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
     }
   }
 
-  override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint,
+  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint,
                                           targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     if scrollView == appBar.headerViewController.headerView.trackingScrollView {
       let headerView = appBar.headerViewController.headerView
-      headerView.trackingScrollViewWillEndDraggingWithVelocity(
-        velocity,
+      headerView.trackingScrollWillEndDragging(
+        withVelocity: velocity,
         targetContentOffset: targetContentOffset
       )
     }
@@ -140,72 +142,72 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   // MARK: UITableViewDataSource
 
-  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  override func numberOfSections(in tableView: UITableView) -> Int {
     if (node.children.count == 1) {
       return 1
     }
     return sectionNames.count
   }
 
-  override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+  override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return sectionNames[section]
   }
 
-  override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    var sectionViewFrame = CGRectMake(0, 0, tableView.frame.size.width, 50)
+  override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    var sectionViewFrame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50)
     let sectionView = UIView(frame: sectionViewFrame)
-    sectionView.backgroundColor = UIColor.whiteColor()
+    sectionView.backgroundColor = UIColor.white
 
     if section == 1 {
-      let lineDivider = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 1))
+      let lineDivider = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
       lineDivider.backgroundColor = UIColor(white: 0.85, alpha: 1)
-      lineDivider.autoresizingMask = .FlexibleWidth
+      lineDivider.autoresizingMask = .flexibleWidth
       sectionView.addSubview(lineDivider)
     }
 
     let label = UILabel()
     label.text = sectionNames[section]
     label.frame =
-      CGRectMake(20, 0, tableView.frame.size.width - 20, additionalExamplesSectionHeight)
+      CGRect(x: 20, y: 0, width: tableView.frame.size.width - 20, height: additionalExamplesSectionHeight)
     label.font = MDCTypography.body2Font()
     label.translatesAutoresizingMaskIntoConstraints = false
     sectionView.addSubview(label)
 
     _ = NSLayoutConstraint(
       item: label,
-      attribute: .Leading,
-      relatedBy: .Equal,
+      attribute: .leading,
+      relatedBy: .equal,
       toItem: sectionView,
-      attribute: .Leading,
+      attribute: .leading,
       multiplier: 1.0,
-      constant: 20).active = true
+      constant: 20).isActive = true
 
     _ = NSLayoutConstraint(
       item: label,
-      attribute: .Trailing,
-      relatedBy: .Equal,
+      attribute: .trailing,
+      relatedBy: .equal,
       toItem: sectionView,
-      attribute: .Trailing,
+      attribute: .trailing,
       multiplier: 1.0,
-      constant: 0).active = true
+      constant: 0).isActive = true
 
     _ = NSLayoutConstraint(
       item: label,
-      attribute: .Top,
-      relatedBy: .Equal,
+      attribute: .top,
+      relatedBy: .equal,
       toItem: sectionView,
-      attribute: .Top,
+      attribute: .top,
       multiplier: 1.0,
-      constant: 0).active = true
+      constant: 0).isActive = true
 
     _ = NSLayoutConstraint(
       item: label,
-      attribute: .Height,
-      relatedBy: .Equal,
+      attribute: .height,
+      relatedBy: .equal,
       toItem: nil,
-      attribute: .NotAnAttribute,
+      attribute: .notAnAttribute,
       multiplier: 1.0,
-      constant: additionalExamplesSectionHeight).active = true
+      constant: additionalExamplesSectionHeight).isActive = true
 
     if (section == 0) {
       let textView = UITextView()
@@ -213,34 +215,34 @@ class MDCNodeListViewController: CBCNodeListViewController {
       textView.font = MDCTypography.captionFont()
       textView.alpha = MDCTypography.captionFontOpacity()
 
-      if (UIApplication.sharedApplication().userInterfaceLayoutDirection == .LeftToRight) {
+      if (UIApplication.shared.userInterfaceLayoutDirection == .leftToRight) {
           textView.contentInset = UIEdgeInsetsMake(-8, -5, -8, 5)
       } else {
           textView.contentInset = UIEdgeInsetsMake(-8, 5, -8, -5)
       }
 
-      textView.editable = false
+      textView.isEditable = false
       textView.translatesAutoresizingMaskIntoConstraints = false
-      sectionViewFrame = CGRectMake(0, 0, tableView.frame.size.width, descriptionSectionHeight)
+      sectionViewFrame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: descriptionSectionHeight)
       sectionView.frame = sectionViewFrame
       sectionView.addSubview(textView)
       let textViewHeight = ceil(MDCTypography.captionFont().lineHeight * 3)
       // Use AutoLayout to workaround http://www.openradar.me/25505644.
       if #available(iOS 9.0, *) {
-        NSLayoutConstraint.activateConstraints([
-          textView.leadingAnchor.constraintEqualToAnchor(sectionView.leadingAnchor, constant: 20),
-          textView.trailingAnchor.constraintEqualToAnchor(sectionView.trailingAnchor,
+        NSLayoutConstraint.activate([
+          textView.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: 20),
+          textView.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor,
               constant: -20),
-          textView.topAnchor.constraintEqualToAnchor(sectionView.topAnchor, constant: 40),
-          textView.heightAnchor.constraintEqualToConstant(textViewHeight)
+          textView.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: 40),
+          textView.heightAnchor.constraint(equalToConstant: textViewHeight)
         ])
       } else {
         let horizontalConstraints =
-            NSLayoutConstraint.constraintsWithVisualFormat("H:|-(20)-[textView]-(20)-|",
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-(20)-[textView]-(20)-|",
                                                            options: [], metrics: nil,
                                                            views: ["textView" : textView])
         let verticalConstraints =
-            NSLayoutConstraint.constraintsWithVisualFormat("V:|-(40)-[textView(==h)]",
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-(40)-[textView(==h)]",
                                                            options: [],
                                                            metrics: ["h" : textViewHeight],
                                                            views: ["textView" : textView])
@@ -252,31 +254,31 @@ class MDCNodeListViewController: CBCNodeListViewController {
     return sectionView
   }
 
-  override func tableView(tableView: UITableView,
+  override func tableView(_ tableView: UITableView,
     heightForHeaderInSection section: Int) -> CGFloat {
-      if (section == Section.Description.rawValue) {
+      if (section == Section.description.rawValue) {
         return descriptionSectionHeight
       }
       return additionalExamplesSectionHeight
   }
 
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if (section == Section.Description.rawValue) {
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if (section == Section.description.rawValue) {
       return 1
     }
     return node.children.count - 1
   }
 
-  override func tableView(tableView: UITableView,
-    cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCellWithIdentifier("NodeViewTableViewDemoCell")
+  override func tableView(_ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    var cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
     if ((cell == nil)) {
-      cell = NodeViewTableViewDemoCell.init(style: .Subtitle,
+      cell = NodeViewTableViewDemoCell.init(style: .subtitle,
         reuseIdentifier: "NodeViewTableViewDemoCell")
     }
 
     var subtitleText: String?
-    if (indexPath.section == Section.Description.rawValue) {
+    if (indexPath.section == Section.description.rawValue) {
       subtitleText = node.children[indexPath.row].exampleViewControllerName()
       cell!.textLabel!.text = "Demo"
       cell!.textLabel!.textColor = UIColor(red: 0.01, green: 0.66, blue: 0.96, alpha: 1)
@@ -286,50 +288,50 @@ class MDCNodeListViewController: CBCNodeListViewController {
       cell!.textLabel!.text = node.children[indexPath.row + 1].title
     }
     if subtitleText != nil {
-      if let swiftModuleRange = subtitleText?.rangeOfString(".") {
-        subtitleText = subtitleText!.substringFromIndex(swiftModuleRange.endIndex)
+      if let swiftModuleRange = subtitleText?.range(of: ".") {
+        subtitleText = subtitleText!.substring(from: swiftModuleRange.upperBound)
       }
       cell!.detailTextLabel?.text = subtitleText!
     }
-    cell!.accessoryType = .DisclosureIndicator
+    cell!.accessoryType = .disclosureIndicator
 
     return cell!
   }
 
-  override func tableView(tableView: UITableView,
-    heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  override func tableView(_ tableView: UITableView,
+    heightForRowAt indexPath: IndexPath) -> CGFloat {
     return rowHeight
   }
 
   // MARK: UITableViewDelegate
 
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     var node = self.node.children[0]
-    if (indexPath.section == Section.AdditionalExamples.rawValue) {
+    if (indexPath.section == Section.additionalExamples.rawValue) {
       node = self.node.children[indexPath.row + 1]
     }
 
     var vc: UIViewController
     if node.isExample() {
       let contentVC = node.createExampleViewController()
-      if contentVC.respondsToSelector(NSSelectorFromString("catalogShouldHideNavigation")) {
+      if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
         vc = contentVC
       } else {
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
-        container.appBar.navigationBar.titleAlignment = .Center
+        container.appBar.navigationBar.titleAlignment = .center
 
         // TODO(featherless): Remove once
-        // https://github.com/google/material-components-ios/issues/367 is resolved.
+        // https://github.com/material-components/material-components-ios/issues/367 is resolved.
         contentVC.title = node.title
 
         let headerView = container.appBar.headerViewController.headerView
 
-        headerView.backgroundColor = UIColor.whiteColor()
+        headerView.backgroundColor = UIColor.white
 
         let textColor = UIColor(white: 0, alpha: 0.8)
         UIBarButtonItem.appearance().setTitleTextAttributes(
           [NSForegroundColorAttributeName:textColor],
-          forState: .Normal)
+          for: UIControlState())
 
         var contentFrame = container.contentViewController.view.frame
         let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)

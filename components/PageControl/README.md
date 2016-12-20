@@ -1,27 +1,14 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/PageControl/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/PageControl">GitHub</a> for README documentation.{% endif %}-->
-
 # Page Control
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/page_control.mp4" autoplay loop></video>
-  [![Page Control](docs/assets/page_control.png)](docs/assets/page_control.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Page Control](docs/assets/page_control.png)](docs/assets/page_control.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/page_control.mp4" autoplay loop></video></div>{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
-influenced by material design specifications for animation and layout. The API methods are the
+influenced by Material Design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
 <!--{: .intro }-->
-
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/PageControl/apidocs/Classes/MDCPageControl.html">MDCPageControl</a></li>
-</ul>
-
 
 - - -
 
@@ -92,15 +79,15 @@ Page control showing new current page.
 Before using Page Control, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents.MaterialPageControl
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialPageControl.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -115,73 +102,61 @@ to fire off the `UIControlEventValueChanged` events in which the scroll view wou
 notified of page changes.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-@interface ViewController () <UIScrollViewDelegate>
-@end
-
-@implementation ViewController {
-  UIScrollView *_scrollView;
-  MDCPageControl *_pageControl;
-}
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  // Scroll view configuration.
-  _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-  _scrollView.delegate = self;
-  ...
-  [self.view addSubview:_scrollView];
-
-  // Page control configuration.
-  _pageControl = [[MDCPageControl alloc] initWithFrame:myFrame];
-  _pageControl.numberOfPages = 3;  // Should match page count of scrollView.
-  [_pageControl addTarget:self
-                   action:@selector(didChangePage:)
-         forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:_pageControl];
-}
-
-- (void)didChangePage:(MDCPageControl *)sender {
-  // Transition scroll view to new page.
-  CGPoint offset = _scrollView.contentOffset;
-  offset.x = sender.currentPage * _scrollView.bounds.size.width;
-  [_scrollView setContentOffset:offset animated:YES];
-}
-~~~
-
 #### Swift
 
 ~~~ swift
-class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDelegate {
+let pageControl = MDCPageControl()
+let scrollView = UIScrollView()
+let pages = NSMutableArray()
 
-  let pageControl = MDCPageControl()
-  let scrollView = UIScrollView()
-  let pages = NSMutableArray()
+override func viewDidLoad() {
+  super.viewDidLoad()
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  scrollView.delegate = self
+  view.addSubview(scrollView)
 
-    scrollView.delegate = self
-    view.addSubview(scrollView)
+  pageControl.numberOfPages = 3
 
-    pageControl.numberOfPages = pageColors.count
+  let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
+  pageControl.frame = CGRect(x: 0, y: view.bounds.height - pageControlSize.height, width: view.bounds.width, height: pageControlSize.height)
 
-    let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
-    pageControl.frame = CGRectMake(0, view.bounds.height - pageControlSize.height, view.bounds.width, pageControlSize.height);
-    pageControl.addTarget(self, action: "didChangePage:", forControlEvents: .ValueChanged)
-    pageControl.autoresizingMask = [.FlexibleTopMargin, .FlexibleWidth];
-    view.addSubview(pageControl)
-  }
+  pageControl.addTarget(self, action: "didChangePage:", for: .valueChanged)
+  pageControl.autoresizingMask = [.flexibleTopMargin, .flexibleWidth]
+  view.addSubview(pageControl)
+}
 
-  func didChangePage(sender: MDCPageControl){
-    var offset = scrollView.contentOffset
-    offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width;
-    scrollView.setContentOffset(offset, animated: true)
-  }
+func didChangePage(sender: MDCPageControl){
+  var offset = scrollView.contentOffset
+  offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width;
+  scrollView.setContentOffset(offset, animated: true)
+}
+~~~
 
+#### Objective-C
+
+~~~ objc
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.scrollView.delegate = self;
+  [self.view addSubview:self.scrollView];
+
+  self.pageControl.numberOfPages = 3;
+
+  CGSize pageControlSize = [self.pageControl sizeThatFits:self.view.bounds.size];
+  self.pageControl.frame = CGRectMake(0, self.view.bounds.size.height - pageControlSize.height, self.view.bounds.size.width, pageControlSize.height);
+
+  [self.pageControl addTarget:self action:@selector(didChangePage:) forControlEvents: UIControlEventValueChanged];
+  self.pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+  [self.view addSubview:self.pageControl];
+
+}
+
+- (void)didChangePage:(MDCPageControl*)sender {
+  CGPoint offset = self.scrollView.contentOffset;
+  offset.x = (CGFloat)sender.currentPage * self.scrollView.bounds.size.width;
+  [self.scrollView setContentOffset:offset animated: true];
+}
 ~~~
 <!--</div>-->
 
@@ -194,36 +169,35 @@ to the page control (`-scrollViewDidScroll`, `-scrollViewDidEndDecelerating`, an
 scrolling movement of the designated scroll view.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-~~~ objc
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  [_pageControl scrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  [_pageControl scrollViewDidEndDecelerating:scrollView];
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-  [_pageControl scrollViewDidEndScrollingAnimation:scrollView];
-}
-~~~
-
 #### Swift
 
 ~~~ swift
-func scrollViewDidScroll(scrollView: UIScrollView) {
+func scrollViewDidScroll(_ scrollView: UIScrollView) {
   pageControl.scrollViewDidScroll(scrollView)
 }
 
-func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
   pageControl.scrollViewDidEndDecelerating(scrollView)
 }
 
-func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
   pageControl.scrollViewDidEndScrollingAnimation(scrollView)
 }
 ~~~
 
+#### Objective-C
+
+~~~ objc
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  [self.pageControl scrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  [self.pageControl scrollViewDidEndDecelerating:scrollView];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+  [self.pageControl scrollViewDidEndScrollingAnimation:scrollView];
+}
+~~~
 <!--</div>-->

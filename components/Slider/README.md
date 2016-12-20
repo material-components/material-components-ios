@@ -1,15 +1,10 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Slider/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Slider">GitHub</a> for README documentation.{% endif %}-->
-
 # Slider
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/slider.mp4" autoplay loop></video>
-  [![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+[![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/slider.mp4" autoplay loop></video></div>{% endif %}-->
 
-The `MDCSlider` object is a material design control used to select a value from a continuous range
+The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
 <!--{: .intro }-->
 
@@ -17,12 +12,6 @@ or discrete set of values.
 
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/components/sliders.html">Sliders</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Slider/apidocs/Classes/MDCSlider.html">MDCSlider</a></li>
 </ul>
 
 - - -
@@ -60,15 +49,15 @@ pod install
 Before using Slider, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+~~~ swift
+import MaterialComponents.MaterialSlider
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialSlider.h"
-~~~
-
-#### Swift
-~~~ swift
-import MaterialComponents
 ~~~
 <!--</div>-->
 
@@ -77,10 +66,27 @@ import MaterialComponents
 MDCSlider can be be used like a standard `UIControl`.
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+
+  let slider = MDCSlider(frame: CGRect(x: 50, y: 50, width: 100, height: 27))
+  slider.addTarget(self,
+                   action: #selector(didChangeSliderValue(senderSlider:)),
+                   for: .valueChanged)
+  view.addSubview(slider)
+}
+
+func didChangeSliderValue(senderSlider:MDCSlider) {
+  print("Did change slider value to: %@", senderSlider.value)
+}
+~~~
+
 #### Objective C
 
 ~~~ objc
-
 - (void)viewDidLoad {
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(50, 50, 100, 27)];
   [slider addTarget:self
@@ -91,22 +97,6 @@ MDCSlider can be be used like a standard `UIControl`.
 
 - (void)didChangeSliderValue:(MDCSlider *)slider {
   NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
-}
-~~~
-
-#### Swift
-
-~~~ swift
-override func viewDidLoad() {
-  let slider = MDCSlider(frame: CGRectMake(50, 50, 100, 27))
-  slider.addTarget(self,
-      action: Selector("didChangeSliderValue:"),
-      forControlEvents: .ValueChanged)
-  view.addSubview(slider)
-}
-
-func didChangeSliderValue(senderSlider:MDCSlider) {
-  NSLog("Did change slider value to: %@", senderSlider.value)
 }
 ~~~
 <!--</div>-->
@@ -127,4 +117,4 @@ Same features:
 
 New features:
 
-- making the slider a snap to discrete values via property numberOfDiscreteValues.
+- making the slider a snap to discrete values via property numberOfDiscreteValues

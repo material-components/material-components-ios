@@ -36,7 +36,7 @@
 
 + (NSString *)catalogDescription {
   return @"Dialogs includes a presentation controller that displays your modal interfaces in a"
-          " material spec defined context.";
+          " Material spec defined context.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
