@@ -1,37 +1,34 @@
 PODS:
-  - CatalogByConvention (1.0.1)
-  - EarlGrey (1.3.0)
-  - MaterialComponents (16.2.0):
-    - MaterialComponents/ActivityIndicator (= 16.2.0)
-    - MaterialComponents/AnimationTiming (= 16.2.0)
-    - MaterialComponents/AppBar (= 16.2.0)
-    - MaterialComponents/ButtonBar (= 16.2.0)
-    - MaterialComponents/Buttons (= 16.2.0)
-    - MaterialComponents/CollectionCells (= 16.2.0)
-    - MaterialComponents/CollectionLayoutAttributes (= 16.2.0)
-    - MaterialComponents/Collections (= 16.2.0)
-    - MaterialComponents/Dialogs (= 16.2.0)
-    - MaterialComponents/FeatureHighlight (= 16.2.0)
-    - MaterialComponents/FlexibleHeader (= 16.2.0)
-    - MaterialComponents/FontDiskLoader (= 16.2.0)
-    - MaterialComponents/HeaderStackView (= 16.2.0)
-    - MaterialComponents/Ink (= 16.2.0)
-    - MaterialComponents/NavigationBar (= 16.2.0)
-    - MaterialComponents/OverlayWindow (= 16.2.0)
-    - MaterialComponents/PageControl (= 16.2.0)
-    - MaterialComponents/Palettes (= 16.2.0)
-    - MaterialComponents/private (= 16.2.0)
-    - MaterialComponents/ProgressView (= 16.2.0)
-    - MaterialComponents/RobotoFontLoader (= 16.2.0)
-    - MaterialComponents/ShadowElevations (= 16.2.0)
-    - MaterialComponents/ShadowLayer (= 16.2.0)
-    - MaterialComponents/Slider (= 16.2.0)
-    - MaterialComponents/Snackbar (= 16.2.0)
-    - MaterialComponents/SpritedAnimationView (= 16.2.0)
-    - MaterialComponents/Switch (= 16.2.0)
-    - MaterialComponents/Tabs (= 16.2.0)
-    - MaterialComponents/Typography (= 16.2.0)
-  - MaterialComponents/ActivityIndicator (16.2.0):
+  - CatalogByConvention (2.0.0)
+  - EarlGrey (1.6.1)
+  - MaterialComponents (19.0.4):
+    - MaterialComponents/ActivityIndicator (= 19.0.4)
+    - MaterialComponents/AnimationTiming (= 19.0.4)
+    - MaterialComponents/AppBar (= 19.0.4)
+    - MaterialComponents/ButtonBar (= 19.0.4)
+    - MaterialComponents/Buttons (= 19.0.4)
+    - MaterialComponents/CollectionCells (= 19.0.4)
+    - MaterialComponents/CollectionLayoutAttributes (= 19.0.4)
+    - MaterialComponents/Collections (= 19.0.4)
+    - MaterialComponents/Dialogs (= 19.0.4)
+    - MaterialComponents/FeatureHighlight (= 19.0.4)
+    - MaterialComponents/FlexibleHeader (= 19.0.4)
+    - MaterialComponents/HeaderStackView (= 19.0.4)
+    - MaterialComponents/Ink (= 19.0.4)
+    - MaterialComponents/NavigationBar (= 19.0.4)
+    - MaterialComponents/OverlayWindow (= 19.0.4)
+    - MaterialComponents/PageControl (= 19.0.4)
+    - MaterialComponents/Palettes (= 19.0.4)
+    - MaterialComponents/private (= 19.0.4)
+    - MaterialComponents/ProgressView (= 19.0.4)
+    - MaterialComponents/ShadowElevations (= 19.0.4)
+    - MaterialComponents/ShadowLayer (= 19.0.4)
+    - MaterialComponents/Slider (= 19.0.4)
+    - MaterialComponents/Snackbar (= 19.0.4)
+    - MaterialComponents/Tabs (= 19.0.4)
+    - MaterialComponents/Typography (= 19.0.4)
+  - MaterialComponents/ActivityIndicator (19.0.4):
+    - MaterialComponents/private/Application
     - MaterialComponents/private/RTL
   - MaterialComponents/AnimationTiming (19.0.4)
   - MaterialComponents/AppBar (19.0.4):
@@ -77,10 +74,8 @@ PODS:
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/FeatureHighlight (16.2.0):
+  - MaterialComponents/FeatureHighlight (19.0.4):
     - MaterialComponents/Typography
-    - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader (16.2.0):
     - MDFTextAccessibility
   - MaterialComponents/FlexibleHeader (19.0.4):
     - MaterialComponents/private/Application
@@ -153,22 +148,19 @@ PODS:
     - MaterialComponents/private/Application
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Overlay
-  - MaterialComponents/SpritedAnimationView (16.2.0)
-  - MaterialComponents/Switch (16.2.0):
-    - MaterialComponents/private/RTL
-    - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Tabs (16.2.0):
+    - MaterialComponents/Typography
+  - MaterialComponents/Tabs (19.0.4):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Ink
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/Typography (16.2.0)
-  - MaterialComponentsCatalog (16.2.0):
+  - MaterialComponents/Typography (19.0.4)
+  - MaterialComponentsCatalog (19.0.4):
     - MaterialComponents
   - MaterialComponentsUnitTests (19.0.4):
     - MaterialComponents
     - MDFTextAccessibility
-  - MDFTextAccessibility (1.1.1)
+  - MDFTextAccessibility (1.1.4)
 
 DEPENDENCIES:
   - CatalogByConvention
@@ -179,19 +171,19 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: ../
+    :path: "../"
   MaterialComponentsCatalog:
-    :path: ../
+    :path: "../"
   MaterialComponentsUnitTests:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  CatalogByConvention: 0e471a53b232b83be30141379b3ff0ad3365c3ec
-  EarlGrey: a75bceccb337860996e968f7f6239fd04c52d5d4
-  MaterialComponents: b479d5f003974327f58e03f940764179a9b41580
-  MaterialComponentsCatalog: c66a111e2a412232c67b36b333c14f6cf746dcf5
-  MaterialComponentsUnitTests: 9bdcf1262f7a911c832b1b9787133480f52015f4
-  MDFTextAccessibility: 79e89490f26446f49ff47a116923e9b6cc10808e
+  CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
+  EarlGrey: cc30647d18d705eabe50e1144670490a32b170c7
+  MaterialComponents: 05b6929ec0d9b6335a4d1769c944a815784207b1
+  MaterialComponentsCatalog: 58d501c0dedc0e9132654b06ad1b5afde91bf12d
+  MaterialComponentsUnitTests: 96c8168923b0ec526c6371103f7555525e01557c
+  MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
 
 PODFILE CHECKSUM: 0a93a34ae9af89654baaaa3a998126cb7d9e1198
 
