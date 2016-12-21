@@ -302,9 +302,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGRect alignedFrame = [self mdc_frameAlignedVertically:titleFrame
                                             withinBounds:textFrame
                                                alignment:titleVerticalAlignment];
-  alignedFrame = [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
-  _titleLabel.frame = MDCRectFlippedForRTL(alignedFrame, self.bounds.size.width,
-                                           self.mdc_effectiveUserInterfaceLayoutDirection);
+  _titleLabel.frame = [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
   self.titleView.frame = textFrame;
 
   // Button and title label alignment
