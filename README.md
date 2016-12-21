@@ -1,4 +1,4 @@
-<img align="right" src="mdc_hero_2x.png" width="200px">
+<img align="right" src="mdc_hero.png" width="200px">
 
 # Material Components for iOS
 
