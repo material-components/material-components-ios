@@ -19,6 +19,7 @@ readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
 readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=latest'
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+all_tests_ok=1
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
   workspace=$(echo $workspace_scheme | cut -d: -f1)
   scheme=$(echo $workspace_scheme | cut -d: -f2)
@@ -32,6 +33,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
   if xcodebuild test -workspace "$workspace" -scheme "$scheme" -destination "$DESTINATION" $1 >"$log_file" 2>&1; then
     rm "$log_file"
   else
+    all_tests_ok=0
     echo
     echo "Failed to test $scheme in $workspace."
     echo "Log left in $log_file."
@@ -39,3 +41,11 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
     echo
   fi
 done
+
+# If any test failed, exit with a failure exit status so continuous integration 
+# tools can react appropriately.
+if [ "$all_tests_ok" -eq 1 ]; then
+  exit 0
+else
+  exit 1
+fi
