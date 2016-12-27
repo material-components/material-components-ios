@@ -1,7 +1,7 @@
 # Button Bar
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Button Bar"><img src="docs/assets/buttom_bar.png" width="320px"></a>
+<a alt="Button Bar"><img src="docs/assets/button_bar.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/button_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
