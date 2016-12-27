@@ -49,6 +49,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
     echo "Failed to build $scheme in $workspace:"
     guess_failure "$log_file"
     echo "Log left in $log_file."
+    cat "$log_file"
     echo "Continuing with next build..."
     echo
   fi
