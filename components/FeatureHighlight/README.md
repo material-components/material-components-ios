@@ -1,7 +1,7 @@
 # Feature Highlight
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Feature Highlight](docs/assets/feature_highlight.png)](docs/assets/feature_highlight.mp4)
+<a alt="Feature Highlight"><img src="docs/assets/feature_highlight.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/feature_highlight.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.

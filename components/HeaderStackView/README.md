@@ -1,7 +1,7 @@
 # Header Stack View
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Header Stack View](docs/assets/header_stack_view.png)](docs/assets/header_stack_view.mp4)
+<a alt="Header Stack View"><img src="docs/assets/header_stack_view.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/header_stack_view.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Header Stack View component is a view that coordinates the layout of two vertically stacked

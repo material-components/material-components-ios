@@ -1,7 +1,7 @@
 # Collections
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Collections](docs/assets/collections.png)](docs/assets/collections.mp4)
+<a alt="Collections"><img src="docs/assets/collections.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/collections.mp4" autoplay loop></video></div>{% endif %}-->
 
 Collection view classes that adhere to Material Design layout and styling.
