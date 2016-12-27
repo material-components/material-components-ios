@@ -1,7 +1,7 @@
 # Activity Indicator
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Activity Indicator](docs/assets/activity_indicator.png)](docs/assets/activity_indicator.mp4)
+<a alt="Activity Indicator"><img src="docs/assets/activity_indicator.png" width="300px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/activity_indicator.mp4" autoplay loop></video></div>{% endif %}-->
 
 Activity indicators are visual indications of an app loading content. The Activity Indicator is a circular indicator that either rotates clockwise or fills to completion clockwise when displaying progress.
