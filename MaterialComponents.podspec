@@ -176,6 +176,9 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
 
+    # Accessibility Configurator
+    ss.dependency "MDFTextAccessibility"
+
     ss.dependency "MaterialComponents/ButtonBar"
     ss.dependency "MaterialComponents/Typography"
     ss.dependency "MaterialComponents/private/RTL"

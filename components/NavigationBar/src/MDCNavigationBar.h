@@ -44,6 +44,31 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
 
 @end
 
+@class MDCNavigationBar;
+
+/**
+  The MDCNavigationBarAccessibilityEnforcer class creates an external object with which to work on
+  an instance of a Material Navigation Bar to activate and esnure accessibility on its title and 
+  buttons.
+
+  ### Dependencies
+
+  Material NavigationBarAccessibilityEnforcer depends on the Navigation Bar material component and
+  MDFTextAccessibility Framework.
+  */
+
+@interface MDCNavigationBarAccessibilityEnforcer : NSObject
+
+- (nonnull instancetype)init;
+
+/**
+  + Mutates title text color and navigation items' tint colors based on background color of
+  + app bar's navigation bar or header view background color.
+  + */
+- (void)enforceFontColorAccessibility:(nonnull MDCNavigationBar *)navBar;
+
+@end
+
 /**
  The MDCNavigationBar class is a view consisting of a leading and trailing button bar, title label,
  and an optional title view.

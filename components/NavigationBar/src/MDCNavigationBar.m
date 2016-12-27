@@ -19,6 +19,7 @@
 #import "MaterialButtonBar.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
+#import "MDFTextAccessibility.h"
 
 #import <objc/runtime.h>
 
@@ -87,6 +88,35 @@ static NSString *const MDCNavigationBarTrailingBarItemsKey = @"MDCNavigationBarT
 static NSString *const MDCNavigationBarLeadingButtonSupplementsBackButtonKey =
     @"MDCNavigationBarLeadingButtonSupplementsBackButtonKey";
 static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTitleAlignmentKey";
+
+@implementation MDCNavigationBarAccessibilityEnforcer
+
+- (nonnull instancetype)init {
+  self = [super init];
+  return self;
+}
+
+- (void)enforceFontColorAccessibility:(nonnull MDCNavigationBar *)navBar {
+  // Determine what is the appropriate background color
+  UIColor *backgroundColor = navBar.backgroundColor;
+  if (!backgroundColor) {
+    return;
+  }
+
+  // Update title label color based on navigationBar backgroundColor
+  NSMutableDictionary *textAttr =
+      [NSMutableDictionary dictionaryWithDictionary:[navBar titleTextAttributes]];
+  UIColor *textColor = [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                                        targetTextAlpha:1.0
+                                                  font:[textAttr objectForKey:NSFontAttributeName]];
+  [textAttr setObject:textColor forKey:NSForegroundColorAttributeName];
+  [navBar setTitleTextAttributes:textAttr];
+
+  // Update button's tint color based on navigationBar backgroundColor
+  navBar.tintColor = textColor;
+}
+
+@end
 
 /**
  Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
