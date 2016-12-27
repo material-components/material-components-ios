@@ -4,7 +4,9 @@ sudo: false
 # Only fire off builds for specific branches.
 branches:
   only:
-    - testtravis
+    - develop
+    - stable
+    - /^feature-.*$/
 env:
   global:
   - LC_CTYPE=en_US.UTF-8
