@@ -18,6 +18,7 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - instruments -s devices
+  - security find-identity -p codesigning -v
   - scripts/release/manage_pods.py install
   - scripts/build_all
   - #scripts/test_all
