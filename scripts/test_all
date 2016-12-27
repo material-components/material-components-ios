@@ -37,6 +37,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
     echo
     echo "Failed to test $scheme in $workspace."
     echo "Log left in $log_file."
+    cat "$log_file"
     echo "Continuing with next test..."
     echo
   fi
