@@ -1,12 +1,12 @@
 target 'Pesto' do
-  pod 'MaterialComponents/AnimationTiming'
-  pod 'MaterialComponents/AppBar'
-  pod 'MaterialComponents/Collections'
-  pod 'MaterialComponents/FlexibleHeader'
-  pod 'MaterialComponents/Ink'
-  pod 'MaterialComponents/ShadowElevations'
-  pod 'MaterialComponents/ShadowLayer'
-  pod 'MaterialComponents/Typography'
-  
+  pod 'MaterialComponents/AnimationTiming', :path => '../../'
+  pod 'MaterialComponents/AppBar', :path => '../../'
+  pod 'MaterialComponents/Collections', :path => '../../'
+  pod 'MaterialComponents/FlexibleHeader', :path => '../../'
+  pod 'MaterialComponents/Ink', :path => '../../'
+  pod 'MaterialComponents/ShadowElevations', :path => '../../'
+  pod 'MaterialComponents/ShadowLayer', :path => '../../'
+  pod 'MaterialComponents/Typography', :path => '../../'
+
 end
 

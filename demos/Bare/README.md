@@ -29,11 +29,11 @@ or the project will not build.
 These are the instructions for how we took this measurement.
 
 ### Create a base line
-- Go to the `Podfile` and remove the `pod 'MaterialComponents'` entry
+- Go to the `Podfile` and remove the `pod 'MaterialComponents', :path => '../../'` entry
 - Measure the [size](#size-of-the-app-generated) of the App without Material Components.
 
 ### Measure the increase with Material Components iOS
-- Go to the `Podfile` and re-add the `pod 'MaterialComponents'` entry
+- Go to the `Podfile` and re-add the `pod 'MaterialComponents', :path => '../../'` entry
 - Measure the [size](#size-of-the-app-generated) of the App with Material Components iOS.
 
 
