@@ -4,19 +4,22 @@ sudo: false
 # Only fire off builds for specific branches.
 branches:
   only:
-    - testtravis
+    - develop
+    - stable
+    - /^feature-.*$/
 env:
   global:
   - LC_CTYPE=en_US.UTF-8
   - LANG=en_US.UTF-8
   matrix:
-    - DESTINATION="OS=9.3,name=iPhone 6s" SDK=iphonesimulator9.3
+    - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.2" SDK="iphonesimulator10.2"
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -showsdks
+  - pod --version
   - scripts/release/manage_pods.py install
   - scripts/build_all
   - scripts/test_all

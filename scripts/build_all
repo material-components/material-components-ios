@@ -28,10 +28,15 @@ function is_expected_failure() {
 # Given a path to an Xcode log file in $1, print a guess at what caused the
 # failure.
 function guess_failure() {
-  grep --after-context=2 "The following build commands failed:" "$1"
+  if [[ $TRAVIS == "true" ]]; then
+    tail -n 200 "$1"
+  else
+    grep --context=20 "The following build commands failed:" "$1"
+  fi
 }
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+readonly SIGNING_OPTIONS="CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO"
 all_builds_ok=1
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
   workspace=$(echo $workspace_scheme | cut -d: -f1)
@@ -39,7 +44,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
   
   echo "Building $scheme in $workspace."
   log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
-  options="-workspace $workspace -scheme $scheme"
+  options="-workspace $workspace -scheme $scheme $SIGNING_OPTIONS"
   if xcodebuild $options $1 >"$log_file" 2>&1 || \
      is_expected_failure "$log_file"; then
     rm "$log_file"

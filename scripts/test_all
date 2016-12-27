@@ -16,7 +16,17 @@
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
-readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=latest'
+readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=10.1'
+
+# Given a path to an Xcode log file in $1, print a guess at what caused the
+# failure.
+function guess_failure() {
+  if [[ $TRAVIS == "true" ]]; then
+    tail -n 200 "$1"
+  else
+    grep --context=20 "The following build commands failed:" "$1"
+  fi
+}
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
 all_tests_ok=1
@@ -36,6 +46,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
     all_tests_ok=0
     echo
     echo "Failed to test $scheme in $workspace."
+    guess_failure "$log_file"
     echo "Log left in $log_file."
     echo "Continuing with next test..."
     echo

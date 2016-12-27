@@ -137,7 +137,7 @@
 				TargetAttributes = {
 					20AA6A9B1D4A5D0C0062273A = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = EQHXZ8M8AV;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -342,7 +342,8 @@
 			baseConfigurationReference = 446F2F1AECCCB052B6006DEA /* Pods-Bare.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Bare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.Bare;
@@ -355,7 +356,8 @@
 			baseConfigurationReference = ED9C9E04E226DD8974E12F27 /* Pods-Bare.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Bare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MaterialComponents.Bare;
