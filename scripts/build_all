@@ -28,7 +28,11 @@ function is_expected_failure() {
 # Given a path to an Xcode log file in $1, print a guess at what caused the
 # failure.
 function guess_failure() {
-  grep --after-context=2 "The following build commands failed:" "$1"
+  if [[ $TRAVIS == "true" ]]; then
+    tail -n 200 "$1"
+  else
+    grep --context=20 "The following build commands failed:" "$1"
+  fi
 }
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
