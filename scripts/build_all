@@ -32,6 +32,7 @@ function guess_failure() {
 }
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+readonly SIGNING_OPTIONS="CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO"
 all_builds_ok=1
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
   workspace=$(echo $workspace_scheme | cut -d: -f1)
@@ -39,7 +40,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
   
   echo "Building $scheme in $workspace."
   log_file=$(dirname "$workspace")/"build_log_for_scheme_${scheme}.txt"
-  options="-workspace $workspace -scheme $scheme"
+  options="-workspace $workspace -scheme $scheme $SIGNING_OPTIONS"
   if xcodebuild $options $1 >"$log_file" 2>&1 || \
      is_expected_failure "$log_file"; then
     rm "$log_file"
@@ -49,7 +50,6 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
     echo "Failed to build $scheme in $workspace:"
     guess_failure "$log_file"
     echo "Log left in $log_file."
-    cat "$log_file"
     echo "Continuing with next build..."
     echo
   fi
