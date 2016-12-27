@@ -16,7 +16,7 @@
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
-readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=latest'
+readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=10.1'
 
 readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
 all_tests_ok=1
