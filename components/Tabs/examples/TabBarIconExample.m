@@ -71,9 +71,12 @@
 
   UIColor *color = [[MDCPalette bluePalette] tint500];
 
-  self.tabBar.barTintColor = color;
-  self.tabBar.tintColor = [UIColor whiteColor];
+  self.tabBar.barTintColor = [UIColor whiteColor];
+  self.tabBar.tintColor = color;
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  self.tabBar.selectedItemTintColor = nil;
+  self.tabBar.unselectedItemTintColor = nil;
+  self.tabBar.inkColor = color;
 
   self.appBar.headerStackView.bottomBar = self.tabBar;
 }

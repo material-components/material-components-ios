@@ -35,13 +35,9 @@
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
 
-  UIColor *color = [[MDCPalette bluePalette] tint500];
-  self.appBar.headerViewController.headerView.backgroundColor = color;
+  self.appBar.headerViewController.headerView.backgroundColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
-
-  self.appBar.navigationBar.tintColor = [UIColor whiteColor];
-  self.appBar.navigationBar.titleTextAttributes =
-  @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+  self.appBar.headerViewController.headerView.tintColor = [[MDCPalette bluePalette] tint500];
 
   [self.appBar addSubviewsToParent];
 
