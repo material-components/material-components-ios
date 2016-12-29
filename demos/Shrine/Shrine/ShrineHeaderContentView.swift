@@ -20,6 +20,13 @@ import RemoteImageServiceForMDCDemos
 
 class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
+  let fontAbril = UIFont(name: "AbrilFatface-Regular", size: 36)
+  let fontHelvetica = UIFont(name: "Helvetica", size: 14)
+  let textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
+  let cyanBoxColor = UIColor(red: 0.19, green: 0.94, blue: 0.94, alpha: 1)
+  let descColor = UIColor(white: 0.54, alpha: 1)
+  let descString = "Leave the tunnel and the rain is fallin amazing things happen when you wait"
+
   var remoteImageService = RemoteImageService()
 
   var pageControl = MDCPageControl()
@@ -85,36 +92,27 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     self.addSubview(logoTextImageView)
   }
 
-  func addPageContent() {
-    let firstPage = pages[0]
-    let secondPage = pages[1]
-    let thirdPage = pages[2]
+  func addPage(page: UIView, imageView: UIImageView, label: UILabel, labelDesc: UILabel,
+               cyanBox: UIView, imageName: String, description: String) {
     imageView.contentMode = UIViewContentMode.scaleAspectFill
     imageView.autoresizingMask = .flexibleHeight
-    (firstPage as AnyObject).addSubview(imageView)
-    let url = URL(string: ShrineData.baseURL + "chair.png")
+    (page as AnyObject).addSubview(imageView)
+    let url = URL(string: ShrineData.baseURL + imageName)
     remoteImageService.fetchImageAndThumbnail(from: url) { (image:UIImage?,
       thumbnailImage:UIImage?) -> Void in
       DispatchQueue.main.async(execute: {
-        self.imageView.image = image;
-        self.imageView.setNeedsDisplay()
+        imageView.image = image;
+        imageView.setNeedsDisplay()
       })
     }
-
-    let fontAbril = UIFont(name: "AbrilFatface-Regular", size: 36)
-    let fontHelvetica = UIFont(name: "Helvetica", size: 14)
-    let textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
-    let cyanBoxColor = UIColor(red: 0.19, green: 0.94, blue: 0.94, alpha: 1)
-    let descColor = UIColor(white: 0.54, alpha: 1)
-    let descString = "Leave the tunnel and the rain is fallin amazing things happen when you wait"
 
     label.font = fontAbril
     label.textColor = textColor
     label.lineBreakMode = .byWordWrapping
     label.numberOfLines = 2
-    label.attributedText = attributedString("Green \ncomfort chair", lineHeightMultiple: 0.8)
+    label.attributedText = attributedString(description, lineHeightMultiple: 0.8)
     label.sizeToFit();
-    (firstPage as AnyObject).addSubview(label)
+    (page as AnyObject).addSubview(label)
 
     labelDesc.lineBreakMode = .byWordWrapping
     labelDesc.numberOfLines = 3
@@ -122,81 +120,28 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     labelDesc.textColor = descColor
     labelDesc.attributedText = attributedString(descString, lineHeightMultiple: 1.2)
     labelDesc.autoresizingMask = .flexibleWidth
-    (firstPage as AnyObject).addSubview(labelDesc)
+    (page as AnyObject).addSubview(labelDesc)
 
     cyanBox.backgroundColor = cyanBoxColor
-    (firstPage as AnyObject).addSubview(cyanBox)
+    (page as AnyObject).addSubview(cyanBox)
 
-    let inkOverlay = ShrineInkOverlay(frame: (firstPage as AnyObject).bounds)
+    let inkOverlay = ShrineInkOverlay(frame: (page as AnyObject).bounds)
     inkOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    (firstPage as AnyObject).addSubview(inkOverlay)
+    (page as AnyObject).addSubview(inkOverlay)
 
-    imageView2.contentMode = UIViewContentMode.scaleAspectFill
-    imageView2.autoresizingMask = .flexibleHeight
-    (secondPage as AnyObject).addSubview(imageView2)
-    let url2 = URL(string: ShrineData.baseURL + "backpack.png")
-    remoteImageService.fetchImageAndThumbnail(from: url2) { (image:UIImage?,
-      thumbnailImage:UIImage?) -> Void in
-      DispatchQueue.main.async(execute: {
-        self.imageView2.image = image;
-        self.imageView2.setNeedsDisplay()
-      })
-    }
+  }
 
-    label2.font = fontAbril
-    label2.textColor = textColor
-    label2.lineBreakMode = .byWordWrapping
-    label2.numberOfLines = 2
-    label2.attributedText = attributedString("Best gift for \nthe traveler",
-      lineHeightMultiple: 0.8)
-    (secondPage as AnyObject).addSubview(label2)
+  func addPageContent() {
+    let firstPage = pages[0]
+    let secondPage = pages[1]
+    let thirdPage = pages[2]
 
-    labelDesc2.lineBreakMode = .byWordWrapping
-    labelDesc2.numberOfLines = 2
-    labelDesc2.font = fontHelvetica
-    labelDesc2.textColor = descColor
-    labelDesc2.attributedText = attributedString(descString, lineHeightMultiple: 1.2)
-    (secondPage as AnyObject).addSubview(labelDesc2)
-
-    cyanBox2.backgroundColor = cyanBoxColor
-    (secondPage as AnyObject).addSubview(cyanBox2)
-
-    let inkOverlay2 = ShrineInkOverlay(frame: (secondPage as AnyObject).bounds)
-    inkOverlay2.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    (secondPage as AnyObject).addSubview(inkOverlay2)
-
-    imageView3.contentMode = UIViewContentMode.scaleAspectFill
-    imageView3.autoresizingMask = .flexibleHeight
-    (thirdPage as AnyObject).addSubview(imageView3)
-    let url3 = URL(string: ShrineData.baseURL + "heels.png")
-    remoteImageService.fetchImageAndThumbnail(from: url3) { (image:UIImage?,
-      thumbnailImage:UIImage?) -> Void in
-      DispatchQueue.main.async(execute: {
-        self.imageView3.image = image;
-        self.imageView3.setNeedsDisplay()
-      })
-    }
-
-    label3.font = fontAbril
-    label3.textColor = textColor
-    label3.lineBreakMode = .byWordWrapping
-    label3.numberOfLines = 2
-    label3.attributedText = attributedString("Better \nwearing heels", lineHeightMultiple: 0.8)
-    (thirdPage as AnyObject).addSubview(label3)
-
-    labelDesc3.lineBreakMode = .byWordWrapping
-    labelDesc3.numberOfLines = 2
-    labelDesc3.font = fontHelvetica
-    labelDesc3.textColor = descColor
-    labelDesc3.attributedText = attributedString(descString, lineHeightMultiple: 1.2)
-    (thirdPage as AnyObject).addSubview(labelDesc3)
-
-    cyanBox3.backgroundColor = cyanBoxColor
-    (thirdPage as AnyObject).addSubview(cyanBox3)
-
-    let inkOverlay3 = ShrineInkOverlay(frame: (thirdPage as AnyObject).bounds)
-    inkOverlay3.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    (thirdPage as AnyObject).addSubview(inkOverlay3)
+    addPage(page: firstPage as! UIView, imageView: imageView, label: label, labelDesc: labelDesc,
+            cyanBox: cyanBox, imageName: "chair.png", description: "Green \ncomfort chair")
+    addPage(page: secondPage as! UIView, imageView: imageView2, label: label2, labelDesc: labelDesc2,
+            cyanBox: cyanBox2, imageName: "backpack.png", description: "Best gift for \nthe traveler")
+    addPage(page: thirdPage as! UIView, imageView: imageView3, label: label3, labelDesc: labelDesc3,
+            cyanBox: cyanBox3, imageName: "heels.png", description: "Better \nwearing heels")
   }
 
   override func layoutSubviews() {
