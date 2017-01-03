@@ -16,3 +16,4 @@
 
 #import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
