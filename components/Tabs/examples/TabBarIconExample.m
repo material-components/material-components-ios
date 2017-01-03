@@ -122,8 +122,4 @@
   [self.scrollView setContentOffset:CGPointMake(index * CGRectGetWidth(self.view.bounds), 0) animated:YES];
 }
 
-- (void)tabBar:(MDCTabBar *)tabBar willSelectItem:(UITabBarItem *)item {
-  
-}
-
 @end
