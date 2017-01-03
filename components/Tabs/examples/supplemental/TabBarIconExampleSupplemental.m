@@ -42,11 +42,12 @@
   [self.appBar addSubviewsToParent];
 
   UIBarButtonItem *badgeIncrementItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Stars"
+      [[UIBarButtonItem alloc] initWithTitle:@"Add"
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(incrementBadges:)];
   self.navigationItem.rightBarButtonItem = badgeIncrementItem;
+
   self.title = @"Tabs With Icons";
 
   // Button to change tab alignments.

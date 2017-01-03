@@ -55,6 +55,7 @@
 
 - (void)loadTabBar {
   self.tabBar = [MDCTabBar new];
+  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
 
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIImage *infoImage =
