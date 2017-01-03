@@ -171,16 +171,16 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: "../"
+    :path: ../
   MaterialComponentsCatalog:
-    :path: "../"
+    :path: ../
   MaterialComponentsUnitTests:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: 75b2e9359c57d56c9b7f333e17761c6bff35a9ea
-  MaterialComponents: bd2bbd4e8631c6a560100848c7d2a864e61b6716
+  MaterialComponents: 05b6929ec0d9b6335a4d1769c944a815784207b1
   MaterialComponentsCatalog: 58d501c0dedc0e9132654b06ad1b5afde91bf12d
   MaterialComponentsUnitTests: 96c8168923b0ec526c6371103f7555525e01557c
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601

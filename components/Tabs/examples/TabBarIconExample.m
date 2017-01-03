@@ -55,6 +55,7 @@
 
 - (void)loadTabBar {
   self.tabBar = [MDCTabBar new];
+  self.tabBar.delegate = self;
   self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
 
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
@@ -113,6 +114,16 @@
 
 - (void)setAlignment:(MDCTabBarAlignment)alignment {
   [self.tabBar setAlignment:alignment animated:YES];
+}
+
+# pragma mark - MDCTabBarDelegate
+- (void)tabBar:(MDCTabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+  NSUInteger index = [tabBar.items indexOfObject:item];
+  [self.scrollView setContentOffset:CGPointMake(index * CGRectGetWidth(self.view.bounds), 0) animated:YES];
+}
+
+- (void)tabBar:(MDCTabBar *)tabBar willSelectItem:(UITabBarItem *)item {
+  
 }
 
 @end
