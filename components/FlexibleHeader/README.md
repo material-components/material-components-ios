@@ -1,7 +1,7 @@
 # Flexible Header
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Flexible Header](docs/assets/flexible_header.png)](docs/assets/flexible_header.mp4)
+<a alt="Flexible Header"><img src="docs/assets/flexible_header.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/flexible_header.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Flexible Header is a container view whose height and vertical offset react to

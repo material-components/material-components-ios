@@ -1,7 +1,7 @@
 # App Bar
 
 <!--{% if site.link_to_site == "true" %}-->
-[![App Bar](docs/assets/app_bar.png)](docs/assets/app_bar.mp4)
+<a alt="App Bar"><img src="docs/assets/app_bar.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/app_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design

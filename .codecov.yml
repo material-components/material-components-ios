@@ -1,0 +1,4 @@
+ignore:
+  - "catalog"
+  - "components/*/examples"
+  - "components/*/tests/*"

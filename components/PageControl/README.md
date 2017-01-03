@@ -1,7 +1,7 @@
 # Page Control
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Page Control](docs/assets/page_control.png)](docs/assets/page_control.mp4)
+<a alt="Page Control"><img src="docs/assets/page_control.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/page_control.mp4" autoplay loop></video></div>{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
