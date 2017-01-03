@@ -79,6 +79,7 @@
   self.tabBar.inkColor = color;
 
   self.appBar.headerStackView.bottomBar = self.tabBar;
+  [self.appBar.headerStackView setNeedsLayout];
 }
 
 - (void)changeAlignment:(id)sender {
