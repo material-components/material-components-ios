@@ -40,9 +40,11 @@
   [super setUp];
   self.message = [[MDCSnackbarMessage alloc] init];
   self.message.attributedText = [[NSAttributedString alloc] initWithString:@"This is a simple message" attributes:nil];
-  self.defaultBackgroundColor = [[UIColor alloc] initWithRed:0x32/255 green:0x32/255 blue:0x32/255 alpha:1.0f];
-  self.defaultShadowColor = [[UIColor alloc] initWithRed:0x00/255 green:0x00/255 blue:0x00/255 alpha:1.0f];
-  self.defaultTextColor = [[UIColor alloc] initWithRed:0xFF/255 green:0xFF/255 blue:0xFF/255 alpha:1.0f];
+  
+  self.defaultBackgroundColor = [UIColor colorWithRed:0x32/255.0f green:0x32/255.0f blue:0x32/255.0f alpha:1.0f];
+  self.defaultShadowColor = [UIColor colorWithRed:0x00/255.0f green:0x00/255.0f blue:0x00/255.0f alpha:1.0f];
+  self.defaultTextColor = [UIColor colorWithRed:0xFF/255.0f green:0xFF/255.0f blue:0xFF/255.0f alpha:1.0f];
+  
   self.view = [[MDCSnackbarMessageView alloc] initWithMessage:self.message dismissHandler:nil];
 }
 
