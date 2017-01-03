@@ -137,6 +137,8 @@ IB_DESIGNABLE
  */
 @protocol MDCTabBarDelegate <NSObject>
 
+@optional
+
 /**
  Called before the selected item changes by user action. This method is not called for programmatic
  changes to the tab bar's selected item.
