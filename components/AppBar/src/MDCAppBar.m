@@ -151,7 +151,7 @@ static const CGFloat kStatusBarHeight = 20;
   // Underlying issue is you need view loaded before accessing. Below change will accomplish that
   // by calling for view.bounds initializing the stack view
   if (!_headerStackView) {
-    _headerStackView = [[MDCHeaderStackView alloc] initWithFrame:self.view.bounds];
+    _headerStackView = [[MDCHeaderStackView alloc] initWithFrame:CGRectZero];
   }
   return _headerStackView;
 }
