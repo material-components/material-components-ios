@@ -1,3 +1,6 @@
+excluded:
+  - third_party
+
 disabled_rules:
   - closure_parameter_position
   - colon
