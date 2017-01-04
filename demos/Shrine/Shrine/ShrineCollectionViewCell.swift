@@ -36,7 +36,7 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     cellContent.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     cellContent.clipsToBounds = true
 
-    imageView.contentMode = .scaleAspectFill;
+    imageView.contentMode = .scaleAspectFill
     imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     cellContent.addSubview(imageView)
 

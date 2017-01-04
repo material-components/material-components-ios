@@ -101,7 +101,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     remoteImageService.fetchImageAndThumbnail(from: url) { (image:UIImage?,
       thumbnailImage:UIImage?) -> Void in
       DispatchQueue.main.async(execute: {
-        imageView.image = image;
+        imageView.image = image
         imageView.setNeedsDisplay()
       })
     }
@@ -111,7 +111,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     label.lineBreakMode = .byWordWrapping
     label.numberOfLines = 2
     label.attributedText = attributedString(description, lineHeightMultiple: 0.8)
-    label.sizeToFit();
+    label.sizeToFit()
     (page as AnyObject).addSubview(label)
 
     labelDesc.lineBreakMode = .byWordWrapping

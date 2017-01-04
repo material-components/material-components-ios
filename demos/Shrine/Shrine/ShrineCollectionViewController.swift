@@ -47,7 +47,7 @@ class ShrineCollectionViewController: UICollectionViewController {
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShrineCollectionViewCell", for: indexPath) as! ShrineCollectionViewCell
-    let itemNum:NSInteger = (indexPath as NSIndexPath).row;
+    let itemNum:NSInteger = (indexPath as NSIndexPath).row
 
     let title = self.shrineData.titles[itemNum] as! String
     let imageName = self.shrineData.imageNames[itemNum] as! String
@@ -62,14 +62,14 @@ class ShrineCollectionViewController: UICollectionViewController {
   func collectionView(_ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-      let cellWidth = floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5);
+      let cellWidth = floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5)
       let cellHeight = cellWidth * 1.2
-      return CGSize(width: cellWidth, height: cellHeight);
+      return CGSize(width: cellWidth, height: cellHeight)
   }
 
   override func collectionView(_ collectionView: UICollectionView,
                                didSelectItemAt indexPath: IndexPath) {
-    let itemNum:NSInteger = (indexPath as NSIndexPath).row;
+    let itemNum:NSInteger = (indexPath as NSIndexPath).row
 
     let detailVC = ShrineDetailViewController()
     detailVC.productTitle = self.shrineData.titles[itemNum] as! String
@@ -80,8 +80,8 @@ class ShrineCollectionViewController: UICollectionViewController {
   }
 
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    headerViewController.scrollViewDidScroll(scrollView);
-    let scrollOffsetY = scrollView.contentOffset.y;
+    headerViewController.scrollViewDidScroll(scrollView)
+    let scrollOffsetY = scrollView.contentOffset.y
     let duration = 0.5
     if (scrollOffsetY > -240) {
       UIView.animate(withDuration: duration, animations: {
@@ -104,11 +104,11 @@ class ShrineCollectionViewController: UICollectionViewController {
     let headerView = headerViewController.headerView
     let bounds = UIScreen.main.bounds
     if (bounds.size.width < bounds.size.height) {
-      headerView.maximumHeight = 440;
-      headerView.minimumHeight = 72;
+      headerView.maximumHeight = 440
+      headerView.minimumHeight = 72
     } else {
-      headerView.maximumHeight = 72;
-      headerView.minimumHeight = 72;
+      headerView.maximumHeight = 72
+      headerView.minimumHeight = 72
     }
   }
 
@@ -125,8 +125,8 @@ class ShrineCollectionViewController: UICollectionViewController {
   func setupHeaderView() {
     let headerView = headerViewController.headerView
     headerView.trackingScrollView = collectionView
-    headerView.maximumHeight = 440;
-    headerView.minimumHeight = 72;
+    headerView.maximumHeight = 440
+    headerView.minimumHeight = 72
     headerView.backgroundColor = UIColor.white
     headerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 

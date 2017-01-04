@@ -64,7 +64,7 @@ class ShrineDetailView: UIScrollView {
       value:paragraphStyle,
       range:NSMakeRange(0, attrString.length))
     label.attributedText = attrString
-    label.sizeToFit();
+    label.sizeToFit()
     label.frame = CGRect(x: labelPadding,
       y: 280, width: label.frame.size.width, height: label.frame.size.height)
     label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
