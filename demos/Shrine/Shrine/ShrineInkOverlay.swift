@@ -24,7 +24,7 @@ class ShrineInkOverlay: UIView, MDCInkTouchControllerDelegate {
   override init(frame: CGRect) {
     super.init(frame: frame)
     let cyan = UIColor(red: 22 / 255, green: 240 / 255, blue: 240 / 255, alpha: 0.2)
-    self.inkTouchController = MDCInkTouchController(view:self)!
+    self.inkTouchController = MDCInkTouchController(view:self)
     self.inkTouchController!.defaultInkView.inkColor = cyan
     self.inkTouchController!.addInkView()
     self.inkTouchController!.delegate = self

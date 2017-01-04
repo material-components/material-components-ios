@@ -81,7 +81,7 @@
 
  @param view View that responds to touch events for ink.
  */
-- (nullable instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
 /**
  When called the @c defaultInkView is added to the @c view.
