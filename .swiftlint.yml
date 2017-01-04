@@ -1,0 +1,14 @@
+disabled_rules:
+  - conditional_binding_cascade
+  - cyclomatic_complexity
+  - file_length
+  - function_body_length
+  - line_length
+  - statement_position
+  - todo
+  - trailing_whitespace
+  - type_name
+  - force_try
+  - force_cast
+
+variable_name: warning
