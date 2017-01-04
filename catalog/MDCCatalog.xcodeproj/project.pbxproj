@@ -507,7 +507,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ..\n${SRCROOT}/../scripts/lint.sh";
+			shellScript = "${SRCROOT}/../scripts/lint.sh";
 		};
 		72ACDAA295D1F2087113246F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
