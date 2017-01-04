@@ -24,10 +24,10 @@ class DialogsLongAlertViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.white;
+    view.backgroundColor = UIColor.white
 
     flatButton.setTitle("PRESENT ALERT", for: UIControlState())
-    flatButton.setTitleColor(UIColor.blue, for: UIControlState());
+    flatButton.setTitleColor(UIColor.blue, for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -49,7 +49,7 @@ class DialogsLongAlertViewController: UIViewController {
     "vel turpis maximus, accumsan dui quis, cursus turpis. Nunc a tincidunt nunc, ut tempus " +
     "libero. Morbi ut orci laoreet, luctus neque nec, rhoncus enim. Cras dui erat, blandit ac " +
     "malesuada vitae, fringilla ac ante. Nullam dui diam, condimentum vitae mi et, dictum " +
-    "euismod libero. Aliquam commodo urna vitae massa convallis aliquet.";
+    "euismod libero. Aliquam commodo urna vitae massa convallis aliquet."
 
     let materialAlertController = MDCAlertController(title: nil, message: messageString)
 

@@ -63,7 +63,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
     self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
-    MDCIcons.ic_arrow_backUseNewStyle(true);
+    MDCIcons.ic_arrow_backUseNewStyle(true)
   }
 
   convenience init(node: CBCNode) {

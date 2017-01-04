@@ -23,7 +23,7 @@ func ExampleTonesForPalette(_ palette: MDCPalette) -> [ExampleTone] {
     (MDCPaletteTint100Name, palette.tint100),
     (MDCPaletteTint300Name, palette.tint300),
     (MDCPaletteTint500Name, palette.tint500),
-    (MDCPaletteTint700Name, palette.tint700),
+    (MDCPaletteTint700Name, palette.tint700)
     ]
 
   if let accent = palette.accent400 {

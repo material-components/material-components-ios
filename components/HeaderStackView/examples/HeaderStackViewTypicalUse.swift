@@ -24,13 +24,13 @@ open class HeaderStackViewTypicalUseSwiftExample: HeaderStackViewTypicalUse {
     super.viewDidLoad()
     self.setupExampleViews()
 
-    stackView = MDCHeaderStackView.init();
-    stackView!.autoresizingMask = .flexibleWidth;
-    stackView!.topBar = topView;
-    stackView!.bottomBar = navBar;
+    stackView = MDCHeaderStackView.init()
+    stackView!.autoresizingMask = .flexibleWidth
+    stackView!.topBar = topView
+    stackView!.bottomBar = navBar
 
-    let frame = self.view.bounds;
-    stackView!.frame = frame;
+    let frame = self.view.bounds
+    stackView!.frame = frame
     stackView!.sizeToFit()
 
     view.addSubview(stackView!)

@@ -24,7 +24,7 @@ class PaletteTests: XCTestCase {
       red:CGFloat((rgbValue & 0xFF0000) >> 16) / 255,
       green:CGFloat((rgbValue & 0x00FF00) >> 8) / 255,
       blue:CGFloat((rgbValue & 0x0000FF) >> 0) / 255,
-      alpha:1);
+      alpha:1)
   }
 
   func testBasics() {

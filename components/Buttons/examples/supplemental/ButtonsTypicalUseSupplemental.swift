@@ -34,7 +34,7 @@ class ButtonsTypicalUseSupplemental: NSObject {
     bezierPath.addLine(to: CGPoint(x: 19, y: 11))
     bezierPath.addLine(to: CGPoint(x: 19, y: 13))
     bezierPath.close()
-    return bezierPath;
+    return bezierPath
   }
 
   static func createPlusShapeLayer(_ floatingButton: MDCFloatingButton) -> CAShapeLayer {
@@ -44,7 +44,7 @@ class ButtonsTypicalUseSupplemental: NSObject {
     plusShape.position =
       CGPoint(x: (floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
                   y: (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2)
-    return plusShape;
+    return plusShape
   }
 
 }

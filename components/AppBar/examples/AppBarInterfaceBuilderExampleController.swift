@@ -45,7 +45,6 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     appBar.headerViewController.headerView.backgroundColor = headerColor
   }
 
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
