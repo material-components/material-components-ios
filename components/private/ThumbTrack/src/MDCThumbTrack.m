@@ -622,8 +622,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       // Set background/border colors based on interpolated percent.
       CGFloat percent = [self relativeValueForValue:_value];
       _thumbView.layer.backgroundColor = [self colorInterpolatedFromColor:_thumbOffColor
-                                                                      toColor:_thumbOnColor
-                                                                      percent:percent]
+                                                                  toColor:_thumbOnColor
+                                                                  percent:percent]
                                              .CGColor;
       _thumbView.layer.borderColor = [self colorInterpolatedFromColor:_thumbOffColor
                                                               toColor:_thumbOnColor
