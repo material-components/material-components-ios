@@ -16,9 +16,9 @@
 
 #import "MDCFeatureHighlightView.h"
 
-#import "MaterialTypography.h"
 #import "MDCFeatureHighlightLayer.h"
 #import "MDFTextAccessibility.h"
+#import "MaterialTypography.h"
 
 const CGFloat kMDCFeatureHighlightInnerRadius = 44.0f;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0f;
@@ -119,7 +119,7 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   _bodyLabel.textColor =
       [MDFTextAccessibility textColorOnBackgroundColor:outerColor
                                        targetTextAlpha:[MDCTypography captionFontOpacity]
-                                                  options:options];
+                                               options:options];
 
   options = MDFTextAccessibilityOptionsPreferLighter;
   if ([MDFTextAccessibility isLargeForContrastRatios:_titleLabel.font]) {
@@ -160,14 +160,15 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:0].CGColor];
   [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor];
 
-  CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
-                                          _displayedView.frame.size.height/2);
+  CGPoint displayMaskCenter =
+      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
 
   [CATransaction begin];
-  [CATransaction setAnimationTimingFunction:
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
+                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter radius:kMDCFeatureHighlightInnerRadius
+  [_displayMaskLayer setCenter:displayMaskCenter
+                        radius:kMDCFeatureHighlightInnerRadius
                       animated:YES];
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:1].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:kMDCFeatureHighlightInnerRadius animated:YES];
@@ -179,38 +180,36 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
 }
 
 - (void)animatePulse {
-  NSArray *keyTimes = @[@0, @0.5, @1];
-  id pulseColorStart = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:
-                                         kMDCFeatureHighlightPulseStartAlpha].CGColor;
+  NSArray *keyTimes = @[ @0, @0.5, @1 ];
+  id pulseColorStart =
+      (__bridge id)
+          [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
+              .CGColor;
   id pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
   CGFloat radius = kMDCFeatureHighlightInnerRadius;
 
   [CATransaction begin];
   [CATransaction setAnimationDuration:1.0f];
-  [CATransaction setAnimationTimingFunction:
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
+                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
   NSArray *innerKeyframes =
-      @[@(radius), @(radius * kMDCFeatureHighlightInnerRadiusFactor), @(radius)];
-  [_innerLayer animateRadiusOverKeyframes:innerKeyframes
-                                 keyTimes:keyTimes
-                                   center:_highlightPoint];
+      @[ @(radius), @(radius * kMDCFeatureHighlightInnerRadiusFactor), @(radius) ];
+  [_innerLayer animateRadiusOverKeyframes:innerKeyframes keyTimes:keyTimes center:_highlightPoint];
   NSArray *pulseKeyframes =
-      @[@(radius), @(radius), @(radius * kMDCFeatureHighlightPulseRadiusFactor)];
-  [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes
-                                 keyTimes:keyTimes
-                                   center:_highlightPoint];
-  [_pulseLayer animateFillColorOverKeyframes:@[pulseColorStart, pulseColorStart, pulseColorEnd]
+      @[ @(radius), @(radius), @(radius * kMDCFeatureHighlightPulseRadiusFactor) ];
+  [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes keyTimes:keyTimes center:_highlightPoint];
+  [_pulseLayer animateFillColorOverKeyframes:@[ pulseColorStart, pulseColorStart, pulseColorEnd ]
                                     keyTimes:keyTimes];
   [CATransaction commit];
 }
 
 - (void)animateAccepted:(NSTimeInterval)duration {
-  CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
-                                          _displayedView.frame.size.height/2);
+  CGPoint displayMaskCenter =
+      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
 
   [CATransaction begin];
-  [CATransaction setAnimationTimingFunction:
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
+                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
@@ -224,12 +223,12 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
 }
 
 - (void)animateRejected:(NSTimeInterval)duration {
-  CGPoint displayMaskCenter = CGPointMake(_displayedView.frame.size.width/2,
-                                          _displayedView.frame.size.height/2);
+  CGPoint displayMaskCenter =
+      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
 
   [CATransaction begin];
-  [CATransaction setAnimationTimingFunction:
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
+                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setCenter:displayMaskCenter radius:0 animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
@@ -245,28 +244,28 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   [_outerLayer removeAllAnimations];
   [_pulseLayer removeAllAnimations];
 
-  BOOL leftHalf = _highlightPoint.x < self.frame.size.width/2;
-  BOOL topHalf = _highlightPoint.y < self.frame.size.height/2;
+  BOOL leftHalf = _highlightPoint.x < self.frame.size.width / 2;
+  BOOL topHalf = _highlightPoint.y < self.frame.size.height / 2;
 
   CGFloat textWidth = MIN(self.frame.size.width - 2 * kMDCFeatureHighlightTextPadding,
                           kMDCFeatureHighlightTextMaxWidth);
-  CGSize titleSize = [_titleLabel sizeThatFits:CGSizeMake(textWidth,
-                                                          kMDCFeatureHighlightMaxTextHeight)];
-  CGSize detailSize = [_bodyLabel sizeThatFits:CGSizeMake(textWidth,
-                                                          kMDCFeatureHighlightMaxTextHeight)];
+  CGSize titleSize =
+      [_titleLabel sizeThatFits:CGSizeMake(textWidth, kMDCFeatureHighlightMaxTextHeight)];
+  CGSize detailSize =
+      [_bodyLabel sizeThatFits:CGSizeMake(textWidth, kMDCFeatureHighlightMaxTextHeight)];
   titleSize.width = MAX(titleSize.width, detailSize.width);
   detailSize.width = titleSize.width;
 
   CGFloat textHeight = titleSize.height + detailSize.height;
 
-  if ((_highlightPoint.y <= kMDCFeatureHighlightConcentricBound)
-      || (_highlightPoint.y >= self.frame.size.height - kMDCFeatureHighlightConcentricBound)) {
+  if ((_highlightPoint.y <= kMDCFeatureHighlightConcentricBound) ||
+      (_highlightPoint.y >= self.frame.size.height - kMDCFeatureHighlightConcentricBound)) {
     _highlightCenter = _highlightPoint;
   } else {
     if (topHalf) {
-      _highlightCenter.y = _highlightPoint.y + kMDCFeatureHighlightInnerRadius + textHeight/2;
+      _highlightCenter.y = _highlightPoint.y + kMDCFeatureHighlightInnerRadius + textHeight / 2;
     } else {
-      _highlightCenter.y = _highlightPoint.y - kMDCFeatureHighlightInnerRadius - textHeight/2;
+      _highlightCenter.y = _highlightPoint.y - kMDCFeatureHighlightInnerRadius - textHeight / 2;
     }
     if (leftHalf) {
       _highlightCenter.x = _highlightPoint.x + kMDCFeatureHighlightNonconcentricOffset;
@@ -287,34 +286,28 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
 
   CGFloat leftTextBound = kMDCFeatureHighlightTextPadding;
   CGFloat rightTextBound = self.frame.size.width - MAX(titleSize.width, detailSize.width) -
-      kMDCFeatureHighlightTextPadding;
+                           kMDCFeatureHighlightTextPadding;
   CGPoint titlePos = CGPointMake(0, 0);
-  titlePos.x = MIN(MAX(_highlightCenter.x - textWidth/2, leftTextBound), rightTextBound);
+  titlePos.x = MIN(MAX(_highlightCenter.x - textWidth / 2, leftTextBound), rightTextBound);
   if (topHalf) {
-    titlePos.y = _highlightPoint.y + kMDCFeatureHighlightInnerPadding +
-        kMDCFeatureHighlightInnerRadius;
+    titlePos.y =
+        _highlightPoint.y + kMDCFeatureHighlightInnerPadding + kMDCFeatureHighlightInnerRadius;
   } else {
     titlePos.y = _highlightPoint.y - kMDCFeatureHighlightInnerPadding -
-        kMDCFeatureHighlightInnerRadius - textHeight;
+                 kMDCFeatureHighlightInnerRadius - textHeight;
   }
 
-  CGRect titleFrame = (CGRect) {
-    titlePos,
-    titleSize
-  };
+  CGRect titleFrame = (CGRect){titlePos, titleSize};
   _titleLabel.frame = titleFrame;
 
-  CGRect detailFrame = (CGRect) {
-    CGPointMake(titlePos.x, CGRectGetMaxY(titleFrame)),
-    detailSize
-  };
+  CGRect detailFrame = (CGRect){CGPointMake(titlePos.x, CGRectGetMaxY(titleFrame)), detailSize};
   _bodyLabel.frame = detailFrame;
 
   // Calculating the radius required for a circle centered at _highlightCenter that fully encircles
   // both labels.
   CGRect textFrames = CGRectUnion(_titleLabel.frame, _bodyLabel.frame);
-  CGFloat distX = ABS(CGRectGetMidX(textFrames) - _highlightCenter.x) + textFrames.size.width/2;
-  CGFloat distY = ABS(CGRectGetMidY(textFrames) - _highlightCenter.y) + textFrames.size.height/2;
+  CGFloat distX = ABS(CGRectGetMidX(textFrames) - _highlightCenter.x) + textFrames.size.width / 2;
+  CGFloat distY = ABS(CGRectGetMidY(textFrames) - _highlightCenter.y) + textFrames.size.height / 2;
   _outerRadius = (float)sqrt(distX * distX + distY * distY) + kMDCFeatureHighlightTextPadding;
 }
 

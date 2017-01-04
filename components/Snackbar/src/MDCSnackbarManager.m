@@ -45,9 +45,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  @note: Keys are the message category, or the all messages category. Values are sets of suspension
         tokens.
  */
-@property(nonatomic)
-    NSMutableDictionary<NSString *, NSMutableSet<NSUUID *> *>
-        *suspensionTokens;
+@property(nonatomic) NSMutableDictionary<NSString *, NSMutableSet<NSUUID *> *> *suspensionTokens;
 
 /**
  The view which will host our snackbar messages.

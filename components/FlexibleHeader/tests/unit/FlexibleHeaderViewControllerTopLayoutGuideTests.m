@@ -20,15 +20,15 @@
 // Extension to MDCFlexibleHeaderViewController for Tests Only to Expose Private Property
 @interface MDCFlexibleHeaderViewController (Testable)
 
-@property (nonatomic) CGFloat flexibleHeaderViewControllerHeightOffset;
+@property(nonatomic) CGFloat flexibleHeaderViewControllerHeightOffset;
 
 @end
 
 // Test ViewController Class Utilizing MDCFlexibleHeaderViewController
 @interface TopLayoutGuideTestClass : UIViewController <UIScrollViewDelegate>
 
-@property (nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
+@property(nonatomic, strong) UIScrollView *scrollView;
 
 @end
 
@@ -125,9 +125,8 @@
 
 // Test the Flexible Header View Height Offset After Initial Setup
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetSettingMinHeight {
-
   // When
-  CGFloat randomHeight = arc4random_uniform(200.0) + 20.0; // Height Greater Than Status Bar
+  CGFloat randomHeight = arc4random_uniform(200.0) + 20.0;  // Height Greater Than Status Bar
   self.vc.fhvc.headerView.minimumHeight = randomHeight;
 
   // Then
@@ -135,13 +134,11 @@
 }
 
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenKeepStatus {
-
   // When
   self.vc.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
-  CGRect offScreenScroll = CGRectMake(0,
-                                      [UIScreen mainScreen].bounds.size.height,
-                                      [UIScreen mainScreen].bounds.size.width,
-                                      [UIScreen mainScreen].bounds.size.height);
+  CGRect offScreenScroll =
+      CGRectMake(0, [UIScreen mainScreen].bounds.size.height,
+                 [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
   [self.vc.scrollView scrollRectToVisible:offScreenScroll animated:NO];
 
   // Then
@@ -149,13 +146,11 @@
 }
 
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffsetScrollingUpOffscreenHideStatus {
-
   // When
   self.vc.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
-  CGRect offScreenScroll = CGRectMake(0,
-                                      [UIScreen mainScreen].bounds.size.height,
-                                      [UIScreen mainScreen].bounds.size.width,
-                                      [UIScreen mainScreen].bounds.size.height);
+  CGRect offScreenScroll =
+      CGRectMake(0, [UIScreen mainScreen].bounds.size.height,
+                 [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
   [self.vc.scrollView scrollRectToVisible:offScreenScroll animated:NO];
 
   // Then
@@ -163,18 +158,14 @@
 }
 
 - (void)testFlexibleHeaderViewControllerTopLayoutGuideHeightOffPullDownRelease {
-
   // When
   CGFloat randomHeight = arc4random_uniform(50.0) + 20.0;
   self.vc.fhvc.headerView.maximumHeight = randomHeight;
   CGFloat initialYOffset = -self.vc.scrollView.contentInset.top;
-  CGRect initialFrame = CGRectMake(0,
-                                   self.vc.scrollView.contentInset.top,
-                                   [UIScreen mainScreen].bounds.size.width,
-                                   [UIScreen mainScreen].bounds.size.height);
-  CGRect pulledFrame = CGRectMake(0,
-                                  -600,
-                                  [UIScreen mainScreen].bounds.size.width,
+  CGRect initialFrame =
+      CGRectMake(0, self.vc.scrollView.contentInset.top, [UIScreen mainScreen].bounds.size.width,
+                 [UIScreen mainScreen].bounds.size.height);
+  CGRect pulledFrame = CGRectMake(0, -600, [UIScreen mainScreen].bounds.size.width,
                                   [UIScreen mainScreen].bounds.size.height);
 
   // Pull Down
