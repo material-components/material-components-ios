@@ -64,6 +64,7 @@ static inline MDCFlexibleHeaderShiftBehavior
   return intendedShiftBehavior;
 }
 
+static NSString *const MDCFlexibleHeaderShadowLayerKey = @"MDCFlexibleHeaderShadowLayerKey";
 static NSString *const MDCFlexibleHeaderMinimumHeightKey = @"MDCFlexibleHeaderMinimumHeightKey";
 static NSString *const MDCFlexibleHeaderMaximumHeightKey = @"MDCFlexibleHeaderMaximumHeightKey";
 static NSString *const MDCFlexibleHeaderShiftBehaviorKey = @"MDCFlexibleHeaderShiftBehaviorKey";
@@ -83,6 +84,8 @@ static NSString *const MDCFlexibleHeaderSharedWithManyScrollViewsKey =
 static NSString *const MDCFlexibleHeaderContentIsTranslucentKey =
     @"MDCFlexibleHeaderContentIsTranslucentKey";
 static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegateKey";
+static NSString *const MDCFlexibleHeaderShadowIntensityBlockKey =
+    @"MDCFlexibleHeaderShadowIntensityBlockKey";
 
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
 
@@ -189,6 +192,10 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCFlexibleHeaderViewInit];
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderShadowLayerKey]) {
+      self.shadowLayer = [aDecoder decodeObjectForKey:MDCFlexibleHeaderShadowLayerKey];
+    }
+
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderMinimumHeightKey]) {
       _minimumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMinimumHeightKey];
     }
@@ -240,6 +247,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderDelegateKey]) {
       _delegate = [aDecoder decodeObjectForKey:MDCFlexibleHeaderDelegateKey];
     }
+
+    if ([aDecoder containsValueForKey:MDCFlexibleHeaderShadowIntensityBlockKey]) {
+      _shadowIntensityChangeBlock =
+          [aDecoder decodeObjectForKey:MDCFlexibleHeaderShadowIntensityBlockKey];
+    }
   }
   return self;
 }
@@ -266,6 +278,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   }
   if (self.delegate) {
     [aCoder encodeConditionalObject:self.delegate forKey:MDCFlexibleHeaderDelegateKey];
+  }
+  if (self.shadowLayer) {
+    [aCoder encodeObject:self.shadowLayer forKey:MDCFlexibleHeaderShadowLayerKey];
+  }
+  if (_shadowIntensityChangeBlock) {
+    [aCoder encodeObject:_shadowIntensityChangeBlock
+                  forKey:MDCFlexibleHeaderShadowIntensityBlockKey];
   }
 
 }
