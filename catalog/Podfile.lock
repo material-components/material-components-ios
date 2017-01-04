@@ -91,14 +91,12 @@ PODS:
   - MaterialComponents/Palettes (19.0.4)
   - MaterialComponents/private (19.0.4):
     - MaterialComponents/private/Application (= 19.0.4)
-    - MaterialComponents/private/Color (= 19.0.4)
     - MaterialComponents/private/Icons (= 19.0.4)
     - MaterialComponents/private/KeyboardWatcher (= 19.0.4)
     - MaterialComponents/private/Overlay (= 19.0.4)
     - MaterialComponents/private/RTL (= 19.0.4)
     - MaterialComponents/private/ThumbTrack (= 19.0.4)
   - MaterialComponents/private/Application (19.0.4)
-  - MaterialComponents/private/Color (19.0.4)
   - MaterialComponents/private/Icons (19.0.4):
     - MaterialComponents/private/Icons/Base (= 19.0.4)
     - MaterialComponents/private/Icons/ic_arrow_back (= 19.0.4)
@@ -129,7 +127,6 @@ PODS:
   - MaterialComponents/private/RTL (19.0.4)
   - MaterialComponents/private/ThumbTrack (19.0.4):
     - MaterialComponents/Ink
-    - MaterialComponents/private/Color
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
@@ -174,7 +171,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: 75b2e9359c57d56c9b7f333e17761c6bff35a9ea
-  MaterialComponents: bd2bbd4e8631c6a560100848c7d2a864e61b6716
+  MaterialComponents: 7e7e3c4d8c7a22bacd831c0dc52ea135b19ce8ec
   MaterialComponentsCatalog: 58d501c0dedc0e9132654b06ad1b5afde91bf12d
   MaterialComponentsUnitTests: 96c8168923b0ec526c6371103f7555525e01557c
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
