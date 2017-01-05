@@ -21,8 +21,7 @@ static const float kKeyShadowOpacity = 0.26f;
 static const float kAmbientShadowOpacity = 0.08f;
 
 static NSString *const MDCShadowLayerElevationKey = @"MDCShadowLayerElevationKey";
-static NSString *const MDCShadowLayerShadowMaskEnabledKey =
-    @"MDCShadowLayerShadowMaskEnabledKey";
+static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShadowMaskEnabledKey";
 
 @implementation MDCShadowMetrics
 
@@ -80,7 +79,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
 
 @end
 
-
 @interface MDCShadowLayer ()
 
 @property(nonatomic, strong) CAShapeLayer *topShadow;
@@ -108,15 +106,13 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
       _elevation = (CGFloat)[aDecoder decodeDoubleForKey:MDCShadowLayerElevationKey];
     }
     if ([aDecoder containsValueForKey:MDCShadowLayerShadowMaskEnabledKey]) {
-      _shadowMaskEnabled =
-        [aDecoder decodeBoolForKey:MDCShadowLayerShadowMaskEnabledKey];
+      _shadowMaskEnabled = [aDecoder decodeBoolForKey:MDCShadowLayerShadowMaskEnabledKey];
     }
 
     [self commonMDCShadowLayerInit];
   }
   return self;
 }
-
 
 /**
  commonMDCShadowLayerInit creates additional layers based on the values of _elevation and
@@ -142,14 +138,14 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey =
   _bottomShadow.shadowRadius = shadowMetrics.bottomShadowRadius;
   _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
 
-  //TODO(#1021): We shouldn't be calling property accessors in an init method.
+  // TODO(#1021): We shouldn't be calling property accessors in an init method.
   if (_shadowMaskEnabled) {
     _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
     _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
   }
 }
 
-//TODO(#993): Implement missing initWithLayer:
+// TODO(#993): Implement missing initWithLayer:
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
