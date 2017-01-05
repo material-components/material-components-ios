@@ -69,6 +69,8 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   self.clipsToBounds = YES;
   self.isAccessibilityElement = YES;
 
+  _backwardProgressAnimationMode = MDCProgressViewBackwardProgressAnimationModeReset;
+
   _trackView = [[UIView alloc] initWithFrame:self.frame];
   _trackView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self addSubview:_trackView];
@@ -132,12 +134,11 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 - (void)setProgress:(float)progress
            animated:(BOOL)animated
          completion:(void (^__nullable)(BOOL finished))completion {
-  // Backward progress should not be animated between the old and new progress. Instead, reset to 0
-  // without animation before animating to the new position.
-  if (progress < self.progress) {
+  if (progress < self.progress && self.backwardProgressAnimationMode == MDCProgressViewBackwardProgressAnimationModeReset) {
     self.progress = 0;
     [self updateProgressView];
   }
+
   self.progress = progress;
   [UIView animateWithDuration:animated ? [[self class] animationDuration] : 0
                         delay:0
