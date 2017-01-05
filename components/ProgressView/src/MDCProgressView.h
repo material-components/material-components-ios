@@ -16,6 +16,16 @@
 
 #import <UIKit/UIKit.h>
 
+/** The animation mode when animating backward progress. */
+typedef NS_ENUM(NSInteger, MDCProgressViewBackwardAnimationMode) {
+
+  /** Animate negative progress by resetting to 0 and then animating to the new value. */
+  MDCProgressViewBackwardAnimationModeReset,
+
+  /** Animate negative progress by animating from the current value. */
+  MDCProgressViewBackwardAnimationModeAnimate
+};
+
 /**
  A Material linear determinate progress view.
 
@@ -47,6 +57,14 @@ IB_DESIGNABLE
  To animate progress changes, use -setProgress:animated:completion:.
  */
 @property(nonatomic, assign) float progress;
+
+/**
+ The backward progress animation mode.
+ 
+ When animating progress which is lower than the current progress value, this mode
+ will determine which animation to use. The default is MDCProgressViewBackwardAnimationModeReset.
+ */
+@property(nonatomic, assign) MDCProgressViewBackwardAnimationMode backwardProgressAnimationMode;
 
 /**
  Adjusts the current progress, optionally animating the change.
