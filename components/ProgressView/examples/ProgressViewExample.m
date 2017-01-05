@@ -246,8 +246,6 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
                                            withObject:nil
                                            afterDelay:MDCProgressViewAnimationDuration];
                           }];
-
-
 }
 
 - (void)animateBackwardProgressAnimateView {
