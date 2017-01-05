@@ -20,7 +20,7 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - pod --version
-  - scripts/release/manage_pods.py install
+  - scripts/prep_all
   - scripts/build_all
   - scripts/test_all
 after_success:
