@@ -89,14 +89,12 @@ PODS:
   - MaterialComponents/Palettes (19.0.4)
   - MaterialComponents/private (19.0.4):
     - MaterialComponents/private/Application (= 19.0.4)
-    - MaterialComponents/private/Color (= 19.0.4)
     - MaterialComponents/private/Icons (= 19.0.4)
     - MaterialComponents/private/KeyboardWatcher (= 19.0.4)
     - MaterialComponents/private/Overlay (= 19.0.4)
     - MaterialComponents/private/RTL (= 19.0.4)
     - MaterialComponents/private/ThumbTrack (= 19.0.4)
   - MaterialComponents/private/Application (19.0.4)
-  - MaterialComponents/private/Color (19.0.4)
   - MaterialComponents/private/Icons (19.0.4):
     - MaterialComponents/private/Icons/Base (= 19.0.4)
     - MaterialComponents/private/Icons/ic_arrow_back (= 19.0.4)
@@ -127,7 +125,6 @@ PODS:
   - MaterialComponents/private/RTL (19.0.4)
   - MaterialComponents/private/ThumbTrack (19.0.4):
     - MaterialComponents/Ink
-    - MaterialComponents/private/Color
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
@@ -157,7 +154,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: bd2bbd4e8631c6a560100848c7d2a864e61b6716
+  MaterialComponents: 7e7e3c4d8c7a22bacd831c0dc52ea135b19ce8ec
   MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
 
 PODFILE CHECKSUM: 44e7c616a05bb4ce24db557c3de4bfbe915c2f56

@@ -263,12 +263,6 @@ Pod::Spec.new do |s|
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
     end
 
-    pss.subspec "Color" do |ss|
-      ss.ios.deployment_target = '7.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
-    end
-
     pss.subspec "KeyboardWatcher" do |ss|
       ss.ios.deployment_target = '7.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
@@ -298,7 +292,6 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/ShadowElevations"
       ss.dependency "MaterialComponents/ShadowLayer"
       ss.dependency "MaterialComponents/Typography"
-      ss.dependency "MaterialComponents/private/Color"
       ss.dependency "MaterialComponents/private/RTL"
     end
 
