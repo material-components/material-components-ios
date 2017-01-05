@@ -18,7 +18,7 @@
 
 @interface MDCFeatureHighlightLayer : CAShapeLayer
 
-@property (nonatomic, assign) CGPoint center;
+@property(nonatomic, assign) CGPoint center;
 
 - (void)setCenter:(CGPoint)center radius:(CGFloat)radius animated:(BOOL)animated;
 

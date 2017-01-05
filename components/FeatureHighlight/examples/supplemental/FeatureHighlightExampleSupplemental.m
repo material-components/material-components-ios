@@ -20,7 +20,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-static NSString * const reuseIdentifier = @"Cell";
+static NSString *const reuseIdentifier = @"Cell";
 
 @implementation FeatureHighlightTypicalUseViewController (CatalogByConvention)
 
@@ -30,7 +30,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 + (NSString *)catalogDescription {
   return @"The Feature Highlight component is used to introduce users to new features and"
-  " functionality at contextually relevant moments.";
+          " functionality at contextually relevant moments.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -46,20 +46,19 @@ static NSString * const reuseIdentifier = @"Cell";
   self.infoLabel.text = @"Tap anywhere to move the button.";
   self.infoLabel.font = [MDCTypography subheadFont];
   self.infoLabel.textColor =
-  [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
+      [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
   [self.view addSubview:self.infoLabel];
 
   self.button = [[MDCRaisedButton alloc] init];
   [self.button setTitle:@"GO!" forState:UIControlStateNormal];
   [self.button sizeToFit];
   [self.button addTarget:self
-              action:@selector(didTapButton:)
-    forControlEvents:UIControlEventTouchUpInside];
+                  action:@selector(didTapButton:)
+        forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.button];
 
   UITapGestureRecognizer *tapRecognizer =
-      [[UITapGestureRecognizer alloc] initWithTarget:self
-                                              action:@selector(didTapBackground:)];
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapBackground:)];
   [self.view addGestureRecognizer:tapRecognizer];
 }
 
@@ -73,7 +72,7 @@ static NSString * const reuseIdentifier = @"Cell";
   self.button.frame = frame;
 
   CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
-  self.infoLabel.frame = CGRectMake(self.view.frame.size.width/2 - labelSize.width / 2, 20,
+  self.infoLabel.frame = CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
                                     labelSize.width, labelSize.height);
 }
 
@@ -81,7 +80,7 @@ static NSString * const reuseIdentifier = @"Cell";
   CGPoint location = [recognizer locationInView:recognizer.view];
   location.x -= self.button.frame.size.width / 2;
   location.y -= self.button.frame.size.height / 2;
-  self.button.frame = (CGRect) { location, self.button.frame.size };
+  self.button.frame = (CGRect){location, self.button.frame.size};
 }
 
 @end
@@ -103,24 +102,15 @@ static NSString * const reuseIdentifier = @"Cell";
           forCellWithReuseIdentifier:reuseIdentifier];
 
   self.colors = @[
-    [MDCPalette redPalette].tint500,
-    [MDCPalette pinkPalette].tint500,
-    [MDCPalette purplePalette].tint500,
-    [MDCPalette deepPurplePalette].tint500,
-    [MDCPalette indigoPalette].tint500,
-    [MDCPalette bluePalette].tint500,
-    [MDCPalette lightBluePalette].tint500,
-    [MDCPalette cyanPalette].tint500,
-    [MDCPalette tealPalette].tint500,
-    [MDCPalette greenPalette].tint500,
-    [MDCPalette lightGreenPalette].tint500,
-    [MDCPalette limePalette].tint500,
-    [MDCPalette yellowPalette].tint500,
-    [MDCPalette amberPalette].tint500,
-    [MDCPalette orangePalette].tint500,
-    [MDCPalette deepOrangePalette].tint500,
-    [MDCPalette brownPalette].tint500,
-    [MDCPalette greyPalette].tint500,
+    [MDCPalette redPalette].tint500,        [MDCPalette pinkPalette].tint500,
+    [MDCPalette purplePalette].tint500,     [MDCPalette deepPurplePalette].tint500,
+    [MDCPalette indigoPalette].tint500,     [MDCPalette bluePalette].tint500,
+    [MDCPalette lightBluePalette].tint500,  [MDCPalette cyanPalette].tint500,
+    [MDCPalette tealPalette].tint500,       [MDCPalette greenPalette].tint500,
+    [MDCPalette lightGreenPalette].tint500, [MDCPalette limePalette].tint500,
+    [MDCPalette yellowPalette].tint500,     [MDCPalette amberPalette].tint500,
+    [MDCPalette orangePalette].tint500,     [MDCPalette deepOrangePalette].tint500,
+    [MDCPalette brownPalette].tint500,      [MDCPalette greyPalette].tint500,
     [MDCPalette blueGreyPalette].tint500,
   ];
 }
@@ -137,13 +127,13 @@ static NSString * const reuseIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCollectionViewTextCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier
-                                            forIndexPath:indexPath];
-  
+      [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier
+                                                forIndexPath:indexPath];
+
   UIView *accessory = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
   accessory.backgroundColor = self.colors[indexPath.row];
   cell.accessoryView = accessory;
-  
+
   return cell;
 }
 

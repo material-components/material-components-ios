@@ -23,7 +23,7 @@
 
 /**
  Returns sharedApplication if it is available otherwise returns nil.
- 
+
  This is a wrapper around sharedApplication which is safe to compile and use in app extensions.
  */
 + (UIApplication *)mdc_safeSharedApplication;

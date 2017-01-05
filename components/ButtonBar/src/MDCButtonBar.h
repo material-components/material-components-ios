@@ -141,7 +141,7 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
 
 /** Asks the receiver to return a view that represents the given bar button item. */
 - (nonnull UIView *)buttonBar:(nonnull MDCButtonBar *)buttonBar
-          viewForItem:(nonnull UIBarButtonItem *)barButtonItem
-          layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;
+                  viewForItem:(nonnull UIBarButtonItem *)barButtonItem
+                  layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;
 
 @end
