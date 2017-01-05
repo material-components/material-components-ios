@@ -22,9 +22,9 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
+#import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialTabs.h"
-#import "MaterialAppBar.h"
 @import MaterialComponents.MaterialPalettes;
 
 @implementation TabBarIconExample (Supplemental)
@@ -56,9 +56,19 @@
   self.scrollView.scrollEnabled = NO;
   [self.view addSubview:self.scrollView];
 
-  NSDictionary *viewsScrollView = @{@"scrollView": self.scrollView, @"header": self.appBar.headerStackView};
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[header][scrollView]|" options:0 metrics:nil views:viewsScrollView]];
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:viewsScrollView]];
+  NSDictionary *viewsScrollView =
+      @{ @"scrollView" : self.scrollView,
+         @"header" : self.appBar.headerStackView };
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[header][scrollView]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:viewsScrollView]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:viewsScrollView]];
 
   // Button to change tab alignments.
   self.alignmentButton = [[MDCRaisedButton alloc] init];
@@ -66,7 +76,8 @@
 
   self.alignmentButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.alignmentButton.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-  [self.alignmentButton.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-40].active = YES;
+  [self.alignmentButton.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-40]
+      .active = YES;
 
   [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
   [self.alignmentButton addTarget:self
@@ -88,11 +99,20 @@
   [page0.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
   [page0.heightAnchor constraintEqualToAnchor:self.view.heightAnchor].active = YES;
 
-  NSDictionary *viewsPages = @{@"page0": page0, @"page1": page1};
+  NSDictionary *viewsPages = @{ @"page0" : page0, @"page1" : page1 };
 
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[page0][page1]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:viewsPages]];
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[page0]|" options:0 metrics:nil views:viewsPages]];
-
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|[page0][page1]|"
+                                                  options:NSLayoutFormatAlignAllTop |
+                                                          NSLayoutFormatAlignAllBottom
+                                                  metrics:nil
+                                                    views:viewsPages]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[page0]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:viewsPages]];
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
