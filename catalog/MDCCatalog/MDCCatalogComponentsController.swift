@@ -31,7 +31,13 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   var headerViewController: MDCFlexibleHeaderViewController
   let imageNames = NSMutableArray()
 
-  var inkController: MDCInkTouchController?
+  private lazy var inkController: MDCInkTouchController = {
+    let controller = MDCInkTouchController(view: self.collectionView!)
+    controller.delaysInkSpread = true
+    controller.delegate = self
+
+    return controller
+  }()
 
   init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
@@ -71,10 +77,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    inkController = MDCInkTouchController(view: self.collectionView!)
-    inkController!.addInkView()
-    inkController!.delaysInkSpread = true
-    inkController!.delegate = self
+    inkController.addInkView()
 
     let containerView = UIView(frame: self.headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
