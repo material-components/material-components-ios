@@ -75,10 +75,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
   _backwardProgressAnimateView = [[MDCProgressView alloc] init];
   _backwardProgressAnimateView.translatesAutoresizingMaskIntoConstraints = NO;
-  _backwardProgressAnimateView.backwardProgressAnimationMode = MDCProgressViewBackwardProgressAnimationModeBackward;
+  _backwardProgressAnimateView.backwardProgressAnimationMode = MDCProgressViewBackwardAnimationModeAnimate;
   [self.view addSubview:_backwardProgressAnimateView];
   // Have a non-zero progress at setup time.
-  _backwardProgressAnimateView.progress = 0.5;
+  _backwardProgressAnimateView.progress = 0.33;
 }
 
 @end
@@ -251,7 +251,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 - (void)animateBackwardProgressAnimateView {
   __weak ProgressViewExample *weakSelf = self;
 
-  [_backwardProgressAnimateView setProgress:fmod((_backwardProgressAnimateView.progress + 0.5), 1)
+  [_backwardProgressAnimateView setProgress:1 - _backwardProgressResetView.progress
                                    animated:YES
                                  completion:^(BOOL finished) {
                                    [weakSelf performSelector:@selector(animateBackwardProgressAnimateView)
