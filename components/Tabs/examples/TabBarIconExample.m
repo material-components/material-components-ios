@@ -69,7 +69,7 @@
     [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]
   ];
 
-  // Give the first item a badge
+  // Give the second item a badge
   [self.tabBar.items[1] setBadgeValue:@"1"];
 
   UIColor *color = [[MDCPalette bluePalette] tint500];
