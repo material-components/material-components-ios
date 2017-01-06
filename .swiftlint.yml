@@ -1,0 +1,10 @@
+excluded:
+  - Carthage
+  - Pods
+  - third_party
+
+disabled_rules:
+  - cyclomatic_complexity
+
+force_cast: warning
+force_try: warning

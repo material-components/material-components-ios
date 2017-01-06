@@ -18,7 +18,7 @@ import Foundation
 import MaterialComponents
 
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
-  
+
   let floatingButtonPlusDimension = CGFloat(24)
 
   override func viewDidLoad() {
@@ -48,8 +48,8 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
     floatingButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
 
-    let plusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton);
-    floatingButton.layer.addSublayer(plusShapeLayer);
+    let plusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    floatingButton.layer.addSublayer(plusShapeLayer)
 
     self.view.addSubview(floatingButton)
 

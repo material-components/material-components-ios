@@ -34,7 +34,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
       for touch in touches {
         switch touch.phase {
         case .began:
-          if (enabled) {
+          if enabled {
             beginDisplayingTouch(touch)
           }
           continue
@@ -44,7 +44,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
         case .stationary:
           continue
         case .ended:
-          if (touch.tapCount == 3) {
+          if touch.tapCount == 3 {
             enabled = !enabled
           }
           fallthrough
@@ -77,7 +77,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
                                animations: {
                                  view?.alpha = 0
                                },
-                               completion: { finished in
+                               completion: { _ in
                                 view?.removeFromSuperview()
                                })
   }

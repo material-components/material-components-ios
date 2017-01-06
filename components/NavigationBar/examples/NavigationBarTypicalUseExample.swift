@@ -30,7 +30,7 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
     navBar!.observe(navigationItem)
     navBar!.tintColor = .white
     navBar!.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.white ]
+      [ NSForegroundColorAttributeName: UIColor.white ]
 
     // Light blue 500
     navBar!.backgroundColor = UIColor.init(red: 0.012, green: 0.663, blue: 0.957, alpha: 1)
@@ -39,7 +39,7 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
 
     navBar!.translatesAutoresizingMaskIntoConstraints = false
 
-    let viewBindings = ["navBar" : navBar!]
+    let viewBindings = ["navBar": navBar!]
 
     var constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[navBar]|",
       options: [], metrics: nil, views: viewBindings)
@@ -55,7 +55,7 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  override open var prefersStatusBarHidden : Bool {
+  override open var prefersStatusBarHidden: Bool {
     return true
   }
 }
