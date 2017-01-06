@@ -87,7 +87,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     titleLabel.textColor = UIColor(white: 0.46, alpha: 1)
     titleLabel.font = MDCTypography.titleFont()
     titleLabel.sizeToFit()
-    if (inset + titleLabel.frame.size.width > containerView.frame.size.width) {
+    if inset + titleLabel.frame.size.width > containerView.frame.size.width {
       titleLabel.font = MDCTypography.body2Font()
     }
 
@@ -216,7 +216,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)
     var cellWidth = (self.view.frame.size.width - 3 * pad) / 2
-    if (self.view.frame.size.width > self.view.frame.size.height) {
+    if self.view.frame.size.width > self.view.frame.size.height {
       cellWidth = (self.view.frame.size.width - 4 * pad) / 3
     }
     return CGSize(width: cellWidth, height: cellWidth * 0.825)

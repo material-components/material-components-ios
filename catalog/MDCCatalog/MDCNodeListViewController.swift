@@ -143,7 +143,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
   // MARK: UITableViewDataSource
 
   override func numberOfSections(in tableView: UITableView) -> Int {
-    if (node.children.count == 1) {
+    if node.children.count == 1 {
       return 1
     }
     return sectionNames.count
@@ -209,13 +209,13 @@ class MDCNodeListViewController: CBCNodeListViewController {
       multiplier: 1.0,
       constant: additionalExamplesSectionHeight).isActive = true
 
-    if (section == 0) {
+    if section == 0 {
       let textView = UITextView()
       textView.text = componentDescription
       textView.font = MDCTypography.captionFont()
       textView.alpha = MDCTypography.captionFontOpacity()
 
-      if (UIApplication.shared.userInterfaceLayoutDirection == .leftToRight) {
+      if UIApplication.shared.userInterfaceLayoutDirection == .leftToRight {
           textView.contentInset = UIEdgeInsets(top: -8, left: -5, bottom: -8, right: 5)
       } else {
           textView.contentInset = UIEdgeInsets(top: -8, left: 5, bottom: -8, right: -5)
@@ -256,14 +256,14 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   override func tableView(_ tableView: UITableView,
     heightForHeaderInSection section: Int) -> CGFloat {
-      if (section == Section.description.rawValue) {
+      if section == Section.description.rawValue {
         return descriptionSectionHeight
       }
       return additionalExamplesSectionHeight
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if (section == Section.description.rawValue) {
+    if section == Section.description.rawValue {
       return 1
     }
     return node.children.count - 1
@@ -272,13 +272,13 @@ class MDCNodeListViewController: CBCNodeListViewController {
   override func tableView(_ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
-    if ((cell == nil)) {
+    if cell == nil {
       cell = NodeViewTableViewDemoCell.init(style: .subtitle,
         reuseIdentifier: "NodeViewTableViewDemoCell")
     }
 
     var subtitleText: String?
-    if (indexPath.section == Section.description.rawValue) {
+    if indexPath.section == Section.description.rawValue {
       subtitleText = node.children[indexPath.row].exampleViewControllerName()
       cell!.textLabel!.text = "Demo"
       cell!.textLabel!.textColor = UIColor(red: 0.01, green: 0.66, blue: 0.96, alpha: 1)
@@ -307,7 +307,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     var node = self.node.children[0]
-    if (indexPath.section == Section.additionalExamples.rawValue) {
+    if indexPath.section == Section.additionalExamples.rawValue {
       node = self.node.children[indexPath.row + 1]
     }
 
