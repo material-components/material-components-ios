@@ -1,4 +1,6 @@
 excluded:
+  - Carthage
+  - Pods
   - third_party
 
 disabled_rules:
@@ -20,5 +22,4 @@ disabled_rules:
   - type_body_length
   - type_name
   - unused_closure_parameter
-
-variable_name: warning
+  - variable_name
