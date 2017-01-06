@@ -70,13 +70,25 @@
                                                                   metrics:nil
                                                                     views:viewsScrollView]];
 
-  // Button to change tab alignments.
   self.alignmentButton = [[MDCRaisedButton alloc] init];
   [self.view addSubview:self.alignmentButton];
 
   self.alignmentButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.alignmentButton.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-  [self.alignmentButton.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-40]
+  [NSLayoutConstraint constraintWithItem:self.alignmentButton
+                               attribute:NSLayoutAttributeCenterX
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeCenterX
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:self.alignmentButton
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1.0
+                                constant:-40]
       .active = YES;
 
   [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
@@ -97,9 +109,23 @@
       @"Tabs enable content organization at a high level, such as switching between views";
   [pageInfo addSubview:infoLabel];
 
-  [infoLabel.centerXAnchor constraintEqualToAnchor:pageInfo.centerXAnchor].active = YES;
-  [infoLabel.centerYAnchor constraintEqualToAnchor:pageInfo.centerYAnchor constant:-50].active =
-      YES;
+  [NSLayoutConstraint constraintWithItem:infoLabel
+                               attribute:NSLayoutAttributeCenterX
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:pageInfo
+                               attribute:NSLayoutAttributeCenterX
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:infoLabel
+                               attribute:NSLayoutAttributeCenterY
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:pageInfo
+                               attribute:NSLayoutAttributeCenterY
+                              multiplier:1
+                                constant:-50]
+      .active = YES;
+
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[infoLabel]-50-|"
                                                                   options:0
@@ -113,10 +139,31 @@
   [self.scrollView addSubview:self.starPage];
   self.starPage.backgroundColor = [[MDCPalette lightBluePalette] tint200];
 
-  [pageInfo.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
-  [pageInfo.heightAnchor constraintEqualToAnchor:self.scrollView.heightAnchor].active = YES;
+  [NSLayoutConstraint constraintWithItem:pageInfo
+                               attribute:NSLayoutAttributeWidth
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeWidth
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:pageInfo
+                               attribute:NSLayoutAttributeHeight
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.scrollView
+                               attribute:NSLayoutAttributeHeight
+                              multiplier:1
+                                constant:0]
+      .active = YES;
 
-  [self.starPage.widthAnchor constraintEqualToAnchor:pageInfo.widthAnchor].active = YES;
+  [NSLayoutConstraint constraintWithItem:self.starPage
+                               attribute:NSLayoutAttributeWidth
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:pageInfo
+                               attribute:NSLayoutAttributeWidth
+                              multiplier:1
+                                constant:0]
+      .active = YES;
 
   NSDictionary *viewsPages = @{ @"page0" : pageInfo, @"page1" : self.starPage };
 
