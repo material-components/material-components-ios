@@ -30,46 +30,15 @@
 @implementation TabBarIconExample (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor whiteColor];
+  [self setupAppBar];
 
-  self.appBar = [[MDCAppBar alloc] init];
-  [self addChildViewController:self.appBar.headerViewController];
+  [self setupScrollView];
+  [self setupScrollingContent];
 
-  self.appBar.headerViewController.headerView.backgroundColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
-  self.appBar.headerViewController.headerView.tintColor = [[MDCPalette bluePalette] tint500];
+  [self setupAlignmentButton];
+}
 
-  [self.appBar addSubviewsToParent];
-
-  UIBarButtonItem *badgeIncrementItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Add"
-                                       style:UIBarButtonItemStylePlain
-                                      target:self
-                                      action:@selector(incrementBadges:)];
-  self.navigationItem.rightBarButtonItem = badgeIncrementItem;
-
-  self.title = @"Tabs With Icons";
-
-  self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-  self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.scrollView.pagingEnabled = YES;
-  self.scrollView.scrollEnabled = NO;
-  [self.view addSubview:self.scrollView];
-
-  NSDictionary *viewsScrollView =
-      @{ @"scrollView" : self.scrollView,
-         @"header" : self.appBar.headerStackView };
-  [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[header][scrollView]|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:viewsScrollView]];
-  [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:viewsScrollView]];
-
+- (void)setupAlignmentButton {
   self.alignmentButton = [[MDCRaisedButton alloc] init];
   [self.view addSubview:self.alignmentButton];
 
@@ -95,7 +64,53 @@
   [self.alignmentButton addTarget:self
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];
+}
 
+- (void)setupAppBar {
+  self.view.backgroundColor = [UIColor whiteColor];
+
+  self.appBar = [[MDCAppBar alloc] init];
+  [self addChildViewController:self.appBar.headerViewController];
+
+  self.appBar.headerViewController.headerView.backgroundColor = [UIColor whiteColor];
+  self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
+  self.appBar.headerViewController.headerView.tintColor = [[MDCPalette bluePalette] tint500];
+
+  [self.appBar addSubviewsToParent];
+
+  UIBarButtonItem *badgeIncrementItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(incrementBadges:)];
+  self.navigationItem.rightBarButtonItem = badgeIncrementItem;
+
+  self.title = @"Tabs With Icons";
+}
+
+- (void)setupScrollView {
+  self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+  self.scrollView.pagingEnabled = YES;
+  self.scrollView.scrollEnabled = NO;
+  [self.view addSubview:self.scrollView];
+
+  NSDictionary *viewsScrollView =
+      @{ @"scrollView" : self.scrollView,
+         @"header" : self.appBar.headerStackView };
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[header][scrollView]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:viewsScrollView]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:viewsScrollView]];
+}
+
+- (void)setupScrollingContent {
   UIView *pageInfo = [[UIView alloc] initWithFrame:CGRectZero];
   pageInfo.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:pageInfo];
