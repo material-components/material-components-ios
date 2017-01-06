@@ -84,22 +84,41 @@
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];
 
-  UIView *page0 = [[UIView alloc] initWithFrame:CGRectZero];
-  page0.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:page0];
-  page0.backgroundColor = [[MDCPalette lightBluePalette] tint300];
+  UIView *pageInfo = [[UIView alloc] initWithFrame:CGRectZero];
+  pageInfo.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.scrollView addSubview:pageInfo];
+  pageInfo.backgroundColor = [[MDCPalette lightBluePalette] tint300];
 
-  UIView *page1 = [[UIView alloc] initWithFrame:CGRectZero];
-  page1.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:page1];
-  page1.backgroundColor = [[MDCPalette lightBluePalette] tint200];
+  UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  infoLabel.textColor = [UIColor whiteColor];
+  infoLabel.numberOfLines = 0;
+  infoLabel.text =
+      @"Tabs enable content organization at a high level, such as switching between views";
+  [pageInfo addSubview:infoLabel];
 
-  [page0.widthAnchor constraintEqualToAnchor:page1.widthAnchor].active = YES;
+  [infoLabel.centerXAnchor constraintEqualToAnchor:pageInfo.centerXAnchor].active = YES;
+  [infoLabel.centerYAnchor constraintEqualToAnchor:pageInfo.centerYAnchor constant:-50].active =
+      YES;
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[infoLabel]-50-|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{
+                                                                      @"infoLabel" : infoLabel
+                                                                    }]];
 
-  [page0.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
-  [page0.heightAnchor constraintEqualToAnchor:self.view.heightAnchor].active = YES;
+  self.starPage = [[UIView alloc] initWithFrame:CGRectZero];
+  self.starPage.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.scrollView addSubview:self.starPage];
+  self.starPage.backgroundColor = [[MDCPalette lightBluePalette] tint200];
 
-  NSDictionary *viewsPages = @{ @"page0" : page0, @"page1" : page1 };
+  [pageInfo.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
+  [pageInfo.heightAnchor constraintEqualToAnchor:self.scrollView.heightAnchor].active = YES;
+
+  [self.starPage.widthAnchor constraintEqualToAnchor:pageInfo.widthAnchor].active = YES;
+
+  NSDictionary *viewsPages = @{ @"page0" : pageInfo, @"page1" : self.starPage };
 
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
@@ -113,6 +132,39 @@
                                                                   options:0
                                                                   metrics:nil
                                                                     views:viewsPages]];
+
+  [self addStar:YES];
+}
+
+- (void)addStar:(BOOL)centered {
+  UIImage *starImage = [UIImage imageNamed:@"TabBarDemo_ic_star"
+                                  inBundle:[NSBundle bundleForClass:[self class]]
+             compatibleWithTraitCollection:nil];
+
+  UIImageView *starView = [[UIImageView alloc] initWithImage:starImage];
+  starView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.starPage addSubview:starView];
+  [starView sizeToFit];
+
+  CGFloat x = centered ? 1 : (arc4random_uniform(199) + 1.0) / 100.0;  // 0 < x <=2
+  CGFloat y = centered ? 1 : (arc4random_uniform(199) + 1.0) / 100.0;  // 0 < y <=2
+
+  [NSLayoutConstraint constraintWithItem:starView
+                               attribute:NSLayoutAttributeCenterX
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.starPage
+                               attribute:NSLayoutAttributeCenterX
+                              multiplier:x
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:starView
+                               attribute:NSLayoutAttributeCenterY
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.starPage
+                               attribute:NSLayoutAttributeCenterY
+                              multiplier:y
+                                constant:0]
+      .active = YES;
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {

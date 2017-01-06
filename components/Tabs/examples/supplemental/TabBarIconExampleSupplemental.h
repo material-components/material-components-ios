@@ -31,11 +31,13 @@
 @property MDCRaisedButton *_Nullable alignmentButton;
 @property MDCAppBar *_Nullable appBar;
 @property UIScrollView *_Nullable scrollView;
+@property UIView *_Nullable starPage;
 
 @end
 
 @interface TabBarIconExample (Supplemental)
 
 - (void)setupExampleViews;
+- (void)addStar:(BOOL)centered;
 
 @end

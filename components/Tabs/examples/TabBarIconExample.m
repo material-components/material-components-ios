@@ -49,6 +49,7 @@
       }
     }
   }
+  [self addStar:NO];
 }
 
 #pragma mark - Private
