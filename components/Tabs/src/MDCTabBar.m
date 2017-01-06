@@ -89,6 +89,13 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 #pragma mark - Initialization
 
++ (void)initialize {
+  [[[self class] appearance] setSelectedItemTintColor:[UIColor whiteColor]];
+  [[[self class] appearance] setUnselectedItemTintColor:[UIColor colorWithWhite:1.0 alpha:0.7]];
+  [[[self class] appearance] setInkColor:[UIColor colorWithWhite:1.0 alpha:0.7]];
+  [[[self class] appearance] setBarTintColor:nil];
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
@@ -107,8 +114,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 - (void)commonMDCTabBarInit {
   _itemAppearance = MDCTabBarItemAppearanceTitles;
-  _selectedItemTintColor = [UIColor whiteColor];
-  _unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
   _displaysUppercaseTitles = YES;
 
   // Create item bar.

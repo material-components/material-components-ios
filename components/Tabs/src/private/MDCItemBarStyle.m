@@ -22,7 +22,6 @@
   self = [super init];
   if (self) {
     _titleColor = [UIColor whiteColor];
-    _inkColor = [UIColor colorWithWhite:1.0 alpha:0.25];
     _displaysUppercaseTitles = YES;
     _shouldDisplayTitle = YES;
     _shouldDisplaySelectionIndicator = YES;
