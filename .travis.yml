@@ -15,6 +15,7 @@ env:
     - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.2" SDK="iphonesimulator10.2"
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - brew update && brew install swiftlint
 # The travis_wait prefix ensures that the build doesn't error out because too much time went past
 # without any output being produced.
 script:
@@ -22,6 +23,7 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - pod --version
+  - swiftlint
   - scripts/prep_all
   - travis_wait scripts/build_all
   - travis_wait scripts/test_all

@@ -54,8 +54,8 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
     let size = buttonBar.sizeThatFits(self.view.bounds.size)
-    let x = (self.view.bounds.size.width - size.width) / 2;
-    let y = self.view.bounds.size.height / 2 - size.height;
+    let x = (self.view.bounds.size.width - size.width) / 2
+    let y = self.view.bounds.size.height / 2 - size.height
     buttonBar.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
     buttonBar.autoresizingMask =
       [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
@@ -97,6 +97,6 @@ extension ButtonBarTypicalUseSwiftExample {
 
   func itemTitleTextAttributes () -> [String:AnyObject] {
     let textColor = UIColor(white: 0, alpha: 0.8)
-    return [NSForegroundColorAttributeName:textColor]
+    return [NSForegroundColorAttributeName: textColor]
   }
 }

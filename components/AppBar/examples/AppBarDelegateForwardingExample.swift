@@ -32,7 +32,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
     self.appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.white ]
+      [ NSForegroundColorAttributeName: UIColor.white ]
 
     self.addChildViewController(appBar.headerViewController)
 
@@ -124,11 +124,11 @@ extension AppBarDelegateForwardingExample {
 }
 
 extension AppBarDelegateForwardingExample {
-  override var childViewControllerForStatusBarHidden : UIViewController? {
+  override var childViewControllerForStatusBarHidden: UIViewController? {
     return appBar.headerViewController
   }
 
-  override var childViewControllerForStatusBarStyle : UIViewController? {
+  override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
   }
 

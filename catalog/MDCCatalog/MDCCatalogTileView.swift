@@ -19,7 +19,7 @@ import UIKit
 class MDCCatalogTileView: UIView {
 
   fileprivate var componentNameString = "Misc"
-  var componentName:String {
+  var componentName: String {
     get {
       return componentNameString
     }

@@ -32,7 +32,7 @@ class AppBarEncodingTests: XCTestCase {
     appBar.navigationBar.backgroundColor = UIColor.black
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.title = "Title"
-    appBar.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.white ]
+    appBar.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName: UIColor.white ]
     appBar.navigationBar.titleAlignment = .leading
 
     // When

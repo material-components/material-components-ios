@@ -17,7 +17,7 @@ limitations under the License.
 import MaterialComponents
 
 private func randomFloat() -> CGFloat {
-  return CGFloat(arc4random()) / CGFloat(UInt32.max);
+  return CGFloat(arc4random()) / CGFloat(UInt32.max)
 }
 
 private func generateRandomPalettes(_ count: Int) -> [(name: String, palette: MDCPalette)] {

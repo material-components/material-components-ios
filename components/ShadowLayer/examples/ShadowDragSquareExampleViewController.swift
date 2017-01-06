@@ -48,7 +48,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
     self.blueView.addGestureRecognizer(longPressRecogniser)
   }
 
-  func longPressedInView(_ sender:UILongPressGestureRecognizer) {
+  func longPressedInView(_ sender: UILongPressGestureRecognizer) {
     // Elevation of the view is changed to indicate that it has been pressed or released.
     // view.center is changed to follow the touch events.
     if (sender.state == .began) {
