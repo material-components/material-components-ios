@@ -75,7 +75,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
   _backwardProgressAnimateView = [[MDCProgressView alloc] init];
   _backwardProgressAnimateView.translatesAutoresizingMaskIntoConstraints = NO;
-  _backwardProgressAnimateView.backwardProgressAnimationMode = MDCProgressViewBackwardAnimationModeAnimate;
+  _backwardProgressAnimateView.backwardProgressAnimationMode =
+      MDCProgressViewBackwardAnimationModeAnimate;
   [self.view addSubview:_backwardProgressAnimateView];
   // Have a non-zero progress at setup time.
   _backwardProgressAnimateView.progress = 0.33;
@@ -155,16 +156,16 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     @"h" : @2,
   };
 
-  NSArray *verticalConstraints =
-      [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(p)-"
-                                                       "[stockView(==h)]-(p)-[stockLabel]-(s)-"
-                                                       "[tintedView(==h)]-(p)-[tintedLabel]-(s)-"
-                                                       "[coloredView(==h)]-(p)-[coloredLabel]-(s)-"
-                                                       "[backwardResetView(==h)]-(p)-[backwardResetLabel]-(s)-"
-                                                       "[backwardAnimateView(==h)]-(p)-[backwardAnimateLabel]"
-                                              options:0
-                                              metrics:metrics
-                                                views:views];
+  NSArray *verticalConstraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:@"V:|-(p)-"
+                                   "[stockView(==h)]-(p)-[stockLabel]-(s)-"
+                                   "[tintedView(==h)]-(p)-[tintedLabel]-(s)-"
+                                   "[coloredView(==h)]-(p)-[coloredLabel]-(s)-"
+                                   "[backwardResetView(==h)]-(p)-[backwardResetLabel]-(s)-"
+                                   "[backwardAnimateView(==h)]-(p)-[backwardAnimateLabel]"
+                          options:0
+                          metrics:metrics
+                            views:views];
   [self.view addConstraints:verticalConstraints];
 
   NSMutableArray *horizontalConstraints = [NSMutableArray array];
@@ -240,12 +241,13 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   __weak ProgressViewExample *weakSelf = self;
 
   [_backwardProgressResetView setProgress:1 - _backwardProgressResetView.progress
-                            animated:YES
-                          completion:^(BOOL finished) {
-                            [weakSelf performSelector:@selector(animateBackwardProgressResetView)
-                                           withObject:nil
-                                           afterDelay:MDCProgressViewAnimationDuration];
-                          }];
+                                 animated:YES
+                               completion:^(BOOL finished) {
+                                 [weakSelf
+                                     performSelector:@selector(animateBackwardProgressResetView)
+                                          withObject:nil
+                                          afterDelay:MDCProgressViewAnimationDuration];
+                               }];
 }
 
 - (void)animateBackwardProgressAnimateView {
@@ -254,9 +256,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [_backwardProgressAnimateView setProgress:1 - _backwardProgressResetView.progress
                                    animated:YES
                                  completion:^(BOOL finished) {
-                                   [weakSelf performSelector:@selector(animateBackwardProgressAnimateView)
-                                                  withObject:nil
-                                                  afterDelay:MDCProgressViewAnimationDuration];
+                                   [weakSelf
+                                       performSelector:@selector(animateBackwardProgressAnimateView)
+                                            withObject:nil
+                                            afterDelay:MDCProgressViewAnimationDuration];
                                  }];
 }
 

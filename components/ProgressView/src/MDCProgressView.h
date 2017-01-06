@@ -60,7 +60,7 @@ IB_DESIGNABLE
 
 /**
  The backward progress animation mode.
- 
+
  When animating progress which is lower than the current progress value, this mode
  will determine which animation to use. The default is MDCProgressViewBackwardAnimationModeReset.
  */
