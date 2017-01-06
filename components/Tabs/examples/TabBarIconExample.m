@@ -77,7 +77,7 @@
   self.tabBar.tintColor = color;
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
   self.tabBar.selectedItemTintColor = nil;
-  self.tabBar.unselectedItemTintColor = nil;
+  self.tabBar.unselectedItemTintColor = [[UIColor blackColor] colorWithAlphaComponent:.4];
   self.tabBar.inkColor = color;
 
   self.appBar.headerStackView.bottomBar = self.tabBar;
