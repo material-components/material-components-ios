@@ -19,7 +19,7 @@ import MaterialComponents
 typealias ExampleTone = (name: String, tone: UIColor)
 
 func ExampleTonesForPalette(_ palette: MDCPalette) -> [ExampleTone] {
-  var tones : [ExampleTone] = [
+  var tones: [ExampleTone] = [
     (MDCPaletteTint100Name, palette.tint100),
     (MDCPaletteTint300Name, palette.tint300),
     (MDCPaletteTint500Name, palette.tint500),

@@ -77,7 +77,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
                                animations: {
                                  view?.alpha = 0
                                },
-                               completion: { finished in
+                               completion: { _ in
                                 view?.removeFromSuperview()
                                })
   }

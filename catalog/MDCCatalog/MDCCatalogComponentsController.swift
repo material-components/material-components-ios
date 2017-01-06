@@ -43,8 +43,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.node = node
 
     let layout = UICollectionViewFlowLayout()
-    let sectionInset:CGFloat = spacing
-    layout.sectionInset = UIEdgeInsetsMake(sectionInset, sectionInset, sectionInset, sectionInset)
+    let sectionInset: CGFloat = spacing
+    layout.sectionInset = UIEdgeInsets(top: sectionInset, left: sectionInset, bottom: sectionInset, right: sectionInset)
     layout.minimumInteritemSpacing = spacing
     layout.minimumLineSpacing = spacing
 

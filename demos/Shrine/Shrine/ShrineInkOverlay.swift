@@ -19,7 +19,7 @@ import MaterialComponents.MaterialInk
 
 class ShrineInkOverlay: UIView, MDCInkTouchControllerDelegate {
 
-  fileprivate var inkTouchController:MDCInkTouchController?
+  fileprivate var inkTouchController: MDCInkTouchController?
 
   override init(frame: CGRect) {
     super.init(frame: frame)

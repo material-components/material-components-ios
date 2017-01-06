@@ -97,6 +97,6 @@ extension ButtonBarTypicalUseSwiftExample {
 
   func itemTitleTextAttributes () -> [String:AnyObject] {
     let textColor = UIColor(white: 0, alpha: 0.8)
-    return [NSForegroundColorAttributeName:textColor]
+    return [NSForegroundColorAttributeName: textColor]
   }
 }

@@ -216,9 +216,9 @@ class MDCNodeListViewController: CBCNodeListViewController {
       textView.alpha = MDCTypography.captionFontOpacity()
 
       if (UIApplication.shared.userInterfaceLayoutDirection == .leftToRight) {
-          textView.contentInset = UIEdgeInsetsMake(-8, -5, -8, 5)
+          textView.contentInset = UIEdgeInsets(top: -8, left: -5, bottom: -8, right: 5)
       } else {
-          textView.contentInset = UIEdgeInsetsMake(-8, 5, -8, -5)
+          textView.contentInset = UIEdgeInsets(top: -8, left: 5, bottom: -8, right: -5)
       }
 
       textView.isEditable = false
@@ -240,12 +240,12 @@ class MDCNodeListViewController: CBCNodeListViewController {
         let horizontalConstraints =
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-(20)-[textView]-(20)-|",
                                                            options: [], metrics: nil,
-                                                           views: ["textView" : textView])
+                                                           views: ["textView": textView])
         let verticalConstraints =
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-(40)-[textView(==h)]",
                                                            options: [],
-                                                           metrics: ["h" : textViewHeight],
-                                                           views: ["textView" : textView])
+                                                           metrics: ["h": textViewHeight],
+                                                           views: ["textView": textView])
         sectionView.addConstraints(horizontalConstraints)
         sectionView.addConstraints(verticalConstraints)
       }
@@ -330,7 +330,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
         let textColor = UIColor(white: 0, alpha: 0.8)
         UIBarButtonItem.appearance().setTitleTextAttributes(
-          [NSForegroundColorAttributeName:textColor],
+          [NSForegroundColorAttributeName: textColor],
           for: UIControlState())
 
         var contentFrame = container.contentViewController.view.frame

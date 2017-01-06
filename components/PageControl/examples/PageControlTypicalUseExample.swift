@@ -47,7 +47,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
     // Add pages to scrollView.
     for (i, pageColor) in pageColors.enumerated() {
-      let pageFrame:CGRect = self.view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
+      let pageFrame: CGRect = self.view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
       let page = UILabel.init(frame:pageFrame)
       page.text = String(format: "Page %zd", i + 1)
       page.font = page.font.withSize(50)
@@ -74,7 +74,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     super.viewWillLayoutSubviews()
     let pageBeforeFrameChange = pageControl.currentPage
     for (i, page) in pages.enumerated() {
-      let pageLabel:UILabel = page as! UILabel
+      let pageLabel: UILabel = page as! UILabel
       pageLabel.frame = view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
     }
     scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pages.count), height: view.bounds.height)

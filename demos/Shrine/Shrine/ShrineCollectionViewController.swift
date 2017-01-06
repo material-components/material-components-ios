@@ -19,8 +19,8 @@ import MaterialComponents.MaterialFlexibleHeader
 
 class ShrineCollectionViewController: UICollectionViewController {
 
-  var headerViewController:MDCFlexibleHeaderViewController!
-  fileprivate let shrineData:ShrineData
+  var headerViewController: MDCFlexibleHeaderViewController!
+  fileprivate let shrineData: ShrineData
   fileprivate var headerContentView = ShrineHeaderContentView(frame: CGRect.zero)
 
   override init(collectionViewLayout layout: UICollectionViewLayout) {
@@ -47,7 +47,7 @@ class ShrineCollectionViewController: UICollectionViewController {
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShrineCollectionViewCell", for: indexPath) as! ShrineCollectionViewCell
-    let itemNum:NSInteger = (indexPath as NSIndexPath).row
+    let itemNum: NSInteger = (indexPath as NSIndexPath).row
 
     let title = self.shrineData.titles[itemNum] as! String
     let imageName = self.shrineData.imageNames[itemNum] as! String
@@ -69,7 +69,7 @@ class ShrineCollectionViewController: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                didSelectItemAt indexPath: IndexPath) {
-    let itemNum:NSInteger = (indexPath as NSIndexPath).row
+    let itemNum: NSInteger = (indexPath as NSIndexPath).row
 
     let detailVC = ShrineDetailViewController()
     detailVC.productTitle = self.shrineData.titles[itemNum] as! String
@@ -112,7 +112,7 @@ class ShrineCollectionViewController: UICollectionViewController {
     }
   }
 
-  override func willAnimateRotation(to toInterfaceOrientation:UIInterfaceOrientation, duration: TimeInterval) {
+  override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
     sizeHeaderView()
     collectionView?.collectionViewLayout.invalidateLayout()
   }

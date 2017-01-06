@@ -98,8 +98,8 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     imageView.autoresizingMask = .flexibleHeight
     (page as AnyObject).addSubview(imageView)
     let url = URL(string: ShrineData.baseURL + imageName)
-    remoteImageService.fetchImageAndThumbnail(from: url) { (image:UIImage?,
-      thumbnailImage:UIImage?) -> Void in
+    remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?,
+      _) -> Void in
       DispatchQueue.main.async(execute: {
         imageView.image = image
         imageView.setNeedsDisplay()
@@ -158,7 +158,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     let pageControlSize = pageControl.sizeThatFits(self.bounds.size)
     pageControl.frame = CGRect(x: 0, y: boundsHeight - pageControlSize.height, width: boundsWidth,
       height: pageControlSize.height)
-    let scrollWidth:CGFloat = boundsWidth * CGFloat(pages.count)
+    let scrollWidth: CGFloat = boundsWidth * CGFloat(pages.count)
     scrollView.frame = CGRect(x: 0, y: 0, width: boundsWidth, height: boundsHeight)
     scrollView.contentSize = CGSize(width: scrollWidth, height: boundsHeight)
 

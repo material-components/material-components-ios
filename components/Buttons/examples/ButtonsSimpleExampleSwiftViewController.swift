@@ -18,7 +18,7 @@ import Foundation
 import MaterialComponents
 
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
-  
+
   let floatingButtonPlusDimension = CGFloat(24)
 
   override func viewDidLoad() {

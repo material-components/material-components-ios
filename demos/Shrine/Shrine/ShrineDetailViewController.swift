@@ -36,16 +36,16 @@ class ShrineDetailView: UIScrollView {
     let minContentHeight = CGFloat(640)
     self.contentSize = CGSize(width: self.frame.width, height: minContentHeight)
 
-    let labelPadding:CGFloat = 50
+    let labelPadding: CGFloat = 50
     imageView.frame = CGRect(x: labelPadding, y: labelPadding,
       width: self.frame.size.width - 2 * labelPadding, height: 220)
     imageView.contentMode = UIViewContentMode.scaleAspectFit
     imageView.autoresizingMask = .flexibleHeight
     self.addSubview(imageView)
-    let urlString:String = ShrineData.baseURL + imageName
+    let urlString: String = ShrineData.baseURL + imageName
     let url = URL(string: urlString)
-    remoteImageService.fetchImageAndThumbnail(from: url) { (image:UIImage?,
-      thumbnailImage:UIImage?) -> Void in
+    remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?,
+      _) -> Void in
       DispatchQueue.main.async(execute: {
         self.imageView.image = image
         self.imageView.setNeedsDisplay()
@@ -92,7 +92,7 @@ class ShrineDetailView: UIScrollView {
 
 class ShrineDetailViewController: UIViewController {
 
-  let fabPadding:CGFloat = 25
+  let fabPadding: CGFloat = 25
   var productTitle = ""
   var desc = ""
   var imageName = "popsicle.png"
