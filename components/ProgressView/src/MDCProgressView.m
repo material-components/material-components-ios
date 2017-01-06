@@ -134,7 +134,8 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 - (void)setProgress:(float)progress
            animated:(BOOL)animated
          completion:(void (^__nullable)(BOOL finished))completion {
-  if (progress < self.progress && self.backwardProgressAnimationMode == MDCProgressViewBackwardAnimationModeReset) {
+  if (progress < self.progress &&
+      self.backwardProgressAnimationMode == MDCProgressViewBackwardAnimationModeReset) {
     self.progress = 0;
     [self updateProgressView];
   }
