@@ -38,6 +38,6 @@
 @interface TabBarIconExample (Supplemental)
 
 - (void)setupExampleViews;
-- (void)addStar:(BOOL)centered;
+- (void)addStarCentered:(BOOL)centered;
 
 @end

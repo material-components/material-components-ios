@@ -49,7 +49,7 @@
       }
     }
   }
-  [self addStar:NO];
+  [self addStarCentered:NO];
 }
 
 #pragma mark - Private

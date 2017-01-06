@@ -180,10 +180,10 @@
                                                                   metrics:nil
                                                                     views:viewsPages]];
 
-  [self addStar:YES];
+  [self addStarCentered:YES];
 }
 
-- (void)addStar:(BOOL)centered {
+- (void)addStarCentered:(BOOL)centered {
   UIImage *starImage = [UIImage imageNamed:@"TabBarDemo_ic_star"
                                   inBundle:[NSBundle bundleForClass:[self class]]
              compatibleWithTraitCollection:nil];
