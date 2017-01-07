@@ -46,9 +46,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  @note: Keys are the message category, or the all messages category. Values are sets of suspension
         tokens.
  */
-@property(nonatomic)
-    NSMutableDictionary<NSString *, NSMutableSet<NSUUID *> *>
-        *suspensionTokens;
+@property(nonatomic) NSMutableDictionary<NSString *, NSMutableSet<NSUUID *> *> *suspensionTokens;
 
 /**
  The view which will host our snackbar messages.
@@ -228,11 +226,15 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
               }
 
               if ([self isSnackbarTransient:snackbarView]) {
+                __weak MDCSnackbarMessageView *weakSnackbarView = snackbarView;
                 dispatch_time_t popTime =
                     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(message.duration * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-                  // Mimic the user tapping on the snackbar.
-                  [snackbarView dismissWithAction:nil userInitiated:NO];
+                  MDCSnackbarMessageView *strongSnackbarView = weakSnackbarView;
+                  if (strongSnackbarView) {
+                    // Mimic the user tapping on the snackbar.
+                    [strongSnackbarView dismissWithAction:nil userInitiated:NO];
+                  }
                 });
               }
             }];

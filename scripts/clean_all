@@ -14,14 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Install tools used by contributors.
-#
-# This is not required for anyone but core team members.
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-"$SCRIPTS_DIR/install/install_clang_format"
-"$SCRIPTS_DIR/install/install_proselint"
-"$SCRIPTS_DIR/install/install_jazzy"
-"$SCRIPTS_DIR/install/install_sourcekitten"
-"$SCRIPTS_DIR/install/install_swiftlint"
+"$SCRIPTS_DIR"/build_all clean && \
+"$SCRIPTS_DIR"/release/manage_pods.py clean

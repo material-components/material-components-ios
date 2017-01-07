@@ -21,7 +21,7 @@
 #import "MaterialFlexibleHeader.h"
 
 @interface FlexibleHeaderTopLayoutGuideExample () <MDCFlexibleHeaderViewLayoutDelegate,
-    UIScrollViewDelegate>
+                                                   UIScrollViewDelegate>
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
 @property(nonatomic, strong) UIView *constrainedView;
@@ -66,7 +66,7 @@
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
   self.scrollView.backgroundColor = [UIColor whiteColor];
   self.scrollView.autoresizingMask =
-  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrollView.delegate = self;
   [self.view addSubview:self.scrollView];
   self.fhvc.headerView.trackingScrollView = self.scrollView;
@@ -78,7 +78,7 @@
 
   // Light blue 500
   self.fhvc.headerView.backgroundColor =
-  [UIColor colorWithRed:0.333 green:0.769 blue:0.961 alpha:1];
+      [UIColor colorWithRed:0.333 green:0.769 blue:0.961 alpha:1];
   self.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
   [self setupScrollViewContent];
@@ -102,32 +102,29 @@
                                   multiplier:1.0
                                     constant:100];
   height.active = YES;
-  NSLayoutConstraint *width =
-      [NSLayoutConstraint constraintWithItem:self.constrainedView
-                                   attribute:NSLayoutAttributeWidth
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:nil
-                                   attribute:NSLayoutAttributeNotAnAttribute
-                                  multiplier:1.0
-                                    constant:100];
+  NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.constrainedView
+                                                           attribute:NSLayoutAttributeWidth
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:nil
+                                                           attribute:NSLayoutAttributeNotAnAttribute
+                                                          multiplier:1.0
+                                                            constant:100];
   width.active = YES;
-  NSLayoutConstraint *top =
-      [NSLayoutConstraint constraintWithItem:self.constrainedView
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.topLayoutGuide
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1.0
-                                    constant:0];
+  NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.constrainedView
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.topLayoutGuide
+                                                         attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0
+                                                          constant:0];
   top.active = YES;
-  NSLayoutConstraint *leading =
-      [NSLayoutConstraint constraintWithItem:self.constrainedView
-                                   attribute:NSLayoutAttributeLeading
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeLeading
-                                  multiplier:1.0
-                                    constant:0];
+  NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:self.constrainedView
+                                                             attribute:NSLayoutAttributeLeading
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view
+                                                             attribute:NSLayoutAttributeLeading
+                                                            multiplier:1.0
+                                                              constant:0];
   leading.active = YES;
 }
 
@@ -144,7 +141,6 @@
 
   // Call updateTopLayoutGuide on Flexible Header View Controller in viewWillLayoutSubviews
   [self.fhvc updateTopLayoutGuide];
-
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's
@@ -156,12 +152,10 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-
 }
 
 #pragma - MDCFlexibleHeaderViewLayoutDelegate
@@ -169,7 +163,6 @@
 - (void)flexibleHeaderViewController:(MDCFlexibleHeaderViewController *)flexibleHeaderViewController
     flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)flexibleHeaderView {
   // Called whenever the frame changes.
-
 }
 
 #pragma mark - UIScrollViewDelegate

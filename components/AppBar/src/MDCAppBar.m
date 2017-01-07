@@ -93,10 +93,10 @@ static const CGFloat kStatusBarHeight = 20;
   // Shadow layer
   MDCFlexibleHeaderView *headerView = _headerViewController.headerView;
   MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock =
-  ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
-    CGFloat elevation = MDCShadowElevationAppBar * intensity;
-    [(MDCShadowLayer *)shadowLayer setElevation:elevation];
-    };
+      ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
+        CGFloat elevation = MDCShadowElevationAppBar * intensity;
+        [(MDCShadowLayer *)shadowLayer setElevation:elevation];
+      };
   [headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
   _appBarController = [[MDCAppBarViewController alloc] init];
   _headerStackView = _appBarController.headerStackView;
@@ -151,7 +151,7 @@ static const CGFloat kStatusBarHeight = 20;
   // Underlying issue is you need view loaded before accessing. Below change will accomplish that
   // by calling for view.bounds initializing the stack view
   if (!_headerStackView) {
-    _headerStackView = [[MDCHeaderStackView alloc] initWithFrame:self.view.bounds];
+    _headerStackView = [[MDCHeaderStackView alloc] initWithFrame:CGRectZero];
   }
   return _headerStackView;
 }

@@ -49,7 +49,7 @@ class ShrineData {
       let price = product["price"] as! String
       prices.add(price)
     }
-    
+
     let shops = json["shops"] as! NSArray
     for shp in shops {
       let shop = shp as! NSDictionary

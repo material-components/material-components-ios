@@ -67,7 +67,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+
   self.minimumHeaderHeight = self.fhvc.headerView.minimumHeight;
 
   self.fhvc.headerView.trackingScrollView = self.tableView;

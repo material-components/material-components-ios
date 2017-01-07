@@ -30,7 +30,8 @@
  and gestureRecognizer:shouldReceiveTouch: methods to avoid breaking
  MDCInkTouchControllerDelegate.
 
- **NOTE:** The controller does not keep a strong reference to the view to which it is attaching an ink view.
+ **NOTE:** The controller does not keep a strong reference to the view to which it is attaching an
+ ink view.
  It is expected that the view will keep a strong reference to its own ink controller, or that the
  view controller controlling the view will keep a strong reference to that view's ink controller.
  */
@@ -81,7 +82,7 @@
 
  @param view View that responds to touch events for ink.
  */
-- (nullable instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
 /**
  When called the @c defaultInkView is added to the @c view.

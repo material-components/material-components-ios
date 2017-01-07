@@ -23,7 +23,7 @@ typedef enum : NSUInteger {
 
 @interface MDCFeatureHighlightAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
 
-@property (nonatomic, assign) MDCFeatureHighlightDismissStyle dismissStyle;
-@property (nonatomic, assign, getter=isPresenting) BOOL presenting;
+@property(nonatomic, assign) MDCFeatureHighlightDismissStyle dismissStyle;
+@property(nonatomic, assign, getter=isPresenting) BOOL presenting;
 
 @end

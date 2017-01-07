@@ -31,14 +31,20 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   var headerViewController: MDCFlexibleHeaderViewController
   let imageNames = NSMutableArray()
 
-  var inkController: MDCInkTouchController?
+  private lazy var inkController: MDCInkTouchController = {
+    let controller = MDCInkTouchController(view: self.collectionView!)
+    controller.delaysInkSpread = true
+    controller.delegate = self
+
+    return controller
+  }()
 
   init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
 
     let layout = UICollectionViewFlowLayout()
-    let sectionInset:CGFloat = spacing
-    layout.sectionInset = UIEdgeInsetsMake(sectionInset, sectionInset, sectionInset, sectionInset)
+    let sectionInset: CGFloat = spacing
+    layout.sectionInset = UIEdgeInsets(top: sectionInset, left: sectionInset, bottom: sectionInset, right: sectionInset)
     layout.minimumInteritemSpacing = spacing
     layout.minimumLineSpacing = spacing
 
@@ -57,7 +63,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
     self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
-    MDCIcons.ic_arrow_backUseNewStyle(true);
+    MDCIcons.ic_arrow_backUseNewStyle(true)
   }
 
   convenience init(node: CBCNode) {
@@ -71,10 +77,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    inkController = MDCInkTouchController(view: self.collectionView!)!
-    inkController!.addInkView()
-    inkController!.delaysInkSpread = true
-    inkController!.delegate = self
+    inkController.addInkView()
 
     let containerView = UIView(frame: self.headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -84,7 +87,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     titleLabel.textColor = UIColor(white: 0.46, alpha: 1)
     titleLabel.font = MDCTypography.titleFont()
     titleLabel.sizeToFit()
-    if (inset + titleLabel.frame.size.width > containerView.frame.size.width) {
+    if inset + titleLabel.frame.size.width > containerView.frame.size.width {
       titleLabel.font = MDCTypography.body2Font()
     }
 
@@ -213,7 +216,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)
     var cellWidth = (self.view.frame.size.width - 3 * pad) / 2
-    if (self.view.frame.size.width > self.view.frame.size.height) {
+    if self.view.frame.size.width > self.view.frame.size.height {
       cellWidth = (self.view.frame.size.width - 4 * pad) / 3
     }
     return CGSize(width: cellWidth, height: cellWidth * 0.825)

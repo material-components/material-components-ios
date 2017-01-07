@@ -14,14 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Install tools used by contributors.
-#
-# This is not required for anyone but core team members.
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly ROOT_DIR="$SCRIPTS_DIR/.."
 
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-"$SCRIPTS_DIR/install/install_clang_format"
-"$SCRIPTS_DIR/install/install_proselint"
-"$SCRIPTS_DIR/install/install_jazzy"
-"$SCRIPTS_DIR/install/install_sourcekitten"
-"$SCRIPTS_DIR/install/install_swiftlint"
+readonly OBJC_SOURCES=$(find "$ROOT_DIR"/components \( -name '*.h' -or -name '*.m' \))
+clang-format -style=file -i $OBJC_SOURCES
