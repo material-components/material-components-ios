@@ -15,13 +15,11 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
-#import "MaterialAppBar.h"
-#import "MaterialTabs.h"
-@import MaterialComponents.MaterialPalettes;
-
 #import "TabBarIconExampleSupplemental.h"
+
+@import MaterialComponents.MaterialAppBar;
+@import MaterialComponents.MaterialTabs;
+@import MaterialComponents.MaterialPalettes;
 
 @implementation TabBarIconExample
 
