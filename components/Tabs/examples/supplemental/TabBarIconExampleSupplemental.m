@@ -109,10 +109,16 @@
 }
 
 - (void)setupScrollingContent {
-  UIView *pageInfo = [[UIView alloc] initWithFrame:CGRectZero];
-  pageInfo.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.scrollView addSubview:pageInfo];
-  pageInfo.backgroundColor = [[MDCPalette lightBluePalette] tint300];
+
+  // The scrollView will have to UIViews (pages.) One has a label with text (infoLabel); we call
+  // this infoPage. Another has 1+ star images; we call this self.starPage. Tapping on the 'INFO'
+  // tab will show the infoPage and tapping on the 'STARS' tab will show the self.starPage.
+
+  // Create the first view and its content. Then add to scrollView.
+  UIView *infoPage = [[UIView alloc] initWithFrame:CGRectZero];
+  infoPage.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.scrollView addSubview:infoPage];
+  infoPage.backgroundColor = [[MDCPalette lightBluePalette] tint300];
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -120,12 +126,12 @@
   infoLabel.numberOfLines = 0;
   infoLabel.text =
       @"Tabs enable content organization at a high level, such as switching between views";
-  [pageInfo addSubview:infoLabel];
+  [infoPage addSubview:infoLabel];
 
   [NSLayoutConstraint constraintWithItem:infoLabel
                                attribute:NSLayoutAttributeCenterX
                                relatedBy:NSLayoutRelationEqual
-                                  toItem:pageInfo
+                                  toItem:infoPage
                                attribute:NSLayoutAttributeCenterX
                               multiplier:1
                                 constant:0]
@@ -133,7 +139,7 @@
   [NSLayoutConstraint constraintWithItem:infoLabel
                                attribute:NSLayoutAttributeCenterY
                                relatedBy:NSLayoutRelationEqual
-                                  toItem:pageInfo
+                                  toItem:infoPage
                                attribute:NSLayoutAttributeCenterY
                               multiplier:1
                                 constant:-50]
@@ -147,12 +153,17 @@
                                                                       @"infoLabel" : infoLabel
                                                                     }]];
 
+  // Create the second view and its content. Then add to scrollView.
   self.starPage = [[UIView alloc] initWithFrame:CGRectZero];
   self.starPage.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:self.starPage];
   self.starPage.backgroundColor = [[MDCPalette lightBluePalette] tint200];
+  [self addStarCentered:YES];
 
-  [NSLayoutConstraint constraintWithItem:pageInfo
+  // Layout the views to be equal height and width to each other and self.view, hug the edges of the
+  // scrollView and meet in the middle.
+
+  [NSLayoutConstraint constraintWithItem:infoPage
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.view
@@ -160,7 +171,7 @@
                               multiplier:1
                                 constant:0]
       .active = YES;
-  [NSLayoutConstraint constraintWithItem:pageInfo
+  [NSLayoutConstraint constraintWithItem:infoPage
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.scrollView
@@ -172,28 +183,27 @@
   [NSLayoutConstraint constraintWithItem:self.starPage
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
-                                  toItem:pageInfo
+                                  toItem:infoPage
                                attribute:NSLayoutAttributeWidth
                               multiplier:1
                                 constant:0]
       .active = YES;
 
-  NSDictionary *viewsPages = @{ @"page0" : pageInfo, @"page1" : self.starPage };
+  NSDictionary *viewsPages = @{ @"infoPage" : infoPage, @"starPage" : self.starPage };
 
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"H:|[page0][page1]|"
+                              constraintsWithVisualFormat:@"H:|[infoPage][starPage]|"
                                                   options:NSLayoutFormatAlignAllTop |
                                                           NSLayoutFormatAlignAllBottom
                                                   metrics:nil
                                                     views:viewsPages]];
   [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[page0]|"
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[infoPage]|"
                                                                   options:0
                                                                   metrics:nil
                                                                     views:viewsPages]];
 
-  [self addStarCentered:YES];
 }
 
 - (void)addStarCentered:(BOOL)centered {
