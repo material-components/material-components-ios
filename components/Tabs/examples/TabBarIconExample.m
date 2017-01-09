@@ -18,8 +18,8 @@
 #import "TabBarIconExampleSupplemental.h"
 
 @import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialTabs;
 @import MaterialComponents.MaterialPalettes;
+@import MaterialComponents.MaterialTabs;
 
 @implementation TabBarIconExample
 

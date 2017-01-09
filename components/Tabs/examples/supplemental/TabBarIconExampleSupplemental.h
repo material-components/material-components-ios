@@ -19,9 +19,9 @@
 
 @import UIKit;
 
-@class MDCTabBar;
-@class MDCRaisedButton;
 @class MDCAppBar;
+@class MDCRaisedButton;
+@class MDCTabBar;
 
 @protocol MDCTabBarDelegate;
 
