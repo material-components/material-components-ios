@@ -56,32 +56,33 @@
 #pragma mark - Private
 
 - (void)loadTabBar {
-  self.tabBar = [MDCTabBar new];
-  self.tabBar.delegate = self;
-  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
+  MDCTabBar *tabBar = [MDCTabBar new];
+  tabBar.delegate = self;
+  tabBar.alignment = MDCTabBarAlignmentCenterSelected;
 
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIImage *infoImage =
   [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
   UIImage *starImage =
   [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
-  self.tabBar.items = @[
+  tabBar.items = @[
                         [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
                         [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]
                         ];
 
   // Give the second item a badge
-  [self.tabBar.items[1] setBadgeValue:@"1"];
+  [tabBar.items[1] setBadgeValue:@"1"];
 
   UIColor *color = [[MDCPalette bluePalette] tint500];
 
-  self.tabBar.barTintColor = [UIColor whiteColor];
-  self.tabBar.tintColor = color;
-  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  self.tabBar.selectedItemTintColor = nil;
-  self.tabBar.unselectedItemTintColor = [[UIColor blackColor] colorWithAlphaComponent:.4];
-  self.tabBar.inkColor = color;
+  tabBar.barTintColor = [UIColor whiteColor];
+  tabBar.tintColor = color;
+  tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  tabBar.selectedItemTintColor = nil;
+  tabBar.unselectedItemTintColor = [[UIColor blackColor] colorWithAlphaComponent:.4];
+  tabBar.inkColor = color;
 
+  self.tabBar = tabBar;
   self.appBar.headerStackView.bottomBar = self.tabBar;
   [self.appBar.headerStackView setNeedsLayout];
 }
