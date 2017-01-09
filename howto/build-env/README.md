@@ -1,8 +1,9 @@
 # Build environment
 
 Material Components for iOS builds with the standard open-source iOS toolchain:
-Xcode and CocoaPods. However, there are certain settings that you can use to
-maximize compatibility with our source.
+[Xcode](https://developer.apple.com/xcode/downloads/) and
+[CocoaPods](https://cocoapods.org/about). However, there are certain settings
+that you can use to maximize compatibility with our source.
 
 - - -
 
