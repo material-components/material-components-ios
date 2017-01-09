@@ -80,7 +80,7 @@
       [[UIBarButtonItem alloc] initWithTitle:@"Add"
                                        style:UIBarButtonItemStylePlain
                                       target:self
-                                      action:@selector(incrementBadges:)];
+                                      action:@selector(incrementDidTouch:)];
   self.navigationItem.rightBarButtonItem = badgeIncrementItem;
 
   self.title = @"Tabs With Icons";

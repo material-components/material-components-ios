@@ -33,21 +33,24 @@
 
 #pragma mark - Action
 
-- (void)incrementBadges:(id)sender {
-  // Increment all numeric badge values to show cells updating when their item's
-  // properties are set.
-  for (UITabBarItem *item in self.tabBar.items) {
-    NSString *badgeValue = item.badgeValue;
-    if (badgeValue) {
-      NSInteger badgeNumber = badgeValue.integerValue;
-      if (badgeNumber > 0) {
-        // Update badge value directly - the cell should update immediately.
-        item.badgeValue = [NSNumberFormatter localizedStringFromNumber:@(badgeNumber + 1)
-                                                           numberStyle:NSNumberFormatterNoStyle];
-      }
+- (void)incrementDidTouch:(id)sender {
+  [self incrementStarBadge];
+
+  [self addStarCentered:NO];
+}
+
+- (void)incrementStarBadge {
+  // Increment numeric badge value.
+  UITabBarItem *starItem = self.tabBar.items[1];
+  NSString *badgeValue = starItem.badgeValue;
+  if (badgeValue) {
+    NSInteger badgeNumber = badgeValue.integerValue;
+    if (badgeNumber > 0) {
+      // Update badge value directly - the cell should update immediately.
+      starItem.badgeValue = [NSNumberFormatter localizedStringFromNumber:@(badgeNumber + 1)
+                                                             numberStyle:NSNumberFormatterNoStyle];
     }
   }
-  [self addStarCentered:NO];
 }
 
 #pragma mark - Private
@@ -59,13 +62,13 @@
 
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIImage *infoImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
+  [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
   UIImage *starImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
+  [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
   self.tabBar.items = @[
-    [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]
-  ];
+                        [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
+                        [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]
+                        ];
 
   // Give the second item a badge
   [self.tabBar.items[1] setBadgeValue:@"1"];
@@ -85,9 +88,9 @@
 
 - (void)changeAlignment:(id)sender {
   UIAlertController *sheet =
-      [UIAlertController alertControllerWithTitle:nil
-                                          message:nil
-                                   preferredStyle:UIAlertControllerStyleActionSheet];
+  [UIAlertController alertControllerWithTitle:nil
+                                      message:nil
+                               preferredStyle:UIAlertControllerStyleActionSheet];
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
