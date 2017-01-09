@@ -123,6 +123,8 @@
 
 - (void)tabBar:(MDCTabBar *)tabBar didSelectItem:(UITabBarItem *)item {
   NSUInteger index = [tabBar.items indexOfObject:item];
+  NSAssert(index != NSNotFound, @"The MDCTabBar does not contain the expected UITabBarItem.");
+
   [self.scrollView setContentOffset:CGPointMake(index * CGRectGetWidth(self.view.bounds), 0)
                            animated:YES];
 }
