@@ -62,13 +62,13 @@
 
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIImage *infoImage =
-  [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
+      [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
   UIImage *starImage =
-  [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
+      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
   tabBar.items = @[
-                        [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
-                        [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]
-                        ];
+    [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]
+  ];
 
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
@@ -89,9 +89,9 @@
 
 - (void)changeAlignment:(id)sender {
   UIAlertController *sheet =
-  [UIAlertController alertControllerWithTitle:nil
-                                      message:nil
-                               preferredStyle:UIAlertControllerStyleActionSheet];
+      [UIAlertController alertControllerWithTitle:nil
+                                          message:nil
+                                   preferredStyle:UIAlertControllerStyleActionSheet];
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
