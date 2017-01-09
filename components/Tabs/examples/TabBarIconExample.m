@@ -120,6 +120,7 @@
 }
 
 #pragma mark - MDCTabBarDelegate
+
 - (void)tabBar:(MDCTabBar *)tabBar didSelectItem:(UITabBarItem *)item {
   NSUInteger index = [tabBar.items indexOfObject:item];
   [self.scrollView setContentOffset:CGPointMake(index * CGRectGetWidth(self.view.bounds), 0)
