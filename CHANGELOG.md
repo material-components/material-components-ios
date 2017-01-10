@@ -1,4 +1,14 @@
-# release-candidate TODO: Replace me with version number. 
+# 20.0.0
+
+## API changes
+
+### Ink
+
+* Return value of `-[MDCInkTouchController initWithView:]` changed from `nullable instancetype` to `nonnull instancetype`.
+
+### ProgressView
+
+* Added `MDCProgressViewBackwardAnimationMode` enumeration and `-[MDCProgressView backwardProgressAnimationMode]` to control how the progress view acts when its progress value is set to a _smaller_ value than the current value.
 
 ## Component changes
 
