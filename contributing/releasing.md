@@ -76,7 +76,7 @@ Note that in both cases, changes made to the release candidate branch will be me
 
 The two most important bits of metadata about a release is the *new version number* and the *release
 notes*. While we have tooling to help, your job is to make sure these are correct. If you're not
-familiar with [MDC's version number policy](versioning.md), please review it now.
+familiar with [MDC's version number policy](versions.md), please review it now.
 
 You will now begin adding release notes to
 [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/stable/CHANGELOG.md)
