@@ -20,7 +20,7 @@
 #import "MDFTextAccessibility.h"
 #import "MaterialTypography.h"
 
-const CGFloat kMDCFeatureHighlightInnerRadius = 44.0f;
+const CGFloat kMDCFeatureHighlightMinimumInnerRadius = 44.0f;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0f;
 const CGFloat kMDCFeatureHighlightTextPadding = 40.0f;
 const CGFloat kMDCFeatureHighlightTextMaxWidth = 300.0f;
@@ -40,6 +40,7 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   UIView *_highlightView;
   CGPoint _highlightPoint;
   CGPoint _highlightCenter;
+  CGFloat _innerRadius;
   CGPoint _outerCenter;
   CGFloat _outerRadius;
   MDCFeatureHighlightLayer *_outerLayer;
@@ -87,6 +88,8 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
 
     self.outerHighlightColor = [UIColor blueColor];
     self.innerHighlightColor = [UIColor whiteColor];
+
+    _innerRadius = kMDCFeatureHighlightMinimumInnerRadius;
 
     // We want the inner and outer highlights to animate from the same origin so we start them from
     // a concentric position.
@@ -168,10 +171,10 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
                                                 functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
   [_displayMaskLayer setCenter:displayMaskCenter
-                        radius:kMDCFeatureHighlightInnerRadius
+                        radius:_innerRadius
                       animated:YES];
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:1].CGColor animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:kMDCFeatureHighlightInnerRadius animated:YES];
+  [_innerLayer setCenter:_highlightPoint radius:_innerRadius animated:YES];
   [_outerLayer setFillColor:_outerHighlightColor.CGColor animated:YES];
   [_outerLayer setCenter:_highlightCenter radius:_outerRadius animated:YES];
   [CATransaction commit];
@@ -186,7 +189,7 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
           [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
               .CGColor;
   id pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
-  CGFloat radius = kMDCFeatureHighlightInnerRadius;
+  CGFloat radius = _innerRadius;
 
   [CATransaction begin];
   [CATransaction setAnimationDuration:1.0f];
@@ -263,9 +266,9 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
     _highlightCenter = _highlightPoint;
   } else {
     if (topHalf) {
-      _highlightCenter.y = _highlightPoint.y + kMDCFeatureHighlightInnerRadius + textHeight / 2;
+      _highlightCenter.y = _highlightPoint.y + _innerRadius + textHeight / 2;
     } else {
-      _highlightCenter.y = _highlightPoint.y - kMDCFeatureHighlightInnerRadius - textHeight / 2;
+      _highlightCenter.y = _highlightPoint.y - _innerRadius - textHeight / 2;
     }
     if (leftHalf) {
       _highlightCenter.x = _highlightPoint.x + kMDCFeatureHighlightNonconcentricOffset;
@@ -290,11 +293,9 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   CGPoint titlePos = CGPointMake(0, 0);
   titlePos.x = MIN(MAX(_highlightCenter.x - textWidth / 2, leftTextBound), rightTextBound);
   if (topHalf) {
-    titlePos.y =
-        _highlightPoint.y + kMDCFeatureHighlightInnerPadding + kMDCFeatureHighlightInnerRadius;
+    titlePos.y = _highlightPoint.y + kMDCFeatureHighlightInnerPadding + _innerRadius;
   } else {
-    titlePos.y = _highlightPoint.y - kMDCFeatureHighlightInnerPadding -
-                 kMDCFeatureHighlightInnerRadius - textHeight;
+    titlePos.y = _highlightPoint.y - kMDCFeatureHighlightInnerPadding - _innerRadius - textHeight;
   }
 
   CGRect titleFrame = (CGRect){titlePos, titleSize};
@@ -315,7 +316,7 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   CGPoint pos = [tapGestureRecognizer locationInView:self];
   CGFloat dist =
       (float)(sqrt(pow(pos.x - _highlightPoint.x, 2) + pow(pos.y - _highlightPoint.y, 2)));
-  BOOL accepted = dist <= kMDCFeatureHighlightInnerRadius;
+  BOOL accepted = dist <= _innerRadius;
 
   if (self.interactionBlock) {
     self.interactionBlock(accepted);
