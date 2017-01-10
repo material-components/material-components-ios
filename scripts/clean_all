@@ -16,5 +16,22 @@
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-"$SCRIPTS_DIR"/build_all clean && \
+# Clean out CocoaPods.
 "$SCRIPTS_DIR"/release/manage_pods.py clean
+
+# Clean out Xcode build products.
+# Note that Xcode seems to want to hold on to old Swift module maps, requiring a
+# "force" clean instead of just asking xcodebuild to clean normally.
+readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+
+for workspace_scheme in $WORKSPACE_SCHEMES; do  
+  workspace=$(echo $workspace_scheme | cut -d: -f1)
+  scheme=$(echo $workspace_scheme | cut -d: -f2)
+  options="-workspace $workspace -scheme $scheme -showBuildSettings"
+  build_dir=$(xcodebuild $options | grep -m1 "^    BUILD_DIR =" | cut -d= -f2)
+  if [[ ! -z $build_dir ]]; then
+    derived_data_dir=$(dirname $(dirname "$build_dir"))
+    echo "Force-cleaning $derived_data_dir..."
+    rm -rf "$derived_data_dir"
+  fi
+done
