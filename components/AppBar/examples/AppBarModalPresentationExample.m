@@ -18,11 +18,11 @@
 
 #import "MaterialAppBar.h"
 
-@interface AppBarModallyPresentedViewController : UITableViewController
+@interface AppBarModalPresentationExamplePresented : UITableViewController
 @property(strong, nonatomic) MDCAppBar *appBar;
 @end
 
-@implementation AppBarModallyPresentedViewController
+@implementation AppBarModalPresentationExamplePresented
 
 - (instancetype)init {
   self = [super init];
@@ -133,7 +133,7 @@
 @end
 
 // The below code class duplicates AppBarTypicalUseExample to present
-// AppBarModallyPresentedViewController
+// AppBarModalPresentationExamplePresented
 
 @interface AppBarModalPresentationExample : UITableViewController
 @property(nonatomic, strong) MDCAppBar *appBar;
@@ -159,8 +159,8 @@
 }
 
 - (void)presentModal {
-  AppBarModallyPresentedViewController *modalVC =
-      [[AppBarModallyPresentedViewController alloc] init];
+  AppBarModalPresentationExamplePresented *modalVC =
+      [[AppBarModalPresentationExamplePresented alloc] init];
   [self presentViewController:modalVC animated:YES completion:^{}];
 }
 
