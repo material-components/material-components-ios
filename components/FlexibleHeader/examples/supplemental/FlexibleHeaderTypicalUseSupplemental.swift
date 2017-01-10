@@ -42,5 +42,5 @@ extension FlexibleHeaderTypicalUseViewControllerSwift {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-  
+
 }

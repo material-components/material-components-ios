@@ -40,5 +40,5 @@ extension HeaderStackViewTypicalUseSwiftExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-  
+
 }

@@ -38,7 +38,7 @@ class PalettesStandardExampleViewController: PalettesExampleViewController {
       ("Deep Orange", MDCPalette.deepOrange()),
       ("Brown", MDCPalette.brown()),
       ("Grey", MDCPalette.grey()),
-      ("Blue Grey", MDCPalette.blueGrey()),
+      ("Blue Grey", MDCPalette.blueGrey())
     ]
   }
 }

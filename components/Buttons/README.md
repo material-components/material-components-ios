@@ -1,7 +1,7 @@
 # Buttons
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
+<a alt="Buttons"><img src="docs/assets/buttons.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/buttons.mp4" autoplay loop></video></div>{% endif %}-->
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a

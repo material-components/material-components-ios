@@ -35,6 +35,11 @@ See [deprecation_policy.md](deprecation_policy.md) for details.
 
 Occasionally it is necessary to hotfix the framework. See [hotfixing.md](hotfixing.md) for details.
 
+## Finding an issue to work on
+
+MDC-iOS uses GitHub to file and track issues. 
+To find an issue to work on, filter the issues list by the ["is:Help wanted" label](https://github.com/material-components/material-components-ios/labels/is%3AHelp%20wanted).
+
 ## The small print
 
 Contributions made by corporations are covered by a different agreement than the one above, the [Software Grant and Corporate Contributor License Agreement](https://cla.developers.google.com/about/google-corporate).

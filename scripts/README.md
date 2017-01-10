@@ -5,8 +5,10 @@ for casual contributors.
 
 The important scripts are:
 
+* `prep_all`: prepare the Material Components catalog, tests, and demos apps for building.
 * `build_all`: build the Material Components catalog and each of our demo apps.
 * `test_all`: build and test the Material Components unit and interation tests.
+* `clean_all`: remove artifacts from the `prep_all`, `build_all`, and `test_all` scripts.
 * `check_components`: run component checks for documentation, examples, etc.
 * `install_contributor_tools`: install local contributor tools to speed up the development cycle. 
 

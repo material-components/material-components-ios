@@ -55,8 +55,8 @@ static const CGFloat kMaxAnchorLengthQuickSwipe = 25;
 // view finishes decelerating with the header partially shifted.
 static const CGFloat kMinimumVisibleProportion = 0.25;
 
-static inline MDCFlexibleHeaderShiftBehavior
- ShiftBehaviorForCurrentAppContext(MDCFlexibleHeaderShiftBehavior intendedShiftBehavior) {
+static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
+    MDCFlexibleHeaderShiftBehavior intendedShiftBehavior) {
   if ([[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"] &&
       intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
     return MDCFlexibleHeaderShiftBehaviorEnabled;
@@ -267,7 +267,6 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   if (self.delegate) {
     [aCoder encodeConditionalObject:self.delegate forKey:MDCFlexibleHeaderDelegateKey];
   }
-
 }
 
 - (void)commonMDCFlexibleHeaderViewInit {
@@ -276,13 +275,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 
   NSPointerFunctionsOptions options =
-  (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
+      (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
   _forwardingViews = [NSHashTable hashTableWithOptions:options];
 
   NSPointerFunctionsOptions keyOptions =
-  (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
+      (NSPointerFunctionsWeakMemory | NSPointerFunctionsObjectPointerPersonality);
   NSPointerFunctionsOptions valueOptions =
-  (NSPointerFunctionsStrongMemory | NSPointerFunctionsObjectPointerPersonality);
+      (NSPointerFunctionsStrongMemory | NSPointerFunctionsObjectPointerPersonality);
   _trackedScrollViews = [NSMapTable mapTableWithKeyOptions:keyOptions valueOptions:valueOptions];
 
   _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
@@ -308,7 +307,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   _contentView = [[UIView alloc] initWithFrame:self.bounds];
   _contentView.autoresizingMask =
-  (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   [super addSubview:_contentView];
 
   self.backgroundColor = [UIColor lightGrayColor];
@@ -922,7 +921,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
                                                   action:@selector(fhv_scrollViewDidPan:)];
   [trackingScrollView.panGestureRecognizer addTarget:self action:@selector(fhv_scrollViewDidPan:)];
 
-#if 0   // TODO(featherless): https://github.com/material-components/material-components-ios/issues/214
+#if 0   // TODO(featherless):
+        // https://github.com/material-components/material-components-ios/issues/214
   // Verify existence of a delegate.
   NSAssert(!trackingScrollView || trackingScrollView.delegate,
            @"The provided tracking scroll view %@ has no delegate. Without a delegate, %@ will not"

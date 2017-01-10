@@ -73,7 +73,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
     }
 
     if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey]) {
-      _layoutDelegate = [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
+      _layoutDelegate =
+          [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
     }
   }
   return self;
@@ -122,7 +123,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   for (NSLayoutConstraint *constraint in self.parentViewController.view.constraints) {
     // Because topLayoutGuide is a readonly property on a viewController we must manipulate
     // the present one via the NSLayoutConstraint attached to it. Thus we keep reference to it.
-    if (constraint.firstItem == self.parentViewController.topLayoutGuide && constraint.secondItem == nil) {
+    if (constraint.firstItem == self.parentViewController.topLayoutGuide &&
+        constraint.secondItem == nil) {
       self.topLayoutGuideTopConstraint = constraint;
     }
   }
@@ -234,7 +236,6 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 }
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
-
   // Whenever the flexibleHeaderView's frame changes, we update the value of the height offset
   self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
 

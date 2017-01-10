@@ -335,13 +335,11 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
     }
     // Handle RTL
     if (self.view.mdc_effectiveUserInterfaceLayoutDirection ==
-        UIUserInterfaceLayoutDirectionRightToLeft){
+        UIUserInterfaceLayoutDirectionRightToLeft) {
       for (UIButton *button in self.actionButtons) {
         CGRect buttonRect = button.frame;
-        CGRect flippedRect =
-            MDCRectFlippedForRTL(buttonRect,
-                                 CGRectGetWidth(self.view.bounds),
-                                 UIUserInterfaceLayoutDirectionRightToLeft);
+        CGRect flippedRect = MDCRectFlippedForRTL(buttonRect, CGRectGetWidth(self.view.bounds),
+                                                  UIUserInterfaceLayoutDirectionRightToLeft);
         button.frame = flippedRect;
       }
     }
