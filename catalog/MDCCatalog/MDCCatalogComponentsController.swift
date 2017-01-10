@@ -44,10 +44,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     let layout = UICollectionViewFlowLayout()
     let sectionInset: CGFloat = spacing
-    layout.sectionInset = UIEdgeInsets(top: sectionInset,
-                                       left: sectionInset,
-                                       bottom: sectionInset,
-                                       right: sectionInset)
+    layout.sectionInset = UIEdgeInsets(top: sectionInset, left: sectionInset, bottom: sectionInset, right: sectionInset)
     layout.minimumInteritemSpacing = spacing
     layout.minimumLineSpacing = spacing
 
@@ -105,10 +102,41 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
     containerView.addSubview(titleLabel)
-    constrainLabel(label: titleLabel,
-                   containerView: containerView,
-                   insets: titleInsets,
-                   height: titleSize.height)
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .leading,
+      relatedBy: .equal,
+      toItem: containerView,
+      attribute: .leading,
+      multiplier: 1.0,
+      constant: titleInsets.left).isActive = true
+
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .trailing,
+      relatedBy: .equal,
+      toItem: containerView,
+      attribute: .trailing,
+      multiplier: 1.0,
+      constant: 0).isActive = true
+
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .bottom,
+      relatedBy: .equal,
+      toItem: containerView,
+      attribute: .bottom,
+      multiplier: 1.0,
+      constant: -titleInsets.bottom).isActive = true
+
+    _ = NSLayoutConstraint(
+      item: titleLabel,
+      attribute: .height,
+      relatedBy: .equal,
+      toItem: nil,
+      attribute: .notAnAttribute,
+      multiplier: 1.0,
+      constant: titleSize.height).isActive = true
 
     self.headerViewController.headerView.addSubview(containerView)
 
@@ -155,13 +183,11 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   // MARK: MDCInkTouchControllerDelegate
 
-  func inkTouchController(_ inkTouchController: MDCInkTouchController,
-                          shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
+  func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
     return self.collectionView!.indexPathForItem(at: location) != nil
   }
 
-  func inkTouchController(_ inkTouchController: MDCInkTouchController,
-                          inkViewAtTouchLocation location: CGPoint) -> MDCInkView {
+  func inkTouchController(_ inkTouchController: MDCInkTouchController, inkViewAtTouchLocation location: CGPoint) -> MDCInkView {
     if let indexPath = self.collectionView!.indexPathForItem(at: location) {
       let cell = self.collectionView!.cellForItem(at: indexPath)
       return self.inkViewForView(cell!)
@@ -171,11 +197,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   // MARK: UICollectionViewDelegate
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell =
-        collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
-                                           for: indexPath)
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
+      for: indexPath)
     cell.backgroundColor = UIColor.white
 
     let componentName = self.node.children[indexPath.row].title
@@ -189,9 +213,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return cell
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
     let pad = CGFloat(1)
     var cellWidth = (self.view.frame.size.width - 3 * pad) / 2
     if self.view.frame.size.width > self.view.frame.size.height {
@@ -212,47 +234,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.navigationController?.pushViewController(vc, animated: true)
   }
 
-  // MARK: Private
-  func constrainLabel(label: UILabel,
-                      containerView: UIView,
-                      insets: UIEdgeInsets,
-                      height: CGFloat) {
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .leading,
-      multiplier: 1.0,
-      constant: insets.left).isActive = true
-
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .trailing,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .trailing,
-      multiplier: 1.0,
-      constant: 0).isActive = true
-
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .bottom,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .bottom,
-      multiplier: 1.0,
-      constant: -insets.bottom).isActive = true
-
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .height,
-      relatedBy: .equal,
-      toItem: nil,
-      attribute: .notAnAttribute,
-      multiplier: 1.0,
-      constant: height).isActive = true
-  }
 }
 
 // UIScrollViewDelegate

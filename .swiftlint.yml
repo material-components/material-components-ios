@@ -6,7 +6,6 @@ excluded:
 
 disabled_rules:
   - cyclomatic_complexity
-  - todo
 
 line_length: 100
 
