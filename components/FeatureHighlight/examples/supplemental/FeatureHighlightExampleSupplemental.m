@@ -50,7 +50,7 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.view addSubview:self.infoLabel];
 
   self.button = [[MDCRaisedButton alloc] init];
-  [self.button setTitle:@"GO really far!" forState:UIControlStateNormal];
+  [self.button setTitle:@"GO!" forState:UIControlStateNormal];
   [self.button sizeToFit];
   [self.button addTarget:self
                   action:@selector(didTapButton:)
