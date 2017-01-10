@@ -52,7 +52,7 @@ class MDCCatalogTileView: UIView {
       let pixelSize = CGSize(width: frame.width * scale, height: frame.height * scale)
       let cachedPixelSize = CGSize(width: cachedImage.size.width * cachedImage.scale,
                                        height: cachedImage.size.height * cachedImage.scale)
-      if (cachedPixelSize != pixelSize) {
+      if cachedPixelSize != pixelSize {
         return createImage()
       }
       return cachedImage
@@ -61,6 +61,9 @@ class MDCCatalogTileView: UIView {
     }
   }
 
+  // This function is long but simple. The name-to-drawing map would be better replaced by a real
+  // dictionary, but Swift's dictionaries can't seem to handle C function pointers.
+  // swiftlint:disable function_body_length
   func createImage() -> UIImage {
     var newImage = UIImage()
 
@@ -122,5 +125,6 @@ class MDCCatalogTileView: UIView {
     imageCache.setObject(newImage, forKey: componentNameString as AnyObject)
     return newImage
   }
+  // swiftlint:enable function_body_length
 
 }
