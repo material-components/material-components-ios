@@ -18,7 +18,11 @@
 
 static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 5;
-static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
+static NSString *const kReusableIdentifierItem = @"customCell";
+
+@interface CollectionStoryboardExampleCell: UICollectionViewCell
+@property(nonatomic, weak) IBOutlet UILabel *label;
+@end
 
 @implementation CollectionsStoryboardExample {
   NSMutableArray *_content;
@@ -35,10 +39,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.title = @"Storyboard Demo";
-
-  // Register cell class.
-  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
-          forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Populate content.
   _content = [NSMutableArray array];
@@ -68,11 +68,15 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCollectionViewTextCell *cell =
+  CollectionStoryboardExampleCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
-  cell.textLabel.text = _content[indexPath.section][indexPath.item];
+  cell.label.text = _content[indexPath.section][indexPath.item];
+
   return cell;
 }
 
+@end
+
+@implementation CollectionStoryboardExampleCell
 @end
