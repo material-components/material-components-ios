@@ -78,8 +78,8 @@
   tabBar.barTintColor = [UIColor whiteColor];
   tabBar.tintColor = color;
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  tabBar.selectedItemTintColor = nil;
-  tabBar.unselectedItemTintColor = [[UIColor blackColor] colorWithAlphaComponent:.4];
+  tabBar.selectedItemTintColor = [[UIColor blackColor] colorWithAlphaComponent:.87];
+  tabBar.unselectedItemTintColor = [[UIColor blackColor] colorWithAlphaComponent:.38];
   tabBar.inkColor = color;
 
   self.tabBar = tabBar;
