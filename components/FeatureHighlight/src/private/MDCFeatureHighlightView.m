@@ -21,6 +21,7 @@
 #import "MaterialTypography.h"
 
 const CGFloat kMDCFeatureHighlightMinimumInnerRadius = 44.0f;
+const CGFloat kMDCFeatureHighlightInnerContentPadding = 10.0f;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0f;
 const CGFloat kMDCFeatureHighlightTextPadding = 40.0f;
 const CGFloat kMDCFeatureHighlightTextMaxWidth = 300.0f;
@@ -89,8 +90,6 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
     self.outerHighlightColor = [UIColor blueColor];
     self.innerHighlightColor = [UIColor whiteColor];
 
-    _innerRadius = kMDCFeatureHighlightMinimumInnerRadius;
-
     // We want the inner and outer highlights to animate from the same origin so we start them from
     // a concentric position.
     _forceConcentricLayout = YES;
@@ -145,6 +144,11 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
 }
 
 - (void)setDisplayedView:(UIView *)displayedView {
+  CGSize displayedSize = displayedView.frame.size;
+  CGFloat viewRadius = sqrt(pow(displayedSize.width/2, 2) + pow(displayedSize.height/2, 2));
+  viewRadius += kMDCFeatureHighlightInnerContentPadding;
+  _innerRadius = MAX(viewRadius, kMDCFeatureHighlightMinimumInnerRadius);
+
   _displayedView.layer.mask = nil;
   [_displayedView removeFromSuperview];
   _displayedView = displayedView;
@@ -309,7 +313,17 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   CGRect textFrames = CGRectUnion(_titleLabel.frame, _bodyLabel.frame);
   CGFloat distX = ABS(CGRectGetMidX(textFrames) - _highlightCenter.x) + textFrames.size.width / 2;
   CGFloat distY = ABS(CGRectGetMidY(textFrames) - _highlightCenter.y) + textFrames.size.height / 2;
-  _outerRadius = (float)sqrt(distX * distX + distY * distY) + kMDCFeatureHighlightTextPadding;
+  CGFloat minTextRadius = sqrt(pow(distX, 2) + pow(distY, 2)) + kMDCFeatureHighlightTextPadding;
+
+  // Calculating the radius required for a circle centered at _highlightCenter that fully encircles
+  // the inner highlight.
+  distX = ABS(_highlightCenter.x - _highlightPoint.x);
+  distY = ABS(_highlightCenter.y - _highlightPoint.y);
+  CGFloat minInnerHighlightRadius = sqrt(pow(distX, 2) + pow(distY, 2)) + _innerRadius
+      + kMDCFeatureHighlightInnerPadding;
+
+  // Use the larger of the two radii to ensure everything is encircled.
+  _outerRadius = MAX(minTextRadius, minInnerHighlightRadius);
 }
 
 - (void)didTapView:(UITapGestureRecognizer *)tapGestureRecognizer {
