@@ -7,7 +7,5 @@ excluded:
 disabled_rules:
   - cyclomatic_complexity
 
-line_length: 100
-
 force_cast: warning
 force_try: warning
