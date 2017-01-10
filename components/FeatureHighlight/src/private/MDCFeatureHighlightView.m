@@ -35,6 +35,10 @@ const CGFloat kMDCFeatureHighlightInnerRadiusFactor = 1.1f;
 const CGFloat kMDCFeatureHighlightOuterRadiusFactor = 1.125f;
 const CGFloat kMDCFeatureHighlightPulseRadiusFactor = 2.0f;
 const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
+const CGFloat kMDCFeatureHighlightInnerRadiusBloomAmount =
+    (kMDCFeatureHighlightInnerRadiusFactor - 1) * kMDCFeatureHighlightMinimumInnerRadius;
+const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
+    (kMDCFeatureHighlightPulseRadiusFactor - 1) * kMDCFeatureHighlightMinimumInnerRadius;
 
 @implementation MDCFeatureHighlightView {
   BOOL _forceConcentricLayout;
@@ -199,11 +203,13 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   [CATransaction setAnimationDuration:1.0f];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
                                                 functionWithName:kCAMediaTimingFunctionEaseOut]];
+  CGFloat innerBloomRadius = radius + kMDCFeatureHighlightInnerRadiusBloomAmount;
+  CGFloat pulseBloomRadius = radius + kMDCFeatureHighlightPulseRadiusBloomAmount;
   NSArray *innerKeyframes =
-      @[ @(radius), @(radius * kMDCFeatureHighlightInnerRadiusFactor), @(radius) ];
+      @[ @(radius), @(innerBloomRadius), @(radius) ];
   [_innerLayer animateRadiusOverKeyframes:innerKeyframes keyTimes:keyTimes center:_highlightPoint];
   NSArray *pulseKeyframes =
-      @[ @(radius), @(radius), @(radius * kMDCFeatureHighlightPulseRadiusFactor) ];
+      @[ @(radius), @(radius), @(pulseBloomRadius) ];
   [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes keyTimes:keyTimes center:_highlightPoint];
   [_pulseLayer animateFillColorOverKeyframes:@[ pulseColorStart, pulseColorStart, pulseColorEnd ]
                                     keyTimes:keyTimes];
