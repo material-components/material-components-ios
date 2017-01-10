@@ -2,6 +2,7 @@ excluded:
   - Carthage
   - Pods
   - third_party
+  - catalog/third_party
 
 disabled_rules:
   - cyclomatic_complexity
