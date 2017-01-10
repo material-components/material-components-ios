@@ -19,4 +19,5 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 "$DIR/install_brew"
-brew install swiftlint
+# Stop certain version of brew from failing if swiftlint is already installed.
+brew install swiftlint || true
