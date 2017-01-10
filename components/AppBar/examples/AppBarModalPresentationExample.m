@@ -68,16 +68,14 @@
   // Add optional navigation items
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Dismiss"
                                                                     style:UIBarButtonItemStyleDone
-                                                                          target:nil
+                                                                          target:self
                                                                     action:@selector(dismissSelf)];
 
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Touch"
                                                                     style:UIBarButtonItemStyleDone
                                                                               target:nil
-                                                                    action:@selector(touchPressed)];
+                                                                    action:nil];
 }
-
-- (void)touchPressed {}
 
 - (void)dismissSelf {
   [self dismissViewControllerAnimated:YES completion:nil];
@@ -135,7 +133,7 @@
 @end
 
 // The below code class duplicates AppBarTypicalUseExample to present
-//AppBarModallyPresentedViewController
+// AppBarModallyPresentedViewController
 
 @interface AppBarModalPresentationExample : UITableViewController
 @property(nonatomic, strong) MDCAppBar *appBar;
@@ -156,7 +154,7 @@
 
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Detail"
                                                                       style:UIBarButtonItemStyleDone
-                                                                              target:nil
+                                                                              target:self
                                                                     action:@selector(presentModal)];
 }
 
