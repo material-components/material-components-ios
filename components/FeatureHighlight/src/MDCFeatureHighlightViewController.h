@@ -39,7 +39,7 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 
  While MDCFeatureHighlightViewController supports changing state while presented, it is not
  recommended as the design spec does not specify any patterns for that behavior.
- 
+
  @note Due to a bug in the iOS simulator it is possible that the feature highlight will not render
  correctly in the simulator. If you're encountering issues make sure to test on device.
  */
