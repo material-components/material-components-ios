@@ -76,17 +76,21 @@ class AppBarDelegateForwardingExample: UITableViewController {
     }
   }
 
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
+                                         willDecelerate decelerate: Bool) {
     let headerView = self.appBar.headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
       headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
     }
   }
 
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  override func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                          withVelocity velocity: CGPoint,
+                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let headerView = self.appBar.headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+      headerView.trackingScrollWillEndDragging(withVelocity: velocity,
+                                               targetContentOffset: targetContentOffset)
     }
   }
 

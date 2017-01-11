@@ -51,18 +51,18 @@ class ShadowDragSquareExampleViewController: UIViewController {
   func longPressedInView(_ sender: UILongPressGestureRecognizer) {
     // Elevation of the view is changed to indicate that it has been pressed or released.
     // view.center is changed to follow the touch events.
-    if (sender.state == .began) {
+    if sender.state == .began {
       self.blueView.setElevation(kSelectedCardElevation)
 
       let selfPoint = sender.location(in: self.view)
       movingViewOffset.x = selfPoint.x - self.blueView.center.x
       movingViewOffset.y = selfPoint.y - self.blueView.center.y
-    } else if (sender.state == .changed) {
+    } else if sender.state == .changed {
       let selfPoint = sender.location(in: self.view)
       let newCenterPoint =
           CGPoint(x: selfPoint.x - movingViewOffset.x, y: selfPoint.y - movingViewOffset.y)
       self.blueView.center = newCenterPoint
-    } else if (sender.state == .ended) {
+    } else if sender.state == .ended {
       self.blueView.setElevation(kRestingCardElevation)
 
       movingViewOffset = CGPoint.zero
@@ -71,7 +71,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
 
   // MARK: catalog by convention
 
-  class func catalogBreadcrumbs() -> Array<String> {
+  class func catalogBreadcrumbs() -> [String] {
     return [ "Shadow", "Shadow Layer"]
   }
 

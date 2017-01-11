@@ -6,7 +6,9 @@ excluded:
 
 disabled_rules:
   - cyclomatic_complexity
+  - force_cast
   - todo
+  - type_name
 
 line_length: 100
 

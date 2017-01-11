@@ -17,7 +17,7 @@
 import Foundation
 import MaterialComponents
 
-class ButtonsStoryboardAndProgrammaticController: UIViewController {
+class ButtonsSwiftAndStoryboardController: UIViewController {
 
   class func catalogBreadcrumbs() -> [String] {
     return ["Buttons", "Buttons (Swift and Storyboard)"]
@@ -63,17 +63,53 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
     self.view.addSubview(containerView)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item: containerView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0),
-      NSLayoutConstraint(item: containerView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0),
-      NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0),
-      NSLayoutConstraint(item: containerView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 0.5, constant: 0)
+      NSLayoutConstraint(item: containerView,
+                         attribute: .leading,
+                         relatedBy: .equal,
+                         toItem: view,
+                         attribute: .leading,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: containerView,
+                         attribute: .top,
+                         relatedBy: .equal,
+                         toItem: view,
+                         attribute: .top,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: containerView,
+                         attribute: .bottom,
+                         relatedBy: .equal,
+                         toItem: view,
+                         attribute: .bottom,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: containerView,
+                         attribute: .width,
+                         relatedBy: .equal,
+                         toItem: view,
+                         attribute: .width,
+                         multiplier: 0.5,
+                         constant: 0)
     ])
 
     containerView.addSubview(innerContainerView)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item: innerContainerView, attribute: .centerX, relatedBy: .equal, toItem: containerView, attribute: .centerX, multiplier: 1.0, constant: 0),
-      NSLayoutConstraint(item: innerContainerView, attribute: .centerY, relatedBy: .equal, toItem: containerView, attribute: .centerY, multiplier: 1.0, constant: 0)
+      NSLayoutConstraint(item: innerContainerView,
+                         attribute: .centerX,
+                         relatedBy: .equal,
+                         toItem: containerView,
+                         attribute: .centerX,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: innerContainerView,
+                         attribute: .centerY,
+                         relatedBy: .equal,
+                         toItem: containerView,
+                         attribute: .centerY,
+                         multiplier: 1.0,
+                         constant: 0)
     ])
 
     raisedButton.setTitle("Programmatic", for: UIControlState())
