@@ -3930,6 +3930,179 @@ void MDCCatalogDrawSwitchTile(CGRect frame) {
   [ovalPath fill];
 }
 
+void MDCCatalogDrawTabsTile(CGRect frame) {
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  UIColor* gradientColor = [UIColor colorWithRed:0.075 green:0.592 blue:0.945 alpha:0.1];
+  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+
+  CGFloat gradientLocations[] = {0, 0.86, 1};
+  CGGradientRef gradient = CGGradientCreateWithColors(
+                                                      colorSpace,
+                                                      (__bridge CFArrayRef)
+                                                      @[ (id)fillColor.CGColor, (id)gradientColor.CGColor, (id)gradientColor.CGColor ],
+                                                      gradientLocations);
+
+  NSShadow* shadow = [[NSShadow alloc] init];
+  [shadow
+   setShadowColor:[fillColor colorWithAlphaComponent:CGColorGetAlpha(fillColor.CGColor) * 0.44]];
+  [shadow setShadowOffset:CGSizeMake(1.1, -0.1)];
+  [shadow setShadowBlurRadius:5];
+
+  CGRect tabsGroup = CGRectMake(CGRectGetMinX(frame) + 24, CGRectGetMinY(frame) + 24.1,
+                                floor((CGRectGetWidth(frame) - 24) * 0.85366 + 0.5),
+                                floor((CGRectGetHeight(frame) - 24.1) * 0.67227 + 23.7) - 23.2);
+
+    CGContextSaveGState(context);
+    CGContextBeginTransparencyLayer(context, NULL);
+
+    UIBezierPath* clip2Path = [UIBezierPath
+                               bezierPathWithRect:CGRectMake(CGRectGetMinX(tabsGroup) +
+                                                             floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                                             CGRectGetMinY(tabsGroup) +
+                                                             floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5),
+                                                             floor(CGRectGetWidth(tabsGroup) * 1.00000 + 0.5) -
+                                                             floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                                             floor(CGRectGetHeight(tabsGroup) * 1.00000 + 0.5) -
+                                                             floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5))];
+    [clip2Path addClip];
+
+        CGContextSaveGState(context);
+        CGContextSetAlpha(context, 0.1);
+        CGContextBeginTransparencyLayer(context, NULL);
+
+        UIBezierPath* clipPath = [UIBezierPath
+                                  bezierPathWithRect:CGRectMake(CGRectGetMinX(tabsGroup) +
+                                                                floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                                                CGRectGetMinY(tabsGroup) +
+                                                                floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5),
+                                                                floor(CGRectGetWidth(tabsGroup) * 1.00000 + 0.5) -
+                                                                floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                                                floor(CGRectGetHeight(tabsGroup) * 1.00000 + 0.5) -
+                                                                floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5))];
+        [clipPath addClip];
+
+        CGRect rectangleRect =
+        CGRectMake(CGRectGetMinX(tabsGroup) + floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                   CGRectGetMinY(tabsGroup) + floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5),
+                   floor(CGRectGetWidth(tabsGroup) * 1.00000 + 0.5) -
+                   floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                   floor(CGRectGetHeight(tabsGroup) * 1.00000 + 0.5) -
+                   floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5));
+        UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect:rectangleRect];
+        CGContextSaveGState(context);
+        [rectanglePath addClip];
+        CGContextDrawLinearGradient(
+                                    context, gradient,
+                                    CGPointMake(CGRectGetMidX(rectangleRect) + 0 * CGRectGetWidth(rectangleRect) / 140,
+                                                CGRectGetMidY(rectangleRect) + 18.17 * CGRectGetHeight(rectangleRect) / 88),
+                                    CGPointMake(CGRectGetMidX(rectangleRect) + 0 * CGRectGetWidth(rectangleRect) / 140,
+                                                CGRectGetMidY(rectangleRect) + 41.79 * CGRectGetHeight(rectangleRect) / 88),
+                                    kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
+        CGContextRestoreGState(context);
+
+        CGContextEndTransparencyLayer(context);
+        CGContextRestoreGState(context);
+    UIBezierPath* tabBarBackgroundRectanglePath = [UIBezierPath
+                                                   bezierPathWithRect:CGRectMake(CGRectGetMinX(tabsGroup) +
+                                                                                 floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                                                                 CGRectGetMinY(tabsGroup) +
+                                                                                 floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5),
+                                                                                 floor(CGRectGetWidth(tabsGroup) * 1.00000 + 0.5) -
+                                                                                 floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                                                                 floor(CGRectGetHeight(tabsGroup) * 0.68182 + 0.5) -
+                                                                                 floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5))];
+    [fillColor setFill];
+    [tabBarBackgroundRectanglePath fill];
+
+    UIBezierPath* selectedRectanglePath = [UIBezierPath
+                                           bezierPathWithRect:CGRectMake(CGRectGetMinX(tabsGroup) +
+                                                                         floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                                                         CGRectGetMinY(tabsGroup) +
+                                                                         floor(CGRectGetHeight(tabsGroup) * 0.63636 + 0.5),
+                                                                         floor(CGRectGetWidth(tabsGroup) * 0.33857 + 0.1) -
+                                                                         floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5) + 0.4,
+                                                                         floor(CGRectGetHeight(tabsGroup) * 0.68182 + 0.5) -
+                                                                         floor(CGRectGetHeight(tabsGroup) * 0.63636 + 0.5))];
+    CGContextSaveGState(context);
+    CGContextSetShadowWithColor(context, shadow.shadowOffset, shadow.shadowBlurRadius,
+                                [shadow.shadowColor CGColor]);
+    [fillColor2 setFill];
+    [selectedRectanglePath fill];
+    CGContextRestoreGState(context);
+
+    UIBezierPath* hamburgerBezierPath = [UIBezierPath bezierPath];
+    [hamburgerBezierPath
+     moveToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                             CGRectGetMinY(tabsGroup) + 0.13384 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.13384 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.12122 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.12122 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.13384 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath closePath];
+    [hamburgerBezierPath
+     moveToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                             CGRectGetMinY(tabsGroup) + 0.16541 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.16541 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.15278 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.15278 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.16541 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath closePath];
+    [hamburgerBezierPath
+     moveToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                             CGRectGetMinY(tabsGroup) + 0.19697 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.19697 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.18434 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.18434 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath
+     addLineToPoint:CGPointMake(
+                                CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                CGRectGetMinY(tabsGroup) + 0.19697 * CGRectGetHeight(tabsGroup))];
+    [hamburgerBezierPath closePath];
+    [fillColor2 setFill];
+    [hamburgerBezierPath fill];
+    
+    CGContextEndTransparencyLayer(context);
+    CGContextRestoreGState(context);
+  CGGradientRelease(gradient);
+  CGColorSpaceRelease(colorSpace);
+}
+
 void MDCCatalogDrawTypographyTile(CGRect frame) {
   UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
 
