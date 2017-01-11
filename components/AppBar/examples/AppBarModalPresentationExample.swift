@@ -37,6 +37,8 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes =
       [ NSForegroundColorAttributeName: UIColor.white ]
+    self.modalPresentationStyle = .formSheet
+    self.modalTransitionStyle = .coverVertical
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -58,7 +60,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
       UIBarButtonItem(title: "Touch", style: .done, target: nil, action: nil)
 
     self.navigationItem.leftBarButtonItem =
-      UIBarButtonItem(title: "Dismiss", style: .done, target: nil, action: nil)
+      UIBarButtonItem(title: "Dismiss", style: .done, target: self, action: #selector(dismissSelf))
   }
 
   override var childViewControllerForStatusBarHidden: UIViewController? {
@@ -88,6 +90,10 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     }
     cell!.layoutMargins = UIEdgeInsets.zero
     return cell!
+  }
+
+  func dismissSelf() {
+    self.dismiss(animated: true, completion: nil)
   }
 }
 
@@ -129,7 +135,7 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     self.tableView.separatorInset = UIEdgeInsets.zero
 
     self.navigationItem.rightBarButtonItem =
-      UIBarButtonItem(title: "Detail", style: .done, target: nil, action: nil)
+      UIBarButtonItem(title: "Detail", style: .done, target: self, action: #selector(presentModal))
   }
 
 
@@ -145,6 +151,11 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+
+  func presentModal() {
+    let modalVC = AppBarModalPresentationSwiftExamplePresented()
+    self.present(modalVC, animated: true, completion: nil)
   }
 }
 
