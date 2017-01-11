@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Buttons Storyboard And Programmatic Controller-->
+        <!--Buttons Swift And Storyboard Controller-->
         <scene sceneID="4Dd-I6-MBs">
             <objects>
-                <viewController id="rmZ-Mt-scB" customClass="ButtonsStoryboardAndProgrammaticController" customModule="MaterialComponentsCatalog" sceneMemberID="viewController">
+                <viewController id="rmZ-Mt-scB" customClass="ButtonsSwiftAndStoryboardController" customModule="MaterialComponentsCatalog" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dkA-v6-Opi"/>
                         <viewControllerLayoutGuide type="bottom" id="QjK-x9-gr9"/>

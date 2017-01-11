@@ -149,8 +149,8 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 
 - (void)setDisplayedView:(UIView *)displayedView {
   CGSize displayedSize = displayedView.frame.size;
-  CGFloat viewRadius = (CGFloat)sqrt(pow(displayedSize.width/2, 2) +
-                                     pow(displayedSize.height/2, 2));
+  CGFloat viewRadius =
+      (CGFloat)sqrt(pow(displayedSize.width / 2, 2) + pow(displayedSize.height / 2, 2));
   viewRadius += kMDCFeatureHighlightInnerContentPadding;
   _innerRadius = MAX(viewRadius, kMDCFeatureHighlightMinimumInnerRadius);
 
@@ -179,9 +179,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
                                                 functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter
-                        radius:_innerRadius
-                      animated:YES];
+  [_displayMaskLayer setCenter:displayMaskCenter radius:_innerRadius animated:YES];
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:1].CGColor animated:YES];
   [_innerLayer setCenter:_highlightPoint radius:_innerRadius animated:YES];
   [_outerLayer setFillColor:_outerHighlightColor.CGColor animated:YES];
@@ -206,11 +204,9 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
                                                 functionWithName:kCAMediaTimingFunctionEaseOut]];
   CGFloat innerBloomRadius = radius + kMDCFeatureHighlightInnerRadiusBloomAmount;
   CGFloat pulseBloomRadius = radius + kMDCFeatureHighlightPulseRadiusBloomAmount;
-  NSArray *innerKeyframes =
-      @[ @(radius), @(innerBloomRadius), @(radius) ];
+  NSArray *innerKeyframes = @[ @(radius), @(innerBloomRadius), @(radius) ];
   [_innerLayer animateRadiusOverKeyframes:innerKeyframes keyTimes:keyTimes center:_highlightPoint];
-  NSArray *pulseKeyframes =
-      @[ @(radius), @(radius), @(pulseBloomRadius) ];
+  NSArray *pulseKeyframes = @[ @(radius), @(radius), @(pulseBloomRadius) ];
   [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes keyTimes:keyTimes center:_highlightPoint];
   [_pulseLayer animateFillColorOverKeyframes:@[ pulseColorStart, pulseColorStart, pulseColorEnd ]
                                     keyTimes:keyTimes];
@@ -320,15 +316,15 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   CGRect textFrames = CGRectUnion(_titleLabel.frame, _bodyLabel.frame);
   CGFloat distX = ABS(CGRectGetMidX(textFrames) - _highlightCenter.x) + textFrames.size.width / 2;
   CGFloat distY = ABS(CGRectGetMidY(textFrames) - _highlightCenter.y) + textFrames.size.height / 2;
-  CGFloat minTextRadius = (CGFloat)(sqrt(pow(distX, 2) + pow(distY, 2))
-      + kMDCFeatureHighlightTextPadding);
+  CGFloat minTextRadius =
+      (CGFloat)(sqrt(pow(distX, 2) + pow(distY, 2)) + kMDCFeatureHighlightTextPadding);
 
   // Calculating the radius required for a circle centered at _highlightCenter that fully encircles
   // the inner highlight.
   distX = ABS(_highlightCenter.x - _highlightPoint.x);
   distY = ABS(_highlightCenter.y - _highlightPoint.y);
-  CGFloat minInnerHighlightRadius = (CGFloat)(sqrt(pow(distX, 2) + pow(distY, 2)) + _innerRadius
-      + kMDCFeatureHighlightInnerPadding);
+  CGFloat minInnerHighlightRadius = (CGFloat)(sqrt(pow(distX, 2) + pow(distY, 2)) + _innerRadius +
+                                              kMDCFeatureHighlightInnerPadding);
 
   // Use the larger of the two radii to ensure everything is encircled.
   _outerRadius = MAX(minTextRadius, minInnerHighlightRadius);

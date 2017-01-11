@@ -20,7 +20,7 @@ static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 5;
 static NSString *const kReusableIdentifierItem = @"customCell";
 
-@interface CollectionStoryboardExampleCell: UICollectionViewCell
+@interface CollectionStoryboardExampleCell : UICollectionViewCell
 @property(nonatomic, weak) IBOutlet UILabel *label;
 @end
 

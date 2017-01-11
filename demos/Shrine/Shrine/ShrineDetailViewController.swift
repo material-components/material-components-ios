@@ -44,8 +44,7 @@ class ShrineDetailView: UIScrollView {
     self.addSubview(imageView)
     let urlString: String = ShrineData.baseURL + imageName
     let url = URL(string: urlString)
-    remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?,
-      _) -> Void in
+    remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?, _) -> Void in
       DispatchQueue.main.async(execute: {
         self.imageView.image = image
         self.imageView.setNeedsDisplay()
@@ -62,7 +61,7 @@ class ShrineDetailView: UIScrollView {
     let attrString = NSMutableAttributedString(string: title)
     attrString.addAttribute(NSParagraphStyleAttributeName,
       value:paragraphStyle,
-      range:NSMakeRange(0, attrString.length))
+      range: NSRange(location: 0, length:attrString.length))
     label.attributedText = attrString
     label.sizeToFit()
     label.frame = CGRect(x: labelPadding,
@@ -79,7 +78,7 @@ class ShrineDetailView: UIScrollView {
     let descAttrString = NSMutableAttributedString(string: desc)
     descAttrString.addAttribute(NSParagraphStyleAttributeName,
       value:descParagraphStyle,
-      range:NSMakeRange(0, descAttrString.length))
+      range:NSRange(location: 0, length: descAttrString.length))
     labelDesc.attributedText = descAttrString
     labelDesc.frame = CGRect(x: labelPadding,
       y: 360, width: self.frame.size.width - 2 * labelPadding, height: 160)
@@ -137,9 +136,9 @@ class ShrineDetailViewController: UIViewController {
 
   override func viewWillLayoutSubviews() {
     floatingButton.frame = CGRect(x: view.frame.width - floatingButton.frame.width - fabPadding,
-                                      y: view.frame.height - floatingButton.frame.height - fabPadding,
-                                      width: floatingButton.frame.width,
-                                      height: floatingButton.frame.height)
+                                  y: view.frame.height - floatingButton.frame.height - fabPadding,
+                                  width: floatingButton.frame.width,
+                                  height: floatingButton.frame.height)
   }
 
   func dismissDetails() {
