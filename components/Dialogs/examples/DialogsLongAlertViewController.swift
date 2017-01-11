@@ -33,9 +33,22 @@ class DialogsLongAlertViewController: UIViewController {
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     self.view.addSubview(flatButton)
 
-    NSLayoutConstraint(item:flatButton, attribute:.centerX, relatedBy:.equal, toItem:self.view, attribute:.centerX, multiplier:1.0, constant: 0.0).isActive = true
-
-    NSLayoutConstraint(item:flatButton, attribute:.centerY, relatedBy:.equal, toItem:self.view, attribute:.centerY, multiplier:1.0, constant: 0.0).isActive = true
+    NSLayoutConstraint.activate([
+      NSLayoutConstraint(item:flatButton,
+                       attribute:.centerX,
+                       relatedBy:.equal,
+                       toItem:self.view,
+                       attribute:.centerX,
+                       multiplier:1.0,
+                       constant: 0.0),
+      NSLayoutConstraint(item:flatButton,
+                       attribute:.centerY,
+                       relatedBy:.equal,
+                       toItem:self.view,
+                       attribute:.centerY,
+                       multiplier:1.0,
+                       constant: 0.0)
+    ])
   }
 
   func tap(_ sender: AnyObject) {
@@ -63,7 +76,7 @@ class DialogsLongAlertViewController: UIViewController {
 
 // MARK: Catalog by convention
 extension DialogsLongAlertViewController {
-  class func catalogBreadcrumbs() -> Array<String> {
+  class func catalogBreadcrumbs() -> [String] {
     return [ "Dialogs", "Swift Alert Demo"]
   }
   class func catalogDescription() -> String {

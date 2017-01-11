@@ -71,7 +71,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
 
   // MARK: catalog by convention
 
-  class func catalogBreadcrumbs() -> Array<String> {
+  class func catalogBreadcrumbs() -> [String] {
     return [ "Shadow", "Shadow Layer"]
   }
 
