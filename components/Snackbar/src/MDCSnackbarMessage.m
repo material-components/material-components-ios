@@ -15,8 +15,9 @@
  */
 
 #import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
 #import "private/MDCSnackbarMessageInternal.h"
-#import "private/MDCSnackbarMessageView.h"
+
 
 static const NSTimeInterval kDefaultDuration = 4.0f;
 
