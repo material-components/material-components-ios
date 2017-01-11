@@ -149,7 +149,8 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 
 - (void)setDisplayedView:(UIView *)displayedView {
   CGSize displayedSize = displayedView.frame.size;
-  CGFloat viewRadius = sqrt(pow(displayedSize.width/2, 2) + pow(displayedSize.height/2, 2));
+  CGFloat viewRadius = (CGFloat)sqrt(pow(displayedSize.width/2, 2) +
+                                     pow(displayedSize.height/2, 2));
   viewRadius += kMDCFeatureHighlightInnerContentPadding;
   _innerRadius = MAX(viewRadius, kMDCFeatureHighlightMinimumInnerRadius);
 
@@ -319,14 +320,15 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   CGRect textFrames = CGRectUnion(_titleLabel.frame, _bodyLabel.frame);
   CGFloat distX = ABS(CGRectGetMidX(textFrames) - _highlightCenter.x) + textFrames.size.width / 2;
   CGFloat distY = ABS(CGRectGetMidY(textFrames) - _highlightCenter.y) + textFrames.size.height / 2;
-  CGFloat minTextRadius = sqrt(pow(distX, 2) + pow(distY, 2)) + kMDCFeatureHighlightTextPadding;
+  CGFloat minTextRadius = (CGFloat)(sqrt(pow(distX, 2) + pow(distY, 2))
+      + kMDCFeatureHighlightTextPadding);
 
   // Calculating the radius required for a circle centered at _highlightCenter that fully encircles
   // the inner highlight.
   distX = ABS(_highlightCenter.x - _highlightPoint.x);
   distY = ABS(_highlightCenter.y - _highlightPoint.y);
-  CGFloat minInnerHighlightRadius = sqrt(pow(distX, 2) + pow(distY, 2)) + _innerRadius
-      + kMDCFeatureHighlightInnerPadding;
+  CGFloat minInnerHighlightRadius = (CGFloat)(sqrt(pow(distX, 2) + pow(distY, 2)) + _innerRadius
+      + kMDCFeatureHighlightInnerPadding);
 
   // Use the larger of the two radii to ensure everything is encircled.
   _outerRadius = MAX(minTextRadius, minInnerHighlightRadius);
