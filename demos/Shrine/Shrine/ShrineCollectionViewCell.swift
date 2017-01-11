@@ -105,16 +105,14 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     labelPrice.text = price
     let urlString = ShrineData.baseURL + imageName
     let url = URL(string: urlString)
-    remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?,
-      thumbnailImage: UIImage?) -> Void in
+    remoteImageService.fetchImageAndThumbnail(from: url) { image, thumbnailImage in
       DispatchQueue.main.sync(execute: {
         self.imageView.image = thumbnailImage
       })
     }
     let avatarURLString = ShrineData.baseURL + avatar
     let avatarURL = URL(string: avatarURLString)
-    remoteImageService.fetchImageAndThumbnail(from: avatarURL) { (image: UIImage?,
-      thumbnailImage: UIImage?) -> Void in
+    remoteImageService.fetchImageAndThumbnail(from: avatarURL) { image, thumbnailImage in
       DispatchQueue.main.sync(execute: {
         self.avatar.image = thumbnailImage
       })

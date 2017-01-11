@@ -98,8 +98,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     imageView.autoresizingMask = .flexibleHeight
     (page as AnyObject).addSubview(imageView)
     let url = URL(string: ShrineData.baseURL + imageName)
-    remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?,
-      _) -> Void in
+    remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?, _) -> Void in
       DispatchQueue.main.async(execute: {
         imageView.image = image
         imageView.setNeedsDisplay()

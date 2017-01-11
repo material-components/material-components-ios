@@ -32,7 +32,8 @@ class ShrineData {
     var json: NSDictionary!
     do {
       let data = try? Data(contentsOf: URL(fileURLWithPath: filePath!))
-      json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions()) as? NSDictionary
+      let option = JSONSerialization.ReadingOptions()
+      json = try JSONSerialization.jsonObject(with: data!, options: options) as? NSDictionary
     } catch _ {
       print("Couldn't get JSON data")
     }

@@ -41,7 +41,8 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     scrollView.delegate = self
     scrollView.isPagingEnabled = true
-    scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pageColors.count), height: view.bounds.height)
+    scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pageColors.count),
+                                    height: view.bounds.height)
     scrollView.showsHorizontalScrollIndicator = false
     view.addSubview(scrollView)
 
@@ -62,7 +63,10 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     pageControl.numberOfPages = pageColors.count
 
     let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
-    pageControl.frame = CGRect(x: 0, y: view.bounds.height - pageControlSize.height, width: view.bounds.width, height: pageControlSize.height)
+    pageControl.frame = CGRect(x: 0,
+                               y: view.bounds.height - pageControlSize.height,
+                               width: view.bounds.width,
+                               height: pageControlSize.height)
     pageControl.addTarget(self, action: #selector(didChangePage), for: .valueChanged)
     pageControl.autoresizingMask = [.flexibleTopMargin, .flexibleWidth]
     view.addSubview(pageControl)
@@ -77,7 +81,8 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
       let pageLabel: UILabel = page as! UILabel
       pageLabel.frame = view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
     }
-    scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pages.count), height: view.bounds.height)
+    scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pages.count),
+                                    height: view.bounds.height)
     var offset = scrollView.contentOffset
     offset.x = CGFloat(pageBeforeFrameChange) * view.bounds.width
     // This non-anmiated change of offset ensures we keep the same page
