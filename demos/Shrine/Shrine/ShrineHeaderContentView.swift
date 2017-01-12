@@ -147,7 +147,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     addPage(page: secondPage as! UIView,
             imageView: imageView2,
             label: label2,
-            abelDesc: labelDesc2,
+            labelDesc: labelDesc2,
             cyanBox: cyanBox2,
             imageName: "backpack.png",
             description: "Best gift for \nthe traveler")

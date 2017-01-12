@@ -51,16 +51,16 @@ class ShrineDetailView: UIScrollView {
       })
     }
 
-    configureTitleLabel(label)
+    configureTitleLabel(label: label, labelPadding: labelPadding)
     self.addSubview(label)
 
-    configureDescriptionLabel(labelDesc)
+    configureDescriptionLabel(label: labelDesc, labelPadding: labelPadding)
     self.addSubview(labelDesc)
   }
 
   // MARK: Private
 
-  func configureTitleLabel(label: UILabel) {
+  func configureTitleLabel(label: UILabel, labelPadding: CGFloat) {
     label.font = UIFont(name: "AbrilFatface-Regular", size: 36)
     label.textColor = UIColor(red: 0.039, green: 0.192, blue: 0.259, alpha: 1)
     label.lineBreakMode = .byWordWrapping
@@ -79,7 +79,7 @@ class ShrineDetailView: UIScrollView {
     label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
   }
 
-  func configureDescriptionLabel(label: UILabel) {
+  func configureDescriptionLabel(label: UILabel, labelPadding: CGFloat) {
     label.lineBreakMode = .byWordWrapping
     label.numberOfLines = 5
     label.font = UIFont(name: "Helvetica", size: 14)
