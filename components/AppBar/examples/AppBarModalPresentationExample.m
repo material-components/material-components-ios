@@ -27,7 +27,6 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.title = nil;
 
     // Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
@@ -41,7 +40,7 @@
     _appBar.headerViewController.headerView.backgroundColor = color;
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
     _appBar.navigationBar.titleTextAttributes =
-    @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 
     // Set presentation style
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
