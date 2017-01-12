@@ -209,7 +209,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${SRCROOT}/../../scripts/lint.sh";
+			shellScript = "${SRCROOT}/../../scripts/lint_all";
 		};
 		BD04A4A94E7A074ACE45ED21 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
