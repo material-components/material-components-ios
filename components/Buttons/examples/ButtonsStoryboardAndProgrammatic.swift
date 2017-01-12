@@ -57,6 +57,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     super.init(coder: aDecoder)
   }
 
+  // swiftlint:disable function_body_length
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -176,6 +177,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
         metrics: nil,
         views: views))
   }
+  // swiftlint:enable function_body_length
 
   @IBAction func tap(_ sender: AnyObject) {
     print("\(type(of: sender)) was tapped.")

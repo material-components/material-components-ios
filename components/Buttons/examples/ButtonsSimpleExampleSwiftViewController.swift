@@ -21,6 +21,10 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
   let floatingButtonPlusDimension = CGFloat(24)
 
+  class func catalogBreadcrumbs() -> [String] {
+    return ["Buttons", "Buttons (Swift)"]
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -59,23 +63,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
       "floating": floatingButton
     ]
 
-    self.view.addConstraint(NSLayoutConstraint(
-      item: flatButton,
-      attribute: .centerX,
-      relatedBy: .equal,
-      toItem: self.view,
-      attribute: .centerX,
-      multiplier: 1.0,
-      constant: 0.0))
-
-    self.view.addConstraint(NSLayoutConstraint(
-      item: flatButton,
-      attribute: .centerY,
-      relatedBy: .equal,
-      toItem: self.view,
-      attribute: .centerY,
-      multiplier: 1.0,
-      constant: 0.0))
+    centerView(view: flatButton, onView: self.view)
 
     self.view.addConstraints(
       NSLayoutConstraint.constraints(withVisualFormat: "V:[raised]-40-[flat]-40-[floating]",
@@ -89,12 +77,30 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
 
-  func tap(_ sender: AnyObject) {
-    print("\(type(of: sender)) was tapped.")
+  // MARK: Private
+
+  func centerView(view: UIView, onView: UIView) {
+    onView.addConstraint(NSLayoutConstraint(
+      item: view,
+      attribute: .centerX,
+      relatedBy: .equal,
+      toItem: onView,
+      attribute: .centerX,
+      multiplier: 1.0,
+      constant: 0.0))
+
+    onView.addConstraint(NSLayoutConstraint(
+      item: view,
+      attribute: .centerY,
+      relatedBy: .equal,
+      toItem: onView,
+      attribute: .centerY,
+      multiplier: 1.0,
+      constant: 0.0))
   }
 
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Buttons", "Buttons (Swift)"]
+  func tap(_ sender: AnyObject) {
+    print("\(type(of: sender)) was tapped.")
   }
 
 }

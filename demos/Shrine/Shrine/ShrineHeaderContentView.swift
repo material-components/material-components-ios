@@ -92,6 +92,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     self.addSubview(logoTextImageView)
   }
 
+  // swiftlint:disable function_parameter_count
   func addPage(page: UIView, imageView: UIImageView, label: UILabel, labelDesc: UILabel,
                cyanBox: UIView, imageName: String, description: String) {
     imageView.contentMode = UIViewContentMode.scaleAspectFill
@@ -129,18 +130,34 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     (page as AnyObject).addSubview(inkOverlay)
 
   }
+  // swiftlint:enable function_parameter_count
 
   func addPageContent() {
     let firstPage = pages[0]
     let secondPage = pages[1]
     let thirdPage = pages[2]
 
-    addPage(page: firstPage as! UIView, imageView: imageView, label: label, labelDesc: labelDesc,
-            cyanBox: cyanBox, imageName: "chair.png", description: "Green \ncomfort chair")
-    addPage(page: secondPage as! UIView, imageView: imageView2, label: label2, labelDesc: labelDesc2,
-            cyanBox: cyanBox2, imageName: "backpack.png", description: "Best gift for \nthe traveler")
-    addPage(page: thirdPage as! UIView, imageView: imageView3, label: label3, labelDesc: labelDesc3,
-            cyanBox: cyanBox3, imageName: "heels.png", description: "Better \nwearing heels")
+    addPage(page: firstPage as! UIView,
+            imageView: imageView,
+            label: label,
+            labelDesc: labelDesc,
+            cyanBox: cyanBox,
+            imageName: "chair.png",
+            description: "Green \ncomfort chair")
+    addPage(page: secondPage as! UIView,
+            imageView: imageView2,
+            label: label2,
+            abelDesc: labelDesc2,
+            cyanBox: cyanBox2,
+            imageName: "backpack.png",
+            description: "Best gift for \nthe traveler")
+    addPage(page: thirdPage as! UIView,
+            imageView: imageView3,
+            label: label3,
+            labelDesc: labelDesc3,
+            cyanBox: cyanBox3,
+            imageName: "heels.png",
+            description: "Better \nwearing heels")
   }
 
   override func layoutSubviews() {
@@ -191,12 +208,13 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     imageView3.frame = CGRect(x: -180, y: 40, width: 420, height: self.frame.size.height)
   }
 
-  func attributedString(_ string: String, lineHeightMultiple: CGFloat) -> NSMutableAttributedString {
+  func attributedString(_ string: String,
+                        lineHeightMultiple: CGFloat) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineHeightMultiple = lineHeightMultiple
     let attrString = NSMutableAttributedString(string: string)
     attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle,
-      range:NSMakeRange(0, attrString.length))
+                            range:NSRange(location:0, length:attrString.length))
     return attrString
   }
 
