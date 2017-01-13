@@ -54,7 +54,7 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UITabBarItem *selectedItem;
 
 /** The tab bar's delegate. */
-@property(nonatomic, weak, nullable) id<MDCTabBarDelegate> delegate;
+@property(nonatomic, weak, nullable) IBOutlet id<MDCTabBarDelegate> delegate;
 
 /**
  Tint color for the tab bar, which determines the color of the tab indicator bar. If
