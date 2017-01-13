@@ -33,34 +33,9 @@ class TabBarIconSwiftExample: UIViewController {
     }
   }
 
-  lazy var alignmentButton: MDCRaisedButton = {
-    let alignmentButton = MDCRaisedButton()
+  lazy var alignmentButton: MDCRaisedButton = self.setupAlignmentButton()
 
-    alignmentButton.setTitle("Change Alignment", for: .normal)
-    alignmentButton.addTarget(self, action:#selector(changeAlignment), for: .touchUpInside)
-
-    self.view.addSubview(alignmentButton)
-    alignmentButton.translatesAutoresizingMaskIntoConstraints = false
-
-    NSLayoutConstraint(item: alignmentButton, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-    NSLayoutConstraint(item: alignmentButton, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -40).isActive = true
-
-    return alignmentButton
-  }()
-
-
-  lazy var appBar: MDCAppBar = {
-    let appBar = MDCAppBar()
-
-    self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor.white
-    appBar.headerViewController.headerView.minimumHeight = 76 + 72
-    appBar.headerViewController.headerView.tintColor = MDCPalette.blue().tint500
-
-    appBar.headerStackView.bottomBar = self.tabBar
-    appBar.headerStackView.setNeedsLayout()
-    return appBar
-  }()
+  lazy var appBar: MDCAppBar = self.setupAppBar()
 
   lazy var scrollView: UIScrollView = self.setupScrollView()
 
@@ -96,6 +71,8 @@ class TabBarIconSwiftExample: UIViewController {
     super.viewDidLoad()
 
     setupExampleViews()
+
+    alignmentButton.addTarget(self, action:#selector(changeAlignment), for: .touchUpInside)
   }
 
   func changeAlignment(_: AnyObject?) {
@@ -142,5 +119,7 @@ extension TabBarIconSwiftExample: MDCTabBarDelegate {
     guard let index = tabBar.items.index(of: item) else {
       abort()
     }
+
+    scrollView.setContentOffset(CGPoint(x: CGFloat(index) * view.bounds.width, y: 0), animated: true)
   }
 }

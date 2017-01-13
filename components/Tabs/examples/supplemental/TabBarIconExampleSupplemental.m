@@ -109,7 +109,7 @@
 }
 
 - (void)setupScrollingContent {
-  // The scrollView will have to UIViews (pages.) One has a label with text (infoLabel); we call
+  // The scrollView will have two UIViews (pages.) One has a label with text (infoLabel); we call
   // this infoPage. Another has 1+ star images; we call this self.starPage. Tapping on the 'INFO'
   // tab will show the infoPage and tapping on the 'STARS' tab will show the self.starPage.
 

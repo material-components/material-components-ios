@@ -22,6 +22,33 @@ extension TabBarIconSwiftExample {
 
   // MARK: Methods
 
+  func setupAlignmentButton() -> MDCRaisedButton {
+    let alignmentButton = MDCRaisedButton()
+
+    alignmentButton.setTitle("Change Alignment", for: .normal)
+
+    self.view.addSubview(alignmentButton)
+    alignmentButton.translatesAutoresizingMaskIntoConstraints = false
+
+    NSLayoutConstraint(item: alignmentButton, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+    NSLayoutConstraint(item: alignmentButton, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -40).isActive = true
+
+    return alignmentButton
+  }
+
+  func setupAppBar() -> MDCAppBar {
+    let appBar = MDCAppBar()
+
+    self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor.white
+    appBar.headerViewController.headerView.minimumHeight = 76 + 72
+    appBar.headerViewController.headerView.tintColor = MDCPalette.blue().tint500
+
+    appBar.headerStackView.bottomBar = self.tabBar
+    appBar.headerStackView.setNeedsLayout()
+    return appBar
+  }
+
   func setupExampleViews() {
     view.backgroundColor = UIColor.white
 
@@ -63,6 +90,12 @@ extension TabBarIconSwiftExample {
   }
 
   func setupScrollingContent() {
+    // The scrollView will have two UIViews (pages.) One has a label with text (infoLabel); we call
+    // this infoPage. Another has 1+ star images; we call this self.starPage. Tapping on the 'INFO'
+    // tab will show the infoPage and tapping on the 'STARS' tab will show the self.starPage.
+
+    // Create the first view and its content. Then add to scrollView.
+
     let infoPage = UIView(frame: CGRect())
     infoPage.translatesAutoresizingMaskIntoConstraints = false
     infoPage.backgroundColor = MDCPalette.lightBlue().tint300
@@ -74,6 +107,9 @@ extension TabBarIconSwiftExample {
     infoLabel.numberOfLines = 0
     infoLabel.text = "Tabs enable content organization at a high level, such as switching between views"
     infoPage.addSubview(infoLabel)
+
+    // Layout the views to be equal height and width to each other and self.view, hug the edges of the
+    // scrollView and meet in the middle.
 
     NSLayoutConstraint(item: infoLabel, attribute: .centerX, relatedBy: .equal, toItem: infoPage, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
     NSLayoutConstraint(item: infoLabel, attribute: .centerY, relatedBy: .equal, toItem: infoPage, attribute: .centerY, multiplier: 1, constant: -50).isActive = true
@@ -105,7 +141,29 @@ extension TabBarIconSwiftExample {
   }
 
   func addStar(centered: Bool) {
-    
+    let starImage = UIImage(named:"TabBarDemo_ic_star", in:Bundle(for: type(of: self)), compatibleWith:nil)
+    let starView = UIImageView(image: starImage)
+    starView.translatesAutoresizingMaskIntoConstraints = false
+    starPage.addSubview(starView)
+    starView.sizeToFit()
+
+    let x = centered ? 1.0 : (CGFloat(arc4random_uniform(199)) + 1.0) / 100.0 // 0 < x <=2
+    let y = centered ? 1.0 : (CGFloat(arc4random_uniform(199)) + 1.0) / 100.0 // 0 < y <=2
+
+    NSLayoutConstraint(item: starView,
+                       attribute: .centerX,
+                       relatedBy: .equal,
+                       toItem: starPage,
+                       attribute: .centerX,
+                       multiplier: x,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: starView,
+                       attribute: .centerY,
+                       relatedBy: .equal,
+                       toItem: self.starPage,
+                       attribute: .centerY,
+                       multiplier: y,
+                       constant: 0).isActive = true
   }
 }
 
