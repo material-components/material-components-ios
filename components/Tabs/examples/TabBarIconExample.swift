@@ -52,10 +52,19 @@ class TabBarIconSwiftExample: UIViewController {
   lazy var appBar: MDCAppBar = {
     let appBar = MDCAppBar()
 
+    self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = UIColor.white
+    appBar.headerViewController.headerView.minimumHeight = 76 + 72
+    appBar.headerViewController.headerView.tintColor = MDCPalette.blue().tint500
+
     appBar.headerStackView.bottomBar = self.tabBar
     appBar.headerStackView.setNeedsLayout()
     return appBar
   }()
+
+  lazy var scrollView: UIScrollView = self.setupScrollView()
+
+  lazy var starPage: UIView = self.setupStarPage()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -82,14 +91,12 @@ class TabBarIconSwiftExample: UIViewController {
     return tabBar
   }()
 
-  // MARK: View Controller Life Cycle
+  // MARK: Methods
   override func viewDidLoad() {
     super.viewDidLoad()
 
     setupExampleViews()
   }
-
-  // MARK: Methods
 
   func changeAlignment(_: AnyObject?) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
