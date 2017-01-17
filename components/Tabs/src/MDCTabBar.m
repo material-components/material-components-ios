@@ -91,8 +91,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 + (void)initialize {
   [[[self class] appearance] setSelectedItemTintColor:[UIColor whiteColor]];
-  [[[self class] appearance] setUnselectedItemTintColor:[UIColor colorWithWhite:1.0 alpha:0.7]];
-  [[[self class] appearance] setInkColor:[UIColor colorWithWhite:1.0 alpha:0.7]];
+  [[[self class] appearance] setUnselectedItemTintColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
+  [[[self class] appearance] setInkColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
   [[[self class] appearance] setBarTintColor:nil];
 }
 
