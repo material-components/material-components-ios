@@ -85,21 +85,19 @@ class ShrineCollectionViewController: UICollectionViewController {
     headerViewController.scrollViewDidScroll(scrollView)
     let scrollOffsetY = scrollView.contentOffset.y
     let duration = 0.5
+    var opacity: CGFloat = 1.0
+    var logoTextImageViewOpacity: CGFloat = 0
     if scrollOffsetY > -240 {
-      UIView.animate(withDuration: duration, animations: {
-        self.headerContentView.scrollView.alpha = 0
-        self.headerContentView.pageControl.alpha = 0
-        self.headerContentView.logoImageView.alpha = 0
-        self.headerContentView.logoTextImageView.alpha = 1
-      })
-    } else {
-      UIView.animate(withDuration: duration, animations: {
-        self.headerContentView.scrollView.alpha = 1
-        self.headerContentView.pageControl.alpha = 1
-        self.headerContentView.logoImageView.alpha = 1
-        self.headerContentView.logoTextImageView.alpha = 0
-      })
+      opacity = 0
+      logoTextImageViewOpacity = 1
     }
+    UIView.animate(withDuration: duration, animations: {
+        self.headerContentView.scrollView.alpha = opacity
+        self.headerContentView.pageControl.alpha = opacity
+        self.headerContentView.logoImageView.alpha = opacity
+        self.headerContentView.logoTextImageView.alpha = logoTextImageViewOpacity
+    })
+
   }
 
   func sizeHeaderView() {
@@ -107,11 +105,10 @@ class ShrineCollectionViewController: UICollectionViewController {
     let bounds = UIScreen.main.bounds
     if bounds.size.width < bounds.size.height {
       headerView.maximumHeight = 440
-      headerView.minimumHeight = 72
     } else {
       headerView.maximumHeight = 72
-      headerView.minimumHeight = 72
     }
+    headerView.minimumHeight = 72
   }
 
   override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation,
