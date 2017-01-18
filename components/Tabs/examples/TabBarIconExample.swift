@@ -20,7 +20,6 @@ import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTabs
 
-
 class TabBarIconSwiftExample: UIViewController {
 
   // MARK: Properties
@@ -77,16 +76,16 @@ class TabBarIconSwiftExample: UIViewController {
 
   func changeAlignmentDidTouch(sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler:{ action in
+    sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler: { _ in
       self.alignment = .leading
     }))
-    sheet.addAction(UIAlertAction(title: "Center", style: .default, handler:{ action in
+    sheet.addAction(UIAlertAction(title: "Center", style: .default, handler: { _ in
       self.alignment = .center
     }))
-    sheet.addAction(UIAlertAction(title: "Justified", style: .default, handler:{ action in
+    sheet.addAction(UIAlertAction(title: "Justified", style: .default, handler: { _ in
       self.alignment = .justified
     }))
-    sheet.addAction(UIAlertAction(title: "Selected Center", style: .default, handler:{ action in
+    sheet.addAction(UIAlertAction(title: "Selected Center", style: .default, handler: { _ in
       self.alignment = .centerSelected
     }))
     present(sheet, animated: true, completion:nil)
@@ -110,7 +109,6 @@ class TabBarIconSwiftExample: UIViewController {
   }
 
 }
-
 
 // MARK: Tab Bar delegate
 extension TabBarIconSwiftExample: MDCTabBarDelegate {

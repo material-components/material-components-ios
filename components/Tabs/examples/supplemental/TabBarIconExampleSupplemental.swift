@@ -85,7 +85,6 @@ extension TabBarIconSwiftExample {
                                                                metrics: nil,
                                                                views: views))
 
-
     return scrollView
   }
 
