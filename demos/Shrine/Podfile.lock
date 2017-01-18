@@ -45,9 +45,9 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: "../../"
+    :path: ../../
   RemoteImageServiceForMDCDemos:
-    :path: "../supplemental"
+    :path: ../supplemental
 
 SPEC CHECKSUMS:
   MaterialComponents: cd8bd56c35bcba349631d762dd5219108324f4e8
