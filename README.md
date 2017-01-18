@@ -18,7 +18,7 @@ Material Components for iOS are written in Objective-C and support Swift and Int
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.google.com) (external site)
-  
+
 ## Trying out Material Components
 
 Our [catalog](catalog/) showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
@@ -32,6 +32,9 @@ In case you have already checked out the repo, run the following command:
 ~~~ bash
 pod install --project-directory=catalog/
 ~~~
+
+If you want to take a look at the implementation of the components, you can find the code inside the development pod.
+Scroll down the left xCode panel after running the above command to find the code.
 
 ## Installation
 
