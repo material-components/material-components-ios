@@ -33,8 +33,8 @@ In case you have already checked out the repo, run the following command:
 pod install --project-directory=catalog/
 ~~~
 
-If you want to take a look at the implementation of the components, you can find the code inside the development pod.
-Scroll down the left xCode panel after running the above command to find the code.
+If you want to take a look at the implementation of the components, you can find the code inside the `Development Pods` folder.
+Use `cmd-1` to open the project navigator within Xcode. Peal open the `Pods` project and inside the `Development Pods` folder you will find the component source code.
 
 ## Installation
 
