@@ -72,10 +72,10 @@ class TabBarIconSwiftExample: UIViewController {
 
     setupExampleViews()
 
-    alignmentButton.addTarget(self, action:#selector(changeAlignment), for: .touchUpInside)
+    alignmentButton.addTarget(self, action:#selector(changeAlignmentDidTouch(sender:)), for: .touchUpInside)
   }
 
-  func changeAlignment(_: AnyObject?) {
+  func changeAlignmentDidTouch(sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler:{ action in
       self.alignment = .leading
@@ -94,22 +94,21 @@ class TabBarIconSwiftExample: UIViewController {
 
   func incrementStarBadge() {
     let starItem = tabBar.items[1]
-    guard let badgeValue = starItem.badgeValue else {
+    guard let badgeValue = starItem.badgeValue,
+      let badgeNumber = Int(badgeValue), badgeNumber > 0 else {
       return
     }
-    if let badgeNumber = Int(badgeValue),
-      badgeNumber > 0 {
-      starItem.badgeValue = NumberFormatter.localizedString(from:(badgeNumber + 1) as NSNumber,
-                                                            number: .none)
-    }
-  }
 
+    starItem.badgeValue = NumberFormatter.localizedString(from:(badgeNumber + 1) as NSNumber,
+                                                            number: .none)
+  }
   // MARK: Action
-  func incrementDidTouch(_: UIBarButtonItem) {
+  func incrementDidTouch(sender: UIBarButtonItem) {
     incrementStarBadge()
 
     addStar(centered: false)
   }
+
 }
 
 
@@ -117,7 +116,7 @@ class TabBarIconSwiftExample: UIViewController {
 extension TabBarIconSwiftExample: MDCTabBarDelegate {
   func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
     guard let index = tabBar.items.index(of: item) else {
-      abort()
+      fatalError("MDCTabBarDelegate given selected item not found in tabBar.items")
     }
 
     scrollView.setContentOffset(CGPoint(x: CGFloat(index) * view.bounds.width, y: 0), animated: true)

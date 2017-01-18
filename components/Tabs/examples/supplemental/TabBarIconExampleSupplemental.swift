@@ -57,7 +57,7 @@ extension TabBarIconSwiftExample {
     let badgeIncrementItem = UIBarButtonItem(title: "Add",
                                              style: .plain,
                                              target: self,
-                                             action:#selector(incrementDidTouch(_: )))
+                                             action:#selector(incrementDidTouch(sender: )))
 
     self.navigationItem.rightBarButtonItem = badgeIncrementItem
 
