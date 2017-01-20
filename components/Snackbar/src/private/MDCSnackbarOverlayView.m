@@ -55,6 +55,11 @@ static const CGFloat kMaximumHeight = 80.0f;
 @property(nonatomic) MDCSnackbarMessageView *snackbarView;
 
 /**
+ Storage for a completion block that is waiting for a CAAnimation to finish.
+ */
+@property(nonatomic, copy) void (^pendingCompletionBlock)(void);
+
+/**
  The object which will notify us of changes in the keyboard position.
  */
 @property(nonatomic) MDCKeyboardWatcher *watcher;
@@ -82,16 +87,6 @@ static const CGFloat kMaximumHeight = 80.0f;
  If we received a rotation event, this is the duration that should be used.
  */
 @property(nonatomic) NSTimeInterval rotationDuration;
-
-/**
- The constraint used to pin the bottom of the snackbar to the bottom of the screen.
- */
-@property(nonatomic) NSLayoutConstraint *snackbarOnscreenConstraint;
-
-/**
- The constraint used to pin the top of the snackbar to the bottom of the screen.
- */
-@property(nonatomic) NSLayoutConstraint *snackbarOffscreenConstraint;
 
 @end
 
@@ -277,26 +272,13 @@ static const CGFloat kMaximumHeight = 80.0f;
       }
 
       // Always pin the snackbar to the bottom of the container.
-      _snackbarOnscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:container
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:-bottomMargin];
-      _snackbarOnscreenConstraint.active = NO; // snackbar starts off-screen.
-      _snackbarOnscreenConstraint.priority = UILayoutPriorityDefaultHigh;
-      [container addConstraint:_snackbarOnscreenConstraint];
-
-      _snackbarOffscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
-                                                                  attribute:NSLayoutAttributeTop
-                                                                  relatedBy:NSLayoutRelationEqual
-                                                                     toItem:container
-                                                                  attribute:NSLayoutAttributeBottom
-                                                                 multiplier:1.0
-                                                                   constant:-bottomMargin];
-      _snackbarOffscreenConstraint.active = YES;
-      [container addConstraint:_snackbarOffscreenConstraint];
+      [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
+                                                            attribute:NSLayoutAttributeBottom
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:container
+                                                            attribute:NSLayoutAttributeBottom
+                                                           multiplier:1.0
+                                                             constant:-bottomMargin]];
 
       // Always limit the height of the snackbar.
       [container
@@ -426,45 +408,40 @@ static const CGFloat kMaximumHeight = 80.0f;
 #pragma mark - Slide Animation
 
 - (void)slideMessageView:(MDCSnackbarMessageView *)snackbarView
-                onscreen:(BOOL)onscreen
+                   fromY:(CGFloat)fromY
+                     toY:(CGFloat)toY
       fromContentOpacity:(CGFloat)fromContentOpacity
         toContentOpacity:(CGFloat)toContentOpacity
        notificationFrame:(CGRect)notificationFrame
               completion:(void (^)(void))completion {
-  // Prepare to move the snackbar.
-  _snackbarOnscreenConstraint.active = onscreen;
-  _snackbarOffscreenConstraint.active = !onscreen;
-  [_containingView setNeedsUpdateConstraints];
+  // Save off @c completion for when the CAAnimation completes.
+  self.pendingCompletionBlock = completion;
 
-  CAMediaTimingFunction *timingFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
   [CATransaction begin];
-  [CATransaction setAnimationTimingFunction:timingFunction];
 
-  // We use UIView animation inside a CATransaction in order to use the custom animation curve.
-  [UIView animateWithDuration:MDCSnackbarTransitionDuration
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     // Trigger snackbar animation.
-                     [_containingView layoutIfNeeded];
-                   } completion:^(BOOL finished) {
-                     if (completion) {
-                       completion();
-                     }
-                   }];
+  // Move the snackbar.
+  CABasicAnimation *translationAnimation =
+      [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
+  translationAnimation.duration = MDCSnackbarTransitionDuration;
+  translationAnimation.fromValue = @(fromY);
+  translationAnimation.toValue = @(toY);
+  translationAnimation.delegate = self;
+  translationAnimation.timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+
+  [snackbarView.layer addAnimation:translationAnimation forKey:@"translation"];
 
   [snackbarView animateContentOpacityFrom:fromContentOpacity
                                        to:toContentOpacity
-                                 duration:MDCSnackbarTransitionDuration
-                           timingFunction:timingFunction];
+                                 duration:translationAnimation.duration
+                           timingFunction:translationAnimation.timingFunction];
   [CATransaction commit];
 
   // Notify the overlay system.
   [self notifyOverlayChangeWithFrame:notificationFrame
-                            duration:MDCSnackbarTransitionDuration
+                            duration:translationAnimation.duration
                                curve:0
-                      timingFunction:timingFunction];
+                      timingFunction:translationAnimation.timingFunction];
 }
 
 - (void)slideInMessageView:(MDCSnackbarMessageView *)snackbarView
@@ -473,7 +450,8 @@ static const CGFloat kMaximumHeight = 80.0f;
   [self triggerSnackbarLayoutChange];
 
   [self slideMessageView:snackbarView
-                onscreen:YES
+                   fromY:snackbarView.bounds.size.height + [self staticBottomMargin]
+                     toY:0.0f
       fromContentOpacity:0
         toContentOpacity:1
        notificationFrame:[self snackbarRectInScreenCoordinates]
@@ -486,11 +464,23 @@ static const CGFloat kMaximumHeight = 80.0f;
   [self triggerSnackbarLayoutChange];
 
   [self slideMessageView:snackbarView
-                onscreen:NO
+                   fromY:0.0f
+                     toY:snackbarView.bounds.size.height + [self staticBottomMargin]
       fromContentOpacity:1
         toContentOpacity:0
        notificationFrame:CGRectNull
               completion:completion];
+}
+
+#pragma mark - CAAnimationDelegate
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+  void (^block)(void) = self.pendingCompletionBlock;
+  self.pendingCompletionBlock = nil;
+
+  if (block) {
+    block();
+  }
 }
 
 #pragma mark - Keyboard Notifications
