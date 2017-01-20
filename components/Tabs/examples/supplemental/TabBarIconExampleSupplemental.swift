@@ -30,8 +30,20 @@ extension TabBarIconSwiftExample {
     self.view.addSubview(alignmentButton)
     alignmentButton.translatesAutoresizingMaskIntoConstraints = false
 
-    NSLayoutConstraint(item: alignmentButton, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-    NSLayoutConstraint(item: alignmentButton, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -40).isActive = true
+    NSLayoutConstraint(item: alignmentButton,
+                       attribute: .centerX,
+                       relatedBy: .equal,
+                       toItem: self.view,
+                       attribute: .centerX,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: alignmentButton,
+                       attribute: .bottom,
+                       relatedBy: .equal,
+                       toItem: self.view,
+                       attribute: .bottom,
+                       multiplier: 1,
+                       constant: -40).isActive = true
 
     return alignmentButton
   }
@@ -110,22 +122,58 @@ extension TabBarIconSwiftExample {
     // Layout the views to be equal height and width to each other and self.view, hug the edges of the
     // scrollView and meet in the middle.
 
-    NSLayoutConstraint(item: infoLabel, attribute: .centerX, relatedBy: .equal, toItem: infoPage, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-    NSLayoutConstraint(item: infoLabel, attribute: .centerY, relatedBy: .equal, toItem: infoPage, attribute: .centerY, multiplier: 1, constant: -50).isActive = true
+    NSLayoutConstraint(item: infoLabel,
+                       attribute: .centerX,
+                       relatedBy: .equal,
+                       toItem: infoPage,
+                       attribute: .centerX,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: infoLabel,
+                       attribute: .centerY,
+                       relatedBy: .equal,
+                       toItem: infoPage,
+                       attribute: .centerY,
+                       multiplier: 1,
+                       constant: -50).isActive = true
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|-50-[infoLabel]-50-|",
                                                                options: [],
                                                                metrics: nil,
                                                                views: ["infoLabel": infoLabel]))
-    NSLayoutConstraint(item: infoPage, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: 1, constant: 0).isActive = true
-    NSLayoutConstraint(item: infoPage, attribute: .height, relatedBy: .equal, toItem: self.scrollView, attribute: .height, multiplier: 1, constant: 0).isActive = true
+    NSLayoutConstraint(item: infoPage,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: self.view,
+                       attribute: .width,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: infoPage,
+                       attribute: .height,
+                       relatedBy: .equal,
+                       toItem: self.scrollView,
+                       attribute: .height,
+                       multiplier: 1,
+                       constant: 0).isActive = true
 
-    NSLayoutConstraint(item: self.starPage, attribute: .width, relatedBy: .equal, toItem: infoPage, attribute: .width, multiplier: 1, constant: 0).isActive = true
+    NSLayoutConstraint(item: self.starPage,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: infoPage,
+                       attribute: .width,
+                       multiplier: 1,
+                       constant: 0).isActive = true
 
     let views = ["infoPage": infoPage, "starPage": self.starPage]
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[infoPage][starPage]|", options: [.alignAllTop, .alignAllBottom], metrics: nil, views: views))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[infoPage]|", options: [], metrics: nil, views: views))
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[infoPage][starPage]|",
+                                                               options: [.alignAllTop, .alignAllBottom],
+                                                               metrics: nil,
+                                                               views: views))
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[infoPage]|",
+                                                               options: [],
+                                                               metrics: nil,
+                                                               views: views))
 
     addStar(centered: true)
   }
@@ -140,7 +188,9 @@ extension TabBarIconSwiftExample {
   }
 
   func addStar(centered: Bool) {
-    let starImage = UIImage(named:"TabBarDemo_ic_star", in:Bundle(for: type(of: self)), compatibleWith:nil)
+    let starImage = UIImage(named:"TabBarDemo_ic_star",
+                            in:Bundle(for: type(of: self)),
+                            compatibleWith:nil)
     let starView = UIImageView(image: starImage)
     starView.translatesAutoresizingMaskIntoConstraints = false
     starPage.addSubview(starView)
