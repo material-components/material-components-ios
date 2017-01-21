@@ -29,7 +29,8 @@
 - (void)setupExampleViews {
   self.view.backgroundColor = [UIColor whiteColor];
 
-  UIBarButtonItem *toggleCaseItem = [[UIBarButtonItem alloc] initWithTitle:@"Toggle Case"
+  UIBarButtonItem *toggleCaseItem = 
+      [[UIBarButtonItem alloc] initWithTitle:@"Toggle Case"
                                                                      style:UIBarButtonItemStylePlain
                                                                     target:self
                                                                     action:@selector(toggleCase:)];
