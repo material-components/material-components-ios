@@ -29,11 +29,10 @@
 - (void)setupExampleViews {
   self.view.backgroundColor = [UIColor whiteColor];
 
-  UIBarButtonItem *toggleCaseItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Toggle Case"
-                                       style:UIBarButtonItemStylePlain
-                                      target:self
-                                      action:@selector(toggleCase:)];
+  UIBarButtonItem *toggleCaseItem = [[UIBarButtonItem alloc] initWithTitle:@"Toggle Case"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(toggleCase:)];
   self.navigationItem.rightBarButtonItem = toggleCaseItem;
 
   // Button to change tab alignments.
