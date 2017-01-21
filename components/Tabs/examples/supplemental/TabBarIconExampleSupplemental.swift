@@ -196,8 +196,8 @@ extension TabBarIconSwiftExample {
     starPage.addSubview(starView)
     starView.sizeToFit()
 
-    let x = centered ? 1.0 : (CGFloat(arc4random_uniform(199)) + 1.0) / 100.0 // 0 < x <=2
-    let y = centered ? 1.0 : (CGFloat(arc4random_uniform(199)) + 1.0) / 100.0 // 0 < y <=2
+    let x = centered ? 1.0 : (CGFloat(arc4random_uniform(199) + 1) / 100.0) // 0 < x <=2
+    let y = centered ? 1.0 : (CGFloat(arc4random_uniform(199) + 1) / 100.0) // 0 < y <=2
 
     NSLayoutConstraint(item: starView,
                        attribute: .centerX,

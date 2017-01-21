@@ -99,7 +99,7 @@ class TabBarIconSwiftExample: UIViewController {
     }
 
     starItem.badgeValue = NumberFormatter.localizedString(from:(badgeNumber + 1) as NSNumber,
-                                                            number: .none)
+                                                          number: .none)
   }
   // MARK: Action
   func incrementDidTouch(sender: UIBarButtonItem) {
