@@ -18,10 +18,12 @@
 
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
+#import "MaterialButtons.h"
 #import "MDCSnackbarOverlayView.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "private/MDCSnackbarMessageViewInternal.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
     @"MDCSnackbarMessageTitleAutomationIdentifier";
@@ -134,11 +136,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
 @property(nonatomic, strong) UIView *contentView;
 
 /**
- The message to display.
- */
-@property(nonatomic, strong) MDCSnackbarMessage *message;
-
-/**
  Holds onto the dismissal handler, called when the snackbar should dismiss due to user interaction.
  */
 @property(nonatomic, copy) MDCSnackbarMessageDismissHandler dismissalHandler;
@@ -163,6 +160,12 @@ static const CGFloat kButtonInkRadius = 64.0f;
 @end
 
 @implementation MDCSnackbarMessageView
+
++ (void)initialize {
+  [[self appearance] setSnackbarMessageViewShadowColor:MDCRGBAColor(0x00, 0x00, 0x00, 1.0f)];
+  [[self appearance] setSnackbarMessageViewBackgroundColor:MDCRGBAColor(0x32, 0x32, 0x32, 1.0f)];
+  [[self appearance] setSnackbarMessageViewTextColor:MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f)];
+}
 
 - (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
   if (self.dismissalHandler) {
@@ -189,9 +192,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                                                               : kMaximumViewWidth_iPhone;
 }
 
-- (UIColor *)snackbarBackgroundColor {
-  return MDCRGBAColor(0x32, 0x32, 0x32, 1.0f);
-}
+#pragma mark - Styling the view
 
 - (UIColor *)snackbarButtonTextColor {
   return MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
@@ -205,25 +206,40 @@ static const CGFloat kButtonInkRadius = 64.0f;
   return MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.5f);
 }
 
-- (UIColor *)snackbarShadowColor {
-  return MDCRGBAColor(0x00, 0x00, 0x00, 1.0f);
+- (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
+  _snackbarMessageViewBackgroundColor = snackbarMessageViewBackgroundColor;
+  _containerView.backgroundColor = snackbarMessageViewBackgroundColor;
 }
 
-- (UIColor *)snackbarTextColor {
-  return MDCRGBAColor(0xFF, 0xFF, 0xFF, 1.0f);
+- (void)setSnackbarShadowColor:(UIColor *)snackbarMessageViewShadowColor {
+  _snackbarMessageViewShadowColor = snackbarMessageViewShadowColor;
+  self.layer.shadowColor = snackbarMessageViewShadowColor.CGColor;
+}
+
+- (void)setSnackbarMessageViewTextColor:(UIColor *)snackbarMessageViewTextColor {
+  _snackbarMessageViewTextColor = snackbarMessageViewTextColor;
+  self.label.textColor = _snackbarMessageViewTextColor;
+}
+
+- (void)addColorToMessageLabel:(UIColor *)color {
+  NSMutableAttributedString *messageString = [_label.attributedText mutableCopy];
+  [messageString addAttributes:@{
+                                 NSForegroundColorAttributeName :color,
+                                 } range:NSMakeRange(0, messageString.length)];
+  _label.attributedText = messageString;
 }
 
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
                  dismissHandler:(MDCSnackbarMessageDismissHandler)handler {
   self = [super init];
   if (self) {
+    
     _message = message;
     _dismissalHandler = [handler copy];
-
-    UIColor *shadowColor = [self snackbarShadowColor];
+    
     self.backgroundColor = [UIColor clearColor];
     self.layer.cornerRadius = kCornerRadius;
-    self.layer.shadowColor = shadowColor.CGColor;
+    self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
     self.layer.shadowOpacity = kShadowAlpha;
     self.layer.shadowOffset = kShadowOffset;
     self.layer.shadowRadius = kShadowSpread;
@@ -235,7 +251,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [self addSubview:_containerView];
 
     [_containerView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    _containerView.backgroundColor = [self snackbarBackgroundColor];
+    _containerView.backgroundColor = _snackbarMessageViewBackgroundColor;
     _containerView.layer.cornerRadius = kCornerRadius;
     _containerView.layer.masksToBounds = YES;
 
@@ -287,16 +303,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
                 }];
 
     // Apply 'global' attributes along the whole string.
-    NSDictionary *attributes = @{
-      NSForegroundColorAttributeName : [self snackbarTextColor],
-    };
-    [messageString addAttributes:attributes range:NSMakeRange(0, messageString.length)];
-
     _label.backgroundColor = [UIColor clearColor];
-    _label.textAlignment = NSTextAlignmentLeft;
-
-    // TODO: Add support for RTL languages so @c _label renders correctly.
-
+    _label.textAlignment = NSTextAlignmentNatural;
     _label.attributedText = messageString;
     _label.numberOfLines = 0;
     [_label setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -333,6 +341,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
     UIColor *textColor = [self snackbarButtonTextColor];
     UIColor *textColorHighlighted = [self snackbarButtonTextColorHighlighted];
+
+    _label.textColor = textColor;
 
     if (message.buttonTextColor) {
       textColor = message.buttonTextColor;

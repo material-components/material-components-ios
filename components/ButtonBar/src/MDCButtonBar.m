@@ -85,7 +85,6 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   }
   [aCoder encodeDouble:self.buttonTitleBaseline forKey:MDCButtonBarButtonTitleBaselineKey];
   [aCoder encodeInteger:self.layoutPosition forKey:MDCButtonBarButtonLayoutPositionKey];
-
 }
 
 - (void)alignButtonBaseline:(UIButton *)button {

@@ -23,7 +23,7 @@
 @implementation ShadowLayerTests
 
 - (void)testBasicEncode {
-	MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
+  MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
 
   NSData *data = [NSKeyedArchiver archivedDataWithRootObject:shadowLayer];
 

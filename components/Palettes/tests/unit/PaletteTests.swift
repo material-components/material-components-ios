@@ -24,7 +24,7 @@ class PaletteTests: XCTestCase {
       red:CGFloat((rgbValue & 0xFF0000) >> 16) / 255,
       green:CGFloat((rgbValue & 0x00FF00) >> 8) / 255,
       blue:CGFloat((rgbValue & 0x0000FF) >> 0) / 255,
-      alpha:1);
+      alpha:1)
   }
 
   func testBasics() {
@@ -63,22 +63,22 @@ class PaletteTests: XCTestCase {
 
   func testCustomPalette() {
     let tints = [
-      MDCPaletteTint50Name : UIColor(white: 0, alpha: 1),
-      MDCPaletteTint100Name : UIColor(white: 0.1, alpha: 1),
-      MDCPaletteTint200Name : UIColor(white: 0.2, alpha: 1),
-      MDCPaletteTint300Name : UIColor(white: 0.3, alpha: 1),
-      MDCPaletteTint400Name : UIColor(white: 0.4, alpha: 1),
-      MDCPaletteTint500Name : UIColor(white: 0.5, alpha: 1),
-      MDCPaletteTint600Name : UIColor(white: 0.6, alpha: 1),
-      MDCPaletteTint700Name : UIColor(white: 0.7, alpha: 1),
-      MDCPaletteTint800Name : UIColor(white: 0.8, alpha: 1),
-      MDCPaletteTint900Name : UIColor(white: 0.9, alpha: 1)
+      MDCPaletteTint50Name: UIColor(white: 0, alpha: 1),
+      MDCPaletteTint100Name: UIColor(white: 0.1, alpha: 1),
+      MDCPaletteTint200Name: UIColor(white: 0.2, alpha: 1),
+      MDCPaletteTint300Name: UIColor(white: 0.3, alpha: 1),
+      MDCPaletteTint400Name: UIColor(white: 0.4, alpha: 1),
+      MDCPaletteTint500Name: UIColor(white: 0.5, alpha: 1),
+      MDCPaletteTint600Name: UIColor(white: 0.6, alpha: 1),
+      MDCPaletteTint700Name: UIColor(white: 0.7, alpha: 1),
+      MDCPaletteTint800Name: UIColor(white: 0.8, alpha: 1),
+      MDCPaletteTint900Name: UIColor(white: 0.9, alpha: 1)
     ]
     let accents = [
-      MDCPaletteAccent100Name : UIColor(white: 1, alpha: 0),
-      MDCPaletteAccent200Name : UIColor(white: 1, alpha: 0.25),
-      MDCPaletteAccent400Name : UIColor(white: 1, alpha: 0.75),
-      MDCPaletteAccent700Name : UIColor(white: 1, alpha: 1)
+      MDCPaletteAccent100Name: UIColor(white: 1, alpha: 0),
+      MDCPaletteAccent200Name: UIColor(white: 1, alpha: 0.25),
+      MDCPaletteAccent400Name: UIColor(white: 1, alpha: 0.75),
+      MDCPaletteAccent700Name: UIColor(white: 1, alpha: 1)
     ]
     let palette = MDCPalette(tints: tints, accents: accents)
     XCTAssertEqual(palette.tint50, tints[MDCPaletteTint50Name])

@@ -1,0 +1,16 @@
+excluded:
+  - Carthage
+  - Pods
+  - third_party
+  - catalog/third_party
+
+disabled_rules:
+  - cyclomatic_complexity
+  - force_cast
+  - todo
+  - type_name
+
+line_length: 100
+
+force_cast: warning
+force_try: warning

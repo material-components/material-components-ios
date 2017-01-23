@@ -16,6 +16,8 @@
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
+# Note that the following is using 10.1 until Travis CI fixes 
+# https://github.com/travis-ci/travis-ci/issues/7031
 readonly DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.1"
 readonly COVERAGE_OPTIONS="GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES -enableCodeCoverage YES"
 

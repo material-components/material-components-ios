@@ -24,18 +24,31 @@ class DialogsLongAlertViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.white;
+    view.backgroundColor = UIColor.white
 
     flatButton.setTitle("PRESENT ALERT", for: UIControlState())
-    flatButton.setTitleColor(UIColor.blue, for: UIControlState());
+    flatButton.setTitleColor(UIColor.blue, for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     self.view.addSubview(flatButton)
 
-    NSLayoutConstraint(item:flatButton, attribute:.centerX, relatedBy:.equal, toItem:self.view, attribute:.centerX, multiplier:1.0, constant: 0.0).isActive = true
-
-    NSLayoutConstraint(item:flatButton, attribute:.centerY, relatedBy:.equal, toItem:self.view, attribute:.centerY, multiplier:1.0, constant: 0.0).isActive = true
+    NSLayoutConstraint.activate([
+      NSLayoutConstraint(item:flatButton,
+                       attribute:.centerX,
+                       relatedBy:.equal,
+                       toItem:self.view,
+                       attribute:.centerX,
+                       multiplier:1.0,
+                       constant: 0.0),
+      NSLayoutConstraint(item:flatButton,
+                       attribute:.centerY,
+                       relatedBy:.equal,
+                       toItem:self.view,
+                       attribute:.centerY,
+                       multiplier:1.0,
+                       constant: 0.0)
+    ])
   }
 
   func tap(_ sender: AnyObject) {
@@ -49,11 +62,11 @@ class DialogsLongAlertViewController: UIViewController {
     "vel turpis maximus, accumsan dui quis, cursus turpis. Nunc a tincidunt nunc, ut tempus " +
     "libero. Morbi ut orci laoreet, luctus neque nec, rhoncus enim. Cras dui erat, blandit ac " +
     "malesuada vitae, fringilla ac ante. Nullam dui diam, condimentum vitae mi et, dictum " +
-    "euismod libero. Aliquam commodo urna vitae massa convallis aliquet.";
+    "euismod libero. Aliquam commodo urna vitae massa convallis aliquet."
 
     let materialAlertController = MDCAlertController(title: nil, message: messageString)
 
-    let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
+    let action = MDCAlertAction(title:"OK") { (_) in print("OK") }
 
     materialAlertController.addAction(action)
 
@@ -63,7 +76,7 @@ class DialogsLongAlertViewController: UIViewController {
 
 // MARK: Catalog by convention
 extension DialogsLongAlertViewController {
-  class func catalogBreadcrumbs() -> Array<String> {
+  class func catalogBreadcrumbs() -> [String] {
     return [ "Dialogs", "Swift Alert Demo"]
   }
   class func catalogDescription() -> String {

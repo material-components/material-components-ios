@@ -19,11 +19,11 @@ import MaterialComponents
 typealias ExampleTone = (name: String, tone: UIColor)
 
 func ExampleTonesForPalette(_ palette: MDCPalette) -> [ExampleTone] {
-  var tones : [ExampleTone] = [
+  var tones: [ExampleTone] = [
     (MDCPaletteTint100Name, palette.tint100),
     (MDCPaletteTint300Name, palette.tint300),
     (MDCPaletteTint500Name, palette.tint500),
-    (MDCPaletteTint700Name, palette.tint700),
+    (MDCPaletteTint700Name, palette.tint700)
     ]
 
   if let accent = palette.accent400 {
@@ -52,7 +52,8 @@ class PalettesExampleViewController: UITableViewController {
     return ExampleTonesForPalette(palette).count
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(_ tableView: UITableView,
+                          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
     if cell == nil {
       cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
@@ -66,7 +67,8 @@ class PalettesExampleViewController: UITableViewController {
     return cell!
   }
 
-  override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+  override func tableView(_ tableView: UITableView,
+                          titleForHeaderInSection section: Int) -> String? {
     return palettes[section].name
   }
 

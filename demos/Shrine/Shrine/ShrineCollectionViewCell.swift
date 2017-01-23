@@ -36,7 +36,7 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     cellContent.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     cellContent.clipsToBounds = true
 
-    imageView.contentMode = .scaleAspectFill;
+    imageView.contentMode = .scaleAspectFill
     imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     cellContent.addSubview(imageView)
 
@@ -64,7 +64,7 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     super.init(coder: coder)!
   }
 
-  override func apply(_ layoutAttributes : UICollectionViewLayoutAttributes) {
+  override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
     super.apply(layoutAttributes)
   }
 
@@ -72,12 +72,12 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     super.layoutSubviews()
     self.addSubview(cellContent)
 
-    let imagePad:CGFloat = 40
+    let imagePad: CGFloat = 40
     imageView.frame = CGRect(x: imagePad,
       y: imagePad,
       width: self.frame.size.width - imagePad * 2,
       height: self.frame.size.height - 10 - imagePad * 2)
-    let avatarDim:CGFloat = 24
+    let avatarDim: CGFloat = 24
     avatar.frame = CGRect(x: 10,
       y: self.frame.size.height - avatarDim - 10,
       width: avatarDim,
@@ -99,22 +99,20 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     avatar.image = nil
   }
 
-  func populateCell(_ title : String, imageName : String, avatar : String, shopTitle : String,
-    price : String) {
+  func populateCell(_ title: String, imageName: String, avatar: String, shopTitle: String,
+    price: String) {
     labelAvatar.text = shopTitle
     labelPrice.text = price
     let urlString = ShrineData.baseURL + imageName
     let url = URL(string: urlString)
-    remoteImageService.fetchImageAndThumbnail(from: url) { (image:UIImage?,
-      thumbnailImage:UIImage?) -> Void in
+    remoteImageService.fetchImageAndThumbnail(from: url) { image, thumbnailImage in
       DispatchQueue.main.sync(execute: {
         self.imageView.image = thumbnailImage
       })
     }
     let avatarURLString = ShrineData.baseURL + avatar
     let avatarURL = URL(string: avatarURLString)
-    remoteImageService.fetchImageAndThumbnail(from: avatarURL) { (image:UIImage?,
-      thumbnailImage:UIImage?) -> Void in
+    remoteImageService.fetchImageAndThumbnail(from: avatarURL) { image, thumbnailImage in
       DispatchQueue.main.sync(execute: {
         self.avatar.image = thumbnailImage
       })

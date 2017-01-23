@@ -17,7 +17,7 @@
 import Foundation
 import MaterialComponents
 
-class ButtonsStoryboardAndProgrammaticController: UIViewController {
+class ButtonsSwiftAndStoryboardController: UIViewController {
 
   class func catalogBreadcrumbs() -> [String] {
     return ["Buttons", "Buttons (Swift and Storyboard)"]
@@ -35,6 +35,20 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
   @IBOutlet weak var storyboardFlat: MDCFlatButton!
   @IBOutlet weak var storyboardFloating: MDCFloatingButton!
 
+  private lazy var containerView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+
+    return view
+  }()
+
+  private lazy var innerContainerView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+
+    return view
+  }()
+
   init() {
     super.init(nibName: nil, bundle: nil)
   }
@@ -46,18 +60,70 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    self.view.addSubview(containerView)
+
+    NSLayoutConstraint.activate([
+      NSLayoutConstraint(item: containerView,
+                         attribute: .leading,
+                         relatedBy: .equal,
+                         toItem: view,
+                         attribute: .leading,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: containerView,
+                         attribute: .top,
+                         relatedBy: .equal,
+                         toItem: view,
+                         attribute: .top,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: containerView,
+                         attribute: .bottom,
+                         relatedBy: .equal,
+                         toItem: view,
+                         attribute: .bottom,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: containerView,
+                         attribute: .width,
+                         relatedBy: .equal,
+                         toItem: view,
+                         attribute: .width,
+                         multiplier: 0.5,
+                         constant: 0)
+    ])
+
+    containerView.addSubview(innerContainerView)
+
+    NSLayoutConstraint.activate([
+      NSLayoutConstraint(item: innerContainerView,
+                         attribute: .centerX,
+                         relatedBy: .equal,
+                         toItem: containerView,
+                         attribute: .centerX,
+                         multiplier: 1.0,
+                         constant: 0),
+      NSLayoutConstraint(item: innerContainerView,
+                         attribute: .centerY,
+                         relatedBy: .equal,
+                         toItem: containerView,
+                         attribute: .centerY,
+                         multiplier: 1.0,
+                         constant: 0)
+    ])
+
     raisedButton.setTitle("Programmatic", for: UIControlState())
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
     raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    self.view.addSubview(raisedButton)
+    self.innerContainerView.addSubview(raisedButton)
 
     flatButton.customTitleColor = UIColor.gray
     flatButton.setTitle("Programmatic", for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    self.view.addSubview(flatButton)
+    self.innerContainerView.addSubview(flatButton)
 
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +131,7 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
 
     let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     floatingButton.layer.addSublayer(floatingPlusShapeLayer)
-    self.view.addSubview(floatingButton)
+    self.innerContainerView.addSubview(floatingButton)
 
     let storyboardPlusShapeLayer =
       ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
@@ -81,22 +147,31 @@ class ButtonsStoryboardAndProgrammaticController: UIViewController {
       item: raisedButton,
       attribute: .leading,
       relatedBy: .equal,
-      toItem: self.view,
+      toItem: innerContainerView,
       attribute: .leading,
       multiplier: 1.0,
-      constant: 8.0))
+      constant: 0))
+
+    self.view.addConstraint(NSLayoutConstraint(
+      item: raisedButton,
+      attribute: .trailing,
+      relatedBy: .equal,
+      toItem: innerContainerView,
+      attribute: .trailing,
+      multiplier: 1.0,
+      constant: 0))
 
     self.view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .top,
       relatedBy: .equal,
-      toItem: self.view,
+      toItem: innerContainerView,
       attribute: .top,
       multiplier: 1.0,
-      constant: 22.0))
+      constant: 0))
 
     self.view.addConstraints(
-      NSLayoutConstraint.constraints(withVisualFormat: "V:[raised]-22-[flat]-22-[floating]",
+      NSLayoutConstraint.constraints(withVisualFormat: "V:|[raised]-22-[flat]-22-[floating]|",
         options: .alignAllCenterX,
         metrics: nil,
         views: views))
