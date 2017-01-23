@@ -16,11 +16,12 @@
 
 #import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
 #import "MaterialOverlayWindow.h"
 #import "UIApplication+AppExtensions.h"
 #import "private/MDCSnackbarMessageInternal.h"
-#import "private/MDCSnackbarMessageView.h"
 #import "private/MDCSnackbarOverlayView.h"
+#import "private/MDCSnackbarMessageViewInternal.h"
 
 @class MDCSnackbarManagerSuspensionToken;
 

@@ -20,7 +20,8 @@
 #import "MDFTextAccessibility.h"
 #import "MaterialTypography.h"
 
-const CGFloat kMDCFeatureHighlightInnerRadius = 44.0f;
+const CGFloat kMDCFeatureHighlightMinimumInnerRadius = 44.0f;
+const CGFloat kMDCFeatureHighlightInnerContentPadding = 10.0f;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0f;
 const CGFloat kMDCFeatureHighlightTextPadding = 40.0f;
 const CGFloat kMDCFeatureHighlightTextMaxWidth = 300.0f;
@@ -34,12 +35,17 @@ const CGFloat kMDCFeatureHighlightInnerRadiusFactor = 1.1f;
 const CGFloat kMDCFeatureHighlightOuterRadiusFactor = 1.125f;
 const CGFloat kMDCFeatureHighlightPulseRadiusFactor = 2.0f;
 const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
+const CGFloat kMDCFeatureHighlightInnerRadiusBloomAmount =
+    (kMDCFeatureHighlightInnerRadiusFactor - 1) * kMDCFeatureHighlightMinimumInnerRadius;
+const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
+    (kMDCFeatureHighlightPulseRadiusFactor - 1) * kMDCFeatureHighlightMinimumInnerRadius;
 
 @implementation MDCFeatureHighlightView {
   BOOL _forceConcentricLayout;
   UIView *_highlightView;
   CGPoint _highlightPoint;
   CGPoint _highlightCenter;
+  CGFloat _innerRadius;
   CGPoint _outerCenter;
   CGFloat _outerRadius;
   MDCFeatureHighlightLayer *_outerLayer;
@@ -142,6 +148,12 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
 }
 
 - (void)setDisplayedView:(UIView *)displayedView {
+  CGSize displayedSize = displayedView.frame.size;
+  CGFloat viewRadius =
+      (CGFloat)sqrt(pow(displayedSize.width / 2, 2) + pow(displayedSize.height / 2, 2));
+  viewRadius += kMDCFeatureHighlightInnerContentPadding;
+  _innerRadius = MAX(viewRadius, kMDCFeatureHighlightMinimumInnerRadius);
+
   _displayedView.layer.mask = nil;
   [_displayedView removeFromSuperview];
   _displayedView = displayedView;
@@ -167,11 +179,9 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
                                                 functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter
-                        radius:kMDCFeatureHighlightInnerRadius
-                      animated:YES];
+  [_displayMaskLayer setCenter:displayMaskCenter radius:_innerRadius animated:YES];
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:1].CGColor animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:kMDCFeatureHighlightInnerRadius animated:YES];
+  [_innerLayer setCenter:_highlightPoint radius:_innerRadius animated:YES];
   [_outerLayer setFillColor:_outerHighlightColor.CGColor animated:YES];
   [_outerLayer setCenter:_highlightCenter radius:_outerRadius animated:YES];
   [CATransaction commit];
@@ -186,17 +196,17 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
           [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
               .CGColor;
   id pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
-  CGFloat radius = kMDCFeatureHighlightInnerRadius;
+  CGFloat radius = _innerRadius;
 
   [CATransaction begin];
   [CATransaction setAnimationDuration:1.0f];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
                                                 functionWithName:kCAMediaTimingFunctionEaseOut]];
-  NSArray *innerKeyframes =
-      @[ @(radius), @(radius * kMDCFeatureHighlightInnerRadiusFactor), @(radius) ];
+  CGFloat innerBloomRadius = radius + kMDCFeatureHighlightInnerRadiusBloomAmount;
+  CGFloat pulseBloomRadius = radius + kMDCFeatureHighlightPulseRadiusBloomAmount;
+  NSArray *innerKeyframes = @[ @(radius), @(innerBloomRadius), @(radius) ];
   [_innerLayer animateRadiusOverKeyframes:innerKeyframes keyTimes:keyTimes center:_highlightPoint];
-  NSArray *pulseKeyframes =
-      @[ @(radius), @(radius), @(radius * kMDCFeatureHighlightPulseRadiusFactor) ];
+  NSArray *pulseKeyframes = @[ @(radius), @(radius), @(pulseBloomRadius) ];
   [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes keyTimes:keyTimes center:_highlightPoint];
   [_pulseLayer animateFillColorOverKeyframes:@[ pulseColorStart, pulseColorStart, pulseColorEnd ]
                                     keyTimes:keyTimes];
@@ -263,9 +273,9 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
     _highlightCenter = _highlightPoint;
   } else {
     if (topHalf) {
-      _highlightCenter.y = _highlightPoint.y + kMDCFeatureHighlightInnerRadius + textHeight / 2;
+      _highlightCenter.y = _highlightPoint.y + _innerRadius + textHeight / 2;
     } else {
-      _highlightCenter.y = _highlightPoint.y - kMDCFeatureHighlightInnerRadius - textHeight / 2;
+      _highlightCenter.y = _highlightPoint.y - _innerRadius - textHeight / 2;
     }
     if (leftHalf) {
       _highlightCenter.x = _highlightPoint.x + kMDCFeatureHighlightNonconcentricOffset;
@@ -290,11 +300,9 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   CGPoint titlePos = CGPointMake(0, 0);
   titlePos.x = MIN(MAX(_highlightCenter.x - textWidth / 2, leftTextBound), rightTextBound);
   if (topHalf) {
-    titlePos.y =
-        _highlightPoint.y + kMDCFeatureHighlightInnerPadding + kMDCFeatureHighlightInnerRadius;
+    titlePos.y = _highlightPoint.y + kMDCFeatureHighlightInnerPadding + _innerRadius;
   } else {
-    titlePos.y = _highlightPoint.y - kMDCFeatureHighlightInnerPadding -
-                 kMDCFeatureHighlightInnerRadius - textHeight;
+    titlePos.y = _highlightPoint.y - kMDCFeatureHighlightInnerPadding - _innerRadius - textHeight;
   }
 
   CGRect titleFrame = (CGRect){titlePos, titleSize};
@@ -308,14 +316,25 @@ const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
   CGRect textFrames = CGRectUnion(_titleLabel.frame, _bodyLabel.frame);
   CGFloat distX = ABS(CGRectGetMidX(textFrames) - _highlightCenter.x) + textFrames.size.width / 2;
   CGFloat distY = ABS(CGRectGetMidY(textFrames) - _highlightCenter.y) + textFrames.size.height / 2;
-  _outerRadius = (float)sqrt(distX * distX + distY * distY) + kMDCFeatureHighlightTextPadding;
+  CGFloat minTextRadius =
+      (CGFloat)(sqrt(pow(distX, 2) + pow(distY, 2)) + kMDCFeatureHighlightTextPadding);
+
+  // Calculating the radius required for a circle centered at _highlightCenter that fully encircles
+  // the inner highlight.
+  distX = ABS(_highlightCenter.x - _highlightPoint.x);
+  distY = ABS(_highlightCenter.y - _highlightPoint.y);
+  CGFloat minInnerHighlightRadius = (CGFloat)(sqrt(pow(distX, 2) + pow(distY, 2)) + _innerRadius +
+                                              kMDCFeatureHighlightInnerPadding);
+
+  // Use the larger of the two radii to ensure everything is encircled.
+  _outerRadius = MAX(minTextRadius, minInnerHighlightRadius);
 }
 
 - (void)didTapView:(UITapGestureRecognizer *)tapGestureRecognizer {
   CGPoint pos = [tapGestureRecognizer locationInView:self];
   CGFloat dist =
       (float)(sqrt(pow(pos.x - _highlightPoint.x, 2) + pow(pos.y - _highlightPoint.y, 2)));
-  BOOL accepted = dist <= kMDCFeatureHighlightInnerRadius;
+  BOOL accepted = dist <= _innerRadius;
 
   if (self.interactionBlock) {
     self.interactionBlock(accepted);

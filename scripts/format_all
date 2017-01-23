@@ -19,3 +19,4 @@ readonly ROOT_DIR="$SCRIPTS_DIR/.."
 
 readonly OBJC_SOURCES=$(find "$ROOT_DIR"/components \( -name '*.h' -or -name '*.m' \))
 clang-format -style=file -i $OBJC_SOURCES
+swiftlint autocorrect

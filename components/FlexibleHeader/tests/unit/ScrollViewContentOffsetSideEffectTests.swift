@@ -27,14 +27,19 @@ class ScrollViewContentOffsetSideEffectTests: XCTestCase {
 
   // Calculates the estimated contentOffset given the proposed new contentInsets and current value
   // of contentOffset + contentSize.
-  class func estimatedContentOffsetForScrollView(_ scrollView: UIScrollView, withNewInsets newInsets: UIEdgeInsets) -> CGPoint {
+  class func estimatedContentOffsetForScrollView(_ scrollView: UIScrollView,
+                                                 withNewInsets newInsets: UIEdgeInsets) -> CGPoint {
     let minimumPossibleYOffset = -newInsets.top
-    let maximumPossibleYOffset = (scrollView.contentSize.height + newInsets.bottom) - scrollView.bounds.height
-    let estimatedYOffset = max(minimumPossibleYOffset, min(maximumPossibleYOffset, scrollView.contentOffset.y))
+    let maximumPossibleYOffset =
+        (scrollView.contentSize.height + newInsets.bottom) - scrollView.bounds.height
+    let estimatedYOffset =
+        max(minimumPossibleYOffset, min(maximumPossibleYOffset, scrollView.contentOffset.y))
 
     let minimumPossibleXOffset = -newInsets.left
-    let maximumPossibleXOffset = (scrollView.contentSize.width + newInsets.right) - scrollView.bounds.width
-    let estimatedXOffset = max(minimumPossibleXOffset, min(maximumPossibleXOffset, scrollView.contentOffset.x))
+    let maximumPossibleXOffset =
+        (scrollView.contentSize.width + newInsets.right) - scrollView.bounds.width
+    let estimatedXOffset =
+        max(minimumPossibleXOffset, min(maximumPossibleXOffset, scrollView.contentOffset.x))
 
     return CGPoint(x: estimatedXOffset, y: estimatedYOffset)
   }
@@ -42,52 +47,54 @@ class ScrollViewContentOffsetSideEffectTests: XCTestCase {
   func testEstimationAddingTopInsets() {
     let insets = UIEdgeInsets(top: inset, left: 0, bottom: 0, right: 0)
 
-    enumerateHeightRangeWithInsets(UIEdgeInsets(), after: insets) { scrollView, estimatedContentOffset in
-      XCTAssertEqual(scrollView.contentOffset, estimatedContentOffset)
+    enumerateHeightRangeWithInsets(UIEdgeInsets(), after: insets) { scrollView, contentOffset in
+      XCTAssertEqual(scrollView.contentOffset, contentOffset)
     }
   }
 
   func testEstimationRemovingTopInsets() {
     let insets = UIEdgeInsets(top: inset, left: 0, bottom: 0, right: 0)
 
-    enumerateHeightRangeWithInsets(insets, after: UIEdgeInsets()) { scrollView, estimatedContentOffset in
-      XCTAssertEqual(scrollView.contentOffset, estimatedContentOffset)
+    enumerateHeightRangeWithInsets(insets, after: UIEdgeInsets()) { scrollView, contentOffset in
+      XCTAssertEqual(scrollView.contentOffset, contentOffset)
     }
   }
 
   func testEstimationAddingBottomInsets() {
     let insets = UIEdgeInsets(top: 0, left: 0, bottom: inset, right: 0)
 
-    enumerateHeightRangeWithInsets(UIEdgeInsets(), after: insets) { scrollView, estimatedContentOffset in
-      XCTAssertEqual(scrollView.contentOffset, estimatedContentOffset)
+    enumerateHeightRangeWithInsets(UIEdgeInsets(), after: insets) { scrollView, contentOffset in
+      XCTAssertEqual(scrollView.contentOffset, contentOffset)
     }
   }
 
   func testEstimationRemovingBottomInsets() {
     let insets = UIEdgeInsets(top: 0, left: 0, bottom: inset, right: 0)
 
-    enumerateHeightRangeWithInsets(insets, after: UIEdgeInsets()) { scrollView, estimatedContentOffset in
-      XCTAssertEqual(scrollView.contentOffset, estimatedContentOffset)
+    enumerateHeightRangeWithInsets(insets, after: UIEdgeInsets()) { scrollView, contentOffset in
+      XCTAssertEqual(scrollView.contentOffset, contentOffset)
     }
   }
 
   func testEstimationAddingBothInsets() {
     let insets = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
 
-    enumerateHeightRangeWithInsets(UIEdgeInsets(), after: insets) { scrollView, estimatedContentOffset in
-      XCTAssertEqual(scrollView.contentOffset, estimatedContentOffset)
+    enumerateHeightRangeWithInsets(UIEdgeInsets(), after: insets) { scrollView, contentOffset in
+      XCTAssertEqual(scrollView.contentOffset, contentOffset)
     }
   }
 
   func testEstimationRemovingBothInsets() {
     let insets = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
 
-    enumerateHeightRangeWithInsets(insets, after: UIEdgeInsets()) { scrollView, estimatedContentOffset in
-      XCTAssertEqual(scrollView.contentOffset, estimatedContentOffset)
+    enumerateHeightRangeWithInsets(insets, after: UIEdgeInsets()) { scrollView, contentOffset in
+      XCTAssertEqual(scrollView.contentOffset, contentOffset)
     }
   }
 
-  func enumerateHeightRangeWithInsets(_ before: UIEdgeInsets, after: UIEdgeInsets, work: (UIScrollView, CGPoint) -> Void) {
+  func enumerateHeightRangeWithInsets(_ before: UIEdgeInsets,
+                                      after: UIEdgeInsets,
+                                      work: (UIScrollView, CGPoint) -> Void) {
     for contentHeight in -1...Int(bounds.height * 3) {
       let scrollView = UITableView(frame: bounds)
 

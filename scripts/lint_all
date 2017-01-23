@@ -14,10 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Installs SourceKitten, required for api diff process
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly ROOT_DIR="$SCRIPTS_DIR/.."
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-"$DIR/install_brew"
-# Stop certain version of brew from failing if swiftlint is already installed.
-brew install swiftlint || true
+if which swiftlint >/dev/null; then
+  swiftlint lint --path "$ROOT_DIR" --quiet
+else
+  echo "warning: run scripts/install_contributor_tools to enable SwiftLint warnings."
+fi
