@@ -438,8 +438,8 @@ static const CGFloat kMaximumHeight = 80.0f;
   [CATransaction commit];
 
   // Notify the overlay system.
-  [self notifyOverlayChangeWithFrame:notificationFrame
-                            duration:translationAnimation.duration
+  [self notifyOverlayChangeWithFrame:[self snackbarRectInScreenCoordinates]
+                            duration:MDCSnackbarTransitionDuration
                                curve:0
                       timingFunction:translationAnimation.timingFunction];
 }
