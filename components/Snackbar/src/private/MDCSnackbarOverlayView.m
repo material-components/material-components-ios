@@ -429,7 +429,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                 onscreen:(BOOL)onscreen
       fromContentOpacity:(CGFloat)fromContentOpacity
         toContentOpacity:(CGFloat)toContentOpacity
-       notificationFrame:(CGRect)notificationFrame
               completion:(void (^)(void))completion {
   // Prepare to move the snackbar.
   _snackbarOnscreenConstraint.active = onscreen;
@@ -476,7 +475,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                 onscreen:YES
       fromContentOpacity:0
         toContentOpacity:1
-       notificationFrame:[self snackbarRectInScreenCoordinates]
               completion:completion];
 }
 
@@ -489,7 +487,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                 onscreen:NO
       fromContentOpacity:1
         toContentOpacity:0
-       notificationFrame:CGRectNull
               completion:completion];
 }
 
