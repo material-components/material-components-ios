@@ -14,8 +14,14 @@
  limitations under the License.
  */
 
-@interface UIFont (Material)
+@interface UIFont (MaterialTypography)
 
-+ (UIFont *)mdc_preferredFontWithMaterialTextStyle:(MDCFontTextStyle)style;
+/*
+ Returns an instance of the font associated with the Material text style and scaled based on the
+ content size category.
+ 
+ @style The Material font text style for which to return a font.
+ */
++ (UIFont *)mdc_preferredFontForMaterialTextStyle:(MDCFontTextStyle)style;
 
 @end

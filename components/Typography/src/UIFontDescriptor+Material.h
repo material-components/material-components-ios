@@ -14,8 +14,14 @@
  limitations under the License.
  */
 
-@interface UIFontDescriptor (Material)
+@interface UIFontDescriptor (MaterialTypography)
 
-+ (UIFontDescriptor *)mdc_preferredFontDescriptorWithMaterialTextStyle:(MDCFontTextStyle)style;
+/*
+ Returns an instance of the font descriptor associated with the Material text style and scaled 
+ based on the content size category.
+
+ @style The Material font text style for which to return a font descriptor.
+ */
++ (UIFontDescriptor *)mdc_preferredFontDescriptorForMaterialTextStyle:(MDCFontTextStyle)style;
 
 @end

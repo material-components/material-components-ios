@@ -14,6 +14,16 @@
  limitations under the License.
  */
 
+/*
+ Material font text styles
+
+ These styles are defined in:
+ https://material.io/guidelines/style/typography.html
+
+ This enumeration is a set of semantic descriptions intended to describe the fonts returned by
+ + [UIFont mdc_preferredFontForMaterialTextStyle:]
+ + [UIFontDescriptor mdc_preferredFontDescriptorForMaterialTextStyle:]
+ */
 typedef NS_ENUM(NSInteger, MDCFontTextStyle) {
   MDCFontTextStyleBody1,
   MDCFontTextStyleBody2,
