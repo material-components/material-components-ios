@@ -57,6 +57,8 @@ static const uint32_t kCellRedColor = 0xF44336;
   UIImageView *_editingSelectorImageView;
 }
 
+@synthesize inkView = _inkView;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -106,6 +108,13 @@ static const uint32_t kCellRedColor = 0xF44336;
 
   // Reset cells hidden during swipe deletion.
   self.hidden = NO;
+
+  if (self.activeInkInCell) {
+    [self.inkView flush];
+    //[self.inkView cancelAllAnimationsAnimated:NO];
+    self.backgroundColor = [UIColor blueColor];
+    self.activeInkInCell = NO;
+  }
 }
 
 - (void)layoutSubviews {
@@ -253,6 +262,22 @@ static const uint32_t kCellRedColor = 0xF44336;
   CGFloat originX = CGRectGetWidth(self.bounds) - size.width - _accessoryInset.right;
   CGFloat originY = (CGRectGetHeight(self.bounds) - size.height) / 2;
   return CGRectMake(originX, originY, size.width, size.height);
+}
+
+- (MDCInkView *)inkView {
+  if (!_inkView) {
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    [self addSubview:_inkView];
+  }
+  return _inkView;
+}
+
+- (void)setInkView:(MDCInkView *)inkView {
+  if (_inkView) {
+    [_inkView removeFromSuperview];
+  }
+  [self addSubview:inkView];
+  _inkView = inkView;
 }
 
 #pragma mark - Separator

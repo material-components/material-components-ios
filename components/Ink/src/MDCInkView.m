@@ -118,6 +118,10 @@
   [self.inkLayer reset:animated];
 }
 
+- (void)flush {
+  [self.inkLayer flushRipples];
+}
+
 - (UIColor *)defaultInkColor {
   return [[UIColor alloc] initWithWhite:0 alpha:0.06f];
 }

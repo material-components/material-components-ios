@@ -108,4 +108,6 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  */
 - (void)cancelAllAnimationsAnimated:(BOOL)animated;
 
+- (void)flush;
+
 @end

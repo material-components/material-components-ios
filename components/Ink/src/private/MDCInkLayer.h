@@ -101,4 +101,6 @@
  */
 - (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock;
 
+- (void)flushRipples;
+
 @end

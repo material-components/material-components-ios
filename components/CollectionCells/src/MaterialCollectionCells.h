@@ -14,6 +14,5 @@
  limitations under the License.
  */
 
-#import "MDCCollectionViewCell+Ink.h"
 #import "MDCCollectionViewCell.h"
 #import "MDCCollectionViewTextCell.h"

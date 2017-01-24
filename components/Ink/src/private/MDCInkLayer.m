@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @end
 
-static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = 0.4f;
+static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = 10.4f;
 static CGFloat const kInkLayerForegroundBoundedPositionExitDuration = 0.3f;
 static CGFloat const kInkLayerForegroundBoundedRadiusExitDuration = 0.8f;
 static CGFloat const kInkLayerForegroundRadiusGrowthMultiplier = 350.f;
@@ -326,6 +326,10 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   [self addAnimation:_foregroundScaleAnim forKey:kInkLayerForegroundScaleAnim];
 }
 
+- (void)exit:(BOOL)animated withCompletionBlock:(void (^)())completionBlock {
+  
+}
+
 @end
 
 static CGFloat const kInkLayerBackgroundOpacityEnterDuration = 0.6f;
@@ -379,6 +383,10 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [self addAnimation:_backgroundOpacityAnim forKey:kInkLayerBackgroundOpacityAnim];
 }
 
+- (void)exit:(BOOL)animated withCompletionBlock:(void (^)())completionBlock {
+
+}
+
 @end
 
 @interface MDCInkLayer () <MDCInkLayerRippleDelegate>
@@ -425,8 +433,28 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (void)reset:(BOOL)animated {
   [_foregroundRipple exit:animated];
   [_backgroundRipple exit:animated];
+//  _foregroundRipple = nil;
+//  _backgroundRipple = nil;
+}
+
+- (void)flushRipples {
+  //[self.compositeRipple removeFromSuperlayer];
+  //_compositeRipple = [CAShapeLayer layer];
+  //[self addSublayer:_compositeRipple];
+  [self.foregroundRipple removeAllAnimations];
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
+  self.foregroundRipple.opacity = 0;
+  [CATransaction commit];
   _foregroundRipple = nil;
+
+  [self.backgroundRipple removeAllAnimations];
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
+  self.backgroundRipple.opacity = 0;
+  [CATransaction commit];
   _backgroundRipple = nil;
+  
 }
 
 #pragma mark - Properties

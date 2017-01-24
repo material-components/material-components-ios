@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import "MaterialInk.h"
+
 #import <UIKit/UIKit.h>
 
 /** The available cell accessory view types. Based on UITableViewCellAccessoryType. */
@@ -93,5 +95,13 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {
  @param animated YES the transition will be animated; otherwise, NO.
  */
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
+
+/** View containing the ink effect. */
+@property(nonatomic, strong, nullable) MDCInkView *inkView;
+
+/**
+ A boolean value indicating whether a cell currently has an active ink animation within its inkView.
+ */
+@property(nonatomic, assign) BOOL activeInkInCell;
 
 @end
