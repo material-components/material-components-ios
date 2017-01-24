@@ -158,20 +158,9 @@ Show all changes to components:
 
     scripts/release/diff components/*/src/
 
-#### Diff everything
-
 Show all changes that are part of this release:
 
     scripts/release/diff
-
-#### Lint the podspec
-
-    pod spec lint MaterialComponents.podspec
-
-Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your `Pods` when you:
-
-    pod trunk me
-
 
 ### Classify the release type
 
@@ -274,17 +263,15 @@ and delete the release branch:
 1. In the body of the release notes, paste the text from [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/stable/CHANGELOG.md) for this release.
 1. Publish the release.
 
-## Publish to Cocoapods
+## Fix clients
 
-    pod trunk push MaterialComponents.podspec
-
-## Reply to the original release email message
+### Reply to the original release email message
 
 Post a reply to your message on [Material Components for iOS
 Discuss](https://groups.google.com/forum/#!forum/material-components-ios-discuss) indicating that
 you are done.
 
-## Coordinate with release-blocking clients to finish work
+### Coordinate with release-blocking clients to finish work
 
 Any work that was started by the [Release-blocking clients](#release-blocking-clients)
 (dragon) step above may need to be finalized.
