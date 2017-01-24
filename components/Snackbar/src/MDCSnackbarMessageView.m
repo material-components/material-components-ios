@@ -19,11 +19,11 @@
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
 #import "MaterialButtons.h"
-#import "MDCSnackbarOverlayView.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
+#import "private/MDCSnackbarOverlayView.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
     @"MDCSnackbarMessageTitleAutomationIdentifier";
