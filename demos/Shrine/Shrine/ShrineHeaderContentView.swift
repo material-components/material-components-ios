@@ -16,18 +16,8 @@
 
 import UIKit
 import MaterialComponents.MaterialPageControl
-import RemoteImageServiceForMDCDemos
 
 class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
-
-  let fontAbril = UIFont(name: "AbrilFatface-Regular", size: 36)
-  let fontHelvetica = UIFont(name: "Helvetica", size: 14)
-  let textColor = UIColor(red: 10 / 255, green: 49 / 255, blue: 66 / 255, alpha: 1)
-  let cyanBoxColor = UIColor(red: 0.19, green: 0.94, blue: 0.94, alpha: 1)
-  let descColor = UIColor(white: 0.54, alpha: 1)
-  let descString = "Leave the tunnel and the rain is fallin amazing things happen when you wait"
-
-  var remoteImageService = RemoteImageService()
 
   var pageControl = MDCPageControl()
   var scrollView = UIScrollView()
@@ -87,60 +77,15 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
                           for: UIControlEvents.valueChanged)
     self.addSubview(pageControl)
 
-    addPageContent()
+    addHeaderPages()
     self.addSubview(logoImageView)
     self.addSubview(logoTextImageView)
   }
 
-  func addPage(page: UIView, imageView: UIImageView, label: UILabel, labelDesc: UILabel,
-               cyanBox: UIView, imageName: String, description: String) {
-    imageView.contentMode = UIViewContentMode.scaleAspectFill
-    imageView.autoresizingMask = .flexibleHeight
-    (page as AnyObject).addSubview(imageView)
-    let url = URL(string: ShrineData.baseURL + imageName)
-    remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?, _) -> Void in
-      DispatchQueue.main.async(execute: {
-        imageView.image = image
-        imageView.setNeedsDisplay()
-      })
-    }
-
-    label.font = fontAbril
-    label.textColor = textColor
-    label.lineBreakMode = .byWordWrapping
-    label.numberOfLines = 2
-    label.attributedText = attributedString(description, lineHeightMultiple: 0.8)
-    label.sizeToFit()
-    (page as AnyObject).addSubview(label)
-
-    labelDesc.lineBreakMode = .byWordWrapping
-    labelDesc.numberOfLines = 3
-    labelDesc.font = fontHelvetica
-    labelDesc.textColor = descColor
-    labelDesc.attributedText = attributedString(descString, lineHeightMultiple: 1.2)
-    labelDesc.autoresizingMask = .flexibleWidth
-    (page as AnyObject).addSubview(labelDesc)
-
-    cyanBox.backgroundColor = cyanBoxColor
-    (page as AnyObject).addSubview(cyanBox)
-
-    let inkOverlay = ShrineInkOverlay(frame: (page as AnyObject).bounds)
-    inkOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    (page as AnyObject).addSubview(inkOverlay)
-
-  }
-
-  func addPageContent() {
-    let firstPage = pages[0]
-    let secondPage = pages[1]
-    let thirdPage = pages[2]
-
-    addPage(page: firstPage as! UIView, imageView: imageView, label: label, labelDesc: labelDesc,
-            cyanBox: cyanBox, imageName: "chair.png", description: "Green \ncomfort chair")
-    addPage(page: secondPage as! UIView, imageView: imageView2, label: label2, labelDesc: labelDesc2,
-            cyanBox: cyanBox2, imageName: "backpack.png", description: "Best gift for \nthe traveler")
-    addPage(page: thirdPage as! UIView, imageView: imageView3, label: label3, labelDesc: labelDesc3,
-            cyanBox: cyanBox3, imageName: "heels.png", description: "Better \nwearing heels")
+  func addHeaderPages() {
+    _ = ShrineHeaderPage(page: pages[0] as! UIView, imageView: imageView, label: label, labelDesc: labelDesc, cyanBox: cyanBox, imageName: "chair.png", description: "Green \ncomfort chair")
+    _ = ShrineHeaderPage(page: pages[1] as! UIView, imageView: imageView2, label: label2, labelDesc: labelDesc2, cyanBox: cyanBox2, imageName: "backpack.png", description: "Best gift for \nthe traveler")
+    _ = ShrineHeaderPage(page: pages[2] as! UIView, imageView: imageView3, label: label3, labelDesc: labelDesc3, cyanBox: cyanBox3, imageName: "heels.png", description: "Better \nwearing heels")
   }
 
   override func layoutSubviews() {
@@ -189,15 +134,6 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     imageView.frame = CGRect(x: -180, y: 120, width: 420, height: self.frame.size.height)
     imageView2.frame = CGRect(x: -220, y: 110, width: 420, height: self.frame.size.height)
     imageView3.frame = CGRect(x: -180, y: 40, width: 420, height: self.frame.size.height)
-  }
-
-  func attributedString(_ string: String, lineHeightMultiple: CGFloat) -> NSMutableAttributedString {
-    let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineHeightMultiple = lineHeightMultiple
-    let attrString = NSMutableAttributedString(string: string)
-    attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle,
-      range:NSMakeRange(0, attrString.length))
-    return attrString
   }
 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
