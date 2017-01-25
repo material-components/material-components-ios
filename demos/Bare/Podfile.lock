@@ -150,7 +150,7 @@ PODS:
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
   - MaterialComponents/Typography (20.1.1)
-  - MDFTextAccessibility (1.1.3)
+  - MDFTextAccessibility (1.1.4)
 
 DEPENDENCIES:
   - MaterialComponents (from `../../`)
@@ -160,8 +160,8 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 26372b7d42f8057bc467a796dea73cf62abc03ed
-  MDFTextAccessibility: f05246cc165f78733bfad535365807ec6fef9601
+  MaterialComponents: f628bce24c4089f905f1c57c08d271af5b6c90bc
+  MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
 
 PODFILE CHECKSUM: 44e7c616a05bb4ce24db557c3de4bfbe915c2f56
 
