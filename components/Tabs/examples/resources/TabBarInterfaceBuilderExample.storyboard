@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="joK-IC-rKT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Delegate-->
+        <scene sceneID="Zee-my-65S">
+            <objects>
+                <viewController title="Interface Builder" id="joK-IC-rKT" customClass="TabBarInterfaceBuilderExample" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cQ2-n3-srw"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ilc-zS-Zyx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Fgt-bz-B3C">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZO4-Dt-YsB" customClass="MDCTabBar">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.24741545376712332" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="FFu-Qb-A4h"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="joK-IC-rKT" id="jmp-DP-Tsq"/>
+                                </connections>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z4d-LU-085" customClass="MDCRaisedButton">
+                                <rect key="frame" x="164" y="595" width="46" height="30"/>
+                                <state key="normal" title="Alignment"/>
+                                <connections>
+                                    <action selector="alignmentButtonDidTouch:" destination="joK-IC-rKT" eventType="touchUpInside" id="W2O-gX-Tib"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZO4-Dt-YsB" firstAttribute="top" secondItem="Fgt-bz-B3C" secondAttribute="topMargin" id="D9p-21-xa0"/>
+                            <constraint firstItem="z4d-LU-085" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fgt-bz-B3C" secondAttribute="leadingMargin" id="HHt-AQ-OZq"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="z4d-LU-085" secondAttribute="trailing" id="S8t-NB-F5q"/>
+                            <constraint firstItem="Ilc-zS-Zyx" firstAttribute="top" secondItem="z4d-LU-085" secondAttribute="bottom" constant="50" id="TrU-Rg-P4W"/>
+                            <constraint firstItem="ZO4-Dt-YsB" firstAttribute="leading" secondItem="Fgt-bz-B3C" secondAttribute="leading" id="YdJ-nh-C9I"/>
+                            <constraint firstItem="z4d-LU-085" firstAttribute="centerX" secondItem="Fgt-bz-B3C" secondAttribute="centerX" id="l67-hr-fBx"/>
+                            <constraint firstAttribute="trailing" secondItem="ZO4-Dt-YsB" secondAttribute="trailing" id="vwG-Ob-qxq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tabBar" destination="ZO4-Dt-YsB" id="s69-ux-bfV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QHU-b4-pJq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="327" y="421"/>
+        </scene>
+    </scenes>
+</document>
