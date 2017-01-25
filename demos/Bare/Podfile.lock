@@ -1,4 +1,5 @@
 PODS:
+<<<<<<< HEAD
   - MaterialComponents (20.1.1):
     - MaterialComponents/ActivityIndicator (= 20.1.1)
     - MaterialComponents/AnimationTiming (= 20.1.1)
@@ -26,6 +27,35 @@ PODS:
     - MaterialComponents/Tabs (= 20.1.1)
     - MaterialComponents/Typography (= 20.1.1)
   - MaterialComponents/ActivityIndicator (20.1.1):
+=======
+  - MaterialComponents (20.1.0):
+    - MaterialComponents/ActivityIndicator (= 20.1.0)
+    - MaterialComponents/AnimationTiming (= 20.1.0)
+    - MaterialComponents/AppBar (= 20.1.0)
+    - MaterialComponents/ButtonBar (= 20.1.0)
+    - MaterialComponents/Buttons (= 20.1.0)
+    - MaterialComponents/CollectionCells (= 20.1.0)
+    - MaterialComponents/CollectionLayoutAttributes (= 20.1.0)
+    - MaterialComponents/Collections (= 20.1.0)
+    - MaterialComponents/Dialogs (= 20.1.0)
+    - MaterialComponents/FeatureHighlight (= 20.1.0)
+    - MaterialComponents/FlexibleHeader (= 20.1.0)
+    - MaterialComponents/HeaderStackView (= 20.1.0)
+    - MaterialComponents/Ink (= 20.1.0)
+    - MaterialComponents/NavigationBar (= 20.1.0)
+    - MaterialComponents/OverlayWindow (= 20.1.0)
+    - MaterialComponents/PageControl (= 20.1.0)
+    - MaterialComponents/Palettes (= 20.1.0)
+    - MaterialComponents/private (= 20.1.0)
+    - MaterialComponents/ProgressView (= 20.1.0)
+    - MaterialComponents/ShadowElevations (= 20.1.0)
+    - MaterialComponents/ShadowLayer (= 20.1.0)
+    - MaterialComponents/Slider (= 20.1.0)
+    - MaterialComponents/Snackbar (= 20.1.0)
+    - MaterialComponents/Tabs (= 20.1.0)
+    - MaterialComponents/Typography (= 20.1.0)
+  - MaterialComponents/ActivityIndicator (20.1.0):
+>>>>>>> 2e2a45668569d94b34e71c8739daf7c27b361b50
     - MaterialComponents/private/Application
     - MaterialComponents/private/RTL
   - MaterialComponents/AnimationTiming (20.1.1)
@@ -144,12 +174,20 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Overlay
     - MaterialComponents/Typography
+<<<<<<< HEAD
   - MaterialComponents/Tabs (20.1.1):
+=======
+  - MaterialComponents/Tabs (20.1.0):
+>>>>>>> 2e2a45668569d94b34e71c8739daf7c27b361b50
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Ink
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
+<<<<<<< HEAD
   - MaterialComponents/Typography (20.1.1)
+=======
+  - MaterialComponents/Typography (20.1.0)
+>>>>>>> 2e2a45668569d94b34e71c8739daf7c27b361b50
   - MDFTextAccessibility (1.1.4)
 
 DEPENDENCIES:
@@ -160,7 +198,11 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
+<<<<<<< HEAD
   MaterialComponents: f628bce24c4089f905f1c57c08d271af5b6c90bc
+=======
+  MaterialComponents: ef50c6355b614732dab43ac72540b57e5c250457
+>>>>>>> 2e2a45668569d94b34e71c8739daf7c27b361b50
   MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
 
 PODFILE CHECKSUM: 44e7c616a05bb4ce24db557c3de4bfbe915c2f56
