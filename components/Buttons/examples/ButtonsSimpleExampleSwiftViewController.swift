@@ -28,24 +28,24 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.view.backgroundColor = UIColor.white
+    view.backgroundColor = .white
 
     let raisedButton = MDCRaisedButton()
-    raisedButton.customTitleColor = UIColor.white
+    raisedButton.customTitleColor = .white
     raisedButton.setElevation(4, for: UIControlState())
     raisedButton.setTitle("Tap Me Too", for: UIControlState())
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
     raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    self.view.addSubview(raisedButton)
+    view.addSubview(raisedButton)
 
     let flatButton = MDCFlatButton()
-    flatButton.customTitleColor = UIColor.gray
+    flatButton.customTitleColor = .gray
     flatButton.setTitle("Touch me", for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    self.view.addSubview(flatButton)
+    view.addSubview(flatButton)
 
     let floatingButton = MDCFloatingButton()
     floatingButton.sizeToFit()
@@ -55,7 +55,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     let plusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     floatingButton.layer.addSublayer(plusShapeLayer)
 
-    self.view.addSubview(floatingButton)
+    view.addSubview(floatingButton)
 
     let views = [
       "raised": raisedButton,
@@ -65,16 +65,11 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
     centerView(view: flatButton, onView: self.view)
 
-    self.view.addConstraints(
+    view.addConstraints(
       NSLayoutConstraint.constraints(withVisualFormat: "V:[raised]-40-[flat]-40-[floating]",
         options: .alignAllCenterX,
         metrics: nil,
         views: views))
-  }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
   }
 
   // MARK: Private
@@ -99,7 +94,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
       constant: 0.0))
   }
 
-  func tap(_ sender: AnyObject) {
+  func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }
 

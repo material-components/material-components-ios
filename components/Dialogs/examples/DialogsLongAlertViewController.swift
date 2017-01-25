@@ -51,7 +51,7 @@ class DialogsLongAlertViewController: UIViewController {
     ])
   }
 
-  func tap(_ sender: AnyObject) {
+  func tap(_ sender: Any) {
     let messageString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
     "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
     "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +

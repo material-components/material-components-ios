@@ -92,7 +92,7 @@ class ButtonBarIssue370Tests: XCTestCase {
     item.setTitleTextAttributes(directAttributes, for: UIControlState())
     buttonBar.items = [item]
 
-    var composite: [String: AnyObject] = fontAttributes
+    var composite: [String: Any] = fontAttributes
     for (key, value) in directAttributes {
       composite[key] = value
     }
