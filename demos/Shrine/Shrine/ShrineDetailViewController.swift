@@ -32,16 +32,16 @@ class ShrineDetailView: UIScrollView {
 
   override func layoutSubviews() {
     super.layoutSubviews()
-    self.backgroundColor = UIColor.white
+    backgroundColor = .white
     let minContentHeight = CGFloat(640)
-    self.contentSize = CGSize(width: self.frame.width, height: minContentHeight)
+    contentSize = CGSize(width: frame.width, height: minContentHeight)
 
     let labelPadding: CGFloat = 50
     imageView.frame = CGRect(x: labelPadding, y: labelPadding,
-      width: self.frame.size.width - 2 * labelPadding, height: 220)
+      width: frame.size.width - 2 * labelPadding, height: 220)
     imageView.contentMode = UIViewContentMode.scaleAspectFit
     imageView.autoresizingMask = .flexibleHeight
-    self.addSubview(imageView)
+    addSubview(imageView)
     let urlString: String = ShrineData.baseURL + imageName
     let url = URL(string: urlString)
     remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?, _) -> Void in
@@ -67,7 +67,7 @@ class ShrineDetailView: UIScrollView {
     label.frame = CGRect(x: labelPadding,
       y: 280, width: label.frame.size.width, height: label.frame.size.height)
     label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    self.addSubview(label)
+    addSubview(label)
 
     labelDesc.lineBreakMode = .byWordWrapping
     labelDesc.numberOfLines = 5
@@ -81,10 +81,10 @@ class ShrineDetailView: UIScrollView {
       range:NSRange(location: 0, length: descAttrString.length))
     labelDesc.attributedText = descAttrString
     labelDesc.frame = CGRect(x: labelPadding,
-      y: 360, width: self.frame.size.width - 2 * labelPadding, height: 160)
+      y: 360, width: frame.size.width - 2 * labelPadding, height: 160)
     labelDesc.sizeToFit()
     labelDesc.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    self.addSubview(labelDesc)
+    addSubview(labelDesc)
   }
 
 }
@@ -101,9 +101,9 @@ class ShrineDetailViewController: UIViewController {
   init() {
     super.init(nibName: nil, bundle: nil)
 
-    self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor.clear
-    appBar.navigationBar.tintColor = UIColor.black
+    addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = .clear
+    appBar.navigationBar.tintColor = .black
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -111,12 +111,12 @@ class ShrineDetailViewController: UIViewController {
   }
 
   override func viewDidLoad() {
-    let detailView = ShrineDetailView(frame: self.view.frame)
+    let detailView = ShrineDetailView(frame: view.frame)
     detailView.title = productTitle
     detailView.desc = desc
     detailView.imageName = imageName
     detailView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    self.view.addSubview(detailView)
+    view.addSubview(detailView)
 
     appBar.addSubviewsToParent()
     let backButton = UIBarButtonItem(title:"",
@@ -142,7 +142,7 @@ class ShrineDetailViewController: UIViewController {
   }
 
   func dismissDetails() {
-    self.dismiss(animated: true, completion: nil)
+    dismiss(animated: true, completion: nil)
   }
 
 }
