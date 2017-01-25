@@ -29,7 +29,7 @@ class MDCCatalogTileView: UIView {
     }
   }
   let imageView = UIImageView()
-  let imageCache = NSCache<AnyObject, UIImage>()
+  let imageCache = NSCache<AnyObject, AnyObject>()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -47,7 +47,7 @@ class MDCCatalogTileView: UIView {
   }
 
   func getImage(_ key: String) -> UIImage {
-    if let cachedImage = imageCache.object(forKey: key as AnyObject) {
+    if let cachedImage = imageCache.object(forKey: key as AnyObject) as? UIImage {
       let scale = UIScreen.main.scale
       let pixelSize = CGSize(width: frame.width * scale, height: frame.height * scale)
       let cachedPixelSize = CGSize(width: cachedImage.size.width * cachedImage.scale,

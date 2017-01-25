@@ -86,9 +86,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="storyboardFlat" destination="1Dc-Q4-b6Z" id="tf2-SG-2uQ"/>
-                        <outlet property="storyboardFloating" destination="BDu-tK-SwC" id="AIX-u6-JAL"/>
-                        <outlet property="storyboardRaised" destination="ixI-3k-a3r" id="5z9-aK-IJ5"/>
+                        <outlet property="storyboardFlat" destination="1Dc-Q4-b6Z" id="PPS-Ra-xp6"/>
+                        <outlet property="storyboardFloating" destination="BDu-tK-SwC" id="2oe-Ay-yiB"/>
+                        <outlet property="storyboardRaised" destination="ixI-3k-a3r" id="B6n-k5-xTo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LO5-z8-Ix6" userLabel="First Responder" sceneMemberID="firstResponder"/>

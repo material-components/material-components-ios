@@ -60,7 +60,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.addSubview(containerView)
+    self.view.addSubview(containerView)
 
     NSLayoutConstraint.activate([
       NSLayoutConstraint(item: containerView,
@@ -116,14 +116,14 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     raisedButton.sizeToFit()
     raisedButton.translatesAutoresizingMaskIntoConstraints = false
     raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    innerContainerView.addSubview(raisedButton)
+    self.innerContainerView.addSubview(raisedButton)
 
     flatButton.customTitleColor = UIColor.gray
     flatButton.setTitle("Programmatic", for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    innerContainerView.addSubview(flatButton)
+    self.innerContainerView.addSubview(flatButton)
 
     floatingButton.sizeToFit()
     floatingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -131,7 +131,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
     let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     floatingButton.layer.addSublayer(floatingPlusShapeLayer)
-    innerContainerView.addSubview(floatingButton)
+    self.innerContainerView.addSubview(floatingButton)
 
     let storyboardPlusShapeLayer =
       ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
@@ -143,7 +143,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       "floating": floatingButton
     ]
 
-    view.addConstraint(NSLayoutConstraint(
+    self.view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .leading,
       relatedBy: .equal,
@@ -152,7 +152,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       multiplier: 1.0,
       constant: 0))
 
-    view.addConstraint(NSLayoutConstraint(
+    self.view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .trailing,
       relatedBy: .equal,
@@ -161,7 +161,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       multiplier: 1.0,
       constant: 0))
 
-    view.addConstraint(NSLayoutConstraint(
+    self.view.addConstraint(NSLayoutConstraint(
       item: raisedButton,
       attribute: .top,
       relatedBy: .equal,
@@ -170,14 +170,14 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       multiplier: 1.0,
       constant: 0))
 
-    view.addConstraints(
+    self.view.addConstraints(
       NSLayoutConstraint.constraints(withVisualFormat: "V:|[raised]-22-[flat]-22-[floating]|",
         options: .alignAllCenterX,
         metrics: nil,
         views: views))
   }
 
-  @IBAction func tap(_ sender: Any) {
+  @IBAction func tap(_ sender: AnyObject) {
     print("\(type(of: sender)) was tapped.")
   }
 

@@ -47,18 +47,18 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
   }
 
   func commonInit() {
-    let boundsWidth = bounds.width
-    let boundsHeight = bounds.height
+    let boundsWidth = self.bounds.width
+    let boundsHeight = self.bounds.height
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     scrollView.delegate = self
     scrollView.isPagingEnabled = true
     scrollView.showsHorizontalScrollIndicator = false
-    addSubview(scrollView)
-    autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    self.addSubview(scrollView)
+    self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     for i in 0...2 {
       let boundsLeft = CGFloat(i) * boundsWidth
-      let pageFrame = bounds.offsetBy(dx: boundsLeft, dy: 0)
+      let pageFrame = self.bounds.offsetBy(dx: boundsLeft, dy: 0)
       let page = UIView(frame:pageFrame)
       page.clipsToBounds = true
       page.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -68,18 +68,18 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
     pageControl.numberOfPages = 3
     pageControl.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    let pageControlSize = pageControl.sizeThatFits(bounds.size)
+    let pageControlSize = pageControl.sizeThatFits(self.bounds.size)
     pageControl.frame = CGRect(x: 0,
       y: boundsHeight - pageControlSize.height,
       width: boundsWidth,
       height: pageControlSize.height)
     pageControl.addTarget(self, action: #selector(didChangePage),
                           for: UIControlEvents.valueChanged)
-    addSubview(pageControl)
+    self.addSubview(pageControl)
 
     addHeaderPages()
-    addSubview(logoImageView)
-    addSubview(logoTextImageView)
+    self.addSubview(logoImageView)
+    self.addSubview(logoTextImageView)
   }
 
   func addHeaderPages() {
@@ -91,15 +91,15 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    let boundsWidth = bounds.width
-    let boundsHeight = bounds.height
+    let boundsWidth = self.bounds.width
+    let boundsHeight = self.bounds.height
     for i in 0...pages.count - 1 {
       let boundsLeft = CGFloat(i) * boundsWidth
-      let pageFrame = bounds.offsetBy(dx: boundsLeft, dy: 0)
+      let pageFrame = self.bounds.offsetBy(dx: boundsLeft, dy: 0)
       let page = pages[i] as! UIView
       page.frame = pageFrame
     }
-    let pageControlSize = pageControl.sizeThatFits(bounds.size)
+    let pageControlSize = pageControl.sizeThatFits(self.bounds.size)
     pageControl.frame = CGRect(x: 0, y: boundsHeight - pageControlSize.height, width: boundsWidth,
       height: pageControlSize.height)
     let scrollWidth: CGFloat = boundsWidth * CGFloat(pages.count)
@@ -108,15 +108,15 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
     let scrollViewOffsetX = CGFloat(pageControl.currentPage) * boundsWidth
     scrollView.setContentOffset(CGPoint(x: scrollViewOffsetX, y: 0), animated: false)
-    logoImageView.center = CGPoint(x: (frame.size.width) / 2, y: 44)
-    logoTextImageView.center = CGPoint(x: (frame.size.width) / 2, y: 44)
+    logoImageView.center = CGPoint(x: (self.frame.size.width) / 2, y: 44)
+    logoTextImageView.center = CGPoint(x: (self.frame.size.width) / 2, y: 44)
 
     let labelWidth = CGFloat(250)
-    let labelWidthFrame = CGRect(x: frame.size.width - labelWidth,
+    let labelWidthFrame = CGRect(x: self.frame.size.width - labelWidth,
       y: 90, width: labelWidth, height: label.frame.size.height)
 
     let labelDescWidth = CGFloat(200)
-    let labelDescWidthFrame = CGRect(x: frame.size.width - labelDescWidth - 10,
+    let labelDescWidthFrame = CGRect(x: self.frame.size.width - labelDescWidth - 10,
       y: 190, width: labelDescWidth, height: 40)
 
     label.frame = labelWidthFrame
@@ -126,14 +126,14 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     label3.frame = labelWidthFrame
     labelDesc3.frame = labelDescWidthFrame
 
-    let cyanBoxFrame = CGRect(x: frame.size.width - 210, y: 180, width: 100, height: 8)
+    let cyanBoxFrame = CGRect(x: self.frame.size.width - 210, y: 180, width: 100, height: 8)
     cyanBox.frame = cyanBoxFrame
     cyanBox2.frame = cyanBoxFrame
     cyanBox3.frame = cyanBoxFrame
 
-    imageView.frame = CGRect(x: -180, y: 120, width: 420, height: frame.size.height)
-    imageView2.frame = CGRect(x: -220, y: 110, width: 420, height: frame.size.height)
-    imageView3.frame = CGRect(x: -180, y: 40, width: 420, height: frame.size.height)
+    imageView.frame = CGRect(x: -180, y: 120, width: 420, height: self.frame.size.height)
+    imageView2.frame = CGRect(x: -220, y: 110, width: 420, height: self.frame.size.height)
+    imageView3.frame = CGRect(x: -180, y: 40, width: 420, height: self.frame.size.height)
   }
 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
