@@ -213,7 +213,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   }
 }
 
-#pragma mark - GOOAccessibility
+#pragma mark - Accessibility
 
 - (id)accessibilityElementForItem:(UITabBarItem *)item {
   NSUInteger index = [_items indexOfObject:item];
