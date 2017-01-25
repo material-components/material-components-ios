@@ -1,4 +1,13 @@
-# release-candidate TODO: Replace me with version number. 
+# 20.1.1
+
+## Component changes
+
+### Snackbar
+
+#### Changes
+
+* [Fix glitchy dismissal animation (#1166)](https://github.com/material-components/material-components-ios/pull/1166) (Sam Morrison)
+* [Update file path for private file. (#1168)](https://github.com/material-components/material-components-ios/commit/1effd8ad0cb879048f00972b366bcdf481e3c2b6) (Louis Romero)
 
 # 20.1.0 
 
