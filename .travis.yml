@@ -29,3 +29,14 @@ script:
   - travis_wait scripts/test_all
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+# Upload logs to a Google Cloud bucket.
+deploy:
+  provider: gcs
+  access_key_id: GOOGUKVLSG5IV3M5CVDE
+  secret_access_key:
+    secure: GCezv3JdyNEm1YiZIkCsx34dcePM8syqVLzerm96B/qkC7TabDGvRMhECtvFesmh7CEVACUG6/vJbe4MjOmPJCbaeAhZHoA5PCBCmRVBM3kL97YC/9KARj4tq9GXnSkHvwbjIxsUaremNP2T4w/Yjvj8WtnaBV1pGfKgprOC4iSkGdDSkVko3IgKtfbUEHGZ5C1CsiWInmXG9SDCJDy6qFIT1OLDyQ/8iIBSLRWpbyJH5uZoQKLe7p1AB8WqeJbVKzhdCdRQGI9KQZK2IlT6b+F6MD7dNZOFiWPHqWcyYFLRHDqMterJb9cCUMy0Dhb+fCUB+xAt8C9m+4Cc+N9545p+Czei9+qZrhwc1xavx30c/2VK8WLtdMxxYqzt0RjkFRc2xQvTmShHgAWtrAI/W7Cy8+w2SyEcxVZo9+qyTrYIehFC92zvk1PYFlp/xKB+oWJRJ7kKGbB6lsLbQcY7+YvFlEMkltnESsh+0IiwJNwU9XR4rdtKdrDMb3o+ESnjrrWJD/VLTYKlk20WqtW7L3GiFXYGIhBPNLOU4MJY+4JldeShHz4HftAybWvWN3cmSrFq9Bba9YQ5WdBBkozzlhuc9UED5iWPWvajFtsbaiZ8Z0zbfW4ZtOk+95QZ0TPLUyt0ahI8okqghhhvgEMkwkMCzdvxj85WyEL9UeYX4nQ=
+  bucket: material-components-ios-logs
+  skip_cleanup: true
+  # acl: public-read
+
