@@ -25,6 +25,7 @@ PODS:
     - MaterialComponents/ShadowLayer (= 20.1.0)
     - MaterialComponents/Slider (= 20.1.0)
     - MaterialComponents/Snackbar (= 20.1.0)
+    - MaterialComponents/Tabs (= 20.1.0)
     - MaterialComponents/Typography (= 20.1.0)
   - MaterialComponents/ActivityIndicator (20.1.0):
     - MaterialComponents/private/Application
@@ -144,6 +145,11 @@ PODS:
     - MaterialComponents/private/Application
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Overlay
+    - MaterialComponents/Typography
+  - MaterialComponents/Tabs (20.1.0):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/Ink
+    - MaterialComponents/private/RTL
     - MaterialComponents/Typography
   - MaterialComponents/Typography (20.1.0)
   - MaterialComponentsCatalog (20.1.0):
