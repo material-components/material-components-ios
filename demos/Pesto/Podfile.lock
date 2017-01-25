@@ -62,17 +62,10 @@ PODS:
     - MaterialComponents/private/Icons/Base
   - MaterialComponents/private/Icons/ic_reorder (20.1.1):
     - MaterialComponents/private/Icons/Base
-<<<<<<< HEAD
   - MaterialComponents/private/RTL (20.1.1)
   - MaterialComponents/ShadowElevations (20.1.1)
   - MaterialComponents/ShadowLayer (20.1.1)
   - MaterialComponents/Typography (20.1.1)
-=======
-  - MaterialComponents/private/RTL (20.1.0)
-  - MaterialComponents/ShadowElevations (20.1.0)
-  - MaterialComponents/ShadowLayer (20.1.0)
-  - MaterialComponents/Typography (20.1.0)
->>>>>>> 2e2a45668569d94b34e71c8739daf7c27b361b50
   - MDFTextAccessibility (1.1.4)
 
 DEPENDENCIES:
@@ -90,11 +83,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-<<<<<<< HEAD
   MaterialComponents: f628bce24c4089f905f1c57c08d271af5b6c90bc
-=======
-  MaterialComponents: ef50c6355b614732dab43ac72540b57e5c250457
->>>>>>> 2e2a45668569d94b34e71c8739daf7c27b361b50
   MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
 
 PODFILE CHECKSUM: 0bae51237ebf30ce3f4ecbcefedc8cf3d7af40cf

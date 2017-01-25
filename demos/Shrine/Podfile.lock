@@ -31,21 +31,12 @@ PODS:
   - MaterialComponents/private/Icons/Base (20.1.1)
   - MaterialComponents/private/Icons/ic_arrow_back (20.1.1):
     - MaterialComponents/private/Icons/Base
-<<<<<<< HEAD
   - MaterialComponents/private/RTL (20.1.1)
   - MaterialComponents/ShadowElevations (20.1.1)
   - MaterialComponents/ShadowLayer (20.1.1)
   - MaterialComponents/Typography (20.1.1)
   - MDFTextAccessibility (1.1.4)
   - RemoteImageServiceForMDCDemos (20.1.1)
-=======
-  - MaterialComponents/private/RTL (20.1.0)
-  - MaterialComponents/ShadowElevations (20.1.0)
-  - MaterialComponents/ShadowLayer (20.1.0)
-  - MaterialComponents/Typography (20.1.0)
-  - MDFTextAccessibility (1.1.4)
-  - RemoteImageServiceForMDCDemos (20.1.0)
->>>>>>> 2e2a45668569d94b34e71c8739daf7c27b361b50
 
 DEPENDENCIES:
   - MaterialComponents/AppBar (from `../../`)
@@ -59,15 +50,9 @@ EXTERNAL SOURCES:
     :path: "../supplemental"
 
 SPEC CHECKSUMS:
-<<<<<<< HEAD
   MaterialComponents: f628bce24c4089f905f1c57c08d271af5b6c90bc
   MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
   RemoteImageServiceForMDCDemos: 487debf834fa4dcee9f04d060769149aa72b9232
-=======
-  MaterialComponents: ef50c6355b614732dab43ac72540b57e5c250457
-  MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
-  RemoteImageServiceForMDCDemos: 209bb22d42bbdaebc37ef8c4fcaf637cc07e5b04
->>>>>>> 2e2a45668569d94b34e71c8739daf7c27b361b50
 
 PODFILE CHECKSUM: 5eb94d7fb8deeb6709b7300f5d0e0e1a75902cca
 
