@@ -20,8 +20,8 @@
 #import "MaterialOverlayWindow.h"
 #import "UIApplication+AppExtensions.h"
 #import "private/MDCSnackbarMessageInternal.h"
-#import "private/MDCSnackbarOverlayView.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
+#import "private/MDCSnackbarOverlayView.h"
 
 @class MDCSnackbarManagerSuspensionToken;
 

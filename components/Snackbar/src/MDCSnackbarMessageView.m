@@ -18,7 +18,6 @@
 
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
-#import "MaterialButtons.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
@@ -224,8 +223,9 @@ static const CGFloat kButtonInkRadius = 64.0f;
 - (void)addColorToMessageLabel:(UIColor *)color {
   NSMutableAttributedString *messageString = [_label.attributedText mutableCopy];
   [messageString addAttributes:@{
-                                 NSForegroundColorAttributeName :color,
-                                 } range:NSMakeRange(0, messageString.length)];
+    NSForegroundColorAttributeName : color,
+  }
+                         range:NSMakeRange(0, messageString.length)];
   _label.attributedText = messageString;
 }
 
@@ -233,10 +233,9 @@ static const CGFloat kButtonInkRadius = 64.0f;
                  dismissHandler:(MDCSnackbarMessageDismissHandler)handler {
   self = [super init];
   if (self) {
-    
     _message = message;
     _dismissalHandler = [handler copy];
-    
+
     self.backgroundColor = [UIColor clearColor];
     self.layer.cornerRadius = kCornerRadius;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
