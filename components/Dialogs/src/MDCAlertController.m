@@ -62,6 +62,8 @@ static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
 static const CGFloat MDCDialogActionButtonHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
 
+static const CGFloat MDCDialogMessageOpacity = 0.38f;
+
 @interface MDCAlertController ()
 
 @property(nonatomic, nonnull, strong) NSMutableArray<UIButton *> *actionButtons;
@@ -218,6 +220,7 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
   self.messageLabel.numberOfLines = 0;
   self.messageLabel.textAlignment = NSTextAlignmentNatural;
   self.messageLabel.font = [MDCTypography body1Font];
+  self.messageLabel.textColor = [UIColor colorWithWhite:0.0 alpha:MDCDialogMessageOpacity];
   [self.contentScrollView addSubview:self.messageLabel];
 
   self.titleLabel.text = self.title;
