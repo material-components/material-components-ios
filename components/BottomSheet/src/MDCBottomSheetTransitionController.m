@@ -14,27 +14,8 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetController.h"
-
 #import "MDCBottomSheetTransitionController.h"
 
-@interface MDCBottomSheetController () <UIViewControllerTransitioningDelegate>
-
-@property(nonatomic, strong) MDCBottomSheetTransitionController *transitionController;
-
-@end
-
-@implementation MDCBottomSheetController
-
-- (instancetype)initWithContentViewController:(UIViewController *)contentViewController {
-  if (self = [super initWithNibName:nil bundle:nil]) {
-    _contentViewController = contentViewController;
-
-    _transitionController = [[MDCBottomSheetTransitionController alloc] init];
-    self.transitioningDelegate = _transitionController;
-    self.modalPresentationStyle = UIModalPresentationCustom;
-  }
-  return self;
-}
+@implementation MDCBottomSheetTransitionController
 
 @end

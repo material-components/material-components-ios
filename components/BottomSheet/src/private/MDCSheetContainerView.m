@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetController.h"
-#import "MDCBottomSheetPresentationController.h"
-#import "MDCBottomSheetTransitionController.h"
+#import "MDCSheetContainerView.h"
+
+@implementation MDCSheetContainerView
+@end

@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetController.h"
-#import "MDCBottomSheetPresentationController.h"
-#import "MDCBottomSheetTransitionController.h"
+#import <UIKit/UIKit.h>
+
+@interface MDCBottomSheetPresentationController : UIPresentationController
+
+@end
