@@ -73,7 +73,8 @@ static NSString *const kInkLayerScale = @"transform.scale";
 typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   kInkRippleNone,
   kInkRippleSpreading,
-  kInkRippleComplete
+  kInkRippleComplete,
+  kInkRippleCancelled,
 };
 
 @protocol MDCInkLayerRippleDelegate <NSObject>
@@ -128,7 +129,9 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 }
 
 - (void)exit {
-  _rippleState = kInkRippleComplete;
+  if (_rippleState != kInkRippleCancelled) {
+    _rippleState = kInkRippleComplete;
+  }
 }
 
 - (CAKeyframeAnimation *)opacityAnimWithValues:(NSArray<NSNumber *> *)values
@@ -246,7 +249,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   }
   [CATransaction begin];
   [CATransaction setCompletionBlock:^{
-    if (completionBlock) {
+    if (completionBlock && self.rippleState != kInkRippleCancelled) {
       completionBlock();
     }
   }];
@@ -256,6 +259,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 }
 
 - (void)exit:(BOOL)animated {
+  self.rippleState = kInkRippleCancelled;
   [self exit:animated completionBlock:nil];
 }
 
@@ -336,7 +340,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
   [CATransaction begin];
   [CATransaction setCompletionBlock:^{
-    if (completionBlock) {
+    if (completionBlock && self.rippleState != kInkRippleCancelled) {
       completionBlock();
     }
   }];
