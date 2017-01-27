@@ -1,12 +1,12 @@
 /*
  Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,10 +24,9 @@
  interaction. @c action, if non-nil, indicates that the user chose to execute a specific action.
  */
 typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
-    MDCSnackbarMessageAction * _Nullable action);
+                                                 MDCSnackbarMessageAction *_Nullable action);
 
 @interface MDCSnackbarMessageView ()
-
 
 /**
  If the user has tapped on the snackbar or if @c dismissWithAction:userInitiated: has been called.
@@ -54,7 +53,7 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  The view will call @c handler when the user has interacted with the snackbar view in such a way
  that it needs to be dismissed prior to its timer-based dismissal time.
  */
-- (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage * _Nullable)message
+- (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage *_Nullable)message
                           dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler;
 
 /**
@@ -66,7 +65,8 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  @param action The action that prompted the dismissal.
  @param userInitiated Whether or not this is a user-initiated dismissal or a programmatic one.
  */
-- (void)dismissWithAction:(MDCSnackbarMessageAction * _Nullable)action userInitiated:(BOOL)userInitiated;
+- (void)dismissWithAction:(MDCSnackbarMessageAction *_Nullable)action
+            userInitiated:(BOOL)userInitiated;
 
 /**
  When VoiceOver is enabled the view should wait for user action before dismissing.
@@ -83,7 +83,6 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 - (void)animateContentOpacityFrom:(CGFloat)fromOpacity
                                to:(CGFloat)toOpacity
                          duration:(NSTimeInterval)duration
-                   timingFunction:(CAMediaTimingFunction * _Nullable)timingFunction;
-
+                   timingFunction:(CAMediaTimingFunction *_Nullable)timingFunction;
 
 @end

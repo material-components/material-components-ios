@@ -86,7 +86,6 @@
            forControlEvents:UIControlEventTouchUpInside];
   floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
 
-  CGFloat floatingButtonPlusDimension = 24.0f;
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   [floatingButton setImage:plusImage forState:UIControlStateNormal];
   [self.view addSubview:floatingButton];

@@ -65,7 +65,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     self.view.backgroundColor = UIColor.white
   }
 
-  func didTapActionButton(_ sender: AnyObject) {
+  func didTapActionButton(_ sender: Any) {
     print("Did tap action item: \(sender)")
   }
 
@@ -95,7 +95,7 @@ extension ButtonBarTypicalUseSwiftExample {
     return UIColor(red: 0.012, green: 0.663, blue: 0.957, alpha: 0.2)
   }
 
-  func itemTitleTextAttributes () -> [String:AnyObject] {
+  func itemTitleTextAttributes () -> [String: Any] {
     let textColor = UIColor(white: 0, alpha: 0.8)
     return [NSForegroundColorAttributeName: textColor]
   }

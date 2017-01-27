@@ -22,6 +22,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   MDCCollectionViewTextCell *cell =
       (MDCCollectionViewTextCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
   MDCFeatureHighlightViewController *highlightController =
