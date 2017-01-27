@@ -80,7 +80,6 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @optional
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished;
 - (void)animationDidStop:(CAAnimation *)anim shapeLayer:(CAShapeLayer *)shapeLayer finished:(BOOL)finished;
 
 @end
@@ -218,7 +217,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
     CGFloat duration = (CGFloat)sqrt(self.radius / kInkLayerForegroundWaveTouchDownAcceleration);
     _foregroundScaleAnim =
-    [self scaleAnimWithValues:@[ @0, @1 ]
+        [self scaleAnimWithValues:@[ @0, @1 ]
                         times:@[ @(kInkLayerForegroundUnboundedEnterDelay), @1 ]];
     _foregroundScaleAnim.duration = duration;
 
@@ -236,7 +235,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [movePath addLineToPoint:endPoint];
 
     CAMediaTimingFunction *linearTimingFunction =
-    [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     _foregroundPositionAnim = [self positionAnimWithPath:movePath.CGPath
                                                 duration:duration
                                           timingFunction:linearTimingFunction];
@@ -292,9 +291,9 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [movePath addLineToPoint:centerOffsetPoint];
 
     _foregroundPositionAnim =
-    [self positionAnimWithPath:movePath.CGPath
-                      duration:kInkLayerForegroundBoundedPositionExitDuration
-                timingFunction:[self logDecelerateEasing]];
+        [self positionAnimWithPath:movePath.CGPath
+                          duration:kInkLayerForegroundBoundedPositionExitDuration
+                    timingFunction:[self logDecelerateEasing]];
     _foregroundScaleAnim.values = @[ @0, @1 ];
     _foregroundScaleAnim.keyTimes = @[ @0, @1 ];
     _foregroundScaleAnim.duration = kInkLayerForegroundBoundedRadiusExitDuration;
@@ -329,7 +328,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   }
 
   _foregroundOpacityAnim.timingFunction =
-  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   _foregroundPositionAnim.timingFunction = [self logDecelerateEasing];
   _foregroundScaleAnim.timingFunction = [self logDecelerateEasing];
 
@@ -407,15 +406,10 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 @interface MDCInkLayer () <MDCInkLayerRippleDelegate>
 
 @property(nonatomic, strong) CAShapeLayer *compositeRipple;
-@property(nonatomic, strong) MDCInkLayerForegroundRipple *foregroundRipple;
 @property(nonatomic, strong) NSMutableArray <MDCInkLayerForegroundRipple *> *foregroundRipples;
-@property(nonatomic, strong) MDCInkLayerBackgroundRipple *backgroundRipple;
 @property(nonatomic, strong) NSMutableArray <MDCInkLayerBackgroundRipple *> *backgroundRipples;
 @property(nonatomic ,assign) NSInteger unexitedForegroundRipples;
 @property(nonatomic ,assign) NSInteger unexitedBackgroundRipples;
-@property(nonatomic, copy) void (^spreadCompletionBlock)();
-@property(nonatomic, copy) void (^evaporateCompletionBlock)();
-@property(nonatomic, copy) void (^evaporateToPointCompletionBlock)();
 
 @end
 
