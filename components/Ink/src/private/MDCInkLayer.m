@@ -445,7 +445,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   _compositeRipple.mask = rippleMaskLayer;
 }
 
-- (void)resetAll:(BOOL)animated {
+- (void)resetAllInk:(BOOL)animated {
   if (self.foregroundRipples.count > 0) {
     [self.foregroundRipples makeObjectsPerformSelector:@selector(exit:)];
   }
@@ -454,7 +454,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 }
 
-- (void)reset:(BOOL)animated completion:(void (^)())completionBlock {
+- (void)resetBottomInk:(BOOL)animated completion:(void (^)())completionBlock {
   if (self.foregroundRipples.count > 0) {
     [[self.foregroundRipples objectAtIndex:self.unexitedForegroundRippleIndex] exit:animated
                                                                 completionBlock:completionBlock];
@@ -464,7 +464,9 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 }
 
-- (void)reset:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)())completionBlock {
+- (void)resetBottomInk:(BOOL)animated
+               toPoint:(CGPoint)point
+            completion:(void (^)())completionBlock {
   if (self.foregroundRipples.count > 0) {
     MDCInkLayerForegroundRipple *foregroundRipple =
         [self.foregroundRipples objectAtIndex:self.unexitedForegroundRippleIndex];
@@ -525,11 +527,11 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 }
 
 - (void)evaporateWithCompletion:(void (^)())completionBlock {
-  [self reset:YES completion:completionBlock];
+  [self resetBottomInk:YES completion:completionBlock];
 }
 
 - (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock {
-  [self reset:YES toPoint:point completion:completionBlock];
+  [self resetBottomInk:YES toPoint:point completion:completionBlock];
 }
 
 #pragma mark - MDCInkLayerRippleDelegate
