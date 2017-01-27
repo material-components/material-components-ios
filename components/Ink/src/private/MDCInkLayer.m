@@ -80,7 +80,9 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @optional
 
-- (void)animationDidStop:(CAAnimation *)anim shapeLayer:(CAShapeLayer *)shapeLayer finished:(BOOL)finished;
+- (void)animationDidStop:(CAAnimation *)anim
+              shapeLayer:(CAShapeLayer *)shapeLayer
+                finished:(BOOL)finished;
 
 @end
 
@@ -458,7 +460,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 - (void)reset:(BOOL)animated completion:(void (^)())completionBlock {
   if (self.foregroundRipples.count > 0) {
-    [[self.foregroundRipples objectAtIndex:self.unexitedForegroundRipples] exit:animated completionBlock:completionBlock];
+    [[self.foregroundRipples objectAtIndex:self.unexitedForegroundRipples] exit:animated
+                                                                completionBlock:completionBlock];
   }
   if (self.backgroundRipples.count > 0) {
     [[self.backgroundRipples objectAtIndex:self.unexitedBackgroundRipples] exit:animated];
@@ -467,7 +470,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 - (void)reset:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)())completionBlock {
   if (self.foregroundRipples.count > 0) {
-    MDCInkLayerForegroundRipple *foregroundRipple = [self.foregroundRipples objectAtIndex:self.unexitedForegroundRipples];
+    MDCInkLayerForegroundRipple *foregroundRipple =
+        [self.foregroundRipples objectAtIndex:self.unexitedForegroundRipples];
     foregroundRipple.point = point;
     [foregroundRipple exit:animated completionBlock:completionBlock];
   }
@@ -534,7 +538,9 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 #pragma mark - MDCInkLayerRippleDelegate
 
-- (void)animationDidStop:(CAAnimation *)anim shapeLayer:(CAShapeLayer *)shapeLayer finished:(BOOL)finished {
+- (void)animationDidStop:(CAAnimation *)anim
+              shapeLayer:(CAShapeLayer *)shapeLayer
+                finished:(BOOL)finished {
 
   if ([shapeLayer isMemberOfClass:[MDCInkLayerForegroundRipple class]]) {
     [self.foregroundRipples removeObject:(MDCInkLayerForegroundRipple *)shapeLayer];
