@@ -115,11 +115,7 @@
 }
 
 - (void)cancelAllAnimationsAnimated:(BOOL)animated {
-  [self.inkLayer reset:animated];
-}
-
-- (void)flush {
-  [self.inkLayer flushRipples];
+  [self.inkLayer resetAll:animated];
 }
 
 - (UIColor *)defaultInkColor {

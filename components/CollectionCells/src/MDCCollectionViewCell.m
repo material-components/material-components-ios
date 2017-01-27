@@ -108,13 +108,7 @@ static const uint32_t kCellRedColor = 0xF44336;
 
   // Reset cells hidden during swipe deletion.
   self.hidden = NO;
-
-  if (self.activeInkInCell) {
-    [self.inkView flush];
-    //[self.inkView cancelAllAnimationsAnimated:NO];
-    self.backgroundColor = [UIColor blueColor];
-    self.activeInkInCell = NO;
-  }
+  [self.inkView cancelAllAnimationsAnimated:NO];
 }
 
 - (void)layoutSubviews {

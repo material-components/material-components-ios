@@ -355,12 +355,9 @@
     }
   }
   self.currentlyActiveInk = YES;
-  MDCCollectionViewCell *collectionCell;
-  if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
-    collectionCell = (MDCCollectionViewCell *)cell;
-    collectionCell.activeInkInCell = YES;
-  }
-  [inkView startTouchBeganAnimationAtPoint:location completion:nil];
+  [inkView startTouchBeganAnimationAtPoint:location completion:^(){
+    //
+  }];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -374,10 +371,9 @@
   MDCCollectionViewCell *collectionCell;
   if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
     collectionCell = (MDCCollectionViewCell *)cell;
-    collectionCell.activeInkInCell = YES;
   }
   [inkView startTouchEndedAnimationAtPoint:location completion:^(){
-    collectionCell.activeInkInCell = NO;
+    //
   }];
 }
 

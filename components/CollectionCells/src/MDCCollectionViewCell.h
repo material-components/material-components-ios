@@ -99,9 +99,4 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {
 /** View containing the ink effect. */
 @property(nonatomic, strong, nullable) MDCInkView *inkView;
 
-/**
- A boolean value indicating whether a cell currently has an active ink animation within its inkView.
- */
-@property(nonatomic, assign) BOOL activeInkInCell;
-
 @end

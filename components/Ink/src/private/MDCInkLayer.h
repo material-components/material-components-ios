@@ -70,8 +70,11 @@
 
  @param animated Enables the ink ripple fade out animation.
  */
-- (void)reset:(BOOL)animated;
+- (void)reset:(BOOL)animated completion:(void (^)())completionBlock;
 
+- (void)reset:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)())completionBlock;
+
+- (void)resetAll:(BOOL)animated;
 /**
  Spreads the ink over the whole view.
 
@@ -100,7 +103,5 @@
  @param completionBlock Block called after the completion of the evaporation.
  */
 - (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock;
-
-- (void)flushRipples;
 
 @end
