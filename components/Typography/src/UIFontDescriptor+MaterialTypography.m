@@ -28,7 +28,6 @@
   // If we are within an application, queary the preferredContentSizeCategory
   if ([UIApplication mdc_safeSharedApplication]) {
     sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-    NSLog(@"UIFontDescriptor : PreferredContentSizeCategory : %@", sizeCategory);  //KM
   }
 
   MDCFontTraits *fontTraits = [MDCFontTraits traitsForTextStyle:style sizeCategory:sizeCategory];

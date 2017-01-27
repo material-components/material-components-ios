@@ -26,8 +26,6 @@
 @property (nonatomic, readonly) CGFloat leading;
 @property (nonatomic, readonly) CGFloat tracking;
 
-- (instancetype)initWithPointSize:(CGFloat)pointSize weight:(CGFloat)weight leading:(CGFloat)leading tracking:(CGFloat)tracking;
-
 + (MDCFontTraits *)traitsForTextStyle:(MDCFontTextStyle)style sizeCategory:(NSString *)sizeCategory;
 
 

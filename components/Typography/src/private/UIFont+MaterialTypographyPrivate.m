@@ -17,7 +17,7 @@
 
 + (NSString *)mdc_fontWeightDescription:(CGFloat)weight {
   NSLog(@"Weight %.3f", weight);
-  // NS_AVAILABLE_IOS(8_2)
+  // The UIFontWeight enumeration was added in iOS 8.2
 #if defined(UIFontWeightUltraLight)
   if (weight == UIFontWeightUltraLight) {
     return @"UltraLight";
@@ -48,8 +48,8 @@
 }
 
 - (CGFloat)mdc_weight {
-  //FIXME
-  CGFloat weight = -999.9;
+  // The default font weight is 0.0 / Regular.
+  CGFloat weight = 0.0;
 
   NSDictionary *fontTraits = [self.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];
   if (fontTraits) {
@@ -73,7 +73,7 @@
   NSMutableString *extendedDescription = [[NSMutableString alloc] init];
   [extendedDescription appendFormat:@"%@ : ", self.fontName];
   [extendedDescription appendFormat:@"%@ : ", self.familyName];
-  [extendedDescription appendFormat:@"%.1f - ", self.pointSize];
+  [extendedDescription appendFormat:@"%.1f pt : ", self.pointSize];
   [extendedDescription appendFormat:@"%@", [self mdc_weightString]];
 
   return extendedDescription;

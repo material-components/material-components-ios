@@ -13,20 +13,6 @@
 
 #import "MDCFontTraits.h"
 
-/*
- MDCFontTextStyleBody1,
- MDCFontTextStyleBody2,
- MDCFontTextStyleCaption,
- MDCFontTextStyleHeadline,
- MDCFontTextStyleSubheadline,
- MDCFontTextStyleTitle,
- MDCFontTextStyleDisplay1,
- MDCFontTextStyleDisplay2,
- MDCFontTextStyleDisplay3,
- MDCFontTextStyleDisplay4,
- MDCFontTextStyleButton,
- */
-
 static NSDictionary <NSString *, MDCFontTraits *> *_body1Traits;
 static NSDictionary <NSString *, MDCFontTraits *> *_body2Traits;
 static NSDictionary <NSString *, MDCFontTraits *> *_buttonTraits;
@@ -44,6 +30,8 @@ static NSDictionary <NSNumber *, NSDictionary *> *_styleTable;
 
 @interface MDCFontTraits (MaterialTypographyPrivate)
 
++ (instancetype)traitsWithPointSize:(CGFloat)pointSize weight:(CGFloat)weight leading:(CGFloat)leading tracking:(CGFloat)tracking;
+
 - (instancetype)initWithPointSize:(CGFloat)pointSize weight:(CGFloat)weight leading:(CGFloat)leading tracking:(CGFloat)tracking;
 
 @end
@@ -52,19 +40,32 @@ static NSDictionary <NSNumber *, NSDictionary *> *_styleTable;
 
 + (void)initialize {
   _body1Traits = @{
-                   UIContentSizeCategoryExtraSmall: [[MDCFontTraits alloc] initWithPointSize:11 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategorySmall: [[MDCFontTraits alloc] initWithPointSize:12 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryMedium: [[MDCFontTraits alloc] initWithPointSize:13 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryLarge: [[MDCFontTraits alloc] initWithPointSize:14 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryExtraLarge: [[MDCFontTraits alloc] initWithPointSize:16 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryExtraExtraLarge: [[MDCFontTraits alloc] initWithPointSize:18 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryExtraExtraExtraLarge: [[MDCFontTraits alloc] initWithPointSize:20 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryAccessibilityMedium: [[MDCFontTraits alloc] initWithPointSize:25 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryAccessibilityLarge: [[MDCFontTraits alloc] initWithPointSize:30 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryAccessibilityExtraLarge: [[MDCFontTraits alloc] initWithPointSize:37 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryAccessibilityExtraExtraLarge: [[MDCFontTraits alloc] initWithPointSize:44 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   UIContentSizeCategoryAccessibilityExtraExtraExtraLarge: [[MDCFontTraits alloc] initWithPointSize:52 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-                   };
+    UIContentSizeCategoryExtraSmall:
+        [MDCFontTraits traitsWithPointSize:11 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategorySmall:
+        [MDCFontTraits traitsWithPointSize:12 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryMedium:
+        [MDCFontTraits traitsWithPointSize:13 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryLarge:
+        [MDCFontTraits traitsWithPointSize:14 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryExtraLarge:
+        [MDCFontTraits traitsWithPointSize:16 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryExtraExtraLarge:
+        [MDCFontTraits traitsWithPointSize:18 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryExtraExtraExtraLarge:
+        [MDCFontTraits traitsWithPointSize:20 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryAccessibilityMedium:
+        [MDCFontTraits traitsWithPointSize:25 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryAccessibilityLarge:
+        [MDCFontTraits traitsWithPointSize:30 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryAccessibilityExtraLarge:
+        [MDCFontTraits traitsWithPointSize:37 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryAccessibilityExtraExtraLarge:
+        [MDCFontTraits traitsWithPointSize:44 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryAccessibilityExtraExtraExtraLarge:
+        [MDCFontTraits traitsWithPointSize:52 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+  };
+
 
   _body2Traits = @{
                    UIContentSizeCategoryExtraSmall: [[MDCFontTraits alloc] initWithPointSize:11 weight:UIFontWeightMedium leading:0.0 tracking:0.0],
@@ -184,6 +185,16 @@ static NSDictionary <NSNumber *, NSDictionary *> *_styleTable;
                   @(MDCFontTextStyleSubheadline) : _subheadlineTraits,
                   @(MDCFontTextStyleTitle) : _titleTraits
                   };
+}
+
++ (instancetype)traitsWithPointSize:(CGFloat)pointSize
+                             weight:(CGFloat)weight
+                            leading:(CGFloat)leading
+                           tracking:(CGFloat)tracking {
+  return [[MDCFontTraits alloc] initWithPointSize:pointSize
+                                           weight:weight
+                                          leading:leading
+                                         tracking:tracking];
 }
 
 - (instancetype)initWithPointSize:(CGFloat)pointSize
