@@ -21,12 +21,11 @@
 
 @interface MDCFontTraits : NSObject
 
-@property (nonatomic, readonly) CGFloat pointSize;
-@property (nonatomic, readonly) CGFloat weight;
-@property (nonatomic, readonly) CGFloat leading;
-@property (nonatomic, readonly) CGFloat tracking;
+@property(nonatomic, readonly) CGFloat pointSize;
+@property(nonatomic, readonly) CGFloat weight;
+@property(nonatomic, readonly) CGFloat leading;
+@property(nonatomic, readonly) CGFloat tracking;
 
 + (MDCFontTraits *)traitsForTextStyle:(MDCFontTextStyle)style sizeCategory:(NSString *)sizeCategory;
-
 
 @end

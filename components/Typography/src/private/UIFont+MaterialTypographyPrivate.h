@@ -19,7 +19,7 @@
 
 /*
  Returns the weigtht of the font.
- 
+
  @return A value between -1.0 (very thin) to 1.0 (very thick).  Regular weight is 0.0.
  */
 - (CGFloat)mdc_weight;

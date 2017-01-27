@@ -19,9 +19,8 @@
 
 @implementation UIFontDescriptor (MaterialTypography)
 
-+ (nonnull UIFontDescriptor *)
-    mdc_preferredFontDescriptorForMaterialTextStyle:(MDCFontTextStyle)style {
-
++ (nonnull UIFontDescriptor *)mdc_preferredFontDescriptorForMaterialTextStyle:
+        (MDCFontTextStyle)style {
   // The default size category is Large
   NSString *sizeCategory = UIContentSizeCategoryLarge;
 
@@ -33,8 +32,10 @@
   MDCFontTraits *fontTraits = [MDCFontTraits traitsForTextStyle:style sizeCategory:sizeCategory];
 
   NSDictionary *traits = @{ UIFontWeightTrait : @(fontTraits.weight) };
-  NSDictionary *attributes = @{ UIFontDescriptorSizeAttribute : @(fontTraits.pointSize),
-                                UIFontDescriptorTraitsAttribute : traits };
+  NSDictionary *attributes = @{
+    UIFontDescriptorSizeAttribute : @(fontTraits.pointSize),
+    UIFontDescriptorTraitsAttribute : traits
+  };
 
   UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] initWithFontAttributes:attributes];
 

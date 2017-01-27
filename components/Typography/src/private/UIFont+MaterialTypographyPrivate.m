@@ -15,10 +15,12 @@
 
 @implementation UIFont (MaterialTypographyPrivate)
 
+/*
+ Returns a string indicating the weight of the font.  These weights were added in iOS 8.2.
+ */
 + (NSString *)mdc_fontWeightDescription:(CGFloat)weight {
-  NSLog(@"Weight %.3f", weight);
-  // The UIFontWeight enumeration was added in iOS 8.2
-#if defined(UIFontWeightUltraLight)
+// The UIFontWeight enumeration was added in iOS 8.2
+#if defined(__IPHONE_8_2)
   if (weight == UIFontWeightUltraLight) {
     return @"UltraLight";
   } else if (weight == UIFontWeightThin) {

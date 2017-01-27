@@ -20,10 +20,10 @@
 /*
  Returns an instance of the font descriptor associated with the Material text style and scaled
  based on the content size category.
- 
+
  @style The Material font text style for which to return a font descriptor.
  */
-+ (nonnull UIFontDescriptor *)
-    mdc_preferredFontDescriptorForMaterialTextStyle:(MDCFontTextStyle)style;
++ (nonnull UIFontDescriptor *)mdc_preferredFontDescriptorForMaterialTextStyle:
+        (MDCFontTextStyle)style;
 
 @end
