@@ -368,10 +368,6 @@
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
   self.currentlyActiveInk = NO;
-  MDCCollectionViewCell *collectionCell;
-  if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
-    collectionCell = (MDCCollectionViewCell *)cell;
-  }
   [inkView startTouchEndedAnimationAtPoint:location completion:^(){
     //
   }];
