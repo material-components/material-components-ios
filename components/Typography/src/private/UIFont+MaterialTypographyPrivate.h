@@ -17,15 +17,17 @@
 
 @interface UIFont (MaterialTypographyPrivate)
 
-/*
- Returns the weigtht of the font.
+/**
+ Returns the weight of the font.
 
- @return A value between -1.0 (very thin) to 1.0 (very thick).  Regular weight is 0.0.
+ @return A value between -1.0 (very thin) to 1.0 (very thick).  
+ 
+ Regular weight is 0.0.
  */
 - (CGFloat)mdc_weight;
 
-/*
- Returns an extended description of the font including name, pointsize and weight
+/**
+ Returns an extended description of the font including name, pointsize and weight.
  */
 - (nonnull NSString *)mdc_extendedDescription;
 

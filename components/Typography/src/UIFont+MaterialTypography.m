@@ -21,7 +21,7 @@
   UIFontDescriptor *fontDescriptor =
       [UIFontDescriptor mdc_preferredFontDescriptorForMaterialTextStyle:style];
 
-  // Size is included in the fontDescriptor, so we pass in 0.0 in the parameter
+  // Size is included in the fontDescriptor, so we pass in 0.0 in the parameter.
   UIFont *font = [UIFont fontWithDescriptor:fontDescriptor size:0.0];
 
   return font;

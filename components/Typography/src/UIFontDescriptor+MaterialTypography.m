@@ -21,19 +21,21 @@
 
 + (nonnull UIFontDescriptor *)mdc_preferredFontDescriptorForMaterialTextStyle:
         (MDCFontTextStyle)style {
-  // The default size category is Large
+  // iOS' default UIContentSizeCategory is Large.
   NSString *sizeCategory = UIContentSizeCategoryLarge;
 
-  // If we are within an application, queary the preferredContentSizeCategory
+  // If we are within an application, query the preferredContentSizeCategory.
   if ([UIApplication mdc_safeSharedApplication]) {
     sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
   }
 
-  MDCFontTraits *fontTraits = [MDCFontTraits traitsForTextStyle:style sizeCategory:sizeCategory];
+  // TODO(#1179): We should include our leading and tracking metrics when creating this descriptor.
+  MDCFontTraits *materialTraits =
+      [MDCFontTraits traitsForTextStyle:style sizeCategory:sizeCategory];
 
-  NSDictionary *traits = @{ UIFontWeightTrait : @(fontTraits.weight) };
+  NSDictionary *traits = @{ UIFontWeightTrait : @(materialTraits.weight) };
   NSDictionary *attributes = @{
-    UIFontDescriptorSizeAttribute : @(fontTraits.pointSize),
+    UIFontDescriptorSizeAttribute : @(materialTraits.pointSize),
     UIFontDescriptorTraitsAttribute : traits
   };
 

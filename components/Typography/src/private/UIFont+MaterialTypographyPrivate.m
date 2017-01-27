@@ -50,7 +50,7 @@
 }
 
 - (CGFloat)mdc_weight {
-  // The default font weight is 0.0 / Regular.
+  // The default font weight is UIFontWeightRegular, which is 0.0.
   CGFloat weight = 0.0;
 
   NSDictionary *fontTraits = [self.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];

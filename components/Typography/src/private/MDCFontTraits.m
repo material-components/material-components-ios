@@ -476,12 +476,15 @@ static NSDictionary<NSNumber *, NSDictionary *> *_styleTable;
       traits = traitsTable[sizeCategory];
     }
 
+    // If you have queried the table for a sizeCategory that doesn't exist, we will return the
+    // traits for XXXL.  This handles the case where the values are requested for one of the
+    // accessibility size categories beyond XXXL such as
+    // UIContentSizeCategoryAccessibilityExtraLarge.  Accessbility size categories are only
+    // defined for the Body Font Style.
     if (traits == nil) {
       traits = traitsTable[UIContentSizeCategoryExtraExtraExtraLarge];
     }
   }
-
-  // Asert traits
 
   return traits;
 }
