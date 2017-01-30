@@ -91,12 +91,14 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @property(nonatomic, weak) id<MDCInkLayerRippleDelegate> animationDelegate;
 @property(nonatomic, assign) BOOL bounded;
-@property(nonatomic, strong) CALayer *inkLayer;
+@property(nonatomic, weak) CALayer *inkLayer;
 @property(nonatomic, assign) CGFloat radius;
 @property(nonatomic, assign) CGPoint point;
 @property(nonatomic, assign) CGRect targetFrame;
 @property(nonatomic, assign) MDCInkRippleState rippleState;
 @property(nonatomic, strong) UIColor *color;
+
+- (void)clearAnimations;
 
 @end
 
@@ -176,6 +178,11 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
   [self removeFromSuperlayer];
   [self.animationDelegate animationDidStop:anim shapeLayer:self finished:finished];
+}
+
+- (void)clearAnimations {
+  NSAssert(NO, @"The method %@ in %@ must be overridden.",
+           NSStringFromSelector(_cmd), NSStringFromClass([self class]));
 }
 
 @end
@@ -355,6 +362,15 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   [CATransaction commit];
 }
 
+- (void)clearAnimations {
+  [self removeAnimationForKey:kInkLayerForegroundOpacityAnim];
+  [self removeAnimationForKey:kInkLayerForegroundPositionAnim];
+  [self removeAnimationForKey:kInkLayerForegroundScaleAnim];
+  _foregroundOpacityAnim = nil;
+  _foregroundPositionAnim = nil;
+  _foregroundScaleAnim = nil;
+}
+
 @end
 
 static CGFloat const kInkLayerBackgroundOpacityEnterDuration = 0.6f;
@@ -406,6 +422,11 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   _backgroundOpacityAnim.duration = duration;
   _backgroundOpacityAnim.delegate = self;
   [self addAnimation:_backgroundOpacityAnim forKey:kInkLayerBackgroundOpacityAnim];
+}
+
+- (void)clearAnimations {
+  _backgroundOpacityAnim = nil;
+  [self removeAnimationForKey:kInkLayerBackgroundOpacityAnim];
 }
 
 @end
@@ -568,6 +589,9 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
               shapeLayer:(CAShapeLayer *)shapeLayer
                 finished:(BOOL)finished {
 
+  if ([shapeLayer respondsToSelector:@selector(clearAnimations)]) {
+    [(MDCInkLayerRipple *)shapeLayer clearAnimations];
+  }
   if ([shapeLayer isMemberOfClass:[MDCInkLayerForegroundRipple class]]) {
     [self.foregroundRipples removeObject:(MDCInkLayerForegroundRipple *)shapeLayer];
     self.unexitedForegroundRippleIndex--;
