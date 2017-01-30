@@ -101,9 +101,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.textLabel.text = _content[indexPath.section][indexPath.item];
-  cell.inkView.inkColor = [UIColor redColor];
-  cell.inkView.alpha = 1.0;
-
   return cell;
 }
 
