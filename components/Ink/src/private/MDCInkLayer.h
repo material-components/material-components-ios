@@ -73,25 +73,6 @@
 - (void)resetAllInk:(BOOL)animated;
 
 /**
- Reset the bottom-most ink applied to the layer with a completion handler to be called on completion
- if applicable.
- 
-  @param animated Enables the ink ripple fade out animation.
-  @param completionBlock Block called after the completion of the animation.
- */
-- (void)resetBottomInk:(BOOL)animated completion:(void (^)())completionBlock;
-
-/**
- Reset the bottom-most ink applied to the layer with a completion handler to be called on completion
- if applicable.
-
- @param animated Enables the ink ripple fade out animation.
- @param point Evaporate the ink towards the point.
- @param completionBlock Block called after the completion of the animation.
- */
-- (void)resetBottomInk:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)())completionBlock;
-
-/**
  Spreads the ink over the whole view.
 
  Can be called multiple times which will result in multiple ink ripples.

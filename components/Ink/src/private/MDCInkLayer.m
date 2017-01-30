@@ -247,9 +247,12 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundPositionAnim.keyTimes = @[ @(kInkLayerForegroundUnboundedEnterDelay), @1 ];
     [self addAnimation:_foregroundPositionAnim forKey:kInkLayerForegroundPositionAnim];
   }
+
+  __weak MDCInkLayerForegroundRipple *weakSelf = self;
   [CATransaction begin];
   [CATransaction setCompletionBlock:^{
-    if (completionBlock && self.rippleState != kInkRippleCancelled) {
+    MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+    if (completionBlock && strongSelf.rippleState != kInkRippleCancelled) {
       completionBlock();
     }
   }];
@@ -338,9 +341,11 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   _foregroundPositionAnim.timingFunction = [self logDecelerateEasing];
   _foregroundScaleAnim.timingFunction = [self logDecelerateEasing];
 
+  __weak MDCInkLayerForegroundRipple *weakSelf = self;
   [CATransaction begin];
   [CATransaction setCompletionBlock:^{
-    if (completionBlock && self.rippleState != kInkRippleCancelled) {
+    MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+    if (completionBlock && strongSelf.rippleState != kInkRippleCancelled) {
       completionBlock();
     }
   }];
@@ -406,6 +411,25 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 @end
 
 @interface MDCInkLayer () <MDCInkLayerRippleDelegate>
+
+/**
+ Reset the bottom-most ink applied to the layer with a completion handler to be called on completion
+ if applicable.
+
+ @param animated Enables the ink ripple fade out animation.
+ @param completionBlock Block called after the completion of the animation.
+ */
+- (void)resetBottomInk:(BOOL)animated completion:(void (^)())completionBlock;
+
+/**
+ Reset the bottom-most ink applied to the layer with a completion handler to be called on completion
+ if applicable.
+
+ @param animated Enables the ink ripple fade out animation.
+ @param point Evaporate the ink towards the point.
+ @param completionBlock Block called after the completion of the animation.
+ */
+- (void)resetBottomInk:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)())completionBlock;
 
 @property(nonatomic, strong) CAShapeLayer *compositeRipple;
 @property(nonatomic, strong) NSMutableArray <MDCInkLayerForegroundRipple *> *foregroundRipples;
