@@ -19,7 +19,7 @@
 #import "MaterialTypography.h"
 
 static const NSInteger kSectionCount = 10;
-static const NSInteger kSectionItemCount = 100;
+static const NSInteger kSectionItemCount = 5;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 #pragma mark - Custom Collection view

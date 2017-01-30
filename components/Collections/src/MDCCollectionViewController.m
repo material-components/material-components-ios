@@ -355,9 +355,7 @@
     }
   }
   self.currentlyActiveInk = YES;
-  [inkView startTouchBeganAnimationAtPoint:location completion:^(){
-    //
-  }];
+  [inkView startTouchBeganAnimationAtPoint:location completion:nil];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -368,9 +366,7 @@
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
   self.currentlyActiveInk = NO;
-  [inkView startTouchEndedAnimationAtPoint:location completion:^(){
-    //
-  }];
+  [inkView startTouchEndedAnimationAtPoint:location completion:nil];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView

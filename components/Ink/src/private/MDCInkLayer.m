@@ -180,7 +180,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @end
 
-static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = 10.4f;
+static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = 0.4f;
 static CGFloat const kInkLayerForegroundBoundedPositionExitDuration = 0.3f;
 static CGFloat const kInkLayerForegroundBoundedRadiusExitDuration = 0.8f;
 static CGFloat const kInkLayerForegroundRadiusGrowthMultiplier = 350.f;
