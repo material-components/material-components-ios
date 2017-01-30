@@ -16,5 +16,31 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MDCSheetContainerViewDelegate;
+
+typedef NS_ENUM(NSUInteger, MDCSheetState) {
+  MDCSheetStateClosed,
+  MDCSheetStatePreferred,
+  MDCSheetStateExtended
+};
+
 @interface MDCSheetContainerView : UIView
+
+@property(nonatomic, weak, nullable) id<MDCSheetContainerViewDelegate> delegate;
+@property(nonatomic, readonly) MDCSheetState sheetState;
+@property(nonatomic) CGFloat preferredSheetHeight;
+
+- (nonnull instancetype)initWithFrame:(CGRect)frame
+                          contentView:(nonnull UIView *)contentView
+                           scrollView:(nullable UIScrollView *)scrollView NS_DESIGNATED_INITIALIZER;
+
+- (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder NS_UNAVAILABLE;
+
+@end
+
+@protocol MDCSheetContainerViewDelegate <NSObject>
+
+- (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView;
+
 @end

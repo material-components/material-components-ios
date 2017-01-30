@@ -19,11 +19,26 @@
 #import "MaterialBottomSheet.h"
 #import "MaterialButtons.h"
 
+@interface BottomSheetExampleViewController : UIViewController
+@end
+
+@implementation BottomSheetExampleViewController
+
+- (void)loadView {
+  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  scrollView.contentSize = CGSizeMake(100, 1000);
+  self.view = scrollView;
+  self.view.backgroundColor = [UIColor redColor];
+}
+
+@end
+
 @interface BottomSheetTypicalUseExample : UIViewController
 @end
 
 @implementation BottomSheetTypicalUseExample {
   MDCButton *_button;
+  MDCBottomSheetTransitionController *_transitionController;
 }
 
 - (void)viewDidLoad {
@@ -42,12 +57,15 @@
     forControlEvents:UIControlEventTouchUpInside];
   _button.center = self.view.center;
   [self.view addSubview:_button];
+
+  _transitionController = [[MDCBottomSheetTransitionController alloc] init];
 }
 
 - (void)didTapButton:(id)sender {
-  MDCBottomSheetController *bottomSheet =
-      [[MDCBottomSheetController alloc] initWithContentViewController:nil];
-  [self presentViewController:bottomSheet animated:YES completion:nil];
+  UIViewController *viewController = [[BottomSheetExampleViewController alloc] initWithCoder:nil];
+  viewController.transitioningDelegate = _transitionController;
+  viewController.modalPresentationStyle = UIModalPresentationCustom;
+  [self presentViewController:viewController animated:YES completion:nil];
 }
 
 @end

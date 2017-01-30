@@ -16,5 +16,94 @@
 
 #import "MDCDraggableView.h"
 
+@interface UIGestureRecognizer (Cancelling)
+// Cancels an active gesture.
+- (void)mdc_cancel;
+@end
+
+@implementation UIGestureRecognizer (Cancelling)
+
+- (void)mdc_cancel {
+  if (self.enabled) {
+    // Setting enabled to NO while a gesture recognizer is currently recognizing a gesture will
+    // transition it to a cancelled state.
+    self.enabled = NO;
+    self.enabled = YES;
+  }
+}
+
+@end
+
+
+@interface MDCDraggableView ()<UIGestureRecognizerDelegate>
+@property(nonatomic) UIPanGestureRecognizer *dragRecognizer;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@end
+
+
 @implementation MDCDraggableView
+
+- (instancetype)initWithFrame:(CGRect)frame scrollView:(UIScrollView *)scrollView {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _scrollView = scrollView;
+    _dragRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                              action:@selector(didPan:)];
+    _dragRecognizer.maximumNumberOfTouches = 1;
+    _dragRecognizer.delegate = self;
+    [self addGestureRecognizer:_dragRecognizer];
+  }
+  return self;
+}
+
+#pragma mark - Gesture handling
+
+- (void)didPan:(UIPanGestureRecognizer *)recognizer {
+  CGPoint point = [recognizer translationInView:self.superview];
+
+  // Ensure that dragging the sheet past the maximum height results in an exponential decay on the
+  // translation. This gives the same effect as when you overscroll a scrollview.
+  CGFloat newHeight = CGRectGetMaxY(self.superview.bounds) - CGRectGetMinY(self.frame);
+  if (newHeight > [self.delegate maximumHeightForDraggableView:self]) {
+    point.y -= point.y / 1.2;
+  }
+
+  self.center = CGPointMake(self.center.x, self.center.y + point.y);
+  [recognizer setTranslation:CGPointZero inView:self.superview];
+
+  CGPoint velocity = [recognizer velocityInView:self.superview];
+  velocity.x = 0;
+
+  if (recognizer.state == UIGestureRecognizerStateBegan) {
+    [self.delegate draggableViewBeganDragging:self];
+  } else if (recognizer.state == UIGestureRecognizerStateEnded) {
+    [self.delegate draggableView:self draggingEndedWithVelocity:velocity];
+  }
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)recognizer {
+  CGPoint velocity = [recognizer velocityInView:self.superview];
+  velocity.x = 0;
+
+  if ([self.delegate draggableView:self shouldBeginDraggingWithVelocity:velocity]) {
+    // If dragging the pane, don't allow the content to scroll at the same time.
+    [self.scrollView.panGestureRecognizer mdc_cancel];
+    return YES;
+  } else {
+    return NO;
+  }
+}
+
+// Allow the drag recogniser to recognize alongside the embedded scrollview's pan gesture.
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)recognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:
+        (UIGestureRecognizer *)otherGestureRecognizer {
+  if (otherGestureRecognizer == self.scrollView.panGestureRecognizer) {
+    return YES;
+  }
+  return NO;
+}
+
 @end
