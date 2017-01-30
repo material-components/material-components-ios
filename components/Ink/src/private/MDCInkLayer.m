@@ -89,6 +89,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @interface MDCInkLayerRipple : CAShapeLayer
 
+@property (nonatomic, assign) BOOL animationsCleared;
 @property(nonatomic, weak) id<MDCInkLayerRippleDelegate> animationDelegate;
 @property(nonatomic, assign) BOOL bounded;
 @property(nonatomic, weak) CALayer *inkLayer;
@@ -113,6 +114,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   self = [super init];
   if (self) {
     _rippleState = kInkRippleNone;
+    _animationsCleared = YES;
   }
   return self;
 }
@@ -128,6 +130,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 - (void)enter {
   _rippleState = kInkRippleSpreading;
   [_inkLayer addSublayer:self];
+  _animationsCleared = NO;
 }
 
 - (void)exit {
@@ -176,8 +179,10 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
-  [self removeFromSuperlayer];
-  [self.animationDelegate animationDidStop:anim shapeLayer:self finished:finished];
+  if (!_animationsCleared) {
+    [self removeFromSuperlayer];
+    [self.animationDelegate animationDidStop:anim shapeLayer:self finished:finished];
+  }
 }
 
 - (void)clearAnimations {
@@ -369,6 +374,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   _foregroundOpacityAnim = nil;
   _foregroundPositionAnim = nil;
   _foregroundScaleAnim = nil;
+  self.animationsCleared = YES;
 }
 
 @end
@@ -427,6 +433,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (void)clearAnimations {
   _backgroundOpacityAnim = nil;
   [self removeAnimationForKey:kInkLayerBackgroundOpacityAnim];
+  self.animationsCleared = YES;
 }
 
 @end
@@ -589,7 +596,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
               shapeLayer:(CAShapeLayer *)shapeLayer
                 finished:(BOOL)finished {
 
-  if ([shapeLayer respondsToSelector:@selector(clearAnimations)]) {
+  if ([shapeLayer isKindOfClass:[MDCInkLayerRipple class]]) {
     [(MDCInkLayerRipple *)shapeLayer clearAnimations];
   }
   if ([shapeLayer isMemberOfClass:[MDCInkLayerForegroundRipple class]]) {
