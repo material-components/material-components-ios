@@ -260,14 +260,16 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [self addAnimation:_foregroundPositionAnim forKey:kInkLayerForegroundPositionAnim];
   }
 
-  __weak MDCInkLayerForegroundRipple *weakSelf = self;
   [CATransaction begin];
-  [CATransaction setCompletionBlock:^{
-    MDCInkLayerForegroundRipple *strongSelf = weakSelf;
-    if (completionBlock && strongSelf.rippleState != kInkRippleCancelled) {
-      completionBlock();
-    }
-  }];
+  if (completionBlock) {
+    __weak MDCInkLayerForegroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^{
+      MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+      if (strongSelf.rippleState != kInkRippleCancelled) {
+        completionBlock();
+      }
+    }];
+  }
   [self addAnimation:_foregroundOpacityAnim forKey:kInkLayerForegroundOpacityAnim];
   [self addAnimation:_foregroundScaleAnim forKey:kInkLayerForegroundScaleAnim];
   [CATransaction commit];
@@ -353,14 +355,16 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   _foregroundPositionAnim.timingFunction = [self logDecelerateEasing];
   _foregroundScaleAnim.timingFunction = [self logDecelerateEasing];
 
-  __weak MDCInkLayerForegroundRipple *weakSelf = self;
   [CATransaction begin];
-  [CATransaction setCompletionBlock:^{
-    MDCInkLayerForegroundRipple *strongSelf = weakSelf;
-    if (completionBlock && strongSelf.rippleState != kInkRippleCancelled) {
-      completionBlock();
-    }
-  }];
+  if (completionBlock) {
+    __weak MDCInkLayerForegroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^{
+      MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+      if (strongSelf.rippleState != kInkRippleCancelled) {
+        completionBlock();
+      }
+    }];
+  }
   [self addAnimation:_foregroundOpacityAnim forKey:kInkLayerForegroundOpacityAnim];
   [self addAnimation:_foregroundPositionAnim forKey:kInkLayerForegroundPositionAnim];
   [self addAnimation:_foregroundScaleAnim forKey:kInkLayerForegroundScaleAnim];
