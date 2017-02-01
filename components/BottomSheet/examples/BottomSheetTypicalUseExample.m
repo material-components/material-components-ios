@@ -19,13 +19,24 @@
 #import "MaterialBottomSheet.h"
 #import "MaterialButtons.h"
 
+@interface ExampleScrollView : UIScrollView
+@end
+
+@implementation ExampleScrollView
+
+- (void)didMoveToSuperview {
+  [super didMoveToSuperview];
+}
+
+@end
+
 @interface BottomSheetExampleViewController : UIViewController
 @end
 
 @implementation BottomSheetExampleViewController
 
 - (void)loadView {
-  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  UIScrollView *scrollView = [[ExampleScrollView alloc] initWithFrame:CGRectZero];
   scrollView.contentSize = CGSizeMake(100, 1000);
   self.view = scrollView;
   self.view.backgroundColor = [UIColor redColor];
@@ -33,12 +44,12 @@
 
 @end
 
-@interface BottomSheetTypicalUseExample : UIViewController
+@interface BottomSheetTypicalUseExample : UIViewController <UIViewControllerTransitioningDelegate>
 @end
 
 @implementation BottomSheetTypicalUseExample {
   MDCButton *_button;
-  MDCBottomSheetTransitionController *_transitionController;
+  MDCBottomSheetPresentationController *_presentationController;
 }
 
 - (void)viewDidLoad {
@@ -57,15 +68,21 @@
     forControlEvents:UIControlEventTouchUpInside];
   _button.center = self.view.center;
   [self.view addSubview:_button];
-
-  _transitionController = [[MDCBottomSheetTransitionController alloc] init];
 }
 
 - (void)didTapButton:(id)sender {
   UIViewController *viewController = [[BottomSheetExampleViewController alloc] initWithCoder:nil];
-  viewController.transitioningDelegate = _transitionController;
+  viewController.transitioningDelegate = self;
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   [self presentViewController:viewController animated:YES completion:nil];
+}
+
+- (UIPresentationController *)
+    presentationControllerForPresentedViewController:(UIViewController *)presented
+                            presentingViewController:(UIViewController *)presenting
+                                sourceViewController:(UIViewController *)source {
+  return [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
+                                                              presentingViewController:presenting];
 }
 
 @end

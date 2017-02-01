@@ -16,8 +16,43 @@
 
 #import "MDCBottomSheetPresentationController.h"
 
+#import "private/MDCSheetContainerView.h"
+
+@interface UIViewController ()
+// Weak dependency on GOONav's equivalent API.
+- (UIScrollView *)navigationPrimaryScrollView;
+@end
+
+static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController) {
+  UIScrollView *scrollView = nil;
+
+  // Ensure the view is loaded - occasionally during non-animated transitions the view may not be
+  // loaded yet (but the scrollview is still needed for scroll-tracking to work properly).
+  if (![viewController isViewLoaded]) {
+    (void)viewController.view;
+  }
+
+  // TODO(b/25442167): This is a soft dependency on GOONav's logic for
+  //                   GOONavigationGetPrimaryScrollView.
+  if ([viewController respondsToSelector:@selector(navigationPrimaryScrollView)]) {
+    scrollView = [(id)viewController navigationPrimaryScrollView];
+  } else if ([viewController.view isKindOfClass:[UIScrollView class]]) {
+    scrollView = (UIScrollView *)viewController.view;
+  } else if ([viewController.view isKindOfClass:[UIWebView class]]) {
+    scrollView = ((UIWebView *)viewController.view).scrollView;
+  } else if ([viewController isKindOfClass:[UICollectionViewController class]]) {
+    scrollView = ((UICollectionViewController *)viewController).collectionView;
+  }
+  return scrollView;
+}
+
+@interface MDCBottomSheetPresentationController () <MDCSheetContainerViewDelegate>
+@end
+
 @implementation MDCBottomSheetPresentationController {
   UIView *_dimmingView;
+  MDCSheetContainerView *_sheetView;
+  CGAffineTransform _savedTransform;
 }
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
@@ -32,11 +67,28 @@
   return self;
 }
 
+- (UIView *)presentedView {
+  return _sheetView;
+}
+
 - (void)presentationTransitionWillBegin {
   UIView *containerView = [self containerView];
-  [containerView insertSubview:_dimmingView atIndex:0];
 
-  NSDictionary *views = NSDictionaryOfVariableBindings(_dimmingView);
+  CGRect frame = self.containerView.frame;
+  UIScrollView *scrollView = MDCBottomSheetGetPrimaryScrollView(self.presentedViewController);
+  _sheetView = [[MDCSheetContainerView alloc] initWithFrame:frame
+                                                contentView:self.presentedViewController.view
+                                                 scrollView:scrollView];
+  _sheetView.delegate = self;
+  _sheetView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _savedTransform = _sheetView.transform;
+  _sheetView.transform = [self offScreenTransformForPresentedView];
+
+  [containerView addSubview:_dimmingView];
+  [containerView addSubview:_sheetView];
+
+  NSDictionary *views = NSDictionaryOfVariableBindings(_dimmingView, _sheetView);
 
   [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_dimmingView]|"
                                                                         options:0
@@ -46,6 +98,16 @@
                                                                         options:0
                                                                         metrics:nil
                                                                           views:views]];
+  [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_sheetView]|"
+                                                                        options:0
+                                                                        metrics:nil
+                                                                          views:views]];
+  [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_sheetView]|"
+                                                                        options:0
+                                                                        metrics:nil
+                                                                          views:views]];
+
+  [self updatePreferredSheetHeight];
 
   id <UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
@@ -54,6 +116,7 @@
   [_dimmingView setAlpha:0.0];
   [transitionCoordinator animateAlongsideTransition:
    ^(id<UIViewControllerTransitionCoordinatorContext> context) {
+     _sheetView.transform = _savedTransform;
      [_dimmingView setAlpha:1.0];
    } completion:nil];
 }
@@ -70,6 +133,7 @@
 
   [transitionCoordinator animateAlongsideTransition:
    ^(id<UIViewControllerTransitionCoordinatorContext> context) {
+     _sheetView.transform = [self offScreenTransformForPresentedView];
      [_dimmingView setAlpha:0.0];
    } completion:nil];
 }
@@ -78,6 +142,32 @@
   if (completed) {
     [_dimmingView removeFromSuperview];
   }
+}
+
+- (CGAffineTransform)offScreenTransformForPresentedView {
+  CGFloat yOffset = CGRectGetHeight(self.presentedViewController.view.bounds);
+  CGAffineTransform translation = CGAffineTransformMakeTranslation(0, yOffset);
+
+  return CGAffineTransformConcat(translation, _sheetView.transform);
+}
+
+- (void)updatePreferredSheetHeight {
+  CGFloat preferredContentHeight = self.presentedViewController.preferredContentSize.height;
+
+  // If |preferredSheetHeight| has not been specified, use half of the current height.
+  //  if (GOOFloatIsApproximatelyZero(preferredContentHeight) || !self.usePreferredHeight) {
+  preferredContentHeight = _sheetView.frame.size.height / 2;
+  if (preferredContentHeight < (CGFloat)FLT_EPSILON) {
+    preferredContentHeight = 0;
+  }
+  //  }
+  _sheetView.preferredSheetHeight = preferredContentHeight;
+}
+
+#pragma mark - MDCSheetContainerViewDelegate
+
+- (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView {
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
