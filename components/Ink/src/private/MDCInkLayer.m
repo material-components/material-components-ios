@@ -222,7 +222,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   [super setupRipple];
 }
 
-- (void)enterWithCompletionBlock:(void (^)())completionBlock {
+- (void)enterWithCompletion:(void (^)())completionBlock {
   [super enter];
 
   if (self.bounded) {
@@ -277,10 +277,10 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 - (void)exit:(BOOL)animated {
   self.rippleState = kInkRippleCancelled;
-  [self exit:animated completionBlock:nil];
+  [self exit:animated completion:nil];
 }
 
-- (void)exit:(BOOL)animated completionBlock:(void (^)())completionBlock {
+- (void)exit:(BOOL)animated completion:(void (^)())completionBlock {
   [super exit];
 
   if (!animated) {
@@ -517,7 +517,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (void)resetBottomInk:(BOOL)animated completion:(void (^)())completionBlock {
   if (self.foregroundRipples.count > 0) {
     [[self.foregroundRipples objectAtIndex:self.unexitedForegroundRippleIndex] exit:animated
-                                                                completionBlock:completionBlock];
+                                                                        completion:completionBlock];
   }
   if (self.backgroundRipples.count > 0) {
     [[self.backgroundRipples objectAtIndex:self.unexitedBackgroundRippleIndex] exit:animated];
@@ -531,7 +531,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     MDCInkLayerForegroundRipple *foregroundRipple =
         [self.foregroundRipples objectAtIndex:self.unexitedForegroundRippleIndex];
     foregroundRipple.point = point;
-    [foregroundRipple exit:animated completionBlock:completionBlock];
+    [foregroundRipple exit:animated completion:completionBlock];
   }
   if (self.backgroundRipples.count > 0) {
     [[self.backgroundRipples objectAtIndex:self.unexitedBackgroundRippleIndex] exit:animated];
@@ -579,7 +579,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
   [backgroundRipple enter];
   [self.backgroundRipples addObject:backgroundRipple];
-  [foregroundRipple enterWithCompletionBlock:completionBlock];
+  [foregroundRipple enterWithCompletion:completionBlock];
   [self.foregroundRipples addObject:foregroundRipple];
   self.unexitedForegroundRippleIndex++;
   self.unexitedBackgroundRippleIndex++;
