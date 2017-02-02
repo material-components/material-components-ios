@@ -109,6 +109,14 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   [self updatePreferredSheetHeight];
 
+  containerView.userInteractionEnabled = YES;
+  // Add tap handler to dismiss the sheet.
+  UITapGestureRecognizer *tapGesture =
+      [[UITapGestureRecognizer alloc] initWithTarget:self
+                                              action:@selector(dismissPresentedControllerIfNecessary:)];
+  tapGesture.cancelsTouchesInView = NO;
+  [containerView addGestureRecognizer:tapGesture];
+
   id <UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
 
@@ -162,6 +170,17 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
   //  }
   _sheetView.preferredSheetHeight = preferredContentHeight;
+}
+
+- (void)dismissPresentedControllerIfNecessary:(UITapGestureRecognizer *)tapRecognizer {
+  // Only dismiss if the tap is outside of the presented view.
+  UIView *contentView = self.presentedViewController.view;
+  CGPoint pointInContentView = [tapRecognizer locationInView:contentView];
+  if ([contentView pointInside:pointInContentView withEvent:nil]) {
+    return;
+  }
+//  [self.presentedViewController.delegate bottomSheetControllerDidCancel:_presentedViewController];
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - MDCSheetContainerViewDelegate

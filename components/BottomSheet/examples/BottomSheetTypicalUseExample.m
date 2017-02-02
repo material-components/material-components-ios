@@ -23,11 +23,6 @@
 @end
 
 @implementation ExampleScrollView
-
-- (void)didMoveToSuperview {
-  [super didMoveToSuperview];
-}
-
 @end
 
 @interface BottomSheetExampleViewController : UIViewController
