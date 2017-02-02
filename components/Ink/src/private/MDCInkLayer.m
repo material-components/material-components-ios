@@ -89,7 +89,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @interface MDCInkLayerRipple : CAShapeLayer
 
-@property (nonatomic, assign) BOOL animationsCleared;
+@property(nonatomic, assign, getter=isAnimationCleared) BOOL animationCleared;
 @property(nonatomic, weak) id<MDCInkLayerRippleDelegate> animationDelegate;
 @property(nonatomic, assign) BOOL bounded;
 @property(nonatomic, weak) CALayer *inkLayer;
@@ -98,8 +98,6 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 @property(nonatomic, assign) CGRect targetFrame;
 @property(nonatomic, assign) MDCInkRippleState rippleState;
 @property(nonatomic, strong) UIColor *color;
-
-- (void)clearAnimations;
 
 @end
 
@@ -114,7 +112,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   self = [super init];
   if (self) {
     _rippleState = kInkRippleNone;
-    _animationsCleared = YES;
+    _animationCleared = YES;
   }
   return self;
 }
@@ -130,7 +128,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 - (void)enter {
   _rippleState = kInkRippleSpreading;
   [_inkLayer addSublayer:self];
-  _animationsCleared = NO;
+  _animationCleared = NO;
 }
 
 - (void)exit {
@@ -179,7 +177,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
-  if (!_animationsCleared) {
+  if (!self.isAnimationCleared) {
     [self removeFromSuperlayer];
     [self.animationDelegate animationDidStop:anim shapeLayer:self finished:finished];
   }
@@ -378,7 +376,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   _foregroundOpacityAnim = nil;
   _foregroundPositionAnim = nil;
   _foregroundScaleAnim = nil;
-  self.animationsCleared = YES;
+  self.animationCleared = YES;
 }
 
 @end
@@ -437,7 +435,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (void)clearAnimations {
   _backgroundOpacityAnim = nil;
   [self removeAnimationForKey:kInkLayerBackgroundOpacityAnim];
-  self.animationsCleared = YES;
+  self.animationCleared = YES;
 }
 
 @end
