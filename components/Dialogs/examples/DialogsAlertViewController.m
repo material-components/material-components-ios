@@ -79,7 +79,7 @@
     "one of the actions available.";
 
   MDCAlertController *materialAlertController =
-  [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
