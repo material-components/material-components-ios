@@ -54,9 +54,9 @@
 @property(nonatomic, assign) BOOL automaticallyDismissBottomSheet;
 
 /**
- Controls the height that the sheet should be when it appears. If not set, it defaults to half the
- height of the screen. If set, and the @c -preferredContentSize is non-zero on the content view
- controller, it defaults to that.
+ Controls the height that the sheet should be when it appears. If NO, it defaults to half the height
+ of the screen. If YES, and the @c -preferredContentSize is non-zero on the content view controller,
+ it defaults to the preferredContentSize.
 
  @note The height used will never be any taller than the screen of the device.
  The default value is NO.
