@@ -183,11 +183,6 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   }
 }
 
-- (void)clearAnimations {
-  NSAssert(NO, @"The method %@ in %@ must be overridden.",
-           NSStringFromSelector(_cmd), NSStringFromClass([self class]));
-}
-
 @end
 
 static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = 0.4f;
@@ -369,10 +364,8 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   [CATransaction commit];
 }
 
-- (void)clearAnimations {
-  [self removeAnimationForKey:kInkLayerForegroundOpacityAnim];
-  [self removeAnimationForKey:kInkLayerForegroundPositionAnim];
-  [self removeAnimationForKey:kInkLayerForegroundScaleAnim];
+- (void)removeAllAnimations {
+  [super removeAllAnimations];
   _foregroundOpacityAnim = nil;
   _foregroundPositionAnim = nil;
   _foregroundScaleAnim = nil;
@@ -432,9 +425,9 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [self addAnimation:_backgroundOpacityAnim forKey:kInkLayerBackgroundOpacityAnim];
 }
 
-- (void)clearAnimations {
+- (void)removeAllAnimations {
+  [super removeAllAnimations];
   _backgroundOpacityAnim = nil;
-  [self removeAnimationForKey:kInkLayerBackgroundOpacityAnim];
   self.animationCleared = YES;
 }
 
@@ -598,9 +591,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
               shapeLayer:(CAShapeLayer *)shapeLayer
                 finished:(BOOL)finished {
 
-  if ([shapeLayer isKindOfClass:[MDCInkLayerRipple class]]) {
-    [(MDCInkLayerRipple *)shapeLayer clearAnimations];
-  }
+  [shapeLayer removeAllAnimations];
+
   if ([shapeLayer isMemberOfClass:[MDCInkLayerForegroundRipple class]]) {
     [self.foregroundRipples removeObject:(MDCInkLayerForegroundRipple *)shapeLayer];
     self.unexitedForegroundRippleIndex--;
