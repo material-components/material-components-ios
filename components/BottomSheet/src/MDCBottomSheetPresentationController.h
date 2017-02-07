@@ -16,42 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCBottomSheetPresentationController;
-
-/**
- Delegate for MDCBottomSheetPresentationController.
- */
-@protocol MDCBottomSheetPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
-
-/**
- Called when the user taps the background or drags the bottom sheet off screen.
- @param controller The MDCBottomSheetPresentationController that was dismissed.
- */
-- (void)bottomSheetPresentationControllerDidCancel:
-    (nonnull MDCBottomSheetPresentationController *)controller;
-
-@end
-
 /**
  A UIPresentationController for presenting a modal view controller as a bottom sheet.
  */
 @interface MDCBottomSheetPresentationController : UIPresentationController
-
-/**
- Delegate to tell the presenter when to dismiss.
- */
-@property(nonatomic, weak, nullable) id<MDCBottomSheetPresentationControllerDelegate> delegate;
-
-/**
- If YES the bottom sheet presentation controller will dismiss the presented view controller when the
- user taps the dimming view or pulls the bottom sheet off the screen.
- If NO the bottom sheet will never automatically dismiss the presented view controller.
-
- @note If NO clients should dismiss the presented view controller inside the delegate callback
-   |bottomSheetPresentationControllerDidCancel|.
- The default value is YES.
- */
-@property(nonatomic, assign) BOOL automaticallyDismissBottomSheet;
 
 /**
  Controls the height that the sheet should be when it appears. If NO, it defaults to half the height
