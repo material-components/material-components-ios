@@ -76,8 +76,11 @@
     presentationControllerForPresentedViewController:(UIViewController *)presented
                             presentingViewController:(UIViewController *)presenting
                                 sourceViewController:(UIViewController *)source {
-  return [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
-                                                              presentingViewController:presenting];
+  MDCBottomSheetPresentationController *presentationController =
+      [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
+                                                           presentingViewController:presenting];
+  presentationController.usePreferredHeight = YES;
+  return presentationController;
 }
 
 @end
