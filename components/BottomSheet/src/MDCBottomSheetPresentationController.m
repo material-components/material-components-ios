@@ -18,11 +18,6 @@
 
 #import "private/MDCSheetContainerView.h"
 
-@interface UIViewController ()
-// Weak dependency on GOONav's equivalent API.
-- (UIScrollView *)navigationPrimaryScrollView;
-@end
-
 static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController) {
   UIScrollView *scrollView = nil;
 
@@ -32,11 +27,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     (void)viewController.view;
   }
 
-  // TODO(b/25442167): This is a soft dependency on GOONav's logic for
-  //                   GOONavigationGetPrimaryScrollView.
-  if ([viewController respondsToSelector:@selector(navigationPrimaryScrollView)]) {
-    scrollView = [(id)viewController navigationPrimaryScrollView];
-  } else if ([viewController.view isKindOfClass:[UIScrollView class]]) {
+  if ([viewController.view isKindOfClass:[UIScrollView class]]) {
     scrollView = (UIScrollView *)viewController.view;
   } else if ([viewController.view isKindOfClass:[UIWebView class]]) {
     scrollView = ((UIWebView *)viewController.view).scrollView;
@@ -55,6 +46,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   CGAffineTransform _savedTransform;
 }
 
+@synthesize delegate;
+
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController {
   self = [super initWithPresentedViewController:presentedViewController
@@ -63,6 +56,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     _dimmingView = [[UIView alloc] init];
     _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
     _dimmingView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    _automaticallyDismissBottomSheet = YES;
   }
   return self;
 }
@@ -163,7 +158,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   CGFloat preferredContentHeight = self.presentedViewController.preferredContentSize.height;
 
   // If |preferredSheetHeight| has not been specified, use half of the current height.
-  //  if (GOOFloatIsApproximatelyZero(preferredContentHeight) || !self.usePreferredHeight) {
+//    if (GOOFloatIsApproximatelyZero(preferredContentHeight) || !self.usePreferredHeight) {
   preferredContentHeight = _sheetView.frame.size.height / 2;
   if (preferredContentHeight < (CGFloat)FLT_EPSILON) {
     preferredContentHeight = 0;
@@ -179,14 +174,19 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   if ([contentView pointInside:pointInContentView withEvent:nil]) {
     return;
   }
-//  [self.presentedViewController.delegate bottomSheetControllerDidCancel:_presentedViewController];
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+  if (self.automaticallyDismissBottomSheet) {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+  }
+  [self.delegate bottomSheetPresentationControllerDidCancel:self];
 }
 
 #pragma mark - MDCSheetContainerViewDelegate
 
 - (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView {
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+  if (self.automaticallyDismissBottomSheet) {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+  }
+  [self.delegate bottomSheetPresentationControllerDidCancel:self];
 }
 
 @end

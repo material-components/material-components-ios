@@ -61,7 +61,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     _sheet.delegate = self;
     _contentView = contentView;
     _contentView.autoresizingMask =
-    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
     _sheet.backgroundColor = contentView.backgroundColor;
     [_sheet addSubview:_contentView];
