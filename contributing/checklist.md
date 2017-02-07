@@ -22,7 +22,7 @@ Before a component is built, the API proposed must be agreed upon by the main co
 Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at [writing_readmes](writing_readmes.md).
 
 1. Verify the component has a filled out README.md
-1. Verify Swift code samples appear before Objc samples.
+1. Verify Swift code samples appear before Objective-C samples.
 1. Enter YES or NO
 
 
@@ -359,9 +359,9 @@ Material Components explicitly annotate all public APIs rather than use `NS_ASSU
 ### Swift Overrides and Annotations
 
 
-Swift coding conventions differ from ObjC. It's important to consider the experience of users implementing Material Components in Swift targets and add naming annotations, refinements, and other cross-language features accordingly. See Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
+Swift coding conventions differ from Objective-C. It's important to consider the experience of users implementing Material Components in Swift targets and add naming annotations, refinements, and other cross-language features accordingly. See Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
 
-1. Use [lightweight ObjC generics](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID173) whenever possible.
+1. Use [lightweight Objective-C generics](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID173) whenever possible.
 1. Add Swift annotation macros where appropriate:
   - `NS_SWIFT_NAME`
   - `NS_SWIFT_NOTHROW`
