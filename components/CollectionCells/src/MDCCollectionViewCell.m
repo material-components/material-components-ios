@@ -268,6 +268,9 @@ static const uint32_t kCellRedColor = 0xF44336;
 }
 
 - (void)setInkView:(MDCInkView *)inkView {
+  if (inkView == _inkView) {
+    return;
+  }
   if (_inkView) {
     [_inkView removeFromSuperview];
   }

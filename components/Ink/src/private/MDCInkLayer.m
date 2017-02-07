@@ -464,8 +464,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 @property(nonatomic, strong) CAShapeLayer *compositeRipple;
 @property(nonatomic, strong) NSMutableArray <MDCInkLayerForegroundRipple *> *foregroundRipples;
 @property(nonatomic, strong) NSMutableArray <MDCInkLayerBackgroundRipple *> *backgroundRipples;
-@property(nonatomic ,assign) NSInteger unexitedForegroundRippleIndex;
-@property(nonatomic ,assign) NSInteger unexitedBackgroundRippleIndex;
+@property(nonatomic, assign) NSInteger unexitedForegroundRippleIndex;
+@property(nonatomic, assign) NSInteger unexitedBackgroundRippleIndex;
 
 @end
 
