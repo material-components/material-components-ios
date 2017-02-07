@@ -361,8 +361,12 @@ Material Components explicitly annotate all public APIs rather than use `NS_ASSU
 
 Swift naming conventions differ from ObjC. It's important to consider the experience of users implementing Material Components in Swift targets and add naming annotations accordingly. See Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
 
-1. Add `NS_SWIFT_NAME` annotations where appropriate.
-1. Use `typedef` for enums to allow truncation of enumeration value name prefixes.
+1. Add Swift annotation macros where appropriate:
+  - NS_SWIFT_NAME
+  - NS_SWIFT_NOTHROW
+  - NS_SWIFT_UNAVAILABLE
+  - NS_REFINED_FOR_SWIFT
+1. Use `typedef NS_ENUM` for enums to allow truncation of enumeration value name prefixes.
 1. Enter YES, NO or N/A
 
 
