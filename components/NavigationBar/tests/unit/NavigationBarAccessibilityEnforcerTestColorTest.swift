@@ -21,15 +21,15 @@ import MDFTextAccessibility
 // Tests confirming that the Navigation Bar Accessibility Enforcer correctly changes title font 
 // color and tint color to meet accepted accessibility values defined by MDFTextAccessibility
 
-class NavigationBarAccessibilityEnforcerTestColorTest: XCTestCase {
+class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
 
   var navBar : MDCNavigationBar!
-  var enforcer : MDCNavigationBarAccessibilityEnforcer!
+  var mutator : MDCNavigationBarTextColorAccessibilityMutator!
 
     override func setUp() {
       super.setUp()
       navBar = MDCNavigationBar()
-      enforcer = MDCNavigationBarAccessibilityEnforcer()
+      mutator = MDCNavigationBarTextColorAccessibilityMutator()
     }
     
   func testDarkNavigationBarBackground() {
@@ -37,7 +37,7 @@ class NavigationBarAccessibilityEnforcerTestColorTest: XCTestCase {
     navBar.backgroundColor = UIColor.black
 
     // When
-    enforcer.enforceFontColorAccessibility(navBar)
+    mutator.mutate(navBar)
 
     // Then
     let fontColor = navBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
@@ -55,7 +55,7 @@ class NavigationBarAccessibilityEnforcerTestColorTest: XCTestCase {
     navBar.backgroundColor = UIColor.white
 
     // When
-    enforcer.enforceFontColorAccessibility(navBar)
+    mutator.mutate(navBar)
 
     // Then
     let fontColor = navBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
@@ -73,7 +73,7 @@ class NavigationBarAccessibilityEnforcerTestColorTest: XCTestCase {
     let tintColorBefore = navBar.tintColor
 
     // When
-    enforcer.enforceFontColorAccessibility(navBar)
+    mutator.mutate(navBar)
 
     // Then
     let fontColorAfter = navBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor

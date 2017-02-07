@@ -89,14 +89,14 @@ static NSString *const MDCNavigationBarLeadingButtonSupplementsBackButtonKey =
     @"MDCNavigationBarLeadingButtonSupplementsBackButtonKey";
 static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTitleAlignmentKey";
 
-@implementation MDCNavigationBarAccessibilityEnforcer
+@implementation MDCNavigationBarTextColorAccessibilityMutator
 
 - (nonnull instancetype)init {
   self = [super init];
   return self;
 }
 
-- (void)enforceFontColorAccessibility:(nonnull MDCNavigationBar *)navBar {
+- (void)mutate:(MDCNavigationBar *)navBar {
   // Determine what is the appropriate background color
   UIColor *backgroundColor = navBar.backgroundColor;
   if (!backgroundColor) {
