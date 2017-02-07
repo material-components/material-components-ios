@@ -2,6 +2,9 @@
 
 <img align="right" src="mdc_hero.png" width="300px">
 
+[![Build Status](https://travis-ci.org/material-components/material-components-ios.svg?branch=develop)](https://travis-ci.org/material-components/material-components-ios)
+[![Code coverage](https://img.shields.io/codecov/c/github/material-components/material-components-ios/develop.svg)](https://codecov.io/gh/material-components/material-components-ios/branch/develop)
+
 Material Components for iOS (MDC-iOS) helps developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps. Learn more about how Material Design supports design and usability best practices across platforms in the  [Material Design Platform Adaptation guidelines](https://material.io/guidelines/platforms/platform-adaptation.html).
 
 Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
@@ -15,7 +18,7 @@ Material Components for iOS are written in Objective-C and support Swift and Int
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.google.com) (external site)
-  
+
 ## Trying out Material Components
 
 Our [catalog](catalog/) showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
@@ -29,6 +32,9 @@ In case you have already checked out the repo, run the following command:
 ~~~ bash
 pod install --project-directory=catalog/
 ~~~
+
+If you want to take a look at the implementation of the components, you can find the code inside the `Development Pods` folder.
+Use `cmd-1` to open the project navigator within Xcode. Peal open the `Pods` project and inside the `Development Pods` folder you will find the component source code.
 
 ## Installation
 

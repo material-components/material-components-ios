@@ -31,7 +31,7 @@ extension FlexibleHeaderTypicalUseViewControllerSwift {
   }
 
   class func catalogDescription() -> String {
-    return "The Flexible Header is a container view whose height and vertical offset react to"
+    return "The Flexible Header is a container view whose height and vertical offset react to" +
            " UIScrollViewDelegate events."
   }
 
@@ -42,5 +42,5 @@ extension FlexibleHeaderTypicalUseViewControllerSwift {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-  
+
 }

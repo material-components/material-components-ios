@@ -1,7 +1,7 @@
 # Typography
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Typography](docs/assets/typography.png)](docs/assets/typography.mp4)
+<a alt="Typography"><img src="docs/assets/typography.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/typography.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Typography component provides methods for displaying text using the type sizes and opacities

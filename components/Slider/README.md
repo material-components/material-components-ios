@@ -1,7 +1,7 @@
 # Slider
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
+<a alt="Slider"><img src="docs/assets/slider.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/slider.mp4" autoplay loop></video></div>{% endif %}-->
 
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range

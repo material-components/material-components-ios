@@ -20,7 +20,7 @@ import MaterialComponents.MaterialShadowLayer
 
 class ExampleShadowedView: UIView {
 
-  override class var layerClass : AnyClass {
+  override class var layerClass: AnyClass {
     return MDCShadowLayer.self
   }
 

@@ -60,7 +60,8 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
     fhvc.didMove(toParentViewController: parentVc)
 
-    XCTAssertEqual(fhvc.headerView.trackingScrollView!.contentOffset.y, -fhvc.headerView.maximumHeight)
+    XCTAssertEqual(fhvc.headerView.trackingScrollView!.contentOffset.y,
+                   -fhvc.headerView.maximumHeight)
     XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.maximumHeight)
   }
 }

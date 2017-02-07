@@ -1,6 +1,6 @@
 # Collection Cells
 
-![Collections](docs/assets/collections_screenshot.png)
+<a alt="Collection Cells"><img src="docs/assets/collection_cells.png" width="320px"></a>
 <!--{: .ios-screenshot .right }-->
 
 Collection view cell classes that adhere to Material Design layout and styling.

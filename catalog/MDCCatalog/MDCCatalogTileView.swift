@@ -19,7 +19,7 @@ import UIKit
 class MDCCatalogTileView: UIView {
 
   fileprivate var componentNameString = "Misc"
-  var componentName:String {
+  var componentName: String {
     get {
       return componentNameString
     }
@@ -29,7 +29,7 @@ class MDCCatalogTileView: UIView {
     }
   }
   let imageView = UIImageView()
-  let imageCache = NSCache<AnyObject, AnyObject>()
+  let imageCache = NSCache<AnyObject, UIImage>()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -47,12 +47,12 @@ class MDCCatalogTileView: UIView {
   }
 
   func getImage(_ key: String) -> UIImage {
-    if let cachedImage = imageCache.object(forKey: key as AnyObject) as? UIImage {
+    if let cachedImage = imageCache.object(forKey: key as AnyObject) {
       let scale = UIScreen.main.scale
       let pixelSize = CGSize(width: frame.width * scale, height: frame.height * scale)
       let cachedPixelSize = CGSize(width: cachedImage.size.width * cachedImage.scale,
                                        height: cachedImage.size.height * cachedImage.scale)
-      if (cachedPixelSize != pixelSize) {
+      if cachedPixelSize != pixelSize {
         return createImage()
       }
       return cachedImage
@@ -61,6 +61,9 @@ class MDCCatalogTileView: UIView {
     }
   }
 
+  // This function is long but simple. The name-to-drawing map would be better replaced by a real
+  // dictionary, but Swift's dictionaries can't seem to handle C function pointers.
+  // swiftlint:disable function_body_length
   func createImage() -> UIImage {
     var newImage = UIImage()
 
@@ -114,6 +117,8 @@ class MDCCatalogTileView: UIView {
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSnackbarTile)
     case "Switch":
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSwitchTile)
+    case "Tab Bar":
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTabsTile)
     case "Typography and Fonts":
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTypographyTile)
     default:
@@ -122,5 +127,6 @@ class MDCCatalogTileView: UIView {
     imageCache.setObject(newImage, forKey: componentNameString as AnyObject)
     return newImage
   }
+  // swiftlint:enable function_body_length
 
 }

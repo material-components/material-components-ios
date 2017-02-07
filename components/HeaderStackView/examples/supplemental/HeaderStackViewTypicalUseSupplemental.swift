@@ -29,7 +29,7 @@ extension HeaderStackViewTypicalUseSwiftExample {
   }
 
   class func catalogDescription() -> String {
-    return "The Header Stack View component is a view that coordinates the layout of two"
+    return "The Header Stack View component is a view that coordinates the layout of two" +
     "vertically-stacked bar views."
   }
 
@@ -40,5 +40,5 @@ extension HeaderStackViewTypicalUseSwiftExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-  
+
 }

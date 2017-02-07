@@ -54,8 +54,8 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
     let size = buttonBar.sizeThatFits(self.view.bounds.size)
-    let x = (self.view.bounds.size.width - size.width) / 2;
-    let y = self.view.bounds.size.height / 2 - size.height;
+    let x = (self.view.bounds.size.width - size.width) / 2
+    let y = self.view.bounds.size.height / 2 - size.height
     buttonBar.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
     buttonBar.autoresizingMask =
       [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
@@ -65,7 +65,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     self.view.backgroundColor = UIColor.white
   }
 
-  func didTapActionButton(_ sender: AnyObject) {
+  func didTapActionButton(_ sender: Any) {
     print("Did tap action item: \(sender)")
   }
 
@@ -95,8 +95,8 @@ extension ButtonBarTypicalUseSwiftExample {
     return UIColor(red: 0.012, green: 0.663, blue: 0.957, alpha: 0.2)
   }
 
-  func itemTitleTextAttributes () -> [String:AnyObject] {
+  func itemTitleTextAttributes () -> [String: Any] {
     let textColor = UIColor(white: 0, alpha: 0.8)
-    return [NSForegroundColorAttributeName:textColor]
+    return [NSForegroundColorAttributeName: textColor]
   }
 }

@@ -39,6 +39,9 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 
  While MDCFeatureHighlightViewController supports changing state while presented, it is not
  recommended as the design spec does not specify any patterns for that behavior.
+
+ @note Due to a bug in the iOS simulator it is possible that the feature highlight will not render
+ correctly in the simulator. If you're encountering issues make sure to test on device.
  */
 @interface MDCFeatureHighlightViewController : UIViewController
 
@@ -91,14 +94,14 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 /**
  Sets the color to be used for the outer highlight. Defaults to blue with an alpha of
  kMDCFeatureHighlightOuterHighlightAlpha.
- 
+
  Alpha should be set to kMDCFeatureHighlightOuterHighlightAlpha.
  */
 @property(nonatomic, strong, null_resettable) UIColor *outerHighlightColor;
 
 /**
  Sets the color to be used for the inner highlight. Defaults to white.
- 
+
  Should be opaque.
  */
 @property(nonatomic, strong, null_resettable) UIColor *innerHighlightColor;

@@ -1,7 +1,7 @@
 # Navigation Bar
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Navigation Bar](docs/assets/navigation_bar.png)](docs/assets/navigation_bar.mp4)
+<a alt="Navigation Bar"><img src="docs/assets/navigation_bar.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/navigation_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Navigation Bar component is a view composed of a left and right Button Bar and either a title
@@ -79,7 +79,7 @@ import MaterialComponents.MaterialNavigationBar
 #### Objective-C
 
 ~~~ objc
-#import "MaterialNavgiationBar.h"
+#import "MaterialNavigationBar.h"
 ~~~
 <!--</div>-->
 

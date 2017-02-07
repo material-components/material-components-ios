@@ -38,7 +38,7 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
 
     navBar!.translatesAutoresizingMaskIntoConstraints = false
 
-    let viewBindings = ["navBar" : navBar!]
+    let viewBindings = ["navBar": navBar!]
 
     var constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[navBar]|",
       options: [], metrics: nil, views: viewBindings)
@@ -54,7 +54,7 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  override open var prefersStatusBarHidden : Bool {
+  override open var prefersStatusBarHidden: Bool {
     return true
   }
 }
