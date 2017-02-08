@@ -115,7 +115,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
         [NSString stringWithFormat:@"Section %lu Header", indexPath.section];
   }
 
-  return supplementaryView;
+  return sectionHeader;
 }
 
 #pragma mark - <MDCCollectionViewEditingDelegate>
