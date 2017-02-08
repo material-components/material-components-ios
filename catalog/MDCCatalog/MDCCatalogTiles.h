@@ -45,4 +45,5 @@ void MDCCatalogDrawShadowLayerTile(CGRect frame);
 void MDCCatalogDrawSliderTile(CGRect frame);
 void MDCCatalogDrawSnackbarTile(CGRect frame);
 void MDCCatalogDrawSwitchTile(CGRect frame);
+void MDCCatalogDrawTabsTile(CGRect frame);
 void MDCCatalogDrawTypographyTile(CGRect frame);

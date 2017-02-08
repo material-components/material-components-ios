@@ -38,11 +38,6 @@
   _materialSlider.value = _vanillaSlider.value;
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
-
 - (IBAction)materialSliderDidChange:(id)sender {
   NSLog(@"Material Slider : %.2f", self.materialSlider.value);
 

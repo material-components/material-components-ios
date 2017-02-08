@@ -79,7 +79,7 @@ import MaterialComponents.MaterialNavigationBar
 #### Objective-C
 
 ~~~ objc
-#import "MaterialNavgiationBar.h"
+#import "MaterialNavigationBar.h"
 ~~~
 <!--</div>-->
 

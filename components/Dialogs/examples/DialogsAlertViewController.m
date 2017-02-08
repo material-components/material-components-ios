@@ -73,4 +73,32 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
+- (IBAction)didTapNondismissingAlert:(id)sender {
+  NSString *titleString = @"This alert requires an action.";
+  NSString *messageString = @"You can't dismiss it by tapping the background. You must choose "
+    "one of the actions available.";
+
+  MDCAlertController *materialAlertController =
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+
+  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
+                                                         handler:^(MDCAlertAction *action) {
+                                                           NSLog(@"%@", @"AGREE pressed");
+                                                         }];
+  [materialAlertController addAction:agreeAaction];
+
+  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
+                                                            handler:^(MDCAlertAction *action) {
+                                                              NSLog(@"%@", @"DISAGREE pressed");
+                                                            }];
+  [materialAlertController addAction:disagreeAaction];
+
+  // This code accesses the presentation controller and turns off dismiss on background tap.
+  MDCDialogPresentationController *presentationController =
+      materialAlertController.mdc_dialogPresentationController;
+  presentationController.dismissOnBackgroundTap = NO;
+
+  [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
+
 @end
