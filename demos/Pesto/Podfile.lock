@@ -1,6 +1,6 @@
 PODS:
-  - MaterialComponents/AnimationTiming (20.1.1)
-  - MaterialComponents/AppBar (20.1.1):
+  - MaterialComponents/AnimationTiming (20.2.0)
+  - MaterialComponents/AppBar (20.2.0):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -9,16 +9,16 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (20.1.1):
+  - MaterialComponents/ButtonBar (20.2.0):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/Buttons (20.1.1):
+  - MaterialComponents/Buttons (20.2.0):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/CollectionCells (20.1.1):
+  - MaterialComponents/CollectionCells (20.2.0):
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/private/Icons/ic_check
@@ -29,43 +29,43 @@ PODS:
     - MaterialComponents/private/Icons/ic_reorder
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/CollectionLayoutAttributes (20.1.1)
-  - MaterialComponents/Collections (20.1.1):
+  - MaterialComponents/CollectionLayoutAttributes (20.2.0)
+  - MaterialComponents/Collections (20.2.0):
     - MaterialComponents/CollectionCells
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/FlexibleHeader (20.1.1):
+  - MaterialComponents/FlexibleHeader (20.2.0):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/HeaderStackView (20.1.1)
-  - MaterialComponents/Ink (20.1.1)
-  - MaterialComponents/NavigationBar (20.1.1):
+  - MaterialComponents/HeaderStackView (20.2.0)
+  - MaterialComponents/Ink (20.2.0)
+  - MaterialComponents/NavigationBar (20.2.0):
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/private/Application (20.1.1)
-  - MaterialComponents/private/Icons/Base (20.1.1)
-  - MaterialComponents/private/Icons/ic_arrow_back (20.1.1):
+  - MaterialComponents/private/Application (20.2.0)
+  - MaterialComponents/private/Icons/Base (20.2.0)
+  - MaterialComponents/private/Icons/ic_arrow_back (20.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check (20.1.1):
+  - MaterialComponents/private/Icons/ic_check (20.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check_circle (20.1.1):
+  - MaterialComponents/private/Icons/ic_check_circle (20.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_chevron_right (20.1.1):
+  - MaterialComponents/private/Icons/ic_chevron_right (20.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_info (20.1.1):
+  - MaterialComponents/private/Icons/ic_info (20.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_radio_button_unchecked (20.1.1):
+  - MaterialComponents/private/Icons/ic_radio_button_unchecked (20.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_reorder (20.1.1):
+  - MaterialComponents/private/Icons/ic_reorder (20.2.0):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/RTL (20.1.1)
-  - MaterialComponents/ShadowElevations (20.1.1)
-  - MaterialComponents/ShadowLayer (20.1.1)
-  - MaterialComponents/Typography (20.1.1)
+  - MaterialComponents/private/RTL (20.2.0)
+  - MaterialComponents/ShadowElevations (20.2.0)
+  - MaterialComponents/ShadowLayer (20.2.0)
+  - MaterialComponents/Typography (20.2.0)
   - MDFTextAccessibility (1.1.4)
 
 DEPENDENCIES:
@@ -83,7 +83,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: f628bce24c4089f905f1c57c08d271af5b6c90bc
+  MaterialComponents: ee64204759171f55c8f264c84fcfaa37b36c5e6d
   MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
 
 PODFILE CHECKSUM: 0bae51237ebf30ce3f4ecbcefedc8cf3d7af40cf
