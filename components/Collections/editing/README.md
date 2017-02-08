@@ -27,7 +27,7 @@ index paths. When a collection view has editing enabled, all of the cells will b
 additional protocol delegate methods, you can override which specific cells allow reordering and
 selection for deletion.
 
-<div class="material-code-render" markdown="1">
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 ~~~ objc
 // Enable editing.
@@ -51,12 +51,12 @@ override func collectionView(collectionView: UICollectionView,
   return indexPath.item != 0
 }
 ~~~
-</div>
+<!--</div>-->
 
 > Important: When enabling editing, if your custom view controller incorporates section headers or 
 > footers you must include the below code at the top of your implementation of the 
 > **collectionView:viewForSupplementaryElementOfKind:atIndexPath:** method as shown below.
-> <div class="material-code-render" markdown="1">
+> <!--<div class="material-code-render" markdown="1">-->
 > #### Objective-C
 > ~~~ objc
 > - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -80,7 +80,7 @@ override func collectionView(collectionView: UICollectionView,
 >   return supplementaryView
 > }
 > ~~~
-> </div>
+> <!--</div>-->
 
 ### Deleting Cells
 
