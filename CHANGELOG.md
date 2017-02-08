@@ -1,6 +1,10 @@
-# 20.2.0
+# 21.0.0
 
 ## API diffs
+
+## Minimum iOS version is now 8.0
+
+Given the usage of clients on versions of iOS below 8.0 and the increased power of the APIs available to us on iOS 8, our minimum iOS version is bumped from iOS 7 to 8. 
 
 ## New component: Tabs
 
