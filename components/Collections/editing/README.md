@@ -59,26 +59,33 @@ override func collectionView(collectionView: UICollectionView,
 > <!--<div class="material-code-render" markdown="1">-->
 > #### Objective-C
 > ~~~ objc
-> - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+> - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView 
+>            viewForSupplementaryElementOfKind:(NSString *)kind 
+>                                  atIndexPath:(NSIndexPath *)indexPath
 > {
 >
-> id supplementaryView = [super collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:indexPath];
-> if (supplementaryView) {
->   return supplementaryView;
-> }
+>   id supplementaryView = [super collectionView:collectionView 
+>              viewForSupplementaryElementOfKind:kind 
+>                                    atIndexPath:indexPath];
+>   if (supplementaryView) {
+>     return supplementaryView;
+>   }
 >
-> // Custom Section Header Code
+>   // Custom Section Header Code
 > ~~~
 > 
 > #### Swift
 > ~~~ swift 
-> override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
+> override func collectionView(_ collectionView: UICollectionView, 
+>        viewForSupplementaryElementOfKind kind: String, 
+>                                  at indexPath: IndexPath) -> UICollectionReusableView
 > {
 >
-> var supplementaryView = super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
-> if supplementaryView != nil {
->   return supplementaryView
-> }
+>   var supplementaryView = super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+>   if supplementaryView != nil {
+>     return supplementaryView
+>   }
+>   // Custom Section Header Code
 > ~~~
 > <!--</div>-->
 
