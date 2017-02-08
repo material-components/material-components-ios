@@ -1,4 +1,15 @@
-# release-candidate TODO: Replace me with version number. 
+# 20.2.0
+
+## API diffs
+
+## New component: Tabs
+
+[Tab component with MDCTabBar (#1164)](https://github.com/material-components/material-components-ios/tree/develop/components/Tabs) is an implementation of the [Material tabs](https://material.io/guidelines/components/tabs.html) used to explore and switch between different views. Try tabs out! (Brian Moore with Will Larche)
+
+## Typography
+
+* [Initial Material Text Style API (#1178)](https://github.com/material-components/material-components-ios/pull/1178) (Randall Li)
+
 
 # 20.1.1
 
