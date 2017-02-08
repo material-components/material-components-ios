@@ -81,10 +81,13 @@ override func collectionView(collectionView: UICollectionView,
 >                                  at indexPath: IndexPath) -> UICollectionReusableView
 > {
 >
->   var supplementaryView = super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+>   var supplementaryView = super.collectionView(collectionView, 
+>                             viewForSupplementaryElementOfKind: kind, 
+>                                                            at: indexPath)
 >   if supplementaryView != nil {
 >     return supplementaryView
 >   }
+>
 >   // Custom Section Header Code
 > ~~~
 > <!--</div>-->
