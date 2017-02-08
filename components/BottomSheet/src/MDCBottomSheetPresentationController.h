@@ -20,7 +20,7 @@
  A UIPresentationController for presenting a modal view controller as a bottom sheet.
  
  @note MDCBottomSheetPresentationController can dismiss the presented view controller if the user
- taps on the dimming view or pulls the bottom sheet offscreen.
+ taps outside the bottom sheet or pulls it offscreen.
  */
 @interface MDCBottomSheetPresentationController : UIPresentationController
 
