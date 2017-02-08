@@ -37,6 +37,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   // Register cell class.
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
+  // Optional
+  // Register section header class
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                 withReuseIdentifier:UICollectionElementKindSectionHeader];
 
   // Populate content.
   _content = [NSMutableArray array];
@@ -87,6 +92,30 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+           viewForSupplementaryElementOfKind:(NSString *)kind
+                                 atIndexPath:(NSIndexPath *)indexPath
+{
+
+  // Must include below code snippet
+  id supplementaryViewTest = [super collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:indexPath];
+  if (supplementaryViewTest) {
+    return supplementaryViewTest;
+  }
+
+  MDCCollectionViewTextCell *supplementaryView =
+  [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                     withReuseIdentifier:kind
+                                            forIndexPath:indexPath];
+
+  if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+    supplementaryView.textLabel.text =
+        [NSString stringWithFormat:@"Section %lu Header", indexPath.section];
+  }
+
+  return supplementaryView;
+}
+
 #pragma mark - <MDCCollectionViewEditingDelegate>
 
 - (BOOL)collectionViewAllowsEditing:(UICollectionView *)collectionView {
@@ -126,6 +155,14 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     [_content[indexPath.section] removeObjectAtIndex:indexPath.item];
     [_content[newIndexPath.section] insertObject:movedObject atIndex:newIndexPath.item];
   }
+}
+
+#pragma mark UICollectionViewFlowLayoutDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+    referenceSizeForHeaderInSection:(NSInteger)section {
+  return CGSizeMake(collectionView.bounds.size.width, MDCCellDefaultOneLineHeight);
 }
 
 @end
