@@ -98,18 +98,20 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 {
 
   // Must include below code snippet
-  id supplementaryViewTest = [super collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:indexPath];
-  if (supplementaryViewTest) {
-    return supplementaryViewTest;
+  id supplementaryView = [super collectionView:collectionView
+             viewForSupplementaryElementOfKind:kind
+                                   atIndexPath:indexPath];
+  if (supplementaryView) {
+    return supplementaryView;
   }
 
-  MDCCollectionViewTextCell *supplementaryView =
-  [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                     withReuseIdentifier:kind
-                                            forIndexPath:indexPath];
+  MDCCollectionViewTextCell *sectionHeader =
+      [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                         withReuseIdentifier:kind
+                                                forIndexPath:indexPath];
 
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-    supplementaryView.textLabel.text =
+    sectionHeader.textLabel.text =
         [NSString stringWithFormat:@"Section %lu Header", indexPath.section];
   }
 
