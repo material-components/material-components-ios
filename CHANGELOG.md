@@ -1,3 +1,99 @@
+# 21.0.0
+
+## API diffs
+
+## Minimum iOS version is now 8.0
+
+Given the usage of clients on versions of iOS below 8.0 and the increased power of the APIs available to us on iOS 8, our minimum iOS version is bumped from iOS 7 to 8. 
+
+## New component: Tabs
+
+[Tab component with MDCTabBar (#1164)](https://github.com/material-components/material-components-ios/tree/develop/components/Tabs) is an implementation of the [Material tabs](https://material.io/guidelines/components/tabs.html) used to explore and switch between different views. Try tabs out! (Brian Moore with Will Larche)
+
+## Typography
+
+* [Initial Material Text Style API (#1178)](https://github.com/material-components/material-components-ios/pull/1178) (Ian Gordon)
+
+## Component changes
+
+### ButtonBar
+
+#### Changes
+
+* [Revert "Swift cleanups."](https://github.com/material-components/material-components-ios/commit/7489fca4e4741ae02b406cdaacaf1dae26e19837) (Adrian Secord)
+* [Swift cleanups.](https://github.com/material-components/material-components-ios/commit/129789c601a2bb6b09648af953c5433ebe3cebe0) (Adrian Secord)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Buttons
+
+#### Changes
+
+* [Revert "Swift cleanups."](https://github.com/material-components/material-components-ios/commit/7489fca4e4741ae02b406cdaacaf1dae26e19837) (Adrian Secord)
+* [Swift cleanups.](https://github.com/material-components/material-components-ios/commit/129789c601a2bb6b09648af953c5433ebe3cebe0) (Adrian Secord)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Dialogs
+
+#### Changes
+
+* [Add a non-dismissing example. (#1184)](https://github.com/material-components/material-components-ios/commit/71d188663654744120bb64ef99762a72565365a3) (ianegordon)
+* [Alert body text color to match spec (#1177)](https://github.com/material-components/material-components-ios/commit/e5a9df409b769ae2c861d3f618f45f1913178e47) (ianegordon)
+* [Revert "Swift cleanups."](https://github.com/material-components/material-components-ios/commit/7489fca4e4741ae02b406cdaacaf1dae26e19837) (Adrian Secord)
+* [Swift cleanups.](https://github.com/material-components/material-components-ios/commit/129789c601a2bb6b09648af953c5433ebe3cebe0) (Adrian Secord)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [Fxing the spelling for MaterialNavigationBar.h in include statement. (#1181)](https://github.com/material-components/material-components-ios/commit/59adab3eaa341458339806027fa4ea371a2b7482) (Scott Nichols)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Slider
+
+#### Changes
+
+* [Revert "Swift cleanups."](https://github.com/material-components/material-components-ios/commit/7489fca4e4741ae02b406cdaacaf1dae26e19837) (Adrian Secord)
+* [Swift cleanups.](https://github.com/material-components/material-components-ios/commit/129789c601a2bb6b09648af953c5433ebe3cebe0) (Adrian Secord)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Snackbar
+
+#### Changes
+
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Tabs
+
+#### Changes
+
+* [[New Component] Tab component with MDCTabBar (#1164)](https://github.com/material-components/material-components-ios/commit/fd074fca51a06e18b7878973820409695bca05aa) (Brian Moore)
+
+### Typography
+
+#### Changes
+
+* [Initial Material Text Style API (#1178)](https://github.com/material-components/material-components-ios/commit/774d2f03a8175827fcb553176a04784345614b61) (ianegordon)
+
+
 # 20.1.1
 
 ## Component changes
