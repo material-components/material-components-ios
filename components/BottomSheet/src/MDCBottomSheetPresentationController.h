@@ -19,6 +19,9 @@
 /**
  A UIPresentationController for presenting a modal view controller as a bottom sheet.
  
+ @note If your presented view controller has a UIScrollView as the root view (or you are presenting
+ a UICollectionViewController or UIWebViewController) MDCBottomSheetPresentationController will 
+ observe the contentSize of the scroll view in order to react to changes in the content size.
  @note MDCBottomSheetPresentationController can dismiss the presented view controller if the user
  taps outside the bottom sheet or pulls it offscreen.
  */
