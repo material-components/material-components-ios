@@ -53,6 +53,35 @@ override func collectionView(collectionView: UICollectionView,
 ~~~
 </div>
 
+> Important: When enabling editing, if your custom view controller incorporates section headers or 
+> footers you must include the below code at the top of your implementation of the 
+> **collectionView:viewForSupplementaryElementOfKind:atIndexPath:** method as shown below.
+> <div class="material-code-render" markdown="1">
+> #### Objective-C
+> ~~~ objc
+> - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+> {
+>
+> id supplementaryView = [super collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:indexPath];
+> if (supplementaryView) {
+>   return supplementaryView;
+> }
+>
+> // Custom Section Header Code
+> ~~~
+> 
+> #### Swift
+> ~~~ swift 
+> override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
+> {
+>
+> var supplementaryView = super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+> if supplementaryView != nil {
+>   return supplementaryView
+> }
+> ~~~
+> </div>
+
 ### Deleting Cells
 
 Cells can be deleted by first [enabling editing mode](#enable-editing). Next enable cell editing by
