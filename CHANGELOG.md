@@ -1,3 +1,7 @@
+# 21.0.1
+
+## Fixed podspec so it passes lint.
+
 # 21.0.0
 
 ## API diffs
