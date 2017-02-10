@@ -99,21 +99,13 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [containerView addSubview:_dimmingView];
   [containerView addSubview:_sheetView];
 
-  NSDictionary *views = NSDictionaryOfVariableBindings(_dimmingView, _sheetView);
+  NSDictionary *views = NSDictionaryOfVariableBindings(_dimmingView);
 
   [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_dimmingView]|"
                                                                         options:0
                                                                         metrics:nil
                                                                           views:views]];
   [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_dimmingView]|"
-                                                                        options:0
-                                                                        metrics:nil
-                                                                          views:views]];
-  [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_sheetView]|"
-                                                                        options:0
-                                                                        metrics:nil
-                                                                          views:views]];
-  [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_sheetView]|"
                                                                         options:0
                                                                         metrics:nil
                                                                           views:views]];
