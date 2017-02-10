@@ -311,10 +311,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, _hitAreaInsets), point);
 }
 
-- (void)tintColorDidChange {
-  self.customTitleColor = self.tintColor;
-}
-
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
