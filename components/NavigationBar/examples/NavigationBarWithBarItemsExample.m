@@ -47,9 +47,9 @@
 
   // Light blue 500
   [self.navBar setBackgroundColor:[UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1]];
-  MDCNavigationBarAccessibilityEnforcer *enforcer =
-      [[MDCNavigationBarAccessibilityEnforcer alloc] init];
-  [enforcer enforceFontColorAccessibility:self.navBar];
+  MDCNavigationBarTextColorAccessibilityMutator *mutator =
+      [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
+  [mutator mutate:self.navBar];
 
   [self.view addSubview:self.navBar];
 

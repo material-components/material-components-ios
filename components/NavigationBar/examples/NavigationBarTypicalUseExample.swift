@@ -31,8 +31,8 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
 
     // Light blue 500
     navBar!.backgroundColor = UIColor.init(red: 0.012, green: 0.663, blue: 0.957, alpha: 1)
-    var enforcer = MDCNavigationBarAccessibilityEnforcer()
-    enforcer.enforceFontColorAccessibility(navBar!)
+    var mutator = MDCNavigationBarTextColorAccessibilityMutator()
+    mutator.mutate(navBar!)
 
     view.addSubview(navBar!)
 
