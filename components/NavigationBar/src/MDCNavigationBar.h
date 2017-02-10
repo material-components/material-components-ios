@@ -44,6 +44,31 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
 
 @end
 
+@class MDCNavigationBar;
+
+/**
+  The MDCNavigationBarTextColorAccessibilityMutator class creates an external object with which to 
+  work on an instance of a Material Navigation Bar to activate and esnure accessibility on its title
+  and buttons.
+
+  ### Dependencies
+
+  Material NavigationBarTextColorAccessibilityMutator depends on the Navigation Bar material 
+  component and MDFTextAccessibility Framework.
+  */
+
+@interface MDCNavigationBarTextColorAccessibilityMutator : NSObject
+
+- (nonnull instancetype)init;
+
+/**
+  Mutates title text color and navigation items' tint colors based on background color of
+  navigation bar.
+  */
+- (void)mutate:(nonnull MDCNavigationBar *)navBar;
+
+@end
+
 /**
  The MDCNavigationBar class is a view consisting of a leading and trailing button bar, title label,
  and an optional title view.
