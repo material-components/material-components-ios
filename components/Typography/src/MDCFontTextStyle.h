@@ -11,6 +11,8 @@
  limitations under the License.
  */
 
+#import <Foundation/Foundation.h>
+
 /**
  Material font text styles
  
