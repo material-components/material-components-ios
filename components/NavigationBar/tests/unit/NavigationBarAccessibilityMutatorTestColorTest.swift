@@ -18,7 +18,7 @@ import XCTest
 import MaterialComponents
 import MDFTextAccessibility
 
-// Tests confirming that the Navigation Bar Accessibility Enforcer correctly changes title font 
+// Tests confirming that the Navigation Bar Accessibility Mutator correctly changes title font 
 // color and tint color to meet accepted accessibility values defined by MDFTextAccessibility
 
 class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
