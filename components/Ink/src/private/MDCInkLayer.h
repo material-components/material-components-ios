@@ -70,7 +70,7 @@
 
  @param animated Enables the ink ripple fade out animation.
  */
-- (void)reset:(BOOL)animated;
+- (void)resetAllInk:(BOOL)animated;
 
 /**
  Spreads the ink over the whole view.
