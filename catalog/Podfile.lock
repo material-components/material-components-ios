@@ -86,6 +86,7 @@ PODS:
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
+    - MDFTextAccessibility
   - MaterialComponents/OverlayWindow (21.1.0):
     - MaterialComponents/private/Application
   - MaterialComponents/PageControl (21.1.0)
@@ -178,7 +179,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: 4ee729245614b7157aafa7fa4a8c4fd4ba38113a
-  MaterialComponents: 1ebb183bfa1b2ccbe7f5afb9536fc9395b368b07
+  MaterialComponents: 1cf6a625a299510d9b60007288e40a7666ffd3ea
   MaterialComponentsCatalog: e7f07ab415fe6455b607f122aca9511f2866096c
   MaterialComponentsUnitTests: '09d7e3529e8b03ff7a89240da8c5117523cbdea7'
   MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
