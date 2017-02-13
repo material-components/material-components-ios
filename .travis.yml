@@ -18,6 +18,8 @@ before_install:
   - scripts/install_contributor_tools
 # The travis_wait prefix ensures that the build doesn't error out because too much time went past
 # without any output being produced.
+#
+# Note that we only test unit tests in an attempt to get reasonable performance out of Travis CI.
 script:
   - set -o pipefail
   - xcodebuild -version
@@ -26,6 +28,6 @@ script:
   - swiftlint
   - scripts/prep_all
   - travis_wait scripts/build_all
-  - travis_wait scripts/test_all
+  - travis_wait scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
 after_success:
   - bash <(curl -s https://codecov.io/bash)
