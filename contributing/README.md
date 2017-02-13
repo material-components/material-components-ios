@@ -27,6 +27,14 @@ Start the title with `[ComponentName]` to identify which component a change affe
 [FooBar] Removes the deprecated fooWithBar:(Bar*)bar method.
 ~~~
 
+#### Using assignee to indicate who should action on a PR
+
+Since PRs on github permanently stay in the `Changes requested` state it is hard to tell when the author has addressed the concerns. By change the assignee to whomever still needs to action (review or modify/justify) we can more easily keep track of what needs attention in our PR queues. 
+
+1. For a reviewer this means adding the author as an assignee once the review is finished.
+1. For an author it means adding back the reviewer (and removing themselves) as an assignee.
+
+
 ### Deprecation
 
 See [deprecation_policy.md](deprecation_policy.md) for details.

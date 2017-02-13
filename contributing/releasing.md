@@ -50,7 +50,7 @@ test the release.
 
 ### Test the release branch
 
-    scripts/release/manage_pods.py install
+    scripts/prep_all
     scripts/build_all
     scripts/test_all
 

@@ -1,3 +1,13 @@
+# 21.1.0
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Revert the button tint color change. (#1196)](https://github.com/material-components/material-components-ios/commit/993edaa5512ce941e5e14e3737945aaa7468b4b5) (Sam Symons)
+
 # 21.0.1
 
 ## Fixed podspec so it passes lint.
