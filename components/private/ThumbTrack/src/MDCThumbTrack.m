@@ -253,8 +253,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
   _primaryColor = primaryColor;
   _thumbOnColor = primaryColor;
-  _trackOnColor =
-      _interpolateOnOffColors ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha] : primaryColor;
+  _trackOnColor = primaryColor;
 
   _touchController.defaultInkView.inkColor = [primaryColor colorWithAlphaComponent:kTrackOnAlpha];
   [self setNeedsLayout];
@@ -277,18 +276,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (void)setTrackDisabledColor:(UIColor *)trackDisabledColor {
   _trackDisabledColor = trackDisabledColor;
   [self setNeedsLayout];
-}
-
-- (void)setInterpolateOnOffColors:(BOOL)interpolateOnOffColors {
-  _interpolateOnOffColors = interpolateOnOffColors;
-
-  // TODO(iangordon): Remove ColorGroup support
-  //  if (_colorGroup) {
-  //    [self setColorGroup:_colorGroup];
-  //  }
-
-  // TODO(iangordon): Refactor setPrimaryColor so this call isn't required
-  [self setPrimaryColor:_primaryColor];
 }
 
 - (void)setShouldDisplayDiscreteDots:(BOOL)shouldDisplayDiscreteDots {
@@ -618,19 +605,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (self.enabled) {
     // Set thumb color if needed. Note that setting color to hollow start state happes in secondary
     // animation block (-updateViewsSecondaryAnimated:withDuration:).
-    if (_interpolateOnOffColors) {
-      // Set background/border colors based on interpolated percent.
-      CGFloat percent = [self relativeValueForValue:_value];
-      _thumbView.layer.backgroundColor =
-          [self colorInterpolatedFromColor:_thumbOffColor toColor:_thumbOnColor percent:percent]
-              .CGColor;
-      _thumbView.layer.borderColor =
-          [self colorInterpolatedFromColor:_thumbOffColor toColor:_thumbOnColor percent:percent]
-              .CGColor;
-      _trackView.backgroundColor =
-          [self colorInterpolatedFromColor:_trackOffColor toColor:_trackOnColor percent:percent];
-      _trackOnLayer.backgroundColor = _clearColor.CGColor;
-    } else if (!_thumbIsHollowAtStart || ![self isValueAtMinimum]) {
+    if (!_thumbIsHollowAtStart || ![self isValueAtMinimum]) {
       [self updateTrackMask];
 
       _thumbView.backgroundColor = _thumbOnColor;
@@ -683,30 +658,28 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   // Update colors, etc.
   if (self.enabled) {
-    if (!_interpolateOnOffColors) {
-      _trackView.backgroundColor = _trackOffColor;
-      _trackOnLayer.backgroundColor = _trackOnColor.CGColor;
+    _trackView.backgroundColor = _trackOffColor;
+    _trackOnLayer.backgroundColor = _trackOnColor.CGColor;
 
-      CGFloat anchorXValue = [self trackPositionForValue:_filledTrackAnchorValue].x;
-      CGFloat currentXValue = [self trackPositionForValue:_value].x;
+    CGFloat anchorXValue = [self trackPositionForValue:_filledTrackAnchorValue].x;
+    CGFloat currentXValue = [self trackPositionForValue:_value].x;
 
-      CGFloat trackOnXValue = MIN(currentXValue, anchorXValue);
-      if (_trackEndsAreInset) {
-        // Account for the fact that the layer's coords are relative to the frame of the track.
-        trackOnXValue -= _thumbRadius;
-      }
-
-      // We have to use a CATransaction here because CALayer.frame is only animatable using this
-      // method, not the UIVIew block-based animation that the rest of this method uses. We use
-      // the timing function and duration passed in in order to match with the other animations.
-      [CATransaction begin];
-      [CATransaction setAnimationTimingFunction:
-                         [self timingFunctionFromUIViewAnimationOptions:animationOptions]];
-      [CATransaction setAnimationDuration:duration];
-      _trackOnLayer.frame =
-          CGRectMake(trackOnXValue, 0, Fabs(currentXValue - anchorXValue), _trackHeight);
-      [CATransaction commit];
+    CGFloat trackOnXValue = MIN(currentXValue, anchorXValue);
+    if (_trackEndsAreInset) {
+      // Account for the fact that the layer's coords are relative to the frame of the track.
+      trackOnXValue -= _thumbRadius;
     }
+
+    // We have to use a CATransaction here because CALayer.frame is only animatable using this
+    // method, not the UIVIew block-based animation that the rest of this method uses. We use
+    // the timing function and duration passed in in order to match with the other animations.
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:
+                       [self timingFunctionFromUIViewAnimationOptions:animationOptions]];
+    [CATransaction setAnimationDuration:duration];
+    _trackOnLayer.frame =
+        CGRectMake(trackOnXValue, 0, Fabs(currentXValue - anchorXValue), _trackHeight);
+    [CATransaction commit];
   } else {
     // Set background colors for disabled state.
     _trackView.backgroundColor = _trackDisabledColor;
