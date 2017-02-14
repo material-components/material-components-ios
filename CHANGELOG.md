@@ -1,4 +1,16 @@
-# release-candidate TODO: Replace me with version number. 
+# 21.2.0
+
+## API diffs
+
+### NavigationBar
+
+* [Add MDCNavigationBarTextColorAccessibilityMutator. (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
+
+## Component changes
+
+### Collection Cells
+
+* [Moved `inkView` property from class extension into class. (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
 
 # 21.1.0
 
