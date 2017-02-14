@@ -4,13 +4,33 @@
 
 ### NavigationBar
 
-* [Add MDCNavigationBarTextColorAccessibilityMutator. (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
+* [Added MDCNavigationBarTextColorAccessibilityMutator. (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
 
 ## Component changes
 
-### Collection Cells
+### CollectionCells
 
-* [Moved `inkView` property from class extension into class. (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
+#### Changes
+
+* [Fix memory leak in Ink and correct issues with ink when re-using cells (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
+
+### Ink
+
+#### Changes
+
+* [Fix memory leak in Ink and correct issues with ink when re-using cells (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
+
+### NavigationBar
+
+#### Changes
+
+* [Added Accessibility Mutator (#1109)](https://github.com/material-components/material-components-ios/commit/c3d3bd34affdd0d52500682bb3c129995f24eadc) (Justin Shephard)
+
+### Typography
+
+#### Changes
+
+* [Corrects typo in snippet. (#1198)](https://github.com/material-components/material-components-ios/commit/a6b23484bdf25b3f15629693e0e8beb65932791a) (Will Larche)
 
 # 21.1.0
 
