@@ -252,9 +252,8 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ...
 
-func application(_ application: UIApplication,
-                 didFinishLaunchingWithOptions launchOptions:
-  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+- (BOOL)application:(UIApplication *)application 
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Before any UI is called
   [MDCTypography setFontLoader:[[CustomFontLoader alloc] init]];
 }

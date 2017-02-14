@@ -32,7 +32,7 @@ the issue to a subsequent release.
 
 Releasing is important enough that we want to start with a clean slate:
 
-    scripts/release/manage_pods.py clean
+    scripts/clean_all
 
 ### Cut a release branch and notify clients
 
@@ -50,7 +50,7 @@ test the release.
 
 ### Test the release branch
 
-    scripts/release/manage_pods.py install
+    scripts/prep_all
     scripts/build_all
     scripts/test_all
 
