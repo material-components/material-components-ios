@@ -116,11 +116,12 @@ extension TabBarIconSwiftExample {
     infoLabel.translatesAutoresizingMaskIntoConstraints = false
     infoLabel.textColor = UIColor.white
     infoLabel.numberOfLines = 0
-    infoLabel.text = "Tabs enable content organization at a high level, such as switching between views"
+    infoLabel.text = "Tabs enable content organization at a high level,"
+        + " such as switching between views"
     infoPage.addSubview(infoLabel)
 
-    // Layout the views to be equal height and width to each other and self.view, hug the edges of the
-    // scrollView and meet in the middle.
+    // Layout the views to be equal height and width to each other and self.view, 
+    // hug the edges of the scrollView and meet in the middle.
 
     NSLayoutConstraint(item: infoLabel,
                        attribute: .centerX,
@@ -167,7 +168,8 @@ extension TabBarIconSwiftExample {
     let views = ["infoPage": infoPage, "starPage": self.starPage]
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[infoPage][starPage]|",
-                                                               options: [.alignAllTop, .alignAllBottom],
+                                                               options: [.alignAllTop,
+                                                                         .alignAllBottom],
                                                                metrics: nil,
                                                                views: views))
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[infoPage]|",

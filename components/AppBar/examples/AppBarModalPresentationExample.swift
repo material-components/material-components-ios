@@ -138,7 +138,6 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
       UIBarButtonItem(title: "Detail", style: .done, target: self, action: #selector(presentModal))
   }
 
-
   override var childViewControllerForStatusBarHidden: UIViewController? {
     return appBar.headerViewController
   }
@@ -188,5 +187,5 @@ extension AppBarModalPresentationSwiftExample {
     cell!.layoutMargins = UIEdgeInsets.zero
     return cell!
   }
-  
+
 }
