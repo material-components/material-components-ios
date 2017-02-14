@@ -89,7 +89,6 @@ struct ShrineHeaderPage {
     let attrString = NSMutableAttributedString(string: string)
     attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle,
                             range:NSRange(location: 0, length: attrString.length))
-    NSran
     return attrString
   }
 
