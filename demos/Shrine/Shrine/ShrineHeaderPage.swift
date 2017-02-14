@@ -50,10 +50,9 @@ struct ShrineHeaderPage {
     imageView.autoresizingMask = .flexibleHeight
     (page as AnyObject).addSubview(imageView)
     let url = URL(string: ShrineData.baseURL + imageName)
-    remoteImageService.fetchImageAndThumbnail(from: url) { (image:UIImage?,
-      thumbnailImage:UIImage?) -> Void in
+    remoteImageService.fetchImageAndThumbnail(from: url) { (image: UIImage?, _: UIImage?) -> Void in
       DispatchQueue.main.async(execute: {
-        imageView.image = image;
+        imageView.image = image
         imageView.setNeedsDisplay()
       })
     }
@@ -63,7 +62,7 @@ struct ShrineHeaderPage {
     label.lineBreakMode = .byWordWrapping
     label.numberOfLines = 2
     label.attributedText = attributedString(description, lineHeightMultiple: 0.8)
-    label.sizeToFit();
+    label.sizeToFit()
     (page as AnyObject).addSubview(label)
 
     labelDesc.lineBreakMode = .byWordWrapping
@@ -83,14 +82,15 @@ struct ShrineHeaderPage {
 
   }
 
-  func attributedString(_ string: String, lineHeightMultiple: CGFloat) -> NSMutableAttributedString {
+  func attributedString(_ string: String,
+                        lineHeightMultiple: CGFloat) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineHeightMultiple = lineHeightMultiple
     let attrString = NSMutableAttributedString(string: string)
     attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle,
-                            range:NSMakeRange(0, attrString.length))
+                            range:NSRange(location: 0, length: attrString.length))
+    NSran
     return attrString
   }
-
 
 }

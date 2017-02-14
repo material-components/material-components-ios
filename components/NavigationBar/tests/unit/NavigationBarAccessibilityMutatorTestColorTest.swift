@@ -23,15 +23,15 @@ import MDFTextAccessibility
 
 class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
 
-  var navBar : MDCNavigationBar!
-  var mutator : MDCNavigationBarTextColorAccessibilityMutator!
+  var navBar: MDCNavigationBar!
+  var mutator: MDCNavigationBarTextColorAccessibilityMutator!
 
     override func setUp() {
       super.setUp()
       navBar = MDCNavigationBar()
       mutator = MDCNavigationBarTextColorAccessibilityMutator()
     }
-    
+
   func testDarkNavigationBarBackground() {
     // Given
     navBar.backgroundColor = UIColor.black

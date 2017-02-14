@@ -62,8 +62,8 @@ class ShrineCollectionViewController: UICollectionViewController {
   }
 
   func collectionView(_ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
       let cellWidth = floor((self.view.frame.size.width - (2 * 5)) / 2) - (2 * 5)
       let cellHeight = cellWidth * 1.2
       return CGSize(width: cellWidth, height: cellHeight)

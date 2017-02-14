@@ -83,9 +83,27 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
   }
 
   func addHeaderPages() {
-    _ = ShrineHeaderPage(page: pages[0] as! UIView, imageView: imageView, label: label, labelDesc: labelDesc, cyanBox: cyanBox, imageName: "chair.png", description: "Green \ncomfort chair")
-    _ = ShrineHeaderPage(page: pages[1] as! UIView, imageView: imageView2, label: label2, labelDesc: labelDesc2, cyanBox: cyanBox2, imageName: "backpack.png", description: "Best gift for \nthe traveler")
-    _ = ShrineHeaderPage(page: pages[2] as! UIView, imageView: imageView3, label: label3, labelDesc: labelDesc3, cyanBox: cyanBox3, imageName: "heels.png", description: "Better \nwearing heels")
+    _ = ShrineHeaderPage(page: pages[0] as! UIView,
+                         imageView: imageView,
+                         label: label,
+                         labelDesc: labelDesc,
+                         cyanBox: cyanBox,
+                         imageName: "chair.png",
+                         description: "Green \ncomfort chair")
+    _ = ShrineHeaderPage(page: pages[1] as! UIView,
+                         imageView: imageView2,
+                         label: label2,
+                         labelDesc: labelDesc2,
+                         cyanBox: cyanBox2,
+                         imageName: "backpack.png",
+                         description: "Best gift for \nthe traveler")
+    _ = ShrineHeaderPage(page: pages[2] as! UIView,
+                         imageView: imageView3,
+                         label: label3,
+                         labelDesc: labelDesc3,
+                         cyanBox: cyanBox3,
+                         imageName: "heels.png",
+                         description: "Better \nwearing heels")
   }
 
   override func layoutSubviews() {
