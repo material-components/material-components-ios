@@ -32,7 +32,7 @@ the issue to a subsequent release.
 
 Releasing is important enough that we want to start with a clean slate:
 
-    scripts/release/manage_pods.py clean
+    scripts/clean_all
 
 ### Cut a release branch and notify clients
 
