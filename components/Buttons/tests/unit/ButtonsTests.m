@@ -417,7 +417,6 @@ static UIColor *randomColor() {
 
   // Then
   XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory);
-
   UIFont *buttonFont = button.titleLabel.font;
   UIFont *preferredFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
   XCTAssertEqualWithAccuracy(buttonFont.pointSize,
