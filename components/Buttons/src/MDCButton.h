@@ -154,6 +154,8 @@
  UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
  If set to YES, this button will base its text font on MDCFontTextStyleButton.
+ 
+ Defaults value is NO.
  */
 @property (nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
