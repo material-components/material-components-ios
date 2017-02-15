@@ -99,6 +99,9 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 {
 
   // Must include below code snippet
+  //TODO: (shepj) Pending fix for
+  // https://github.com/material-components/material-components-ios/issues/1208
+  // we must call super which registers classes for supplemental header and footer in editing mode
   UICollectionReusableView *supplementaryView = [super collectionView:collectionView
                                     viewForSupplementaryElementOfKind:kind
                                                           atIndexPath:indexPath];
@@ -108,7 +111,7 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 
   MDCCollectionViewTextCell *sectionHeader =
       [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                         withReuseIdentifier:kind
+                                         withReuseIdentifier:HEADER_REUSE_IDENTIFIER
                                                 forIndexPath:indexPath];
 
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
