@@ -469,6 +469,7 @@ static NSDictionary<NSNumber *, NSDictionary *> *_styleTable;
 + (MDCFontTraits *)traitsForTextStyle:(MDCFontTextStyle)style
                          sizeCategory:(NSString *)sizeCategory {
   NSDictionary *traitsTable = _styleTable[@(style)];
+  NSCAssert(traitsTable, @"traitsTable cannot be nil. Is style valid?");
 
   MDCFontTraits *traits;
   if (traitsTable) {
