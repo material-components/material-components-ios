@@ -28,12 +28,11 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
 
     navBar = MDCNavigationBar()
     navBar!.observe(navigationItem)
-    navBar!.tintColor = .white
-    navBar!.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
 
     // Light blue 500
     navBar!.backgroundColor = UIColor.init(red: 0.012, green: 0.663, blue: 0.957, alpha: 1)
+    var mutator = MDCNavigationBarTextColorAccessibilityMutator()
+    mutator.mutate(navBar!)
 
     view.addSubview(navBar!)
 

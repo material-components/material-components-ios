@@ -31,7 +31,12 @@ function guess_failure() {
   fi
 }
 
-readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+if [[ $# -lt 1 ]]; then
+  WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+else
+  WORKSPACE_SCHEMES=$*
+fi
+
 all_tests_ok=1
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
   workspace=$(echo $workspace_scheme | cut -d: -f1)

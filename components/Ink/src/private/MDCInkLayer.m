@@ -73,22 +73,26 @@ static NSString *const kInkLayerScale = @"transform.scale";
 typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   kInkRippleNone,
   kInkRippleSpreading,
-  kInkRippleComplete
+  kInkRippleComplete,
+  kInkRippleCancelled,
 };
 
 @protocol MDCInkLayerRippleDelegate <NSObject>
 
 @optional
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished;
+- (void)animationDidStop:(CAAnimation *)anim
+              shapeLayer:(CAShapeLayer *)shapeLayer
+                finished:(BOOL)finished;
 
 @end
 
 @interface MDCInkLayerRipple : CAShapeLayer
 
+@property(nonatomic, assign, getter=isAnimationCleared) BOOL animationCleared;
 @property(nonatomic, weak) id<MDCInkLayerRippleDelegate> animationDelegate;
 @property(nonatomic, assign) BOOL bounded;
-@property(nonatomic, strong) CALayer *inkLayer;
+@property(nonatomic, weak) CALayer *inkLayer;
 @property(nonatomic, assign) CGFloat radius;
 @property(nonatomic, assign) CGPoint point;
 @property(nonatomic, assign) CGRect targetFrame;
@@ -108,6 +112,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   self = [super init];
   if (self) {
     _rippleState = kInkRippleNone;
+    _animationCleared = YES;
   }
   return self;
 }
@@ -123,10 +128,13 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 - (void)enter {
   _rippleState = kInkRippleSpreading;
   [_inkLayer addSublayer:self];
+  _animationCleared = NO;
 }
 
 - (void)exit {
-  _rippleState = kInkRippleComplete;
+  if (_rippleState != kInkRippleCancelled) {
+    _rippleState = kInkRippleComplete;
+  }
 }
 
 - (CAKeyframeAnimation *)opacityAnimWithValues:(NSArray<NSNumber *> *)values
@@ -169,8 +177,10 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
-  [self removeFromSuperlayer];
-  [self.animationDelegate animationDidStop:anim finished:finished];
+  if (!self.isAnimationCleared) {
+    [self removeFromSuperlayer];
+    [self.animationDelegate animationDidStop:anim shapeLayer:self finished:finished];
+  }
 }
 
 @end
@@ -205,7 +215,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   [super setupRipple];
 }
 
-- (void)enter {
+- (void)enterWithCompletion:(void (^)())completionBlock {
   [super enter];
 
   if (self.bounded) {
@@ -242,11 +252,28 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundPositionAnim.keyTimes = @[ @(kInkLayerForegroundUnboundedEnterDelay), @1 ];
     [self addAnimation:_foregroundPositionAnim forKey:kInkLayerForegroundPositionAnim];
   }
+
+  [CATransaction begin];
+  if (completionBlock) {
+    __weak MDCInkLayerForegroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^{
+      MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+      if (strongSelf.rippleState != kInkRippleCancelled) {
+        completionBlock();
+      }
+    }];
+  }
   [self addAnimation:_foregroundOpacityAnim forKey:kInkLayerForegroundOpacityAnim];
   [self addAnimation:_foregroundScaleAnim forKey:kInkLayerForegroundScaleAnim];
+  [CATransaction commit];
 }
 
 - (void)exit:(BOOL)animated {
+  self.rippleState = kInkRippleCancelled;
+  [self exit:animated completion:nil];
+}
+
+- (void)exit:(BOOL)animated completion:(void (^)())completionBlock {
   [super exit];
 
   if (!animated) {
@@ -321,9 +348,28 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
   _foregroundPositionAnim.timingFunction = [self logDecelerateEasing];
   _foregroundScaleAnim.timingFunction = [self logDecelerateEasing];
 
+  [CATransaction begin];
+  if (completionBlock) {
+    __weak MDCInkLayerForegroundRipple *weakSelf = self;
+    [CATransaction setCompletionBlock:^{
+      MDCInkLayerForegroundRipple *strongSelf = weakSelf;
+      if (strongSelf.rippleState != kInkRippleCancelled) {
+        completionBlock();
+      }
+    }];
+  }
   [self addAnimation:_foregroundOpacityAnim forKey:kInkLayerForegroundOpacityAnim];
   [self addAnimation:_foregroundPositionAnim forKey:kInkLayerForegroundPositionAnim];
   [self addAnimation:_foregroundScaleAnim forKey:kInkLayerForegroundScaleAnim];
+  [CATransaction commit];
+}
+
+- (void)removeAllAnimations {
+  [super removeAllAnimations];
+  _foregroundOpacityAnim = nil;
+  _foregroundPositionAnim = nil;
+  _foregroundScaleAnim = nil;
+  self.animationCleared = YES;
 }
 
 @end
@@ -379,16 +425,38 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [self addAnimation:_backgroundOpacityAnim forKey:kInkLayerBackgroundOpacityAnim];
 }
 
+- (void)removeAllAnimations {
+  [super removeAllAnimations];
+  _backgroundOpacityAnim = nil;
+  self.animationCleared = YES;
+}
+
 @end
 
 @interface MDCInkLayer () <MDCInkLayerRippleDelegate>
 
+/**
+ Reset the bottom-most ink applied to the layer with a completion handler to be called on completion
+ if applicable.
+
+ @param animated Enables the ink ripple fade out animation.
+ @param completionBlock Block called after the completion of the animation.
+ */
+- (void)resetBottomInk:(BOOL)animated completion:(void (^)())completionBlock;
+
+/**
+ Reset the bottom-most ink applied to the layer with a completion handler to be called on completion
+ if applicable.
+
+ @param animated Enables the ink ripple fade out animation.
+ @param point Evaporate the ink towards the point.
+ @param completionBlock Block called after the completion of the animation.
+ */
+- (void)resetBottomInk:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)())completionBlock;
+
 @property(nonatomic, strong) CAShapeLayer *compositeRipple;
-@property(nonatomic, strong) MDCInkLayerForegroundRipple *foregroundRipple;
-@property(nonatomic, strong) MDCInkLayerBackgroundRipple *backgroundRipple;
-@property(nonatomic, copy) void (^spreadCompletionBlock)();
-@property(nonatomic, copy) void (^evaporateCompletionBlock)();
-@property(nonatomic, copy) void (^evaporateToPointCompletionBlock)();
+@property(nonatomic, strong) NSMutableArray <MDCInkLayerForegroundRipple *> *foregroundRipples;
+@property(nonatomic, strong) NSMutableArray <MDCInkLayerBackgroundRipple *> *backgroundRipples;
 
 @end
 
@@ -400,6 +468,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     self.masksToBounds = YES;
     _bounded = YES;
     _compositeRipple = [CAShapeLayer layer];
+    _foregroundRipples = [NSMutableArray array];
+    _backgroundRipples = [NSMutableArray array];
     [self addSublayer:_compositeRipple];
   }
   return self;
@@ -422,11 +492,37 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   _compositeRipple.mask = rippleMaskLayer;
 }
 
-- (void)reset:(BOOL)animated {
-  [_foregroundRipple exit:animated];
-  [_backgroundRipple exit:animated];
-  _foregroundRipple = nil;
-  _backgroundRipple = nil;
+- (void)resetAllInk:(BOOL)animated {
+  if (self.foregroundRipples.count > 0) {
+    [self.foregroundRipples makeObjectsPerformSelector:@selector(exit:)];
+  }
+  if (self.backgroundRipples.count > 0) {
+    [self.backgroundRipples makeObjectsPerformSelector:@selector(exit:)];
+  }
+}
+
+- (void)resetBottomInk:(BOOL)animated completion:(void (^)())completionBlock {
+  if (self.foregroundRipples.count > 0) {
+    [[self.foregroundRipples objectAtIndex:(self.foregroundRipples.count - 1)] exit:animated
+                                                                        completion:completionBlock];
+  }
+  if (self.backgroundRipples.count > 0) {
+    [[self.backgroundRipples objectAtIndex:(self.backgroundRipples.count - 1)] exit:animated];
+  }
+}
+
+- (void)resetBottomInk:(BOOL)animated
+               toPoint:(CGPoint)point
+            completion:(void (^)())completionBlock {
+  if (self.foregroundRipples.count > 0) {
+    MDCInkLayerForegroundRipple *foregroundRipple =
+        [self.foregroundRipples objectAtIndex:(self.foregroundRipples.count - 1)];
+    foregroundRipple.point = point;
+    [foregroundRipple exit:animated completion:completionBlock];
+  }
+  if (self.backgroundRipples.count > 0) {
+    [[self.backgroundRipples objectAtIndex:(self.backgroundRipples.count - 1)] exit:animated];
+  }
 }
 
 #pragma mark - Properties
@@ -446,57 +542,55 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   CGFloat radius = MDCInkLayerRadiusBounds(_maxRippleRadius,
                                            MDCInkLayerRectHypotenuse(self.bounds) / 2.f, _bounded);
 
-  _backgroundRipple = [[MDCInkLayerBackgroundRipple alloc] init];
-  _backgroundRipple.inkLayer = _compositeRipple;
-  _backgroundRipple.targetFrame = self.bounds;
-  _backgroundRipple.point = point;
-  _backgroundRipple.color = self.inkColor;
-  _backgroundRipple.radius = radius;
-  _backgroundRipple.bounded = self.bounded;
-  [_backgroundRipple setupRipple];
+  MDCInkLayerBackgroundRipple *backgroundRipple = [[MDCInkLayerBackgroundRipple alloc] init];
+  backgroundRipple.inkLayer = _compositeRipple;
+  backgroundRipple.targetFrame = self.bounds;
+  backgroundRipple.point = point;
+  backgroundRipple.color = self.inkColor;
+  backgroundRipple.radius = radius;
+  backgroundRipple.bounded = self.bounded;
+  backgroundRipple.animationDelegate = self;
+  [backgroundRipple setupRipple];
 
-  _foregroundRipple = [[MDCInkLayerForegroundRipple alloc] init];
-  _foregroundRipple.inkLayer = _compositeRipple;
-  _foregroundRipple.targetFrame = self.bounds;
-  _foregroundRipple.point = point;
-  _foregroundRipple.color = self.inkColor;
-  _foregroundRipple.radius = radius;
-  _foregroundRipple.bounded = self.bounded;
-  _foregroundRipple.animationDelegate = self;
-  _foregroundRipple.useCustomInkCenter = self.useCustomInkCenter;
-  _foregroundRipple.customInkCenter = self.customInkCenter;
-  [_foregroundRipple setupRipple];
+  MDCInkLayerForegroundRipple *foregroundRipple = [[MDCInkLayerForegroundRipple alloc] init];
+  foregroundRipple.inkLayer = _compositeRipple;
+  foregroundRipple.targetFrame = self.bounds;
+  foregroundRipple.point = point;
+  foregroundRipple.color = self.inkColor;
+  foregroundRipple.radius = radius;
+  foregroundRipple.bounded = self.bounded;
+  foregroundRipple.animationDelegate = self;
+  foregroundRipple.useCustomInkCenter = self.useCustomInkCenter;
+  foregroundRipple.customInkCenter = self.customInkCenter;
+  [foregroundRipple setupRipple];
 
-  [_backgroundRipple enter];
-  [_foregroundRipple enter];
+  [backgroundRipple enter];
+  [self.backgroundRipples addObject:backgroundRipple];
+  [foregroundRipple enterWithCompletion:completionBlock];
+  [self.foregroundRipples addObject:foregroundRipple];
 
-  _spreadCompletionBlock = completionBlock;
 }
 
 - (void)evaporateWithCompletion:(void (^)())completionBlock {
-  _evaporateCompletionBlock = completionBlock;
-  [self reset:YES];
+  [self resetBottomInk:YES completion:completionBlock];
 }
 
 - (void)evaporateToPoint:(CGPoint)point completion:(void (^)())completionBlock {
-  _evaporateToPointCompletionBlock = completionBlock;
-  _foregroundRipple.point = point;
-  [self reset:YES];
+  [self resetBottomInk:YES toPoint:point completion:completionBlock];
 }
 
 #pragma mark - MDCInkLayerRippleDelegate
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
-  if (finished) {
-    if (_spreadCompletionBlock) {
-      _spreadCompletionBlock();
-    }
-    if (_evaporateCompletionBlock) {
-      _evaporateCompletionBlock();
-    }
-    if (_evaporateToPointCompletionBlock) {
-      _evaporateToPointCompletionBlock();
-    }
+- (void)animationDidStop:(CAAnimation *)anim
+              shapeLayer:(CAShapeLayer *)shapeLayer
+                finished:(BOOL)finished {
+
+  [shapeLayer removeAllAnimations];
+
+  if ([shapeLayer isMemberOfClass:[MDCInkLayerForegroundRipple class]]) {
+    [self.foregroundRipples removeObject:(MDCInkLayerForegroundRipple *)shapeLayer];
+  } else if ([shapeLayer isMemberOfClass:[MDCInkLayerBackgroundRipple class]]) {
+    [self.backgroundRipples removeObject:(MDCInkLayerBackgroundRipple *)shapeLayer];
   }
 }
 
