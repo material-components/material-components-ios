@@ -411,15 +411,14 @@ static UIColor *randomColor() {
 - (void)testAdjustsFontProperty {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
+  UIFont *preferredFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
 
   // When
   button.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
   XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory);
-  UIFont *buttonFont = button.titleLabel.font;
-  UIFont *preferredFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
-  XCTAssertEqualWithAccuracy(buttonFont.pointSize,
+  XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize,
                              preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
