@@ -102,6 +102,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Cached accessibility settings.
   NSMutableDictionary<NSNumber *, NSString *> *_accessibilityLabelForState;
   NSString *_accessibilityLabelExplicitValue;
+
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 @property(nonatomic, strong) MDCInkView *inkView;

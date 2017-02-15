@@ -150,6 +150,9 @@
  Indicates whether the button should automatically update its font when the device’s
  UIContentSizeCategory is changed.
  
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
  If set to YES, this button will base its text font on MDCFontTextStyleButton.
  */
 @property (nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
