@@ -146,6 +146,15 @@
  */
 - (void)resetElevationForState:(UIControlState)state;
 
+/*
+ Indicates whether the button should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+ 
+ If set to YES, this button will base its text font on MDCFontTextStyleButton.
+ */
+@property (nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
 #pragma mark - UIButton changes
 
 /**
