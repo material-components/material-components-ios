@@ -705,6 +705,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
   UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
   self.titleLabel.font = font;
+  [self sizeToFit];
 }
 
 #pragma mark - Deprecations
