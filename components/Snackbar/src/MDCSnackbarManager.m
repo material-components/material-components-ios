@@ -103,7 +103,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
     _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    _overlayView.accessibilityViewIsModal = YES;
   }
   return self;
 }
@@ -201,13 +200,13 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
         }
       };
 
-  self.overlayView.hidden = NO;
-  [self activateOverlay:self.overlayView];
-
   Class viewClass = [message viewClass];
   snackbarView = [[viewClass alloc] initWithMessage:message dismissHandler:dismissHandler];
-
   self.currentSnackbar = snackbarView;
+
+  self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
+  self.overlayView.hidden = NO;
+  [self activateOverlay:self.overlayView];
 
   // Once the Snackbar has finished animating on screen, start the automatic dismiss timeout, but
   // only if the user isn't running VoiceOver.
