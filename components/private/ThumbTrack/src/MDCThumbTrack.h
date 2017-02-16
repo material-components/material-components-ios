@@ -126,9 +126,6 @@
 /** Whether the ends of the track are inset by the radius of the thumb. The default is NO. */
 @property(nonatomic, assign) BOOL trackEndsAreInset;
 
-/** Whether the thumb and the track interpolate between on and off color. The default is NO. */
-@property(nonatomic, assign) BOOL interpolateOnOffColors;
-
 /**
  The value from which the filled part of the track is anchored. If set to a value between
  minimumValue and maximumValue, then the filled/colored part of the track extends from the
