@@ -102,6 +102,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Cached accessibility settings.
   NSMutableDictionary<NSNumber *, NSString *> *_accessibilityLabelForState;
   NSString *_accessibilityLabelExplicitValue;
+
+  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 @property(nonatomic, strong) MDCInkView *inkView;
 @end
@@ -272,6 +274,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)dealloc {
   [self removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
+
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:UIContentSizeCategoryDidChangeNotification
+                                                object:nil];
 }
 
 - (void)setCustomTitleColor:(UIColor *)customTitleColor {
@@ -674,6 +680,31 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                                                  options:options];
     [self setTitleColor:color forState:UIControlStateNormal];
   }
+}
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
+    self.titleLabel.font = font;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+  }
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  UIFont *font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
+  self.titleLabel.font = font;
 }
 
 #pragma mark - Deprecations
