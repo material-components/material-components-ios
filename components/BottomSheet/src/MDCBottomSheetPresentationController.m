@@ -72,8 +72,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     _dimmingView = [[UIView alloc] init];
     _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
     _dimmingView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    _automaticallyDismissBottomSheet = YES;
   }
   return self;
 }
@@ -166,7 +164,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   CGFloat preferredContentHeight = self.presentedViewController.preferredContentSize.height;
 
   // If |preferredSheetHeight| has not been specified, use half of the current height.
-  if (MDCFloatIsApproximatelyZero(preferredContentHeight) || !self.usePreferredHeight) {
+  if (MDCFloatIsApproximatelyZero(preferredContentHeight)) {
     preferredContentHeight = MDCRound(_sheetView.frame.size.height / 2);
   }
   _sheetView.preferredSheetHeight = preferredContentHeight;
@@ -179,19 +177,15 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   if ([contentView pointInside:pointInContentView withEvent:nil]) {
     return;
   }
-  if (self.automaticallyDismissBottomSheet) {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  }
-  [self.delegate bottomSheetPresentationControllerDidCancel:self];
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+  [self.delegate bottomSheetPresentationControllerDidDismiss:self];
 }
 
 #pragma mark - MDCSheetContainerViewDelegate
 
 - (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView {
-  if (self.automaticallyDismissBottomSheet) {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  }
-  [self.delegate bottomSheetPresentationControllerDidCancel:self];
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+  [self.delegate bottomSheetPresentationControllerDidDismiss:self];
 }
 
 @end

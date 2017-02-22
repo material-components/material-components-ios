@@ -49,25 +49,4 @@
  */
 @property(nonatomic, weak, nullable) id<MDCBottomSheetPresentationControllerDelegate> delegate;
 
-/**
- If YES the bottom sheet presentation controller will dismiss the presented view controller when the
- user taps the dimming view or pulls the bottom sheet off the screen.
- If NO the bottom sheet will never automatically dismiss the presented view controller.
-
- @note If NO clients should dismiss the presented view controller inside the delegate callback
-   |bottomSheetPresentationControllerDidCancel|.
- The default value is YES.
- */
-@property(nonatomic, assign) BOOL automaticallyDismissBottomSheet;
-
-/**
- Controls the height that the sheet should be when it appears. If NO, it defaults to half the height
- of the screen. If YES, and the @c -preferredContentSize is non-zero on the content view controller,
- it defaults to the preferredContentSize.
-
- @note The height used will never be any taller than the screen of the device.
- The default value is NO.
- */
-@property(nonatomic) BOOL usePreferredHeight;
-
 @end

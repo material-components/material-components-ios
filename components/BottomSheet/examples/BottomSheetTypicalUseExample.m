@@ -79,7 +79,6 @@
   MDCBottomSheetPresentationController *presentationController =
       [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                            presentingViewController:presenting];
-  presentationController.usePreferredHeight = YES;
   return presentationController;
 }
 
