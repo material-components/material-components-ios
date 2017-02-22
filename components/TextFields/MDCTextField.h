@@ -31,8 +31,7 @@
 
   Default is black with 38% opacity.
  */
-@property(nonatomic, null_resettable, strong) UIColor *clearButtonColor NS_SWIFT_NAME(clearColor)
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, null_resettable, strong) UIColor *clearButtonColor UI_APPEARANCE_SELECTOR;
 
 /** MDCTextField does not implement borders that conform to UITextBorderStyle. */
 @property(nullable) UITextBorderStyle borderStyle NS_UNAVAILABLE;
