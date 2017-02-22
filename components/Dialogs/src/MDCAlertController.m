@@ -227,6 +227,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.38f;
 
   // The action MDCButtons handle their own resizing
 
+  // Our presentation controller reacts to changes to preferredContentSize to determine our
+  // frame at the presented controller.
   self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
