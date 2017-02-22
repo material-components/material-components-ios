@@ -81,6 +81,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 - (void)presentationTransitionWillBegin {
+  [self.delegate prepareForBottomSheetPresentation:self];
+
   UIView *containerView = [self containerView];
 
   CGRect frame = self.containerView.frame;

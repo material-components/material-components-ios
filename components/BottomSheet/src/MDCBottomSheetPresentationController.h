@@ -24,11 +24,20 @@
 @protocol MDCBottomSheetPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
 @optional
 
+/**
+ Called before the bottom sheet is presented.
+
+ @param bottomSheet The MDCBottomSheetPresentationController being presented.
+ */
 - (void)prepareForBottomSheetPresentation:
     (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
 /**
- Called when the user taps the background or drags the bottom sheet off screen.
+ Called after dimissing the bottom sheet to let clients know it is no longer onscreen. The bottom
+ sheet controller calls this method only in response to user actions such as tapping the background
+ or draging the sheet offscreen. This method is not called if the bottom sheet is dismissed
+ programmatically.
+
  @param bottomSheet The MDCBottomSheetPresentationController that was dismissed.
  */
 - (void)bottomSheetPresentationControllerDidDismiss:
