@@ -27,9 +27,6 @@
 - (void)prepareForBottomSheetPresentation:
     (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
-- (BOOL)bottomSheetPresentationControllerShouldDismissBottomSheet:
-    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
-
 /**
  Called when the user taps the background or drags the bottom sheet off screen.
  @param bottomSheet The MDCBottomSheetPresentationController that was dismissed.

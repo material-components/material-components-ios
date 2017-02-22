@@ -153,13 +153,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
 }
 
-- (CGAffineTransform)offScreenTransformForPresentedView {
-  CGFloat yOffset = CGRectGetHeight(self.presentedViewController.view.bounds);
-  CGAffineTransform translation = CGAffineTransformMakeTranslation(0, yOffset);
-
-  return CGAffineTransformConcat(translation, _sheetView.transform);
-}
-
 - (void)updatePreferredSheetHeight {
   CGFloat preferredContentHeight = self.presentedViewController.preferredContentSize.height;
 
@@ -186,6 +179,15 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 - (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
   [self.delegate bottomSheetPresentationControllerDidDismiss:self];
+}
+
+#pragma mark - Private
+
+- (CGAffineTransform)offScreenTransformForPresentedView {
+  CGFloat yOffset = CGRectGetHeight(self.presentedViewController.view.bounds);
+  CGAffineTransform translation = CGAffineTransformMakeTranslation(0, yOffset);
+
+  return CGAffineTransformConcat(translation, _sheetView.transform);
 }
 
 @end
