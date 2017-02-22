@@ -1,4 +1,24 @@
-# release-candidate TODO: Replace me with version number. 
+# 21.3.0
+
+## API diffs
+
+### Buttons
+
+* [Add Dynamic Type support (#1211)](https://github.com/material-components/material-components-ios/pull/1211) (Ian Gordon)
+
+## Component changes
+
+### CollectionCells
+
+#### Changes
+
+* [Updated README docs and example to use collection headers in editing mode (#1193)](https://github.com/material-components/material-components-ios/pull/1193) (Justin Shephard)
+
+### Snackbar
+
+#### Changes
+
+* [Release voice over's focus on snackbars when they are transient (#1214)](https://github.com/material-components/material-components-ios/pull/1214) (Sam Morrison)
 
 # 21.2.0
 
