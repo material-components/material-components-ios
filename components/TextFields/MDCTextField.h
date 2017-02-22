@@ -34,6 +34,6 @@
 @property(nonatomic, null_resettable, strong) UIColor *clearButtonColor UI_APPEARANCE_SELECTOR;
 
 /** MDCTextField does not implement borders that conform to UITextBorderStyle. */
-@property(nullable) UITextBorderStyle borderStyle NS_UNAVAILABLE;
+@property(nonatomic) UITextBorderStyle borderStyle NS_UNAVAILABLE;
 
 @end
