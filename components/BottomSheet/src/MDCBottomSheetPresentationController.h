@@ -22,13 +22,20 @@
  Delegate for MDCBottomSheetPresentationController.
  */
 @protocol MDCBottomSheetPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
+@optional
+
+- (void)prepareForBottomSheetPresentation:
+    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+
+- (BOOL)bottomSheetPresentationControllerShouldDismissBottomSheet:
+    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
 /**
  Called when the user taps the background or drags the bottom sheet off screen.
- @param controller The MDCBottomSheetPresentationController that was dismissed.
+ @param bottomSheet The MDCBottomSheetPresentationController that was dismissed.
  */
-- (void)bottomSheetPresentationControllerDidCancel:
-    (nonnull MDCBottomSheetPresentationController *)controller;
+- (void)bottomSheetPresentationControllerDidDismiss:
+    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
 @end
 
