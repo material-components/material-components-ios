@@ -18,6 +18,24 @@
 
 #import "MDCTextInput.h"
 
+/** Delegate for MDCTextInput size changes. */
+@protocol MDCTextViewLayoutDelegate <NSObject>
+
+@optional
+/**
+ Notifies the delegate that the textView's content size changed, requiring the size provided for
+ best display.
+
+ If using auto layout, this method is unnecessary; this is a way for views not implementing auto
+ layout to know when to grow and shrink height to accomodate changes in content.
+
+ @param textView  The text view for which the content size changed.
+ @param size      The size required by the text view to fit all of its content.
+ */
+- (void)textView:(_Nonnull MDCTextView)textView didChangeContentSize:(CGSize)size;
+
+@end
+
 /**
   Material Design themed text view (multiline text input).
   https://www.google.com/design/spec/components/text-fields.html#text-fields-multi-line-text-field
