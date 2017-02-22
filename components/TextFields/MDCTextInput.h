@@ -109,9 +109,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 /** The text displayed in the text input. */
 @property(nonatomic, nullable, copy) NSString *text;
 
-/** The delegate for the text input. */
-@property(nonatomic, nullable, weak) IBInspectable id<MDCTextInputLayoutDelegate> layoutDelegate;
-
 /**
  The presentation style of the text input.
 

@@ -42,4 +42,11 @@
  */
 @interface MDCTextView : UITextView <MDCTextInput>
 
+/**
+ The delegate for changes to preferred content size.
+
+ If using auto layout, it is not necessary to have a layout delegate.
+ */
+@property(nonatomic, nullable, weak) IBInspectable id<MDCTextInputLayoutDelegate> layoutDelegate;
+
 @end
