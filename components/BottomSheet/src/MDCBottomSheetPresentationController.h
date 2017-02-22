@@ -16,25 +16,43 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCBottomSheetPresentationController;
+
+/**
+ Delegate for MDCBottomSheetPresentationController.
+ */
+@protocol MDCBottomSheetPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
+@optional
+
+/**
+ Called before the bottom sheet is presented.
+
+ @param bottomSheet The MDCBottomSheetPresentationController being presented.
+ */
+- (void)prepareForBottomSheetPresentation:
+    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+
+/**
+ Called after dimissing the bottom sheet to let clients know it is no longer onscreen. The bottom
+ sheet controller calls this method only in response to user actions such as tapping the background
+ or draging the sheet offscreen. This method is not called if the bottom sheet is dismissed
+ programmatically.
+
+ @param bottomSheet The MDCBottomSheetPresentationController that was dismissed.
+ */
+- (void)bottomSheetPresentationControllerDidDismiss:
+    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+
+@end
+
 /**
  A UIPresentationController for presenting a modal view controller as a bottom sheet.
- 
- @note If your presented view controller has a UIScrollView as the root view (or you are presenting
- a UICollectionViewController or UIWebViewController) MDCBottomSheetPresentationController will 
- observe the contentSize of the scroll view in order to react to changes in the content size.
- @note MDCBottomSheetPresentationController can dismiss the presented view controller if the user
- taps outside the bottom sheet or pulls it offscreen.
  */
 @interface MDCBottomSheetPresentationController : UIPresentationController
 
 /**
- Controls the height that the sheet should be when it appears. If NO, it defaults to half the height
- of the screen. If YES, and the @c -preferredContentSize is non-zero on the content view controller,
- it defaults to the preferredContentSize.
-
- @note The height used will never be any taller than the screen of the device.
- The default value is NO.
+ Delegate to tell the presenter when to dismiss.
  */
-@property(nonatomic) BOOL usePreferredHeight;
+@property(nonatomic, weak, nullable) id<MDCBottomSheetPresentationControllerDelegate> delegate;
 
 @end
