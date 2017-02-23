@@ -36,6 +36,8 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 
 @dynamic borderStyle;
 
+@synthesize internalClearButton = _internalClearButton;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -494,8 +496,9 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 
 #pragma mark - Drawing
 
-// GENERATED CODE
 - (UIBezierPath *)pathForClearButtonImageFrame:(CGSize)frame {
+  // GENERATED CODE
+
   CGRect innerBounds = CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10,
                                   floor((frame.size.width - 10) * 0.73684 + 0.5),
                                   floor((frame.size.height - 10) * 0.73684 + 0.5));
