@@ -80,6 +80,21 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   return _sheetView;
 }
 
+- (CGRect)frameOfPresentedViewInContainerView {
+  CGSize containerSize = self.containerView.frame.size;
+  CGSize preferredSize = self.presentedViewController.preferredContentSize;
+
+  if (preferredSize.width > 0 && preferredSize.width < containerSize.width) {
+    // We only customize the width and not the height here. MDCSheetContainerView lays out the
+    // presentedView taking the preferred height in to account.
+    CGFloat width = preferredSize.width;
+    CGFloat leftPad = (containerSize.width - width) / 2;
+    return CGRectMake(leftPad, 0, width, containerSize.height);
+  } else {
+    return [super frameOfPresentedViewInContainerView];
+  }
+}
+
 - (void)presentationTransitionWillBegin {
   [self.delegate prepareForBottomSheetPresentation:self];
 

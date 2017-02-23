@@ -37,6 +37,10 @@
   self.view.backgroundColor = [UIColor redColor];
 }
 
+- (CGSize)preferredContentSize {
+  return CGSizeMake(400, 0);
+}
+
 @end
 
 @interface BottomSheetTypicalUseExample : UIViewController <UIViewControllerTransitioningDelegate>
@@ -79,6 +83,7 @@
   MDCBottomSheetPresentationController *presentationController =
       [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                            presentingViewController:presenting];
+  presentationController.overrideTraitCollection = [UITraitCollection traitCollectionWithHorizontalSizeClass:UIUserInterfaceSizeClassCompact];
   return presentationController;
 }
 
