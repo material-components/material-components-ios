@@ -14,8 +14,18 @@
  limitations under the License.
  */
 
-#import "MDCTextInput.h"
-#import "MDCTextField.h"
-#import "MDCTextView.h"
-#import "MDCTextInputBehavior.h"
-#import "MDCTextFieldCharacterCounter.h"
+#import <UIKit/UIKit.h>
+
+/**
+ * A view that uses two CATextLayer objects to draw title text for an instance of GOOTextField.
+ *
+ * @ingroup GOOInputs
+ */
+@interface GOOTextFieldTitleView : UIView
+@property(nonatomic, assign) CGColorRef frontLayerColor;
+@property(nonatomic, assign) CGColorRef backLayerColor;
+@property(nonatomic, assign) NSObject *string;
+@property(nonatomic, strong) UIFont *font;
+@property(nonatomic, strong) CATextLayer *frontLayer;
+@property(nonatomic, strong) CATextLayer *backLayer;
+@end
