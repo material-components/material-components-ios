@@ -100,9 +100,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   UIView *containerView = [self containerView];
 
-  CGRect frame = self.containerView.frame;
   UIScrollView *scrollView = MDCBottomSheetGetPrimaryScrollView(self.presentedViewController);
-  _sheetView = [[MDCSheetContainerView alloc] initWithFrame:frame
+  _sheetView = [[MDCSheetContainerView alloc] initWithFrame:[self frameOfPresentedViewInContainerView]
                                                 contentView:self.presentedViewController.view
                                                  scrollView:scrollView];
   _sheetView.delegate = self;
