@@ -50,7 +50,7 @@
 
  Default is UITextFieldViewModeAlways.
  */
-@property(nonatomic, assign) UITextFieldViewMode underlineViewMode NS_SWIFT_NAME(underlineMode);
+@property(nonatomic, assign) UITextFieldViewMode underlineViewMode NS_SWIFT_NAME(underlineMode) UI_APPEARANCE_SELECTOR;
 
 /**
  Controls when the character count will be shown.
