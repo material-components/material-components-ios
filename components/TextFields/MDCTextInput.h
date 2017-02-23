@@ -75,7 +75,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is black with Material Design hint text opacity.
  */
-@property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor NS_SWIFT_NAME(inlineScale)
+@property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor NS_SWIFT_NAME(inlineColor)
     UI_APPEARANCE_SELECTOR;
 
 /**
