@@ -170,6 +170,18 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+  [coordinator animateAlongsideTransition:
+       ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+    _sheetView.frame = [self frameOfPresentedViewInContainerView];
+    [_sheetView layoutIfNeeded];
+    [self updatePreferredSheetHeight];
+  } completion:nil];
+}
+
 - (void)updatePreferredSheetHeight {
   CGFloat preferredContentHeight = self.presentedViewController.preferredContentSize.height;
 
