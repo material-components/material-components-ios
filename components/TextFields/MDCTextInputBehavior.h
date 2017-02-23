@@ -26,20 +26,8 @@
  */
 @interface MDCTextInputBehavior : NSObject
 
+/** The text input the behavior is managing. */
 @property(nonatomic, nonnull, strong) id<MDCTextInput> textInput NS_SWIFT_NAME(input);
-
-/**
- The text displayed in the underline text that explains the nature of the error.
-
- The value of this property controls the state of the text input. When errorText != nil, the text
- input is in an error state:
- - The error text appears in a label below the input rectangle's underline with the errorColor as
- text color.
- - The input rectangle's underline is colored with the errorColor.
-
- Set this property via setErrorText:errorAccessibilityValue:.
- */
-@property(nonatomic, nullable, copy, readonly) NSString *errorText;
 
 /**
  The color used to denote error state in the underline, the errorText's label, the plceholder and
