@@ -50,7 +50,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @interface MDCTextInputBehavior : NSObject
 
 /** The text input the behavior is managing. */
-@property(nonatomic, nonnull, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
+@property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
 
 /**
  The color used to denote error state in the underline, the errorText's label, the plceholder and
