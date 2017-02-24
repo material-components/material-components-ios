@@ -18,6 +18,8 @@
 
 #import "MDCTextInput.h"
 
+@class MDCTextView;
+
 /** Delegate for MDCTextInput size changes. */
 @protocol MDCTextViewLayoutDelegate <NSObject>
 
@@ -32,7 +34,7 @@
  @param textView  The text view for which the content size changed.
  @param size      The size required by the text view to fit all of its content.
  */
-- (void)textView:(_Nonnull MDCTextView)textView didChangeContentSize:(CGSize)size;
+- (void)textView:(MDCTextView* _Nonnull)textView didChangeContentSize:(CGSize)size;
 
 @end
 
