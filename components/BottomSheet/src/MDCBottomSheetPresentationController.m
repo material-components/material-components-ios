@@ -64,18 +64,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 @synthesize delegate;
 
-- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
-                       presentingViewController:(UIViewController *)presentingViewController {
-  self = [super initWithPresentedViewController:presentedViewController
-                       presentingViewController:presentingViewController];
-  if (self) {
-    _dimmingView = [[UIView alloc] init];
-    _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4f];
-    _dimmingView.translatesAutoresizingMaskIntoConstraints = NO;
-  }
-  return self;
-}
-
 - (UIView *)presentedView {
   return _sheetView;
 }
@@ -100,8 +88,15 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   UIView *containerView = [self containerView];
 
+  _dimmingView = [[UIView alloc] initWithFrame:self.containerView.bounds];
+  _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4f];
+  _dimmingView.translatesAutoresizingMaskIntoConstraints = NO;
+  _dimmingView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
   UIScrollView *scrollView = MDCBottomSheetGetPrimaryScrollView(self.presentedViewController);
-  _sheetView = [[MDCSheetContainerView alloc] initWithFrame:[self frameOfPresentedViewInContainerView]
+  CGRect sheetFrame = [self frameOfPresentedViewInContainerView];
+  _sheetView = [[MDCSheetContainerView alloc] initWithFrame:sheetFrame
                                                 contentView:self.presentedViewController.view
                                                  scrollView:scrollView];
   _sheetView.delegate = self;
@@ -113,25 +108,14 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [containerView addSubview:_dimmingView];
   [containerView addSubview:_sheetView];
 
-  NSDictionary *views = NSDictionaryOfVariableBindings(_dimmingView);
-
-  [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_dimmingView]|"
-                                                                        options:0
-                                                                        metrics:nil
-                                                                          views:views]];
-  [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_dimmingView]|"
-                                                                        options:0
-                                                                        metrics:nil
-                                                                          views:views]];
-
   [self updatePreferredSheetHeight];
 
-  containerView.userInteractionEnabled = YES;
   // Add tap handler to dismiss the sheet.
-  UITapGestureRecognizer *tapGesture =
-      [[UITapGestureRecognizer alloc] initWithTarget:self
-                                              action:@selector(dismissPresentedControllerIfNecessary:)];
+  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                               action:
+      @selector(dismissPresentedControllerIfNecessary:)];
   tapGesture.cancelsTouchesInView = NO;
+  containerView.userInteractionEnabled = YES;
   [containerView addGestureRecognizer:tapGesture];
 
   id <UIViewControllerTransitionCoordinator> transitionCoordinator =
