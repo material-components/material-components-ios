@@ -17,7 +17,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCTextInput;
+@protocol MDCTextInput;
 
 /**
  Material Design themed states for textInputs. The logic for 'automagic' error states changes:
@@ -26,20 +26,7 @@
  */
 @interface MDCTextInputBehavior : NSObject
 
-@property(nonatomic, nonnull, strong) id<MDCTextInput> textInput NS_SWIFT_NAME(input);
-
-/**
- The text displayed in the underline text that explains the nature of the error.
-
- The value of this property controls the state of the text input. When errorText != nil, the text
- input is in an error state:
- - The error text appears in a label below the input rectangle's underline with the errorColor as
- text color.
- - The input rectangle's underline is colored with the errorColor.
-
- Set this property via setErrorText:errorAccessibilityValue:.
- */
-@property(nonatomic, nullable, copy, readonly) NSString *errorText;
+@property(nonatomic, nullable, weak) UIView <MDCTextInput> *textInput NS_SWIFT_NAME(input);
 
 /**
  The color used to denote error state in the underline, the errorText's label, the plceholder and
@@ -48,12 +35,6 @@
  Default is red.
  */
 @property(nonatomic, nullable, copy) UIColor *errorColor UI_APPEARANCE_SELECTOR;
-
-/**
- A localized string that represents the value of the errorText label. Use only when the you need
- to override the default which is the errorText itself.
- */
-@property(nonatomic, nullable, copy, readonly) NSString *errorAccessibilityText;
 
 /**
  Controls when the underline will be shown.
