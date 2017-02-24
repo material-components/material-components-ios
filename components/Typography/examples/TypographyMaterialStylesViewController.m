@@ -103,22 +103,6 @@
 
   [self.tableView beginUpdates];
   [self.tableView endUpdates];
-
-  //TODO Wierdness on iOS 8
-//  [self.tableView reloadData];
-}
-
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  NSLog(@"traitCollectionDidChange:");
-  UITraitCollection *currentTraitCollection = self.traitCollection;
-
-  // contentSize change doesn't arrive until iOS 10
-
-  //  [self.tableView beginUpdates];
-  //  [self.tableView endUpdates];
-
-//  [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource

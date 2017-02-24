@@ -1,3 +1,55 @@
+# 21.3.0
+
+## API diffs
+
+### Buttons
+
+* [Add Dynamic Type support (#1211)](https://github.com/material-components/material-components-ios/pull/1211) (Ian Gordon)
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [[Project] Clear warnings within project (#1205)](https://github.com/material-components/material-components-ios/commit/95d71cfaac054d9fe88c130617ff963dc4b71ce5) (Justin Shephard)
+
+### Buttons
+
+#### Changes
+
+* [[Button] Add Dynamic Type support (#1211)](https://github.com/material-components/material-components-ios/commit/05d0ad2074d2b4e2a954c6e663ba96798e3efb86) (ianegordon)
+
+### Collections
+
+#### Changes
+
+* [- Updated README docs and example to use collection headers in editing mode (#1193)](https://github.com/material-components/material-components-ios/commit/620b5be1116771e18b3836a44bc806f6a5a3481c) (Justin Shephard)
+
+### NavigationBar
+
+#### Changes
+
+* [[Project] Clear warnings within project (#1205)](https://github.com/material-components/material-components-ios/commit/95d71cfaac054d9fe88c130617ff963dc4b71ce5) (Justin Shephard)
+
+### Snackbar
+
+#### Changes
+
+* [Release voice over's focus on snackbars when they are transient (#1214)](https://github.com/material-components/material-components-ios/commit/2c2592172b323a759af4bdfd969c4be775d95764) (Sam Morrison)
+
+### Tabs
+
+#### Changes
+
+* [[Project] Clear warnings within project (#1205)](https://github.com/material-components/material-components-ios/commit/95d71cfaac054d9fe88c130617ff963dc4b71ce5) (Justin Shephard)
+
+### Typography
+
+#### Changes
+
+* [Silence warning (#1206)](https://github.com/material-components/material-components-ios/commit/cee7266d2fc552f7039baaf8f528171237092b14) (ianegordon)
+
 # 21.2.0
 
 ## API diffs

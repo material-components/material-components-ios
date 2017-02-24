@@ -71,7 +71,9 @@ class TabBarIconSwiftExample: UIViewController {
 
     setupExampleViews()
 
-    alignmentButton.addTarget(self, action:#selector(changeAlignmentDidTouch(sender:)), for: .touchUpInside)
+    alignmentButton.addTarget(self,
+                              action:#selector(changeAlignmentDidTouch(sender:)),
+                              for: .touchUpInside)
   }
 
   func changeAlignmentDidTouch(sender: UIButton) {
@@ -117,6 +119,7 @@ extension TabBarIconSwiftExample: MDCTabBarDelegate {
       fatalError("MDCTabBarDelegate given selected item not found in tabBar.items")
     }
 
-    scrollView.setContentOffset(CGPoint(x: CGFloat(index) * view.bounds.width, y: 0), animated: true)
+    scrollView.setContentOffset(CGPoint(x: CGFloat(index) * view.bounds.width, y: 0),
+                                animated: true)
   }
 }

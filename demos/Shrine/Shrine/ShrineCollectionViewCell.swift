@@ -99,8 +99,11 @@ class ShrineCollectionViewCell: UICollectionViewCell {
     avatar.image = nil
   }
 
-  func populateCell(_ title: String, imageName: String, avatar: String, shopTitle: String,
-    price: String) {
+  func populateCell(_ title: String,
+                    imageName: String,
+                    avatar: String,
+                    shopTitle: String,
+                    price: String) {
     labelAvatar.text = shopTitle
     labelPrice.text = price
     let urlString = ShrineData.baseURL + imageName

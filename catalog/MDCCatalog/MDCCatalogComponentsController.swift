@@ -142,7 +142,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   }
 
   override func collectionView(_ collectionView: UICollectionView,
-    numberOfItemsInSection section: Int) -> Int {
+                               numberOfItemsInSection section: Int) -> Int {
     return node.children.count
   }
 
@@ -201,7 +201,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   }
 
   override func collectionView(_ collectionView: UICollectionView,
-    didSelectItemAt indexPath: IndexPath) {
+                               didSelectItemAt indexPath: IndexPath) {
     let node = self.node.children[indexPath.row]
     var vc: UIViewController
     if node.isExample() {

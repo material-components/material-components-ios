@@ -38,6 +38,10 @@
 /** The color of the track disabled color. */
 @property(nullable, nonatomic, strong) UIColor *trackDisabledColor;
 
+/** Dummy property to unbreak internal clients. */
+/** TODO(#1216): Remove this property */
+@property(nonatomic, assign) BOOL interpolateOnOffColors;
+
 /**
  The number of discrete values that the thumb can take along the track. If this property is zero,
  then the slider operates continuously and doesn't do any snapping after the user releases the
@@ -125,9 +129,6 @@
 
 /** Whether the ends of the track are inset by the radius of the thumb. The default is NO. */
 @property(nonatomic, assign) BOOL trackEndsAreInset;
-
-/** Whether the thumb and the track interpolate between on and off color. The default is NO. */
-@property(nonatomic, assign) BOOL interpolateOnOffColors;
 
 /**
  The value from which the filled part of the track is anchored. If set to a value between
