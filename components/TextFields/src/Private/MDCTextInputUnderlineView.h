@@ -23,19 +23,19 @@
  *
  * @ingroup GOOInputs
  */
-@interface MDCTextFieldUnderlineView : UIView
+@interface MDCTextInputUnderlineView : UIView
 @property(nonatomic, strong) UIColor *focusedColor;
 @property(nonatomic, strong) UIColor *unfocusedColor;
 @property(nonatomic, strong) UIColor *errorColor;
 @property(nonatomic, assign) BOOL enabled;
 @property(nonatomic, assign) BOOL erroneous;
-@property(nonatomic, assign) BOOL focusBorderHidden;
-@property(nonatomic, assign) BOOL normalBorderHidden;
-@property(nonatomic, strong) CAShapeLayer *disabledBorder;
-@property(nonatomic, strong) CALayer *focusedBorder;
+@property(nonatomic, assign) BOOL focusUnderlineHidden;
+@property(nonatomic, assign) BOOL normalUnderlineHidden;
+@property(nonatomic, strong) CAShapeLayer *disabledUnderline;
+@property(nonatomic, strong) CALayer *focusedUnderline;
 
-- (void)animateFocusBorderIn;
+- (void)animateFocusUnderlineIn;
 
-- (void)animateFocusBorderOut;
+- (void)animateFocusUnderlineOut;
 
 @end

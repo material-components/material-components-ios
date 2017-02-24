@@ -276,14 +276,6 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   _controller.underlineTextFont = underlineTextFont;
 }
 
-- (UITextFieldViewMode)underlineViewMode {
-  return _controller.underlineViewMode;
-}
-
-- (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
-  _controller.underlineViewMode = underlineViewMode;
-}
-
 - (CGFloat)underlineWidth {
   return _controller.underlineWidth;
 }
@@ -362,7 +354,7 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    editingRect.size.width += MDCTextFieldFullWidthHorizontalPadding;
+    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
     // Full width text boxes have their character count on the text input line
     if (self.characterLimit) {
       editingRect.size.width -= _controller.characterLimitViewSize.width;
@@ -381,19 +373,21 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   UIButton *clearButton = self.internalClearButton;
   if (clearButton != nil) {
     // If the image is not our image, set it.
-    if (clearButton.imageView.image != self.clearButtonImage) {
-      [clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
-      [clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
-      [clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
-    }
 
-    // If the rect doesn't fit the image, adjust accordingly
-    if (!CGSizeEqualToSize(clearButtonRect.size, self.clearButtonImage.size)) {
-      // Resize and shift the clearButtonRect to fit the clearButtonImage
-      CGFloat xDelta = (clearButtonRect.size.width - self.clearButtonImage.size.width) / 2.0f;
-      CGFloat yDelta = (clearButtonRect.size.height - self.clearButtonImage.size.height) / 2.0f;
-      clearButtonRect = CGRectInset(clearButtonRect, xDelta, yDelta);
-    }
+    //TODO(larche) Finish converting to layer.
+//    if (clearButton.imageView.image != self.clearButtonImage) {
+//      [clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
+//      [clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
+//      [clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
+//    }
+//
+//    // If the rect doesn't fit the image, adjust accordingly
+//    if (!CGSizeEqualToSize(clearButtonRect.size, self.clearButtonImage.size)) {
+//      // Resize and shift the clearButtonRect to fit the clearButtonImage
+//      CGFloat xDelta = (clearButtonRect.size.width - self.clearButtonImage.size.width) / 2.0f;
+//      CGFloat yDelta = (clearButtonRect.size.height - self.clearButtonImage.size.height) / 2.0f;
+//      clearButtonRect = CGRectInset(clearButtonRect, xDelta, yDelta);
+//    }
   }
 
   // Full width text boxes have their character count on the text input line
@@ -481,7 +475,7 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 
 #pragma mark - Drawing
 
-- (UIBezierPath *)pathForClearButtonImageFrame:(CGSize)frame {
+- (UIBezierPath *)pathForClearButtonImageFrame:(CGRect)frame {
   // GENERATED CODE
 
   CGRect innerBounds = CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10,

@@ -29,8 +29,6 @@
    - https://github.com/adamwaite/Validator
  */
 
-@protocol MDCTextInput;
-
 /**
  Presentation styles for a text input. The style determines specific aspects of the text
  input, such as sizing, placeholder placement and behavior, layout, etc.
@@ -110,6 +108,9 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
 /** The text displayed in the text input. */
 @property(nonatomic, nullable, copy) NSString *text;
+
+/** The text displayed in the text input. */
+@property(nonatomic, nullable, strong) UIColor *textColor;
 
 /**
  The presentation style of the text input.

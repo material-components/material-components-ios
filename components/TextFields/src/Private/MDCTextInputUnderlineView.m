@@ -14,28 +14,28 @@
  limitations under the License.
  */
 
-#import "MDCTextFieldUnderlineView.h"
+#import "MDCTextInputUnderlineView.h"
 
 #import "MaterialPalettes.h"
 #import "MDCTextInput+Internal.h"
 
-static const CGFloat MDCTextFieldBorderFocusedHeight = 2.f;
+static const CGFloat MDCTextInputUnderlineFocusedHeight = 2.f;
 
-static const NSTimeInterval MDCTextFieldDividerAnimationDuration = 0.2f;
+static const NSTimeInterval MDCTextInputDividerAnimationDuration = 0.2f;
 
-@implementation MDCTextFieldUnderlineView
+@implementation MDCTextInputUnderlineView
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _focusedColor = [[MDCPalette indigoPalette] tint500];
-    _unfocusedColor = MDCTextFieldBorderColor();
-    _errorColor = MDCTextFieldTextErrorColor();
+    _focusedColor = [MDCPalette indigoPalette].tint500;
+    _unfocusedColor = MDCTextInputUnderlineColor();
+    _errorColor = MDCTextInputTextErrorColor();
     _enabled = YES;
 
     [self setClipsToBounds:NO];
     [self updateBackgroundColor];
-    [self updateBorder];
+    [self updateUnderline];
   }
 
   return self;
@@ -43,45 +43,45 @@ static const NSTimeInterval MDCTextFieldDividerAnimationDuration = 0.2f;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  [self updateBorderPath];
+  [self updateUnderlinePath];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return CGSizeMake(size.width, MDCTextFieldBorderHeight);
+  return CGSizeMake(size.width, MDCTextInputUnderlineHeight);
 }
 
-- (void)updateBorderPath {
+- (void)updateUnderlinePath {
   CGRect bounds = [self bounds];
 
-  if (_focusedBorder) {
-    CGRect focusBorderRect = bounds;
-    focusBorderRect.size.height = MDCTextFieldBorderFocusedHeight;
-    focusBorderRect.origin.y = CGRectGetMidY(bounds) - CGRectGetHeight(focusBorderRect) / 2;
+  if (_focusedUnderline) {
+    CGRect focusUnderlineRect = bounds;
+    focusUnderlineRect.size.height = MDCTextInputUnderlineFocusedHeight;
+    focusUnderlineRect.origin.y = CGRectGetMidY(bounds) - CGRectGetHeight(focusUnderlineRect) / 2;
 
-    [_focusedBorder setFrame:focusBorderRect];
+    [_focusedUnderline setFrame:focusUnderlineRect];
   }
 
-  if (_disabledBorder) {
+  if (_disabledUnderline) {
     CGMutablePathRef path = CGPathCreateMutable();
     if (path) {
-      [_disabledBorder setFrame:bounds];
-      [_disabledBorder setLineWidth:CGRectGetHeight(bounds)];
+      [_disabledUnderline setFrame:bounds];
+      [_disabledUnderline setLineWidth:CGRectGetHeight(bounds)];
 
       CGPathMoveToPoint(path, NULL, CGRectGetMinX(bounds), CGRectGetMidY(bounds));
       CGPathAddLineToPoint(path, NULL, CGRectGetMaxX(bounds), CGRectGetMidY(bounds));
-      [_disabledBorder setPath:path];
+      [_disabledUnderline setPath:path];
       CGPathRelease(path);
     }
   }
 }
 
-- (void)updateBorder {
-  if (_focusBorderHidden) {
-    [_disabledBorder removeFromSuperlayer];
-    _disabledBorder = nil;
+- (void)updateUnderline {
+  if (_focusUnderlineHidden) {
+    [_disabledUnderline removeFromSuperlayer];
+    _disabledUnderline = nil;
 
-    [_focusedBorder removeFromSuperlayer];
-    _focusedBorder = nil;
+    [_focusedUnderline removeFromSuperlayer];
+    _focusedUnderline = nil;
 
     return;
   }
@@ -89,45 +89,45 @@ static const NSTimeInterval MDCTextFieldDividerAnimationDuration = 0.2f;
   CALayer *layerToAdd = nil;
 
   if (_enabled) {
-    [_disabledBorder removeFromSuperlayer];
-    _disabledBorder = nil;
+    [_disabledUnderline removeFromSuperlayer];
+    _disabledUnderline = nil;
 
-    if (!_focusedBorder) {
-      _focusedBorder = [CALayer layer];
-      [_focusedBorder setBackgroundColor:[_focusedColor CGColor]];
-      [_focusedBorder setFrame:CGRectZero];
-      [_focusedBorder setOpacity:0];
+    if (!_focusedUnderline) {
+      _focusedUnderline = [CALayer layer];
+      [_focusedUnderline setBackgroundColor:[_focusedColor CGColor]];
+      [_focusedUnderline setFrame:CGRectZero];
+      [_focusedUnderline setOpacity:0];
     }
 
-    layerToAdd = _focusedBorder;
+    layerToAdd = _focusedUnderline;
   } else {
-    [_focusedBorder removeFromSuperlayer];
-    _focusedBorder = nil;
+    [_focusedUnderline removeFromSuperlayer];
+    _focusedUnderline = nil;
 
-    if (!_disabledBorder) {
-      _disabledBorder = [CAShapeLayer layer];
-      [_disabledBorder setFrame:CGRectZero];
-      [_disabledBorder setStrokeColor:[_unfocusedColor CGColor]];
-      [_disabledBorder setLineJoin:kCALineJoinMiter];
-      [_disabledBorder setLineDashPattern:@[ @1.5, @1.5 ]];
+    if (!_disabledUnderline) {
+      _disabledUnderline = [CAShapeLayer layer];
+      [_disabledUnderline setFrame:CGRectZero];
+      [_disabledUnderline setStrokeColor:[_unfocusedColor CGColor]];
+      [_disabledUnderline setLineJoin:kCALineJoinMiter];
+      [_disabledUnderline setLineDashPattern:@[ @1.5, @1.5 ]];
     }
 
-    layerToAdd = _disabledBorder;
+    layerToAdd = _disabledUnderline;
   }
 
   [[self layer] addSublayer:layerToAdd];
-  [self updateBorderPath];
+  [self updateUnderlinePath];
 }
 
 - (void)updateBackgroundColor {
-  BOOL showBorder = _enabled && !_normalBorderHidden;
+  BOOL showUnderline = _enabled && !_normalUnderlineHidden;
   UIColor *backgroundColor = [UIColor clearColor];
-  if (showBorder) {
+  if (showUnderline) {
     backgroundColor = _unfocusedColor;
   }
 
   [self setBackgroundColor:backgroundColor];
-  [self setOpaque:showBorder];
+  [self setOpaque:showUnderline];
 }
 
 - (void)updateForegroundColor {
@@ -136,7 +136,7 @@ static const NSTimeInterval MDCTextFieldDividerAnimationDuration = 0.2f;
     backgroundColor = _errorColor;
   }
 
-  [_focusedBorder setBackgroundColor:[backgroundColor CGColor]];
+  [_focusedUnderline setBackgroundColor:[backgroundColor CGColor]];
 }
 
 #pragma mark - Property implementation
@@ -154,7 +154,7 @@ static const NSTimeInterval MDCTextFieldDividerAnimationDuration = 0.2f;
 - (void)setEnabled:(BOOL)enabled {
   if (_enabled != enabled) {
     _enabled = enabled;
-    [self updateBorder];
+    [self updateUnderline];
     [self updateBackgroundColor];
     [self updateForegroundColor];
   }
@@ -165,33 +165,33 @@ static const NSTimeInterval MDCTextFieldDividerAnimationDuration = 0.2f;
   [self updateForegroundColor];
 }
 
-- (void)setFocusBorderHidden:(BOOL)hidden {
-  _focusBorderHidden = hidden;
-  [self updateBorder];
+- (void)setFocusUnderlineHidden:(BOOL)hidden {
+  _focusUnderlineHidden = hidden;
+  [self updateUnderline];
 }
 
-- (void)setNormalBorderHidden:(BOOL)hidden {
-  _normalBorderHidden = hidden;
+- (void)setNormalUnderlineHidden:(BOOL)hidden {
+  _normalUnderlineHidden = hidden;
   [self updateBackgroundColor];
 }
 
 #pragma mark - Animations
 
-- (void)animateFocusBorderIn {
+- (void)animateFocusUnderlineIn {
   if (!_enabled) {
     return;
   }
 
   CGRect toBounds = [self bounds];
-  toBounds.size.height = MDCTextFieldBorderFocusedHeight;
+  toBounds.size.height = MDCTextInputUnderlineFocusedHeight;
 
   CGFloat width = CGRectGetWidth(toBounds);
 
   CAKeyframeAnimation *sizeAnimation = [CAKeyframeAnimation animationWithKeyPath:@"bounds.size"];
   [sizeAnimation setValues:@[
-    [NSValue valueWithCGSize:CGSizeMake(1, MDCTextFieldBorderFocusedHeight * 2)],
-    [NSValue valueWithCGSize:CGSizeMake(width * 0.4f, MDCTextFieldBorderFocusedHeight * 2)],
-    [NSValue valueWithCGSize:CGSizeMake(width * 0.8f, MDCTextFieldBorderFocusedHeight)],
+    [NSValue valueWithCGSize:CGSizeMake(1, MDCTextInputUnderlineFocusedHeight * 2)],
+    [NSValue valueWithCGSize:CGSizeMake(width * 0.4f, MDCTextInputUnderlineFocusedHeight * 2)],
+    [NSValue valueWithCGSize:CGSizeMake(width * 0.8f, MDCTextInputUnderlineFocusedHeight)],
     [NSValue valueWithCGSize:toBounds.size],
   ]];
 
@@ -200,20 +200,20 @@ static const NSTimeInterval MDCTextFieldDividerAnimationDuration = 0.2f;
   [alphaAnimation setToValue:@1];
 
   CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-  [animationGroup setDuration:MDCTextFieldDividerAnimationDuration];
+  [animationGroup setDuration:MDCTextInputDividerAnimationDuration];
   [animationGroup setAnimations:@[ sizeAnimation, alphaAnimation ]];
 
-  [_focusedBorder addAnimation:animationGroup forKey:@"animateFocusBorderIn"];
-  [_focusedBorder setOpacity:1];
+  [_focusedUnderline addAnimation:animationGroup forKey:@"animateFocusUnderlineIn"];
+  [_focusedUnderline setOpacity:1];
 }
 
-- (void)animateFocusBorderOut {
+- (void)animateFocusUnderlineOut {
   if (!_enabled) {
     return;
   }
 
   CGRect fromBounds = [self bounds];
-  fromBounds.size.height = MDCTextFieldBorderFocusedHeight;
+  fromBounds.size.height = MDCTextInputUnderlineFocusedHeight;
 
   CGRect toBounds = fromBounds;
   toBounds.size.height = 0;
@@ -227,11 +227,11 @@ static const NSTimeInterval MDCTextFieldDividerAnimationDuration = 0.2f;
   [alphaAnimation setToValue:@0];
 
   CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-  [animationGroup setDuration:MDCTextFieldDividerOutAnimationDuration];
+  [animationGroup setDuration:MDCTextInputDividerOutAnimationDuration];
   [animationGroup setAnimations:@[ sizeAnimation, alphaAnimation ]];
 
-  [_focusedBorder addAnimation:animationGroup forKey:@"animateFocusBorderOut"];
-  [_focusedBorder setOpacity:0];
+  [_focusedUnderline addAnimation:animationGroup forKey:@"animateFocusUnderlineOut"];
+  [_focusedUnderline setOpacity:0];
 }
 
 @end

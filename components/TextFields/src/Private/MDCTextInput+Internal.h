@@ -16,21 +16,27 @@
 
 #import "MaterialTypography.h"
 
-static const CGFloat MDCTextFieldBorderHeight = 1.f;
-static const CGFloat MDCTextFieldBorderVerticalPadding = 8.f;
-static const CGFloat MDCTextFieldFullWidthHorizontalPadding = 16.f;
-static const NSTimeInterval MDCTextFieldDividerOutAnimationDuration = 0.266666f;
-static const CGFloat MDCTextFieldHintTextOpacity = 0.54f;
+#import "MaterialPalettes.h"
 
-static inline UIColor *MDCTextFieldBorderColor() {
+static const CGFloat MDCTextInputUnderlineHeight = 1.f;
+static const CGFloat MDCTextInputUnderlineVerticalPadding = 8.f;
+static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
+static const NSTimeInterval MDCTextInputDividerOutAnimationDuration = 0.266666f;
+static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
+
+static inline UIColor *MDCTextInputCursorColor() {
+  return [MDCPalette indigoPalette].tint500;
+}
+
+static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
 
-static inline UIColor *MDCTextFieldPlaceholderTextColor() {
-  return [UIColor colorWithWhite:0 alpha:MDCTextFieldHintTextOpacity];
+static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
+  return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
 }
 
-static inline UIColor *MDCTextFieldTextErrorColor() {
+static inline UIColor *MDCTextInputTextErrorColor() {
   // Material Design color palette red at tint 500.
   return [UIColor colorWithRed:211.0f / 255.0f
                          green:67.0f / 255.0f
@@ -38,6 +44,6 @@ static inline UIColor *MDCTextFieldTextErrorColor() {
                          alpha:[MDCTypography body1FontOpacity]];
 }
 
-static inline UIColor *MDCTextFieldTextColor() {
+static inline UIColor *MDCTextInputTextColor() {
   return [UIColor colorWithWhite:0 alpha:[MDCTypography body1FontOpacity]];
 }

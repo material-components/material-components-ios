@@ -13,29 +13,30 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+#import "MDCTextInput.h"
 
 #import "MDCTextInputController.h"
 
-#import "MDCTextInput.h"
+#import "MaterialAnimationTiming.h"
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputTitleView.h"
-#import "MDCTextFieldUnderlineView.h"
+#import "MDCTextInputUnderlineView.h"
 
-NSString *const MDCTextFieldValidatorErrorColorKey = @"MDCTextFieldValidatorErrorColor";
-NSString *const MDCTextFieldValidatorErrorTextKey = @"MDCTextFieldValidatorErrorText";
-NSString *const MDCTextFieldValidatorAXErrorTextKey = @"MDCTextFieldValidatorAXErrorText";
+NSString *const MDCTextInputValidatorErrorColorKey = @"MDCTextInputValidatorErrorColor";
+NSString *const MDCTextInputValidatorErrorTextKey = @"MDCTextInputValidatorErrorText";
+NSString *const MDCTextInputValidatorAXErrorTextKey = @"MDCTextInputValidatorAXErrorText";
 
 // These numers are straight from the redlines in the docs here:
-// https://spec.googleplex.com/quantum/components/text-fields
-static const CGFloat MDCTextFieldVerticalPadding = 16.f;
-static const CGFloat MDCTextFieldFloatingLabelFontSize = 12.f;
-static const CGFloat MDCTextFieldFloatingLabelTextHeight = 16.f;
-static const CGFloat MDCTextFieldFloatingLabelMargin = 8.f;
-static const CGFloat MDCTextFieldFullWidthVerticalPadding = 20.f;
-static const CGFloat MDCTextFieldValidationMargin = 8.f;
+// https://spec.MDCgleplex.com/quantum/components/text-fields
+static const CGFloat MDCTextInputVerticalPadding = 16.f;
+static const CGFloat MDCTextInputFloatingLabelFontSize = 12.f;
+static const CGFloat MDCTextInputFloatingLabelTextHeight = 16.f;
+static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
+static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
+static const CGFloat MDCTextInputValidationMargin = 8.f;
 
-static const NSTimeInterval MDCTextFieldAnimationDuration = 0.3f;
+static const NSTimeInterval MDCTextInputAnimationDuration = 0.3f;
 
 
 static inline CGFloat MDCFabs(CGFloat value) {
@@ -43,6 +44,14 @@ static inline CGFloat MDCFabs(CGFloat value) {
   return fabs(value);
 #else
   return fabsf(value);
+#endif
+}
+
+static inline CGFloat MDCCeil(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return ceil(value);
+#else
+  return ceilf(value);
 #endif
 }
 
@@ -63,10 +72,10 @@ static inline BOOL MDCFloatIsApproximatelyZero(CGFloat value) {
 #endif
 }
 
-static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
+static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   CGFloat pointSize = [font pointSize];
   if (!MDCFloatIsApproximatelyZero(pointSize)) {
-    return MDCTextFieldFloatingLabelFontSize / pointSize;
+    return MDCTextInputFloatingLabelFontSize / pointSize;
   }
 
   return 1;
@@ -74,52 +83,62 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 
 @interface MDCTextInputController ()
 
-@property(nonatomic, weak) UIView<MDCControlledTextInput> *textField;
-@property(nonatomic, readonly) BOOL isMultiline;
-@property(nonatomic, strong) MDCTextInputTitleView *titleView;
-@property(nonatomic, assign) CGAffineTransform floatingTitleScale;
-@property(nonatomic, strong) MDCTextFieldUnderlineView *borderView;
+@property(nonatomic, readonly) BOOL canValidate;
 @property(nonatomic, strong) UILabel *characterLimitView;
 @property(nonatomic, strong) UILabel *errorTextView;
-@property(nonatomic, readonly) BOOL canValidate;
+@property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
+@property(nonatomic, readonly) BOOL isMultiline;
+@property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
+@property(nonatomic, strong) MDCTextInputTitleView *titleView;
+@property(nonatomic, strong) MDCTextInputUnderlineView *underlineView;
 
 @end
 
 @implementation MDCTextInputController
 
 // We never use the text property. Instead always read from the text field.
-@synthesize text = _do_no_use_text;
-@synthesize presentationStyle = _presentationStyle;
-@synthesize textColor = _textColor;
-@synthesize placeholderColor = _placeholderColor;
-@synthesize errorColor = _errorColor;
-@synthesize underlineColor = _underlineColor;
+
 @synthesize characterLimit = _characterLimit;
+@synthesize characterLimitColor = _characterLimitColor;
+@synthesize characterLimitFont = _characterLimitFont;
 @synthesize characterCounter = _characterCounter;
-@synthesize underlineViewMode = _underlineViewMode;
+@synthesize editing = _editing;
+@synthesize floatingPlaceholderColor = _floatingPlaceholderColor;
+@synthesize floatingPlaceholderScale = _floatingPlaceholderScale;
+@synthesize inlinePlaceholderColor = _inlinePlaceholderColor;
+@synthesize placeholderFont = _placeholderFont;
+@synthesize presentationStyle = _presentationStyle;
+@synthesize text = _do_no_use_text;
+@synthesize textColor = _textColor;
+@synthesize underlineAccessibilityText = _underlineAccessibilityText;
+@synthesize underlineColor = _underlineColor;
+@synthesize underlineText = _underlineText;
+@synthesize underlineTextColor = _underlineTextColor;
+@synthesize underlineTextFont = _underlineTextFont;
+@synthesize underlineWidth = _underlineWidth;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
   return nil;
 }
 
-- (instancetype)initWithTextField:(UIView<MDCControlledTextInput> *)textField
-                      isMultiline:(BOOL)isMultiline {
+- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput> * _Nonnull)textInput
+                              isMultiline:(BOOL)isMultiline {
   self = [super init];
   if (self) {
-    _textField = textField;
+    _textInput = textInput;
     _isMultiline = isMultiline;
 
-    _textColor = GOOTextFieldTextColor();
-    _placeholderColor = GOOTextFieldPlaceholderTextColor();
-    _errorColor = GOOTextFieldTextErrorColor();
-    _underlineColor = GOOTextFieldBorderColor();
+    _textColor = MDCTextInputTextColor();
+    _inlinePlaceholderColor = MDCTextInputInlinePlaceholderTextColor();
+    _floatingPlaceholderColor = MDCTextInputInlinePlaceholderTextColor();
+    _underlineColor = MDCTextInputUnderlineColor();
 
-    _floatingTitleScale = CGAffineTransformIdentity;
-    _underlineViewMode = UITextFieldViewModeAlways;
+    _floatingPlaceholderScale = 0.25;
+    _floatingPlaceholderScaleTransform = CGAffineTransformIdentity;
 
     _titleView =
-        [[GOOTextFieldTitleView alloc] initWithFrame:[self placeholderDefaultPositionFrame]];
+        [[MDCTextInputTitleView alloc] initWithFrame:[self placeholderDefaultPositionFrame]];
     // The default, kCAAlignmentNatural is not honored by CATextLayer. rdar://23881371
     if ([self shouldLayoutForRTL]) {
       [_titleView.backLayer setAlignmentMode:kCAAlignmentRight];
@@ -127,38 +146,38 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
     }
     _titleView.layer.anchorPoint = CGPointZero;
     _titleView.userInteractionEnabled = NO;
-    _titleView.frontLayerColor = _textField.tintColor.CGColor;
-    _titleView.backLayerColor = _placeholderColor.CGColor;
-    _titleView.font = _textField.font;
+    _titleView.frontLayerColor = _textInput.tintColor.CGColor;
+    _titleView.backLayerColor = _inlinePlaceholderColor.CGColor;
+    _titleView.font = _textInput.font;
     _titleView.alpha = 0;
-    [_textField addSubview:_titleView];
-    [_textField sendSubviewToBack:_titleView];
+    [_textInput addSubview:_titleView];
+    [_textInput sendSubviewToBack:_titleView];
 
-    // Use the property accessor to create the border view as needed.
-    __unused GOOUnderlineView *underlineView = [self borderView];
+    // Use the property accessor to create the underline view as needed.
+    __unused MDCTextInputUnderlineView *underlineView = [self underlineView];
   }
   return self;
 }
 
 - (void)didSetText {
   [self didChange];
-  [self.textField setNeedsLayout];
+  [self.textInput setNeedsLayout];
 }
 
 - (void)didSetFont {
-  UIFont *font = self.textField.font;
+  UIFont *font = self.textInput.font;
   self.titleView.font = font;
 
-  CGFloat scaleFactor = GOOTextFieldTitleScaleFactor(font);
-  self.floatingTitleScale = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
+  CGFloat scaleFactor = MDCTextInputTitleScaleFactor(font);
+  self.floatingPlaceholderScaleTransform = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
 
   [self updatePlaceholderTransformAndPosition];
 }
 
 - (void)layoutSubviewsWithAnimationsDisabled {
   self.characterLimitView.frame = [self characterLimitFrame];
-  self.errorTextView.frame = [self errorTextFrame];
-  self.borderView.frame = [self borderViewFrame];
+  self.errorTextView.frame = [self underlineTextFrame];
+  self.underlineView.frame = [self underlineViewFrame];
   [self updatePlaceholderTransformAndPosition];
   [self updatePlaceholderAlpha];
 }
@@ -166,48 +185,48 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 - (UIEdgeInsets)textContainerInset {
   UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
   switch (self.presentationStyle) {
-    case GOOTextFieldPresentationStyleDefault:
-      textContainerInset.top = MDCTextFieldVerticalPadding;
-      textContainerInset.bottom = MDCTextFieldVerticalPadding;
+    case MDCTextInputPresentationStyleDefault:
+      textContainerInset.top = MDCTextInputVerticalPadding;
+      textContainerInset.bottom = MDCTextInputVerticalPadding;
       break;
-    case GOOTextFieldPresentationStyleFloatingPlaceholder:
-      textContainerInset.top = MDCTextFieldVerticalPadding + MDCTextFieldFloatingLabelTextHeight +
-                               MDCTextFieldFloatingLabelMargin;
-      textContainerInset.bottom = MDCTextFieldVerticalPadding;
+    case MDCTextInputPresentationStyleFloatingPlaceholder:
+      textContainerInset.top = MDCTextInputVerticalPadding + MDCTextInputFloatingLabelTextHeight +
+                               MDCTextInputFloatingLabelMargin;
+      textContainerInset.bottom = MDCTextInputVerticalPadding;
       break;
-    case GOOTextFieldPresentationStyleFullWidth:
-      textContainerInset.top = MDCTextFieldFullWidthVerticalPadding;
-      textContainerInset.bottom = MDCTextFieldFullWidthVerticalPadding;
-      textContainerInset.left = MDCTextFieldFullWidthHorizontalPadding;
-      textContainerInset.right = MDCTextFieldFullWidthHorizontalPadding;
+    case MDCTextInputPresentationStyleFullWidth:
+      textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
+      textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
+      textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
+      textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
       break;
   }
+
+  // TODO(larche) Check this removal of validator.
   // Adjust for the character limit and validator.
   // Full width single line text fields have their character counter on the same line as the text.
-  if ((self.characterLimit || self.validator) &&
-      (self.presentationStyle != GOOTextFieldPresentationStyleFullWidth || self.isMultiline)) {
-    textContainerInset.bottom += MDCTextFieldValidationMargin;
+  if ((self.characterLimit) &&
+      (self.presentationStyle != MDCTextInputPresentationStyleFullWidth || self.isMultiline)) {
+    textContainerInset.bottom += MDCTextInputValidationMargin;
   }
 
   return textContainerInset;
 }
 
 - (void)didBeginEditing {
-  if (self.underlineViewMode == UITextFieldViewModeUnlessEditing &&
-      self.presentationStyle != GOOTextFieldPresentationStyleFullWidth) {
-    [self.borderView setNormalBorderHidden:YES];
+  // TODO(larche) Check this removal of underlineViewMode.
+  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+    [self.underlineView setNormalUnderlineHidden:YES];
   }
 
-  [self validateEvents:GOOTextFieldValidatorEventBeginEditing];
-
   [CATransaction begin];
-  [CATransaction setAnimationDuration:MDCTextFieldAnimationDuration];
+  [CATransaction setAnimationDuration:MDCTextInputAnimationDuration];
   [CATransaction
-      setAnimationTimingFunction:[QTMAnimationCurve animationTimingFunctionForCurve:
-                                                        kQTMAnimationTimingCurveQuantumEaseInOut]];
-  if (self.underlineViewMode != UITextFieldViewModeUnlessEditing &&
-      self.presentationStyle != GOOTextFieldPresentationStyleFullWidth) {
-    [self.borderView animateFocusBorderIn];
+      setAnimationTimingFunction:[CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+
+  // TODO(larche) Check this removal of underlineViewMode.
+  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+    [self.underlineView animateFocusUnderlineIn];
   }
   [self animatePlaceholderUp];
   [CATransaction commit];
@@ -216,22 +235,20 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 }
 
 - (void)didEndEditing {
-  if (self.underlineViewMode == UITextFieldViewModeUnlessEditing &&
-      self.presentationStyle != GOOTextFieldPresentationStyleFullWidth) {
-    [self.borderView setNormalBorderHidden:NO];
+  // TODO(larche) Check this removal of underlineViewMode.
+  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+    [self.underlineView setNormalUnderlineHidden:NO];
   }
 
-  [self validateEvents:GOOTextFieldValidatorEventEndEditing];
-
   [CATransaction begin];
-  [CATransaction setAnimationDuration:MDCTextFieldDividerOutAnimationDuration];
-  if (self.presentationStyle != GOOTextFieldPresentationStyleFullWidth) {
-    [self.borderView animateFocusBorderOut];
+  [CATransaction setAnimationDuration:MDCTextInputDividerOutAnimationDuration];
+  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+    [self.underlineView animateFocusUnderlineOut];
   }
   [self animatePlaceholderDown];
   [CATransaction commit];
 
-  UILabel *label = (UILabel *)[self textFieldLabel];
+  UILabel *label = (UILabel *)[self textInputLabel];
   if ([label isKindOfClass:[UILabel class]]) {
     [label setLineBreakMode:NSLineBreakByTruncatingTail];
   }
@@ -242,76 +259,73 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 - (void)didChange {
   [self updatePlaceholderAlpha];
   [self updateCharacterCountLimit];
-  [self validateEvents:GOOTextFieldValidatorEventTextChange];
 }
 
-- (void)validate {
-  if (self.canValidate) {
-    [self performValidation];
-  }
-}
-
+// TODO(larche) Add back in properly.
 - (BOOL)shouldLayoutForRTL {
-  return GOOShouldLayoutForRTL() && GOORTLCanSupportFullMirroring();
+  return NO;
+  //  return MDCShouldLayoutForRTL() && MDCRTLCanSupportFullMirroring();
 }
 
-#pragma mark - Border View Implementation
+#pragma mark - Underline View Implementation
 
-- (GOOUnderlineView *)borderView {
-  if (self.underlineViewMode == UITextFieldViewModeNever ||
-      self.presentationStyle == GOOTextFieldPresentationStyleFullWidth) {
+- (MDCTextInputUnderlineView *)underlineView {
+  // TODO(larche) Check this removal of underlineViewMode.
+  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
     return nil;
   }
 
-  if (!_borderView) {
-    _borderView = [[GOOUnderlineView alloc] initWithFrame:[self borderViewFrame]];
-    if (self.presentationStyle == GOOTextFieldPresentationStyleFullWidth) {
-      _borderView.normalBorderHidden = NO;
-      _borderView.focusBorderHidden = YES;
+  if (!_underlineView) {
+    _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:[self underlineViewFrame]];
+    if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+      _underlineView.normalUnderlineHidden = NO;
+      _underlineView.focusUnderlineHidden = YES;
     } else {
-      _borderView.normalBorderHidden = (self.underlineViewMode == UITextFieldViewModeWhileEditing);
-      _borderView.focusBorderHidden = (self.underlineViewMode == UITextFieldViewModeUnlessEditing);
+      // TODO(larche) Check this removal of underlineViewMode.
+//      _underlineView.normalUnderlineHidden = (self.underlineViewMode == UITextInputViewModeWhileEditing);
+      // TODO(larche) Check this removal of underlineViewMode.
+//      _underlineView.focusUnderlineHidden = (self.underlineViewMode == UITextInputViewModeUnlessEditing);
     }
 
-    _borderView.focusedColor = self.textField.tintColor;
-    _borderView.unfocusedColor = self.borderColor;
+    _underlineView.focusedColor = self.textInput.tintColor;
+    _underlineView.unfocusedColor = self.underlineColor;
 
-    [self.textField addSubview:_borderView];
-    [self.textField sendSubviewToBack:_borderView];
+    [self.textInput addSubview:_underlineView];
+    [self.textInput sendSubviewToBack:_underlineView];
   }
 
-  return _borderView;
+  return _underlineView;
 }
 
-- (CGRect)borderViewFrame {
-  CGRect bounds = self.textField.bounds;
+- (CGRect)underlineViewFrame {
+  CGRect bounds = self.textInput.bounds;
   if (CGRectIsEmpty(bounds)) {
     return bounds;
   }
 
-  CGRect borderFrame = CGRectZero;
-  borderFrame.size = [_borderView sizeThatFits:bounds.size];
-  CGRect textRect = [self.textField textRectThatFitsForBounds:bounds];
+  CGRect underlineFrame = CGRectZero;
+  underlineFrame.size = [_underlineView sizeThatFits:bounds.size];
+  CGRect textRect = [self.textInput textRectThatFitsForBounds:bounds];
 
-  CGFloat borderVerticalPadding = MDCTextFieldBorderVerticalPadding;
-  if ([self.textField respondsToSelector:@selector(borderVerticalPadding)]) {
-    borderVerticalPadding = self.textField.borderVerticalPadding;
+  CGFloat underlineVerticalPadding = MDCTextInputUnderlineVerticalPadding;
+  if ([self.textInput respondsToSelector:@selector(underlineVerticalPadding)]) {
+    underlineVerticalPadding = self.textInput.underlineVerticalPadding;
   }
 
   if (self.isMultiline) {
     // For multiline text fields, the textRectThatFitsForBounds is essentially the text container
     // and we can just measure from the bottom.
-    borderFrame.origin.y =
-        CGRectGetMaxY(textRect) + borderVerticalPadding - borderFrame.size.height;
+    underlineFrame.origin.y =
+        CGRectGetMaxY(textRect) + underlineVerticalPadding - underlineFrame.size.height;
   } else {
     // For single line text fields, the textRectThatFitsForBounds is a best guess at the text
     // rect for the line of text, which may be rect adjusted for pixel boundaries.  Measure from the
-    // center to get the best border placement.
-    borderFrame.origin.y = CGRectGetMidY(textRect) + (self.textField.font.pointSize / 2.0f) +
-                           borderVerticalPadding - borderFrame.size.height;
+    // center to get the best underline placement.
+    underlineFrame.origin.y = CGRectGetMidY(textRect) + (self.textInput.font.pointSize / 2.0f) +
+                           underlineVerticalPadding - underlineFrame.size.height;
   }
 
-  return borderFrame;
+  return underlineFrame;
 }
 
 #pragma mark - Properties Implementation
@@ -330,43 +344,31 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 - (void)setPlaceholder:(NSString *)placeholder {
   self.titleView.string = placeholder;
   [self updatePlaceholderAlpha];
-  [self.textField setNeedsLayout];
+  [self.textInput setNeedsLayout];
 }
 
 - (void)setEnabled:(BOOL)enabled {
   _enabled = enabled;
-  self.borderView.enabled = enabled;
+  self.underlineView.enabled = enabled;
 }
 
-- (void)setPresentationStyle:(GOOTextFieldPresentationStyle)presentationStyle {
+- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
   if (_presentationStyle != presentationStyle) {
     _presentationStyle = presentationStyle;
     [self removeCharacterCountLimit];
     [self updateCharacterCountLimit];
-    if (_presentationStyle == GOOTextFieldPresentationStyleFullWidth) {
-      [_borderView removeFromSuperview];
-      _borderView = nil;
+    if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+      [_underlineView removeFromSuperview];
+      _underlineView = nil;
     }
-    [self validateEvents:GOOTextFieldValidatorEventPropertyChange];
-    [self.textField setNeedsLayout];
+    [self.textInput setNeedsLayout];
   }
 }
 
-- (void)setColorGroup:(QTMColorGroup *)colorGroup {
-  if (!colorGroup) {
-    colorGroup = [QTMColorGroup colorGroupWithID:kQTMColorGroupIndigo];
-  }
-
-  if (_colorGroup != colorGroup) {
-    _colorGroup = colorGroup;
-    [self updateColors];
-    [self.textField setNeedsDisplay];
-  }
-}
 
 - (void)setTextColor:(UIColor *)textColor {
   if (!textColor) {
-    textColor = GOOTextFieldTextColor();
+    textColor = MDCTextInputTextColor();
   }
 
   if (_textColor != textColor) {
@@ -375,35 +377,35 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
   }
 }
 
-- (void)setPlaceholderColor:(UIColor *)placeholderColor {
-  if (!placeholderColor) {
-    placeholderColor = GOOTextFieldPlaceholderTextColor();
+- (void)setInlinePlaceholderColor:(UIColor *)inlinePlaceholderColor {
+  if (!inlinePlaceholderColor) {
+    inlinePlaceholderColor = MDCTextInputInlinePlaceholderTextColor();
   }
 
-  if (_placeholderColor != placeholderColor) {
-    _placeholderColor = placeholderColor;
+  if (_inlinePlaceholderColor != inlinePlaceholderColor) {
+    _inlinePlaceholderColor = inlinePlaceholderColor;
     [self updateColors];
   }
 }
 
-- (void)setErrorColor:(UIColor *)errorColor {
-  if (!errorColor) {
-    errorColor = GOOTextFieldTextErrorColor();
+- (void)setUnderlineTextColor:(UIColor *)underlineTextColor {
+  if (!underlineTextColor) {
+    underlineTextColor = MDCTextInputTextErrorColor();
   }
 
-  if (_errorColor != errorColor) {
-    _errorColor = errorColor;
+  if (_underlineTextColor != underlineTextColor) {
+    _underlineTextColor = underlineTextColor;
     [self updateColors];
   }
 }
 
-- (void)setBorderColor:(UIColor *)borderColor {
-  if (!borderColor) {
-    borderColor = GOOTextFieldBorderColor();
+- (void)setUnderlineColor:(UIColor *)underlineColor {
+  if (!underlineColor) {
+    underlineColor = MDCTextInputUnderlineColor();
   }
 
-  if (_borderColor != borderColor) {
-    _borderColor = borderColor;
+  if (_underlineColor != underlineColor) {
+    _underlineColor = underlineColor;
     [self updateColors];
   }
 }
@@ -412,32 +414,17 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
   if (_characterLimit != characterLimit) {
     _characterLimit = characterLimit;
     [self updateCharacterCountLimit];
-    [self validateEvents:GOOTextFieldValidatorEventPropertyChange];
   }
 }
 
-- (void)setCharacterCounter:(id<GOOTextFieldCharacterCounter>)characterCounter {
+- (void)setCharacterCounter:(id<MDCTextInputCharacterCounter>)characterCounter {
   if (_characterCounter != characterCounter) {
     _characterCounter = characterCounter;
     [self updateCharacterCountLimit];
-    [self validateEvents:GOOTextFieldValidatorEventPropertyChange];
   }
 }
 
-- (void)setUnderlineViewMode:(UITextFieldViewMode)mode {
-  if (_underlineViewMode != mode) {
-    _underlineViewMode = mode;
-
-    if (_underlineViewMode == UITextFieldViewModeNever) {
-      [_borderView removeFromSuperview];
-      _borderView = nil;
-    } else {
-      [_borderView setNormalBorderHidden:(_underlineViewMode == UITextFieldViewModeWhileEditing)];
-      [_borderView setFocusBorderHidden:(_underlineViewMode == UITextFieldViewModeUnlessEditing)];
-    }
-    [self.textField setNeedsDisplay];
-  }
-}
+// TODO(larche) Check this removal of setUnderlineViewMode.
 
 #pragma mark - Character Limit Implementation
 
@@ -445,7 +432,7 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
   if (!_characterLimitView) {
     _characterLimitView = [[UILabel alloc] initWithFrame:CGRectZero];
     _characterLimitView.textAlignment = NSTextAlignmentRight;
-    _characterLimitView.font = [GOOTypography captionFont];
+    _characterLimitView.font = [MDCTypography captionFont];
   }
 
   NSString *text = [NSString stringWithFormat:
@@ -461,7 +448,7 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 }
 
 - (CGRect)characterLimitFrame {
-  CGRect bounds = self.textField.bounds;
+  CGRect bounds = self.textInput.bounds;
   if (CGRectIsEmpty(bounds)) {
     return bounds;
   }
@@ -475,7 +462,7 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
   }
 
   // If its single line full width, position on the line.
-  if (self.presentationStyle == GOOTextFieldPresentationStyleFullWidth && !self.isMultiline) {
+  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && !self.isMultiline) {
     characterLimitFrame.origin.y =
         CGRectGetMidY(bounds) - CGRectGetHeight(characterLimitFrame) / 2.0f;
   } else {
@@ -491,23 +478,23 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 }
 
 - (void)updateCharacterCountLimit {
-  if (!self.characterLimit || !self.textField.isEditing) {
+  if (!self.characterLimit || !self.textInput.isEditing) {
     [self removeCharacterCountLimit];
     return;
   }
 
   BOOL pastLimit = [self characterCount] > self.characterLimit;
 
-  UIColor *textColor = GOOTextFieldPlaceholderTextColor();
-  if (pastLimit && self.textField.isEditing) {
-    textColor = GOOTextFieldTextErrorColor();
+  UIColor *textColor = MDCTextInputInlinePlaceholderTextColor();
+  if (pastLimit && self.textInput.isEditing) {
+    textColor = MDCTextInputTextErrorColor();
   }
 
   self.characterLimitView.textColor = textColor;
   [self.characterLimitView sizeToFit];
 
-  [self.textField insertSubview:self.characterLimitView aboveSubview:self.titleView];
-  [self.borderView setErroneous:pastLimit];
+  [self.textInput insertSubview:self.characterLimitView aboveSubview:self.titleView];
+  [self.underlineView setErroneous:pastLimit];
 }
 
 #pragma mark - Placeholder Implementation
@@ -515,8 +502,8 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 - (void)updatePlaceholderAlpha {
   CGFloat opacity = 1;
 
-  if (self.textField.text.length &&
-      (self.presentationStyle != GOOTextFieldPresentationStyleFloatingPlaceholder)) {
+  if (self.textInput.text.length &&
+      (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder)) {
     opacity = 0;
   } else if (!self.placeholder.length) {
     opacity = 0;
@@ -533,9 +520,9 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
   // - text has been entered, or
   // - the user is currently entering text, or
   // - the field has failed validation.
-  if (self.presentationStyle == GOOTextFieldPresentationStyleFloatingPlaceholder &&
-      (self.textField.text.length || self.textField.isEditing || self.errorTextView)) {
-    transform = self.floatingTitleScale;
+  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder &&
+      (self.textInput.text.length || self.textInput.isEditing || self.errorTextView)) {
+    transform = self.floatingPlaceholderScaleTransform;
     frame = [self placeholderFloatingPositionFrame];
   }
 
@@ -545,12 +532,12 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 }
 
 - (CGRect)placeholderDefaultPositionFrame {
-  CGRect bounds = self.textField.bounds;
+  CGRect bounds = self.textInput.bounds;
   if (CGRectIsEmpty(bounds)) {
     return bounds;
   }
 
-  CGRect placeholderRect = [self.textField textRectThatFitsForBounds:bounds];
+  CGRect placeholderRect = [self.textInput textRectThatFitsForBounds:bounds];
   // Calculating the offset to account for a rightView in case it is needed for RTL layout,
   // before the placeholderRect is modified to be just wide enough for the text.
   CGFloat placeholderLeftViewOffset =
@@ -558,13 +545,13 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
   CGFloat placeHolderWidth = [self placeHolderRequiredWidth];
   placeholderRect.size.width = placeHolderWidth;
   if ([self shouldLayoutForRTL]) {
-    // The leftView (or leading view) of a UITextField is placed before the text.  The rect
-    // returned by UITextField::textRectThatFitsForBounds: returns a rect that fills the field
+    // The leftView (or leading view) of a UITextInput is placed before the text.  The rect
+    // returned by UITextInput::textRectThatFitsForBounds: returns a rect that fills the field
     // from the trailing edge of the leftView to the leading edge of the rightView.  Since this
     // rect is not used directly for the placeholder, the space for the leftView must calculated
     // to determine the correct origin for the placeholder view when rendering for RTL text.
     placeholderRect.origin.x =
-        CGRectGetWidth(self.textField.bounds) - placeHolderWidth - placeholderLeftViewOffset;
+        CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
   }
   placeholderRect.size.height = self.fontHeight;
   return placeholderRect;
@@ -577,36 +564,36 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
   }
 
   placeholderRect.origin.y -=
-      MDCTextFieldFloatingLabelMargin + MDCTextFieldFloatingLabelTextHeight;
+      MDCTextInputFloatingLabelMargin + MDCTextInputFloatingLabelTextHeight;
 
   // In RTL Layout, make the title view go up and to the right.
   if ([self shouldLayoutForRTL]) {
-    placeholderRect.origin.x = CGRectGetWidth(self.textField.bounds)
-        - placeholderRect.size.width * self.floatingTitleScale.a;
+    placeholderRect.origin.x = CGRectGetWidth(self.textInput.bounds)
+        - placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
   }
 
   return placeholderRect;
 }
 
 - (CGFloat)placeHolderRequiredWidth {
-  if (!self.textField.font) {
+  if (!self.textInput.font) {
     return 0;
   }
-  return [self.placeholder sizeWithAttributes:@{NSFontAttributeName : self.textField.font}].width;
+  return [self.placeholder sizeWithAttributes:@{NSFontAttributeName : self.textInput.font}].width;
 }
 
 - (void)animatePlaceholderUp {
-  if (self.presentationStyle != GOOTextFieldPresentationStyleFloatingPlaceholder) {
+  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder) {
     return;
   }
 
   // If there's an error, the view will already be up.
-  if (!self.textField.text.length && !self.errorTextView) {
+  if (!self.textInput.text.length && !self.errorTextView) {
     CALayer *titleLayer = self.titleView.layer;
 
     CGRect destinationFrame = [self placeholderFloatingPositionFrame];
 
-    CATransform3D titleScaleTransform = CATransform3DMakeAffineTransform(self.floatingTitleScale);
+    CATransform3D titleScaleTransform = CATransform3DMakeAffineTransform(self.floatingPlaceholderScaleTransform);
 
     CABasicAnimation *fontSizeAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
     [fontSizeAnimation setFromValue:[NSValue valueWithCATransform3D:CATransform3DIdentity]];
@@ -619,7 +606,7 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
     animationGroup.animations = @[ fontSizeAnimation, positionAnimation ];
     [titleLayer addAnimation:animationGroup forKey:@"animatePlaceholderUp"];
-    self.titleView.transform = self.floatingTitleScale;
+    self.titleView.transform = self.floatingPlaceholderScaleTransform;
     self.titleView.center = destinationFrame.origin;
   }
 
@@ -632,12 +619,12 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 }
 
 - (void)animatePlaceholderDown {
-  if (self.presentationStyle != GOOTextFieldPresentationStyleFloatingPlaceholder) {
+  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder) {
     return;
   }
 
   // If there's an error, the placeholder should stay up.
-  if (!self.textField.text.length && !self.errorTextView) {
+  if (!self.textInput.text.length && !self.errorTextView) {
     CGRect destinationFrame = [self placeholderDefaultPositionFrame];
     CALayer *titleLayer = self.titleView.layer;
 
@@ -667,144 +654,55 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 
 #pragma mark - Validator Implementation
 
-- (void)setValidator:(id<GOOTextFieldValidator>)validator {
-  if (_validator == validator) {
-    return;
-  }
-
-  _validator = validator;
-  if (self.validator) {
-    [self validateEvents:GOOTextFieldValidatorEventPropertyChange];
-  } else if (self.errorTextView) {
-    [self.errorTextView removeFromSuperview];
-    self.errorTextView = nil;
-    [self.borderView setErroneous:NO];
-  }
-}
-
-- (CGRect)errorTextFrame {
-  CGRect bounds = self.textField.bounds;
+- (CGRect)underlineTextFrame {
+  CGRect bounds = self.textInput.bounds;
   if (CGRectIsEmpty(bounds)) {
     return bounds;
   }
 
-  CGRect errorTextFrame = CGRectZero;
-  errorTextFrame.size = [self.errorTextView sizeThatFits:bounds.size];
+  CGRect underlineTextFrame = CGRectZero;
+  underlineTextFrame.size = [self.errorTextView sizeThatFits:bounds.size];
   if ([self shouldLayoutForRTL]) {
-    errorTextFrame.origin.x = CGRectGetMaxX(bounds) - CGRectGetWidth(errorTextFrame);
+    underlineTextFrame.origin.x = CGRectGetMaxX(bounds) - CGRectGetWidth(underlineTextFrame);
   } else {
-    errorTextFrame.origin.x = CGRectGetMinX(bounds);
+    underlineTextFrame.origin.x = CGRectGetMinX(bounds);
   }
-  CGRect borderFrame = [self borderViewFrame];
-  errorTextFrame.origin.y =
-      CGRectGetMaxY(borderFrame) + MDCTextFieldVerticalPadding - CGRectGetHeight(errorTextFrame);
+  CGRect underlineFrame = [self underlineViewFrame];
+  underlineTextFrame.origin.y =
+      CGRectGetMaxY(underlineFrame) + MDCTextInputVerticalPadding - CGRectGetHeight(underlineTextFrame);
 
   if (self.characterLimit) {
     CGRect characterLimitFrame = [self characterLimitFrame];
     if ([self shouldLayoutForRTL]) {
-      errorTextFrame.size.width =
-          CGRectGetMaxX(errorTextFrame) - CGRectGetMaxX(characterLimitFrame);
+      underlineTextFrame.size.width =
+          CGRectGetMaxX(underlineTextFrame) - CGRectGetMaxX(characterLimitFrame);
     } else {
-      errorTextFrame.size.width =
-          CGRectGetMinX(characterLimitFrame) - CGRectGetMinX(errorTextFrame);
+      underlineTextFrame.size.width =
+          CGRectGetMinX(characterLimitFrame) - CGRectGetMinX(underlineTextFrame);
     }
   }
 
-  return errorTextFrame;
-}
-
-- (void)validateEvents:(GOOTextFieldValidatorEvent)events {
-  if ([self shouldValidateEvents:events]) {
-    [self performValidation];
-  }
-}
-
-- (BOOL)canValidate {
-  // Single line full width text fields do not support validators.
-  if (!self.validator ||
-      (!self.isMultiline && self.presentationStyle == GOOTextFieldPresentationStyleFullWidth)) {
-    return NO;
-  }
-
-  if (![self.validator respondsToSelector:@selector(validationResultsForTextField:)]) {
-    return NO;
-  }
-  return YES;
-}
-
-- (BOOL)shouldValidateEvents:(GOOTextFieldValidatorEvent)events {
-  if (!self.canValidate) {
-    return NO;
-  }
-
-  GOOTextFieldValidatorEvent allowedEvents = GOOTextFieldValidatorEventAll;
-  if ([self.validator respondsToSelector:@selector(validateEventsForTextField:)]) {
-    allowedEvents = [self.validator validateEventsForTextField:self.textField];
-  }
-  return ((allowedEvents & events) != GOOTextFieldValidatorEventNever);
-}
-
-- (void)performValidation {
-  NSDictionary *validationResult = [self.validator validationResultsForTextField:self.textField];
-  NSString *errorText = [validationResult objectForKey:MDCTextFieldValidatorErrorTextKey];
-  UIColor *errorColor = [validationResult objectForKey:MDCTextFieldValidatorErrorColorKey];
-
-  BOOL erroneous = ([errorText length] > 0);
-  if (!erroneous) {
-    errorColor = nil;
-
-    [self.errorTextView removeFromSuperview];
-    self.errorTextView = nil;
-  } else {
-    if (!self.errorTextView) {
-      self.errorTextView = [[UILabel alloc] initWithFrame:CGRectZero];
-      [self.errorTextView setTextAlignment:NSTextAlignmentLeft];
-      [self.errorTextView setFont:[GOOTypography captionFont]];
-      [self.textField insertSubview:self.errorTextView aboveSubview:self.titleView];
-    }
-
-    if (!errorColor) {
-      errorColor = GOOTextFieldTextErrorColor();
-    }
-  }
-
-  [self.borderView setErrorColor:errorColor];
-  [self.borderView setErroneous:erroneous];
-  [self.errorTextView setTextColor:errorColor];
-  [self.errorTextView setText:errorText];
-
-  if (self.errorTextView) {
-    NSString *announcementString =
-        [validationResult objectForKey:MDCTextFieldValidatorAXErrorTextKey];
-    if (![announcementString length]) {
-      announcementString = errorText;
-    }
-
-    // Simply sending a layout change notification does not seem to
-    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
-  }
-
-  [self.textField setNeedsLayout];
+  return underlineTextFrame;
 }
 
 #pragma mark - Private
 
 - (void)updateColors {
-  self.textField.tintColor = self.colorGroup.regularColor;
-  self.textField.textColor = self.textColor;
+  self.textInput.tintColor = MDCTextInputCursorColor();
+  self.textInput.textColor = self.textColor;
 
-  self.borderView.focusedColor = self.textField.tintColor;
-  self.borderView.unfocusedColor = self.borderColor;
+  self.underlineView.focusedColor = self.textInput.tintColor;
+  self.underlineView.unfocusedColor = self.underlineColor;
 
-  self.titleView.frontLayerColor = self.textField.tintColor.CGColor;
-  self.titleView.backLayerColor = self.placeholderColor.CGColor;
+  self.titleView.frontLayerColor = self.textInput.tintColor.CGColor;
+  self.titleView.backLayerColor = self.inlinePlaceholderColor.CGColor;
 }
 
-- (UIView *)textFieldLabel {
-  Class targetClass = NSClassFromString(@"UITextFieldLabel");
-  // Loop through the text field's views until we find the UITextFieldLabel which is used for the
-  // label in UITextField.
-  NSMutableArray *toVisit = [NSMutableArray arrayWithArray:self.textField.subviews];
+- (UIView *)textInputLabel {
+  Class targetClass = NSClassFromString(@"UITextInputLabel");
+  // Loop through the text field's views until we find the UITextInputLabel which is used for the
+  // label in UITextInput.
+  NSMutableArray *toVisit = [NSMutableArray arrayWithArray:self.textInput.subviews];
   while ([toVisit count]) {
     UIView *view = [toVisit objectAtIndex:0];
     if ([view isKindOfClass:targetClass]) {
@@ -817,13 +715,13 @@ static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 }
 
 - (CGFloat)fontHeight {
-  return GOOCeil(self.textField.font.lineHeight);
+  return MDCCeil(self.textInput.font.lineHeight);
 }
 
 - (NSUInteger)characterCount {
   return self.characterCounter
-      ? [self.characterCounter characterCountForTextField:self.textField]
-      : self.textField.text.length;
+      ? [self.characterCounter characterCountForTextInput:self.textInput]
+      : self.textInput.text.length;
 }
 
 @end

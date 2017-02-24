@@ -13,11 +13,10 @@
  See the License for the specific language governing permissions and
  limitations under the License. */
 
-#import "MDCTextInput.h"
 
 /** Protocol implemented by a text field controlled by a |MDCTextFieldController|. */
 
-@protocol MDCControlledTextInput
+@protocol MDCControlledTextInput <MDCTextInput>
 
 @property(nonatomic, nullable, strong) UIFont *font;
 
@@ -26,10 +25,12 @@
 
 @optional
 
-/** Vertical padding between the text and the border view. Defaults to 8.0f if not implemented. */
-- (CGFloat)borderVerticalPadding;
+/** Vertical padding between the text and the underline view. Defaults to 8.0f if not implemented. */
+- (CGFloat)underlineVerticalPadding;
 
 @end
+
+@protocol MDCTextInput;
 
 /** A controller for common traits shared by text field controls. */
 @interface MDCTextInputController : NSObject <MDCTextInput>
@@ -51,7 +52,7 @@
 @property(nonatomic, readonly) UIEdgeInsets textContainerInset;
 
 /** Designated initializer with the controlled text field and whether it is multiline. */
-- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput, MDCTextInput> *_Nonnull)textField
+- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput> * _Nonnull)textInput
                       isMultiline:(BOOL)isMultiline NS_DESIGNATED_INITIALIZER;
 
 /** @deprecated Please use initWithTextField:isMultiline:. */
@@ -74,9 +75,6 @@
 
 /** Perform all updates when the text field changes. */
 - (void)didChange;
-
-/** Validates the text field if it has a validator present. */
-- (void)validate;
 
 /** 
  Whether or not to layout the UI for right-to-left languages. Query this to make layout decisions. 

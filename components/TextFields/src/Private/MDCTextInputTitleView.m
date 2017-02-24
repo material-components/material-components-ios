@@ -29,13 +29,13 @@
     CGRect bounds = [self bounds];
 
     _backLayer = [[CATextLayer alloc] init];
-    [_backLayer setForegroundColor:MDCTextFieldPlaceholderTextColor().CGColor];
+    [_backLayer setForegroundColor:MDCTextInputInlinePlaceholderTextColor().CGColor];
     [_backLayer setContentsScale:contentsScale];
     [_backLayer setFrame:bounds];
     [layer addSublayer:_backLayer];
 
     _frontLayer = [[CATextLayer alloc] init];
-    [_frontLayer setForegroundColor:[[MDCPalette indigoPalette] tint500].CGColor];
+    [_frontLayer setForegroundColor:[MDCPalette indigoPalette].tint500.CGColor];
     [_frontLayer setContentsScale:contentsScale];
     [_frontLayer setFrame:bounds];
     [_frontLayer setOpacity:0];
