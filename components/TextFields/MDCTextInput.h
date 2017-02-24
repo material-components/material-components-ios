@@ -40,6 +40,9 @@
 /** The text displayed in the text input. */
 @property(nonatomic, nullable, copy) NSString *text;
 
+/** The color of the text in the input. */
+@property(nonatomic, nullable, strong) UIColor *textColor;
+
 /**
  The label displaying text when no input text has been entered. The Material Design guidelines call
  this 'Hint text.'
