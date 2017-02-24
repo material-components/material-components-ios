@@ -47,3 +47,12 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 static inline UIColor *MDCTextInputTextColor() {
   return [UIColor colorWithWhite:0 alpha:[MDCTypography body1FontOpacity]];
 }
+
+static inline CGFloat MDCCeil(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return ceil(value);
+#else
+  return ceilf(value);
+#endif
+}
+

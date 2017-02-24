@@ -109,7 +109,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 /** The text displayed in the text input. */
 @property(nonatomic, nullable, copy) NSString *text;
 
-/** The text displayed in the text input. */
+/** The color of the text displayed in the input. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
 /**

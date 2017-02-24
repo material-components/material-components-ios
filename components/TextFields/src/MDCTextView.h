@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCTextInput.h"
+
 @class MDCTextView;
 
 /** Delegate for MDCTextInput size changes. */

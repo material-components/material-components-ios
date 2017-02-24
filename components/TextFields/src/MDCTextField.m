@@ -14,7 +14,6 @@
  limitations under the License.
  */
 
-#import "MDCTextField.h"
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
@@ -68,7 +67,7 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 
   self.tintColor = _controller.cursorColor;
   self.textColor = _controller.textColor;
-  self.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+  self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
   // Set the clear button color to black with 54% opacity.
   self.clearButtonColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];

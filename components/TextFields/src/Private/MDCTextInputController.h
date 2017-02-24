@@ -16,6 +16,8 @@
 
 /** Protocol implemented by a text field controlled by a |MDCTextFieldController|. */
 
+#import "MDCTextField.h"
+
 @protocol MDCControlledTextInput <MDCTextInput>
 
 @property(nonatomic, nullable, strong) UIFont *font;
@@ -29,8 +31,6 @@
 - (CGFloat)underlineVerticalPadding;
 
 @end
-
-@protocol MDCTextInput;
 
 /** A controller for common traits shared by text field controls. */
 @interface MDCTextInputController : NSObject <MDCTextInput>

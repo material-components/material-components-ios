@@ -47,14 +47,6 @@ static inline CGFloat MDCFabs(CGFloat value) {
 #endif
 }
 
-static inline CGFloat MDCCeil(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return ceil(value);
-#else
-  return ceilf(value);
-#endif
-}
-
 /**
   Checks whether the provided floating point number is approximately zero based on a small epsilon.
 

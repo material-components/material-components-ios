@@ -16,10 +16,15 @@
 
 #import "MDCTextView.h"
 
+#import "MaterialTypography.h"
+#import "MaterialPalettes.h"
+
 #import "MDCTextInput+Internal.h"
+#import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
 #import "MDCTextInputTitleView.h"
 #import "MDCTextInputUnderlineView.h"
+
 
 @interface MDCTextView () <MDCControlledTextInput>
 
@@ -40,8 +45,8 @@
 
     self.tintColor = MDCTextInputCursorColor();
     self.textColor = _controller.textColor;
-    self.font = [GOOTypography textFieldFont];
-
+    self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    
     self.editable = YES;
     self.textContainerInset = UIEdgeInsetsZero;
 
@@ -83,15 +88,59 @@
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize tempSize = [super sizeThatFits:size];
   // iOS 7 doesn't display the last line of text unless the height is ceiled.
-  tempSize.height = GOOCeil(tempSize.height);
+  tempSize.height = MDCCeil(tempSize.height);
   return tempSize;
 }
 
-- (void)validate {
-  [_controller validate];
+#pragma mark - Properties Implementation
+
+- (UIColor *)underlineColor {
+  return _controller.underlineColor;
 }
 
-#pragma mark - Properties Implementation
+- (void)setUnderlineColor:(UIColor *)underlineColor {
+  _controller.underlineColor = underlineColor;
+}
+
+- (NSString *)underlineAccessibilityText {
+  return _controller.underlineAccessibilityText;
+}
+
+- (void)setUnderlineAccessibilityText:(NSString *)underlineAccessibilityText {
+  _controller.underlineAccessibilityText = underlineAccessibilityText;
+}
+
+- (NSString *)underlineText {
+  return _controller.underlineText;
+}
+
+- (void)setUnderlineText:(NSString *)underlineText {
+  _controller.underlineText = underlineText;
+}
+
+- (UIColor *)underlineTextColor {
+  return _controller.underlineTextColor;
+}
+
+- (void)setUnderlineTextColor:(UIColor *)underlineTextColor {
+  _controller.underlineTextColor = underlineTextColor;
+}
+
+- (UIFont *)underlineTextFont {
+  return _controller.underlineTextFont;
+}
+
+- (void)setUnderlineTextFont:(UIFont *)underlineTextFont {
+  _controller.underlineTextFont = underlineTextFont;
+}
+
+- (CGFloat)underlineWidth {
+  return _controller.underlineWidth;
+}
+
+- (void)setUnderlineWidth:(CGFloat)underlineWidth {
+  _controller.underlineWidth = underlineWidth;
+}
 
 - (NSString *)placeholder {
   return _controller.placeholder;
@@ -101,23 +150,23 @@
   _controller.placeholder = placeholder;
 }
 
-- (GOOTextFieldPresentationStyle)presentationStyle {
+- (UIFont *)placeholderFont {
+  return _controller.placeholderFont;
+}
+
+- (void)setPlaceholderFont:(UIFont *)placeholderFont {
+  _controller.placeholderFont = placeholderFont;
+}
+
+- (MDCTextInputPresentationStyle)presentationStyle {
   return _controller.presentationStyle;
 }
 
-- (void)setPresentationStyle:(GOOTextFieldPresentationStyle)presentationStyle {
+- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
   if (_controller.presentationStyle != presentationStyle) {
     _controller.presentationStyle = presentationStyle;
     self.textContainerInset = UIEdgeInsetsZero;
   }
-}
-
-- (QTMColorGroup *)colorGroup {
-  return _controller.colorGroup;
-}
-
-- (void)setColorGroup:(QTMColorGroup *)colorGroup {
-  _controller.colorGroup = colorGroup;
 }
 
 - (UIColor *)textColor {
@@ -129,28 +178,28 @@
   _controller.textColor = textColor;
 }
 
-- (UIColor *)placeholderColor {
-  return _controller.placeholderColor;
+- (UIColor *)floatingPlaceholderColor {
+  return _controller.floatingPlaceholderColor;
 }
 
-- (void)setPlaceholderColor:(UIColor *)placeholderColor {
-  _controller.placeholderColor = placeholderColor;
+- (void)setFloatingPlaceholderColor:(UIColor *)floatingPlaceholderColor {
+  _controller.floatingPlaceholderColor = floatingPlaceholderColor;
 }
 
-- (UIColor *)errorColor {
-  return _controller.errorColor;
+- (CGFloat)floatingPlaceholderScale {
+  return _controller.floatingPlaceholderScale;
 }
 
-- (void)setErrorColor:(UIColor *)errorColor {
-  _controller.errorColor = errorColor;
+- (void)setFloatingPlaceholderScale:(CGFloat)floatingPlaceholderScale {
+  _controller.floatingPlaceholderScale = floatingPlaceholderScale;
 }
 
-- (UIColor *)borderColor {
-  return _controller.borderColor;
+- (UIColor *)inlinePlaceholderColor {
+  return _controller.inlinePlaceholderColor;
 }
 
-- (void)setBorderColor:(UIColor *)borderColor {
-  _controller.borderColor = borderColor;
+- (void)setInlinePlaceholderColor:(UIColor *)inlinePlaceholderColor {
+  _controller.inlinePlaceholderColor = inlinePlaceholderColor;
 }
 
 - (NSUInteger)characterLimit {
@@ -164,31 +213,27 @@
   }
 }
 
-- (id<GOOTextFieldCharacterCounter>)characterCounter {
+- (id<MDCTextInputCharacterCounter>)characterCounter {
   return _controller.characterCounter;
 }
 
-- (void)setCharacterCounter:(id<GOOTextFieldCharacterCounter>)characterCounter {
+- (void)setCharacterCounter:(id<MDCTextInputCharacterCounter>)characterCounter {
   _controller.characterCounter = characterCounter;
 }
-
-- (UITextFieldViewMode)underlineViewMode {
-  return _controller.underlineViewMode;
+- (UIColor *)characterLimitColor {
+  return _controller.characterLimitColor;
 }
 
-- (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
-  _controller.underlineViewMode = underlineViewMode;
+- (void)setCharacterLimitColor:(UIColor *)characterLimitColor {
+  _controller.characterLimitColor = characterLimitColor;
 }
 
-- (id<GOOTextFieldValidator>)validator {
-  return _controller.validator;
+- (UIFont *)characterLimitFont {
+  return _controller.characterLimitFont;
 }
 
-- (void)setValidator:(id<GOOTextFieldValidator>)validator {
-  if (_controller.validator != validator) {
-    _controller.validator = validator;
-    self.textContainerInset = UIEdgeInsetsZero;
-  }
+- (void)setCharacterLimitFont:(UIFont *)characterLimitFont {
+  _controller.characterLimitFont = characterLimitFont;
 }
 
 // Always set the text container insets based upon style of the text field.
@@ -196,7 +241,7 @@
   [super setTextContainerInset:[_controller textContainerInset]];
 }
 
-#pragma mark - GOOControlledTextField
+#pragma mark - MDCControlledTextField
 
 - (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
   return UIEdgeInsetsInsetRect(bounds, self.textContainerInset);
@@ -245,9 +290,9 @@
   CGSize currentSize = self.bounds.size;
   CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
   if (currentSize.height != requiredSize.height && self.delegate &&
-      [self.delegate respondsToSelector:@selector(textFieldContentSizeChanged:size:)]) {
-    id<GOOMultilineTextFieldDelegate> delegate = (id<GOOMultilineTextFieldDelegate>)self.delegate;
-    [delegate textFieldContentSizeChanged:self size:requiredSize];
+      [self.delegate respondsToSelector:@selector(textView:didChangeContentSize:)]) {
+    id<MDCTextViewLayoutDelegate> delegate = (id<MDCTextViewLayoutDelegate>)self.delegate;
+    [delegate textView:self didChangeContentSize:requiredSize];
   }
 }
 
