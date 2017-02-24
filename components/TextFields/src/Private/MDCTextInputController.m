@@ -19,8 +19,8 @@
 #import "MDCTextInput.h"
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
-#import "Private/MDCTextFieldTitleView.h"
-#import "Private/MDCUnderlineView.h"
+#import "MDCTextInputTitleView.h"
+#import "MDCTextFieldUnderlineView.h"
 
 NSString *const MDCTextFieldValidatorErrorColorKey = @"MDCTextFieldValidatorErrorColor";
 NSString *const MDCTextFieldValidatorErrorTextKey = @"MDCTextFieldValidatorErrorText";
@@ -37,7 +37,33 @@ static const CGFloat MDCTextFieldValidationMargin = 8.f;
 
 static const NSTimeInterval MDCTextFieldAnimationDuration = 0.3f;
 
-NS_INLINE CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
+
+static inline CGFloat MDCFabs(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return fabs(value);
+#else
+  return fabsf(value);
+#endif
+}
+
+/**
+  Checks whether the provided floating point number is approximately zero based on a small epsilon.
+
+  Note that ULP-based comparisons are not used because ULP-space is significantly distorted around
+  zero.
+
+  Reference:
+  https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+ */
+static inline BOOL MDCFloatIsApproximatelyZero(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return (MDCFabs(value) < DBL_EPSILON);
+#else
+  return (MDCFabs(value) < FLT_EPSILON);
+#endif
+}
+
+static inline CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
   CGFloat pointSize = [font pointSize];
   if (!MDCFloatIsApproximatelyZero(pointSize)) {
     return MDCTextFieldFloatingLabelFontSize / pointSize;
@@ -48,11 +74,11 @@ NS_INLINE CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 
 @interface MDCTextInputController ()
 
-@property(nonatomic, weak) UIView<MDCControlledTextField> *textField;
+@property(nonatomic, weak) UIView<MDCControlledTextInput> *textField;
 @property(nonatomic, readonly) BOOL isMultiline;
-@property(nonatomic, strong) MDCTextFieldTitleView *titleView;
+@property(nonatomic, strong) MDCTextInputTitleView *titleView;
 @property(nonatomic, assign) CGAffineTransform floatingTitleScale;
-@property(nonatomic, strong) MDCUnderlineView *borderView;
+@property(nonatomic, strong) MDCTextFieldUnderlineView *borderView;
 @property(nonatomic, strong) UILabel *characterLimitView;
 @property(nonatomic, strong) UILabel *errorTextView;
 @property(nonatomic, readonly) BOOL canValidate;
@@ -64,33 +90,30 @@ NS_INLINE CGFloat MDCTextFieldTitleScaleFactor(UIFont *font) {
 // We never use the text property. Instead always read from the text field.
 @synthesize text = _do_no_use_text;
 @synthesize presentationStyle = _presentationStyle;
-@synthesize colorGroup = _colorGroup;
 @synthesize textColor = _textColor;
 @synthesize placeholderColor = _placeholderColor;
 @synthesize errorColor = _errorColor;
-@synthesize borderColor = _borderColor;
+@synthesize underlineColor = _underlineColor;
 @synthesize characterLimit = _characterLimit;
 @synthesize characterCounter = _characterCounter;
 @synthesize underlineViewMode = _underlineViewMode;
-@synthesize validator = _validator;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
   return nil;
 }
 
-- (instancetype)initWithTextField:(UIView<MDCControlledTextField> *)textField
+- (instancetype)initWithTextField:(UIView<MDCControlledTextInput> *)textField
                       isMultiline:(BOOL)isMultiline {
   self = [super init];
   if (self) {
     _textField = textField;
     _isMultiline = isMultiline;
 
-    _colorGroup = [QTMColorGroup colorGroupWithID:kQTMColorGroupIndigo];
     _textColor = GOOTextFieldTextColor();
     _placeholderColor = GOOTextFieldPlaceholderTextColor();
     _errorColor = GOOTextFieldTextErrorColor();
-    _borderColor = GOOTextFieldBorderColor();
+    _underlineColor = GOOTextFieldBorderColor();
 
     _floatingTitleScale = CGAffineTransformIdentity;
     _underlineViewMode = UITextFieldViewModeAlways;

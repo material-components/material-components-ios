@@ -66,7 +66,7 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 - (void)commonInitialization {
   _controller = [[MDCTextInputController alloc] initWithTextField:self isMultiline:NO];
 
-  self.tintColor = _controller.colorGroup.regularColor;
+  self.tintColor = _controller.cursorColor;
   self.textColor = _controller.textColor;
   self.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 
@@ -124,12 +124,12 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 
 #pragma mark - Properties Implementation
 
-- (UIColor *)borderColor {
-  return _controller.borderColor;
+- (UIColor *)underlineColor {
+  return _controller.underlineColor;
 }
 
-- (void)setBorderColor:(UIColor *)borderColor {
-  _controller.borderColor = borderColor;
+- (void)setUnderlineColor:(UIColor *)underlineColor {
+  _controller.underlineColor = underlineColor;
 }
 
 - (id<MDCTextInputCharacterCounter>)characterCounter {
@@ -218,13 +218,6 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   }
   return nil;
 }
-- (UIColor *)placeholderColor {
-  return _controller.placeholderColor;
-}
-
-- (void)setPlaceholderColor:(UIColor *)placeholderColor {
-  _controller.placeholderColor = placeholderColor;
-}
 
 - (UIFont *)placeholderFont {
   return _controller.placeholderFont;
@@ -257,14 +250,6 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 
 - (void)setUnderlineAccessibilityText:(NSString *)underlineAccessibilityText {
   _controller.underlineAccessibilityText = underlineAccessibilityText;
-}
-
-- (UIColor *)underlineColor {
-  return _controller.underlineColor;
-}
-
-- (void)setUnderlineColor:(UIColor *)underlineColor {
-  _controller.underlineColor = underlineColor;
 }
 
 - (NSString *)underlineText {
@@ -412,7 +397,7 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   }
 
   // Full width text boxes have their character count on the text input line
-  if (self.presentationStyle == MDCTextFieldPresentationStyleFullWidth && self.characterLimit) {
+  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && self.characterLimit) {
     if ([_controller shouldLayoutForRTL]) {
       clearButtonRect.origin.x += _controller.characterLimitViewSize.width;
     } else {

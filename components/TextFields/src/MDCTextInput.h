@@ -54,6 +54,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
   MDCTextInputPresentationStyleFullWidth,
 };
 
+@protocol MDCTextInputCharacterCounter;
+
 /** Common API for Material Design themed text inputs. */
 @protocol MDCTextInput <NSObject>
 
@@ -156,7 +158,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  This is usually error text or further instructions.
  */
-@property(nonatomic, nullable, copy, readonly) IBInspectable NSString *underlineText;
+@property(nonatomic, nullable, copy) IBInspectable NSString *underlineText;
 
 /**
  The color of the underlineText label.
@@ -177,6 +179,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  need
  to override the default which is the underline text itself.
  */
-@property(nonatomic, nullable, copy, readonly) IBInspectable NSString *underlineAccessibilityText;
+@property(nonatomic, nullable, copy) IBInspectable NSString *underlineAccessibilityText;
+
+@property(nonatomic, nullable, weak) id<MDCTextInputCharacterCounter> characterCounter;
 
 @end

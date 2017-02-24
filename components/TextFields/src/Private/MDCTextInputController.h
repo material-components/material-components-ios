@@ -19,7 +19,7 @@
 
 @protocol MDCControlledTextInput
 
-@property(nonatomic, retain) UIFont *font;
+@property(nonatomic, nullable, strong) UIFont *font;
 
 /** The text rect for the text field that fits it's contents given the provided bounds. */
 - (CGRect)textRectThatFitsForBounds:(CGRect)bounds;
@@ -43,15 +43,19 @@
 /** Height of the font appropriately ceiled. */
 @property(nonatomic, readonly) CGFloat fontHeight;
 
+@property(nonatomic, nullable, strong) UIColor *textColor;
+
+@property(nonatomic, nullable, strong) UIColor *cursorColor;
+
 /** Inset set on the text container based upon the text field's style. */
 @property(nonatomic, readonly) UIEdgeInsets textContainerInset;
 
 /** Designated initializer with the controlled text field and whether it is multiline. */
-- (instancetype)initWithTextField:(UIView<MDCControlledTextInput, MDCTextInput> *)textField
+- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput, MDCTextInput> *_Nonnull)textField
                       isMultiline:(BOOL)isMultiline NS_DESIGNATED_INITIALIZER;
 
 /** @deprecated Please use initWithTextField:isMultiline:. */
-- (instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /** Called by the controlled text field to notify the controller that it's text was set. */
 - (void)didSetText;

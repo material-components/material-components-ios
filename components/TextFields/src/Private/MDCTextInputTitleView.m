@@ -14,11 +14,12 @@
  limitations under the License.
  */
 
-#import "MDCTextFieldTitleView.h"
+#import "MDCTextInputTitleView.h"
 
+#import "MaterialPalettes.h"
 #import "MDCTextInput+Internal.h"
 
-@implementation GOOTextFieldTitleView
+@implementation MDCTextInputTitleView
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -28,13 +29,13 @@
     CGRect bounds = [self bounds];
 
     _backLayer = [[CATextLayer alloc] init];
-    [_backLayer setForegroundColor:GOOTextFieldPlaceholderTextColor().CGColor];
+    [_backLayer setForegroundColor:MDCTextFieldPlaceholderTextColor().CGColor];
     [_backLayer setContentsScale:contentsScale];
     [_backLayer setFrame:bounds];
     [layer addSublayer:_backLayer];
 
     _frontLayer = [[CATextLayer alloc] init];
-    [_frontLayer setForegroundColor:[[GOOTextFieldDefaultColorGroup() regularColor] CGColor]];
+    [_frontLayer setForegroundColor:[[MDCPalette indigoPalette] tint500].CGColor];
     [_frontLayer setContentsScale:contentsScale];
     [_frontLayer setFrame:bounds];
     [_frontLayer setOpacity:0];

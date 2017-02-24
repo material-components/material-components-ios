@@ -14,22 +14,23 @@
  limitations under the License.
  */
 
-#import "MDCUnderlineView.h"
+#import "MDCTextFieldUnderlineView.h"
 
+#import "MaterialPalettes.h"
 #import "MDCTextInput+Internal.h"
 
-static const CGFloat kGOOTextFieldBorderFocusedHeight = 2.f;
+static const CGFloat MDCTextFieldBorderFocusedHeight = 2.f;
 
-static const NSTimeInterval kGOOTextFieldDividerAnimationDuration = 0.2f;
+static const NSTimeInterval MDCTextFieldDividerAnimationDuration = 0.2f;
 
-@implementation GOOUnderlineView
+@implementation MDCTextFieldUnderlineView
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _focusedColor = [GOOTextFieldDefaultColorGroup() regularColor];
-    _unfocusedColor = GOOTextFieldBorderColor();
-    _errorColor = GOOTextFieldTextErrorColor();
+    _focusedColor = [[MDCPalette indigoPalette] tint500];
+    _unfocusedColor = MDCTextFieldBorderColor();
+    _errorColor = MDCTextFieldTextErrorColor();
     _enabled = YES;
 
     [self setClipsToBounds:NO];
@@ -46,7 +47,7 @@ static const NSTimeInterval kGOOTextFieldDividerAnimationDuration = 0.2f;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return CGSizeMake(size.width, kGOOTextFieldBorderHeight);
+  return CGSizeMake(size.width, MDCTextFieldBorderHeight);
 }
 
 - (void)updateBorderPath {
@@ -54,7 +55,7 @@ static const NSTimeInterval kGOOTextFieldDividerAnimationDuration = 0.2f;
 
   if (_focusedBorder) {
     CGRect focusBorderRect = bounds;
-    focusBorderRect.size.height = kGOOTextFieldBorderFocusedHeight;
+    focusBorderRect.size.height = MDCTextFieldBorderFocusedHeight;
     focusBorderRect.origin.y = CGRectGetMidY(bounds) - CGRectGetHeight(focusBorderRect) / 2;
 
     [_focusedBorder setFrame:focusBorderRect];
@@ -182,15 +183,15 @@ static const NSTimeInterval kGOOTextFieldDividerAnimationDuration = 0.2f;
   }
 
   CGRect toBounds = [self bounds];
-  toBounds.size.height = kGOOTextFieldBorderFocusedHeight;
+  toBounds.size.height = MDCTextFieldBorderFocusedHeight;
 
   CGFloat width = CGRectGetWidth(toBounds);
 
   CAKeyframeAnimation *sizeAnimation = [CAKeyframeAnimation animationWithKeyPath:@"bounds.size"];
   [sizeAnimation setValues:@[
-    [NSValue valueWithCGSize:CGSizeMake(1, kGOOTextFieldBorderFocusedHeight * 2)],
-    [NSValue valueWithCGSize:CGSizeMake(width * 0.4f, kGOOTextFieldBorderFocusedHeight * 2)],
-    [NSValue valueWithCGSize:CGSizeMake(width * 0.8f, kGOOTextFieldBorderFocusedHeight)],
+    [NSValue valueWithCGSize:CGSizeMake(1, MDCTextFieldBorderFocusedHeight * 2)],
+    [NSValue valueWithCGSize:CGSizeMake(width * 0.4f, MDCTextFieldBorderFocusedHeight * 2)],
+    [NSValue valueWithCGSize:CGSizeMake(width * 0.8f, MDCTextFieldBorderFocusedHeight)],
     [NSValue valueWithCGSize:toBounds.size],
   ]];
 
@@ -199,7 +200,7 @@ static const NSTimeInterval kGOOTextFieldDividerAnimationDuration = 0.2f;
   [alphaAnimation setToValue:@1];
 
   CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-  [animationGroup setDuration:kGOOTextFieldDividerAnimationDuration];
+  [animationGroup setDuration:MDCTextFieldDividerAnimationDuration];
   [animationGroup setAnimations:@[ sizeAnimation, alphaAnimation ]];
 
   [_focusedBorder addAnimation:animationGroup forKey:@"animateFocusBorderIn"];
@@ -212,7 +213,7 @@ static const NSTimeInterval kGOOTextFieldDividerAnimationDuration = 0.2f;
   }
 
   CGRect fromBounds = [self bounds];
-  fromBounds.size.height = kGOOTextFieldBorderFocusedHeight;
+  fromBounds.size.height = MDCTextFieldBorderFocusedHeight;
 
   CGRect toBounds = fromBounds;
   toBounds.size.height = 0;
@@ -226,7 +227,7 @@ static const NSTimeInterval kGOOTextFieldDividerAnimationDuration = 0.2f;
   [alphaAnimation setToValue:@0];
 
   CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-  [animationGroup setDuration:kGOOTextFieldDividerOutAnimationDuration];
+  [animationGroup setDuration:MDCTextFieldDividerOutAnimationDuration];
   [animationGroup setAnimations:@[ sizeAnimation, alphaAnimation ]];
 
   [_focusedBorder addAnimation:animationGroup forKey:@"animateFocusBorderOut"];

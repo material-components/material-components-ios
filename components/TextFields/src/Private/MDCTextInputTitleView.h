@@ -21,7 +21,7 @@
  *
  * @ingroup GOOInputs
  */
-@interface GOOTextFieldTitleView : UIView
+@interface MDCTextInputTitleView : UIView
 @property(nonatomic, assign) CGColorRef frontLayerColor;
 @property(nonatomic, assign) CGColorRef backLayerColor;
 @property(nonatomic, assign) NSObject *string;

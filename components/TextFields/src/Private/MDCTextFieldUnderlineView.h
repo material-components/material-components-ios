@@ -23,7 +23,7 @@
  *
  * @ingroup GOOInputs
  */
-@interface GOOUnderlineView : UIView
+@interface MDCTextFieldUnderlineView : UIView
 @property(nonatomic, strong) UIColor *focusedColor;
 @property(nonatomic, strong) UIColor *unfocusedColor;
 @property(nonatomic, strong) UIColor *errorColor;
