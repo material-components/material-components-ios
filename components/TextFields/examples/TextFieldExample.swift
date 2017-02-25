@@ -21,6 +21,7 @@ import MaterialComponents.MaterialTextFields
 class TextFieldSwiftExample: UIViewController {
 
   let textField = MDCTextField()
+  let textView = MDCTextView()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -28,13 +29,28 @@ class TextFieldSwiftExample: UIViewController {
     view.backgroundColor = .white
 
     view.addSubview(textField)
+    view.addSubview(textView)
 
     textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.placeholder = "Hello who?"
+    textField.placeholder = "This is a text field"
     textField.delegate = self
+    textField.presentation = .floatingPlaceholder
 
-    NSLayoutConstraint(item: textField, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[textField]-|", options: [], metrics: nil, views: ["textField": textField]))
+    textView.translatesAutoresizingMaskIntoConstraints = false
+    textView.placeholder = "This is a text view"
+    textView.delegate = self
+    textView.presentation = .default
+
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|-100-[textField]-[textView]",
+                                                               options: [.alignAllTrailing, .alignAllLeading],
+                                                               metrics: nil,
+                                                               views: ["textField": textField,
+                                                               "textView": textView]))
+
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[textField]-|",
+                                                               options: [],
+                                                               metrics: nil,
+                                                               views: ["textField": textField]))
   }
 
 }
@@ -44,6 +60,10 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
     textField.resignFirstResponder()
     return false
   }
+}
+
+extension TextFieldSwiftExample: UITextViewDelegate {
+  
 }
 
 extension TextFieldSwiftExample {
