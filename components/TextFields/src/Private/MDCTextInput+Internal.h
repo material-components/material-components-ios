@@ -55,4 +55,3 @@ static inline CGFloat MDCCeil(CGFloat value) {
   return ceilf(value);
 #endif
 }
-

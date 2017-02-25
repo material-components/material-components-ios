@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import "MDCTextInput.h"
 #import "MDCTextField.h"
-#import "MDCTextView.h"
+#import "MDCTextInput.h"
 #import "MDCTextInputBehavior.h"
 #import "MDCTextInputCharacterCounter.h"
+#import "MDCTextView.h"

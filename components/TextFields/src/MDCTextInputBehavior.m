@@ -15,13 +15,12 @@
  limitations under the License.
  */
 
-
 #import "MDCTextInputBehavior.h"
 
 @implementation MDCTextInputBehavior
 
-- (void)setErrorText:(NSString *)errorText errorAccessibilityValue:(NSString *)errorAccessibilityValue {
-  
+- (void)setErrorText:(NSString *)errorText
+    errorAccessibilityValue:(NSString *)errorAccessibilityValue {
 }
 
 @end

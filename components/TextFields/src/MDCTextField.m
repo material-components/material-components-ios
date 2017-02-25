@@ -373,20 +373,21 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   if (clearButton != nil) {
     // If the image is not our image, set it.
 
-    //TODO(larche) Finish converting to layer.
-//    if (clearButton.imageView.image != self.clearButtonImage) {
-//      [clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
-//      [clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
-//      [clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
-//    }
-//
-//    // If the rect doesn't fit the image, adjust accordingly
-//    if (!CGSizeEqualToSize(clearButtonRect.size, self.clearButtonImage.size)) {
-//      // Resize and shift the clearButtonRect to fit the clearButtonImage
-//      CGFloat xDelta = (clearButtonRect.size.width - self.clearButtonImage.size.width) / 2.0f;
-//      CGFloat yDelta = (clearButtonRect.size.height - self.clearButtonImage.size.height) / 2.0f;
-//      clearButtonRect = CGRectInset(clearButtonRect, xDelta, yDelta);
-//    }
+    // TODO(larche) Finish converting to layer.
+    //    if (clearButton.imageView.image != self.clearButtonImage) {
+    //      [clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
+    //      [clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
+    //      [clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
+    //    }
+    //
+    //    // If the rect doesn't fit the image, adjust accordingly
+    //    if (!CGSizeEqualToSize(clearButtonRect.size, self.clearButtonImage.size)) {
+    //      // Resize and shift the clearButtonRect to fit the clearButtonImage
+    //      CGFloat xDelta = (clearButtonRect.size.width - self.clearButtonImage.size.width) / 2.0f;
+    //      CGFloat yDelta = (clearButtonRect.size.height - self.clearButtonImage.size.height) /
+    //      2.0f;
+    //      clearButtonRect = CGRectInset(clearButtonRect, xDelta, yDelta);
+    //    }
   }
 
   // Full width text boxes have their character count on the text input line

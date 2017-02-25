@@ -16,8 +16,8 @@
 
 #import "MDCTextInputTitleView.h"
 
-#import "MaterialPalettes.h"
 #import "MDCTextInput+Internal.h"
+#import "MaterialPalettes.h"
 
 @implementation MDCTextInputTitleView
 

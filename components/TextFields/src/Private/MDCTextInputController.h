@@ -13,7 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License. */
 
-
 /** Protocol implemented by a text field controlled by a |MDCTextFieldController|. */
 
 #import "MDCTextField.h"
@@ -27,7 +26,8 @@
 
 @optional
 
-/** Vertical padding between the text and the underline view. Defaults to 8.0f if not implemented. */
+/** Vertical padding between the text and the underline view. Defaults to 8.0f if not implemented.
+ */
 - (CGFloat)underlineVerticalPadding;
 
 @end
@@ -52,8 +52,8 @@
 @property(nonatomic, readonly) UIEdgeInsets textContainerInset;
 
 /** Designated initializer with the controlled text field and whether it is multiline. */
-- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput> * _Nonnull)textInput
-                      isMultiline:(BOOL)isMultiline NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput> *_Nonnull)textInput
+                              isMultiline:(BOOL)isMultiline NS_DESIGNATED_INITIALIZER;
 
 /** @deprecated Please use initWithTextField:isMultiline:. */
 - (nonnull instancetype)init NS_UNAVAILABLE;
@@ -76,8 +76,8 @@
 /** Perform all updates when the text field changes. */
 - (void)didChange;
 
-/** 
- Whether or not to layout the UI for right-to-left languages. Query this to make layout decisions. 
+/**
+ Whether or not to layout the UI for right-to-left languages. Query this to make layout decisions.
  */
 - (BOOL)shouldLayoutForRTL;
 

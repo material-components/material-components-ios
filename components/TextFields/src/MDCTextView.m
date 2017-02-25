@@ -16,15 +16,14 @@
 
 #import "MDCTextView.h"
 
-#import "MaterialTypography.h"
 #import "MaterialPalettes.h"
+#import "MaterialTypography.h"
 
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
 #import "MDCTextInputTitleView.h"
 #import "MDCTextInputUnderlineView.h"
-
 
 @interface MDCTextView () <MDCControlledTextInput>
 
@@ -46,7 +45,7 @@
     self.tintColor = MDCTextInputCursorColor();
     self.textColor = _controller.textColor;
     self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-    
+
     self.editable = YES;
     self.textContainerInset = UIEdgeInsetsZero;
 

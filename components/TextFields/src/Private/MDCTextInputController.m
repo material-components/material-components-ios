@@ -17,11 +17,11 @@
 
 #import "MDCTextInputController.h"
 
-#import "MaterialAnimationTiming.h"
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputTitleView.h"
 #import "MDCTextInputUnderlineView.h"
+#import "MaterialAnimationTiming.h"
 
 NSString *const MDCTextInputValidatorErrorColorKey = @"MDCTextInputValidatorErrorColor";
 NSString *const MDCTextInputValidatorErrorTextKey = @"MDCTextInputValidatorErrorText";
@@ -37,7 +37,6 @@ static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
 static const CGFloat MDCTextInputValidationMargin = 8.f;
 
 static const NSTimeInterval MDCTextInputAnimationDuration = 0.3f;
-
 
 static inline CGFloat MDCFabs(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -114,7 +113,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   return nil;
 }
 
-- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput> * _Nonnull)textInput
+- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput> *_Nonnull)textInput
                               isMultiline:(BOOL)isMultiline {
   self = [super init];
   if (self) {
@@ -214,7 +213,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCTextInputAnimationDuration];
   [CATransaction
-      setAnimationTimingFunction:[CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+      setAnimationTimingFunction:[CAMediaTimingFunction
+                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
   // TODO(larche) Check this removal of underlineViewMode.
   if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
@@ -274,9 +274,11 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
       _underlineView.focusUnderlineHidden = YES;
     } else {
       // TODO(larche) Check this removal of underlineViewMode.
-//      _underlineView.normalUnderlineHidden = (self.underlineViewMode == UITextInputViewModeWhileEditing);
+      //      _underlineView.normalUnderlineHidden = (self.underlineViewMode ==
+      //      UITextInputViewModeWhileEditing);
       // TODO(larche) Check this removal of underlineViewMode.
-//      _underlineView.focusUnderlineHidden = (self.underlineViewMode == UITextInputViewModeUnlessEditing);
+      //      _underlineView.focusUnderlineHidden = (self.underlineViewMode ==
+      //      UITextInputViewModeUnlessEditing);
     }
 
     _underlineView.focusedColor = self.textInput.tintColor;
@@ -314,7 +316,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     // rect for the line of text, which may be rect adjusted for pixel boundaries.  Measure from the
     // center to get the best underline placement.
     underlineFrame.origin.y = CGRectGetMidY(textRect) + (self.textInput.font.pointSize / 2.0f) +
-                           underlineVerticalPadding - underlineFrame.size.height;
+                              underlineVerticalPadding - underlineFrame.size.height;
   }
 
   return underlineFrame;
@@ -356,7 +358,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     [self.textInput setNeedsLayout];
   }
 }
-
 
 - (void)setTextColor:(UIColor *)textColor {
   if (!textColor) {
@@ -427,8 +428,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     _characterLimitView.font = [MDCTypography captionFont];
   }
 
-  NSString *text = [NSString stringWithFormat:
-      @"%lu/%lu", (unsigned long)[self characterCount], (unsigned long)self.characterLimit];
+  NSString *text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)[self characterCount],
+                                              (unsigned long)self.characterLimit];
   _characterLimitView.text = text;
 
   return _characterLimitView;
@@ -533,7 +534,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   // Calculating the offset to account for a rightView in case it is needed for RTL layout,
   // before the placeholderRect is modified to be just wide enough for the text.
   CGFloat placeholderLeftViewOffset =
-        CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
+      CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
   CGFloat placeHolderWidth = [self placeHolderRequiredWidth];
   placeholderRect.size.width = placeHolderWidth;
   if ([self shouldLayoutForRTL]) {
@@ -555,13 +556,13 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     return placeholderRect;
   }
 
-  placeholderRect.origin.y -=
-      MDCTextInputFloatingLabelMargin + MDCTextInputFloatingLabelTextHeight;
+  placeholderRect.origin.y -= MDCTextInputFloatingLabelMargin + MDCTextInputFloatingLabelTextHeight;
 
   // In RTL Layout, make the title view go up and to the right.
   if ([self shouldLayoutForRTL]) {
-    placeholderRect.origin.x = CGRectGetWidth(self.textInput.bounds)
-        - placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
+    placeholderRect.origin.x =
+        CGRectGetWidth(self.textInput.bounds) -
+        placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
   }
 
   return placeholderRect;
@@ -585,7 +586,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
     CGRect destinationFrame = [self placeholderFloatingPositionFrame];
 
-    CATransform3D titleScaleTransform = CATransform3DMakeAffineTransform(self.floatingPlaceholderScaleTransform);
+    CATransform3D titleScaleTransform =
+        CATransform3DMakeAffineTransform(self.floatingPlaceholderScaleTransform);
 
     CABasicAnimation *fontSizeAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
     [fontSizeAnimation setFromValue:[NSValue valueWithCATransform3D:CATransform3DIdentity]];
@@ -660,8 +662,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     underlineTextFrame.origin.x = CGRectGetMinX(bounds);
   }
   CGRect underlineFrame = [self underlineViewFrame];
-  underlineTextFrame.origin.y =
-      CGRectGetMaxY(underlineFrame) + MDCTextInputVerticalPadding - CGRectGetHeight(underlineTextFrame);
+  underlineTextFrame.origin.y = CGRectGetMaxY(underlineFrame) + MDCTextInputVerticalPadding -
+                                CGRectGetHeight(underlineTextFrame);
 
   if (self.characterLimit) {
     CGRect characterLimitFrame = [self characterLimitFrame];
@@ -711,9 +713,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 }
 
 - (NSUInteger)characterCount {
-  return self.characterCounter
-      ? [self.characterCounter characterCountForTextInput:self.textInput]
-      : self.textInput.text.length;
+  return self.characterCounter ? [self.characterCounter characterCountForTextInput:self.textInput]
+                               : self.textInput.text.length;
 }
 
 @end
