@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="o5b-mD-WeU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="o5b-mD-WeU">
     <dependencies>
         <deployment identifier="iOS"/>
         <development version="7000" identifier="xcode"/>
@@ -51,6 +51,17 @@
                                     <action selector="didTapNondismissingAlert:" destination="o5b-mD-WeU" eventType="touchUpInside" id="Oqc-9S-GGz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vqx-6W-SeA" customClass="MDCRaisedButton">
+                                <rect key="frame" x="93" y="307" width="134" height="34"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                <state key="normal" title="DYNAMIC ALERT">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapDynamicAlert:" destination="o5b-mD-WeU" eventType="touchUpInside" id="6oS-Px-lRF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -60,6 +71,8 @@
                             <constraint firstItem="Lpe-1x-D8T" firstAttribute="centerX" secondItem="PBd-In-ziF" secondAttribute="centerX" id="IrQ-8G-4hy"/>
                             <constraint firstItem="RB8-BC-9uM" firstAttribute="top" secondItem="Svl-rE-K5t" secondAttribute="bottom" constant="8" id="LX0-rg-GuH"/>
                             <constraint firstItem="Lpe-1x-D8T" firstAttribute="top" secondItem="RB8-BC-9uM" secondAttribute="bottom" constant="8" id="Pf3-xA-Bp8"/>
+                            <constraint firstItem="Vqx-6W-SeA" firstAttribute="top" secondItem="Lpe-1x-D8T" secondAttribute="bottom" constant="8" id="Qow-kh-dBb"/>
+                            <constraint firstItem="Vqx-6W-SeA" firstAttribute="centerX" secondItem="PBd-In-ziF" secondAttribute="centerX" id="p8h-et-6gM"/>
                         </constraints>
                     </view>
                 </viewController>

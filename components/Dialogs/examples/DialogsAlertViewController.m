@@ -81,11 +81,11 @@
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
 
-  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
+  MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
                                                            NSLog(@"%@", @"AGREE pressed");
                                                          }];
-  [materialAlertController addAction:agreeAaction];
+  [materialAlertController addAction:agreeAction];
 
   MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
                                                             handler:^(MDCAlertAction *action) {
@@ -100,5 +100,40 @@
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
+
+- (IBAction)didTapDynamicAlert:(id)sender {
+  // The following strings are extra verbose to better demonstrate the dynamic handling of an alert.
+  NSString *titleString = @"This alert supports Dynamic Type font sizing.";
+  NSString *messageString =
+      @"You can adjust to size of the font used in the Settings App. Navigate to General -> "
+       "Accessibility -> Larger Text. Yout can drag the slider left and right to adjust the size "
+       "of your fonts to be larger or smaller. We will update the fonts used in this alert to "
+       "match your preference";
+
+  MDCAlertController *materialAlertController =
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
+                                                         handler:^(MDCAlertAction *action) {
+                                                           NSLog(@"%@", @"AGREE pressed");
+                                                         }];
+  [materialAlertController addAction:agreeAction];
+
+  MDCAlertAction *okayAction = [MDCAlertAction actionWithTitle:@"OKAY"
+                                                       handler:^(MDCAlertAction *action) {
+                                                         NSLog(@"%@", @"OKAY pressed");
+                                                       }];
+  [materialAlertController addAction:okayAction];
+
+  MDCAlertAction *acceptAction = [MDCAlertAction actionWithTitle:@"ACCEPT"
+                                                         handler:^(MDCAlertAction *action) {
+                                                           NSLog(@"%@", @"ACCEPT pressed");
+                                                         }];
+  [materialAlertController addAction:acceptAction];
+
+  [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
+
 
 @end
