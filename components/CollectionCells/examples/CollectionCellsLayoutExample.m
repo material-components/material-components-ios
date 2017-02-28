@@ -189,7 +189,7 @@ static NSString *const kExampleDetailText =
 }
 
 - (BOOL)collectionViewAllowsReordering:(UICollectionView *)collectionView {
-  return YES;
+  return NO;  // Not honored because ↓
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
@@ -199,7 +199,7 @@ static NSString *const kExampleDetailText =
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
     canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
-  return (indexPath.item != 0);
+  return (indexPath.item != 0);  // ← Overriding this method bypasses the check in the parent class.
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
