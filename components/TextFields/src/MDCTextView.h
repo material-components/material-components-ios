@@ -49,6 +49,6 @@
 
  If using auto layout, it is not necessary to have a layout delegate.
  */
-@property(nonatomic, nullable, weak) IBInspectable id<MDCTextViewLayoutDelegate> layoutDelegate;
+@property(nonatomic, nullable, weak) IBInspectable id<MDCTextInputLayoutDelegate> layoutDelegate;
 
 @end

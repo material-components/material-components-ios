@@ -29,30 +29,7 @@
    - https://github.com/adamwaite/Validator
  */
 
-/**
- Presentation styles for a text input. The style determines specific aspects of the text
- input, such as sizing, placeholder placement and behavior, layout, etc.
- */
-typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
-  /**
-   Default style with an inline placeholder (that disappears when text is entered) and character
-   count / limit below text.
-   */
-  MDCTextInputPresentationStyleDefault = 0,
-
-  /**
-   The placeholder text is laid out inline but will float above the field when there is content or
-   the field is being edited. The character count is below text. The Material Design guidelines
-   call this 'Floating inline labels.'
-   https://material.io/guidelines/components/text-fields.html#text-fields-labels
-   */
-  MDCTextInputPresentationStyleFloatingPlaceholder,
-
-  /** The placeholder is laid out inline and the character count is also inline to the right. */
-  MDCTextInputPresentationStyleFullWidth,
-};
-
-@protocol MDCTextInputCharacterCounter;
+@protocol MDCTextInput;
 
 /** Common API for Material Design themed text inputs. */
 @protocol MDCTextInput <NSObject>
@@ -60,89 +37,32 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 /** A Boolean value indicating whether the text field is currently in edit mode. */
 @property(nonatomic, readonly, getter=isEditing) BOOL editing;
 
-/**
- The text to be displayed when no text has been entered. The Material Design guidelines call this
- 'Hint text.'
-
- If presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder this text will also float
- above the input when text has been entered.
- https://material.io/guidelines/components/text-fields.html#text-fields-input
- */
-@property(nonatomic, nullable, copy) IBInspectable NSString *placeholder;
-
-/**
- The color applied to the placeholder when inline (not floating.)
-
- Default is black with Material Design hint text opacity.
- */
-@property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor NS_SWIFT_NAME(inlineScale)
-    UI_APPEARANCE_SELECTOR;
-
-/**
- The color applied to the placeholder when floating. However, when in error state, it will be
- colored with the error color.
-
- Default is black with Material Design hint text opacity.
- */
-@property(nonatomic, nullable, strong)
-    UIColor *floatingPlaceholderColor NS_SWIFT_NAME(floatingColor) UI_APPEARANCE_SELECTOR;
-
-/**
- The font applied to placeholder labels.
-
- The UIFont.pointSize is respected for placeholders in an inline mode. However, the pointSize of
- a placeholder in floating mode is placeholderFont.pointSize * floatingPlaceholderScale.
-
- Default is system body.
- */
-@property(nonatomic, nullable, strong) UIFont *placeholderFont UI_APPEARANCE_SELECTOR;
-
-/**
- The scale of the the floating placeholder label in comparison to the inline placeholder specified
- as a value from 0.0 to 1.0.
-
- Default is 0.75.
- */
-@property(nonatomic, assign) CGFloat floatingPlaceholderScale NS_SWIFT_NAME(floatingScale)
-    UI_APPEARANCE_SELECTOR;
-
 /** The text displayed in the text input. */
 @property(nonatomic, nullable, copy) NSString *text;
 
-/** The color of the text displayed in the input. */
+/** The color of the text in the input. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
 /**
- The presentation style of the text input.
-
- Default is MDCTextInputPresentationStyleDefault.
+ The label displaying text when no input text has been entered. The Material Design guidelines call
+ this 'Hint text.'
  */
-@property(nonatomic, assign)
-    MDCTextInputPresentationStyle presentationStyle NS_SWIFT_NAME(presentation);
+@property(nonatomic, nonnull, strong, readonly) UILabel *placeholderLabel;
 
 /**
- The character limit for the text input. A label under the input counts characters entered and
- presents the count / the limit.
+ The label on the trailing side under the input.
 
- Default is 0.
+ This will usually be used for placeholder text to be displayed when no text has been entered. The
+ Material Design guidelines call this 'Helper text.'
  */
-@property(nonatomic, assign) IBInspectable NSUInteger characterLimit;
+@property(nonatomic, nonnull, strong, readonly) UILabel *leadingUnderlineLabel NS_SWIFT_NAME(leadingLabel);
 
 /**
- The color applied to the character count / character limit label.
+ The label on the trailing side under the input.
 
- Default is black with Material Design hint text opacity.
+ This will usually be for the character count / limit.
  */
-@property(nonatomic, nullable, strong) UIColor *characterLimitColor NS_SWIFT_NAME(limitColor)
-    UI_APPEARANCE_SELECTOR;
-
-/**
- The font applied to the character count / character limit label.
-
- Default is system caption1.
- */
-@property(nonatomic, nullable, strong) UIFont *characterLimitFont NS_SWIFT_NAME(limitFont)
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nonnull, strong, readonly) UILabel *trailingUnderlineLabel NS_SWIFT_NAME(trailingLabel);
 
 /**
  The color applied to the underline.
@@ -153,35 +73,5 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
 /** The thickness of the underline. */
 @property(nonatomic, assign) CGFloat underlineWidth UI_APPEARANCE_SELECTOR;
-
-/**
- The text displayed under input rectangle. The Material Design guidelines call this 'Helper text.'
-
- This is usually error text or further instructions.
- */
-@property(nonatomic, nullable, copy) IBInspectable NSString *underlineText;
-
-/**
- The color of the underlineText label.
-
- Default is 38% black.
- */
-@property(nonatomic, nullable, copy) UIColor *underlineTextColor UI_APPEARANCE_SELECTOR;
-
-/**
- The font applied to the underlineText label.
-
- Default is system caption1.
- */
-@property(nonatomic, nullable, strong) UIFont *underlineTextFont UI_APPEARANCE_SELECTOR;
-
-/**
- A localized string that represents the value of the underline text label. Use only when the you
- need
- to override the default which is the underline text itself.
- */
-@property(nonatomic, nullable, copy) IBInspectable NSString *underlineAccessibilityText;
-
-@property(nonatomic, nullable, weak) id<MDCTextInputCharacterCounter> characterCounter;
 
 @end

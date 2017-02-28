@@ -17,7 +17,30 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MDCTextInput;
+@class MDCTextInput;
+
+/**
+ Presentation styles for a text input. The style determines specific aspects of the text
+ input, such as sizing, placeholder placement and behavior, layout, etc.
+ */
+typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
+  /**
+   Default style with an inline placeholder (that disappears when text is entered) and character
+   count / limit below text.
+   */
+  MDCTextInputPresentationStyleDefault = 0,
+
+  /**
+   The placeholder text is laid out inline but will float above the field when there is content or
+   the field is being edited. The character count is below text. The Material Design guidelines
+   call this 'Floating inline labels.'
+   https://material.io/guidelines/components/text-fields.html#text-fields-labels
+   */
+  MDCTextInputPresentationStyleFloatingPlaceholder,
+
+  /** The placeholder is laid out inline and the character count is also inline to the right. */
+  MDCTextInputPresentationStyleFullWidth,
+};
 
 /**
  Material Design themed states for textInputs. The logic for 'automagic' error states changes:
@@ -26,6 +49,7 @@
  */
 @interface MDCTextInputBehavior : NSObject
 
+/** The text input the behavior is managing. */
 @property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
 
 /**
@@ -34,7 +58,7 @@
 
  Default is red.
  */
-@property(nonatomic, nullable, copy) UIColor *errorColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nullable, strong) UIColor *errorColor UI_APPEARANCE_SELECTOR;
 
 /**
  Controls when the underline will be shown.
@@ -43,7 +67,8 @@
 
  Default is UITextFieldViewModeAlways.
  */
-@property(nonatomic, assign) UITextFieldViewMode underlineViewMode NS_SWIFT_NAME(underlineMode);
+@property(nonatomic, assign) UITextFieldViewMode underlineViewMode NS_SWIFT_NAME(underlineMode)
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Controls when the character count will be shown.
@@ -52,6 +77,48 @@
  */
 @property(nonatomic, assign) UITextFieldViewMode characterCountViewMode NS_SWIFT_NAME(characterMode)
     ;
+
+/**
+ The character limit for the text input. A label under the input counts characters entered and
+ presents the count / the limit.
+
+ Default is 0.
+ */
+@property(nonatomic, assign) IBInspectable NSUInteger characterLimit;
+
+/**
+ The color applied to the placeholder when floating. However, when in error state, it will be
+ colored with the error color.
+
+ Default is black with Material Design hint text opacity.
+ */
+@property(nonatomic, nullable, strong)
+    UIColor *floatingPlaceholderColor NS_SWIFT_NAME(floatingColor) UI_APPEARANCE_SELECTOR;
+
+/**
+ The scale of the the floating placeholder label in comparison to the inline placeholder specified
+ as a value from 0.0 to 1.0.
+
+ Default is 0.75.
+ */
+@property(nonatomic, assign) CGFloat floatingPlaceholderScale NS_SWIFT_NAME(floatingScale)
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ The color applied to the placeholder when inline (not floating).
+
+ Default is black with Material Design hint text opacity.
+ */
+@property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor NS_SWIFT_NAME(inlineColor)
+    UI_APPEARANCE_SELECTOR;
+
+/**
+ The presentation style of the text input.
+
+ Default is MDCTextInputPresentationStyleDefault.
+ */
+@property(nonatomic, assign)
+    MDCTextInputPresentationStyle presentationStyle NS_SWIFT_NAME(presentation);
 
 /**
  Sets the state of the controller by setting the values of properties errorText and
