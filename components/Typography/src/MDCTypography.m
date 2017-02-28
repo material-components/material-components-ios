@@ -146,18 +146,30 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 @implementation MDCSystemFontLoader
 
 - (UIFont *)lightFontOfSize:(CGFloat)fontSize {
-  return [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
+  }
+  return [UIFont systemFontOfSize:fontSize];
 }
 
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize];
+  }
   return [UIFont systemFontOfSize:fontSize];
 }
 
 - (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
-  return [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
+  }
+  return [UIFont systemFontOfSize:fontSize];
 }
 
 - (UIFont *)boldFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightBold];
+  }
   return [UIFont boldSystemFontOfSize:fontSize];
 }
 
