@@ -154,7 +154,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize];
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
   }
   return [UIFont systemFontOfSize:fontSize];
 }
