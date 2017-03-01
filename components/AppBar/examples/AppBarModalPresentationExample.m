@@ -53,6 +53,7 @@
 }
 
 - (void)viewDidLoad {
+  [super viewDidLoad];
 
   // UITableViewController's tableView.delegate is self by default. We're setting it here for
   // emphasis.

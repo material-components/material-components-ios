@@ -134,8 +134,6 @@
   cell.textLabel.numberOfLines = 0;
   cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
-  UIFont *currentFont = _styleFonts[indexPath.row];
-
   if (cell.textLabel.font.pointSize > 100 && indexPath.section == 0) {
     cell.textLabel.text = @"MDC";
   }
