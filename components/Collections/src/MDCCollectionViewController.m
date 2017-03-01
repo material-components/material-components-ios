@@ -365,11 +365,19 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  // Start cell ink evaporate animation.
-  MDCInkView *inkView =
-      [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
+
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
+
+  // Start cell ink evaporate animation.
+  MDCInkView *inkView;
+  if ([cell respondsToSelector:@selector(inkView)]) {
+    inkView =
+        [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
+  } else {
+    return;
+  }
+
   self.currentlyActiveInk = NO;
   [inkView startTouchEndedAnimationAtPoint:location completion:nil];
 }
