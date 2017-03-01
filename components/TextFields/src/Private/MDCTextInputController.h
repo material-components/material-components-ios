@@ -32,6 +32,10 @@
 
 @end
 
+#pragma mark - New API
+@class MDCTextInputUnderlineView;
+
+
 /** A controller for common traits shared by text field controls. */
 @interface MDCTextInputController : NSObject <MDCTextInput>
 
@@ -80,5 +84,9 @@
  Whether or not to layout the UI for right-to-left languages. Query this to make layout decisions.
  */
 - (BOOL)shouldLayoutForRTL;
+
+#pragma mark - New API
+@property(nonatomic, nonnull, strong) MDCTextInputUnderlineView *underlineView;
+
 
 @end

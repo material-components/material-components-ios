@@ -16,12 +16,17 @@
 
 #import "MDCTextInputUnderlineView.h"
 
-#import "MDCTextInput+Internal.h"
 #import "MaterialPalettes.h"
+
+#import "MDCTextInput+Internal.h"
 
 static const CGFloat MDCTextInputUnderlineFocusedHeight = 2.f;
 
 static const NSTimeInterval MDCTextInputDividerAnimationDuration = 0.2f;
+
+static inline UIColor *MDCTextInputUnderlineColor() {
+  return [UIColor lightGrayColor];
+}
 
 @implementation MDCTextInputUnderlineView
 
@@ -30,7 +35,7 @@ static const NSTimeInterval MDCTextInputDividerAnimationDuration = 0.2f;
   if (self) {
     _focusedColor = [MDCPalette indigoPalette].tint500;
     _unfocusedColor = MDCTextInputUnderlineColor();
-    _errorColor = MDCTextInputTextErrorColor();
+    _errorColor = [MDCPalette redPalette].tint500;
     _enabled = YES;
 
     [self setClipsToBounds:NO];

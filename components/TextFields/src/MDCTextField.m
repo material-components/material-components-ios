@@ -36,11 +36,6 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 @dynamic borderStyle;
 
 @synthesize internalClearButton = _internalClearButton;
-@synthesize leadingUnderlineLabel = _leadingUnderlineLabel;
-@synthesize placeholderLabel = _placeholderLabel;
-@synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
-@synthesize underlineColor = _underlineColor;
-@synthesize underlineWidth = _underlineWidth;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -135,28 +130,13 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   }
 }
 
-- (UIButton *)internalClearButton {
-  if (_internalClearButton != nil) {
-    return _internalClearButton;
-  }
-  Class targetClass = [UIButton class];
-  // Loop through child views until we find the UIButton that is used to display the clear button
-  // internally in UITextField.
-  NSMutableArray *toVisit = [NSMutableArray arrayWithArray:self.subviews];
-  while ([toVisit count]) {
-    UIView *view = [toVisit objectAtIndex:0];
-    if ([view isKindOfClass:targetClass]) {
-      UIButton *button = (UIButton *)view;
-      // In case other buttons exist, do our best to ensure this is the clear button
-      if (CGSizeEqualToSize(button.imageView.image.size, MDCClearButtonImageDefaultSize)) {
-        _internalClearButton = button;
-        return _internalClearButton;
-      }
-    }
-    [toVisit addObjectsFromArray:view.subviews];
-    [toVisit removeObjectAtIndex:0];
-  }
-  return nil;
+
+- (UILabel *)placeholderLabel {
+  return _controller.placeholderLabel;
+}
+
+- (UILabel *)leadingUnderlineLabel {
+  return _controller.leadingUnderlineLabel;
 }
 
 - (UIColor *)textColor {
@@ -169,13 +149,7 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 }
 
 - (UILabel *)trailingUnderlineLabel {
-  if (!_trailingUnderlineLabel) {
-    _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _trailingUnderlineLabel.textAlignment = NSTextAlignmentRight;
-    _trailingUnderlineLabel.font = [MDCTypography captionFont];
-  }
-
-  return _trailingUnderlineLabel;
+  return _controller.trailingUnderlineLabel;
 }
 
 - (UIColor *)underlineColor {
@@ -185,6 +159,15 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 - (void)setUnderlineColor:(UIColor *)underlineColor {
   _controller.underlineColor = underlineColor;
 }
+
+- (CGFloat)underlineWidth {
+  return _controller.underlineWidth;
+}
+
+- (void)setUnderlineWidth:(CGFloat)underlineWidth {
+  _controller.underlineWidth = underlineWidth;
+}
+
 
 #pragma mark - UITextField Property Overrides
 
@@ -216,6 +199,33 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   [super setEnabled:enabled];
   _controller.enabled = enabled;
 }
+
+- (UIButton *)internalClearButton {
+  if (_internalClearButton != nil) {
+    return _internalClearButton;
+  }
+  Class targetClass = [UIButton class];
+  // Loop through child views until we find the UIButton that is used to display the clear button
+  // internally in UITextField.
+  NSMutableArray *toVisit = [NSMutableArray arrayWithArray:self.subviews];
+  while ([toVisit count]) {
+    UIView *view = [toVisit objectAtIndex:0];
+    if ([view isKindOfClass:targetClass]) {
+      UIButton *button = (UIButton *)view;
+      // In case other buttons exist, do our best to ensure this is the clear button
+      if (CGSizeEqualToSize(button.imageView.image.size, MDCClearButtonImageDefaultSize)) {
+        _internalClearButton = button;
+        return _internalClearButton;
+      }
+    }
+    [toVisit addObjectsFromArray:view.subviews];
+    [toVisit removeObjectAtIndex:0];
+  }
+  return nil;
+}
+
+
+
 
 #pragma mark - UITextField Positioning Overrides
 
@@ -255,16 +265,16 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   // Full width text fields have their clear button in the horizontal margin, but because the
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
-  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
-    // Full width text boxes have their character count on the text input line
-    if (self.characterLimit) {
-      editingRect.size.width -= _controller.characterLimitViewSize.width;
-      if ([_controller shouldLayoutForRTL]) {
-        editingRect.origin.x += _controller.characterLimitViewSize.width;
-      }
-    }
-  }
+//  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+//    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
+//    // Full width text boxes have their character count on the text input line
+//    if (self.characterLimit) {
+//      editingRect.size.width -= _controller.characterLimitViewSize.width;
+//      if ([_controller shouldLayoutForRTL]) {
+//        editingRect.origin.x += _controller.characterLimitViewSize.width;
+//      }
+//    }
+//  }
   return editingRect;
 }
 
@@ -294,13 +304,13 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   }
 
   // Full width text boxes have their character count on the text input line
-  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && self.characterLimit) {
-    if ([_controller shouldLayoutForRTL]) {
-      clearButtonRect.origin.x += _controller.characterLimitViewSize.width;
-    } else {
-      clearButtonRect.origin.x -= _controller.characterLimitViewSize.width;
-    }
-  }
+//  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && self.characterLimit) {
+//    if ([_controller shouldLayoutForRTL]) {
+//      clearButtonRect.origin.x += _controller.characterLimitViewSize.width;
+//    } else {
+//      clearButtonRect.origin.x -= _controller.characterLimitViewSize.width;
+//    }
+//  }
 
   // [super clearButtonRectForBounds:] is rect integral centered. Instead, we need to center to the
   // text without calling textRectForBounds (which will cause a cycle).

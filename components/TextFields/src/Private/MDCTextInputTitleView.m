@@ -19,6 +19,12 @@
 #import "MDCTextInput+Internal.h"
 #import "MaterialPalettes.h"
 
+
+static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
+  return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
+}
+
+
 @implementation MDCTextInputTitleView
 
 - (instancetype)initWithFrame:(CGRect)frame {

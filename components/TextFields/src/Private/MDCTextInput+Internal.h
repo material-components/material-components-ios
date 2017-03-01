@@ -28,9 +28,6 @@ static inline UIColor *MDCTextInputCursorColor() {
   return [MDCPalette indigoPalette].tint500;
 }
 
-static inline UIColor *MDCTextInputUnderlineColor() {
-  return [UIColor lightGrayColor];
-}
 
 
 static inline UIColor *MDCTextInputTextColor() {

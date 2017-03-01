@@ -34,6 +34,7 @@
 
 @implementation MDCTextView
 
+
 - (instancetype)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
   self = [super initWithFrame:frame textContainer:textContainer];
   if (self) {
@@ -93,79 +94,37 @@
 
 #pragma mark - Properties Implementation
 
-- (UIColor *)underlineColor {
-  return _controller.underlineColor;
+
+- (UILabel *)leadingUnderlineLabel {
+  return _controller.leadingUnderlineLabel;
 }
 
-- (void)setUnderlineColor:(UIColor *)underlineColor {
-  _controller.underlineColor = underlineColor;
-}
-
-- (NSString *)underlineAccessibilityText {
-  return _controller.underlineAccessibilityText;
-}
-
-- (void)setUnderlineAccessibilityText:(NSString *)underlineAccessibilityText {
-  _controller.underlineAccessibilityText = underlineAccessibilityText;
-}
-
-- (NSString *)underlineText {
-  return _controller.underlineText;
-}
-
-- (void)setUnderlineText:(NSString *)underlineText {
-  _controller.underlineText = underlineText;
-}
-
-- (UIColor *)underlineTextColor {
-  return _controller.underlineTextColor;
-}
-
-- (void)setUnderlineTextColor:(UIColor *)underlineTextColor {
-  _controller.underlineTextColor = underlineTextColor;
-}
-
-- (UIFont *)underlineTextFont {
-  return _controller.underlineTextFont;
-}
-
-- (void)setUnderlineTextFont:(UIFont *)underlineTextFont {
-  _controller.underlineTextFont = underlineTextFont;
-}
-
-- (CGFloat)underlineWidth {
-  return _controller.underlineWidth;
-}
-
-- (void)setUnderlineWidth:(CGFloat)underlineWidth {
-  _controller.underlineWidth = underlineWidth;
-}
 
 - (NSString *)placeholder {
-  return _controller.placeholder;
+  return self.placeholderLabel.text;
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
-  _controller.placeholder = placeholder;
+  self.placeholderLabel.text = placeholder;
 }
 
 - (UIFont *)placeholderFont {
-  return _controller.placeholderFont;
+  return self.placeholderLabel.font;
 }
 
 - (void)setPlaceholderFont:(UIFont *)placeholderFont {
-  _controller.placeholderFont = placeholderFont;
+  self.placeholderLabel.font = placeholderFont;
 }
 
-- (MDCTextInputPresentationStyle)presentationStyle {
-  return _controller.presentationStyle;
-}
-
-- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
-  if (_controller.presentationStyle != presentationStyle) {
-    _controller.presentationStyle = presentationStyle;
-    self.textContainerInset = UIEdgeInsetsZero;
-  }
+//
+//- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
+//  if (_controller.presentationStyle != presentationStyle) {
+//    _controller.presentationStyle = presentationStyle;
+//    self.textContainerInset = UIEdgeInsetsZero;
+//  }
+//}
+- (UILabel *)placeholderLabel {
+  return _controller.placeholderLabel;
 }
 
 - (UIColor *)textColor {
@@ -177,69 +136,37 @@
   _controller.textColor = textColor;
 }
 
-- (UIColor *)floatingPlaceholderColor {
-  return _controller.floatingPlaceholderColor;
-}
-
-- (void)setFloatingPlaceholderColor:(UIColor *)floatingPlaceholderColor {
-  _controller.floatingPlaceholderColor = floatingPlaceholderColor;
-}
-
-- (CGFloat)floatingPlaceholderScale {
-  return _controller.floatingPlaceholderScale;
-}
-
-- (void)setFloatingPlaceholderScale:(CGFloat)floatingPlaceholderScale {
-  _controller.floatingPlaceholderScale = floatingPlaceholderScale;
-}
-
-- (UIColor *)inlinePlaceholderColor {
-  return _controller.inlinePlaceholderColor;
-}
-
-- (void)setInlinePlaceholderColor:(UIColor *)inlinePlaceholderColor {
-  _controller.inlinePlaceholderColor = inlinePlaceholderColor;
-}
-
-- (NSUInteger)characterLimit {
-  return _controller.characterLimit;
-}
-
-- (void)setCharacterLimit:(NSUInteger)characterLimit {
-  if (_controller.characterLimit != characterLimit) {
-    _controller.characterLimit = characterLimit;
-    self.textContainerInset = UIEdgeInsetsZero;
-  }
-}
-
-- (id<MDCTextInputCharacterCounter>)characterCounter {
-  return _controller.characterCounter;
-}
-
-- (void)setCharacterCounter:(id<MDCTextInputCharacterCounter>)characterCounter {
-  _controller.characterCounter = characterCounter;
-}
-- (UIColor *)characterLimitColor {
-  return _controller.characterLimitColor;
-}
-
-- (void)setCharacterLimitColor:(UIColor *)characterLimitColor {
-  _controller.characterLimitColor = characterLimitColor;
-}
-
-- (UIFont *)characterLimitFont {
-  return _controller.characterLimitFont;
-}
-
-- (void)setCharacterLimitFont:(UIFont *)characterLimitFont {
-  _controller.characterLimitFont = characterLimitFont;
-}
+//- (void)setCharacterLimit:(NSUInteger)characterLimit {
+//  if (_controller.characterLimit != characterLimit) {
+//    _controller.characterLimit = characterLimit;
+//    self.textContainerInset = UIEdgeInsetsZero;
+//  }
+//}
 
 // Always set the text container insets based upon style of the text field.
 - (void)setTextContainerInset:(UIEdgeInsets)textContainerInset {
   [super setTextContainerInset:[_controller textContainerInset]];
 }
 
+- (UILabel *)trailingUnderlineLabel {
+  return _controller.trailingUnderlineLabel;
+}
+
+- (UIColor *)underlineColor {
+  return _controller.underlineColor;
+}
+
+- (void)setUnderlineColor:(UIColor *)underlineColor {
+  _controller.underlineColor = underlineColor;
+}
+
+- (CGFloat)underlineWidth {
+  return _controller.underlineWidth;
+}
+
+- (void)setUnderlineWidth:(CGFloat)underlineWidth {
+  _controller.underlineWidth = underlineWidth;
+}
 #pragma mark - MDCControlledTextField
 
 - (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
