@@ -278,14 +278,7 @@
             inkViewAtTouchLocation:(CGPoint)location {
   NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
   UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-  MDCInkView *ink = nil;
-  if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
-    MDCCollectionViewCell *inkCell = (MDCCollectionViewCell *)cell;
-    if ([inkCell respondsToSelector:@selector(inkView)]) {
-      // Set cell ink.
-      ink = [cell performSelector:@selector(inkView)];
-    }
-  }
+  MDCInkView *ink = [cell performSelector:@selector(inkView)];
 
   if ([_styler.delegate
           respondsToSelector:@selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
@@ -345,11 +338,18 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  // Start cell ink show animation.
-  MDCInkView *inkView =
-      [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
+
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
+
+  // Start cell ink show animation.
+  MDCInkView *inkView;
+  if ([cell respondsToSelector:@selector(inkView)]) {
+    inkView =
+        [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
+  } else {
+    return;
+  }
 
   // Update ink color if necessary.
   if ([_styler.delegate respondsToSelector:@selector(collectionView:inkColorAtIndexPath:)]) {
