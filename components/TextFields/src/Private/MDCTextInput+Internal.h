@@ -32,17 +32,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
 
-static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
-  return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
-}
-
-static inline UIColor *MDCTextInputTextErrorColor() {
-  // Material Design color palette red at tint 500.
-  return [UIColor colorWithRed:211.0f / 255.0f
-                         green:67.0f / 255.0f
-                          blue:54.0f / 255.0f
-                         alpha:[MDCTypography body1FontOpacity]];
-}
 
 static inline UIColor *MDCTextInputTextColor() {
   return [UIColor colorWithWhite:0 alpha:[MDCTypography body1FontOpacity]];

@@ -17,7 +17,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCTextInput;
+#pragma mark - Unapproved API
+
+@protocol MDCTextInputCharacterCounter;
+
+#pragma mark - Approved API
+
+@protocol MDCTextInput;
 
 /**
  Presentation styles for a text input. The style determines specific aspects of the text
@@ -47,10 +53,10 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  underline color, underline text color.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
-@interface MDCTextInputBehavior : NSObject
+@interface MDCTextInputBehavior : NSObject <NSCoding, NSCopying>
 
 /** The text input the behavior is managing. */
-@property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
+@property(nonatomic, nullable, weak) UIView <MDCTextInput> *textInput NS_SWIFT_NAME(input);
 
 /**
  The color used to denote error state in the underline, the errorText's label, the plceholder and
@@ -148,5 +154,11 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 - (void)setErrorText:(nullable NSString *)errorText
     errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue
     NS_SWIFT_NAME(set(errorText:errorAccessibilityValue:));
+
+#pragma mark - Unapproved API
+
+@property(nonatomic, nullable, weak) id <MDCTextInputCharacterCounter> characterCounter;
+
+#pragma mark - Approved API
 
 @end

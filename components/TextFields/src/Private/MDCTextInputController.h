@@ -55,7 +55,7 @@
 - (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput> *_Nonnull)textInput
                               isMultiline:(BOOL)isMultiline NS_DESIGNATED_INITIALIZER;
 
-/** @deprecated Please use initWithTextField:isMultiline:. */
+/** Please use initWithTextField:isMultiline:. */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /** Called by the controlled text field to notify the controller that it's text was set. */

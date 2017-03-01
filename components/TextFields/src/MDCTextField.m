@@ -36,6 +36,11 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 @dynamic borderStyle;
 
 @synthesize internalClearButton = _internalClearButton;
+@synthesize leadingUnderlineLabel = _leadingUnderlineLabel;
+@synthesize placeholderLabel = _placeholderLabel;
+@synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
+@synthesize underlineColor = _underlineColor;
+@synthesize underlineWidth = _underlineWidth;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -123,75 +128,11 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 
 #pragma mark - Properties Implementation
 
-- (UIColor *)underlineColor {
-  return _controller.underlineColor;
-}
-
-- (void)setUnderlineColor:(UIColor *)underlineColor {
-  _controller.underlineColor = underlineColor;
-}
-
-- (id<MDCTextInputCharacterCounter>)characterCounter {
-  return _controller.characterCounter;
-}
-
-- (void)setCharacterCounter:(id<MDCTextInputCharacterCounter>)characterCounter {
-  _controller.characterCounter = characterCounter;
-}
-
-- (NSUInteger)characterLimit {
-  return _controller.characterLimit;
-}
-
-- (void)setCharacterLimit:(NSUInteger)characterLimit {
-  _controller.characterLimit = characterLimit;
-}
-
-- (UIColor *)characterLimitColor {
-  return _controller.characterLimitColor;
-}
-
-- (void)setCharacterLimitColor:(UIColor *)characterLimitColor {
-  _controller.characterLimitColor = characterLimitColor;
-}
-
-- (UIFont *)characterLimitFont {
-  return _controller.characterLimitFont;
-}
-
-- (void)setCharacterLimitFont:(UIFont *)characterLimitFont {
-  _controller.characterLimitFont = characterLimitFont;
-}
-
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
   if (_clearButtonColor != clearButtonColor) {
     _clearButtonColor = clearButtonColor;
     self.clearButtonImage.fillColor = _clearButtonColor.CGColor;
   }
-}
-
-- (UIColor *)floatingPlaceholderColor {
-  return _controller.floatingPlaceholderColor;
-}
-
-- (void)setFloatingPlaceholderColor:(UIColor *)floatingPlaceholderColor {
-  _controller.floatingPlaceholderColor = floatingPlaceholderColor;
-}
-
-- (CGFloat)floatingPlaceholderScale {
-  return _controller.floatingPlaceholderScale;
-}
-
-- (void)setFloatingPlaceholderScale:(CGFloat)floatingPlaceholderScale {
-  _controller.floatingPlaceholderScale = floatingPlaceholderScale;
-}
-
-- (UIColor *)inlinePlaceholderColor {
-  return _controller.inlinePlaceholderColor;
-}
-
-- (void)setInlinePlaceholderColor:(UIColor *)inlinePlaceholderColor {
-  _controller.inlinePlaceholderColor = inlinePlaceholderColor;
 }
 
 - (UIButton *)internalClearButton {
@@ -218,22 +159,6 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   return nil;
 }
 
-- (UIFont *)placeholderFont {
-  return _controller.placeholderFont;
-}
-
-- (void)setPlaceholderFont:(UIFont *)placeholderFont {
-  _controller.placeholderFont = placeholderFont;
-}
-
-- (MDCTextInputPresentationStyle)presentationStyle {
-  return _controller.presentationStyle;
-}
-
-- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
-  _controller.presentationStyle = presentationStyle;
-}
-
 - (UIColor *)textColor {
   return _controller.textColor;
 }
@@ -243,44 +168,22 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   _controller.textColor = textColor;
 }
 
-- (NSString *)underlineAccessibilityText {
-  return _controller.underlineAccessibilityText;
+- (UILabel *)trailingUnderlineLabel {
+  if (!_trailingUnderlineLabel) {
+    _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _trailingUnderlineLabel.textAlignment = NSTextAlignmentRight;
+    _trailingUnderlineLabel.font = [MDCTypography captionFont];
+  }
+
+  return _trailingUnderlineLabel;
 }
 
-- (void)setUnderlineAccessibilityText:(NSString *)underlineAccessibilityText {
-  _controller.underlineAccessibilityText = underlineAccessibilityText;
+- (UIColor *)underlineColor {
+  return _controller.underlineColor;
 }
 
-- (NSString *)underlineText {
-  return _controller.underlineText;
-}
-
-- (void)setUnderlineText:(NSString *)underlineText {
-  _controller.underlineText = underlineText;
-}
-
-- (UIColor *)underlineTextColor {
-  return _controller.underlineTextColor;
-}
-
-- (void)setUnderlineTextColor:(UIColor *)underlineTextColor {
-  _controller.underlineTextColor = underlineTextColor;
-}
-
-- (UIFont *)underlineTextFont {
-  return _controller.underlineTextFont;
-}
-
-- (void)setUnderlineTextFont:(UIFont *)underlineTextFont {
-  _controller.underlineTextFont = underlineTextFont;
-}
-
-- (CGFloat)underlineWidth {
-  return _controller.underlineWidth;
-}
-
-- (void)setUnderlineWidth:(CGFloat)underlineWidth {
-  _controller.underlineWidth = underlineWidth;
+- (void)setUnderlineColor:(UIColor *)underlineColor {
+  _controller.underlineColor = underlineColor;
 }
 
 #pragma mark - UITextField Property Overrides
@@ -291,17 +194,17 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 }
 
 - (NSString *)placeholder {
-  return _controller.placeholder;
+  return self.placeholderLabel.text;
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
   [super setPlaceholder:placeholder];
-  _controller.placeholder = placeholder;
+  self.placeholderLabel.text = placeholder;
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   [super setAttributedPlaceholder:attributedPlaceholder];
-  _controller.placeholder = attributedPlaceholder.string;
+  self.placeholderLabel.text = attributedPlaceholder.string;
 }
 
 - (void)setFont:(UIFont *)font {
