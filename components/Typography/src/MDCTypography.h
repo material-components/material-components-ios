@@ -42,6 +42,10 @@
 /** Asks the receiver to return an italic font. */
 - (nonnull UIFont *)italicFontOfSize:(CGFloat)fontSize;
 
+@optional
+/** Asks the receiver to decide if a font is large for accessibilty purposes. */
+- (BOOL)isLargeForContrastRatios:(nonnull UIFont *)font;
+
 @end
 
 /**
