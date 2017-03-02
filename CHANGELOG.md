@@ -1,3 +1,55 @@
+# 22.0.0
+
+## API diffs
+
+### Dialogs
+
+#### Changes
+
+* [Add Dynamic Type support to Alert controller (#1213)](https://github.com/material-components/material-components-ios/commit/9f92b161db6441dfa8b4eacf7dff6d8aced37509) (ianegordon)
+
+### Typography
+
+#### Changes
+
+* [Added bold and italics to the system fontloader and MDCTypographyFontLoader protocol (#1225)](https://github.com/material-components/material-components-ios/commit/975680a9cb34db366f4d95e62a105d7a0300b972) (Randall Li)
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Fix analyzer warnings (#1229)](https://github.com/material-components/material-components-ios/commit/42084cb3b8fa4c9b7deef0120231ec1063a5397a) (ianegordon)
+
+### Buttons
+
+#### Changes
+
+* [Dynamic Type resizing fix (#1213)](https://github.com/material-components/material-components-ios/commit/9f92b161db6441dfa8b4eacf7dff6d8aced37509) (ianegordon)
+
+### Dialogs
+
+#### Changes
+
+* [Add Dynamic Type support to Alert controller (#1213)](https://github.com/material-components/material-components-ios/commit/9f92b161db6441dfa8b4eacf7dff6d8aced37509) (ianegordon)
+
+### Snackbar
+
+#### Changes
+
+* [fix case of UIKit.h (#1223)](https://github.com/material-components/material-components-ios/commit/3f2968b54c738c747c6b9a02ab614d7853b0c406) (yoshisatoyanagisawa)
+
+### Typography
+
+#### Changes
+
+* [Add warning about custom fonts and Dynamic Type (#1224)](https://github.com/material-components/material-components-ios/commit/9bea2218a6a6fa7d3eabf4788e4a49ff52487259) (ianegordon)
+* [Added bold and italics to the system fontloader and MDCTypographyFontLoader protocol (#1225)](https://github.com/material-components/material-components-ios/commit/975680a9cb34db366f4d95e62a105d7a0300b972) (Randall Li)
+* [Fix analyzer warnings (#1229)](https://github.com/material-components/material-components-ios/commit/42084cb3b8fa4c9b7deef0120231ec1063a5397a) (ianegordon)
+* [switch it to a objc test (#1226)](https://github.com/material-components/material-components-ios/commit/64852237037ccd68af02b84e03f085392829ec5e) (Randall Li)
+
+
 # 21.3.0
 
 ## API diffs

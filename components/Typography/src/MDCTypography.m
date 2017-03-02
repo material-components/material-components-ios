@@ -145,16 +145,36 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 @implementation MDCSystemFontLoader
 
+- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
+  }
+  return [UIFont systemFontOfSize:fontSize];
+}
+
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+  }
   return [UIFont systemFontOfSize:fontSize];
 }
 
 - (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
+  }
+  return [UIFont systemFontOfSize:fontSize];
+}
+
+- (UIFont *)boldFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightBold];
+  }
   return [UIFont boldSystemFontOfSize:fontSize];
 }
 
-- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
-  return [UIFont systemFontOfSize:fontSize];
+- (UIFont *)italicFontOfSize:(CGFloat)fontSize {
+  return [UIFont italicSystemFontOfSize:fontSize];
 }
 
 @end

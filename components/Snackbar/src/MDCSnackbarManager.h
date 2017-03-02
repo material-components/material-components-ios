@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKIt.h>
+#import <UIKit/UIKit.h>
 
 @class MDCSnackbarMessage;
 @protocol MDCSnackbarSuspensionToken;
