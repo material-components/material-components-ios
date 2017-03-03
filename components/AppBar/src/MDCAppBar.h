@@ -21,24 +21,27 @@
 @class MDCAppBar;
 
 /**
- The MDCAppBarAccessibilityEnforcer class creates an external object with which to work on an
- instance of a Material App Bar to activate and esnure accessibility on its title and buttons.
+ The MDCAppBarTextColorAccessibilityMutator class creates an external object with which to work on 
+ an instance of a Material App Bar to activate and ensure accessibility on its title and buttons.
 
  ### Dependencies
 
- Material AppBarAccessibilityEnforcer depends on the AppBar material component and
+ Material AppBarTextColorAccessibilityMutator depends on the AppBar material component and
  MDFTextAccessibility Framework.
  */
 
-@interface MDCAppBarAccessibilityEnforcer : NSObject
+@interface MDCAppBarTextColorAccessibilityMutator : NSObject
 
+/**
+ Initializes and returns a newly created accessibility mutator
+ */
 - (nonnull instancetype)init;
 
 /**
  Mutates title text color and navigation items' tint colors based on background color of
  app bar's navigation bar or header view background color.
  */
-- (void)enforceFontColorAccessibility:(nonnull MDCAppBar *)appBar;
+- (void)mutate:(nonnull MDCAppBar *)appBar;
 
 @end
 

@@ -50,8 +50,9 @@
   UIColor *headerColor = [UIColor colorWithRed:0.01 green:0.67 blue:0.96 alpha:1.0];
   self.appBar.headerViewController.headerView.backgroundColor = headerColor;
 
-  MDCAppBarAccessibilityEnforcer *enforcer = [[MDCAppBarAccessibilityEnforcer alloc] init];
-  [enforcer enforceFontColorAccessibility:_appBar];
+  MDCAppBarTextColorAccessibilityMutator *mutator =
+      [[MDCAppBarTextColorAccessibilityMutator alloc] init];
+  [mutator mutate:_appBar];
 }
 
 - (void)viewDidLoad {

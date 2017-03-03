@@ -38,9 +38,9 @@
                                       blue:(CGFloat)0xF4 / (CGFloat)255
                                      alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    MDCAppBarTextColorAccessibilityMutator *mutator =
+        [[MDCAppBarTextColorAccessibilityMutator alloc] init];
+    [mutator mutate:_appBar];
 
     // Set presentation style
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -227,6 +227,9 @@
                                       blue:(CGFloat)0xF4 / (CGFloat)255
                                      alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
+    MDCAppBarTextColorAccessibilityMutator *mutator =
+        [[MDCAppBarTextColorAccessibilityMutator alloc] init];
+    [mutator mutate:_appBar];
   }
   return self;
 }

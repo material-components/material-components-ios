@@ -103,8 +103,9 @@
                                       blue:(CGFloat)0xF4 / (CGFloat)255
                                      alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
-    MDCAppBarAccessibilityEnforcer *enforcer = [[MDCAppBarAccessibilityEnforcer alloc] init];
-    [enforcer enforceFontColorAccessibility:_appBar];
+    MDCAppBarTextColorAccessibilityMutator *mutator =
+        [[MDCAppBarTextColorAccessibilityMutator alloc] init];
+    [mutator mutate:_appBar];
   }
   return self;
 }

@@ -33,14 +33,14 @@ static NSString *const MDCAppBarNavigationBarKey = @"MDCAppBarNavigationBarKey";
 static NSString *const MDCAppBarHeaderStackViewKey = @"MDCAppBarHeaderStackViewKey";
 static const CGFloat kStatusBarHeight = 20;
 
-@implementation MDCAppBarAccessibilityEnforcer
+@implementation MDCAppBarTextColorAccessibilityMutator
 
 - (nonnull instancetype)init {
   self = [super init];
   return self;
 }
 
-- (void)enforceFontColorAccessibility:(nonnull MDCAppBar *)appBar {
+- (void)mutate:(nonnull MDCAppBar *)appBar {
   // Determine what is the appropriate background color
   // Because navigation bar renders above headerview, it takes presedence
   UIColor *backgroundColor = appBar.navigationBar.backgroundColor ?:

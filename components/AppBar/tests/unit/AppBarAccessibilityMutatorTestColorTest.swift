@@ -18,19 +18,19 @@ import XCTest
 import MaterialComponents
 import MDFTextAccessibility
 
-// Tests confirming that the App Bar Accessibility Enforcer correctly changes title font color and
+// Tests confirming that the App Bar Accessibility Mutator correctly changes title font color and
 // tint color on App Bar's |navigationBar| to meet accepted accessibility values defined by
 // MDFTextAccessibility
 
-class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
+class AppBarAccessibilityMutatorTestColorTest: XCTestCase {
 
   var appBar: MDCAppBar!
-  var enforcer: MDCAppBarAccessibilityEnforcer!
+  var mutator: MDCAppBarTextColorAccessibilityMutator!
 
   override func setUp() {
     super.setUp()
     appBar = MDCAppBar()
-    enforcer = MDCAppBarAccessibilityEnforcer()
+    mutator = MDCAppBarTextColorAccessibilityMutator()
   }
 
   func testDarkNavigationBarBackground() {
@@ -38,7 +38,7 @@ class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
     appBar.navigationBar.backgroundColor = UIColor.black
 
     // When
-    enforcer.enforceFontColorAccessibility(appBar)
+    mutator.mutate(appBar)
 
     // Then
     let fontColor =
@@ -57,7 +57,7 @@ class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
     appBar.navigationBar.backgroundColor = UIColor.white
 
     // When
-    enforcer.enforceFontColorAccessibility(appBar)
+    mutator.mutate(appBar)
 
     // Then
     let fontColor =
@@ -75,7 +75,7 @@ class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
     appBar.headerViewController.headerView.backgroundColor = UIColor.black
 
     // When
-    enforcer.enforceFontColorAccessibility(appBar)
+    mutator.mutate(appBar)
 
     // Then
     let fontColor =
@@ -93,7 +93,7 @@ class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
     appBar.headerViewController.headerView.backgroundColor = UIColor.white
 
     // When
-    enforcer.enforceFontColorAccessibility(appBar)
+    mutator.mutate(appBar)
 
     // Then
     let fontColor =
@@ -111,7 +111,7 @@ class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
     let defaultBackgroundColor = appBar.headerViewController.headerView.backgroundColor!
 
     // When
-    enforcer.enforceFontColorAccessibility(appBar)
+    mutator.mutate(appBar)
 
     // Then
     let fontColor =
@@ -130,7 +130,7 @@ class AppBarAccessibilityEnforcerTestColorTest: XCTestCase {
     appBar.navigationBar.backgroundColor = UIColor.black
 
     // When
-    enforcer.enforceFontColorAccessibility(appBar)
+    mutator.mutate(appBar)
 
     // Then
     let fontColor =
