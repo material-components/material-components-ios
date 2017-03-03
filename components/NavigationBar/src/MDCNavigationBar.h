@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
 
 /**
   The MDCNavigationBarTextColorAccessibilityMutator class creates an external object with which to 
-  work on an instance of a Material Navigation Bar to activate and esnure accessibility on its title
+  work on an instance of a Material Navigation Bar to activate and ensure accessibility on its title
   and buttons.
 
   ### Dependencies
@@ -59,6 +59,9 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
 
 @interface MDCNavigationBarTextColorAccessibilityMutator : NSObject
 
+/**
+ Initializes and returns a newly created accessibility mutator
+ */
 - (nonnull instancetype)init;
 
 /**
