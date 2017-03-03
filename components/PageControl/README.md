@@ -1,7 +1,7 @@
 # Page Control
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Page Control](docs/assets/page_control.png)](docs/assets/page_control.mp4)
+<a alt="Page Control"><img src="docs/assets/page_control.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/page_control.mp4" autoplay loop></video></div>{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
@@ -9,14 +9,6 @@ influenced by Material Design specifications for animation and layout. The API m
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
 <!--{: .intro }-->
-
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/PageControl/apidocs/Classes/MDCPageControl.html">MDCPageControl</a></li>
-</ul>
-
 
 - - -
 

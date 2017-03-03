@@ -25,6 +25,6 @@ if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   exit 1
 fi
 
-git diff --name-only origin/master..release-candidate components/ \
+git diff --name-only origin/stable..release-candidate components/ \
   | grep -i -e "components\/.*\/src\/.*\.h" \
   | grep -v -i -e "\/private\/"

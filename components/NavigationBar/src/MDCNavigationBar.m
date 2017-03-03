@@ -19,6 +19,7 @@
 #import "MaterialButtonBar.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
+#import "MDFTextAccessibility.h"
 
 #import <objc/runtime.h>
 
@@ -87,6 +88,35 @@ static NSString *const MDCNavigationBarTrailingBarItemsKey = @"MDCNavigationBarT
 static NSString *const MDCNavigationBarLeadingButtonSupplementsBackButtonKey =
     @"MDCNavigationBarLeadingButtonSupplementsBackButtonKey";
 static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTitleAlignmentKey";
+
+@implementation MDCNavigationBarTextColorAccessibilityMutator
+
+- (nonnull instancetype)init {
+  self = [super init];
+  return self;
+}
+
+- (void)mutate:(MDCNavigationBar *)navBar {
+  // Determine what is the appropriate background color
+  UIColor *backgroundColor = navBar.backgroundColor;
+  if (!backgroundColor) {
+    return;
+  }
+
+  // Update title label color based on navigationBar backgroundColor
+  NSMutableDictionary *textAttr =
+      [NSMutableDictionary dictionaryWithDictionary:[navBar titleTextAttributes]];
+  UIColor *textColor = [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                                        targetTextAlpha:1.0
+                                                  font:[textAttr objectForKey:NSFontAttributeName]];
+  [textAttr setObject:textColor forKey:NSForegroundColorAttributeName];
+  [navBar setTitleTextAttributes:textAttr];
+
+  // Update button's tint color based on navigationBar backgroundColor
+  navBar.tintColor = textColor;
+}
+
+@end
 
 /**
  Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
@@ -187,7 +217,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     }
 
     if ([aDecoder containsValueForKey:MDCNavigationBarTitleAlignmentKey]) {
-      self.titleAlignment = [aDecoder decodeBoolForKey:MDCNavigationBarTitleAlignmentKey];
+      self.titleAlignment = [aDecoder decodeIntegerForKey:MDCNavigationBarTitleAlignmentKey];
     }
   }
   return self;
@@ -269,10 +299,9 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                                                  self.mdc_effectiveUserInterfaceLayoutDirection);
 
   CGSize trailingButtonBarSize = [_trailingButtonBar sizeThatFits:self.bounds.size];
-  CGRect trailingButtonBarFrame = CGRectMake(self.bounds.size.width - trailingButtonBarSize.width,
-                                             self.bounds.origin.y,
-                                             trailingButtonBarSize.width,
-                                             trailingButtonBarSize.height);
+  CGRect trailingButtonBarFrame =
+      CGRectMake(self.bounds.size.width - trailingButtonBarSize.width, self.bounds.origin.y,
+                 trailingButtonBarSize.width, trailingButtonBarSize.height);
   _trailingButtonBar.frame = MDCRectFlippedForRTL(trailingButtonBarFrame, self.bounds.size.width,
                                                   self.mdc_effectiveUserInterfaceLayoutDirection);
 
@@ -292,7 +321,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGSize titleSize = [_titleLabel.text boundingRectWithSize:textFrame.size
                                                     options:NSStringDrawingTruncatesLastVisibleLine
                                                  attributes:attributes
-                                                    context:NULL].size;
+                                                    context:NULL]
+                         .size;
   titleSize.width = Ceil(titleSize.width);
   titleSize.height = Ceil(titleSize.height);
   CGRect titleFrame = CGRectMake(textFrame.origin.x, 0, titleSize.width, titleSize.height);
@@ -302,9 +332,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGRect alignedFrame = [self mdc_frameAlignedVertically:titleFrame
                                             withinBounds:textFrame
                                                alignment:titleVerticalAlignment];
-  alignedFrame = [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
-  _titleLabel.frame = MDCRectFlippedForRTL(alignedFrame, self.bounds.size.width,
-                                           self.mdc_effectiveUserInterfaceLayoutDirection);
+  _titleLabel.frame =
+      [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
   self.titleView.frame = textFrame;
 
   // Button and title label alignment
@@ -365,7 +394,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   switch (textAlignment) {
     default:
       NSAssert(NO, @"textAlignment not supported: %li", (long)textAlignment);
-      // Intentional fall through logic
+    // Intentional fall through logic
     case NSTextAlignmentNatural:
     case NSTextAlignmentLeft:
       return MDCNavigationBarTitleAlignmentLeading;
@@ -424,22 +453,16 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                            alignment:(UIControlContentVerticalAlignment)alignment {
   switch (alignment) {
     case UIControlContentVerticalAlignmentBottom:
-      return CGRectMake(frame.origin.x, CGRectGetMaxY(bounds) - frame.size.height,
-                        frame.size.width, frame.size.height);
+      return CGRectMake(frame.origin.x, CGRectGetMaxY(bounds) - frame.size.height, frame.size.width,
+                        frame.size.height);
 
     case UIControlContentVerticalAlignmentCenter: {
       CGFloat centeredY = Floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
-      return CGRectMake(frame.origin.x,
-                        centeredY,
-                        frame.size.width,
-                        frame.size.height);
+      return CGRectMake(frame.origin.x, centeredY, frame.size.width, frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentTop: {
-      return CGRectMake(frame.origin.x,
-                        bounds.origin.y,
-                        frame.size.width,
-                        frame.size.height);
+      return CGRectMake(frame.origin.x, bounds.origin.y, frame.size.width, frame.size.height);
     }
 
     case UIControlContentVerticalAlignmentFill: {
@@ -452,16 +475,11 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                              alignment:(MDCNavigationBarTitleAlignment)alignment {
   switch (alignment) {
     case MDCNavigationBarTitleAlignmentCenter:
-      return CGRectMake(CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2,
-                        frame.origin.y,
-                        frame.size.width,
-                        frame.size.height);
+      return CGRectMake(CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2, frame.origin.y,
+                        frame.size.width, frame.size.height);
 
     case MDCNavigationBarTitleAlignmentLeading:
-      return CGRectMake(frame.origin.x,
-                        frame.origin.y,
-                        frame.size.width,
-                        frame.size.height);
+      return CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
   }
 }
 

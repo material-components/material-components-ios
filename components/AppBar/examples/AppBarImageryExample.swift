@@ -45,7 +45,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     // implement -preferredStatusBarStyle.
     headerView.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.white ]
+      [ NSForegroundColorAttributeName: UIColor.white ]
 
     // Allow the header to show more of the image.
     headerView.maximumHeight = 200
@@ -56,7 +56,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     appBar.addSubviewsToParent()
   }
 
-  override var preferredStatusBarStyle : UIStatusBarStyle {
+  override var preferredStatusBarStyle: UIStatusBarStyle {
     // Ensure that our status bar is white.
     return .lightContent
   }

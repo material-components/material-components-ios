@@ -1,7 +1,7 @@
 # Typography
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Typography](docs/assets/typography.png)](docs/assets/typography.mp4)
+<a alt="Typography"><img src="docs/assets/typography.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/typography.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Typography component provides methods for displaying text using the type sizes and opacities
@@ -12,14 +12,6 @@ from the Material Design specifications.
 
 <ul class="icon-list">
 <li class="icon-link"><a href="https://www.google.com/design/spec/style/typography.html">Typography</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Classes/MDCTypography.html">MDCTypography</a></li>
-<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FontDiskLoader/apidocs/Classes.html#/c:objc(cs)MDCSystemFontLoader">MDCSystemFontLoader</a></li>
-<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Typography/apidocs/Protocols/MDCTypographyFontLoading.html">MDCTypographyFontLoading</a></li>
 </ul>
 
 ## Installation
@@ -111,8 +103,6 @@ settings in the Material Design specifications.
 #### Swift
 
 ~~~ swift
-import MaterialComponents.MaterialTypography
-
 let label = UILabel()
 label.text = "This is a title"
 label.font = MDCTypography.titleFont()
@@ -127,8 +117,6 @@ self.view.addSubview(label)
 #### Objective C
 
 ~~~ objc
-#import "MaterialTypography.h"
-
 UILabel *label = [[UILabel alloc] init];
 label.text = @"This is a title";
 label.font = [MDCTypography titleFont];
@@ -138,7 +126,6 @@ label.alpha = [MDCTypography titleFontOpacity];
 // as all constraints are valid.
 [label sizeToFit];
 [self.view addSubview:label];
-
 ~~~
 <!--</div>-->
 
@@ -148,8 +135,6 @@ label.alpha = [MDCTypography titleFontOpacity];
 #### Swift
 
 ~~~ swift
-import MaterialComponents.MaterialTypography
-
 let label = UILabel()
 label.text = "Display 1"
 label.font = MDCTypography.display1Font()
@@ -164,8 +149,6 @@ self.view.addSubview(label)
 #### Objective
 
 ~~~ objc
-#import "MaterialTypography.h"
-
 UILabel *label = [[UILabel alloc] init];
 label.text = @"Display 1";
 label.font = [MDCTypography display1Font];
@@ -185,20 +168,16 @@ label.alpha = [MDCTypography display1FontOpacity];
 #### Swift
 
 ~~~ swift
-import MaterialComponents.MaterialTypography
-
-self.label.font = MDCTypography.captionFont()
-self.label.alpha = MDCTypography.captionFontOpacity()
+label.font = MDCTypography.captionFont()
+label.alpha = MDCTypography.captionFontOpacity()
 
 // If using autolayout, the following line is unnecessary as long
 // as all constraints are valid.
-self.label.sizeToFit()
+label.sizeToFit()
 ~~~
 #### Objective C
 
 ~~~ objc
-#import "MaterialTypography.h"
-
 self.label.font = [MDCTypography captionFont];
 self.label.alpha = [MDCTypography captionFontOpacity];
 
@@ -222,26 +201,27 @@ If you want to use the system font use `MDCSystemFontLoader` which already confo
 #### Swift
 ~~~ swift
 class CustomFontLoader: NSObject, MDCTypographyFontLoading {
-  func regularFontOfSize(fontSize: CGFloat) -> UIFont {
-    // Consider using MDCFontDiskLoader to register your font.
+  func regularFont(ofSize fontSize: CGFloat) -> UIFont {
+    // Consider using MDFFontDiskLoader to register your font.
     return UIFont.init(name: "yourCustomRegularFont", size: fontSize)!
   }
-  func mediumFontOfSize(fontSize: CGFloat) -> UIFont {
-    // Consider using MDCFontDiskLoader to register your font.
+  func mediumFont(ofSize fontSize: CGFloat) -> UIFont {
+    // Consider using MDFFontDiskLoader to register your font.
     return UIFont.init(name: "yourCustomMediumFont", size: fontSize)!
   }
-  func lightFontOfSize(fontSize: CGFloat) -> UIFont {
-    // Consider using MDCFontDiskLoader to register your font.
+  func lightFont(ofSize fontSize: CGFloat) -> UIFont {
+    // Consider using MDFFontDiskLoader to register your font.
     return UIFont.init(name: "yourCustomLightFont", size: fontSize)!
   }
 }
 
 ...
 
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-... before any UI is called
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+  // Before any UI is called
   MDCTypography.setFontLoader(CustomFontLoader())
-...
+
 }
 ~~~
 
@@ -254,17 +234,17 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 @implementation CustomFontLoader
 
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
-  // Consider using MDCFontDiskLoader to register your font.
+  // Consider using MDFFontDiskLoader to register your font.
   return [UIFont fontWithName:@"yourCustomRegularFont" size:fontSize];
 }
 
 - (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
-  // Consider using MDCFontDiskLoader to register your font.
+  // Consider using MDFFontDiskLoader to register your font.
   return [UIFont fontWithName:@"yourCustomMediumFont" size:fontSize];
 }
 
 - (UIFont *)lightFontOfSize:(CGFloat)fontSize {
-  // Consider using MDCFontDiskLoader to register your font.
+  // Consider using MDFFontDiskLoader to register your font.
   return [UIFont fontWithName:@"yourCustomLightFont" size:fontSize];
 }
 
@@ -272,10 +252,10 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
 ...
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-... before any UI is called
-    [MDCTypography setFontLoader:[[CustomFontLoader alloc] init];
-...
+- (BOOL)application:(UIApplication *)application 
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  // Before any UI is called
+  [MDCTypography setFontLoader:[[CustomFontLoader alloc] init]];
 }
 ~~~
 <!--</div>-->

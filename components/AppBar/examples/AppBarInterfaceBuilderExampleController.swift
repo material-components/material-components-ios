@@ -44,7 +44,6 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     enforcer.enforceFontColorAccessibility(appBar)
   }
 
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -55,7 +54,7 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     appBar.addSubviewsToParent()
   }
 
-  override var preferredStatusBarStyle : UIStatusBarStyle {
+  override var preferredStatusBarStyle: UIStatusBarStyle {
     // Ensure that our status bar is white.
     return .lightContent
   }

@@ -36,8 +36,9 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
       blue: CGFloat(0xF4) / CGFloat(255),
       alpha: 1)
     appBar.headerViewController.headerView.backgroundColor = color
-    let enforcer = MDCAppBarAccessibilityEnforcer()
-    enforcer.enforceFontColorAccessibility(appBar)
+    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.titleTextAttributes =
+      [ NSForegroundColorAttributeName: UIColor.white ]
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -60,20 +61,20 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     self.tableView.layoutMargins = UIEdgeInsets.zero
     self.tableView.separatorInset = UIEdgeInsets.zero
-    
+
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
   }
 
   // Optional step: If you allow the header view to hide the status bar you must implement this
   //                method and return the headerViewController.
-  override var childViewControllerForStatusBarHidden : UIViewController? {
+  override var childViewControllerForStatusBarHidden: UIViewController? {
     return appBar.headerViewController
   }
 
   // Optional step: The Header View Controller does basic inspection of the header view's background
   //                color to identify whether the status bar should be light or dark-themed.
-  override var childViewControllerForStatusBarStyle : UIViewController? {
+  override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
   }
 

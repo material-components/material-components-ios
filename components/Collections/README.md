@@ -1,7 +1,7 @@
 # Collections
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Collections](docs/assets/collections.png)](docs/assets/collections.mp4)
+<a alt="Collections"><img src="docs/assets/collections.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/collections.mp4" autoplay loop></video></div>{% endif %}-->
 
 Collection view classes that adhere to Material Design layout and styling.
@@ -11,17 +11,6 @@ Collection view classes that adhere to Material Design layout and styling.
 
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Classes/MDCCollectionViewController.html">MDCCollectionViewController</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Protocols/MDCCollectionViewEditing.html">MDCCollectionViewEditing</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Protocols/MDCCollectionViewEditingDelegate.html">MDCCollectionViewEditingDelegate</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Classes.html#/c:objc(cs)MDCCollectionViewFlowLayout">MDCCollectionViewFlowLayout</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Protocols/MDCCollectionViewStyling.html">MDCCollectionViewStyling</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Collections/apidocs/Protocols/MDCCollectionViewStylingDelegate.html">MDCCollectionViewStylingDelegate</a></li>
 </ul>
 
 - - -

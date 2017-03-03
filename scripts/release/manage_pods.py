@@ -28,7 +28,7 @@ import sys
 
 
 COMMANDS = ['install', 'clean', 'update', 'list']
-BLACKLIST_DIRS = {'external', 'third_party', 'site-source', '.git'}
+BLACKLIST_DIRS = {'external', 'third_party', '.git'}
 
 def find_matching_dirs(root, target_name, blacklist):
   """Return a list of directories that contain an entry with a particular name.

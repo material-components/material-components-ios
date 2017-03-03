@@ -57,6 +57,8 @@ static const uint32_t kCellRedColor = 0xF44336;
   UIImageView *_editingSelectorImageView;
 }
 
+@synthesize inkView = _inkView;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -106,6 +108,8 @@ static const uint32_t kCellRedColor = 0xF44336;
 
   // Reset cells hidden during swipe deletion.
   self.hidden = NO;
+  
+  [self.inkView cancelAllAnimationsAnimated:NO];
 }
 
 - (void)layoutSubviews {
@@ -255,6 +259,27 @@ static const uint32_t kCellRedColor = 0xF44336;
   return CGRectMake(originX, originY, size.width, size.height);
 }
 
+- (MDCInkView *)inkView {
+  if (!_inkView) {
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    [self addSubview:_inkView];
+  }
+  return _inkView;
+}
+
+- (void)setInkView:(MDCInkView *)inkView {
+  if (inkView == _inkView) {
+    return;
+  }
+  if (_inkView) {
+    [_inkView removeFromSuperview];
+  }
+  if (inkView) {
+    [self addSubview:inkView];
+  }
+  _inkView = inkView;
+}
+
 #pragma mark - Separator
 
 - (void)setShouldHideSeparator:(BOOL)shouldHideSeparator {
@@ -337,8 +362,8 @@ static const uint32_t kCellRedColor = 0xF44336;
       CGAffineTransform transform = _editingReorderImageView.transform;
       _editingReorderImageView.transform = CGAffineTransformIdentity;
       CGSize size = _editingReorderImageView.image.size;
-      CGRect frame = CGRectMake(0, (CGRectGetHeight(self.bounds) - size.height) / 2,
-                                size.width, size.height);
+      CGRect frame =
+          CGRectMake(0, (CGRectGetHeight(self.bounds) - size.height) / 2, size.width, size.height);
       _editingReorderImageView.frame = MDCRectFlippedForRTL(
           frame, CGRectGetWidth(self.bounds), self.mdc_effectiveUserInterfaceLayoutDirection);
       _editingReorderImageView.transform = transform;

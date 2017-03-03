@@ -16,9 +16,28 @@
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
-readonly DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=latest'
+# Note that the following is using 10.1 until Travis CI fixes 
+# https://github.com/travis-ci/travis-ci/issues/7031
+readonly DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.1"
+readonly COVERAGE_OPTIONS="GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES -enableCodeCoverage YES"
 
-readonly WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+# Given a path to an Xcode log file in $1, print a guess at what caused the
+# failure.
+function guess_failure() {
+  if [[ $TRAVIS == "true" ]]; then
+    tail -n 200 "$1"
+  else
+    grep --context=20 "The following build commands failed:" "$1"
+  fi
+}
+
+if [[ $# -lt 1 ]]; then
+  WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
+else
+  WORKSPACE_SCHEMES=$*
+fi
+
+all_tests_ok=1
 for workspace_scheme in $WORKSPACE_SCHEMES; do  
   workspace=$(echo $workspace_scheme | cut -d: -f1)
   scheme=$(echo $workspace_scheme | cut -d: -f2)
@@ -29,13 +48,24 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
   fi
   echo $workspace $scheme
   log_file=$(dirname "$workspace")/"test_log_for_scheme_${scheme}.txt"
-  if xcodebuild test -workspace "$workspace" -scheme "$scheme" -destination "$DESTINATION" $1 >"$log_file" 2>&1; then
+  options="-workspace $workspace -scheme $scheme"
+  if xcodebuild test $options $COVERAGE_OPTIONS -destination "$DESTINATION" >"$log_file" 2>&1; then
     rm "$log_file"
   else
+    all_tests_ok=0
     echo
     echo "Failed to test $scheme in $workspace."
+    guess_failure "$log_file"
     echo "Log left in $log_file."
     echo "Continuing with next test..."
     echo
   fi
 done
+
+# If any test failed, exit with a failure exit status so continuous integration 
+# tools can react appropriately.
+if [ "$all_tests_ok" -eq 1 ]; then
+  exit 0
+else
+  exit 1
+fi

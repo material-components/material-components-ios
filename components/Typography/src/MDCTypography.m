@@ -20,13 +20,6 @@ static id<MDCTypographyFontLoading> gFontLoader = nil;
 const CGFloat MDCTypographyStandardOpacity = 0.87f;
 const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
-// This protocal is not intended for actual use. It allows us to weakly reference MDCRoboto with
-// less warnings. @c defaultFontLoader
-@protocol MDCRobotoFontLoaderWeakLink
-// Shared singleton instance.
-+ (nonnull instancetype)sharedInstance;
-@end
-
 @implementation MDCTypography
 
 #pragma mark - Font loader access
@@ -145,10 +138,6 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma mark - Private
 
 + (id<MDCTypographyFontLoading>)defaultFontLoader {
-  Class fontLoaderClass = NSClassFromString(@"MDCRobotoFontLoader");
-  if (fontLoaderClass && [fontLoaderClass respondsToSelector:@selector(sharedInstance)]) {
-    return [fontLoaderClass sharedInstance];
-  }
   return [[MDCSystemFontLoader alloc] init];
 }
 
@@ -156,16 +145,36 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 @implementation MDCSystemFontLoader
 
+- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
+  }
+  return [UIFont systemFontOfSize:fontSize];
+}
+
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+  }
   return [UIFont systemFontOfSize:fontSize];
 }
 
 - (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
+  }
+  return [UIFont systemFontOfSize:fontSize];
+}
+
+- (UIFont *)boldFontOfSize:(CGFloat)fontSize {
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightBold];
+  }
   return [UIFont boldSystemFontOfSize:fontSize];
 }
 
-- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
-  return [UIFont systemFontOfSize:fontSize];
+- (UIFont *)italicFontOfSize:(CGFloat)fontSize {
+  return [UIFont italicSystemFontOfSize:fontSize];
 }
 
 @end

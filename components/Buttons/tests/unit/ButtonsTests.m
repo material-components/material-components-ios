@@ -15,8 +15,10 @@
  */
 
 #import <XCTest/XCTest.h>
-#import "MDCShadowElevations.h"
+
 #import "MaterialButtons.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialTypography.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 // A value greater than the largest value created by combining normal values of UIControlState.
@@ -396,6 +398,30 @@ static UIColor *randomColor() {
   // Then
   XCTAssertFalse(button.selected);
   XCTAssertFalse(button.state & UIControlStateSelected);
+}
+
+- (void)testDefaultAdjustsFontProperty {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // Then
+  XCTAssertFalse(button.mdc_adjustsFontForContentSizeCategory);
+}
+
+- (void)testAdjustsFontProperty {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIFont *preferredFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton];
+
+  // When
+  button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory);
+  XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize,
+                             preferredFont.pointSize,
+                             kEpsilonAccuracy,
+                             @"Font size should be equal to MDCFontTextStyleButton's.");
 }
 
 @end

@@ -1,7 +1,7 @@
 # Buttons
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Buttons](docs/assets/buttons.png)](docs/assets/buttons.mp4)
+<a alt="Buttons"><img src="docs/assets/buttons.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/buttons.mp4" autoplay loop></video></div>{% endif %}-->
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
@@ -14,16 +14,6 @@ floating action button.
 <ul class="icon-list">
   <li class="icon-link"><a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a></li>
 </ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes.html#/c:objc(cs)MDCRaisedButton">MDCRaisedButton</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Buttons/apidocs/Classes/MDCButton.html">MDCButton</a></li>
-</ul>
-
 
 - - -
 

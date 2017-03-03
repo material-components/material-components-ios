@@ -1,8 +1,13 @@
 # Material Components for iOS
 
-Material Components for iOS (MDC-iOS) help developers execute [Material Design](http://material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps.
+<img align="right" src="mdc_hero.png" width="300px">
 
-Material Components for iOS are available in Objective-C and Swift, and support Interface Builder.
+[![Build Status](https://travis-ci.org/material-components/material-components-ios.svg?branch=develop)](https://travis-ci.org/material-components/material-components-ios)
+[![Code coverage](https://img.shields.io/codecov/c/github/material-components/material-components-ios/develop.svg)](https://codecov.io/gh/material-components/material-components-ios/branch/develop)
+
+Material Components for iOS (MDC-iOS) helps developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps. Learn more about how Material Design supports design and usability best practices across platforms in the  [Material Design Platform Adaptation guidelines](https://material.io/guidelines/platforms/platform-adaptation.html).
+
+Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
 
 ## Useful Links
 
@@ -10,10 +15,10 @@ Material Components for iOS are available in Objective-C and Swift, and support 
 - [All Components](components/)
 - [Demo Apps](demos/)
 - [Contributing](contributing/)
-- [MDC-iOS on Stack Overflow](http://stackoverflow.com/questions/tagged/material-components-ios)
-- [Material.io](http://material.io) (external site)
-- [Material Design Guidelines](http://material.google.com) (external site)
-  
+- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
+- [Material.io](https://www.material.io) (external site)
+- [Material Design Guidelines](https://material.google.com) (external site)
+
 ## Trying out Material Components
 
 Our [catalog](catalog/) showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
@@ -27,6 +32,9 @@ In case you have already checked out the repo, run the following command:
 ~~~ bash
 pod install --project-directory=catalog/
 ~~~
+
+If you want to take a look at the implementation of the components, you can find the code inside the `Development Pods` folder.
+Use `cmd-1` to open the project navigator within Xcode. Peal open the `Pods` project and inside the `Development Pods` folder you will find the component source code.
 
 ## Installation
 
@@ -59,11 +67,7 @@ to your target in your Podfile:
 ~~~ ruby
 target "MyApp" do
   ...
-  # Until Material Components for iOS is public:
-  pod 'MaterialComponents', :git => 'https://github.com/material-components/material-components-ios.git'
-
-  # After Material Components for iOS is public:
-  # pod 'MaterialComponents'
+  pod 'MaterialComponents'
 end
 ~~~
 
@@ -91,7 +95,7 @@ The components are built upon familiar UIKit classes and can be added to a view 
 ~~~ swift
 import MaterialComponents.MaterialButtons
 
-class MDCBuildTestViewController: UIViewController {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,7 +145,7 @@ class MDCBuildTestViewController: UIViewController {
 Material Components for iOS uses
 [Material Design icons](https://github.com/google/material-design-icons),
 copyright Google Inc. and licensed under
-[CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 Several components use
 [MDFTextAccessibility](https://github.com/material-foundation/material-text-accessibility-ios),
@@ -149,7 +153,7 @@ copyright Google Inc. and licensed under
 [Apache 2.0](https://github.com/material-foundation/material-text-accessibility-ios/blob/master/LICENSE)
 without a NOTICE file.
 
-Roboto Font Loader uses the
+MDCCatalog uses the
 [Roboto font](https://github.com/google/fonts/tree/master/apache/roboto),
 copyright 2011 Google Inc. and licensed under
 [Apache 2.0](https://github.com/google/fonts/blob/master/apache/roboto/LICENSE.txt)

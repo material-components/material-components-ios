@@ -1,7 +1,7 @@
 # Slider
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Slider](docs/assets/slider.png)](docs/assets/slider.mp4)
+<a alt="Slider"><img src="docs/assets/slider.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/slider.mp4" autoplay loop></video></div>{% endif %}-->
 
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
@@ -12,12 +12,6 @@ or discrete set of values.
 
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/components/sliders.html">Sliders</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/Slider/apidocs/Classes/MDCSlider.html">MDCSlider</a></li>
 </ul>
 
 - - -
@@ -57,7 +51,7 @@ Before using Slider, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-import MaterialComponents
+import MaterialComponents.MaterialSlider
 ~~~
 
 #### Objective-C
@@ -76,22 +70,23 @@ MDCSlider can be be used like a standard `UIControl`.
 
 ~~~ swift
 override func viewDidLoad() {
-  let slider = MDCSlider(frame: CGRectMake(50, 50, 100, 27))
+  super.viewDidLoad()
+
+  let slider = MDCSlider(frame: CGRect(x: 50, y: 50, width: 100, height: 27))
   slider.addTarget(self,
-      action: Selector("didChangeSliderValue:"),
-      forControlEvents: .ValueChanged)
+                   action: #selector(didChangeSliderValue(senderSlider:)),
+                   for: .valueChanged)
   view.addSubview(slider)
 }
 
 func didChangeSliderValue(senderSlider:MDCSlider) {
-  NSLog("Did change slider value to: %@", senderSlider.value)
+  print("Did change slider value to: %@", senderSlider.value)
 }
 ~~~
 
 #### Objective C
 
 ~~~ objc
-
 - (void)viewDidLoad {
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(50, 50, 100, 27)];
   [slider addTarget:self
@@ -122,4 +117,4 @@ Same features:
 
 New features:
 
-- making the slider a snap to discrete values via property numberOfDiscreteValues.
+- making the slider a snap to discrete values via property numberOfDiscreteValues

@@ -1,11 +1,7 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/material-components/material-components-ios/tree/develop/components/AppBar">GitHub</a> for README documentation.{% endif %}-->
-
 # App Bar
 
 <!--{% if site.link_to_site == "true" %}-->
-[![App Bar](docs/assets/app_bar.png)](docs/assets/app_bar.mp4)
+<a alt="App Bar"><img src="docs/assets/app_bar.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/app_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
@@ -17,13 +13,6 @@ navigation experience.
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar Structure</a></li>
   <li class="icon-link"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBar.html">MDCAppBar</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
 </ul>
 
 - - -

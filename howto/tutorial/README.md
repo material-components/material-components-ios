@@ -58,9 +58,9 @@ target 'MDC-Tutorial' do
   use_frameworks!
 
   # Pods for MDC-Tutorial
-  pod 'MaterialComponents/AppBar', :git => 'git@github.com:material-components/material-components-ios.git'
-  pod 'MaterialComponents/Buttons', :git => 'git@github.com:material-components/material-components-ios.git'
-  pod 'MaterialComponents/Collections', :git => 'git@github.com:material-components/material-components-ios.git'
+  pod 'MaterialComponents/AppBar'
+  pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/Collections'
 end
 ~~~
 
@@ -70,9 +70,9 @@ target 'MDC-Tutorial' do
   #use_frameworks!
 
   # Pods for MDC-Tutorial
-  pod 'MaterialComponents/AppBar', :git => 'git@github.com:material-components/material-components-ios.git'
-  pod 'MaterialComponents/Buttons', :git => 'git@github.com:material-components/material-components-ios.git'
-  pod 'MaterialComponents/Collections', :git => 'git@github.com:material-components/material-components-ios.git'
+  pod 'MaterialComponents/AppBar'
+  pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/Collections'
 end
 ~~~
 <!--</div>-->
@@ -774,10 +774,10 @@ Use our examples and catalog apps to try out other components and other ways to 
 ### Sample Code
 
 
-*   [Pesto: A simple recipe app, incorporating a flexible header, floating action button, and collections.](https://github.com/material-components/material-components-ios/tree/master/demos/Pesto)
+*   [Pesto: A simple recipe app, incorporating a flexible header, floating action button, and collections.](https://github.com/material-components/material-components-ios/tree/stable/demos/Pesto)
 
 
-*   [Shrine: A demo shopping app, incorporating a flexible header, custom typography, and collections.](https://github.com/material-components/material-components-ios/tree/master/demos/Shrine)
+*   [Shrine: A demo shopping app, incorporating a flexible header, custom typography, and collections.](https://github.com/material-components/material-components-ios/tree/stable/demos/Shrine)
 
 <!--{% if site.link_to_site == "true" %}-->
 <img src="docs/assets/Pesto.gif">

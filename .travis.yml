@@ -1,0 +1,33 @@
+language: objective-c
+osx_image: xcode8.2
+sudo: false
+# Only fire off builds for specific branches.
+branches:
+  only:
+    - develop
+    - stable
+    - /^feature-.*$/
+env:
+  global:
+  - LC_CTYPE=en_US.UTF-8
+  - LANG=en_US.UTF-8
+  matrix:
+    - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.2" SDK="iphonesimulator10.2"
+before_install:
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - scripts/install_contributor_tools
+# The travis_wait prefix ensures that the build doesn't error out because too much time went past
+# without any output being produced.
+#
+# Note that we only test unit tests in an attempt to get reasonable performance out of Travis CI.
+script:
+  - set -o pipefail
+  - xcodebuild -version
+  - xcodebuild -showsdks
+  - pod --version
+  - swiftlint
+  - scripts/prep_all
+  - travis_wait scripts/build_all
+  - travis_wait scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

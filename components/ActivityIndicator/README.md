@@ -1,7 +1,7 @@
 # Activity Indicator
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Activity Indicator](docs/assets/activity_indicator.png)](docs/assets/activity_indicator.mp4)
+<a alt="Activity Indicator"><img src="docs/assets/activity_indicator.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/activity_indicator.mp4" autoplay loop></video></div>{% endif %}-->
 
 Activity indicators are visual indications of an app loading content. The Activity Indicator is a circular indicator that either rotates clockwise or fills to completion clockwise when displaying progress.
@@ -11,14 +11,6 @@ Activity indicators are visual indications of an app loading content. The Activi
 
 <ul class="icon-list">
   <li class="icon-link"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Classes/MDCActivityIndicator.html>MDCActivityIndicator</a></li>
-<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Enums/MDCActivityIndicatorMode.html">MDCActivityIndicatorMode</a></li>
-<li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ActivityIndicator/apidocs/Protocols/MDCActivityIndicatorDelegate.html">MDCActivityIndicatorDelegate</a></li>
 </ul>
 
 - - -

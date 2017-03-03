@@ -22,7 +22,7 @@ Before a component is built, the API proposed must be agreed upon by the main co
 Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at [writing_readmes](writing_readmes.md).
 
 1. Verify the component has a filled out README.md
-1. Verify Swift code samples appear before Objc samples.
+1. Verify Swift code samples appear before Objective-C samples.
 1. Enter YES or NO
 
 
@@ -76,29 +76,6 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 #### Verify a tile exists:
 
 1. Run the catalog application and look for the component. Make sure the tile shown is specific to the component and not a placeholder nor empty view.
-1. Enter YES or NO
-
-
-### Site Icon
-
-
-The documentation site uses icons in an [ordered list](https://material-ext.appspot.com/mdc-ios-preview/components/) of the components. These icons are created by Google's Material Design department specifically for this purpose.
-
-1. Make sure the site source's `.../images/custom_icons_` folder contains an icon named `ic_component_name_24.svg`.
-1. Make sure the site source's `_icons.scss` contains an entry for that icon for that component:
-~~~CSS
-  .icon-componentname a::before {
-    background-image: url(#{$root_folder}/images/custom_icons/ic_component_name_24px.svg);
-  }
-~~~
-
-
-### Site Left Nav Presence
-
-
-The component should have an entry in the left nav of [the documentation site](https://material-ext.appspot.com/mdc-ios-preview/components/). If missing, add it in the site source's `_data/navigation.yaml` file.
-
-1. Verify [the documentation site's](https://material-ext.appspot.com/mdc-ios-preview/components/) left nav contains a link to the component's docs.
 1. Enter YES or NO
 
 
@@ -379,13 +356,22 @@ Material Components explicitly annotate all public APIs rather than use `NS_ASSU
 1. Enter YES or NO
 
 
-### Swift Name Overrides
+### Swift Overrides and Annotations
 
 
-Swift naming conventions differ from ObjC. It's important to consider the experience of users implementing Material Components in Swift targets and add naming annotations accordingly. See Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
+Swift coding conventions differ from Objective-C. It's important to consider the experience of users implementing Material Components in Swift targets and add naming annotations, refinements, and other cross-language features accordingly. See Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
 
-1. Add `NS_SWIFT_NAME` annotations where appropriate.
-1. Use `typedef` for enums to allow truncation of enumeration value name prefixes.
+1. Use [lightweight Objective-C generics](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID173) whenever possible.
+1. Add Swift annotation macros where appropriate:
+  - `NS_SWIFT_NAME`
+  - `NS_SWIFT_NOTHROW`
+  - `NS_SWIFT_UNAVAILABLE`
+  - `NS_REFINED_FOR_SWIFT`
+1. Use `typedef NS_ENUM` for enums to allow truncation of enumeration value name prefixes.
+1. Typedef string constants with [proper macros](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html#//apple_ref/doc/uid/TP40014216-CH8-ID29) for better swift translation:
+  1. `NS_STRING_ENUM` for importing as a `String` backed enum.
+  1. `NS_EXTENSIBLE_STRING_ENUM` for importing as an extensible `struct` in Swift.
+1. Mark non-escaping blocks as `NS_NOESCAPE` and non-escaping closures as `@noescape`.
 1. Enter YES, NO or N/A
 
 

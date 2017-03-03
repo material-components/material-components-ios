@@ -302,6 +302,11 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
+  // TODO (shepj): This implementation of registering cell classes in data source methods should be
+  // rethought. This causes a crash without a workaround when collections with headers or
+  // footers entering editing mode. Also, we should find a way around implementing a data source
+  // method in a super class.
+  // Issue: https://github.com/material-components/material-components-ios/issues/1208
   // Editing info bar.
   if ([kind isEqualToString:MDCCollectionInfoBarKindHeader] ||
       [kind isEqualToString:MDCCollectionInfoBarKindFooter]) {

@@ -38,7 +38,8 @@ class TypographyFontListExampleViewController: UITableViewController {
     return fonts.count
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(_ tableView: UITableView,
+                          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
     if cell == nil {
       cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")

@@ -19,7 +19,7 @@
 #import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
 #import "MaterialInk.h"
-#import "UIColor+MDC.h"
+#import "MaterialRTL.h"
 
 static const CGFloat kAnimationDuration = 0.25f;
 static const CGFloat kThumbChangeAnimationDuration = 0.12f;
@@ -253,8 +253,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
   _primaryColor = primaryColor;
   _thumbOnColor = primaryColor;
-  _trackOnColor =
-      _interpolateOnOffColors ? [primaryColor colorWithAlphaComponent:kTrackOnAlpha] : primaryColor;
+  _trackOnColor = primaryColor;
 
   _touchController.defaultInkView.inkColor = [primaryColor colorWithAlphaComponent:kTrackOnAlpha];
   [self setNeedsLayout];
@@ -277,18 +276,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (void)setTrackDisabledColor:(UIColor *)trackDisabledColor {
   _trackDisabledColor = trackDisabledColor;
   [self setNeedsLayout];
-}
-
-- (void)setInterpolateOnOffColors:(BOOL)interpolateOnOffColors {
-  _interpolateOnOffColors = interpolateOnOffColors;
-
-  // TODO(iangordon): Remove ColorGroup support
-  //  if (_colorGroup) {
-  //    [self setColorGroup:_colorGroup];
-  //  }
-
-  // TODO(iangordon): Refactor setPrimaryColor so this call isn't required
-  [self setPrimaryColor:_primaryColor];
 }
 
 - (void)setShouldDisplayDiscreteDots:(BOOL)shouldDisplayDiscreteDots {
@@ -618,22 +605,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (self.enabled) {
     // Set thumb color if needed. Note that setting color to hollow start state happes in secondary
     // animation block (-updateViewsSecondaryAnimated:withDuration:).
-    if (_interpolateOnOffColors) {
-      // Set background/border colors based on interpolated percent.
-      CGFloat percent = [self relativeValueForValue:_value];
-      _thumbView.layer.backgroundColor = [UIColor mdc_colorInterpolatedFromColor:_thumbOffColor
-                                                                         toColor:_thumbOnColor
-                                                                         percent:percent]
-                                             .CGColor;
-      _thumbView.layer.borderColor = [UIColor mdc_colorInterpolatedFromColor:_thumbOffColor
-                                                                     toColor:_thumbOnColor
-                                                                     percent:percent]
-                                         .CGColor;
-      _trackView.backgroundColor = [UIColor mdc_colorInterpolatedFromColor:_trackOffColor
-                                                                   toColor:_trackOnColor
-                                                                   percent:percent];
-      _trackOnLayer.backgroundColor = _clearColor.CGColor;
-    } else if (!_thumbIsHollowAtStart || ![self isValueAtMinimum]) {
+    if (!_thumbIsHollowAtStart || ![self isValueAtMinimum]) {
       [self updateTrackMask];
 
       _thumbView.backgroundColor = _thumbOnColor;
@@ -686,30 +658,28 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   // Update colors, etc.
   if (self.enabled) {
-    if (!_interpolateOnOffColors) {
-      _trackView.backgroundColor = _trackOffColor;
-      _trackOnLayer.backgroundColor = _trackOnColor.CGColor;
+    _trackView.backgroundColor = _trackOffColor;
+    _trackOnLayer.backgroundColor = _trackOnColor.CGColor;
 
-      CGFloat anchorXValue = [self trackPositionForValue:_filledTrackAnchorValue].x;
-      CGFloat currentXValue = [self trackPositionForValue:_value].x;
+    CGFloat anchorXValue = [self trackPositionForValue:_filledTrackAnchorValue].x;
+    CGFloat currentXValue = [self trackPositionForValue:_value].x;
 
-      CGFloat trackOnXValue = MIN(currentXValue, anchorXValue);
-      if (_trackEndsAreInset) {
-        // Account for the fact that the layer's coords are relative to the frame of the track.
-        trackOnXValue -= _thumbRadius;
-      }
-
-      // We have to use a CATransaction here because CALayer.frame is only animatable using this
-      // method, not the UIVIew block-based animation that the rest of this method uses. We use
-      // the timing function and duration passed in in order to match with the other animations.
-      [CATransaction begin];
-      [CATransaction setAnimationTimingFunction:
-                         [self timingFunctionFromUIViewAnimationOptions:animationOptions]];
-      [CATransaction setAnimationDuration:duration];
-      _trackOnLayer.frame =
-          CGRectMake(trackOnXValue, 0, Fabs(currentXValue - anchorXValue), _trackHeight);
-      [CATransaction commit];
+    CGFloat trackOnXValue = MIN(currentXValue, anchorXValue);
+    if (_trackEndsAreInset) {
+      // Account for the fact that the layer's coords are relative to the frame of the track.
+      trackOnXValue -= _thumbRadius;
     }
+
+    // We have to use a CATransaction here because CALayer.frame is only animatable using this
+    // method, not the UIVIew block-based animation that the rest of this method uses. We use
+    // the timing function and duration passed in in order to match with the other animations.
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:
+                       [self timingFunctionFromUIViewAnimationOptions:animationOptions]];
+    [CATransaction setAnimationDuration:duration];
+    _trackOnLayer.frame =
+        CGRectMake(trackOnXValue, 0, Fabs(currentXValue - anchorXValue), _trackHeight);
+    [CATransaction commit];
   } else {
     // Set background colors for disabled state.
     _trackView.backgroundColor = _trackDisabledColor;
@@ -804,7 +774,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // particularly when that view's edges fall on a subpixel. Adding the extra pt on the top and
   // bottom accounts for this case here, and ensures that none of the _trackView appears where it
   // isn't supposed to.
-  // This fixes https://github.com/material-components/material-components-ios/issues/566 for all orientations.
+  // This fixes https://github.com/material-components/material-components-ios/issues/566 for all
+  // orientations.
   CGRect maskFrame = CGRectMake(0, -1, CGRectGetWidth(self.bounds), _trackHeight + 2);
 
   CGMutablePathRef path = CGPathCreateMutable();
@@ -864,6 +835,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (CGFloat)valueForThumbPosition:(CGPoint)position {
   CGFloat relValue = (position.x - _thumbRadius) / self.thumbPanRange;
   relValue = MAX(0, MIN(relValue, 1));
+  // For RTL we invert the value
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    relValue = 1 - relValue;
+  }
   return (1 - relValue) * _minimumValue + relValue * _maximumValue;
 }
 
@@ -903,7 +878,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (CGFloatEqual(_minimumValue, _maximumValue)) {
     return _minimumValue;
   }
-  return (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
+  CGFloat relValue = (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
+  // For RTL we invert the value
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    relValue = 1 - relValue;
+  }
+  return relValue;
 }
 
 - (CGFloat)closestValueToTargetValue:(CGFloat)targetValue {
@@ -924,6 +904,37 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [_dummyPanRecognizer.view removeGestureRecognizer:_dummyPanRecognizer];
   UIView *panTarget = _panningAllowedOnEntireControl ? self : _thumbView;
   [panTarget addGestureRecognizer:_dummyPanRecognizer];
+}
+
+#pragma mark - Color Helpers
+
+- (UIColor *)colorInterpolatedFromColor:(UIColor *)fromColor
+                                toColor:(UIColor *)toColor
+                                percent:(CGFloat)percent {
+  // Clamp percent to [0.0, 1.0]
+  percent = MAX(0, percent);
+  percent = MIN(1, percent);
+
+  CGFloat r1, g1, b1, a1;
+  r1 = g1 = b1 = a1 = 1;
+  if (![fromColor getRed:&r1 green:&g1 blue:&b1 alpha:&a1]) {
+    [fromColor getWhite:&r1 alpha:&a1];
+    g1 = b1 = r1;
+  };
+
+  CGFloat r2, g2, b2, a2;
+  r2 = g2 = b2 = a2 = 1;
+  if (![toColor getRed:&r2 green:&g2 blue:&b2 alpha:&a2]) {
+    [toColor getWhite:&r2 alpha:&a2];
+    g2 = b2 = r2;
+  }
+
+  CGFloat rfinal = r1 * (1 - percent) + r2 * percent;
+  CGFloat gfinal = g1 * (1 - percent) + g2 * percent;
+  CGFloat bfinal = b1 * (1 - percent) + b2 * percent;
+  CGFloat afinal = a1 * (1 - percent) + a2 * percent;
+
+  return [UIColor colorWithRed:rfinal green:gfinal blue:bfinal alpha:afinal];
 }
 
 #pragma mark - UIResponder Events

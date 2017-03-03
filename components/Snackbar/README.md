@@ -1,7 +1,7 @@
 # Snackbar
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Snackbar](docs/assets/snackbar.png)](docs/assets/snackbar.mp4)
+<a alt="Snackbar"><img src="docs/assets/snackbar.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/snackbar.mp4" autoplay loop></video></div>{% endif %}-->
 
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
@@ -71,7 +71,7 @@ Before using Snackbar, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-import MaterialSnackbar
+import MaterialComponents.MaterialSnackbar
 ~~~
 
 #### Objective-C
@@ -92,7 +92,7 @@ import MaterialSnackbar
 ~~~ swift
 let message = MDCSnackbarMessage()
 message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
-MDCSnackbarManager.showMessage(message)
+MDCSnackbarManager.show(message)
 ~~~
 
 #### Objective-C
@@ -114,7 +114,7 @@ let action = MDCSnackbarMessageAction()
 let actionHandler = {() in
   let answerMessage = MDCSnackbarMessage()
   answerMessage.text = "Fascinating"
-  MDCSnackbarManager.showMessage(answerMessage)
+  MDCSnackbarManager.show(answerMessage)
 }
 action.handler = actionHandler
 action.title = "OK"

@@ -21,10 +21,14 @@ In case you have already checked out the repo, run the following command:
 pod install --project-directory=catalog/
 ~~~
 
+- - -
+
 ## Useful Links
-  
+
 - [How To Use MDC-iOS](../howto/)
-- [All Components](../components/) 
+- [All Components](../components/)
 - [Contributing](../contributing/)
-- [Material.io](http://material.io) (external site)
-- [Material Design Guidelines](http://material.google.com) (external site)
+- [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
+- [Material.io](https://www.material.io) (external site)
+- [Material Design Guidelines](https://material.google.com) (external site)
+  

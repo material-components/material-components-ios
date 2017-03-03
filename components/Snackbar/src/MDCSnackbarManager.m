@@ -16,10 +16,11 @@
 
 #import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
 #import "MaterialOverlayWindow.h"
 #import "UIApplication+AppExtensions.h"
 #import "private/MDCSnackbarMessageInternal.h"
-#import "private/MDCSnackbarMessageView.h"
+#import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
 
 @class MDCSnackbarManagerSuspensionToken;
@@ -45,9 +46,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  @note: Keys are the message category, or the all messages category. Values are sets of suspension
         tokens.
  */
-@property(nonatomic)
-    NSMutableDictionary<NSString *, NSMutableSet<NSUUID *> *>
-        *suspensionTokens;
+@property(nonatomic) NSMutableDictionary<NSString *, NSMutableSet<NSUUID *> *> *suspensionTokens;
 
 /**
  The view which will host our snackbar messages.
@@ -104,7 +103,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
     _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    _overlayView.accessibilityViewIsModal = YES;
   }
   return self;
 }
@@ -202,13 +200,13 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
         }
       };
 
-  self.overlayView.hidden = NO;
-  [self activateOverlay:self.overlayView];
-
   Class viewClass = [message viewClass];
   snackbarView = [[viewClass alloc] initWithMessage:message dismissHandler:dismissHandler];
-
   self.currentSnackbar = snackbarView;
+
+  self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
+  self.overlayView.hidden = NO;
+  [self activateOverlay:self.overlayView];
 
   // Once the Snackbar has finished animating on screen, start the automatic dismiss timeout, but
   // only if the user isn't running VoiceOver.
@@ -227,11 +225,15 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
               }
 
               if ([self isSnackbarTransient:snackbarView]) {
+                __weak MDCSnackbarMessageView *weakSnackbarView = snackbarView;
                 dispatch_time_t popTime =
                     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(message.duration * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-                  // Mimic the user tapping on the snackbar.
-                  [snackbarView dismissWithAction:nil userInitiated:NO];
+                  MDCSnackbarMessageView *strongSnackbarView = weakSnackbarView;
+                  if (strongSnackbarView) {
+                    // Mimic the user tapping on the snackbar.
+                    [strongSnackbarView dismissWithAction:nil userInitiated:NO];
+                  }
                 });
               }
             }];

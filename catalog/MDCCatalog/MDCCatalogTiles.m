@@ -2785,6 +2785,123 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame) {
   CGColorSpaceRelease(colorSpace);
 }
 
+void MDCCatalogDrawOverlayWindow(CGRect frame) {
+  UIColor* fillColor = [UIColor colorWithRed:0.649 green:0.873 blue:0.984 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithRed:0.076 green:0.59 blue:0.945 alpha:1];
+  UIColor* fillColor3 = [UIColor colorWithRed:0.261 green:0.712 blue:0.959 alpha:1];
+
+  CGRect overlayWindowGroup = CGRectMake(CGRectGetMinX(frame) + 54, CGRectGetMinY(frame) + 38,
+                                         floor((CGRectGetWidth(frame) - 54) * 0.59701 + 0.5),
+                                         floor((CGRectGetHeight(frame) - 38) * 0.68376 + 0.5));
+
+  UIBezierPath* rightCornerPath = [UIBezierPath bezierPath];
+  [rightCornerPath moveToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                               1.00000 * CGRectGetWidth(overlayWindowGroup),
+                                           CGRectGetMinY(overlayWindowGroup) +
+                                               0.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.12500 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  0.87500 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.12500 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  0.87500 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  1.00000 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                  1.00000 * CGRectGetWidth(overlayWindowGroup),
+                                              CGRectGetMinY(overlayWindowGroup) +
+                                                  0.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [rightCornerPath closePath];
+  rightCornerPath.miterLimit = 4;
+
+  [fillColor setFill];
+  [rightCornerPath fill];
+
+  UIBezierPath* leftCornerPath = [UIBezierPath bezierPath];
+  [leftCornerPath moveToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                              0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                          CGRectGetMinY(overlayWindowGroup) +
+                                              0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.15150 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.14588 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.00000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.00000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.27088 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.00000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.27650 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.00000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 1.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.65000 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 1.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 1.00000 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.77500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath addLineToPoint:CGPointMake(CGRectGetMinX(overlayWindowGroup) +
+                                                 0.12500 * CGRectGetWidth(overlayWindowGroup),
+                                             CGRectGetMinY(overlayWindowGroup) +
+                                                 0.87500 * CGRectGetHeight(overlayWindowGroup))];
+  [leftCornerPath closePath];
+  leftCornerPath.miterLimit = 4;
+
+  [fillColor2 setFill];
+  [leftCornerPath fill];
+
+  UIBezierPath* overlapRectanglePath = [UIBezierPath
+      bezierPathWithRect:CGRectMake(
+                             CGRectGetMinX(overlayWindowGroup) +
+                                 floor(CGRectGetWidth(overlayWindowGroup) * 0.12500 + 0.5),
+                             CGRectGetMinY(overlayWindowGroup) +
+                                 floor(CGRectGetHeight(overlayWindowGroup) * 0.12500 + 0.5),
+                             floor(CGRectGetWidth(overlayWindowGroup) * 0.87500 + 0.5) -
+                                 floor(CGRectGetWidth(overlayWindowGroup) * 0.12500 + 0.5),
+                             floor(CGRectGetHeight(overlayWindowGroup) * 0.87500 + 0.5) -
+                                 floor(CGRectGetHeight(overlayWindowGroup) * 0.12500 + 0.5))];
+  [fillColor3 setFill];
+  [overlapRectanglePath fill];
+}
+
 void MDCCatalogDrawPageControlTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
@@ -2921,7 +3038,7 @@ void MDCCatalogDrawPageControlTile(CGRect frame) {
   CGColorSpaceRelease(colorSpace);
 }
 
-static NSString *const PalettesFontName = @"RobotoMono-Regular";
+static NSString* const PalettesFontName = @"RobotoMono-Regular";
 
 void MDCCatalogDrawPalettesTile(CGRect frame) {
   CGFloat PalettesFontPointSize = [UIScreen mainScreen].bounds.size.width / 320 * 7;
@@ -3763,389 +3880,6 @@ void MDCCatalogDrawSnackbarTile(CGRect frame) {
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawSpritedAnimationViewTile(CGRect frame) {
-  CGContextRef context = UIGraphicsGetCurrentContext();
-
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
-  UIColor* blue60 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.6];
-  UIColor* blue40 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.4];
-  UIColor* blue20 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
-
-  CGRect spritedButtonAnimation =
-      CGRectMake(CGRectGetMinX(frame) + 56.33, CGRectGetMinY(frame) + 14.3,
-                 floor((CGRectGetWidth(frame) - 56.33) * 0.57217 + 56.16) - 55.66,
-                 floor((CGRectGetHeight(frame) - 14.3) * 0.53546 + 14.1) - 13.6);
-
-  {
-    {
-      CGContextSaveGState(context);
-      CGContextSetAlpha(context, 0.2);
-      CGContextBeginTransparencyLayer(context, NULL);
-
-      UIBezierPath* bezierPath = [UIBezierPath bezierPath];
-      [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                              0.71213 * CGRectGetWidth(spritedButtonAnimation),
-                                          CGRectGetMinY(spritedButtonAnimation) +
-                                              0.35858 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.64143 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.28787 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.50000 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.42929 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.35858 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.28787 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.28786 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.35858 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.42929 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.50001 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.28786 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.64142 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.35858 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.71213 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.50000 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.57071 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.64143 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.71213 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.71213 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.64142 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.57071 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.50001 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath
-          addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                         0.71213 * CGRectGetWidth(spritedButtonAnimation),
-                                     CGRectGetMinY(spritedButtonAnimation) +
-                                         0.35858 * CGRectGetHeight(spritedButtonAnimation))];
-      [bezierPath closePath];
-      [blue20 setFill];
-      [bezierPath fill];
-
-      CGContextEndTransparencyLayer(context);
-      CGContextRestoreGState(context);
-    }
-
-    UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
-    [bezier2Path moveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                             0.66830 * CGRectGetWidth(spritedButtonAnimation),
-                                         CGRectGetMinY(spritedButtonAnimation) +
-                                             0.30849 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.58169 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.25849 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.48170 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.43170 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.30850 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.33170 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.25850 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.41831 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.43170 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.51831 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.33170 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.69151 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.41830 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.74151 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.51830 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.56831 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.69150 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.66830 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.74151 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.58170 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.56830 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.48170 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.66830 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.30849 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier2Path closePath];
-    [blue40 setFill];
-    [bezier2Path fill];
-
-    UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
-    [bezier3Path moveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                             0.61300 * CGRectGetWidth(spritedButtonAnimation),
-                                         CGRectGetMinY(spritedButtonAnimation) +
-                                             0.27146 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.51641 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.24558 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.46464 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.43876 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.27146 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.38701 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.24558 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.48360 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.43876 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.53536 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.38699 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.72854 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.48359 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.75442 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.53535 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.56123 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.72855 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.61300 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.75443 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.51641 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.56124 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.46464 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.61300 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.27146 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier3Path closePath];
-    [blue60 setFill];
-    [bezier3Path fill];
-
-    UIBezierPath* bezier4Path = [UIBezierPath bezierPath];
-    [bezier4Path moveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                             0.55000 * CGRectGetWidth(spritedButtonAnimation),
-                                         CGRectGetMinY(spritedButtonAnimation) +
-                                             0.25000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.45000 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.25000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.45000 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.45000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.24999 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.45000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.24999 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.55000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.45000 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.55000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.45000 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.74999 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.55000 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.74999 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.55000 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.55000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.75001 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.55000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.75001 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.45000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.55000 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.45000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path addLineToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                                0.55000 * CGRectGetWidth(spritedButtonAnimation),
-                                            CGRectGetMinY(spritedButtonAnimation) +
-                                                0.25000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier4Path closePath];
-    [fillColor setFill];
-    [bezier4Path fill];
-
-    UIBezierPath* bezier5Path = [UIBezierPath bezierPath];
-    [bezier5Path moveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                             0.50000 * CGRectGetWidth(spritedButtonAnimation),
-                                         CGRectGetMinY(spritedButtonAnimation) +
-                                             0.90000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path
-        addCurveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.09999 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.49999 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint1:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.27950 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.90000 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint2:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.09999 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.72050 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path
-        addCurveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.50000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.10000 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint1:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.09999 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.27950 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint2:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.27950 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.10000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path
-        addCurveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.90000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.49999 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint1:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.72050 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.10000 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint2:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.90000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.27950 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path
-        addCurveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.50000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.90000 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint1:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.90000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.72050 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint2:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.72050 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.90000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path closePath];
-    [bezier5Path moveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                             0.50000 * CGRectGetWidth(spritedButtonAnimation),
-                                         CGRectGetMinY(spritedButtonAnimation) +
-                                             0.00000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path
-        addCurveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.00000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.49999 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint1:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.22399 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.00000 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint2:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.00000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.22400 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path
-        addCurveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.50000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        1.00000 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint1:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.00000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.77600 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint2:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.22399 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        1.00000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path
-        addCurveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        1.00000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.49999 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint1:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.77600 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        1.00000 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint2:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        1.00000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.77600 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path
-        addCurveToPoint:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.50000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.00000 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint1:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        1.00000 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.22400 * CGRectGetHeight(spritedButtonAnimation))
-          controlPoint2:CGPointMake(CGRectGetMinX(spritedButtonAnimation) +
-                                        0.77600 * CGRectGetWidth(spritedButtonAnimation),
-                                    CGRectGetMinY(spritedButtonAnimation) +
-                                        0.00000 * CGRectGetHeight(spritedButtonAnimation))];
-    [bezier5Path closePath];
-    [fillColor setFill];
-    [bezier5Path fill];
-  }
-}
-
 void MDCCatalogDrawSwitchTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -4194,6 +3928,167 @@ void MDCCatalogDrawSwitchTile(CGRect frame) {
                                    43.3, 43.3)];
   [fillColor2 setFill];
   [ovalPath fill];
+}
+
+void MDCCatalogDrawTabsTile(CGRect frame) {
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  UIColor* gradientColor = [UIColor colorWithRed:0.075 green:0.592 blue:0.945 alpha:0.1];
+  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+
+  CGFloat gradientLocations[] = {0, 0.86, 1};
+  CGGradientRef gradient = CGGradientCreateWithColors(
+      colorSpace,
+      (__bridge CFArrayRef)
+          @[ (id)fillColor.CGColor, (id)gradientColor.CGColor, (id)gradientColor.CGColor ],
+      gradientLocations);
+
+  NSShadow* shadow = [[NSShadow alloc] init];
+  [shadow
+      setShadowColor:[fillColor colorWithAlphaComponent:CGColorGetAlpha(fillColor.CGColor) * 0.44]];
+  [shadow setShadowOffset:CGSizeMake(1.1, -0.1)];
+  [shadow setShadowBlurRadius:5];
+
+  CGRect tabsGroup = CGRectMake(CGRectGetMinX(frame) + 24, CGRectGetMinY(frame) + 24.1,
+                                floor((CGRectGetWidth(frame) - 24) * 0.85366 + 0.5),
+                                floor((CGRectGetHeight(frame) - 24.1) * 0.67227 + 23.7) - 23.2);
+
+  CGContextSaveGState(context);
+  CGContextBeginTransparencyLayer(context, NULL);
+
+  UIBezierPath* clip2Path = [UIBezierPath
+      bezierPathWithRect:CGRectMake(CGRectGetMinX(tabsGroup) +
+                                        floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                    CGRectGetMinY(tabsGroup) +
+                                        floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5),
+                                    floor(CGRectGetWidth(tabsGroup) * 1.00000 + 0.5) -
+                                        floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                    floor(CGRectGetHeight(tabsGroup) * 1.00000 + 0.5) -
+                                        floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5))];
+  [clip2Path addClip];
+
+  CGContextSaveGState(context);
+  CGContextSetAlpha(context, 0.1);
+  CGContextBeginTransparencyLayer(context, NULL);
+
+  UIBezierPath* clipPath = [UIBezierPath
+      bezierPathWithRect:CGRectMake(CGRectGetMinX(tabsGroup) +
+                                        floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                    CGRectGetMinY(tabsGroup) +
+                                        floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5),
+                                    floor(CGRectGetWidth(tabsGroup) * 1.00000 + 0.5) -
+                                        floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                    floor(CGRectGetHeight(tabsGroup) * 1.00000 + 0.5) -
+                                        floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5))];
+  [clipPath addClip];
+
+  CGRect rectangleRect =
+      CGRectMake(CGRectGetMinX(tabsGroup) + floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                 CGRectGetMinY(tabsGroup) + floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5),
+                 floor(CGRectGetWidth(tabsGroup) * 1.00000 + 0.5) -
+                     floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                 floor(CGRectGetHeight(tabsGroup) * 1.00000 + 0.5) -
+                     floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5));
+  UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect:rectangleRect];
+  CGContextSaveGState(context);
+  [rectanglePath addClip];
+  CGContextDrawLinearGradient(
+      context, gradient,
+      CGPointMake(CGRectGetMidX(rectangleRect) + 0 * CGRectGetWidth(rectangleRect) / 140,
+                  CGRectGetMidY(rectangleRect) + 18.17 * CGRectGetHeight(rectangleRect) / 88),
+      CGPointMake(CGRectGetMidX(rectangleRect) + 0 * CGRectGetWidth(rectangleRect) / 140,
+                  CGRectGetMidY(rectangleRect) + 41.79 * CGRectGetHeight(rectangleRect) / 88),
+      kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
+  CGContextRestoreGState(context);
+
+  CGContextEndTransparencyLayer(context);
+  CGContextRestoreGState(context);
+  UIBezierPath* tabBarBackgroundRectanglePath = [UIBezierPath
+      bezierPathWithRect:CGRectMake(CGRectGetMinX(tabsGroup) +
+                                        floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                    CGRectGetMinY(tabsGroup) +
+                                        floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5),
+                                    floor(CGRectGetWidth(tabsGroup) * 1.00000 + 0.5) -
+                                        floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                    floor(CGRectGetHeight(tabsGroup) * 0.68182 + 0.5) -
+                                        floor(CGRectGetHeight(tabsGroup) * 0.00000 + 0.5))];
+  [fillColor setFill];
+  [tabBarBackgroundRectanglePath fill];
+
+  UIBezierPath* selectedRectanglePath = [UIBezierPath
+      bezierPathWithRect:CGRectMake(CGRectGetMinX(tabsGroup) +
+                                        floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5),
+                                    CGRectGetMinY(tabsGroup) +
+                                        floor(CGRectGetHeight(tabsGroup) * 0.63636 + 0.5),
+                                    floor(CGRectGetWidth(tabsGroup) * 0.33857 + 0.1) -
+                                        floor(CGRectGetWidth(tabsGroup) * 0.00000 + 0.5) + 0.4,
+                                    floor(CGRectGetHeight(tabsGroup) * 0.68182 + 0.5) -
+                                        floor(CGRectGetHeight(tabsGroup) * 0.63636 + 0.5))];
+  CGContextSaveGState(context);
+  CGContextSetShadowWithColor(context, shadow.shadowOffset, shadow.shadowBlurRadius,
+                              [shadow.shadowColor CGColor]);
+  [fillColor2 setFill];
+  [selectedRectanglePath fill];
+  CGContextRestoreGState(context);
+
+  UIBezierPath* hamburgerBezierPath = [UIBezierPath bezierPath];
+  [hamburgerBezierPath
+      moveToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                              CGRectGetMinY(tabsGroup) + 0.13384 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.13384 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.12122 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.12122 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.13384 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath closePath];
+  [hamburgerBezierPath
+      moveToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                              CGRectGetMinY(tabsGroup) + 0.16541 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.16541 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.15278 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.15278 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.16541 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath closePath];
+  [hamburgerBezierPath
+      moveToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                              CGRectGetMinY(tabsGroup) + 0.19697 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.19697 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.14286 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.18434 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.18434 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath
+      addLineToPoint:CGPointMake(CGRectGetMinX(tabsGroup) + 0.07143 * CGRectGetWidth(tabsGroup),
+                                 CGRectGetMinY(tabsGroup) + 0.19697 * CGRectGetHeight(tabsGroup))];
+  [hamburgerBezierPath closePath];
+  [fillColor2 setFill];
+  [hamburgerBezierPath fill];
+
+  CGContextEndTransparencyLayer(context);
+  CGContextRestoreGState(context);
+  CGGradientRelease(gradient);
+  CGColorSpaceRelease(colorSpace);
 }
 
 void MDCCatalogDrawTypographyTile(CGRect frame) {

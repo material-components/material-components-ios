@@ -1,3 +1,830 @@
+# 22.0.0
+
+## API diffs
+
+### Dialogs
+
+#### Changes
+
+* [Add Dynamic Type support to Alert controller (#1213)](https://github.com/material-components/material-components-ios/commit/9f92b161db6441dfa8b4eacf7dff6d8aced37509) (ianegordon)
+
+### Typography
+
+#### Changes
+
+* [Added bold and italics to the system fontloader and MDCTypographyFontLoader protocol (#1225)](https://github.com/material-components/material-components-ios/commit/975680a9cb34db366f4d95e62a105d7a0300b972) (Randall Li)
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Fix analyzer warnings (#1229)](https://github.com/material-components/material-components-ios/commit/42084cb3b8fa4c9b7deef0120231ec1063a5397a) (ianegordon)
+
+### Buttons
+
+#### Changes
+
+* [Dynamic Type resizing fix (#1213)](https://github.com/material-components/material-components-ios/commit/9f92b161db6441dfa8b4eacf7dff6d8aced37509) (ianegordon)
+
+### Dialogs
+
+#### Changes
+
+* [Add Dynamic Type support to Alert controller (#1213)](https://github.com/material-components/material-components-ios/commit/9f92b161db6441dfa8b4eacf7dff6d8aced37509) (ianegordon)
+
+### Snackbar
+
+#### Changes
+
+* [fix case of UIKit.h (#1223)](https://github.com/material-components/material-components-ios/commit/3f2968b54c738c747c6b9a02ab614d7853b0c406) (yoshisatoyanagisawa)
+
+### Typography
+
+#### Changes
+
+* [Add warning about custom fonts and Dynamic Type (#1224)](https://github.com/material-components/material-components-ios/commit/9bea2218a6a6fa7d3eabf4788e4a49ff52487259) (ianegordon)
+* [Added bold and italics to the system fontloader and MDCTypographyFontLoader protocol (#1225)](https://github.com/material-components/material-components-ios/commit/975680a9cb34db366f4d95e62a105d7a0300b972) (Randall Li)
+* [Fix analyzer warnings (#1229)](https://github.com/material-components/material-components-ios/commit/42084cb3b8fa4c9b7deef0120231ec1063a5397a) (ianegordon)
+* [switch it to a objc test (#1226)](https://github.com/material-components/material-components-ios/commit/64852237037ccd68af02b84e03f085392829ec5e) (Randall Li)
+
+
+# 21.3.0
+
+## API diffs
+
+### Buttons
+
+* [Add Dynamic Type support (#1211)](https://github.com/material-components/material-components-ios/pull/1211) (Ian Gordon)
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [[Project] Clear warnings within project (#1205)](https://github.com/material-components/material-components-ios/commit/95d71cfaac054d9fe88c130617ff963dc4b71ce5) (Justin Shephard)
+
+### Buttons
+
+#### Changes
+
+* [[Button] Add Dynamic Type support (#1211)](https://github.com/material-components/material-components-ios/commit/05d0ad2074d2b4e2a954c6e663ba96798e3efb86) (ianegordon)
+
+### Collections
+
+#### Changes
+
+* [- Updated README docs and example to use collection headers in editing mode (#1193)](https://github.com/material-components/material-components-ios/commit/620b5be1116771e18b3836a44bc806f6a5a3481c) (Justin Shephard)
+
+### NavigationBar
+
+#### Changes
+
+* [[Project] Clear warnings within project (#1205)](https://github.com/material-components/material-components-ios/commit/95d71cfaac054d9fe88c130617ff963dc4b71ce5) (Justin Shephard)
+
+### Snackbar
+
+#### Changes
+
+* [Release voice over's focus on snackbars when they are transient (#1214)](https://github.com/material-components/material-components-ios/commit/2c2592172b323a759af4bdfd969c4be775d95764) (Sam Morrison)
+
+### Tabs
+
+#### Changes
+
+* [[Project] Clear warnings within project (#1205)](https://github.com/material-components/material-components-ios/commit/95d71cfaac054d9fe88c130617ff963dc4b71ce5) (Justin Shephard)
+
+### Typography
+
+#### Changes
+
+* [Silence warning (#1206)](https://github.com/material-components/material-components-ios/commit/cee7266d2fc552f7039baaf8f528171237092b14) (ianegordon)
+
+# 21.2.0
+
+## API diffs
+
+### NavigationBar
+
+* [Added MDCNavigationBarTextColorAccessibilityMutator. (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
+
+## Component changes
+
+### CollectionCells
+
+#### Changes
+
+* [Fix memory leak in Ink and correct issues with ink when re-using cells (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
+
+### Ink
+
+#### Changes
+
+* [Fix memory leak in Ink and correct issues with ink when re-using cells (#1180)](https://github.com/material-components/material-components-ios/commit/5db1b8add5e9e77d9439a973cbc9d2d41188d049) (Justin Shephard)
+
+### NavigationBar
+
+#### Changes
+
+* [Added Accessibility Mutator (#1109)](https://github.com/material-components/material-components-ios/commit/c3d3bd34affdd0d52500682bb3c129995f24eadc) (Justin Shephard)
+
+### Typography
+
+#### Changes
+
+* [Corrects typo in snippet. (#1198)](https://github.com/material-components/material-components-ios/commit/a6b23484bdf25b3f15629693e0e8beb65932791a) (Will Larche)
+
+# 21.1.0
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Revert the button tint color change. (#1196)](https://github.com/material-components/material-components-ios/commit/993edaa5512ce941e5e14e3737945aaa7468b4b5) (Sam Symons)
+
+# 21.0.1
+
+## Fixed podspec so it passes lint.
+
+# 21.0.0
+
+## API diffs
+
+## Minimum iOS version is now 8.0
+
+Given the usage of clients on versions of iOS below 8.0 and the increased power of the APIs available to us on iOS 8, our minimum iOS version is bumped from iOS 7 to 8. 
+
+## New component: Tabs
+
+[Tab component with MDCTabBar (#1164)](https://github.com/material-components/material-components-ios/tree/develop/components/Tabs) is an implementation of the [Material tabs](https://material.io/guidelines/components/tabs.html) used to explore and switch between different views. Try tabs out! (Brian Moore with Will Larche)
+
+## Typography
+
+* [Initial Material Text Style API (#1178)](https://github.com/material-components/material-components-ios/pull/1178) (Ian Gordon)
+
+## Component changes
+
+### ButtonBar
+
+#### Changes
+
+* [Revert "Swift cleanups."](https://github.com/material-components/material-components-ios/commit/7489fca4e4741ae02b406cdaacaf1dae26e19837) (Adrian Secord)
+* [Swift cleanups.](https://github.com/material-components/material-components-ios/commit/129789c601a2bb6b09648af953c5433ebe3cebe0) (Adrian Secord)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Buttons
+
+#### Changes
+
+* [Revert "Swift cleanups."](https://github.com/material-components/material-components-ios/commit/7489fca4e4741ae02b406cdaacaf1dae26e19837) (Adrian Secord)
+* [Swift cleanups.](https://github.com/material-components/material-components-ios/commit/129789c601a2bb6b09648af953c5433ebe3cebe0) (Adrian Secord)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Dialogs
+
+#### Changes
+
+* [Add a non-dismissing example. (#1184)](https://github.com/material-components/material-components-ios/commit/71d188663654744120bb64ef99762a72565365a3) (ianegordon)
+* [Alert body text color to match spec (#1177)](https://github.com/material-components/material-components-ios/commit/e5a9df409b769ae2c861d3f618f45f1913178e47) (ianegordon)
+* [Revert "Swift cleanups."](https://github.com/material-components/material-components-ios/commit/7489fca4e4741ae02b406cdaacaf1dae26e19837) (Adrian Secord)
+* [Swift cleanups.](https://github.com/material-components/material-components-ios/commit/129789c601a2bb6b09648af953c5433ebe3cebe0) (Adrian Secord)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [Fxing the spelling for MaterialNavigationBar.h in include statement. (#1181)](https://github.com/material-components/material-components-ios/commit/59adab3eaa341458339806027fa4ea371a2b7482) (Scott Nichols)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Slider
+
+#### Changes
+
+* [Revert "Swift cleanups."](https://github.com/material-components/material-components-ios/commit/7489fca4e4741ae02b406cdaacaf1dae26e19837) (Adrian Secord)
+* [Swift cleanups.](https://github.com/material-components/material-components-ios/commit/129789c601a2bb6b09648af953c5433ebe3cebe0) (Adrian Secord)
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Snackbar
+
+#### Changes
+
+* [[Swiftlint] Moar swiftlint fixes (#1155)](https://github.com/material-components/material-components-ios/commit/7ff646b58aba753c367bea7c9b7d0325ee61b440) (Adrian Secord)
+
+### Tabs
+
+#### Changes
+
+* [[New Component] Tab component with MDCTabBar (#1164)](https://github.com/material-components/material-components-ios/commit/fd074fca51a06e18b7878973820409695bca05aa) (Brian Moore)
+
+### Typography
+
+#### Changes
+
+* [Initial Material Text Style API (#1178)](https://github.com/material-components/material-components-ios/commit/774d2f03a8175827fcb553176a04784345614b61) (ianegordon)
+
+
+# 20.1.1
+
+## Component changes
+
+### Snackbar
+
+#### Changes
+
+* [Fix glitchy dismissal animation (#1166)](https://github.com/material-components/material-components-ios/pull/1166) (Sam Morrison)
+* [Update file path for private file. (#1168)](https://github.com/material-components/material-components-ios/commit/1effd8ad0cb879048f00972b366bcdf481e3c2b6) (Louis Romero)
+
+# 20.1.0 
+
+## API diffs
+
+### Snackbar
+
+* Message View Styling
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [- Added Modal Presentation App Bar Example (#1153)](https://github.com/material-components/material-components-ios/commit/8ab5505d0e438d7e9a7a31cf9e1ffea113e3be7c) (Justin Shephard)
+* [More SwiftLint fixes for unit tests and example apps. (#1154)](https://github.com/material-components/material-components-ios/commit/8bcb19781cd8387464f46be51cdd72787d3f12ef) (Adrian Secord)
+
+### Buttons
+
+#### Changes
+
+* [More SwiftLint fixes for unit tests and example apps. (#1154)](https://github.com/material-components/material-components-ios/commit/8bcb19781cd8387464f46be51cdd72787d3f12ef) (Adrian Secord)
+
+### Collections
+
+#### Changes
+
+* [Added custom Storyboard cell to the Storyboard example. (#1152)](https://github.com/material-components/material-components-ios/commit/6843303f9d54a5a11a70abae6976f0b4d011636f) (Adrian Secord)
+* [More SwiftLint fixes for unit tests and example apps. (#1154)](https://github.com/material-components/material-components-ios/commit/8bcb19781cd8387464f46be51cdd72787d3f12ef) (Adrian Secord)
+
+### Dialogs
+
+#### Changes
+
+* [More SwiftLint fixes for unit tests and example apps. (#1154)](https://github.com/material-components/material-components-ios/commit/8bcb19781cd8387464f46be51cdd72787d3f12ef) (Adrian Secord)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Build fix: CGFloat casts missing from MDCFeatureHighlightView.m.](https://github.com/material-components/material-components-ios/commit/99d59f3fc6e2be46ebbe93c2784965516615a4ba) (Adrian Secord)
+* [More SwiftLint fixes for unit tests and example apps. (#1154)](https://github.com/material-components/material-components-ios/commit/8bcb19781cd8387464f46be51cdd72787d3f12ef) (Adrian Secord)
+* [[Feature highlight] Dynamically size inner highlight (#1151)](https://github.com/material-components/material-components-ios/commit/771496f6c6044866ea30622006646e7a7193e070) (Sam Morrison)
+
+### FlexibleHeader
+
+#### Changes
+
+* [More SwiftLint fixes for unit tests and example apps. (#1154)](https://github.com/material-components/material-components-ios/commit/8bcb19781cd8387464f46be51cdd72787d3f12ef) (Adrian Secord)
+
+### PageControl
+
+#### Changes
+
+* [More SwiftLint fixes for unit tests and example apps. (#1154)](https://github.com/material-components/material-components-ios/commit/8bcb19781cd8387464f46be51cdd72787d3f12ef) (Adrian Secord)
+
+### Palettes
+
+#### Changes
+
+* [More SwiftLint fixes for unit tests and example apps. (#1154)](https://github.com/material-components/material-components-ios/commit/8bcb19781cd8387464f46be51cdd72787d3f12ef) (Adrian Secord)
+
+### ShadowLayer
+
+#### Changes
+
+* [More SwiftLint fixes for unit tests and example apps. (#1154)](https://github.com/material-components/material-components-ios/commit/8bcb19781cd8387464f46be51cdd72787d3f12ef) (Adrian Secord)
+
+### Snackbar
+
+#### Changes
+
+* [Message View Styling. (#1120)](https://github.com/material-components/material-components-ios/commit/95891e1130e6ee9351d5e7bad8f1ceb68bc22500) (Sean O'Shea)
+
+# 20.0.0
+
+## API changes
+
+### Ink
+
+* Return value of `-[MDCInkTouchController initWithView:]` changed from `nullable instancetype` to `nonnull instancetype`.
+
+### ProgressView
+
+* Added `MDCProgressViewBackwardAnimationMode` enumeration and `-[MDCProgressView backwardProgressAnimationMode]` to control how the progress view acts when its progress value is set to a _smaller_ value than the current value.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+
+### AppBar
+
+#### Changes
+
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [Header stack view in AppBarController (#1121)](https://github.com/material-components/material-components-ios/commit/f2f00b3339da2658366977f8de972d4c8f9a0c31) (Will Larche)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### ButtonBar
+
+#### Changes
+
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### Buttons
+
+#### Changes
+
+* [Update the button’s custom title color when the tint color changes. (#1134)](https://github.com/material-components/material-components-ios/commit/85dd5428f2c20c9ec4ca25bcaf531a20990fe4fa) (Sam Symons)
+* [[Catalog] Center views in the Buttons (Swift and Storyboard) demo (#1126)](https://github.com/material-components/material-components-ios/commit/94a6d589e07dc6565a9f2011f733e9e2848e4b28) (Sam Symons)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### CollectionCells
+
+#### Changes
+
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+* [[ReadMes] - Updated asset name for collection_cells (#1111)](https://github.com/material-components/material-components-ios/commit/c0103fc323d6767b90c91d93aa875a401ed98acf) (Justin Shephard)
+
+### Collections
+
+#### Changes
+
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+
+### Dialogs
+
+#### Changes
+
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+
+### FlexibleHeader
+
+#### Changes
+
+* [- Update tests so as not to have 0 in contentSize (#1146)](https://github.com/material-components/material-components-ios/commit/89e007b7a603785e94e775c8fdf3d2c505901330) (Justin Shephard)
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### HeaderStackView
+
+#### Changes
+
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### Ink
+
+#### Changes
+
+* [Add nonnull to the MDCInkTouchController initializer (#1123)](https://github.com/material-components/material-components-ios/commit/b62b9c0524cc0bb9b54194ef70d464d0fd756e63) (Sam Symons)
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+
+### NavigationBar
+
+#### Changes
+
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [Remove redundant RTL frame adjustment (#1103)](https://github.com/material-components/material-components-ios/commit/ac88e9b297306ea3b08e4e9e1eb1c92185b9eeef) (Junius Gunaratne)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### OverlayWindow
+
+#### Changes
+
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+
+### PageControl
+
+#### Changes
+
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### Palettes
+
+#### Changes
+
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### ProgressView
+
+#### Changes
+
+* [Backward animation support (#1138)](https://github.com/material-components/material-components-ios/commit/26ce625081dea69c947a3383e53128eab0abb7b2) (Sam Symons)
+* [Ran scripts/format_all. (#1141)](https://github.com/material-components/material-components-ios/commit/c6620b9ada62bea7e572412e62f109c0d491e134) (Adrian Secord)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+
+### ShadowLayer
+
+#### Changes
+
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+* [[Scripts] SwiftLint integration (#1129)](https://github.com/material-components/material-components-ios/commit/bb561ac2575b613ff324772e4e0daa8dad0e9e27) (Sam Symons)
+
+### Slider
+
+#### Changes
+
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+
+### Snackbar
+
+#### Changes
+
+* [Fixes layout for SnackbarSuspensionExample (#1098)](https://github.com/material-components/material-components-ios/commit/ae5361cca0cff5aec4699bdf07fb9bdcb6f84f05) (Peter Friese)
+* [Formatted all Objective-C sources with clang-format. (#1133)](https://github.com/material-components/material-components-ios/commit/7ba66bf09ca984649ee30e58363fc6f995bedaca) (Adrian Secord)
+* [Render Snackbar labels correctly for RTL (#1137)](https://github.com/material-components/material-components-ios/commit/7e475358182dcc0cdb8208ad56d94e867244b4d5) (Sam Morrison)
+* [Weakify strongify asynchronously dispatched snackbar view dismissal (#1136)](https://github.com/material-components/material-components-ios/commit/82049abf8f9937e2b2932e3839e56a16fb074e7a) (Sam Morrison)
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+
+### Typography
+
+#### Changes
+
+* [[ReadMes] - First image of each component is too big (#1110)](https://github.com/material-components/material-components-ios/commit/7a194835697bbb7d69832b83f1900de8ade2a8c8) (Justin Shephard)
+
+
+# 19.0.4
+
+This point release changes certain podfiles and instructions to refer to the published pod up at CocoaPods.
+
+# 19.0.3
+
+This point release removes the examples from `private/ThumbTrack`; they didn't follow our normal conventions and was confusing `pod try`.
+
+## API changes
+
+* No API changes in this release.
+
+## Component changes
+
+* No component changes in this release.
+
+# 19.0.2
+
+## API changes
+
+* No API changes in this release.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### AppBar
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### ButtonBar
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### Buttons
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### CollectionCells
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### Collections
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### Ink
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### PageControl
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### Palettes
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### ProgressView
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### ShadowElevations
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### ShadowLayer
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### Slider
+
+#### Changes
+
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+### Typography
+
+#### Changes
+
+* [Remove all references to removed components (#1067)](https://github.com/material-components/material-components-ios/commit/03059189e5c929d877a6fd83d33c1a5614273527) (Adrian Secord)
+* [Removed old refs to API docs. (#1084)](https://github.com/material-components/material-components-ios/commit/e8c45d53942908ceece95bfadbc98db7a92089b0) (Adrian Secord)
+
+# 19.0.1
+
+This point release fixes stale references to MDFFontDiskLoader, MDFSpritedAnimationView, and MDFRobotoFontLoader in our CocoaPods podspec.
+
+## API diffs
+
+None.
+
+## Component changes
+
+### Typography
+
+#### Changes
+
+* [Remove all references to removed components (#1067)](https://github.com/material-components/material-components-ios/commit/3405a9495b57b6f45180847e89f7e3f3d34b7fe1) (Adrian Secord)
+
+# 19.0.0
+
+## API diffs
+
+The following components have been refactored out of MDC into their own repos:
+
+* MDCFontDiskLoader is now [MDFFontDiskLoader](https://github.com/material-foundation/material-font-disk-loader-ios).
+* MDCSpritedAnimationView is now [MDFSpritedAnimationView](https://github.com/material-foundation/material-sprited-animation-view-ios).
+* MDCRobotoFontLoader is now [MDFRobotoFontLoader](https://github.com/material-foundation/material-roboto-font-loader-ios).
+
+> Please note that while [MDC's
+> repo](https://github.com/material-components/material-components-ios) is
+> private, there is no way for
+> [MDFRobotoFontLoader](https://github.com/material-foundation/material-roboto-font-loader-ios/blob/stable/src/MDFRobotoFontLoader.h#L22)
+> to formally depend on
+> [MDCTypographyFontLoading](https://github.com/material-components/material-components-ios/blob/develop/components/Typography/src/MDCTypography.h#L27),
+> even though it informally implements the protocol. This means that
+> MDFRobotoFontLoader can't be used out of the box to configure Typography with
+> Roboto. Once we go public, a pull request to MDFFontDiskLoader will be
+> created to add this convenience. Until that time, you can manually extend
+> your local copy of MDFRobotoFontLoader to declare that it implements
+> MDCTypographyFontLoading. 
+
+### ShadowLayer
+#### MDCShadowLayer
+
+*modified* property: `shadowMaskEnabled` in `MDCShadowLayer`
+
+| Type of change: | declaration |
+|---|---|
+| From: | `@property (assign, readwrite, nonatomic) BOOL shadowMaskEnabled;` |
+| To: | `@property (getter=isShadowMaskEnabled, assign, readwrite, nonatomic)     BOOL shadowMaskEnabled;` |
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### AnimationTiming
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### AppBar
+
+#### Changes
+
+* [- Re-adding NSCoding Support (#1008)](https://github.com/material-components/material-components-ios/commit/9cb3c3055204cb83891eb9c3e3af7d9ea33e36ea) (Justin Shephard)
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### ButtonBar
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Buttons
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Collections
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Dialogs
+
+#### Changes
+
+* [Update README.md (#1028)](https://github.com/material-components/material-components-ios/commit/e648cf361000579ba2bd862257a735d74a66a768) (ianegordon)
+* [[Catalog] Update dialog storyboard to rotate properly (#1031)](https://github.com/material-components/material-components-ios/commit/2cbfa20b1bafc8b4c37de9a43d8a9cea1aca63ae) (ianegordon)
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Ink
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [Adding guidance to NavigationBar's docs about not using center-aligned titles (#1030)](https://github.com/material-components/material-components-ios/commit/9c9d6cee11d1916bb6eb6b2ea895fc8fff5fa758) (Junius Gunaratne)
+* [[AppBar] - Re-adding NSCoding Support (#1008)](https://github.com/material-components/material-components-ios/commit/9cb3c3055204cb83891eb9c3e3af7d9ea33e36ea) (Justin Shephard)
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### OverlayWindow
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### PageControl
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### Palettes
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### ProgressView
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1039)](https://github.com/material-components/material-components-ios/commit/3c4e9055983635c8b0ac9897816771ee864e030f) (Will Larche)
+
+### ShadowElevations
+
+#### Changes
+
+* [Update ShadowElevation and ShadowLayer examples in README.md to Swift 3 (#1041)](https://github.com/material-components/material-components-ios/commit/1696df81a3b272c353caf6d9b242983bc143891e) (Junius Gunaratne)
+
+### ShadowLayer
+
+#### Changes
+
+* [Add NSCoder support.  (Mark 2) (#1045)](https://github.com/material-components/material-components-ios/commit/2c353f82c2eba4261fe5e1403cb6b974501d9a55) (ianegordon)
+* [Initial NSCoding support (#987)](https://github.com/material-components/material-components-ios/commit/4af729a8f3249f6d0511d97cce67a0edd7737747) (ianegordon)
+* [Revert "Initial NSCoding support (#987)"](https://github.com/material-components/material-components-ios/commit/e1f886db71be7b70ff07bf7681526334c766a06b) (Ian Gordon)
+* [Update ShadowElevation and ShadowLayer examples in README.md to Swift 3 (#1041)](https://github.com/material-components/material-components-ios/commit/1696df81a3b272c353caf6d9b242983bc143891e) (Junius Gunaratne)
+* [[Typography] Remove Font Loaders (#1035)](https://github.com/material-components/material-components-ios/commit/0f422df49a48fff7487a71ec2c11297f043f9835) (ianegordon)
+
+### Slider
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1050)](https://github.com/material-components/material-components-ios/commit/ae163f527c87869f8326bd159e74378d34a9bcb6) (Will Larche)
+
+### Snackbar
+
+#### Changes
+
+* [[Readmes] Snippets in Swift 3 (#1050)](https://github.com/material-components/material-components-ios/commit/ae163f527c87869f8326bd159e74378d34a9bcb6) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Remove Font Loaders (#1035)](https://github.com/material-components/material-components-ios/commit/0f422df49a48fff7487a71ec2c11297f043f9835) (ianegordon)
+* [Removed runtime check for MDCRoboto within typography. (#1055)](https://github.com/material-components/material-components-ios/commit/e02c9831365018772d9da1650d8e57e061a55bb9) (Randall Li)
+* [[Readmes] Snippets in Swift 3 (#1050)](https://github.com/material-components/material-components-ios/commit/ae163f527c87869f8326bd159e74378d34a9bcb6) (Will Larche)
+* [updated bare measurements. (#1063)](https://github.com/material-components/material-components-ios/commit/ab0f705a37d28a55a815106e8cbff3d2c49b9896) (Randall Li)
+
 # 18.0.0
 
 ## API diffs

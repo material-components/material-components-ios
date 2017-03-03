@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKIt.h>
+#import <UIKit/UIKit.h>
 
 @class MDCSnackbarMessage;
 @protocol MDCSnackbarSuspensionToken;
@@ -49,7 +49,8 @@
  most commonly when using MDCSnackbarManager inside an application extension. By default, if you use
  MDCSnackbarManager without calling @c setPresentationHostView, the manager will attempt to find a
  suitable view by stepping through the application windows. Explicitly providing a host view is only
- required if you need to manually manage the view hierarchy, or are inside a UIApplication extension.
+ required if you need to manually manage the view hierarchy, or are inside a UIApplication
+ extension.
 
  @note This method must be called from the main thread.
  @note Calling setPresentationHostView will not change the parent of the currently visible message.

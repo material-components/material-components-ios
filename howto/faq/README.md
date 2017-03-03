@@ -6,13 +6,13 @@ Material Design doesn’t imply a specific style. There are many good examples o
 
 ### Can we keep our own branding and styles if we use Material Components for iOS in our app?
 
-Absolutely. Material was developed to be a starting point for designers and developers to enhance their identity. We understand branding is always case by case, so MDC offers a range of components that you can adopt, from highly visual to almost completely structural. 
+Absolutely. Material was developed to be a starting point for designers and developers to enhance their identity. We understand branding is always case by case, so MDC offers a range of components that you can adopt, from highly visual to almost completely structural.
 
 ### We don’t want to use Roboto.
 
 Roboto is not required for Material Design. The Typography component defaults to using Apple's system font.
 
-### Will we risk not being featured by Apple anymore? 
+### Will we risk not being featured by Apple anymore?
 
 Apple features good products with good design. Using Material Design itself is not a reason for an app to be barred from promotion.
 
@@ -24,9 +24,9 @@ Reduced developer time and a consistent design system applied to your UI.
 
 We believe in making great design accessible to developers, and we believe that Material Design can contribute to great design across platforms. This has been available to our internal iOS teams and we are excited to open source it to external developers. In addition, we’re really excited to engage with the iOS developer community and think that Material Design can be better by getting it into the hands of more developers in the open source community.
 
-### We believe that visually coherent UI is very important to our users, so we adhere to Apple's platform design. 
+### We believe that visually coherent UI is very important to our users, so we adhere to Apple's platform design.
 
-We completely agree about coherent UI; Apple's components are a great starting point. MDC offers a set of components that range from structural, programmer-only conveniences to more visually opinionated components such as sliders and switches. The flexible header component is a good example of a UI element that is widely used, complements Apple's native components, and can reduce engineering time by providing a production-ready experience. 
+We completely agree about coherent UI; Apple's components are a great starting point. MDC offers a set of components that range from structural, programmer-only conveniences to more visually opinionated components such as sliders and switches. The flexible header component is a good example of a UI element that is widely used, complements Apple's native components, and can reduce engineering time by providing a production-ready experience.
 
 ### We don't want our iOS app to stand out as looking like a Google app.
 
@@ -40,3 +40,6 @@ We learn about upcoming API breakages in UIKit as early as everyone else through
 
 If you import all the components, the size of your app will increase by about 5.3MB. However, you don't have to add the entire library! You can add as many or as few of the 25+ individual components as you like. And that averages to less than .2MB per component.
 
+### Can we use Material Components for iOS with storyboards?
+
+Yes! Storyboards and nibs/xibs are great places to use Material Components for iOS. Almost every component has support for Interface Builder development that includes IBDesignable. **Note:** IBInspectable support is not supported as it conflicts with UIAppearance support.

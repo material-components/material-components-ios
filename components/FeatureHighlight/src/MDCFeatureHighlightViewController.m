@@ -152,16 +152,17 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   } else {
     _animationController.dismissStyle = MDCFeatureHighlightDismissRejected;
   }
-  [self dismissViewControllerAnimated:YES completion:^() {
-    if (self->_completion) {
-      self->_completion(accepted);
-    }
-  }];
+  [self dismissViewControllerAnimated:YES
+                           completion:^() {
+                             if (self->_completion) {
+                               self->_completion(accepted);
+                             }
+                           }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSString *,id> *)change
+                        change:(NSDictionary<NSString *, id> *)change
                        context:(void *)context {
   if (object == _highlightedView && [keyPath isEqualToString:@"frame"]) {
     CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
@@ -183,8 +184,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   return nil;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)
-    animationControllerForDismissedController:(UIViewController *)dismissed {
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
+        (UIViewController *)dismissed {
   if (dismissed == self) {
     return _animationController;
   }
@@ -192,4 +193,3 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 @end
-

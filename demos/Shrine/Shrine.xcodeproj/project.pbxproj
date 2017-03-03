@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6B0C01BA37AC5D6B39F49F16 /* Pods_Shrine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E79DB3BB3A6DCA8E56C685D /* Pods_Shrine.framework */; };
+		CBAF7A311E1577380022A08F /* ShrineHeaderPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF7A301E1577380022A08F /* ShrineHeaderPage.swift */; };
 		DE064E731C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */; };
 		DE34DEBB1C88E90000E04B65 /* ShrineInkOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE34DEBA1C88E90000E04B65 /* ShrineInkOverlay.swift */; };
 		DE34DEBF1C8A34B100E04B65 /* ShrineHeaderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE34DEBE1C8A34B100E04B65 /* ShrineHeaderContentView.swift */; };
@@ -27,6 +28,7 @@
 		1C7F50E40E35B48C29C884F8 /* Pods-Shrine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.release.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.release.xcconfig"; sourceTree = "<group>"; };
 		2E79DB3BB3A6DCA8E56C685D /* Pods_Shrine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shrine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D22DA7C0F576B707C1CA5BE /* Pods-Shrine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shrine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Shrine/Pods-Shrine.debug.xcconfig"; sourceTree = "<group>"; };
+		CBAF7A301E1577380022A08F /* ShrineHeaderPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineHeaderPage.swift; sourceTree = "<group>"; };
 		DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineFlexibleHeaderContainerViewController.swift; sourceTree = "<group>"; };
 		DE34DEBA1C88E90000E04B65 /* ShrineInkOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineInkOverlay.swift; sourceTree = "<group>"; };
 		DE34DEBE1C8A34B100E04B65 /* ShrineHeaderContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrineHeaderContentView.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				DE064E721C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift */,
 				DE34DEBE1C8A34B100E04B65 /* ShrineHeaderContentView.swift */,
 				DE34DEBA1C88E90000E04B65 /* ShrineInkOverlay.swift */,
+				CBAF7A301E1577380022A08F /* ShrineHeaderPage.swift */,
 			);
 			path = Shrine;
 			sourceTree = "<group>";
@@ -133,6 +136,7 @@
 				DE5D2A401C81068100C9C650 /* Sources */,
 				DE5D2A411C81068100C9C650 /* Frameworks */,
 				DE5D2A421C81068100C9C650 /* Resources */,
+				595187321E1DB4E300AC2110 /* SwiftLint */,
 				D1F846F8DE8314F37D7BCFC1 /* [CP] Embed Pods Frameworks */,
 				E79A83FFB3D723D88B7FB762 /* [CP] Copy Pods Resources */,
 			);
@@ -157,8 +161,8 @@
 				TargetAttributes = {
 					DE5D2A431C81068100C9C650 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = EQHXZ8M8AV;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -196,6 +200,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		595187321E1DB4E300AC2110 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/../../scripts/lint_all";
+		};
 		BD04A4A94E7A074ACE45ED21 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -208,7 +226,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D1F846F8DE8314F37D7BCFC1 /* [CP] Embed Pods Frameworks */ = {
@@ -253,6 +271,7 @@
 				DE5D2A481C81068100C9C650 /* AppDelegate.swift in Sources */,
 				DE5D2A5C1C810E6600C9C650 /* ShrineCollectionViewController.swift in Sources */,
 				DE34DEBF1C8A34B100E04B65 /* ShrineHeaderContentView.swift in Sources */,
+				CBAF7A311E1577380022A08F /* ShrineHeaderPage.swift in Sources */,
 				DE064E731C83D20E00B17776 /* ShrineFlexibleHeaderContainerViewController.swift in Sources */,
 				DE6887F31C84FCD40074A8C5 /* ShrineData.swift in Sources */,
 				DE34DEBB1C88E90000E04B65 /* ShrineInkOverlay.swift in Sources */,
@@ -300,7 +319,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -347,7 +366,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -375,7 +394,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Shrine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = google.com.Shrine;
@@ -392,7 +412,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Shrine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = google.com.Shrine;

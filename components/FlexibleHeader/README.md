@@ -1,7 +1,7 @@
 # Flexible Header
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Flexible Header](docs/assets/flexible_header.png)](docs/assets/flexible_header.mp4)
+<a alt="Flexible Header"><img src="docs/assets/flexible_header.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/flexible_header.mp4" autoplay loop></video></div>{% endif %}-->
 
 The Flexible Header is a container view whose height and vertical offset react to
@@ -13,20 +13,6 @@ UIScrollViewDelegate events.
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
 </ul>
-
-
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/FlexibleHeader/apidocs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
-</ul>
-
-
 
 - - -
 

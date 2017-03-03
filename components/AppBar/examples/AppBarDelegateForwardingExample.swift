@@ -32,7 +32,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
 
     self.appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName : UIColor.white ]
+      [ NSForegroundColorAttributeName: UIColor.white ]
 
     self.addChildViewController(appBar.headerViewController)
 
@@ -77,17 +77,21 @@ class AppBarDelegateForwardingExample: UITableViewController {
     }
   }
 
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
+                                         willDecelerate decelerate: Bool) {
     let headerView = self.appBar.headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
       headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
     }
   }
 
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  override func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                          withVelocity velocity: CGPoint,
+                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let headerView = self.appBar.headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+      headerView.trackingScrollWillEndDragging(withVelocity: velocity,
+                                               targetContentOffset: targetContentOffset)
     }
   }
 
@@ -125,11 +129,11 @@ extension AppBarDelegateForwardingExample {
 }
 
 extension AppBarDelegateForwardingExample {
-  override var childViewControllerForStatusBarHidden : UIViewController? {
+  override var childViewControllerForStatusBarHidden: UIViewController? {
     return appBar.headerViewController
   }
 
-  override var childViewControllerForStatusBarStyle : UIViewController? {
+  override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
   }
 

@@ -1,7 +1,7 @@
 # Shadow Layer
 
 <!--{% if site.link_to_site == "true" %}-->
-[![Shadow Layer](docs/assets/shadow_layer.png)](docs/assets/shadow_layer.mp4)
+<a alt="Shadow Layer"><img src="docs/assets/shadow_layer.png" width="320px"></a>
 <!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/shadow_layer.mp4" autoplay loop></video></div>{% endif %}-->
 
 Shadow Layer implements the Material Design specifications for elevation and shadows.
@@ -36,14 +36,6 @@ shadow that adheres to defined height and light source principles.
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
 </ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/apidocs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/ShadowLayer/apidocs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
-</ul>
-
 
 - - -
 
@@ -99,8 +91,8 @@ Example of a custom button based on UIButton with Material Design shadows:
 #### Swift
 ~~~ swift
 class ShadowButton: UIButton {
-
-  override class func layerClass() -> AnyClass {
+  
+  override class var layerClass: AnyClass {
     return MDCShadowLayer.self
   }
 
@@ -129,11 +121,12 @@ Add the custom button to view:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~ swift
-let button: ShadowButton = ShadowButton.init(type: UIButtonType.System)
+let button: ShadowButton = ShadowButton.init(type: .system)
 button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
-button.setTitle("Button", forState: UIControlState.Normal)
-(button.layer as! MDCShadowLayer).setElevation(6.0)
-self.addSubview(button)
+button.setTitle("Button", for: .normal)
+let buttonLayer = button.layer as! MDCShadowLayer
+buttonLayer.elevation = 6.0
+addSubview(button)
 
 ~~~
 
@@ -143,7 +136,7 @@ ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
 button.frame = CGRectMake(100, 100, 200, 50);
 [button setTitle: @"Button" forState:UIControlStateNormal];
 [(MDCShadowLayer *)button.layer setElevation:6.f];
-[self.view addSubview:button];
+[self addSubview:button];
 
 ~~~
 <!--</div>-->
@@ -156,7 +149,7 @@ Creating a custom UIView with a shadow:
 ~~~ swift
 class ShadowedView: UIView {
 
-  override class func layerClass() -> AnyClass {
+  override class var layerClass: AnyClass {
     return MDCShadowLayer.self
   }
 
@@ -202,8 +195,8 @@ animating or changing size.
 #### Swift
 ~~~ swift
 
-self.layer.shouldRasterize = true;
-self.layer.rasterizationScale = UIScreen.mainScreen().scale
+layer.shouldRasterize = true
+layer.rasterizationScale = UIScreen.main.scale
 
 ~~~
 

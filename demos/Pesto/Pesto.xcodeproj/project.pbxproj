@@ -232,7 +232,7 @@
 				TargetAttributes = {
 					DEBEDF231C3EF5D5004B614B = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = EQHXZ8M8AV;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -309,7 +309,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -449,7 +449,8 @@
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
-				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -479,7 +480,8 @@
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
-				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;

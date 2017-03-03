@@ -36,6 +36,12 @@
 /** Asks the receiver to return a font with a medium weight. */
 - (nonnull UIFont *)mediumFontOfSize:(CGFloat)fontSize;
 
+/** Asks the receiver to return a font with a bold weight. */
+- (nonnull UIFont *)boldFontOfSize:(CGFloat)fontSize;
+
+/** Asks the receiver to return an italic font. */
+- (nonnull UIFont *)italicFontOfSize:(CGFloat)fontSize;
+
 @end
 
 /**
@@ -49,7 +55,7 @@
 
 #pragma mark - Font loader access
 
-/** Set the font loader in order to use a non-Roboto or non-system font. */
+/** Set the font loader in order to use a non-system font. */
 + (void)setFontLoader:(nonnull id<MDCTypographyFontLoading>)fontLoader;
 
 /** Get the current font loader. */

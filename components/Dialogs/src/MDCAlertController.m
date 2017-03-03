@@ -62,6 +62,8 @@ static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
 static const CGFloat MDCDialogActionButtonHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
 
+static const CGFloat MDCDialogMessageOpacity = 0.38f;
+
 @interface MDCAlertController ()
 
 @property(nonatomic, nonnull, strong) NSMutableArray<UIButton *> *actionButtons;
@@ -88,6 +90,8 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
   NSMutableArray<MDCAlertAction *> *_actions;
 
   CGSize _previousLayoutSize;
+
+  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
@@ -164,6 +168,7 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
   [_actions addObject:[action copy]];
 
   MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:action.title forState:UIControlStateNormal];
   // TODO(iangordon): Determine default text color values for Normal and Disabled
   [actionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -183,6 +188,50 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
 
   [self.view setNeedsLayout];
 }
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+
+  // Update any action buttons to match the alert controller.
+  for (MDCButton *actionButton in self.actionButtons) {
+    actionButton.mdc_adjustsFontForContentSizeCategory = adjusts;
+  }
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [self updateFontsForDynamicType];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+  }
+}
+
+// Handles UIContentSizeCategoryDidChangeNotifications
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self updateFontsForDynamicType];
+}
+
+// Update the fonts used based on mdc_preferredFontForMaterialTextStyle and recalculate the
+// preferred content size.
+- (void)updateFontsForDynamicType {
+  self.titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
+  self.messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+
+  // The action MDCButtons handle their own resizing
+
+  // Our presentation controller reacts to changes to preferredContentSize to determine our
+  // frame at the presented controller.
+  self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+}
+
 
 - (void)actionButtonPressed:(id)sender {
   NSInteger actionIndex = [self.actionButtons indexOfObject:sender];
@@ -211,13 +260,22 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
   self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.textAlignment = NSTextAlignmentNatural;
-  self.titleLabel.font = [MDCTypography titleFont];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    self.titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
+  } else {
+    self.titleLabel.font = [MDCTypography titleFont];
+  }
   [self.contentScrollView addSubview:self.titleLabel];
 
   self.messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   self.messageLabel.numberOfLines = 0;
   self.messageLabel.textAlignment = NSTextAlignmentNatural;
-  self.messageLabel.font = [MDCTypography body1Font];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    self.messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  } else {
+    self.messageLabel.font = [MDCTypography body1Font];
+  }
+  self.messageLabel.textColor = [UIColor colorWithWhite:0.0 alpha:MDCDialogMessageOpacity];
   [self.contentScrollView addSubview:self.messageLabel];
 
   self.titleLabel.text = self.title;
@@ -335,13 +393,11 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
     }
     // Handle RTL
     if (self.view.mdc_effectiveUserInterfaceLayoutDirection ==
-        UIUserInterfaceLayoutDirectionRightToLeft){
+        UIUserInterfaceLayoutDirectionRightToLeft) {
       for (UIButton *button in self.actionButtons) {
         CGRect buttonRect = button.frame;
-        CGRect flippedRect =
-            MDCRectFlippedForRTL(buttonRect,
-                                 CGRectGetWidth(self.view.bounds),
-                                 UIUserInterfaceLayoutDirectionRightToLeft);
+        CGRect flippedRect = MDCRectFlippedForRTL(buttonRect, CGRectGetWidth(self.view.bounds),
+                                                  UIUserInterfaceLayoutDirectionRightToLeft);
         button.frame = flippedRect;
       }
     }
@@ -462,7 +518,7 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
         MDCDialogActionsInsets.top + MDCDialogActionButtonHeight + MDCDialogActionsInsets.bottom;
     size.width = MDCDialogActionsInsets.left + MDCDialogActionsInsets.right;
     for (UIButton *button in self.actionButtons) {
-      size.width += button.bounds.size.width;
+      size.width += CGRectGetWidth(button.bounds);
       if (button != [self.actionButtons lastObject]) {
         size.width += MDCDialogActionsHorizontalPadding;
       }
@@ -478,8 +534,8 @@ static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
     size.height = MDCDialogActionsInsets.top + MDCDialogActionsInsets.bottom;
     size.width = MDCDialogActionsInsets.left + MDCDialogActionsInsets.right;
     for (UIButton *button in self.actionButtons) {
-      size.height += button.bounds.size.height;
-      size.width = MAX(size.width, button.bounds.size.width);
+      size.height += CGRectGetHeight(button.bounds);
+      size.width = MAX(size.width, CGRectGetWidth(button.bounds));
       if (button != [self.actionButtons lastObject]) {
         size.height += MDCDialogActionsVerticalPadding;
       }

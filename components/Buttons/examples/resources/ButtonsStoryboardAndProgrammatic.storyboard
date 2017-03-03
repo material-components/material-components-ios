@@ -1,70 +1,99 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rmZ-Mt-scB">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmZ-Mt-scB">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Buttons Storyboard And Programmatic Controller-->
+        <!--Buttons Swift And Storyboard Controller-->
         <scene sceneID="4Dd-I6-MBs">
             <objects>
-                <viewController id="rmZ-Mt-scB" customClass="ButtonsStoryboardAndProgrammaticController" customModule="MaterialComponentsCatalog" sceneMemberID="viewController">
+                <viewController id="rmZ-Mt-scB" customClass="ButtonsSwiftAndStoryboardController" customModule="MaterialComponentsCatalog" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dkA-v6-Opi"/>
                         <viewControllerLayoutGuide type="bottom" id="QjK-x9-gr9"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dz8-vM-Ak5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" customClass="MDCRaisedButton">
-                                <rect key="frame" x="407" y="28" width="173" height="30"/>
-                                <state key="normal" title="Storyboard">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="JuO-kL-5tW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDu-tK-SwC" customClass="MDCFloatingButton">
-                                <rect key="frame" x="478" y="104" width="56" height="56"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="FTx-qa-X3A"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Dc-Q4-b6Z" customClass="MDCFlatButton">
-                                <rect key="frame" x="407" y="66" width="173" height="30"/>
-                                <state key="normal" title="Storyboard">
-                                    <color key="titleColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="D3j-iL-WdR"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISg-pg-Aeq" userLabel="Button Container">
+                                <rect key="frame" x="187.5" y="20" width="187.5" height="647"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VTp-Pq-SmW" userLabel="Inner Button Container">
+                                        <rect key="frame" x="48.5" y="254.5" width="91" height="138"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" customClass="MDCRaisedButton">
+                                                <rect key="frame" x="0.0" y="0.0" width="91" height="34"/>
+                                                <state key="normal" title="Storyboard">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="JuO-kL-5tW"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Dc-Q4-b6Z" customClass="MDCFlatButton">
+                                                <rect key="frame" x="7" y="56" width="77" height="30"/>
+                                                <state key="normal" title="Storyboard">
+                                                    <color key="titleColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="D3j-iL-WdR"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDu-tK-SwC" customClass="MDCFloatingButton">
+                                                <rect key="frame" x="30.5" y="108" width="30" height="30"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="tap:" destination="rmZ-Mt-scB" eventType="touchUpInside" id="FTx-qa-X3A"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="ixI-3k-a3r" firstAttribute="leading" secondItem="VTp-Pq-SmW" secondAttribute="leading" id="FBb-3p-CG8"/>
+                                            <constraint firstAttribute="trailing" secondItem="ixI-3k-a3r" secondAttribute="trailing" id="H0k-Sg-FgP"/>
+                                            <constraint firstAttribute="bottom" secondItem="BDu-tK-SwC" secondAttribute="bottom" id="Ha3-Ha-PXS"/>
+                                            <constraint firstItem="BDu-tK-SwC" firstAttribute="top" secondItem="1Dc-Q4-b6Z" secondAttribute="bottom" constant="22" id="Kt1-XG-qoe"/>
+                                            <constraint firstItem="ixI-3k-a3r" firstAttribute="top" secondItem="VTp-Pq-SmW" secondAttribute="top" id="d6b-wg-hsL"/>
+                                            <constraint firstItem="BDu-tK-SwC" firstAttribute="centerX" secondItem="VTp-Pq-SmW" secondAttribute="centerX" id="myT-KJ-say"/>
+                                            <constraint firstItem="1Dc-Q4-b6Z" firstAttribute="centerX" secondItem="VTp-Pq-SmW" secondAttribute="centerX" id="vqd-tJ-Ycb"/>
+                                            <constraint firstItem="1Dc-Q4-b6Z" firstAttribute="top" secondItem="ixI-3k-a3r" secondAttribute="bottom" constant="22" id="wNB-v5-avy"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="VTp-Pq-SmW" firstAttribute="centerX" secondItem="ISg-pg-Aeq" secondAttribute="centerX" id="1ea-fU-34C"/>
+                                    <constraint firstItem="VTp-Pq-SmW" firstAttribute="centerY" secondItem="ISg-pg-Aeq" secondAttribute="centerY" id="Ucq-pJ-ESS"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.81176470590000005" green="0.90980392160000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.81176470590000005" green="0.90980392160000001" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="1Dc-Q4-b6Z" firstAttribute="top" secondItem="ixI-3k-a3r" secondAttribute="bottom" constant="22" id="BnU-WV-iZC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ixI-3k-a3r" secondAttribute="trailing" id="Gt7-Bm-l2M"/>
-                            <constraint firstItem="BDu-tK-SwC" firstAttribute="top" secondItem="1Dc-Q4-b6Z" secondAttribute="bottom" constant="22" id="JzA-Sk-491"/>
-                            <constraint firstItem="1Dc-Q4-b6Z" firstAttribute="centerX" secondItem="BDu-tK-SwC" secondAttribute="centerX" id="PhP-TV-oLS"/>
-                            <constraint firstItem="ixI-3k-a3r" firstAttribute="centerX" secondItem="1Dc-Q4-b6Z" secondAttribute="centerX" id="WwS-8J-IZN"/>
-                            <constraint firstItem="ixI-3k-a3r" firstAttribute="top" secondItem="dkA-v6-Opi" secondAttribute="bottom" constant="22" id="mIM-Ub-zl9"/>
+                            <constraint firstItem="ISg-pg-Aeq" firstAttribute="width" secondItem="dz8-vM-Ak5" secondAttribute="width" multiplier="0.5" id="19q-Zc-Tgb"/>
+                            <constraint firstItem="ISg-pg-Aeq" firstAttribute="trailing" secondItem="dz8-vM-Ak5" secondAttribute="trailingMargin" constant="16" id="PMn-Bh-3ZY"/>
+                            <constraint firstItem="ISg-pg-Aeq" firstAttribute="top" secondItem="dkA-v6-Opi" secondAttribute="bottom" id="cJX-J8-2o7"/>
+                            <constraint firstItem="QjK-x9-gr9" firstAttribute="top" secondItem="ISg-pg-Aeq" secondAttribute="bottom" id="pC7-ZM-ScF"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="storyboardFlat" destination="1Dc-Q4-b6Z" id="PPS-Ra-xp6"/>
-                        <outlet property="storyboardFloating" destination="BDu-tK-SwC" id="2oe-Ay-yiB"/>
-                        <outlet property="storyboardRaised" destination="ixI-3k-a3r" id="B6n-k5-xTo"/>
+                        <outlet property="storyboardFlat" destination="1Dc-Q4-b6Z" id="tf2-SG-2uQ"/>
+                        <outlet property="storyboardFloating" destination="BDu-tK-SwC" id="AIX-u6-JAL"/>
+                        <outlet property="storyboardRaised" destination="ixI-3k-a3r" id="5z9-aK-IJ5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LO5-z8-Ix6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="443" y="468"/>
+            <point key="canvasLocation" x="442.39999999999998" y="467.3163418290855"/>
         </scene>
     </scenes>
 </document>

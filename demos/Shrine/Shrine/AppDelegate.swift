@@ -22,13 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions
+                   launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
     let flexHeadVC = ShrineFlexibleHeaderContainerViewController()
-    self.window?.rootViewController = flexHeadVC;
-    self.window?.makeKeyAndVisible();
+    self.window?.rootViewController = flexHeadVC
+    self.window?.makeKeyAndVisible()
 
-    MDCIcons.ic_arrow_backUseNewStyle(true);
+    MDCIcons.ic_arrow_backUseNewStyle(true)
 
     return true
   }

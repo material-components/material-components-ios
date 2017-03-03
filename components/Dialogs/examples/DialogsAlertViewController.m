@@ -73,4 +73,67 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
+- (IBAction)didTapNondismissingAlert:(id)sender {
+  NSString *titleString = @"This alert requires an action.";
+  NSString *messageString = @"You can't dismiss it by tapping the background. You must choose "
+    "one of the actions available.";
+
+  MDCAlertController *materialAlertController =
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+
+  MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
+                                                         handler:^(MDCAlertAction *action) {
+                                                           NSLog(@"%@", @"AGREE pressed");
+                                                         }];
+  [materialAlertController addAction:agreeAction];
+
+  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
+                                                            handler:^(MDCAlertAction *action) {
+                                                              NSLog(@"%@", @"DISAGREE pressed");
+                                                            }];
+  [materialAlertController addAction:disagreeAaction];
+
+  // This code accesses the presentation controller and turns off dismiss on background tap.
+  MDCDialogPresentationController *presentationController =
+      materialAlertController.mdc_dialogPresentationController;
+  presentationController.dismissOnBackgroundTap = NO;
+
+  [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
+
+- (IBAction)didTapDynamicAlert:(id)sender {
+  // The following strings are extra verbose to better demonstrate the dynamic handling of an alert.
+  NSString *titleString = @"This alert supports Dynamic Type font sizing.";
+  NSString *messageString =
+      @"You can adjust to size of the font used in the Settings App. Navigate to General -> "
+       "Accessibility -> Larger Text. Yout can drag the slider left and right to adjust the size "
+       "of your fonts to be larger or smaller. We will update the fonts used in this alert to "
+       "match your preference";
+
+  MDCAlertController *materialAlertController =
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
+                                                         handler:^(MDCAlertAction *action) {
+                                                           NSLog(@"%@", @"AGREE pressed");
+                                                         }];
+  [materialAlertController addAction:agreeAction];
+
+  MDCAlertAction *okayAction = [MDCAlertAction actionWithTitle:@"OKAY"
+                                                       handler:^(MDCAlertAction *action) {
+                                                         NSLog(@"%@", @"OKAY pressed");
+                                                       }];
+  [materialAlertController addAction:okayAction];
+
+  MDCAlertAction *acceptAction = [MDCAlertAction actionWithTitle:@"ACCEPT"
+                                                         handler:^(MDCAlertAction *action) {
+                                                           NSLog(@"%@", @"ACCEPT pressed");
+                                                         }];
+  [materialAlertController addAction:acceptAction];
+
+  [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
+
+
 @end

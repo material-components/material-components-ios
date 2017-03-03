@@ -23,8 +23,8 @@ const NSTimeInterval kMDCFeatureHighlightDismissalDuration = 0.2f;
 
 @implementation MDCFeatureHighlightAnimationController
 
-- (NSTimeInterval)
-    transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
+- (NSTimeInterval)transitionDuration:
+        (nullable id<UIViewControllerContextTransitioning>)transitionContext {
   if (self.presenting) {
     return kMDCFeatureHighlightPresentationDuration;
   } else {
@@ -32,7 +32,7 @@ const NSTimeInterval kMDCFeatureHighlightDismissalDuration = 0.2f;
   }
 }
 
-- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   UIViewController *toViewController =
       [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
@@ -67,25 +67,25 @@ const NSTimeInterval kMDCFeatureHighlightDismissalDuration = 0.2f;
     }
   }
   [UIView animateWithDuration:transitionDuration
-                        delay:0.0
-                      options:UIViewAnimationOptionBeginFromCurrentState
-                   animations:^{
-                     // We have to perform an animation on highlightView in this block or else UIKit
-                     // will not know we are performing an animation and will cancel our
-                     // CAAnimations.
-                     if (self.presenting) {
-                       [highlightView layoutAppearing];
-                     } else {
-                       [highlightView layoutDisappearing];
-                     }
-                   }
-                   completion:^(BOOL finished) {
-                     // If we're dismissing, remove the highlight view from the hierarchy
-                     if (!self.presenting) {
-                       [fromView removeFromSuperview];
-                     }
-                     [transitionContext completeTransition:YES];
-                   }];
+      delay:0.0
+      options:UIViewAnimationOptionBeginFromCurrentState
+      animations:^{
+        // We have to perform an animation on highlightView in this block or else UIKit
+        // will not know we are performing an animation and will cancel our
+        // CAAnimations.
+        if (self.presenting) {
+          [highlightView layoutAppearing];
+        } else {
+          [highlightView layoutDisappearing];
+        }
+      }
+      completion:^(BOOL finished) {
+        // If we're dismissing, remove the highlight view from the hierarchy
+        if (!self.presenting) {
+          [fromView removeFromSuperview];
+        }
+        [transitionContext completeTransition:YES];
+      }];
 }
 
 @end

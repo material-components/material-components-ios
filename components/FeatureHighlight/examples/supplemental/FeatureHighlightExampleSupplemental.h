@@ -21,6 +21,8 @@
 @interface FeatureHighlightTypicalUseViewController : UIViewController
 @property(nonatomic) UILabel *infoLabel;
 @property(nonatomic) UIButton *button;
+
+- (void)didTapButton:(id)sender;
 @end
 
 @interface FeatureHighlightColorExample : MDCCollectionViewController

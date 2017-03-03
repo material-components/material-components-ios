@@ -35,7 +35,7 @@ find components -type d -name 'src' | while read path; do
     continue;
   fi
   
-  if [ $(git log --pretty=oneline --no-merges origin/master..release-candidate $folder \
+  if [ $(git log --pretty=oneline --no-merges origin/stable..release-candidate $folder \
          | wc -l) == "0" ]; then
     continue
   fi
@@ -44,7 +44,7 @@ find components -type d -name 'src' | while read path; do
     git log \
       --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
       --no-merges \
-      origin/master..release-candidate \
+      origin/stable..release-candidate \
       $folder
   }
 

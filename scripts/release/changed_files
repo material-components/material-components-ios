@@ -25,6 +25,6 @@ if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
   exit 1
 fi
 
-git diff --name-status --diff-filter=ADR origin/master..release-candidate \
+git diff --name-status --diff-filter=ADR origin/stable..release-candidate \
   | grep "components/" \
   | grep "src/"

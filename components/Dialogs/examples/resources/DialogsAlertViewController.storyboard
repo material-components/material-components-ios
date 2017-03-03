@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="o5b-mD-WeU">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="o5b-mD-WeU">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
     </dependencies>
     <scenes>
         <!--AlertController-->
@@ -17,8 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Svl-rE-K5t" customClass="MDCRaisedButton">
-                                <rect key="frame" x="244" y="283" width="112" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Svl-rE-K5t" customClass="MDCRaisedButton">
+                                <rect key="frame" x="104" y="181" width="112" height="34"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" title="SHOW ALERT">
@@ -28,8 +29,8 @@
                                     <action selector="didTapShowAlert:" destination="o5b-mD-WeU" eventType="touchUpInside" id="TB7-z5-8hF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RB8-BC-9uM" customClass="MDCRaisedButton">
-                                <rect key="frame" x="222" y="325" width="157" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RB8-BC-9uM" customClass="MDCRaisedButton">
+                                <rect key="frame" x="82" y="223" width="157" height="34"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" title="SHOW LONG ALERT">
@@ -39,19 +40,45 @@
                                     <action selector="didTapShowLongAlert:" destination="o5b-mD-WeU" eventType="touchUpInside" id="icX-jQ-ycZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lpe-1x-D8T" customClass="MDCRaisedButton">
+                                <rect key="frame" x="59" y="265" width="202" height="34"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                <state key="normal" title="NON-DISMISSABLE ALERT">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapNondismissingAlert:" destination="o5b-mD-WeU" eventType="touchUpInside" id="Oqc-9S-GGz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vqx-6W-SeA" customClass="MDCRaisedButton">
+                                <rect key="frame" x="93" y="307" width="134" height="34"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                <state key="normal" title="DYNAMIC ALERT">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapDynamicAlert:" destination="o5b-mD-WeU" eventType="touchUpInside" id="6oS-Px-lRF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Svl-rE-K5t" firstAttribute="centerX" secondItem="PBd-In-ziF" secondAttribute="centerX" id="0oQ-Er-bhQ"/>
                             <constraint firstItem="RB8-BC-9uM" firstAttribute="centerX" secondItem="PBd-In-ziF" secondAttribute="centerX" id="4b5-3V-R3n"/>
+                            <constraint firstItem="RB8-BC-9uM" firstAttribute="centerY" secondItem="PBd-In-ziF" secondAttribute="centerY" id="8fo-2n-kci"/>
+                            <constraint firstItem="Svl-rE-K5t" firstAttribute="centerX" secondItem="PBd-In-ziF" secondAttribute="centerX" id="IOo-f3-1Bq"/>
+                            <constraint firstItem="Lpe-1x-D8T" firstAttribute="centerX" secondItem="PBd-In-ziF" secondAttribute="centerX" id="IrQ-8G-4hy"/>
                             <constraint firstItem="RB8-BC-9uM" firstAttribute="top" secondItem="Svl-rE-K5t" secondAttribute="bottom" constant="8" id="LX0-rg-GuH"/>
-                            <constraint firstItem="Svl-rE-K5t" firstAttribute="centerY" secondItem="PBd-In-ziF" secondAttribute="centerY" id="yrF-oh-eTk"/>
+                            <constraint firstItem="Lpe-1x-D8T" firstAttribute="top" secondItem="RB8-BC-9uM" secondAttribute="bottom" constant="8" id="Pf3-xA-Bp8"/>
+                            <constraint firstItem="Vqx-6W-SeA" firstAttribute="top" secondItem="Lpe-1x-D8T" secondAttribute="bottom" constant="8" id="Qow-kh-dBb"/>
+                            <constraint firstItem="Vqx-6W-SeA" firstAttribute="centerX" secondItem="PBd-In-ziF" secondAttribute="centerX" id="p8h-et-6gM"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hRQ-Ai-YYv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="484" y="494"/>
+            <point key="canvasLocation" x="483.75" y="493.75"/>
         </scene>
     </scenes>
 </document>

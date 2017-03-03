@@ -406,14 +406,14 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   if (animated) {
     // Invalidate current layout while allowing animation to new layout.
     [UIView animateWithDuration:0
-                     animations:^{
-                       [_collectionView.collectionViewLayout invalidateLayout];
-                     }
-                     completion:^(BOOL finished) {
-                       if (completion) {
-                         completion(finished);
-                       }
-                     }];
+        animations:^{
+          [_collectionView.collectionViewLayout invalidateLayout];
+        }
+        completion:^(BOOL finished) {
+          if (completion) {
+            completion(finished);
+          }
+        }];
   } else {
     _shouldInvalidateLayout = YES;
 

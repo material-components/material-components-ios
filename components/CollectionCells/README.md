@@ -1,6 +1,6 @@
 # Collection Cells
 
-![Collections](docs/assets/collections_screenshot.png)
+<a alt="Collection Cells"><img src="docs/assets/collection_cells.png" width="320px"></a>
 <!--{: .ios-screenshot .right }-->
 
 Collection view cell classes that adhere to Material Design layout and styling.
@@ -10,13 +10,6 @@ Collection view cell classes that adhere to Material Design layout and styling.
 
 <ul class="icon-list">
   <li class="icon-link"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
-</ul>
-
-### API Documentation
-
-<ul class="icon-list">
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/CollectionCells/apidocs/Classes/MDCCollectionViewCell.html">MDCCollectionViewCell</a></li>
-  <li class="icon-link"><a href="https://material-ext.appspot.com/mdc-ios-preview/components/CollectionCells/apidocs/Classes/MDCCollectionViewTextCell.html">MDCCollectionViewTextCell</a></li>
 </ul>
 
 - - -

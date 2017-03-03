@@ -19,6 +19,7 @@
 static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 5;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
+static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 
 @implementation CollectionsEditingExample {
   NSMutableArray *_content;
@@ -37,6 +38,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   // Register cell class.
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
+  // Optional
+  // Register section header class
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                 withReuseIdentifier:HEADER_REUSE_IDENTIFIER];
 
   // Populate content.
   _content = [NSMutableArray array];
@@ -87,6 +93,35 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+           viewForSupplementaryElementOfKind:(NSString *)kind
+                                 atIndexPath:(NSIndexPath *)indexPath
+{
+
+  // Must include below code snippet
+  //TODO: (shepj) Pending fix for
+  // https://github.com/material-components/material-components-ios/issues/1208
+  // we must call super which registers classes for supplemental header and footer in editing mode
+  UICollectionReusableView *supplementaryView = [super collectionView:collectionView
+                                    viewForSupplementaryElementOfKind:kind
+                                                          atIndexPath:indexPath];
+  if (supplementaryView) {
+    return supplementaryView;
+  }
+
+  MDCCollectionViewTextCell *sectionHeader =
+      [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                         withReuseIdentifier:HEADER_REUSE_IDENTIFIER
+                                                forIndexPath:indexPath];
+
+  if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+    sectionHeader.textLabel.text =
+        [NSString stringWithFormat:@"Section %lu Header", indexPath.section];
+  }
+
+  return sectionHeader;
+}
+
 #pragma mark - <MDCCollectionViewEditingDelegate>
 
 - (BOOL)collectionViewAllowsEditing:(UICollectionView *)collectionView {
@@ -126,6 +161,14 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     [_content[indexPath.section] removeObjectAtIndex:indexPath.item];
     [_content[newIndexPath.section] insertObject:movedObject atIndex:newIndexPath.item];
   }
+}
+
+#pragma mark UICollectionViewFlowLayoutDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+    referenceSizeForHeaderInSection:(NSInteger)section {
+  return CGSizeMake(collectionView.bounds.size.width, MDCCellDefaultOneLineHeight);
 }
 
 @end
