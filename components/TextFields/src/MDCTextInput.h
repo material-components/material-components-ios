@@ -29,8 +29,6 @@
    - https://github.com/adamwaite/Validator
  */
 
-@protocol MDCTextInput;
-
 /** Common API for Material Design themed text inputs. */
 @protocol MDCTextInput <NSObject>
 
@@ -43,11 +41,21 @@
 /** The color of the text in the input. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
+#pragma mark - Uapproved API
+/**
+ The text string of the placeholder label.
+
+ This is a convenience for backwards compatibility. It maps to returning the .text of the 
+ placeholder label.
+ */
+@property(nonatomic, nullable, copy) NSString *placeholder;
+#pragma mark - Approved API
+
 /**
  The label displaying text when no input text has been entered. The Material Design guidelines call
  this 'Hint text.'
  */
-@property(nonatomic, nonnull, strong, readonly) UILabel *placeholderLabel;
+@property(nonatomic, nonnull, strong, readonly) IBInspectable UILabel *placeholderLabel;
 
 /**
  The label on the trailing side under the input.
@@ -55,14 +63,14 @@
  This will usually be used for placeholder text to be displayed when no text has been entered. The
  Material Design guidelines call this 'Helper text.'
  */
-@property(nonatomic, nonnull, strong, readonly) UILabel *leadingUnderlineLabel NS_SWIFT_NAME(leadingLabel);
+@property(nonatomic, nonnull, strong, readonly) IBInspectable UILabel *leadingUnderlineLabel NS_SWIFT_NAME(leadingLabel);
 
 /**
  The label on the trailing side under the input.
 
  This will usually be for the character count / limit.
  */
-@property(nonatomic, nonnull, strong, readonly) UILabel *trailingUnderlineLabel NS_SWIFT_NAME(trailingLabel);
+@property(nonatomic, nonnull, strong, readonly) IBInspectable UILabel *trailingUnderlineLabel NS_SWIFT_NAME(trailingLabel);
 
 /**
  The color applied to the underline.

@@ -108,6 +108,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return self;
 }
 
+- (instancetype)initWithInput:(UIView<MDCTextInput> *)input {
+  self = [super init];
+  if (self) {
+    _textInput = input;
+  }
+  return self;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.errorColor forKey:MDCTextInputBehaviorErrorColorKey];
   // TODO(larche) All properties

@@ -126,6 +126,15 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @property(nonatomic, assign)
     MDCTextInputPresentationStyle presentationStyle NS_SWIFT_NAME(presentation);
 
+#pragma mark - Unapproved API
+/**
+ Convenience init. Never fails.
+
+ @param input An MDCTextInput this behavior will manage.
+ */
+- (nonnull instancetype)initWithInput:(nullable UIView <MDCTextInput> *)input;
+#pragma mark - Approved API
+
 /**
  Sets the state of the controller by setting the values of properties errorText and
  errorAccessibilityValue.

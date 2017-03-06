@@ -160,10 +160,10 @@ PODS:
     - MaterialComponents/Ink
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/TextFields (21.2.0):
+  - MaterialComponents/TextFields (21.3.0):
     - MaterialComponents/Palettes
     - MaterialComponents/Typography
-  - MaterialComponents/Typography (21.2.0):
+  - MaterialComponents/Typography (21.3.0):
     - MaterialComponents/private/Application
   - MDFTextAccessibility (1.2.0)
 

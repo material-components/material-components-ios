@@ -16,7 +16,7 @@
 
 import UIKit
 
-import MaterialComponents.MaterialTextFields
+import MaterialComponents.MaterialTextField
 
 class TextFieldSwiftExample: UIViewController {
 
@@ -31,15 +31,20 @@ class TextFieldSwiftExample: UIViewController {
     view.addSubview(textField)
     view.addSubview(textView)
 
+    let textFieldBehavior = MDCTextInputBehavior(input: textField)
+
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.placeholder = "This is a text field"
     textField.delegate = self
-    textField.presentation = .floatingPlaceholder
+
+    textFieldBehavior.presentation = .floatingPlaceholder
+
+    let textViewBehavior = MDCTextInputBehavior(input: textView)
 
     textView.translatesAutoresizingMaskIntoConstraints = false
-    textView.placeholder = "This is a text view"
+    //textView.placeholderLabel.text = "This is a text view"
     textView.delegate = self
-    textView.presentation = .default
+    textViewBehavior.presentation = .default
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|-100-[textField]-[textView]",
                                                                options: [.alignAllTrailing, .alignAllLeading],
