@@ -29,7 +29,7 @@
 typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
   /**
    Default style with an inline placeholder (that disappears when text is entered) and character
-   count / limit below text.
+   count / max below text.
    */
   MDCTextInputPresentationStyleDefault = 0,
 
@@ -92,19 +92,21 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
     ;
 
 /**
- The character limit for the text input. A label under the input counts characters entered and
- presents the count / the limit.
+ The character count maximum for the text input. A label under the input counts characters entered 
+ and presents the count / the max.
 
- If character count / limit has been hidden by the characterCountViewMode
+ If character count / max has been hidden by the characterCountViewMode
  (ie: UITextFieldViewModeNever) changing the value of characterLimit has no effect.
 
- If the character count goes above its limit, the underline, the character count / limit label and
+ If the character count goes above its max, the underline, the character count / max label and
  any floating placeholder label all turn to the error color; the text input will be in error state.
  Note: setErrorText:errorAccessibilityValue: also sets these MDCTextInput properties.
  
+ There is no support for a minimum character count.
+
  Default is 0.
  */
-@property(nonatomic, assign) IBInspectable NSUInteger characterLimit;
+@property(nonatomic, assign) IBInspectable NSUInteger characterCountMax;
 
 /**
  The color applied to the placeholder when floating. However, when in error state, it will be
