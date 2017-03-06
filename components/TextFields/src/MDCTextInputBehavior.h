@@ -82,7 +82,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
     characterCounter;
 
 /**
- Controls when the character count will be shown.
+ Controls when the character count will be shown and therefore whether character counting determines
+ error state.
 
  Default is UITextFieldViewModeNever.
  */
@@ -92,6 +93,16 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 /**
  The character limit for the text input. A label under the input counts characters entered and
  presents the count / the limit.
+
+ If character count / limit has been hidden by the characterCountViewMode
+ (ie: UITextFieldViewModeNever) changing the value of characterLimit has no effect.
+
+ When using error text: error state is determined by whether error text is set OR (inclusive
+ OR) the character count is over the limit. If the character count goes above its limit, the
+ underline, the character count / limit label and any floating placeholder label all turn to the
+ error color; the text input will be in error state. This happens regardless of whether or not error
+ text is set with setErrorText:errorAccessibilityValue:. Logic:  errorText != nil ||
+ ((character count > characterLimit) && (characterCountViewMode > UITextFieldViewModeNever))
 
  Default is 0.
  */
@@ -155,6 +166,12 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  count in the errorColor.
 
  Setting errorAccessibilityValue when errorText == nil has no effect.
+
+ When using character limits: error state is determined by whether error text is set OR (inclusive
+ OR) the character count is over the limit. If the character count goes above its limit, the
+ underline, the character count / limit label and any floating placeholder label all turn to the
+ error color; the text input will be in error state. This happens regardless of whether or not error
+ text is set with this method.
  */
 - (void)setErrorText:(nullable NSString *)errorText
     errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue
