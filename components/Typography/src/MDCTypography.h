@@ -36,13 +36,13 @@
 /** Asks the receiver to return a font with a medium weight. */
 - (nonnull UIFont *)mediumFontOfSize:(CGFloat)fontSize;
 
+@optional
+
 /** Asks the receiver to return a font with a bold weight. */
 - (nonnull UIFont *)boldFontOfSize:(CGFloat)fontSize;
 
 /** Asks the receiver to return an italic font. */
 - (nonnull UIFont *)italicFontOfSize:(CGFloat)fontSize;
-
-@optional
 
 /**
  Asks the receiver to determine if a particular font would be considered "large" for the purposes of
