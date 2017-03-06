@@ -38,3 +38,12 @@
 - (NSUInteger)characterCountForTextInput:(UIView<MDCTextInput> *)textInput;
 
 @end
+
+/** 
+ The default character counter.
+ 
+ MDCTextInputAllCharactersCounter is naive (counts each character regardless of context). 
+ */
+@interface MDCTextInputAllCharactersCounter : NSObject <MDCTextInputCharacterCounter>
+
+@end

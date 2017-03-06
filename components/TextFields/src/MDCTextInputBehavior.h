@@ -17,6 +17,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCTextInputAllCharactersCounter;
+
 @protocol MDCTextInput;
 @protocol MDCTextInputCharacterCounter;
 
@@ -72,13 +74,12 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
     UI_APPEARANCE_SELECTOR;
 
 /**
- Optional, custom character counter.
+ The character counter. Override to use a custom character counter.
 
- Instead of relying on the default character count which is naive (counts each character regardless
- of context), this object can instead choose to do sophisticated counting (ie: ignoring whitespace,
- ignoring url strings, etc).
+ Default is an internal instance MDCTextInputAllCharactersCounter. Setting this property to null 
+ will reset it to return that instance.
  */
-@property(nonatomic, nullable, weak) IBInspectable id<MDCTextInputCharacterCounter>
+@property(nonatomic, null_resettable, weak) IBInspectable id<MDCTextInputCharacterCounter>
     characterCounter;
 
 /**
