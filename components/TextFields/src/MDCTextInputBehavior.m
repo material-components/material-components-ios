@@ -86,8 +86,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 @implementation MDCTextInputBehavior
 
-@synthesize characterLimit = _characterLimit;
-
+@synthesize characterCountMax = _characterCountMax;
 @synthesize presentationStyle = _presentationStyle;
 
 - (instancetype)init {
@@ -152,14 +151,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                       object:self];
 }
 
-
 #pragma mark - Properties Implementation
 
 - (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
   if (_presentationStyle != presentationStyle) {
     _presentationStyle = presentationStyle;
-    [self removeCharacterCountLimit];
-    [self updateCharacterCountLimit];
+    [self removeCharacterCountMax];
+    [self updateCharacterCountMax];
     if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
       self.textInput.underlineColor = [UIColor clearColor];
     }
@@ -167,7 +165,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 }
 
-#pragma mark - Character Limit Implementation
+#pragma mark - Character Max Implementation
 
 - (NSUInteger)characterCount {
   return self.characterCounter ? [self.characterCounter characterCountForTextInput:self.textInput]
@@ -177,43 +175,43 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)setCharacterCounter:(id<MDCTextInputCharacterCounter>)characterCounter {
   if (_characterCounter != characterCounter) {
     _characterCounter = characterCounter;
-    [self updateCharacterCountLimit];
+    [self updateCharacterCountMax];
   }
 }
 
-- (void)setCharacterLimit:(NSUInteger)characterLimit {
-  if (_characterLimit != characterLimit) {
-    _characterLimit = characterLimit;
-    [self updateCharacterCountLimit];
+- (void)setCharacterCountMax:(NSUInteger)characterCountMax {
+  if (_characterCountMax != characterCountMax) {
+    _characterCountMax = characterCountMax;
+    [self updateCharacterCountMax];
   }
 }
 
-- (CGRect)characterLimitFrame {
+- (CGRect)characterMaxFrame {
   CGRect bounds = self.textInput.bounds;
   if (CGRectIsEmpty(bounds)) {
     return bounds;
   }
 
-  CGRect characterLimitFrame = CGRectZero;
-  characterLimitFrame.size = [self.textInput.trailingUnderlineLabel sizeThatFits:bounds.size];
+  CGRect characterMaxFrame = CGRectZero;
+  characterMaxFrame.size = [self.textInput.trailingUnderlineLabel sizeThatFits:bounds.size];
   if ([self shouldLayoutForRTL]) {
-    characterLimitFrame.origin.x = 0.0f;
+    characterMaxFrame.origin.x = 0.0f;
   } else {
-    characterLimitFrame.origin.x = CGRectGetMaxX(bounds) - CGRectGetWidth(characterLimitFrame);
+    characterMaxFrame.origin.x = CGRectGetMaxX(bounds) - CGRectGetWidth(characterMaxFrame);
   }
 
   // If its single line full width, position on the line.
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && ![self.textInput isKindOfClass:[UITextView class]]) {
-    characterLimitFrame.origin.y =
-    CGRectGetMidY(bounds) - CGRectGetHeight(characterLimitFrame) / 2.0f;
+    characterMaxFrame.origin.y =
+    CGRectGetMidY(bounds) - CGRectGetHeight(characterMaxFrame) / 2.0f;
   } else {
-    characterLimitFrame.origin.y = CGRectGetMaxY(bounds) - CGRectGetHeight(characterLimitFrame);
+    characterMaxFrame.origin.y = CGRectGetMaxY(bounds) - CGRectGetHeight(characterMaxFrame);
   }
 
-  return characterLimitFrame;
+  return characterMaxFrame;
 }
 
-- (void)removeCharacterCountLimit {
+- (void)removeCharacterCountMax {
   self.textInput.hidden = YES;
 }
 
@@ -223,16 +221,16 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 
-- (void)updateCharacterCountLimit {
-  if (!self.characterLimit || !self.textInput.isEditing) {
-    [self removeCharacterCountLimit];
+- (void)updateCharacterCountMax {
+  if (!self.characterCountMax || !self.textInput.isEditing) {
+    [self removeCharacterCountMax];
     return;
   }
 
-  BOOL pastLimit = [self characterCount] > self.characterLimit;
+  BOOL pastMax = [self characterCount] > self.characterCountMax;
 
   UIColor *textColor = MDCTextInputInlinePlaceholderTextColor();
-  if (pastLimit && self.textInput.isEditing) {
+  if (pastMax && self.textInput.isEditing) {
     textColor = MDCTextInputTextErrorColor();
   }
 
@@ -240,7 +238,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   [self.textInput.trailingUnderlineLabel sizeToFit];
 
 //  [self.textInput insertSubview:self.textInput.trailingUnderlineLabel aboveSubview:self.titleView];
-//  [self.textInput.underlineView setErroneous:pastLimit];
+//  [self.textInput.underlineView setErroneous:pastMax];
 }
 
 // TODO(larche) Add back in properly.
@@ -415,7 +413,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)textFieldDidChange:(NSNotification *)note {
     [self updatePlaceholderAlpha];
-    [self updateCharacterCountLimit];
+    [self updateCharacterCountMax];
 }
 
 #pragma mark - Public API

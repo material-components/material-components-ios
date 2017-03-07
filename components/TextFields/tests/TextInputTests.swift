@@ -26,7 +26,7 @@ class TextInputTests: XCTestCase {
     XCTAssertNotNil(textField.trailingLabel)
     XCTAssertNotNil(textField.placeholderLabel)
 
-    let behavior = MDCTextInputBehavior(textField)
+    let behavior = MDCTextInputBehavior(input: textField)
 
     
   }
