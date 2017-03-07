@@ -1,34 +1,34 @@
 PODS:
   - CatalogByConvention (2.0.0)
   - EarlGrey (1.7.1)
-  - MaterialComponents (21.3.0):
-    - MaterialComponents/ActivityIndicator (= 21.3.0)
-    - MaterialComponents/AnimationTiming (= 21.3.0)
-    - MaterialComponents/AppBar (= 21.3.0)
-    - MaterialComponents/ButtonBar (= 21.3.0)
-    - MaterialComponents/Buttons (= 21.3.0)
-    - MaterialComponents/CollectionCells (= 21.3.0)
-    - MaterialComponents/CollectionLayoutAttributes (= 21.3.0)
-    - MaterialComponents/Collections (= 21.3.0)
-    - MaterialComponents/Dialogs (= 21.3.0)
-    - MaterialComponents/FeatureHighlight (= 21.3.0)
-    - MaterialComponents/FlexibleHeader (= 21.3.0)
-    - MaterialComponents/HeaderStackView (= 21.3.0)
-    - MaterialComponents/Ink (= 21.3.0)
-    - MaterialComponents/NavigationBar (= 21.3.0)
-    - MaterialComponents/OverlayWindow (= 21.3.0)
-    - MaterialComponents/PageControl (= 21.3.0)
-    - MaterialComponents/Palettes (= 21.3.0)
-    - MaterialComponents/private (= 21.3.0)
-    - MaterialComponents/ProgressView (= 21.3.0)
-    - MaterialComponents/ShadowElevations (= 21.3.0)
-    - MaterialComponents/ShadowLayer (= 21.3.0)
-    - MaterialComponents/Slider (= 21.3.0)
-    - MaterialComponents/Snackbar (= 21.3.0)
-    - MaterialComponents/Tabs (= 21.3.0)
-    - MaterialComponents/TextFields (= 21.3.0)
-    - MaterialComponents/Typography (= 21.3.0)
-  - MaterialComponents/ActivityIndicator (21.3.0):
+  - MaterialComponents (22.0.0):
+    - MaterialComponents/ActivityIndicator (= 22.0.0)
+    - MaterialComponents/AnimationTiming (= 22.0.0)
+    - MaterialComponents/AppBar (= 22.0.0)
+    - MaterialComponents/ButtonBar (= 22.0.0)
+    - MaterialComponents/Buttons (= 22.0.0)
+    - MaterialComponents/CollectionCells (= 22.0.0)
+    - MaterialComponents/CollectionLayoutAttributes (= 22.0.0)
+    - MaterialComponents/Collections (= 22.0.0)
+    - MaterialComponents/Dialogs (= 22.0.0)
+    - MaterialComponents/FeatureHighlight (= 22.0.0)
+    - MaterialComponents/FlexibleHeader (= 22.0.0)
+    - MaterialComponents/HeaderStackView (= 22.0.0)
+    - MaterialComponents/Ink (= 22.0.0)
+    - MaterialComponents/NavigationBar (= 22.0.0)
+    - MaterialComponents/OverlayWindow (= 22.0.0)
+    - MaterialComponents/PageControl (= 22.0.0)
+    - MaterialComponents/Palettes (= 22.0.0)
+    - MaterialComponents/private (= 22.0.0)
+    - MaterialComponents/ProgressView (= 22.0.0)
+    - MaterialComponents/ShadowElevations (= 22.0.0)
+    - MaterialComponents/ShadowLayer (= 22.0.0)
+    - MaterialComponents/Slider (= 22.0.0)
+    - MaterialComponents/Snackbar (= 22.0.0)
+    - MaterialComponents/Tabs (= 22.0.0)
+    - MaterialComponents/TextFields (= 22.0.0)
+    - MaterialComponents/Typography (= 22.0.0)
+  - MaterialComponents/ActivityIndicator (22.0.0):
     - MaterialComponents/private/Application
     - MaterialComponents/private/RTL
   - MaterialComponents/AnimationTiming (23.0.2)
@@ -160,10 +160,10 @@ PODS:
     - MaterialComponents/Ink
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/TextFields (21.3.0):
+  - MaterialComponents/TextFields (22.0.0):
     - MaterialComponents/Palettes
     - MaterialComponents/Typography
-  - MaterialComponents/Typography (21.3.0):
+  - MaterialComponents/Typography (22.0.0):
     - MaterialComponents/private/Application
   - MDFTextAccessibility (1.2.0)
 
