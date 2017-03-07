@@ -191,7 +191,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return YES;
   }
 
-  // We treat medium as large for MDC accesibility when larger than 14
+  // We treat medium as large for MDC accessibility when larger than 14.
   if ([font.fontName rangeOfString:@"medium" options:NSCaseInsensitiveSearch].location != NSNotFound) {
     return YES;
   }
