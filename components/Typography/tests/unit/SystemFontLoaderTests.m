@@ -96,4 +96,12 @@
   XCTAssertTrue([fontLoader isLargeForContrastRatios:[fontLoader italicFontOfSize:largeSize]]);
 }
 
+- (void)testUIFontWeightMediumValue {
+  // Given
+  CGFloat MDCFontWeightMedium = (CGFloat)0.23;
+  // Ensure that our placehold value for UIFontWeightMedium matches the real value.
+  // We are defining it for < iOS 8.2 in MDCTypography.m
+  XCTAssertEqualWithAccuracy(UIFontWeightMedium, MDCFontWeightMedium, FLT_EPSILON);
+}
+
 @end
