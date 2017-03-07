@@ -107,10 +107,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return self;
 }
 
-- (instancetype)initWithInput:(UIView<MDCTextInput> *)input {
+- (instancetype)initWithTextInput:(UIView<MDCTextInput> *)textInput {
   self = [super init];
   if (self) {
-    _textInput = input;
+    _textInput = textInput;
   }
   return self;
 }

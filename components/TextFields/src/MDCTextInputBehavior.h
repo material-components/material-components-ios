@@ -152,7 +152,8 @@ characterCounter;
 
  @param input An MDCTextInput this behavior will manage.
  */
-- (nonnull instancetype)initWithInput:(nullable UIView <MDCTextInput> *)input;
+- (nonnull instancetype)initWithTextInput:(nullable UIView <MDCTextInput> *)input
+    NS_SWIFT_NAME(init(input:));
 #pragma mark - Approved API
 
 /**
@@ -185,5 +186,6 @@ characterCounter;
 - (void)setErrorText:(nullable NSString *)errorText
     errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue
     NS_SWIFT_NAME(set(errorText:errorAccessibilityValue:));
+
 
 @end
