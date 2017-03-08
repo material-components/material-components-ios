@@ -45,10 +45,17 @@
 /**
  The text string of the placeholder label.
 
- This is a convenience for backwards compatibility. It maps to returning the .text of the 
+ This is for convenience and cross-compatibility. It maps to returning the .text of the
  placeholder label.
  */
 @property(nonatomic, nullable, copy) NSString *placeholder;
+
+/**
+ The attributed text string of the placeholder label.
+ This is for convenience and cross-compatibility. It maps to returning the .text of the
+ placeholder label wrapped in an NSAttributedString.
+ */
+@property(nonatomic, nullable, copy) NSAttributedString *attributedPlaceholder;
 #pragma mark - Approved API
 
 /**
