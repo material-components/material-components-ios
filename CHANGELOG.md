@@ -1,4 +1,26 @@
-# release-candidate TODO: Replace me with version number. 
+# 22.1.0
+
+## API diffs
+
+### Typography
+
+#### Changes
+
+* [Added isLargeForContrastRatio to protocol (#1232)](https://github.com/material-components/material-components-ios/commit/36ca5ec407d8a3d8ba159e3af52605135b13010d) (Randall Li)
+
+## Component changes
+
+### NavigationBar
+
+#### Changes
+
+* [[Navigation Bar] - Update docs (#1235)](https://github.com/material-components/material-components-ios/commit/8f3d4a89e360300dc885dc9c9d3c259f6ea7c2ca) (Justin Shephard)
+
+### Typography
+
+#### Changes
+
+* [Added isLargeForContrastRatio to protocol (#1232)](https://github.com/material-components/material-components-ios/commit/36ca5ec407d8a3d8ba159e3af52605135b13010d) (Randall Li)
 
 # 22.0.0
 
