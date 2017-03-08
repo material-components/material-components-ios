@@ -34,7 +34,6 @@
 
 @implementation MDCTextView
 
-
 - (instancetype)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
   self = [super initWithFrame:frame textContainer:textContainer];
   if (self) {
@@ -101,11 +100,19 @@
 
 
 - (NSString *)placeholder {
-  return self.placeholderLabel.text;
+  return self.controller.placeholder;
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
-  self.placeholderLabel.text = placeholder;
+  [self.controller setPlaceholder:placeholder];
+}
+
+- (NSAttributedString *)attributedPlaceholder {
+  return _controller.attributedPlaceholder;
+}
+
+- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
+  _controller.attributedPlaceholder = attributedPlaceholder;
 }
 
 - (UIFont *)placeholderFont {

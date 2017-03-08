@@ -177,17 +177,21 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 }
 
 - (NSString *)placeholder {
-  return self.placeholderLabel.text;
+  return self.controller.placeholder;
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
   [super setPlaceholder:placeholder];
-  self.placeholderLabel.text = placeholder;
+  [self.controller setPlaceholder:placeholder];
+}
+
+- (NSAttributedString *)attributedPlaceholder {
+  return _controller.attributedPlaceholder;
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   [super setAttributedPlaceholder:attributedPlaceholder];
-  self.placeholderLabel.text = attributedPlaceholder.string;
+  _controller.attributedPlaceholder = attributedPlaceholder;
 }
 
 - (void)setFont:(UIFont *)font {

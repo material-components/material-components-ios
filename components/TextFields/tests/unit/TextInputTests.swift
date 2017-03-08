@@ -24,16 +24,49 @@ class TextInputTests: XCTestCase {
 
     XCTAssertNotNil(textField.leadingLabel)
     XCTAssertNotNil(textField.trailingLabel)
-    XCTAssertNotNil(textField.placeholderLabel)
-    XCTAssertNotNil(textField)
+    //XCTAssertNotNil(textField.placeholderLabel)
 
-    let behavior = MDCTextInputBehavior(input: textField)
+    let grey = UIColor.gray
 
-    
+    textField.clearButtonColor = grey.copy() as? UIColor
+    XCTAssert(textField.clearButtonColor == grey)
+
+    textField.textColor = grey.copy() as? UIColor
+    XCTAssert(textField.textColor == grey)
+
+    let testText = "Test text"
+    textField.text = testText
+    XCTAssert(textField.text == testText)
+
+    let testPlaceholder = "Test placeholder"
+    textField.placeholder = testPlaceholder
+    XCTAssert(textField.placeholder == testPlaceholder)
+
+    //let behavior = MDCTextInputBehavior(input: textField)
+
   }
 
   func testTextViewInputProtocolConformance() {
+    let textView = MDCTextView()
 
+    XCTAssertNotNil(textView.leadingLabel)
+    XCTAssertNotNil(textView.trailingLabel)
+    //XCTAssertNotNil(textView.placeholderLabel)
+
+    let grey = UIColor.gray
+
+    textView.textColor = grey.copy() as? UIColor
+    XCTAssert(textView.textColor == grey)
+
+    let testText = "Test text"
+    textView.text = testText
+    XCTAssert(textView.text == testText)
+
+    let testPlaceholder = "Test placeholder"
+    textView.placeholder = testPlaceholder
+    XCTAssert(textView.placeholder == testPlaceholder)
+
+    //let behavior = MDCTextInputBehavior(input: textView)
+    
   }
 }
-

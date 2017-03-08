@@ -77,11 +77,11 @@ static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
   [_backLayer setForegroundColor:backLayerColor];
 }
 
-- (NSObject *)string {
+- (id)string {
   return [_frontLayer string];
 }
 
-- (void)setString:(NSObject *)string {
+- (void)setString:(id)string {
   [_frontLayer setString:string];
   [_backLayer setString:string];
 }

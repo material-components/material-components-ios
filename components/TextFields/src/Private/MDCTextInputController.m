@@ -82,8 +82,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _textColor = MDCTextInputTextColor();
     _underlineColor = MDCTextInputUnderlineColor();
 
-//    _titleView =
-//        [[MDCTextInputTitleView alloc] initWithFrame:[self placeholderDefaultPositionFrame]];
+    // Initialize elements of UI
+    _leadingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _titleView =
+        [[MDCTextInputTitleView alloc] initWithFrame:[self placeholderDefaultPositionFrame]];
+    _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+
     // The default, kCAAlignmentNatural is not honored by CATextLayer. rdar://23881371
     if ([self shouldLayoutForRTL]) {
       [_titleView.backLayer setAlignmentMode:kCAAlignmentRight];
@@ -290,7 +294,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Properties Implementation
 
 - (NSString *)placeholder {
-  NSObject *placeholderString = self.titleView.string;
+  id placeholderString = self.titleView.string;
   if ([placeholderString isKindOfClass:[NSString class]]) {
     return (NSString *)placeholderString;
   } else if ([placeholderString isKindOfClass:[NSAttributedString class]]) {
@@ -303,6 +307,27 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)setPlaceholder:(NSString *)placeholder {
   self.titleView.string = placeholder;
 //  [self updatePlaceholderAlpha];
+  [self.textInput setNeedsLayout];
+}
+
+- (NSAttributedString *)attributedPlaceholder {
+  id placeholderString = self.titleView.string;
+  if ([placeholderString isKindOfClass:[NSString class]]) {
+    // TODO(larche) Return string attributes also. Tho I feel like that should come from the titleView / placeholderLabel
+    NSAttributedString *constructedString = [[NSAttributedString alloc] initWithString:(NSString *)placeholderString attributes:nil];
+    return constructedString;
+  } else if ([placeholderString isKindOfClass:[NSAttributedString class]]) {
+    return (NSAttributedString *)placeholderString;
+  }
+
+  return nil;
+}
+
+- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
+  self.titleView.string = attributedPlaceholder.string;
+  // TODO(larche) Read string attributes also. Tho I feel like that should come from the titleView / placeholderLabel
+
+  //  [self updatePlaceholderAlpha];
   [self.textInput setNeedsLayout];
 }
 
