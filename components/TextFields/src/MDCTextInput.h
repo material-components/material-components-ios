@@ -44,6 +44,14 @@
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
 /**
+ The text string of the placeholder label.
+
+ This is for convenience and cross-compatibility. It maps to returning the .text of the
+ placeholder label.
+ */
+@property(nonatomic, nullable, copy) NSString *placeholder;
+
+/**
  The label displaying text when no input text has been entered. The Material Design guidelines call
  this 'Hint text.'
  */
