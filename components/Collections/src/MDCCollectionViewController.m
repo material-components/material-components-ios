@@ -278,13 +278,20 @@
             inkViewAtTouchLocation:(CGPoint)location {
   NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
   UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-  MDCInkView *ink = [cell performSelector:@selector(inkView)];
+  MDCInkView *ink = nil;
 
   if ([_styler.delegate
-          respondsToSelector:@selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
+       respondsToSelector:@selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
     return [_styler.delegate collectionView:self.collectionView
                          inkTouchController:inkTouchController
                          inkViewAtIndexPath:indexPath];
+  }
+  if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
+    MDCCollectionViewCell *inkCell = (MDCCollectionViewCell *)cell;
+    if ([inkCell respondsToSelector:@selector(inkView)]) {
+      // Set cell ink.
+      ink = [cell performSelector:@selector(inkView)];
+    }
   }
 
   return ink;
@@ -345,8 +352,7 @@
   // Start cell ink show animation.
   MDCInkView *inkView;
   if ([cell respondsToSelector:@selector(inkView)]) {
-    inkView =
-        [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
+    inkView = [cell performSelector:@selector(inkView)];
   } else {
     return;
   }
@@ -372,8 +378,7 @@
   // Start cell ink evaporate animation.
   MDCInkView *inkView;
   if ([cell respondsToSelector:@selector(inkView)]) {
-    inkView =
-        [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
+    inkView = [cell performSelector:@selector(inkView)];
   } else {
     return;
   }
