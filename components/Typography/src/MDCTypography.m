@@ -150,7 +150,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     return [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
   }
-  return [UIFont systemFontOfSize:fontSize];
+  return [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
 }
 
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
@@ -164,7 +164,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     return [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
   }
-  return [UIFont systemFontOfSize:fontSize];
+  return [UIFont fontWithName:@"HelveticaNeue-Medium" size:fontSize];
 }
 
 - (UIFont *)boldFontOfSize:(CGFloat)fontSize {
