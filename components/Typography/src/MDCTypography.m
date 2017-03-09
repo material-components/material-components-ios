@@ -15,6 +15,7 @@
  */
 
 #import "MDCTypography.h"
+#import "private/UIFont+MaterialTypographyPrivate.h"
 
 static id<MDCTypographyFontLoading> gFontLoader = nil;
 const CGFloat MDCTypographyStandardOpacity = 0.87f;
@@ -175,6 +176,38 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 - (UIFont *)italicFontOfSize:(CGFloat)fontSize {
   return [UIFont italicSystemFontOfSize:fontSize];
+}
+
+- (BOOL)isLargeForContrastRatios:(UIFont *)font {
+  if (font.pointSize >= 18) {
+    return YES;
+  }
+  if (font.pointSize < 14) {
+    return NO;
+  }
+
+  UIFontDescriptor *fontDescriptor = font.fontDescriptor;
+  if ((fontDescriptor.symbolicTraits & UIFontDescriptorTraitBold) == UIFontDescriptorTraitBold) {
+    return YES;
+  }
+
+  CGFloat MDCFontWeightMedium = (CGFloat)0.23;
+  // Based on Apple's SDK-Based Development: Using Weakly Linked Methods, Functions, and Symbols.
+  // https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/cross_development/Using/using.html#//apple_ref/doc/uid/20002000-1114537-BABHHJBC
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
+#pragma clang diagnostic ignored "-Wunreachable-code"
+  if (&UIFontWeightMedium != NULL) {
+    MDCFontWeightMedium = UIFontWeightMedium;
+  }
+#pragma clang diagnostic pop
+
+  // We treat system font medium as large for accessibility when larger than 14.
+  if (font.mdc_weight >= MDCFontWeightMedium) {
+    return YES;
+  }
+
+  return NO;
 }
 
 @end
