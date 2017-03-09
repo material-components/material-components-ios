@@ -216,27 +216,28 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (!_enabled) {
     return;
   }
-
-  CGRect fromBounds = [self bounds];
-  fromBounds.size.height = MDCTextInputUnderlineFocusedHeight;
-
-  CGRect toBounds = fromBounds;
-  toBounds.size.height = 0;
-
-  CABasicAnimation *sizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds.size"];
-  [sizeAnimation setFromValue:[NSValue valueWithCGSize:fromBounds.size]];
-  [sizeAnimation setToValue:[NSValue valueWithCGSize:toBounds.size]];
-
-  CABasicAnimation *alphaAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-  [alphaAnimation setFromValue:@1];
-  [alphaAnimation setToValue:@0];
-
-  CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-  [animationGroup setDuration:MDCTextInputDividerOutAnimationDuration];
-  [animationGroup setAnimations:@[ sizeAnimation, alphaAnimation ]];
-
-  [_focusedUnderline addAnimation:animationGroup forKey:@"animateFocusUnderlineOut"];
-  [_focusedUnderline setOpacity:0];
+  // TODO(larche) Decide how best to handle underline changes.
+//
+//  CGRect fromBounds = [self bounds];
+//  fromBounds.size.height = MDCTextInputUnderlineFocusedHeight;
+//
+//  CGRect toBounds = fromBounds;
+//  toBounds.size.height = 0;
+//
+//  CABasicAnimation *sizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds.size"];
+//  [sizeAnimation setFromValue:[NSValue valueWithCGSize:fromBounds.size]];
+//  [sizeAnimation setToValue:[NSValue valueWithCGSize:toBounds.size]];
+//
+//  CABasicAnimation *alphaAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+//  [alphaAnimation setFromValue:@1];
+//  [alphaAnimation setToValue:@0];
+//
+//  CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+//  [animationGroup setDuration:MDCTextInputDividerOutAnimationDuration];
+//  [animationGroup setAnimations:@[ sizeAnimation, alphaAnimation ]];
+//
+//  [_focusedUnderline addAnimation:animationGroup forKey:@"animateFocusUnderlineOut"];
+//  [_focusedUnderline setOpacity:0];
 }
 
 @end

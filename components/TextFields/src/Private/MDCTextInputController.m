@@ -220,24 +220,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)didEndEditing {
   // TODO(larche) Check this removal of underlineViewMode.
-  //  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-  //    [self.underlineView setNormalUnderlineHidden:NO];
-  //  }
-  //
-  //  [CATransaction begin];
-  //  [CATransaction setAnimationDuration:MDCTextInputDividerOutAnimationDuration];
-  //  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-  //    [self.underlineView animateFocusUnderlineOut];
-  //  }
-  //  [self animatePlaceholderDown];
-  //  [CATransaction commit];
-  //
     UILabel *label = (UILabel *)[self textInputLabel];
     if ([label isKindOfClass:[UILabel class]]) {
       [label setLineBreakMode:NSLineBreakByTruncatingTail];
     }
-  //
-  //  [self updateCharacterCountLimit];
 }
 
 - (void)didChange {

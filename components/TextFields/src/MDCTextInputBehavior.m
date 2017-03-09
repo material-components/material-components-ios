@@ -17,7 +17,9 @@
 
 #import "MDCTextInputBehavior.h"
 
+#import "MaterialAnimationTiming.h"
 #import "MaterialPalettes.h"
+#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 #import "MDCTextInput.h"
@@ -35,6 +37,7 @@ static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
 //static const CGFloat MDCTextInputValidationMargin = 8.f;
 //
 //static const NSTimeInterval MDCTextInputAnimationDuration = 0.3f;
+static const NSTimeInterval MDCTextInputDividerOutAnimationDuration = 0.266666f;
 
 static NSString *const MDCTextInputBehaviorErrorColorKey = @"MDCTextInputBehaviorErrorColorKey";
 
@@ -432,11 +435,42 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 #pragma mark - UITextField Notification Observation
 
 - (void)textFieldDidBeginEditing:(NSNotification *)note {
-  NSLog(@"%@", note);
+  if (self.underlineViewMode == UITextFieldViewModeUnlessEditing &&
+      self.presentationStyle != GOOTextFieldPresentationStyleFullWidth) {
+    [self.borderView setNormalBorderHidden:YES];
+  }
+
+  [self validateEvents:GOOTextFieldValidatorEventBeginEditing];
+
+  [CATransaction begin];
+  [CATransaction setAnimationDuration:kGOOTextFieldAnimationDuration];
+  [CATransaction
+   setAnimationTimingFunction:[QTMAnimationCurve animationTimingFunctionForCurve:
+                               kQTMAnimationTimingCurveQuantumEaseInOut]];
+
+// TODO(larche) Decide how best to handle underline changes.
+//  if (self.underlineViewMode != UITextFieldViewModeUnlessEditing &&
+//      self.presentationStyle != GOOTextFieldPresentationStyleFullWidth) {
+//    [self.underderlineView animateFocusBorderIn];
+//  }
+  [self animatePlaceholderUp];
+  [CATransaction commit];
 }
 
 - (void)textFieldDidEndEditing:(NSNotification *)note {
-  NSLog(@"%@", note);
+    if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+      // TODO(larche) Reset underline color to inactive state color.
+    }
+  
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:MDCTextInputDividerOutAnimationDuration];
+    if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+      // TODO(larche) Consider how best to handle underline changes.
+      // [self.underlineView animateFocusUnderlineOut];
+    }
+    [self animatePlaceholderDown];
+    [CATransaction commit];
+  
 }
 
 - (void)textFieldDidChange:(NSNotification *)note {
