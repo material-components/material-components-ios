@@ -81,27 +81,65 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _underlineColor = MDCTextInputUnderlineColor();
 
     // Initialize elements of UI
-    _leadingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _placeholderLabel = [[UILabel alloc] initWithFrame:[self placeholderDefaultPositionFrame]];
-    _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-
-    _placeholderLabel.textAlignment = NSTextAlignmentNatural;
-    _placeholderLabel.layer.anchorPoint = CGPointZero;
-    _placeholderLabel.userInteractionEnabled = NO;
-    _placeholderLabel.alpha = 0;
-
-    // TODO(larche) Get default placeholder text color.
-    _placeholderLabel.textColor = [UIColor grayColor];
-    _placeholderLabel.font = _textInput.font;
-
-    [_textInput addSubview:_placeholderLabel];
-    [_textInput sendSubviewToBack:_placeholderLabel];
+    [self setupPlaceholderLabel];
 
     // Use the property accessor to create the underline view as needed.
     __unused MDCTextInputUnderlineView *underlineView = [self underlineView];
+    [self setupUnderlineLabels];
   }
   return self;
 }
+
+- (void)setupPlaceholderLabel {
+  _placeholderLabel = [[UILabel alloc] initWithFrame:[self placeholderDefaultPositionFrame]];
+
+  _placeholderLabel.textAlignment = NSTextAlignmentNatural;
+
+  // TODO(larche) Undo this anchorPoint change the resulting geometry.
+  _placeholderLabel.layer.anchorPoint = CGPointZero;
+  _placeholderLabel.userInteractionEnabled = NO;
+  _placeholderLabel.alpha = 0;
+
+  // TODO(larche) Get default placeholder text color.
+  _placeholderLabel.textColor = [UIColor grayColor];
+  _placeholderLabel.font = _textInput.font;
+
+  [_textInput addSubview:_placeholderLabel];
+  [_textInput sendSubviewToBack:_placeholderLabel];
+}
+
+- (void)setupUnderlineLabels {
+  _leadingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+
+  // TODO(larche) Get default leading text color.
+  _leadingUnderlineLabel.textColor = [UIColor grayColor];
+  _leadingUnderlineLabel.font = _textInput.font;
+
+  [_leadingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_textInput addSubview:_leadingUnderlineLabel];
+
+  _trailingUnderlineLabel.textColor = [UIColor grayColor];
+  _trailingUnderlineLabel.font = _textInput.font;
+
+  [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_textInput addSubview:_trailingUnderlineLabel];
+
+  NSString *horizontalString;
+  horizontalString = [self shouldLayoutForRTL] ? @"H:|[trailing]-4-[leading]|" : @"H:|[leading]-4-[trailing]|";
+
+  [_textInput addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:horizontalString options:0 metrics:nil views:@{@"leading": _leadingUnderlineLabel, @"trailing": _trailingUnderlineLabel}]];
+
+  [[NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_textInput attribute:NSLayoutAttributeBottom multiplier:1 constant:0] setActive:YES];
+  [[NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_underlineView attribute:NSLayoutAttributeBottom multiplier:1 constant:0] setActive:YES];
+
+  [[NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_textInput attribute:NSLayoutAttributeBottom multiplier:1 constant:0] setActive:YES];
+  [[NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_underlineView attribute:NSLayoutAttributeBottom multiplier:1 constant:0] setActive:YES];
+
+  [_trailingUnderlineLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+  [_trailingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+}
+
 
 - (void)didSetText {
   [self didChange];
@@ -390,7 +428,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   // before the placeholderRect is modified to be just wide enough for the text.
   CGFloat placeholderLeftViewOffset =
   CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
-  CGFloat placeHolderWidth = [self placeHolderRequiredWidth];
+  CGFloat placeHolderWidth = [self placeholderRequiredWidth];
   placeholderRect.size.width = placeHolderWidth;
   if ([self shouldLayoutForRTL]) {
     // The leftView (or leading view) of a UITextInput is placed before the text.  The rect
@@ -405,7 +443,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return placeholderRect;
 }
 
-- (CGFloat)placeHolderRequiredWidth {
+- (CGFloat)placeholderRequiredWidth {
   if (!self.textInput.font) {
     return 0;
   }
@@ -415,6 +453,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updatePlaceholderAlpha {
   CGFloat opacity = self.textInput.text.length ? 0 : 1;
   self.placeholderLabel.alpha = opacity;
+}
+
+- (CGFloat)underlineLabelRequiredHeight:(UILabel *)label {
+  if (!label.font) {
+    return 0;
+  }
+  return [label systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 }
 
 #pragma mark - Private

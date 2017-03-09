@@ -37,8 +37,9 @@ class TextFieldSwiftExample: UIViewController {
     textField.placeholder = "This is a text field"
     textField.delegate = self
 
-//    textField.backgroundColor = .blue
-//    textView.backgroundColor = .red
+    textField.leadingLabel.text = "Leading test"
+    textField.trailingLabel.text = "Trailing test"
+    textField.sizeToFit()
 
     textFieldBehavior.presentation = .floatingPlaceholder
 
@@ -47,6 +48,10 @@ class TextFieldSwiftExample: UIViewController {
     textView.translatesAutoresizingMaskIntoConstraints = false
     textView.placeholderLabel.text = "This is a text view"
     textView.delegate = self
+
+    textView.leadingLabel.text = "Leading test"
+    textView.trailingLabel.text = "Trailing test"
+
     textViewBehavior.presentation = .default
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:

@@ -49,6 +49,14 @@ class TextInputTests: XCTestCase {
     let width: CGFloat = 5.0
     textField.underlineWidth = width
     XCTAssertEqual(textField.underlineWidth, width)
+
+    let testLeading = "Helper Test"
+    textField.leadingLabel.text = testLeading
+    XCTAssertEqual(textField.leadingLabel, testLeading)
+
+    let testTrailing = "NN/NN"
+    textField.trailingLabel.text = testTrailing
+    XCTAssertEqual(textField.trailingLabel, testTrailing)
   }
 
   func testTextViewInputProtocolConformance() {
@@ -79,5 +87,13 @@ class TextInputTests: XCTestCase {
     let width: CGFloat = 5.0
     textView.underlineWidth = width
     XCTAssertEqual(textView.underlineWidth, width)
+
+    let testLeading = "Helper Test"
+    textView.leadingLabel.text = testLeading
+    XCTAssertEqual(textView.leadingLabel, testLeading)
+
+    let testTrailing = "NN/NN"
+    textView.trailingLabel.text = testTrailing
+    XCTAssertEqual(textView.trailingLabel, testTrailing)
   }
 }
