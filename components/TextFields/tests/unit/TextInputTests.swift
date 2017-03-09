@@ -52,11 +52,11 @@ class TextInputTests: XCTestCase {
 
     let testLeading = "Helper Test"
     textField.leadingLabel.text = testLeading
-    XCTAssertEqual(textField.leadingLabel, testLeading)
+    XCTAssertEqual(textField.leadingLabel.text, testLeading)
 
     let testTrailing = "NN/NN"
     textField.trailingLabel.text = testTrailing
-    XCTAssertEqual(textField.trailingLabel, testTrailing)
+    XCTAssertEqual(textField.trailingLabel.text, testTrailing)
   }
 
   func testTextViewInputProtocolConformance() {
@@ -90,10 +90,10 @@ class TextInputTests: XCTestCase {
 
     let testLeading = "Helper Test"
     textView.leadingLabel.text = testLeading
-    XCTAssertEqual(textView.leadingLabel, testLeading)
+    XCTAssertEqual(textView.leadingLabel.text, testLeading)
 
     let testTrailing = "NN/NN"
     textView.trailingLabel.text = testTrailing
-    XCTAssertEqual(textView.trailingLabel, testTrailing)
+    XCTAssertEqual(textView.trailingLabel.text, testTrailing)
   }
 }
