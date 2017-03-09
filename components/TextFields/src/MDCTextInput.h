@@ -38,31 +38,31 @@
 /** The text displayed in the text input. */
 @property(nonatomic, nullable, copy) NSString *text;
 
+/** The text displayed in the text input with style attributes. */
+@property(nonatomic, nullable, copy) NSAttributedString *attributedText;
+
 /** The color of the text in the input. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
-#pragma mark - Uapproved API
 /**
  The text string of the placeholder label.
-
- This is for convenience and cross-compatibility. It maps to returning the .text of the
+ Bringing convenience api found in UITextField to all MDCTextInputs. Maps to the .text of the
  placeholder label.
  */
 @property(nonatomic, nullable, copy) NSString *placeholder;
 
 /**
  The attributed text string of the placeholder label.
- This is for convenience and cross-compatibility. It maps to returning the .text of the
- placeholder label wrapped in an NSAttributedString.
+ Bringing convenience api found in UITextField to all MDCTextInputs. Maps to the .attributedText of the
+ placeholder label.
  */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedPlaceholder;
-#pragma mark - Approved API
 
 /**
  The label displaying text when no input text has been entered. The Material Design guidelines call
  this 'Hint text.'
  */
-@property(nonatomic, nonnull, strong, readonly) IBInspectable UILabel *placeholderLabel;
+@property(nonatomic, nonnull, strong, readonly) UILabel *placeholderLabel;
 
 /**
  The label on the trailing side under the input.

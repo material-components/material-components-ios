@@ -57,6 +57,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 // We never use the text property. Instead always read from the text field.
 
+@synthesize attributedText = _do_no_use_attributedText;
 @synthesize editing = _editing;
 @synthesize leadingUnderlineLabel = _leadingUnderlineLabel;
 @synthesize placeholderLabel = _placeholderLabel;
