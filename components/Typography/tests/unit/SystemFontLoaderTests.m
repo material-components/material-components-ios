@@ -57,8 +57,6 @@
   MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
 
   // Then
-  XCTAssertFalse([fontLoader isLargeForContrastRatios:nil]);
-
   XCTAssertFalse([fontLoader isLargeForContrastRatios:[UIFont systemFontOfSize:smallSize]]);
   XCTAssertFalse([fontLoader isLargeForContrastRatios:[UIFont boldSystemFontOfSize:smallSize]]);
   XCTAssertTrue(
