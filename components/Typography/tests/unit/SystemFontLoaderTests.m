@@ -40,9 +40,9 @@
                    [UIFont systemFontOfSize:size weight: UIFontWeightBold]);
   } else {
     // Fallback on earlier versions
-    XCTAssertEqual([fontLoader lightFontOfSize:size], [UIFont systemFontOfSize:size]);
+    XCTAssertEqual([fontLoader lightFontOfSize:size], [UIFont fontWithName:@"HelveticaNeue-Light" size:size]);
     XCTAssertEqual([fontLoader regularFontOfSize:size], [UIFont systemFontOfSize:size]);
-    XCTAssertEqual([fontLoader mediumFontOfSize:size], [UIFont systemFontOfSize:size]);
+    XCTAssertEqual([fontLoader mediumFontOfSize:size], [UIFont fontWithName:@"HelveticaNeue-Medium" size:size]);
     XCTAssertEqual([fontLoader boldFontOfSize:size], [UIFont boldSystemFontOfSize:size]);
   }
   XCTAssertEqual([fontLoader italicFontOfSize:size], [UIFont italicSystemFontOfSize:size]);
