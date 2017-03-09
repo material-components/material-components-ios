@@ -39,6 +39,8 @@ class TextFieldSwiftExample: UIViewController {
 
     textField.leadingLabel.text = "Leading test"
     textField.trailingLabel.text = "Trailing test"
+
+    textField.clearButtonMode = .always
     textField.sizeToFit()
 
     textFieldBehavior.presentation = .floatingPlaceholder

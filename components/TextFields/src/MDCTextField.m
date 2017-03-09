@@ -18,12 +18,12 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
 
-#import <objc/runtime.h>
-
 // TODO(larche): Support left icon view with a enum property for the icon to show
 // TODO(larche): Support in-line auto complete
 
-static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
+static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
+static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
+
 
 @interface MDCTextField () <MDCControlledTextInput>
 
@@ -72,7 +72,7 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
   self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
   // Set the clear button color to black with 54% opacity.
-  self.clearButtonColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
+  [self setClearButtonColor:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
 
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter addObserver:self
@@ -128,7 +128,7 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
   if (_clearButtonColor != clearButtonColor) {
     _clearButtonColor = clearButtonColor;
-    self.clearButtonImage = nil;
+    self.clearButtonImage = [self drawnClearButtonImage];
   }
 }
 
@@ -168,7 +168,6 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
 - (void)setUnderlineWidth:(CGFloat)underlineWidth {
   _controller.underlineWidth = underlineWidth;
 }
-
 
 #pragma mark - UITextField Property Overrides
 
@@ -218,7 +217,7 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
     if ([view isKindOfClass:targetClass]) {
       UIButton *button = (UIButton *)view;
       // In case other buttons exist, do our best to ensure this is the clear button
-      if (CGSizeEqualToSize(button.imageView.image.size, CGSizeMake(MDCClearButtonImageDefaultSquareSize, MDCClearButtonImageDefaultSquareSize))) {
+      if (CGSizeEqualToSize(button.imageView.image.size, CGSizeMake(MDCClearButtonImageSystemSquareSize, MDCClearButtonImageSystemSquareSize))) {
         _internalClearButton = button;
         return _internalClearButton;
       }
@@ -253,7 +252,7 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
       CGFloat centerY = CGRectGetMidY(tempRect);
       CGFloat minY = textRect.size.height / 2.0f;
       textRect =
-          CGRectMake(textRect.origin.x, centerY - minY, textRect.size.width, textRect.size.height);
+      CGRectMake(textRect.origin.x, centerY - minY, textRect.size.width, textRect.size.height);
       break;
     }
   }
@@ -267,16 +266,16 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
   // Full width text fields have their clear button in the horizontal margin, but because the
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
-//  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-//    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
-//    // Full width text boxes have their character count on the text input line
-//    if (self.characterLimit) {
-//      editingRect.size.width -= _controller.characterLimitViewSize.width;
-//      if ([_controller shouldLayoutForRTL]) {
-//        editingRect.origin.x += _controller.characterLimitViewSize.width;
-//      }
-//    }
-//  }
+  //  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+  //    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
+  //    // Full width text boxes have their character count on the text input line
+  //    if (self.characterLimit) {
+  //      editingRect.size.width -= _controller.characterLimitViewSize.width;
+  //      if ([_controller shouldLayoutForRTL]) {
+  //        editingRect.origin.x += _controller.characterLimitViewSize.width;
+  //      }
+  //    }
+  //  }
   return editingRect;
 }
 
@@ -303,13 +302,13 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
   }
 
   // Full width text boxes have their character count on the text input line
-//  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && self.characterLimit) {
-//    if ([_controller shouldLayoutForRTL]) {
-//      clearButtonRect.origin.x += _controller.characterLimitViewSize.width;
-//    } else {
-//      clearButtonRect.origin.x -= _controller.characterLimitViewSize.width;
-//    }
-//  }
+  //  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && self.characterLimit) {
+  //    if ([_controller shouldLayoutForRTL]) {
+  //      clearButtonRect.origin.x += _controller.characterLimitViewSize.width;
+  //    } else {
+  //      clearButtonRect.origin.x -= _controller.characterLimitViewSize.width;
+  //    }
+  //  }
 
   // [super clearButtonRectForBounds:] is rect integral centered. Instead, we need to center to the
   // text without calling textRectForBounds (which will cause a cycle).
@@ -324,7 +323,7 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
       break;
     case UIControlContentVerticalAlignmentBottom:
       clearButtonRect.origin.y =
-          self.bounds.size.height - textContainerInset.bottom - CGRectGetMaxY(clearButtonRect);
+      self.bounds.size.height - textContainerInset.bottom - CGRectGetMaxY(clearButtonRect);
       break;
     case UIControlContentVerticalAlignmentCenter:
     case UIControlContentVerticalAlignmentFill: {
@@ -341,18 +340,16 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
   return CGRectIntegral(clearButtonRect);
 }
 
-- (UIImage *)clearButtonImage {
-  if (_clearButtonImage) {
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGRect bounds = CGRectMake(0, 0, MDCClearButtonImageDefaultSquareSize, MDCClearButtonImageDefaultSquareSize);
-    UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
-    [self.clearButtonColor setFill];
-    [[self pathForClearButtonImageFrame:bounds] fill];
-    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    _clearButtonImage = image;
-  }
-  return _clearButtonImage;
+- (UIImage *)drawnClearButtonImage {
+  CGFloat scale = [UIScreen mainScreen].scale;
+  CGRect bounds = CGRectMake(0, 0, MDCClearButtonImageSquareSize, MDCClearButtonImageSquareSize);
+  UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
+  [self.clearButtonColor setFill];
+  [[self pathForClearButtonImageFrame:bounds] fill];
+  UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+
+  return image;
 }
 
 #pragma mark - UITextField Draw Overrides
@@ -410,44 +407,44 @@ static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
 
   UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
   [ic_clear_path
-      moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
+   moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
+                           CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
+  [ic_clear_path
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.00000f * innerBounds.size.height)];
+  [ic_clear_path
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.39893f * innerBounds.size.height)];
+  [ic_clear_path
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.00000f * innerBounds.size.height)];
+  [ic_clear_path
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000f * innerBounds.size.width,
                               CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.00000f * innerBounds.size.height)];
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.39893f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.50000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.39893f * innerBounds.size.height)];
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.89893f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.00000f * innerBounds.size.height)];
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 1.00000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.60107f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.39893f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.50000f * innerBounds.size.height)];
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 1.00000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.89893f * innerBounds.size.height)];
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.89893f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 1.00000f * innerBounds.size.height)];
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.60107f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.50000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.60107f * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 1.00000f * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.89893f * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.60107f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.50000f * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
+   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
   [ic_clear_path closePath];
 
   return ic_clear_path;
