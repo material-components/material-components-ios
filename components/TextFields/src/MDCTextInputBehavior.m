@@ -81,11 +81,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 @property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
 @property(nonatomic, strong) MDCTextInputTitleView *titleView;
+@property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 
 @end
 
 @implementation MDCTextInputBehavior
 
+@synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
 @synthesize presentationStyle = _presentationStyle;
 
@@ -101,16 +103,17 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
   if (self) {
-    [self commonInitialization];
+    // commonInitialization sets up defaults in properties that should have been saved in this case.
   }
 
   return self;
 }
 
 - (instancetype)initWithTextInput:(UIView<MDCTextInput> *)textInput {
-  self = [super init];
+  self = [self init];
   if (self) {
     _textInput = textInput;
+    [self subscribeForNotifications];
   }
   return self;
 }
@@ -127,28 +130,39 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (void)dealloc {
-  NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter removeObserver:self name:UITextFieldTextDidBeginEditingNotification object:self];
-  [defaultCenter removeObserver:self name:UITextFieldTextDidEndEditingNotification object:self];
-  [defaultCenter removeObserver:self name:UITextFieldTextDidChangeNotification object:self];
+  [self unsubscribeFromNotifications];
 }
 
 - (void)commonInitialization {
   _floatingPlaceholderScaleTransform = CGAffineTransformIdentity;
+  _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
+  _errorColor = MDCTextInputTextErrorColor();
+}
 
+- (void)subscribeForNotifications {
+  if (!_textInput) {
+    return;
+  }
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter addObserver:self
                     selector:@selector(textFieldDidBeginEditing:)
                         name:UITextFieldTextDidBeginEditingNotification
-                      object:self];
+                      object:_textInput];
   [defaultCenter addObserver:self
                     selector:@selector(textFieldDidEndEditing:)
                         name:UITextFieldTextDidEndEditingNotification
-                      object:self];
+                      object:_textInput];
   [defaultCenter addObserver:self
                     selector:@selector(textFieldDidChange:)
                         name:UITextFieldTextDidChangeNotification
-                      object:self];
+                      object:_textInput];
+}
+
+- (void)unsubscribeFromNotifications {
+  NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+  [defaultCenter removeObserver:self name:UITextFieldTextDidBeginEditingNotification object:_textInput];
+  [defaultCenter removeObserver:self name:UITextFieldTextDidEndEditingNotification object:_textInput];
+  [defaultCenter removeObserver:self name:UITextFieldTextDidChangeNotification object:_textInput];
 }
 
 #pragma mark - Properties Implementation
@@ -156,7 +170,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
   if (_presentationStyle != presentationStyle) {
     _presentationStyle = presentationStyle;
-    [self removeCharacterCountMax];
     [self updateCharacterCountMax];
     if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
       self.textInput.underlineColor = [UIColor clearColor];
@@ -165,11 +178,26 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 }
 
+- (void)setTextInput:(UIView<MDCTextInput> *)textInput {
+  if (_textInput != textInput) {
+    [self unsubscribeFromNotifications];
+    _textInput = textInput;
+    [self subscribeForNotifications];
+    [self updateCharacterCountMax];
+  }
+}
+
 #pragma mark - Character Max Implementation
 
 - (NSUInteger)characterCount {
-  return self.characterCounter ? [self.characterCounter characterCountForTextInput:self.textInput]
-  : self.textInput.text.length;
+  return [self.characterCounter characterCountForTextInput:self.textInput];
+}
+
+- (id<MDCTextInputCharacterCounter>)characterCounter {
+  if (!_characterCounter) {
+    _characterCounter = self.internalCharacterCounter;
+  }
+  return _characterCounter;
 }
 
 - (void)setCharacterCounter:(id<MDCTextInputCharacterCounter>)characterCounter {
@@ -211,11 +239,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return characterMaxFrame;
 }
 
-- (void)removeCharacterCountMax {
-  // TODO(larche) What?!
-  //self.textInput.hidden = YES;
-}
-
 - (CGSize)trailingUnderlineLabelSize {
   [self.textInput.trailingUnderlineLabel sizeToFit];
   return self.textInput.trailingUnderlineLabel.bounds.size;
@@ -223,22 +246,26 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 
 - (void)updateCharacterCountMax {
-  if (!self.characterCountMax || !self.textInput.isEditing) {
-    [self removeCharacterCountMax];
+  if (!self.characterCountMax) {
+    self.textInput.trailingUnderlineLabel.text = nil;
     return;
   }
+
+  NSString *text = [NSString stringWithFormat:
+                    @"%lu/%lu", (unsigned long)[self characterCount], (unsigned long)self.characterCountMax];
+  self.textInput.trailingUnderlineLabel.text = text;
 
   BOOL pastMax = [self characterCount] > self.characterCountMax;
 
   UIColor *textColor = MDCTextInputInlinePlaceholderTextColor();
   if (pastMax && self.textInput.isEditing) {
-    textColor = MDCTextInputTextErrorColor();
+    textColor = self.errorColor;
   }
 
   self.textInput.trailingUnderlineLabel.textColor = textColor;
   [self.textInput.trailingUnderlineLabel sizeToFit];
 
-//  [self.textInput insertSubview:self.textInput.trailingUnderlineLabel aboveSubview:self.titleView];
+
 //  [self.textInput.underlineView setErroneous:pastMax];
 }
 
@@ -405,11 +432,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 #pragma mark - UITextField Notification Observation
 
 - (void)textFieldDidBeginEditing:(NSNotification *)note {
-
+  NSLog(@"%@", note);
 }
 
 - (void)textFieldDidEndEditing:(NSNotification *)note {
-
+  NSLog(@"%@", note);
 }
 
 - (void)textFieldDidChange:(NSNotification *)note {

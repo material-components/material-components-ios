@@ -22,6 +22,16 @@ class TextFieldSwiftExample: UIViewController {
 
   let textField = MDCTextField()
   let textView = MDCTextView()
+  let textFieldBehavior: MDCTextInputBehavior
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    textFieldBehavior = MDCTextInputBehavior(input: textField)
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,19 +41,17 @@ class TextFieldSwiftExample: UIViewController {
     view.addSubview(textField)
     view.addSubview(textView)
 
-    let textFieldBehavior = MDCTextInputBehavior(input: textField)
-
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.placeholder = "This is a text field"
     textField.delegate = self
 
     textField.leadingLabel.text = "Leading test"
-    textField.trailingLabel.text = "Trailing test"
 
     textField.clearButtonMode = .always
     textField.sizeToFit()
 
     textFieldBehavior.presentation = .floatingPlaceholder
+    textFieldBehavior.characterCountMax = 50
 
     let textViewBehavior = MDCTextInputBehavior(input: textView)
 
