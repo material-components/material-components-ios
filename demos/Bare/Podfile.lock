@@ -161,7 +161,9 @@ PODS:
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
   - MaterialComponents/TextFields (22.0.0):
+    - MaterialComponents/AnimationTiming
     - MaterialComponents/Palettes
+    - MaterialComponents/private/RTL
     - MaterialComponents/Typography
   - MaterialComponents/Typography (22.0.0):
     - MaterialComponents/private/Application
