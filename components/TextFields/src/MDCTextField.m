@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import "MDCTextFieldArt.h"
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
@@ -345,7 +346,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   CGRect bounds = CGRectMake(0, 0, MDCClearButtonImageSquareSize, MDCClearButtonImageSquareSize);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
   [self.clearButtonColor setFill];
-  [[self pathForClearButtonImageFrame:bounds] fill];
+  [MDCPathForClearButtonImageFrame(bounds) fill];
   UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
 
@@ -394,60 +395,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   }
   textRect.size.height = fontHeight;
   return CGRectIntegral(textRect);
-}
-
-#pragma mark - Drawing
-
-- (UIBezierPath *)pathForClearButtonImageFrame:(CGRect)frame {
-  // GENERATED CODE
-
-  CGRect innerBounds = CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10,
-                                  MDCFloor((frame.size.width - 10) * 0.73684f + 0.5f),
-                                  MDCFloor((frame.size.height - 10) * 0.73684f + 0.5f));
-
-  UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
-  [ic_clear_path
-   moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
-                           CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.00000f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.39893f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.00000f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.39893f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.50000f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.89893f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 1.00000f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.60107f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 1.00000f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.89893f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.60107f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.50000f * innerBounds.size.height)];
-  [ic_clear_path
-   addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
-  [ic_clear_path closePath];
-
-  return ic_clear_path;
 }
 
 @end
