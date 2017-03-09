@@ -212,7 +212,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (void)removeCharacterCountMax {
-  self.textInput.hidden = YES;
+  // TODO(larche) What?!
+  //self.textInput.hidden = YES;
 }
 
 - (CGSize)trailingUnderlineLabelSize {

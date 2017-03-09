@@ -37,6 +37,9 @@ class TextFieldSwiftExample: UIViewController {
     textField.placeholder = "This is a text field"
     textField.delegate = self
 
+//    textField.backgroundColor = .blue
+//    textView.backgroundColor = .red
+
     textFieldBehavior.presentation = .floatingPlaceholder
 
     let textViewBehavior = MDCTextInputBehavior(input: textView)
@@ -46,18 +49,20 @@ class TextFieldSwiftExample: UIViewController {
     textView.delegate = self
     textViewBehavior.presentation = .default
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|-100-[textField]-[textView]",
-                                                               options: [.alignAllTrailing, .alignAllLeading],
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "V:|-100-[textField]-[textView]",
+                                                               options: [.alignAllTrailing,
+                                                                         .alignAllLeading],
                                                                metrics: nil,
                                                                views: ["textField": textField,
-                                                               "textView": textView]))
+                                                                       "textView": textView]))
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[textField]-|",
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "H:|-[textField]-|",
                                                                options: [],
                                                                metrics: nil,
                                                                views: ["textField": textField]))
   }
-
 }
 
 extension TextFieldSwiftExample: UITextFieldDelegate {
@@ -68,7 +73,6 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
 }
 
 extension TextFieldSwiftExample: UITextViewDelegate {
-  
 }
 
 extension TextFieldSwiftExample {

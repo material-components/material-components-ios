@@ -19,7 +19,6 @@
 
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputTitleView.h"
 #import "MDCTextInputUnderlineView.h"
 #import "MaterialAnimationTiming.h"
 
@@ -32,13 +31,13 @@ NSString *const MDCTextInputValidatorAXErrorTextKey = @"MDCTextInputValidatorAXE
 // https://spec.MDCgleplex.com/quantum/components/text-fields
 
 /**
-  Checks whether the provided floating point number is approximately zero based on a small epsilon.
+ Checks whether the provided floating point number is approximately zero based on a small epsilon.
 
-  Note that ULP-based comparisons are not used because ULP-space is significantly distorted around
-  zero.
+ Note that ULP-based comparisons are not used because ULP-space is significantly distorted around
+ zero.
 
-  Reference:
-  https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+ Reference:
+ https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
  */
 
 static inline UIColor *MDCTextInputUnderlineColor() {
@@ -51,7 +50,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) UILabel *characterLimitView;
 @property(nonatomic, strong) UILabel *errorTextView;
 @property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
-@property(nonatomic, strong) MDCTextInputTitleView *titleView;
 
 @end
 
@@ -84,22 +82,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
     // Initialize elements of UI
     _leadingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleView =
-        [[MDCTextInputTitleView alloc] initWithFrame:[self placeholderDefaultPositionFrame]];
+    _placeholderLabel = [[UILabel alloc] initWithFrame:[self placeholderDefaultPositionFrame]];
     _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 
-    // The default, kCAAlignmentNatural is not honored by CATextLayer. rdar://23881371
-    if ([self shouldLayoutForRTL]) {
-      [_titleView.backLayer setAlignmentMode:kCAAlignmentRight];
-      [_titleView.frontLayer setAlignmentMode:kCAAlignmentRight];
-    }
-    _titleView.layer.anchorPoint = CGPointZero;
-    _titleView.userInteractionEnabled = NO;
-    _titleView.frontLayerColor = _textInput.tintColor.CGColor;
-    _titleView.font = _textInput.font;
-    _titleView.alpha = 0;
-    [_textInput addSubview:_titleView];
-    [_textInput sendSubviewToBack:_titleView];
+    _placeholderLabel.textAlignment = NSTextAlignmentNatural;
+    _placeholderLabel.layer.anchorPoint = CGPointZero;
+    _placeholderLabel.userInteractionEnabled = NO;
+    _placeholderLabel.alpha = 0;
+
+    // TODO(larche) Get default placeholder text color.
+    _placeholderLabel.textColor = [UIColor grayColor];
+    _placeholderLabel.font = _textInput.font;
+
+    [_textInput addSubview:_placeholderLabel];
+    [_textInput sendSubviewToBack:_placeholderLabel];
 
     // Use the property accessor to create the underline view as needed.
     __unused MDCTextInputUnderlineView *underlineView = [self underlineView];
@@ -114,99 +110,99 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)didSetFont {
   UIFont *font = self.textInput.font;
-  self.titleView.font = font;
+  self.placeholderLabel.font = font;
 
-//  CGFloat scaleFactor = MDCTextInputTitleScaleFactor(font);
-//  self.floatingPlaceholderScaleTransform = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
+  //  CGFloat scaleFactor = MDCTextInputTitleScaleFactor(font);
+  //  self.floatingPlaceholderScaleTransform = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
 
-//  [self updatePlaceholderTransformAndPosition];
+  [self updatePlaceholderPosition];
 }
 
 - (void)layoutSubviewsWithAnimationsDisabled {
-//  self.characterLimitView.frame = [self characterLimitFrame];
-//  self.errorTextView.frame = [self underlineTextFrame];
+  //  self.characterLimitView.frame = [self characterLimitFrame];
+  //  self.errorTextView.frame = [self underlineTextFrame];
   self.underlineView.frame = [self underlineViewFrame];
-//  [self updatePlaceholderTransformAndPosition];
-//  [self updatePlaceholderAlpha];
+  [self updatePlaceholderPosition];
+  [self updatePlaceholderAlpha];
 }
 
 - (UIEdgeInsets)textContainerInset {
   UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
-//  switch (self.presentationStyle) {
-//    case MDCTextInputPresentationStyleDefault:
-//      textContainerInset.top = MDCTextInputVerticalPadding;
-//      textContainerInset.bottom = MDCTextInputVerticalPadding;
-//      break;
-//    case MDCTextInputPresentationStyleFloatingPlaceholder:
-//      textContainerInset.top = MDCTextInputVerticalPadding + MDCTextInputFloatingLabelTextHeight +
-//                               MDCTextInputFloatingLabelMargin;
-//      textContainerInset.bottom = MDCTextInputVerticalPadding;
-//      break;
-//    case MDCTextInputPresentationStyleFullWidth:
-//      textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
-//      textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
-//      textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
-//      textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
-//      break;
-//  }
-//
-//  // TODO(larche) Check this removal of validator.
-//  // Adjust for the character limit and validator.
-//  // Full width single line text fields have their character counter on the same line as the text.
-//  if ((self.characterLimit) &&
-//      (self.presentationStyle != MDCTextInputPresentationStyleFullWidth || [self.textInput isKindOfClass:[UITextView class]])) {
-//    textContainerInset.bottom += MDCTextInputValidationMargin;
-//  }
-//
+  //  switch (self.presentationStyle) {
+  //    case MDCTextInputPresentationStyleDefault:
+  //      textContainerInset.top = MDCTextInputVerticalPadding;
+  //      textContainerInset.bottom = MDCTextInputVerticalPadding;
+  //      break;
+  //    case MDCTextInputPresentationStyleFloatingPlaceholder:
+  //      textContainerInset.top = MDCTextInputVerticalPadding + MDCTextInputFloatingLabelTextHeight +
+  //                               MDCTextInputFloatingLabelMargin;
+  //      textContainerInset.bottom = MDCTextInputVerticalPadding;
+  //      break;
+  //    case MDCTextInputPresentationStyleFullWidth:
+  //      textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
+  //      textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
+  //      textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
+  //      textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
+  //      break;
+  //  }
+  //
+  //  // TODO(larche) Check this removal of validator.
+  //  // Adjust for the character limit and validator.
+  //  // Full width single line text fields have their character counter on the same line as the text.
+  //  if ((self.characterLimit) &&
+  //      (self.presentationStyle != MDCTextInputPresentationStyleFullWidth || [self.textInput isKindOfClass:[UITextView class]])) {
+  //    textContainerInset.bottom += MDCTextInputValidationMargin;
+  //  }
+  //
   return textContainerInset;
 }
 
 - (void)didBeginEditing {
   // TODO(larche) Check this removal of underlineViewMode.
-//  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-//    [self.underlineView setNormalUnderlineHidden:YES];
-//  }
-//
-//  [CATransaction begin];
-//  [CATransaction setAnimationDuration:MDCTextInputAnimationDuration];
-//  [CATransaction
-//      setAnimationTimingFunction:[CAMediaTimingFunction
-//                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
-//
-//  // TODO(larche) Check this removal of underlineViewMode.
-//  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-//    [self.underlineView animateFocusUnderlineIn];
-//  }
-//  [self animatePlaceholderUp];
-//  [CATransaction commit];
-//
-//  [self updateCharacterCountLimit];
+  //  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+  //    [self.underlineView setNormalUnderlineHidden:YES];
+  //  }
+  //
+  //  [CATransaction begin];
+  //  [CATransaction setAnimationDuration:MDCTextInputAnimationDuration];
+  //  [CATransaction
+  //      setAnimationTimingFunction:[CAMediaTimingFunction
+  //                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+  //
+  //  // TODO(larche) Check this removal of underlineViewMode.
+  //  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+  //    [self.underlineView animateFocusUnderlineIn];
+  //  }
+  //  [self animatePlaceholderUp];
+  //  [CATransaction commit];
+  //
+  //  [self updateCharacterCountLimit];
 }
 
 - (void)didEndEditing {
   // TODO(larche) Check this removal of underlineViewMode.
-//  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-//    [self.underlineView setNormalUnderlineHidden:NO];
-//  }
-//
-//  [CATransaction begin];
-//  [CATransaction setAnimationDuration:MDCTextInputDividerOutAnimationDuration];
-//  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-//    [self.underlineView animateFocusUnderlineOut];
-//  }
-//  [self animatePlaceholderDown];
-//  [CATransaction commit];
-//
-//  UILabel *label = (UILabel *)[self textInputLabel];
-//  if ([label isKindOfClass:[UILabel class]]) {
-//    [label setLineBreakMode:NSLineBreakByTruncatingTail];
-//  }
-//
-//  [self updateCharacterCountLimit];
+  //  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+  //    [self.underlineView setNormalUnderlineHidden:NO];
+  //  }
+  //
+  //  [CATransaction begin];
+  //  [CATransaction setAnimationDuration:MDCTextInputDividerOutAnimationDuration];
+  //  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+  //    [self.underlineView animateFocusUnderlineOut];
+  //  }
+  //  [self animatePlaceholderDown];
+  //  [CATransaction commit];
+  //
+  //  UILabel *label = (UILabel *)[self textInputLabel];
+  //  if ([label isKindOfClass:[UILabel class]]) {
+  //    [label setLineBreakMode:NSLineBreakByTruncatingTail];
+  //  }
+  //
+  //  [self updateCharacterCountLimit];
 }
 
 - (void)didChange {
-
+  [self updatePlaceholderAlpha];
 }
 
 // TODO(larche) Add back in properly.
@@ -219,25 +215,24 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (MDCTextInputUnderlineView *)underlineView {
   // TODO(larche) Check this removal of underlineViewMode.
-//  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-//    return nil;
-//  }
-//
+  //  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+  //    return nil;
+  //  }
+  //
   if (!_underlineView) {
     _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:[self underlineViewFrame]];
-//    if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-//      _underlineView.normalUnderlineHidden = NO;
-//      _underlineView.focusUnderlineHidden = YES;
-//    } else {
-//      // TODO(larche) Check this removal of underlineViewMode.
-//      //      _underlineView.normalUnderlineHidden = (self.underlineViewMode ==
-//      //      UITextInputViewModeWhileEditing);
-//      // TODO(larche) Check this removal of underlineViewMode.
-//      //      _underlineView.focusUnderlineHidden = (self.underlineViewMode ==
-//      //      UITextInputViewModeUnlessEditing);
-//    }
+    //    if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+    //      _underlineView.normalUnderlineHidden = NO;
+    //      _underlineView.focusUnderlineHidden = YES;
+    //    } else {
+    //      // TODO(larche) Check this removal of underlineViewMode.
+    //      //      _underlineView.normalUnderlineHidden = (self.underlineViewMode ==
+    //      //      UITextInputViewModeWhileEditing);
+    //      // TODO(larche) Check this removal of underlineViewMode.
+    //      //      _underlineView.focusUnderlineHidden = (self.underlineViewMode ==
+    //      //      UITextInputViewModeUnlessEditing);
+    //    }
 
-    _underlineView.focusedColor = self.textInput.tintColor;
     _underlineView.unfocusedColor = self.underlineColor;
 
     [self.textInput addSubview:_underlineView];
@@ -279,13 +274,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     // For multiline text fields, the textRectThatFitsForBounds is essentially the text container
     // and we can just measure from the bottom.
     underlineFrame.origin.y =
-        CGRectGetMaxY(textRect) + underlineVerticalPadding - underlineFrame.size.height;
+    CGRectGetMaxY(textRect) + underlineVerticalPadding - underlineFrame.size.height;
   } else {
     // For single line text fields, the textRectThatFitsForBounds is a best guess at the text
     // rect for the line of text, which may be rect adjusted for pixel boundaries.  Measure from the
     // center to get the best underline placement.
     underlineFrame.origin.y = CGRectGetMidY(textRect) + (self.textInput.font.pointSize / 2.0f) +
-                              underlineVerticalPadding - underlineFrame.size.height;
+    underlineVerticalPadding - underlineFrame.size.height;
   }
 
   return underlineFrame;
@@ -294,7 +289,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Properties Implementation
 
 - (NSString *)placeholder {
-  id placeholderString = self.titleView.string;
+  id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
     return (NSString *)placeholderString;
   } else if ([placeholderString isKindOfClass:[NSAttributedString class]]) {
@@ -305,13 +300,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
-  self.titleView.string = placeholder;
-//  [self updatePlaceholderAlpha];
+  self.placeholderLabel.text = placeholder;
+  [self updatePlaceholderAlpha];
   [self.textInput setNeedsLayout];
 }
 
 - (NSAttributedString *)attributedPlaceholder {
-  id placeholderString = self.titleView.string;
+  id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
     // TODO(larche) Return string attributes also. Tho I feel like that should come from the titleView / placeholderLabel
     NSAttributedString *constructedString = [[NSAttributedString alloc] initWithString:(NSString *)placeholderString attributes:nil];
@@ -324,10 +319,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
-  self.titleView.string = attributedPlaceholder.string;
+  self.placeholderLabel.text = attributedPlaceholder.string;
   // TODO(larche) Read string attributes also. Tho I feel like that should come from the titleView / placeholderLabel
 
-  //  [self updatePlaceholderAlpha];
+  [self updatePlaceholderAlpha];
   [self.textInput setNeedsLayout];
 }
 
@@ -360,8 +355,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 }
 
-
 // TODO(larche) Check this removal of setUnderlineViewMode.
+- (void)updatePlaceholderPosition {
+  CGRect frame = [self placeholderDefaultPositionFrame];
+
+  self.placeholderLabel.bounds = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
+  self.placeholderLabel.center = frame.origin;
+}
 
 - (CGRect)placeholderFloatingPositionFrame {
   CGRect placeholderRect = [self placeholderDefaultPositionFrame];
@@ -369,44 +369,55 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     return placeholderRect;
   }
 
-//  placeholderRect.origin.y -= MDCTextInputFloatingLabelMargin + MDCTextInputFloatingLabelTextHeight;
+  //  placeholderRect.origin.y -= MDCTextInputFloatingLabelMargin + MDCTextInputFloatingLabelTextHeight;
 
   // In RTL Layout, make the title view go up and to the right.
-//  if ([self shouldLayoutForRTL]) {
-//    placeholderRect.origin.x =
-//    CGRectGetWidth(self.textInput.bounds) -
-//    placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
-//  }
+  //  if ([self shouldLayoutForRTL]) {
+  //    placeholderRect.origin.x =
+  //    CGRectGetWidth(self.textInput.bounds) -
+  //    placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
+  //  }
 
   return placeholderRect;
 }
 
 - (CGRect)placeholderDefaultPositionFrame {
   CGRect bounds = self.textInput.bounds;
-  //  if (CGRectIsEmpty(bounds)) {
-  return bounds;
-  //  }
-  //
-  //  CGRect placeholderRect = [self.textInput textRectThatFitsForBounds:bounds];
-  //  // Calculating the offset to account for a rightView in case it is needed for RTL layout,
-  //  // before the placeholderRect is modified to be just wide enough for the text.
-  //  CGFloat placeholderLeftViewOffset =
-  //  CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
-  //  CGFloat placeHolderWidth = [self placeHolderRequiredWidth];
-  //  placeholderRect.size.width = placeHolderWidth;
-  //  if ([self shouldLayoutForRTL]) {
-  //    // The leftView (or leading view) of a UITextInput is placed before the text.  The rect
-  //    // returned by UITextInput::textRectThatFitsForBounds: returns a rect that fills the field
-  //    // from the trailing edge of the leftView to the leading edge of the rightView.  Since this
-  //    // rect is not used directly for the placeholder, the space for the leftView must calculated
-  //    // to determine the correct origin for the placeholder view when rendering for RTL text.
-  //    placeholderRect.origin.x =
-  //    CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
-  //  }
-  //  placeholderRect.size.height = self.fontHeight;
-  //  return placeholderRect;
+  if (CGRectIsEmpty(bounds)) {
+    return bounds;
+  }
+
+  CGRect placeholderRect = [self.textInput textRectThatFitsForBounds:bounds];
+  // Calculating the offset to account for a rightView in case it is needed for RTL layout,
+  // before the placeholderRect is modified to be just wide enough for the text.
+  CGFloat placeholderLeftViewOffset =
+  CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
+  CGFloat placeHolderWidth = [self placeHolderRequiredWidth];
+  placeholderRect.size.width = placeHolderWidth;
+  if ([self shouldLayoutForRTL]) {
+    // The leftView (or leading view) of a UITextInput is placed before the text.  The rect
+    // returned by UITextInput::textRectThatFitsForBounds: returns a rect that fills the field
+    // from the trailing edge of the leftView to the leading edge of the rightView.  Since this
+    // rect is not used directly for the placeholder, the space for the leftView must calculated
+    // to determine the correct origin for the placeholder view when rendering for RTL text.
+    placeholderRect.origin.x =
+    CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
+  }
+  placeholderRect.size.height = self.fontHeight;
+  return placeholderRect;
 }
 
+- (CGFloat)placeHolderRequiredWidth {
+  if (!self.textInput.font) {
+    return 0;
+  }
+  return [self.placeholder sizeWithAttributes:@{NSFontAttributeName : self.textInput.font}].width;
+}
+
+- (void)updatePlaceholderAlpha {
+  CGFloat opacity = self.textInput.text.length ? 0 : 1;
+  self.placeholderLabel.alpha = opacity;
+}
 
 #pragma mark - Private
 
@@ -414,11 +425,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.textInput.tintColor = MDCTextInputCursorColor();
   self.textInput.textColor = self.textColor;
 
-  self.underlineView.focusedColor = self.textInput.tintColor;
   self.underlineView.unfocusedColor = self.underlineColor;
-
-  self.titleView.frontLayerColor = self.textInput.tintColor.CGColor;
-//  self.titleView.backLayerColor = self.inlinePlaceholderColor.CGColor;
 }
 
 - (UIView *)textInputLabel {

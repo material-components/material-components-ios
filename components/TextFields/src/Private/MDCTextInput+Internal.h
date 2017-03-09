@@ -41,3 +41,12 @@ static inline CGFloat MDCCeil(CGFloat value) {
   return ceilf(value);
 #endif
 }
+
+static inline CGFloat MDCFloor(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return floor(value);
+#else
+  return floorf(value);
+#endif
+}
+

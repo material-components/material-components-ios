@@ -18,15 +18,17 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
 
+#import <objc/runtime.h>
+
 // TODO(larche): Support left icon view with a enum property for the icon to show
 // TODO(larche): Support in-line auto complete
 
-static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
+static const CGFloat MDCClearButtonImageDefaultSquareSize = 14.0f;
 
 @interface MDCTextField () <MDCControlledTextInput>
 
 @property(nonatomic, strong) MDCTextInputController *controller;
-@property(nonatomic, strong) CAShapeLayer *clearButtonImage;
+@property(nonatomic, strong) UIImage *clearButtonImage;
 @property(nonatomic, readonly, weak) UIButton *internalClearButton;
 
 @end
@@ -126,10 +128,9 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
   if (_clearButtonColor != clearButtonColor) {
     _clearButtonColor = clearButtonColor;
-    self.clearButtonImage.fillColor = _clearButtonColor.CGColor;
+    self.clearButtonImage = nil;
   }
 }
-
 
 - (UILabel *)placeholderLabel {
   return _controller.placeholderLabel;
@@ -217,7 +218,7 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
     if ([view isKindOfClass:targetClass]) {
       UIButton *button = (UIButton *)view;
       // In case other buttons exist, do our best to ensure this is the clear button
-      if (CGSizeEqualToSize(button.imageView.image.size, MDCClearButtonImageDefaultSize)) {
+      if (CGSizeEqualToSize(button.imageView.image.size, CGSizeMake(MDCClearButtonImageDefaultSquareSize, MDCClearButtonImageDefaultSquareSize))) {
         _internalClearButton = button;
         return _internalClearButton;
       }
@@ -227,9 +228,6 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   }
   return nil;
 }
-
-
-
 
 #pragma mark - UITextField Positioning Overrides
 
@@ -282,6 +280,7 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   return editingRect;
 }
 
+
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
   CGRect clearButtonRect = [super clearButtonRectForBounds:bounds];
 
@@ -289,22 +288,19 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   UIButton *clearButton = self.internalClearButton;
   if (clearButton != nil) {
     // If the image is not our image, set it.
+    if (clearButton.imageView.image != self.clearButtonImage) {
+      [clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
+      [clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
+      [clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
+    }
 
-    // TODO(larche) Finish converting to layer.
-    //    if (clearButton.imageView.image != self.clearButtonImage) {
-    //      [clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
-    //      [clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
-    //      [clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
-    //    }
-    //
-    //    // If the rect doesn't fit the image, adjust accordingly
-    //    if (!CGSizeEqualToSize(clearButtonRect.size, self.clearButtonImage.size)) {
-    //      // Resize and shift the clearButtonRect to fit the clearButtonImage
-    //      CGFloat xDelta = (clearButtonRect.size.width - self.clearButtonImage.size.width) / 2.0f;
-    //      CGFloat yDelta = (clearButtonRect.size.height - self.clearButtonImage.size.height) /
-    //      2.0f;
-    //      clearButtonRect = CGRectInset(clearButtonRect, xDelta, yDelta);
-    //    }
+    // If the rect doesn't fit the image, adjust accordingly
+    if (!CGSizeEqualToSize(clearButtonRect.size, self.clearButtonImage.size)) {
+      // Resize and shift the clearButtonRect to fit the clearButtonImage
+      CGFloat xDelta = (clearButtonRect.size.width - self.clearButtonImage.size.width) / 2.0f;
+      CGFloat yDelta = (clearButtonRect.size.height - self.clearButtonImage.size.height) / 2.0f;
+      clearButtonRect = CGRectInset(clearButtonRect, xDelta, yDelta);
+    }
   }
 
   // Full width text boxes have their character count on the text input line
@@ -344,6 +340,20 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   }
 
   return CGRectIntegral(clearButtonRect);
+}
+
+- (UIImage *)clearButtonImage {
+  if (_clearButtonImage) {
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGRect bounds = CGRectMake(0, 0, MDCClearButtonImageDefaultSquareSize, MDCClearButtonImageDefaultSquareSize);
+    UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
+    [self.clearButtonColor setFill];
+    [[self pathForClearButtonImageFrame:bounds] fill];
+    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    _clearButtonImage = image;
+  }
+  return _clearButtonImage;
 }
 
 #pragma mark - UITextField Draw Overrides
@@ -396,49 +406,49 @@ static const CGSize MDCClearButtonImageDefaultSize = {14.0f, 14.0f};
   // GENERATED CODE
 
   CGRect innerBounds = CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10,
-                                  floor((frame.size.width - 10) * 0.73684 + 0.5),
-                                  floor((frame.size.height - 10) * 0.73684 + 0.5));
+                                  MDCFloor((frame.size.width - 10) * 0.73684f + 0.5f),
+                                  MDCFloor((frame.size.height - 10) * 0.73684f + 0.5f));
 
   UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
   [ic_clear_path
-      moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + 0.10107 * innerBounds.size.height)];
+      moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
+                              CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.00000 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.00000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.39893 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.39893f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.00000 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.00000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.10107 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.39893 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.50000 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.39893f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.50000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.89893 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.00000f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.89893f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 1.00000 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.10107f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 1.00000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.60107 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.50000f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.60107f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 1.00000 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.89893f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 1.00000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.89893 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.89893f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.60107 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.50000 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0.60107f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.50000f * innerBounds.size.height)];
   [ic_clear_path
-      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000 * innerBounds.size.width,
-                                 CGRectGetMinY(innerBounds) + 0.10107 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1.00000f * innerBounds.size.width,
+                                 CGRectGetMinY(innerBounds) + 0.10107f * innerBounds.size.height)];
   [ic_clear_path closePath];
 
   return ic_clear_path;
