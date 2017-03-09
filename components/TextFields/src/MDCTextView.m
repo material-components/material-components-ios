@@ -23,7 +23,6 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
 #import "MDCTextInputTitleView.h"
-#import "MDCTextInputUnderlineView.h"
 
 @interface MDCTextView () <MDCControlledTextInput>
 
@@ -91,13 +90,24 @@
   return tempSize;
 }
 
-#pragma mark - Properties Implementation
+- (CGSize)intrinsicContentSize {
+  CGSize boundingSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  if (boundingSize.width == CGFLOAT_MAX) {
+    boundingSize.width = UIViewNoIntrinsicMetric;
+  }
 
+  if (boundingSize.height == CGFLOAT_MAX) {
+    boundingSize.height = UIViewNoIntrinsicMetric;
+  }
+
+  return boundingSize;
+}
+
+#pragma mark - Properties Implementation
 
 - (UILabel *)leadingUnderlineLabel {
   return _controller.leadingUnderlineLabel;
 }
-
 
 - (NSString *)placeholder {
   return self.controller.placeholder;
@@ -123,13 +133,13 @@
   self.placeholderLabel.font = placeholderFont;
 }
 
-//
 //- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
 //  if (_controller.presentationStyle != presentationStyle) {
 //    _controller.presentationStyle = presentationStyle;
 //    self.textContainerInset = UIEdgeInsetsZero;
 //  }
 //}
+
 - (UILabel *)placeholderLabel {
   return _controller.placeholderLabel;
 }

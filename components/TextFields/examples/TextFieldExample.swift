@@ -45,7 +45,7 @@ class TextFieldSwiftExample: UIViewController {
     let textViewBehavior = MDCTextInputBehavior(input: textView)
 
     textView.translatesAutoresizingMaskIntoConstraints = false
-    //textView.placeholderLabel.text = "This is a text view"
+    textView.placeholderLabel.text = "This is a text view"
     textView.delegate = self
     textViewBehavior.presentation = .default
 

@@ -25,7 +25,7 @@
 NSString *const MDCTextInputValidatorErrorColorKey = @"MDCTextInputValidatorErrorColor";
 NSString *const MDCTextInputValidatorErrorTextKey = @"MDCTextInputValidatorErrorText";
 NSString *const MDCTextInputValidatorAXErrorTextKey = @"MDCTextInputValidatorAXErrorText";
-
+static const CGFloat MDCTextInputVerticalPadding = 16.f;
 
 // These numers are straight from the redlines in the docs here:
 // https://spec.MDCgleplex.com/quantum/components/text-fields
@@ -130,8 +130,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
   //  switch (self.presentationStyle) {
   //    case MDCTextInputPresentationStyleDefault:
-  //      textContainerInset.top = MDCTextInputVerticalPadding;
-  //      textContainerInset.bottom = MDCTextInputVerticalPadding;
+        textContainerInset.top = MDCTextInputVerticalPadding;
+        textContainerInset.bottom = MDCTextInputVerticalPadding;
   //      break;
   //    case MDCTextInputPresentationStyleFloatingPlaceholder:
   //      textContainerInset.top = MDCTextInputVerticalPadding + MDCTextInputFloatingLabelTextHeight +
@@ -193,10 +193,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   //  [self animatePlaceholderDown];
   //  [CATransaction commit];
   //
-  //  UILabel *label = (UILabel *)[self textInputLabel];
-  //  if ([label isKindOfClass:[UILabel class]]) {
-  //    [label setLineBreakMode:NSLineBreakByTruncatingTail];
-  //  }
+    UILabel *label = (UILabel *)[self textInputLabel];
+    if ([label isKindOfClass:[UILabel class]]) {
+      [label setLineBreakMode:NSLineBreakByTruncatingTail];
+    }
   //
   //  [self updateCharacterCountLimit];
 }
@@ -252,8 +252,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self updateColors];
   }
 }
-
-
 
 - (CGRect)underlineViewFrame {
   CGRect bounds = self.textInput.bounds;
