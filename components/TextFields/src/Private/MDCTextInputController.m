@@ -96,8 +96,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   _placeholderLabel.textAlignment = NSTextAlignmentNatural;
 
-  // TODO(larche) Undo this anchorPoint change the resulting geometry.
-  _placeholderLabel.layer.anchorPoint = CGPointZero;
   _placeholderLabel.userInteractionEnabled = NO;
   _placeholderLabel.alpha = 0;
 
@@ -141,10 +139,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_trailingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
 }
 
-
 - (void)didSetText {
   [self didChange];
-  [self.textInput setNeedsLayout];
+  //[self.textInput setNeedsLayout];
 }
 
 - (void)didSetFont {
@@ -158,11 +155,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)layoutSubviewsWithAnimationsDisabled {
-  //  self.characterLimitView.frame = [self characterLimitFrame];
-  //  self.errorTextView.frame = [self underlineTextFrame];
   self.underlineView.frame = [self underlineViewFrame];
   [self updatePlaceholderPosition];
-  [self updatePlaceholderAlpha];
+  //[self updatePlaceholderAlpha];
 }
 
 - (UIEdgeInsets)textContainerInset {
@@ -198,24 +193,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)didBeginEditing {
   // TODO(larche) Check this removal of underlineViewMode.
-  //  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-  //    [self.underlineView setNormalUnderlineHidden:YES];
-  //  }
-  //
-  //  [CATransaction begin];
-  //  [CATransaction setAnimationDuration:MDCTextInputAnimationDuration];
-  //  [CATransaction
-  //      setAnimationTimingFunction:[CAMediaTimingFunction
-  //                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
-  //
-  //  // TODO(larche) Check this removal of underlineViewMode.
-  //  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-  //    [self.underlineView animateFocusUnderlineIn];
-  //  }
-  //  [self animatePlaceholderUp];
-  //  [CATransaction commit];
-  //
-  //  [self updateCharacterCountLimit];
+
+  // TODO(larche) Maybe add getting rid of placeholder when typing by default. OR leave it on for
+  // autocomplete.
 }
 
 - (void)didEndEditing {
@@ -354,18 +334,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.underlineView.enabled = enabled;
 }
 
-//- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
-//  if (_presentationStyle != presentationStyle) {
-//    _presentationStyle = presentationStyle;
-//    [self removeCharacterCountLimit];
-//    [self updateCharacterCountLimit];
-//    if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-//      [_underlineView removeFromSuperview];
-//      _underlineView = nil;
-//    }
-//    [self.textInput setNeedsLayout];
-//  }
-//}
 
 - (void)setTextColor:(UIColor *)textColor {
   if (!textColor) {
@@ -380,28 +348,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 // TODO(larche) Check this removal of setUnderlineViewMode.
 - (void)updatePlaceholderPosition {
-  CGRect frame = [self placeholderDefaultPositionFrame];
-
-  self.placeholderLabel.bounds = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
-  self.placeholderLabel.center = frame.origin;
-}
-
-- (CGRect)placeholderFloatingPositionFrame {
-  CGRect placeholderRect = [self placeholderDefaultPositionFrame];
-  if (CGRectIsEmpty(placeholderRect)) {
-    return placeholderRect;
+  if (self.placeholderLabel.layer.animationKeys.count > 0) {
+    // We don't need to get in the middle of animations.
+    return;
   }
-
-  //  placeholderRect.origin.y -= MDCTextInputFloatingLabelMargin + MDCTextInputFloatingLabelTextHeight;
-
-  // In RTL Layout, make the title view go up and to the right.
-  //  if ([self shouldLayoutForRTL]) {
-  //    placeholderRect.origin.x =
-  //    CGRectGetWidth(self.textInput.bounds) -
-  //    placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
-  //  }
-
-  return placeholderRect;
+  CGRect destinationFrame = [self placeholderDefaultPositionFrame];
+  CGPoint destinationPosition = CGPointMake(destinationFrame.origin.x + CGRectGetWidth(destinationFrame) / 2.0, destinationFrame.origin.y + CGRectGetHeight(destinationFrame) / 2.0);
+  self.placeholderLabel.bounds = CGRectMake(0, 0, CGRectGetWidth(destinationFrame), CGRectGetHeight(destinationFrame));
+  self.placeholderLabel.center = destinationPosition;
 }
 
 - (CGRect)placeholderDefaultPositionFrame {

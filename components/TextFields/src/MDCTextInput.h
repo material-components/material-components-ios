@@ -91,4 +91,7 @@ NS_SWIFT_NAME(trailingLabel);
 /** The thickness of the underline. */
 @property(nonatomic, assign) CGFloat underlineWidth UI_APPEARANCE_SELECTOR;
 
+#pragma mark - Unapproved API
+- (void)layoutToFit;
+#pragma mark - Approved API
 @end

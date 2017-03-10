@@ -27,8 +27,6 @@ static inline UIColor *MDCTextInputCursorColor() {
   return [MDCPalette indigoPalette].tint500;
 }
 
-
-
 static inline UIColor *MDCTextInputTextColor() {
   return [UIColor colorWithWhite:0 alpha:[MDCTypography body1FontOpacity]];
 }
