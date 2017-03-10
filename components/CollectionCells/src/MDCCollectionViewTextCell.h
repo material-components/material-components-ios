@@ -36,6 +36,16 @@ extern const CGFloat MDCCellDefaultThreeLineHeight;
  @see http://www.google.com/design/spec/components/lists.html#lists-specs
  */
 @interface MDCCollectionViewTextCell : MDCCollectionViewCell
+    
+
+/**
+ Simple helper method for getting the right cell height based on total lines of text that you
+ want to show into the MDCCollectionViewTextCell.
+ 
+ @param textLines   The number of lines of text to show.
+ @param descriptionLines   The number of lines of description text to show.
+ */
++ (CGFloat)cellHeightFromNumberOfTextLines: (int)textLines andDescriptionLines: (int)descriptionLines;
 
 /**
  A text label. Typically this will be the first line of text in the cell.

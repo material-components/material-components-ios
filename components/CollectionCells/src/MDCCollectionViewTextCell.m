@@ -88,6 +88,19 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
 @implementation MDCCollectionViewTextCell {
   UIView *_contentWrapper;
 }
+    
++ (CGFloat)cellHeightFromNumberOfTextLines: (int)textLines andDescriptionLines: (int)descriptionLines {
+  int totalNumberOfLines = textLines + descriptionLines;
+  if (totalNumberOfLines == 1) {
+    return MDCCellDefaultOneLineHeight;
+  } else if (totalNumberOfLines == 2) {
+    return MDCCellDefaultTwoLineHeight;
+  } else if (totalNumberOfLines == 3) {
+    return MDCCellDefaultThreeLineHeight;
+  } else {
+    return kCellThreeLinePaddingTop + kCellThreeLinePaddingBottom + (kCellDefaultTextFont.lineHeight * textLines) + (kCellDefaultDetailTextFont.lineHeight * descriptionLines);
+  }
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -208,7 +221,7 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
       detailFrame.origin.y = (boundsHeight / 2) - (detailFrame.size.height / 2);
     }
 
-  } else if ([self numberOfAllVisibleTextLines] == 3) {
+  } else if ([self numberOfAllVisibleTextLines] >= 3) {
     if (!CGRectIsEmpty(textFrame) && !CGRectIsEmpty(detailFrame)) {
       // Alignment for three lines.
       textFrame.origin.y =

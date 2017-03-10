@@ -105,6 +105,14 @@ static NSString *const kExampleDetailText =
                                         textLineArray:@[ @(3), @(0) ]
                                             checkMark:NO
                                                circle:NO]];
+  [_content addObject:[SimpleModel modelWithTextArray:@[ kExampleText, @"Detail text" ]
+                                        textLineArray:@[ @(3), @(1) ]
+                                              checkMark:NO
+                                                 circle:NO]];
+  [_content addObject:[SimpleModel modelWithTextArray:@[ kExampleText, @"Detail text" ]
+                                        textLineArray:@[ @(4), @(1) ]
+                                              checkMark:NO
+                                                 circle:NO]];
   [_content addObject:[SimpleModel modelWithTextArray:@[ @"", @"Detail text" ]
                                         textLineArray:@[ @(0), @(1) ]
                                             checkMark:NO
@@ -171,15 +179,7 @@ static NSString *const kExampleDetailText =
 - (CGFloat)collectionView:(UICollectionView *)collectionView
     cellHeightAtIndexPath:(NSIndexPath *)indexPath {
   SimpleModel *model = _content[indexPath.item];
-  NSInteger numberOfLines = model.textLines + model.detailTextLines;
-  if (numberOfLines == 1) {
-    return MDCCellDefaultOneLineHeight;
-  } else if (numberOfLines == 2) {
-    return MDCCellDefaultTwoLineHeight;
-  } else if (numberOfLines == 3) {
-    return MDCCellDefaultThreeLineHeight;
-  }
-  return MDCCellDefaultOneLineHeight;
+  return [MDCCollectionViewTextCell cellHeightFromNumberOfTextLines: model.textLines andDescriptionLines: model.detailTextLines];
 }
 
 #pragma mark - <MDCCollectionViewEditingDelegate>
