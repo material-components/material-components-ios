@@ -179,7 +179,7 @@ static NSString *const kExampleDetailText =
 - (CGFloat)collectionView:(UICollectionView *)collectionView
     cellHeightAtIndexPath:(NSIndexPath *)indexPath {
   SimpleModel *model = _content[indexPath.item];
-  return [MDCCollectionViewTextCell cellHeightFromNumberOfTextLines: model.textLines andDescriptionLines: model.detailTextLines];
+  return [MDCCollectionViewTextCell cellHeightFromNumberOfTextLines: model.textLines andDetailLines: model.detailTextLines];
 }
 
 #pragma mark - <MDCCollectionViewEditingDelegate>

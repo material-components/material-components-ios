@@ -89,8 +89,8 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   UIView *_contentWrapper;
 }
     
-+ (CGFloat)cellHeightFromNumberOfTextLines: (int)textLines andDescriptionLines: (int)descriptionLines {
-  int totalNumberOfLines = textLines + descriptionLines;
++ (CGFloat)cellHeightFromNumberOfTextLines: (int)textLines andDetailLines: (int)detailLines {
+  int totalNumberOfLines = textLines + detailLines;
   if (totalNumberOfLines == 1) {
     return MDCCellDefaultOneLineHeight;
   } else if (totalNumberOfLines == 2) {
@@ -98,7 +98,7 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   } else if (totalNumberOfLines == 3) {
     return MDCCellDefaultThreeLineHeight;
   } else {
-    return kCellThreeLinePaddingTop + kCellThreeLinePaddingBottom + (kCellDefaultTextFont.lineHeight * textLines) + (kCellDefaultDetailTextFont.lineHeight * descriptionLines);
+    return kCellThreeLinePaddingTop + kCellThreeLinePaddingBottom + (kCellDefaultTextFont.lineHeight * textLines) + (kCellDefaultDetailTextFont.lineHeight * detailLines);
   }
 }
 

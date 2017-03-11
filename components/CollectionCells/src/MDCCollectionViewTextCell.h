@@ -45,7 +45,7 @@ extern const CGFloat MDCCellDefaultThreeLineHeight;
  @param textLines   The number of lines of text to show.
  @param descriptionLines   The number of lines of description text to show.
  */
-+ (CGFloat)cellHeightFromNumberOfTextLines: (int)textLines andDescriptionLines: (int)descriptionLines;
++ (CGFloat)cellHeightFromNumberOfTextLines: (int)textLines andDetailLines: (int)detailLines;
 
 /**
  A text label. Typically this will be the first line of text in the cell.
