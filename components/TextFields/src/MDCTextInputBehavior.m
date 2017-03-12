@@ -311,7 +311,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 //  self.textInput.placeholderLabel.transform = transform;
 //  self.textInput.placeholderLabel.frame = frame;
 //}
-//
+
 #pragma mark - Placeholder Animation
 
 // TODO(larche) Merge these two methods. They are almost the same.
@@ -363,6 +363,12 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   animationGroup.removedOnCompletion = NO;
   animationGroup.animations = animations;
   [self.textInput.placeholderLabel.layer addAnimation:animationGroup forKey:MDCTextInputBehaviorAnimatePlaceholderUpKey];
+
+  NSArray *constraints = self.textInput.placeholderLabel.constraints;
+  for (NSLayoutConstraint *constraint in constraints) {
+    [constraint setActive:NO];
+  }
+  [self.textInput.placeholderLabel setTranslatesAutoresizingMaskIntoConstraints:YES];
 
   // TODO(larche) Was this still needed?
   // titleLayer.opacity = 1;

@@ -51,6 +51,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) UILabel *errorTextView;
 @property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
 
+@property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
+
 @end
 
 @implementation MDCTextInputController
@@ -92,7 +94,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setupPlaceholderLabel {
-  _placeholderLabel = [[UILabel alloc] initWithFrame:[self placeholderDefaultPositionFrame]];
+  _placeholderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  [_placeholderLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 
   _placeholderLabel.textAlignment = NSTextAlignmentNatural;
 
@@ -105,6 +108,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   [_textInput addSubview:_placeholderLabel];
   [_textInput sendSubviewToBack:_placeholderLabel];
+
+  [self.textInput addConstraints:[self placeholderDefaultConstaints]];
 }
 
 - (void)setupUnderlineLabels {
@@ -354,8 +359,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
   CGRect destinationFrame = [self placeholderDefaultPositionFrame];
   CGPoint destinationPosition = CGPointMake(destinationFrame.origin.x + CGRectGetWidth(destinationFrame) / 2.0, destinationFrame.origin.y + CGRectGetHeight(destinationFrame) / 2.0);
-  self.placeholderLabel.bounds = CGRectMake(0, 0, CGRectGetWidth(destinationFrame), CGRectGetHeight(destinationFrame));
-  self.placeholderLabel.center = destinationPosition;
+//  self.placeholderLabel.bounds = CGRectMake(0, 0, CGRectGetWidth(destinationFrame), CGRectGetHeight(destinationFrame));
+//  self.placeholderLabel.center = destinationPosition;
+
+  self.placeholderTop.constant = destinationPosition.y;
 }
 
 - (CGRect)placeholderDefaultPositionFrame {
@@ -381,7 +388,40 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
   }
   placeholderRect.size.height = self.fontHeight;
+
   return placeholderRect;
+}
+
+- (NSArray <NSLayoutConstraint*> *)placeholderDefaultConstaints {
+  CGRect placeholderRect = [self placeholderDefaultPositionFrame];
+
+  self.placeholderTop = [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:_placeholderLabel.superview
+                                                         attribute:NSLayoutAttributeTop
+                                                        multiplier:1
+                                                          constant:CGRectGetMinY(placeholderRect)];
+  NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                                             attribute:NSLayoutAttributeLeading
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:_placeholderLabel.superview
+                                                             attribute:NSLayoutAttributeLeading
+                                                            multiplier:1
+                                                              constant:CGRectGetMinX(placeholderRect)];
+  NSLayoutConstraint *trailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                                              attribute:NSLayoutAttributeTrailing
+                                                              relatedBy:NSLayoutRelationLessThanOrEqual
+                                                                 toItem:_placeholderLabel.superview
+                                                              attribute:NSLayoutAttributeTrailing
+                                                             multiplier:1
+                                                               constant:8];
+
+  [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
+  [leading setPriority:UILayoutPriorityDefaultLow];
+  [trailing setPriority:UILayoutPriorityDefaultLow];
+
+  return @[self.placeholderTop, leading, trailing];
 }
 
 - (CGFloat)placeholderRequiredWidth {
