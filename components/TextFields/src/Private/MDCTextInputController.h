@@ -81,9 +81,4 @@
 /** Asks auto layout for required height for font and/or text. */
 - (CGFloat)underlineLabelRequiredHeight:(UILabel *_Nullable)label;
 
-/**
- Whether or not to layout the UI for right-to-left languages. Query this to make layout decisions.
- */
-- (BOOL)shouldLayoutForRTL;
-
 @end

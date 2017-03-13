@@ -104,7 +104,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   _placeholderLabel.userInteractionEnabled = NO;
 
-  // TODO: (larche) Get default placeholder text color.
+  // TODO: (larche) Get real default placeholder text color.
   _placeholderLabel.textColor = [UIColor grayColor];
   _placeholderLabel.font = _textInput.font;
 
@@ -120,7 +120,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   _leadingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 
-  // TODO: (larche) Get default leading text color.
+  // TODO: (larche) Get real default leading text color.
   _leadingUnderlineLabel.textColor = [UIColor grayColor];
   _leadingUnderlineLabel.font = _textInput.font;
   _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
@@ -137,7 +137,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   NSString *horizontalString;
   horizontalString =
-      [self shouldLayoutForRTL] ? @"H:|[trailing]-4-[leading]|" : @"H:|[leading]-4-[trailing]|";
+      @"H:|[leading]-4-[trailing]|";
 
   [_textInput addConstraints:[NSLayoutConstraint
                                  constraintsWithVisualFormat:horizontalString
@@ -257,12 +257,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)didChange {
   [self updatePlaceholderAlpha];
-}
-
-// TODO: (larche) Add back in properly.
-- (BOOL)shouldLayoutForRTL {
-  return NO;
-  //  return MDCShouldLayoutForRTL() && MDCRTLCanSupportFullMirroring();
 }
 
 #pragma mark - Underline View Implementation
@@ -409,6 +403,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.placeholderHeight.constant = CGRectGetHeight(destinationFrame);
 }
 
+// TODO: (larche) Replace with only needed information or remove altogether.
 - (CGRect)placeholderDefaultPositionFrame {
   CGRect bounds = self.textInput.bounds;
   if (CGRectIsEmpty(bounds)) {
@@ -418,19 +413,23 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGRect placeholderRect = [self.textInput textRectThatFitsForBounds:bounds];
   // Calculating the offset to account for a rightView in case it is needed for RTL layout,
   // before the placeholderRect is modified to be just wide enough for the text.
-  CGFloat placeholderLeftViewOffset =
-      CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
+
+  // TODO: (larche) Undo this comment if RTL needs it. See below.
+  //  CGFloat placeholderLeftViewOffset =
+//      CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
   CGFloat placeHolderWidth = [self placeholderRequiredWidth];
   placeholderRect.size.width = placeHolderWidth;
-  if ([self shouldLayoutForRTL]) {
-    // The leftView (or leading view) of a UITextInput is placed before the text.  The rect
-    // returned by UITextInput::textRectThatFitsForBounds: returns a rect that fills the field
-    // from the trailing edge of the leftView to the leading edge of the rightView.  Since this
-    // rect is not used directly for the placeholder, the space for the leftView must calculated
-    // to determine the correct origin for the placeholder view when rendering for RTL text.
-    placeholderRect.origin.x =
-        CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
-  }
+
+  // TODO: (larche) Check removal of this RTL code.
+//  if ([self shouldLayoutForRTL]) {
+//    // The leftView (or leading view) of a UITextInput is placed before the text.  The rect
+//    // returned by UITextInput::textRectThatFitsForBounds: returns a rect that fills the field
+//    // from the trailing edge of the leftView to the leading edge of the rightView.  Since this
+//    // rect is not used directly for the placeholder, the space for the leftView must calculated
+//    // to determine the correct origin for the placeholder view when rendering for RTL text.
+//    placeholderRect.origin.x =
+//        CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
+//  }
   placeholderRect.size.height = self.fontHeight;
 
   return placeholderRect;
