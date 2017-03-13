@@ -21,11 +21,19 @@ import MaterialComponents.MaterialTextField
 class TextFieldSwiftExample: UIViewController {
 
   let textField = MDCTextField()
-  let textView = MDCTextView()
   let textFieldBehavior: MDCTextInputBehavior
+
+  let textFieldInline = MDCTextField()
+  let textFieldInlineBehavior: MDCTextInputBehavior
+
+  let textView = MDCTextView()
+  let textViewBehavior: MDCTextInputBehavior
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     textFieldBehavior = MDCTextInputBehavior(input: textField)
+    textFieldInlineBehavior = MDCTextInputBehavior(input: textFieldInline)
+    textViewBehavior = MDCTextInputBehavior(input: textView)
+
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -39,22 +47,33 @@ class TextFieldSwiftExample: UIViewController {
     view.backgroundColor = .white
 
     view.addSubview(textField)
+    view.addSubview(textFieldInline)
     view.addSubview(textView)
 
     textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.placeholder = "This is a text field"
+    textField.placeholder = "This is a text field w/ floating placeholder"
     textField.delegate = self
 
-    textField.leadingLabel.text = "Leading test"
+    textField.leadingLabel.text = "Helper text"
 
     textField.clearButtonMode = .always
-    textField.sizeToFit()
 
     textFieldBehavior.presentation = .floatingPlaceholder
     textFieldBehavior.characterCountMax = 50
 
-    let textViewBehavior = MDCTextInputBehavior(input: textView)
+    textFieldInline.translatesAutoresizingMaskIntoConstraints = false
+    textFieldInline.placeholder = "This is a text field w/ inline placeholder"
+    textFieldInline.delegate = self
 
+    textFieldInline.leadingLabel.text = "More helper text"
+
+    textFieldInline.clearButtonMode = .always
+
+    textFieldInlineBehavior.presentation = .default
+    textFieldInlineBehavior.characterCountMax = 40
+
+    // Hide TextView for now
+    textView.alpha = 0
     textView.translatesAutoresizingMaskIntoConstraints = false
     textView.placeholderLabel.text = "This is a text view"
     textView.delegate = self
@@ -70,12 +89,13 @@ class TextFieldSwiftExample: UIViewController {
     view.addSubview(errorSwitch)
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-100-[textField]-[textView]-50-[switch]",
+      "V:|-100-[textField]-[textFieldInline]-[textView]-50-[switch]",
                                                                options: [.alignAllTrailing,
                                                                          .alignAllLeading],
                                                                metrics: nil,
                                                                views: ["switch": errorSwitch,
                                                                        "textField": textField,
+                                                                       "textFieldInline": textFieldInline,
                                                                        "textView": textView]))
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
@@ -86,7 +106,7 @@ class TextFieldSwiftExample: UIViewController {
   }
 
   func errorSwitchDidChange(errorSwitch: UISwitch) {
-    textFieldBehavior.set(errorText: errorSwitch.isOn ? "Oh no" : nil, errorAccessibilityValue: nil)
+    textFieldBehavior.set(errorText: errorSwitch.isOn ? "Oh no! ERROR!!!" : nil, errorAccessibilityValue: nil)
   }
 }
 
