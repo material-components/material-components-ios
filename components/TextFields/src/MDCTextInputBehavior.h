@@ -149,8 +149,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  Convenience init. Never fails.
  @param input An MDCTextInput this behavior will manage.
  */
-- (nonnull instancetype)initWithTextInput:(nullable UIView <MDCTextInput> *)input
-NS_SWIFT_NAME(init(input:));
+- (nonnull instancetype)initWithTextInput:(nullable UIView<MDCTextInput> *)input
+    NS_SWIFT_NAME(init(input:));
 
 /**
  Sets the state of the controller by setting the values of properties errorText and

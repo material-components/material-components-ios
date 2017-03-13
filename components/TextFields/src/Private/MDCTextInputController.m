@@ -136,8 +136,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_textInput addSubview:_trailingUnderlineLabel];
 
   NSString *horizontalString;
-  horizontalString =
-      @"H:|[leading]-4-[trailing]|";
+  horizontalString = @"H:|[leading]-4-[trailing]|";
 
   [_textInput addConstraints:[NSLayoutConstraint
                                  constraintsWithVisualFormat:horizontalString
@@ -348,7 +347,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.placeholderLabel.text = attributedPlaceholder.string;
-  // TODO: (larche) Read string attributes also. Tho I feel like that should come from the titleView /
+  // TODO: (larche) Read string attributes also. Tho I feel like that should come from the titleView
+  // /
   // placeholderLabel
 
   [self updatePlaceholderAlpha];
@@ -413,20 +413,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   // TODO: (larche) Undo this comment if RTL needs it. See below.
   //  CGFloat placeholderLeftViewOffset =
-//      CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
+  //      CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
   CGFloat placeHolderWidth = [self placeholderRequiredWidth];
   placeholderRect.size.width = placeHolderWidth;
 
   // TODO: (larche) Check removal of this RTL code.
-//  if ([self shouldLayoutForRTL]) {
-//    // The leftView (or leading view) of a UITextInput is placed before the text.  The rect
-//    // returned by UITextInput::textRectThatFitsForBounds: returns a rect that fills the field
-//    // from the trailing edge of the leftView to the leading edge of the rightView.  Since this
-//    // rect is not used directly for the placeholder, the space for the leftView must calculated
-//    // to determine the correct origin for the placeholder view when rendering for RTL text.
-//    placeholderRect.origin.x =
-//        CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
-//  }
+  //  if ([self shouldLayoutForRTL]) {
+  //    // The leftView (or leading view) of a UITextInput is placed before the text.  The rect
+  //    // returned by UITextInput::textRectThatFitsForBounds: returns a rect that fills the field
+  //    // from the trailing edge of the leftView to the leading edge of the rightView.  Since this
+  //    // rect is not used directly for the placeholder, the space for the leftView must calculated
+  //    // to determine the correct origin for the placeholder view when rendering for RTL text.
+  //    placeholderRect.origin.x =
+  //        CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
+  //  }
   placeholderRect.size.height = self.fontHeight;
 
   return placeholderRect;
