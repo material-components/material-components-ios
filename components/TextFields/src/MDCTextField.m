@@ -25,7 +25,6 @@
 static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
 static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
-
 @interface MDCTextField () <MDCControlledTextInput>
 
 @property(nonatomic, strong) MDCTextInputController *controller;
@@ -125,7 +124,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 }
 
 #pragma mark - Properties Implementation
-
 
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
   if (_clearButtonColor != clearButtonColor) {
@@ -235,7 +233,9 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
     if ([view isKindOfClass:targetClass]) {
       UIButton *button = (UIButton *)view;
       // In case other buttons exist, do our best to ensure this is the clear button
-      if (CGSizeEqualToSize(button.imageView.image.size, CGSizeMake(MDCClearButtonImageSystemSquareSize, MDCClearButtonImageSystemSquareSize))) {
+      if (CGSizeEqualToSize(button.imageView.image.size,
+                            CGSizeMake(MDCClearButtonImageSystemSquareSize,
+                                       MDCClearButtonImageSystemSquareSize))) {
         _internalClearButton = button;
         return _internalClearButton;
       }
@@ -270,7 +270,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
       CGFloat centerY = CGRectGetMidY(tempRect);
       CGFloat minY = textRect.size.height / 2.0f;
       textRect =
-      CGRectMake(textRect.origin.x, centerY - minY, textRect.size.width, textRect.size.height);
+          CGRectMake(textRect.origin.x, centerY - minY, textRect.size.width, textRect.size.height);
       break;
     }
   }
@@ -341,7 +341,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
       break;
     case UIControlContentVerticalAlignmentBottom:
       clearButtonRect.origin.y =
-      self.bounds.size.height - textContainerInset.bottom - CGRectGetMaxY(clearButtonRect);
+          self.bounds.size.height - textContainerInset.bottom - CGRectGetMaxY(clearButtonRect);
       break;
     case UIControlContentVerticalAlignmentCenter:
     case UIControlContentVerticalAlignmentFill: {
@@ -364,7 +364,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
   [self.clearButtonColor setFill];
   [MDCPathForClearButtonImageFrame(bounds) fill];
-  UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
 
   return image;

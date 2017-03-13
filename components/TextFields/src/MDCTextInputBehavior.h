@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @interface MDCTextInputBehavior : NSObject <NSCoding, NSCopying>
 
 /** The text input the behavior is managing. */
-@property(nonatomic, nullable, weak) UIView <MDCTextInput> *textInput NS_SWIFT_NAME(input);
+@property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
 
 /**
  The color used to denote error state in the underline, the errorText's label, the plceholder and
@@ -83,8 +83,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  will reset it to return that instance.
  */
 @property(nonatomic, null_resettable, weak) IBInspectable id<MDCTextInputCharacterCounter>
-characterCounter;
-
+    characterCounter;
 
 /**
  Controls when the character count will be shown and therefore whether character counting determines
@@ -152,7 +151,7 @@ characterCounter;
 
  @param input An MDCTextInput this behavior will manage.
  */
-- (nonnull instancetype)initWithTextInput:(nullable UIView <MDCTextInput> *)input
+- (nonnull instancetype)initWithTextInput:(nullable UIView<MDCTextInput> *)input
     NS_SWIFT_NAME(init(input:));
 #pragma mark - Approved API
 
@@ -180,12 +179,11 @@ characterCounter;
  count in the errorColor.
 
  Setting errorAccessibilityValue when errorText == nil has no effect.
- 
+
  Note: The characterCountMax property also affects these same MDCTextInput properties.
  */
 - (void)setErrorText:(nullable NSString *)errorText
     errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue
     NS_SWIFT_NAME(set(errorText:errorAccessibilityValue:));
-
 
 @end

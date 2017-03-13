@@ -28,7 +28,7 @@ class TextFieldSwiftExample: UIViewController {
     textFieldBehavior = MDCTextInputBehavior(input: textField)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -64,12 +64,18 @@ class TextFieldSwiftExample: UIViewController {
 
     textViewBehavior.presentation = .default
 
+    let errorSwitch = UISwitch()
+    errorSwitch.translatesAutoresizingMaskIntoConstraints = false
+    errorSwitch.addTarget(self, action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)), for: .touchUpInside)
+    view.addSubview(errorSwitch)
+
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-100-[textField]-[textView]",
+      "V:|-100-[textField]-[textView]-50-[switch]",
                                                                options: [.alignAllTrailing,
                                                                          .alignAllLeading],
                                                                metrics: nil,
-                                                               views: ["textField": textField,
+                                                               views: ["switch": errorSwitch,
+                                                                       "textField": textField,
                                                                        "textView": textView]))
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
@@ -77,6 +83,10 @@ class TextFieldSwiftExample: UIViewController {
                                                                options: [],
                                                                metrics: nil,
                                                                views: ["textField": textField]))
+  }
+
+  func errorSwitchDidChange(errorSwitch: UISwitch) {
+    textFieldBehavior.set(errorText: errorSwitch.isOn ? "Oh no" : nil, errorAccessibilityValue: nil)
   }
 }
 

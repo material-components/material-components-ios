@@ -46,4 +46,3 @@ static inline CGFloat MDCFloor(CGFloat value) {
   return floorf(value);
 #endif
 }
-

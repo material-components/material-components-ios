@@ -134,18 +134,53 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_textInput addSubview:_trailingUnderlineLabel];
 
   NSString *horizontalString;
-  horizontalString = [self shouldLayoutForRTL] ? @"H:|[trailing]-4-[leading]|" : @"H:|[leading]-4-[trailing]|";
+  horizontalString =
+      [self shouldLayoutForRTL] ? @"H:|[trailing]-4-[leading]|" : @"H:|[leading]-4-[trailing]|";
 
-  [_textInput addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:horizontalString options:0 metrics:nil views:@{@"leading": _leadingUnderlineLabel, @"trailing": _trailingUnderlineLabel}]];
+  [_textInput addConstraints:[NSLayoutConstraint
+                                 constraintsWithVisualFormat:horizontalString
+                                                     options:0
+                                                     metrics:nil
+                                                       views:@{
+                                                         @"leading" : _leadingUnderlineLabel,
+                                                         @"trailing" : _trailingUnderlineLabel
+                                                       }]];
 
-  [[NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_textInput attribute:NSLayoutAttributeBottom multiplier:1 constant:0] setActive:YES];
-  [[NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_underlineView attribute:NSLayoutAttributeBottom multiplier:1 constant:0] setActive:YES];
+  [[NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                                attribute:NSLayoutAttributeBottom
+                                relatedBy:NSLayoutRelationEqual
+                                   toItem:_textInput
+                                attribute:NSLayoutAttributeBottom
+                               multiplier:1
+                                 constant:0] setActive:YES];
+  [[NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                                attribute:NSLayoutAttributeTop
+                                relatedBy:NSLayoutRelationEqual
+                                   toItem:_underlineView
+                                attribute:NSLayoutAttributeBottom
+                               multiplier:1
+                                 constant:0] setActive:YES];
 
-  [[NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_textInput attribute:NSLayoutAttributeBottom multiplier:1 constant:0] setActive:YES];
-  [[NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_underlineView attribute:NSLayoutAttributeBottom multiplier:1 constant:0] setActive:YES];
+  [[NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                                attribute:NSLayoutAttributeBottom
+                                relatedBy:NSLayoutRelationEqual
+                                   toItem:_textInput
+                                attribute:NSLayoutAttributeBottom
+                               multiplier:1
+                                 constant:0] setActive:YES];
+  [[NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                                attribute:NSLayoutAttributeTop
+                                relatedBy:NSLayoutRelationEqual
+                                   toItem:_underlineView
+                                attribute:NSLayoutAttributeBottom
+                               multiplier:1
+                                 constant:0] setActive:YES];
 
-  [_trailingUnderlineLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-  [_trailingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+  [_trailingUnderlineLabel
+      setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                      forAxis:UILayoutConstraintAxisHorizontal];
+  [_trailingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired
+                                             forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 - (void)didSetText {
@@ -173,11 +208,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
   //  switch (self.presentationStyle) {
   //    case MDCTextInputPresentationStyleDefault:
-        textContainerInset.top = MDCTextInputVerticalPadding;
-        textContainerInset.bottom = MDCTextInputVerticalPadding;
+  textContainerInset.top = MDCTextInputVerticalPadding;
+  textContainerInset.bottom = MDCTextInputVerticalPadding;
   //      break;
   //    case MDCTextInputPresentationStyleFloatingPlaceholder:
-  //      textContainerInset.top = MDCTextInputVerticalPadding + MDCTextInputFloatingLabelTextHeight +
+  //      textContainerInset.top = MDCTextInputVerticalPadding + MDCTextInputFloatingLabelTextHeight
+  //      +
   //                               MDCTextInputFloatingLabelMargin;
   //      textContainerInset.bottom = MDCTextInputVerticalPadding;
   //      break;
@@ -191,9 +227,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   //
   //  // TODO(larche) Check this removal of validator.
   //  // Adjust for the character limit and validator.
-  //  // Full width single line text fields have their character counter on the same line as the text.
+  //  // Full width single line text fields have their character counter on the same line as the
+  //  text.
   //  if ((self.characterLimit) &&
-  //      (self.presentationStyle != MDCTextInputPresentationStyleFullWidth || [self.textInput isKindOfClass:[UITextView class]])) {
+  //      (self.presentationStyle != MDCTextInputPresentationStyleFullWidth || [self.textInput
+  //      isKindOfClass:[UITextView class]])) {
   //    textContainerInset.bottom += MDCTextInputValidationMargin;
   //  }
   //
@@ -209,10 +247,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)didEndEditing {
   // TODO(larche) Check this removal of underlineViewMode.
-    UILabel *label = (UILabel *)[self textInputLabel];
-    if ([label isKindOfClass:[UILabel class]]) {
-      [label setLineBreakMode:NSLineBreakByTruncatingTail];
-    }
+  UILabel *label = (UILabel *)[self textInputLabel];
+  if ([label isKindOfClass:[UILabel class]]) {
+    [label setLineBreakMode:NSLineBreakByTruncatingTail];
+  }
 }
 
 - (void)didChange {
@@ -286,13 +324,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     // For multiline text fields, the textRectThatFitsForBounds is essentially the text container
     // and we can just measure from the bottom.
     underlineFrame.origin.y =
-    CGRectGetMaxY(textRect) + underlineVerticalPadding - underlineFrame.size.height;
+        CGRectGetMaxY(textRect) + underlineVerticalPadding - underlineFrame.size.height;
   } else {
     // For single line text fields, the textRectThatFitsForBounds is a best guess at the text
     // rect for the line of text, which may be rect adjusted for pixel boundaries.  Measure from the
     // center to get the best underline placement.
     underlineFrame.origin.y = CGRectGetMidY(textRect) + (self.textInput.font.pointSize / 2.0f) +
-    underlineVerticalPadding - underlineFrame.size.height;
+                              underlineVerticalPadding - underlineFrame.size.height;
   }
 
   return underlineFrame;
@@ -303,8 +341,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (NSAttributedString *)attributedPlaceholder {
   id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
-    // TODO(larche) Return string attributes also. Tho I feel like that should come from the titleView / placeholderLabel
-    NSAttributedString *constructedString = [[NSAttributedString alloc] initWithString:(NSString *)placeholderString attributes:nil];
+    // TODO(larche) Return string attributes also. Tho I feel like that should come from the
+    // titleView / placeholderLabel
+    NSAttributedString *constructedString =
+        [[NSAttributedString alloc] initWithString:(NSString *)placeholderString attributes:nil];
     return constructedString;
   } else if ([placeholderString isKindOfClass:[NSAttributedString class]]) {
     return (NSAttributedString *)placeholderString;
@@ -315,7 +355,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.placeholderLabel.text = attributedPlaceholder.string;
-  // TODO(larche) Read string attributes also. Tho I feel like that should come from the titleView / placeholderLabel
+  // TODO(larche) Read string attributes also. Tho I feel like that should come from the titleView /
+  // placeholderLabel
 
   [self updatePlaceholderAlpha];
   [self.textInput setNeedsLayout];
@@ -376,7 +417,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   // Calculating the offset to account for a rightView in case it is needed for RTL layout,
   // before the placeholderRect is modified to be just wide enough for the text.
   CGFloat placeholderLeftViewOffset =
-  CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
+      CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
   CGFloat placeHolderWidth = [self placeholderRequiredWidth];
   placeholderRect.size.width = placeHolderWidth;
   if ([self shouldLayoutForRTL]) {
@@ -386,51 +427,53 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     // rect is not used directly for the placeholder, the space for the leftView must calculated
     // to determine the correct origin for the placeholder view when rendering for RTL text.
     placeholderRect.origin.x =
-    CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
+        CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
   }
   placeholderRect.size.height = self.fontHeight;
 
   return placeholderRect;
 }
 
-- (NSArray <NSLayoutConstraint*> *)placeholderDefaultConstaints {
+- (NSArray<NSLayoutConstraint *> *)placeholderDefaultConstaints {
   CGRect placeholderRect = [self placeholderDefaultPositionFrame];
 
   self.placeholderTop = [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                                         attribute:NSLayoutAttributeTop
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:_placeholderLabel.superview
-                                                         attribute:NSLayoutAttributeTop
-                                                        multiplier:1
-                                                          constant:CGRectGetMinY(placeholderRect)];
-  NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                                             attribute:NSLayoutAttributeLeading
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:_placeholderLabel.superview
-                                                             attribute:NSLayoutAttributeLeading
-                                                            multiplier:1
-                                                              constant:CGRectGetMinX(placeholderRect)];
-  NSLayoutConstraint *trailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                                              attribute:NSLayoutAttributeTrailing
-                                                              relatedBy:NSLayoutRelationLessThanOrEqual
-                                                                 toItem:_placeholderLabel.superview
-                                                              attribute:NSLayoutAttributeTrailing
-                                                             multiplier:1
-                                                               constant:8];
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:_placeholderLabel.superview
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:1
+                                                      constant:CGRectGetMinY(placeholderRect)];
+  NSLayoutConstraint *leading =
+      [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                   attribute:NSLayoutAttributeLeading
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:_placeholderLabel.superview
+                                   attribute:NSLayoutAttributeLeading
+                                  multiplier:1
+                                    constant:CGRectGetMinX(placeholderRect)];
+  NSLayoutConstraint *trailing =
+      [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationLessThanOrEqual
+                                      toItem:_placeholderLabel.superview
+                                   attribute:NSLayoutAttributeTrailing
+                                  multiplier:1
+                                    constant:8];
   self.placeholderHeight = [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                                              attribute:NSLayoutAttributeHeight
-                                                              relatedBy:NSLayoutRelationLessThanOrEqual
-                                                                 toItem:nil
-                                                              attribute:NSLayoutAttributeNotAnAttribute
-                                                             multiplier:1
-                                                               constant:CGRectGetHeight(placeholderRect)];
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1
+                                                         constant:CGRectGetHeight(placeholderRect)];
 
   [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
   [leading setPriority:UILayoutPriorityDefaultLow];
   [trailing setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderHeight setPriority:UILayoutPriorityDefaultLow];
 
-  return @[self.placeholderTop, leading, trailing];
+  return @[ self.placeholderTop, leading, trailing ];
 }
 
 - (CGFloat)placeholderRequiredWidth {

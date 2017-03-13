@@ -29,19 +29,21 @@
 #pragma mark - Constants
 
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
-//static const CGFloat MDCTextInputVerticalPadding = 16.f;
+// static const CGFloat MDCTextInputVerticalPadding = 16.f;
 static const CGFloat MDCTextInputFloatingLabelFontSize = 12.f;
 static const CGFloat MDCTextInputFloatingLabelTextHeight = 16.f;
 static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
-//static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
-//static const CGFloat MDCTextInputValidationMargin = 8.f;
+// static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
+// static const CGFloat MDCTextInputValidationMargin = 8.f;
 
 static const NSTimeInterval MDCTextInputFloatingPlaceholderAnimationDuration = 0.3f;
 static const NSTimeInterval MDCTextInputDividerOutAnimationDuration = 0.266666f;
 
 static NSString *const MDCTextInputBehaviorErrorColorKey = @"MDCTextInputBehaviorErrorColorKey";
-static NSString *const MDCTextInputBehaviorAnimatePlaceholderUpKey = @"MDCTextInputBehaviorAnimatePlaceholderUpKey";
-static NSString *const MDCTextInputBehaviorAnimatePlaceholderDownKey = @"MDCTextInputBehaviorAnimatePlaceholderDownKey";
+static NSString *const MDCTextInputBehaviorAnimatePlaceholderUpKey =
+    @"MDCTextInputBehaviorAnimatePlaceholderUpKey";
+static NSString *const MDCTextInputBehaviorAnimatePlaceholderDownKey =
+    @"MDCTextInputBehaviorAnimatePlaceholderDownKey";
 
 static inline CGFloat MDCFabs(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -63,7 +65,7 @@ static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
 }
 
-//static inline UIColor *MDCTextInputUnderlineColor() {
+// static inline UIColor *MDCTextInputUnderlineColor() {
 //  return [UIColor lightGrayColor];
 //}
 
@@ -85,9 +87,12 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 @property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 @property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
-@property(nonatomic, strong) NSArray <NSLayoutConstraint*> *placeholderAnimationConstraints;
-@property(nonatomic, strong) UIColor *defaultLeadingTextColor;
-@property(nonatomic, strong) UIColor *defaultTrailingTextColor;
+@property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
+@property(nonatomic, strong) UIColor *previousLeadingTextColor;
+@property(nonatomic, strong) NSString *previousLeadingText;
+@property(nonatomic, strong) UIColor *previousPlaceholderColor;
+@property(nonatomic, strong) UIColor *previousTrailingTextColor;
+@property(nonatomic, strong) UIColor *previousUnderlineColor;
 
 @end
 
@@ -168,8 +173,12 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 - (void)unsubscribeFromNotifications {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter removeObserver:self name:UITextFieldTextDidBeginEditingNotification object:_textInput];
-  [defaultCenter removeObserver:self name:UITextFieldTextDidEndEditingNotification object:_textInput];
+  [defaultCenter removeObserver:self
+                           name:UITextFieldTextDidBeginEditingNotification
+                         object:_textInput];
+  [defaultCenter removeObserver:self
+                           name:UITextFieldTextDidEndEditingNotification
+                         object:_textInput];
   [defaultCenter removeObserver:self name:UITextFieldTextDidChangeNotification object:_textInput];
 }
 
@@ -183,7 +192,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
       self.textInput.underlineColor = [UIColor clearColor];
     }
-    self.textInput.hidesPlaceholderOnInput = _presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder;
+    self.textInput.hidesPlaceholderOnInput =
+        _presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder;
     [self.textInput setNeedsLayout];
   }
 }
@@ -240,9 +250,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   }
 
   // If its single line full width, position on the line.
-  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && ![self.textInput isKindOfClass:[UITextView class]]) {
-    characterMaxFrame.origin.y =
-    CGRectGetMidY(bounds) - CGRectGetHeight(characterMaxFrame) / 2.0f;
+  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth &&
+      ![self.textInput isKindOfClass:[UITextView class]]) {
+    characterMaxFrame.origin.y = CGRectGetMidY(bounds) - CGRectGetHeight(characterMaxFrame) / 2.0f;
   } else {
     characterMaxFrame.origin.y = CGRectGetMaxY(bounds) - CGRectGetHeight(characterMaxFrame);
   }
@@ -255,15 +265,14 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   return self.textInput.trailingUnderlineLabel.bounds.size;
 }
 
-
 - (void)updateCharacterCountMax {
   if (!self.characterCountMax) {
     self.textInput.trailingUnderlineLabel.text = nil;
     return;
   }
 
-  NSString *text = [NSString stringWithFormat:
-                    @"%lu/%lu", (unsigned long)[self characterCount], (unsigned long)self.characterCountMax];
+  NSString *text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)[self characterCount],
+                                              (unsigned long)self.characterCountMax];
   self.textInput.trailingUnderlineLabel.text = text;
 
   BOOL pastMax = [self characterCount] > self.characterCountMax;
@@ -275,7 +284,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
   self.textInput.trailingUnderlineLabel.textColor = textColor;
   [self.textInput.trailingUnderlineLabel sizeToFit];
-
 
   //  [self.textInput.underlineView setErroneous:pastMax];
 }
@@ -306,7 +314,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 // TODO(larche) Merge these two methods. They are almost the same.
 - (void)animatePlaceholderUp {
-  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder || self.placeholderAnimationConstraints.count > 0) {
+  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder ||
+      self.placeholderAnimationConstraints.count > 0) {
     return;
   }
   self.placeholderDefaultPositionFrame = self.textInput.placeholderLabel.frame;
@@ -321,53 +330,69 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   if (self.textInput.text.length == 0) {
     destinationPosition = [self placeholderFloatingPositionFrame].origin;
 
-    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.textInput attribute:NSLayoutAttributeTop multiplier:1 constant:destinationPosition.y];
-    NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.textInput attribute:NSLayoutAttributeLeading multiplier:1 constant:destinationPosition.x];
-    self.placeholderAnimationConstraints = @[top, leading];
+    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.textInput
+                                                           attribute:NSLayoutAttributeTop
+                                                          multiplier:1
+                                                            constant:destinationPosition.y];
+    NSLayoutConstraint *leading =
+        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                     attribute:NSLayoutAttributeLeading
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textInput
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:destinationPosition.x];
+    self.placeholderAnimationConstraints = @[ top, leading ];
 
-    [UIView animateWithDuration:[CATransaction animationDuration] animations:^{
-      self.textInput.placeholderLabel.transform = self.floatingPlaceholderScaleTransform;
+    [UIView animateWithDuration:[CATransaction animationDuration]
+                     animations:^{
+                       self.textInput.placeholderLabel.transform =
+                           self.floatingPlaceholderScaleTransform;
 
-      [self.textInput addConstraints:self.placeholderAnimationConstraints];
-      [self.textInput.placeholderLabel layoutIfNeeded];
-    }];
+                       [self.textInput addConstraints:self.placeholderAnimationConstraints];
+                       [self.textInput.placeholderLabel layoutIfNeeded];
+                     }];
   }
 
   // TODO(larche) Turn back on change color of text.
-//  CAKeyframeAnimation *fontColorAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-//  fontColorAnimation.values = @[ @0, @0, @0.25, @1 ];
+  //  CAKeyframeAnimation *fontColorAnimation = [CAKeyframeAnimation
+  //  animationWithKeyPath:@"opacity"];
+  //  fontColorAnimation.values = @[ @0, @0, @0.25, @1 ];
   //[animations addObject:fontColorAnimation];
-
-
 
   // TODO(larche) Was this still needed?
   // titleLayer.opacity = 1;
 }
 
 - (void)animatePlaceholderDown {
-  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder || self.placeholderAnimationConstraints.count == 0) {
+  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder ||
+      self.placeholderAnimationConstraints.count == 0) {
     return;
   }
 
   // If there's an error, the view will already be up.
   // TODO(larche) Deal with error state check.
   if (self.textInput.text.length == 0) {
+    [UIView animateWithDuration:[CATransaction animationDuration]
+                     animations:^{
+                       self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
 
-    [UIView animateWithDuration:[CATransaction animationDuration] animations:^{
-      self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
-
-      [self.textInput removeConstraints:self.placeholderAnimationConstraints];
-      [self.textInput.placeholderLabel layoutIfNeeded];
-    }];
+                       [self.textInput removeConstraints:self.placeholderAnimationConstraints];
+                       [self.textInput.placeholderLabel layoutIfNeeded];
+                     }];
   }
 
-//  TODO(larche) Turn back on change color of text.
-//  CAKeyframeAnimation *fontColorAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-//  fontColorAnimation.values = @[ @1, @0.25, @0, @0 ];
-//  [animations addObject:fontColorAnimation];
+  //  TODO(larche) Turn back on change color of text.
+  //  CAKeyframeAnimation *fontColorAnimation = [CAKeyframeAnimation
+  //  animationWithKeyPath:@"opacity"];
+  //  fontColorAnimation.values = @[ @1, @0.25, @0, @0 ];
+  //  [animations addObject:fontColorAnimation];
 
-//  TODO(larche) Was this still needed?
-//  frontTitleViewLayer.opacity = 0;
+  //  TODO(larche) Was this still needed?
+  //  frontTitleViewLayer.opacity = 0;
 }
 
 - (CGRect)placeholderFloatingPositionFrame {
@@ -381,8 +406,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   // In RTL Layout, make the title view go up and to the right.
   if ([self shouldLayoutForRTL]) {
     placeholderRect.origin.x =
-    CGRectGetWidth(self.textInput.bounds) -
-    placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
+        CGRectGetWidth(self.textInput.bounds) -
+        placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
   }
 
   return placeholderRect;
@@ -399,13 +424,14 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCTextInputFloatingPlaceholderAnimationDuration];
   [CATransaction
-   setAnimationTimingFunction:[CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+      setAnimationTimingFunction:[CAMediaTimingFunction
+                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
   // TODO(larche) Decide how best to handle underline changes.
-    if (self.underlineViewMode != UITextFieldViewModeUnlessEditing &&
-        self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-  //    [self.underderlineView animateFocusBorderIn];
-    }
+  if (self.underlineViewMode != UITextFieldViewModeUnlessEditing &&
+      self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
+    //    [self.underderlineView animateFocusBorderIn];
+  }
   [self animatePlaceholderUp];
   [CATransaction commit];
 }
@@ -418,7 +444,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCTextInputDividerOutAnimationDuration];
   [CATransaction
-   setAnimationTimingFunction:[CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+      setAnimationTimingFunction:[CAMediaTimingFunction
+                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
   if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
     // TODO(larche) Consider how best to handle underline changes.
@@ -436,19 +463,44 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 #pragma mark - Public API
 
 - (void)setErrorText:(NSString *)errorText
-errorAccessibilityValue:(NSString *)errorAccessibilityValue {
-  self.textInput.leadingUnderlineLabel.text = errorText;
-
-  if (![self.defaultLeadingTextColor isEqual:self.errorColor]) {
-    self.defaultLeadingTextColor = self.textInput.leadingUnderlineLabel.textColor;
+    errorAccessibilityValue:(NSString *)errorAccessibilityValue {
+  if (errorText &&
+      ![self.previousLeadingText isEqualToString:self.textInput.leadingUnderlineLabel.text]) {
+    self.previousLeadingText = self.textInput.leadingUnderlineLabel.text;
   }
+  self.textInput.leadingUnderlineLabel.text = errorText ?: self.previousLeadingText;
 
-  if (![self.defaultTrailingTextColor isEqual:self.errorColor]) {
-    self.defaultTrailingTextColor = self.textInput.trailingUnderlineLabel.textColor;
+  if (errorText &&
+      ![self.previousLeadingTextColor isEqual:self.textInput.leadingUnderlineLabel.textColor] &&
+      ![self.textInput.leadingUnderlineLabel.textColor isEqual:self.errorColor]) {
+    self.previousLeadingTextColor = self.textInput.leadingUnderlineLabel.textColor;
   }
+  self.textInput.leadingUnderlineLabel.textColor =
+  errorText ? self.errorColor : self.previousLeadingTextColor;
 
-  self.textInput.leadingUnderlineLabel.textColor = self.errorColor;
-  self.textInput.trailingUnderlineLabel.textColor = self.errorColor;
+  if (errorText &&
+      ![self.previousTrailingTextColor isEqual:self.textInput.leadingUnderlineLabel.textColor] &&
+      ![self.textInput.leadingUnderlineLabel.textColor isEqual:self.errorColor]) {
+    self.previousTrailingTextColor = self.textInput.trailingUnderlineLabel.textColor;
+  }
+  self.textInput.trailingUnderlineLabel.textColor =
+      errorText ? self.errorColor : self.previousTrailingTextColor;
+
+  if (errorText &&
+      ![self.previousUnderlineColor isEqual:self.textInput.underlineColor] &&
+      ![self.textInput.underlineColor isEqual:self.errorColor]) {
+    self.previousUnderlineColor = self.textInput.underlineColor;
+  }
+  self.textInput.underlineColor =
+  errorText ? self.errorColor : self.previousUnderlineColor;
+
+  if (errorText &&
+      ![self.previousPlaceholderColor isEqual:self.textInput.placeholderLabel.textColor] &&
+      ![self.textInput.placeholderLabel.textColor isEqual:self.errorColor]) {
+    self.previousPlaceholderColor = self.textInput.placeholderLabel.textColor;
+  }
+  self.textInput.placeholderLabel.textColor =
+  errorText ? self.errorColor : self.previousPlaceholderColor;
 }
 
 @end

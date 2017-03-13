@@ -56,7 +56,8 @@
 
 /**
  The attributed text string of the placeholder label.
- Bringing convenience api found in UITextField to all MDCTextInputs. Maps to the .attributedText of the
+ Bringing convenience api found in UITextField to all MDCTextInputs. Maps to the .attributedText of
+ the
  placeholder label.
  */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedPlaceholder;
@@ -73,16 +74,16 @@
  This will usually be used for placeholder text to be displayed when no text has been entered. The
  Material Design guidelines call this 'Helper text.'
  */
-@property(nonatomic, nonnull, strong, readonly) IBInspectable UILabel *leadingUnderlineLabel
-NS_SWIFT_NAME(leadingLabel);
+@property(nonatomic, nonnull, strong, readonly)
+    IBInspectable UILabel *leadingUnderlineLabel NS_SWIFT_NAME(leadingLabel);
 
 /**
  The label on the trailing side under the input.
 
  This will usually be for the character count / limit.
  */
-@property(nonatomic, nonnull, strong, readonly) IBInspectable UILabel *trailingUnderlineLabel
-NS_SWIFT_NAME(trailingLabel);
+@property(nonatomic, nonnull, strong, readonly)
+    IBInspectable UILabel *trailingUnderlineLabel NS_SWIFT_NAME(trailingLabel);
 
 /**
  The color applied to the underline.
