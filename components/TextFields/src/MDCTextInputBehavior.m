@@ -332,6 +332,10 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   if (isToUp) {
     destinationPosition = [self placeholderFloatingPositionFrame].origin;
 
+    // Due to transform working on normal (0.5,0.5) anchor point.
+    // Why no anchor point of (0,0)? Because our users wouldn't expect it.
+    CGFloat xOffset = (scaleFactor - 1.0f) * CGRectGetWidth(self.textInput.placeholderLabel.frame) / 2.0f;
+
     NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
@@ -339,15 +343,15 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                                            attribute:NSLayoutAttributeTop
                                                           multiplier:1
                                                             constant:destinationPosition.y];
-//    NSLayoutConstraint *leading =
-//    [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-//                                 attribute:NSLayoutAttributeLeading
-//                                 relatedBy:NSLayoutRelationEqual
-//                                    toItem:self.textInput
-//                                 attribute:NSLayoutAttributeLeading
-//                                multiplier:1
-//                                  constant:destinationPosition.x];
-    self.placeholderAnimationConstraints = @[ top ];
+    NSLayoutConstraint *leading =
+    [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.textInput
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:xOffset];
+    self.placeholderAnimationConstraints = @[ top, leading ];
 
     animationBlock = ^{
       self.textInput.placeholderLabel.transform =
@@ -383,13 +387,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   }
 
   placeholderRect.origin.y -= MDCTextInputFloatingLabelMargin + MDCTextInputFloatingLabelTextHeight;
-
-  // In RTL Layout, make the title view go up and to the right.
-  if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    placeholderRect.origin.x =
-    CGRectGetWidth(self.textInput.bounds) -
-    placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
-  }
 
   return placeholderRect;
 }

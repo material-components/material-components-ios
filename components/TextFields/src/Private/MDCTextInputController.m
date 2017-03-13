@@ -194,9 +194,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   UIFont *font = self.textInput.font;
   self.placeholderLabel.font = font;
 
-  //  CGFloat scaleFactor = MDCTextInputTitleScaleFactor(font);
-  //  self.floatingPlaceholderScaleTransform = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
-
   [self updatePlaceholderPosition];
 }
 
