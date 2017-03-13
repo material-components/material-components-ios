@@ -19,8 +19,8 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
 
-// TODO(larche): Support left icon view with a enum property for the icon to show
-// TODO(larche): Support in-line auto complete
+// TODO: (larche): Support left icon view with a enum property for the icon to show
+// TODO: (larche): Support in-line auto complete
 
 static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
 static const CGFloat MDCClearButtonImageSquareSize = 32.0f;

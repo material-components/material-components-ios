@@ -216,7 +216,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (!_enabled) {
     return;
   }
-  // TODO(larche) Decide how best to handle underline changes.
+  // TODO: (larche) Decide how best to handle underline changes.
   //
   //  CGRect fromBounds = [self bounds];
   //  fromBounds.size.height = MDCTextInputUnderlineFocusedHeight;

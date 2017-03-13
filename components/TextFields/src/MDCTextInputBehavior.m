@@ -132,12 +132,12 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.errorColor forKey:MDCTextInputBehaviorErrorColorKey];
-  // TODO(larche) All properties
+  // TODO: (larche) All properties
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextInputBehavior *copy = [[[self class] alloc] init];
-  // TODO(larche) All properties
+  // TODO: (larche) All properties
   return copy;
 }
 
@@ -242,7 +242,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
   CGRect characterMaxFrame = CGRectZero;
   characterMaxFrame.size = [self.textInput.trailingUnderlineLabel sizeThatFits:bounds.size];
-  if ([self shouldLayoutForRTL]) {
+  if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     characterMaxFrame.origin.x = 0.0f;
   } else {
     characterMaxFrame.origin.x = CGRectGetMaxX(bounds) - CGRectGetWidth(characterMaxFrame);
@@ -283,12 +283,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
   self.textInput.trailingUnderlineLabel.textColor = textColor;
   [self.textInput.trailingUnderlineLabel sizeToFit];
-}
-
-// TODO(larche) Add back in properly.
-- (BOOL)shouldLayoutForRTL {
-  return NO;
-  //  return MDCShouldLayoutForRTL() && MDCRTLCanSupportFullMirroring();
 }
 
 #pragma mark - Placeholder Implementation
@@ -335,8 +329,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   CGPoint destinationPosition;
   void (^animationBlock)(void);
 
-  // If there's an error, the view will already be up.
-  // TODO(larche) Deal with error state check.
   if (isToUp) {
     destinationPosition = [self placeholderFloatingPositionFrame].origin;
 
@@ -347,15 +339,15 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                                            attribute:NSLayoutAttributeTop
                                                           multiplier:1
                                                             constant:destinationPosition.y];
-    NSLayoutConstraint *leading =
-    [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                 attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.textInput
-                                 attribute:NSLayoutAttributeLeading
-                                multiplier:1
-                                  constant:destinationPosition.x];
-    self.placeholderAnimationConstraints = @[ top, leading ];
+//    NSLayoutConstraint *leading =
+//    [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+//                                 attribute:NSLayoutAttributeLeading
+//                                 relatedBy:NSLayoutRelationEqual
+//                                    toItem:self.textInput
+//                                 attribute:NSLayoutAttributeLeading
+//                                multiplier:1
+//                                  constant:destinationPosition.x];
+    self.placeholderAnimationConstraints = @[ top ];
 
     animationBlock = ^{
       self.textInput.placeholderLabel.transform =
@@ -384,27 +376,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                    }];
 }
 
-- (void)animatePlaceholderDown {
-  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder ||
-      !self.isPlaceholderUp) {
-    return;
-  }
-
-  // If there's an error, the view will already be up.
-  // TODO(larche) Deal with error state check.
-  if (self.textInput.text.length == 0) {
-    [UIView animateWithDuration:[CATransaction animationDuration]
-                     animations:^{
-                       self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
-
-                       [self.textInput removeConstraints:self.placeholderAnimationConstraints];
-                       [self.textInput.placeholderLabel layoutIfNeeded];
-                     } completion:^(BOOL finished) {
-                       self.placeholderAnimationConstraints = nil;
-                     }];
-  }
-}
-
 - (CGRect)placeholderFloatingPositionFrame {
   CGRect placeholderRect = self.placeholderDefaultPositionFrame;
   if (CGRectIsEmpty(placeholderRect)) {
@@ -414,7 +385,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   placeholderRect.origin.y -= MDCTextInputFloatingLabelMargin + MDCTextInputFloatingLabelTextHeight;
 
   // In RTL Layout, make the title view go up and to the right.
-  if ([self shouldLayoutForRTL]) {
+  if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     placeholderRect.origin.x =
     CGRectGetWidth(self.textInput.bounds) -
     placeholderRect.size.width * self.floatingPlaceholderScaleTransform.a;
@@ -432,7 +403,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
    setAnimationTimingFunction:[CAMediaTimingFunction
                                mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
-  // TODO(larche) Decide how best to handle underline changes.
+  // TODO: (larche) Decide how best to handle underline changes.
   if (self.underlineViewMode != UITextFieldViewModeUnlessEditing &&
       self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
     self.textInput.underlineColor = self.textInput.tintColor;
@@ -453,7 +424,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
   if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-    // TODO(larche) Consider how best to handle underline changes.
+    // TODO: (larche) Consider how best to handle underline changes.
     self.textInput.underlineWidth = MDCTextInputUnderlineNormalWidth;
 
     UIColor *commonColor = self.textInput.leadingUnderlineLabel.textColor;

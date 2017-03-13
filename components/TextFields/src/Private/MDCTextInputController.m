@@ -104,7 +104,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   _placeholderLabel.userInteractionEnabled = NO;
 
-  // TODO(larche) Get default placeholder text color.
+  // TODO: (larche) Get default placeholder text color.
   _placeholderLabel.textColor = [UIColor grayColor];
   _placeholderLabel.font = _textInput.font;
 
@@ -120,7 +120,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   _leadingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 
-  // TODO(larche) Get default leading text color.
+  // TODO: (larche) Get default leading text color.
   _leadingUnderlineLabel.textColor = [UIColor grayColor];
   _leadingUnderlineLabel.font = _textInput.font;
   _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
@@ -130,7 +130,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   _trailingUnderlineLabel.textColor = [UIColor grayColor];
   _trailingUnderlineLabel.font = _textInput.font;
-  // TODO(larche) Do I need to set the trailing one to be reverse of RTL?
+  // TODO: (larche) Do I need to set the trailing one to be reverse of RTL?
 
   [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_trailingUnderlineLabel];
@@ -227,7 +227,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   //      break;
   //  }
   //
-  //  // TODO(larche) Check this removal of validator.
+  //  // TODO: (larche) Check this removal of validator.
   //  // Adjust for the character limit and validator.
   //  // Full width single line text fields have their character counter on the same line as the
   //  text.
@@ -241,14 +241,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)didBeginEditing {
-  // TODO(larche) Check this removal of underlineViewMode.
+  // TODO: (larche) Check this removal of underlineViewMode.
 
-  // TODO(larche) Maybe add getting rid of placeholder when typing by default. OR leave it on for
+  // TODO: (larche) Maybe add getting rid of placeholder when typing by default. OR leave it on for
   // autocomplete.
 }
 
 - (void)didEndEditing {
-  // TODO(larche) Check this removal of underlineViewMode.
+  // TODO: (larche) Check this removal of underlineViewMode.
   UILabel *label = (UILabel *)[self textInputLabel];
   if ([label isKindOfClass:[UILabel class]]) {
     [label setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -259,7 +259,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updatePlaceholderAlpha];
 }
 
-// TODO(larche) Add back in properly.
+// TODO: (larche) Add back in properly.
 - (BOOL)shouldLayoutForRTL {
   return NO;
   //  return MDCShouldLayoutForRTL() && MDCRTLCanSupportFullMirroring();
@@ -268,7 +268,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Underline View Implementation
 
 - (MDCTextInputUnderlineView *)underlineView {
-  // TODO(larche) Check this removal of underlineViewMode.
+  // TODO: (larche) Check this removal of underlineViewMode.
   //  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
   //    return nil;
   //  }
@@ -279,10 +279,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     //      _underlineView.normalUnderlineHidden = NO;
     //      _underlineView.focusUnderlineHidden = YES;
     //    } else {
-    //      // TODO(larche) Check this removal of underlineViewMode.
+    //      // TODO: (larche) Check this removal of underlineViewMode.
     //      //      _underlineView.normalUnderlineHidden = (self.underlineViewMode ==
     //      //      UITextInputViewModeWhileEditing);
-    //      // TODO(larche) Check this removal of underlineViewMode.
+    //      // TODO: (larche) Check this removal of underlineViewMode.
     //      //      _underlineView.focusUnderlineHidden = (self.underlineViewMode ==
     //      //      UITextInputViewModeUnlessEditing);
     //    }
@@ -343,7 +343,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (NSAttributedString *)attributedPlaceholder {
   id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
-    // TODO(larche) Return string attributes also. Tho I feel like that should come from the
+    // TODO: (larche) Return string attributes also. Tho I feel like that should come from the
     // titleView / placeholderLabel
     NSAttributedString *constructedString =
         [[NSAttributedString alloc] initWithString:(NSString *)placeholderString attributes:nil];
@@ -357,7 +357,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.placeholderLabel.text = attributedPlaceholder.string;
-  // TODO(larche) Read string attributes also. Tho I feel like that should come from the titleView /
+  // TODO: (larche) Read string attributes also. Tho I feel like that should come from the titleView /
   // placeholderLabel
 
   [self updatePlaceholderAlpha];
@@ -397,7 +397,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 }
 
-// TODO(larche) Check this removal of setUnderlineViewMode.
+// TODO: (larche) Check this removal of setUnderlineViewMode.
 - (void)updatePlaceholderPosition {
   if (self.placeholderLabel.layer.animationKeys.count > 0) {
     // We don't need to get in the middle of animations.
