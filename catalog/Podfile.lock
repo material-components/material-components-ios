@@ -154,6 +154,7 @@ PODS:
     - MaterialComponents/Typography
   - MaterialComponents/Typography (22.1.0):
     - MaterialComponents/private/Application
+    - MDFTextAccessibility
   - MaterialComponentsCatalog (22.1.0):
     - MaterialComponents
   - MaterialComponentsUnitTests (22.1.0):
@@ -179,11 +180,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: 704eb520225eeec801e77ad0583095f4f2624520
-  MaterialComponents: ce0eae9b1fe2bbc7f260783713ccf97d9d602b20
+  MaterialComponents: f3956c6c20c15c14f8b4e5a9bb0b3a240f344bba
   MaterialComponentsCatalog: 54f938ab7966787e282b0132ded3612a9428ae67
   MaterialComponentsUnitTests: 0bbe06045203e9acdf7712c8cd6f378aa264e05d
   MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
 
 PODFILE CHECKSUM: 0a93a34ae9af89654baaaa3a998126cb7d9e1198
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.1.1

@@ -146,6 +146,8 @@
 /** Returns the recommended opacity of black text for the button font. */
 + (CGFloat)buttonFontOpacity;
 
+
++ (BOOL)isLargeForContrastRatios:(nullable UIFont *)font;
 @end
 
 /**

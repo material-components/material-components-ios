@@ -15,6 +15,7 @@
  */
 
 #import "MDCTypography.h"
+#import "MDFTextAccessibility.h"
 #import "private/UIFont+MaterialTypographyPrivate.h"
 
 static id<MDCTypographyFontLoading> gFontLoader = nil;
@@ -134,6 +135,15 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 + (CGFloat)buttonFontOpacity {
   return MDCTypographyStandardOpacity;
+}
+
++ (BOOL)isLargeForContrastRatios:(nullable UIFont *)font {
+  id <MDCTypographyFontLoading> fontLoader = [self fontLoader];
+
+  if ([fontLoader respondsToSelector:@selector(isLargeForContrastRatios:)]) {
+    return [fontLoader isLargeForContrastRatios:font];
+  }
+  return [MDFTextAccessibility isLargeForContrastRatios:font];
 }
 
 #pragma mark - Private

@@ -44,7 +44,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Application"
     ss.dependency "MaterialComponents/private/RTL"
   end
-  
+
   s.subspec "AnimationTiming" do |ss|
     ss.ios.deployment_target = '8.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
@@ -266,6 +266,7 @@ Pod::Spec.new do |s|
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
     ss.dependency "MaterialComponents/private/Application"
+    ss.dependency 'MDFTextAccessibility'
   end
 
   s.subspec "private" do |pss|
