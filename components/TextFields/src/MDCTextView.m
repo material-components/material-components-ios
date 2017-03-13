@@ -105,6 +105,22 @@
 
 #pragma mark - Properties Implementation
 
+- (NSAttributedString *)attributedPlaceholder {
+  return _controller.attributedPlaceholder;
+}
+
+- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
+  _controller.attributedPlaceholder = attributedPlaceholder;
+}
+
+- (BOOL)hidesPlaceholderOnInput {
+  return _controller.hidesPlaceholderOnInput;
+}
+
+- (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
+  _controller.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
+}
+
 - (UILabel *)leadingUnderlineLabel {
   return _controller.leadingUnderlineLabel;
 }
@@ -117,14 +133,6 @@
   [self.controller setPlaceholder:placeholder];
 }
 
-- (NSAttributedString *)attributedPlaceholder {
-  return _controller.attributedPlaceholder;
-}
-
-- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
-  _controller.attributedPlaceholder = attributedPlaceholder;
-}
-
 - (UIFont *)placeholderFont {
   return self.placeholderLabel.font;
 }
@@ -132,13 +140,6 @@
 - (void)setPlaceholderFont:(UIFont *)placeholderFont {
   self.placeholderLabel.font = placeholderFont;
 }
-
-//- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
-//  if (_controller.presentationStyle != presentationStyle) {
-//    _controller.presentationStyle = presentationStyle;
-//    self.textContainerInset = UIEdgeInsetsZero;
-//  }
-//}
 
 - (UILabel *)placeholderLabel {
   return _controller.placeholderLabel;
@@ -152,13 +153,6 @@
   [super setTextColor:textColor];
   _controller.textColor = textColor;
 }
-
-//- (void)setCharacterLimit:(NSUInteger)characterLimit {
-//  if (_controller.characterLimit != characterLimit) {
-//    _controller.characterLimit = characterLimit;
-//    self.textContainerInset = UIEdgeInsetsZero;
-//  }
-//}
 
 // Always set the text container insets based upon style of the text field.
 - (void)setTextContainerInset:(UIEdgeInsets)textContainerInset {
@@ -175,6 +169,14 @@
 
 - (void)setUnderlineColor:(UIColor *)underlineColor {
   _controller.underlineColor = underlineColor;
+}
+
+- (MDCTextInputUnderlineView *)underlineView {
+  return _controller.underlineView;
+}
+
+- (void)setUnderlineView:(MDCTextInputUnderlineView *)underlineView {
+  _controller.underlineView = underlineView;
 }
 
 - (CGFloat)underlineWidth {

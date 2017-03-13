@@ -51,6 +51,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) UILabel *errorTextView;
 @property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
 
+@property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 
 @end
@@ -61,12 +62,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 @synthesize attributedText = _do_no_use_attributedText;
 @synthesize editing = _editing;
+@synthesize hidesPlaceholderOnInput = _hidesPlaceholderOnInput;
 @synthesize leadingUnderlineLabel = _leadingUnderlineLabel;
 @synthesize placeholderLabel = _placeholderLabel;
 @synthesize text = _do_no_use_text;
 @synthesize textColor = _textColor;
 @synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
 @synthesize underlineColor = _underlineColor;
+@synthesize underlineView = _underlineView;
 @synthesize underlineWidth = _underlineWidth;
 
 - (instancetype)init {
@@ -100,7 +103,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   _placeholderLabel.textAlignment = NSTextAlignmentNatural;
 
   _placeholderLabel.userInteractionEnabled = NO;
-  _placeholderLabel.alpha = 0;
 
   // TODO(larche) Get default placeholder text color.
   _placeholderLabel.textColor = [UIColor grayColor];
@@ -110,6 +112,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_textInput sendSubviewToBack:_placeholderLabel];
 
   [self.textInput addConstraints:[self placeholderDefaultConstaints]];
+
+  _hidesPlaceholderOnInput = YES;
 }
 
 - (void)setupUnderlineLabels {
@@ -146,7 +150,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)didSetText {
   [self didChange];
-  //[self.textInput setNeedsLayout];
+  [self.textInput setNeedsLayout];
 }
 
 - (void)didSetFont {
@@ -162,7 +166,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)layoutSubviewsWithAnimationsDisabled {
   self.underlineView.frame = [self underlineViewFrame];
   [self updatePlaceholderPosition];
-  //[self updatePlaceholderAlpha];
+  [self updatePlaceholderAlpha];
 }
 
 - (UIEdgeInsets)textContainerInset {
@@ -296,23 +300,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 #pragma mark - Properties Implementation
 
-- (NSString *)placeholder {
-  id placeholderString = self.placeholderLabel.text;
-  if ([placeholderString isKindOfClass:[NSString class]]) {
-    return (NSString *)placeholderString;
-  } else if ([placeholderString isKindOfClass:[NSAttributedString class]]) {
-    return [(NSAttributedString *)placeholderString string];
-  }
-
-  return nil;
-}
-
-- (void)setPlaceholder:(NSString *)placeholder {
-  self.placeholderLabel.text = placeholder;
-  [self updatePlaceholderAlpha];
-  [self.textInput setNeedsLayout];
-}
-
 - (NSAttributedString *)attributedPlaceholder {
   id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
@@ -339,6 +326,22 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.underlineView.enabled = enabled;
 }
 
+- (NSString *)placeholder {
+  id placeholderString = self.placeholderLabel.text;
+  if ([placeholderString isKindOfClass:[NSString class]]) {
+    return (NSString *)placeholderString;
+  } else if ([placeholderString isKindOfClass:[NSAttributedString class]]) {
+    return [(NSAttributedString *)placeholderString string];
+  }
+
+  return nil;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder {
+  self.placeholderLabel.text = placeholder;
+  [self updatePlaceholderAlpha];
+  [self.textInput setNeedsLayout];
+}
 
 - (void)setTextColor:(UIColor *)textColor {
   if (!textColor) {
@@ -357,12 +360,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     // We don't need to get in the middle of animations.
     return;
   }
-  CGRect destinationFrame = [self placeholderDefaultPositionFrame];
-  CGPoint destinationPosition = CGPointMake(destinationFrame.origin.x + CGRectGetWidth(destinationFrame) / 2.0, destinationFrame.origin.y + CGRectGetHeight(destinationFrame) / 2.0);
-//  self.placeholderLabel.bounds = CGRectMake(0, 0, CGRectGetWidth(destinationFrame), CGRectGetHeight(destinationFrame));
-//  self.placeholderLabel.center = destinationPosition;
 
-  self.placeholderTop.constant = destinationPosition.y;
+  CGRect destinationFrame = [self placeholderDefaultPositionFrame];
+  self.placeholderTop.constant = CGRectGetMinY(destinationFrame);
+  self.placeholderHeight.constant = CGRectGetHeight(destinationFrame);
 }
 
 - (CGRect)placeholderDefaultPositionFrame {
@@ -416,10 +417,18 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                               attribute:NSLayoutAttributeTrailing
                                                              multiplier:1
                                                                constant:8];
+  self.placeholderHeight = [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                                              attribute:NSLayoutAttributeHeight
+                                                              relatedBy:NSLayoutRelationLessThanOrEqual
+                                                                 toItem:nil
+                                                              attribute:NSLayoutAttributeNotAnAttribute
+                                                             multiplier:1
+                                                               constant:CGRectGetHeight(placeholderRect)];
 
   [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
   [leading setPriority:UILayoutPriorityDefaultLow];
   [trailing setPriority:UILayoutPriorityDefaultLow];
+  [self.placeholderHeight setPriority:UILayoutPriorityDefaultLow];
 
   return @[self.placeholderTop, leading, trailing];
 }
@@ -432,6 +441,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)updatePlaceholderAlpha {
+  if (!self.hidesPlaceholderOnInput) {
+    return;
+  }
   CGFloat opacity = self.textInput.text.length ? 0 : 1;
   self.placeholderLabel.alpha = opacity;
 }

@@ -17,6 +17,9 @@
 
 #import <UIKit/UIKit.h>
 
+#pragma mark - Unapproved API
+@class MDCTextInputUnderlineView;
+#pragma mark - Approved API
 /**
  The Material Design guideslines have many suggestions for handling text input. The inputs that
  conform to this protocol have all the API necessary to customize them to those suggestions.
@@ -90,5 +93,11 @@ NS_SWIFT_NAME(trailingLabel);
 
 /** The thickness of the underline. */
 @property(nonatomic, assign) CGFloat underlineWidth UI_APPEARANCE_SELECTOR;
+
+#pragma mark - New API
+@property(nonatomic, nonnull, strong) MDCTextInputUnderlineView *underlineView;
+
+/** Should it have the standard behavior of disappearing when you type? Defaults to YES. */
+@property(nonatomic, assign) BOOL hidesPlaceholderOnInput;
 
 @end

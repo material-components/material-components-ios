@@ -126,11 +126,20 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
 #pragma mark - Properties Implementation
 
+
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
   if (_clearButtonColor != clearButtonColor) {
     _clearButtonColor = clearButtonColor;
     self.clearButtonImage = [self drawnClearButtonImage];
   }
+}
+
+- (BOOL)hidesPlaceholderOnInput {
+  return _controller.hidesPlaceholderOnInput;
+}
+
+- (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
+  _controller.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
 }
 
 - (UILabel *)placeholderLabel {
@@ -160,6 +169,14 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
 - (void)setUnderlineColor:(UIColor *)underlineColor {
   _controller.underlineColor = underlineColor;
+}
+
+- (MDCTextInputUnderlineView *)underlineView {
+  return _controller.underlineView;
+}
+
+- (void)setUnderlineView:(MDCTextInputUnderlineView *)underlineView {
+  _controller.underlineView = underlineView;
 }
 
 - (CGFloat)underlineWidth {
