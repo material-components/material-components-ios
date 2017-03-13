@@ -34,16 +34,13 @@ static const CGFloat MDCTextInputFloatingLabelFontSize = 12.f;
 static const CGFloat MDCTextInputFloatingLabelTextHeight = 16.f;
 static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
 // static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
-// static const CGFloat MDCTextInputValidationMargin = 8.f;
+static const CGFloat MDCTextInputUnderlineActiveWidth = 4.f;
+static const CGFloat MDCTextInputUnderlineNormalWidth = 2.f;
 
 static const NSTimeInterval MDCTextInputFloatingPlaceholderAnimationDuration = 0.3f;
 static const NSTimeInterval MDCTextInputDividerOutAnimationDuration = 0.266666f;
 
 static NSString *const MDCTextInputBehaviorErrorColorKey = @"MDCTextInputBehaviorErrorColorKey";
-static NSString *const MDCTextInputBehaviorAnimatePlaceholderUpKey =
-    @"MDCTextInputBehaviorAnimatePlaceholderUpKey";
-static NSString *const MDCTextInputBehaviorAnimatePlaceholderDownKey =
-    @"MDCTextInputBehaviorAnimatePlaceholderDownKey";
 
 static inline CGFloat MDCFabs(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -65,9 +62,9 @@ static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
 }
 
-// static inline UIColor *MDCTextInputUnderlineColor() {
-//  return [UIColor lightGrayColor];
-//}
+ static inline UIColor *MDCTextInputNormalUnderlineColor() {
+  return [UIColor lightGrayColor];
+}
 
 static inline UIColor *MDCTextInputTextErrorColor() {
   return [MDCPalette redPalette].tint500;
@@ -127,6 +124,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     _placeholderDefaultPositionFrame = textInput.frame;
 
     [self subscribeForNotifications];
+    _textInput.underlineColor = MDCTextInputNormalUnderlineColor();
   }
   return self;
 }
@@ -284,8 +282,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
   self.textInput.trailingUnderlineLabel.textColor = textColor;
   [self.textInput.trailingUnderlineLabel sizeToFit];
-
-  //  [self.textInput.underlineView setErroneous:pastMax];
 }
 
 // TODO(larche) Add back in properly.
@@ -430,7 +426,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   // TODO(larche) Decide how best to handle underline changes.
   if (self.underlineViewMode != UITextFieldViewModeUnlessEditing &&
       self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-    //    [self.underderlineView animateFocusBorderIn];
+    self.textInput.underlineColor = self.textInput.tintColor;
+    self.textInput.underlineWidth = MDCTextInputUnderlineActiveWidth;
+    self.textInput.placeholderLabel.textColor = self.textInput.tintColor;
   }
   [self animatePlaceholderUp];
   [CATransaction commit];
@@ -449,7 +447,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
   if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
     // TODO(larche) Consider how best to handle underline changes.
-    // [self.underlineView animateFocusUnderlineOut];
+    self.textInput.underlineWidth = MDCTextInputUnderlineNormalWidth;
+    self.textInput.placeholderLabel.textColor = self.textInput.leadingUnderlineLabel.textColor;
   }
   [self animatePlaceholderDown];
   [CATransaction commit];

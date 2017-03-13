@@ -123,12 +123,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   // TODO(larche) Get default leading text color.
   _leadingUnderlineLabel.textColor = [UIColor grayColor];
   _leadingUnderlineLabel.font = _textInput.font;
+  _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
 
   [_leadingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_leadingUnderlineLabel];
 
   _trailingUnderlineLabel.textColor = [UIColor grayColor];
   _trailingUnderlineLabel.font = _textInput.font;
+  // TODO(larche) Do I need to set the trailing one to be reverse of RTL?
 
   [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_trailingUnderlineLabel];
