@@ -178,6 +178,13 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   return [UIFont italicSystemFontOfSize:fontSize];
 }
 
+- (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
+  UIFont *regular = [self regularFontOfSize:fontSize];
+  UIFontDescriptor *descriptor = [regular.fontDescriptor fontDescriptorWithSymbolicTraits:
+      UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
+  return [UIFont fontWithDescriptor:descriptor size:fontSize];
+}
+
 - (BOOL)isLargeForContrastRatios:(UIFont *)font {
   if (font.pointSize >= 18) {
     return YES;
