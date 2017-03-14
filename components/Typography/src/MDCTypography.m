@@ -15,7 +15,6 @@
  */
 
 #import "MDCTypography.h"
-#import "MDFTextAccessibility.h"
 #import "private/UIFont+MaterialTypographyPrivate.h"
 
 static id<MDCTypographyFontLoading> gFontLoader = nil;
@@ -143,7 +142,12 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   if ([fontLoader respondsToSelector:@selector(isLargeForContrastRatios:)]) {
     return [fontLoader isLargeForContrastRatios:font];
   }
-  return [MDFTextAccessibility isLargeForContrastRatios:font];
+  
+  // Copied from [MDFTextAccessibility isLargeForContrastRatios:]
+  UIFontDescriptor *fontDescriptor = font.fontDescriptor;
+  BOOL isBold =
+      (fontDescriptor.symbolicTraits & UIFontDescriptorTraitBold) == UIFontDescriptorTraitBold;
+  return font.pointSize >= 18 || (isBold && font.pointSize >= 14);
 }
 
 #pragma mark - Private
