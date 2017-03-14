@@ -149,7 +149,7 @@
  @param location The touch location in the coords of @c inkTouchController.view.
  @return An ink view to use at the touch location.
  */
-- (nonnull MDCInkView *)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
+- (nullable MDCInkView *)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
                     inkViewAtTouchLocation:(CGPoint)location;
 
 /**
