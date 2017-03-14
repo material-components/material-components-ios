@@ -45,6 +45,10 @@
     XCTAssertEqual([fontLoader mediumFontOfSize:size], [UIFont fontWithName:@"HelveticaNeue-Medium" size:size]);
     XCTAssertEqual([fontLoader boldFontOfSize:size], [UIFont boldSystemFontOfSize:size]);
   }
+  UIFontDescriptor * fontDescriptorWithBoldItalic = [[UIFont systemFontOfSize:size].fontDescriptor
+      fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
+  XCTAssertEqual([fontLoader boldItalicFontOfSize:size],
+                   [UIFont fontWithDescriptor:fontDescriptorWithBoldItalic size:size]);
   XCTAssertEqual([fontLoader italicFontOfSize:size], [UIFont italicSystemFontOfSize:size]);
 
 }

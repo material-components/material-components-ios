@@ -44,6 +44,9 @@
 /** Asks the receiver to return an italic font. */
 - (nonnull UIFont *)italicFontOfSize:(CGFloat)fontSize;
 
+/** Asks the receiver to return a font with an italic bold weight. */
+- (nonnull UIFont *)boldItalicFontOfSize:(CGFloat)fontSize;
+
 /**
  Asks the receiver to determine if a particular font would be considered "large" for the purposes of
  calculating contrast ratios.
