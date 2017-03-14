@@ -179,8 +179,8 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 }
 
 - (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
-  UIFont *bold = [self regularFontOfSize:fontSize];
-  UIFontDescriptor *descriptor = [bold.fontDescriptor fontDescriptorWithSymbolicTraits:
+  UIFont *regular = [self regularFontOfSize:fontSize];
+  UIFontDescriptor *descriptor = [regular.fontDescriptor fontDescriptorWithSymbolicTraits:
       UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
   return [UIFont fontWithDescriptor:descriptor size:fontSize];
 }
