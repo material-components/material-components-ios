@@ -136,7 +136,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   return MDCTypographyStandardOpacity;
 }
 
-+ (BOOL)isLargeForContrastRatios:(nullable UIFont *)font {
++ (BOOL)isLargeForContrastRatios:(nonnull UIFont *)font {
   id <MDCTypographyFontLoading> fontLoader = [self fontLoader];
 
   if ([fontLoader respondsToSelector:@selector(isLargeForContrastRatios:)]) {
