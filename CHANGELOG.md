@@ -1,3 +1,13 @@
+# 22.1.1
+
+## Component changes
+
+### Flexible Header
+
+#### Changes
+
+* [FlexibleHeaderView] iOS 10.3beta workaround(https://github.com/material-components/material-components-ios/commit/0d54829bf29e6631de16f6a159fb7b48a8037692) (Ian Gordon)
+
 # 22.1.0
 
 ## API diffs
