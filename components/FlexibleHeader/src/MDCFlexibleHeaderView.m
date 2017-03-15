@@ -878,19 +878,17 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 #if DEBUG
 - (void)fhv_scrollViewDidPan:(UIPanGestureRecognizer *)pan {
   if (pan.state == UIGestureRecognizerStateEnded && [self fhv_canShiftOffscreen]) {
-    // TODO(#1254): Re-enable sanity check assert on viewDidPan
-    // Remove #if 0 and else clause, keep NSAssert() to re-enable
-#if 0
     // You _must_ implement the target content offset method in your UIScrollViewDelegate.
     // Not implementing the target content offset method can allow the status bar to get into an
     // indeterminate state and may cause your app to be rejected.
-    NSAssert(_didAdjustTargetContentOffset, @"%@ isn't invoking %@'s %@.",
-             NSStringFromClass([_trackingScrollView class]), NSStringFromClass([self class]),
-             NSStringFromSelector(
-                 @selector(trackingScrollViewWillEndDraggingWithVelocity:targetContentOffset:)));
-#else
-    ;
-#endif
+
+    // TODO(#1254): Re-enable sanity check assert on viewDidPan
+    // The original test below has been replaced with NSAssert(YES) to stop the assert from firing.
+    NSAssert(YES, @"This assert is intentionally disabled.");
+//    NSAssert(_didAdjustTargetContentOffset, @"%@ isn't invoking %@'s %@.",
+//             NSStringFromClass([_trackingScrollView class]), NSStringFromClass([self class]),
+//             NSStringFromSelector(
+//                 @selector(trackingScrollViewWillEndDraggingWithVelocity:targetContentOffset:)));
   }
 }
 #endif
