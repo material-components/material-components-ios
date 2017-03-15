@@ -1,5 +1,26 @@
 # release-candidate TODO: Replace me with version number.
 
+## API diffs
+
+### Collections
+
+#### Changes
+
+* Change [MDCCollectionViewStyling backgroundImageForCellLayoutAttributes] nullability
+
+### Ink
+
+#### Changes
+
+* Change [MDCInkTouchController inkTouchController] nullability
+
+### Typography
+
+#### Changes
+
+* Add [MDCTypography isLargeForContrastRatios]
+
+
 # 22.1.1
 
 ## Component changes
