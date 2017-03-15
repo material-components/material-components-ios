@@ -875,6 +875,25 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
 #pragma mark Gestures
 
+// TODO(#1254): Re-enable sanity check assert on viewDidPan
+// This function is a temporary inclusion to stop an assert from triggering on iOS 10.3b until
+// we determine the cause. Remove once #1254 is closed.
+static BOOL isRunningiOS10_3OrAbove() {
+  static dispatch_once_t onceToken;
+  static BOOL isRunningiOS10_3OrAbove;
+  dispatch_once(&onceToken, ^{
+    NSProcessInfo *info = [NSProcessInfo processInfo];
+    if ([info respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+      isRunningiOS10_3OrAbove = [info isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){
+        .majorVersion = 10,
+        .minorVersion = 3,
+        .patchVersion = 0,
+      }];
+    }
+  });
+  return isRunningiOS10_3OrAbove;
+}
+
 #if DEBUG
 - (void)fhv_scrollViewDidPan:(UIPanGestureRecognizer *)pan {
   if (pan.state == UIGestureRecognizerStateEnded && [self fhv_canShiftOffscreen]) {
@@ -883,12 +902,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     // indeterminate state and may cause your app to be rejected.
 
     // TODO(#1254): Re-enable sanity check assert on viewDidPan
-    // The original test below has been replaced with NSAssert(YES) to stop the assert from firing.
-    NSAssert(YES, @"This assert is intentionally disabled.");
-//    NSAssert(_didAdjustTargetContentOffset, @"%@ isn't invoking %@'s %@.",
-//             NSStringFromClass([_trackingScrollView class]), NSStringFromClass([self class]),
-//             NSStringFromSelector(
-//                 @selector(trackingScrollViewWillEndDraggingWithVelocity:targetContentOffset:)));
+    // To re-enable, remove isRunningiOS10_3OrAbove() function and always assert.
+    if (!isRunningiOS10_3OrAbove() ) {
+      NSAssert(_didAdjustTargetContentOffset, @"%@ isn't invoking %@'s %@.",
+               NSStringFromClass([_trackingScrollView class]), NSStringFromClass([self class]),
+               NSStringFromSelector(
+                   @selector(trackingScrollViewWillEndDraggingWithVelocity:targetContentOffset:)));
+    }
   }
 }
 #endif
