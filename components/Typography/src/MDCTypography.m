@@ -136,6 +136,20 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   return MDCTypographyStandardOpacity;
 }
 
++ (BOOL)isLargeForContrastRatios:(nonnull UIFont *)font {
+  id <MDCTypographyFontLoading> fontLoader = [self fontLoader];
+
+  if ([fontLoader respondsToSelector:@selector(isLargeForContrastRatios:)]) {
+    return [fontLoader isLargeForContrastRatios:font];
+  }
+  
+  // Copied from [MDFTextAccessibility isLargeForContrastRatios:]
+  UIFontDescriptor *fontDescriptor = font.fontDescriptor;
+  BOOL isBold =
+      (fontDescriptor.symbolicTraits & UIFontDescriptorTraitBold) == UIFontDescriptorTraitBold;
+  return font.pointSize >= 18 || (isBold && font.pointSize >= 14);
+}
+
 #pragma mark - Private
 
 + (id<MDCTypographyFontLoading>)defaultFontLoader {
