@@ -878,6 +878,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 // TODO(#1254): Re-enable sanity check assert on viewDidPan
 // This function is a temporary inclusion to stop an assert from triggering on iOS 10.3b until
 // we determine the cause. Remove once #1254 is closed.
+#if DEBUG
 static BOOL isRunningiOS10_3OrAbove() {
   static dispatch_once_t onceToken;
   static BOOL isRunningiOS10_3OrAbove;
@@ -893,6 +894,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   });
   return isRunningiOS10_3OrAbove;
 }
+#endif
 
 #if DEBUG
 - (void)fhv_scrollViewDidPan:(UIPanGestureRecognizer *)pan {
