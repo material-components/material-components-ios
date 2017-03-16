@@ -13,8 +13,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCFontTextStyle.h"
-
 @interface UIFont (MaterialTypographyPrivate)
 
 /**

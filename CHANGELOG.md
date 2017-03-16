@@ -1,3 +1,60 @@
+# release-candidate TODO: Replace me with version number.
+
+## API diffs
+
+### Collections
+
+#### Changes
+
+* Change [MDCCollectionViewStyling backgroundImageForCellLayoutAttributes] nullability
+
+### Ink
+
+#### Changes
+
+* Change [MDCInkTouchController inkTouchController] nullability
+
+### Typography
+
+#### Changes
+
+* Add [MDCTypography isLargeForContrastRatios]
+
+
+# 22.1.1
+
+## Component changes
+
+### Flexible Header
+
+#### Changes
+
+* [FlexibleHeaderView] iOS 10.3beta workaround(https://github.com/material-components/material-components-ios/commit/0d54829bf29e6631de16f6a159fb7b48a8037692) (Ian Gordon)
+
+# 22.1.0
+
+## API diffs
+
+### Typography
+
+#### Changes
+
+* [Added isLargeForContrastRatio to protocol (#1232)](https://github.com/material-components/material-components-ios/commit/36ca5ec407d8a3d8ba159e3af52605135b13010d) (Randall Li)
+
+## Component changes
+
+### NavigationBar
+
+#### Changes
+
+* [[Navigation Bar] - Update docs (#1235)](https://github.com/material-components/material-components-ios/commit/8f3d4a89e360300dc885dc9c9d3c259f6ea7c2ca) (Justin Shephard)
+
+### Typography
+
+#### Changes
+
+* [Added isLargeForContrastRatio to protocol (#1232)](https://github.com/material-components/material-components-ios/commit/36ca5ec407d8a3d8ba159e3af52605135b13010d) (Randall Li)
+
 # 22.0.0
 
 ## API diffs
