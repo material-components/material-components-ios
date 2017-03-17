@@ -37,7 +37,7 @@
     XCTAssertEqual([fontLoader mediumFontOfSize:size],
                    [UIFont systemFontOfSize:size weight: UIFontWeightMedium]);
     XCTAssertEqual([fontLoader boldFontOfSize:size],
-                   [UIFont systemFontOfSize:size weight: UIFontWeightBold]);
+                   [UIFont systemFontOfSize:size weight: UIFontWeightSemibold]);
   } else {
     // Fallback on earlier versions
     XCTAssertEqual([fontLoader lightFontOfSize:size], [UIFont fontWithName:@"HelveticaNeue-Light" size:size]);

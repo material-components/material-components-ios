@@ -148,6 +148,31 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   BOOL isBold =
       (fontDescriptor.symbolicTraits & UIFontDescriptorTraitBold) == UIFontDescriptorTraitBold;
   return font.pointSize >= 18 || (isBold && font.pointSize >= 14);
+  
+}
+
++ (UIFont *)italicFontFromFont:(UIFont *)font {
+  SEL selector = @selector(italicFontFromFont:);
+  if ([self.fontLoader respondsToSelector:selector]) {
+    return [self.fontLoader italicFontFromFont:font];
+  }
+  UIFontDescriptor * fontDescriptor = [font.fontDescriptor
+                              fontDescriptorWithSymbolicTraits: UIFontDescriptorTraitItalic];
+  return [UIFont fontWithDescriptor:fontDescriptor size:0];
+}
+
++ (UIFont *)boldFontFromFont:(UIFont *)font {
+  SEL selector = @selector(boldFontFromFont:);
+  if ([self.fontLoader respondsToSelector:selector]) {
+    return [self.fontLoader boldFontFromFont:font];
+  }
+  UIFontDescriptorSymbolicTraits traits = UIFontDescriptorTraitBold;
+  if (font.mdc_slant != 0) {
+    traits = traits | UIFontDescriptorTraitItalic;
+  }
+  UIFontDescriptor * fontDescriptor =
+      [font.fontDescriptor fontDescriptorWithSymbolicTraits: traits];
+  return [UIFont fontWithDescriptor:fontDescriptor size:0];
 }
 
 #pragma mark - Private
@@ -183,9 +208,10 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 - (UIFont *)boldFontOfSize:(CGFloat)fontSize {
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightBold];
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightSemibold];
   }
   return [UIFont boldSystemFontOfSize:fontSize];
+  
 }
 
 - (UIFont *)italicFontOfSize:(CGFloat)fontSize {
