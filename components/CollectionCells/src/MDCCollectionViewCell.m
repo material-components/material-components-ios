@@ -44,12 +44,10 @@ static NSString *const kResourceBundleName = @"MaterialCollectionCells";
 // String table name containing localized strings.
 static NSString *const kStringTableName = @"MaterialCollectionCells";
 
-// String key for accessibility hint of selected cells.
-static NSString *const kSelectedCellAccessibilityHintKey =
+NSString *const kSelectedCellAccessibilityHintKey =
     @"MaterialCollectionCellsAccessibilitySelectedHint";
 
-// String key for accessibility hint of deselected cells.
-static NSString *const kDeselectedCellAccessibilityHintKey =
+NSString *const kDeselectedCellAccessibilityHintKey =
     @"MaterialCollectionCellsAccessibilityDeselectedHint";
 
 // To be used as accessory view when an accessory type is set. It has no particular functionalities
