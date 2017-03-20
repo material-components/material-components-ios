@@ -47,6 +47,11 @@
 /** Asks the receiver to return a font with an italic bold weight. FontSize must be larger tha 0. */
 - (nonnull UIFont *)boldItalicFontOfSize:(CGFloat)fontSize;
 
+/** Returns a bold version of the specified font. */
+- (nonnull UIFont *)boldFontFromFont:(nonnull UIFont *)font;
+
+/** Returns an italic version of the specified font. */
+- (nonnull UIFont *)italicFontFromFont:(nonnull UIFont *)font;
 /**
  Asks the receiver to determine if a particular font would be considered "large" for the purposes of
  calculating contrast ratios.
@@ -148,6 +153,13 @@
 
 /** Returns the recommended opacity of black text for the button font. */
 + (CGFloat)buttonFontOpacity;
+
+/** Returns a bold version of the specified font. */
++ (nonnull UIFont *)boldFontFromFont:(nonnull UIFont *)font;
+
+/** Returns an italic version of the specified font. */
++ (nonnull UIFont *)italicFontFromFont:(nonnull UIFont *)font;
+
 
 /**
  Asks the receiver to determine if a particular font would be considered "large" for the purposes of
