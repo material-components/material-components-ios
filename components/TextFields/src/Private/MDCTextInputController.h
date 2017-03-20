@@ -67,7 +67,7 @@
 - (void)didSetFont;
 
 /** Layout views on the controlled text field with animations disabled. */
-- (void)layoutSubviewsWithAnimationsDisabled;
+- (void)layoutSubviewsOfInput;
 
 /** Perform all updates when editing starts. */
 - (void)didBeginEditing;

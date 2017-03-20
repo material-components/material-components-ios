@@ -78,7 +78,7 @@
 
   [super layoutSubviews];
 
-  [_controller layoutSubviewsWithAnimationsDisabled];
+  [_controller layoutSubviewsOfInput];
 
   [UIView setAnimationsEnabled:animationsWereEnabled];
 }

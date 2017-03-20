@@ -196,7 +196,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updatePlaceholderPosition];
 }
 
-- (void)layoutSubviewsWithAnimationsDisabled {
+- (void)layoutSubviewsOfInput {
   self.underlineView.frame = [self underlineViewFrame];
   [self updatePlaceholderPosition];
   [self updatePlaceholderAlpha];

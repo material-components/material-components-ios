@@ -90,14 +90,9 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 }
 
 - (void)layoutSubviews {
-  BOOL animationsWereEnabled = [UIView areAnimationsEnabled];
-  [UIView setAnimationsEnabled:NO];
-
   [super layoutSubviews];
 
-  [_controller layoutSubviewsWithAnimationsDisabled];
-
-  [UIView setAnimationsEnabled:animationsWereEnabled];
+  [_controller layoutSubviewsOfInput];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {

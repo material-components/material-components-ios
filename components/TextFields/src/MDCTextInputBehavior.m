@@ -370,10 +370,12 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     };
   }
 
+  [self.textInput layoutIfNeeded];
+
   [UIView animateWithDuration:[CATransaction animationDuration]
       animations:^{
         animationBlock();
-        [self.textInput.placeholderLabel layoutIfNeeded];
+        [self.textInput layoutIfNeeded];
       }
       completion:^(BOOL finished) {
         if (!isToUp) {
