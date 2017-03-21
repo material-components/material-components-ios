@@ -85,6 +85,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
     _textColor = MDCTextInputTextColor();
     _underlineColor = MDCTextInputUnderlineColor();
+    _cursorColor = MDCTextInputCursorColor();
 
     // Initialize elements of UI
     [self setupPlaceholderLabel];
@@ -92,6 +93,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     // Use the property accessor to create the underline view as needed.
     __unused MDCTextInputUnderlineView *underlineView = [self underlineView];
     [self setupUnderlineLabels];
+
+    [self updateColors];
   }
   return self;
 }
@@ -417,16 +420,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGFloat placeHolderWidth = [self placeholderRequiredWidth];
   placeholderRect.size.width = placeHolderWidth;
 
-  // TODO: (larche) Check removal of this RTL code.
-  //  if ([self shouldLayoutForRTL]) {
-  //    // The leftView (or leading view) of a UITextInput is placed before the text.  The rect
-  //    // returned by UITextInput::textRectThatFitsForBounds: returns a rect that fills the field
-  //    // from the trailing edge of the leftView to the leading edge of the rightView.  Since this
-  //    // rect is not used directly for the placeholder, the space for the leftView must calculated
-  //    // to determine the correct origin for the placeholder view when rendering for RTL text.
-  //    placeholderRect.origin.x =
-  //        CGRectGetWidth(self.textInput.bounds) - placeHolderWidth - placeholderLeftViewOffset;
-  //  }
   placeholderRect.size.height = self.fontHeight;
 
   return placeholderRect;
@@ -499,7 +492,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Private
 
 - (void)updateColors {
-  self.textInput.tintColor = MDCTextInputCursorColor();
+  self.textInput.tintColor = self.cursorColor;
   self.textInput.textColor = self.textColor;
 
   self.underlineView.unfocusedColor = self.underlineColor;

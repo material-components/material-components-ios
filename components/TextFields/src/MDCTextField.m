@@ -67,8 +67,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 - (void)commonInitialization {
   _controller = [[MDCTextInputController alloc] initWithTextField:self isMultiline:NO];
 
-  self.tintColor = _controller.cursorColor;
-  self.textColor = _controller.textColor;
   self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
   // Set the clear button color to black with 54% opacity.
