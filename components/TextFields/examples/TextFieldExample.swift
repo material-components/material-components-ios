@@ -24,14 +24,14 @@ class TextFieldSwiftExample: UIViewController {
   let textFieldController: MDCTextInputController
 
   let textFieldInline = MDCTextField()
-  let textFieldInlineBehavior: MDCTextInputController
+  let textFieldInlineController: MDCTextInputController
 
   let textView = MDCTextView()
   let textViewBehavior: MDCTextInputController
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     textFieldController = MDCTextInputController(input: textField)
-    textFieldInlineBehavior = MDCTextInputController(input: textFieldInline)
+    textFieldInlineController = MDCTextInputController(input: textFieldInline)
     textViewBehavior = MDCTextInputController(input: textView)
 
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -69,8 +69,8 @@ class TextFieldSwiftExample: UIViewController {
 
     textFieldInline.clearButtonMode = .always
 
-    textFieldInlineBehavior.presentation = .default
-    textFieldInlineBehavior.characterCountMax = 40
+    textFieldInlineController.presentation = .default
+    textFieldInlineController.characterCountMax = 40
 
     // Hide TextView for now
     textView.alpha = 0
