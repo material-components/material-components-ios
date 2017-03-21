@@ -19,9 +19,6 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
 
-// TODO: (larche): Support left icon view with a enum property for the icon to show
-// TODO: (larche): Support in-line auto complete
-
 static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
 static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
@@ -274,6 +271,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect editingRect = [self textRectForBounds:bounds];
 
+  // TODO: (larche): Move to behavior. Add API.
   // Full width text fields have their clear button in the horizontal margin, but because the
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
@@ -312,6 +310,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
     }
   }
 
+  // TODO: (larche): Move to behavior. Add API.
   // Full width text boxes have their character count on the text input line
   //  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && self.characterLimit) {
   //    if ([_controller shouldLayoutForRTL]) {

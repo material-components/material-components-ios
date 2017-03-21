@@ -17,11 +17,9 @@
 #import <UIKit/UIKit.h>
 
 /**
- * A view that draws the underline effect for an instance of GOOTextField. The underline has three
- * possible states enabled && unfocused, enabled && focused, diabled, each with different colors and
- * style.
- *
- * @ingroup GOOInputs
+ A view that draws the underline effect for an instance of GOOTextField. The underline has three
+ possible states enabled && unfocused, enabled && focused, diabled, each with different colors and
+ style.
  */
 @interface MDCTextInputUnderlineView : UIView
 @property(nonatomic, strong) UIColor *focusedColor;

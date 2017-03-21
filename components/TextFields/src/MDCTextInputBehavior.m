@@ -29,7 +29,6 @@
 #pragma mark - Constants
 
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
-// static const CGFloat MDCTextInputVerticalPadding = 16.f;
 static const CGFloat MDCTextInputFloatingLabelFontSize = 12.f;
 static const CGFloat MDCTextInputFloatingLabelTextHeight = 16.f;
 static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
@@ -100,6 +99,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 @synthesize characterCountMax = _characterCountMax;
 @synthesize presentationStyle = _presentationStyle;
 
+// TODO: (larche): Support left icon view with a enum property for the icon to show
+// TODO: (larche): Support in-line auto complete
+
 - (instancetype)init {
   self = [super init];
   if (self) {
@@ -113,6 +115,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   self = [super init];
   if (self) {
     // commonInitialization sets up defaults in properties that should have been saved in this case.
+    // TODO: (larche) All properties
   }
 
   return self;
@@ -336,9 +339,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
     // Due to transform working on normal (0.5,0.5) anchor point.
     // Why no anchor point of (0,0)? Because our users wouldn't expect it.
-    CGFloat xOffset =
-        (scaleFactor - 1.0f) * CGRectGetWidth(self.textInput.placeholderLabel.frame) / 2.0f;
-
     NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
@@ -346,6 +346,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                                            attribute:NSLayoutAttributeTop
                                                           multiplier:1
                                                             constant:destinationPosition.y];
+    CGFloat xOffset =
+    (scaleFactor - 1.0f) * CGRectGetWidth(self.textInput.placeholderLabel.frame) / 2.0f;
     NSLayoutConstraint *leading =
         [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
                                      attribute:NSLayoutAttributeLeading
@@ -405,7 +407,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
       setAnimationTimingFunction:[CAMediaTimingFunction
                                      mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
-  // TODO: (larche) Decide how best to handle underline changes.
   if (self.underlineViewMode != UITextFieldViewModeUnlessEditing &&
       self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
     self.textInput.underlineColor = self.textInput.tintColor;
@@ -426,7 +427,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                      mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
   if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-    // TODO: (larche) Consider how best to handle underline changes.
     self.textInput.underlineWidth = MDCTextInputUnderlineNormalWidth;
 
     UIColor *commonColor = self.textInput.leadingUnderlineLabel.textColor;

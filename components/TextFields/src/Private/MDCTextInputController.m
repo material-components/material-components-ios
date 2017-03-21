@@ -263,6 +263,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (MDCTextInputUnderlineView *)underlineView {
   if (!_underlineView) {
     _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:[self underlineViewFrame]];
+
+    // TODO: (larche): Handle in behavior.
     //    if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
     //      _underlineView.normalUnderlineHidden = NO;
     //      _underlineView.focusUnderlineHidden = YES;
@@ -345,9 +347,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.placeholderLabel.text = attributedPlaceholder.string;
-  // TODO: (larche) Read string attributes also. Tho I feel like that should come from the titleView
-  // /
-  // placeholderLabel
+  // TODO: (larche) Read string attributes also. Tho I feel like that should come from the
+  // titleView / placeholderLabel
 
   [self updatePlaceholderAlpha];
   [self.textInput setNeedsLayout];
