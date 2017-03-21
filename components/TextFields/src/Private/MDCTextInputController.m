@@ -261,11 +261,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Underline View Implementation
 
 - (MDCTextInputUnderlineView *)underlineView {
-  // TODO: (larche) Check this removal of underlineViewMode.
-  //  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-  //    return nil;
-  //  }
-  //
   if (!_underlineView) {
     _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:[self underlineViewFrame]];
     //    if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
