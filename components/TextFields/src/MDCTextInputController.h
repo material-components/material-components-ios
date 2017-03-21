@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  underline color, underline text color.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
-@interface MDCTextInputBehavior : NSObject <NSCoding, NSCopying>
+@interface MDCTextInputController : NSObject <NSCoding, NSCopying>
 
 /** The text input the behavior is managing. */
 @property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);

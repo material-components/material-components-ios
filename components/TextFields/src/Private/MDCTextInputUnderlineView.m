@@ -22,8 +22,6 @@
 
 static const CGFloat MDCTextInputUnderlineFocusedHeight = 2.f;
 
-static const NSTimeInterval MDCTextInputDividerAnimationDuration = 0.2f;
-
 static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }

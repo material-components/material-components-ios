@@ -15,7 +15,7 @@
  limitations under the License.
  */
 
-#import "MDCTextInputBehavior.h"
+#import "MDCTextInputController.h"
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialPalettes.h"
@@ -24,7 +24,6 @@
 
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputTitleView.h"
 
 #pragma mark - Constants
 
@@ -39,7 +38,7 @@ static const CGFloat MDCTextInputUnderlineNormalWidth = 2.f;
 static const NSTimeInterval MDCTextInputFloatingPlaceholderAnimationDuration = 0.3f;
 static const NSTimeInterval MDCTextInputDividerOutAnimationDuration = 0.266666f;
 
-static NSString *const MDCTextInputBehaviorErrorColorKey = @"MDCTextInputBehaviorErrorColorKey";
+static NSString *const MDCTextInputControllerErrorColorKey = @"MDCTextInputControllerErrorColorKey";
 
 static inline CGFloat MDCFabs(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -78,7 +77,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   return 1;
 }
 
-@interface MDCTextInputBehavior ()
+@interface MDCTextInputController ()
 
 @property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
@@ -93,7 +92,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 @end
 
-@implementation MDCTextInputBehavior
+@implementation MDCTextInputController
 
 @synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
@@ -134,12 +133,12 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.errorColor forKey:MDCTextInputBehaviorErrorColorKey];
+  [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerErrorColorKey];
   // TODO: (larche) All properties
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-  MDCTextInputBehavior *copy = [[[self class] alloc] init];
+  MDCTextInputController *copy = [[[self class] alloc] init];
   // TODO: (larche) All properties
   return copy;
 }

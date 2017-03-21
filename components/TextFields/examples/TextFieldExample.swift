@@ -21,18 +21,18 @@ import MaterialComponents.MaterialTextField
 class TextFieldSwiftExample: UIViewController {
 
   let textField = MDCTextField()
-  let textFieldBehavior: MDCTextInputBehavior
+  let textFieldController: MDCTextInputController
 
   let textFieldInline = MDCTextField()
-  let textFieldInlineBehavior: MDCTextInputBehavior
+  let textFieldInlineBehavior: MDCTextInputController
 
   let textView = MDCTextView()
-  let textViewBehavior: MDCTextInputBehavior
+  let textViewBehavior: MDCTextInputController
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    textFieldBehavior = MDCTextInputBehavior(input: textField)
-    textFieldInlineBehavior = MDCTextInputBehavior(input: textFieldInline)
-    textViewBehavior = MDCTextInputBehavior(input: textView)
+    textFieldController = MDCTextInputController(input: textField)
+    textFieldInlineBehavior = MDCTextInputController(input: textFieldInline)
+    textViewBehavior = MDCTextInputController(input: textView)
 
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
@@ -58,8 +58,8 @@ class TextFieldSwiftExample: UIViewController {
 
     textField.clearButtonMode = .always
 
-    textFieldBehavior.presentation = .floatingPlaceholder
-    textFieldBehavior.characterCountMax = 50
+    textFieldController.presentation = .floatingPlaceholder
+    textFieldController.characterCountMax = 50
 
     textFieldInline.translatesAutoresizingMaskIntoConstraints = false
     textFieldInline.placeholder = "This is a text field w/ inline placeholder"
@@ -106,7 +106,7 @@ class TextFieldSwiftExample: UIViewController {
   }
 
   func errorSwitchDidChange(errorSwitch: UISwitch) {
-    textFieldBehavior.set(errorText: errorSwitch.isOn ? "Oh no! ERROR!!!" : nil, errorAccessibilityValue: nil)
+    textFieldController.set(errorText: errorSwitch.isOn ? "Oh no! ERROR!!!" : nil, errorAccessibilityValue: nil)
   }
 }
 

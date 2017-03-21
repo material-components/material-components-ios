@@ -15,7 +15,7 @@
  */
 #import "MDCTextInput.h"
 
-#import "MDCTextInputController.h"
+#import "MDCTextInputLayoutCoordinator.h"
 
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
@@ -44,7 +44,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
 
-@interface MDCTextInputController ()
+@interface MDCTextInputLayoutCoordinator ()
 
 @property(nonatomic, readonly) BOOL canValidate;
 @property(nonatomic, strong) UILabel *characterLimitView;
@@ -56,7 +56,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 @end
 
-@implementation MDCTextInputController
+@implementation MDCTextInputLayoutCoordinator
 
 // We never use the text property. Instead always read from the text field.
 

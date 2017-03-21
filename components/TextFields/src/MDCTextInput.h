@@ -26,7 +26,7 @@
 
  They are, however, dumb; they do not handle error state nor validation.
 
- - For handling error states and other Material behaviors use an MDCTextInputBehavior on your inputs
+ - For handling error states and other Material behaviors use an MDCTextInputController on your inputs
  - For validation, there are many 3rd party libraries you can use like:
    - https://github.com/3lvis/Validation
    - https://github.com/adamwaite/Validator

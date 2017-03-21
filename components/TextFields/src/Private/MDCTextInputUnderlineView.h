@@ -22,6 +22,7 @@
  style.
  */
 @interface MDCTextInputUnderlineView : UIView
+
 @property(nonatomic, strong) UIColor *focusedColor;
 @property(nonatomic, strong) UIColor *unfocusedColor;
 @property(nonatomic, strong) UIColor *errorColor;
@@ -31,9 +32,5 @@
 @property(nonatomic, assign) BOOL normalUnderlineHidden;
 @property(nonatomic, strong) CAShapeLayer *disabledUnderline;
 @property(nonatomic, strong) CALayer *focusedUnderline;
-
-- (void)animateFocusUnderlineIn;
-
-- (void)animateFocusUnderlineOut;
 
 @end

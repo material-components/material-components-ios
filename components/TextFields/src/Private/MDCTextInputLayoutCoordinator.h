@@ -35,7 +35,7 @@
 #pragma mark - New API
 
 /** A controller for common traits shared by text field controls. */
-@interface MDCTextInputController : NSObject <MDCTextInput>
+@interface MDCTextInputLayoutCoordinator : NSObject <MDCTextInput>
 
 /** Whether the text field is enabled. */
 @property(nonatomic, getter=isEnabled) BOOL enabled;

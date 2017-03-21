@@ -21,12 +21,11 @@
 
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputController.h"
-#import "MDCTextInputTitleView.h"
+#import "MDCTextInputLayoutCoordinator.h"
 
 @interface MDCTextView () <MDCControlledTextInput>
 
-@property(nonatomic, strong) MDCTextInputController *controller;
+@property(nonatomic, strong) MDCTextInputLayoutCoordinator *coordinator;
 @property(nonatomic, assign, getter=isEditing) BOOL editing;
 
 @end
@@ -39,10 +38,10 @@
     self.scrollEnabled = NO;
     self.textContainer.lineFragmentPadding = 0;
 
-    _controller = [[MDCTextInputController alloc] initWithTextField:self isMultiline:YES];
+    _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextField:self isMultiline:YES];
 
     self.tintColor = MDCTextInputCursorColor();
-    self.textColor = _controller.textColor;
+    self.textColor = _coordinator.textColor;
     self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
     self.editable = YES;
@@ -78,7 +77,7 @@
 
   [super layoutSubviews];
 
-  [_controller layoutSubviewsOfInput];
+  [_coordinator layoutSubviewsOfInput];
 
   [UIView setAnimationsEnabled:animationsWereEnabled];
 }
@@ -106,31 +105,31 @@
 #pragma mark - Properties Implementation
 
 - (NSAttributedString *)attributedPlaceholder {
-  return _controller.attributedPlaceholder;
+  return _coordinator.attributedPlaceholder;
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
-  _controller.attributedPlaceholder = attributedPlaceholder;
+  _coordinator.attributedPlaceholder = attributedPlaceholder;
 }
 
 - (BOOL)hidesPlaceholderOnInput {
-  return _controller.hidesPlaceholderOnInput;
+  return _coordinator.hidesPlaceholderOnInput;
 }
 
 - (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
-  _controller.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
+  _coordinator.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
 }
 
 - (UILabel *)leadingUnderlineLabel {
-  return _controller.leadingUnderlineLabel;
+  return _coordinator.leadingUnderlineLabel;
 }
 
 - (NSString *)placeholder {
-  return self.controller.placeholder;
+  return self.coordinator.placeholder;
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
-  [self.controller setPlaceholder:placeholder];
+  [self.coordinator setPlaceholder:placeholder];
 }
 
 - (UIFont *)placeholderFont {
@@ -142,49 +141,49 @@
 }
 
 - (UILabel *)placeholderLabel {
-  return _controller.placeholderLabel;
+  return _coordinator.placeholderLabel;
 }
 
 - (UIColor *)textColor {
-  return _controller.textColor;
+  return _coordinator.textColor;
 }
 
 - (void)setTextColor:(UIColor *)textColor {
   [super setTextColor:textColor];
-  _controller.textColor = textColor;
+  _coordinator.textColor = textColor;
 }
 
 // Always set the text container insets based upon style of the text field.
 - (void)setTextContainerInset:(UIEdgeInsets)textContainerInset {
-  [super setTextContainerInset:[_controller textContainerInset]];
+  [super setTextContainerInset:[_coordinator textContainerInset]];
 }
 
 - (UILabel *)trailingUnderlineLabel {
-  return _controller.trailingUnderlineLabel;
+  return _coordinator.trailingUnderlineLabel;
 }
 
 - (UIColor *)underlineColor {
-  return _controller.underlineColor;
+  return _coordinator.underlineColor;
 }
 
 - (void)setUnderlineColor:(UIColor *)underlineColor {
-  _controller.underlineColor = underlineColor;
+  _coordinator.underlineColor = underlineColor;
 }
 
 - (MDCTextInputUnderlineView *)underlineView {
-  return _controller.underlineView;
+  return _coordinator.underlineView;
 }
 
 - (void)setUnderlineView:(MDCTextInputUnderlineView *)underlineView {
-  _controller.underlineView = underlineView;
+  _coordinator.underlineView = underlineView;
 }
 
 - (CGFloat)underlineWidth {
-  return _controller.underlineWidth;
+  return _coordinator.underlineWidth;
 }
 
 - (void)setUnderlineWidth:(CGFloat)underlineWidth {
-  _controller.underlineWidth = underlineWidth;
+  _coordinator.underlineWidth = underlineWidth;
 }
 #pragma mark - MDCControlledTextField
 
@@ -202,36 +201,36 @@
 
 - (void)setText:(NSString *)text {
   [super setText:text];
-  [_controller didSetText];
+  [_coordinator didSetText];
 }
 
 - (void)setFont:(UIFont *)font {
   if (self.font != font) {
     [super setFont:font];
     self.textContainerInset = UIEdgeInsetsZero;
-    [_controller didSetFont];
+    [_coordinator didSetFont];
   }
 }
 
 - (void)setEditable:(BOOL)editable {
   [super setEditable:editable];
-  _controller.enabled = editable;
+  _coordinator.enabled = editable;
 }
 
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
   self.editing = YES;
-  [_controller didBeginEditing];
+  [_coordinator didBeginEditing];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
   self.editing = NO;
-  [_controller didEndEditing];
+  [_coordinator didEndEditing];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
-  [_controller didChange];
+  [_coordinator didChange];
   CGSize currentSize = self.bounds.size;
   CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
   if (currentSize.height != requiredSize.height && self.delegate &&

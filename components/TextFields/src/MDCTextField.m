@@ -17,14 +17,14 @@
 #import "MDCTextFieldArt.h"
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputController.h"
+#import "MDCTextInputLayoutCoordinator.h"
 
 static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
 static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
 @interface MDCTextField () <MDCControlledTextInput>
 
-@property(nonatomic, strong) MDCTextInputController *controller;
+@property(nonatomic, strong) MDCTextInputLayoutCoordinator *coordinator;
 @property(nonatomic, strong) UIImage *clearButtonImage;
 @property(nonatomic, readonly, weak) UIButton *internalClearButton;
 
@@ -62,7 +62,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 }
 
 - (void)commonInitialization {
-  _controller = [[MDCTextInputController alloc] initWithTextField:self isMultiline:NO];
+  _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextField:self isMultiline:NO];
 
   self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
@@ -87,14 +87,14 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  [_controller layoutSubviewsOfInput];
+  [_coordinator layoutSubviewsOfInput];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
   // Use the super class implementation to get the correct width.
   size = [super sizeThatFits:size];
 
-  UIEdgeInsets textContainerInset = _controller.textContainerInset;
+  UIEdgeInsets textContainerInset = _coordinator.textContainerInset;
   size.height = self.font.pointSize + textContainerInset.top + textContainerInset.bottom;
 
   return size;
@@ -123,91 +123,91 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 }
 
 - (BOOL)hidesPlaceholderOnInput {
-  return _controller.hidesPlaceholderOnInput;
+  return _coordinator.hidesPlaceholderOnInput;
 }
 
 - (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
-  _controller.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
+  _coordinator.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
 }
 
 - (UILabel *)placeholderLabel {
-  return _controller.placeholderLabel;
+  return _coordinator.placeholderLabel;
 }
 
 - (UILabel *)leadingUnderlineLabel {
-  return _controller.leadingUnderlineLabel;
+  return _coordinator.leadingUnderlineLabel;
 }
 
 - (UIColor *)textColor {
-  return _controller.textColor;
+  return _coordinator.textColor;
 }
 
 - (void)setTextColor:(UIColor *)textColor {
   [super setTextColor:textColor];
-  _controller.textColor = textColor;
+  _coordinator.textColor = textColor;
 }
 
 - (UILabel *)trailingUnderlineLabel {
-  return _controller.trailingUnderlineLabel;
+  return _coordinator.trailingUnderlineLabel;
 }
 
 - (UIColor *)underlineColor {
-  return _controller.underlineColor;
+  return _coordinator.underlineColor;
 }
 
 - (void)setUnderlineColor:(UIColor *)underlineColor {
-  _controller.underlineColor = underlineColor;
+  _coordinator.underlineColor = underlineColor;
 }
 
 - (MDCTextInputUnderlineView *)underlineView {
-  return _controller.underlineView;
+  return _coordinator.underlineView;
 }
 
 - (void)setUnderlineView:(MDCTextInputUnderlineView *)underlineView {
-  _controller.underlineView = underlineView;
+  _coordinator.underlineView = underlineView;
 }
 
 - (CGFloat)underlineWidth {
-  return _controller.underlineWidth;
+  return _coordinator.underlineWidth;
 }
 
 - (void)setUnderlineWidth:(CGFloat)underlineWidth {
-  _controller.underlineWidth = underlineWidth;
+  _coordinator.underlineWidth = underlineWidth;
 }
 
 #pragma mark - UITextField Property Overrides
 
 - (void)setText:(NSString *)text {
   [super setText:text];
-  [_controller didSetText];
+  [_coordinator didSetText];
 }
 
 - (NSString *)placeholder {
-  return self.controller.placeholder;
+  return self.coordinator.placeholder;
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
   [super setPlaceholder:placeholder];
-  [self.controller setPlaceholder:placeholder];
+  [self.coordinator setPlaceholder:placeholder];
 }
 
 - (NSAttributedString *)attributedPlaceholder {
-  return _controller.attributedPlaceholder;
+  return _coordinator.attributedPlaceholder;
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   [super setAttributedPlaceholder:attributedPlaceholder];
-  _controller.attributedPlaceholder = attributedPlaceholder;
+  _coordinator.attributedPlaceholder = attributedPlaceholder;
 }
 
 - (void)setFont:(UIFont *)font {
   [super setFont:font];
-  [_controller didSetFont];
+  [_coordinator didSetFont];
 }
 
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
-  _controller.enabled = enabled;
+  _coordinator.enabled = enabled;
 }
 
 - (UIButton *)internalClearButton {
@@ -240,7 +240,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = [super textRectForBounds:bounds];
-  UIEdgeInsets textContainerInset = [_controller textContainerInset];
+  UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
   textRect.origin.x += textContainerInset.left;
   textRect.size.width -= textContainerInset.left + textContainerInset.right;
 
@@ -279,9 +279,9 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   //    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
   //    // Full width text boxes have their character count on the text input line
   //    if (self.characterLimit) {
-  //      editingRect.size.width -= _controller.characterLimitViewSize.width;
-  //      if ([_controller shouldLayoutForRTL]) {
-  //        editingRect.origin.x += _controller.characterLimitViewSize.width;
+  //      editingRect.size.width -= _coordinator.characterLimitViewSize.width;
+  //      if ([_coordinator shouldLayoutForRTL]) {
+  //        editingRect.origin.x += _coordinator.characterLimitViewSize.width;
   //      }
   //    }
   //  }
@@ -313,10 +313,10 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   // TODO: (larche): Move to behavior. Add API.
   // Full width text boxes have their character count on the text input line
   //  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && self.characterLimit) {
-  //    if ([_controller shouldLayoutForRTL]) {
-  //      clearButtonRect.origin.x += _controller.characterLimitViewSize.width;
+  //    if ([_coordinator shouldLayoutForRTL]) {
+  //      clearButtonRect.origin.x += _coordinator.characterLimitViewSize.width;
   //    } else {
-  //      clearButtonRect.origin.x -= _controller.characterLimitViewSize.width;
+  //      clearButtonRect.origin.x -= _coordinator.characterLimitViewSize.width;
   //    }
   //  }
 
@@ -324,9 +324,9 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   // text without calling textRectForBounds (which will cause a cycle).
 
   // Offset origin to center to the font height.
-  clearButtonRect.origin.y = (_controller.fontHeight - clearButtonRect.size.height) / 2.0f;
+  clearButtonRect.origin.y = (_coordinator.fontHeight - clearButtonRect.size.height) / 2.0f;
 
-  UIEdgeInsets textContainerInset = [_controller textContainerInset];
+  UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
   switch (self.contentVerticalAlignment) {
     case UIControlContentVerticalAlignmentTop:
       clearButtonRect.origin.y += textContainerInset.top;
@@ -365,7 +365,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 #pragma mark - UITextField Draw Overrides
 
 - (void)drawPlaceholderInRect:(CGRect)rect {
-  // We implement our own placeholder that is managed by the controller. However, to observe normal
+  // We implement our own placeholder that is managed by the coordinator. However, to observe normal
   // VO placeholder behavior, we still set the placeholder on the UITextField, and need to not draw
   // it here.
 }
@@ -373,22 +373,22 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 #pragma mark - UITextField Notification Observation
 
 - (void)textFieldDidBeginEditing:(NSNotification *)note {
-  [_controller didBeginEditing];
+  [_coordinator didBeginEditing];
 }
 
 - (void)textFieldDidEndEditing:(NSNotification *)note {
-  [_controller didEndEditing];
+  [_coordinator didEndEditing];
 }
 
 - (void)textFieldDidChange:(NSNotification *)note {
-  [_controller didChange];
+  [_coordinator didChange];
 }
 
 #pragma mark - MDCControlledTextInput
 
 - (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
   CGRect textRect = [self textRectForBounds:bounds];
-  CGFloat fontHeight = _controller.fontHeight;
+  CGFloat fontHeight = _coordinator.fontHeight;
   // The text rect has been shifted as necessary, but now needs to be sized accordingly.
   switch (self.contentVerticalAlignment) {
     case UIControlContentVerticalAlignmentTop:
