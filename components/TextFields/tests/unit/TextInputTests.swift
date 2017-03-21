@@ -24,7 +24,7 @@ class TextInputTests: XCTestCase {
 
     XCTAssertNotNil(textField.leadingLabel)
     XCTAssertNotNil(textField.trailingLabel)
-    //XCTAssertNotNil(textField.placeholderLabel)
+    XCTAssertNotNil(textField.placeholderLabel)
 
     let gray = UIColor.gray
 
@@ -44,7 +44,6 @@ class TextInputTests: XCTestCase {
 
     textField.underlineColor = gray.copy() as? UIColor
     XCTAssertEqual(textField.underlineColor, gray)
-    //let behavior = MDCTextInputBehavior(input: textField)
 
     let width: CGFloat = 5.0
     textField.underlineWidth = width
@@ -57,6 +56,9 @@ class TextInputTests: XCTestCase {
     let testTrailing = "NN/NN"
     textField.trailingLabel.text = testTrailing
     XCTAssertEqual(textField.trailingLabel.text, testTrailing)
+
+    let controller = MDCTextInputController(input: textField)
+    XCTAssertNotNil(controller.input)
   }
 
   func testTextViewInputProtocolConformance() {
@@ -64,7 +66,7 @@ class TextInputTests: XCTestCase {
 
     XCTAssertNotNil(textView.leadingLabel)
     XCTAssertNotNil(textView.trailingLabel)
-    //XCTAssertNotNil(textView.placeholderLabel)
+    XCTAssertNotNil(textView.placeholderLabel)
 
     let gray = UIColor.gray
 
@@ -82,8 +84,6 @@ class TextInputTests: XCTestCase {
     textView.underlineColor = gray.copy() as? UIColor
     XCTAssertEqual(textView.underlineColor, gray)
 
-    //let behavior = MDCTextInputBehavior(input: textView)
-
     let width: CGFloat = 5.0
     textView.underlineWidth = width
     XCTAssertEqual(textView.underlineWidth, width)
@@ -95,5 +95,8 @@ class TextInputTests: XCTestCase {
     let testTrailing = "NN/NN"
     textView.trailingLabel.text = testTrailing
     XCTAssertEqual(textView.trailingLabel.text, testTrailing)
+
+    let controller = MDCTextInputController(input: textView)
+    XCTAssertNotNil(controller.input)
   }
 }

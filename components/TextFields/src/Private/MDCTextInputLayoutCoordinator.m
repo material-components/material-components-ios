@@ -114,7 +114,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_textInput addSubview:_placeholderLabel];
   [_textInput sendSubviewToBack:_placeholderLabel];
 
-  [self.textInput addConstraints:[self placeholderDefaultConstaints]];
+  [NSLayoutConstraint activateConstraints:[self placeholderDefaultConstaints]];
 
   _hidesPlaceholderOnInput = YES;
 }
@@ -141,7 +141,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   NSString *horizontalString;
   horizontalString = @"H:|[leading]-4-[trailing]|";
 
-  [_textInput addConstraints:[NSLayoutConstraint
+  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint
                                  constraintsWithVisualFormat:horizontalString
                                                      options:0
                                                      metrics:nil
@@ -150,35 +150,43 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                          @"trailing" : _trailingUnderlineLabel
                                                        }]];
 
-  [[NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+  NSLayoutConstraint *underlineBottom = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                 attribute:NSLayoutAttributeBottom
                                 relatedBy:NSLayoutRelationEqual
                                    toItem:_textInput
                                 attribute:NSLayoutAttributeBottom
                                multiplier:1
-                                 constant:0] setActive:YES];
-  [[NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
-                                attribute:NSLayoutAttributeTop
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:_underlineView
-                                attribute:NSLayoutAttributeBottom
-                               multiplier:1
-                                 constant:0] setActive:YES];
+                                 constant:0];
+  underlineBottom.priority = UILayoutPriorityDefaultLow;
 
-  [[NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
-                                attribute:NSLayoutAttributeBottom
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:_textInput
-                                attribute:NSLayoutAttributeBottom
-                               multiplier:1
-                                 constant:0] setActive:YES];
-  [[NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+  NSLayoutConstraint *leadingTop = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                 attribute:NSLayoutAttributeTop
                                 relatedBy:NSLayoutRelationEqual
                                    toItem:_underlineView
                                 attribute:NSLayoutAttributeBottom
                                multiplier:1
-                                 constant:0] setActive:YES];
+                                 constant:0];
+  leadingTop.priority = UILayoutPriorityDefaultLow;
+
+  NSLayoutConstraint *trailingBottom = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                                attribute:NSLayoutAttributeBottom
+                                relatedBy:NSLayoutRelationEqual
+                                   toItem:_textInput
+                                attribute:NSLayoutAttributeBottom
+                               multiplier:1
+                                 constant:0];
+  trailingBottom.priority = UILayoutPriorityDefaultLow;
+
+  NSLayoutConstraint * trailingTop = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                                attribute:NSLayoutAttributeTop
+                                relatedBy:NSLayoutRelationEqual
+                                   toItem:_underlineView
+                                attribute:NSLayoutAttributeBottom
+                               multiplier:1
+                                 constant:0];
+  trailingTop.priority = UILayoutPriorityDefaultLow;
+
+  [NSLayoutConstraint activateConstraints:@[underlineBottom, leadingTop, trailingBottom, trailingTop]];
 
   [_trailingUnderlineLabel
       setContentCompressionResistancePriority:UILayoutPriorityRequired
