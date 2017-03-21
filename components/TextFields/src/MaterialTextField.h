@@ -16,6 +16,6 @@
 
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
-#import "MDCTextInputController.h"
 #import "MDCTextInputCharacterCounter.h"
+#import "MDCTextInputController.h"
 #import "MDCTextView.h"

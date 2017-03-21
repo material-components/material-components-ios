@@ -90,8 +90,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     // Initialize elements of UI
     [self setupPlaceholderLabel];
 
-    // Use the property accessor to create the underline view as needed.
-    __unused MDCTextInputUnderlineView *underlineView = [self underlineView];
+    // This has to happen before the underline labels are added to the hierarchy.
+    [self setupUnderlineView];
     [self setupUnderlineLabels];
 
     [self updateColors];
@@ -106,6 +106,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   _placeholderLabel.textAlignment = NSTextAlignmentNatural;
 
   _placeholderLabel.userInteractionEnabled = NO;
+  _placeholderLabel.opaque = NO;
 
   // TODO: (larche) Get real default placeholder text color.
   _placeholderLabel.textColor = [UIColor grayColor];
@@ -128,12 +129,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   _leadingUnderlineLabel.font = _textInput.font;
   _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
 
+  _leadingUnderlineLabel.opaque = NO;
+
   [_leadingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_leadingUnderlineLabel];
 
   _trailingUnderlineLabel.textColor = [UIColor grayColor];
   _trailingUnderlineLabel.font = _textInput.font;
-  // TODO: (larche) Do I need to set the trailing one to be reverse of RTL?
+
+  _trailingUnderlineLabel.opaque = NO;
 
   [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_trailingUnderlineLabel];
@@ -141,58 +145,84 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   NSString *horizontalString;
   horizontalString = @"H:|[leading]-4-[trailing]|";
 
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint
-                                 constraintsWithVisualFormat:horizontalString
-                                                     options:0
-                                                     metrics:nil
-                                                       views:@{
-                                                         @"leading" : _leadingUnderlineLabel,
-                                                         @"trailing" : _trailingUnderlineLabel
-                                                       }]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:horizontalString
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"leading" : _leadingUnderlineLabel,
+                                                      @"trailing" : _trailingUnderlineLabel
+                                                    }]];
 
-  NSLayoutConstraint *underlineBottom = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
-                                attribute:NSLayoutAttributeBottom
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:_textInput
-                                attribute:NSLayoutAttributeBottom
-                               multiplier:1
-                                 constant:0];
+  NSLayoutConstraint *underlineBottom =
+      [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:_textInput
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1
+                                    constant:0];
   underlineBottom.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *leadingTop = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
-                                attribute:NSLayoutAttributeTop
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:_underlineView
-                                attribute:NSLayoutAttributeBottom
-                               multiplier:1
-                                 constant:0];
+                                                                attribute:NSLayoutAttributeTop
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_underlineView
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1
+                                                                 constant:0];
   leadingTop.priority = UILayoutPriorityDefaultLow;
 
-  NSLayoutConstraint *trailingBottom = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
-                                attribute:NSLayoutAttributeBottom
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:_textInput
-                                attribute:NSLayoutAttributeBottom
-                               multiplier:1
-                                 constant:0];
+  NSLayoutConstraint *trailingBottom =
+      [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:_textInput
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1
+                                    constant:0];
   trailingBottom.priority = UILayoutPriorityDefaultLow;
 
-  NSLayoutConstraint * trailingTop = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
-                                attribute:NSLayoutAttributeTop
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:_underlineView
-                                attribute:NSLayoutAttributeBottom
-                               multiplier:1
-                                 constant:0];
+  NSLayoutConstraint *trailingTop = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                                                                 attribute:NSLayoutAttributeTop
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:_underlineView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1
+                                                                  constant:0];
   trailingTop.priority = UILayoutPriorityDefaultLow;
 
-  [NSLayoutConstraint activateConstraints:@[underlineBottom, leadingTop, trailingBottom, trailingTop]];
+  [NSLayoutConstraint
+      activateConstraints:@[ underlineBottom, leadingTop, trailingBottom, trailingTop ]];
 
   [_trailingUnderlineLabel
       setContentCompressionResistancePriority:UILayoutPriorityRequired
                                       forAxis:UILayoutConstraintAxisHorizontal];
   [_trailingUnderlineLabel setContentHuggingPriority:UILayoutPriorityRequired
                                              forAxis:UILayoutConstraintAxisHorizontal];
+}
+
+- (void)setupUnderlineView {
+  _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:[self underlineViewFrame]];
+
+  // TODO: (larche): Handle in behavior.
+  //    if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+  //      _underlineView.normalUnderlineHidden = NO;
+  //      _underlineView.focusUnderlineHidden = YES;
+  //    } else {
+  //      // TODO: (larche) Check this removal of underlineViewMode.
+  //      //      _underlineView.normalUnderlineHidden = (self.underlineViewMode ==
+  //      //      UITextInputViewModeWhileEditing);
+  //      // TODO: (larche) Check this removal of underlineViewMode.
+  //      //      _underlineView.focusUnderlineHidden = (self.underlineViewMode ==
+  //      //      UITextInputViewModeUnlessEditing);
+  //    }
+
+  _underlineView.unfocusedColor = self.underlineColor;
+
+  [self.textInput addSubview:_underlineView];
+  [self.textInput sendSubviewToBack:_underlineView];
 }
 
 - (void)didSetText {
@@ -268,32 +298,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 #pragma mark - Underline View Implementation
 
-- (MDCTextInputUnderlineView *)underlineView {
-  if (!_underlineView) {
-    _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:[self underlineViewFrame]];
-
-    // TODO: (larche): Handle in behavior.
-    //    if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    //      _underlineView.normalUnderlineHidden = NO;
-    //      _underlineView.focusUnderlineHidden = YES;
-    //    } else {
-    //      // TODO: (larche) Check this removal of underlineViewMode.
-    //      //      _underlineView.normalUnderlineHidden = (self.underlineViewMode ==
-    //      //      UITextInputViewModeWhileEditing);
-    //      // TODO: (larche) Check this removal of underlineViewMode.
-    //      //      _underlineView.focusUnderlineHidden = (self.underlineViewMode ==
-    //      //      UITextInputViewModeUnlessEditing);
-    //    }
-
-    _underlineView.unfocusedColor = self.underlineColor;
-
-    [self.textInput addSubview:_underlineView];
-    [self.textInput sendSubviewToBack:_underlineView];
-  }
-
-  return _underlineView;
-}
-
 - (void)setUnderlineColor:(UIColor *)underlineColor {
   if (!underlineColor) {
     underlineColor = MDCTextInputUnderlineColor();
@@ -342,7 +346,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
     // TODO: (larche) Return string attributes also. Tho I feel like that should come from the
-    // titleView / placeholderLabel
+    // placeholderLabel
     NSAttributedString *constructedString =
         [[NSAttributedString alloc] initWithString:(NSString *)placeholderString attributes:nil];
     return constructedString;
@@ -356,7 +360,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.placeholderLabel.text = attributedPlaceholder.string;
   // TODO: (larche) Read string attributes also. Tho I feel like that should come from the
-  // titleView / placeholderLabel
+  // placeholderLabel
 
   [self updatePlaceholderAlpha];
   [self.textInput setNeedsLayout];
