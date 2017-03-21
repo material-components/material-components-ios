@@ -80,7 +80,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 @property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *fullWidthCharacterCountConstraints;
-@property(nonatomic, strong) NSLayoutConstraint *fullWidthPlaceholderConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 @property(nonatomic, readonly) BOOL isPlaceholderUp;
 @property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
@@ -220,11 +219,14 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 - (void)updateConstraints {
   if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
     if (self.fullWidthCharacterCountConstraints.count == 0) {
-      NSLayoutConstraint *characterCountBottom;
-      NSLayoutConstraint *characterCountTop;
+      [self.textInput.trailingUnderlineLabel
+       setContentHuggingPriority:UILayoutPriorityRequired
+       forAxis:UILayoutConstraintAxisVertical];
+
+      NSLayoutConstraint *characterCountY;
 
       if ([self.textInput isKindOfClass:[UITextView class]]) {
-        characterCountBottom =
+        characterCountY =
             [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
                                          attribute:NSLayoutAttributeBottom
                                          relatedBy:NSLayoutRelationEqual
@@ -241,47 +243,26 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                             forAxis:UILayoutConstraintAxisVertical];
 
         [self.textInput.trailingUnderlineLabel
-            setContentHuggingPriority:UILayoutPriorityRequired
-                              forAxis:UILayoutConstraintAxisVertical];
-        [self.textInput.trailingUnderlineLabel
             setContentCompressionResistancePriority:UILayoutPriorityRequired
                                             forAxis:UILayoutConstraintAxisVertical];
       } else {
-        characterCountBottom =
+        characterCountY =
             [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
-                                         attribute:NSLayoutAttributeBottom
+                                         attribute:NSLayoutAttributeCenterY
                                          relatedBy:NSLayoutRelationEqual
-                                            toItem:self.textInput.placeholderLabel
-                                         attribute:NSLayoutAttributeBottom
-                                        multiplier:1
-                                          constant:0];
-        characterCountTop =
-            [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
-                                         attribute:NSLayoutAttributeTop
-                                         relatedBy:NSLayoutRelationEqual
-                                            toItem:self.textInput.placeholderLabel
-                                         attribute:NSLayoutAttributeTop
+                                            toItem:self.textInput
+                                         attribute:NSLayoutAttributeCenterY
                                         multiplier:1
                                           constant:0];
       }
-      self.fullWidthCharacterCountConstraints = @[ characterCountBottom, characterCountTop ];
+      self.fullWidthCharacterCountConstraints = @[ characterCountY ];
     }
-    [NSLayoutConstraint activateConstraints:self.fullWidthCharacterCountConstraints];
 
-    if (!self.fullWidthPlaceholderConstraint) {
-      self.fullWidthPlaceholderConstraint =
-          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                       attribute:NSLayoutAttributeTop
-                                       relatedBy:NSLayoutRelationEqual
-                                          toItem:self.textInput.placeholderLabel.superview
-                                       attribute:NSLayoutAttributeTop
-                                      multiplier:1
-                                        constant:0];
-    }
-    self.fullWidthPlaceholderConstraint.active = YES;
+    [self placeholderYconstraint].priority = UILayoutPriorityRequired;
+    [NSLayoutConstraint activateConstraints:self.fullWidthCharacterCountConstraints];
   } else {
+    [self placeholderYconstraint].priority = UILayoutPriorityDefaultLow;
     [NSLayoutConstraint deactivateConstraints:self.fullWidthCharacterCountConstraints];
-    self.fullWidthPlaceholderConstraint.active = NO;
   }
 }
 
@@ -342,9 +323,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 - (void)updateLeadingUnderlineLabel {
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    self.textInput.leadingUnderlineLabel.hidden = YES;
-  } else {
-    self.textInput.leadingUnderlineLabel.hidden = NO;
+    self.textInput.leadingUnderlineLabel.text = nil;
   }
 }
 
@@ -455,6 +434,15 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   return placeholderRect;
 }
 
+- (NSLayoutConstraint *)placeholderYconstraint {
+  for (NSLayoutConstraint *constraint in self.textInput.constraints) {
+    if (constraint.firstItem == self.textInput.placeholderLabel && (constraint.firstAttribute == NSLayoutAttributeTop || constraint.firstAttribute == NSLayoutAttributeCenterY)) {
+      return constraint;
+    }
+  }
+  return nil;
+}
+
 #pragma mark - Trailing Label Customization
 
 - (CGSize)trailingUnderlineLabelSize {
@@ -468,7 +456,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     return;
   }
 
-  NSString *text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)[self characterCount],
+  NSString *text = [NSString stringWithFormat:@"%lu / %lu", (unsigned long)[self characterCount],
                                               (unsigned long)self.characterCountMax];
   self.textInput.trailingUnderlineLabel.text = text;
 

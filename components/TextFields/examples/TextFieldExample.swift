@@ -51,22 +51,24 @@ class TextFieldSwiftExample: UIViewController {
     view.backgroundColor = .white
 
     setupTextFields()
-    setupTextViews()
+    //setupTextViews()
 
     let errorSwitch = UISwitch()
     errorSwitch.translatesAutoresizingMaskIntoConstraints = false
-    errorSwitch.addTarget(self, action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)), for: .touchUpInside)
+    errorSwitch.addTarget(self,
+                          action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
+                          for: .touchUpInside)
     view.addSubview(errorSwitch)
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-100-[textField]-[textFieldInline]-[textFieldWide]-[textView]-50-[switch]",
+      "V:|-100-[textField]-[textFieldInline]-[textFieldWide]-50-[switch]",
                                                                options: [.alignAllTrailing,
                                                                          .alignAllLeading],
                                                                metrics: nil,
                                                                views: ["switch": errorSwitch,
                                                                        "textField": textField,
-                                                                       "textFieldInline": textFieldInline, "textFieldWide": textFieldWide,
-                                                                       "textView": textView]))
+                                                                       "textFieldInline": textFieldInline,
+                                                                       "textFieldWide": textFieldWide]))
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
       "H:|-[textField]-|",

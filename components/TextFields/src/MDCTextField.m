@@ -90,28 +90,30 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   [_coordinator layoutSubviewsOfInput];
 }
 
-- (CGSize)sizeThatFits:(CGSize)size {
-  // Use the super class implementation to get the correct width.
-  size = [super sizeThatFits:size];
-
-  UIEdgeInsets textContainerInset = _coordinator.textContainerInset;
-  size.height = self.font.pointSize + textContainerInset.top + textContainerInset.bottom;
-
-  return size;
-}
-
-- (CGSize)intrinsicContentSize {
-  CGSize boundingSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-  if (boundingSize.width == CGFLOAT_MAX) {
-    boundingSize.width = UIViewNoIntrinsicMetric;
-  }
-
-  if (boundingSize.height == CGFLOAT_MAX) {
-    boundingSize.height = UIViewNoIntrinsicMetric;
-  }
-
-  return boundingSize;
-}
+//- (CGSize)sizeThatFits:(CGSize)size {
+//  // Use the super class implementation to get the correct width.
+//  size = [super sizeThatFits:size];
+//
+//  UIEdgeInsets textContainerInset = _coordinator.textContainerInset;
+//  size.height = self.font.pointSize + textContainerInset.top + textContainerInset.bottom;
+//
+//  return size;
+//}
+//
+//- (CGSize)intrinsicContentSize {
+//  CGSize boundingSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+//  if (boundingSize.width == CGFLOAT_MAX) {
+//    boundingSize.width = UIViewNoIntrinsicMetric;
+//  }
+//
+//  if (boundingSize.height == CGFLOAT_MAX) {
+//    boundingSize.height = UIViewNoIntrinsicMetric;
+//  }
+//
+//  boundingSize.height = 56;
+//
+//  return boundingSize;
+//}
 
 #pragma mark - Properties Implementation
 

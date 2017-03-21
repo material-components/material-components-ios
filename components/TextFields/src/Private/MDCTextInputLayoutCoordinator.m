@@ -286,10 +286,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)didEndEditing {
   // TODO: (larche) Check this removal of underlineViewMode.
-  UILabel *label = (UILabel *)[self textInputLabel];
-  if ([label isKindOfClass:[UILabel class]]) {
-    [label setLineBreakMode:NSLineBreakByTruncatingTail];
-  }
 }
 
 - (void)didChange {
@@ -407,7 +403,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 
   CGRect destinationFrame = [self placeholderDefaultPositionFrame];
-  self.placeholderTop.constant = CGRectGetMinY(destinationFrame);
+
   self.placeholderHeight.constant = CGRectGetHeight(destinationFrame);
 }
 
@@ -437,12 +433,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGRect placeholderRect = [self placeholderDefaultPositionFrame];
 
   self.placeholderTop = [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                                     attribute:NSLayoutAttributeTop
+                                                     attribute:NSLayoutAttributeCenterY
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:_placeholderLabel.superview
-                                                     attribute:NSLayoutAttributeTop
+                                                     attribute:NSLayoutAttributeCenterY
                                                     multiplier:1
-                                                      constant:CGRectGetMinY(placeholderRect)];
+                                                      constant:0];
+
   NSLayoutConstraint *leading =
       [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                    attribute:NSLayoutAttributeLeading
@@ -472,7 +469,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [trailing setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderHeight setPriority:UILayoutPriorityDefaultLow];
 
-  return @[ self.placeholderTop, leading, trailing ];
+  return @[ self.placeholderHeight, self.placeholderTop, leading, trailing ];
 }
 
 - (CGFloat)placeholderRequiredWidth {
@@ -504,22 +501,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.textInput.textColor = self.textColor;
 
   self.underlineView.unfocusedColor = self.underlineColor;
-}
-
-- (UIView *)textInputLabel {
-  Class targetClass = NSClassFromString(@"UITextInputLabel");
-  // Loop through the text field's views until we find the UITextInputLabel which is used for the
-  // label in UITextInput.
-  NSMutableArray *toVisit = [NSMutableArray arrayWithArray:self.textInput.subviews];
-  while ([toVisit count]) {
-    UIView *view = [toVisit objectAtIndex:0];
-    if ([view isKindOfClass:targetClass]) {
-      return view;
-    }
-    [toVisit addObjectsFromArray:view.subviews];
-    [toVisit removeObjectAtIndex:0];
-  }
-  return nil;
 }
 
 - (CGFloat)fontHeight {
