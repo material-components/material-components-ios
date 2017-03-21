@@ -54,11 +54,13 @@
       (otherAttrs.shouldShowSelectorStateMask != self.shouldShowSelectorStateMask) ||
       (otherAttrs.shouldShowGridBackground != self.shouldShowGridBackground) ||
       (otherAttrs.sectionOrdinalPosition != self.sectionOrdinalPosition) ||
-      ![otherAttrs.backgroundImage isEqual:self.backgroundImage] ||
+      ![MDCCollectionViewLayoutAttributes is:otherAttrs.backgroundImage
+                                     equalTo:self.backgroundImage] ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.backgroundImageViewInsets,
                                       self.backgroundImageViewInsets)) ||
       (otherAttrs.isGridLayout != self.isGridLayout) ||
-      ![otherAttrs.separatorColor isEqual:self.separatorColor] ||
+      ![MDCCollectionViewLayoutAttributes is:otherAttrs.separatorColor
+                                     equalTo:self.separatorColor] ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.separatorInset, self.separatorInset)) ||
       (otherAttrs.separatorLineHeight != self.separatorLineHeight) ||
       (otherAttrs.shouldHideSeparators != self.shouldHideSeparators) ||
@@ -75,6 +77,10 @@
          (NSUInteger)self.sectionOrdinalPosition ^ (NSUInteger)self.backgroundImage ^
          (NSUInteger)self.isGridLayout ^ (NSUInteger)self.separatorColor ^
          (NSUInteger)self.separatorLineHeight ^ (NSUInteger)self.shouldHideSeparators;
+}
+
++ (BOOL)is:(id)object1 equalTo:(id)object2 {
+  return (!object1 && !object2) || [object1 isEqual:object2];
 }
 
 @end
