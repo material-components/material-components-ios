@@ -215,31 +215,74 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
   [self updateUnderline];
-  [self updateVisibility];
 }
 
 - (void)updateConstraints {
   if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    self.textInput.underlineColor = [UIColor clearColor];
+    if (self.fullWidthCharacterCountConstraints.count == 0) {
+      NSLayoutConstraint *characterCountBottom;
+      NSLayoutConstraint *characterCountTop;
 
-    self.textInput.leadingUnderlineLabel.hidden = YES;
+      if ([self.textInput isKindOfClass:[UITextView class]]) {
+        characterCountBottom =
+            [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                         attribute:NSLayoutAttributeBottom
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.textInput.trailingUnderlineLabel.superview
+                                         attribute:NSLayoutAttributeBottom
+                                        multiplier:1
+                                          constant:0];
 
-    if ([self.textInput isKindOfClass:[UITextView class]]) {
-      self.fullWidthCharacterCountConstraint = [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.textInput.trailingUnderlineLabel.superview attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    } else {
-      self.fullWidthCharacterCountConstraint = [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.textInput.placeholderLabel attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+        [self.textInput.leadingUnderlineLabel
+            setContentHuggingPriority:UILayoutPriorityRequired
+                              forAxis:UILayoutConstraintAxisVertical];
+        [self.textInput.leadingUnderlineLabel
+            setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                            forAxis:UILayoutConstraintAxisVertical];
+
+        [self.textInput.trailingUnderlineLabel
+            setContentHuggingPriority:UILayoutPriorityRequired
+                              forAxis:UILayoutConstraintAxisVertical];
+        [self.textInput.trailingUnderlineLabel
+            setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                            forAxis:UILayoutConstraintAxisVertical];
+      } else {
+        characterCountBottom =
+            [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                         attribute:NSLayoutAttributeBottom
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.textInput.placeholderLabel
+                                         attribute:NSLayoutAttributeBottom
+                                        multiplier:1
+                                          constant:0];
+        characterCountTop =
+            [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                         attribute:NSLayoutAttributeTop
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.textInput.placeholderLabel
+                                         attribute:NSLayoutAttributeTop
+                                        multiplier:1
+                                          constant:0];
+      }
+      self.fullWidthCharacterCountConstraints = @[ characterCountBottom, characterCountTop ];
     }
-    self.fullWidthPlaceholderConstraint = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.textInput.trailingUnderlineLabel.superview attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    [NSLayoutConstraint activateConstraints:self.fullWidthCharacterCountConstraints];
 
-    self.fullWidthCharacterCountConstraint.active = YES;
+    if (!self.fullWidthPlaceholderConstraint) {
+      self.fullWidthPlaceholderConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.textInput.placeholderLabel.superview
+                                       attribute:NSLayoutAttributeTop
+                                      multiplier:1
+                                        constant:0];
+    }
     self.fullWidthPlaceholderConstraint.active = YES;
   } else {
-    self.fullWidthCharacterCountConstraint.active = NO;
+    [NSLayoutConstraint deactivateConstraints:self.fullWidthCharacterCountConstraints];
     self.fullWidthPlaceholderConstraint.active = NO;
   }
-}
-
-- (void)updateVisibility {
 }
 
 #pragma mark - Character Max Implementation
