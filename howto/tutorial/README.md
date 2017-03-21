@@ -1,3 +1,9 @@
+<!--docs:
+title:  "Material Components Development Guide"
+layout: landing
+section: howto
+-->
+
 ## Tutorial
 
 Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
@@ -129,7 +135,7 @@ Open `Main.storyboard` and delete the default view controller that came with it.
 
 <!--{% if site.link_to_site == "true" %}-->
 [![In the storyboard, replacing the default view controller](docs/assets/Xcode-Storyboard-Replace-Controller.jpg)](docs/assets/Xcode-Storyboard-Replace-Controller.m4v)
-<!--{% else %}<div class="ios-animation large" markdown="1"><video src="docs/assets/Xcode-Storyboard-Replace-Controller.m4v" autoplay loop></video></div>{% endif %}-->
+<!--{% else %}<div class="article__asset large" markdown="1"><video src="docs/assets/Xcode-Storyboard-Replace-Controller.m4v" autoplay loop></video></div>{% endif %}-->
 
 
 Select the prototype cell and set its custom class to `MDCCollectionViewTextCell`,
@@ -138,7 +144,7 @@ then set its reuse identifier to `cell`:
 
 <!--{% if site.link_to_site == "true" %}-->
 [![In the storyboard, changing the cell class and identifier](docs/assets/Xcode-Storyboard-Define-Cell.jpg)](docs/assets/Xcode-Storyboard-Define-Cell.m4v)
-<!--{% else %}<div class="ios-animation large" markdown="1"><video src="docs/assets/Xcode-Storyboard-Define-Cell.m4v" autoplay loop></video></div>{% endif %}-->
+<!--{% else %}<div class="article__asset large" markdown="1"><video src="docs/assets/Xcode-Storyboard-Define-Cell.m4v" autoplay loop></video></div>{% endif %}-->
 
 
 In `viewDidLoad`, configure the collection view’s appearance:
@@ -782,13 +788,14 @@ Use our examples and catalog apps to try out other components and other ways to 
 <!--{% if site.link_to_site == "true" %}-->
 <img src="docs/assets/Pesto.gif">
 <img src="docs/assets/Shrine.gif">
-<!--{% else %}<div class="ios-animation right" markdown="1">
-<img src="docs/assets/Shrine.gif">
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <img src="docs/assets/Shrine.gif">
 </div>
-
-<div class="ios-animation left" markdown="1">
-<img src="docs/assets/Pesto.gif">
-</div> {% endif %}-->
+<div class="article__asset left" markdown="1">
+  <img src="docs/assets/Pesto.gif">
+</div>
+{% endif %}-->
 
 ---
 

@@ -1,17 +1,30 @@
+<!--docs:
+title:  "Flexible Header"
+layout: detail
+section: components
+excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
+-->
+
 # Flexible Header
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Flexible Header"><img src="docs/assets/flexible_header.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/flexible_header.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/flexible_header.png" alt="Flexible Header" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/flexible_header.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 The Flexible Header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+  <li class="icon-spec"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
 </ul>
 
 - - -
@@ -374,7 +387,6 @@ headerViewController.layoutDelegate = self;
     flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)flexibleHeaderView {
   // Called whenever the frame changes.
 }
-
 ~~~
 <!--</div>-->
 
@@ -387,22 +399,22 @@ updateTopLayoutGuide on the flexible header view controller within the paired vi
 viewWillLayoutSubviews method.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    [self.headerViewController updateLayoutGuide];
-}
-
-~~~
-
 #### Swift
 
+~~~ swift
 override func viewWillLayoutSubviews() {
     super.viewDidLayoutSubviews()
     headerViewController.updateTopLayoutGuide()
 }
+~~~
 
+#### Objective-C
+
+~~~ objc
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self.headerViewController updateLayoutGuide];
+}
 ~~~
 <!--</div>-->
 

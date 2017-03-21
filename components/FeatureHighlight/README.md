@@ -1,15 +1,28 @@
+<!--docs:
+title:  "Feature Highlight"
+layout: detail
+section: components
+excerpt: "Feature Highlight highlights a part of the screen in order to introduce users to new features and functionality."
+-->
+
 # Feature Highlight
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Feature Highlight"><img src="docs/assets/feature_highlight.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/feature_highlight.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/feature_highlight.png" alt="Feature Highlight" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/feature_highlight.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="https://material.google.com/growth-communications/feature-discovery.html">Feature Discovery</a></li>
+  <li class="icon-spec"><a href="https://material.google.com/growth-communications/feature-discovery.html">Feature Discovery</a></li>
 </ul>
 
 - - -

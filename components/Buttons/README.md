@@ -1,18 +1,30 @@
+<!--docs:
+title:  "Buttons"
+layout: detail
+section: components
+excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
+-->
+
 # Buttons
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Buttons"><img src="docs/assets/buttons.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/buttons.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/buttons.png" alt="Buttons" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/buttons.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
-
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a></li>
+  <li class="icon-spec"><a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a></li>
 </ul>
 
 - - -

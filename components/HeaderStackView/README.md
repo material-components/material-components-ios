@@ -1,17 +1,30 @@
+<!--docs:
+title:  "Header Stack View"
+layout: detail
+section: components
+excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically stacked bar views."
+-->
+
 # Header Stack View
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Header Stack View"><img src="docs/assets/header_stack_view.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/header_stack_view.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/header_stack_view.png" alt="Header Stack View" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/header_stack_view.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 The Header Stack View component is a view that coordinates the layout of two vertically stacked
 bar views.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar</a></li>
+  <li class="icon-spec"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar</a></li>
 </ul>
 
 - - -

@@ -1,14 +1,27 @@
+<!--docs:
+title:  "Page Control"
+layout: detail
+section: components
+excerpt: "Page Control is a drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout."
+-->
+
 # Page Control
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Page Control"><img src="docs/assets/page_control.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/page_control.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/page_control.png" alt="Page Control" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/page_control.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
 influenced by Material Design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
 - - -
 
@@ -53,19 +66,19 @@ final position of the new page.
 
 
 ![screenshot-1](docs/assets/MDCPageControl_screenshot-1.png)
-<!--{: .ios-screenshot .right }-->
+<!--{: .article__asset.article__asset--screenshot }-->
 Page control showing current page in resting state.
 <!--{: .clear-after }-->
 
 
 ![screenshot-2](docs/assets/MDCPageControl_screenshot-2.png)
-<!--{: .ios-screenshot .right }-->
+<!--{: .article__asset.article__asset--screenshot }-->
 Page control showing animated track with current page indicator positioned along the track.
 <!--{: .clear-after }-->
 
 
 ![screenshot-3](docs/assets/MDCPageControl_screenshot-3.png)
-<!--{: .ios-screenshot .right }-->
+<!--{: .article__asset.article__asset--screenshot }-->
 Page control showing new current page.
 <!--{: .clear-after }-->
 

@@ -1,3 +1,9 @@
+<!--docs:
+title:  "How to use Material Components"
+layout: landing
+section: howto
+-->
+
 # How to use Material Components
 
 Material Components for iOS should be immediately useable out of the box with
@@ -23,4 +29,4 @@ Apple's standard development tool chain.
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.google.com) (external site)
-  
+
