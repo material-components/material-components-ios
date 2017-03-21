@@ -49,18 +49,30 @@
 
   // Compare custom properties that affect layout.
   MDCCollectionViewLayoutAttributes *otherAttrs = (MDCCollectionViewLayoutAttributes *)object;
+  BOOL backgroundImageIdentity = NO;
+  if (self.backgroundImage && otherAttrs.backgroundImage) {
+    backgroundImageIdentity = [self.backgroundImage isEqual:otherAttrs.backgroundImage];
+  } else if (!self.backgroundImage && !otherAttrs.backgroundImage) {
+    backgroundImageIdentity = YES;
+  }
+
+  BOOL separatorColorIdentity = NO;
+  if (self.separatorColor && otherAttrs.separatorColor) {
+    separatorColorIdentity = [self.separatorColor isEqual:otherAttrs.separatorColor];
+  } else if (!self.separatorColor && !otherAttrs.separatorColor) {
+    separatorColorIdentity = YES;
+  }
+
   if ((otherAttrs.editing != self.editing) ||
       (otherAttrs.shouldShowReorderStateMask != self.shouldShowReorderStateMask) ||
       (otherAttrs.shouldShowSelectorStateMask != self.shouldShowSelectorStateMask) ||
       (otherAttrs.shouldShowGridBackground != self.shouldShowGridBackground) ||
       (otherAttrs.sectionOrdinalPosition != self.sectionOrdinalPosition) ||
-      ![MDCCollectionViewLayoutAttributes is:otherAttrs.backgroundImage
-                                     equalTo:self.backgroundImage] ||
+      !backgroundImageIdentity ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.backgroundImageViewInsets,
                                       self.backgroundImageViewInsets)) ||
       (otherAttrs.isGridLayout != self.isGridLayout) ||
-      ![MDCCollectionViewLayoutAttributes is:otherAttrs.separatorColor
-                                     equalTo:self.separatorColor] ||
+      !separatorColorIdentity ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.separatorInset, self.separatorInset)) ||
       (otherAttrs.separatorLineHeight != self.separatorLineHeight) ||
       (otherAttrs.shouldHideSeparators != self.shouldHideSeparators) ||
@@ -77,11 +89,6 @@
          (NSUInteger)self.sectionOrdinalPosition ^ (NSUInteger)self.backgroundImage ^
          (NSUInteger)self.isGridLayout ^ (NSUInteger)self.separatorColor ^
          (NSUInteger)self.separatorLineHeight ^ (NSUInteger)self.shouldHideSeparators;
-}
-
-+ (BOOL)is:(id)object1 equalTo:(id)object2 {
-  // Test for equality, including when both objects are nil.
-  return (!object1 && !object2) || [object1 isEqual:object2];
 }
 
 @end
