@@ -26,12 +26,16 @@ class TextFieldSwiftExample: UIViewController {
   let textFieldInline = MDCTextField()
   let textFieldInlineController: MDCTextInputController
 
+  let textFieldWide = MDCTextField()
+  let textFieldWideController: MDCTextInputController
+
   let textView = MDCTextView()
   let textViewController: MDCTextInputController
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     textFieldController = MDCTextInputController(input: textField)
     textFieldInlineController = MDCTextInputController(input: textFieldInline)
+    textFieldWideController = MDCTextInputController(input: textFieldWide)
     textViewController = MDCTextInputController(input: textView)
 
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -46,9 +50,35 @@ class TextFieldSwiftExample: UIViewController {
 
     view.backgroundColor = .white
 
+    setupTextFields()
+    setupTextViews()
+
+    let errorSwitch = UISwitch()
+    errorSwitch.translatesAutoresizingMaskIntoConstraints = false
+    errorSwitch.addTarget(self, action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)), for: .touchUpInside)
+    view.addSubview(errorSwitch)
+
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "V:|-100-[textField]-[textFieldInline]-[textFieldWide]-[textView]-50-[switch]",
+                                                               options: [.alignAllTrailing,
+                                                                         .alignAllLeading],
+                                                               metrics: nil,
+                                                               views: ["switch": errorSwitch,
+                                                                       "textField": textField,
+                                                                       "textFieldInline": textFieldInline, "textFieldWide": textFieldWide,
+                                                                       "textView": textView]))
+
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "H:|-[textField]-|",
+                                                               options: [],
+                                                               metrics: nil,
+                                                               views: ["textField": textField]))
+  }
+
+  func setupTextFields() {
     view.addSubview(textField)
     view.addSubview(textFieldInline)
-    view.addSubview(textView)
+    view.addSubview(textFieldWide)
 
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.placeholder = "This is a text field w/ floating placeholder"
@@ -67,10 +97,25 @@ class TextFieldSwiftExample: UIViewController {
 
     textFieldInline.leadingLabel.text = "More helper text"
 
-    textFieldInline.clearButtonMode = .always
+    textFieldInline.clearButtonMode = .unlessEditing
 
     textFieldInlineController.presentation = .default
     textFieldInlineController.characterCountMax = 40
+
+    textFieldWide.translatesAutoresizingMaskIntoConstraints = false
+    textFieldWide.placeholder = "This is a full width text field"
+    textFieldWide.delegate = self
+
+    textFieldWide.leadingLabel.text = "This text should be hidden."
+
+    textFieldWide.clearButtonMode = .whileEditing
+
+    textFieldWideController.presentation = .fullWidth
+    textFieldWideController.characterCountMax = 30
+  }
+
+  func setupTextViews() {
+    view.addSubview(textView)
 
     // Hide TextView for now
     textView.alpha = 0
@@ -82,27 +127,6 @@ class TextFieldSwiftExample: UIViewController {
     textView.trailingLabel.text = "Trailing test"
 
     textViewController.presentation = .default
-
-    let errorSwitch = UISwitch()
-    errorSwitch.translatesAutoresizingMaskIntoConstraints = false
-    errorSwitch.addTarget(self, action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)), for: .touchUpInside)
-    view.addSubview(errorSwitch)
-
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-100-[textField]-[textFieldInline]-[textView]-50-[switch]",
-                                                               options: [.alignAllTrailing,
-                                                                         .alignAllLeading],
-                                                               metrics: nil,
-                                                               views: ["switch": errorSwitch,
-                                                                       "textField": textField,
-                                                                       "textFieldInline": textFieldInline,
-                                                                       "textView": textView]))
-
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "H:|-[textField]-|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: ["textField": textField]))
   }
 
   func errorSwitchDidChange(errorSwitch: UISwitch) {
