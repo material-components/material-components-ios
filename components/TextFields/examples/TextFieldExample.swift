@@ -27,12 +27,12 @@ class TextFieldSwiftExample: UIViewController {
   let textFieldInlineController: MDCTextInputController
 
   let textView = MDCTextView()
-  let textViewBehavior: MDCTextInputController
+  let textViewController: MDCTextInputController
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     textFieldController = MDCTextInputController(input: textField)
     textFieldInlineController = MDCTextInputController(input: textFieldInline)
-    textViewBehavior = MDCTextInputController(input: textView)
+    textViewController = MDCTextInputController(input: textView)
 
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
@@ -81,7 +81,7 @@ class TextFieldSwiftExample: UIViewController {
     textView.leadingLabel.text = "Leading test"
     textView.trailingLabel.text = "Trailing test"
 
-    textViewBehavior.presentation = .default
+    textViewController.presentation = .default
 
     let errorSwitch = UISwitch()
     errorSwitch.translatesAutoresizingMaskIntoConstraints = false
