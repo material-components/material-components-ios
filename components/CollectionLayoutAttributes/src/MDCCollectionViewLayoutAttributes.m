@@ -80,6 +80,7 @@
 }
 
 + (BOOL)is:(id)object1 equalTo:(id)object2 {
+  // Test for equality, including when both objects are nil.
   return (!object1 && !object2) || [object1 isEqual:object2];
 }
 
