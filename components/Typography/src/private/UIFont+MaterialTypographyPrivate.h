@@ -13,8 +13,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCFontTextStyle.h"
-
 @interface UIFont (MaterialTypographyPrivate)
 
 /**
@@ -25,6 +23,15 @@
  Regular weight is 0.0.
  */
 - (CGFloat)mdc_weight;
+
+/**
+ Returns the slant of the font.
+ 
+ @return more than 0 when italic and 0 when not italic.
+ 
+ Regular slant is 0.0.
+ */
+- (CGFloat)mdc_slant;
 
 /**
  Returns an extended description of the font including name, pointsize and weight.

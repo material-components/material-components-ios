@@ -136,6 +136,45 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   return MDCTypographyStandardOpacity;
 }
 
++ (BOOL)isLargeForContrastRatios:(nonnull UIFont *)font {
+  id <MDCTypographyFontLoading> fontLoader = [self fontLoader];
+
+  if ([fontLoader respondsToSelector:@selector(isLargeForContrastRatios:)]) {
+    return [fontLoader isLargeForContrastRatios:font];
+  }
+  
+  // Copied from [MDFTextAccessibility isLargeForContrastRatios:]
+  UIFontDescriptor *fontDescriptor = font.fontDescriptor;
+  BOOL isBold =
+      (fontDescriptor.symbolicTraits & UIFontDescriptorTraitBold) == UIFontDescriptorTraitBold;
+  return font.pointSize >= 18 || (isBold && font.pointSize >= 14);
+  
+}
+
++ (UIFont *)italicFontFromFont:(UIFont *)font {
+  SEL selector = @selector(italicFontFromFont:);
+  if ([self.fontLoader respondsToSelector:selector]) {
+    return [self.fontLoader italicFontFromFont:font];
+  }
+  UIFontDescriptor * fontDescriptor = [font.fontDescriptor
+                              fontDescriptorWithSymbolicTraits: UIFontDescriptorTraitItalic];
+  return [UIFont fontWithDescriptor:fontDescriptor size:0];
+}
+
++ (UIFont *)boldFontFromFont:(UIFont *)font {
+  SEL selector = @selector(boldFontFromFont:);
+  if ([self.fontLoader respondsToSelector:selector]) {
+    return [self.fontLoader boldFontFromFont:font];
+  }
+  UIFontDescriptorSymbolicTraits traits = UIFontDescriptorTraitBold;
+  if (font.mdc_slant != 0) {
+    traits = traits | UIFontDescriptorTraitItalic;
+  }
+  UIFontDescriptor * fontDescriptor =
+      [font.fontDescriptor fontDescriptorWithSymbolicTraits: traits];
+  return [UIFont fontWithDescriptor:fontDescriptor size:0];
+}
+
 #pragma mark - Private
 
 + (id<MDCTypographyFontLoading>)defaultFontLoader {
@@ -150,7 +189,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     return [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
   }
-  return [UIFont systemFontOfSize:fontSize];
+  return [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
 }
 
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
@@ -164,18 +203,26 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     return [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
   }
-  return [UIFont systemFontOfSize:fontSize];
+  return [UIFont fontWithName:@"HelveticaNeue-Medium" size:fontSize];
 }
 
 - (UIFont *)boldFontOfSize:(CGFloat)fontSize {
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightBold];
+    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightSemibold];
   }
   return [UIFont boldSystemFontOfSize:fontSize];
+  
 }
 
 - (UIFont *)italicFontOfSize:(CGFloat)fontSize {
   return [UIFont italicSystemFontOfSize:fontSize];
+}
+
+- (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
+  UIFont *regular = [self regularFontOfSize:fontSize];
+  UIFontDescriptor *descriptor = [regular.fontDescriptor fontDescriptorWithSymbolicTraits:
+      UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
+  return [UIFont fontWithDescriptor:descriptor size:fontSize];
 }
 
 - (BOOL)isLargeForContrastRatios:(UIFont *)font {

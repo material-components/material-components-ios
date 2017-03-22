@@ -23,6 +23,17 @@
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
 
+/** Test whether any of the accessibility elements of a view is focused */
+static BOOL UIViewHasFocusedAccessibilityElement(UIView *view) {
+  for (NSInteger i = 0; i < [view accessibilityElementCount]; i++) {
+    id accessibilityElement = [view accessibilityElementAtIndex:i];
+    if ([accessibilityElement accessibilityElementIsFocused]) {
+      return YES;
+    }
+  }
+  return NO;
+};
+
 @class MDCSnackbarManagerSuspensionToken;
 
 /**
@@ -230,7 +241,9 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(message.duration * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
                   MDCSnackbarMessageView *strongSnackbarView = weakSnackbarView;
-                  if (strongSnackbarView) {
+                  BOOL hasVoiceOverFocus = UIAccessibilityIsVoiceOverRunning()
+                      && UIViewHasFocusedAccessibilityElement(strongSnackbarView);
+                  if (strongSnackbarView && !hasVoiceOverFocus) {
                     // Mimic the user tapping on the snackbar.
                     [strongSnackbarView dismissWithAction:nil userInitiated:NO];
                   }

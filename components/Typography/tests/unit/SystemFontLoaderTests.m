@@ -37,14 +37,18 @@
     XCTAssertEqual([fontLoader mediumFontOfSize:size],
                    [UIFont systemFontOfSize:size weight: UIFontWeightMedium]);
     XCTAssertEqual([fontLoader boldFontOfSize:size],
-                   [UIFont systemFontOfSize:size weight: UIFontWeightBold]);
+                   [UIFont systemFontOfSize:size weight: UIFontWeightSemibold]);
   } else {
     // Fallback on earlier versions
-    XCTAssertEqual([fontLoader lightFontOfSize:size], [UIFont systemFontOfSize:size]);
+    XCTAssertEqual([fontLoader lightFontOfSize:size], [UIFont fontWithName:@"HelveticaNeue-Light" size:size]);
     XCTAssertEqual([fontLoader regularFontOfSize:size], [UIFont systemFontOfSize:size]);
-    XCTAssertEqual([fontLoader mediumFontOfSize:size], [UIFont systemFontOfSize:size]);
+    XCTAssertEqual([fontLoader mediumFontOfSize:size], [UIFont fontWithName:@"HelveticaNeue-Medium" size:size]);
     XCTAssertEqual([fontLoader boldFontOfSize:size], [UIFont boldSystemFontOfSize:size]);
   }
+  UIFontDescriptor * fontDescriptorWithBoldItalic = [[UIFont systemFontOfSize:size].fontDescriptor
+      fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
+  XCTAssertEqual([fontLoader boldItalicFontOfSize:size],
+                   [UIFont fontWithDescriptor:fontDescriptorWithBoldItalic size:size]);
   XCTAssertEqual([fontLoader italicFontOfSize:size], [UIFont italicSystemFontOfSize:size]);
 
 }

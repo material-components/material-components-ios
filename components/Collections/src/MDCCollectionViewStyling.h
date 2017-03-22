@@ -125,7 +125,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
  @param attr The cell's layout attributes.
  @return Image as determined by cell style and section ordinal position.
  */
-- (nonnull UIImage *)backgroundImageForCellLayoutAttributes:
+- (nullable UIImage *)backgroundImageForCellLayoutAttributes:
         (nonnull MDCCollectionViewLayoutAttributes *)attr;
 
 #pragma mark - Cell Separator
