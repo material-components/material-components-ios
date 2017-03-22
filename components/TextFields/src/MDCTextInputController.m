@@ -33,6 +33,7 @@ static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputFloatingLabelFontSize = 12.f;
 static const CGFloat MDCTextInputFloatingLabelTextHeight = 16.f;
 static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
+static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
 static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
 static const CGFloat MDCTextInputUnderlineActiveWidth = 4.f;
 static const CGFloat MDCTextInputUnderlineNormalWidth = 2.f;
@@ -560,7 +561,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   }
 
   MDCTextField *textField = (MDCTextField*)self.textInput;
-
   CGRect clearButtonRect = defaultRect;
 
   // Full width text boxes have their character count on the text input line
@@ -576,6 +576,32 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   NSLog(@"default: %@", NSStringFromCGRect(defaultRect));
   NSLog(@"clear: %@", NSStringFromCGRect(clearButtonRect));
   return clearButtonRect;
+}
+
+- (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+  if (![self.textInput isKindOfClass:[UITextField class]]) {
+    return CGRectZero;
+  }
+
+  MDCTextField *textField = (MDCTextField*)self.textInput;
+  CGRect editingRect = defaultRect;
+
+  // Full width text fields have their clear button in the horizontal margin, but because the
+  // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
+  // implementation, our modifications are not picked up. Adjust accordingly.
+    if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+      editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
+      // Full width text boxes have their character count on the text input line
+      if (self.characterCountMax) {
+        editingRect.size.width -= CGRectGetWidth(textField.trailingUnderlineLabel.frame);
+        if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
+            UIUserInterfaceLayoutDirectionRightToLeft) {
+          editingRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
+        }
+      }
+    }
+
+  return editingRect;
 }
 
 #pragma mark - Public API

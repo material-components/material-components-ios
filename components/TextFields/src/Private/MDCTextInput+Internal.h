@@ -20,7 +20,6 @@
 
 static const CGFloat MDCTextInputUnderlineHeight = 1.f;
 static const CGFloat MDCTextInputUnderlineVerticalPadding = 8.f;
-static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
 
 static inline UIColor *MDCTextInputCursorColor() {

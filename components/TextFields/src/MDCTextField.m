@@ -246,21 +246,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
   CGRect editingRect = [self textRectForBounds:bounds];
 
-  // TODO: (larche): Move to behavior. Add API.
-  // Full width text fields have their clear button in the horizontal margin, but because the
-  // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
-  // implementation, our modifications are not picked up. Adjust accordingly.
-  //  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-  //    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
-  //    // Full width text boxes have their character count on the text input line
-  //    if (self.characterLimit) {
-  //      editingRect.size.width -= _coordinator.characterLimitViewSize.width;
-  //      if ([_coordinator shouldLayoutForRTL]) {
-  //        editingRect.origin.x += _coordinator.characterLimitViewSize.width;
-  //      }
-  //    }
-  //  }
-
   if ([self.positioningDelegate respondsToSelector:@selector(editingRectForBounds:)]) {
     return [self.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
