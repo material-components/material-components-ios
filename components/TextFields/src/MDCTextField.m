@@ -101,13 +101,9 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 //}
 //
 //- (CGSize)intrinsicContentSize {
-//  CGSize boundingSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+//  CGSize boundingSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, 56)];
 //  if (boundingSize.width == CGFLOAT_MAX) {
 //    boundingSize.width = UIViewNoIntrinsicMetric;
-//  }
-//
-//  if (boundingSize.height == CGFLOAT_MAX) {
-//    boundingSize.height = UIViewNoIntrinsicMetric;
 //  }
 //
 //  boundingSize.height = 56;

@@ -27,10 +27,12 @@
 
 #pragma mark - Constants
 
+static const CGFloat MDCTextInputAlmostRequiredPriority = 999;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputFloatingLabelFontSize = 12.f;
 static const CGFloat MDCTextInputFloatingLabelTextHeight = 16.f;
 static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
+static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
 static const CGFloat MDCTextInputUnderlineActiveWidth = 4.f;
 static const CGFloat MDCTextInputUnderlineNormalWidth = 2.f;
 
@@ -79,7 +81,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 @interface MDCTextInputController ()
 
 @property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
-@property(nonatomic, strong) NSArray<NSLayoutConstraint *> *fullWidthCharacterCountConstraints;
+@property(nonatomic, strong) NSLayoutConstraint *fullWidthCharacterCountConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *fullWidthHeightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 @property(nonatomic, readonly) BOOL isPlaceholderUp;
 @property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
@@ -218,15 +221,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 - (void)updateConstraints {
   if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    if (self.fullWidthCharacterCountConstraints.count == 0) {
-      [self.textInput.trailingUnderlineLabel
-       setContentHuggingPriority:UILayoutPriorityRequired
-       forAxis:UILayoutConstraintAxisVertical];
-
-      NSLayoutConstraint *characterCountY;
-
-      if ([self.textInput isKindOfClass:[UITextView class]]) {
-        characterCountY =
+    if ([self.textInput isKindOfClass:[UITextView class]]) {
+      if (!self.fullWidthCharacterCountConstraint) {
+        self.fullWidthCharacterCountConstraint =
             [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
                                          attribute:NSLayoutAttributeBottom
                                          relatedBy:NSLayoutRelationEqual
@@ -234,19 +231,21 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                          attribute:NSLayoutAttributeBottom
                                         multiplier:1
                                           constant:0];
+      }
+      [self.textInput.leadingUnderlineLabel
+          setContentHuggingPriority:UILayoutPriorityRequired
+                            forAxis:UILayoutConstraintAxisVertical];
+      [self.textInput.leadingUnderlineLabel
+          setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                          forAxis:UILayoutConstraintAxisVertical];
 
-        [self.textInput.leadingUnderlineLabel
-            setContentHuggingPriority:UILayoutPriorityRequired
-                              forAxis:UILayoutConstraintAxisVertical];
-        [self.textInput.leadingUnderlineLabel
-            setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                            forAxis:UILayoutConstraintAxisVertical];
+      [self.textInput.trailingUnderlineLabel
+          setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                          forAxis:UILayoutConstraintAxisVertical];
 
-        [self.textInput.trailingUnderlineLabel
-            setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                            forAxis:UILayoutConstraintAxisVertical];
-      } else {
-        characterCountY =
+    } else {
+      if (!self.fullWidthCharacterCountConstraint) {
+        self.fullWidthCharacterCountConstraint =
             [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
                                          attribute:NSLayoutAttributeCenterY
                                          relatedBy:NSLayoutRelationEqual
@@ -255,14 +254,30 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                         multiplier:1
                                           constant:0];
       }
-      self.fullWidthCharacterCountConstraints = @[ characterCountY ];
+
+      if (!self.fullWidthHeightConstraint) {
+        self.fullWidthHeightConstraint =
+            [NSLayoutConstraint constraintWithItem:self.textInput
+                                         attribute:NSLayoutAttributeHeight
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.textInput.placeholderLabel
+                                         attribute:NSLayoutAttributeHeight
+                                        multiplier:1
+                                          constant:2 * MDCTextInputFullWidthVerticalPadding];
+      }
+      self.fullWidthHeightConstraint.active = YES;
     }
 
-    [self placeholderYconstraint].priority = UILayoutPriorityRequired;
-    [NSLayoutConstraint activateConstraints:self.fullWidthCharacterCountConstraints];
+    [self.textInput.trailingUnderlineLabel
+        setContentHuggingPriority:UILayoutPriorityRequired
+                          forAxis:UILayoutConstraintAxisVertical];
+    [self placeholderYconstraint].priority = MDCTextInputAlmostRequiredPriority;
+    self.fullWidthCharacterCountConstraint.active = YES;
   } else {
+    self.fullWidthHeightConstraint.active = NO;
+
     [self placeholderYconstraint].priority = UILayoutPriorityDefaultLow;
-    [NSLayoutConstraint deactivateConstraints:self.fullWidthCharacterCountConstraints];
+    self.fullWidthCharacterCountConstraint.active = NO;
   }
 }
 
@@ -436,7 +451,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 - (NSLayoutConstraint *)placeholderYconstraint {
   for (NSLayoutConstraint *constraint in self.textInput.constraints) {
-    if (constraint.firstItem == self.textInput.placeholderLabel && (constraint.firstAttribute == NSLayoutAttributeTop || constraint.firstAttribute == NSLayoutAttributeCenterY)) {
+    if (constraint.firstItem == self.textInput.placeholderLabel &&
+        (constraint.firstAttribute == NSLayoutAttributeTop ||
+         constraint.firstAttribute == NSLayoutAttributeCenterY)) {
       return constraint;
     }
   }
