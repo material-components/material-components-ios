@@ -56,7 +56,7 @@ class TextFieldSwiftExample: UIViewController {
     let errorSwitch = UISwitch()
     errorSwitch.translatesAutoresizingMaskIntoConstraints = false
     errorSwitch.addTarget(self,
-                          action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
+                       action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
                           for: .touchUpInside)
     view.addSubview(errorSwitch)
 
@@ -66,9 +66,9 @@ class TextFieldSwiftExample: UIViewController {
                                                                          .alignAllLeading],
                                                                metrics: nil,
                                                                views: ["switch": errorSwitch,
-                                                                       "textField": textField,
-                                                                       "textFieldInline": textFieldInline,
-                                                                       "textFieldWide": textFieldWide]))
+                                                                    "textField": textField,
+                                                              "textFieldInline": textFieldInline,
+                                                                "textFieldWide": textFieldWide]))
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
       "H:|-[textField]-|",
@@ -132,7 +132,8 @@ class TextFieldSwiftExample: UIViewController {
   }
 
   func errorSwitchDidChange(errorSwitch: UISwitch) {
-    textFieldController.set(errorText: errorSwitch.isOn ? "Oh no! ERROR!!!" : nil, errorAccessibilityValue: nil)
+    textFieldController.set(errorText: errorSwitch.isOn ? "Oh no! ERROR!!!" : nil,
+                            errorAccessibilityValue: nil)
   }
 }
 
