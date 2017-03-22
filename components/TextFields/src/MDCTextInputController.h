@@ -18,12 +18,11 @@
 #import <UIKit/UIKit.h>
 
 #pragma mark - Unapproved API
-
-@protocol MDCTextInputCharacterCounter;
-
+#import "MDCTextFieldPositioningDelegate.h"
 #pragma mark - Approved API
 
 @protocol MDCTextInput;
+@protocol MDCTextInputCharacterCounter;
 
 /**
  Presentation styles for a text input. The style determines specific aspects of the text
@@ -53,7 +52,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  underline color, underline text color.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
-@interface MDCTextInputController : NSObject <NSCoding, NSCopying>
+@interface MDCTextInputController : NSObject <MDCTextFieldPositioningDelegate, NSCoding, NSCopying>
 
 /** The text input the behavior is managing. */
 @property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);

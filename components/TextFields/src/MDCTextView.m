@@ -170,14 +170,6 @@
   _coordinator.underlineColor = underlineColor;
 }
 
-- (MDCTextInputUnderlineView *)underlineView {
-  return _coordinator.underlineView;
-}
-
-- (void)setUnderlineView:(MDCTextInputUnderlineView *)underlineView {
-  _coordinator.underlineView = underlineView;
-}
-
 - (CGFloat)underlineWidth {
   return _coordinator.underlineWidth;
 }

@@ -15,6 +15,7 @@
  */
 
 #import "MDCTextFieldArt.h"
+#import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputLayoutCoordinator.h"
@@ -90,27 +91,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   [_coordinator layoutSubviewsOfInput];
 }
 
-//- (CGSize)sizeThatFits:(CGSize)size {
-//  // Use the super class implementation to get the correct width.
-//  size = [super sizeThatFits:size];
-//
-//  UIEdgeInsets textContainerInset = _coordinator.textContainerInset;
-//  size.height = self.font.pointSize + textContainerInset.top + textContainerInset.bottom;
-//
-//  return size;
-//}
-//
-//- (CGSize)intrinsicContentSize {
-//  CGSize boundingSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, 56)];
-//  if (boundingSize.width == CGFLOAT_MAX) {
-//    boundingSize.width = UIViewNoIntrinsicMetric;
-//  }
-//
-//  boundingSize.height = 56;
-//
-//  return boundingSize;
-//}
-
 #pragma mark - Properties Implementation
 
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
@@ -145,6 +125,10 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   _coordinator.textColor = textColor;
 }
 
+- (UIEdgeInsets)textContainerInset {
+  return _coordinator.textContainerInset;
+}
+
 - (UILabel *)trailingUnderlineLabel {
   return _coordinator.trailingUnderlineLabel;
 }
@@ -155,14 +139,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
 - (void)setUnderlineColor:(UIColor *)underlineColor {
   _coordinator.underlineColor = underlineColor;
-}
-
-- (MDCTextInputUnderlineView *)underlineView {
-  return _coordinator.underlineView;
-}
-
-- (void)setUnderlineView:(MDCTextInputUnderlineView *)underlineView {
-  _coordinator.underlineView = underlineView;
 }
 
 - (CGFloat)underlineWidth {
@@ -267,6 +243,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
+
   CGRect editingRect = [self textRectForBounds:bounds];
 
   // TODO: (larche): Move to behavior. Add API.
@@ -283,10 +260,16 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   //      }
   //    }
   //  }
+
+  if ([self.positioningDelegate respondsToSelector:@selector(editingRectForBounds:)]) {
+    return [self.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
+  }
+
   return editingRect;
 }
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
+
   CGRect clearButtonRect = [super clearButtonRectForBounds:bounds];
 
   // Get the clear button if it exists.
@@ -308,21 +291,11 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
     }
   }
 
-  // TODO: (larche): Move to behavior. Add API.
-  // Full width text boxes have their character count on the text input line
-  //  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && self.characterLimit) {
-  //    if ([_coordinator shouldLayoutForRTL]) {
-  //      clearButtonRect.origin.x += _coordinator.characterLimitViewSize.width;
-  //    } else {
-  //      clearButtonRect.origin.x -= _coordinator.characterLimitViewSize.width;
-  //    }
-  //  }
-
   // [super clearButtonRectForBounds:] is rect integral centered. Instead, we need to center to the
   // text without calling textRectForBounds (which will cause a cycle).
 
   // Offset origin to center to the font height.
-  clearButtonRect.origin.y = (_coordinator.fontHeight - clearButtonRect.size.height) / 2.0f;
+  clearButtonRect.origin.y = (MDCCeil(self.font.lineHeight) - clearButtonRect.size.height) / 2.0f;
 
   UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
   switch (self.contentVerticalAlignment) {
@@ -345,7 +318,13 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
     }
   }
 
-  return CGRectIntegral(clearButtonRect);
+  clearButtonRect = CGRectIntegral(clearButtonRect);
+
+  if ([self.positioningDelegate respondsToSelector:@selector(clearButtonRectForBounds:defaultRect:)]) {
+    return [self.positioningDelegate clearButtonRectForBounds:bounds defaultRect:clearButtonRect];
+  }
+
+  return clearButtonRect;
 }
 
 - (UIImage *)drawnClearButtonImage {
@@ -386,7 +365,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
 - (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
   CGRect textRect = [self textRectForBounds:bounds];
-  CGFloat fontHeight = _coordinator.fontHeight;
+  CGFloat fontHeight = MDCCeil(self.font.lineHeight);
   // The text rect has been shifted as necessary, but now needs to be sized accordingly.
   switch (self.contentVerticalAlignment) {
     case UIControlContentVerticalAlignmentTop:

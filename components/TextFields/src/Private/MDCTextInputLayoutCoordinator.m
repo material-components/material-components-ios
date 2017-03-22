@@ -49,10 +49,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, readonly) BOOL canValidate;
 @property(nonatomic, strong) UILabel *characterLimitView;
 @property(nonatomic, strong) UILabel *errorTextView;
-@property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
-
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
+@property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
+@property(nonatomic, strong) MDCTextInputUnderlineView *underlineView;
 
 @end
 
@@ -424,7 +424,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGFloat placeHolderWidth = [self placeholderRequiredWidth];
   placeholderRect.size.width = placeHolderWidth;
 
-  placeholderRect.size.height = self.fontHeight;
+  placeholderRect.size.height = MDCCeil(self.textInput.font.lineHeight);
 
   return placeholderRect;
 }
@@ -501,10 +501,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.textInput.textColor = self.textColor;
 
   self.underlineView.unfocusedColor = self.underlineColor;
-}
-
-- (CGFloat)fontHeight {
-  return MDCCeil(self.textInput.font.lineHeight);
 }
 
 @end

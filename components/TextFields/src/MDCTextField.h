@@ -18,6 +18,10 @@
 
 #import "MDCTextInput.h"
 
+#pragma mark - New API
+@protocol MDCTextFieldPositioningDelegate;
+#pragma mark - Approved API
+
 /**
   Material Design themed single line text input.
   https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
@@ -35,5 +39,9 @@
 
 /** MDCTextField does not implement borders that conform to UITextBorderStyle. */
 @property(nonatomic) UITextBorderStyle borderStyle NS_UNAVAILABLE;
+
+#pragma mark - New API
+@property(nonatomic, nullable, weak) id <MDCTextFieldPositioningDelegate> positioningDelegate;
+#pragma mark - Approved API
 
 @end

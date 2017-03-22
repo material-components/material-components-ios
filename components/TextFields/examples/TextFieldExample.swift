@@ -67,7 +67,7 @@ class TextFieldSwiftExample: UIViewController {
                                                                metrics: nil,
                                                                views: ["switch": errorSwitch,
                                                                     "textField": textField,
-                                                              "textFieldInline": textFieldInline,
+                                                          "textFieldInline": textFieldInline,
                                                                 "textFieldWide": textFieldWide]))
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:

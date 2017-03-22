@@ -97,9 +97,9 @@
 @property(nonatomic, assign) CGFloat underlineWidth UI_APPEARANCE_SELECTOR;
 
 #pragma mark - New API
-@property(nonatomic, nonnull, strong) MDCTextInputUnderlineView *underlineView;
-
 /** Should it have the standard behavior of disappearing when you type? Defaults to YES. */
 @property(nonatomic, assign) BOOL hidesPlaceholderOnInput;
+/** Inset set on the text container based upon the text field's style. */
+@property(nonatomic, readonly) UIEdgeInsets textContainerInset;
 
 @end

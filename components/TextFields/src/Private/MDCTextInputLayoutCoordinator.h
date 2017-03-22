@@ -43,9 +43,6 @@
 /** Size of the character limit view. */
 @property(nonatomic, readonly) CGSize characterLimitViewSize;
 
-/** Height of the font appropriately ceiled. */
-@property(nonatomic, readonly) CGFloat fontHeight;
-
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
 @property(nonatomic, nullable, strong) UIColor *cursorColor;

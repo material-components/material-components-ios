@@ -1,5 +1,6 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights
+ Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,9 +15,16 @@
  limitations under the License.
  */
 
-#import "MDCTextField.h"
-#import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInput.h"
-#import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputController.h"
-#import "MDCTextView.h"
+#import <UIKit/UIKit.h>
+
+#pragma mark - New API
+
+@protocol MDCTextFieldPositioningDelegate <NSObject>
+
+@optional
+
+- (CGRect)textRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
+- (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
+- (CGRect)clearButtonRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
+
+@end
