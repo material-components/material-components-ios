@@ -1,6 +1,14 @@
-# release-candidate TODO: Replace me with version number.
+# 23.0.0
 
 ## API diffs
+
+### CollectionCell
+
+#### Changes
+
+* Add kSelectedCellAccessibilityHintKey
+
+* Add kDeselectedCellAccessibilityHintKey
 
 ### Collections
 
@@ -18,8 +26,62 @@
 
 #### Changes
 
+* Add [MDCTypography boldItalicFontOfSize:]
+
+* Add [MDCTypography boldFontFromFont:]
+
+* Add [MDCTypography italicFontFromFont:]
+
 * Add [MDCTypography isLargeForContrastRatios]
 
+## Component changes
+
+### CollectionCells
+
+#### Changes
+
+* [Add accessibility hint in edit mode (#1258)](https://github.com/material-components/material-components-ios/commit/4cbdfb9e3190225f3c13a6826b0bd9fd99c02d26) (Louis Romero)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [Fix comparison (#1268)](https://github.com/material-components/material-components-ios/commit/2d8dbeb6de53508c7d6c33085c8863285137ab2c) (Gauthier Ambard)
+
+### Collections
+
+#### Changes
+
+* [- Fix static analyzer warnings (#1231)](https://github.com/material-components/material-components-ios/commit/d640c1c3aac9998b860a087c26c4689a3fbd9261) (Justin Shephard)
+* [[Collection] Fix text in header/footer example (#1266)](https://github.com/material-components/material-components-ios/commit/6ddf3fbdcf9cb2948c9d63d8d42ba3ce5424e52d) (Gauthier Ambard)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[FlexibleHeaderView] Temporarily remove assert to workaround iOS 10.3b issue (#1255)](https://github.com/material-components/material-components-ios/commit/ae15b469a8d9e639d6cfbe562edab4b4efa58d7a) (ianegordon)
+
+### Ink
+
+#### Changes
+
+* [[Collections] - Fix static analyzer warnings (#1231)](https://github.com/material-components/material-components-ios/commit/d640c1c3aac9998b860a087c26c4689a3fbd9261) (Justin Shephard)
+
+### Snackbar
+
+#### Changes
+
+* [Dont autodismiss snackbar messages views if they have voiceover focus (#1260)](https://github.com/material-components/material-components-ios/commit/cf7e0d423dde27e64f6c08a6f62a5e7f9ea8cb35) (Sam Morrison)
+
+### Typography
+
+#### Changes
+
+* [Added strong dependency to MDFTextAccessiblity for fallbackack logic when isLargeForContrastRatios: is unspecified. (#1250)](https://github.com/material-components/material-components-ios/commit/5328641bff96768bc8dc31da818932b70e2bd11e) (Randall Li)
+* [Make system font return medium and light versions of Helvetica instead of regularSystemFont. (#1246)](https://github.com/material-components/material-components-ios/commit/9fa1bf999b64eff71eea8a8627ebad7cdfa54e48) (Randall Li)
+* [Remove unused header that causes circular dependency. (#1240)](https://github.com/material-components/material-components-ios/commit/502136ba8923f6a7b323c20b0400f6febc668432) (Adrian Secord)
+* [added boldFontFromFont: and italicFontFormFont: (#1261)](https://github.com/material-components/material-components-ios/commit/7ddf3fb0c65f063ff72726f8472542642ff9b5a1) (Randall Li)
+* [added boldItalic font to optional protocol of the TypographyFontLoading protocol (#1252)](https://github.com/material-components/material-components-ios/commit/f922779b29a1283b1cfcfec0500339b066a6b84c) (Randall Li)
 
 # 22.1.1
 
