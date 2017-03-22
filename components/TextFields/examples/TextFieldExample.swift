@@ -22,106 +22,82 @@ class TextFieldSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
-  let textFieldControllerDefault: MDCTextInputController
-  let textFieldControllerDefaultCharMax: MDCTextInputController
-
-  let textFieldControllerFullWidth: MDCTextInputController
-  let textFieldControllerFullWidthCharMax: MDCTextInputController
-
-  let textFieldControllerFloating: MDCTextInputController
-  let textFieldControllerFloatingCharMax: MDCTextInputController
-
-  let textFieldControllerDefaultDisabled: MDCTextInputController
-  let textFieldControllerDefaultCustomFont: MDCTextInputController
-  let textFieldControllerDefaultLeftView: MDCTextInputController
-
-  let allTextFields: [MDCTextInputController]
-
-  let textViewControllerDefault: MDCTextInputController
-  let textViewControllerDefaultCharMax: MDCTextInputController
-
-  let textViewControllerFullWidth: MDCTextInputController
-  let textViewControllerFullWidthCharMax: MDCTextInputController
-
-  let textViewControllerFloating: MDCTextInputController
-  let textViewControllerFloatingCharMax: MDCTextInputController
-
-  let textViewControllerDefaultCustomFont: MDCTextInputController
-
-  let allTextViews: [MDCTextInputController]
-
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-
+  let allTextFields: [MDCTextInputController] = {
     let textFieldDefault = MDCTextField()
-    textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
+    let textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
     let textFieldDefaultCharMax = MDCTextField()
-    textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
+    let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
 
     let textFieldFullWidth = MDCTextField()
-    textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
+    let textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
     let textFieldFullWidthCharMax = MDCTextField()
-    textFieldControllerFullWidthCharMax = MDCTextInputController(input: textFieldFullWidthCharMax)
+    let textFieldControllerFullWidthCharMax =
+      MDCTextInputController(input: textFieldFullWidthCharMax)
 
     let textFieldFloating = MDCTextField()
-    textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
+    let textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
     let textFieldFloatingCharMax = MDCTextField()
-    textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
+    let textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
 
     let textFieldDisabled = MDCTextField()
-    textFieldControllerDefaultDisabled = MDCTextInputController(input: textFieldDisabled)
+    let textFieldControllerDefaultDisabled = MDCTextInputController(input: textFieldDisabled)
     let textFieldCustomFont = MDCTextField()
-    textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
+    let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
     let textFieldLeftView = MDCTextField()
-    textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
+    let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
 
-    allTextFields = [textFieldControllerDefault, textFieldControllerDefaultCharMax,
+    let allTextFields = [textFieldControllerDefault, textFieldControllerDefaultCharMax,
                      textFieldControllerFullWidth, textFieldControllerFullWidthCharMax,
                      textFieldControllerFloating, textFieldControllerFloatingCharMax,
                      textFieldControllerDefaultDisabled, textFieldControllerDefaultCustomFont,
                      textFieldControllerDefaultLeftView]
 
+    return allTextFields
+  }()
+
+  let allTextViews: [MDCTextInputController] = {
     let textViewDefault = MDCTextView()
-    textViewControllerDefault = MDCTextInputController(input: textViewDefault)
+    let textViewControllerDefault = MDCTextInputController(input: textViewDefault)
     let textViewDefaultCharMax = MDCTextView()
-    textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
+    let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
 
     let textViewFullWidth = MDCTextView()
-    textViewControllerFullWidth = MDCTextInputController(input: textViewFullWidth)
+    let textViewControllerFullWidth = MDCTextInputController(input: textViewFullWidth)
     let textViewFullWidthCharMax = MDCTextView()
-    textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
+    let textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
 
     let textViewFloating = MDCTextView()
-    textViewControllerFloating = MDCTextInputController(input: textViewFloating)
+    let textViewControllerFloating = MDCTextInputController(input: textViewFloating)
     let textViewFloatingCharMax = MDCTextView()
-    textViewControllerFloatingCharMax = MDCTextInputController(input: textViewFloatingCharMax)
+    let textViewControllerFloatingCharMax = MDCTextInputController(input: textViewFloatingCharMax)
 
     let textViewCustomFont = MDCTextView()
-    textViewControllerDefaultCustomFont = MDCTextInputController(input: textViewCustomFont)
+    let textViewControllerDefaultCustomFont = MDCTextInputController(input: textViewCustomFont)
 
-    allTextViews = [textViewControllerDefault, textViewControllerDefaultCharMax,
+    let allTextViews = [textViewControllerDefault, textViewControllerDefaultCharMax,
                     textViewControllerFullWidth, textViewControllerFullWidthCharMax,
                     textViewControllerFloating, textViewControllerFloatingCharMax,
                     textViewControllerDefaultCustomFont]
 
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
-    allTextFields.forEach { if let textField = $0.input as? MDCTextField {
-      scrollView.addSubview(textField)}
-    }
-
-    allTextViews.forEach { if let textView = $0.input as? MDCTextView {
-      scrollView.addSubview(textView)}
-    }
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+    return allTextViews
+  }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+
+    allTextFields.forEach({(controller: MDCTextInputController) -> Void in
+      if let textField = controller.input as? MDCTextField {
+        scrollView.addSubview(textField)
+      }
+    })
+
+    allTextViews.forEach({(controller: MDCTextInputController) -> Void in
+      if let textView = controller.input as? MDCTextView {
+        scrollView.addSubview(textView)
+      }
+    })
 
     setupTextFields()
     setupTextViews()
@@ -130,8 +106,8 @@ class TextFieldSwiftExample: UIViewController {
     let errorSwitch = UISwitch()
     errorSwitch.translatesAutoresizingMaskIntoConstraints = false
     errorSwitch.addTarget(self,
-                          action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
-                          for: .touchUpInside)
+                        action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
+                        for: .touchUpInside)
     view.addSubview(errorSwitch)
 
     //    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
