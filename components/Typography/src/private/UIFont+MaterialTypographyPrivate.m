@@ -66,7 +66,7 @@
 
 - (CGFloat)mdc_slant {
   CGFloat slant = 0.0;
-  
+
   NSDictionary *fontTraits = [self.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];
   if (fontTraits) {
     NSNumber *slantNumber = fontTraits[UIFontSlantTrait];
@@ -74,7 +74,7 @@
       slant = [slantNumber floatValue];
     }
   }
-  
+
   return slant;
 }
 

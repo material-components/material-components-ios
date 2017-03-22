@@ -245,14 +245,14 @@ static const CGFloat kOpacityMedium = 0.87f;
 - (void)testItalicFontFromFont {
   // Given
   CGFloat size = 8;
-  MDCSystemFontLoader *fontLoader=[[MDCSystemFontLoader alloc] init];
+  MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
   UIFont *normalFont = [UIFont systemFontOfSize:size];
   UIFont *italicFont = [UIFont italicSystemFontOfSize:size];
   UIFont *mediumFont = [fontLoader mediumFontOfSize:size];
   UIFontDescriptor *fontDescriptor =
-      [mediumFont.fontDescriptor fontDescriptorWithSymbolicTraits: UIFontDescriptorTraitItalic];
+      [mediumFont.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
   UIFont *italicMediumFont = [UIFont fontWithDescriptor:fontDescriptor size:0];
-  
+
   // Then
   XCTAssertEqualObjects([MDCTypography italicFontFromFont:mediumFont], italicMediumFont);
   XCTAssertEqualObjects([MDCTypography italicFontFromFont:normalFont], italicFont);
@@ -261,7 +261,7 @@ static const CGFloat kOpacityMedium = 0.87f;
 - (void)testBoldFontFromFont {
   // Given
   CGFloat size = 8;
-  MDCSystemFontLoader *fontLoader=[[MDCSystemFontLoader alloc] init];
+  MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
   UIFont *normalFont = [UIFont systemFontOfSize:size];
   UIFont *boldFont = [UIFont boldSystemFontOfSize:size];
   UIFont *italicFont = [UIFont italicSystemFontOfSize:size];
@@ -271,13 +271,12 @@ static const CGFloat kOpacityMedium = 0.87f;
   UIFont *fontLoaderRegularFont = [fontLoader regularFontOfSize:size];
   UIFont *fontLoaderBoldFont = [fontLoader boldFontOfSize:size];
 
-  
   // Then
   XCTAssertEqualObjects([MDCTypography boldFontFromFont:italicFont], italicBoldFont);
   XCTAssertEqualObjects([MDCTypography boldFontFromFont:normalFont], boldFont);
   // For some reason the fonts are not equal, the names are the same though.
   XCTAssertEqualObjects([MDCTypography boldFontFromFont:fontLoaderRegularFont].fontName,
-      fontLoaderBoldFont.fontName);
+                        fontLoaderBoldFont.fontName);
 }
 
 @end

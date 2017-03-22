@@ -95,11 +95,9 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind
-                                 atIndexPath:(NSIndexPath *)indexPath
-{
-
+                                 atIndexPath:(NSIndexPath *)indexPath {
   // Must include below code snippet
-  //TODO: (shepj) Pending fix for
+  // TODO: (shepj) Pending fix for
   // https://github.com/material-components/material-components-ios/issues/1208
   // we must call super which registers classes for supplemental header and footer in editing mode
   UICollectionReusableView *supplementaryView = [super collectionView:collectionView
@@ -166,7 +164,7 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 #pragma mark UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
+                             layout:(UICollectionViewLayout *)collectionViewLayout
     referenceSizeForHeaderInSection:(NSInteger)section {
   return CGSizeMake(collectionView.bounds.size.width, MDCCellDefaultOneLineHeight);
 }

@@ -341,8 +341,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     // Update UI to reflect newly selected item.
     [self didSelectItemAtIndexPath:indexPath animateTransition:YES];
     [_collectionView scrollToItemAtIndexPath:indexPath
-                               atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-                                       animated:YES];
+                            atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                    animated:YES];
   }
 }
 
@@ -360,8 +360,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSParameterAssert(_collectionView == collectionView);
 
-  MDCItemBarCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:kItemReuseID
-                                                                       forIndexPath:indexPath];
+  MDCItemBarCell *itemCell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kItemReuseID forIndexPath:indexPath];
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
 
   [self configureCell:itemCell];
@@ -456,8 +456,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   NSIndexPath *indexPath = [self indexPathForItemAtIndex:index];
   [_collectionView selectItemAtIndexPath:indexPath
-                                   animated:animated
-                             scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+                                animated:animated
+                          scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
   [self didSelectItemAtIndexPath:indexPath animateTransition:animated];
 }
 

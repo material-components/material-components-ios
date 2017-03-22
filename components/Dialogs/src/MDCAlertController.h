@@ -98,9 +98,8 @@
 
  Default value is NO.
  */
-@property (nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
 
 /** MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:

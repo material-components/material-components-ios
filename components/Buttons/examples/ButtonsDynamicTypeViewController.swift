@@ -80,7 +80,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
       multiplier: 1.0,
       constant: 0.0))
   }
-  
+
   func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }

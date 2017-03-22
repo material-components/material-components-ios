@@ -674,8 +674,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // method, not the UIVIew block-based animation that the rest of this method uses. We use
     // the timing function and duration passed in in order to match with the other animations.
     [CATransaction begin];
-    [CATransaction setAnimationTimingFunction:
-                       [self timingFunctionFromUIViewAnimationOptions:animationOptions]];
+    [CATransaction
+        setAnimationTimingFunction:[self
+                                       timingFunctionFromUIViewAnimationOptions:animationOptions]];
     [CATransaction setAnimationDuration:duration];
     _trackOnLayer.frame =
         CGRectMake(trackOnXValue, 0, Fabs(currentXValue - anchorXValue), _trackHeight);

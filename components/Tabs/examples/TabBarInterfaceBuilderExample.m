@@ -22,8 +22,8 @@
 
 @interface TabBarInterfaceBuilderExample : UIViewController <MDCTabBarDelegate>
 
-@property (weak, nonatomic) IBOutlet MDCTabBar *tabBar;
-@property (nonatomic) NSArray <UIColor*> *colors;
+@property(weak, nonatomic) IBOutlet MDCTabBar *tabBar;
+@property(nonatomic) NSArray<UIColor *> *colors;
 
 @end
 
@@ -33,16 +33,16 @@
   [super viewDidLoad];
 
   self.tabBar.items = @[
-                   [[UITabBarItem alloc] initWithTitle:@"Blue" image:nil tag:0],
-                   [[UITabBarItem alloc] initWithTitle:@"Pink" image:nil tag:1],
-                   [[UITabBarItem alloc] initWithTitle:@"Red" image:nil tag:2],
-                   [[UITabBarItem alloc] initWithTitle:@"Green" image:nil tag:3]
-                   ];
+    [[UITabBarItem alloc] initWithTitle:@"Blue" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Pink" image:nil tag:1],
+    [[UITabBarItem alloc] initWithTitle:@"Red" image:nil tag:2],
+    [[UITabBarItem alloc] initWithTitle:@"Green" image:nil tag:3]
+  ];
 
-  self.colors = @[[MDCPalette bluePalette].tint500,
-                  [MDCPalette pinkPalette].tint500,
-                  [MDCPalette redPalette].tint500,
-                  [MDCPalette greenPalette].tint500];
+  self.colors = @[
+    [MDCPalette bluePalette].tint500, [MDCPalette pinkPalette].tint500,
+    [MDCPalette redPalette].tint500, [MDCPalette greenPalette].tint500
+  ];
 
   self.view.backgroundColor = self.colors[0];
 }
@@ -57,9 +57,9 @@
 
 - (IBAction)alignmentButtonDidTouch:(UIButton *)sender {
   UIAlertController *sheet =
-  [UIAlertController alertControllerWithTitle:nil
-                                      message:nil
-                               preferredStyle:UIAlertControllerStyleActionSheet];
+      [UIAlertController alertControllerWithTitle:nil
+                                          message:nil
+                                   preferredStyle:UIAlertControllerStyleActionSheet];
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
@@ -78,7 +78,8 @@
   [sheet addAction:[UIAlertAction actionWithTitle:@"Selected Center"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
-                                            [self.tabBar setAlignment:MDCTabBarAlignmentCenterSelected];
+                                            [self.tabBar
+                                                setAlignment:MDCTabBarAlignmentCenterSelected];
                                           }]];
   [self presentViewController:sheet animated:YES completion:nil];
 }

@@ -281,7 +281,7 @@
   MDCInkView *ink = nil;
 
   if ([_styler.delegate
-       respondsToSelector:@selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
+          respondsToSelector:@selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
     return [_styler.delegate collectionView:self.collectionView
                          inkTouchController:inkTouchController
                          inkViewAtIndexPath:indexPath];
@@ -345,7 +345,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
 
@@ -371,7 +370,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
 
