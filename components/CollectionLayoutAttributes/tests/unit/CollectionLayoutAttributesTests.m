@@ -87,7 +87,7 @@
   _attributes.backgroundImage = nil;
   _attributes.separatorColor = nil;
   MDCCollectionViewLayoutAttributes *copy = [_attributes copy];
-  
+
   // Then
   XCTAssertEqualObjects(_attributes, copy);
 }

@@ -150,7 +150,7 @@
  @return An ink view to use at the touch location.
  */
 - (nullable MDCInkView *)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
-                    inkViewAtTouchLocation:(CGPoint)location;
+                     inkViewAtTouchLocation:(CGPoint)location;
 
 /**
  Controls whether the ink touch controller should be processing touches.

@@ -256,8 +256,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.shouldGrowOnSelection = NO;
   style.titleFont = [MDCTypography buttonFont];
   style.inkStyle = MDCInkStyleBounded;
-  style.titleImagePadding =
-      (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
+  style.titleImagePadding = (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
 
   BOOL displayImage = NO;
   BOOL displayTitle = NO;

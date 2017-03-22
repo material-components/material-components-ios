@@ -15,7 +15,7 @@
 
 /**
  Material font text styles
- 
+
  These styles are defined in:
  https://material.io/guidelines/style/typography.html
  This enumeration is a set of semantic descriptions intended to describe the fonts returned by

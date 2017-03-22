@@ -34,10 +34,10 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {
 };
 
 // String key for accessibility hint of selected cells.
-FOUNDATION_EXPORT NSString * _Nonnull const kSelectedCellAccessibilityHintKey;
+FOUNDATION_EXPORT NSString *_Nonnull const kSelectedCellAccessibilityHintKey;
 
 // String key for accessibility hint of deselected cells.
-FOUNDATION_EXPORT NSString * _Nonnull const kDeselectedCellAccessibilityHintKey;
+FOUNDATION_EXPORT NSString *_Nonnull const kDeselectedCellAccessibilityHintKey;
 
 /**
  The MDCCollectionViewCell class provides an implementation of UICollectionViewCell that

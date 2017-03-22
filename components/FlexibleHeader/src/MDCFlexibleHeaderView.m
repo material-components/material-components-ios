@@ -886,10 +886,10 @@ static BOOL isRunningiOS10_3OrAbove() {
     NSProcessInfo *info = [NSProcessInfo processInfo];
     if ([info respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
       isRunningiOS10_3OrAbove = [info isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){
-        .majorVersion = 10,
-        .minorVersion = 3,
-        .patchVersion = 0,
-      }];
+                                                                          .majorVersion = 10,
+                                                                          .minorVersion = 3,
+                                                                          .patchVersion = 0,
+                                                                      }];
     }
   });
   return isRunningiOS10_3OrAbove;
@@ -905,7 +905,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 
     // TODO(#1254): Re-enable sanity check assert on viewDidPan
     // To re-enable, remove isRunningiOS10_3OrAbove() function and always assert.
-    if (!isRunningiOS10_3OrAbove() ) {
+    if (!isRunningiOS10_3OrAbove()) {
       NSAssert(_didAdjustTargetContentOffset, @"%@ isn't invoking %@'s %@.",
                NSStringFromClass([_trackingScrollView class]), NSStringFromClass([self class]),
                NSStringFromSelector(

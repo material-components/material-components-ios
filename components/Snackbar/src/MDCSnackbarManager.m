@@ -241,8 +241,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(message.duration * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
                   MDCSnackbarMessageView *strongSnackbarView = weakSnackbarView;
-                  BOOL hasVoiceOverFocus = UIAccessibilityIsVoiceOverRunning()
-                      && UIViewHasFocusedAccessibilityElement(strongSnackbarView);
+                  BOOL hasVoiceOverFocus = UIAccessibilityIsVoiceOverRunning() &&
+                                           UIViewHasFocusedAccessibilityElement(strongSnackbarView);
                   if (strongSnackbarView && !hasVoiceOverFocus) {
                     // Mimic the user tapping on the snackbar.
                     [strongSnackbarView dismissWithAction:nil userInitiated:NO];
