@@ -164,15 +164,6 @@ Show all changes that are part of this release:
 
     scripts/release/diff
 
-#### Lint the podspec
-
-    pod spec lint MaterialComponents.podspec
-
-Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your `Pods` when you:
-
-    pod trunk me
-
-
 ### Classify the release type
 
 You should now be able to identify the release type and its new version number. Bump the release
@@ -188,6 +179,14 @@ Commit the results to your branch:
 
     git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
     git push origin release-candidate
+
+#### Lint the local podspec
+
+    pod lib lint MaterialComponents.podspec
+
+Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your `Pods` when you:
+
+    pod trunk me
 
 ## Testing with release-blocking clients
 
