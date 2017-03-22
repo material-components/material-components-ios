@@ -23,7 +23,7 @@
 
 @optional
 
-- (CGRect)textRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
+- (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets;
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 

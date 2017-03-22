@@ -210,7 +210,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   return nil;
 }
 
-#pragma mark - UITextField Positioning Overrides
+#pragma mark - UITextField Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = [super textRectForBounds:bounds];
@@ -229,12 +229,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
       break;
     case UIControlContentVerticalAlignmentCenter:
     case UIControlContentVerticalAlignmentFill: {
-      // Vertically center the text rect based upon the center per the insets.
-      CGRect tempRect = UIEdgeInsetsInsetRect(textRect, textContainerInset);
-      CGFloat centerY = CGRectGetMidY(tempRect);
-      CGFloat minY = textRect.size.height / 2.0f;
-      textRect =
-          CGRectMake(textRect.origin.x, centerY - minY, textRect.size.width, textRect.size.height);
       break;
     }
   }
@@ -312,6 +306,16 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   return clearButtonRect;
 }
 
+#pragma mark - UITextField Draw Overrides
+
+- (void)drawPlaceholderInRect:(CGRect)rect {
+  // We implement our own placeholder that is managed by the coordinator. However, to observe normal
+  // VO placeholder behavior, we still set the placeholder on the UITextField, and need to not draw
+  // it here.
+}
+
+#pragma mark - Clear Button Image
+
 - (UIImage *)drawnClearButtonImage {
   CGFloat scale = [UIScreen mainScreen].scale;
   CGRect bounds = CGRectMake(0, 0, MDCClearButtonImageSquareSize, MDCClearButtonImageSquareSize);
@@ -322,14 +326,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   UIGraphicsEndImageContext();
 
   return image;
-}
-
-#pragma mark - UITextField Draw Overrides
-
-- (void)drawPlaceholderInRect:(CGRect)rect {
-  // We implement our own placeholder that is managed by the coordinator. However, to observe normal
-  // VO placeholder behavior, we still set the placeholder on the UITextField, and need to not draw
-  // it here.
 }
 
 #pragma mark - UITextField Notification Observation

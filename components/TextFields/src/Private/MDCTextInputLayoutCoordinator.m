@@ -15,7 +15,9 @@
  */
 #import "MDCTextInput.h"
 
+#import "MDCTextField.h"
 #import "MDCTextInputLayoutCoordinator.h"
+#import "MDCTextFieldPositioningDelegate.h"
 
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
@@ -245,35 +247,19 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (UIEdgeInsets)textContainerInset {
   UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
-  //  switch (self.presentationStyle) {
-  //    case MDCTextInputPresentationStyleDefault:
+
+  if (![self.textInput isKindOfClass:[UITextField class]]) {
+    return textContainerInset;
+  }
+
+  MDCTextField *textField = (MDCTextField*)self.textInput;
+
   textContainerInset.top = MDCTextInputVerticalPadding;
   textContainerInset.bottom = MDCTextInputVerticalPadding;
-  //      break;
-  //    case MDCTextInputPresentationStyleFloatingPlaceholder:
-  //      textContainerInset.top = MDCTextInputVerticalPadding + MDCTextInputFloatingLabelTextHeight
-  //      +
-  //                               MDCTextInputFloatingLabelMargin;
-  //      textContainerInset.bottom = MDCTextInputVerticalPadding;
-  //      break;
-  //    case MDCTextInputPresentationStyleFullWidth:
-  //      textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
-  //      textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
-  //      textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
-  //      textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
-  //      break;
-  //  }
-  //
-  //  // TODO: (larche) Check this removal of validator.
-  //  // Adjust for the character limit and validator.
-  //  // Full width single line text fields have their character counter on the same line as the
-  //  text.
-  //  if ((self.characterLimit) &&
-  //      (self.presentationStyle != MDCTextInputPresentationStyleFullWidth || [self.textInput
-  //      isKindOfClass:[UITextView class]])) {
-  //    textContainerInset.bottom += MDCTextInputValidationMargin;
-  //  }
-  //
+
+  if ([textField.positioningDelegate respondsToSelector:@selector(textContainerInset:)]) {
+    return [textField.positioningDelegate textContainerInset:textContainerInset];
+  }
   return textContainerInset;
 }
 

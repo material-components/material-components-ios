@@ -37,6 +37,7 @@ static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
 static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
 static const CGFloat MDCTextInputUnderlineActiveWidth = 4.f;
 static const CGFloat MDCTextInputUnderlineNormalWidth = 2.f;
+static const CGFloat MDCTextInputVerticalPadding = 16.f;
 
 static const NSTimeInterval MDCTextInputFloatingPlaceholderAnimationDuration = 0.3f;
 static const NSTimeInterval MDCTextInputDividerOutAnimationDuration = 0.266666f;
@@ -573,8 +574,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     }
   }
 
-  NSLog(@"default: %@", NSStringFromCGRect(defaultRect));
-  NSLog(@"clear: %@", NSStringFromCGRect(clearButtonRect));
   return clearButtonRect;
 }
 
@@ -602,6 +601,36 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     }
 
   return editingRect;
+}
+
+- (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets {
+  UIEdgeInsets textContainerInset = defaultInsets;
+    switch (self.presentationStyle) {
+      case MDCTextInputPresentationStyleDefault:
+        break;
+      case MDCTextInputPresentationStyleFloatingPlaceholder:
+        textContainerInset.top = MDCTextInputVerticalPadding + MDCTextInputFloatingLabelTextHeight
+        +
+                                 MDCTextInputFloatingLabelMargin;
+        textContainerInset.bottom = MDCTextInputVerticalPadding;
+        break;
+      case MDCTextInputPresentationStyleFullWidth:
+        textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
+        textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
+        break;
+    }
+  
+    // TODO: (larche) Check this removal of validator.
+    // Adjust for the character limit and validator.
+    // Full width single line text fields have their character counter on the same line as the
+    //text.
+    if ((self.characterCountMax) &&
+        (self.presentationStyle != MDCTextInputPresentationStyleFullWidth || [self.textInput
+        isKindOfClass:[UITextView class]])) {
+      textContainerInset.bottom += CGRectGetHeight(self.textInput.trailingUnderlineLabel.frame);
+    }
+  
+  return textContainerInset;
 }
 
 #pragma mark - Public API
