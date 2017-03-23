@@ -22,173 +22,283 @@ class TextFieldSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
-  let allTextFields: [MDCTextInputController] = {
-    let textFieldDefault = MDCTextField()
-    let textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
-    let textFieldDefaultCharMax = MDCTextField()
-    let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
+  let singleLabel: UILabel = {
+    let singleLabel = UILabel()
+    singleLabel.translatesAutoresizingMaskIntoConstraints = false
+    singleLabel.text = "Single Line Text Fields"
+    return singleLabel
+}()
+  var allTextFields = [MDCTextInputController]()
 
-    let textFieldFullWidth = MDCTextField()
-    let textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
-    let textFieldFullWidthCharMax = MDCTextField()
-    let textFieldControllerFullWidthCharMax =
-      MDCTextInputController(input: textFieldFullWidthCharMax)
-
-    let textFieldFloating = MDCTextField()
-    let textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
-    let textFieldFloatingCharMax = MDCTextField()
-    let textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
-
-    let textFieldDisabled = MDCTextField()
-    let textFieldControllerDefaultDisabled = MDCTextInputController(input: textFieldDisabled)
-    let textFieldCustomFont = MDCTextField()
-    let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
-    let textFieldLeftView = MDCTextField()
-    let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
-
-    let allTextFields = [textFieldControllerDefault, textFieldControllerDefaultCharMax,
-                     textFieldControllerFullWidth, textFieldControllerFullWidthCharMax,
-                     textFieldControllerFloating, textFieldControllerFloatingCharMax,
-                     textFieldControllerDefaultDisabled, textFieldControllerDefaultCustomFont,
-                     textFieldControllerDefaultLeftView]
-
-    return allTextFields
+  let multiLabel: UILabel = {
+    let multiLabel = UILabel()
+    multiLabel.translatesAutoresizingMaskIntoConstraints = false
+    multiLabel.text = "Multi Line Text Views"
+    return multiLabel
   }()
 
-  let allTextViews: [MDCTextInputController] = {
-    let textViewDefault = MDCTextView()
-    let textViewControllerDefault = MDCTextInputController(input: textViewDefault)
-    let textViewDefaultCharMax = MDCTextView()
-    let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
-
-    let textViewFullWidth = MDCTextView()
-    let textViewControllerFullWidth = MDCTextInputController(input: textViewFullWidth)
-    let textViewFullWidthCharMax = MDCTextView()
-    let textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
-
-    let textViewFloating = MDCTextView()
-    let textViewControllerFloating = MDCTextInputController(input: textViewFloating)
-    let textViewFloatingCharMax = MDCTextView()
-    let textViewControllerFloatingCharMax = MDCTextInputController(input: textViewFloatingCharMax)
-
-    let textViewCustomFont = MDCTextView()
-    let textViewControllerDefaultCustomFont = MDCTextInputController(input: textViewCustomFont)
-
-    let allTextViews = [textViewControllerDefault, textViewControllerDefaultCharMax,
-                    textViewControllerFullWidth, textViewControllerFullWidthCharMax,
-                    textViewControllerFloating, textViewControllerFloatingCharMax,
-                    textViewControllerDefaultCustomFont]
-
-    return allTextViews
-  }()
+  var allTextViews = [MDCTextInputController]()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
 
-    allTextFields.forEach({(controller: MDCTextInputController) -> Void in
-      if let textField = controller.input as? MDCTextField {
-        scrollView.addSubview(textField)
-      }
-    })
+    allTextFields = [setupDefaultTextFields(),
+                     setupFullWidthTextFields(),
+                     setupFloatingTextFields(),
+                     setupSpecialTextFields()].flatMap { $0 }
 
-    allTextViews.forEach({(controller: MDCTextInputController) -> Void in
-      if let textView = controller.input as? MDCTextView {
-        scrollView.addSubview(textView)
-      }
-    })
+    allTextViews = [setupDefaultTextViews(),
+                    setupFullWidthTextViews(),
+                    setupFloatingTextViews(),
+                    setupSpecialTextViews()].flatMap { $0 }
 
-    setupTextFields()
-    setupTextViews()
     setupScrollView()
-
-    let errorSwitch = UISwitch()
-    errorSwitch.translatesAutoresizingMaskIntoConstraints = false
-    errorSwitch.addTarget(self,
-                        action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
-                        for: .touchUpInside)
-    view.addSubview(errorSwitch)
-
-    //    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-    //      "V:|-100-[textField]-[textFieldInline]-[textFieldWide]-50-[switch]",
-    //                                                               options: [.alignAllTrailing,
-    //                                                                         .alignAllLeading],
-    //                                                               metrics: nil,
-    //                                                               views: ["switch": errorSwitch,
-    //                                                                    "textField": textFieldController.input,
-    //                                                          "textFieldInline": textFieldInlineController.input,
-    //                                                                "textFieldWide": textFieldWideController.input]))
-    //
-    //    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-    //      "H:|-[textField]-|",
-    //                                                               options: [],
-    //                                                               metrics: nil,
-    //                                                               views: ["textField": textFieldController.input]))
   }
 
-  func setupTextFields() {
-    //    view.addSubview(textFieldController.input)
-    //    view.addSubview(textFieldInlineController.input)
-    //    view.addSubview(textFieldWideController.input)
-    //
-    //    textField.translatesAutoresizingMaskIntoConstraints = false
-    //    textField.placeholder = "This is a text field w/ floating placeholder"
-    //    textField.delegate = self
-    //
-    //    textField.leadingLabel.text = "Helper text"
-    //
-    //    textField.clearButtonMode = .always
-    //
-    //    textFieldController.presentation = .floatingPlaceholder
-    //    textFieldController.characterCountMax = 50
-    //
-    //    textFieldInline.translatesAutoresizingMaskIntoConstraints = false
-    //    textFieldInline.placeholder = "This is a text field w/ inline placeholder"
-    //    textFieldInline.delegate = self
-    //
-    //    textFieldInline.leadingLabel.text = "More helper text"
-    //
-    //    textFieldInline.clearButtonMode = .unlessEditing
-    //
-    //    textFieldInlineController.presentation = .default
-    //    textFieldInlineController.characterCountMax = 40
-    //
-    //    textFieldWide.translatesAutoresizingMaskIntoConstraints = false
-    //    textFieldWide.placeholder = "This is a full width text field"
-    //    textFieldWide.delegate = self
-    //
-    //    textFieldWide.leadingLabel.text = "This text should be hidden."
-    //
-    //    textFieldWide.clearButtonMode = .whileEditing
-    //
-    //    textFieldWideController.presentation = .fullWidth
-    //    textFieldWideController.characterCountMax = 30
+  func setupDefaultTextFields() -> [MDCTextInputController] {
+    let textFieldDefault = MDCTextField()
+    scrollView.addSubview(textFieldDefault)
+    textFieldDefault.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldDefault.placeholder = "This is a text field w/ floating placeholder"
+    textFieldDefault.delegate = self
+
+    textFieldDefault.leadingLabel.text = "Helper text"
+
+    textFieldDefault.clearButtonMode = .always
+
+    let textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
+
+    textFieldControllerDefault.presentation = .default
+    textFieldControllerDefault.characterCountMax = 50
+
+    let textFieldDefaultCharMax = MDCTextField()
+    scrollView.addSubview(textFieldDefaultCharMax)
+    textFieldDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
+
+    return [textFieldControllerDefault, textFieldControllerDefaultCharMax]
+  }
+  func setupFullWidthTextFields() -> [MDCTextInputController] {
+    let textFieldFullWidth = MDCTextField()
+    scrollView.addSubview(textFieldFullWidth)
+    textFieldFullWidth.translatesAutoresizingMaskIntoConstraints = false
+
+    let textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
+
+    let textFieldFullWidthCharMax = MDCTextField()
+    scrollView.addSubview(textFieldFullWidthCharMax)
+    textFieldFullWidthCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    let textFieldControllerFullWidthCharMax =
+      MDCTextInputController(input: textFieldFullWidthCharMax)
+
+    return [textFieldControllerFullWidth, textFieldControllerFullWidthCharMax]
   }
 
-  func setupTextViews() {
-    //    view.addSubview(textView)
-    //
-    //    // Hide TextView for now
-    //    textView.alpha = 0
-    //    textView.translatesAutoresizingMaskIntoConstraints = false
-    //    textView.placeholderLabel.text = "This is a text view"
-    //    textView.delegate = self
-    //
-    //    textView.leadingLabel.text = "Leading test"
-    //    textView.trailingLabel.text = "Trailing test"
-    //
-    //    textViewController.presentation = .default
+  func setupFloatingTextFields() -> [MDCTextInputController] {
+    let textFieldFloating = MDCTextField()
+    scrollView.addSubview(textFieldFloating)
+    textFieldFloating.translatesAutoresizingMaskIntoConstraints = false
+    textFieldFloating.placeholder = "This is a text field w/ floating placeholder"
+    textFieldFloating.delegate = self
+
+    textFieldFloating.leadingLabel.text = "Helper text"
+
+    textFieldFloating.clearButtonMode = .always
+
+    let textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
+
+    textFieldControllerFloating.presentation = .floatingPlaceholder
+    textFieldControllerFloating.characterCountMax = 50
+
+    let textFieldFloatingCharMax = MDCTextField()
+    scrollView.addSubview(textFieldFloatingCharMax)
+    textFieldFloatingCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    let textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
+
+    return [textFieldControllerFloating, textFieldControllerFloatingCharMax]
+  }
+
+  func setupSpecialTextFields() -> [MDCTextInputController] {
+    let textFieldDisabled = MDCTextField()
+    scrollView.addSubview(textFieldDisabled)
+    textFieldDisabled.translatesAutoresizingMaskIntoConstraints = false
+
+    let textFieldControllerDefaultDisabled = MDCTextInputController(input: textFieldDisabled)
+
+    let textFieldCustomFont = MDCTextField()
+    scrollView.addSubview(textFieldCustomFont)
+    textFieldCustomFont.translatesAutoresizingMaskIntoConstraints = false
+
+    let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
+
+    let textFieldLeftView = MDCTextField()
+    scrollView.addSubview(textFieldLeftView)
+    textFieldLeftView.translatesAutoresizingMaskIntoConstraints = false
+
+    let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
+
+    return [textFieldControllerDefaultDisabled, textFieldControllerDefaultCustomFont,
+            textFieldControllerDefaultLeftView]
+  }
+
+  func setupDefaultTextViews() -> [MDCTextInputController] {
+    let textViewDefault = MDCTextView()
+    scrollView.addSubview(textViewDefault)
+    textViewDefault.translatesAutoresizingMaskIntoConstraints = false
+
+    let textViewControllerDefault = MDCTextInputController(input: textViewDefault)
+
+    let textViewDefaultCharMax = MDCTextView()
+    scrollView.addSubview(textViewDefaultCharMax)
+    textViewDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
+
+    return [textViewControllerDefault, textViewControllerDefaultCharMax]
+  }
+
+  func setupFullWidthTextViews() -> [MDCTextInputController] {
+    let textViewFullWidth = MDCTextView()
+    scrollView.addSubview(textViewFullWidth)
+    textViewFullWidth.translatesAutoresizingMaskIntoConstraints = false
+
+    let textViewControllerFullWidth = MDCTextInputController(input: textViewFullWidth)
+
+    let textViewFullWidthCharMax = MDCTextView()
+    scrollView.addSubview(textViewFullWidthCharMax)
+    textViewFullWidthCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    let textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
+
+    return [textViewControllerFullWidth, textViewControllerFullWidthCharMax]
+  }
+
+  func setupFloatingTextViews() -> [MDCTextInputController] {
+    let textViewFloating = MDCTextView()
+    scrollView.addSubview(textViewFloating)
+    textViewFloating.translatesAutoresizingMaskIntoConstraints = false
+
+    let textViewControllerFloating = MDCTextInputController(input: textViewFloating)
+
+    let textViewFloatingCharMax = MDCTextView()
+    scrollView.addSubview(textViewFloatingCharMax)
+    textViewFloatingCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    let textViewControllerFloatingCharMax = MDCTextInputController(input: textViewFloatingCharMax)
+
+    return [textViewControllerFloating, textViewControllerFloatingCharMax]
+  }
+
+  func setupSpecialTextViews() -> [MDCTextInputController] {
+    let textViewCustomFont = MDCTextView()
+    scrollView.addSubview(textViewCustomFont)
+    textViewCustomFont.translatesAutoresizingMaskIntoConstraints = false
+
+    let textViewControllerDefaultCustomFont = MDCTextInputController(input: textViewCustomFont)
+
+    return [textViewControllerDefaultCustomFont]
+  }
+
+  func setupLabels() {
+    scrollView.addSubview(singleLabel)
+
+    scrollView.addSubview(multiLabel)
+
+    NSLayoutConstraint(item: singleLabel,
+                       attribute: .leading,
+                       relatedBy: .equal,
+                       toItem: view,
+                       attribute: .leadingMargin,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+
+    NSLayoutConstraint(item: singleLabel,
+                       attribute: .trailing,
+                       relatedBy: .equal,
+                       toItem: view,
+                       attribute: .trailingMargin,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+
   }
 
   func setupScrollView() {
     view.addSubview(scrollView)
-    scrollView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+
+    scrollView.translatesAutoresizingMaskIntoConstraints = false
+
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|",
+                                                               options: [],
+                                                               metrics: nil,
+                                                               views: ["scrollView": scrollView]))
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
+                                                               options: [],
+                                                               metrics: nil,
+                                                               views: ["scrollView": scrollView]))
+    setupLabels()
+
+    var textFields = [String: UIView]()
+    allTextFields.flatMap { $0.input }.forEach { input in
+      textFields["input" + String(describing: Unmanaged.passUnretained(input).toOpaque())] = input
+    }
+
+    let concatenatingClosure = {
+      (accumulator, keyValue: (key: String, value: UIView)) in
+      accumulator + "[" + keyValue.key + "]" + "-"
+    }
+
+    let textFieldsString = textFields.reduce("", concatenatingClosure)
+
+    var textViews = [String: UIView]()
+    allTextViews.flatMap { $0.input }.forEach { input in
+      textViews["input" + String(describing: Unmanaged.passUnretained(input).toOpaque())] = input
+    }
+
+    let textViewsString = textViews.reduce("", concatenatingClosure)
+
+    let visualString = "V:|-[singleLabel]-" + textFieldsString + "[multiLabel]-" + textViewsString
+      + "|"
+
+    let labels: [String: UIView] = ["singleLabel": singleLabel, "multiLabel": multiLabel]
+
+    var views = [String: UIView]()
+
+    let dictionaries = [labels, textFields, textViews]
+
+    dictionaries.forEach { dictionary in
+      dictionary.forEach { (key, value) in
+        views[key] = value
+      }
+    }
+
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: visualString,
+                                                               options: [.alignAllLeft,
+                                                                         .alignAllRight],
+                                                               metrics: nil,
+                                                               views: views))
+  }
+
+  func setupControls() -> [UIControl] {
+    let errorSwitch = UISwitch()
+    errorSwitch.translatesAutoresizingMaskIntoConstraints = false
+    errorSwitch.addTarget(self,
+      action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
+      for: .touchUpInside)
+    scrollView.addSubview(errorSwitch)
+
+    return [errorSwitch]
   }
 
   func errorSwitchDidChange(errorSwitch: UISwitch) {
-    //    textFieldController.set(errorText: errorSwitch.isOn ? "Oh no! ERROR!!!" : nil,
-    //                            errorAccessibilityValue: nil)
+    allTextFields.forEach { controller in
+      controller.set(errorText: "Uh oh! Error. Try something else.", errorAccessibilityValue: nil)
+    }
   }
 }
 
