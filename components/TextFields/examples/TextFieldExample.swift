@@ -17,6 +17,7 @@
 import UIKit
 
 import MaterialComponents.MaterialTextField
+import MaterialComponents.MaterialButtons
 
 class TextFieldSwiftExample: UIViewController {
 
@@ -27,7 +28,7 @@ class TextFieldSwiftExample: UIViewController {
     singleLabel.translatesAutoresizingMaskIntoConstraints = false
     singleLabel.text = "Single Line Text Fields"
     return singleLabel
-}()
+  }()
   var allTextFields = [MDCTextInputController]()
 
   let multiLabel: UILabel = {
@@ -38,6 +39,11 @@ class TextFieldSwiftExample: UIViewController {
   }()
 
   var allTextViews = [MDCTextInputController]()
+
+  var allInputs = [MDCTextInputController]()
+
+  let characterModeButton = UIButton()
+  let underlineButton = UIButton()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -54,6 +60,7 @@ class TextFieldSwiftExample: UIViewController {
                     setupFloatingTextViews(),
                     setupSpecialTextViews()].flatMap { $0 }
 
+    allInputs = allTextFields + allTextViews
     setupScrollView()
   }
 
@@ -243,17 +250,25 @@ class TextFieldSwiftExample: UIViewController {
                                                                views: ["scrollView": scrollView]))
     setupLabels()
 
-    var textFields = [String: UIView]()
-    allTextFields.flatMap { $0.input }.forEach { input in
-      textFields["input" + String(describing: Unmanaged.passUnretained(input).toOpaque())] = input
-    }
-
     let concatenatingClosure = {
       (accumulator, keyValue: (key: String, value: UIView)) in
       accumulator + "[" + keyValue.key + "]" + "-"
     }
 
+    var textFields = [String: UIView]()
+    allTextFields.flatMap { $0.input }.forEach { input in
+      textFields["input" + String(describing: Unmanaged.passUnretained(input).toOpaque())] = input
+    }
+
     let textFieldsString = textFields.reduce("", concatenatingClosure)
+
+    var controls = [String: UIView]()
+    setupControls().forEach { control in
+      controls["control" + String(describing: Unmanaged.passUnretained(control).toOpaque())] =
+        control
+    }
+
+    let controlsString = controls.reduce("", concatenatingClosure)
 
     var textViews = [String: UIView]()
     allTextViews.flatMap { $0.input }.forEach { input in
@@ -262,14 +277,14 @@ class TextFieldSwiftExample: UIViewController {
 
     let textViewsString = textViews.reduce("", concatenatingClosure)
 
-    let visualString = "V:|-[singleLabel]-" + textFieldsString + "[multiLabel]-" + textViewsString
-      + "|"
+    let visualString = "V:|-[singleLabel]-" + textFieldsString + "[multiLabel]-" + controlsString +
+      textViewsString + "|"
 
     let labels: [String: UIView] = ["singleLabel": singleLabel, "multiLabel": multiLabel]
 
     var views = [String: UIView]()
 
-    let dictionaries = [labels, textFields, textViews]
+    let dictionaries = [labels, textFields, controls, textViews]
 
     dictionaries.forEach { dictionary in
       dictionary.forEach { (key, value) in
@@ -284,20 +299,116 @@ class TextFieldSwiftExample: UIViewController {
                                                                views: views))
   }
 
-  func setupControls() -> [UIControl] {
+  func setupControls() -> [UIView] {
+    let errorLabel = UILabel()
+    errorLabel.translatesAutoresizingMaskIntoConstraints = false
+    errorLabel.text = "In Error"
+    scrollView.addSubview(errorLabel)
+
     let errorSwitch = UISwitch()
     errorSwitch.translatesAutoresizingMaskIntoConstraints = false
     errorSwitch.addTarget(self,
-      action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
-      for: .touchUpInside)
+       action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
+       for: .touchUpInside)
     scrollView.addSubview(errorSwitch)
 
-    return [errorSwitch]
+    let helperLabel = UILabel()
+    helperLabel.translatesAutoresizingMaskIntoConstraints = false
+    helperLabel.text = "Show Helper Text"
+    scrollView.addSubview(helperLabel)
+
+    let helperSwitch = UISwitch()
+    helperSwitch.translatesAutoresizingMaskIntoConstraints = false
+    helperSwitch.addTarget(self,
+        action: #selector(TextFieldSwiftExample.helperSwitchDidChange(helperSwitch:)),
+        for: .touchUpInside)
+    scrollView.addSubview(helperSwitch)
+
+    let underlineButton = UIButton()
+    underlineButton.translatesAutoresizingMaskIntoConstraints = false
+    underlineButton.addTarget(self,
+                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
+                              for: .touchUpInside)
+
+    underlineButton.setTitle("Underline Mode: Always", for: .normal)
+
+    scrollView.addSubview(underlineButton)
+
+    let characterButton = UIButton()
+    characterButton.translatesAutoresizingMaskIntoConstraints = false
+    characterButton.addTarget(self,
+        action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
+        for: .touchUpInside)
+    characterButton.setTitle("Character Count Mode: Always", for: .normal)
+    scrollView.addSubview(characterButton)
+
+    return [errorLabel, errorSwitch, helperLabel, helperSwitch, underlineButton, characterButton]
   }
 
   func errorSwitchDidChange(errorSwitch: UISwitch) {
-    allTextFields.forEach { controller in
-      controller.set(errorText: "Uh oh! Error. Try something else.", errorAccessibilityValue: nil)
+    allInputs.forEach { controller in
+      if errorSwitch.isOn {
+        controller.set(errorText: "Uh oh! Error. Try something else.", errorAccessibilityValue: nil)
+      } else {
+        controller.set(errorText: nil, errorAccessibilityValue: nil)
+      }
+    }
+  }
+
+  func helperSwitchDidChange(helperSwitch: UISwitch) {
+    allInputs.forEach { controller in
+      controller.helper = helperSwitch.isOn ? "This is helper text." : nil
+    }
+  }
+
+  func buttonDidTouch(button: UIButton) {
+    var partialTitle = ""
+    if button == underlineButton {
+      partialTitle = "Underline View Mode"
+    } else {
+      partialTitle = "Character Count Mode"
+    }
+
+    let closure: (UITextFieldViewMode, String) -> Void = { mode, title in
+      self.allInputs.forEach { controller in
+        controller.underlineMode = mode
+
+        button.setTitle(title + ": " + self.modeName(mode: mode), for: .normal)
+      }
+    }
+
+    let alert = UIAlertController(title: partialTitle,
+                                  message: nil,
+                                  preferredStyle: .alert)
+    presentAlert(alert: alert, partialTitle: partialTitle, closure: closure)
+  }
+
+  func presentAlert (alert: UIAlertController,
+                     partialTitle: String,
+    closure: @escaping (_ mode: UITextFieldViewMode, _ title: String) -> Void) -> Void {
+
+    for rawMode in 0...3 {
+      let mode = UITextFieldViewMode(rawValue: rawMode)!
+      alert.addAction(UIAlertAction(title: modeName(mode: mode),
+                                    style: .default,
+                                    handler: { _ in
+        closure(mode, partialTitle)
+      }))
+    }
+
+    present(alert, animated: true, completion: nil)
+  }
+
+  func modeName(mode: UITextFieldViewMode) -> String {
+    switch mode {
+    case .always:
+      return "Always"
+    case .whileEditing:
+      return "While Editing"
+    case .unlessEditing:
+      return "Unless Editing"
+    case .never:
+      return "Never"
     }
   }
 }
