@@ -87,6 +87,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 @property(nonatomic, strong) NSLayoutConstraint *fullWidthCharacterCountConstraint;
 @property(nonatomic, strong) NSLayoutConstraint *fullWidthHeightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
+@property(nonatomic, assign) BOOL isDisplayingErrorText;
 @property(nonatomic, readonly) BOOL isPlaceholderUp;
 @property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
@@ -102,7 +103,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 @synthesize characterCounter = _characterCounter;
 @synthesize characterCountMax = _characterCountMax;
-
 @synthesize presentationStyle = _presentationStyle;
 
 // TODO: (larche): Support left icon view with a enum property for the icon / view to show.
@@ -194,6 +194,22 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 }
 
 #pragma mark - Properties Implementation
+
+- (void)setHelperText:(NSString *)helperText {
+  if (self.isDisplayingErrorText) {
+    self.previousLeadingText = helperText;
+  } else {
+    self.textInput.leadingUnderlineLabel.text = helperText;
+  }
+}
+
+- (NSString *)helperText {
+  if (self.isDisplayingErrorText) {
+    return self.previousLeadingText;
+  } else {
+    return self.textInput.leadingUnderlineLabel.text;
+  }
+}
 
 - (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
   if (_presentationStyle != presentationStyle) {

@@ -128,6 +128,16 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @property(nonatomic, assign) CGFloat floatingPlaceholderScale NS_SWIFT_NAME(floatingScale)
     UI_APPEARANCE_SELECTOR;
 
+#pragma mark - New API
+/**
+ Text displayed in the leading underline label.
+ 
+ This text should give context or instruction to the user. If error text is set, it is
+ not shown.
+ */
+@property(nonatomic, nullable, strong) IBInspectable NSString *helperText NS_SWIFT_NAME(helper);
+#pragma mark - Approved API
+
 /**
  The color applied to the placeholder when inline (not floating).
 
