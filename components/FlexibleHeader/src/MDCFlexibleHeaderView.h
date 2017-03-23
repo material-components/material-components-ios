@@ -172,52 +172,6 @@ IB_DESIGNABLE
 /** Asks the receiver to take the header off-screen if it's currently on-screen. */
 - (void)shiftHeaderOffScreenAnimated:(BOOL)animated;
 
-#pragma mark UIKit Hooks
-
-// All of these UIKit hooks must be called from the view controller that owns this header view.
-// Failure to do so will result in undefined behavior of the flexible header view.
-
-/**
- Returns a Boolean value indicating whether the status bar should be visible.
-
- Must be called by the owning UIViewController's -prefersStatusBarHidden.
- */
-@property(nonatomic, readonly) BOOL prefersStatusBarHidden;
-
-// Pre-iOS 8 Interface Orientation APIs
-
-/**
- Informs the receiver that the interface orientation is about to change.
-
- Must be called from UIViewController::willRotateToInterfaceOrientation:duration:.
- */
-- (void)interfaceOrientationWillChange;
-
-/**
- Informs the receiver that the interface orientation is in the process of changing.
-
- Must be called from UIViewController::willAnimateRotationToInterfaceOrientation:duration:.
- */
-- (void)interfaceOrientationIsChanging;
-
-/**
- Informs the receiver that the interface orientation has changed.
-
- Must be called from UIViewController::didRotateFromInterfaceOrientation:.
- */
-- (void)interfaceOrientationDidChange;
-
-// iOS 8 Interface Orientation APIs
-
-/**
- Informs the receiver that the owning view controller's size will change.
-
- Must be called from UIViewController::viewWillTransitionToSize:withTransitionCoordinator: on apps
- targeting iOS 8 and onward.
- */
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)coordinator;
-
 #pragma mark Changing Content Insets
 
 /**
@@ -437,6 +391,59 @@ IB_DESIGNABLE
 - (void)flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)headerView;
 
 @end
+
+#if TARGET_OS_IOS
+
+@interface MDCFlexibleHeaderView (iOS)
+
+#pragma mark UIKit Hooks
+
+// All of these UIKit hooks must be called from the view controller that owns this header view.
+// Failure to do so will result in undefined behavior of the flexible header view.
+
+/**
+ Returns a Boolean value indicating whether the status bar should be visible.
+
+ Must be called by the owning UIViewController's -prefersStatusBarHidden.
+ */
+@property(nonatomic, readonly) BOOL prefersStatusBarHidden;
+
+// Pre-iOS 8 Interface Orientation APIs
+
+/**
+ Informs the receiver that the interface orientation is about to change.
+
+ Must be called from UIViewController::willRotateToInterfaceOrientation:duration:.
+ */
+- (void)interfaceOrientationWillChange;
+
+/**
+ Informs the receiver that the interface orientation is in the process of changing.
+
+ Must be called from UIViewController::willAnimateRotationToInterfaceOrientation:duration:.
+ */
+- (void)interfaceOrientationIsChanging;
+
+/**
+ Informs the receiver that the interface orientation has changed.
+
+ Must be called from UIViewController::didRotateFromInterfaceOrientation:.
+ */
+- (void)interfaceOrientationDidChange;
+
+// iOS 8 Interface Orientation APIs
+
+/**
+ Informs the receiver that the owning view controller's size will change.
+
+ Must be called from UIViewController::viewWillTransitionToSize:withTransitionCoordinator: on apps
+ targeting iOS 8 and onward.
+ */
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)coordinator;
+@end
+
+#endif // #if TARGET_OS_IOS
 
 // clang-format off
 @interface MDCFlexibleHeaderView ()

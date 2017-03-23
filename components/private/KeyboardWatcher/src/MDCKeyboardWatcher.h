@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#if TARGET_OS_IOS
+
 // These notifications mirror their UIKeyboard* counterparts. They are posted after the keyboard
 // watcher has updated its own internal state, so listeners are safe to query the keyboard watcher
 // for its values.
@@ -52,3 +54,5 @@ OBJC_EXTERN NSString *const MDCKeyboardWatcherKeyboardWillChangeFrameNotificatio
 @property(nonatomic, readonly) CGFloat keyboardOffset;
 
 @end
+
+#endif // #if TARGET_OS_IOS

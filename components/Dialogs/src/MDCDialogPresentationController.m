@@ -17,6 +17,7 @@
 #import "MDCDialogPresentationController.h"
 
 #import "MaterialKeyboardWatcher.h"
+#import "MDCDialogPresentationController+ios.h"
 #import "private/MDCDialogShadowedView.h"
 
 static CGFloat MDCDialogMinimumWidth = 280.0f;
@@ -29,10 +30,6 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 // View matching the container's bounds that dims the entire screen and catchs taps to dismiss.
 @property(nonatomic) UIView *dimmingView;
-
-// Tracking view that adds a shadow under the presented view. This view's frame should always match
-// the presented view's.
-@property(nonatomic) UIView *trackingView;
 
 @end
 
@@ -66,21 +63,27 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
     _trackingView = [[MDCDialogShadowedView alloc] init];
 
+#if TARGET_OS_IOS
     [self registerKeyboardNotifications];
+#endif
   }
 
   return self;
 }
 
 - (void)dealloc {
+#if TARGET_OS_IOS
   [self unregisterKeyboardNotifications];
+#endif
 }
 
 - (CGRect)frameOfPresentedViewInContainerView {
   CGRect presentedViewFrame = CGRectZero;
 
   CGRect containerBounds = self.containerView.bounds;
+#if TARGET_OS_IOS
   containerBounds.size.height -= [MDCKeyboardWatcher sharedKeyboardWatcher].keyboardOffset;
+#endif
 
   presentedViewFrame.size = [self sizeForChildContentContainer:self.presentedViewController
                                        withParentContainerSize:containerBounds.size];
@@ -258,63 +261,6 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   if (gesture.state == UIGestureRecognizerStateRecognized) {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
   }
-}
-
-#pragma mark - Keyboard handling
-
-- (void)registerKeyboardNotifications {
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(keyboardWatcherHandler:)
-                                               name:MDCKeyboardWatcherKeyboardWillShowNotification
-                                             object:nil];
-
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(keyboardWatcherHandler:)
-                                               name:MDCKeyboardWatcherKeyboardWillHideNotification
-                                             object:nil];
-
-  [[NSNotificationCenter defaultCenter]
-      addObserver:self
-         selector:@selector(keyboardWatcherHandler:)
-             name:MDCKeyboardWatcherKeyboardWillChangeFrameNotification
-           object:nil];
-}
-
-- (void)unregisterKeyboardNotifications {
-  [[NSNotificationCenter defaultCenter]
-      removeObserver:self
-                name:MDCKeyboardWatcherKeyboardWillShowNotification
-              object:nil];
-
-  [[NSNotificationCenter defaultCenter]
-      removeObserver:self
-                name:MDCKeyboardWatcherKeyboardWillHideNotification
-              object:nil];
-
-  [[NSNotificationCenter defaultCenter]
-      removeObserver:self
-                name:MDCKeyboardWatcherKeyboardWillChangeFrameNotification
-              object:nil];
-}
-
-#pragma mark - KeyboardWatcher Notifications
-
-- (void)keyboardWatcherHandler:(NSNotification *)aNotification {
-  NSTimeInterval animationDuration =
-      [MDCKeyboardWatcher animationDurationFromKeyboardNotification:aNotification];
-
-  UIViewAnimationOptions animationCurveOption =
-      [MDCKeyboardWatcher animationCurveOptionFromKeyboardNotification:aNotification];
-
-  [UIView animateWithDuration:animationDuration
-                        delay:0.0f
-                      options:animationCurveOption | UIViewAnimationOptionTransitionNone
-                   animations:^{
-                     CGRect presentedViewFrame = [self frameOfPresentedViewInContainerView];
-                     self.presentedView.frame = presentedViewFrame;
-                     self.trackingView.frame = presentedViewFrame;
-                   }
-                   completion:NULL];
 }
 
 @end

@@ -46,6 +46,14 @@
  */
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
+
+/**
+  Tracking view that adds a shadow under the presented view. This view's frame should always match
+  the presented view's.
+*/
+@property(nonatomic, readonly, nonnull) UIView *trackingView;
+
+
 /**
  Returns the size of the specified child view controller's content.
 

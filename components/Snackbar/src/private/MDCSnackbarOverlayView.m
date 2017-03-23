@@ -54,10 +54,12 @@ static const CGFloat kMaximumHeight = 80.0f;
  */
 @property(nonatomic) MDCSnackbarMessageView *snackbarView;
 
+#if TARGET_OS_IOS
 /**
  The object which will notify us of changes in the keyboard position.
  */
 @property(nonatomic) MDCKeyboardWatcher *watcher;
+#endif // #if TARGET_OS_IOS
 
 /**
  The layout constraint which determines the bottom of the containing view. Setting the constant
@@ -100,15 +102,20 @@ static const CGFloat kMaximumHeight = 80.0f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
 
+#if TARGET_OS_IOS
   MDCKeyboardWatcher *watcher = [MDCKeyboardWatcher sharedKeyboardWatcher];
+#endif
 
   if (self) {
+#if TARGET_OS_IOS
     _watcher = watcher;
+#endif
     _containingView = [[UIView alloc] initWithFrame:frame];
     _containingView.translatesAutoresizingMaskIntoConstraints = NO;
     _containingView.clipsToBounds = YES;
     [self addSubview:_containingView];
 
+#if TARGET_OS_IOS
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
     [nc addObserver:self
@@ -135,7 +142,7 @@ static const CGFloat kMaximumHeight = 80.0f;
            selector:@selector(didRotate:)
                name:UIApplicationDidChangeStatusBarOrientationNotification
              object:nil];
-
+#endif // #if TARGET_OS_IOS
     [self setupContainerConstraints];
   }
   return self;
@@ -191,10 +198,14 @@ static const CGFloat kMaximumHeight = 80.0f;
  change at any time during runtime.
  */
 - (CGFloat)dynamicBottomMargin {
+#if TARGET_OS_TV
+  return self.bottomOffset;
+#else
   CGFloat keyboardHeight = self.watcher.keyboardOffset;
   CGFloat userHeight = self.bottomOffset;
 
   return MAX(keyboardHeight, userHeight);
+#endif // #if TARGET_OS_TV
 }
 
 /**
@@ -492,6 +503,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 
 #pragma mark - Keyboard Notifications
 
+#if !TARGET_OS_TV
 - (void)updatesnackbarPositionWithKeyboardUserInfo:(NSDictionary *)userInfo {
   // Always set the bottom constraint, even if there isn't a snackbar currently displayed.
   void (^updateBlock)(void) = ^{
@@ -532,6 +544,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 - (void)keyboardWillChangeFrame:(NSNotification *)notification {
   [self updatesnackbarPositionWithKeyboardUserInfo:[notification userInfo]];
 }
+#endif // #if !TARGET_OS_TV
 
 #pragma mark - Bottom Offset
 
@@ -562,6 +575,8 @@ static const CGFloat kMaximumHeight = 80.0f;
     [self handleRotation];
   }
 }
+
+#if !TARGET_OS_TV
 
 - (void)willRotate:(NSNotification *)notification {
   UIApplication *application = [UIApplication mdc_safeSharedApplication];
@@ -599,6 +614,8 @@ static const CGFloat kMaximumHeight = 80.0f;
     self.rotationDuration = -1;
   });
 }
+
+#endif // #if !TARGET_OS_TV
 
 #pragma mark - Overlay Support
 

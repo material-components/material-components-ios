@@ -18,19 +18,6 @@
 
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
-#import "MDFTextAccessibility.h"
-
-static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
-  if (CGColorGetAlpha(color.CGColor) < 1) {
-    return NO;
-  }
-
-  // We assume that the light iOS status text is white and not big enough to be considered "large"
-  // text according to the W3CAG 2.0 spec.
-  return [MDFTextAccessibility textColor:[UIColor whiteColor]
-                 passesOnBackgroundColor:color
-                                 options:MDFTextAccessibilityOptionsNone];
-}
 
 static NSString *const MDCFlexibleHeaderViewControllerHeaderViewKey =
     @"MDCFlexibleHeaderViewControllerHeaderViewKey";
@@ -144,51 +131,6 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 #endif
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return (ShouldUseLightStatusBarOnBackgroundColor(_headerView.backgroundColor)
-              ? UIStatusBarStyleLightContent
-              : UIStatusBarStyleDefault);
-}
-
-- (BOOL)prefersStatusBarHidden {
-  return _headerView.prefersStatusBarHidden;
-}
-
-// Only include this logic when supporting pre-iOS 8 devices.
-#if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-  // Check if we're on iOS 8 and above and the new method will be called.
-  if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
-                                                             withTransitionCoordinator:)]) {
-    [_headerView interfaceOrientationWillChange];
-  }
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                         duration:(NSTimeInterval)duration {
-  [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-  // Check if we're on iOS 8 and above and the new method will be called.
-  if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
-                                                             withTransitionCoordinator:)]) {
-    [_headerView interfaceOrientationIsChanging];
-  }
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
-  // Check if we're on iOS 8 and above and the new method will be called.
-  if (![UIViewController instancesRespondToSelector:@selector(viewWillTransitionToSize:
-                                                             withTransitionCoordinator:)]) {
-    [_headerView interfaceOrientationDidChange];
-  }
-}
-#endif  // #if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -232,7 +174,9 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 #pragma mark MDCFlexibleHeaderViewDelegate
 
 - (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:(MDCFlexibleHeaderView *)headerView {
+#if TARGET_OS_IOS
   [self setNeedsStatusBarAppearanceUpdate];
+#endif
 }
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
