@@ -69,39 +69,71 @@ class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textFieldDefault)
     textFieldDefault.translatesAutoresizingMaskIntoConstraints = false
 
-    textFieldDefault.placeholder = "This is a text field w/ floating placeholder"
     textFieldDefault.delegate = self
-
-    textFieldDefault.leadingLabel.text = "Helper text"
-
     textFieldDefault.clearButtonMode = .always
 
     let textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
 
     textFieldControllerDefault.presentation = .default
-    textFieldControllerDefault.characterCountMax = 50
+
+    let textFieldDefaultPlaceholder = MDCTextField()
+    scrollView.addSubview(textFieldDefaultPlaceholder)
+    textFieldDefaultPlaceholder.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldDefaultPlaceholder.placeholder = "This is a text field w/ inline placeholder"
+    textFieldDefaultPlaceholder.delegate = self
+
+    textFieldDefaultPlaceholder.clearButtonMode = .always
+
+    let textFieldControllerDefaultPlaceholder = MDCTextInputController(input: textFieldDefaultPlaceholder)
+
+    textFieldControllerDefaultPlaceholder.presentation = .default
 
     let textFieldDefaultCharMax = MDCTextField()
     scrollView.addSubview(textFieldDefaultCharMax)
     textFieldDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
 
-    let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
+    textFieldDefaultCharMax.placeholder = "This is a text field w/ character count"
+    textFieldDefaultCharMax.delegate = self
+    textFieldDefaultCharMax.clearButtonMode = .always
 
-    return [textFieldControllerDefault, textFieldControllerDefaultCharMax]
+    let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
+    textFieldControllerDefaultCharMax.characterCountMax = 50
+
+    return [textFieldControllerDefault, textFieldControllerDefaultPlaceholder,
+            textFieldControllerDefaultCharMax]
   }
   func setupFullWidthTextFields() -> [MDCTextInputController] {
     let textFieldFullWidth = MDCTextField()
     scrollView.addSubview(textFieldFullWidth)
     textFieldFullWidth.translatesAutoresizingMaskIntoConstraints = false
 
+    textFieldFullWidth.delegate = self
+
     let textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
+    textFieldControllerFullWidth.presentation = .fullWidth
+
+    let textFieldFullWidthPlaceholder = MDCTextField()
+    scrollView.addSubview(textFieldFullWidthPlaceholder)
+    textFieldFullWidthPlaceholder.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldFullWidthPlaceholder.placeholder = "This is a full width text field"
+    textFieldFullWidthPlaceholder.delegate = self
+
+    let textFieldControllerFullWidthPlaceholder = MDCTextInputController(input: textFieldFullWidthPlaceholder)
+    textFieldControllerFullWidthPlaceholder.presentation = .fullWidth
 
     let textFieldFullWidthCharMax = MDCTextField()
     scrollView.addSubview(textFieldFullWidthCharMax)
     textFieldFullWidthCharMax.translatesAutoresizingMaskIntoConstraints = false
 
+    textFieldFullWidthCharMax.placeholder = "This is a full width text field"
+    textFieldFullWidthCharMax.delegate = self
+
     let textFieldControllerFullWidthCharMax =
       MDCTextInputController(input: textFieldFullWidthCharMax)
+    textFieldControllerFullWidthCharMax.presentation = .fullWidth
+    textFieldControllerFullWidthCharMax.characterCountMax = 50
 
     return [textFieldControllerFullWidth, textFieldControllerFullWidthCharMax]
   }
@@ -113,20 +145,19 @@ class TextFieldSwiftExample: UIViewController {
     textFieldFloating.placeholder = "This is a text field w/ floating placeholder"
     textFieldFloating.delegate = self
 
-    textFieldFloating.leadingLabel.text = "Helper text"
-
     textFieldFloating.clearButtonMode = .always
 
     let textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
 
     textFieldControllerFloating.presentation = .floatingPlaceholder
-    textFieldControllerFloating.characterCountMax = 50
 
     let textFieldFloatingCharMax = MDCTextField()
     scrollView.addSubview(textFieldFloatingCharMax)
     textFieldFloatingCharMax.translatesAutoresizingMaskIntoConstraints = false
 
     let textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
+    textFieldControllerFloatingCharMax.presentation = .floatingPlaceholder
+    textFieldControllerFloatingCharMax.characterCountMax = 50
 
     return [textFieldControllerFloating, textFieldControllerFloatingCharMax]
   }
@@ -135,12 +166,15 @@ class TextFieldSwiftExample: UIViewController {
     let textFieldDisabled = MDCTextField()
     scrollView.addSubview(textFieldDisabled)
     textFieldDisabled.translatesAutoresizingMaskIntoConstraints = false
+    textFieldDisabled.placeholder = "This is a disabled text field"
+    textFieldDisabled.isEnabled = false
 
     let textFieldControllerDefaultDisabled = MDCTextInputController(input: textFieldDisabled)
 
     let textFieldCustomFont = MDCTextField()
     scrollView.addSubview(textFieldCustomFont)
     textFieldCustomFont.translatesAutoresizingMaskIntoConstraints = false
+    textFieldCustomFont.font = UIFont.preferredFont(forTextStyle: .headline)
 
     let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
 
@@ -161,11 +195,20 @@ class TextFieldSwiftExample: UIViewController {
 
     let textViewControllerDefault = MDCTextInputController(input: textViewDefault)
 
+    let textViewDefaultPlaceholder = MDCTextView()
+    scrollView.addSubview(textViewDefaultPlaceholder)
+    textViewDefaultPlaceholder.translatesAutoresizingMaskIntoConstraints = false
+    textViewDefaultPlaceholder.placeholder = "This is a multi line text view with placeholder"
+
+    let textViewControllerDefaultPlaceholder = MDCTextInputController(input: textViewDefaultPlaceholder)
+
     let textViewDefaultCharMax = MDCTextView()
     scrollView.addSubview(textViewDefaultCharMax)
     textViewDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
+    textViewDefaultCharMax.placeholder = "This is a multi line text view with placeholder"
 
     let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
+    textViewControllerDefaultCharMax.characterCountMax = 140
 
     return [textViewControllerDefault, textViewControllerDefaultCharMax]
   }
