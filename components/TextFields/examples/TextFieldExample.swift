@@ -377,6 +377,7 @@ final class TextFieldSwiftExample: UIViewController {
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     errorLabel.text = "In Error:"
     errorLabel.font = MDCTypography.subheadFont()
+    errorLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
     container.addSubview(errorLabel)
 
     let errorSwitch = UISwitch()
@@ -390,6 +391,7 @@ final class TextFieldSwiftExample: UIViewController {
     helperLabel.translatesAutoresizingMaskIntoConstraints = false
     helperLabel.text = "Show Helper Text:"
     helperLabel.font = MDCTypography.subheadFont()
+    helperLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
     container.addSubview(helperLabel)
 
     let helperSwitch = UISwitch()
@@ -426,7 +428,7 @@ final class TextFieldSwiftExample: UIViewController {
     characterButton.setTitle("Character Count Mode: Always", for: .normal)
     characterButton.setTitleColor(.white, for: .normal)
     scrollView.addSubview(characterButton)
-    
+
     return [container, underlineButton, characterButton]
   }
 
