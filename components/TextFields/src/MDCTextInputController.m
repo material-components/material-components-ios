@@ -700,6 +700,17 @@ errorAccessibilityValue:(NSString *)errorAccessibilityValue {
   }
   self.textInput.placeholderLabel.textColor =
   errorText ? self.errorColor : self.previousPlaceholderColor;
+
+  // Accessibility
+  if (errorText) {
+    NSString *announcementString = errorAccessibilityValue;
+    if (!announcementString.length) {
+      announcementString = errorText.length > 0 ? errorText : @"Error.";
+    }
+
+    // Simply sending a layout change notification does not seem to
+    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
+  }
 }
 
 @end
