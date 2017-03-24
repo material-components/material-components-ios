@@ -37,6 +37,26 @@ static const CGFloat kOpacityMedium = 0.87f;
 @interface TypographyTests : XCTestCase
 @end
 
+/** This font loader is for Bodoni Ornaments and is for testing the missing bold/italic fonts. */
+@interface BodoniOrnamentsFontLoader : NSObject <MDCTypographyFontLoading>
+@end
+
+@implementation BodoniOrnamentsFontLoader
+
+- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"Bodoni Ornaments" size:fontSize];
+}
+
+- (UIFont *)regularFontOfSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"Bodoni Ornaments" size:fontSize];
+}
+
+- (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"Bodoni Ornaments" size:fontSize];
+}
+
+@end
+
 @implementation TypographyTests
 
 #pragma mark - Font opacity
@@ -279,4 +299,35 @@ static const CGFloat kOpacityMedium = 0.87f;
                         fontLoaderBoldFont.fontName);
 }
 
+- (void)testBoldFontFromFontWithNoBold {
+  // Given
+  BodoniOrnamentsFontLoader *fontLoader = [[BodoniOrnamentsFontLoader alloc] init];
+  [MDCTypography setFontLoader:fontLoader];
+  UIFont *font = [MDCTypography buttonFont];
+
+  // When
+  UIFont *boldFont = [MDCTypography boldFontFromFont:font];
+
+  // Then
+  XCTAssertNotNil(boldFont);
+
+  // Cleanup
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
+}
+
+- (void)testItalicFontFromFontWithNoItalic {
+  // Given
+  BodoniOrnamentsFontLoader *fontLoader = [[BodoniOrnamentsFontLoader alloc] init];
+  [MDCTypography setFontLoader:fontLoader];
+  UIFont *font = [MDCTypography buttonFont];
+
+  // When
+  UIFont *italicFont = [MDCTypography italicFontFromFont:font];
+
+  // Then
+  XCTAssertNotNil(italicFont);
+
+  // Cleanup
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
+}
 @end
