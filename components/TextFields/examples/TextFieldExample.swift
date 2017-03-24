@@ -14,12 +14,18 @@
  limitations under the License.
  */
 
+// swiftlint:disable type_body_length file_length function_body_length
+
 import UIKit
 
 import MaterialComponents.MaterialTextField
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialTypography
 
-class TextFieldSwiftExample: UIViewController {
+class TestCell: UICollectionViewCell {
+}
+
+final class TextFieldSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -27,40 +33,44 @@ class TextFieldSwiftExample: UIViewController {
     let singleLabel = UILabel()
     singleLabel.translatesAutoresizingMaskIntoConstraints = false
     singleLabel.text = "Single Line Text Fields"
+    singleLabel.font = MDCTypography.headlineFont()
+    singleLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
     return singleLabel
   }()
-  var allTextFields = [MDCTextInputController]()
+  var allTextFieldControllers = [MDCTextInputController]()
 
   let multiLabel: UILabel = {
     let multiLabel = UILabel()
     multiLabel.translatesAutoresizingMaskIntoConstraints = false
     multiLabel.text = "Multi Line Text Views"
+    multiLabel.font = MDCTypography.display1Font()
+    multiLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
     return multiLabel
   }()
 
-  var allTextViews = [MDCTextInputController]()
+  var allTextViewControllers = [MDCTextInputController]()
 
-  var allInputs = [MDCTextInputController]()
+  var allInputControllers = [MDCTextInputController]()
 
-  let characterModeButton = UIButton()
-  let underlineButton = UIButton()
+  let characterModeButton = MDCButton()
+  let underlineButton = MDCButton()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+    view.backgroundColor = .white
 
-    allTextFields = [setupDefaultTextFields(),
+    allTextFieldControllers = [setupDefaultTextFields(),
                      setupFullWidthTextFields(),
                      setupFloatingTextFields(),
                      setupSpecialTextFields()].flatMap { $0 }
 
-    allTextViews = [setupDefaultTextViews(),
+    allTextViewControllers = [setupDefaultTextViews(),
                     setupFullWidthTextViews(),
                     setupFloatingTextViews(),
                     setupSpecialTextViews()].flatMap { $0 }
 
-    allInputs = allTextFields + allTextViews
+    allInputControllers = allTextFieldControllers + allTextViewControllers
     setupScrollView()
   }
 
@@ -85,7 +95,8 @@ class TextFieldSwiftExample: UIViewController {
 
     textFieldDefaultPlaceholder.clearButtonMode = .always
 
-    let textFieldControllerDefaultPlaceholder = MDCTextInputController(input: textFieldDefaultPlaceholder)
+    let textFieldControllerDefaultPlaceholder =
+      MDCTextInputController(input: textFieldDefaultPlaceholder)
 
     textFieldControllerDefaultPlaceholder.presentation = .default
 
@@ -120,7 +131,8 @@ class TextFieldSwiftExample: UIViewController {
     textFieldFullWidthPlaceholder.placeholder = "This is a full width text field"
     textFieldFullWidthPlaceholder.delegate = self
 
-    let textFieldControllerFullWidthPlaceholder = MDCTextInputController(input: textFieldFullWidthPlaceholder)
+    let textFieldControllerFullWidthPlaceholder =
+      MDCTextInputController(input: textFieldFullWidthPlaceholder)
     textFieldControllerFullWidthPlaceholder.presentation = .fullWidth
 
     let textFieldFullWidthCharMax = MDCTextField()
@@ -135,7 +147,8 @@ class TextFieldSwiftExample: UIViewController {
     textFieldControllerFullWidthCharMax.presentation = .fullWidth
     textFieldControllerFullWidthCharMax.characterCountMax = 50
 
-    return [textFieldControllerFullWidth, textFieldControllerFullWidthCharMax]
+    return [textFieldControllerFullWidth, textFieldControllerFullWidthPlaceholder,
+            textFieldControllerFullWidthCharMax]
   }
 
   func setupFloatingTextFields() -> [MDCTextInputController] {
@@ -200,7 +213,8 @@ class TextFieldSwiftExample: UIViewController {
     textViewDefaultPlaceholder.translatesAutoresizingMaskIntoConstraints = false
     textViewDefaultPlaceholder.placeholder = "This is a multi line text view with placeholder"
 
-    let textViewControllerDefaultPlaceholder = MDCTextInputController(input: textViewDefaultPlaceholder)
+    let textViewControllerDefaultPlaceholder =
+      MDCTextInputController(input: textViewDefaultPlaceholder)
 
     let textViewDefaultCharMax = MDCTextView()
     scrollView.addSubview(textViewDefaultCharMax)
@@ -210,7 +224,8 @@ class TextFieldSwiftExample: UIViewController {
     let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
     textViewControllerDefaultCharMax.characterCountMax = 140
 
-    return [textViewControllerDefault, textViewControllerDefaultCharMax]
+    return [textViewControllerDefault, textViewControllerDefaultPlaceholder,
+            textViewControllerDefaultCharMax]
   }
 
   func setupFullWidthTextViews() -> [MDCTextInputController] {
@@ -255,9 +270,8 @@ class TextFieldSwiftExample: UIViewController {
     return [textViewControllerDefaultCustomFont]
   }
 
-  func setupLabels() {
+  func setupSectionLabels() {
     scrollView.addSubview(singleLabel)
-
     scrollView.addSubview(multiLabel)
 
     NSLayoutConstraint(item: singleLabel,
@@ -291,39 +305,51 @@ class TextFieldSwiftExample: UIViewController {
                                                                options: [],
                                                                metrics: nil,
                                                                views: ["scrollView": scrollView]))
-    setupLabels()
+    let header = UILabel()
+    header.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(header)
+    header.text = "Material Text Fields"
+    header.font = MDCTypography.display1Font()
+    header.textColor = UIColor(white: 0, alpha: MDCTypography.display1FontOpacity())
+    setupSectionLabels()
 
+    let prefix = "view"
     let concatenatingClosure = {
-      (accumulator, keyValue: (key: String, value: UIView)) in
-      accumulator + "[" + keyValue.key + "]" + "-"
+      (accumulator, object: AnyObject) in
+      accumulator + "[" + self.unique(from: object, with: prefix) +
+        "]" + "-"
     }
 
-    var textFields = [String: UIView]()
-    allTextFields.flatMap { $0.input }.forEach { input in
-      textFields["input" + String(describing: Unmanaged.passUnretained(input).toOpaque())] = input
-    }
-
-    let textFieldsString = textFields.reduce("", concatenatingClosure)
+    let allControls = setupControls()
+    let controlsString = allControls.reduce("", concatenatingClosure)
 
     var controls = [String: UIView]()
-    setupControls().forEach { control in
-      controls["control" + String(describing: Unmanaged.passUnretained(control).toOpaque())] =
-        control
+    allControls.forEach { control in
+      controls[unique(from: control, with: prefix)] =
+      control
     }
 
-    let controlsString = controls.reduce("", concatenatingClosure)
+    let allTextFields = allTextFieldControllers.flatMap { $0.input }
+    let textFieldsString = allTextFields.reduce("", concatenatingClosure)
+
+    var textFields = [String: UIView]()
+    allTextFields.forEach { input in
+      textFields[unique(from: input, with: prefix)] = input
+    }
+
+    let allTextViews = allTextViewControllers.flatMap { $0.input }
+    let textViewsString = allTextViews.reduce("", concatenatingClosure)
 
     var textViews = [String: UIView]()
-    allTextViews.flatMap { $0.input }.forEach { input in
-      textViews["input" + String(describing: Unmanaged.passUnretained(input).toOpaque())] = input
+    allTextViews.forEach { input in
+      textViews[unique(from: input, with: prefix)] = input
     }
 
-    let textViewsString = textViews.reduce("", concatenatingClosure)
+    let visualString = "V:|-20-[header]-20-" + controlsString + "[singleLabel]-" + textFieldsString
+      + "[multiLabel]-" + textViewsString + "20-|"
 
-    let visualString = "V:|-[singleLabel]-" + textFieldsString + "[multiLabel]-" + controlsString +
-      textViewsString + "|"
-
-    let labels: [String: UIView] = ["singleLabel": singleLabel, "multiLabel": multiLabel]
+    let labels: [String: UIView] = ["header": header, "singleLabel": singleLabel,
+                                    "multiLabel": multiLabel]
 
     var views = [String: UIView]()
 
@@ -343,53 +369,73 @@ class TextFieldSwiftExample: UIViewController {
   }
 
   func setupControls() -> [UIView] {
+    let container = UIView()
+    container.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(container)
+
     let errorLabel = UILabel()
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
-    errorLabel.text = "In Error"
-    scrollView.addSubview(errorLabel)
+    errorLabel.text = "In Error:"
+    errorLabel.font = MDCTypography.subheadFont()
+    container.addSubview(errorLabel)
 
     let errorSwitch = UISwitch()
     errorSwitch.translatesAutoresizingMaskIntoConstraints = false
     errorSwitch.addTarget(self,
-       action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
-       for: .touchUpInside)
-    scrollView.addSubview(errorSwitch)
+                    action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
+                    for: .touchUpInside)
+    container.addSubview(errorSwitch)
 
     let helperLabel = UILabel()
     helperLabel.translatesAutoresizingMaskIntoConstraints = false
-    helperLabel.text = "Show Helper Text"
-    scrollView.addSubview(helperLabel)
+    helperLabel.text = "Show Helper Text:"
+    helperLabel.font = MDCTypography.subheadFont()
+    container.addSubview(helperLabel)
 
     let helperSwitch = UISwitch()
     helperSwitch.translatesAutoresizingMaskIntoConstraints = false
     helperSwitch.addTarget(self,
-        action: #selector(TextFieldSwiftExample.helperSwitchDidChange(helperSwitch:)),
-        for: .touchUpInside)
-    scrollView.addSubview(helperSwitch)
+                      action: #selector(TextFieldSwiftExample.helperSwitchDidChange(helperSwitch:)),
+                      for: .touchUpInside)
+    container.addSubview(helperSwitch)
 
-    let underlineButton = UIButton()
+    let views = ["errorLabel": errorLabel, "errorSwitch": errorSwitch,
+                 "helperLabel": helperLabel, "helperSwitch": helperSwitch]
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "H:|-[errorLabel]-[errorSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "H:|-[helperLabel]-[helperSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "V:|-[errorSwitch]-[helperSwitch]|", options: [], metrics: nil, views: views))
+
+    let underlineButton = MDCButton()
     underlineButton.translatesAutoresizingMaskIntoConstraints = false
     underlineButton.addTarget(self,
                               action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
                               for: .touchUpInside)
 
     underlineButton.setTitle("Underline Mode: Always", for: .normal)
-
+    underlineButton.setTitleColor(.white, for: .normal)
     scrollView.addSubview(underlineButton)
 
-    let characterButton = UIButton()
+    let characterButton = MDCButton()
     characterButton.translatesAutoresizingMaskIntoConstraints = false
     characterButton.addTarget(self,
-        action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
-        for: .touchUpInside)
+                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
+                              for: .touchUpInside)
     characterButton.setTitle("Character Count Mode: Always", for: .normal)
+    characterButton.setTitleColor(.white, for: .normal)
     scrollView.addSubview(characterButton)
+    
+    return [container, underlineButton, characterButton]
+  }
 
-    return [errorLabel, errorSwitch, helperLabel, helperSwitch, underlineButton, characterButton]
+  func unique(from input: AnyObject, with prefix: String) -> String {
+    return prefix + String(describing: Unmanaged.passUnretained(input).toOpaque())
   }
 
   func errorSwitchDidChange(errorSwitch: UISwitch) {
-    allInputs.forEach { controller in
+    allInputControllers.forEach { controller in
       if errorSwitch.isOn {
         controller.set(errorText: "Uh oh! Error. Try something else.", errorAccessibilityValue: nil)
       } else {
@@ -399,12 +445,12 @@ class TextFieldSwiftExample: UIViewController {
   }
 
   func helperSwitchDidChange(helperSwitch: UISwitch) {
-    allInputs.forEach { controller in
+    allInputControllers.forEach { controller in
       controller.helper = helperSwitch.isOn ? "This is helper text." : nil
     }
   }
 
-  func buttonDidTouch(button: UIButton) {
+  func buttonDidTouch(button: MDCButton) {
     var partialTitle = ""
     if button == underlineButton {
       partialTitle = "Underline View Mode"
@@ -413,7 +459,7 @@ class TextFieldSwiftExample: UIViewController {
     }
 
     let closure: (UITextFieldViewMode, String) -> Void = { mode, title in
-      self.allInputs.forEach { controller in
+      self.allInputControllers.forEach { controller in
         controller.underlineMode = mode
 
         button.setTitle(title + ": " + self.modeName(mode: mode), for: .normal)
