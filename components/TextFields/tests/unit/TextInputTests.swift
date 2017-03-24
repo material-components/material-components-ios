@@ -66,15 +66,16 @@ class TextInputTests: XCTestCase {
 
     let altLeading = "Alternative Helper Test"
     controller.helper = altLeading
-    guard let input = controller.input as? MDCTextInput else {
+    if let input = controller.input as? MDCTextInput {
+      XCTAssertEqual(altLeading, input.leadingLabel.text)
+
+      let error = "Error Test"
+      controller.set(errorText: error, errorAccessibilityValue: nil)
+      XCTAssertNotEqual(altLeading, input.leadingLabel.text)
+      XCTAssertEqual(error, input.leadingLabel.text)
+    } else {
       XCTFail("No input found on controller.")
     }
-    XCTAssertEqual(altLeading, input.leadingLabel.text)
-
-    let error = "Error Test"
-    controller.set(errorText: error, errorAccessibilityValue: nil)
-    XCTAssertNotEqual(altLeading, input.leadingLabel.text)
-    XCTAssertEqual(error, input.leadingLabel.text)
   }
 
   func testTextViewInputProtocolConformance() {
