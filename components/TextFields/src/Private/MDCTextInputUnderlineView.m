@@ -137,4 +137,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 }
 
+- (void)setWidth:(CGFloat)width {
+  if (_width != width) {
+    _width = width;
+    [self updateUnderline];
+  }
+}
+
 @end

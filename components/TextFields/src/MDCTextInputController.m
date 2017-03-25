@@ -537,11 +537,13 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
         underlineColor = [MDCPalette bluePalette].tint500; // Blue
         break;
       case UITextFieldViewModeWhileEditing:
-        underlineColor = self.textInput.isEditing ? [MDCPalette bluePalette].tint500 : [UIColor grayColor];
+        underlineColor = self.textInput.isEditing ? [MDCPalette bluePalette].tint500 :
+          [UIColor grayColor];
         underlineWidth = self.textInput.isEditing ? MDCTextInputUnderlineNormalWidth : MDCTextInputUnderlineActiveWidth;
         break;
       case UITextFieldViewModeUnlessEditing:
-        underlineColor = !self.textInput.isEditing ? [MDCPalette bluePalette].tint500 : [UIColor grayColor];
+        underlineColor = !self.textInput.isEditing ? [MDCPalette bluePalette].tint500 :
+          [UIColor grayColor];
         underlineWidth = !self.textInput.isEditing ? MDCTextInputUnderlineNormalWidth : MDCTextInputUnderlineActiveWidth;
         break;
       case UITextFieldViewModeNever:
@@ -564,11 +566,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
    setAnimationTimingFunction:[CAMediaTimingFunction
                                mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
-  if (self.underlineViewMode != UITextFieldViewModeUnlessEditing &&
-      self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-    self.textInput.underlineColor = self.textInput.tintColor;
-    self.textInput.underlineWidth = MDCTextInputUnderlineActiveWidth;
-  }
+  [self updateUnderline];
 
   if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
     [self animatePlaceholderToUp:YES];
@@ -583,13 +581,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
    setAnimationTimingFunction:[CAMediaTimingFunction
                                mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
-  if (self.presentationStyle != MDCTextInputPresentationStyleFullWidth) {
-    self.textInput.underlineWidth = MDCTextInputUnderlineNormalWidth;
-
-    UIColor *commonColor = self.textInput.leadingUnderlineLabel.textColor;
-    self.textInput.placeholderLabel.textColor = commonColor;
-    self.textInput.underlineColor = commonColor;
-  }
+  [self updateUnderline];
 
   if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
     [self animatePlaceholderToUp:NO];
