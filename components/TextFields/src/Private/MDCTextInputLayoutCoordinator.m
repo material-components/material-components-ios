@@ -29,19 +29,6 @@ NSString *const MDCTextInputValidatorErrorTextKey = @"MDCTextInputValidatorError
 NSString *const MDCTextInputValidatorAXErrorTextKey = @"MDCTextInputValidatorAXErrorText";
 static const CGFloat MDCTextInputVerticalPadding = 16.f;
 
-// These numers are straight from the redlines in the docs here:
-// https://spec.MDCgleplex.com/quantum/components/text-fields
-
-/**
- Checks whether the provided floating point number is approximately zero based on a small epsilon.
-
- Note that ULP-based comparisons are not used because ULP-space is significantly distorted around
- zero.
-
- Reference:
- https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
- */
-
 static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
