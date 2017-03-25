@@ -14,7 +14,9 @@
  limitations under the License.
  */
 
-// swiftlint:disable type_body_length file_length function_body_length
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
+// swiftlint:disable function_body_length
 
 import UIKit
 
