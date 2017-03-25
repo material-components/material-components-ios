@@ -237,7 +237,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-
   CGRect editingRect = [self textRectForBounds:bounds];
 
   if ([self.positioningDelegate respondsToSelector:@selector(editingRectForBounds:)]) {
@@ -248,7 +247,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 }
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
-
   CGRect clearButtonRect = [super clearButtonRectForBounds:bounds];
 
   // Get the clear button if it exists.
@@ -299,7 +297,8 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
   clearButtonRect = CGRectIntegral(clearButtonRect);
 
-  if ([self.positioningDelegate respondsToSelector:@selector(clearButtonRectForBounds:defaultRect:)]) {
+  if ([self.positioningDelegate
+          respondsToSelector:@selector(clearButtonRectForBounds:defaultRect:)]) {
     return [self.positioningDelegate clearButtonRectForBounds:bounds defaultRect:clearButtonRect];
   }
 

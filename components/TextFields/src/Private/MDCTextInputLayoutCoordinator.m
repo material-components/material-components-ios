@@ -16,8 +16,8 @@
 #import "MDCTextInput.h"
 
 #import "MDCTextField.h"
-#import "MDCTextInputLayoutCoordinator.h"
 #import "MDCTextFieldPositioningDelegate.h"
+#import "MDCTextInputLayoutCoordinator.h"
 
 #import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
@@ -224,7 +224,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     return textContainerInset;
   }
 
-  MDCTextField *textField = (MDCTextField*)self.textInput;
+  MDCTextField *textField = (MDCTextField *)self.textInput;
 
   textContainerInset.top = MDCTextInputVerticalPadding;
   textContainerInset.bottom = MDCTextInputVerticalPadding;

@@ -130,7 +130,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 #pragma mark - New API
 /**
  Text displayed in the leading underline label.
- 
+
  This text should give context or instruction to the user. If error text is set, it is
  not shown.
  */

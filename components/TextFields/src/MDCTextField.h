@@ -41,7 +41,7 @@
 @property(nonatomic) UITextBorderStyle borderStyle NS_UNAVAILABLE;
 
 #pragma mark - New API
-@property(nonatomic, nullable, weak) id <MDCTextFieldPositioningDelegate> positioningDelegate;
+@property(nonatomic, nullable, weak) id<MDCTextFieldPositioningDelegate> positioningDelegate;
 #pragma mark - Approved API
 
 @end
