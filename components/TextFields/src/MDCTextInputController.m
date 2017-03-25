@@ -82,8 +82,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 @interface MDCTextInputController ()
 
-@property(nonatomic, strong) NSString *errorText;
-@property(nonatomic, strong) NSString *errorAccessibilityValue;
+@property(nonatomic, copy) NSString *errorText;
+@property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
 @property(nonatomic, strong) NSLayoutConstraint *fullWidthCharacterCountConstraint;
 @property(nonatomic, strong) NSLayoutConstraint *fullWidthHeightConstraint;
@@ -92,11 +92,12 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 @property(nonatomic, readonly) BOOL isPlaceholderUp;
 @property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
-@property(nonatomic, strong) UIColor *previousLeadingTextColor;
-@property(nonatomic, strong) NSString *previousLeadingText;
-@property(nonatomic, strong) UIColor *previousPlaceholderColor;
-@property(nonatomic, strong) UIColor *previousTrailingTextColor;
-@property(nonatomic, strong) UIColor *previousUnderlineColor;
+@property(nonatomic, copy) NSString *previousLeadingText;
+@property(nonatomic, copy) UIColor *previousLeadingTextColor;
+@property(nonatomic, copy) UIColor *previousPlaceholderColor;
+@property(nonatomic, copy) UIColor *previousTrailingTextColor;
+@property(nonatomic, copy) UIColor *previousUnderlineColor;
+@property(nonatomic, assign) NSNumber *previousUnderlineWidth;
 
 @end
 
@@ -196,6 +197,14 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 #pragma mark - Properties Implementation
 
+- (void)setErrorText:(NSString *)errorText {
+  _errorText = errorText.copy;
+}
+
+- (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
+  _errorAccessibilityValue = errorAccessibilityValue.copy;
+}
+
 - (void)setHelperText:(NSString *)helperText {
   if (self.isDisplayingErrorText) {
     self.previousLeadingText = helperText;
@@ -226,6 +235,26 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
         _presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder;
     [self.textInput setNeedsLayout];
   }
+}
+
+- (void)setPreviousLeadingText:(NSString *)previousLeadingText {
+  _previousLeadingText = previousLeadingText.copy;
+}
+
+- (void)setPreviousLeadingTextColor:(UIColor *)previousLeadingTextColor {
+  _previousLeadingTextColor = previousLeadingTextColor.copy;
+}
+
+- (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
+  _previousPlaceholderColor = previousPlaceholderColor.copy;
+}
+
+- (void)setPreviousTrailingTextColor:(UIColor *)previousTrailingTextColor {
+  _previousTrailingTextColor = previousTrailingTextColor.copy;
+}
+
+- (void)setPreviousUnderlineColor:(UIColor *)previousUnderlineColor {
+  _previousUnderlineColor = previousUnderlineColor.copy;
 }
 
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
@@ -379,7 +408,19 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 - (void)updateLeadingUnderlineLabel {
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
     self.textInput.leadingUnderlineLabel.text = nil;
+    return;
   }
+
+
+  // Leading Underline Label: Color
+  if (self.isDisplayingErrorText &&
+      ![self.previousLeadingTextColor isEqual:self.textInput.leadingUnderlineLabel.textColor] &&
+      ![self.textInput.leadingUnderlineLabel.textColor isEqual:self.errorColor]) {
+    self.previousLeadingTextColor = self.textInput.leadingUnderlineLabel.textColor;
+  }
+  self.textInput.leadingUnderlineLabel.textColor =
+  self.isDisplayingErrorText ? self.errorColor : self.previousLeadingTextColor;
+
 }
 
 #pragma mark - Placeholder Customization
@@ -534,6 +575,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
     self.textInput.underlineColor = [UIColor clearColor];
   } else {
+
+    // TODO: (larche): Error color support.
+
     UIColor *underlineColor = self.textInput.underlineColor;
     CGFloat underlineWidth = self.textInput.underlineWidth;
 
@@ -686,8 +730,18 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     errorAccessibilityValue:(NSString *)errorAccessibilityValue {
   // Turn off error:
   if (!errorText) {
-    self.textInput.leadingUnderlineLabel.text = self.previousLeadingText;
+    // If there is a saved state, use it.
+    self.textInput.leadingUnderlineLabel.text = self.previousLeadingText ?: self.textInput.leadingUnderlineLabel.text;
+    self.textInput.leadingUnderlineLabel.textColor = self.previousLeadingTextColor ?: self.textInput.leadingUnderlineLabel.textColor;
+    self.textInput.trailingUnderlineLabel.textColor = self.previousTrailingTextColor ?: self.textInput.trailingUnderlineLabel.textColor;
+
+    self.textInput.underlineColor = self.previousUnderlineColor ?: self.textInput.underlineColor;
+    self.textInput.underlineWidth = self.previousUnderlineWidth ?
+      (CGFloat)[self.previousUnderlineWidth doubleValue] : self.textInput.underlineWidth;
+
+    // Clear out saved state.
     self.previousLeadingText = nil;
+    self.previousLeadingTextColor = nil;
   }
 
   // Change error:
@@ -695,60 +749,36 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     self.textInput.leadingUnderlineLabel.text = errorText;
   }
 
+  // Turn on error:
+  //
+  // Here the 'magic' logic happens for error text.
+  // When the user sets error text, we save the current state of their underline, leading text,
+  // trailing text, and placeholder text for both content and color. If error text is unset (nil)
+  // we reset to those previous values.
+
   if (errorText && !self.isDisplayingErrorText) {
-    // If we are not in error, but will be, we need to save the existing leading label text.
-    self.previousLeadingText = self.textInput.leadingUnderlineLabel.text;
+    // If we are not in error, but will be, we need to save the existing state.
+    self.previousLeadingText = self.textInput.leadingUnderlineLabel.text.copy;
+    self.previousLeadingTextColor = self.textInput.leadingUnderlineLabel.textColor.copy;
+    self.previousPlaceholderColor = self.textInput.placeholderLabel.textColor;
+    self.previousTrailingTextColor = self.textInput.trailingUnderlineLabel.textColor;
+    self.previousUnderlineColor = self.textInput.underlineColor;
+    self.previousUnderlineWidth = @(self.textInput.underlineWidth);
+
     self.textInput.leadingUnderlineLabel.text = errorText;
   }
 
-  _errorText = errorText.copy;
-  _errorAccessibilityValue = errorAccessibilityValue.copy;
-
-  // Here the 'magic' logic happens for error text:
-  // When the user sets error text, we save the current state of their underline, leading text,
-  // trailing text,
-  // and placeholder text for both content and color. If error text is unset (nil) we reset to those
-  // previous
-  // values.
-
-  // Leading Underline Label: Text
-  if (errorText &&
-      ![self.previousLeadingText isEqualToString:self.textInput.leadingUnderlineLabel.text]) {
-    self.previousLeadingText = self.textInput.leadingUnderlineLabel.text;
-  }
-  self.textInput.leadingUnderlineLabel.text = errorText ?: self.previousLeadingText;
-
-  // Leading Underline Label: Color
-  if (errorText &&
-      ![self.previousLeadingTextColor isEqual:self.textInput.leadingUnderlineLabel.textColor] &&
-      ![self.textInput.leadingUnderlineLabel.textColor isEqual:self.errorColor]) {
-    self.previousLeadingTextColor = self.textInput.leadingUnderlineLabel.textColor;
-  }
-  self.textInput.leadingUnderlineLabel.textColor =
-      errorText ? self.errorColor : self.previousLeadingTextColor;
+  self.errorText = errorText;
+  self.errorAccessibilityValue = errorAccessibilityValue;
 
   // Trailing Underline Label: Color
-  if (errorText &&
-      ![self.previousTrailingTextColor isEqual:self.textInput.leadingUnderlineLabel.textColor] &&
-      ![self.textInput.leadingUnderlineLabel.textColor isEqual:self.errorColor]) {
-    self.previousTrailingTextColor = self.textInput.trailingUnderlineLabel.textColor;
-  }
   self.textInput.trailingUnderlineLabel.textColor =
       errorText ? self.errorColor : self.previousTrailingTextColor;
 
   // Underline: Color
-  if (errorText && ![self.previousUnderlineColor isEqual:self.textInput.underlineColor] &&
-      ![self.textInput.underlineColor isEqual:self.errorColor]) {
-    self.previousUnderlineColor = self.textInput.underlineColor;
-  }
   self.textInput.underlineColor = errorText ? self.errorColor : self.previousUnderlineColor;
 
   // Placeholder Label: Color
-  if (errorText &&
-      ![self.previousPlaceholderColor isEqual:self.textInput.placeholderLabel.textColor] &&
-      ![self.textInput.placeholderLabel.textColor isEqual:self.errorColor]) {
-    self.previousPlaceholderColor = self.textInput.placeholderLabel.textColor;
-  }
   self.textInput.placeholderLabel.textColor =
       errorText ? self.errorColor : self.previousPlaceholderColor;
 
