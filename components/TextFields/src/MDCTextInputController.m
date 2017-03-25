@@ -236,6 +236,14 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   }
 }
 
+- (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
+  if (_underlineViewMode != underlineViewMode) {
+    _underlineViewMode = underlineViewMode;
+
+    [self updateLayout];
+  }
+}
+
 #pragma mark - Layout for Presentation Style
 
 - (void)updateLayout {
@@ -519,6 +527,31 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 - (void)updateUnderline {
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
     self.textInput.underlineColor = [UIColor clearColor];
+  } else {
+    UIColor *underlineColor = self.textInput.underlineColor;
+    CGFloat underlineWidth = self.textInput.underlineWidth;
+
+    // TODO: (larche): Get real blue;
+    switch (self.underlineViewMode) {
+      case UITextFieldViewModeAlways:
+        underlineColor = [MDCPalette bluePalette].tint500; // Blue
+        break;
+      case UITextFieldViewModeWhileEditing:
+        underlineColor = self.textInput.isEditing ? [MDCPalette bluePalette].tint500 : [UIColor grayColor];
+        underlineWidth = self.textInput.isEditing ? MDCTextInputUnderlineNormalWidth : MDCTextInputUnderlineActiveWidth;
+        break;
+      case UITextFieldViewModeUnlessEditing:
+        underlineColor = !self.textInput.isEditing ? [MDCPalette bluePalette].tint500 : [UIColor grayColor];
+        underlineWidth = !self.textInput.isEditing ? MDCTextInputUnderlineNormalWidth : MDCTextInputUnderlineActiveWidth;
+        break;
+      case UITextFieldViewModeNever:
+      default:
+        underlineColor = [UIColor grayColor];
+        underlineWidth = MDCTextInputUnderlineNormalWidth;
+        break;
+    }
+    self.textInput.underlineColor = underlineColor;
+    self.textInput.underlineWidth = underlineWidth;
   }
 }
 

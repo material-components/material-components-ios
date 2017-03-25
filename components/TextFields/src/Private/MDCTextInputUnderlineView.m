@@ -20,8 +20,9 @@
 
 #import "MDCTextInput+Internal.h"
 
-static const CGFloat MDCTextInputUnderlineFocusedHeight = 2.f;
+static const CGFloat MDCTextInputUnderlineDefaultHeight = 2.f;
 
+// TODO: (larche): Make disabled color programmable?
 static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
@@ -31,13 +32,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _focusedColor = [MDCPalette indigoPalette].tint500;
-    _unfocusedColor = MDCTextInputUnderlineColor();
-    _errorColor = [MDCPalette redPalette].tint500;
+    _color = MDCTextInputUnderlineColor();
     _enabled = YES;
+    _width = MDCTextInputUnderlineDefaultHeight;
 
     [self setClipsToBounds:NO];
-    [self updateBackgroundColor];
     [self updateUnderline];
   }
 
@@ -56,12 +55,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updateUnderlinePath {
   CGRect bounds = [self bounds];
 
-  if (_focusedUnderline) {
-    CGRect focusUnderlineRect = bounds;
-    focusUnderlineRect.size.height = MDCTextInputUnderlineFocusedHeight;
-    focusUnderlineRect.origin.y = CGRectGetMidY(bounds) - CGRectGetHeight(focusUnderlineRect) / 2;
+  if (_underline) {
+    CGRect underlineRect = bounds;
+    underlineRect.size.height = self.width;
+    underlineRect.origin.y = CGRectGetMidY(bounds) - CGRectGetHeight(underlineRect) / 2;
 
-    [_focusedUnderline setFrame:focusUnderlineRect];
+    [_underline setFrame:underlineRect];
   }
 
   if (_disabledUnderline) {
@@ -79,38 +78,28 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)updateUnderline {
-  if (_focusUnderlineHidden) {
-    [_disabledUnderline removeFromSuperlayer];
-    _disabledUnderline = nil;
-
-    [_focusedUnderline removeFromSuperlayer];
-    _focusedUnderline = nil;
-
-    return;
-  }
-
   CALayer *layerToAdd = nil;
 
   if (_enabled) {
     [_disabledUnderline removeFromSuperlayer];
     _disabledUnderline = nil;
 
-    if (!_focusedUnderline) {
-      _focusedUnderline = [CALayer layer];
-      [_focusedUnderline setBackgroundColor:[_focusedColor CGColor]];
-      [_focusedUnderline setFrame:CGRectZero];
-      [_focusedUnderline setOpacity:0];
+    if (!_underline) {
+      _underline = [CALayer layer];
+      [_underline setBackgroundColor:[_color CGColor]];
+      [_underline setFrame:CGRectZero];
+      [_underline setOpacity:0];
     }
 
-    layerToAdd = _focusedUnderline;
+    layerToAdd = _underline;
   } else {
-    [_focusedUnderline removeFromSuperlayer];
-    _focusedUnderline = nil;
+    [_underline removeFromSuperlayer];
+    _underline = nil;
 
     if (!_disabledUnderline) {
       _disabledUnderline = [CAShapeLayer layer];
       [_disabledUnderline setFrame:CGRectZero];
-      [_disabledUnderline setStrokeColor:[_unfocusedColor CGColor]];
+      [_disabledUnderline setStrokeColor:[MDCTextInputUnderlineColor() CGColor]];
       [_disabledUnderline setLineJoin:kCALineJoinMiter];
       [_disabledUnderline setLineDashPattern:@[ @1.5, @1.5 ]];
     }
@@ -122,60 +111,30 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updateUnderlinePath];
 }
 
-- (void)updateBackgroundColor {
-  BOOL showUnderline = _enabled && !_normalUnderlineHidden;
+- (void)updateColor {
+  BOOL showUnderline = self.enabled;
   UIColor *backgroundColor = [UIColor clearColor];
   if (showUnderline) {
-    backgroundColor = _unfocusedColor;
+    backgroundColor = _color;
   }
 
   [self setBackgroundColor:backgroundColor];
   [self setOpaque:showUnderline];
 }
 
-- (void)updateForegroundColor {
-  UIColor *backgroundColor = _focusedColor;
-  if (_erroneous) {
-    backgroundColor = _errorColor;
-  }
-
-  [_focusedUnderline setBackgroundColor:[backgroundColor CGColor]];
-}
-
 #pragma mark - Property implementation
 
-- (void)setFocusedColor:(UIColor *)focusedColor {
-  _focusedColor = focusedColor;
-  [self updateForegroundColor];
-}
-
-- (void)setUnfocusedColor:(UIColor *)unfocusedColor {
-  _unfocusedColor = unfocusedColor;
-  [self updateBackgroundColor];
+- (void)setColor:(UIColor *)color {
+  _color = color;
+  [self updateColor];
 }
 
 - (void)setEnabled:(BOOL)enabled {
   if (_enabled != enabled) {
     _enabled = enabled;
     [self updateUnderline];
-    [self updateBackgroundColor];
-    [self updateForegroundColor];
+    [self updateColor];
   }
-}
-
-- (void)setErroneous:(BOOL)erroneous {
-  _erroneous = erroneous;
-  [self updateForegroundColor];
-}
-
-- (void)setFocusUnderlineHidden:(BOOL)hidden {
-  _focusUnderlineHidden = hidden;
-  [self updateUnderline];
-}
-
-- (void)setNormalUnderlineHidden:(BOOL)hidden {
-  _normalUnderlineHidden = hidden;
-  [self updateBackgroundColor];
 }
 
 @end

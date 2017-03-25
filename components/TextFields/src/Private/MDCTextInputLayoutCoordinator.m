@@ -59,7 +59,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
 @synthesize underlineColor = _underlineColor;
 @synthesize underlineView = _underlineView;
-@synthesize underlineWidth = _underlineWidth;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
@@ -194,21 +193,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setupUnderlineView {
   _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:[self underlineViewFrame]];
-
-  // TODO: (larche): Handle in behavior.
-  //    if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-  //      _underlineView.normalUnderlineHidden = NO;
-  //      _underlineView.focusUnderlineHidden = YES;
-  //    } else {
-  //      // TODO: (larche) Check this removal of underlineViewMode.
-  //      //      _underlineView.normalUnderlineHidden = (self.underlineViewMode ==
-  //      //      UITextInputViewModeWhileEditing);
-  //      // TODO: (larche) Check this removal of underlineViewMode.
-  //      //      _underlineView.focusUnderlineHidden = (self.underlineViewMode ==
-  //      //      UITextInputViewModeUnlessEditing);
-  //    }
-
-  _underlineView.unfocusedColor = self.underlineColor;
+  _underlineView.color = self.underlineColor;
 
   [self.textInput addSubview:_underlineView];
   [self.textInput sendSubviewToBack:_underlineView];
@@ -307,6 +292,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 
   return underlineFrame;
+}
+
+- (CGFloat)underlineWidth {
+  return self.underlineView.width;
+}
+
+- (void)setUnderlineWidth:(CGFloat)underlineWidth {
+  self.underlineView.width = underlineWidth;
 }
 
 #pragma mark - Properties Implementation
@@ -473,7 +466,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.textInput.tintColor = self.cursorColor;
   self.textInput.textColor = self.textColor;
 
-  self.underlineView.unfocusedColor = self.underlineColor;
+  self.underlineView.color = self.underlineColor;
 }
 
 @end
