@@ -82,11 +82,13 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 @interface MDCTextInputController ()
 
+@property(nonatomic, strong) NSString *errorText;
+@property(nonatomic, strong) NSString *errorAccessibilityValue;
 @property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
 @property(nonatomic, strong) NSLayoutConstraint *fullWidthCharacterCountConstraint;
 @property(nonatomic, strong) NSLayoutConstraint *fullWidthHeightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
-@property(nonatomic, assign) BOOL isDisplayingErrorText;
+@property(nonatomic, readonly) BOOL isDisplayingErrorText;
 @property(nonatomic, readonly) BOOL isPlaceholderUp;
 @property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
@@ -208,6 +210,10 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   } else {
     return self.textInput.leadingUnderlineLabel.text;
   }
+}
+
+- (BOOL)isDisplayingErrorText {
+  return self.errorText != nil;
 }
 
 - (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {

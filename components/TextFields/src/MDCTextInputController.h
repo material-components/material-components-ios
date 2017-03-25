@@ -166,8 +166,9 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  The value of errorText controls the state of the text input.
 
- @param errorText               The error text to be shown as underline text.
+ @param errorText               The error text to be shown as underline text. Copied.
  @param errorAccessibilityValue Optional override of default underline text accessibility value.
+                                Copied.
 
  When errorText != nil, the text input is in an error state:
  - The error text appears in the underline text with the errorColor as text color.
