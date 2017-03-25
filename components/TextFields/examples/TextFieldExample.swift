@@ -22,9 +22,6 @@ import MaterialComponents.MaterialTextField
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialTypography
 
-class TestCell: UICollectionViewCell {
-}
-
 final class TextFieldSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
