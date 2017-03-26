@@ -42,7 +42,7 @@ final class TextFieldSwiftExample: UIViewController {
     let multiLabel = UILabel()
     multiLabel.translatesAutoresizingMaskIntoConstraints = false
     multiLabel.text = "Multi Line Text Views"
-    multiLabel.font = MDCTypography.display1Font()
+    multiLabel.font = MDCTypography.headlineFont()
     multiLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
     return multiLabel
   }()
