@@ -155,9 +155,10 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 }
 
 - (void)commonInitialization {
+  _errorColor = MDCTextInputTextErrorColor();
   _floatingPlaceholderScaleTransform = CGAffineTransformIdentity;
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
-  _errorColor = MDCTextInputTextErrorColor();
+  _underlineViewMode = UITextFieldViewModeWhileEditing;
 }
 
 - (void)subscribeForNotifications {

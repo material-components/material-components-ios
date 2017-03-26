@@ -415,7 +415,7 @@ final class TextFieldSwiftExample: UIViewController {
                               action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
                               for: .touchUpInside)
 
-    underlineButton.setTitle("Underline Mode: Always", for: .normal)
+    underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
     underlineButton.setTitleColor(.white, for: .normal)
     scrollView.addSubview(underlineButton)
 
@@ -424,7 +424,7 @@ final class TextFieldSwiftExample: UIViewController {
     characterButton.addTarget(self,
                               action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
                               for: .touchUpInside)
-    characterButton.setTitle("Character Count Mode: Always", for: .normal)
+    characterButton.setTitle("Character Count Mode: While Editing", for: .normal)
     characterButton.setTitleColor(.white, for: .normal)
     scrollView.addSubview(characterButton)
 
