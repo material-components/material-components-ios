@@ -95,7 +95,9 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 
-  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight);
+  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) + 2 *
+    MDCTextInputUnderlineVerticalSpacing + MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
+      MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
   boundingSize.height = height;
 
   return boundingSize;
