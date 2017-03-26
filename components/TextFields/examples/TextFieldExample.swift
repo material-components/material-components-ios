@@ -58,7 +58,7 @@ final class TextFieldSwiftExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(white:0.95, alpha: 1.0)
+    view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
     allTextFieldControllers = [setupDefaultTextFields(),
                      setupFullWidthTextFields(),
@@ -81,6 +81,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldDefault.delegate = self
     textFieldDefault.clearButtonMode = .always
+    textFieldDefault.backgroundColor = .white
 
     let textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
 
@@ -92,6 +93,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldDefaultPlaceholder.placeholder = "This is a text field w/ inline placeholder"
     textFieldDefaultPlaceholder.delegate = self
+    textFieldDefaultPlaceholder.backgroundColor = .white
 
     textFieldDefaultPlaceholder.clearButtonMode = .always
 
@@ -107,6 +109,7 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldDefaultCharMax.placeholder = "This is a text field w/ character count"
     textFieldDefaultCharMax.delegate = self
     textFieldDefaultCharMax.clearButtonMode = .always
+    textFieldDefaultCharMax.backgroundColor = .white
 
     let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
     textFieldControllerDefaultCharMax.characterCountMax = 50
@@ -116,12 +119,14 @@ final class TextFieldSwiftExample: UIViewController {
     return [textFieldControllerDefault, textFieldControllerDefaultPlaceholder,
             textFieldControllerDefaultCharMax]
   }
+
   func setupFullWidthTextFields() -> [MDCTextInputController] {
     let textFieldFullWidth = MDCTextField()
     scrollView.addSubview(textFieldFullWidth)
     textFieldFullWidth.translatesAutoresizingMaskIntoConstraints = false
 
     textFieldFullWidth.delegate = self
+    textFieldFullWidth.backgroundColor = .white
 
     let textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
     textFieldControllerFullWidth.presentation = .fullWidth
@@ -132,6 +137,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldFullWidthPlaceholder.placeholder = "This is a full width text field"
     textFieldFullWidthPlaceholder.delegate = self
+    textFieldFullWidthPlaceholder.backgroundColor = .white
 
     let textFieldControllerFullWidthPlaceholder =
       MDCTextInputController(input: textFieldFullWidthPlaceholder)
@@ -143,6 +149,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldFullWidthCharMax.placeholder = "This is a full width text field"
     textFieldFullWidthCharMax.delegate = self
+    textFieldFullWidthCharMax.backgroundColor = .white
 
     let textFieldControllerFullWidthCharMax =
       MDCTextInputController(input: textFieldFullWidthCharMax)
@@ -159,10 +166,11 @@ final class TextFieldSwiftExample: UIViewController {
     let textFieldFloating = MDCTextField()
     scrollView.addSubview(textFieldFloating)
     textFieldFloating.translatesAutoresizingMaskIntoConstraints = false
+
     textFieldFloating.placeholder = "This is a text field w/ floating placeholder"
     textFieldFloating.delegate = self
-
     textFieldFloating.clearButtonMode = .always
+    textFieldFloating.backgroundColor = .white
 
     let textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
 
@@ -171,6 +179,10 @@ final class TextFieldSwiftExample: UIViewController {
     let textFieldFloatingCharMax = MDCTextField()
     scrollView.addSubview(textFieldFloatingCharMax)
     textFieldFloatingCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldFloatingCharMax.placeholder = "This is floating with character count"
+    textFieldFloatingCharMax.delegate = self
+    textFieldFloatingCharMax.backgroundColor = .white
 
     let textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
     textFieldControllerFloatingCharMax.presentation = .floatingPlaceholder
@@ -185,23 +197,29 @@ final class TextFieldSwiftExample: UIViewController {
     let textFieldDisabled = MDCTextField()
     scrollView.addSubview(textFieldDisabled)
     textFieldDisabled.translatesAutoresizingMaskIntoConstraints = false
+
     textFieldDisabled.placeholder = "This is a disabled text field"
     textFieldDisabled.isEnabled = false
+    textFieldDisabled.backgroundColor = .white
 
     let textFieldControllerDefaultDisabled = MDCTextInputController(input: textFieldDisabled)
 
     let textFieldCustomFont = MDCTextField()
     scrollView.addSubview(textFieldCustomFont)
     textFieldCustomFont.translatesAutoresizingMaskIntoConstraints = false
+
     textFieldCustomFont.font = UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFont.placeholder = "This is a custom font"
+    textFieldCustomFont.backgroundColor = .white
 
     let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
 
     let textFieldLeftView = MDCTextField()
     scrollView.addSubview(textFieldLeftView)
     textFieldLeftView.translatesAutoresizingMaskIntoConstraints = false
+
     textFieldLeftView.placeholder = "This has a left view"
+    textFieldLeftView.backgroundColor = .white
 
     let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
 
@@ -214,12 +232,16 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textViewDefault)
     textViewDefault.translatesAutoresizingMaskIntoConstraints = false
 
+    textViewDefault.backgroundColor = .white
+
     let textViewControllerDefault = MDCTextInputController(input: textViewDefault)
 
     let textViewDefaultPlaceholder = MDCTextView()
     scrollView.addSubview(textViewDefaultPlaceholder)
     textViewDefaultPlaceholder.translatesAutoresizingMaskIntoConstraints = false
+
     textViewDefaultPlaceholder.placeholder = "This is a multi line text view with placeholder"
+    textViewDefaultPlaceholder.backgroundColor = .white
 
     let textViewControllerDefaultPlaceholder =
       MDCTextInputController(input: textViewDefaultPlaceholder)
@@ -227,7 +249,9 @@ final class TextFieldSwiftExample: UIViewController {
     let textViewDefaultCharMax = MDCTextView()
     scrollView.addSubview(textViewDefaultCharMax)
     textViewDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
+
     textViewDefaultCharMax.placeholder = "This is a multi line text view with placeholder"
+    textViewDefaultCharMax.backgroundColor = .white
 
     let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
     textViewControllerDefaultCharMax.characterCountMax = 140
@@ -243,11 +267,15 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textViewFullWidth)
     textViewFullWidth.translatesAutoresizingMaskIntoConstraints = false
 
+    textViewFullWidth.backgroundColor = .white
+
     let textViewControllerFullWidth = MDCTextInputController(input: textViewFullWidth)
 
     let textViewFullWidthCharMax = MDCTextView()
     scrollView.addSubview(textViewFullWidthCharMax)
     textViewFullWidthCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    textViewFullWidthCharMax.backgroundColor = .white
 
     let textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
 
@@ -261,11 +289,15 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textViewFloating)
     textViewFloating.translatesAutoresizingMaskIntoConstraints = false
 
+    textViewFloating.backgroundColor = .white
+
     let textViewControllerFloating = MDCTextInputController(input: textViewFloating)
 
     let textViewFloatingCharMax = MDCTextView()
     scrollView.addSubview(textViewFloatingCharMax)
     textViewFloatingCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    textViewFloatingCharMax.backgroundColor = .white
 
     let textViewControllerFloatingCharMax = MDCTextInputController(input: textViewFloatingCharMax)
 
@@ -278,7 +310,9 @@ final class TextFieldSwiftExample: UIViewController {
     let textViewCustomFont = MDCTextView()
     scrollView.addSubview(textViewCustomFont)
     textViewCustomFont.translatesAutoresizingMaskIntoConstraints = false
+
     textViewCustomFont.placeholder = "This has a custom font"
+    textViewCustomFont.backgroundColor = .white
 
     let textViewControllerDefaultCustomFont = MDCTextInputController(input: textViewCustomFont)
 
@@ -380,7 +414,7 @@ final class TextFieldSwiftExample: UIViewController {
                                                                options: [.alignAllLeft,
                                                                          .alignAllRight],
                                                                metrics: nil,
-                                                               views: views))
+                                                                 views: views))
   }
 
   func setupControls() -> [UIView] {
