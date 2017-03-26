@@ -91,6 +91,16 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   [_coordinator layoutSubviewsOfInput];
 }
 
+- (CGSize)intrinsicContentSize {
+  CGSize boundingSize = CGSizeZero;
+  boundingSize.width = UIViewNoIntrinsicMetric;
+
+  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight);
+  boundingSize.height = height;
+
+  return boundingSize;
+}
+
 #pragma mark - Properties Implementation
 
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
