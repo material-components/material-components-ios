@@ -155,6 +155,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 }
 
 - (void)commonInitialization {
+  _characterCountViewMode = UITextFieldViewModeAlways;
   _errorColor = MDCTextInputTextErrorColor();
   _floatingPlaceholderScaleTransform = CGAffineTransformIdentity;
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
@@ -192,6 +193,14 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 }
 
 #pragma mark - Properties Implementation
+
+- (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
+  if (_characterCountViewMode != characterCountViewMode) {
+    _characterCountViewMode = characterCountViewMode;
+
+    [self updateLayout];
+  }
+}
 
 - (void)setErrorText:(NSString *)errorText {
   _errorText = errorText.copy;
@@ -537,6 +546,20 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     textColor = self.errorColor;
   }
 
+  switch (self.characterCountViewMode) {
+    case UITextFieldViewModeAlways:
+      break;
+    case UITextFieldViewModeWhileEditing:
+      textColor = !self.textInput.isEditing ? [UIColor clearColor] : textColor;
+      break;
+    case UITextFieldViewModeUnlessEditing:
+      textColor = self.textInput.isEditing ? [UIColor clearColor] : textColor;
+      break;
+    case UITextFieldViewModeNever:
+      textColor = [UIColor clearColor];
+      break;
+  }
+
   self.textInput.trailingUnderlineLabel.textColor = textColor;
 }
 
@@ -591,7 +614,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
       setAnimationTimingFunction:[CAMediaTimingFunction
                                      mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
-  [self updateUnderline];
+  [self updateLayout];
 
   if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
     [self animatePlaceholderToUp:YES];
@@ -606,7 +629,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
       setAnimationTimingFunction:[CAMediaTimingFunction
                                      mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
-  [self updateUnderline];
+  [self updateLayout];
 
   if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
     [self animatePlaceholderToUp:NO];
@@ -615,8 +638,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 }
 
 - (void)textFieldDidChange:(NSNotification *)note {
-  [self updatePlaceholderAlpha];
-  [self updateTrailingUnderlineLabel];
+  [self updateLayout];
 }
 
 #pragma mark - MDCTextFieldPositioningDelegate

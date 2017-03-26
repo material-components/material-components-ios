@@ -50,6 +50,7 @@ final class TextFieldSwiftExample: UIViewController {
   var allTextViewControllers = [MDCTextInputController]()
 
   var allInputControllers = [MDCTextInputController]()
+  var controllersWithCharacterCount = [MDCTextInputController]()
 
   let characterModeButton = MDCButton()
   let underlineButton = MDCButton()
@@ -110,6 +111,8 @@ final class TextFieldSwiftExample: UIViewController {
     let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
     textFieldControllerDefaultCharMax.characterCountMax = 50
 
+    controllersWithCharacterCount.append(textFieldControllerDefaultCharMax)
+
     return [textFieldControllerDefault, textFieldControllerDefaultPlaceholder,
             textFieldControllerDefaultCharMax]
   }
@@ -146,6 +149,8 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldControllerFullWidthCharMax.presentation = .fullWidth
     textFieldControllerFullWidthCharMax.characterCountMax = 50
 
+    controllersWithCharacterCount.append(textFieldControllerFullWidthCharMax)
+
     return [textFieldControllerFullWidth, textFieldControllerFullWidthPlaceholder,
             textFieldControllerFullWidthCharMax]
   }
@@ -171,6 +176,8 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldControllerFloatingCharMax.presentation = .floatingPlaceholder
     textFieldControllerFloatingCharMax.characterCountMax = 50
 
+    controllersWithCharacterCount.append(textFieldControllerFloatingCharMax)
+
     return [textFieldControllerFloating, textFieldControllerFloatingCharMax]
   }
 
@@ -187,12 +194,14 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textFieldCustomFont)
     textFieldCustomFont.translatesAutoresizingMaskIntoConstraints = false
     textFieldCustomFont.font = UIFont.preferredFont(forTextStyle: .headline)
+    textFieldCustomFont.placeholder = "This is a custom font"
 
     let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
 
     let textFieldLeftView = MDCTextField()
     scrollView.addSubview(textFieldLeftView)
     textFieldLeftView.translatesAutoresizingMaskIntoConstraints = false
+    textFieldLeftView.placeholder = "This has a left view"
 
     let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
 
@@ -223,6 +232,8 @@ final class TextFieldSwiftExample: UIViewController {
     let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
     textViewControllerDefaultCharMax.characterCountMax = 140
 
+    controllersWithCharacterCount.append(textViewControllerDefaultCharMax)
+
     return [textViewControllerDefault, textViewControllerDefaultPlaceholder,
             textViewControllerDefaultCharMax]
   }
@@ -240,6 +251,8 @@ final class TextFieldSwiftExample: UIViewController {
 
     let textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
 
+    controllersWithCharacterCount.append(textViewControllerFullWidthCharMax)
+
     return [textViewControllerFullWidth, textViewControllerFullWidthCharMax]
   }
 
@@ -256,6 +269,8 @@ final class TextFieldSwiftExample: UIViewController {
 
     let textViewControllerFloatingCharMax = MDCTextInputController(input: textViewFloatingCharMax)
 
+    controllersWithCharacterCount.append(textViewControllerFloatingCharMax)
+
     return [textViewControllerFloating, textViewControllerFloatingCharMax]
   }
 
@@ -263,6 +278,7 @@ final class TextFieldSwiftExample: UIViewController {
     let textViewCustomFont = MDCTextView()
     scrollView.addSubview(textViewCustomFont)
     textViewCustomFont.translatesAutoresizingMaskIntoConstraints = false
+    textViewCustomFont.placeholder = "This has a custom font"
 
     let textViewControllerDefaultCustomFont = MDCTextInputController(input: textViewCustomFont)
 
@@ -409,7 +425,15 @@ final class TextFieldSwiftExample: UIViewController {
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
       "V:|-[errorSwitch]-[helperSwitch]|", options: [], metrics: nil, views: views))
 
-    let underlineButton = MDCButton()
+    characterModeButton.translatesAutoresizingMaskIntoConstraints = false
+    characterModeButton.addTarget(self,
+                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
+                              for: .touchUpInside)
+    characterModeButton.setTitle("Character Count Mode: Always", for: .normal)
+    characterModeButton.setTitleColor(.white, for: .normal)
+    scrollView.addSubview(characterModeButton)
+
+
     underlineButton.translatesAutoresizingMaskIntoConstraints = false
     underlineButton.addTarget(self,
                               action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
@@ -419,16 +443,7 @@ final class TextFieldSwiftExample: UIViewController {
     underlineButton.setTitleColor(.white, for: .normal)
     scrollView.addSubview(underlineButton)
 
-    let characterButton = MDCButton()
-    characterButton.translatesAutoresizingMaskIntoConstraints = false
-    characterButton.addTarget(self,
-                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
-                              for: .touchUpInside)
-    characterButton.setTitle("Character Count Mode: While Editing", for: .normal)
-    characterButton.setTitleColor(.white, for: .normal)
-    scrollView.addSubview(characterButton)
-
-    return [container, underlineButton, characterButton]
+    return [container, characterModeButton, underlineButton]
   }
 
   func unique(from input: AnyObject, with prefix: String) -> String {
@@ -452,16 +467,24 @@ final class TextFieldSwiftExample: UIViewController {
   }
 
   func buttonDidTouch(button: MDCButton) {
+    var controllersToChange = allInputControllers
     var partialTitle = ""
-    if button == underlineButton {
-      partialTitle = "Underline View Mode"
-    } else {
+    let isCharacterMode = button == characterModeButton
+
+    if isCharacterMode {
       partialTitle = "Character Count Mode"
+      controllersToChange = controllersWithCharacterCount
+    } else {
+      partialTitle = "Underline View Mode"
     }
 
     let closure: (UITextFieldViewMode, String) -> Void = { mode, title in
-      self.allInputControllers.forEach { controller in
-        controller.underlineMode = mode
+      controllersToChange.forEach { controller in
+        if isCharacterMode {
+          controller.characterMode = mode
+        } else {
+          controller.underlineMode = mode
+        }
 
         button.setTitle(title + ": " + self.modeName(mode: mode), for: .normal)
       }
