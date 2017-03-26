@@ -90,15 +90,14 @@
 }
 
 - (CGSize)intrinsicContentSize {
-  CGSize boundingSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-  if (boundingSize.width == CGFLOAT_MAX) {
-    boundingSize.width = UIViewNoIntrinsicMetric;
-  }
+  CGSize boundingSize = CGSizeZero;
+  boundingSize.width = UIViewNoIntrinsicMetric;
 
-  if (boundingSize.height == CGFLOAT_MAX) {
-    boundingSize.height = UIViewNoIntrinsicMetric;
-  }
-
+  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) + 2 *
+  MDCTextInputUnderlineVerticalSpacing + MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
+                                             MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
+  boundingSize.height = height;
+  
   return boundingSize;
 }
 
