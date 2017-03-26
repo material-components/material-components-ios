@@ -58,7 +58,7 @@ final class TextFieldSwiftExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = .white
+    view.backgroundColor = UIColor(white:0.95, alpha: 1.0)
 
     allTextFieldControllers = [setupDefaultTextFields(),
                      setupFullWidthTextFields(),
