@@ -199,6 +199,7 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldDisabled.translatesAutoresizingMaskIntoConstraints = false
 
     textFieldDisabled.placeholder = "This is a disabled text field"
+    textFieldDisabled.delegate = self
     textFieldDisabled.isEnabled = false
     textFieldDisabled.backgroundColor = .white
 
@@ -210,6 +211,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldCustomFont.font = UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFont.placeholder = "This is a custom font"
+    textFieldCustomFont.delegate = self
     textFieldCustomFont.backgroundColor = .white
 
     let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
@@ -219,6 +221,7 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldLeftView.translatesAutoresizingMaskIntoConstraints = false
 
     textFieldLeftView.placeholder = "This has a left view"
+    textFieldLeftView.delegate = self
     textFieldLeftView.backgroundColor = .white
 
     let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
