@@ -495,8 +495,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     };
   }
 
+  // We do this beforehand to flush the layout engine.
   [self.textInput layoutIfNeeded];
-
   [UIView animateWithDuration:[CATransaction animationDuration]
       animations:^{
         animationBlock();
