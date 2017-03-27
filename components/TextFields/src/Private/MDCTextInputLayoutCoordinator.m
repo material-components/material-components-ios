@@ -291,8 +291,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                               underlineVerticalPadding - underlineFrame.size.height;
   }
 
-  underlineFrame.size.height = 10;
-
   return underlineFrame;
 }
 
