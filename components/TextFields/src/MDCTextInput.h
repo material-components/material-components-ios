@@ -44,6 +44,9 @@
 /** The text displayed in the text input with style attributes. */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedText;
 
+/** The font of the text in the input. */
+@property(nonatomic, nullable, strong) UIFont *font;
+
 /** The color of the text in the input. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
