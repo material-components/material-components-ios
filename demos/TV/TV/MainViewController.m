@@ -4,8 +4,8 @@
   UILabel *_label;
 }
 
-- (void)loadView {
-  [super loadView];
+- (void)viewDidLoad {
+  [super viewDidLoad];
 
   _label = [[UILabel alloc] initWithFrame:CGRectZero];
   _label.text = @"This project is used to verify that Material Components iOS runs on tvOS";
@@ -16,7 +16,8 @@
   [super viewWillLayoutSubviews];
 
   [_label sizeToFit];
-  _label.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2);
+  _label.center =
+      CGPointMake(CGRectGetMidX(_label.superview.bounds), CGRectGetMidY(_label.superview.bounds));
 }
 
 @end
