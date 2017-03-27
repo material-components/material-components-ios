@@ -53,6 +53,7 @@ final class TextFieldSwiftExample: UIViewController {
   var controllersWithCharacterCount = [MDCTextInputController]()
 
   let characterModeButton = MDCButton()
+  let clearModeButton = MDCButton()
   let underlineButton = MDCButton()
 
   override func viewDidLoad() {
@@ -80,7 +81,7 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldDefault.translatesAutoresizingMaskIntoConstraints = false
 
     textFieldDefault.delegate = self
-    textFieldDefault.clearButtonMode = .always
+    textFieldDefault.clearButtonMode = .whileEditing
     textFieldDefault.backgroundColor = .white
 
     let textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
@@ -95,7 +96,7 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldDefaultPlaceholder.delegate = self
     textFieldDefaultPlaceholder.backgroundColor = .white
 
-    textFieldDefaultPlaceholder.clearButtonMode = .always
+    textFieldDefaultPlaceholder.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultPlaceholder =
       MDCTextInputController(input: textFieldDefaultPlaceholder)
@@ -108,7 +109,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldDefaultCharMax.placeholder = "This is a text field w/ character count"
     textFieldDefaultCharMax.delegate = self
-    textFieldDefaultCharMax.clearButtonMode = .always
+    textFieldDefaultCharMax.clearButtonMode = .whileEditing
     textFieldDefaultCharMax.backgroundColor = .white
 
     let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
@@ -126,6 +127,7 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldFullWidth.translatesAutoresizingMaskIntoConstraints = false
 
     textFieldFullWidth.delegate = self
+    textFieldFullWidth.clearButtonMode = .whileEditing
     textFieldFullWidth.backgroundColor = .white
 
     let textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
@@ -137,6 +139,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldFullWidthPlaceholder.placeholder = "This is a full width text field"
     textFieldFullWidthPlaceholder.delegate = self
+    textFieldFullWidthPlaceholder.clearButtonMode = .whileEditing
     textFieldFullWidthPlaceholder.backgroundColor = .white
 
     let textFieldControllerFullWidthPlaceholder =
@@ -149,6 +152,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldFullWidthCharMax.placeholder = "This is a full width text field"
     textFieldFullWidthCharMax.delegate = self
+    textFieldFullWidthCharMax.clearButtonMode = .whileEditing
     textFieldFullWidthCharMax.backgroundColor = .white
 
     let textFieldControllerFullWidthCharMax =
@@ -169,7 +173,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldFloating.placeholder = "This is a text field w/ floating placeholder"
     textFieldFloating.delegate = self
-    textFieldFloating.clearButtonMode = .always
+    textFieldFloating.clearButtonMode = .whileEditing
     textFieldFloating.backgroundColor = .white
 
     let textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
@@ -182,6 +186,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldFloatingCharMax.placeholder = "This is floating with character count"
     textFieldFloatingCharMax.delegate = self
+    textFieldFloatingCharMax.clearButtonMode = .whileEditing
     textFieldFloatingCharMax.backgroundColor = .white
 
     let textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
@@ -212,6 +217,7 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldCustomFont.font = UIFont.preferredFont(forTextStyle: .headline)
     textFieldCustomFont.placeholder = "This is a custom font"
     textFieldCustomFont.delegate = self
+    textFieldCustomFont.clearButtonMode = .whileEditing
     textFieldCustomFont.backgroundColor = .white
 
     let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
@@ -222,6 +228,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldLeftView.placeholder = "This has a left view"
     textFieldLeftView.delegate = self
+    textFieldLeftView.clearButtonMode = .whileEditing
     textFieldLeftView.backgroundColor = .white
 
     let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
@@ -322,6 +329,76 @@ final class TextFieldSwiftExample: UIViewController {
     return [textViewControllerDefaultCustomFont]
   }
 
+  func setupControls() -> [UIView] {
+    let container = UIView()
+    container.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.addSubview(container)
+
+    let errorLabel = UILabel()
+    errorLabel.translatesAutoresizingMaskIntoConstraints = false
+    errorLabel.text = "In Error:"
+    errorLabel.font = MDCTypography.subheadFont()
+    errorLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
+    container.addSubview(errorLabel)
+
+    let errorSwitch = UISwitch()
+    errorSwitch.translatesAutoresizingMaskIntoConstraints = false
+    errorSwitch.addTarget(self,
+                        action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
+                        for: .touchUpInside)
+    container.addSubview(errorSwitch)
+
+    let helperLabel = UILabel()
+    helperLabel.translatesAutoresizingMaskIntoConstraints = false
+    helperLabel.text = "Show Helper Text:"
+    helperLabel.font = MDCTypography.subheadFont()
+    helperLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
+    container.addSubview(helperLabel)
+
+    let helperSwitch = UISwitch()
+    helperSwitch.translatesAutoresizingMaskIntoConstraints = false
+    helperSwitch.addTarget(self,
+                    action: #selector(TextFieldSwiftExample.helperSwitchDidChange(helperSwitch:)),
+                    for: .touchUpInside)
+    container.addSubview(helperSwitch)
+
+    let views = ["errorLabel": errorLabel, "errorSwitch": errorSwitch,
+                 "helperLabel": helperLabel, "helperSwitch": helperSwitch]
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "H:|-[errorLabel]-[errorSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "H:|-[helperLabel]-[helperSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
+      "V:|-[errorSwitch]-[helperSwitch]|", options: [], metrics: nil, views: views))
+
+    characterModeButton.translatesAutoresizingMaskIntoConstraints = false
+    characterModeButton.addTarget(self,
+                                  action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
+                                  for: .touchUpInside)
+    characterModeButton.setTitle("Character Count Mode: Always", for: .normal)
+    characterModeButton.setTitleColor(.white, for: .normal)
+    scrollView.addSubview(characterModeButton)
+
+    clearModeButton.translatesAutoresizingMaskIntoConstraints = false
+    clearModeButton.addTarget(self,
+                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
+                              for: .touchUpInside)
+    clearModeButton.setTitle("Clear Button Mode: While Editing", for: .normal)
+    clearModeButton.setTitleColor(.white, for: .normal)
+    scrollView.addSubview(clearModeButton)
+
+    underlineButton.translatesAutoresizingMaskIntoConstraints = false
+    underlineButton.addTarget(self,
+                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
+                              for: .touchUpInside)
+
+    underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
+    underlineButton.setTitleColor(.white, for: .normal)
+    scrollView.addSubview(underlineButton)
+
+    return [container, characterModeButton, underlineButton, clearModeButton]
+  }
+
   func setupSectionLabels() {
     scrollView.addSubview(singleLabel)
     scrollView.addSubview(multiLabel)
@@ -341,7 +418,6 @@ final class TextFieldSwiftExample: UIViewController {
                        attribute: .trailingMargin,
                        multiplier: 1,
                        constant: 0).isActive = true
-
   }
 
   func setupScrollView() {
@@ -397,8 +473,8 @@ final class TextFieldSwiftExample: UIViewController {
       textViews[unique(from: input, with: prefix)] = input
     }
 
-    let visualString = "V:|-20-[header]-20-" + controlsString + "[singleLabel]-" + textFieldsString
-      + "[multiLabel]-" + textViewsString + "20-|"
+    let visualString = "V:|-20-[header]-20-" + controlsString + "20-[singleLabel]-" +
+      textFieldsString + "20-[multiLabel]-" + textViewsString + "20-|"
 
     let labels: [String: UIView] = ["header": header, "singleLabel": singleLabel,
                                     "multiLabel": multiLabel]
@@ -418,68 +494,6 @@ final class TextFieldSwiftExample: UIViewController {
                                                                          .alignAllRight],
                                                                metrics: nil,
                                                                  views: views))
-  }
-
-  func setupControls() -> [UIView] {
-    let container = UIView()
-    container.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(container)
-
-    let errorLabel = UILabel()
-    errorLabel.translatesAutoresizingMaskIntoConstraints = false
-    errorLabel.text = "In Error:"
-    errorLabel.font = MDCTypography.subheadFont()
-    errorLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
-    container.addSubview(errorLabel)
-
-    let errorSwitch = UISwitch()
-    errorSwitch.translatesAutoresizingMaskIntoConstraints = false
-    errorSwitch.addTarget(self,
-                    action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
-                    for: .touchUpInside)
-    container.addSubview(errorSwitch)
-
-    let helperLabel = UILabel()
-    helperLabel.translatesAutoresizingMaskIntoConstraints = false
-    helperLabel.text = "Show Helper Text:"
-    helperLabel.font = MDCTypography.subheadFont()
-    helperLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
-    container.addSubview(helperLabel)
-
-    let helperSwitch = UISwitch()
-    helperSwitch.translatesAutoresizingMaskIntoConstraints = false
-    helperSwitch.addTarget(self,
-                      action: #selector(TextFieldSwiftExample.helperSwitchDidChange(helperSwitch:)),
-                      for: .touchUpInside)
-    container.addSubview(helperSwitch)
-
-    let views = ["errorLabel": errorLabel, "errorSwitch": errorSwitch,
-                 "helperLabel": helperLabel, "helperSwitch": helperSwitch]
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "H:|-[errorLabel]-[errorSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "H:|-[helperLabel]-[helperSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-[errorSwitch]-[helperSwitch]|", options: [], metrics: nil, views: views))
-
-    characterModeButton.translatesAutoresizingMaskIntoConstraints = false
-    characterModeButton.addTarget(self,
-                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
-                              for: .touchUpInside)
-    characterModeButton.setTitle("Character Count Mode: Always", for: .normal)
-    characterModeButton.setTitleColor(.white, for: .normal)
-    scrollView.addSubview(characterModeButton)
-
-    underlineButton.translatesAutoresizingMaskIntoConstraints = false
-    underlineButton.addTarget(self,
-                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
-                              for: .touchUpInside)
-
-    underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
-    underlineButton.setTitleColor(.white, for: .normal)
-    scrollView.addSubview(underlineButton)
-
-    return [container, characterModeButton, underlineButton]
   }
 
   func unique(from input: AnyObject, with prefix: String) -> String {
@@ -505,19 +519,25 @@ final class TextFieldSwiftExample: UIViewController {
   func buttonDidTouch(button: MDCButton) {
     var controllersToChange = allInputControllers
     var partialTitle = ""
-    let isCharacterMode = button == characterModeButton
 
-    if isCharacterMode {
+    if button == characterModeButton {
       partialTitle = "Character Count Mode"
       controllersToChange = controllersWithCharacterCount
+    } else if button == clearModeButton {
+      partialTitle = "Clear Button Mode"
+      controllersToChange = allTextFieldControllers
     } else {
       partialTitle = "Underline View Mode"
     }
 
     let closure: (UITextFieldViewMode, String) -> Void = { mode, title in
       controllersToChange.forEach { controller in
-        if isCharacterMode {
+        if button == self.characterModeButton {
           controller.characterMode = mode
+        } else if button == self.clearModeButton {
+          if let input = controller.input as? UITextField {
+            input.clearButtonMode = mode
+          }
         } else {
           controller.underlineMode = mode
         }
