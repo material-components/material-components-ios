@@ -333,6 +333,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.underlineView.enabled = enabled;
 }
 
+- (UIFont *)font {
+  return self.textInput.font;
+}
+
+- (void)setFont:(UIFont *)font {
+  [self.textInput setFont:font];
+}
+
 - (NSString *)placeholder {
   id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
