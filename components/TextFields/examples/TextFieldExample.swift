@@ -77,17 +77,21 @@ final class TextFieldSwiftExample: UIViewController {
 
     title = "Material Text Fields"
 
-    controllersFullWidth = setupFullWidthTextFields()
+    let textFieldControllersFullWidth = setupFullWidthTextFields()
 
     allTextFieldControllers = [setupDefaultTextFields(),
-                     controllersFullWidth,
+                     textFieldControllersFullWidth,
                      setupFloatingTextFields(),
                      setupSpecialTextFields()].flatMap { $0 }
 
+    let textViewControllersFullWidth = setupFullWidthTextViews()
+
     allTextViewControllers = [setupDefaultTextViews(),
-                    setupFullWidthTextViews(),
+                    textViewControllersFullWidth,
                     setupFloatingTextViews(),
                     setupSpecialTextViews()].flatMap { $0 }
+
+    controllersFullWidth = textFieldControllersFullWidth + textViewControllersFullWidth
 
     allInputControllers = allTextFieldControllers + allTextViewControllers
 
