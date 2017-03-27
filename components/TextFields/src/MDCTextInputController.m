@@ -298,13 +298,14 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 - (void)updateConstraints {
   if (!self.heightConstraint) {
     self.heightConstraint =
-    [NSLayoutConstraint constraintWithItem:self.textInput
-                                 attribute:NSLayoutAttributeHeight
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.textInput.placeholderLabel
-                                 attribute:NSLayoutAttributeHeight
-                                multiplier:1
-                                  constant:MDCCeil(self.textInput.font.lineHeight) + 2 * MDCTextInputFullWidthVerticalPadding];
+        [NSLayoutConstraint constraintWithItem:self.textInput
+                                     attribute:NSLayoutAttributeHeight
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textInput.placeholderLabel
+                                     attribute:NSLayoutAttributeHeight
+                                    multiplier:1
+                                      constant:MDCCeil(self.textInput.font.lineHeight) +
+                                               2 * MDCTextInputFullWidthVerticalPadding];
     self.heightConstraint.active = YES;
   }
 
@@ -409,10 +410,11 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     return;
   }
 
-  self.textInput.leadingUnderlineLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  self.textInput.leadingUnderlineLabel.font =
+      [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
 
   self.textInput.leadingUnderlineLabel.textColor =
-    self.isDisplayingErrorText ? self.errorColor : MDCTextInputInlinePlaceholderTextColor();
+      self.isDisplayingErrorText ? self.errorColor : MDCTextInputInlinePlaceholderTextColor();
 }
 
 #pragma mark - Placeholder Customization
@@ -495,8 +497,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     animationBlock = ^{
       self.textInput.placeholderLabel.transform = CGAffineTransformIdentity;
 
-      self.textInput.placeholderLabel.textColor = self.previousPlaceholderColor ?:
-        self.textInput.placeholderLabel.textColor;
+      self.textInput.placeholderLabel.textColor =
+          self.previousPlaceholderColor ?: self.textInput.placeholderLabel.textColor;
       [NSLayoutConstraint deactivateConstraints:self.placeholderAnimationConstraints];
     };
   }
@@ -550,7 +552,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     return;
   }
 
-  self.textInput.trailingUnderlineLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  self.textInput.trailingUnderlineLabel.font =
+      [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
 
   NSString *text = [NSString stringWithFormat:@"%lu / %lu", (unsigned long)[self characterCount],
                                               (unsigned long)self.characterCountMax];
@@ -599,16 +602,14 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
         underlineHeight = MDCTextInputUnderlineActiveHeight;
         break;
       case UITextFieldViewModeWhileEditing:
-        underlineColor =
-            self.textInput.isEditing ? activeColor : normalColor;
+        underlineColor = self.textInput.isEditing ? activeColor : normalColor;
         underlineHeight = self.textInput.isEditing ? MDCTextInputUnderlineActiveHeight
-                                                  : MDCTextInputUnderlineNormalHeight;
+                                                   : MDCTextInputUnderlineNormalHeight;
         break;
       case UITextFieldViewModeUnlessEditing:
-        underlineColor =
-            !self.textInput.isEditing ? activeColor : normalColor;
+        underlineColor = !self.textInput.isEditing ? activeColor : normalColor;
         underlineHeight = !self.textInput.isEditing ? MDCTextInputUnderlineActiveHeight
-                                                   : MDCTextInputUnderlineNormalHeight;
+                                                    : MDCTextInputUnderlineNormalHeight;
         break;
       case UITextFieldViewModeNever:
       default:
@@ -740,7 +741,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 - (void)setErrorText:(NSString *)errorText
     errorAccessibilityValue:(NSString *)errorAccessibilityValue {
-
   // Turn on error:
   //
   // Here the 'magic' logic happens for error text.
@@ -748,9 +748,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   // trailing text, and placeholder text for both content and color.
   if (errorText && !self.isDisplayingErrorText) {
     // If we are not in error, but will be, we need to save the existing state.
-    self.previousLeadingText =
-      self.textInput.leadingUnderlineLabel.text ? self.textInput.leadingUnderlineLabel.text.copy :
-        @"";
+    self.previousLeadingText = self.textInput.leadingUnderlineLabel.text
+                                   ? self.textInput.leadingUnderlineLabel.text.copy
+                                   : @"";
 
     self.textInput.leadingUnderlineLabel.text = errorText;
   }
@@ -766,7 +766,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   if (!errorText) {
     // If there is a saved state, use it.
     self.textInput.leadingUnderlineLabel.text =
-      self.previousLeadingText ?: self.textInput.leadingUnderlineLabel.text;
+        self.previousLeadingText ?: self.textInput.leadingUnderlineLabel.text;
 
     // Clear out saved state.
     self.previousLeadingText = nil;

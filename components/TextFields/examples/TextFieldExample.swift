@@ -470,7 +470,6 @@ final class TextFieldSwiftExample: UIViewController {
     characterModeButton.setTitleColor(.white, for: .normal)
     scrollView.addSubview(characterModeButton)
 
-
     underlineButton.translatesAutoresizingMaskIntoConstraints = false
     underlineButton.addTarget(self,
                               action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
