@@ -247,7 +247,7 @@ Sometimes the operating system changes in ways that cause unpredictable or surpr
 ### Test on tvOS
 
 
-Verify that the demo tvOS application under `Demos/TV`. This can also be verified using the `scripts/run_all`.
+Verify that the demo tvOS application under `Demos/TV` builds. This can also be verified using the `scripts/run_all`.
 
 
 ### Extensions Support (If possible)

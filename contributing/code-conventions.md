@@ -114,7 +114,7 @@ category of the main class like so
 #endif
 ```
 
-For large blocks of code that is private implementation, put it in the private/ folder liek so:
+For large blocks of code that is private implementation, put it in the private/ folder like so:
 ```
 // MDCWidget+ios.h
 #if TARGET_OS_IOS

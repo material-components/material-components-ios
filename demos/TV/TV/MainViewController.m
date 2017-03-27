@@ -16,7 +16,7 @@
   [super viewWillLayoutSubviews];
 
   [_label sizeToFit];
-  _label.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+  _label.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2);
 }
 
 @end

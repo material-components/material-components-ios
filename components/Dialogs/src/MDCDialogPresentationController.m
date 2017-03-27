@@ -31,6 +31,10 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 // View matching the container's bounds that dims the entire screen and catchs taps to dismiss.
 @property(nonatomic) UIView *dimmingView;
 
+// Tracking view that adds a shadow under the presented view. This view's frame should always match
+// the presented view's.
+@property(nonatomic) UIView *trackingView;
+
 @end
 
 @implementation MDCDialogPresentationController {

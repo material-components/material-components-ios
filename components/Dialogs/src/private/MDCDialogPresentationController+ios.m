@@ -19,6 +19,13 @@
 
 #import "MaterialKeyboardWatcher.h"
 
+@interface MDCDialogPresentationController (private)
+
+// Access to the trackingView used by MDCDialogTransitionController(iOS)
+@property(nonatomic) UIView *trackingView;
+
+@end
+
 @implementation MDCDialogPresentationController (iOS)
 
 #pragma mark - Keyboard handling
