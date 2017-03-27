@@ -51,6 +51,7 @@ final class TextFieldSwiftExample: UIViewController {
 
   var allInputControllers = [MDCTextInputController]()
   var controllersWithCharacterCount = [MDCTextInputController]()
+  var controllersFullWidth = [MDCTextInputController]()
 
   let characterModeButton = MDCButton()
   let clearModeButton = MDCButton()
@@ -60,9 +61,10 @@ final class TextFieldSwiftExample: UIViewController {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
+    controllersFullWidth = setupFullWidthTextFields()
 
     allTextFieldControllers = [setupDefaultTextFields(),
-                     setupFullWidthTextFields(),
+                     controllersFullWidth,
                      setupFloatingTextFields(),
                      setupSpecialTextFields()].flatMap { $0 }
 
@@ -72,6 +74,7 @@ final class TextFieldSwiftExample: UIViewController {
                     setupSpecialTextViews()].flatMap { $0 }
 
     allInputControllers = allTextFieldControllers + allTextViewControllers
+
     setupScrollView()
   }
 
@@ -433,6 +436,11 @@ final class TextFieldSwiftExample: UIViewController {
                                                                options: [],
                                                                metrics: nil,
                                                                views: ["scrollView": scrollView]))
+    let marginOffset: CGFloat = 16
+    let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
+
+    scrollView.layoutMargins = margins
+
     let header = UILabel()
     header.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(header)
@@ -486,14 +494,50 @@ final class TextFieldSwiftExample: UIViewController {
     dictionaries.forEach { dictionary in
       dictionary.forEach { (key, value) in
         views[key] = value
+
+        let leading = NSLayoutConstraint(item: value,
+                           attribute: .leading,
+                           relatedBy: .equal,
+                           toItem: value.superview,
+                           attribute: .leadingMargin,
+                           multiplier: 1.0,
+                           constant: 0.0)
+        leading.priority = 750.0
+        leading.isActive = true
+
+        let trailing = NSLayoutConstraint(item: value,
+                                         attribute: .trailing,
+                                         relatedBy: .equal,
+                                         toItem: value.superview,
+                                         attribute: .trailing,
+                                         multiplier: 1.0,
+                                         constant: 0.0)
+        trailing.priority = 750.0
+        trailing.isActive = true
       }
     }
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: visualString,
-                                                               options: [.alignAllLeft,
-                                                                         .alignAllRight],
+                                                               options: [.alignAllCenterX],
                                                                metrics: nil,
                                                                  views: views))
+
+    controllersFullWidth.flatMap { $0.input }.forEach { input in
+      NSLayoutConstraint(item: input,
+                         attribute: .leading,
+                         relatedBy: .equal,
+                         toItem: input.superview,
+                         attribute: .leading,
+                         multiplier: 1.0,
+                         constant: 0).isActive = true
+      NSLayoutConstraint(item: input,
+                         attribute: .trailing,
+                         relatedBy: .equal,
+                         toItem: input.superview,
+                         attribute: .trailing,
+                         multiplier: 1.0,
+                         constant: 0).isActive = true
+    }
   }
 
   func unique(from input: AnyObject, with prefix: String) -> String {
