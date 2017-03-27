@@ -256,6 +256,10 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   _previousLeadingText = previousLeadingText.copy;
 }
 
+- (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
+  _previousPlaceholderColor = previousPlaceholderColor.copy;
+}
+
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
   if (_textInput != textInput) {
     [self unsubscribeFromNotifications];
@@ -405,6 +409,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     return;
   }
 
+  self.textInput.leadingUnderlineLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+
   self.textInput.leadingUnderlineLabel.textColor =
     self.isDisplayingErrorText ? self.errorColor : MDCTextInputInlinePlaceholderTextColor();
 }
@@ -477,7 +483,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                       constant:xOffset];
     self.placeholderAnimationConstraints = @[ top, leading ];
 
-    self.previousPlaceholderColor = self.textInput.textColor;
+    self.previousPlaceholderColor = self.textInput.placeholderLabel.textColor;
 
     animationBlock = ^{
       self.textInput.placeholderLabel.transform = self.floatingPlaceholderScaleTransform;
@@ -543,6 +549,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     self.textInput.trailingUnderlineLabel.text = nil;
     return;
   }
+
+  self.textInput.trailingUnderlineLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
 
   NSString *text = [NSString stringWithFormat:@"%lu / %lu", (unsigned long)[self characterCount],
                                               (unsigned long)self.characterCountMax];
