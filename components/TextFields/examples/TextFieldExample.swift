@@ -21,12 +21,22 @@
 import UIKit
 
 import MaterialComponents.MaterialTextField
+import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialTypography
 
 final class TextFieldSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
+
+  let controlLabel: UILabel = {
+    let controlLabel = UILabel()
+    controlLabel.translatesAutoresizingMaskIntoConstraints = false
+    controlLabel.text = "Options"
+    controlLabel.font = MDCTypography.headlineFont()
+    controlLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
+    return controlLabel
+  }()
 
   let singleLabel: UILabel = {
     let singleLabel = UILabel()
@@ -57,10 +67,16 @@ final class TextFieldSwiftExample: UIViewController {
   let clearModeButton = MDCButton()
   let underlineButton = MDCButton()
 
+  lazy var appBar: MDCAppBar = self.setupAppBar()
+
   override func viewDidLoad() {
     super.viewDidLoad()
+    appBar.addSubviewsToParent()
 
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
+
+    title = "Material Text Fields"
+
     controllersFullWidth = setupFullWidthTextFields()
 
     allTextFieldControllers = [setupDefaultTextFields(),
@@ -85,7 +101,6 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldDefault.delegate = self
     textFieldDefault.clearButtonMode = .whileEditing
-    textFieldDefault.backgroundColor = .white
 
     let textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
 
@@ -97,7 +112,6 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldDefaultPlaceholder.placeholder = "This is a text field w/ inline placeholder"
     textFieldDefaultPlaceholder.delegate = self
-    textFieldDefaultPlaceholder.backgroundColor = .white
 
     textFieldDefaultPlaceholder.clearButtonMode = .whileEditing
 
@@ -113,7 +127,6 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldDefaultCharMax.placeholder = "This is a text field w/ character count"
     textFieldDefaultCharMax.delegate = self
     textFieldDefaultCharMax.clearButtonMode = .whileEditing
-    textFieldDefaultCharMax.backgroundColor = .white
 
     let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
     textFieldControllerDefaultCharMax.characterCountMax = 50
@@ -131,7 +144,6 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldFullWidth.delegate = self
     textFieldFullWidth.clearButtonMode = .whileEditing
-    textFieldFullWidth.backgroundColor = .white
 
     let textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
     textFieldControllerFullWidth.presentation = .fullWidth
@@ -143,7 +155,6 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldFullWidthPlaceholder.placeholder = "This is a full width text field"
     textFieldFullWidthPlaceholder.delegate = self
     textFieldFullWidthPlaceholder.clearButtonMode = .whileEditing
-    textFieldFullWidthPlaceholder.backgroundColor = .white
 
     let textFieldControllerFullWidthPlaceholder =
       MDCTextInputController(input: textFieldFullWidthPlaceholder)
@@ -156,7 +167,6 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldFullWidthCharMax.placeholder = "This is a full width text field"
     textFieldFullWidthCharMax.delegate = self
     textFieldFullWidthCharMax.clearButtonMode = .whileEditing
-    textFieldFullWidthCharMax.backgroundColor = .white
 
     let textFieldControllerFullWidthCharMax =
       MDCTextInputController(input: textFieldFullWidthCharMax)
@@ -177,7 +187,6 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldFloating.placeholder = "This is a text field w/ floating placeholder"
     textFieldFloating.delegate = self
     textFieldFloating.clearButtonMode = .whileEditing
-    textFieldFloating.backgroundColor = .white
 
     let textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
 
@@ -190,7 +199,6 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldFloatingCharMax.placeholder = "This is floating with character count"
     textFieldFloatingCharMax.delegate = self
     textFieldFloatingCharMax.clearButtonMode = .whileEditing
-    textFieldFloatingCharMax.backgroundColor = .white
 
     let textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
     textFieldControllerFloatingCharMax.presentation = .floatingPlaceholder
@@ -209,7 +217,6 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldDisabled.placeholder = "This is a disabled text field"
     textFieldDisabled.delegate = self
     textFieldDisabled.isEnabled = false
-    textFieldDisabled.backgroundColor = .white
 
     let textFieldControllerDefaultDisabled = MDCTextInputController(input: textFieldDisabled)
 
@@ -221,7 +228,6 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldCustomFont.placeholder = "This is a custom font"
     textFieldCustomFont.delegate = self
     textFieldCustomFont.clearButtonMode = .whileEditing
-    textFieldCustomFont.backgroundColor = .white
 
     let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
 
@@ -232,7 +238,6 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldLeftView.placeholder = "This has a left view"
     textFieldLeftView.delegate = self
     textFieldLeftView.clearButtonMode = .whileEditing
-    textFieldLeftView.backgroundColor = .white
 
     let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
 
@@ -245,8 +250,6 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textViewDefault)
     textViewDefault.translatesAutoresizingMaskIntoConstraints = false
 
-    textViewDefault.backgroundColor = .white
-
     let textViewControllerDefault = MDCTextInputController(input: textViewDefault)
 
     let textViewDefaultPlaceholder = MDCTextView()
@@ -254,7 +257,6 @@ final class TextFieldSwiftExample: UIViewController {
     textViewDefaultPlaceholder.translatesAutoresizingMaskIntoConstraints = false
 
     textViewDefaultPlaceholder.placeholder = "This is a multi line text view with placeholder"
-    textViewDefaultPlaceholder.backgroundColor = .white
 
     let textViewControllerDefaultPlaceholder =
       MDCTextInputController(input: textViewDefaultPlaceholder)
@@ -264,7 +266,6 @@ final class TextFieldSwiftExample: UIViewController {
     textViewDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
 
     textViewDefaultCharMax.placeholder = "This is a multi line text view with placeholder"
-    textViewDefaultCharMax.backgroundColor = .white
 
     let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
     textViewControllerDefaultCharMax.characterCountMax = 140
@@ -280,15 +281,11 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textViewFullWidth)
     textViewFullWidth.translatesAutoresizingMaskIntoConstraints = false
 
-    textViewFullWidth.backgroundColor = .white
-
     let textViewControllerFullWidth = MDCTextInputController(input: textViewFullWidth)
 
     let textViewFullWidthCharMax = MDCTextView()
     scrollView.addSubview(textViewFullWidthCharMax)
     textViewFullWidthCharMax.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewFullWidthCharMax.backgroundColor = .white
 
     let textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
 
@@ -302,15 +299,11 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textViewFloating)
     textViewFloating.translatesAutoresizingMaskIntoConstraints = false
 
-    textViewFloating.backgroundColor = .white
-
     let textViewControllerFloating = MDCTextInputController(input: textViewFloating)
 
     let textViewFloatingCharMax = MDCTextView()
     scrollView.addSubview(textViewFloatingCharMax)
     textViewFloatingCharMax.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewFloatingCharMax.backgroundColor = .white
 
     let textViewControllerFloatingCharMax = MDCTextInputController(input: textViewFloatingCharMax)
 
@@ -325,7 +318,6 @@ final class TextFieldSwiftExample: UIViewController {
     textViewCustomFont.translatesAutoresizingMaskIntoConstraints = false
 
     textViewCustomFont.placeholder = "This has a custom font"
-    textViewCustomFont.backgroundColor = .white
 
     let textViewControllerDefaultCustomFont = MDCTextInputController(input: textViewCustomFont)
 
@@ -403,6 +395,7 @@ final class TextFieldSwiftExample: UIViewController {
   }
 
   func setupSectionLabels() {
+    scrollView.addSubview(controlLabel)
     scrollView.addSubview(singleLabel)
     scrollView.addSubview(multiLabel)
 
@@ -428,25 +421,22 @@ final class TextFieldSwiftExample: UIViewController {
 
     scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|",
+    let mainViews: [String: UIView] = ["header": self.appBar.headerStackView,
+                                       "scrollView": scrollView]
+    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(
+      withVisualFormat: "V:[header][scrollView]|",
                                                                options: [],
                                                                metrics: nil,
-                                                               views: ["scrollView": scrollView]))
+                                                               views: mainViews))
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
                                                                options: [],
                                                                metrics: nil,
-                                                               views: ["scrollView": scrollView]))
+                                                               views: mainViews))
     let marginOffset: CGFloat = 16
     let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
 
     scrollView.layoutMargins = margins
 
-    let header = UILabel()
-    header.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(header)
-    header.text = "Material Text Fields"
-    header.font = MDCTypography.display1Font()
-    header.textColor = UIColor(white: 0, alpha: MDCTypography.display1FontOpacity())
     setupSectionLabels()
 
     let prefix = "view"
@@ -481,10 +471,11 @@ final class TextFieldSwiftExample: UIViewController {
       textViews[unique(from: input, with: prefix)] = input
     }
 
-    let visualString = "V:|-20-[header]-20-" + controlsString + "20-[singleLabel]-" +
+    let visualString = "V:|-10-[controlLabel]-" + controlsString + "20-[singleLabel]-" +
       textFieldsString + "20-[multiLabel]-" + textViewsString + "20-|"
 
-    let labels: [String: UIView] = ["header": header, "singleLabel": singleLabel,
+    let labels: [String: UIView] = ["controlLabel": controlLabel,
+                                    "singleLabel": singleLabel,
                                     "multiLabel": multiLabel]
 
     var views = [String: UIView]()
@@ -538,6 +529,17 @@ final class TextFieldSwiftExample: UIViewController {
                          multiplier: 1.0,
                          constant: 0).isActive = true
     }
+  }
+
+  func setupAppBar() -> MDCAppBar {
+    let appBar = MDCAppBar()
+
+    self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue().tint500
+    appBar.headerViewController.headerView.tintColor = .white
+    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+
+    return appBar
   }
 
   func unique(from input: AnyObject, with prefix: String) -> String {
@@ -634,6 +636,12 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
 }
 
 extension TextFieldSwiftExample: UITextViewDelegate {
+}
+
+extension TextFieldSwiftExample {
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
 }
 
 extension TextFieldSwiftExample {
