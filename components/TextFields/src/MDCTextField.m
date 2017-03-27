@@ -153,12 +153,12 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   _coordinator.underlineColor = underlineColor;
 }
 
-- (CGFloat)underlineWidth {
-  return _coordinator.underlineWidth;
+- (CGFloat)underlineHeight {
+  return _coordinator.underlineHeight;
 }
 
-- (void)setUnderlineWidth:(CGFloat)underlineWidth {
-  _coordinator.underlineWidth = underlineWidth;
+- (void)setUnderlineHeight:(CGFloat)underlineHeight {
+  _coordinator.underlineHeight = underlineHeight;
 }
 
 #pragma mark - UITextField Property Overrides

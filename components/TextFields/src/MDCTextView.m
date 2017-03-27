@@ -169,13 +169,14 @@
   _coordinator.underlineColor = underlineColor;
 }
 
-- (CGFloat)underlineWidth {
-  return _coordinator.underlineWidth;
+- (CGFloat)underlineHeight {
+  return _coordinator.underlineHeight;
 }
 
-- (void)setUnderlineWidth:(CGFloat)underlineWidth {
-  _coordinator.underlineWidth = underlineWidth;
+- (void)setUnderlineHeight:(CGFloat)underlineHeight {
+  _coordinator.underlineHeight = underlineHeight;
 }
+
 #pragma mark - MDCControlledTextField
 
 - (CGRect)textRectThatFitsForBounds:(CGRect)bounds {

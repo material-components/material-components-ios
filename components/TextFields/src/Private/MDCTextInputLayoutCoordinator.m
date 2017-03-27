@@ -291,15 +291,17 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                               underlineVerticalPadding - underlineFrame.size.height;
   }
 
+  underlineFrame.size.height = 10;
+
   return underlineFrame;
 }
 
-- (CGFloat)underlineWidth {
-  return self.underlineView.width;
+- (CGFloat)underlineHeight {
+  return self.underlineView.lineHeight;
 }
 
-- (void)setUnderlineWidth:(CGFloat)underlineWidth {
-  self.underlineView.width = underlineWidth;
+- (void)setUnderlineHeight:(CGFloat)underlineHeight {
+  self.underlineView.lineHeight = underlineHeight;
 }
 
 #pragma mark - Properties Implementation

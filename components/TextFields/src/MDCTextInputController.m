@@ -34,8 +34,8 @@ static const CGFloat MDCTextInputFloatingLabelTextHeight = 16.f;
 static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
 static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
 static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
-static const CGFloat MDCTextInputUnderlineActiveWidth = 4.f;
-static const CGFloat MDCTextInputUnderlineNormalWidth = 2.f;
+static const CGFloat MDCTextInputUnderlineActiveHeight = 2.f;
+static const CGFloat MDCTextInputUnderlineNormalHeight = 1.f;
 static const CGFloat MDCTextInputVerticalPadding = 16.f;
 
 static const NSTimeInterval MDCTextInputFloatingPlaceholderAnimationDuration = 0.3f;
@@ -574,34 +574,34 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     UIColor *activeColor = [MDCPalette bluePalette].tint500;
     UIColor *normalColor = MDCTextInputInlinePlaceholderTextColor();
 
-    CGFloat underlineWidth = self.textInput.underlineWidth;
+    CGFloat underlineHeight = self.textInput.underlineHeight;
 
     switch (self.underlineViewMode) {
       case UITextFieldViewModeAlways:
         underlineColor = activeColor;
-        underlineWidth = MDCTextInputUnderlineActiveWidth;
+        underlineHeight = MDCTextInputUnderlineActiveHeight;
         break;
       case UITextFieldViewModeWhileEditing:
         underlineColor =
             self.textInput.isEditing ? activeColor : normalColor;
-        underlineWidth = self.textInput.isEditing ? MDCTextInputUnderlineNormalWidth
-                                                  : MDCTextInputUnderlineActiveWidth;
+        underlineHeight = self.textInput.isEditing ? MDCTextInputUnderlineActiveHeight
+                                                  : MDCTextInputUnderlineNormalHeight;
         break;
       case UITextFieldViewModeUnlessEditing:
         underlineColor =
             !self.textInput.isEditing ? activeColor : normalColor;
-        underlineWidth = !self.textInput.isEditing ? MDCTextInputUnderlineNormalWidth
-                                                   : MDCTextInputUnderlineActiveWidth;
+        underlineHeight = !self.textInput.isEditing ? MDCTextInputUnderlineActiveHeight
+                                                   : MDCTextInputUnderlineNormalHeight;
         break;
       case UITextFieldViewModeNever:
       default:
         underlineColor = normalColor;
-        underlineWidth = MDCTextInputUnderlineNormalWidth;
+        underlineHeight = MDCTextInputUnderlineNormalHeight;
         break;
     }
 
     self.textInput.underlineColor = self.isDisplayingErrorText ? self.errorColor : underlineColor;
-    self.textInput.underlineWidth = underlineWidth;
+    self.textInput.underlineHeight = underlineHeight;
   }
 }
 

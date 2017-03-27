@@ -26,7 +26,7 @@
 @property(nonatomic, strong) UIColor *color;
 @property(nonatomic, assign) BOOL enabled;
 @property(nonatomic, strong) CAShapeLayer *disabledUnderline;
-@property(nonatomic, strong) CALayer *underline;
-@property(nonatomic, assign) CGFloat width;
+@property(nonatomic, strong) CAShapeLayer *underline;
+@property(nonatomic, assign) CGFloat lineHeight;
 
 @end

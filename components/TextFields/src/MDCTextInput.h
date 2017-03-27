@@ -96,7 +96,7 @@
 @property(nonatomic, nullable, strong) UIColor *underlineColor UI_APPEARANCE_SELECTOR;
 
 /** The thickness of the underline. */
-@property(nonatomic, assign) CGFloat underlineWidth UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) CGFloat underlineHeight UI_APPEARANCE_SELECTOR;
 
 #pragma mark - New API
 /** Should it have the standard behavior of disappearing when you type? Defaults to YES. */

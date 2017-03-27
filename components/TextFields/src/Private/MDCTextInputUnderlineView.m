@@ -20,7 +20,7 @@
 
 #import "MDCTextInput+Internal.h"
 
-static const CGFloat MDCTextInputUnderlineDefaultHeight = 2.f;
+static const CGFloat MDCTextInputUnderlineDefaultHeight = 1.f;
 
 // TODO: (larche): Make disabled color programmable?
 static inline UIColor *MDCTextInputUnderlineColor() {
@@ -34,7 +34,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     _color = MDCTextInputUnderlineColor();
     _enabled = YES;
-    _width = MDCTextInputUnderlineDefaultHeight;
+    _lineHeight = MDCTextInputUnderlineDefaultHeight;
 
     [self setClipsToBounds:NO];
     [self updateUnderline];
@@ -52,74 +52,74 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return CGSizeMake(size.width, MDCTextInputUnderlineHeight);
 }
 
+- (CGSize)intrinsicContentSize {
+  return CGSizeMake(UIViewNoIntrinsicMetric, self.lineHeight);
+}
+
 - (void)updateUnderlinePath {
   CGRect bounds = [self bounds];
+  CGMutablePathRef path = CGPathCreateMutable();
+  CGFloat offSet = 1.0 / [UIScreen mainScreen].scale;
+  CGPathMoveToPoint(path, NULL, CGRectGetMinX(bounds), CGRectGetMidY(bounds) + offSet);
+  CGPathAddLineToPoint(path, NULL, CGRectGetMaxX(bounds), CGRectGetMidY(bounds) + offSet);
 
   if (_underline) {
-    CGRect underlineRect = bounds;
-    underlineRect.size.height = self.width;
-    underlineRect.origin.y = CGRectGetMidY(bounds) - CGRectGetHeight(underlineRect) / 2;
-
-    [_underline setFrame:underlineRect];
+    _underline.frame = bounds;
+    _underline.path = path;
   }
 
   if (_disabledUnderline) {
-    CGMutablePathRef path = CGPathCreateMutable();
     if (path) {
-      [_disabledUnderline setFrame:bounds];
-      [_disabledUnderline setLineWidth:CGRectGetHeight(bounds)];
-
-      CGPathMoveToPoint(path, NULL, CGRectGetMinX(bounds), CGRectGetMidY(bounds));
-      CGPathAddLineToPoint(path, NULL, CGRectGetMaxX(bounds), CGRectGetMidY(bounds));
-      [_disabledUnderline setPath:path];
-      CGPathRelease(path);
+      _disabledUnderline.frame = bounds;
+      _disabledUnderline.path = path;
     }
   }
+  CGPathRelease(path);
 }
 
 - (void)updateUnderline {
-  CALayer *layerToAdd = nil;
-
   if (_enabled) {
-    [_disabledUnderline removeFromSuperlayer];
-    _disabledUnderline = nil;
-
     if (!_underline) {
-      _underline = [CALayer layer];
-      [_underline setBackgroundColor:[_color CGColor]];
-      [_underline setFrame:CGRectZero];
-      [_underline setOpacity:0];
+      _underline = [CAShapeLayer layer];
+      _underline.contentsScale = [UIScreen mainScreen].scale;
+      _underline.frame = CGRectZero;
+      _underline.lineWidth = self.lineHeight;
+      _underline.strokeColor = MDCTextInputUnderlineColor().CGColor;
+
+      [self.layer addSublayer:_underline];
     }
 
-    layerToAdd = _underline;
+    _disabledUnderline.opacity = 0.f;
   } else {
-    [_underline removeFromSuperlayer];
-    _underline = nil;
-
     if (!_disabledUnderline) {
       _disabledUnderline = [CAShapeLayer layer];
-      [_disabledUnderline setFrame:CGRectZero];
-      [_disabledUnderline setStrokeColor:[MDCTextInputUnderlineColor() CGColor]];
-      [_disabledUnderline setLineJoin:kCALineJoinMiter];
-      [_disabledUnderline setLineDashPattern:@[ @1.5, @1.5 ]];
+      _disabledUnderline.contentsScale = [UIScreen mainScreen].scale;
+      _disabledUnderline.frame = CGRectZero;
+      _disabledUnderline.lineJoin = kCALineJoinMiter;
+      _disabledUnderline.lineDashPattern = @[ @1.5, @1.5 ];
+      _disabledUnderline.lineWidth = 1.0;
+      _disabledUnderline.opaque = NO;
+      _disabledUnderline.strokeColor = MDCTextInputUnderlineColor().CGColor;
+      [self.layer addSublayer:_disabledUnderline];
     }
 
-    layerToAdd = _disabledUnderline;
+    _disabledUnderline.opacity = 1.f;
   }
 
-  [[self layer] addSublayer:layerToAdd];
+  _underline.lineWidth = self.lineHeight;
+
   [self updateUnderlinePath];
 }
 
 - (void)updateColor {
   BOOL showUnderline = self.enabled;
-  UIColor *backgroundColor = [UIColor clearColor];
+  UIColor *strokeColor = [UIColor clearColor];
   if (showUnderline) {
-    backgroundColor = _color;
+    strokeColor = _color;
   }
 
-  [self setBackgroundColor:backgroundColor];
-  [self setOpaque:showUnderline];
+  self.underline.strokeColor = strokeColor.CGColor;
+  self.opaque = showUnderline;
 }
 
 #pragma mark - Property implementation
@@ -137,11 +137,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 }
 
-- (void)setWidth:(CGFloat)width {
-  if (_width != width) {
-    _width = width;
-    [self updateUnderline];
+- (void)setLineHeight:(CGFloat)lineHeight {
+  if (_lineHeight != lineHeight) {
+    _lineHeight = lineHeight;
   }
+  [self updateUnderline];
 }
 
 @end
