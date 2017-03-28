@@ -102,15 +102,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  CGPoint point;
-  if ([self deviceUsesCoordinateSpaces]) {
-    // We have to use coordinate spaces on iOS8 devices
-    point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                   toCoordinateSpace:_featureHighlightView];
-  } else {
-    point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                              toView:_featureHighlightView];
-  }
+  CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
+                                         toCoordinateSpace:_featureHighlightView];
   _featureHighlightView.highlightPoint = point;
 }
 
@@ -197,18 +190,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     return _animationController;
   }
   return nil;
-}
-
-- (BOOL)deviceUsesCoordinateSpaces {
-  static BOOL useCoordinateSpace = NO;
-
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    UIScreen *screen = [UIScreen mainScreen];
-    useCoordinateSpace = [screen respondsToSelector:@selector(fixedCoordinateSpace)];
-  });
-
-  return useCoordinateSpace;
 }
 
 @end
