@@ -46,8 +46,8 @@ class TextInputTests: XCTestCase {
     XCTAssertEqual(textField.underlineColor, gray)
 
     let width: CGFloat = 5.0
-    textField.underlineWidth = width
-    XCTAssertEqual(textField.underlineWidth, width)
+    textField.underlineHeight = width
+    XCTAssertEqual(textField.underlineHeight, width)
 
     let testLeading = "Helper Test"
     textField.leadingLabel.text = testLeading
@@ -102,8 +102,8 @@ class TextInputTests: XCTestCase {
     XCTAssertEqual(textView.underlineColor, gray)
 
     let width: CGFloat = 5.0
-    textView.underlineWidth = width
-    XCTAssertEqual(textView.underlineWidth, width)
+    textView.underlineHeight = width
+    XCTAssertEqual(textView.underlineHeight, width)
 
     let testLeading = "Helper Test"
     textView.leadingLabel.text = testLeading
