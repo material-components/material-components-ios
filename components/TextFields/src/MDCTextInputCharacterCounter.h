@@ -34,7 +34,7 @@
 
  @return count of characters.
  */
-- (NSUInteger)characterCountForTextInput:(UIView<MDCTextInput> *)textInput;
+- (NSUInteger)characterCountForTextInput:(nullable UIView<MDCTextInput> *)textInput;
 
 @end
 
