@@ -238,8 +238,8 @@ final class TextFieldSwiftExample: UIViewController {
     let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
 
     let bundle = Bundle(for: TextFieldSwiftExample.self)
-    let imagePath = bundle.path(forResource: "ic_search", ofType: "png")!
-    let leftViewImage = UIImage(contentsOfFile: imagePath)!
+    let leftViewImagePath = bundle.path(forResource: "ic_search", ofType: "png")!
+    let leftViewImage = UIImage(contentsOfFile: leftViewImagePath)!
 
     let textFieldLeftView = MDCTextField()
     textFieldLeftView.leftViewMode = .always
@@ -269,6 +269,70 @@ final class TextFieldSwiftExample: UIViewController {
       MDCTextInputController(input: textFieldLeftViewFloating)
     textFieldControllerDefaultLeftViewFloating.presentation = .floatingPlaceholder
 
+    let rightViewImagePath = bundle.path(forResource: "ic_done", ofType: "png")!
+    let rightViewImage = UIImage(contentsOfFile: rightViewImagePath)!
+
+    let textFieldRightView = MDCTextField()
+    textFieldRightView.rightViewMode = .always
+    textFieldRightView.rightView = UIImageView(image:rightViewImage)
+
+    scrollView.addSubview(textFieldRightView)
+    textFieldRightView.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldRightView.placeholder = "This has a right view"
+    textFieldRightView.delegate = self
+    textFieldRightView.clearButtonMode = .whileEditing
+
+    let textFieldControllerDefaultRightView = MDCTextInputController(input: textFieldRightView)
+
+    let textFieldRightViewFloating = MDCTextField()
+    textFieldRightViewFloating.rightViewMode = .always
+    textFieldRightViewFloating.rightView = UIImageView(image:rightViewImage)
+
+    scrollView.addSubview(textFieldRightViewFloating)
+    textFieldRightViewFloating.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldRightViewFloating.placeholder = "This has a right view and floats"
+    textFieldRightViewFloating.delegate = self
+    textFieldRightViewFloating.clearButtonMode = .whileEditing
+
+    let textFieldControllerDefaultRightViewFloating =
+      MDCTextInputController(input: textFieldRightViewFloating)
+    textFieldControllerDefaultRightViewFloating.presentation = .floatingPlaceholder
+
+    let textFieldLeftRightView = MDCTextField()
+    textFieldLeftRightView.leftViewMode = .whileEditing
+    textFieldLeftRightView.leftView = UIImageView(image: leftViewImage)
+    textFieldLeftRightView.rightViewMode = .always
+    textFieldLeftRightView.rightView = UIImageView(image:rightViewImage)
+
+    scrollView.addSubview(textFieldLeftRightView)
+    textFieldLeftRightView.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldLeftRightView.placeholder = "This has left & right views"
+    textFieldLeftRightView.delegate = self
+    textFieldLeftRightView.clearButtonMode = .whileEditing
+
+    let textFieldControllerDefaultLeftRightView =
+      MDCTextInputController(input: textFieldLeftRightView)
+
+    let textFieldLeftRightViewFloating = MDCTextField()
+    textFieldLeftRightViewFloating.leftViewMode = .always
+    textFieldLeftRightViewFloating.leftView = UIImageView(image: leftViewImage)
+    textFieldLeftRightViewFloating.rightViewMode = .whileEditing
+    textFieldLeftRightViewFloating.rightView = UIImageView(image:rightViewImage)
+
+    scrollView.addSubview(textFieldLeftRightViewFloating)
+    textFieldLeftRightViewFloating.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldLeftRightViewFloating.placeholder = "This has left & right views and floats"
+    textFieldLeftRightViewFloating.delegate = self
+    textFieldLeftRightViewFloating.clearButtonMode = .whileEditing
+
+    let textFieldControllerDefaultLeftRightViewFloating =
+      MDCTextInputController(input: textFieldLeftRightViewFloating)
+    textFieldControllerDefaultLeftRightViewFloating.presentation = .floatingPlaceholder
+
     scrollView.addSubview(unstyledTextField)
     unstyledTextField.translatesAutoresizingMaskIntoConstraints = false
 
@@ -277,7 +341,10 @@ final class TextFieldSwiftExample: UIViewController {
     unstyledTextField.clearButtonMode = .whileEditing
 
     return [textFieldControllerDefaultDisabled, textFieldControllerDefaultCustomFont,
-            textFieldControllerDefaultLeftView, textFieldControllerDefaultLeftViewFloating]
+            textFieldControllerDefaultLeftView, textFieldControllerDefaultLeftViewFloating,
+            textFieldControllerDefaultRightView, textFieldControllerDefaultRightViewFloating,
+            textFieldControllerDefaultLeftRightView,
+            textFieldControllerDefaultLeftRightViewFloating]
   }
 
   func setupDefaultTextViews() -> [MDCTextInputController] {
