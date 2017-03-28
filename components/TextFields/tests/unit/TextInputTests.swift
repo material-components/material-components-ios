@@ -53,9 +53,27 @@ class TextInputTests: XCTestCase {
     textField.leadingLabel.text = testLeading
     XCTAssertEqual(textField.leadingLabel.text, testLeading)
 
-    let testTrailing = "NN/NN"
+    let testTrailing = "NN / NN"
     textField.trailingLabel.text = testTrailing
     XCTAssertEqual(textField.trailingLabel.text, testTrailing)
+  }
+
+  func testTextFieldAssociateViews() {
+    let textField = MDCTextField()
+
+    let leftView = UILabel()
+    let rightView = UILabel()
+    leftView.text = "X"
+    textField.leftView = leftView
+    textField.rightView = rightView
+    textField.leftViewMode = .always
+    textField.rightViewMode = .always
+
+    // This will trigger autolayout to scream in the console. It's ok. It's for the testing.
+    textField.layoutIfNeeded()
+
+    XCTAssertTrue(textField.subviews.contains(leftView))
+    XCTAssertTrue(textField.subviews.contains(rightView))
   }
 
   func testControllerTextField() {
