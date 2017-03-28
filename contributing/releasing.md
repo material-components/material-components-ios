@@ -100,7 +100,7 @@ Inspect changes to public component headers and manually generate the API diff b
 
     scripts/release/diff components/*/src/*.h
 
-~~Generate the API diff by running the following:~~
+~~Generate the API diff using scripts/release/api_diff:~~
 
 **The api_diff script is broken. Manually generate the API diff using scripts/release/diff as noted above and continue to the next step, Commit the changes.**
 
