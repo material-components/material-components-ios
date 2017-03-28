@@ -38,6 +38,11 @@ Releasing is important enough that we want to start with a clean slate:
 
 ### Cut a release branch and notify clients
 
+Verify that there are no existing release-candidate branches either locally or on origin:
+
+    git fetch -a
+    git branch -a | grep release-candidate
+
 Run the following command to cut a release:
 
     scripts/release/cut
@@ -87,11 +92,17 @@ you will need to examine the release's changes.
 
 You have several tools available for deciding if a release is major, minor, or a patch.
 
-### Generating the API diff
+### Generate the API diff
 
-> Our API diff tooling should not be trusted at the moment. :( Please inspect changes to component
-> headers manually with `scripts/release/diff components/*/src/*.h` and generate the API diff by
-> hand.
+#### Use scripts/release/diff to determine API changes
+
+Please inspect changes to public component headers manually and generate the API diff by hand.
+
+    scripts/release/diff components/*/src/*.h
+
+#### ~~Use scripts/release/api_diff to determine API changes~~
+
+**This script is broken. Manually generate the api_diff.**
 
 Generate the API diff by running the following:
 
@@ -182,13 +193,18 @@ Commit the results to your branch:
     git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
     git push origin release-candidate
 
-#### Lint the local podspec
+#### Verify Cocoapods
+
+Send our local podspec through the Cocoapods linter:
 
     pod lib lint MaterialComponents.podspec
 
-Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your `Pods` when you:
+Cocoapods publishes a directory of publicly available pods through its **trunk** service.
+Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
 
     pod trunk me
+
+If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
 
 ## Testing with release-blocking clients
 
