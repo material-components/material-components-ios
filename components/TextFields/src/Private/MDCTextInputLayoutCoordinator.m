@@ -39,9 +39,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) UILabel *characterLimitView;
 @property(nonatomic, strong) UILabel *errorTextView;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
-@property(nonatomic, strong) NSLayoutConstraint *placeholderLeftViewLeading;
-@property(nonatomic, strong) NSLayoutConstraint *placeholderRightViewTrailing;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeftViewTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderTrailing;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingRightViewLeading;
 @property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
 @property(nonatomic, strong) MDCTextInputUnderlineView *underlineView;
 
@@ -393,8 +395,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 
   MDCTextField *textField = (MDCTextField *)self.textInput;
-  if (textField.leftView.superview && !self.placeholderLeftViewLeading) {
-    self.placeholderLeftViewLeading =
+  if (textField.leftView.superview && !self.placeholderLeadingLeftViewTrailing) {
+    self.placeholderLeadingLeftViewTrailing =
         [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
                                      attribute:NSLayoutAttributeLeading
                                      relatedBy:NSLayoutRelationEqual
@@ -402,14 +404,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                      attribute:NSLayoutAttributeTrailing
                                     multiplier:1
                                       constant:0];
-    self.placeholderLeftViewLeading.priority = UILayoutPriorityDefaultLow + 1;
-    self.placeholderLeftViewLeading.active = YES;
-  } else if (!textField.leftView.superview && self.placeholderLeftViewLeading) {
-    self.placeholderLeftViewLeading = nil;
+    self.placeholderLeadingLeftViewTrailing.priority = UILayoutPriorityDefaultLow + 1;
+    self.placeholderLeadingLeftViewTrailing.active = YES;
+  } else if (!textField.leftView.superview && self.placeholderLeadingLeftViewTrailing) {
+    self.placeholderLeadingLeftViewTrailing = nil;
   }
 
-  if (textField.rightView.superview && !self.placeholderRightViewTrailing) {
-    self.placeholderRightViewTrailing =
+  if (textField.rightView.superview && !self.placeholderTrailingRightViewLeading) {
+    self.placeholderTrailingRightViewLeading =
     [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
                                  attribute:NSLayoutAttributeTrailing
                                  relatedBy:NSLayoutRelationLessThanOrEqual
@@ -417,10 +419,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                  attribute:NSLayoutAttributeLeading
                                 multiplier:1
                                   constant:0];
-    self.placeholderRightViewTrailing.priority = UILayoutPriorityDefaultLow + 1;
-    self.placeholderRightViewTrailing.active = YES;
-  } else if (!textField.rightView.superview && self.placeholderRightViewTrailing) {
-    self.placeholderRightViewTrailing = nil;
+    self.placeholderTrailingRightViewLeading.priority = UILayoutPriorityDefaultLow + 1;
+    self.placeholderTrailingRightViewLeading.active = YES;
+  } else if (!textField.rightView.superview && self.placeholderTrailingRightViewLeading) {
+    self.placeholderTrailingRightViewLeading = nil;
   }
 }
 
@@ -432,17 +434,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 
   CGRect placeholderRect = [self.textInput textRectThatFitsForBounds:bounds];
-  // Calculating the offset to account for a rightView in case it is needed for RTL layout,
-  // before the placeholderRect is modified to be just wide enough for the text.
-
-  // TODO: (larche) Undo this comment if RTL needs it. See below.
-  //  CGFloat placeholderLeftViewOffset =
-  //      CGRectGetWidth(bounds) - CGRectGetWidth(placeholderRect) - CGRectGetMinX(placeholderRect);
-  CGFloat placeHolderWidth = [self placeholderRequiredWidth];
-  placeholderRect.size.width = placeHolderWidth;
-
-  placeholderRect.size.height = MDCCeil(self.textInput.font.lineHeight);
-
   return placeholderRect;
 }
 
@@ -457,8 +448,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                     multiplier:1
                                                       constant:0];
 
-  // This can be affected by .leftView
-  NSLayoutConstraint *leading =
+  // This can be affected by .leftView and .rightView.
+  // See updatePlaceholderPositionOverlays()
+  self.placeholderLeading =
       [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                    attribute:NSLayoutAttributeLeading
                                    relatedBy:NSLayoutRelationEqual
@@ -466,7 +458,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                    attribute:NSLayoutAttributeLeading
                                   multiplier:1
                                     constant:CGRectGetMinX(placeholderRect)];
-  NSLayoutConstraint *trailing =
+  self.placeholderTrailing =
       [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                    attribute:NSLayoutAttributeTrailing
                                    relatedBy:NSLayoutRelationLessThanOrEqual
@@ -483,18 +475,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                          constant:CGRectGetHeight(placeholderRect)];
 
   [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
-  [leading setPriority:UILayoutPriorityDefaultLow];
-  [trailing setPriority:UILayoutPriorityDefaultLow];
+  [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
+  [self.placeholderTrailing setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderHeight setPriority:UILayoutPriorityDefaultLow];
 
-  return @[ self.placeholderHeight, self.placeholderTop, leading, trailing ];
-}
-
-- (CGFloat)placeholderRequiredWidth {
-  if (!self.textInput.font) {
-    return 0;
-  }
-  return [self.placeholder sizeWithAttributes:@{NSFontAttributeName : self.textInput.font}].width;
+  return @[ self.placeholderHeight, self.placeholderTop, self.placeholderLeading,
+            self.placeholderTrailing ];
 }
 
 - (void)updatePlaceholderAlpha {
