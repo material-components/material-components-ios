@@ -63,6 +63,8 @@ final class TextFieldSwiftExample: UIViewController {
   var controllersWithCharacterCount = [MDCTextInputController]()
   var controllersFullWidth = [MDCTextInputController]()
 
+  let unstyledTextField = MDCTextField()
+
   let characterModeButton = MDCButton()
   let clearModeButton = MDCButton()
   let underlineButton = MDCButton()
@@ -239,8 +241,9 @@ final class TextFieldSwiftExample: UIViewController {
     let imagePath = bundle.path(forResource: "ic_search", ofType: "png")!
     let leftViewImage = UIImage(contentsOfFile: imagePath)!
 
-    let textFieldLeftView = MDCTextField(leftView: UIImageView(image:leftViewImage))
+    let textFieldLeftView = MDCTextField()
     textFieldLeftView.leftViewMode = .always
+    textFieldLeftView.leftView = UIImageView(image:leftViewImage)
 
     scrollView.addSubview(textFieldLeftView)
     textFieldLeftView.translatesAutoresizingMaskIntoConstraints = false
@@ -251,8 +254,30 @@ final class TextFieldSwiftExample: UIViewController {
 
     let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
 
+    let textFieldLeftViewFloating = MDCTextField()
+    textFieldLeftViewFloating.leftViewMode = .always
+    textFieldLeftViewFloating.leftView = UIImageView(image:leftViewImage)
+
+    scrollView.addSubview(textFieldLeftViewFloating)
+    textFieldLeftViewFloating.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldLeftViewFloating.placeholder = "This has a left view and floats"
+    textFieldLeftViewFloating.delegate = self
+    textFieldLeftViewFloating.clearButtonMode = .whileEditing
+
+    let textFieldControllerDefaultLeftViewFloating =
+      MDCTextInputController(input: textFieldLeftViewFloating)
+    textFieldControllerDefaultLeftViewFloating.presentation = .floatingPlaceholder
+
+    scrollView.addSubview(unstyledTextField)
+    unstyledTextField.translatesAutoresizingMaskIntoConstraints = false
+
+    unstyledTextField.placeholder = "This is an unstyled text field (no controller)"
+    unstyledTextField.delegate = self
+    unstyledTextField.clearButtonMode = .whileEditing
+
     return [textFieldControllerDefaultDisabled, textFieldControllerDefaultCustomFont,
-            textFieldControllerDefaultLeftView]
+            textFieldControllerDefaultLeftView, textFieldControllerDefaultLeftViewFloating]
   }
 
   func setupDefaultTextViews() -> [MDCTextInputController] {
@@ -482,11 +507,12 @@ final class TextFieldSwiftExample: UIViewController {
     }
 
     let visualString = "V:|-10-[controlLabel]-" + controlsString + "20-[singleLabel]-" +
-      textFieldsString + "20-[multiLabel]-" + textViewsString + "20-|"
+      textFieldsString + "[unstyledTextField]-20-[multiLabel]-" + textViewsString + "20-|"
 
     let labels: [String: UIView] = ["controlLabel": controlLabel,
                                     "singleLabel": singleLabel,
-                                    "multiLabel": multiLabel]
+                                    "multiLabel": multiLabel,
+                                    "unstyledTextField": unstyledTextField]
 
     var views = [String: UIView]()
 

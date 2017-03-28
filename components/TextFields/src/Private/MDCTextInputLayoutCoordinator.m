@@ -39,6 +39,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) UILabel *characterLimitView;
 @property(nonatomic, strong) UILabel *errorTextView;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderLeftViewLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
 @property(nonatomic, strong) MDCTextInputUnderlineView *underlineView;
@@ -248,6 +249,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)didChange {
   [self updatePlaceholderAlpha];
+  [self updatePlaceholderPosition];
 }
 
 #pragma mark - Underline View Implementation
@@ -379,6 +381,30 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGRect destinationFrame = [self placeholderDefaultPositionFrame];
 
   self.placeholderHeight.constant = CGRectGetHeight(destinationFrame);
+
+  [self updatePlaceholderPositionToLeftView];
+}
+
+- (void)updatePlaceholderPositionToLeftView {
+  if (![self.textInput isKindOfClass:[MDCTextField class]]) {
+    return;
+  }
+  
+  MDCTextField *textField = (MDCTextField *)self.textInput;
+  if (textField.leftView.superview && !self.placeholderLeftViewLeading) {
+    self.placeholderLeftViewLeading =
+    [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:textField.leftView
+                                 attribute:NSLayoutAttributeTrailing
+                                multiplier:1
+                                  constant:0];
+    self.placeholderLeftViewLeading.priority = UILayoutPriorityDefaultLow + 1;
+    self.placeholderLeftViewLeading.active = YES;
+  } else if (!textField.leftView.superview && self.placeholderLeftViewLeading) {
+    self.placeholderLeftViewLeading = nil;
+  }
 }
 
 // TODO: (larche) Replace with only needed information or remove altogether.
@@ -414,6 +440,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                     multiplier:1
                                                       constant:0];
 
+
+  // This can be affected by .leftView
   NSLayoutConstraint *leading =
       [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                    attribute:NSLayoutAttributeLeading
