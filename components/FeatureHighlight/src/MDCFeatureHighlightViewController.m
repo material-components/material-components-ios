@@ -70,8 +70,20 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
                                      completion:(nullable MDCFeatureHighlightCompletion)completion {
+  UIView *snapshotView = [highlightedView snapshotViewAfterScreenUpdates:YES];
+  // We have to wrap the snapshoted view because _UIReplicantViews can't be accessibility elements.
+  UIView *displayedView = [[UIView alloc] initWithFrame:snapshotView.bounds];
+  [displayedView addSubview:snapshotView];
+
+  // Copy the accessibility values from the view being highlighted.
+  displayedView.isAccessibilityElement = YES;
+  displayedView.accessibilityTraits = UIAccessibilityTraitButton;
+  displayedView.accessibilityLabel = highlightedView.accessibilityLabel;
+  displayedView.accessibilityValue = highlightedView.accessibilityValue;
+  displayedView.accessibilityHint = highlightedView.accessibilityHint;
+
   return [self initWithHighlightedView:highlightedView
-                           andShowView:[highlightedView snapshotViewAfterScreenUpdates:YES]
+                           andShowView:displayedView
                             completion:completion];
 }
 
@@ -81,6 +93,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 - (void)loadView {
+  _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
+
   _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
   _featureHighlightView.displayedView = _displayedView;
   _featureHighlightView.titleLabel.text = self.titleText;
