@@ -94,15 +94,15 @@ You have several tools available for deciding if a release is major, minor, or a
 
 ### Generate the API diff
 
-#### Use scripts/release/diff to determine API changes
+Use scripts/release/diff to determine API changes
 
 Please inspect changes to public component headers manually and generate the API diff by hand.
 
     scripts/release/diff components/*/src/*.h
 
-#### ~~Use scripts/release/api_diff to determine API changes~~
+~~Use scripts/release/api_diff to determine API changes~~
 
-**This script is broken. Manually generate the api_diff.**
+**This script is broken. Manually generate the api_diff using scripts/release/diff as noted above and continue to the Commit the changes step below.**
 
 Generate the API diff by running the following:
 
