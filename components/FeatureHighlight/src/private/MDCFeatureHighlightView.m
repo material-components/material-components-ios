@@ -20,6 +20,8 @@
 #import "MDFTextAccessibility.h"
 #import "MaterialTypography.h"
 
+NSString *const MDCFeatureHighlightViewTitleA11yHint = @"Double-tap to dismiss.";
+
 const CGFloat kMDCFeatureHighlightMinimumInnerRadius = 44.0f;
 const CGFloat kMDCFeatureHighlightInnerContentPadding = 10.0f;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0f;
@@ -76,6 +78,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
+    _titleLabel.accessibilityHint = MDCFeatureHighlightViewTitleA11yHint;
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
