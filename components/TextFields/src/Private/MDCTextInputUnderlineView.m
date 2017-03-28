@@ -59,7 +59,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updateUnderlinePath {
   CGRect bounds = [self bounds];
   CGMutablePathRef path = CGPathCreateMutable();
-  CGFloat offSet = 1.0 / [UIScreen mainScreen].scale;
+  CGFloat offSet = 1.f / [UIScreen mainScreen].scale;
   CGPathMoveToPoint(path, NULL, CGRectGetMinX(bounds), CGRectGetMidY(bounds) + offSet);
   CGPathAddLineToPoint(path, NULL, CGRectGetMaxX(bounds), CGRectGetMidY(bounds) + offSet);
 
