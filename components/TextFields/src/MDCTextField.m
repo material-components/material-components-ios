@@ -55,6 +55,14 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   return self;
 }
 
+- (instancetype)initWithLeftView:(UIView *)leftView {
+  self = [self initWithFrame:CGRectZero];
+  if (self) {
+    self.leftView = leftView;
+  }
+  return self;
+}
+
 - (void)dealloc {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter removeObserver:self name:UITextFieldTextDidBeginEditingNotification object:self];

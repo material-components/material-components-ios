@@ -235,20 +235,19 @@ final class TextFieldSwiftExample: UIViewController {
 
     let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
 
-    let textFieldLeftView = MDCTextField()
+    let bundle = Bundle(for: TextFieldSwiftExample.self)
+    let imagePath = bundle.path(forResource: "ic_search", ofType: "png")!
+    let leftViewImage = UIImage(contentsOfFile: imagePath)!
+
+    let textFieldLeftView = MDCTextField(leftView: UIImageView(image:leftViewImage))
+    textFieldLeftView.leftViewMode = .always
+
     scrollView.addSubview(textFieldLeftView)
     textFieldLeftView.translatesAutoresizingMaskIntoConstraints = false
 
     textFieldLeftView.placeholder = "This has a left view"
     textFieldLeftView.delegate = self
     textFieldLeftView.clearButtonMode = .whileEditing
-
-    let bundle = Bundle(for: TextFieldSwiftExample.self)
-    let imagePath = bundle.path(forResource: "ic_search", ofType: "png")!
-    let leftViewImage = UIImage(contentsOfFile: imagePath)!
-
-    textFieldLeftView.leftView = UIImageView(image:leftViewImage)
-    textFieldLeftView.leftViewMode = .always
 
     let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
 
