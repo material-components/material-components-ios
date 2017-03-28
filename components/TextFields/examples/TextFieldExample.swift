@@ -309,7 +309,8 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textFieldLeftRightView)
     textFieldLeftRightView.translatesAutoresizingMaskIntoConstraints = false
 
-    textFieldLeftRightView.placeholder = "This has left & right views"
+    textFieldLeftRightView.placeholder =
+      "This has left & right views and a very long placeholder that should be truncated"
     textFieldLeftRightView.delegate = self
     textFieldLeftRightView.clearButtonMode = .whileEditing
 
@@ -325,7 +326,8 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textFieldLeftRightViewFloating)
     textFieldLeftRightViewFloating.translatesAutoresizingMaskIntoConstraints = false
 
-    textFieldLeftRightViewFloating.placeholder = "This has left & right views and floats"
+    textFieldLeftRightViewFloating.placeholder =
+      "This has left & right views and floats and a very long placeholder that should be truncated"
     textFieldLeftRightViewFloating.delegate = self
     textFieldLeftRightViewFloating.clearButtonMode = .whileEditing
 

@@ -40,6 +40,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) UILabel *errorTextView;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeftViewLeading;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderRightViewTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
 @property(nonatomic, strong) MDCTextInputUnderlineView *underlineView;
@@ -90,8 +91,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setupPlaceholderLabel {
   _placeholderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  [_placeholderLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-
+  _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow
+                                                     forAxis:UILayoutConstraintAxisHorizontal];
   _placeholderLabel.textAlignment = NSTextAlignmentNatural;
 
   _placeholderLabel.userInteractionEnabled = NO;
@@ -382,10 +384,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   self.placeholderHeight.constant = CGRectGetHeight(destinationFrame);
 
-  [self updatePlaceholderPositionToLeftView];
+  [self updatePlaceholderPositionOverlays];
 }
 
-- (void)updatePlaceholderPositionToLeftView {
+- (void)updatePlaceholderPositionOverlays {
   if (![self.textInput isKindOfClass:[MDCTextField class]]) {
     return;
   }
@@ -404,6 +406,21 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     self.placeholderLeftViewLeading.active = YES;
   } else if (!textField.leftView.superview && self.placeholderLeftViewLeading) {
     self.placeholderLeftViewLeading = nil;
+  }
+
+  if (textField.rightView.superview && !self.placeholderRightViewTrailing) {
+    self.placeholderRightViewTrailing =
+    [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
+                                 attribute:NSLayoutAttributeTrailing
+                                 relatedBy:NSLayoutRelationLessThanOrEqual
+                                    toItem:textField.rightView
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:0];
+    self.placeholderRightViewTrailing.priority = UILayoutPriorityDefaultLow + 1;
+    self.placeholderRightViewTrailing.active = YES;
+  } else if (!textField.rightView.superview && self.placeholderRightViewTrailing) {
+    self.placeholderRightViewTrailing = nil;
   }
 }
 
