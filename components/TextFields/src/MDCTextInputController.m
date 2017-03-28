@@ -594,7 +594,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     UIColor *activeColor = [MDCPalette bluePalette].tint500;
     UIColor *normalColor = MDCTextInputInlinePlaceholderTextColor();
 
-    CGFloat underlineHeight = self.textInput.underlineHeight;
+    CGFloat underlineHeight;
 
     switch (self.underlineViewMode) {
       case UITextFieldViewModeAlways:

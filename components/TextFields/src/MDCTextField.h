@@ -43,7 +43,7 @@
 #pragma mark - New API
 @property(nonatomic, nullable, weak) id<MDCTextFieldPositioningDelegate> positioningDelegate;
 
-- (_Nonnull instancetype) initWithLeftView:(nullable UIView *)leftView;
+- (_Nonnull instancetype)initWithLeftView:(nullable UIView *)leftView;
 #pragma mark - Approved API
 
 @end

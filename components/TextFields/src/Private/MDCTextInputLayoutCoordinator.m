@@ -389,17 +389,17 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (![self.textInput isKindOfClass:[MDCTextField class]]) {
     return;
   }
-  
+
   MDCTextField *textField = (MDCTextField *)self.textInput;
   if (textField.leftView.superview && !self.placeholderLeftViewLeading) {
     self.placeholderLeftViewLeading =
-    [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
-                                 attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:textField.leftView
-                                 attribute:NSLayoutAttributeTrailing
-                                multiplier:1
-                                  constant:0];
+        [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
+                                     attribute:NSLayoutAttributeLeading
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:textField.leftView
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:0];
     self.placeholderLeftViewLeading.priority = UILayoutPriorityDefaultLow + 1;
     self.placeholderLeftViewLeading.active = YES;
   } else if (!textField.leftView.superview && self.placeholderLeftViewLeading) {
@@ -439,7 +439,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                      attribute:NSLayoutAttributeCenterY
                                                     multiplier:1
                                                       constant:0];
-
 
   // This can be affected by .leftView
   NSLayoutConstraint *leading =
