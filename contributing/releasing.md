@@ -102,7 +102,7 @@ Inspect changes to public component headers and manually generate the API diff b
 
 ~~Generate the API diff using scripts/release/api_diff:~~
 
-**The api_diff script is broken. Manually generate the API diff using scripts/release/diff as noted above and continue to the next step, Commit the changes.**
+**The api_diff script is broken. Manually generate the API diff using scripts/release/diff as noted above and continue to the next step, Commit the changes. - Mar.28,2017 (ianegordon)**
 
     scripts/release/api_diff
 
@@ -191,13 +191,13 @@ Commit the results to your branch:
     git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
     git push origin release-candidate
 
-#### Verify Cocoapods
+#### Verify CocoaPods podspec and trunk access
 
-Send our local podspec through the Cocoapods linter:
+Send our local podspec through the CocoaPods linter:
 
     pod lib lint MaterialComponents.podspec
 
-Cocoapods publishes a directory of publicly available pods through its **trunk** service.
+CocoaPods publishes a directory of publicly available pods through its **trunk** service.
 Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
 
     pod trunk me
