@@ -162,7 +162,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   }
 
   _preferredSheetHeight = preferredSheetHeight;
-  _lastFrameHeight =   self.frame.size.height;
+  _lastFrameHeight = self.frame.size.height;
 
   [self updateSheetFrame];
 
@@ -273,7 +273,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   }
 }
 
-#pragma mark GOODraggableViewDelegate
+#pragma mark - MDCDraggableViewDelegate
 
 - (CGFloat)maximumHeightForDraggableView:(MDCDraggableView *)view {
   return [self maximumSheetHeight];
