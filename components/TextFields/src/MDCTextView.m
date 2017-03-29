@@ -84,34 +84,9 @@
 }
 
 - (void)layoutSubviews {
-  BOOL animationsWereEnabled = [UIView areAnimationsEnabled];
-  [UIView setAnimationsEnabled:NO];
-
   [super layoutSubviews];
 
   [_coordinator layoutSubviewsOfInput];
-
-  [UIView setAnimationsEnabled:animationsWereEnabled];
-}
-
-- (CGSize)sizeThatFits:(CGSize)size {
-  CGSize tempSize = [super sizeThatFits:size];
-  // iOS 7 doesn't display the last line of text unless the height is ceiled.
-  tempSize.height = MDCCeil(tempSize.height);
-  return tempSize;
-}
-
-- (CGSize)intrinsicContentSize {
-  CGSize boundingSize = CGSizeZero;
-  boundingSize.width = UIViewNoIntrinsicMetric;
-
-  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) +
-                   2 * MDCTextInputUnderlineVerticalSpacing +
-                   MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
-                       MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
-  boundingSize.height = height;
-
-  return boundingSize;
 }
 
 #pragma mark - Properties Implementation
