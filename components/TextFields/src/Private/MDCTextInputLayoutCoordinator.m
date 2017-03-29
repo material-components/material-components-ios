@@ -69,7 +69,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return nil;
 }
 
-- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput> *_Nonnull)textInput
+- (nonnull instancetype)initWithTextInput:(UIView<MDCControlledTextInput> *_Nonnull)textInput
                               isMultiline:(BOOL)isMultiline {
   self = [super init];
   if (self) {

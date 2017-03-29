@@ -116,7 +116,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 @synthesize characterCountMax = _characterCountMax;
 @synthesize presentationStyle = _presentationStyle;
 
-// TODO: (larche): Support left icon view with a enum property for the icon / view to show.
 // TODO: (larche): Support in-line auto complete.
 
 - (instancetype)init {

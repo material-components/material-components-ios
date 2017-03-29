@@ -35,40 +35,52 @@
 - (instancetype)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
   self = [super initWithFrame:frame textContainer:textContainer];
   if (self) {
-    self.scrollEnabled = NO;
-    self.textContainer.lineFragmentPadding = 0;
-
-    _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextField:self isMultiline:YES];
-
-    self.tintColor = MDCTextInputCursorColor();
-    self.textColor = _coordinator.textColor;
-    self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-
-    self.editable = YES;
-    self.textContainerInset = UIEdgeInsetsZero;
-
-    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-    [defaultCenter addObserver:self
-                      selector:@selector(textViewDidBeginEditing:)
-                          name:UITextViewTextDidBeginEditingNotification
-                        object:self];
-    [defaultCenter addObserver:self
-                      selector:@selector(textViewDidEndEditing:)
-                          name:UITextViewTextDidEndEditingNotification
-                        object:self];
-    [defaultCenter addObserver:self
-                      selector:@selector(textViewDidChange:)
-                          name:UITextViewTextDidChangeNotification
-                        object:self];
+    [self commonMDCTextViewInitialization];
   }
   return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCTextViewInitialization];
+  }
+
+  return self;
+}
 - (void)dealloc {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter removeObserver:self name:UITextViewTextDidBeginEditingNotification object:self];
   [defaultCenter removeObserver:self name:UITextViewTextDidEndEditingNotification object:self];
   [defaultCenter removeObserver:self name:UITextViewTextDidChangeNotification object:self];
+}
+
+- (void)commonMDCTextViewInitialization {
+  self.scrollEnabled = NO;
+  self.textContainer.lineFragmentPadding = 0;
+
+  _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self isMultiline:YES];
+
+  self.tintColor = MDCTextInputCursorColor();
+  self.textColor = _coordinator.textColor;
+  self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+
+  self.editable = YES;
+  self.textContainerInset = UIEdgeInsetsZero;
+
+  NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+  [defaultCenter addObserver:self
+                    selector:@selector(textViewDidBeginEditing:)
+                        name:UITextViewTextDidBeginEditingNotification
+                      object:self];
+  [defaultCenter addObserver:self
+                    selector:@selector(textViewDidEndEditing:)
+                        name:UITextViewTextDidEndEditingNotification
+                      object:self];
+  [defaultCenter addObserver:self
+                    selector:@selector(textViewDidChange:)
+                        name:UITextViewTextDidChangeNotification
+                      object:self];
 }
 
 - (void)layoutSubviews {

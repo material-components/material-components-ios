@@ -40,7 +40,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInitialization];
+    [self commonMDCTextFieldInitialization];
   }
 
   return self;
@@ -49,7 +49,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonInitialization];
+    [self commonMDCTextFieldInitialization];
   }
 
   return self;
@@ -70,8 +70,8 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   [defaultCenter removeObserver:self name:UITextFieldTextDidChangeNotification object:self];
 }
 
-- (void)commonInitialization {
-  _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextField:self isMultiline:NO];
+- (void)commonMDCTextFieldInitialization {
+  _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self isMultiline:NO];
 
   self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 

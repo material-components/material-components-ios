@@ -51,7 +51,7 @@
 @property(nonatomic, readonly) UIEdgeInsets textContainerInset;
 
 /** Designated initializer with the controlled text field and whether it is multiline. */
-- (nonnull instancetype)initWithTextField:(UIView<MDCControlledTextInput> *_Nonnull)textInput
+- (nonnull instancetype)initWithTextInput:(UIView<MDCControlledTextInput> *_Nonnull)textInput
                               isMultiline:(BOOL)isMultiline NS_DESIGNATED_INITIALIZER;
 
 /** Please use initWithTextField:isMultiline:. */
