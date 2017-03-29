@@ -68,7 +68,7 @@ PODS:
   - MaterialComponents/ShadowLayer (23.0.0)
   - MaterialComponents/Typography (23.0.0):
     - MaterialComponents/private/Application
-  - MDFTextAccessibility (1.1.4)
+  - MDFTextAccessibility (1.2.0)
 
 DEPENDENCIES:
   - MaterialComponents/AnimationTiming (from `../../`)
@@ -86,7 +86,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MaterialComponents: fb0c07cfd26598f3e988fe1cb02375228ab97c4b
-  MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
+  MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: 0bae51237ebf30ce3f4ecbcefedc8cf3d7af40cf
 

@@ -37,7 +37,7 @@ PODS:
   - MaterialComponents/ShadowLayer (23.0.0)
   - MaterialComponents/Typography (23.0.0):
     - MaterialComponents/private/Application
-  - MDFTextAccessibility (1.1.4)
+  - MDFTextAccessibility (1.2.0)
   - RemoteImageServiceForMDCDemos (23.0.0)
 
 DEPENDENCIES:
@@ -53,7 +53,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MaterialComponents: fb0c07cfd26598f3e988fe1cb02375228ab97c4b
-  MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
+  MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   RemoteImageServiceForMDCDemos: 5b11700fea233d50203fbeb51b6c9915f29c548c
 
 PODFILE CHECKSUM: 5eb94d7fb8deeb6709b7300f5d0e0e1a75902cca
