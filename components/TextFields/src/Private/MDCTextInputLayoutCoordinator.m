@@ -137,16 +137,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   NSString *horizontalString;
   horizontalString = @"H:|[leading]-4-[trailing]|";
+  NSArray <NSLayoutConstraint *> *constraints = [NSLayoutConstraint
+                                                 constraintsWithVisualFormat:horizontalString
+                                                 options:0
+                                                 metrics:nil
+                                                 views:@{
+                                                         @"leading" : _leadingUnderlineLabel,
+                                                         @"trailing" : _trailingUnderlineLabel
+                                                         }];
+  for (NSLayoutConstraint *constraint in constraints) {
+    constraint.priority = UILayoutPriorityDefaultLow;
+  }
 
   [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:horizontalString
-                                                  options:0
-                                                  metrics:nil
-                                                    views:@{
-                                                      @"leading" : _leadingUnderlineLabel,
-                                                      @"trailing" : _trailingUnderlineLabel
-                                                    }]];
+      activateConstraints:constraints];
 
   NSLayoutConstraint *underlineBottom =
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel

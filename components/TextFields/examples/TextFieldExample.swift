@@ -107,6 +107,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldDefault.delegate = self
     textFieldDefault.clearButtonMode = .whileEditing
+    textFieldDefault.backgroundColor = .white
 
     let textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
 
@@ -150,6 +151,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     textFieldFullWidth.delegate = self
     textFieldFullWidth.clearButtonMode = .whileEditing
+    textFieldFullWidth.backgroundColor = .white
 
     let textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
     textFieldControllerFullWidth.presentation = .fullWidth
@@ -170,7 +172,8 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textFieldFullWidthCharMax)
     textFieldFullWidthCharMax.translatesAutoresizingMaskIntoConstraints = false
 
-    textFieldFullWidthCharMax.placeholder = "This is a full width text field"
+    textFieldFullWidthCharMax.placeholder =
+      "This is a full width text field with character count and a very long placeholder"
     textFieldFullWidthCharMax.delegate = self
     textFieldFullWidthCharMax.clearButtonMode = .whileEditing
 

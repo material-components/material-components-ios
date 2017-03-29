@@ -33,6 +33,7 @@ static const CGFloat MDCTextInputFloatingLabelFontSize = 12.f;
 static const CGFloat MDCTextInputFloatingLabelTextHeight = 16.f;
 static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
 static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
+static const CGFloat MDCTextInputFullWidthHorizontalInnerPadding = 8.f;
 static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
 static const CGFloat MDCTextInputUnderlineActiveHeight = 2.f;
 static const CGFloat MDCTextInputUnderlineNormalHeight = 1.f;
@@ -93,13 +94,17 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 @property(nonatomic, copy) NSString *errorText;
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
-@property(nonatomic, strong) NSLayoutConstraint *fullWidthCharacterCountConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *characterCountCenterY;
+@property(nonatomic, strong) NSLayoutConstraint *characterTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 @property(nonatomic, readonly) BOOL isDisplayingErrorText;
 @property(nonatomic, readonly) BOOL isPlaceholderUp;
-@property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
+@property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
 @property(nonatomic, copy) NSString *previousLeadingText;
 @property(nonatomic, copy) UIColor *previousPlaceholderColor;
 
@@ -264,7 +269,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   if (_textInput != textInput) {
     [self unsubscribeFromNotifications];
     _textInput = textInput;
-    if ([_textInput isKindOfClass:[UITextField class]]) {
+    if ([_textInput isKindOfClass:[MDCTextField class]]) {
       ((MDCTextField *)_textInput).positioningDelegate = self;
     }
 
@@ -310,6 +315,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   }
 
   if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+
+    // Multi Line
     if ([self.textInput isKindOfClass:[UITextView class]]) {
       self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
 
@@ -323,10 +330,10 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
       [self.textInput.trailingUnderlineLabel
           setContentCompressionResistancePriority:UILayoutPriorityRequired
                                           forAxis:UILayoutConstraintAxisVertical];
-
     } else {
-      if (!self.fullWidthCharacterCountConstraint) {
-        self.fullWidthCharacterCountConstraint =
+      // Single Line
+      if (!self.characterCountCenterY) {
+        self.characterCountCenterY =
             [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
                                          attribute:NSLayoutAttributeCenterY
                                          relatedBy:NSLayoutRelationEqual
@@ -335,6 +342,51 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                         multiplier:1
                                           constant:0];
       }
+      if (!self.characterTrailing) {
+        self.characterTrailing =
+        [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textInput
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
+      }
+      if (!self.placeholderLeading) {
+        self.placeholderLeading =
+          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.textInput
+                                       attribute:NSLayoutAttributeLeading
+                                      multiplier:1
+                                        constant:MDCTextInputFullWidthHorizontalPadding];
+
+      }
+      if (!self.placeholderTrailingCharacterCountLeading) {
+        self.placeholderTrailingCharacterCountLeading =
+        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:self.textInput.trailingUnderlineLabel
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:-1 * MDCTextInputFullWidthHorizontalInnerPadding];
+
+      }
+      if (!self.placeholderTrailingSuperviewTrailing) {
+        self.placeholderTrailingSuperviewTrailing =
+        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:self.textInput
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
+
+      }
+
+
       self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
     }
 
@@ -342,10 +394,18 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
         setContentHuggingPriority:UILayoutPriorityRequired
                           forAxis:UILayoutConstraintAxisVertical];
     [self placeholderYconstraint].priority = MDCTextInputAlmostRequiredPriority;
-    self.fullWidthCharacterCountConstraint.active = YES;
+    self.characterCountCenterY.active = YES;
+    self.characterTrailing.active = YES;
+    self.placeholderLeading.active = YES;
+    self.placeholderTrailingCharacterCountLeading.active = YES;
+    self.placeholderTrailingSuperviewTrailing.active = YES;
   } else {
     [self placeholderYconstraint].priority = UILayoutPriorityDefaultLow;
-    self.fullWidthCharacterCountConstraint.active = NO;
+    self.characterCountCenterY.active = NO;
+    self.characterTrailing.active = NO;
+    self.placeholderLeading.active = NO;
+    self.placeholderTrailingCharacterCountLeading.active = NO;
+    self.placeholderTrailingSuperviewTrailing.active = NO;
   }
 }
 
@@ -374,32 +434,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     _characterCountMax = characterCountMax;
     [self updateTrailingUnderlineLabel];
   }
-}
-
-- (CGRect)characterMaxFrame {
-  CGRect bounds = self.textInput.bounds;
-  if (CGRectIsEmpty(bounds)) {
-    return bounds;
-  }
-
-  CGRect characterMaxFrame = CGRectZero;
-  characterMaxFrame.size = [self.textInput.trailingUnderlineLabel sizeThatFits:bounds.size];
-  if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
-      UIUserInterfaceLayoutDirectionRightToLeft) {
-    characterMaxFrame.origin.x = 0.0f;
-  } else {
-    characterMaxFrame.origin.x = CGRectGetMaxX(bounds) - CGRectGetWidth(characterMaxFrame);
-  }
-
-  // If its single line full width, position on the line.
-  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth &&
-      ![self.textInput isKindOfClass:[UITextView class]]) {
-    characterMaxFrame.origin.y = CGRectGetMidY(bounds) - CGRectGetHeight(characterMaxFrame) / 2.0f;
-  } else {
-    characterMaxFrame.origin.y = CGRectGetMaxY(bounds) - CGRectGetHeight(characterMaxFrame);
-  }
-
-  return characterMaxFrame;
 }
 
 #pragma mark - Leading Label Customization
@@ -541,11 +575,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 #pragma mark - Trailing Label Customization
 
-- (CGSize)trailingUnderlineLabelSize {
-  [self.textInput.trailingUnderlineLabel sizeToFit];
-  return self.textInput.trailingUnderlineLabel.bounds.size;
-}
-
 - (void)updateTrailingUnderlineLabel {
   if (!self.characterCountMax) {
     self.textInput.trailingUnderlineLabel.text = nil;
@@ -675,7 +704,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
         UIUserInterfaceLayoutDirectionRightToLeft) {
       clearButtonRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
     } else {
-      clearButtonRect.origin.x -= CGRectGetWidth(textField.trailingUnderlineLabel.frame);
+      clearButtonRect.origin.x = CGRectGetMinX(textField.trailingUnderlineLabel.frame);
+      clearButtonRect.origin.x -= MDCTextInputFullWidthHorizontalInnerPadding;
+      clearButtonRect.origin.x -= CGRectGetWidth(clearButtonRect);
     }
   }
 
@@ -721,11 +752,11 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     case MDCTextInputPresentationStyleFullWidth:
       textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
       textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
+      textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
+      textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
       break;
   }
 
-  // TODO: (larche) Check this removal of validator.
-  // Adjust for the character limit and validator.
   // Full width single line text fields have their character counter on the same line as the
   // text.
   if ((self.characterCountMax) &&

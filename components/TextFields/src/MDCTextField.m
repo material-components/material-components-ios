@@ -260,7 +260,7 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect editingRect = [self textRectForBounds:bounds];
 
-  if ([self.positioningDelegate respondsToSelector:@selector(editingRectForBounds:)]) {
+  if ([self.positioningDelegate respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
     return [self.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
 
