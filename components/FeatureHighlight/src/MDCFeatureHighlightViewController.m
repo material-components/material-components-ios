@@ -103,7 +103,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   [super viewWillAppear:animated];
 
   CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                                    toView:_featureHighlightView];
+                                         toCoordinateSpace:_featureHighlightView];
   _featureHighlightView.highlightPoint = point;
 }
 
