@@ -84,6 +84,13 @@
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)recognizer {
+  // When opening the control center while a GOOBottomSheet is displayed recognizer happens to be
+  // an object of _UISystemGestureGateGestureRecognizer which doesn't have velocityInView: and it
+  // crashes the app.
+  if (recognizer != self.dragRecognizer) {
+    return NO;
+  }
+
   CGPoint velocity = [recognizer velocityInView:self.superview];
   velocity.x = 0;
 
