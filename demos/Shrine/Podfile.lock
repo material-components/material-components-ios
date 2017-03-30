@@ -1,5 +1,5 @@
 PODS:
-  - MaterialComponents/AppBar (23.0.0):
+  - MaterialComponents/AppBar (23.0.1):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -8,37 +8,37 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (23.0.0):
+  - MaterialComponents/ButtonBar (23.0.1):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/Buttons (23.0.0):
+  - MaterialComponents/Buttons (23.0.1):
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader (23.0.0):
+  - MaterialComponents/FlexibleHeader (23.0.1):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/HeaderStackView (23.0.0)
-  - MaterialComponents/Ink (23.0.0)
-  - MaterialComponents/NavigationBar (23.0.0):
+  - MaterialComponents/HeaderStackView (23.0.1)
+  - MaterialComponents/Ink (23.0.1)
+  - MaterialComponents/NavigationBar (23.0.1):
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/PageControl (23.0.0)
-  - MaterialComponents/private/Application (23.0.0)
-  - MaterialComponents/private/Icons/Base (23.0.0)
-  - MaterialComponents/private/Icons/ic_arrow_back (23.0.0):
+  - MaterialComponents/PageControl (23.0.1)
+  - MaterialComponents/private/Application (23.0.1)
+  - MaterialComponents/private/Icons/Base (23.0.1)
+  - MaterialComponents/private/Icons/ic_arrow_back (23.0.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/RTL (23.0.0)
-  - MaterialComponents/ShadowElevations (23.0.0)
-  - MaterialComponents/ShadowLayer (23.0.0)
-  - MaterialComponents/Typography (23.0.0):
+  - MaterialComponents/private/RTL (23.0.1)
+  - MaterialComponents/ShadowElevations (23.0.1)
+  - MaterialComponents/ShadowLayer (23.0.1)
+  - MaterialComponents/Typography (23.0.1):
     - MaterialComponents/private/Application
-  - MDFTextAccessibility (1.1.4)
-  - RemoteImageServiceForMDCDemos (23.0.0)
+  - MDFTextAccessibility (1.2.0)
+  - RemoteImageServiceForMDCDemos (23.0.1)
 
 DEPENDENCIES:
   - MaterialComponents/AppBar (from `../../`)
@@ -52,9 +52,9 @@ EXTERNAL SOURCES:
     :path: "../supplemental"
 
 SPEC CHECKSUMS:
-  MaterialComponents: fb0c07cfd26598f3e988fe1cb02375228ab97c4b
-  MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
-  RemoteImageServiceForMDCDemos: 5b11700fea233d50203fbeb51b6c9915f29c548c
+  MaterialComponents: 8666bde1128660f2a3525d03d6b460d2bc34dc3b
+  MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
+  RemoteImageServiceForMDCDemos: ac07ee638c35f21cf271adeaf68a59f253dacccc
 
 PODFILE CHECKSUM: 5eb94d7fb8deeb6709b7300f5d0e0e1a75902cca
 

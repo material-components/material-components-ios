@@ -455,8 +455,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (void)resetBottomInk:(BOOL)animated toPoint:(CGPoint)point completion:(void (^)())completionBlock;
 
 @property(nonatomic, strong) CAShapeLayer *compositeRipple;
-@property(nonatomic, strong) NSMutableArray <MDCInkLayerForegroundRipple *> *foregroundRipples;
-@property(nonatomic, strong) NSMutableArray <MDCInkLayerBackgroundRipple *> *backgroundRipples;
+@property(nonatomic, strong) NSMutableArray<MDCInkLayerForegroundRipple *> *foregroundRipples;
+@property(nonatomic, strong) NSMutableArray<MDCInkLayerBackgroundRipple *> *backgroundRipples;
 
 @end
 
@@ -503,8 +503,9 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 - (void)resetBottomInk:(BOOL)animated completion:(void (^)())completionBlock {
   if (self.foregroundRipples.count > 0) {
-    [[self.foregroundRipples objectAtIndex:(self.foregroundRipples.count - 1)] exit:animated
-                                                                        completion:completionBlock];
+    [[self.foregroundRipples objectAtIndex:(self.foregroundRipples.count - 1)]
+              exit:animated
+        completion:completionBlock];
   }
   if (self.backgroundRipples.count > 0) {
     [[self.backgroundRipples objectAtIndex:(self.backgroundRipples.count - 1)] exit:animated];
@@ -568,7 +569,6 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [self.backgroundRipples addObject:backgroundRipple];
   [foregroundRipple enterWithCompletion:completionBlock];
   [self.foregroundRipples addObject:foregroundRipple];
-
 }
 
 - (void)evaporateWithCompletion:(void (^)())completionBlock {
@@ -584,7 +584,6 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (void)animationDidStop:(CAAnimation *)anim
               shapeLayer:(CAShapeLayer *)shapeLayer
                 finished:(BOOL)finished {
-
   [shapeLayer removeAllAnimations];
 
   if ([shapeLayer isMemberOfClass:[MDCInkLayerForegroundRipple class]]) {

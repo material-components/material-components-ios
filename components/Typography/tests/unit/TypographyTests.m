@@ -37,6 +37,26 @@ static const CGFloat kOpacityMedium = 0.87f;
 @interface TypographyTests : XCTestCase
 @end
 
+/** This font loader is for Bodoni Ornaments and is for testing the missing bold/italic fonts. */
+@interface BodoniOrnamentsFontLoader : NSObject <MDCTypographyFontLoading>
+@end
+
+@implementation BodoniOrnamentsFontLoader
+
+- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"Bodoni Ornaments" size:fontSize];
+}
+
+- (UIFont *)regularFontOfSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"Bodoni Ornaments" size:fontSize];
+}
+
+- (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"Bodoni Ornaments" size:fontSize];
+}
+
+@end
+
 @implementation TypographyTests
 
 #pragma mark - Font opacity
@@ -245,14 +265,14 @@ static const CGFloat kOpacityMedium = 0.87f;
 - (void)testItalicFontFromFont {
   // Given
   CGFloat size = 8;
-  MDCSystemFontLoader *fontLoader=[[MDCSystemFontLoader alloc] init];
+  MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
   UIFont *normalFont = [UIFont systemFontOfSize:size];
   UIFont *italicFont = [UIFont italicSystemFontOfSize:size];
   UIFont *mediumFont = [fontLoader mediumFontOfSize:size];
   UIFontDescriptor *fontDescriptor =
-      [mediumFont.fontDescriptor fontDescriptorWithSymbolicTraits: UIFontDescriptorTraitItalic];
+      [mediumFont.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
   UIFont *italicMediumFont = [UIFont fontWithDescriptor:fontDescriptor size:0];
-  
+
   // Then
   XCTAssertEqualObjects([MDCTypography italicFontFromFont:mediumFont], italicMediumFont);
   XCTAssertEqualObjects([MDCTypography italicFontFromFont:normalFont], italicFont);
@@ -261,7 +281,7 @@ static const CGFloat kOpacityMedium = 0.87f;
 - (void)testBoldFontFromFont {
   // Given
   CGFloat size = 8;
-  MDCSystemFontLoader *fontLoader=[[MDCSystemFontLoader alloc] init];
+  MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
   UIFont *normalFont = [UIFont systemFontOfSize:size];
   UIFont *boldFont = [UIFont boldSystemFontOfSize:size];
   UIFont *italicFont = [UIFont italicSystemFontOfSize:size];
@@ -271,13 +291,43 @@ static const CGFloat kOpacityMedium = 0.87f;
   UIFont *fontLoaderRegularFont = [fontLoader regularFontOfSize:size];
   UIFont *fontLoaderBoldFont = [fontLoader boldFontOfSize:size];
 
-  
   // Then
   XCTAssertEqualObjects([MDCTypography boldFontFromFont:italicFont], italicBoldFont);
   XCTAssertEqualObjects([MDCTypography boldFontFromFont:normalFont], boldFont);
   // For some reason the fonts are not equal, the names are the same though.
   XCTAssertEqualObjects([MDCTypography boldFontFromFont:fontLoaderRegularFont].fontName,
-      fontLoaderBoldFont.fontName);
+                        fontLoaderBoldFont.fontName);
 }
 
+- (void)testBoldFontFromFontWithNoBold {
+  // Given
+  BodoniOrnamentsFontLoader *fontLoader = [[BodoniOrnamentsFontLoader alloc] init];
+  [MDCTypography setFontLoader:fontLoader];
+  UIFont *font = [MDCTypography buttonFont];
+
+  // When
+  UIFont *boldFont = [MDCTypography boldFontFromFont:font];
+
+  // Then
+  XCTAssertNotNil(boldFont);
+
+  // Cleanup
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
+}
+
+- (void)testItalicFontFromFontWithNoItalic {
+  // Given
+  BodoniOrnamentsFontLoader *fontLoader = [[BodoniOrnamentsFontLoader alloc] init];
+  [MDCTypography setFontLoader:fontLoader];
+  UIFont *font = [MDCTypography buttonFont];
+
+  // When
+  UIFont *italicFont = [MDCTypography italicFontFromFont:font];
+
+  // Then
+  XCTAssertNotNil(italicFont);
+
+  // Cleanup
+  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
+}
 @end

@@ -71,8 +71,7 @@
       !backgroundImageIdentity ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.backgroundImageViewInsets,
                                       self.backgroundImageViewInsets)) ||
-      (otherAttrs.isGridLayout != self.isGridLayout) ||
-      !separatorColorIdentity ||
+      (otherAttrs.isGridLayout != self.isGridLayout) || !separatorColorIdentity ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.separatorInset, self.separatorInset)) ||
       (otherAttrs.separatorLineHeight != self.separatorLineHeight) ||
       (otherAttrs.shouldHideSeparators != self.shouldHideSeparators) ||

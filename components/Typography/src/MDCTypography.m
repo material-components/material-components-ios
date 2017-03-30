@@ -137,18 +137,17 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 }
 
 + (BOOL)isLargeForContrastRatios:(nonnull UIFont *)font {
-  id <MDCTypographyFontLoading> fontLoader = [self fontLoader];
+  id<MDCTypographyFontLoading> fontLoader = [self fontLoader];
 
   if ([fontLoader respondsToSelector:@selector(isLargeForContrastRatios:)]) {
     return [fontLoader isLargeForContrastRatios:font];
   }
-  
+
   // Copied from [MDFTextAccessibility isLargeForContrastRatios:]
   UIFontDescriptor *fontDescriptor = font.fontDescriptor;
   BOOL isBold =
       (fontDescriptor.symbolicTraits & UIFontDescriptorTraitBold) == UIFontDescriptorTraitBold;
   return font.pointSize >= 18 || (isBold && font.pointSize >= 14);
-  
 }
 
 + (UIFont *)italicFontFromFont:(UIFont *)font {
@@ -156,9 +155,10 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   if ([self.fontLoader respondsToSelector:selector]) {
     return [self.fontLoader italicFontFromFont:font];
   }
-  UIFontDescriptor * fontDescriptor = [font.fontDescriptor
-                              fontDescriptorWithSymbolicTraits: UIFontDescriptorTraitItalic];
-  return [UIFont fontWithDescriptor:fontDescriptor size:0];
+  UIFontDescriptor *fontDescriptor =
+      [font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
+  return [UIFont fontWithDescriptor:fontDescriptor size:0] ?:
+      [UIFont italicSystemFontOfSize:font.pointSize];
 }
 
 + (UIFont *)boldFontFromFont:(UIFont *)font {
@@ -170,9 +170,9 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   if (font.mdc_slant != 0) {
     traits = traits | UIFontDescriptorTraitItalic;
   }
-  UIFontDescriptor * fontDescriptor =
-      [font.fontDescriptor fontDescriptorWithSymbolicTraits: traits];
-  return [UIFont fontWithDescriptor:fontDescriptor size:0];
+  UIFontDescriptor *fontDescriptor = [font.fontDescriptor fontDescriptorWithSymbolicTraits:traits];
+  return [UIFont fontWithDescriptor:fontDescriptor size:0] ?:
+      [UIFont boldSystemFontOfSize:font.pointSize];
 }
 
 #pragma mark - Private
@@ -211,7 +211,6 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return [UIFont systemFontOfSize:fontSize weight:UIFontWeightSemibold];
   }
   return [UIFont boldSystemFontOfSize:fontSize];
-  
 }
 
 - (UIFont *)italicFontOfSize:(CGFloat)fontSize {
@@ -220,8 +219,8 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 - (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
   UIFont *regular = [self regularFontOfSize:fontSize];
-  UIFontDescriptor *descriptor = [regular.fontDescriptor fontDescriptorWithSymbolicTraits:
-      UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
+  UIFontDescriptor *descriptor = [regular.fontDescriptor
+      fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
   return [UIFont fontWithDescriptor:descriptor size:fontSize];
 }
 
@@ -239,8 +238,8 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   }
 
   CGFloat MDCFontWeightMedium = (CGFloat)0.23;
-  // Based on Apple's SDK-Based Development: Using Weakly Linked Methods, Functions, and Symbols.
-  // https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/cross_development/Using/using.html#//apple_ref/doc/uid/20002000-1114537-BABHHJBC
+// Based on Apple's SDK-Based Development: Using Weakly Linked Methods, Functions, and Symbols.
+// https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/cross_development/Using/using.html#//apple_ref/doc/uid/20002000-1114537-BABHHJBC
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wtautological-pointer-compare"
 #pragma clang diagnostic ignored "-Wunreachable-code"

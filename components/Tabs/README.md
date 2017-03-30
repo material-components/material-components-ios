@@ -65,16 +65,18 @@ Tabs can also show a badge (usually a number) like UITabBar.
 To use the tab bar in your code, import the MaterialTabs umbrella header (Objective-C) or MaterialComponents module (Swift).
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialTabs.h"
 ~~~
 
-#### Swift
-~~~ swift
-import MaterialComponents
-~~~
 <!--</div>-->
 
 ### Delegate
@@ -102,6 +104,20 @@ Configure where items are placed in the tab bar by setting the `alignment` prope
 ### Creating a tab bar
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+let tabBar = MDCTabBar(frame: view.bounds)
+tabBar.items = [
+UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
+UITabBarItem(title: "Favorites", image: UIImage(named: "heart"), tag: 0),
+]
+tabBar.itemAppearance = .titledImages
+tabBar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
+tabBar.sizeToFit()
+view.addSubview(tabBar)
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -117,16 +133,4 @@ tabBar.autoresizingMask =
 [self.view addSubview:tabBar];
 ~~~
 
-#### Swift
-~~~ swift
-let tabBar = MDCTabBar(frame: view.bounds)
-tabBar.items = [
-    UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
-    UITabBarItem(title: "Favorites", image: UIImage(named: "heart"), tag: 0),
-]
-tabBar.itemAppearance = .titledImages
-tabBar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-tabBar.sizeToFit()
-view.addSubview(tabBar)
-~~~
 <!--</div>-->

@@ -18,17 +18,17 @@
 /**
  Returns the weight of the font.
 
- @return A value between -1.0 (very thin) to 1.0 (very thick).  
- 
+ @return A value between -1.0 (very thin) to 1.0 (very thick).
+
  Regular weight is 0.0.
  */
 - (CGFloat)mdc_weight;
 
 /**
  Returns the slant of the font.
- 
+
  @return more than 0 when italic and 0 when not italic.
- 
+
  Regular slant is 0.0.
  */
 - (CGFloat)mdc_slant;

@@ -32,9 +32,17 @@ the issue to a subsequent release.
 
 Releasing is important enough that we want to start with a clean slate:
 
+    git fetch -a
+    git checkout develop
     scripts/clean_all
 
 ### Cut a release branch and notify clients
+
+Verify that there are no existing release-candidate branches either locally or on origin:
+
+    git fetch -a
+    git remote prune origin
+    git branch -a | grep release-candidate
 
 Run the following command to cut a release:
 
@@ -85,13 +93,17 @@ you will need to examine the release's changes.
 
 You have several tools available for deciding if a release is major, minor, or a patch.
 
-### Generating the API diff
+### Generate the API diff
 
-> Our API diff tooling should not be trusted at the moment. :( Please inspect changes to component
-> headers manually with `scripts/release/diff components/*/src/*.h` and generate the API diff by
-> hand.
+Use scripts/release/diff to determine API changes
 
-Generate the API diff by running the following:
+Inspect changes to public component headers and manually generate the API diff by hand.
+
+    scripts/release/diff components/*/src/*.h
+
+~~Generate the API diff using scripts/release/api_diff:~~
+
+**The api_diff script is broken. Manually generate the API diff using scripts/release/diff as noted above and continue to the next step, Commit the changes. - Mar.28,2017 (ianegordon)**
 
     scripts/release/api_diff
 
@@ -164,15 +176,6 @@ Show all changes that are part of this release:
 
     scripts/release/diff
 
-#### Lint the podspec
-
-    pod spec lint MaterialComponents.podspec
-
-Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your `Pods` when you:
-
-    pod trunk me
-
-
 ### Classify the release type
 
 You should now be able to identify the release type and its new version number. Bump the release
@@ -188,6 +191,19 @@ Commit the results to your branch:
 
     git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
     git push origin release-candidate
+
+#### Verify CocoaPods podspec and trunk access
+
+Send our local podspec through the CocoaPods linter:
+
+    pod lib lint MaterialComponents.podspec
+
+CocoaPods publishes a directory of publicly available pods through its **trunk** service.
+Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
+
+    pod trunk me
+
+If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
 
 ## Testing with release-blocking clients
 

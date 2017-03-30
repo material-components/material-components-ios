@@ -120,7 +120,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 
   // Reset cells hidden during swipe deletion.
   self.hidden = NO;
-  
+
   [self.inkView cancelAllAnimationsAnimated:NO];
 }
 
@@ -492,7 +492,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 
 - (NSString *)accessibilityHint {
   if (_attr.shouldShowSelectorStateMask) {
-    NSString* localizedHintKey =
+    NSString *localizedHintKey =
         self.selected ? kSelectedCellAccessibilityHintKey : kDeselectedCellAccessibilityHintKey;
     return [[self class] localizedStringWithKey:localizedHintKey];
   }
