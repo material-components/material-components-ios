@@ -31,7 +31,7 @@
 @property(nonatomic, weak, nullable) id <MDCDraggableViewDelegate> delegate;
 
 /**
- * Initializes a GOODraggableView.
+ * Initializes a MDCDraggableView.
  *
  * @param frame Initial frame for the view.
  * @param scrollView A @c UIScrollView contained as a subview of this view. The view will block

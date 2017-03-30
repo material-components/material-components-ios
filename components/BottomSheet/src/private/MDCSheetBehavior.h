@@ -29,7 +29,7 @@
 @property(nonatomic) CGPoint velocity;
 
 /**
- * Initializes a @c GOOSheetBehavior.
+ * Initializes a @c MDCSheetBehavior.
  * @param item The dynamic item (a view) to apply the sheet behavior to.
  */
 - (nonnull instancetype)initWithItem:(nonnull id <UIDynamicItem>)item NS_DESIGNATED_INITIALIZER;
