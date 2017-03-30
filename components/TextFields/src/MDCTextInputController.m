@@ -91,11 +91,11 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 @interface MDCTextInputController ()
 
+@property(nonatomic, strong) NSLayoutConstraint *characterCountCenterY;
+@property(nonatomic, strong) NSLayoutConstraint *characterTrailing;
 @property(nonatomic, copy) NSString *errorText;
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, assign) CGAffineTransform floatingPlaceholderScaleTransform;
-@property(nonatomic, strong) NSLayoutConstraint *characterCountCenterY;
-@property(nonatomic, strong) NSLayoutConstraint *characterTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
 @property(nonatomic, readonly) BOOL isDisplayingErrorText;
@@ -382,24 +382,21 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                      attribute:NSLayoutAttributeTrailing
                                     multiplier:1
                                       constant:-1 * MDCTextInputFullWidthHorizontalPadding];
-
       }
-
 
       self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
     }
+    [NSLayoutConstraint activateConstraints:@[ self.characterCountCenterY, self.characterTrailing, self.placeholderLeading, self.placeholderTrailingCharacterCountLeading, self.placeholderTrailingSuperviewTrailing ]];
 
     [self.textInput.trailingUnderlineLabel
         setContentHuggingPriority:UILayoutPriorityRequired
                           forAxis:UILayoutConstraintAxisVertical];
     [self placeholderYconstraint].priority = MDCTextInputAlmostRequiredPriority;
-    self.characterCountCenterY.active = YES;
-    self.characterTrailing.active = YES;
-    self.placeholderLeading.active = YES;
-    self.placeholderTrailingCharacterCountLeading.active = YES;
-    self.placeholderTrailingSuperviewTrailing.active = YES;
+
   } else {
     [self placeholderYconstraint].priority = UILayoutPriorityDefaultLow;
+
+    // These constraints are deactivated via .active in case they are nil.
     self.characterCountCenterY.active = NO;
     self.characterTrailing.active = NO;
     self.placeholderLeading.active = NO;
