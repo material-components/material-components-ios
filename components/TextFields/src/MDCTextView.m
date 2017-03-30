@@ -83,6 +83,8 @@
                       object:self];
 }
 
+#pragma mark - Layout
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -90,9 +92,13 @@
 }
 
 - (void)updateConstraints {
-  [super updateConstraints];
-
   [_coordinator updateConstraintsOfInput];
+
+  [super updateConstraints];
+}
+
++ (BOOL)requiresConstraintBasedLayout {
+  return YES;
 }
 
 #pragma mark - Properties Implementation

@@ -37,6 +37,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 @property(nonatomic, readonly) BOOL canValidate;
 @property(nonatomic, strong) UILabel *characterLimitView;
+@property(nonatomic, strong) UIView *relativeSuperview;
 @property(nonatomic, strong) UILabel *errorTextView;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
@@ -80,6 +81,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _underlineColor = MDCTextInputUnderlineColor();
 
     // Initialize elements of UI
+    [self setupRelativeSuperview];
     [self setupPlaceholderLabel];
 
     // This has to happen before the underline labels are added to the hierarchy.
@@ -89,6 +91,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self updateColors];
   }
   return self;
+}
+
+// UITextViews are subclasses of UIScrollView and that complicates autolayout. This container is
+// just a box to give a 'real' value to constraints related to superview.
+- (void)setupRelativeSuperview {
+  if ([_textInput isKindOfClass:[UIScrollView class]]) {
+    _relativeSuperview = [[UIView alloc] initWithFrame:CGRectZero];
+    [_textInput addSubview:_relativeSuperview];
+    [_textInput sendSubviewToBack:_relativeSuperview];
+    _relativeSuperview.opaque = NO;
+    _relativeSuperview.backgroundColor = [UIColor clearColor];
+  } else {
+    _relativeSuperview = _textInput;
+  }
 }
 
 - (void)setupPlaceholderLabel {
@@ -135,28 +151,44 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_textInput addSubview:_trailingUnderlineLabel];
 
-  NSString *horizontalString;
-  horizontalString = @"H:|[leading]-4-[trailing]|";
-  NSArray <NSLayoutConstraint *> *constraints = [NSLayoutConstraint
-                                                 constraintsWithVisualFormat:horizontalString
-                                                 options:0
-                                                 metrics:nil
-                                                 views:@{
-                                                         @"leading" : _leadingUnderlineLabel,
-                                                         @"trailing" : _trailingUnderlineLabel
-                                                         }];
-  for (NSLayoutConstraint *constraint in constraints) {
-    constraint.priority = UILayoutPriorityDefaultLow;
-  }
+  NSLayoutConstraint *leadingLeading =
+  [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:_relativeSuperview
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:0];
+  leadingLeading.priority = UILayoutPriorityDefaultLow;
+
+  NSLayoutConstraint *trailingTrailing =
+  [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:_relativeSuperview
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                constant:0];
+  trailingTrailing.priority = UILayoutPriorityDefaultLow;
+
+  NSLayoutConstraint *labelSpacing =
+  [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:_trailingUnderlineLabel
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:0];
+  labelSpacing.priority = UILayoutPriorityDefaultLow;
 
   [NSLayoutConstraint
-      activateConstraints:constraints];
+   activateConstraints:@[ labelSpacing, leadingLeading, trailingTrailing ]];
 
   NSLayoutConstraint *underlineBottom =
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                    attribute:NSLayoutAttributeBottom
                                    relatedBy:NSLayoutRelationEqual
-                                      toItem:_textInput
+                                      toItem:_relativeSuperview
                                    attribute:NSLayoutAttributeBottom
                                   multiplier:1
                                     constant:0];
@@ -175,7 +207,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
                                    attribute:NSLayoutAttributeBottom
                                    relatedBy:NSLayoutRelationEqual
-                                      toItem:_textInput
+                                      toItem:_relativeSuperview
                                    attribute:NSLayoutAttributeBottom
                                   multiplier:1
                                     constant:0];
@@ -221,9 +253,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)layoutSubviewsOfInput {
+  if (self.relativeSuperview != self.textInput) {
+    self.relativeSuperview.frame = self.textInput.bounds;
+    [self.textInput setNeedsUpdateConstraints];
+  }
   self.underlineView.frame = [self underlineViewFrame];
-  [self updatePlaceholderPosition];
+
   [self updatePlaceholderAlpha];
+  [self updateColors];
 }
 
 - (void)updateConstraintsOfInput {
@@ -451,7 +488,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.placeholderTop = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                      attribute:NSLayoutAttributeCenterY
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:_placeholderLabel.superview
+                                                        toItem:_relativeSuperview
                                                      attribute:NSLayoutAttributeCenterY
                                                     multiplier:1
                                                       constant:0];
@@ -462,7 +499,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                    attribute:NSLayoutAttributeLeading
                                    relatedBy:NSLayoutRelationEqual
-                                      toItem:_placeholderLabel.superview
+                                      toItem:_relativeSuperview
                                    attribute:NSLayoutAttributeLeading
                                   multiplier:1
                                     constant:CGRectGetMinX(placeholderRect)];
@@ -470,7 +507,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                    attribute:NSLayoutAttributeTrailing
                                    relatedBy:NSLayoutRelationLessThanOrEqual
-                                      toItem:_placeholderLabel.superview
+                                      toItem:_relativeSuperview
                                    attribute:NSLayoutAttributeTrailing
                                   multiplier:1
                                     constant:8];

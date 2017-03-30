@@ -93,6 +93,8 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
                       object:self];
 }
 
+#pragma mark - Layout
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -100,9 +102,13 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 }
 
 - (void)updateConstraints {
-  [super updateConstraints];
-
   [_coordinator updateConstraintsOfInput];
+
+  [super updateConstraints];
+}
+
++ (BOOL)requiresConstraintBasedLayout {
+  return YES;
 }
 
 - (CGSize)intrinsicContentSize {
