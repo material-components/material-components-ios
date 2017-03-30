@@ -1,3 +1,96 @@
+# 23.0.1
+
+## API diffs
+
+No change in public APIs.
+
+## Component changes
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### Buttons
+
+#### Changes
+
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### CollectionCells
+
+#### Changes
+
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### Collections
+
+#### Changes
+
+* [Fix markdown in styles readme (#1263)](https://github.com/material-components/material-components-ios/commit/0ab539bd92cb0a52b37f6a8fbe2dd3b23cfc8981) (Morgan Chen)
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### Dialogs
+
+#### Changes
+
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Feature Highlight] Fix feature highlight on iOS8 devices (#1281)](https://github.com/material-components/material-components-ios/commit/6f8304e29b51a74db297631900b15018da782527) (Sam Morrison)
+* [[Feature Highlight] Fix leaked CGPaths (thanks static analyzer!) (#1282)](https://github.com/material-components/material-components-ios/commit/5d8a6f9a1f8e1b0b22bb8caf4641ff7701bb7ea4) (Sam Morrison)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### Ink
+
+#### Changes
+
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### NavigationBar
+
+#### Changes
+
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### Snackbar
+
+#### Changes
+
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### Tabs
+
+#### Changes
+
+* [License stanza corrections.](https://github.com/material-components/material-components-ios/commit/258b2919961f6b69c82025db4e3faaa51fd50650) (Will Larche)
+* [Reversing order of snippets.](https://github.com/material-components/material-components-ios/commit/801e4bedd9f95e817fc8230c3a77e105228effbf) (Will Larche)
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
+### Typography
+
+#### Changes
+
+* [Added fallback logic for getting bold/italic fonts so that if there are no fonts then it returns the system bold/italic fonts. (#1277)](https://github.com/material-components/material-components-ios/commit/bbfad4f894333a66099f118ee508df5a8bb45ff4) (Randall Li)
+* [[All] Formatting. (#1269)](https://github.com/material-components/material-components-ios/commit/8c5350de315acf7d3902e93515aae1de9349edab) (Will Larche)
+
 # 23.0.0
 
 ## API diffs
