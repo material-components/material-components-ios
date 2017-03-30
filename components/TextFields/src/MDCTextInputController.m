@@ -42,7 +42,19 @@ static const CGFloat MDCTextInputVerticalPadding = 16.f;
 static const NSTimeInterval MDCTextInputFloatingPlaceholderAnimationDuration = 0.3f;
 static const NSTimeInterval MDCTextInputDividerOutAnimationDuration = 0.266666f;
 
+static NSString *const MDCTextInputControllerTextInputKey = @"MDCTextInputControllerTextInputKey";
 static NSString *const MDCTextInputControllerErrorColorKey = @"MDCTextInputControllerErrorColorKey";
+static NSString *const MDCTextInputControllerUnderlineViewModeKey = @"MDCTextInputControllerUnderlineViewModeKey";
+static NSString *const MDCTextInputControllerCharacterCounterKey = @"MDCTextInputControllerCharacterCounterKey";
+static NSString *const MDCTextInputControllerCharacterCountViewModeKey = @"MDCTextInputControllerCharacterCountViewModeKey";
+static NSString *const MDCTextInputControllerCharacterCountMaxKey = @"MDCTextInputControllerCharacterCountMaxKey";
+static NSString *const MDCTextInputControllerFloatingPlaceholderColorKey = @"MDCTextInputControllerFloatingPlaceholderColorKey";
+static NSString *const MDCTextInputControllerFloatingPlaceholderScaleKey = @"MDCTextInputControllerFloatingPlaceholderScaleKey";
+static NSString *const MDCTextInputControllerHelperTextKey = @"MDCTextInputControllerHelperTextKey";
+static NSString *const MDCTextInputControllerInlinePlaceholderColorKey = @"MDCTextInputControllerInlinePlaceholderColorKey";
+static NSString *const MDCTextInputControllerPresentationStyleKey = @"MDCTextInputControllerPresentationStyleKey";
+static NSString *const MDCTextInputControllerErrorTextKey = @"MDCTextInputControllerErrorTextKey";
+static NSString *const MDCTextInputControllerErrorAccessibilityValueKey = @"MDCTextInputControllerErrorAccessibilityValueKey";
 
 static inline CGFloat MDCFabs(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -130,8 +142,17 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
   if (self) {
-    // commonInitialization sets up defaults in properties that should have been saved in this case.
-    // TODO: (larche) All properties
+    [self commonInitialization];
+
+    _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerTextInputKey];
+    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerErrorColorKey];
+    _underlineViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputControllerUnderlineViewModeKey];
+    _characterCounter = [aDecoder decodeObjectForKey:MDCTextInputControllerCharacterCounterKey];
+    _characterCountMax = [aDecoder decodeIntegerForKey:MDCTextInputControllerCharacterCountMaxKey];
+    _floatingPlaceholderColor = [aDecoder decodeObjectForKey:MDCTextInputControllerFloatingPlaceholderColorKey];
+    _floatingPlaceholderScale = (CGFloat)[aDecoder decodeFloatForKey:MDCTextInputControllerFloatingPlaceholderScaleKey];
+    _inlinePlaceholderColor = [aDecoder decodeObjectForKey:MDCTextInputControllerInlinePlaceholderColorKey];
+    _presentationStyle = (MDCTextInputPresentationStyle)[aDecoder decodeIntegerForKey:MDCTextInputControllerPresentationStyleKey];
   }
 
   return self;
@@ -154,13 +175,39 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerTextInputKey];
   [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerErrorColorKey];
-  // TODO: (larche) All properties
+  [aCoder encodeInteger:self.underlineViewMode forKey:MDCTextInputControllerUnderlineViewModeKey];
+  [aCoder encodeObject:self.characterCounter forKey:MDCTextInputControllerCharacterCounterKey];
+  [aCoder encodeInteger:self.characterCountViewMode forKey:MDCTextInputControllerCharacterCountViewModeKey];
+  [aCoder encodeInteger:self.characterCountMax forKey:MDCTextInputControllerCharacterCountMaxKey];
+  [aCoder encodeObject:self.floatingPlaceholderColor forKey:MDCTextInputControllerFloatingPlaceholderColorKey];
+  [aCoder encodeFloat:(float)self.floatingPlaceholderScale forKey:MDCTextInputControllerFloatingPlaceholderScaleKey];
+  [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerHelperTextKey];
+  [aCoder encodeObject:self.inlinePlaceholderColor forKey:MDCTextInputControllerInlinePlaceholderColorKey];
+  [aCoder encodeInteger:self.presentationStyle forKey:MDCTextInputControllerPresentationStyleKey];
+  [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerErrorTextKey];
+  [aCoder encodeObject:self.errorAccessibilityValue forKey:MDCTextInputControllerErrorAccessibilityValueKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextInputController *copy = [[[self class] alloc] init];
-  // TODO: (larche) All properties
+
+  copy.textInput = self.textInput; //Just a pointer value copy
+  copy.errorColor = self.errorColor.copy;
+  copy.underlineViewMode = self.underlineViewMode;
+  copy.characterCounter = self.characterCounter; //Just a pointer value copy
+  copy.characterCountViewMode = self.characterCountViewMode;
+  copy.characterCountMax = self.characterCountMax;
+  copy.floatingPlaceholderColor = self.floatingPlaceholderColor.copy;
+  copy.floatingPlaceholderScale = self.floatingPlaceholderScale;
+  copy.helperText = self.helperText.copy;
+  copy.inlinePlaceholderColor = self.inlinePlaceholderColor.copy;
+  copy.presentationStyle = self.presentationStyle;
+  copy.errorText = self.errorText.copy;
+  copy.errorAccessibilityValue = self.errorAccessibilityValue.copy;
+  copy.previousLeadingText = self.previousLeadingText.copy;
+  copy.previousPlaceholderColor = self.previousPlaceholderColor.copy;
   return copy;
 }
 
