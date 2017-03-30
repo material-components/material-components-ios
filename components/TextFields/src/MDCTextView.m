@@ -89,6 +89,12 @@
   [_coordinator layoutSubviewsOfInput];
 }
 
+- (void)updateConstraints {
+  [super updateConstraints];
+
+  [_coordinator updateConstraintsOfInput];
+}
+
 #pragma mark - Properties Implementation
 
 - (NSAttributedString *)attributedPlaceholder {

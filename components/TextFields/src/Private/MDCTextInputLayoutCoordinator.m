@@ -226,6 +226,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updatePlaceholderAlpha];
 }
 
+- (void)updateConstraintsOfInput {
+  [self updatePlaceholderPosition];
+}
+
 - (UIEdgeInsets)textContainerInset {
   UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
 

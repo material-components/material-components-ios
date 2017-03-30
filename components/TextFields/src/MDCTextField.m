@@ -99,6 +99,12 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   [_coordinator layoutSubviewsOfInput];
 }
 
+- (void)updateConstraints {
+  [super updateConstraints];
+
+  [_coordinator updateConstraintsOfInput];
+}
+
 - (CGSize)intrinsicContentSize {
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;

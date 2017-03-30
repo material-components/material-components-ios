@@ -66,6 +66,9 @@
 /** Layout views on the controlled text field with animations disabled. */
 - (void)layoutSubviewsOfInput;
 
+/** Mirror of UIView's updateConstraints(). */
+- (void)updateConstraintsOfInput;
+
 /** Perform all updates when editing starts. */
 - (void)didBeginEditing;
 
