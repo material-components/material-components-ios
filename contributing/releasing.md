@@ -41,6 +41,7 @@ Releasing is important enough that we want to start with a clean slate:
 Verify that there are no existing release-candidate branches either locally or on origin:
 
     git fetch -a
+    git remote prune origin
     git branch -a | grep release-candidate
 
 Run the following command to cut a release:
