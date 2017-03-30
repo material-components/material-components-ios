@@ -165,18 +165,6 @@
   _coordinator.underlineHeight = underlineHeight;
 }
 
-#pragma mark - MDCControlledTextField
-
-- (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
-  return UIEdgeInsetsInsetRect(bounds, self.textContainerInset);
-}
-
-#pragma mark - UIAccessibility
-
-- (NSString *)accessibilityValue {
-  return [self.text length] ? self.text : self.placeholder;
-}
-
 #pragma mark - UITextView Property Overrides
 
 - (void)setText:(NSString *)text {
@@ -197,7 +185,19 @@
   _coordinator.enabled = editable;
 }
 
-#pragma mark - UITextViewDelegate
+#pragma mark - MDCControlledTextField
+
+- (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
+  return UIEdgeInsetsInsetRect(bounds, self.textContainerInset);
+}
+
+#pragma mark - UIAccessibility
+
+- (NSString *)accessibilityValue {
+  return [self.text length] ? self.text : self.placeholder;
+}
+
+#pragma mark - UITextView Notification Observation
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
   self.editing = YES;

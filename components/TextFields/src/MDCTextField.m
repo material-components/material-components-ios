@@ -129,12 +129,12 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   _coordinator.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
 }
 
-- (UILabel *)placeholderLabel {
-  return _coordinator.placeholderLabel;
-}
-
 - (UILabel *)leadingUnderlineLabel {
   return _coordinator.leadingUnderlineLabel;
+}
+
+- (UILabel *)placeholderLabel {
+  return _coordinator.placeholderLabel;
 }
 
 - (UIColor *)textColor {
