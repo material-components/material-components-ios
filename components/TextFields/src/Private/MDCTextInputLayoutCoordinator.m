@@ -75,9 +75,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     _textInput = textInput;
 
+    _cursorColor = MDCTextInputCursorColor();
     _textColor = MDCTextInputTextColor();
     _underlineColor = MDCTextInputUnderlineColor();
-    _cursorColor = MDCTextInputCursorColor();
 
     // Initialize elements of UI
     [self setupPlaceholderLabel];
@@ -491,6 +491,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
             self.placeholderTrailing ];
 }
 
+- (void)updateColors {
+  self.textInput.tintColor = self.cursorColor;
+  self.textInput.textColor = self.textColor;
+
+  self.underlineView.color = self.underlineColor;
+}
+
 - (void)updatePlaceholderAlpha {
   if (!self.hidesPlaceholderOnInput) {
     return;
@@ -504,15 +511,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     return 0;
   }
   return [label systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-}
-
-#pragma mark - Private
-
-- (void)updateColors {
-  self.textInput.tintColor = self.cursorColor;
-  self.textInput.textColor = self.textColor;
-
-  self.underlineView.color = self.underlineColor;
 }
 
 @end
