@@ -17,68 +17,53 @@
 
 #import "MDCTextField.h"
 
-@protocol MDCControlledTextInput <MDCTextInput>
+static const CGFloat MDCTextInputUnderlineVerticalPadding;
 
-@property(nonatomic, nullable, strong) UIFont *font;
+@protocol MDCControlledTextInput <MDCTextInput>
 
 /** The text rect for the text field that fits it's contents given the provided bounds. */
 - (CGRect)textRectThatFitsForBounds:(CGRect)bounds;
 
-@optional
-
-/** Vertical padding between the text and the underline view. Defaults to 8.0f if not implemented.
- */
-- (CGFloat)underlineVerticalPadding;
-
 @end
 
-#pragma mark - New API
+/** A controller for common traits shared by text inputs. */
+@interface MDCTextInputLayoutCoordinator : NSObject <MDCTextInput, NSCopying, NSCoding>
 
-/** A controller for common traits shared by text field controls. */
-@interface MDCTextInputLayoutCoordinator : NSObject <MDCTextInput>
+/** The color of the caret indicating where inputted characters will be placed (in the text.) */
+@property(nonatomic, nullable, strong) UIColor *cursorColor;
 
 /** Whether the text field is enabled. */
 @property(nonatomic, getter=isEnabled) BOOL enabled;
 
-/** Size of the character limit view. */
-@property(nonatomic, readonly) CGSize characterLimitViewSize;
-
+/** The color of the input's text. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
-@property(nonatomic, nullable, strong) UIColor *cursorColor;
-
-/** Inset set on the text container based upon the text field's style. */
+/** Inset set on the text container based upon the text input's style. */
 @property(nonatomic, readonly) UIEdgeInsets textContainerInset;
 
-/** Designated initializer with the controlled text field and whether it is multiline. */
+/** Designated initializer with the controlled text input. */
 - (nonnull instancetype)initWithTextInput:(UIView<MDCControlledTextInput> *_Nonnull)textInput
-                              isMultiline:(BOOL)isMultiline NS_DESIGNATED_INITIALIZER;
+  NS_DESIGNATED_INITIALIZER;
 
-/** Please use initWithTextField:isMultiline:. */
+/** Please use initWithTextInput:. */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
-/** Called by the controlled text field to notify the controller that it's text was set. */
-- (void)didSetText;
+/** Text began being edited event. */
+- (void)didBeginEditing;
 
-/** Called by the controlled text field to notify the controller that it's font was set. */
+/** Text did change event. */
+- (void)didChange;
+
+/** Called by the controlled text input to notify the controller that it's font was set. */
 - (void)didSetFont;
 
-/** Layout views on the controlled text field with animations disabled. */
+/** Called by the controlled text input to notify the controller that it's text was set manually. */
+- (void)didSetText;
+
+/** Mirror of UIView's layoutSubviews(). */
 - (void)layoutSubviewsOfInput;
 
 /** Mirror of UIView's updateConstraints(). */
 - (void)updateConstraintsOfInput;
-
-/** Perform all updates when editing starts. */
-- (void)didBeginEditing;
-
-/** Perform all updates when editing ends. */
-- (void)didEndEditing;
-
-/** Perform all updates when the text field changes. */
-- (void)didChange;
-
-/** Asks auto layout for required height for font and/or text. */
-- (CGFloat)underlineLabelRequiredHeight:(UILabel *_Nullable)label;
 
 @end

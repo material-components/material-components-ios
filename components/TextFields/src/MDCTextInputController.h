@@ -25,7 +25,7 @@
 
 /**
  Presentation styles for a text input. The style determines specific aspects of the text
- input, such as sizing, placeholder placement and behavior, layout, etc.
+ input such as sizing, placeholder placement and behavior, layout, etc.
  */
 typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
   /**
@@ -53,27 +53,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  */
 @interface MDCTextInputController : NSObject <MDCTextFieldPositioningDelegate, NSCoding, NSCopying>
 
-/** The text input the behavior is managing. */
-@property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
-
-/**
- The color used to denote error state in the underline, the errorText's label, the plceholder and
- the character count label.
-
- Default is red.
- */
-@property(nonatomic, nullable, strong) UIColor *errorColor UI_APPEARANCE_SELECTOR;
-
-/**
- Controls when the underline will be shown.
-
- The underline is an overlay that can be hidden depending on the editing state of the input text.
-
- Default is UITextFieldViewModeAlways.
- */
-@property(nonatomic, assign) UITextFieldViewMode underlineViewMode NS_SWIFT_NAME(underlineMode)
-    UI_APPEARANCE_SELECTOR;
-
 /**
  The character counter. Override to use a custom character counter.
 
@@ -82,15 +61,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  */
 @property(nonatomic, null_resettable, weak) IBInspectable id<MDCTextInputCharacterCounter>
     characterCounter;
-
-/**
- Controls when the character count will be shown and therefore whether character counting determines
- error state.
-
- Default is UITextFieldViewModeNever.
- */
-@property(nonatomic, assign) UITextFieldViewMode characterCountViewMode NS_SWIFT_NAME(characterMode)
-    ;
 
 /**
  The character count maximum for the text input. A label under the input counts characters entered
@@ -110,6 +80,23 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @property(nonatomic, assign) IBInspectable NSUInteger characterCountMax;
 
 /**
+ Controls when the character count will be shown and therefore whether character counting determines
+ error state.
+
+ Default is UITextFieldViewModeNever.
+ */
+@property(nonatomic, assign) UITextFieldViewMode characterCountViewMode NS_SWIFT_NAME(characterMode)
+    ;
+
+/**
+ The color used to denote error state in the underline, the errorText's label, the placeholder and
+ the character count label.
+
+ Default is red.
+ */
+@property(nonatomic, nullable, strong) UIColor *errorColor UI_APPEARANCE_SELECTOR;
+
+/**
  The color applied to the placeholder when floating. However, when in error state, it will be
  colored with the error color.
 
@@ -127,7 +114,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @property(nonatomic, assign) CGFloat floatingPlaceholderScale NS_SWIFT_NAME(floatingScale)
     UI_APPEARANCE_SELECTOR;
 
-#pragma mark - New API
 /**
  Text displayed in the leading underline label.
 
@@ -135,7 +121,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  not shown.
  */
 @property(nonatomic, nullable, strong) IBInspectable NSString *helperText NS_SWIFT_NAME(helper);
-#pragma mark - Approved API
 
 /**
  The color applied to the placeholder when inline (not floating).
@@ -145,17 +130,27 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor NS_SWIFT_NAME(inlineColor)
     UI_APPEARANCE_SELECTOR;
 
-/**
- The presentation style of the text input.
-
- Default is MDCTextInputPresentationStyleDefault.
- */
+/** The behavioral style applied to the text input. */
 @property(nonatomic, assign)
     MDCTextInputPresentationStyle presentationStyle NS_SWIFT_NAME(presentation);
 
+/** The text input the controller is affecting. */
+@property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
+
+/**
+ Controls when the underline will be shown.
+
+ The underline is an overlay that can be hidden depending on the editing state of the input text.
+
+ Default is UITextFieldViewModeAlways.
+ */
+@property(nonatomic, assign) UITextFieldViewMode underlineViewMode NS_SWIFT_NAME(underlineMode)
+UI_APPEARANCE_SELECTOR;
+
 /**
  Convenience init. Never fails.
- @param input An MDCTextInput this behavior will manage.
+
+ @param input An MDCTextInput this controller will manage.
  */
 - (nonnull instancetype)initWithTextInput:(nullable UIView<MDCTextInput> *)input
     NS_SWIFT_NAME(init(input:));
@@ -172,11 +167,11 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  When errorText != nil, the text input is in an error state:
  - The error text appears in the underline text with the errorColor as text color.
- - The input rectangle's underline, placeholder and character is colored with the errorColor.
+ - The input rectangle's underline, placeholder and character are colored to the errorColor.
 
  When errorText == nil, the text input is not in error state:
  - The underline text is restored to the color and value it was.
- - The underline color and width is restored.
+ - The underline color and height is restored.
  - The placeholder text is restored to the color it was.
  - The character count text is restored to the color it was.
 

@@ -16,17 +16,32 @@
 
 #import "MDCTextFieldArt.h"
 #import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputLayoutCoordinator.h"
 
-static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
+#import "MaterialTypography.h"
+
+NSString *const MDCTextFieldClearButtonColorKey = @"MDCTextFieldClearButtonColorKey";
+NSString *const MDCTextFieldClearButtonImageKey = @"MDCTextFieldClearButtonImageKey";
+NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
+NSString *const MDCTextFieldPositioningDelegateKey = @"MDCTextFieldPositioningDelegateKey";
+
 static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
+static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
+static const CGFloat MDCTextInputUnderlineVerticalSpacing = 8.f;
+
+static inline CGFloat MDCCeil(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return ceil(value);
+#else
+  return ceilf(value);
+#endif
+}
 
 @interface MDCTextField () <MDCControlledTextInput>
 
-@property(nonatomic, strong) MDCTextInputLayoutCoordinator *coordinator;
 @property(nonatomic, strong) UIImage *clearButtonImage;
+@property(nonatomic, strong) MDCTextInputLayoutCoordinator *coordinator;
 @property(nonatomic, readonly, weak) UIButton *internalClearButton;
 
 @end
@@ -42,7 +57,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   if (self) {
     [self commonMDCTextFieldInitialization];
   }
-
   return self;
 }
 
@@ -50,8 +64,12 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCTextFieldInitialization];
-  }
 
+    _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonImageKey];
+    _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonColorKey];
+    _coordinator = [aDecoder decodeObjectForKey:MDCTextFieldCoordinatorKey];
+    _positioningDelegate = [aDecoder decodeObjectForKey:MDCTextFieldPositioningDelegateKey];
+  }
   return self;
 }
 
@@ -66,12 +84,32 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 - (void)dealloc {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter removeObserver:self name:UITextFieldTextDidBeginEditingNotification object:self];
-  [defaultCenter removeObserver:self name:UITextFieldTextDidEndEditingNotification object:self];
   [defaultCenter removeObserver:self name:UITextFieldTextDidChangeNotification object:self];
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  [aCoder encodeObject:self.clearButtonColor forKey:MDCTextFieldClearButtonColorKey];
+  [aCoder encodeObject:self.clearButtonImage forKey:MDCTextFieldClearButtonImageKey];
+  [aCoder encodeConditionalObject:self.coordinator forKey:MDCTextFieldCoordinatorKey];
+  [aCoder encodeObject:self.positioningDelegate forKey:MDCTextFieldPositioningDelegateKey];
+}
+
+- (instancetype)copyWithZone:(NSZone *)zone {
+  MDCTextField *copy = [[[self class] alloc] init];
+
+  copy.clearButtonColor = self.clearButtonColor.copy;
+  copy.clearButtonImage = self.clearButtonImage.copy;
+
+  // Just a pointer value copies.
+  copy.coordinator = self.coordinator;
+  copy.positioningDelegate = self.positioningDelegate;
+
+  return copy;
+}
+
 - (void)commonMDCTextFieldInitialization {
-  _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self isMultiline:NO];
+  _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
 
   self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
@@ -84,16 +122,25 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
                         name:UITextFieldTextDidBeginEditingNotification
                       object:self];
   [defaultCenter addObserver:self
-                    selector:@selector(textFieldDidEndEditing:)
-                        name:UITextFieldTextDidEndEditingNotification
-                      object:self];
-  [defaultCenter addObserver:self
                     selector:@selector(textFieldDidChange:)
                         name:UITextFieldTextDidChangeNotification
                       object:self];
 }
 
 #pragma mark - Layout
+
+- (CGSize)intrinsicContentSize {
+  CGSize boundingSize = CGSizeZero;
+  boundingSize.width = UIViewNoIntrinsicMetric;
+
+  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) +
+  2 * MDCTextInputUnderlineVerticalSpacing +
+  MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
+      MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
+  boundingSize.height = height;
+
+  return boundingSize;
+}
 
 - (void)layoutSubviews {
   [super layoutSubviews];
@@ -109,19 +156,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
 + (BOOL)requiresConstraintBasedLayout {
   return YES;
-}
-
-- (CGSize)intrinsicContentSize {
-  CGSize boundingSize = CGSizeZero;
-  boundingSize.width = UIViewNoIntrinsicMetric;
-
-  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) +
-                   2 * MDCTextInputUnderlineVerticalSpacing +
-                   MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
-                       MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
-  boundingSize.height = height;
-
-  return boundingSize;
 }
 
 #pragma mark - Properties Implementation
@@ -184,20 +218,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
 #pragma mark - UITextField Property Overrides
 
-- (void)setText:(NSString *)text {
-  [super setText:text];
-  [_coordinator didSetText];
-}
-
-- (NSString *)placeholder {
-  return self.coordinator.placeholder;
-}
-
-- (void)setPlaceholder:(NSString *)placeholder {
-  [super setPlaceholder:placeholder];
-  [self.coordinator setPlaceholder:placeholder];
-}
-
 - (NSAttributedString *)attributedPlaceholder {
   return _coordinator.attributedPlaceholder;
 }
@@ -241,6 +261,20 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
     [toVisit removeObjectAtIndex:0];
   }
   return nil;
+}
+
+- (NSString *)placeholder {
+  return self.coordinator.placeholder;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder {
+  [super setPlaceholder:placeholder];
+  [self.coordinator setPlaceholder:placeholder];
+}
+
+- (void)setText:(NSString *)text {
+  [super setText:text];
+  [_coordinator didSetText];
 }
 
 #pragma mark - UITextField Overrides
@@ -364,10 +398,6 @@ static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 
 - (void)textFieldDidBeginEditing:(NSNotification *)note {
   [_coordinator didBeginEditing];
-}
-
-- (void)textFieldDidEndEditing:(NSNotification *)note {
-  [_coordinator didEndEditing];
 }
 
 - (void)textFieldDidChange:(NSNotification *)note {

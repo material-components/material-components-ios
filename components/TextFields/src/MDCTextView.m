@@ -16,12 +16,14 @@
 
 #import "MDCTextView.h"
 
+#import "MDCTextInputCharacterCounter.h"
+#import "MDCTextInputLayoutCoordinator.h"
+
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-#import "MDCTextInput+Internal.h"
-#import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputLayoutCoordinator.h"
+NSString *const MDCTextViewCoordinatorKey = @"MDCTextViewCoordinatorKey";
+NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
 
 @interface MDCTextView () <MDCControlledTextInput>
 
@@ -44,10 +46,13 @@
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCTextViewInitialization];
-  }
 
+    [aDecoder decodeObjectForKey:MDCTextViewCoordinatorKey];
+    [aDecoder decodeObjectForKey:MDCTextViewLayoutDelegateKey];
+  }
   return self;
 }
+
 - (void)dealloc {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter removeObserver:self name:UITextViewTextDidBeginEditingNotification object:self];
@@ -55,13 +60,27 @@
   [defaultCenter removeObserver:self name:UITextViewTextDidChangeNotification object:self];
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [super encodeWithCoder:aCoder];
+  [aCoder encodeConditionalObject:self.coordinator forKey:MDCTextViewCoordinatorKey];
+  [aCoder encodeConditionalObject:self.layoutDelegate forKey:MDCTextViewLayoutDelegateKey];
+}
+
+- (instancetype)copyWithZone:(NSZone *)zone {
+  MDCTextView *copy = [[[self class] alloc] init];
+
+  // Just a pointer value copies.
+  copy.coordinator = self.coordinator;
+  copy.layoutDelegate = self.layoutDelegate;
+  return copy;
+}
+
 - (void)commonMDCTextViewInitialization {
   self.scrollEnabled = NO;
   self.textContainer.lineFragmentPadding = 0;
 
-  _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self isMultiline:YES];
+  _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
 
-  self.tintColor = MDCTextInputCursorColor();
   self.textColor = _coordinator.textColor;
   self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
@@ -99,6 +118,26 @@
 
 + (BOOL)requiresConstraintBasedLayout {
   return YES;
+}
+
+#pragma mark - UITextView Property Overrides
+
+- (void)setText:(NSString *)text {
+  [super setText:text];
+  [_coordinator didSetText];
+}
+
+- (void)setFont:(UIFont *)font {
+  if (self.font != font) {
+    [super setFont:font];
+    self.textContainerInset = UIEdgeInsetsZero;
+    [_coordinator didSetFont];
+  }
+}
+
+- (void)setEditable:(BOOL)editable {
+  [super setEditable:editable];
+  _coordinator.enabled = editable;
 }
 
 #pragma mark - Properties Implementation
@@ -177,26 +216,6 @@
   _coordinator.underlineHeight = underlineHeight;
 }
 
-#pragma mark - UITextView Property Overrides
-
-- (void)setText:(NSString *)text {
-  [super setText:text];
-  [_coordinator didSetText];
-}
-
-- (void)setFont:(UIFont *)font {
-  if (self.font != font) {
-    [super setFont:font];
-    self.textContainerInset = UIEdgeInsetsZero;
-    [_coordinator didSetFont];
-  }
-}
-
-- (void)setEditable:(BOOL)editable {
-  [super setEditable:editable];
-  _coordinator.enabled = editable;
-}
-
 #pragma mark - MDCControlledTextField
 
 - (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
@@ -218,7 +237,6 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
   self.editing = NO;
-  [_coordinator didEndEditing];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {

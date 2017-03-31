@@ -16,7 +16,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTextInput+Internal.h"
+static inline CGFloat MDCFloor(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return floor(value);
+#else
+  return floorf(value);
+#endif
+}
 
 #pragma mark - Drawing
 

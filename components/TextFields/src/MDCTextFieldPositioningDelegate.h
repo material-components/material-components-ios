@@ -18,11 +18,12 @@
 
 #pragma mark - New API
 
-@protocol MDCTextFieldPositioningDelegate <NSObject>
+@protocol MDCTextFieldPositioningDelegate <NSObject, NSCopying, NSCoding>
 
 @optional
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets;
+
 @end

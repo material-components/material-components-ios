@@ -18,11 +18,13 @@
 
 #import "MaterialPalettes.h"
 
-#import "MDCTextInput+Internal.h"
+NSString *const MDCTextInputUnderlineColorKey = @"";
+NSString *const MDCTextInputUnderlineEnabledKey = @"";
+NSString *const MDCTextInputUnderlineLineHeightKey = @"";
 
 static const CGFloat MDCTextInputUnderlineDefaultHeight = 1.f;
 
-// TODO: (larche): Make disabled color programmable?
+// TODO: (larche): Make disabled color parameterized?
 static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
@@ -36,11 +38,45 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _enabled = YES;
     _lineHeight = MDCTextInputUnderlineDefaultHeight;
 
-    [self setClipsToBounds:NO];
-    [self updateUnderline];
+    [self commonMDCUnderlineViewInitialization];
   }
-
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+  self = [super initWithCoder:coder];
+  if (self) {
+    _color = [coder decodeObjectForKey:MDCTextInputUnderlineColorKey];
+    _enabled = [coder decodeBoolForKey:MDCTextInputUnderlineEnabledKey];
+    _lineHeight = (CGFloat)[coder decodeFloatForKey:MDCTextInputUnderlineLineHeightKey];
+
+    [self commonMDCUnderlineViewInitialization];
+  }
+  return self;
+}
+
+- (void)commonMDCUnderlineViewInitialization {
+  [self setClipsToBounds:NO];
+  [self updateUnderline];
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+  [super encodeWithCoder:coder];
+  [coder encodeObject:self.color forKey:MDCTextInputUnderlineColorKey];
+  [coder encodeBool:self.enabled forKey:MDCTextInputUnderlineEnabledKey];
+  [coder encodeFloat:(float)self.lineHeight forKey:MDCTextInputUnderlineLineHeightKey];
+}
+
+- (instancetype)copyWithZone:(NSZone *)zone {
+  MDCTextInputUnderlineView *copy = [[[self class] alloc] initWithFrame:self.frame];
+
+  copy.color = self.color.copy;
+  copy.enabled = self.enabled;
+  copy.lineHeight = self.lineHeight;
+
+  return copy;
 }
 
 - (void)layoutSubviews {
@@ -49,7 +85,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return CGSizeMake(size.width, MDCTextInputUnderlineHeight);
+  return CGSizeMake(size.width, self.lineHeight);
 }
 
 - (CGSize)intrinsicContentSize {

@@ -23,16 +23,16 @@
 
  Instead of relying on the default character count which is naive (counts each character regardless
  of context), this object can instead choose to do sophisticated counting (ie: ignoring whitespace,
- ignoring url strings, etc).
+ ignoring url strings, ignoring usernames, etc).
  */
-@protocol MDCTextInputCharacterCounter <NSObject>
+@protocol MDCTextInputCharacterCounter <NSObject, NSCopying, NSCoding>
 
 /**
  Returns the count of characters for the text field.
 
- @param textField the text field.
+ @param textInput   The text input to count from.
 
- @return count of characters.
+ @return            The count of characters.
  */
 - (NSUInteger)characterCountForTextInput:(nullable UIView<MDCTextInput> *)textInput;
 

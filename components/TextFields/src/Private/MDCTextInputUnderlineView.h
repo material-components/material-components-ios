@@ -17,16 +17,15 @@
 #import <UIKit/UIKit.h>
 
 /**
- A view that draws the underline effect for an instance of GOOTextField. The underline has three
- possible states enabled && unfocused, enabled && focused, diabled, each with different colors and
- style.
+ A view that draws the underline effect for an instance of MDCTextInput. The underline has 2
+ possible states enabled and disabled. Disabled shows a dotted line instead of solid.
  */
-@interface MDCTextInputUnderlineView : UIView
+@interface MDCTextInputUnderlineView : UIView <NSCopying, NSCoding>
 
 @property(nonatomic, strong) UIColor *color;
-@property(nonatomic, assign) BOOL enabled;
 @property(nonatomic, strong) CAShapeLayer *disabledUnderline;
-@property(nonatomic, strong) CAShapeLayer *underline;
+@property(nonatomic, assign) BOOL enabled;
 @property(nonatomic, assign) CGFloat lineHeight;
+@property(nonatomic, strong) CAShapeLayer *underline;
 
 @end

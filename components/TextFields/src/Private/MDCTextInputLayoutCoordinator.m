@@ -17,17 +17,33 @@
 
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInputLayoutCoordinator.h"
-
-#import "MDCTextInput+Internal.h"
 #import "MDCTextInputCharacterCounter.h"
+#import "MDCTextInputLayoutCoordinator.h"
 #import "MDCTextInputUnderlineView.h"
-#import "MaterialAnimationTiming.h"
 
-NSString *const MDCTextInputValidatorErrorColorKey = @"MDCTextInputValidatorErrorColor";
-NSString *const MDCTextInputValidatorErrorTextKey = @"MDCTextInputValidatorErrorText";
-NSString *const MDCTextInputValidatorAXErrorTextKey = @"MDCTextInputValidatorAXErrorText";
+#import "MaterialAnimationTiming.h"
+#import "MaterialPalettes.h"
+#import "MaterialTypography.h"
+
+NSString *const MDCTextInputCoordinatorCharacterRelativeSuperviewKey = @"MDCTextInputCoordinatorCharacterRelativeSuperviewKey";
+NSString *const MDCTextInputCoordinatorHidesPlaceholderKey = @"MDCTextInputCoordinatorHidesPlaceholderKey";
+NSString *const MDCTextInputCoordinatorInputKey = @"MDCTextInputCoordinatorInputKey";
+NSString *const MDCTextInputCoordinatorLeadingLabelKey = @"MDCTextInputCoordinatorLeadingLabelKey";
+NSString *const MDCTextInputCoordinatorPlaceholderLabelKey = @"MDCTextInputCoordinatorPlaceholderLabelKey";
+NSString *const MDCTextInputCoordinatorTextColorKey = @"MDCTextInputCoordinatorTextColorKey";
+NSString *const MDCTextInputCoordinatorTrailingLabelKey = @"MDCTextInputCoordinatorTrailingLabelKey";
+NSString *const MDCTextInputCoordinatorUnderlineViewKey = @"MDCTextInputCoordinatorUnderlineViewKey";
+
 static const CGFloat MDCTextInputVerticalPadding = 16.f;
+static const CGFloat MDCTextInputUnderlineVerticalPadding = 16.f;
+
+static inline UIColor * _Nonnull MDCTextInputCursorColor() {
+  return [MDCPalette indigoPalette].tint500;
+}
+
+static inline UIColor *MDCTextInputTextColor() {
+  return [UIColor colorWithWhite:0 alpha:[MDCTypography body1FontOpacity]];
+}
 
 static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
@@ -35,16 +51,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 @interface MDCTextInputLayoutCoordinator ()
 
-@property(nonatomic, readonly) BOOL canValidate;
-@property(nonatomic, strong) UILabel *characterLimitView;
-@property(nonatomic, strong) UIView *relativeSuperview;
-@property(nonatomic, strong) UILabel *errorTextView;
+// TODO: (larche): Check all properties and methods are needed.
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeftViewTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingRightViewLeading;
+@property(nonatomic, strong) UIView *relativeSuperview;
 @property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
 @property(nonatomic, strong) MDCTextInputUnderlineView *underlineView;
 
@@ -70,8 +84,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return nil;
 }
 
-- (nonnull instancetype)initWithTextInput:(UIView<MDCControlledTextInput> *_Nonnull)textInput
-                              isMultiline:(BOOL)isMultiline {
+- (nonnull instancetype)initWithTextInput:(UIView<MDCControlledTextInput> *_Nonnull)textInput {
   self = [super init];
   if (self) {
     _textInput = textInput;
@@ -91,6 +104,42 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self updateColors];
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  UIView <MDCControlledTextInput> *input = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorInputKey];
+
+  self = [self initWithTextInput:input];
+  if (self) {
+    _hidesPlaceholderOnInput = [aDecoder decodeBoolForKey:MDCTextInputCoordinatorHidesPlaceholderKey];
+    _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorLeadingLabelKey];
+    _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
+    _relativeSuperview = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
+    _textColor = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
+    _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTrailingLabelKey];
+    _underlineView = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorUnderlineViewKey];
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeBool:self.hidesPlaceholderOnInput forKey:MDCTextInputCoordinatorHidesPlaceholderKey];
+  [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputCoordinatorLeadingLabelKey];
+  [aCoder encodeObject:self.placeholderLabel forKey:MDCTextInputCoordinatorPlaceholderLabelKey];
+  [aCoder encodeObject:self.relativeSuperview forKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
+  [aCoder encodeObject:self.textColor forKey:MDCTextInputCoordinatorTextColorKey];
+  [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputCoordinatorTrailingLabelKey];
+  [aCoder encodeObject:self.underlineView forKey:MDCTextInputCoordinatorUnderlineViewKey];
+}
+
+- (instancetype)copyWithZone:(NSZone *)zone {
+  MDCTextInputLayoutCoordinator *copy = [[[self class] alloc] init];
+
+  copy.relativeSuperview = self.relativeSuperview.copy;
+  copy.textColor = self.textColor.copy;
+  copy.underlineView = self.underlineView.copy;
+
+  return copy;
 }
 
 // UITextViews are subclasses of UIScrollView and that complicates autolayout. This container is
@@ -240,18 +289,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self.textInput sendSubviewToBack:_underlineView];
 }
 
-- (void)didSetText {
-  [self didChange];
-  [self.textInput setNeedsLayout];
-}
-
-- (void)didSetFont {
-  UIFont *font = self.textInput.font;
-  self.placeholderLabel.font = font;
-
-  [self updatePlaceholderPosition];
-}
-
 - (void)layoutSubviewsOfInput {
   if (self.relativeSuperview != self.textInput) {
     self.relativeSuperview.frame = self.textInput.bounds;
@@ -267,38 +304,28 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updatePlaceholderPosition];
 }
 
-- (UIEdgeInsets)textContainerInset {
-  UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
-
-  if (![self.textInput isKindOfClass:[UITextField class]]) {
-    return textContainerInset;
-  }
-
-  MDCTextField *textField = (MDCTextField *)self.textInput;
-
-  textContainerInset.top = MDCTextInputVerticalPadding;
-  textContainerInset.bottom = MDCTextInputVerticalPadding;
-
-  if ([textField.positioningDelegate respondsToSelector:@selector(textContainerInset:)]) {
-    return [textField.positioningDelegate textContainerInset:textContainerInset];
-  }
-  return textContainerInset;
-}
+#pragma mark - Text Input Events
 
 - (void)didBeginEditing {
-  // TODO: (larche) Check this removal of underlineViewMode.
-
   // TODO: (larche) Maybe add getting rid of placeholder when typing by default. OR leave it on for
   // autocomplete.
-}
-
-- (void)didEndEditing {
-  // TODO: (larche) Check this removal of underlineViewMode.
 }
 
 - (void)didChange {
   [self updatePlaceholderAlpha];
   [self updatePlaceholderPosition];
+}
+
+- (void)didSetFont {
+  UIFont *font = self.textInput.font;
+  self.placeholderLabel.font = font;
+
+  [self updatePlaceholderPosition];
+}
+
+- (void)didSetText {
+  [self didChange];
+  [self.textInput setNeedsLayout];
 }
 
 #pragma mark - Underline View Implementation
@@ -314,6 +341,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 }
 
+- (CGFloat)underlineHeight {
+  return self.underlineView.lineHeight;
+}
+
+- (void)setUnderlineHeight:(CGFloat)underlineHeight {
+  self.underlineView.lineHeight = underlineHeight;
+}
+
 - (CGRect)underlineViewFrame {
   CGRect bounds = self.textInput.bounds;
   if (CGRectIsEmpty(bounds)) {
@@ -325,32 +360,21 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGRect textRect = [self.textInput textRectThatFitsForBounds:bounds];
 
   CGFloat underlineVerticalPadding = MDCTextInputUnderlineVerticalPadding;
-  if ([self.textInput respondsToSelector:@selector(underlineVerticalPadding)]) {
-    underlineVerticalPadding = self.textInput.underlineVerticalPadding;
-  }
 
   if ([self.textInput isKindOfClass:[UITextView class]]) {
     // For multiline text fields, the textRectThatFitsForBounds is essentially the text container
     // and we can just measure from the bottom.
     underlineFrame.origin.y =
-        CGRectGetMaxY(textRect) + underlineVerticalPadding - underlineFrame.size.height;
+    CGRectGetMaxY(textRect) + underlineVerticalPadding - underlineFrame.size.height;
   } else {
     // For single line text fields, the textRectThatFitsForBounds is a best guess at the text
     // rect for the line of text, which may be rect adjusted for pixel boundaries.  Measure from the
     // center to get the best underline placement.
     underlineFrame.origin.y = CGRectGetMidY(textRect) + (self.textInput.font.pointSize / 2.0f) +
-                              underlineVerticalPadding - underlineFrame.size.height;
+    underlineVerticalPadding - underlineFrame.size.height;
   }
 
   return underlineFrame;
-}
-
-- (CGFloat)underlineHeight {
-  return self.underlineView.lineHeight;
-}
-
-- (void)setUnderlineHeight:(CGFloat)underlineHeight {
-  self.underlineView.lineHeight = underlineHeight;
 }
 
 #pragma mark - Properties Implementation
@@ -359,7 +383,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
     // TODO: (larche) Return string attributes also. Tho I feel like that should come from the
-    // placeholderLabel
+    // placeholderLabel itself somehow.
     NSAttributedString *constructedString =
         [[NSAttributedString alloc] initWithString:(NSString *)placeholderString attributes:nil];
     return constructedString;
@@ -373,10 +397,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.placeholderLabel.text = attributedPlaceholder.string;
   // TODO: (larche) Read string attributes also. Tho I feel like that should come from the
-  // placeholderLabel
+  // placeholderLabel itself somehow.
 
   [self updatePlaceholderAlpha];
-  [self.textInput setNeedsLayout];
+  [self.textInput setNeedsUpdateConstraints];
 }
 
 - (void)setEnabled:(BOOL)enabled {
@@ -420,21 +444,34 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 }
 
-// TODO: (larche) Check this removal of setUnderlineViewMode.
-- (void)updatePlaceholderPosition {
-  if (self.placeholderLabel.layer.animationKeys.count > 0) {
-    // We don't need to get in the middle of animations.
-    return;
+- (UIEdgeInsets)textContainerInset {
+  UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
+
+  if (![self.textInput isKindOfClass:[UITextField class]]) {
+    return textContainerInset;
   }
 
-  CGRect destinationFrame = [self placeholderDefaultPositionFrame];
+  MDCTextField *textField = (MDCTextField *)self.textInput;
 
-  self.placeholderHeight.constant = CGRectGetHeight(destinationFrame);
+  textContainerInset.top = MDCTextInputVerticalPadding;
+  textContainerInset.bottom = MDCTextInputVerticalPadding;
 
-  [self updatePlaceholderPositionOverlays];
+  if ([textField.positioningDelegate respondsToSelector:@selector(textContainerInset:)]) {
+    return [textField.positioningDelegate textContainerInset:textContainerInset];
+  }
+  return textContainerInset;
 }
 
-- (void)updatePlaceholderPositionOverlays {
+#pragma mark - Layout
+
+- (void)updateColors {
+  self.textInput.tintColor = self.cursorColor;
+  self.textInput.textColor = self.textColor;
+
+  self.underlineView.color = self.underlineColor;
+}
+
+- (void)updateOverlaysPosition {
   if (![self.textInput isKindOfClass:[MDCTextField class]]) {
     return;
   }
@@ -469,6 +506,27 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   } else if (!textField.rightView.superview && self.placeholderTrailingRightViewLeading) {
     self.placeholderTrailingRightViewLeading = nil;
   }
+}
+
+- (void)updatePlaceholderAlpha {
+  if (!self.hidesPlaceholderOnInput) {
+    return;
+  }
+  CGFloat opacity = self.textInput.text.length ? 0 : 1;
+  self.placeholderLabel.alpha = opacity;
+}
+
+- (void)updatePlaceholderPosition {
+  if (self.placeholderLabel.layer.animationKeys.count > 0) {
+    // We don't need to get in the middle of animations.
+    return;
+  }
+
+  CGRect destinationFrame = [self placeholderDefaultPositionFrame];
+
+  self.placeholderHeight.constant = CGRectGetHeight(destinationFrame);
+
+  [self updateOverlaysPosition];
 }
 
 // TODO: (larche) Replace with only needed information or remove altogether.
@@ -527,27 +585,4 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return @[ self.placeholderHeight, self.placeholderTop, self.placeholderLeading,
             self.placeholderTrailing ];
 }
-
-- (void)updateColors {
-  self.textInput.tintColor = self.cursorColor;
-  self.textInput.textColor = self.textColor;
-
-  self.underlineView.color = self.underlineColor;
-}
-
-- (void)updatePlaceholderAlpha {
-  if (!self.hidesPlaceholderOnInput) {
-    return;
-  }
-  CGFloat opacity = self.textInput.text.length ? 0 : 1;
-  self.placeholderLabel.alpha = opacity;
-}
-
-- (CGFloat)underlineLabelRequiredHeight:(UILabel *)label {
-  if (!label.font) {
-    return 0;
-  }
-  return [label systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-}
-
 @end

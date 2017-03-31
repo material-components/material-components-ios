@@ -20,6 +20,22 @@
 
 @implementation MDCTextInputAllCharactersCounter
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super init];
+  if (self) {
+  }
+  return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+  MDCTextInputAllCharactersCounter *copy = [[[self class] alloc] init];
+  return copy;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  
+}
+
 - (NSUInteger)characterCountForTextInput:(UIView<MDCTextInput> *)textInput {
   return textInput.text.length;
 }

@@ -18,15 +18,16 @@
 
 #import "MDCTextInput.h"
 
-#pragma mark - New API
 @protocol MDCTextFieldPositioningDelegate;
-#pragma mark - Approved API
 
 /**
   Material Design themed single line text input.
   https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
 @interface MDCTextField : UITextField <MDCTextInput>
+
+/** MDCTextField does not implement borders that conform to UITextBorderStyle. */
+@property(nonatomic) UITextBorderStyle borderStyle NS_UNAVAILABLE;
 
 /**
   Color for the "clear the text" button image.
@@ -37,13 +38,13 @@
  */
 @property(nonatomic, nullable, strong) UIColor *clearButtonColor UI_APPEARANCE_SELECTOR;
 
-/** MDCTextField does not implement borders that conform to UITextBorderStyle. */
-@property(nonatomic) UITextBorderStyle borderStyle NS_UNAVAILABLE;
-
-#pragma mark - New API
+/**
+ An optional delegate that can be queried for important layout information like the editing rect,
+ text rect, etc.
+ */
 @property(nonatomic, nullable, weak) id<MDCTextFieldPositioningDelegate> positioningDelegate;
 
+/** A convenience initializer for inputs that have left views. */
 - (_Nonnull instancetype)initWithLeftView:(nullable UIView *)leftView;
-#pragma mark - Approved API
 
 @end
