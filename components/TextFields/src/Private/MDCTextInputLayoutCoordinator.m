@@ -35,7 +35,7 @@ NSString *const MDCTextInputCoordinatorTrailingLabelKey = @"MDCTextInputCoordina
 NSString *const MDCTextInputCoordinatorUnderlineViewKey = @"MDCTextInputCoordinatorUnderlineViewKey";
 
 static const CGFloat MDCTextInputVerticalPadding = 16.f;
-static const CGFloat MDCTextInputUnderlineVerticalPadding = 16.f;
+const CGFloat MDCTextInputUnderlineVerticalPadding = 16.f;
 
 static inline UIColor * _Nonnull MDCTextInputCursorColor() {
   return [MDCPalette indigoPalette].tint500;

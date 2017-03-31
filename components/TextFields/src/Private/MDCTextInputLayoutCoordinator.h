@@ -17,7 +17,7 @@
 
 #import "MDCTextField.h"
 
-static const CGFloat MDCTextInputUnderlineVerticalPadding;
+extern const CGFloat MDCTextInputUnderlineVerticalPadding;
 
 @protocol MDCControlledTextInput <MDCTextInput>
 
