@@ -127,7 +127,7 @@ class TextInputTests: XCTestCase {
     textView.leadingLabel.text = testLeading
     XCTAssertEqual(textView.leadingLabel.text, testLeading)
 
-    let testTrailing = "NN/NN"
+    let testTrailing = "NN / NN"
     textView.trailingLabel.text = testTrailing
     XCTAssertEqual(textView.trailingLabel.text, testTrailing)
 
