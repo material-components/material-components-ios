@@ -305,6 +305,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.underlineView.frame = [self underlineViewFrame];
 
   [self updatePlaceholderAlpha];
+  [self updatePlaceholderPosition];
   [self updateColors];
 }
 
