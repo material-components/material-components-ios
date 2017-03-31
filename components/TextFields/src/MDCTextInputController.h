@@ -130,6 +130,18 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 @property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor NS_SWIFT_NAME(inlineColor)
     UI_APPEARANCE_SELECTOR;
 
+/*
+ Indicates whether the alert contents should automatically update their font when the device’s
+ UIContentSizeCategory changes.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
 /** The behavioral style applied to the text input. */
 @property(nonatomic, assign)
     MDCTextInputPresentationStyle presentationStyle NS_SWIFT_NAME(presentation);

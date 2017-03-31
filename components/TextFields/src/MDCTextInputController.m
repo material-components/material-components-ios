@@ -101,7 +101,10 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   return 1;
 }
 
-@interface MDCTextInputController ()
+@interface MDCTextInputController () {
+  BOOL _mdc_adjustsFontForContentSizeCategory;
+}
+
 
 @property(nonatomic, strong) NSLayoutConstraint *characterCountCenterY;
 @property(nonatomic, strong) NSLayoutConstraint *characterTrailing;
@@ -162,6 +165,10 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   self = [self init];
   if (self) {
     _textInput = textInput;
+
+    // This controller will handle Dynamic Type and all fonts for the text input
+    _textInput.mdc_adjustsFontForContentSizeCategory = NO;
+    
     if ([_textInput isKindOfClass:[UITextField class]]) {
       ((MDCTextField *)_textInput).positioningDelegate = self;
     }
@@ -222,6 +229,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   _floatingPlaceholderScaleTransform = CGAffineTransformIdentity;
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
   _underlineViewMode = UITextFieldViewModeWhileEditing;
+  [self mdc_setAdjustsFontForContentSizeCategory:YES];
 }
 
 - (void)subscribeForNotifications {
@@ -254,205 +262,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   [defaultCenter removeObserver:self
                            name:UITextFieldTextDidEndEditingNotification
                          object:_textInput];
-}
-
-#pragma mark - Properties Implementation
-
-- (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
-  if (_characterCountViewMode != characterCountViewMode) {
-    _characterCountViewMode = characterCountViewMode;
-
-    [self updateLayout];
-  }
-}
-
-- (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
-  _errorAccessibilityValue = errorAccessibilityValue.copy;
-}
-
-- (void)setErrorText:(NSString *)errorText {
-  _errorText = errorText.copy;
-}
-
-- (void)setHelperText:(NSString *)helperText {
-  if (self.isDisplayingErrorText) {
-    self.previousLeadingText = helperText;
-  } else {
-    self.textInput.leadingUnderlineLabel.text = helperText;
-  }
-}
-
-- (NSString *)helperText {
-  if (self.isDisplayingErrorText) {
-    return self.previousLeadingText;
-  } else {
-    return self.textInput.leadingUnderlineLabel.text;
-  }
-}
-
-- (BOOL)isDisplayingErrorText {
-  return self.errorText != nil;
-}
-
-- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
-  if (_presentationStyle != presentationStyle) {
-    _presentationStyle = presentationStyle;
-
-    [self updateLayout];
-
-    self.textInput.hidesPlaceholderOnInput =
-        _presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder;
-    [self.textInput setNeedsLayout];
-  }
-}
-
-- (void)setPreviousLeadingText:(NSString *)previousLeadingText {
-  _previousLeadingText = previousLeadingText.copy;
-}
-
-- (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
-  _previousPlaceholderColor = previousPlaceholderColor.copy;
-}
-
-- (void)setTextInput:(UIView<MDCTextInput> *)textInput {
-  if (_textInput != textInput) {
-    [self unsubscribeFromNotifications];
-    _textInput = textInput;
-    if ([_textInput isKindOfClass:[MDCTextField class]]) {
-      ((MDCTextField *)_textInput).positioningDelegate = self;
-    }
-
-    _placeholderDefaultPositionFrame = textInput.placeholderLabel.frame;
-    [self subscribeForNotifications];
-    [self updateLayout];
-  }
-}
-
-- (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
-  if (_underlineViewMode != underlineViewMode) {
-    _underlineViewMode = underlineViewMode;
-
-    [self updateLayout];
-  }
-}
-
-#pragma mark - Layout for Presentation Style
-
-- (void)updateLayout {
-  if (!_textInput) {
-    return;
-  }
-
-  [self updateConstraints];
-  [self updateLeadingUnderlineLabel];
-  [self updateTrailingUnderlineLabel];
-  [self updateUnderline];
-}
-
-- (void)updateConstraints {
-  if (!self.heightConstraint) {
-    self.heightConstraint =
-        [NSLayoutConstraint constraintWithItem:self.textInput
-                                     attribute:NSLayoutAttributeHeight
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeHeight
-                                    multiplier:1
-                                      constant:MDCCeil(self.textInput.font.lineHeight) +
-                                               2 * MDCTextInputFullWidthVerticalPadding];
-    self.heightConstraint.active = YES;
-  }
-
-  if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-
-    // Multi Line
-    if ([self.textInput isKindOfClass:[UITextView class]]) {
-      self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
-
-      [self.textInput.leadingUnderlineLabel
-          setContentHuggingPriority:UILayoutPriorityRequired
-                            forAxis:UILayoutConstraintAxisVertical];
-      [self.textInput.leadingUnderlineLabel
-          setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                          forAxis:UILayoutConstraintAxisVertical];
-
-      [self.textInput.trailingUnderlineLabel
-          setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                          forAxis:UILayoutConstraintAxisVertical];
-    } else {
-      // Single Line
-      if (!self.characterCountCenterY) {
-        self.characterCountCenterY =
-            [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
-                                         attribute:NSLayoutAttributeCenterY
-                                         relatedBy:NSLayoutRelationEqual
-                                            toItem:self.textInput
-                                         attribute:NSLayoutAttributeCenterY
-                                        multiplier:1
-                                          constant:0];
-      }
-      if (!self.characterTrailing) {
-        self.characterTrailing =
-        [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
-                                     attribute:NSLayoutAttributeTrailing
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeTrailing
-                                    multiplier:1
-                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
-      }
-      if (!self.placeholderLeading) {
-        self.placeholderLeading =
-          [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                       attribute:NSLayoutAttributeLeading
-                                       relatedBy:NSLayoutRelationEqual
-                                          toItem:self.textInput
-                                       attribute:NSLayoutAttributeLeading
-                                      multiplier:1
-                                        constant:MDCTextInputFullWidthHorizontalPadding];
-
-      }
-      if (!self.placeholderTrailingCharacterCountLeading) {
-        self.placeholderTrailingCharacterCountLeading =
-        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeTrailing
-                                     relatedBy:NSLayoutRelationLessThanOrEqual
-                                        toItem:self.textInput.trailingUnderlineLabel
-                                     attribute:NSLayoutAttributeLeading
-                                    multiplier:1
-                                      constant:-1 * MDCTextInputFullWidthHorizontalInnerPadding];
-
-      }
-      if (!self.placeholderTrailingSuperviewTrailing) {
-        self.placeholderTrailingSuperviewTrailing =
-        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeTrailing
-                                     relatedBy:NSLayoutRelationLessThanOrEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeTrailing
-                                    multiplier:1
-                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
-      }
-
-      self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
-    }
-    [NSLayoutConstraint activateConstraints:@[ self.characterCountCenterY, self.characterTrailing, self.placeholderLeading, self.placeholderTrailingCharacterCountLeading, self.placeholderTrailingSuperviewTrailing ]];
-
-    [self.textInput.trailingUnderlineLabel
-        setContentHuggingPriority:UILayoutPriorityRequired
-                          forAxis:UILayoutConstraintAxisVertical];
-    [self placeholderYconstraint].priority = MDCTextInputAlmostRequiredPriority;
-
-  } else {
-    [self placeholderYconstraint].priority = UILayoutPriorityDefaultLow;
-
-    // These constraints are deactivated via .active in case they are nil.
-    self.characterCountCenterY.active = NO;
-    self.characterTrailing.active = NO;
-    self.placeholderLeading.active = NO;
-    self.placeholderTrailingCharacterCountLeading.active = NO;
-    self.placeholderTrailingSuperviewTrailing.active = NO;
-  }
 }
 
 #pragma mark - Character Max Implementation
@@ -499,18 +308,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 #pragma mark - Placeholder Customization
 
-- (void)updatePlaceholderAlpha {
-  CGFloat opacity = 1;
-
-  BOOL hidesPlaceholderOnInput = NO;
-  if (self.textInput.text.length &&
-      (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder)) {
-    opacity = 0;
-    hidesPlaceholderOnInput = YES;
-  }
-
-  self.textInput.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
-  self.textInput.placeholderLabel.alpha = opacity;
+- (void)updatePlaceholder {
+  self.textInput.placeholderLabel.font =
+  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 }
 
 - (BOOL)isPlaceholderUp {
@@ -698,40 +498,215 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   }
 }
 
-#pragma mark - UITextField Notification Observation
+#pragma mark - Properties Implementation
 
-- (void)textFieldDidBeginEditing:(NSNotification *)note {
-  [CATransaction begin];
-  [CATransaction setAnimationDuration:MDCTextInputFloatingPlaceholderUpAnimationDuration];
-  [CATransaction
-      setAnimationTimingFunction:[CAMediaTimingFunction
-                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+- (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
+  if (_characterCountViewMode != characterCountViewMode) {
+    _characterCountViewMode = characterCountViewMode;
 
-  [self updateLayout];
-
-  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-    [self animatePlaceholderToUp:YES];
+    [self updateLayout];
   }
-  [CATransaction commit];
 }
 
-- (void)textFieldDidChange:(NSNotification *)note {
-  [self updateLayout];
+- (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
+  _errorAccessibilityValue = errorAccessibilityValue.copy;
 }
 
-- (void)textFieldDidEndEditing:(NSNotification *)note {
-  [CATransaction begin];
-  [CATransaction setAnimationDuration:MDCTextInputFloatingPlaceholderDownAnimationDuration];
-  [CATransaction
-      setAnimationTimingFunction:[CAMediaTimingFunction
-                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+- (void)setErrorText:(NSString *)errorText {
+  _errorText = errorText.copy;
+}
 
-  [self updateLayout];
-
-  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-    [self animatePlaceholderToUp:NO];
+- (void)setHelperText:(NSString *)helperText {
+  if (self.isDisplayingErrorText) {
+    self.previousLeadingText = helperText;
+  } else {
+    self.textInput.leadingUnderlineLabel.text = helperText;
   }
-  [CATransaction commit];
+}
+
+- (NSString *)helperText {
+  if (self.isDisplayingErrorText) {
+    return self.previousLeadingText;
+  } else {
+    return self.textInput.leadingUnderlineLabel.text;
+  }
+}
+
+- (BOOL)isDisplayingErrorText {
+  return self.errorText != nil;
+}
+
+- (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
+  if (_presentationStyle != presentationStyle) {
+    _presentationStyle = presentationStyle;
+
+    [self updateLayout];
+
+    self.textInput.hidesPlaceholderOnInput =
+    _presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder;
+    [self.textInput setNeedsLayout];
+  }
+}
+
+- (void)setPreviousLeadingText:(NSString *)previousLeadingText {
+  _previousLeadingText = previousLeadingText.copy;
+}
+
+- (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
+  _previousPlaceholderColor = previousPlaceholderColor.copy;
+}
+
+- (void)setTextInput:(UIView<MDCTextInput> *)textInput {
+  if (_textInput != textInput) {
+    [self unsubscribeFromNotifications];
+    _textInput = textInput;
+    if ([_textInput isKindOfClass:[MDCTextField class]]) {
+      ((MDCTextField *)_textInput).positioningDelegate = self;
+    }
+
+    _placeholderDefaultPositionFrame = textInput.placeholderLabel.frame;
+    [self subscribeForNotifications];
+    [self updateLayout];
+  }
+}
+
+- (void)setUnderlineViewMode:(UITextFieldViewMode)underlineViewMode {
+  if (_underlineViewMode != underlineViewMode) {
+    _underlineViewMode = underlineViewMode;
+
+    [self updateLayout];
+  }
+}
+
+#pragma mark - Layout
+
+- (void)updateLayout {
+  if (!_textInput) {
+    return;
+  }
+
+  [self updatePlaceholder];
+  [self updateConstraints];
+  [self updateLeadingUnderlineLabel];
+  [self updateTrailingUnderlineLabel];
+  [self updateUnderline];
+}
+
+- (void)updateConstraints {
+  if (!self.heightConstraint) {
+    self.heightConstraint =
+    [NSLayoutConstraint constraintWithItem:self.textInput
+                                 attribute:NSLayoutAttributeHeight
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.textInput.placeholderLabel
+                                 attribute:NSLayoutAttributeHeight
+                                multiplier:1
+                                  constant:MDCCeil(self.textInput.font.lineHeight) +
+     2 * MDCTextInputFullWidthVerticalPadding];
+    self.heightConstraint.active = YES;
+  }
+
+  if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+
+    // Multi Line
+    if ([self.textInput isKindOfClass:[UITextView class]]) {
+      self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
+
+      [self.textInput.leadingUnderlineLabel
+       setContentHuggingPriority:UILayoutPriorityRequired
+       forAxis:UILayoutConstraintAxisVertical];
+      [self.textInput.leadingUnderlineLabel
+       setContentCompressionResistancePriority:UILayoutPriorityRequired
+       forAxis:UILayoutConstraintAxisVertical];
+
+      [self.textInput.trailingUnderlineLabel
+       setContentCompressionResistancePriority:UILayoutPriorityRequired
+       forAxis:UILayoutConstraintAxisVertical];
+    } else {
+      // Single Line
+      if (!self.characterCountCenterY) {
+        self.characterCountCenterY =
+        [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                     attribute:NSLayoutAttributeCenterY
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textInput
+                                     attribute:NSLayoutAttributeCenterY
+                                    multiplier:1
+                                      constant:0];
+      }
+      if (!self.characterTrailing) {
+        self.characterTrailing =
+        [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textInput
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
+      }
+      if (!self.placeholderLeading) {
+        self.placeholderLeading =
+        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                     attribute:NSLayoutAttributeLeading
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textInput
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:MDCTextInputFullWidthHorizontalPadding];
+
+      }
+      if (!self.placeholderTrailingCharacterCountLeading) {
+        self.placeholderTrailingCharacterCountLeading =
+        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:self.textInput.trailingUnderlineLabel
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:-1 * MDCTextInputFullWidthHorizontalInnerPadding];
+
+      }
+      if (!self.placeholderTrailingSuperviewTrailing) {
+        self.placeholderTrailingSuperviewTrailing =
+        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:self.textInput
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
+      }
+
+      self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
+    }
+    [NSLayoutConstraint activateConstraints:@[ self.characterCountCenterY, self.characterTrailing, self.placeholderLeading, self.placeholderTrailingCharacterCountLeading, self.placeholderTrailingSuperviewTrailing ]];
+
+    [self.textInput.trailingUnderlineLabel
+     setContentHuggingPriority:UILayoutPriorityRequired
+     forAxis:UILayoutConstraintAxisVertical];
+    [self placeholderYconstraint].priority = MDCTextInputAlmostRequiredPriority;
+
+  } else {
+    [self placeholderYconstraint].priority = UILayoutPriorityDefaultLow;
+
+    // These constraints are deactivated via .active in case they are nil.
+    self.characterCountCenterY.active = NO;
+    self.characterTrailing.active = NO;
+    self.placeholderLeading.active = NO;
+    self.placeholderTrailingCharacterCountLeading.active = NO;
+    self.placeholderTrailingSuperviewTrailing.active = NO;
+  }
+}
+
+- (void)updateFontsForDynamicType {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    self.textInput.font = textFont;
+
+    [self updateLeadingUnderlineLabel];
+    [self updateTrailingUnderlineLabel];
+    [self updatePlaceholder];
+  }
 }
 
 #pragma mark - MDCTextFieldPositioningDelegate
@@ -814,6 +789,42 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   return textContainerInset;
 }
 
+#pragma mark - UITextField Notification Observation
+
+- (void)textFieldDidBeginEditing:(NSNotification *)note {
+  [CATransaction begin];
+  [CATransaction setAnimationDuration:MDCTextInputFloatingPlaceholderUpAnimationDuration];
+  [CATransaction
+   setAnimationTimingFunction:[CAMediaTimingFunction
+                               mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+
+  [self updateLayout];
+
+  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
+    [self animatePlaceholderToUp:YES];
+  }
+  [CATransaction commit];
+}
+
+- (void)textFieldDidChange:(NSNotification *)note {
+  [self updateLayout];
+}
+
+- (void)textFieldDidEndEditing:(NSNotification *)note {
+  [CATransaction begin];
+  [CATransaction setAnimationDuration:MDCTextInputFloatingPlaceholderDownAnimationDuration];
+  [CATransaction
+   setAnimationTimingFunction:[CAMediaTimingFunction
+                               mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+
+  [self updateLayout];
+
+  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
+    [self animatePlaceholderToUp:NO];
+  }
+  [CATransaction commit];
+}
+
 #pragma mark - Public API
 
 - (void)setErrorText:(NSString *)errorText
@@ -864,6 +875,35 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     // Simply sending a layout change notification does not seem to
     UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
   }
+}
+
+#pragma mark - Accessibility
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [self updateFontsForDynamicType];
+  }
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+  }
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self updateFontsForDynamicType];
 }
 
 @end

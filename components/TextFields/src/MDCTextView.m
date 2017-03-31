@@ -102,24 +102,6 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
                       object:self];
 }
 
-#pragma mark - Layout
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-
-  [_coordinator layoutSubviewsOfInput];
-}
-
-- (void)updateConstraints {
-  [_coordinator updateConstraintsOfInput];
-
-  [super updateConstraints];
-}
-
-+ (BOOL)requiresConstraintBasedLayout {
-  return YES;
-}
-
 #pragma mark - UITextView Property Overrides
 
 - (void)setText:(NSString *)text {
@@ -216,16 +198,28 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
   _coordinator.underlineHeight = underlineHeight;
 }
 
+#pragma mark - Layout
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  [_coordinator layoutSubviewsOfInput];
+}
+
+- (void)updateConstraints {
+  [_coordinator updateConstraintsOfInput];
+
+  [super updateConstraints];
+}
+
++ (BOOL)requiresConstraintBasedLayout {
+  return YES;
+}
+
 #pragma mark - MDCControlledTextField
 
 - (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
   return UIEdgeInsetsInsetRect(bounds, self.textContainerInset);
-}
-
-#pragma mark - UIAccessibility
-
-- (NSString *)accessibilityValue {
-  return [self.text length] ? self.text : self.placeholder;
 }
 
 #pragma mark - UITextView Notification Observation
@@ -248,6 +242,20 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
     id<MDCTextViewLayoutDelegate> delegate = (id<MDCTextViewLayoutDelegate>)self.delegate;
     [delegate textView:self didChangeContentSize:requiredSize];
   }
+}
+
+#pragma mark - Accessibility
+
+- (NSString *)accessibilityValue {
+  return [self.text length] ? self.text : self.placeholder;
+}
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _coordinator.mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  [_coordinator mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 
 @end

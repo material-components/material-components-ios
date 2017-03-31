@@ -29,6 +29,7 @@ NSString *const MDCTextInputCoordinatorCharacterRelativeSuperviewKey = @"MDCText
 NSString *const MDCTextInputCoordinatorHidesPlaceholderKey = @"MDCTextInputCoordinatorHidesPlaceholderKey";
 NSString *const MDCTextInputCoordinatorInputKey = @"MDCTextInputCoordinatorInputKey";
 NSString *const MDCTextInputCoordinatorLeadingLabelKey = @"MDCTextInputCoordinatorLeadingLabelKey";
+NSString *const MDCTextInputCoordinatorMDCAdjustsFontsKey = @"MDCTextInputCoordinatorMDCAdjustsFontsKey";
 NSString *const MDCTextInputCoordinatorPlaceholderLabelKey = @"MDCTextInputCoordinatorPlaceholderLabelKey";
 NSString *const MDCTextInputCoordinatorTextColorKey = @"MDCTextInputCoordinatorTextColorKey";
 NSString *const MDCTextInputCoordinatorTrailingLabelKey = @"MDCTextInputCoordinatorTrailingLabelKey";
@@ -49,7 +50,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
 
-@interface MDCTextInputLayoutCoordinator ()
+@interface MDCTextInputLayoutCoordinator () {
+  BOOL _mdc_adjustsFontForContentSizeCategory;
+}
 
 // TODO: (larche): Check all properties and methods are needed.
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
@@ -93,6 +96,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _textColor = MDCTextInputTextColor();
     _underlineColor = MDCTextInputUnderlineColor();
 
+    self.textInput.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+
     // Initialize elements of UI
     [self setupRelativeSuperview];
     [self setupPlaceholderLabel];
@@ -113,6 +118,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     _hidesPlaceholderOnInput = [aDecoder decodeBoolForKey:MDCTextInputCoordinatorHidesPlaceholderKey];
     _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorLeadingLabelKey];
+    _mdc_adjustsFontForContentSizeCategory = [aDecoder decodeBoolForKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
     _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
     _relativeSuperview = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
@@ -125,6 +131,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeBool:self.hidesPlaceholderOnInput forKey:MDCTextInputCoordinatorHidesPlaceholderKey];
   [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputCoordinatorLeadingLabelKey];
+  [aCoder encodeBool:self.mdc_adjustsFontForContentSizeCategory forKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
   [aCoder encodeObject:self.placeholderLabel forKey:MDCTextInputCoordinatorPlaceholderLabelKey];
   [aCoder encodeObject:self.relativeSuperview forKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
   [aCoder encodeObject:self.textColor forKey:MDCTextInputCoordinatorTextColorKey];
@@ -135,6 +142,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextInputLayoutCoordinator *copy = [[[self class] alloc] init];
 
+  copy.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   copy.relativeSuperview = self.relativeSuperview.copy;
   copy.textColor = self.textColor.copy;
   copy.underlineView = self.underlineView.copy;
@@ -304,30 +312,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updatePlaceholderPosition];
 }
 
-#pragma mark - Text Input Events
-
-- (void)didBeginEditing {
-  // TODO: (larche) Maybe add getting rid of placeholder when typing by default. OR leave it on for
-  // autocomplete.
-}
-
-- (void)didChange {
-  [self updatePlaceholderAlpha];
-  [self updatePlaceholderPosition];
-}
-
-- (void)didSetFont {
-  UIFont *font = self.textInput.font;
-  self.placeholderLabel.font = font;
-
-  [self updatePlaceholderPosition];
-}
-
-- (void)didSetText {
-  [self didChange];
-  [self.textInput setNeedsLayout];
-}
-
 #pragma mark - Underline View Implementation
 
 - (void)setUnderlineColor:(UIColor *)underlineColor {
@@ -471,6 +455,16 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.underlineView.color = self.underlineColor;
 }
 
+- (void)updateFontsForDynamicType {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    self.textInput.font = textFont;
+    self.leadingUnderlineLabel.font = textFont;
+    self.trailingUnderlineLabel.font = textFont;
+    self.placeholderLabel.font = textFont;
+  }
+}
+
 - (void)updateOverlaysPosition {
   if (![self.textInput isKindOfClass:[MDCTextField class]]) {
     return;
@@ -585,4 +579,58 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return @[ self.placeholderHeight, self.placeholderTop, self.placeholderLeading,
             self.placeholderTrailing ];
 }
+
+#pragma mark - Text Input Events
+
+- (void)didBeginEditing {
+  // TODO: (larche) Maybe add getting rid of placeholder when typing by default. OR leave it on for
+  // autocomplete.
+}
+
+- (void)didChange {
+  [self updatePlaceholderAlpha];
+  [self updatePlaceholderPosition];
+}
+
+- (void)didSetFont {
+  UIFont *font = self.textInput.font;
+  self.placeholderLabel.font = font;
+
+  [self updatePlaceholderPosition];
+}
+
+- (void)didSetText {
+  [self didChange];
+  [self.textInput setNeedsLayout];
+}
+
+#pragma mark - Accessibility
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+
+  if (adjusts) {
+    [self updateFontsForDynamicType];
+  }
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+  }
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self updateFontsForDynamicType];
+}
+
 @end

@@ -61,6 +61,18 @@
 @property(nonatomic, nonnull, strong, readonly) IBInspectable UILabel *leadingUnderlineLabel
 NS_SWIFT_NAME(leadingLabel);
 
+/*
+ Indicates whether the alert contents should automatically update their font when the device’s
+ UIContentSizeCategory changes.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
 /**
  The text string of the placeholder label.
  Bringing convenience api found in UITextField to all MDCTextInputs. Maps to the .text of the

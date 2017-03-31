@@ -111,8 +111,6 @@ static inline CGFloat MDCCeil(CGFloat value) {
 - (void)commonMDCTextFieldInitialization {
   _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
 
-  self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-
   // Set the clear button color to black with 54% opacity.
   [self setClearButtonColor:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
 
@@ -127,35 +125,18 @@ static inline CGFloat MDCCeil(CGFloat value) {
                       object:self];
 }
 
-#pragma mark - Layout
+#pragma mark - Clear Button Image
 
-- (CGSize)intrinsicContentSize {
-  CGSize boundingSize = CGSizeZero;
-  boundingSize.width = UIViewNoIntrinsicMetric;
+- (UIImage *)drawnClearButtonImage {
+  CGFloat scale = [UIScreen mainScreen].scale;
+  CGRect bounds = CGRectMake(0, 0, MDCClearButtonImageSquareSize, MDCClearButtonImageSquareSize);
+  UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
+  [self.clearButtonColor setFill];
+  [MDCPathForClearButtonImageFrame(bounds) fill];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
 
-  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) +
-  2 * MDCTextInputUnderlineVerticalSpacing +
-  MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
-      MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
-  boundingSize.height = height;
-
-  return boundingSize;
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-
-  [_coordinator layoutSubviewsOfInput];
-}
-
-- (void)updateConstraints {
-  [_coordinator updateConstraintsOfInput];
-
-  [super updateConstraints];
-}
-
-+ (BOOL)requiresConstraintBasedLayout {
-  return YES;
+  return image;
 }
 
 #pragma mark - Properties Implementation
@@ -380,28 +361,35 @@ static inline CGFloat MDCCeil(CGFloat value) {
   // it here.
 }
 
-#pragma mark - Clear Button Image
+#pragma mark - Layout
 
-- (UIImage *)drawnClearButtonImage {
-  CGFloat scale = [UIScreen mainScreen].scale;
-  CGRect bounds = CGRectMake(0, 0, MDCClearButtonImageSquareSize, MDCClearButtonImageSquareSize);
-  UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
-  [self.clearButtonColor setFill];
-  [MDCPathForClearButtonImageFrame(bounds) fill];
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
+- (CGSize)intrinsicContentSize {
+  CGSize boundingSize = CGSizeZero;
+  boundingSize.width = UIViewNoIntrinsicMetric;
 
-  return image;
+  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) +
+  2 * MDCTextInputUnderlineVerticalSpacing +
+  MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
+      MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
+  boundingSize.height = height;
+
+  return boundingSize;
 }
 
-#pragma mark - UITextField Notification Observation
+- (void)layoutSubviews {
+  [super layoutSubviews];
 
-- (void)textFieldDidBeginEditing:(NSNotification *)note {
-  [_coordinator didBeginEditing];
+  [_coordinator layoutSubviewsOfInput];
 }
 
-- (void)textFieldDidChange:(NSNotification *)note {
-  [_coordinator didChange];
+- (void)updateConstraints {
+  [_coordinator updateConstraintsOfInput];
+
+  [super updateConstraints];
+}
+
++ (BOOL)requiresConstraintBasedLayout {
+  return YES;
 }
 
 #pragma mark - MDCControlledTextInput
@@ -424,6 +412,26 @@ static inline CGFloat MDCCeil(CGFloat value) {
   }
   textRect.size.height = fontHeight;
   return CGRectIntegral(textRect);
+}
+
+#pragma mark - UITextField Notification Observation
+
+- (void)textFieldDidBeginEditing:(NSNotification *)note {
+  [_coordinator didBeginEditing];
+}
+
+- (void)textFieldDidChange:(NSNotification *)note {
+  [_coordinator didChange];
+}
+
+#pragma mark - Accessibility
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _coordinator.mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  [_coordinator mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 
 @end
