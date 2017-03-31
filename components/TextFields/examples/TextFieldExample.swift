@@ -33,7 +33,7 @@ final class TextFieldSwiftExample: UIViewController {
     let controlLabel = UILabel()
     controlLabel.translatesAutoresizingMaskIntoConstraints = false
     controlLabel.text = "Options"
-    controlLabel.font = MDCTypography.headlineFont()
+    controlLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     controlLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
     return controlLabel
   }()
@@ -42,8 +42,9 @@ final class TextFieldSwiftExample: UIViewController {
     let singleLabel = UILabel()
     singleLabel.translatesAutoresizingMaskIntoConstraints = false
     singleLabel.text = "Single Line Text Fields"
-    singleLabel.font = MDCTypography.headlineFont()
+    singleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     singleLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
+    singleLabel.numberOfLines = 0
     return singleLabel
   }()
   var allTextFieldControllers = [MDCTextInputController]()
@@ -52,9 +53,30 @@ final class TextFieldSwiftExample: UIViewController {
     let multiLabel = UILabel()
     multiLabel.translatesAutoresizingMaskIntoConstraints = false
     multiLabel.text = "Multi Line Text Views"
-    multiLabel.font = MDCTypography.headlineFont()
+    multiLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     multiLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
+    multiLabel.numberOfLines = 0
     return multiLabel
+  }()
+
+  let errorLabel: UILabel = {
+    let errorLabel = UILabel()
+    errorLabel.translatesAutoresizingMaskIntoConstraints = false
+    errorLabel.text = "In Error:"
+    errorLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    errorLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
+    errorLabel.numberOfLines = 0
+    return errorLabel
+  }()
+
+  let helperLabel: UILabel = {
+    let helperLabel = UILabel()
+    helperLabel.translatesAutoresizingMaskIntoConstraints = false
+    helperLabel.text = "Show Helper Text:"
+    helperLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    helperLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
+    helperLabel.numberOfLines = 0
+    return helperLabel
   }()
 
   var allTextViewControllers = [MDCTextInputController]()
@@ -98,6 +120,11 @@ final class TextFieldSwiftExample: UIViewController {
     allInputControllers = allTextFieldControllers + allTextViewControllers
 
     setupScrollView()
+
+    NotificationCenter.default.addObserver(self,
+                    selector: #selector(TextFieldSwiftExample.contentSizeCategoryDidChange(notif:)),
+                    name:.UIContentSizeCategoryDidChange,
+                    object: nil)
   }
 
   func setupDefaultTextFields() -> [MDCTextInputController] {
@@ -436,11 +463,6 @@ final class TextFieldSwiftExample: UIViewController {
     container.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(container)
 
-    let errorLabel = UILabel()
-    errorLabel.translatesAutoresizingMaskIntoConstraints = false
-    errorLabel.text = "In Error:"
-    errorLabel.font = MDCTypography.subheadFont()
-    errorLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
     container.addSubview(errorLabel)
 
     let errorSwitch = UISwitch()
@@ -450,11 +472,6 @@ final class TextFieldSwiftExample: UIViewController {
                         for: .touchUpInside)
     container.addSubview(errorSwitch)
 
-    let helperLabel = UILabel()
-    helperLabel.translatesAutoresizingMaskIntoConstraints = false
-    helperLabel.text = "Show Helper Text:"
-    helperLabel.font = MDCTypography.subheadFont()
-    helperLabel.textColor = UIColor(white: 0, alpha: MDCTypography.subheadFontOpacity())
     container.addSubview(helperLabel)
 
     let helperSwitch = UISwitch()
@@ -479,6 +496,7 @@ final class TextFieldSwiftExample: UIViewController {
                                   for: .touchUpInside)
     characterModeButton.setTitle("Character Count Mode: Always", for: .normal)
     characterModeButton.setTitleColor(.white, for: .normal)
+    characterModeButton.mdc_adjustsFontForContentSizeCategory = true
     scrollView.addSubview(characterModeButton)
 
     clearModeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -487,6 +505,7 @@ final class TextFieldSwiftExample: UIViewController {
                               for: .touchUpInside)
     clearModeButton.setTitle("Clear Button Mode: While Editing", for: .normal)
     clearModeButton.setTitleColor(.white, for: .normal)
+    clearModeButton.mdc_adjustsFontForContentSizeCategory = true
     scrollView.addSubview(clearModeButton)
 
     underlineButton.translatesAutoresizingMaskIntoConstraints = false
@@ -496,6 +515,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
     underlineButton.setTitleColor(.white, for: .normal)
+    underlineButton.mdc_adjustsFontForContentSizeCategory = true
     scrollView.addSubview(underlineButton)
 
     return [container, characterModeButton, underlineButton, clearModeButton]
@@ -744,6 +764,16 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
 }
 
 extension TextFieldSwiftExample: UITextViewDelegate {
+}
+
+extension TextFieldSwiftExample {
+  func contentSizeCategoryDidChange(notif: Notification) {
+    controlLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+    singleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+    multiLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+    errorLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    helperLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+  }
 }
 
 extension TextFieldSwiftExample {
