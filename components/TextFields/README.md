@@ -90,7 +90,7 @@ This class holds all the 'magic' logic necessary to make the naturally 'dumb' te
 
 A text field or text view can be added to a view hierarchy the same way UITextField and UITextView are but to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), an MDCTextInputController must be initialized to manage the text field.
 
-**NOTE:** Expect to interact with _both the text field (for the traditional API) and the controller_ (for changes affecting the presentation and state).
+**NOTE:** Expect to interact with _both the text field_ (for the traditional API) _and the controller_ (for changes affecting the presentation and state).
 
 ### Importing
 
