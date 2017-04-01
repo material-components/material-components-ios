@@ -112,38 +112,37 @@ import MaterialComponents.MaterialTextFields
 
 ## Examples
 
-### Display a modal dialog
+### Text Field with Character Count
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
-// The following is called from the presenting view controller and has the
-// following variable defined to keep a reference to the transition
-// controller.
-strong var dialogTransitionController: MDCDialogTransitionController
+// First the text field component is setup just like a UITextField
+let textFieldDefaultCharMax = MDCTextField()
+scrollView.addSubview(textFieldDefaultCharMax)
 
-// To present the dialog myDialogViewController
-dialogTransitionController = MDCDialogTransitionController()
-myDialogViewController.modalPresentationStyle = .custom
-myDialogViewController.transitioningDelegate = dialogTransitionController
+textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
+textFieldDefaultCharMax.delegate = self
 
-present(myDialogViewController, animated: true, completion:...)
+// Second the controller is created to manage the text field
+let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
+textFieldControllerDefaultCharMax.characterCountMax = 50
 ~~~
 
 #### Objective-C
 
 ~~~ objc
-// self is the presenting view controller and which has the following property
-// defined to keep a reference to the transition controller.
-@property(nonatomic) MDCDialogTransitionController *dialogTransitionController;
+// First the text field component is setup just like a UITextField
+MDCTextField *textFieldDefaultCharMax = [[MDCTextField alloc] init];
+[self.scrollView addSubview:textFieldDefaultCharMax];
 
-// To present the dialog myDialogViewController
-self.dialogTransitionController = [[MDCDialogTransitionController alloc] init];
-myDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
-myDialogViewController.transitioningDelegate = self.dialogTransitionController;
-[self presentViewController:myDialogViewController animated:YES completion:...];
+textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
+textFieldDefaultCharMax.delegate = self;
 
+// Second the controller is created to manage the text field
+MDCTextInputController *textFieldControllerDefaultCharMax = [[MDCTextInputController alloc] initWithTextInput: textFieldDefaultCharMax];
+textFieldControllerDefaultCharMax.characterCountMax = 50;
 ~~~
 <!--</div>-->
 
