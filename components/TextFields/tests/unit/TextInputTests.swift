@@ -15,7 +15,7 @@
  */
 
 import XCTest
-import MaterialComponents.MaterialTextField
+import MaterialComponents.MaterialTextFields
 
 class TextInputTests: XCTestCase {
 

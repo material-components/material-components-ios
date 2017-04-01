@@ -20,7 +20,7 @@
 
 import UIKit
 
-import MaterialComponents.MaterialTextField
+import MaterialComponents.MaterialTextFields
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialTypography
