@@ -182,7 +182,7 @@ textFieldControllerFloating.presentationStyle = MDCTextInputPresentationStyleFlo
 ~~~
 <!--</div>-->
 
-### Text View with Floating Placeholder (Multiline)
+### Text View (Multiline) with Floating Placeholder
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
