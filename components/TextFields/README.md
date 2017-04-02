@@ -181,3 +181,35 @@ MDCTextInputController *textFieldControllerFloating = [[MDCTextInputController a
 textFieldControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
 ~~~
 <!--</div>-->
+
+### Text View with Floating Placeholder (Multiline)
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+let textViewFloating = MDCTextView()
+scrollView.addSubview(textViewFloating)
+
+textViewFloating = "Full Name"
+textViewFloating = self
+
+let textViewControllerFloating = MDCTextInputController(input: textViewFloating)
+
+textViewControllerFloating.presentation = .floatingPlaceholder
+~~~
+
+#### Objective-C
+
+~~~ objc
+MDCTextView *textViewFloating = [[MDCTextView alloc] init];
+[self.scrollView addSubview:textViewFloating];
+
+textViewFloating.placeholder = @"Full Name";
+textViewFloating.delegate = self;
+
+MDCTextInputController *textViewControllerFloating = [[MDCTextInputController alloc] initWithTextInput:textViewFloating];
+
+textViewControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
+~~~
+<!--</div>-->
