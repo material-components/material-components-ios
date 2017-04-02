@@ -24,7 +24,6 @@
 NSString *const MDCTextFieldClearButtonColorKey = @"MDCTextFieldClearButtonColorKey";
 NSString *const MDCTextFieldClearButtonImageKey = @"MDCTextFieldClearButtonImageKey";
 NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
-NSString *const MDCTextFieldPositioningDelegateKey = @"MDCTextFieldPositioningDelegateKey";
 
 static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
 static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
@@ -68,7 +67,6 @@ static inline CGFloat MDCCeil(CGFloat value) {
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonImageKey];
     _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonColorKey];
     _coordinator = [aDecoder decodeObjectForKey:MDCTextFieldCoordinatorKey];
-    _positioningDelegate = [aDecoder decodeObjectForKey:MDCTextFieldPositioningDelegateKey];
   }
   return self;
 }
@@ -92,7 +90,6 @@ static inline CGFloat MDCCeil(CGFloat value) {
   [aCoder encodeObject:self.clearButtonColor forKey:MDCTextFieldClearButtonColorKey];
   [aCoder encodeObject:self.clearButtonImage forKey:MDCTextFieldClearButtonImageKey];
   [aCoder encodeConditionalObject:self.coordinator forKey:MDCTextFieldCoordinatorKey];
-  [aCoder encodeObject:self.positioningDelegate forKey:MDCTextFieldPositioningDelegateKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
@@ -103,7 +100,6 @@ static inline CGFloat MDCCeil(CGFloat value) {
 
   // Just a pointer value copies.
   copy.coordinator = self.coordinator;
-  copy.positioningDelegate = self.positioningDelegate;
 
   return copy;
 }
@@ -251,6 +247,14 @@ static inline CGFloat MDCCeil(CGFloat value) {
 - (void)setPlaceholder:(NSString *)placeholder {
   [super setPlaceholder:placeholder];
   [self.coordinator setPlaceholder:placeholder];
+}
+
+- (id<MDCTextInputPositioningDelegate>)positioningDelegate {
+  return _coordinator.positioningDelegate;
+}
+
+- (void)setPositioningDelegate:(id<MDCTextInputPositioningDelegate>)positioningDelegate {
+  _coordinator.positioningDelegate = positioningDelegate;
 }
 
 - (void)setText:(NSString *)text {

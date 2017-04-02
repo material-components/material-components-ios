@@ -164,6 +164,14 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
   return _coordinator.placeholderLabel;
 }
 
+- (id<MDCTextInputPositioningDelegate>)positioningDelegate {
+  return _coordinator.positioningDelegate;
+}
+
+- (void)setPositioningDelegate:(id<MDCTextInputPositioningDelegate>)positioningDelegate {
+  _coordinator.positioningDelegate = positioningDelegate;
+}
+
 - (UIColor *)textColor {
   return _coordinator.textColor;
 }

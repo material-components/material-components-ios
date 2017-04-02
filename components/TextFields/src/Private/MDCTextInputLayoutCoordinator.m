@@ -30,6 +30,7 @@ NSString *const MDCTextInputCoordinatorHidesPlaceholderKey = @"MDCTextInputCoord
 NSString *const MDCTextInputCoordinatorInputKey = @"MDCTextInputCoordinatorInputKey";
 NSString *const MDCTextInputCoordinatorLeadingLabelKey = @"MDCTextInputCoordinatorLeadingLabelKey";
 NSString *const MDCTextInputCoordinatorMDCAdjustsFontsKey = @"MDCTextInputCoordinatorMDCAdjustsFontsKey";
+NSString *const MDCTextInputPositioningDelegateKey = @"MDCTextInputPositioningDelegateKey";
 NSString *const MDCTextInputCoordinatorPlaceholderLabelKey = @"MDCTextInputCoordinatorPlaceholderLabelKey";
 NSString *const MDCTextInputCoordinatorTextColorKey = @"MDCTextInputCoordinatorTextColorKey";
 NSString *const MDCTextInputCoordinatorTrailingLabelKey = @"MDCTextInputCoordinatorTrailingLabelKey";
@@ -76,6 +77,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize hidesPlaceholderOnInput = _hidesPlaceholderOnInput;
 @synthesize leadingUnderlineLabel = _leadingUnderlineLabel;
 @synthesize placeholderLabel = _placeholderLabel;
+@synthesize positioningDelegate = _positioningDelegate;
 @synthesize text = _do_no_use_text;
 @synthesize textColor = _textColor;
 @synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
@@ -120,6 +122,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorLeadingLabelKey];
     _mdc_adjustsFontForContentSizeCategory = [aDecoder decodeBoolForKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
     _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
+    _positioningDelegate = [aDecoder decodeObjectForKey:MDCTextInputPositioningDelegateKey];
     _relativeSuperview = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTrailingLabelKey];
@@ -133,6 +136,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputCoordinatorLeadingLabelKey];
   [aCoder encodeBool:self.mdc_adjustsFontForContentSizeCategory forKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
   [aCoder encodeObject:self.placeholderLabel forKey:MDCTextInputCoordinatorPlaceholderLabelKey];
+  [aCoder encodeObject:self.positioningDelegate forKey:MDCTextInputPositioningDelegateKey];
   [aCoder encodeObject:self.relativeSuperview forKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
   [aCoder encodeObject:self.textColor forKey:MDCTextInputCoordinatorTextColorKey];
   [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputCoordinatorTrailingLabelKey];
@@ -143,6 +147,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   MDCTextInputLayoutCoordinator *copy = [[[self class] alloc] init];
 
   copy.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+  copy.positioningDelegate = self.positioningDelegate;
   copy.relativeSuperview = self.relativeSuperview.copy;
   copy.textColor = self.textColor.copy;
   copy.underlineView = self.underlineView.copy;
@@ -432,17 +437,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (UIEdgeInsets)textContainerInset {
   UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
 
-  if (![self.textInput isKindOfClass:[UITextField class]]) {
-    return textContainerInset;
-  }
-
-  MDCTextField *textField = (MDCTextField *)self.textInput;
-
   textContainerInset.top = MDCTextInputVerticalPadding;
   textContainerInset.bottom = MDCTextInputVerticalPadding;
 
-  if ([textField.positioningDelegate respondsToSelector:@selector(textContainerInset:)]) {
-    return [textField.positioningDelegate textContainerInset:textContainerInset];
+  if ([self.textInput.positioningDelegate respondsToSelector:@selector(textContainerInset:)]) {
+    return [self.textInput.positioningDelegate textContainerInset:textContainerInset];
   }
   return textContainerInset;
 }

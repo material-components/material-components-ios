@@ -18,8 +18,6 @@
 
 #import "MDCTextInput.h"
 
-@protocol MDCTextFieldPositioningDelegate;
-
 /**
   Material Design themed single line text input.
   https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
@@ -37,12 +35,6 @@
   Default is black with 38% opacity.
  */
 @property(nonatomic, nullable, strong) UIColor *clearButtonColor UI_APPEARANCE_SELECTOR;
-
-/**
- An optional delegate that can be queried for important layout information like the editing rect,
- text rect, etc.
- */
-@property(nonatomic, nullable, weak) id<MDCTextFieldPositioningDelegate> positioningDelegate;
 
 /** A convenience initializer for inputs that have left views. */
 - (_Nonnull instancetype)initWithLeftView:(nullable UIView *)leftView;

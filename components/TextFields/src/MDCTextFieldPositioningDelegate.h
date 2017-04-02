@@ -16,14 +16,16 @@
 
 #import <UIKit/UIKit.h>
 
-#pragma mark - New API
-
-@protocol MDCTextFieldPositioningDelegate <NSObject, NSCopying, NSCoding>
+@protocol MDCTextInputPositioningDelegate <NSObject>
 
 @optional
 
-- (CGRect)clearButtonRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
-- (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
+// Used for MDCTextField and MDCTextView
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets;
 
+// Used only for MDCTextField
+- (CGRect)clearButtonRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
+- (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
+
 @end
+

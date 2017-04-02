@@ -29,6 +29,8 @@
    - https://github.com/adamwaite/Validator
  */
 
+@protocol MDCTextInputPositioningDelegate;
+
 /** Common API for Material Design themed text inputs. */
 @protocol MDCTextInput <NSObject>
 
@@ -85,6 +87,12 @@ BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
  this 'Hint text.'
  */
 @property(nonatomic, nonnull, strong, readonly) UILabel *placeholderLabel;
+
+/**
+ An optional delegate that can be queried for important layout information like the text insets for
+ any input and the editing rect, clear button rect for a text field.
+ */
+@property(nonatomic, nullable, weak) id<MDCTextInputPositioningDelegate> positioningDelegate;
 
 /** The text displayed in the text input. */
 @property(nonatomic, nullable, copy) NSString *text;

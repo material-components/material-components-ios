@@ -16,9 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#pragma mark - Unapproved API
 #import "MDCTextFieldPositioningDelegate.h"
-#pragma mark - Approved API
 
 @protocol MDCTextInput;
 @protocol MDCTextInputCharacterCounter;
@@ -51,7 +49,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  underline color, underline text color.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
-@interface MDCTextInputController : NSObject <MDCTextFieldPositioningDelegate, NSCoding, NSCopying>
+@interface MDCTextInputController : NSObject <MDCTextInputPositioningDelegate, NSCoding, NSCopying>
 
 /**
  The character counter. Override to use a custom character counter.
