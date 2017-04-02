@@ -307,6 +307,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     self.relativeSuperview.frame = self.textInput.bounds;
     [self.textInput setNeedsUpdateConstraints];
   }
+
+  if ([self.textInput isKindOfClass:[UITextView class]] &&
+      !UIEdgeInsetsEqualToEdgeInsets(((UITextView *)self.textInput).textContainerInset,
+                                     self.textContainerInset)) {
+    ((UITextView *)self.textInput).textContainerInset = self.textContainerInset;
+  }
+
   self.underlineView.frame = [self underlineViewFrame];
 
   [self updatePlaceholderAlpha];

@@ -85,7 +85,6 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
   self.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
   self.editable = YES;
-  self.textContainerInset = UIEdgeInsetsZero;
 
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter addObserver:self
@@ -112,7 +111,6 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
 - (void)setFont:(UIFont *)font {
   if (self.font != font) {
     [super setFont:font];
-    self.textContainerInset = UIEdgeInsetsZero;
     [_coordinator didSetFont];
   }
 }
@@ -179,11 +177,6 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
 - (void)setTextColor:(UIColor *)textColor {
   [super setTextColor:textColor];
   _coordinator.textColor = textColor;
-}
-
-// Always set the text container insets based upon style of the text field.
-- (void)setTextContainerInset:(UIEdgeInsets)textContainerInset {
-  [super setTextContainerInset:[_coordinator textContainerInset]];
 }
 
 - (UILabel *)trailingUnderlineLabel {

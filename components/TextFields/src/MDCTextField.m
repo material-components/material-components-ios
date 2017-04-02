@@ -169,10 +169,6 @@ static inline CGFloat MDCCeil(CGFloat value) {
   _coordinator.textColor = textColor;
 }
 
-- (UIEdgeInsets)textContainerInset {
-  return _coordinator.textContainerInset;
-}
-
 - (UILabel *)trailingUnderlineLabel {
   return _coordinator.trailingUnderlineLabel;
 }
@@ -291,8 +287,8 @@ static inline CGFloat MDCCeil(CGFloat value) {
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect editingRect = [self textRectForBounds:bounds];
 
-  if ([self.positioningDelegate respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
-    return [self.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
+  if ([self.coordinator.positioningDelegate respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
+    return [self.coordinator.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
 
   return editingRect;
@@ -349,9 +345,9 @@ static inline CGFloat MDCCeil(CGFloat value) {
 
   clearButtonRect = CGRectIntegral(clearButtonRect);
 
-  if ([self.positioningDelegate
+  if ([self.coordinator.positioningDelegate
           respondsToSelector:@selector(clearButtonRectForBounds:defaultRect:)]) {
-    return [self.positioningDelegate clearButtonRectForBounds:bounds defaultRect:clearButtonRect];
+    return [self.coordinator.positioningDelegate clearButtonRectForBounds:bounds defaultRect:clearButtonRect];
   }
 
   return clearButtonRect;

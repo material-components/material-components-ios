@@ -100,9 +100,6 @@ BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 /** The color of the text in the input. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
-/** Inset set on the text container and editing area. */
-@property(nonatomic, readonly) UIEdgeInsets textContainerInset;
-
 /**
  The label on the trailing side under the input.
 

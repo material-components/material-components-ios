@@ -169,9 +169,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     // This controller will handle Dynamic Type and all fonts for the text input
     _textInput.mdc_adjustsFontForContentSizeCategory = NO;
     
-    if ([_textInput isKindOfClass:[UITextField class]]) {
-      ((MDCTextField *)_textInput).positioningDelegate = self;
-    }
+    _textInput.positioningDelegate = self;
     _placeholderDefaultPositionFrame = textInput.frame;
 
     [self subscribeForNotifications];
@@ -560,9 +558,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   if (_textInput != textInput) {
     [self unsubscribeFromNotifications];
     _textInput = textInput;
-    if ([_textInput isKindOfClass:[MDCTextField class]]) {
-      ((MDCTextField *)_textInput).positioningDelegate = self;
-    }
+    _textInput.positioningDelegate = self;
 
     _placeholderDefaultPositionFrame = textInput.placeholderLabel.frame;
     [self subscribeForNotifications];
