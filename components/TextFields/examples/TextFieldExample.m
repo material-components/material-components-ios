@@ -17,8 +17,8 @@
 
 #import "TextFieldExample.h"
 
-#import "MaterialTextFields.h"
 #import "MaterialAppBar.h"
+#import "MaterialTextFields.h"
 
 @interface TextFieldExample ()
 
@@ -45,7 +45,8 @@
   textFieldDefaultCharMax.delegate = self;
 
   // Second the controller is created to manage the text field
-  MDCTextInputController *textFieldControllerDefaultCharMax = [[MDCTextInputController alloc] initWithTextInput: textFieldDefaultCharMax];
+  MDCTextInputController *textFieldControllerDefaultCharMax =
+      [[MDCTextInputController alloc] initWithTextInput:textFieldDefaultCharMax];
   textFieldControllerDefaultCharMax.characterCountMax = 50;
 
   MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
@@ -56,10 +57,10 @@
   textFieldFloating.delegate = self;
   textFieldFloating.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-  MDCTextInputController *textFieldControllerFloating = [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
+  MDCTextInputController *textFieldControllerFloating =
+      [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
 
   textFieldControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-
 }
 
 - (void)setupScrollView {
@@ -67,13 +68,26 @@
   [self.view addSubview:self.scrollView];
   self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
 
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics:nil views:@{@"scrollView": self.scrollView}]];
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:@{@"scrollView": self.scrollView}]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
 
   CGFloat marginOffset = 16;
   UIEdgeInsets margins = UIEdgeInsetsMake(0, marginOffset, 0, marginOffset);
   self.scrollView.layoutMargins = margins;
-
 }
 
 + (NSArray *)catalogBreadcrumbs {
@@ -81,7 +95,8 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states.";
+  return @"The Material Design Text Fields take the familiar element to a new level by adding "
+         @"useful animations, character counts, helper text and error states.";
 }
 
 @end

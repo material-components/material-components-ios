@@ -43,7 +43,7 @@ extern const CGFloat MDCTextInputUnderlineVerticalPadding;
 
 /** Designated initializer with the controlled text input. */
 - (nonnull instancetype)initWithTextInput:(UIView<MDCControlledTextInput> *_Nonnull)textInput
-  NS_DESIGNATED_INITIALIZER;
+    NS_DESIGNATED_INITIALIZER;
 
 /** Please use initWithTextInput:. */
 - (nonnull instancetype)init NS_UNAVAILABLE;

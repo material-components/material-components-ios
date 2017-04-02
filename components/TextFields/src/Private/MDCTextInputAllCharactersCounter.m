@@ -33,7 +33,6 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  
 }
 
 - (NSUInteger)characterCountForTextInput:(UIView<MDCTextInput> *)textInput {

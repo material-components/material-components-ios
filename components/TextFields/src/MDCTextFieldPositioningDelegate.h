@@ -28,4 +28,3 @@
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 
 @end
-

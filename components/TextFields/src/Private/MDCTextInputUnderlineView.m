@@ -43,8 +43,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+- (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
     _color = [coder decodeObjectForKey:MDCTextInputUnderlineColorKey];
@@ -61,8 +60,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updateUnderline];
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder {
   [super encodeWithCoder:coder];
   [coder encodeObject:self.color forKey:MDCTextInputUnderlineColorKey];
   [coder encodeBool:self.enabled forKey:MDCTextInputUnderlineEnabledKey];

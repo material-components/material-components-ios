@@ -138,7 +138,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  Default value is NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /** The behavioral style applied to the text input. */
 @property(nonatomic, assign)
@@ -155,7 +155,7 @@ BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
  Default is UITextFieldViewModeAlways.
  */
 @property(nonatomic, assign) UITextFieldViewMode underlineViewMode NS_SWIFT_NAME(underlineMode)
-UI_APPEARANCE_SELECTOR;
+    UI_APPEARANCE_SELECTOR;
 
 /**
  Convenience init. Never fails.

@@ -42,19 +42,28 @@ static const CGFloat MDCTextInputVerticalPadding = 16.f;
 static const NSTimeInterval MDCTextInputFloatingPlaceholderDownAnimationDuration = 0.266666f;
 static const NSTimeInterval MDCTextInputFloatingPlaceholderUpAnimationDuration = 0.3f;
 
-static NSString *const MDCTextInputControllerCharacterCounterKey = @"MDCTextInputControllerCharacterCounterKey";
-static NSString *const MDCTextInputControllerCharacterCountViewModeKey = @"MDCTextInputControllerCharacterCountViewModeKey";
-static NSString *const MDCTextInputControllerCharacterCountMaxKey = @"MDCTextInputControllerCharacterCountMaxKey";
-static NSString *const MDCTextInputControllerErrorAccessibilityValueKey = @"MDCTextInputControllerErrorAccessibilityValueKey";
+static NSString *const MDCTextInputControllerCharacterCounterKey =
+    @"MDCTextInputControllerCharacterCounterKey";
+static NSString *const MDCTextInputControllerCharacterCountViewModeKey =
+    @"MDCTextInputControllerCharacterCountViewModeKey";
+static NSString *const MDCTextInputControllerCharacterCountMaxKey =
+    @"MDCTextInputControllerCharacterCountMaxKey";
+static NSString *const MDCTextInputControllerErrorAccessibilityValueKey =
+    @"MDCTextInputControllerErrorAccessibilityValueKey";
 static NSString *const MDCTextInputControllerErrorColorKey = @"MDCTextInputControllerErrorColorKey";
 static NSString *const MDCTextInputControllerErrorTextKey = @"MDCTextInputControllerErrorTextKey";
-static NSString *const MDCTextInputControllerFloatingPlaceholderColorKey = @"MDCTextInputControllerFloatingPlaceholderColorKey";
-static NSString *const MDCTextInputControllerFloatingPlaceholderScaleKey = @"MDCTextInputControllerFloatingPlaceholderScaleKey";
+static NSString *const MDCTextInputControllerFloatingPlaceholderColorKey =
+    @"MDCTextInputControllerFloatingPlaceholderColorKey";
+static NSString *const MDCTextInputControllerFloatingPlaceholderScaleKey =
+    @"MDCTextInputControllerFloatingPlaceholderScaleKey";
 static NSString *const MDCTextInputControllerHelperTextKey = @"MDCTextInputControllerHelperTextKey";
-static NSString *const MDCTextInputControllerInlinePlaceholderColorKey = @"MDCTextInputControllerInlinePlaceholderColorKey";
-static NSString *const MDCTextInputControllerPresentationStyleKey = @"MDCTextInputControllerPresentationStyleKey";
+static NSString *const MDCTextInputControllerInlinePlaceholderColorKey =
+    @"MDCTextInputControllerInlinePlaceholderColorKey";
+static NSString *const MDCTextInputControllerPresentationStyleKey =
+    @"MDCTextInputControllerPresentationStyleKey";
 static NSString *const MDCTextInputControllerTextInputKey = @"MDCTextInputControllerTextInputKey";
-static NSString *const MDCTextInputControllerUnderlineViewModeKey = @"MDCTextInputControllerUnderlineViewModeKey";
+static NSString *const MDCTextInputControllerUnderlineViewModeKey =
+    @"MDCTextInputControllerUnderlineViewModeKey";
 
 static inline CGFloat MDCCeil(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -105,7 +114,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
-
 @property(nonatomic, strong) NSLayoutConstraint *characterCountCenterY;
 @property(nonatomic, strong) NSLayoutConstraint *characterTrailing;
 @property(nonatomic, copy) NSString *errorText;
@@ -150,13 +158,19 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerErrorColorKey];
     _characterCounter = [aDecoder decodeObjectForKey:MDCTextInputControllerCharacterCounterKey];
     _characterCountMax = [aDecoder decodeIntegerForKey:MDCTextInputControllerCharacterCountMaxKey];
-    _characterCountViewMode = [aDecoder decodeIntegerForKey:MDCTextInputControllerCharacterCountViewModeKey];
-    _floatingPlaceholderColor = [aDecoder decodeObjectForKey:MDCTextInputControllerFloatingPlaceholderColorKey];
-    _floatingPlaceholderScale = (CGFloat)[aDecoder decodeFloatForKey:MDCTextInputControllerFloatingPlaceholderScaleKey];
-    _inlinePlaceholderColor = [aDecoder decodeObjectForKey:MDCTextInputControllerInlinePlaceholderColorKey];
-    _presentationStyle = (MDCTextInputPresentationStyle)[aDecoder decodeIntegerForKey:MDCTextInputControllerPresentationStyleKey];
+    _characterCountViewMode =
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerCharacterCountViewModeKey];
+    _floatingPlaceholderColor =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerFloatingPlaceholderColorKey];
+    _floatingPlaceholderScale =
+        (CGFloat)[aDecoder decodeFloatForKey:MDCTextInputControllerFloatingPlaceholderScaleKey];
+    _inlinePlaceholderColor =
+        [aDecoder decodeObjectForKey:MDCTextInputControllerInlinePlaceholderColorKey];
+    _presentationStyle = (MDCTextInputPresentationStyle)
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerPresentationStyleKey];
     _textInput = [aDecoder decodeObjectForKey:MDCTextInputControllerTextInputKey];
-    _underlineViewMode = (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextInputControllerUnderlineViewModeKey];
+    _underlineViewMode = (UITextFieldViewMode)
+        [aDecoder decodeIntegerForKey:MDCTextInputControllerUnderlineViewModeKey];
   }
   return self;
 }
@@ -168,7 +182,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
     // This controller will handle Dynamic Type and all fonts for the text input
     _textInput.mdc_adjustsFontForContentSizeCategory = NO;
-    
+
     _textInput.positioningDelegate = self;
     _placeholderDefaultPositionFrame = textInput.frame;
 
@@ -182,14 +196,19 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.characterCounter forKey:MDCTextInputControllerCharacterCounterKey];
   [aCoder encodeInteger:self.characterCountMax forKey:MDCTextInputControllerCharacterCountMaxKey];
-  [aCoder encodeInteger:self.characterCountViewMode forKey:MDCTextInputControllerCharacterCountViewModeKey];
-  [aCoder encodeObject:self.errorAccessibilityValue forKey:MDCTextInputControllerErrorAccessibilityValueKey];
+  [aCoder encodeInteger:self.characterCountViewMode
+                 forKey:MDCTextInputControllerCharacterCountViewModeKey];
+  [aCoder encodeObject:self.errorAccessibilityValue
+                forKey:MDCTextInputControllerErrorAccessibilityValueKey];
   [aCoder encodeObject:self.errorColor forKey:MDCTextInputControllerErrorColorKey];
   [aCoder encodeObject:self.errorText forKey:MDCTextInputControllerErrorTextKey];
-  [aCoder encodeObject:self.floatingPlaceholderColor forKey:MDCTextInputControllerFloatingPlaceholderColorKey];
-  [aCoder encodeFloat:(float)self.floatingPlaceholderScale forKey:MDCTextInputControllerFloatingPlaceholderScaleKey];
+  [aCoder encodeObject:self.floatingPlaceholderColor
+                forKey:MDCTextInputControllerFloatingPlaceholderColorKey];
+  [aCoder encodeFloat:(float)self.floatingPlaceholderScale
+               forKey:MDCTextInputControllerFloatingPlaceholderScaleKey];
   [aCoder encodeObject:self.helperText forKey:MDCTextInputControllerHelperTextKey];
-  [aCoder encodeObject:self.inlinePlaceholderColor forKey:MDCTextInputControllerInlinePlaceholderColorKey];
+  [aCoder encodeObject:self.inlinePlaceholderColor
+                forKey:MDCTextInputControllerInlinePlaceholderColorKey];
   [aCoder encodeInteger:self.presentationStyle forKey:MDCTextInputControllerPresentationStyleKey];
   [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputControllerTextInputKey];
   [aCoder encodeInteger:self.underlineViewMode forKey:MDCTextInputControllerUnderlineViewModeKey];
@@ -198,7 +217,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextInputController *copy = [[[self class] alloc] init];
 
-  copy.characterCounter = self.characterCounter; //Just a pointer value copy
+  copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;
   copy.characterCountMax = self.characterCountMax;
   copy.errorAccessibilityValue = self.errorAccessibilityValue.copy;
@@ -211,7 +230,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   copy.presentationStyle = self.presentationStyle;
   copy.previousLeadingText = self.previousLeadingText.copy;
   copy.previousPlaceholderColor = self.previousPlaceholderColor.copy;
-  copy.textInput = self.textInput; //Just a pointer value copy
+  copy.textInput = self.textInput;  // Just a pointer value copy
   copy.underlineViewMode = self.underlineViewMode;
 
   return copy;
@@ -254,9 +273,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   [defaultCenter removeObserver:self
                            name:UITextFieldTextDidBeginEditingNotification
                          object:_textInput];
-  [defaultCenter removeObserver:self
-                           name:UITextFieldTextDidChangeNotification
-                         object:_textInput];
+  [defaultCenter removeObserver:self name:UITextFieldTextDidChangeNotification object:_textInput];
   [defaultCenter removeObserver:self
                            name:UITextFieldTextDidEndEditingNotification
                          object:_textInput];
@@ -308,7 +325,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 - (void)updatePlaceholder {
   self.textInput.placeholderLabel.font =
-  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+      [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 }
 
 - (BOOL)isPlaceholderUp {
@@ -541,7 +558,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     [self updateLayout];
 
     self.textInput.hidesPlaceholderOnInput =
-    _presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder;
+        _presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder;
     [self.textInput setNeedsLayout];
   }
 }
@@ -591,95 +608,95 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 - (void)updateConstraints {
   if (!self.heightConstraint) {
     self.heightConstraint =
-    [NSLayoutConstraint constraintWithItem:self.textInput
-                                 attribute:NSLayoutAttributeHeight
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.textInput.placeholderLabel
-                                 attribute:NSLayoutAttributeHeight
-                                multiplier:1
-                                  constant:MDCCeil(self.textInput.font.lineHeight) +
-     2 * MDCTextInputFullWidthVerticalPadding];
+        [NSLayoutConstraint constraintWithItem:self.textInput
+                                     attribute:NSLayoutAttributeHeight
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textInput.placeholderLabel
+                                     attribute:NSLayoutAttributeHeight
+                                    multiplier:1
+                                      constant:MDCCeil(self.textInput.font.lineHeight) +
+                                               2 * MDCTextInputFullWidthVerticalPadding];
     self.heightConstraint.active = YES;
   }
 
   if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-
     // Multi Line
     if ([self.textInput isKindOfClass:[UITextView class]]) {
       self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
 
       [self.textInput.leadingUnderlineLabel
-       setContentHuggingPriority:UILayoutPriorityRequired
-       forAxis:UILayoutConstraintAxisVertical];
+          setContentHuggingPriority:UILayoutPriorityRequired
+                            forAxis:UILayoutConstraintAxisVertical];
       [self.textInput.leadingUnderlineLabel
-       setContentCompressionResistancePriority:UILayoutPriorityRequired
-       forAxis:UILayoutConstraintAxisVertical];
+          setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                          forAxis:UILayoutConstraintAxisVertical];
 
       [self.textInput.trailingUnderlineLabel
-       setContentCompressionResistancePriority:UILayoutPriorityRequired
-       forAxis:UILayoutConstraintAxisVertical];
+          setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                          forAxis:UILayoutConstraintAxisVertical];
     } else {
       // Single Line
       if (!self.characterCountCenterY) {
         self.characterCountCenterY =
-        [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
-                                     attribute:NSLayoutAttributeCenterY
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeCenterY
-                                    multiplier:1
-                                      constant:0];
+            [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                         attribute:NSLayoutAttributeCenterY
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.textInput
+                                         attribute:NSLayoutAttributeCenterY
+                                        multiplier:1
+                                          constant:0];
       }
       if (!self.characterTrailing) {
         self.characterTrailing =
-        [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
-                                     attribute:NSLayoutAttributeTrailing
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeTrailing
-                                    multiplier:1
-                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
+            [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                         attribute:NSLayoutAttributeTrailing
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.textInput
+                                         attribute:NSLayoutAttributeTrailing
+                                        multiplier:1
+                                          constant:-1 * MDCTextInputFullWidthHorizontalPadding];
       }
       if (!self.placeholderLeading) {
         self.placeholderLeading =
-        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeLeading
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeLeading
-                                    multiplier:1
-                                      constant:MDCTextInputFullWidthHorizontalPadding];
-
+            [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                         attribute:NSLayoutAttributeLeading
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.textInput
+                                         attribute:NSLayoutAttributeLeading
+                                        multiplier:1
+                                          constant:MDCTextInputFullWidthHorizontalPadding];
       }
       if (!self.placeholderTrailingCharacterCountLeading) {
-        self.placeholderTrailingCharacterCountLeading =
-        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeTrailing
-                                     relatedBy:NSLayoutRelationLessThanOrEqual
-                                        toItem:self.textInput.trailingUnderlineLabel
-                                     attribute:NSLayoutAttributeLeading
-                                    multiplier:1
-                                      constant:-1 * MDCTextInputFullWidthHorizontalInnerPadding];
-
+        self.placeholderTrailingCharacterCountLeading = [NSLayoutConstraint
+            constraintWithItem:self.textInput.placeholderLabel
+                     attribute:NSLayoutAttributeTrailing
+                     relatedBy:NSLayoutRelationLessThanOrEqual
+                        toItem:self.textInput.trailingUnderlineLabel
+                     attribute:NSLayoutAttributeLeading
+                    multiplier:1
+                      constant:-1 * MDCTextInputFullWidthHorizontalInnerPadding];
       }
       if (!self.placeholderTrailingSuperviewTrailing) {
         self.placeholderTrailingSuperviewTrailing =
-        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeTrailing
-                                     relatedBy:NSLayoutRelationLessThanOrEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeTrailing
-                                    multiplier:1
-                                      constant:-1 * MDCTextInputFullWidthHorizontalPadding];
+            [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                         attribute:NSLayoutAttributeTrailing
+                                         relatedBy:NSLayoutRelationLessThanOrEqual
+                                            toItem:self.textInput
+                                         attribute:NSLayoutAttributeTrailing
+                                        multiplier:1
+                                          constant:-1 * MDCTextInputFullWidthHorizontalPadding];
       }
 
       self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
     }
-    [NSLayoutConstraint activateConstraints:@[ self.characterCountCenterY, self.characterTrailing, self.placeholderLeading, self.placeholderTrailingCharacterCountLeading, self.placeholderTrailingSuperviewTrailing ]];
+    [NSLayoutConstraint activateConstraints:@[
+      self.characterCountCenterY, self.characterTrailing, self.placeholderLeading,
+      self.placeholderTrailingCharacterCountLeading, self.placeholderTrailingSuperviewTrailing
+    ]];
 
     [self.textInput.trailingUnderlineLabel
-     setContentHuggingPriority:UILayoutPriorityRequired
-     forAxis:UILayoutConstraintAxisVertical];
+        setContentHuggingPriority:UILayoutPriorityRequired
+                          forAxis:UILayoutConstraintAxisVertical];
     [self placeholderYconstraint].priority = MDCTextInputAlmostRequiredPriority;
 
   } else {
@@ -791,8 +808,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCTextInputFloatingPlaceholderUpAnimationDuration];
   [CATransaction
-   setAnimationTimingFunction:[CAMediaTimingFunction
-                               mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+      setAnimationTimingFunction:[CAMediaTimingFunction
+                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
   [self updateLayout];
 
@@ -810,8 +827,8 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCTextInputFloatingPlaceholderDownAnimationDuration];
   [CATransaction
-   setAnimationTimingFunction:[CAMediaTimingFunction
-                               mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+      setAnimationTimingFunction:[CAMediaTimingFunction
+                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
 
   [self updateLayout];
 

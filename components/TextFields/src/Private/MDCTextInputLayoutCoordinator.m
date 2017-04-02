@@ -25,21 +25,27 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-NSString *const MDCTextInputCoordinatorCharacterRelativeSuperviewKey = @"MDCTextInputCoordinatorCharacterRelativeSuperviewKey";
-NSString *const MDCTextInputCoordinatorHidesPlaceholderKey = @"MDCTextInputCoordinatorHidesPlaceholderKey";
+NSString *const MDCTextInputCoordinatorCharacterRelativeSuperviewKey =
+    @"MDCTextInputCoordinatorCharacterRelativeSuperviewKey";
+NSString *const MDCTextInputCoordinatorHidesPlaceholderKey =
+    @"MDCTextInputCoordinatorHidesPlaceholderKey";
 NSString *const MDCTextInputCoordinatorInputKey = @"MDCTextInputCoordinatorInputKey";
 NSString *const MDCTextInputCoordinatorLeadingLabelKey = @"MDCTextInputCoordinatorLeadingLabelKey";
-NSString *const MDCTextInputCoordinatorMDCAdjustsFontsKey = @"MDCTextInputCoordinatorMDCAdjustsFontsKey";
+NSString *const MDCTextInputCoordinatorMDCAdjustsFontsKey =
+    @"MDCTextInputCoordinatorMDCAdjustsFontsKey";
 NSString *const MDCTextInputPositioningDelegateKey = @"MDCTextInputPositioningDelegateKey";
-NSString *const MDCTextInputCoordinatorPlaceholderLabelKey = @"MDCTextInputCoordinatorPlaceholderLabelKey";
+NSString *const MDCTextInputCoordinatorPlaceholderLabelKey =
+    @"MDCTextInputCoordinatorPlaceholderLabelKey";
 NSString *const MDCTextInputCoordinatorTextColorKey = @"MDCTextInputCoordinatorTextColorKey";
-NSString *const MDCTextInputCoordinatorTrailingLabelKey = @"MDCTextInputCoordinatorTrailingLabelKey";
-NSString *const MDCTextInputCoordinatorUnderlineViewKey = @"MDCTextInputCoordinatorUnderlineViewKey";
+NSString *const MDCTextInputCoordinatorTrailingLabelKey =
+    @"MDCTextInputCoordinatorTrailingLabelKey";
+NSString *const MDCTextInputCoordinatorUnderlineViewKey =
+    @"MDCTextInputCoordinatorUnderlineViewKey";
 
 static const CGFloat MDCTextInputVerticalPadding = 16.f;
 const CGFloat MDCTextInputUnderlineVerticalPadding = 16.f;
 
-static inline UIColor * _Nonnull MDCTextInputCursorColor() {
+static inline UIColor *_Nonnull MDCTextInputCursorColor() {
   return [MDCPalette indigoPalette].tint500;
 }
 
@@ -114,16 +120,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  UIView <MDCControlledTextInput> *input = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorInputKey];
+  UIView<MDCControlledTextInput> *input =
+      [aDecoder decodeObjectForKey:MDCTextInputCoordinatorInputKey];
 
   self = [self initWithTextInput:input];
   if (self) {
-    _hidesPlaceholderOnInput = [aDecoder decodeBoolForKey:MDCTextInputCoordinatorHidesPlaceholderKey];
+    _hidesPlaceholderOnInput =
+        [aDecoder decodeBoolForKey:MDCTextInputCoordinatorHidesPlaceholderKey];
     _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorLeadingLabelKey];
-    _mdc_adjustsFontForContentSizeCategory = [aDecoder decodeBoolForKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
+    _mdc_adjustsFontForContentSizeCategory =
+        [aDecoder decodeBoolForKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
     _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
     _positioningDelegate = [aDecoder decodeObjectForKey:MDCTextInputPositioningDelegateKey];
-    _relativeSuperview = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
+    _relativeSuperview =
+        [aDecoder decodeObjectForKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTrailingLabelKey];
     _underlineView = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorUnderlineViewKey];
@@ -132,12 +142,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeBool:self.hidesPlaceholderOnInput forKey:MDCTextInputCoordinatorHidesPlaceholderKey];
+  [aCoder encodeBool:self.hidesPlaceholderOnInput
+              forKey:MDCTextInputCoordinatorHidesPlaceholderKey];
   [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputCoordinatorLeadingLabelKey];
-  [aCoder encodeBool:self.mdc_adjustsFontForContentSizeCategory forKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
+  [aCoder encodeBool:self.mdc_adjustsFontForContentSizeCategory
+              forKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
   [aCoder encodeObject:self.placeholderLabel forKey:MDCTextInputCoordinatorPlaceholderLabelKey];
   [aCoder encodeObject:self.positioningDelegate forKey:MDCTextInputPositioningDelegateKey];
-  [aCoder encodeObject:self.relativeSuperview forKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
+  [aCoder encodeObject:self.relativeSuperview
+                forKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
   [aCoder encodeObject:self.textColor forKey:MDCTextInputCoordinatorTextColorKey];
   [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputCoordinatorTrailingLabelKey];
   [aCoder encodeObject:self.underlineView forKey:MDCTextInputCoordinatorUnderlineViewKey];
@@ -214,37 +227,36 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [_textInput addSubview:_trailingUnderlineLabel];
 
   NSLayoutConstraint *leadingLeading =
-  [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:_relativeSuperview
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:0];
+      [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                                   attribute:NSLayoutAttributeLeading
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:_relativeSuperview
+                                   attribute:NSLayoutAttributeLeading
+                                  multiplier:1
+                                    constant:0];
   leadingLeading.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *trailingTrailing =
-  [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:_relativeSuperview
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                constant:0];
+      [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:_relativeSuperview
+                                   attribute:NSLayoutAttributeTrailing
+                                  multiplier:1
+                                    constant:0];
   trailingTrailing.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *labelSpacing =
-  [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:_trailingUnderlineLabel
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:0];
+      [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:_trailingUnderlineLabel
+                                   attribute:NSLayoutAttributeLeading
+                                  multiplier:1
+                                    constant:0];
   labelSpacing.priority = UILayoutPriorityDefaultLow;
 
-  [NSLayoutConstraint
-   activateConstraints:@[ labelSpacing, leadingLeading, trailingTrailing ]];
+  [NSLayoutConstraint activateConstraints:@[ labelSpacing, leadingLeading, trailingTrailing ]];
 
   NSLayoutConstraint *underlineBottom =
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
@@ -495,13 +507,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   if (textField.rightView.superview && !self.placeholderTrailingRightViewLeading) {
     self.placeholderTrailingRightViewLeading =
-    [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
-                                 attribute:NSLayoutAttributeTrailing
-                                 relatedBy:NSLayoutRelationLessThanOrEqual
-                                    toItem:textField.rightView
-                                 attribute:NSLayoutAttributeLeading
-                                multiplier:1
-                                  constant:0];
+        [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:textField.rightView
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:0];
     self.placeholderTrailingRightViewLeading.priority = UILayoutPriorityDefaultLow + 1;
     self.placeholderTrailingRightViewLeading.active = YES;
   } else if (!textField.rightView.superview && self.placeholderTrailingRightViewLeading) {
@@ -583,8 +595,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self.placeholderTrailing setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderHeight setPriority:UILayoutPriorityDefaultLow];
 
-  return @[ self.placeholderHeight, self.placeholderTop, self.placeholderLeading,
-            self.placeholderTrailing ];
+  return @[
+    self.placeholderHeight, self.placeholderTop, self.placeholderLeading, self.placeholderTrailing
+  ];
 }
 
 #pragma mark - Text Input Events

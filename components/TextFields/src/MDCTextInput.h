@@ -60,8 +60,8 @@
  This will usually be used for placeholder text to be displayed when no text has been entered. The
  Material Design guidelines call this 'helper text.'
  */
-@property(nonatomic, nonnull, strong, readonly) IBInspectable UILabel *leadingUnderlineLabel
-NS_SWIFT_NAME(leadingLabel);
+@property(nonatomic, nonnull, strong, readonly)
+    IBInspectable UILabel *leadingUnderlineLabel NS_SWIFT_NAME(leadingLabel);
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
@@ -73,7 +73,7 @@ NS_SWIFT_NAME(leadingLabel);
  Default value is NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
  The text string of the placeholder label.
