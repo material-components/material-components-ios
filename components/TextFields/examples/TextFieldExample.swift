@@ -91,11 +91,8 @@ final class TextFieldSwiftExample: UIViewController {
   let clearModeButton = MDCButton()
   let underlineButton = MDCButton()
 
-  lazy var appBar: MDCAppBar = self.setupAppBar()
-
   override func viewDidLoad() {
     super.viewDidLoad()
-    appBar.addSubviewsToParent()
 
     view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
 
@@ -545,20 +542,17 @@ final class TextFieldSwiftExample: UIViewController {
 
   func setupScrollView() {
     view.addSubview(scrollView)
-
     scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-    let mainViews: [String: UIView] = ["header": self.appBar.headerStackView,
-                                       "scrollView": scrollView]
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(
-      withVisualFormat: "V:[header][scrollView]|",
+      withVisualFormat: "V:|[scrollView]|",
                                                                options: [],
                                                                metrics: nil,
-                                                               views: mainViews))
+                                                               views: ["scrollView": scrollView]))
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
                                                                options: [],
                                                                metrics: nil,
-                                                               views: mainViews))
+                                                               views: ["scrollView": scrollView]))
     let marginOffset: CGFloat = 16
     let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
 
@@ -657,17 +651,6 @@ final class TextFieldSwiftExample: UIViewController {
                          multiplier: 1.0,
                          constant: 0).isActive = true
     }
-  }
-
-  func setupAppBar() -> MDCAppBar {
-    let appBar = MDCAppBar()
-
-    self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue().tint500
-    appBar.headerViewController.headerView.tintColor = .white
-    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-
-    return appBar
   }
 
   func unique(from input: AnyObject, with prefix: String) -> String {
@@ -784,9 +767,16 @@ extension TextFieldSwiftExample {
 
 extension TextFieldSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "(Swift)"]
+    return ["Text Field", "Typical Use"]
   }
-  func catalogShouldHideNavigation() -> Bool {
+//  func catalogShouldHideNavigation() -> Bool {
+//    return false
+//  }
+  class func catalogDescription() -> String {
+    // swiftlint:disable:next line_length
+    return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
+  }
+  class func catalogIsPrimaryDemo() -> Bool {
     return true
   }
 }
