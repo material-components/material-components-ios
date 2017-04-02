@@ -4,10 +4,9 @@ See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Tabs/">
 
 # Tabs
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/tab_bar.mp4" autoplay loop></video>
-  [![Tab Bar](docs/assets/tab_bar.png)](docs/assets/tab_bar.mp4)
-</div>
+<!--{% if site.link_to_site == "true" %}-->
+<a alt="Tab Bar"><img src="docs/assets/tab_bar.png" width="320px"></a>
+<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/tab_bar.mp4" autoplay loop></video></div>{% endif %}-->
 
 Tabs are bars of buttons used to navigate between groups of content.
 <!--{: .intro :}-->
