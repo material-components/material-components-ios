@@ -146,36 +146,38 @@ textFieldControllerDefaultCharMax.characterCountMax = 50;
 ~~~
 <!--</div>-->
 
-### Present an alert
+### Text Field with Floating Placeholder
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ~~~ swift
-// Present a modal alert
-let alertController = MDCAlertController(title: titleString, message: messageString)
-let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
-alertController.addAction(action)
+let textFieldFloating = MDCTextField()
+scrollView.addSubview(textFieldFloating)
+textFieldFloating.translatesAutoresizingMaskIntoConstraints = false
 
-present(alertController, animated:true, completion:...)
+textFieldFloating.placeholder = "Full Name"
+textFieldFloating.delegate = self
+textFieldFloating.clearButtonMode = .unlessEditing
+
+let textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
+
+textFieldControllerFloating.presentation = .floatingPlaceholder
 ~~~
 
 #### Objective-C
 
 ~~~ objc
-// Present a modal alert
-MDCAlertController *alertController =
-[MDCAlertController alertControllerWithTitle:titleString
-message:messageString];
+MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
+[self.scrollView addSubview:textFieldFloating];
+textFieldFloating.translatesAutoresizingMaskIntoConstraints = NO;
 
-MDCAlertAction *alertAction =
-[MDCAlertAction actionWithTitle:@"OK"
-handler:^(MDCAlertAction *action) {
-NSLog(@"OK");
-}];
+textFieldFloating.placeholder = @"Full Name";
+textFieldFloating.delegate = self;
+textFieldFloating.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-[alertController addAction:alertAction];
+MDCTextInputController *textFieldControllerFloating = [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
 
-[self presentViewController:alertController animated:YES completion:...];
+textFieldControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
 ~~~
 <!--</div>-->
