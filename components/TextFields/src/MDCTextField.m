@@ -264,22 +264,9 @@ static inline CGFloat MDCCeil(CGFloat value) {
   CGRect textRect = [super textRectForBounds:bounds];
   UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
   textRect.origin.x += textContainerInset.left;
+  textRect.origin.y += textContainerInset.top;
   textRect.size.width -= textContainerInset.left + textContainerInset.right;
-
-  switch (self.contentVerticalAlignment) {
-    case UIControlContentVerticalAlignmentTop:
-      // Shift the text rect down to accomodate text.
-      textRect.origin.y += textContainerInset.top;
-      break;
-    case UIControlContentVerticalAlignmentBottom:
-      // Shift the text rect up to accomodate text.
-      textRect.origin.y -= textContainerInset.bottom;
-      break;
-    case UIControlContentVerticalAlignmentCenter:
-    case UIControlContentVerticalAlignmentFill: {
-      break;
-    }
-  }
+  textRect.size.height -= textContainerInset.top + textContainerInset.bottom;
 
   return CGRectIntegral(textRect);
 }
@@ -287,8 +274,10 @@ static inline CGFloat MDCCeil(CGFloat value) {
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect editingRect = [self textRectForBounds:bounds];
 
-  if ([self.coordinator.positioningDelegate respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
-    return [self.coordinator.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
+  if ([self.coordinator.positioningDelegate
+          respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
+    return
+        [self.coordinator.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
 
   return editingRect;
@@ -323,31 +312,19 @@ static inline CGFloat MDCCeil(CGFloat value) {
   clearButtonRect.origin.y = (MDCCeil(self.font.lineHeight) - clearButtonRect.size.height) / 2.0f;
 
   UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
-  switch (self.contentVerticalAlignment) {
-    case UIControlContentVerticalAlignmentTop:
-      clearButtonRect.origin.y += textContainerInset.top;
-      break;
-    case UIControlContentVerticalAlignmentBottom:
-      clearButtonRect.origin.y =
-          self.bounds.size.height - textContainerInset.bottom - CGRectGetMaxY(clearButtonRect);
-      break;
-    case UIControlContentVerticalAlignmentCenter:
-    case UIControlContentVerticalAlignmentFill: {
-      // Vertically center the clear rect based upon the center per the insets.
-      CGRect tempRect = UIEdgeInsetsInsetRect(self.bounds, textContainerInset);
-      CGFloat centerY = CGRectGetMidY(tempRect);
-      CGFloat minY = clearButtonRect.size.height / 2.0f;
-      clearButtonRect = CGRectMake(clearButtonRect.origin.x, centerY - minY,
-                                   clearButtonRect.size.width, clearButtonRect.size.height);
-      break;
-    }
-  }
+  // Vertically center the clear rect based upon the center per the insets.
+  CGRect tempRect = UIEdgeInsetsInsetRect(self.bounds, textContainerInset);
+  CGFloat centerY = CGRectGetMidY(tempRect);
+  CGFloat minY = clearButtonRect.size.height / 2.0f;
+  clearButtonRect = CGRectMake(clearButtonRect.origin.x, centerY - minY, clearButtonRect.size.width,
+                               clearButtonRect.size.height);
 
   clearButtonRect = CGRectIntegral(clearButtonRect);
 
   if ([self.coordinator.positioningDelegate
           respondsToSelector:@selector(clearButtonRectForBounds:defaultRect:)]) {
-    return [self.coordinator.positioningDelegate clearButtonRectForBounds:bounds defaultRect:clearButtonRect];
+    return [self.coordinator.positioningDelegate clearButtonRectForBounds:bounds
+                                                              defaultRect:clearButtonRect];
   }
 
   return clearButtonRect;
@@ -368,9 +345,9 @@ static inline CGFloat MDCCeil(CGFloat value) {
   boundingSize.width = UIViewNoIntrinsicMetric;
 
   CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) +
-  2 * MDCTextInputUnderlineVerticalSpacing +
-  MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
-      MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
+                   2 * MDCTextInputUnderlineVerticalSpacing +
+                   MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
+                       MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
   boundingSize.height = height;
 
   return boundingSize;
@@ -398,18 +375,7 @@ static inline CGFloat MDCCeil(CGFloat value) {
   CGRect textRect = [self textRectForBounds:bounds];
   CGFloat fontHeight = MDCCeil(self.font.lineHeight);
   // The text rect has been shifted as necessary, but now needs to be sized accordingly.
-  switch (self.contentVerticalAlignment) {
-    case UIControlContentVerticalAlignmentTop:
-      // We just need to update the height, which is handled generically below.
-      break;
-    case UIControlContentVerticalAlignmentBottom:
-      textRect.origin.y = CGRectGetMaxY(textRect) - fontHeight;
-      break;
-    case UIControlContentVerticalAlignmentCenter:
-    case UIControlContentVerticalAlignmentFill:
-      textRect.origin.y = CGRectGetMidY(textRect) - (fontHeight / 2.0f);
-      break;
-  }
+  textRect.origin.y = CGRectGetMidY(textRect) - (fontHeight / 2.0f);
   textRect.size.height = fontHeight;
   return CGRectIntegral(textRect);
 }

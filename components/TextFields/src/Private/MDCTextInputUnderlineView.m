@@ -18,9 +18,9 @@
 
 #import "MaterialPalettes.h"
 
-NSString *const MDCTextInputUnderlineColorKey = @"";
-NSString *const MDCTextInputUnderlineEnabledKey = @"";
-NSString *const MDCTextInputUnderlineLineHeightKey = @"";
+NSString *const MDCTextInputUnderlineColorKey = @"MDCTextInputUnderlineColorKey";
+NSString *const MDCTextInputUnderlineEnabledKey = @"MDCTextInputUnderlineEnabledKey";
+NSString *const MDCTextInputUnderlineLineHeightKey = @"MDCTextInputUnderlineLineHeightKey";
 
 static const CGFloat MDCTextInputUnderlineDefaultHeight = 1.f;
 

@@ -307,11 +307,24 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)setupUnderlineView {
-  _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:[self underlineViewFrame]];
+  _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:CGRectZero];
   _underlineView.color = self.underlineColor;
+  _underlineView.translatesAutoresizingMaskIntoConstraints = NO;
 
   [self.textInput addSubview:_underlineView];
   [self.textInput sendSubviewToBack:_underlineView];
+
+  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[underlineView]|"
+                                                                                  options:0
+                                                                                  metrics:nil
+                                                                                    views:@{@"underlineView": _underlineView}]];
+  [NSLayoutConstraint constraintWithItem:_underlineView
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:_relativeSuperview
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:-1 * MDCTextInputUnderlineVerticalPadding].active = YES;
 }
 
 - (void)layoutSubviewsOfInput {
@@ -325,8 +338,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                      self.textContainerInset)) {
     ((UITextView *)self.textInput).textContainerInset = self.textContainerInset;
   }
-
-  self.underlineView.frame = [self underlineViewFrame];
 
   [self updatePlaceholderAlpha];
   [self updatePlaceholderPosition];
@@ -356,34 +367,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setUnderlineHeight:(CGFloat)underlineHeight {
   self.underlineView.lineHeight = underlineHeight;
-}
-
-- (CGRect)underlineViewFrame {
-  CGRect bounds = self.textInput.bounds;
-  if (CGRectIsEmpty(bounds)) {
-    return bounds;
-  }
-
-  CGRect underlineFrame = CGRectZero;
-  underlineFrame.size = [_underlineView sizeThatFits:bounds.size];
-  CGRect textRect = [self.textInput textRectThatFitsForBounds:bounds];
-
-  CGFloat underlineVerticalPadding = MDCTextInputUnderlineVerticalPadding;
-
-  if ([self.textInput isKindOfClass:[UITextView class]]) {
-    // For multiline text fields, the textRectThatFitsForBounds is essentially the text container
-    // and we can just measure from the bottom.
-    underlineFrame.origin.y =
-    CGRectGetMaxY(textRect) + underlineVerticalPadding - underlineFrame.size.height;
-  } else {
-    // For single line text fields, the textRectThatFitsForBounds is a best guess at the text
-    // rect for the line of text, which may be rect adjusted for pixel boundaries.  Measure from the
-    // center to get the best underline placement.
-    underlineFrame.origin.y = CGRectGetMidY(textRect) + (self.textInput.font.pointSize / 2.0f) +
-    underlineVerticalPadding - underlineFrame.size.height;
-  }
-
-  return underlineFrame;
+  [self.textInput setNeedsUpdateConstraints];
 }
 
 #pragma mark - Properties Implementation
@@ -566,22 +550,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   // This can be affected by .leftView and .rightView.
   // See updatePlaceholderPositionOverlays()
-  self.placeholderLeading =
-      [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                   attribute:NSLayoutAttributeLeading
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:_relativeSuperview
-                                   attribute:NSLayoutAttributeLeading
-                                  multiplier:1
-                                    constant:CGRectGetMinX(placeholderRect)];
-  self.placeholderTrailing =
-      [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                   attribute:NSLayoutAttributeTrailing
-                                   relatedBy:NSLayoutRelationLessThanOrEqual
-                                      toItem:_relativeSuperview
-                                   attribute:NSLayoutAttributeTrailing
-                                  multiplier:1
-                                    constant:8];
+  self.placeholderLeading = [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                                         attribute:NSLayoutAttributeLeading
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:_relativeSuperview
+                                                         attribute:NSLayoutAttributeLeading
+                                                        multiplier:1
+                                                          constant:CGRectGetMinX(placeholderRect)];
+  self.placeholderTrailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationLessThanOrEqual
+                                                             toItem:_relativeSuperview
+                                                          attribute:NSLayoutAttributeTrailing
+                                                         multiplier:1
+                                                           constant:8];
   self.placeholderHeight = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationLessThanOrEqual
