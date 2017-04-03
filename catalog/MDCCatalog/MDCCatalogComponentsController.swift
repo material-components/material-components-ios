@@ -161,7 +161,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   }
 
   func inkTouchController(_ inkTouchController: MDCInkTouchController,
-                          inkViewAtTouchLocation location: CGPoint) -> MDCInkView {
+                          inkViewAtTouchLocation location: CGPoint) -> MDCInkView? {
     if let indexPath = self.collectionView!.indexPathForItem(at: location) {
       let cell = self.collectionView!.cellForItem(at: indexPath)
       return self.inkViewForView(cell!)

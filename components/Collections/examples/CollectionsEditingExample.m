@@ -114,7 +114,7 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     sectionHeader.textLabel.text =
-        [NSString stringWithFormat:@"Section %lu Header", indexPath.section];
+        [NSString stringWithFormat:@"Section %lu Header", (long)indexPath.section];
   }
 
   return sectionHeader;
