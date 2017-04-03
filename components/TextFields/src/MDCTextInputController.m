@@ -28,8 +28,8 @@
 #pragma mark - Constants
 
 static const CGFloat MDCTextInputAlmostRequiredPriority = 999;
-static const CGFloat MDCTextInputFloatingLabelFontSize = 12.f;
 static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
+static const CGFloat MDCTextInputFloatingPlaceholderDefaultScale = 0.75f;
 static const CGFloat MDCTextInputFullWidthHorizontalInnerPadding = 8.f;
 static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
 static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
@@ -64,27 +64,11 @@ static NSString *const MDCTextInputControllerTextInputKey = @"MDCTextInputContro
 static NSString *const MDCTextInputControllerUnderlineViewModeKey =
     @"MDCTextInputControllerUnderlineViewModeKey";
 
-static inline CGFloat MDCCeil(CGFloat value) {
+static inline CGFloat MDCRound(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
-  return ceil(value);
+  return rint(value);
 #else
-  return ceilf(value);
-#endif
-}
-
-static inline CGFloat MDCFabs(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return fabs(value);
-#else
-  return fabsf(value);
-#endif
-}
-
-static inline BOOL MDCFloatIsApproximatelyZero(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return (MDCFabs(value) < DBL_EPSILON);
-#else
-  return (MDCFabs(value) < FLT_EPSILON);
+  return rintf(value);
 #endif
 }
 
@@ -98,15 +82,6 @@ static inline UIColor *MDCTextInputNormalUnderlineColor() {
 
 static inline UIColor *MDCTextInputTextErrorColor() {
   return [MDCPalette redPalette].tint500;
-}
-
-static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
-  CGFloat pointSize = [font pointSize];
-  if (!MDCFloatIsApproximatelyZero(pointSize)) {
-    return MDCTextInputFloatingLabelFontSize / pointSize;
-  }
-
-  return 1;
 }
 
 @interface MDCTextInputController () {
@@ -432,7 +407,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     return placeholderRect;
   }
 
-  placeholderRect.origin.y -= MDCTextInputFloatingLabelMargin + MDCCeil(self.textInput.placeholderLabel.font.lineHeight);
+  placeholderRect.origin.y -= MDCTextInputFloatingLabelMargin + MDCRound(self.textInput.placeholderLabel.font.lineHeight);
 
   return placeholderRect;
 }
@@ -449,7 +424,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 }
 
 - (CGFloat)effectiveFloatingScale {
-  CGFloat scaleFactor = self.floatingPlaceholderScale ? (CGFloat)self.floatingPlaceholderScale.floatValue : MDCTextInputTitleScaleFactor(self.textInput.placeholderLabel.font);
+  CGFloat scaleFactor = self.floatingPlaceholderScale ? (CGFloat)self.floatingPlaceholderScale.floatValue : MDCTextInputFloatingPlaceholderDefaultScale;
 
   return scaleFactor;
 }
@@ -706,7 +681,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     } else {
       // Single Line Only
       // .fullWidth
-      self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding + MDCCeil(self.textInput.font.lineHeight);
+      self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding + MDCRound(self.textInput.font.lineHeight);
 
       if (!self.characterCountY) {
         self.characterCountY =
@@ -740,7 +715,14 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     self.placeholderTrailingSuperviewTrailing.active = NO;
 
     if (_presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-      self.heightConstraint.constant = MDCTextInputVerticalPadding + MDCCeil(self.textInput.placeholderLabel.font.lineHeight * [self effectiveFloatingScale]) + MDCTextInputFloatingLabelMargin + MDCCeil(self.textInput.font.lineHeight) + MDCTextInputVerticalPadding;
+
+      self.heightConstraint.constant = MDCTextInputVerticalPadding +
+      MDCRound(self.textInput.placeholderLabel.font.lineHeight) +
+      MDCTextInputFloatingLabelMargin + MDCRound(self.textInput.font.lineHeight) +
+      MAX(MDCTextInputVerticalPadding,
+          MAX(MDCRound(self.textInput.leadingUnderlineLabel.font.lineHeight),
+              MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight)));
+
       NSLog(@"%f", self.heightConstraint.constant);
     } // else is .default which needs no heightConstraint.
   }
@@ -767,19 +749,18 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   // NOTE: UITextFields have a centerY based layout. But you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
-
   UIEdgeInsets textContainerInset = defaultInsets;
   switch (self.presentationStyle) {
     case MDCTextInputPresentationStyleDefault:
       break;
     case MDCTextInputPresentationStyleFloatingPlaceholder:
-      textContainerInset.top = MDCTextInputVerticalPadding + MDCCeil(self.textInput.placeholderLabel.font.lineHeight) +
+      textContainerInset.top = MDCTextInputVerticalPadding + MDCRound(self.textInput.placeholderLabel.font.lineHeight) +
       MDCTextInputFloatingLabelMargin;
-//      textContainerInset.bottom = MDCTextInputVerticalPadding;
+      textContainerInset.bottom = MDCTextInputVerticalPadding;
       break;
     case MDCTextInputPresentationStyleFullWidth:
-//      textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
-//      textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
+      textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
+      textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
       textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
       textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
       break;
