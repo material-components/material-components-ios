@@ -86,6 +86,7 @@ final class TextFieldSwiftExample: UIViewController {
   var controllersFullWidth = [MDCTextInputController]()
 
   let unstyledTextField = MDCTextField()
+  let unstyledTextView = MDCTextView()
 
   let characterModeButton = MDCButton()
   let clearModeButton = MDCButton()
@@ -381,6 +382,8 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textViewDefault)
     textViewDefault.translatesAutoresizingMaskIntoConstraints = false
 
+    textViewDefault.delegate = self
+
     let textViewControllerDefault = MDCTextInputController(input: textViewDefault)
 
     let textViewDefaultPlaceholder = MDCTextView()
@@ -388,6 +391,7 @@ final class TextFieldSwiftExample: UIViewController {
     textViewDefaultPlaceholder.translatesAutoresizingMaskIntoConstraints = false
 
     textViewDefaultPlaceholder.placeholder = "This is a multi line text view with placeholder"
+    textViewDefaultPlaceholder.delegate = self
 
     let textViewControllerDefaultPlaceholder =
       MDCTextInputController(input: textViewDefaultPlaceholder)
@@ -397,6 +401,7 @@ final class TextFieldSwiftExample: UIViewController {
     textViewDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
 
     textViewDefaultCharMax.placeholder = "This is a multi line text view with placeholder"
+    textViewDefaultCharMax.delegate = self
 
     let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
     textViewControllerDefaultCharMax.characterCountMax = 140
@@ -412,11 +417,17 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textViewFullWidth)
     textViewFullWidth.translatesAutoresizingMaskIntoConstraints = false
 
+    textViewFullWidth.placeholder = "This is a full width text view"
+    textViewFullWidth.delegate = self
+
     let textViewControllerFullWidth = MDCTextInputController(input: textViewFullWidth)
 
     let textViewFullWidthCharMax = MDCTextView()
     scrollView.addSubview(textViewFullWidthCharMax)
     textViewFullWidthCharMax.translatesAutoresizingMaskIntoConstraints = false
+
+    textViewFullWidthCharMax.placeholder = "This is a full width text view with character count"
+    textViewFullWidthCharMax.delegate = self
 
     let textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
 
@@ -430,13 +441,22 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(textViewFloating)
     textViewFloating.translatesAutoresizingMaskIntoConstraints = false
 
+    textViewFloating.delegate = self
+    textViewFloating.placeholder = "This is a text view with a floating placeholder"
+
     let textViewControllerFloating = MDCTextInputController(input: textViewFloating)
+    textViewControllerFloating.presentation = .floatingPlaceholder
 
     let textViewFloatingCharMax = MDCTextView()
     scrollView.addSubview(textViewFloatingCharMax)
     textViewFloatingCharMax.translatesAutoresizingMaskIntoConstraints = false
 
+    textViewFloatingCharMax.delegate = self
+    textViewFloatingCharMax.placeholder =
+      "This is a text view with a floating placeholder and character count"
+
     let textViewControllerFloatingCharMax = MDCTextInputController(input: textViewFloatingCharMax)
+    textViewControllerFloatingCharMax.presentation = .floatingPlaceholder
 
     controllersWithCharacterCount.append(textViewControllerFloatingCharMax)
 
@@ -451,6 +471,12 @@ final class TextFieldSwiftExample: UIViewController {
     textViewCustomFont.placeholder = "This has a custom font"
 
     let textViewControllerDefaultCustomFont = MDCTextInputController(input: textViewCustomFont)
+
+    scrollView.addSubview(unstyledTextView)
+    unstyledTextView.translatesAutoresizingMaskIntoConstraints = false
+
+    unstyledTextView.placeholder = "This text view has no controller (unstyled)"
+    unstyledTextView.delegate = self
 
     return [textViewControllerDefaultCustomFont]
   }
@@ -593,12 +619,14 @@ final class TextFieldSwiftExample: UIViewController {
     }
 
     let visualString = "V:|-10-[controlLabel]-" + controlsString + "20-[singleLabel]-" +
-      textFieldsString + "[unstyledTextField]-20-[multiLabel]-" + textViewsString + "20-|"
+      textFieldsString + "[unstyledTextField]-20-[multiLabel]-" + textViewsString +
+    "[unstyledTextView]-20-|"
 
     let labels: [String: UIView] = ["controlLabel": controlLabel,
                                     "singleLabel": singleLabel,
                                     "multiLabel": multiLabel,
-                                    "unstyledTextField": unstyledTextField]
+                                    "unstyledTextField": unstyledTextField,
+                                    "unstyledTextView": unstyledTextView]
 
     var views = [String: UIView]()
 
@@ -747,6 +775,15 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
 }
 
 extension TextFieldSwiftExample: UITextViewDelegate {
+  func textView(_ textView: UITextView,
+                shouldChangeTextIn range: NSRange,
+                replacementText text: String) -> Bool {
+    if text == "\n" {
+      textView.resignFirstResponder()
+      return false
+    }
+    return true
+  }
 }
 
 extension TextFieldSwiftExample {
