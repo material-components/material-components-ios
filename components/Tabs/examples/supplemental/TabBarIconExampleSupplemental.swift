@@ -26,6 +26,7 @@ extension TabBarIconSwiftExample {
     let alignmentButton = MDCRaisedButton()
 
     alignmentButton.setTitle("Change Alignment", for: .normal)
+    alignmentButton.setTitleColor(.white, for: .normal)
 
     self.view.addSubview(alignmentButton)
     alignmentButton.translatesAutoresizingMaskIntoConstraints = false
