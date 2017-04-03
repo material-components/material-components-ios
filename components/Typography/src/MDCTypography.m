@@ -237,7 +237,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return YES;
   }
 
-  // TODO(#): Remove after we drop support for iOS 8
+  // TODO(#1296): Remove after we drop support for iOS 8
   // This following value (0.23) is based off what Apple made public in iOS 8.2.
   // We are re-defining it since we can't assume it exists on iOS 8.1.
   CGFloat MDCFontWeightMedium = (CGFloat)0.23;
@@ -256,7 +256,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return YES;
   }
 
-  // TODO(#): Remove after we drop support for iOS 8
+  // TODO(#1296): Remove after we drop support for iOS 8
   // iOS 8 handles medium system font requests by creating a normal weight font of a specific font
   // face instead of a medium font weight of a general font family.  Therefore we can't assume the
   // weight is valid on iOS 8.
