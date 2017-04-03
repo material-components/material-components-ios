@@ -254,18 +254,36 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     return;
   }
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter addObserver:self
-                    selector:@selector(textFieldDidBeginEditing:)
-                        name:UITextFieldTextDidBeginEditingNotification
-                      object:_textInput];
-  [defaultCenter addObserver:self
-                    selector:@selector(textFieldDidChange:)
-                        name:UITextFieldTextDidChangeNotification
-                      object:_textInput];
-  [defaultCenter addObserver:self
-                    selector:@selector(textFieldDidEndEditing:)
-                        name:UITextFieldTextDidEndEditingNotification
-                      object:_textInput];
+
+  if ([_textInput isKindOfClass:[UITextField class]]) {
+    [defaultCenter addObserver:self
+                      selector:@selector(textInputDidBeginEditing:)
+                          name:UITextFieldTextDidBeginEditingNotification
+                        object:_textInput];
+    [defaultCenter addObserver:self
+                      selector:@selector(textInputDidChange:)
+                          name:UITextFieldTextDidChangeNotification
+                        object:_textInput];
+    [defaultCenter addObserver:self
+                      selector:@selector(textInputDidEndEditing:)
+                          name:UITextFieldTextDidEndEditingNotification
+                        object:_textInput];
+  }
+
+  if ([_textInput isKindOfClass:[UITextView class]]) {
+    [defaultCenter addObserver:self
+                      selector:@selector(textInputDidBeginEditing:)
+                          name:UITextViewTextDidBeginEditingNotification
+                        object:_textInput];
+    [defaultCenter addObserver:self
+                      selector:@selector(textInputDidChange:)
+                          name:UITextViewTextDidChangeNotification
+                        object:_textInput];
+    [defaultCenter addObserver:self
+                      selector:@selector(textInputDidEndEditing:)
+                          name:UITextViewTextDidEndEditingNotification
+                        object:_textInput];
+  }
 }
 
 - (void)unsubscribeFromNotifications {
@@ -802,9 +820,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   return textContainerInset;
 }
 
-#pragma mark - UITextField Notification Observation
+#pragma mark - UITextField & UITextView Notification Observation
 
-- (void)textFieldDidBeginEditing:(NSNotification *)note {
+- (void)textInputDidBeginEditing:(NSNotification *)note {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCTextInputFloatingPlaceholderUpAnimationDuration];
   [CATransaction
@@ -819,11 +837,11 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
   [CATransaction commit];
 }
 
-- (void)textFieldDidChange:(NSNotification *)note {
+- (void)textInputDidChange:(NSNotification *)note {
   [self updateLayout];
 }
 
-- (void)textFieldDidEndEditing:(NSNotification *)note {
+- (void)textInputDidEndEditing:(NSNotification *)note {
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCTextInputFloatingPlaceholderDownAnimationDuration];
   [CATransaction
