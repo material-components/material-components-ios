@@ -625,22 +625,21 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
 
 - (void)updateConstraints {
   if (!self.heightConstraint) {
+
     self.heightConstraint =
         [NSLayoutConstraint constraintWithItem:self.textInput
                                      attribute:NSLayoutAttributeHeight
                                      relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeHeight
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeNotAnAttribute
                                     multiplier:1
-                                      constant:MDCCeil(self.textInput.font.lineHeight) +
-                                               2 * MDCTextInputFullWidthVerticalPadding];
-    self.heightConstraint.active = YES;
+                                      constant:0];
   }
 
   if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
     // Multi Line
+    // .fullWidth
     if ([self.textInput isKindOfClass:[UITextView class]]) {
-      self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
 
       [self.textInput.leadingUnderlineLabel
           setContentHuggingPriority:UILayoutPriorityRequired
@@ -654,6 +653,9 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                           forAxis:UILayoutConstraintAxisVertical];
     } else {
       // Single Line
+      // .fullWidth
+      self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding + MDCCeil(self.textInput.font.lineHeight);
+
       if (!self.characterCountCenterY) {
         self.characterCountCenterY =
             [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
@@ -705,7 +707,6 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
                                           constant:-1 * MDCTextInputFullWidthHorizontalPadding];
       }
 
-      self.heightConstraint.constant = 2 * MDCTextInputFullWidthVerticalPadding;
     }
     [NSLayoutConstraint activateConstraints:@[
       self.characterCountCenterY, self.characterTrailing, self.placeholderLeading,
@@ -718,6 +719,7 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     [self placeholderYconstraint].priority = MDCTextInputAlmostRequiredPriority;
 
   } else {
+    // .floatingPlaceholder and .default
     [self placeholderYconstraint].priority = UILayoutPriorityDefaultLow;
 
     // These constraints are deactivated via .active in case they are nil.
@@ -726,7 +728,17 @@ static inline CGFloat MDCTextInputTitleScaleFactor(UIFont *font) {
     self.placeholderLeading.active = NO;
     self.placeholderTrailingCharacterCountLeading.active = NO;
     self.placeholderTrailingSuperviewTrailing.active = NO;
+
+    if (_presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
+      self.heightConstraint.constant = MDCTextInputFullWidthVerticalPadding + MDCCeil(self.textInput.placeholderLabel.font.lineHeight * self.floatingPlaceholderScale) + MDCCeil(self.textInput.font.lineHeight) +
+      MDCTextInputFullWidthVerticalPadding;
+    } // else is .default which needs no heightConstraint.
+
   }
+
+  // Default just uses the built in intrinsic content size but floating placeholder needs more
+  // height and full width needs less. (Constants set above.)
+  self.heightConstraint.active = _presentationStyle != MDCTextInputPresentationStyleDefault;
 }
 
 - (void)updateFontsForDynamicType {
