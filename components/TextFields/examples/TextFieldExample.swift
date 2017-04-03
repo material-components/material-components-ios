@@ -421,6 +421,7 @@ final class TextFieldSwiftExample: UIViewController {
     textViewFullWidth.delegate = self
 
     let textViewControllerFullWidth = MDCTextInputController(input: textViewFullWidth)
+    textViewControllerFullWidth.presentation = .fullWidth
 
     let textViewFullWidthCharMax = MDCTextView()
     scrollView.addSubview(textViewFullWidthCharMax)
@@ -430,6 +431,7 @@ final class TextFieldSwiftExample: UIViewController {
     textViewFullWidthCharMax.delegate = self
 
     let textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
+    textViewControllerFullWidthCharMax.presentation = .fullWidth
 
     controllersWithCharacterCount.append(textViewControllerFullWidthCharMax)
 

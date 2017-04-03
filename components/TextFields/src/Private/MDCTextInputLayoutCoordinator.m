@@ -177,6 +177,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [_textInput sendSubviewToBack:_relativeSuperview];
     _relativeSuperview.opaque = NO;
     _relativeSuperview.backgroundColor = [UIColor clearColor];
+    [_textInput setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+
   } else {
     _relativeSuperview = _textInput;
   }
@@ -457,6 +459,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     return [self.textInput.positioningDelegate textContainerInset:textContainerInset];
   }
   return textContainerInset;
+}
+
+- (void)setTextInput:(UIView<MDCTextInput> *)textInput {
+  _textInput = textInput;
+
+  [_textInput setNeedsLayout];
 }
 
 #pragma mark - Layout

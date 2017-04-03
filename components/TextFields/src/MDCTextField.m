@@ -342,9 +342,9 @@ static inline CGFloat MDCCeil(CGFloat value) {
   boundingSize.width = UIViewNoIntrinsicMetric;
 
   CGFloat height = MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) +
-    MDCTextInputUnderlineVerticalSpacing +
+    MAX(MDCTextInputUnderlineVerticalSpacing,
                    MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
-                       MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
+                       MDCCeil(self.trailingUnderlineLabel.font.lineHeight)));
   boundingSize.height = height;
 
   return boundingSize;

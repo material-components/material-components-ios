@@ -109,7 +109,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is 0.75.
  */
-@property(nonatomic, assign) CGFloat floatingPlaceholderScale NS_SWIFT_NAME(floatingScale)
+@property(nonatomic, nullable, strong) NSNumber *floatingPlaceholderScale NS_SWIFT_NAME(floatingScale)
     UI_APPEARANCE_SELECTOR;
 
 /**

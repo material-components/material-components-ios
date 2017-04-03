@@ -78,6 +78,7 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
 - (void)commonMDCTextViewInitialization {
   self.scrollEnabled = NO;
   self.textContainer.lineFragmentPadding = 0;
+  self.backgroundColor = [UIColor clearColor];
 
   _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
 
