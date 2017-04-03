@@ -314,12 +314,22 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self.textInput addSubview:_underlineView];
   [self.textInput sendSubviewToBack:_underlineView];
 
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[underlineView]|"
-                                                                                  options:0
-                                                                                  metrics:nil
-                                                                                    views:@{@"underlineView": _underlineView}]];
   [NSLayoutConstraint constraintWithItem:_underlineView
-                               attribute:NSLayoutAttributeTop
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:_relativeSuperview
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:_underlineView
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:_relativeSuperview
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:_underlineView
+                               attribute:NSLayoutAttributeCenterY
                                relatedBy:NSLayoutRelationEqual
                                   toItem:_relativeSuperview
                                attribute:NSLayoutAttributeBottom
@@ -519,9 +529,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     return;
   }
 
-  CGRect destinationFrame = [self placeholderDefaultPositionFrame];
-
-  self.placeholderHeight.constant = CGRectGetHeight(destinationFrame);
+  self.placeholderTop.constant = [self textContainerInset].top;
 
   [self updateOverlaysPosition];
 }
@@ -541,12 +549,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGRect placeholderRect = [self placeholderDefaultPositionFrame];
 
   self.placeholderTop = [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                                     attribute:NSLayoutAttributeCenterY
+                                                     attribute:NSLayoutAttributeTop
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:_relativeSuperview
-                                                     attribute:NSLayoutAttributeCenterY
+                                                     attribute:NSLayoutAttributeTop
                                                     multiplier:1
-                                                      constant:0];
+                                                      constant:[self textContainerInset].top];
 
   // This can be affected by .leftView and .rightView.
   // See updatePlaceholderPositionOverlays()
@@ -564,21 +572,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                           attribute:NSLayoutAttributeTrailing
                                                          multiplier:1
                                                            constant:8];
-  self.placeholderHeight = [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                                        attribute:NSLayoutAttributeHeight
-                                                        relatedBy:NSLayoutRelationLessThanOrEqual
-                                                           toItem:nil
-                                                        attribute:NSLayoutAttributeNotAnAttribute
-                                                       multiplier:1
-                                                         constant:CGRectGetHeight(placeholderRect)];
 
   [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderTrailing setPriority:UILayoutPriorityDefaultLow];
-  [self.placeholderHeight setPriority:UILayoutPriorityDefaultLow];
 
   return @[
-    self.placeholderHeight, self.placeholderTop, self.placeholderLeading, self.placeholderTrailing
+    self.placeholderTop, self.placeholderLeading, self.placeholderTrailing
   ];
 }
 

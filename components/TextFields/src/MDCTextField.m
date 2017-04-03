@@ -25,7 +25,7 @@ NSString *const MDCTextFieldClearButtonColorKey = @"MDCTextFieldClearButtonColor
 NSString *const MDCTextFieldClearButtonImageKey = @"MDCTextFieldClearButtonImageKey";
 NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
 
-static const CGFloat MDCClearButtonImageSquareSize = 32.0f;
+static const CGFloat MDCClearButtonImageSquareSize = 24.f;
 static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
 static const CGFloat MDCTextInputUnderlineVerticalSpacing = 8.f;
 
@@ -123,9 +123,12 @@ static inline CGFloat MDCCeil(CGFloat value) {
 
 #pragma mark - Clear Button Image
 
-- (UIImage *)drawnClearButtonImage {
+- (UIImage *)drawnClearButtonImage:(CGSize)size {
+  if (CGSizeEqualToSize(size, CGSizeZero)) {
+    size = CGSizeMake(MDCClearButtonImageSquareSize, MDCClearButtonImageSquareSize);
+  }
   CGFloat scale = [UIScreen mainScreen].scale;
-  CGRect bounds = CGRectMake(0, 0, MDCClearButtonImageSquareSize, MDCClearButtonImageSquareSize);
+  CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
   [self.clearButtonColor setFill];
   [MDCPathForClearButtonImageFrame(bounds) fill];
@@ -140,7 +143,7 @@ static inline CGFloat MDCCeil(CGFloat value) {
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
   if (_clearButtonColor != clearButtonColor) {
     _clearButtonColor = clearButtonColor;
-    self.clearButtonImage = [self drawnClearButtonImage];
+    self.clearButtonImage = [self drawnClearButtonImage:self.clearButtonImage.size];
   }
 }
 
@@ -261,18 +264,29 @@ static inline CGFloat MDCCeil(CGFloat value) {
 #pragma mark - UITextField Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
-  CGRect textRect = [super textRectForBounds:bounds];
+  CGRect textRect = bounds;
   UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
   textRect.origin.x += textContainerInset.left;
-  textRect.origin.y += textContainerInset.top;
   textRect.size.width -= textContainerInset.left + textContainerInset.right;
-  textRect.size.height -= textContainerInset.top + textContainerInset.bottom;
 
-  return CGRectIntegral(textRect);
+  // UITextFields have a centerY based layout. But you can change EITHER the height or the Y. Not
+  // both. Don't know why. So, we have to leave the text rect as big as the bounds and move it to a
+  // Y that works.
+  CGFloat actualY = (CGRectGetHeight(bounds) / 2.0) - self.font.lineHeight / 2.0;
+  actualY = textContainerInset.top - actualY;
+
+  textRect.origin.y = actualY;
+
+  return textRect;
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect editingRect = [self textRectForBounds:bounds];
+
+  // The image for the clear button is sized by the scale of the screen pixel density. We need to
+  // adjust for that while giving it room.
+  CGFloat scale = [UIScreen mainScreen].scale;
+  editingRect.size.width -= self.clearButtonImage.size.width / scale;
 
   if ([self.coordinator.positioningDelegate
           respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
@@ -289,37 +303,20 @@ static inline CGFloat MDCCeil(CGFloat value) {
   // Get the clear button if it exists.
   UIButton *clearButton = self.internalClearButton;
   if (clearButton != nil) {
+    if (!self.clearButtonImage || !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonRect.size)) {
+      self.clearButtonImage = [self drawnClearButtonImage:clearButtonRect.size];
+    }
+
     // If the image is not our image, set it.
     if (clearButton.imageView.image != self.clearButtonImage) {
       [clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
       [clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
       [clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
     }
-
-    // If the rect doesn't fit the image, adjust accordingly
-    if (!CGSizeEqualToSize(clearButtonRect.size, self.clearButtonImage.size)) {
-      // Resize and shift the clearButtonRect to fit the clearButtonImage
-      CGFloat xDelta = (clearButtonRect.size.width - self.clearButtonImage.size.width) / 2.0f;
-      CGFloat yDelta = (clearButtonRect.size.height - self.clearButtonImage.size.height) / 2.0f;
-      clearButtonRect = CGRectInset(clearButtonRect, xDelta, yDelta);
-    }
   }
 
-  // [super clearButtonRectForBounds:] is rect integral centered. Instead, we need to center to the
-  // text without calling textRectForBounds (which will cause a cycle).
-
-  // Offset origin to center to the font height.
-  clearButtonRect.origin.y = (MDCCeil(self.font.lineHeight) - clearButtonRect.size.height) / 2.0f;
-
   UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
-  // Vertically center the clear rect based upon the center per the insets.
-  CGRect tempRect = UIEdgeInsetsInsetRect(self.bounds, textContainerInset);
-  CGFloat centerY = CGRectGetMidY(tempRect);
-  CGFloat minY = clearButtonRect.size.height / 2.0f;
-  clearButtonRect = CGRectMake(clearButtonRect.origin.x, centerY - minY, clearButtonRect.size.width,
-                               clearButtonRect.size.height);
-
-  clearButtonRect = CGRectIntegral(clearButtonRect);
+  clearButtonRect.origin.y = textContainerInset.top;
 
   if ([self.coordinator.positioningDelegate
           respondsToSelector:@selector(clearButtonRectForBounds:defaultRect:)]) {
@@ -344,8 +341,8 @@ static inline CGFloat MDCCeil(CGFloat value) {
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 
-  CGFloat height = 2 * MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) +
-                   2 * MDCTextInputUnderlineVerticalSpacing +
+  CGFloat height = MDCTextInputUnderlineVerticalPadding + MDCCeil(self.font.lineHeight) +
+    MDCTextInputUnderlineVerticalSpacing +
                    MAX(MDCCeil(self.leadingUnderlineLabel.font.lineHeight),
                        MDCCeil(self.trailingUnderlineLabel.font.lineHeight));
   boundingSize.height = height;
