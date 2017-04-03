@@ -37,7 +37,7 @@ static inline CGFloat MDCCeil(CGFloat value) {
 #endif
 }
 
-@interface MDCTextField () <MDCControlledTextInput>
+@interface MDCTextField ()
 
 @property(nonatomic, strong) UIImage *clearButtonImage;
 @property(nonatomic, strong) MDCTextInputLayoutCoordinator *coordinator;
@@ -272,7 +272,7 @@ static inline CGFloat MDCCeil(CGFloat value) {
   // UITextFields have a centerY based layout. But you can change EITHER the height or the Y. Not
   // both. Don't know why. So, we have to leave the text rect as big as the bounds and move it to a
   // Y that works.
-  CGFloat actualY = (CGRectGetHeight(bounds) / 2.0) - self.font.lineHeight / 2.0;
+  CGFloat actualY = (CGRectGetHeight(bounds) / 2.f) - self.font.lineHeight / 2.f;
   actualY = textContainerInset.top - actualY;
 
   textRect.origin.y = actualY;
@@ -364,17 +364,6 @@ static inline CGFloat MDCCeil(CGFloat value) {
 
 + (BOOL)requiresConstraintBasedLayout {
   return YES;
-}
-
-#pragma mark - MDCControlledTextInput
-
-- (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
-  CGRect textRect = [self textRectForBounds:bounds];
-  CGFloat fontHeight = MDCCeil(self.font.lineHeight);
-  // The text rect has been shifted as necessary, but now needs to be sized accordingly.
-  textRect.origin.y = CGRectGetMidY(textRect) - (fontHeight / 2.0f);
-  textRect.size.height = fontHeight;
-  return CGRectIntegral(textRect);
 }
 
 #pragma mark - UITextField Notification Observation

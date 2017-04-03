@@ -69,7 +69,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingRightViewLeading;
 @property(nonatomic, strong) UIView *relativeSuperview;
-@property(nonatomic, weak) UIView<MDCControlledTextInput, MDCTextInput> *textInput;
+@property(nonatomic, weak) UIView<MDCTextInput> *textInput;
 @property(nonatomic, strong) MDCTextInputUnderlineView *underlineView;
 
 @end
@@ -95,7 +95,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return nil;
 }
 
-- (nonnull instancetype)initWithTextInput:(UIView<MDCControlledTextInput> *_Nonnull)textInput {
+- (nonnull instancetype)initWithTextInput:(UIView<MDCTextInput> *_Nonnull)textInput {
   self = [super init];
   if (self) {
     _textInput = textInput;
@@ -120,7 +120,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  UIView<MDCControlledTextInput> *input =
+  UIView<MDCTextInput> *input =
       [aDecoder decodeObjectForKey:MDCTextInputCoordinatorInputKey];
 
   self = [self initWithTextInput:input];
@@ -534,20 +534,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updateOverlaysPosition];
 }
 
-// TODO: (larche) Replace with only needed information or remove altogether.
-- (CGRect)placeholderDefaultPositionFrame {
-  CGRect bounds = self.textInput.bounds;
-  if (CGRectIsEmpty(bounds)) {
-    return bounds;
-  }
-
-  CGRect placeholderRect = [self.textInput textRectThatFitsForBounds:bounds];
-  return placeholderRect;
-}
-
 - (NSArray<NSLayoutConstraint *> *)placeholderDefaultConstaints {
-  CGRect placeholderRect = [self placeholderDefaultPositionFrame];
-
   self.placeholderTop = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                      attribute:NSLayoutAttributeTop
                                                      relatedBy:NSLayoutRelationEqual
@@ -564,7 +551,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                             toItem:_relativeSuperview
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
-                                                          constant:CGRectGetMinX(placeholderRect)];
+                                                          constant:[self textContainerInset].left];
   self.placeholderTrailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                           attribute:NSLayoutAttributeTrailing
                                                           relatedBy:NSLayoutRelationLessThanOrEqual

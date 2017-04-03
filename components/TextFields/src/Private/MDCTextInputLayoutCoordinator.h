@@ -19,13 +19,6 @@
 
 extern const CGFloat MDCTextInputUnderlineVerticalPadding;
 
-@protocol MDCControlledTextInput <MDCTextInput>
-
-/** The text rect for the text field that fits it's contents given the provided bounds. */
-- (CGRect)textRectThatFitsForBounds:(CGRect)bounds;
-
-@end
-
 /** A controller for common traits shared by text inputs. */
 @interface MDCTextInputLayoutCoordinator : NSObject <MDCTextInput, NSCopying, NSCoding>
 
@@ -42,7 +35,7 @@ extern const CGFloat MDCTextInputUnderlineVerticalPadding;
 @property(nonatomic, readonly) UIEdgeInsets textContainerInset;
 
 /** Designated initializer with the controlled text input. */
-- (nonnull instancetype)initWithTextInput:(UIView<MDCControlledTextInput> *_Nonnull)textInput
+- (nonnull instancetype)initWithTextInput:(UIView<MDCTextInput> *_Nonnull)textInput
     NS_DESIGNATED_INITIALIZER;
 
 /** Please use initWithTextInput:. */

@@ -25,7 +25,7 @@
 NSString *const MDCTextViewCoordinatorKey = @"MDCTextViewCoordinatorKey";
 NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
 
-@interface MDCTextView () <MDCControlledTextInput>
+@interface MDCTextView ()
 
 @property(nonatomic, strong) MDCTextInputLayoutCoordinator *coordinator;
 @property(nonatomic, assign, getter=isEditing) BOOL editing;
@@ -215,12 +215,6 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
 
 + (BOOL)requiresConstraintBasedLayout {
   return YES;
-}
-
-#pragma mark - MDCControlledTextField
-
-- (CGRect)textRectThatFitsForBounds:(CGRect)bounds {
-  return UIEdgeInsetsInsetRect(bounds, self.textContainerInset);
 }
 
 #pragma mark - UITextView Notification Observation
