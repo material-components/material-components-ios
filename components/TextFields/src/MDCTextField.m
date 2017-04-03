@@ -327,6 +327,14 @@ static inline CGFloat MDCCeil(CGFloat value) {
   return clearButtonRect;
 }
 
+- (CGRect)leftViewRectForBounds:(CGRect)bounds {
+  return [super leftViewRectForBounds:bounds];
+}
+
+- (CGRect)rightViewRectForBounds:(CGRect)bounds {
+  return [super rightViewRectForBounds:bounds];
+}
+
 #pragma mark - UITextField Draw Overrides
 
 - (void)drawPlaceholderInRect:(CGRect)rect {
