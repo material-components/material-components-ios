@@ -70,7 +70,7 @@
 }
 
 - (void)didTapButton:(id)sender {
-  UIViewController *viewController = [[BottomSheetExampleViewController alloc] initWithCoder:nil];
+  UIViewController *viewController = [[BottomSheetExampleViewController alloc] init];
   viewController.transitioningDelegate = self;
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   [self presentViewController:viewController animated:YES completion:nil];
