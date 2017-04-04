@@ -20,7 +20,7 @@
 #import "MaterialAppBar.h"
 #import "MaterialTextFields.h"
 
-@interface TextFieldExample ()
+@interface TextFieldExample () <UITextFieldDelegate, UITextViewDelegate>
 
 @property(nonatomic, strong) UIScrollView *scrollView;
 
