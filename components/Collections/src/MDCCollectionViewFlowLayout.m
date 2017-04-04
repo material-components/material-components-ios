@@ -27,7 +27,7 @@
 #import <tgmath.h>
 
 /** The grid background decoration view kind. */
-NSString *const kCollectionDecorationView = @"MDCCollectionDecorationView";
+NSString *const kCollectionGridDecorationView = @"MDCCollectionGridDecorationView";
 
 static const NSInteger kSupplementaryViewZIndex = 99;
 
@@ -43,19 +43,32 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
 - (instancetype)init {
   self = [super init];
-  if (self) {
-    // Defaults.
-    self.minimumLineSpacing = 0;
-    self.minimumInteritemSpacing = 0;
-    self.scrollDirection = UICollectionViewScrollDirectionVertical;
-    self.sectionInset = UIEdgeInsetsZero;
-
-    // Register decoration view for grid background.
-    _decorationViewAttributeCache = [NSMutableDictionary dictionary];
-    [self registerClass:[MDCCollectionGridBackgroundView class]
-        forDecorationViewOfKind:kCollectionDecorationView];
+  if (self != nil) {
+    [self commonMDCCollectionViewFlowLayoutInit];
   }
   return self;
+}
+
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self != nil) {
+    // TODO(#): Use values from decoder, don't overwrite in commonInit
+    [self commonMDCCollectionViewFlowLayoutInit];
+  }
+  return self;
+}
+
+- (void)commonMDCCollectionViewFlowLayoutInit {
+  // Defaults.
+  self.minimumLineSpacing = 0;
+  self.minimumInteritemSpacing = 0;
+  self.scrollDirection = UICollectionViewScrollDirectionVertical;
+  self.sectionInset = UIEdgeInsetsZero;
+
+  // Register decoration view for grid background.
+  _decorationViewAttributeCache = [NSMutableDictionary dictionary];
+  [self registerClass:[MDCCollectionGridBackgroundView class]
+      forDecorationViewOfKind:kCollectionGridDecorationView];
 }
 
 - (id<MDCCollectionViewEditing>)editor {
@@ -650,7 +663,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
         NSIndexPath *decorationIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
         MDCCollectionViewLayoutAttributes *decorationAttr =
             (MDCCollectionViewLayoutAttributes *)[self
-                layoutAttributesForDecorationViewOfKind:kCollectionDecorationView
+                layoutAttributesForDecorationViewOfKind:kCollectionGridDecorationView
                                             atIndexPath:decorationIndexPath];
         shouldShowGridBackground = [self shouldShowGridBackgroundWithAttribute:decorationAttr];
         decorationAttr.shouldShowGridBackground = shouldShowGridBackground;
