@@ -28,7 +28,6 @@
 #pragma mark - Constants
 
 static const CGFloat MDCTextInputAlmostRequiredPriority = 999;
-static const CGFloat MDCTextInputFloatingLabelMargin = 8.f;
 static const CGFloat MDCTextInputFloatingPlaceholderDefaultScale = 0.75f;
 static const CGFloat MDCTextInputFullWidthHorizontalInnerPadding = 8.f;
 static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
@@ -36,6 +35,7 @@ static const CGFloat MDCTextInputFullWidthVerticalPadding = 20.f;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputUnderlineActiveHeight = 2.f;
 static const CGFloat MDCTextInputUnderlineNormalHeight = 1.f;
+static const CGFloat MDCTextInputVerticalHalfPadding = 8.f;
 static const CGFloat MDCTextInputVerticalPadding = 16.f;
 
 static const NSTimeInterval MDCTextInputFloatingPlaceholderDownAnimationDuration = 0.266666f;
@@ -288,14 +288,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)setCharacterCounter:(id<MDCTextInputCharacterCounter>)characterCounter {
   if (_characterCounter != characterCounter) {
     _characterCounter = characterCounter;
-    [self updateTrailingUnderlineLabel];
+    [self updateLayout];
   }
 }
 
 - (void)setCharacterCountMax:(NSUInteger)characterCountMax {
   if (_characterCountMax != characterCountMax) {
     _characterCountMax = characterCountMax;
-    [self updateTrailingUnderlineLabel];
+    [self updateLayout];
   }
 }
 
@@ -411,7 +411,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     return placeholderRect;
   }
 
-  placeholderRect.origin.y -= MDCTextInputFloatingLabelMargin + MDCRound(self.textInput.placeholderLabel.font.lineHeight);
+  placeholderRect.origin.y -= MDCTextInputVerticalHalfPadding + MDCRound(self.textInput.placeholderLabel.font.lineHeight);
 
   return placeholderRect;
 }
@@ -534,7 +534,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (self.isDisplayingErrorText) {
     self.previousLeadingText = helperText;
   } else {
-    self.textInput.leadingUnderlineLabel.text = helperText;
+    if (![self.textInput.leadingUnderlineLabel.text isEqualToString:helperText]) {
+      self.textInput.leadingUnderlineLabel.text = helperText;
+      [self updateLayout];
+    }
   }
 }
 
@@ -597,11 +600,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     return;
   }
 
+  if (self.characterCountMax) {
+    NSLog(@"%@", self.textInput.trailingUnderlineLabel);
+  }
   [self updatePlaceholder];
-  [self updateConstraints];
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
   [self updateUnderline];
+  [self updateConstraints];
 }
 
 - (void)updateConstraints {
@@ -720,12 +726,27 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
     if (_presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
 
-      self.heightConstraint.constant = MDCTextInputVerticalPadding +
-      MDCRound(self.textInput.placeholderLabel.font.lineHeight) +
-      MDCTextInputFloatingLabelMargin + MDCRound(self.textInput.font.lineHeight) +
-      MAX(MDCTextInputVerticalPadding,
-          MAX(MDCRound(self.textInput.leadingUnderlineLabel.font.lineHeight),
-              MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight)));
+      // The amount of space underneath the underline is variable. It could just be
+      // MDCTextInputVerticalPadding or the biggest estimated underlineLabel height +
+      // MDCTextInputVerticalHalfPadding
+      CGFloat underlineLabelsOffset = 0;
+      if (self.textInput.leadingUnderlineLabel.text.length) {
+        underlineLabelsOffset = MDCRound(self.textInput.leadingUnderlineLabel.font.lineHeight);
+      }
+      if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
+        underlineLabelsOffset = MAX(underlineLabelsOffset, MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight));
+      }
+      underlineLabelsOffset += MDCTextInputVerticalHalfPadding;
+
+      NSLog(@"underlineLabelsOffset %f", underlineLabelsOffset);
+      CGFloat scale = self.floatingPlaceholderScale ? self.floatingPlaceholderScale.floatValue : 1;
+      self.heightConstraint.constant = MDCTextInputVerticalPadding +          // Top padding
+      MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +     // Placeholder when up
+      MDCTextInputVerticalHalfPadding +                                       // Small padding
+      MDCRound(self.textInput.font.lineHeight) +                              // Text field
+      MDCTextInputVerticalHalfPadding  +                                      // Small padding
+      // Underline height doesn't 'count' right now.                          // Underline
+      underlineLabelsOffset;                                                  // Padding or labels
 
     } // else is .default which needs no heightConstraint.
   }
@@ -740,9 +761,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
     self.textInput.font = textFont;
 
-    [self updateLeadingUnderlineLabel];
-    [self updateTrailingUnderlineLabel];
-    [self updatePlaceholder];
+    [self updateLayout];
   }
 }
 
@@ -758,7 +777,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       break;
     case MDCTextInputPresentationStyleFloatingPlaceholder:
       textContainerInset.top = MDCTextInputVerticalPadding +
-      MDCRound(self.textInput.placeholderLabel.font.lineHeight) + MDCTextInputFloatingLabelMargin;
+      MDCRound(self.textInput.placeholderLabel.font.lineHeight) + MDCTextInputVerticalHalfPadding;
       textContainerInset.bottom = MDCTextInputVerticalPadding;
       break;
     case MDCTextInputPresentationStyleFullWidth:
