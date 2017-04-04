@@ -89,7 +89,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 @property(nonatomic, strong) NSLayoutConstraint *characterCountY;
-@property(nonatomic, strong) NSLayoutConstraint *characterTrailing;
+@property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
 @property(nonatomic, copy) NSString *errorText;
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
@@ -614,8 +614,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    if (!self.characterTrailing) {
-      self.characterTrailing =
+    if (!self.characterCountTrailing) {
+      self.characterCountTrailing =
       [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
                                    attribute:NSLayoutAttributeTrailing
                                    relatedBy:NSLayoutRelationEqual
@@ -671,13 +671,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       if (!self.characterCountY) {
         self.characterCountY =
         [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
-                                     attribute:NSLayoutAttributeCenterY
+                                     attribute:NSLayoutAttributeBottom
                                      relatedBy:NSLayoutRelationEqual
                                         toItem:self.textInput
-                                     attribute:NSLayoutAttributeCenterY
+                                     attribute:NSLayoutAttributeBottom
                                     multiplier:1
-                                      constant:MDCTextInputVerticalPadding];
+                                      constant:0];
       }
+
     } else {
       // Single Line Only
       // .fullWidth
@@ -685,17 +686,17 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
       if (!self.characterCountY) {
         self.characterCountY =
-            [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
-                                         attribute:NSLayoutAttributeBottom
-                                         relatedBy:NSLayoutRelationEqual
-                                            toItem:self.textInput
-                                         attribute:NSLayoutAttributeBottom
-                                        multiplier:1
-                                          constant:0];
+        [NSLayoutConstraint constraintWithItem:self.textInput.trailingUnderlineLabel
+                                     attribute:NSLayoutAttributeCenterY
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textInput
+                                     attribute:NSLayoutAttributeCenterY
+                                    multiplier:1
+                                      constant:0];
       }
     }
     [NSLayoutConstraint activateConstraints:@[
-      self.characterCountY, self.characterTrailing, self.placeholderLeading,
+      self.characterCountY, self.characterCountTrailing, self.placeholderLeading,
       self.placeholderTrailingCharacterCountLeading, self.placeholderTrailingSuperviewTrailing
     ]];
 
@@ -709,7 +710,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
     // These constraints are deactivated via .active in case they are nil.
     self.characterCountY.active = NO;
-    self.characterTrailing.active = NO;
+    self.characterCountTrailing.active = NO;
     self.placeholderLeading.active = NO;
     self.placeholderTrailingCharacterCountLeading.active = NO;
     self.placeholderTrailingSuperviewTrailing.active = NO;
@@ -753,8 +754,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     case MDCTextInputPresentationStyleDefault:
       break;
     case MDCTextInputPresentationStyleFloatingPlaceholder:
-      textContainerInset.top = MDCTextInputVerticalPadding + MDCRound(self.textInput.placeholderLabel.font.lineHeight) +
-      MDCTextInputFloatingLabelMargin;
+      textContainerInset.top = MDCTextInputVerticalPadding +
+      MDCRound(self.textInput.placeholderLabel.font.lineHeight) + MDCTextInputFloatingLabelMargin;
       textContainerInset.bottom = MDCTextInputVerticalPadding;
       break;
     case MDCTextInputPresentationStyleFullWidth:
