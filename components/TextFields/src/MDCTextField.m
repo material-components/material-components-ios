@@ -384,7 +384,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {
   CGFloat centerY = [_coordinator textContainerInset].top +
-  (self.placeholderLabel.font.lineHeight / 2.0) - (heightOfView / 2.0);
+  (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
   return centerY;
 }
 
