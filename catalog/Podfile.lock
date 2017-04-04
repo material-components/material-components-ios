@@ -1,6 +1,6 @@
 PODS:
   - CatalogByConvention (2.1.0)
-  - EarlGrey (1.8.0)
+  - EarlGrey (1.9.0)
   - MaterialComponents (23.0.1):
     - MaterialComponents/ActivityIndicator (= 23.0.1)
     - MaterialComponents/AnimationTiming (= 23.0.1)
@@ -178,7 +178,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatalogByConvention: ef0913973b86b4234bcadf22aa84037c4a47cbbd
-  EarlGrey: fa5b7268f7eee71bccc987cfdf5e6d9223c38213
+  EarlGrey: 3dd4feebea192819c3af5e74f85fe5431b820de2
   MaterialComponents: 8666bde1128660f2a3525d03d6b460d2bc34dc3b
   MaterialComponentsCatalog: b750a67ae74634abd0cc2449419823cb6a30d3a1
   MaterialComponentsUnitTests: e8c5d8aa3ce89bd51e9d11a82632df45b6ed2483
