@@ -775,10 +775,15 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   switch (self.presentationStyle) {
     case MDCTextInputPresentationStyleDefault:
       break;
-    case MDCTextInputPresentationStyleFloatingPlaceholder:
+    case MDCTextInputPresentationStyleFloatingPlaceholder: {
+      CGFloat scale = self.floatingPlaceholderScale ? self.floatingPlaceholderScale.floatValue : 1;
+
       textContainerInset.top = MDCTextInputVerticalPadding +
-      MDCRound(self.textInput.placeholderLabel.font.lineHeight) + MDCTextInputVerticalHalfPadding;
+      MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
+      MDCTextInputVerticalHalfPadding;
+
       textContainerInset.bottom = MDCTextInputVerticalPadding;
+    }
       break;
     case MDCTextInputPresentationStyleFullWidth:
       textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
