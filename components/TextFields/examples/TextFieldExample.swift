@@ -371,6 +371,10 @@ final class TextFieldSwiftExample: UIViewController {
     unstyledTextField.trailingLabel.text = "Trailing label"
     unstyledTextField.delegate = self
     unstyledTextField.clearButtonMode = .whileEditing
+    unstyledTextField.leftView = UIImageView(image: leftViewImage)
+    unstyledTextField.leftViewMode = .always
+    unstyledTextField.rightView = UIImageView(image: rightViewImage)
+    unstyledTextField.rightViewMode = .always
 
     return [textFieldControllerDefaultDisabled, textFieldControllerDefaultCustomFont,
             textFieldControllerDefaultLeftView, textFieldControllerDefaultLeftViewFloating,

@@ -367,6 +367,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
   CGRect defaultRect = [super leftViewRectForBounds:bounds];
+  defaultRect.origin.y = [self centerYForAssociateViews:CGRectGetHeight(defaultRect)];
   if ([self.coordinator.positioningDelegate
        respondsToSelector:@selector(leftViewRectForBounds:defaultRect:)]) {
     return [self.coordinator.positioningDelegate leftViewRectForBounds:bounds defaultRect:defaultRect];
@@ -376,11 +377,18 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
   CGRect defaultRect = [super rightViewRectForBounds:bounds];
+  defaultRect.origin.y = [self centerYForAssociateViews:CGRectGetHeight(defaultRect)];
   if ([self.coordinator.positioningDelegate
        respondsToSelector:@selector(rightViewRectForBounds:defaultRect:)]) {
     return [self.coordinator.positioningDelegate rightViewRectForBounds:bounds defaultRect:defaultRect];
   }
   return defaultRect;
+}
+
+- (CGFloat)centerYForAssociateViews:(CGFloat)heightOfView {
+  CGFloat centerY = [_coordinator textContainerInset].top +
+  (self.placeholderLabel.font.lineHeight / 2.0) - (heightOfView / 2.0);
+  return centerY;
 }
 
 #pragma mark - UITextField Draw Overrides

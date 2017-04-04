@@ -837,7 +837,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   CGRect leftViewRect = defaultRect;
   if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
     // Center it to where the placeholder is when not animated
-    leftViewRect.origin.y = [self centerForAssociateViews:CGRectGetHeight(leftViewRect)];
+    leftViewRect.origin.y = [self centerYForAssociateViews:CGRectGetHeight(leftViewRect)];
   }
 
   return leftViewRect;
@@ -851,13 +851,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   CGRect rightViewRect = defaultRect;
   if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
     // Center it to where the placeholder is when not animated
-    rightViewRect.origin.y = [self centerForAssociateViews:CGRectGetHeight(rightViewRect)];
+    rightViewRect.origin.y = [self centerYForAssociateViews:CGRectGetHeight(rightViewRect)];
   }
 
   return rightViewRect;
 }
 
-- (CGFloat)centerForAssociateViews:(CGFloat)heightOfView {
+- (CGFloat)centerYForAssociateViews:(CGFloat)heightOfView {
   return [self textContainerInset:UIEdgeInsetsZero].top +
   (self.textInput.placeholderLabel.font.lineHeight / 2.0) - (heightOfView / 2.0);
 }
