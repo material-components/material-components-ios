@@ -60,7 +60,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self != nil) {
-    //TODO(#): Why is this nil, the decoder should have created it
+    // TODO(#): Why is this nil, the decoder should have created it
     if (!_collectionViewLayout) {
       _collectionViewLayout = [[MDCCollectionViewFlowLayout alloc] init];
     }
@@ -91,14 +91,14 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   NSString *headerKind = MDCCollectionInfoBarKindHeader;
   NSString *footerKind = MDCCollectionInfoBarKindFooter;
   [self.collectionView registerClass:[MDCCollectionInfoBarView class]
-     forSupplementaryViewOfKind:headerKind
-            withReuseIdentifier:classIdentifier];
+          forSupplementaryViewOfKind:headerKind
+                 withReuseIdentifier:classIdentifier];
   [self.collectionView registerClass:[MDCCollectionInfoBarView class]
           forSupplementaryViewOfKind:footerKind
                  withReuseIdentifier:classIdentifier];
 
-  NSLog(@"Registered Supplementary %@ : %@", headerKind, classIdentifier);  //KM
-  NSLog(@"Registered Supplementary %@ : %@", footerKind, classIdentifier);  //KM
+  NSLog(@"Registered Supplementary %@ : %@", headerKind, classIdentifier);  // KM
+  NSLog(@"Registered Supplementary %@ : %@", footerKind, classIdentifier);  // KM
 }
 
 - (void)setCollectionView:(__kindof UICollectionView *)collectionView {
@@ -335,9 +335,9 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
       [kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
     NSString *identifier = NSStringFromClass([MDCCollectionInfoBarView class]);
     // KM: Simplify identifier
-//    identifier = [identifier stringByAppendingFormat:@".%@", kind];
+    //    identifier = [identifier stringByAppendingFormat:@".%@", kind];
 
-    NSLog(@"Dequeue Supplementary %@ : %@", kind, identifier);  //KM
+    NSLog(@"Dequeue Supplementary %@ : %@", kind, identifier);  // KM
 
     UICollectionReusableView *supplementaryView =
         [collectionView dequeueReusableSupplementaryViewOfKind:kind
