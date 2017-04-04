@@ -42,11 +42,16 @@ NSString *const MDCTextInputCoordinatorTrailingLabelKey =
 NSString *const MDCTextInputCoordinatorUnderlineViewKey =
     @"MDCTextInputCoordinatorUnderlineViewKey";
 
+static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
 const CGFloat MDCTextInputVerticalPadding = 16.f;
 const CGFloat MDCTextInputUnderlineVerticalSpacing = 8.f;
 
 static inline UIColor *_Nonnull MDCTextInputCursorColor() {
   return [MDCPalette indigoPalette].tint500;
+}
+
+static inline UIColor *MDCTextInputDefaultPlaceholderTextColor() {
+  return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
 }
 
 static inline UIColor *MDCTextInputTextColor() {
@@ -64,7 +69,6 @@ static inline CGFloat MDCRound(CGFloat value) {
   return rintf(value);
 #endif
 }
-
 
 @interface MDCTextInputLayoutCoordinator () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
@@ -203,8 +207,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   _placeholderLabel.userInteractionEnabled = NO;
   _placeholderLabel.opaque = NO;
 
-  // TODO: (larche) Get real default placeholder text color.
-  _placeholderLabel.textColor = [UIColor grayColor];
+  _placeholderLabel.textColor = MDCTextInputDefaultPlaceholderTextColor();
   _placeholderLabel.font = _textInput.font;
 
   [_textInput addSubview:_placeholderLabel];
@@ -219,8 +222,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   _leadingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 
-  // TODO: (larche) Get real default leading text color.
-  _leadingUnderlineLabel.textColor = [UIColor grayColor];
+  _leadingUnderlineLabel.textColor = MDCTextInputDefaultPlaceholderTextColor();
   _leadingUnderlineLabel.font = _textInput.font;
   _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
 
@@ -591,8 +593,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 #pragma mark - Text Input Events
 
 - (void)didBeginEditing {
-  // TODO: (larche) Maybe add getting rid of placeholder when typing by default. OR leave it on for
-  // autocomplete.
   [self.textInput invalidateIntrinsicContentSize];
 }
 
