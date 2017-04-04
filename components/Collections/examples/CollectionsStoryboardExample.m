@@ -36,6 +36,14 @@ static NSString *const kReusableIdentifierItem = @"customCell";
   return @"CollectionsStoryboardExample";
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self != nil) {
+    NSLog(@"Storyboard");
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.title = @"Storyboard Demo";
