@@ -308,6 +308,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
+  // First the textRect is loaded. Then it's shaved for cursor and/or clear button.
   CGRect editingRect = [self textRectForBounds:bounds];
   // UITextFields show EITHER the clear button or the rightView. If the rightView has a superview,
   // then it's being shown and the clear button isn't.
@@ -369,19 +370,19 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
   CGRect defaultRect = [super leftViewRectForBounds:bounds];
-  defaultRect.origin.y = [self centerYForAssociateViews:CGRectGetHeight(defaultRect)];
+  defaultRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(defaultRect)];
 
   return defaultRect;
 }
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
   CGRect defaultRect = [super rightViewRectForBounds:bounds];
-  defaultRect.origin.y = [self centerYForAssociateViews:CGRectGetHeight(defaultRect)];
+  defaultRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(defaultRect)];
 
   return defaultRect;
 }
 
-- (CGFloat)centerYForAssociateViews:(CGFloat)heightOfView {
+- (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {
   CGFloat centerY = [_coordinator textContainerInset].top +
   (self.placeholderLabel.font.lineHeight / 2.0) - (heightOfView / 2.0);
   return centerY;
