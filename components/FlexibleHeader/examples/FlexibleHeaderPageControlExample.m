@@ -161,10 +161,6 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   if (scrollView == self.scrollView) {
-    CGFloat contentOffsetY = -scrollView.contentOffset.y;
-    if (contentOffsetY < kFlexibleHeaderMinHeight) {
-      contentOffsetY = kFlexibleHeaderMinHeight;
-    }
     [self.fhvc scrollViewDidScroll:scrollView];
   } else if (scrollView == self.pageScrollView) {
     [_pageControl scrollViewDidScroll:scrollView];

@@ -87,11 +87,13 @@
 
   _contentViewController = contentViewController;
 
-  [self addChildViewController:contentViewController];
-  if ([self isViewLoaded]) {
-    [self.view insertSubview:contentViewController.view
-                belowSubview:self.headerViewController.headerView];
-    [contentViewController didMoveToParentViewController:self];
+  if (contentViewController != nil) {
+    [self addChildViewController:contentViewController];
+    if ([self isViewLoaded]) {
+      [self.view insertSubview:contentViewController.view
+                  belowSubview:self.headerViewController.headerView];
+      [contentViewController didMoveToParentViewController:self];
+    }
   }
 }
 

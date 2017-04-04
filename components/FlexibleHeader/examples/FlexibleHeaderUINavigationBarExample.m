@@ -145,10 +145,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 #pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  CGFloat contentOffsetY = -scrollView.contentOffset.y;
-  if (contentOffsetY < kFlexibleHeaderMinHeight) {
-    contentOffsetY = kFlexibleHeaderMinHeight;
-  }
   [self.fhvc scrollViewDidScroll:scrollView];
 }
 
