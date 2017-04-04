@@ -19,9 +19,9 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
-//KM Moved to CollectionController
-//NSString *const MDCCollectionInfoBarKindHeader = @"MDCCollectionInfoBarKindHeader";
-//NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFooter";
+// KM Moved to CollectionController
+// NSString *const MDCCollectionInfoBarKindHeader = @"MDCCollectionInfoBarKindHeader";
+// NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFooter";
 
 const CGFloat MDCCollectionInfoBarAnimationDuration = 0.3f;
 const CGFloat MDCCollectionInfoBarHeaderHeight = 48.0f;
