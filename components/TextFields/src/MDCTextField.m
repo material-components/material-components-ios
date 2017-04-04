@@ -25,7 +25,8 @@ NSString *const MDCTextFieldClearButtonColorKey = @"MDCTextFieldClearButtonColor
 NSString *const MDCTextFieldClearButtonImageKey = @"MDCTextFieldClearButtonImageKey";
 NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
 
-static const CGFloat MDCTextInputEditingRectRightPaddingCorrection = -6.f;
+static const CGFloat MDCTextInputTextRectRightPaddingCorrection = -4.f;
+static const CGFloat MDCTextInputEditingRectRightPaddingCorrection = -2.f;
 static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 static const CGFloat MDCClearButtonImageSquareSize = 24.f;
@@ -278,14 +279,13 @@ static inline CGFloat MDCRound(CGFloat value) {
   }
 
   CGFloat rightViewWidth = CGRectGetWidth([self rightViewRectForBounds:bounds]);
-  rightViewWidth += MDCTextInputEditingRectRightPaddingCorrection;
+  rightViewWidth += MDCTextInputTextRectRightPaddingCorrection;
   if (self.rightView.superview) {
-        // This could get undone during textRectForBounds: but now we are editing.
         textRect.size.width -= rightViewWidth;
   } else {
     CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
-    clearButtonWidth += MDCTextInputEditingRectRightPaddingCorrection;
+    clearButtonWidth += MDCTextInputTextRectRightPaddingCorrection;
     switch (self.clearButtonMode) {
       case UITextFieldViewModeAlways:
       case UITextFieldViewModeUnlessEditing:
@@ -325,6 +325,8 @@ static inline CGFloat MDCRound(CGFloat value) {
       default:
         break;
     }
+  } else {
+    editingRect.size.width += MDCTextInputEditingRectRightPaddingCorrection;
   }
 
   if ([self.coordinator.positioningDelegate
