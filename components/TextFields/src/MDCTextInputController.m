@@ -600,9 +600,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     return;
   }
 
-  if (self.characterCountMax) {
-    NSLog(@"%@", self.textInput.trailingUnderlineLabel);
-  }
   [self updatePlaceholder];
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
@@ -738,7 +735,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       }
       underlineLabelsOffset += MDCTextInputVerticalHalfPadding;
 
-      NSLog(@"underlineLabelsOffset %f", underlineLabelsOffset);
       CGFloat scale = self.floatingPlaceholderScale ? self.floatingPlaceholderScale.floatValue : 1;
       self.heightConstraint.constant = MDCTextInputVerticalPadding +          // Top padding
       MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +     // Placeholder when up
