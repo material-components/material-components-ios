@@ -275,7 +275,6 @@ static inline CGFloat MDCRound(CGFloat value) {
   actualY = textContainerInset.top - actualY;
 
   textRect.origin.y = actualY;
-
   return textRect;
 }
 
@@ -292,7 +291,6 @@ static inline CGFloat MDCRound(CGFloat value) {
     return
         [self.coordinator.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
-
   return editingRect;
 }
 
@@ -322,16 +320,25 @@ static inline CGFloat MDCRound(CGFloat value) {
     return [self.coordinator.positioningDelegate clearButtonRectForBounds:bounds
                                                               defaultRect:clearButtonRect];
   }
-
   return clearButtonRect;
 }
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
-  return [super leftViewRectForBounds:bounds];
+  CGRect defaultRect = [super leftViewRectForBounds:bounds];
+  if ([self.coordinator.positioningDelegate
+       respondsToSelector:@selector(leftViewRectForBounds:defaultRect:)]) {
+    return [self.coordinator.positioningDelegate leftViewRectForBounds:bounds defaultRect:defaultRect];
+  }
+  return defaultRect;
 }
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
-  return [super rightViewRectForBounds:bounds];
+  CGRect defaultRect = [super rightViewRectForBounds:bounds];
+  if ([self.coordinator.positioningDelegate
+       respondsToSelector:@selector(rightViewRectForBounds:defaultRect:)]) {
+    return [self.coordinator.positioningDelegate rightViewRectForBounds:bounds defaultRect:defaultRect];
+  }
+  return defaultRect;
 }
 
 #pragma mark - UITextField Draw Overrides
