@@ -76,6 +76,10 @@ static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
 }
 
+static inline UIColor *MDCTextInputActiveUnderlineColor() {
+  return [MDCPalette indigoPalette].tint500;
+}
+
 static inline UIColor *MDCTextInputNormalUnderlineColor() {
   return [UIColor lightGrayColor];
 }
@@ -476,9 +480,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     self.textInput.underlineColor = [UIColor clearColor];
   } else {
     UIColor *underlineColor;
-    // TODO: (larche): Get real blue.
-    UIColor *activeColor = [MDCPalette bluePalette].tint500;
-    UIColor *normalColor = MDCTextInputInlinePlaceholderTextColor();
+    UIColor *activeColor = MDCTextInputActiveUnderlineColor();
+    UIColor *normalColor = MDCTextInputNormalUnderlineColor();
 
     CGFloat underlineHeight;
 

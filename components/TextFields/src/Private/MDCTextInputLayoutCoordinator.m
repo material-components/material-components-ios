@@ -70,8 +70,6 @@ static inline CGFloat MDCRound(CGFloat value) {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
-
-// TODO: (larche): Check all properties and methods are needed.
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeftViewTrailing;
