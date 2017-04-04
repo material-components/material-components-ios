@@ -27,7 +27,6 @@ NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
 
 static const CGFloat MDCClearButtonImageSquareSize = 24.f;
 static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
-static const CGFloat MDCTextInputUnderlineVerticalSpacing = 8.f;
 
 static inline CGFloat MDCRound(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -269,7 +268,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   textRect.origin.x += textContainerInset.left;
   textRect.size.width -= textContainerInset.left + textContainerInset.right;
 
-  // UITextFields have a centerY based layout. But you can change EITHER the height or the Y. Not
+  // UITextFields have a centerY based layout. And you can change EITHER the height or the Y. Not
   // both. Don't know why. So, we have to leave the text rect as big as the bounds and move it to a
   // Y that works.
   CGFloat actualY = (CGRectGetHeight(bounds) / 2.f) - MDCRound(self.font.lineHeight / 2.f);
@@ -277,7 +276,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 
   textRect.origin.y = actualY;
 
-  NSLog(@"actualY: %f", actualY);
   return textRect;
 }
 
@@ -350,10 +348,11 @@ static inline CGFloat MDCRound(CGFloat value) {
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 
-  CGFloat height = MDCTextInputUnderlineVerticalPadding + MDCRound(self.font.lineHeight) +
-    MAX(MDCTextInputUnderlineVerticalSpacing,
-                   MAX(MDCRound(self.leadingUnderlineLabel.font.lineHeight),
-                       MDCRound(self.trailingUnderlineLabel.font.lineHeight)));
+  CGFloat height = MDCTextInputVerticalPadding + MDCRound(self.font.lineHeight) + MDCTextInputUnderlineVerticalSpacing * 2.f;
+
+  CGFloat underlineLabelsHeight = MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
+                                      MDCRound(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
+  height += underlineLabelsHeight;
   boundingSize.height = height;
 
   return boundingSize;

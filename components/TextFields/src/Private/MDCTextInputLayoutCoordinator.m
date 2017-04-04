@@ -42,8 +42,8 @@ NSString *const MDCTextInputCoordinatorTrailingLabelKey =
 NSString *const MDCTextInputCoordinatorUnderlineViewKey =
     @"MDCTextInputCoordinatorUnderlineViewKey";
 
-static const CGFloat MDCTextInputVerticalPadding = 16.f;
-const CGFloat MDCTextInputUnderlineVerticalPadding = 16.f;
+const CGFloat MDCTextInputVerticalPadding = 16.f;
+const CGFloat MDCTextInputUnderlineVerticalSpacing = 8.f;
 
 static inline UIColor *_Nonnull MDCTextInputCursorColor() {
   return [MDCPalette indigoPalette].tint500;
@@ -57,9 +57,19 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
 
+static inline CGFloat MDCRound(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return rint(value);
+#else
+  return rintf(value);
+#endif
+}
+
+
 @interface MDCTextInputLayoutCoordinator () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
+
 
 // TODO: (larche): Check all properties and methods are needed.
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
@@ -71,6 +81,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) UIView *relativeSuperview;
 @property(nonatomic, weak) UIView<MDCTextInput> *textInput;
 @property(nonatomic, strong) MDCTextInputUnderlineView *underlineView;
+@property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
 @end
 
@@ -260,7 +271,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   [NSLayoutConstraint activateConstraints:@[ labelSpacing, leadingLeading, trailingTrailing ]];
 
-  NSLayoutConstraint *underlineBottom =
+  NSLayoutConstraint *leadingBottom =
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                    attribute:NSLayoutAttributeBottom
                                    relatedBy:NSLayoutRelationEqual
@@ -268,16 +279,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                    attribute:NSLayoutAttributeBottom
                                   multiplier:1
                                     constant:0];
-  underlineBottom.priority = UILayoutPriorityDefaultLow;
-
-  NSLayoutConstraint *leadingTop = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
-                                                                attribute:NSLayoutAttributeTop
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:_underlineView
-                                                                attribute:NSLayoutAttributeBottom
-                                                               multiplier:1
-                                                                 constant:0];
-  leadingTop.priority = UILayoutPriorityDefaultLow;
+  leadingBottom.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *trailingBottom =
       [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
@@ -289,17 +291,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                     constant:0];
   trailingBottom.priority = UILayoutPriorityDefaultLow;
 
-  NSLayoutConstraint *trailingTop = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
-                                                                 attribute:NSLayoutAttributeTop
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_underlineView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1
-                                                                  constant:0];
-  trailingTop.priority = UILayoutPriorityDefaultLow;
-
   [NSLayoutConstraint
-      activateConstraints:@[ underlineBottom, leadingTop, trailingBottom, trailingTop ]];
+      activateConstraints:@[ leadingBottom, trailingBottom ]];
 
   [_trailingUnderlineLabel
       setContentCompressionResistancePriority:UILayoutPriorityRequired
@@ -330,13 +323,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
                                 constant:0].active = YES;
-  [NSLayoutConstraint constraintWithItem:_underlineView
+  _underlineY = [NSLayoutConstraint constraintWithItem:_underlineView
                                attribute:NSLayoutAttributeCenterY
                                relatedBy:NSLayoutRelationEqual
                                   toItem:_relativeSuperview
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
-                                constant:-1 * MDCTextInputUnderlineVerticalPadding].active = YES;
+                                constant:-1 * MDCTextInputUnderlineVerticalSpacing];
+  _underlineY.active = YES;
 }
 
 - (void)layoutSubviewsOfInput {
@@ -358,6 +352,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)updateConstraintsOfInput {
   [self updatePlaceholderPosition];
+  [self updateUnderlinePosition];
 }
 
 #pragma mark - Underline View Implementation
@@ -380,6 +375,23 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)setUnderlineHeight:(CGFloat)underlineHeight {
   self.underlineView.lineHeight = underlineHeight;
   [self.textInput setNeedsUpdateConstraints];
+}
+
+- (void)updateUnderlinePosition {
+  // Usually the underline is halfway between the text and the bottom of the view. But if there are
+  // underline labels, we need to be above them.
+
+  CGFloat underlineYConstant = MDCTextInputUnderlineVerticalSpacing;
+
+  CGFloat underlineLabelsHeight = MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
+                                      MDCRound(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
+  underlineYConstant += underlineLabelsHeight;
+  underlineYConstant *= -1;
+
+  if (self.underlineY.constant != underlineYConstant) {
+    self.underlineY.constant = underlineYConstant;
+    [self.textInput invalidateIntrinsicContentSize];
+  }
 }
 
 #pragma mark - Properties Implementation
@@ -540,6 +552,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self.placeholderTop.constant = [self textContainerInset].top;
 
   [self updateOverlaysPosition];
+  [self.textInput invalidateIntrinsicContentSize];
 }
 
 - (NSArray<NSLayoutConstraint *> *)placeholderDefaultConstaints {
@@ -582,6 +595,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)didBeginEditing {
   // TODO: (larche) Maybe add getting rid of placeholder when typing by default. OR leave it on for
   // autocomplete.
+  [self.textInput invalidateIntrinsicContentSize];
 }
 
 - (void)didChange {

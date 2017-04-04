@@ -723,7 +723,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
           MAX(MDCRound(self.textInput.leadingUnderlineLabel.font.lineHeight),
               MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight)));
 
-      NSLog(@"%f", self.heightConstraint.constant);
     } // else is .default which needs no heightConstraint.
   }
 

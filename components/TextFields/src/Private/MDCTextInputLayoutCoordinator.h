@@ -17,7 +17,8 @@
 
 #import "MDCTextField.h"
 
-extern const CGFloat MDCTextInputUnderlineVerticalPadding;
+extern const CGFloat MDCTextInputVerticalPadding;
+extern const CGFloat MDCTextInputUnderlineVerticalSpacing;
 
 /** A controller for common traits shared by text inputs. */
 @interface MDCTextInputLayoutCoordinator : NSObject <MDCTextInput, NSCopying, NSCoding>

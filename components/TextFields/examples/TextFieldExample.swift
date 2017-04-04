@@ -367,6 +367,8 @@ final class TextFieldSwiftExample: UIViewController {
     unstyledTextField.translatesAutoresizingMaskIntoConstraints = false
 
     unstyledTextField.placeholder = "This is an unstyled text field (no controller)"
+    unstyledTextField.leadingLabel.text = "Leading label"
+    unstyledTextField.trailingLabel.text = "Trailing label"
     unstyledTextField.delegate = self
     unstyledTextField.clearButtonMode = .whileEditing
 
@@ -478,6 +480,8 @@ final class TextFieldSwiftExample: UIViewController {
     unstyledTextView.translatesAutoresizingMaskIntoConstraints = false
 
     unstyledTextView.placeholder = "This text view has no controller (unstyled)"
+    unstyledTextView.leadingLabel.text = "Leading label"
+    unstyledTextView.trailingLabel.text = "Trailing label"
     unstyledTextView.delegate = self
 
     return [textViewControllerDefaultCustomFont]
