@@ -829,39 +829,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return editingRect;
 }
 
-- (CGRect)leftViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
-  if (![self.textInput isKindOfClass:[UITextField class]]) {
-    return CGRectZero;
-  }
-
-  CGRect leftViewRect = defaultRect;
-  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-    // Center it to where the placeholder is when not animated
-    leftViewRect.origin.y = [self centerYForAssociateViews:CGRectGetHeight(leftViewRect)];
-  }
-
-  return leftViewRect;
-}
-
-- (CGRect)rightViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
-  if (![self.textInput isKindOfClass:[UITextField class]]) {
-    return CGRectZero;
-  }
-
-  CGRect rightViewRect = defaultRect;
-  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-    // Center it to where the placeholder is when not animated
-    rightViewRect.origin.y = [self centerYForAssociateViews:CGRectGetHeight(rightViewRect)];
-  }
-
-  return rightViewRect;
-}
-
-- (CGFloat)centerYForAssociateViews:(CGFloat)heightOfView {
-  return [self textContainerInset:UIEdgeInsetsZero].top +
-  (self.textInput.placeholderLabel.font.lineHeight / 2.0) - (heightOfView / 2.0);
-}
-
 #pragma mark - UITextField & UITextView Notification Observation
 
 - (void)textInputDidBeginEditing:(NSNotification *)note {
