@@ -26,7 +26,5 @@
 // Used only for MDCTextField
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
-- (CGRect)leftViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
-- (CGRect)rightViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 
 @end
