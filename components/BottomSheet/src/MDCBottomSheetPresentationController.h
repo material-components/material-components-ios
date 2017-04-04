@@ -35,7 +35,7 @@
 /**
  Called after dimissing the bottom sheet to let clients know it is no longer onscreen. The bottom
  sheet controller calls this method only in response to user actions such as tapping the background
- or draging the sheet offscreen. This method is not called if the bottom sheet is dismissed
+ or dragging the sheet offscreen. This method is not called if the bottom sheet is dismissed
  programmatically.
 
  @param bottomSheet The MDCBottomSheetPresentationController that was dismissed.
