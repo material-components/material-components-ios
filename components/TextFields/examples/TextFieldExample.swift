@@ -331,7 +331,7 @@ final class TextFieldSwiftExample: UIViewController {
     let textFieldLeftRightView = MDCTextField()
     textFieldLeftRightView.leftViewMode = .whileEditing
     textFieldLeftRightView.leftView = UIImageView(image: leftViewImage)
-    textFieldLeftRightView.rightViewMode = .always
+    textFieldLeftRightView.rightViewMode = .unlessEditing
     textFieldLeftRightView.rightView = UIImageView(image:rightViewImage)
 
     scrollView.addSubview(textFieldLeftRightView)
@@ -726,7 +726,7 @@ final class TextFieldSwiftExample: UIViewController {
         if button == self.characterModeButton {
           controller.characterMode = mode
         } else if button == self.clearModeButton {
-          if let input = controller.input as? UITextField {
+          if let input = controller.input as? MDCTextField {
             input.clearButtonMode = mode
           }
         } else {

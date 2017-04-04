@@ -42,6 +42,7 @@ NSString *const MDCTextInputCoordinatorTrailingLabelKey =
 NSString *const MDCTextInputCoordinatorUnderlineViewKey =
     @"MDCTextInputCoordinatorUnderlineViewKey";
 
+static const CGFloat MDCTextInputAssociateViewToEditingRectPadding = 2.f;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
 const CGFloat MDCTextInputVerticalPadding = 16.f;
 const CGFloat MDCTextInputUnderlineVerticalSpacing = 8.f;
@@ -498,7 +499,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   }
 }
 
-- (void)updateOverlaysPosition {
+- (void)updatePlaceholderToAssociateViewsPosition {
   if (![self.textInput isKindOfClass:[MDCTextField class]]) {
     return;
   }
@@ -512,7 +513,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                                         toItem:textField.leftView
                                      attribute:NSLayoutAttributeTrailing
                                     multiplier:1
-                                      constant:0];
+                                      constant:MDCTextInputAssociateViewToEditingRectPadding];
     self.placeholderLeadingLeftViewTrailing.priority = UILayoutPriorityDefaultLow + 1;
     self.placeholderLeadingLeftViewTrailing.active = YES;
   } else if (!textField.leftView.superview && self.placeholderLeadingLeftViewTrailing) {
@@ -527,7 +528,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                                         toItem:textField.rightView
                                      attribute:NSLayoutAttributeLeading
                                     multiplier:1
-                                      constant:0];
+                                      constant:MDCTextInputAssociateViewToEditingRectPadding];
     self.placeholderTrailingRightViewLeading.priority = UILayoutPriorityDefaultLow + 1;
     self.placeholderTrailingRightViewLeading.active = YES;
   } else if (!textField.rightView.superview && self.placeholderTrailingRightViewLeading) {
@@ -551,7 +552,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
   self.placeholderTop.constant = [self textContainerInset].top;
 
-  [self updateOverlaysPosition];
+  [self updatePlaceholderToAssociateViewsPosition];
   [self.textInput invalidateIntrinsicContentSize];
 }
 
@@ -565,7 +566,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                                                       constant:[self textContainerInset].top];
 
   // This can be affected by .leftView and .rightView.
-  // See updatePlaceholderPositionOverlays()
+  // See updatePlaceholderToAssociateViewsPosition()
   self.placeholderLeading = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual

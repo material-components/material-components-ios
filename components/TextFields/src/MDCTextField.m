@@ -25,6 +25,9 @@ NSString *const MDCTextFieldClearButtonColorKey = @"MDCTextFieldClearButtonColor
 NSString *const MDCTextFieldClearButtonImageKey = @"MDCTextFieldClearButtonImageKey";
 NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
 
+static const CGFloat MDCTextInputEditingRectRightPaddingCorrection = -6.f;
+static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
+
 static const CGFloat MDCClearButtonImageSquareSize = 24.f;
 static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
 
@@ -225,9 +228,8 @@ static inline CGFloat MDCRound(CGFloat value) {
     if ([view isKindOfClass:targetClass]) {
       UIButton *button = (UIButton *)view;
       // In case other buttons exist, do our best to ensure this is the clear button
-      if (CGSizeEqualToSize(button.imageView.image.size,
-                            CGSizeMake(MDCClearButtonImageSystemSquareSize,
-                                       MDCClearButtonImageSystemSquareSize))) {
+      if (button.imageView.image.size.width == MDCClearButtonImageSystemSquareSize ||
+          button.imageView.image.size.width == MDCClearButtonImageSquareSize) {
         _internalClearButton = button;
         return _internalClearButton;
       }
@@ -268,6 +270,32 @@ static inline CGFloat MDCRound(CGFloat value) {
   textRect.origin.x += textContainerInset.left;
   textRect.size.width -= textContainerInset.left + textContainerInset.right;
 
+  CGFloat leftViewWidth = CGRectGetWidth([self leftViewRectForBounds:bounds]);
+  if (self.leftView.superview) {
+    // This could get undone during textRectForBounds: but now we are editing.
+    textRect.size.width -= leftViewWidth;
+    textRect.origin.x = leftViewWidth;
+  }
+
+  CGFloat rightViewWidth = CGRectGetWidth([self rightViewRectForBounds:bounds]);
+  rightViewWidth += MDCTextInputEditingRectRightPaddingCorrection;
+  if (self.rightView.superview) {
+        // This could get undone during textRectForBounds: but now we are editing.
+        textRect.size.width -= rightViewWidth;
+  } else {
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
+    clearButtonWidth += MDCTextInputEditingRectRightPaddingCorrection;
+    switch (self.clearButtonMode) {
+      case UITextFieldViewModeAlways:
+      case UITextFieldViewModeUnlessEditing:
+        textRect.size.width -= clearButtonWidth;
+        break;
+      default:
+        break;
+    }
+  }
+
   // UITextFields have a centerY based layout. And you can change EITHER the height or the Y. Not
   // both. Don't know why. So, we have to leave the text rect as big as the bounds and move it to a
   // Y that works.
@@ -275,16 +303,29 @@ static inline CGFloat MDCRound(CGFloat value) {
   actualY = textContainerInset.top - actualY;
 
   textRect.origin.y = actualY;
+
   return textRect;
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect editingRect = [self textRectForBounds:bounds];
-
-  // The image for the clear button is sized by the scale of the screen pixel density. We need to
-  // adjust for that while giving it room.
-  CGFloat scale = [UIScreen mainScreen].scale;
-  editingRect.size.width -= self.clearButtonImage.size.width / scale;
+  // UITextFields show EITHER the clear button or the rightView. If the rightView has a superview,
+  // then it's being shown and the clear button isn't.
+  if (!self.rightView.superview) {
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
+    clearButtonWidth += MDCTextInputEditingRectClearPaddingCorrection;
+    switch (self.clearButtonMode) {
+      case UITextFieldViewModeUnlessEditing:
+        editingRect.size.width += clearButtonWidth;
+        break;
+      case UITextFieldViewModeWhileEditing:
+        editingRect.size.width -= clearButtonWidth;
+        break;
+      default:
+        break;
+    }
+  }
 
   if ([self.coordinator.positioningDelegate
           respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
@@ -296,6 +337,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
   CGRect clearButtonRect = [super clearButtonRectForBounds:bounds];
+  clearButtonRect.origin.x = CGRectGetWidth(bounds) - CGRectGetWidth(clearButtonRect);
 
   // Get the clear button if it exists.
   UIButton *clearButton = self.internalClearButton;
