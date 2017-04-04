@@ -528,8 +528,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
           (id<MDCCollectionViewEditingDelegate>)self.collectionView.dataSource;
 
       // Check if delegate can select during editing.
-      if ([editingDelegate respondsToSelector:@selector(collectionView:
-                                                  canSelectItemDuringEditingAtIndexPath:)]) {
+      if ([editingDelegate respondsToSelector:@selector
+                           (collectionView:canSelectItemDuringEditingAtIndexPath:)]) {
         attr.shouldShowSelectorStateMask = [editingDelegate collectionView:self.collectionView
                                      canSelectItemDuringEditingAtIndexPath:attr.indexPath];
       }

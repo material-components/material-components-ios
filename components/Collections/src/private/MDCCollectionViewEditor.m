@@ -465,9 +465,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
         _reorderingCellIndexPath = newIndexPath;
 
         // Notify delegate that item will move.
-        if ([_delegate respondsToSelector:@selector(collectionView:
-                                              willMoveItemAtIndexPath:
-                                                          toIndexPath:)]) {
+        if ([_delegate respondsToSelector:@selector
+                       (collectionView:willMoveItemAtIndexPath:toIndexPath:)]) {
           [_delegate collectionView:_collectionView
               willMoveItemAtIndexPath:previousIndexPath
                           toIndexPath:newIndexPath];
@@ -552,8 +551,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
           if ([_delegate collectionView:_collectionView
                   canSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath]) {
             // Notify delegate.
-            if ([_delegate respondsToSelector:@selector(collectionView:
-                                                  willBeginSwipeToDismissItemAtIndexPath:)]) {
+            if ([_delegate respondsToSelector:@selector
+                           (collectionView:willBeginSwipeToDismissItemAtIndexPath:)]) {
               [_delegate collectionView:_collectionView
                   willBeginSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
             }
@@ -790,9 +789,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
   // Quit early if scrolling past collection view bounds.
   if ((!isPanningDown && contentYOffset <= 0) ||
-      (isPanningDown &&
-       contentYOffset >=
-           self.collectionView.contentSize.height - CGRectGetHeight(self.collectionView.bounds))) {
+      (isPanningDown && contentYOffset >= self.collectionView.contentSize.height -
+                                              CGRectGetHeight(self.collectionView.bounds))) {
     [self stopAutoscroll];
     return;
   }
