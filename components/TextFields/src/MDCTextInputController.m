@@ -768,29 +768,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     self.placeholderTrailingCharacterCountLeading.active = NO;
     self.placeholderTrailingSuperviewTrailing.active = NO;
 
-    if (_presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-      // The amount of space underneath the underline is variable. It could just be
-      // MDCTextInputVerticalPadding or the biggest estimated underlineLabel height +
-      // MDCTextInputVerticalHalfPadding
-      CGFloat underlineLabelsOffset = 0;
-      if (self.textInput.leadingUnderlineLabel.text.length) {
-        underlineLabelsOffset = MDCRound(self.textInput.leadingUnderlineLabel.font.lineHeight);
-      }
-      if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-        underlineLabelsOffset = MAX(
-            underlineLabelsOffset, MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight));
-      }
-      underlineLabelsOffset += MDCTextInputVerticalHalfPadding;
+    UIEdgeInsets insets = [self textContainerInset:UIEdgeInsetsZero];
 
-      CGFloat scale = self.floatingPlaceholderScale ? self.floatingPlaceholderScale.floatValue : 1;
-      self.heightConstraint.constant = MDCTextInputVerticalPadding +  // Top padding
-                                       MDCRound(self.textInput.placeholderLabel.font.lineHeight *
-                                                scale) +                  // Placeholder when up
-                                       MDCTextInputVerticalHalfPadding +  // Small padding
-                                       MDCRound(self.textInput.font.lineHeight) +  // Text field
-                                       MDCTextInputVerticalHalfPadding +           // Small padding
-                                       // Underline height doesn't 'count' right now. // Underline
-                                       underlineLabelsOffset;  // Padding or labels
+    if (_presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
+      self.heightConstraint.constant = insets.top +   // Labels and padding
+                                       MDCRound(MAX(self.textInput.font.lineHeight,
+                                                    self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
+                                       insets.bottom;  // Padding or labels
 
     }  // else is .default which needs no heightConstraint.
   }
@@ -811,22 +795,51 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 #pragma mark - MDCTextFieldPositioningDelegate
 
+
+/**
+ The vertical layout is, at most complex, this form:
+ MDCTextInputVerticalPadding +  // Top padding
+ MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +  // Placeholder when up
+ MDCTextInputVerticalHalfPadding +  // Small padding
+ MDCRound(self.textInput.font.lineHeight) +  // Text field
+ MDCTextInputVerticalHalfPadding +           // Small padding
+ // Underline (height not counted)
+ underlineOffset;  // Padding and/or labels MAX(underlineLabelsOffset,MDCTextInputVerticalPadding)
+
+ */
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets {
   // NOTE: UITextFields have a centerY based layout. But you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
   UIEdgeInsets textContainerInset = defaultInsets;
+
   switch (self.presentationStyle) {
     case MDCTextInputPresentationStyleDefault:
       break;
     case MDCTextInputPresentationStyleFloatingPlaceholder: {
-      CGFloat scale = self.floatingPlaceholderScale ? self.floatingPlaceholderScale.floatValue : 1;
+      CGFloat scale = [self effectiveFloatingScale];
+      // The amount of space underneath the underline is variable. It could just be
+      // MDCTextInputVerticalPadding or the biggest estimated underlineLabel height +
+      // MDCTextInputVerticalHalfPadding
+      CGFloat underlineLabelsOffset = 0;
+      if (self.textInput.leadingUnderlineLabel.text.length) {
+        underlineLabelsOffset = MDCRound(self.textInput.leadingUnderlineLabel.font.lineHeight);
+      }
+      if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
+        underlineLabelsOffset = MAX(underlineLabelsOffset,
+                                    MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight));
+      }
+      CGFloat underlineOffset = MAX(underlineLabelsOffset,
+                                    MDCTextInputVerticalHalfPadding);
+      underlineOffset += MDCTextInputVerticalHalfPadding;
 
       textContainerInset.top = MDCTextInputVerticalPadding +
                                MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
                                MDCTextInputVerticalHalfPadding;
 
-      textContainerInset.bottom = MDCTextInputVerticalPadding;
+      // .bottom = underlineOffset + the half padding about the line but below the text field
+      textContainerInset.bottom = underlineOffset + MDCTextInputVerticalHalfPadding;
+
     } break;
     case MDCTextInputPresentationStyleFullWidth:
       textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
@@ -834,14 +847,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
       textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
       break;
-  }
-
-  // Full width single line text fields have their character counter on the same line as the
-  // text.
-  if ((self.characterCountMax) &&
-      (self.presentationStyle != MDCTextInputPresentationStyleFullWidth ||
-       [self.textInput isKindOfClass:[UITextView class]])) {
-    textContainerInset.bottom += CGRectGetHeight(self.textInput.trailingUnderlineLabel.frame);
   }
 
   return textContainerInset;
