@@ -810,7 +810,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
  MDCTextInputVerticalHalfPadding +                                    // Small padding
  --Underline-- (height not counted)                                   // Underline (height ignored)
  MAX(underlineLabelsOffset,MDCTextInputVerticalPadding)               // Padding and/or labels
-
  */
 // clang-format on
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets {
@@ -842,7 +841,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
                                MDCTextInputVerticalHalfPadding;
 
-      // .bottom = underlineOffset + the half padding about the line but below the text field
+      // .bottom = underlineOffset + the half padding above the line but below the text field
       textContainerInset.bottom = underlineOffset + MDCTextInputVerticalHalfPadding;
 
     } break;
