@@ -135,8 +135,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  UIView<MDCTextInput> *input =
-      [aDecoder decodeObjectForKey:MDCTextInputCoordinatorInputKey];
+  UIView<MDCTextInput> *input = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorInputKey];
 
   self = [self initWithTextInput:input];
   if (self) {
@@ -192,7 +191,8 @@ static inline CGFloat MDCRound(CGFloat value) {
     [_textInput sendSubviewToBack:_relativeSuperview];
     _relativeSuperview.opaque = NO;
     _relativeSuperview.backgroundColor = [UIColor clearColor];
-    [_textInput setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+    [_textInput setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                                  forAxis:UILayoutConstraintAxisVertical];
 
   } else {
     _relativeSuperview = _textInput;
@@ -273,14 +273,13 @@ static inline CGFloat MDCRound(CGFloat value) {
 
   [NSLayoutConstraint activateConstraints:@[ labelSpacing, leadingLeading, trailingTrailing ]];
 
-  NSLayoutConstraint *leadingBottom =
-      [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:_relativeSuperview
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1
-                                    constant:0];
+  NSLayoutConstraint *leadingBottom = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:_relativeSuperview
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                  multiplier:1
+                                                                    constant:0];
   leadingBottom.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *trailingBottom =
@@ -293,8 +292,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                                     constant:0];
   trailingBottom.priority = UILayoutPriorityDefaultLow;
 
-  [NSLayoutConstraint
-      activateConstraints:@[ leadingBottom, trailingBottom ]];
+  [NSLayoutConstraint activateConstraints:@[ leadingBottom, trailingBottom ]];
 
   [_trailingUnderlineLabel
       setContentCompressionResistancePriority:UILayoutPriorityRequired
@@ -317,21 +315,23 @@ static inline CGFloat MDCRound(CGFloat value) {
                                   toItem:_relativeSuperview
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
-                                constant:0].active = YES;
+                                constant:0]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:_underlineView
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
                                   toItem:_relativeSuperview
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
-                                constant:0].active = YES;
+                                constant:0]
+      .active = YES;
   _underlineY = [NSLayoutConstraint constraintWithItem:_underlineView
-                               attribute:NSLayoutAttributeCenterY
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:_relativeSuperview
-                               attribute:NSLayoutAttributeBottom
-                              multiplier:1
-                                constant:-1 * MDCTextInputUnderlineVerticalSpacing];
+                                             attribute:NSLayoutAttributeCenterY
+                                             relatedBy:NSLayoutRelationEqual
+                                                toItem:_relativeSuperview
+                                             attribute:NSLayoutAttributeBottom
+                                            multiplier:1
+                                              constant:-1 * MDCTextInputUnderlineVerticalSpacing];
   _underlineY.active = YES;
 }
 
@@ -385,8 +385,9 @@ static inline CGFloat MDCRound(CGFloat value) {
 
   CGFloat underlineYConstant = MDCTextInputUnderlineVerticalSpacing;
 
-  CGFloat underlineLabelsHeight = MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
-                                      MDCRound(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
+  CGFloat underlineLabelsHeight =
+      MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
+          MDCRound(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
   underlineYConstant += underlineLabelsHeight;
   underlineYConstant *= -1;
 
@@ -587,9 +588,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderTrailing setPriority:UILayoutPriorityDefaultLow];
 
-  return @[
-    self.placeholderTop, self.placeholderLeading, self.placeholderTrailing
-  ];
+  return @[ self.placeholderTop, self.placeholderLeading, self.placeholderTrailing ];
 }
 
 #pragma mark - Text Input Events

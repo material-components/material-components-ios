@@ -109,8 +109,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is 0.75.
  */
-@property(nonatomic, nullable, strong) NSNumber *floatingPlaceholderScale NS_SWIFT_NAME(floatingScale)
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nullable, strong)
+    NSNumber *floatingPlaceholderScale NS_SWIFT_NAME(floatingScale) UI_APPEARANCE_SELECTOR;
 
 /**
  Text displayed in the leading underline label.

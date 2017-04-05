@@ -56,7 +56,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)commonMDCUnderlineViewInitialization {
-  [self setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+  [self setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                          forAxis:UILayoutConstraintAxisVertical];
   [self setClipsToBounds:NO];
   [self updateUnderline];
 }

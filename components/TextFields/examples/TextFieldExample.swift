@@ -287,7 +287,6 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldCustomFontFloating.trailingLabel.font =
       UIFont.preferredFont(forTextStyle: .subheadline)
 
-
     let bundle = Bundle(for: TextFieldSwiftExample.self)
     let leftViewImagePath = bundle.path(forResource: "ic_search", ofType: "png")!
     let leftViewImage = UIImage(contentsOfFile: leftViewImagePath)!

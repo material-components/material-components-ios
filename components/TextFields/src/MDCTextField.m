@@ -281,7 +281,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   CGFloat rightViewWidth = CGRectGetWidth([self rightViewRectForBounds:bounds]);
   rightViewWidth += MDCTextInputTextRectRightPaddingCorrection;
   if (self.rightView.superview) {
-        textRect.size.width -= rightViewWidth;
+    textRect.size.width -= rightViewWidth;
   } else {
     CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
@@ -345,7 +345,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   // Get the clear button if it exists.
   UIButton *clearButton = self.internalClearButton;
   if (clearButton != nil) {
-    if (!self.clearButtonImage || !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonRect.size)) {
+    if (!self.clearButtonImage ||
+        !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonRect.size)) {
       self.clearButtonImage = [self drawnClearButtonImage:clearButtonRect.size];
     }
 
@@ -384,7 +385,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {
   CGFloat centerY = [_coordinator textContainerInset].top +
-  (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
+                    (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
   return centerY;
 }
 
@@ -402,10 +403,12 @@ static inline CGFloat MDCRound(CGFloat value) {
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 
-  CGFloat height = MDCTextInputVerticalPadding + MDCRound(self.font.lineHeight) + MDCTextInputUnderlineVerticalSpacing * 2.f;
+  CGFloat height = MDCTextInputVerticalPadding + MDCRound(self.font.lineHeight) +
+                   MDCTextInputUnderlineVerticalSpacing * 2.f;
 
-  CGFloat underlineLabelsHeight = MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
-                                      MDCRound(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
+  CGFloat underlineLabelsHeight =
+      MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
+          MDCRound(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
   height += underlineLabelsHeight;
   boundingSize.height = height;
 
