@@ -797,15 +797,17 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 
 /**
+ textContainerInset: is the source of truth for vertical layout. It's used to figure out the proper
+ height and also where to place the placeholder / text field.
+
  The vertical layout is, at most complex, this form:
  MDCTextInputVerticalPadding +  // Top padding
  MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +  // Placeholder when up
  MDCTextInputVerticalHalfPadding +  // Small padding
  MDCRound(self.textInput.font.lineHeight) +  // Text field
- MDCTextInputVerticalHalfPadding +           // Small padding
+ MDCTextInputVerticalHalfPadding +  // Small padding
  // Underline (height not counted)
  underlineOffset;  // Padding and/or labels MAX(underlineLabelsOffset,MDCTextInputVerticalPadding)
-
  */
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets {
   // NOTE: UITextFields have a centerY based layout. But you can change EITHER the height or the Y.
