@@ -158,6 +158,31 @@ static inline CGFloat MDCRound(CGFloat value) {
   _coordinator.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
 }
 
+- (UIButton *)internalClearButton {
+  if (_internalClearButton != nil) {
+    return _internalClearButton;
+  }
+  Class targetClass = [UIButton class];
+  // Loop through child views until we find the UIButton that is used to display the clear button
+  // internally in UITextField.
+  NSMutableArray *toVisit = [NSMutableArray arrayWithArray:self.subviews];
+  while ([toVisit count]) {
+    UIView *view = [toVisit objectAtIndex:0];
+    if ([view isKindOfClass:targetClass]) {
+      UIButton *button = (UIButton *)view;
+      // In case other buttons exist, do our best to ensure this is the clear button
+      if (button.imageView.image.size.width == MDCClearButtonImageSystemSquareSize ||
+          button.imageView.image.size.width == MDCClearButtonImageSquareSize) {
+        _internalClearButton = button;
+        return _internalClearButton;
+      }
+    }
+    [toVisit addObjectsFromArray:view.subviews];
+    [toVisit removeObjectAtIndex:0];
+  }
+  return nil;
+}
+
 - (UILabel *)leadingUnderlineLabel {
   return _coordinator.leadingUnderlineLabel;
 }
@@ -222,31 +247,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   _coordinator.enabled = enabled;
-}
-
-- (UIButton *)internalClearButton {
-  if (_internalClearButton != nil) {
-    return _internalClearButton;
-  }
-  Class targetClass = [UIButton class];
-  // Loop through child views until we find the UIButton that is used to display the clear button
-  // internally in UITextField.
-  NSMutableArray *toVisit = [NSMutableArray arrayWithArray:self.subviews];
-  while ([toVisit count]) {
-    UIView *view = [toVisit objectAtIndex:0];
-    if ([view isKindOfClass:targetClass]) {
-      UIButton *button = (UIButton *)view;
-      // In case other buttons exist, do our best to ensure this is the clear button
-      if (button.imageView.image.size.width == MDCClearButtonImageSystemSquareSize ||
-          button.imageView.image.size.width == MDCClearButtonImageSquareSize) {
-        _internalClearButton = button;
-        return _internalClearButton;
-      }
-    }
-    [toVisit addObjectsFromArray:view.subviews];
-    [toVisit removeObjectAtIndex:0];
-  }
-  return nil;
 }
 
 - (NSString *)placeholder {

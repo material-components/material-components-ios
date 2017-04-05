@@ -177,9 +177,9 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
 
 #pragma mark - UITextView Property Overrides
 
-- (void)setText:(NSString *)text {
-  [super setText:text];
-  [_coordinator didSetText];
+- (void)setEditable:(BOOL)editable {
+  [super setEditable:editable];
+  _coordinator.enabled = editable;
 }
 
 - (void)setFont:(UIFont *)font {
@@ -189,9 +189,9 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
   }
 }
 
-- (void)setEditable:(BOOL)editable {
-  [super setEditable:editable];
-  _coordinator.enabled = editable;
+- (void)setText:(NSString *)text {
+  [super setText:text];
+  [_coordinator didSetText];
 }
 
 #pragma mark - Layout
