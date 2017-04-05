@@ -104,25 +104,6 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
                       object:self];
 }
 
-#pragma mark - UITextView Property Overrides
-
-- (void)setText:(NSString *)text {
-  [super setText:text];
-  [_coordinator didSetText];
-}
-
-- (void)setFont:(UIFont *)font {
-  if (self.font != font) {
-    [super setFont:font];
-    [_coordinator didSetFont];
-  }
-}
-
-- (void)setEditable:(BOOL)editable {
-  [super setEditable:editable];
-  _coordinator.enabled = editable;
-}
-
 #pragma mark - Properties Implementation
 
 - (NSAttributedString *)attributedPlaceholder {
@@ -200,6 +181,25 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
 
 - (void)setUnderlineHeight:(CGFloat)underlineHeight {
   _coordinator.underlineHeight = underlineHeight;
+}
+
+#pragma mark - UITextView Property Overrides
+
+- (void)setText:(NSString *)text {
+  [super setText:text];
+  [_coordinator didSetText];
+}
+
+- (void)setFont:(UIFont *)font {
+  if (self.font != font) {
+    [super setFont:font];
+    [_coordinator didSetFont];
+  }
+}
+
+- (void)setEditable:(BOOL)editable {
+  [super setEditable:editable];
+  _coordinator.enabled = editable;
 }
 
 #pragma mark - Layout
