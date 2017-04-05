@@ -47,8 +47,8 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
   if (self) {
     [self commonMDCTextViewInitialization];
 
-    [aDecoder decodeObjectForKey:MDCTextViewCoordinatorKey];
-    [aDecoder decodeObjectForKey:MDCTextViewLayoutDelegateKey];
+    _coordinator = [aDecoder decodeObjectForKey:MDCTextViewCoordinatorKey];
+    _layoutDelegate = [aDecoder decodeObjectForKey:MDCTextViewLayoutDelegateKey];
   }
   return self;
 }
