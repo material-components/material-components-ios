@@ -1,15 +1,22 @@
+<!--docs:
+title:  "Collection Cells"
+layout: detail
+section: components
+excerpt: "Collection view cell classes that adhere to Material Design layout and styling."
+-->
+
 # Collection Cells
 
-<a alt="Collection Cells"><img src="docs/assets/collection_cells.png" width="320px"></a>
-<!--{: .ios-screenshot .right }-->
+<img src="docs/assets/collection_cells.png" alt="Collection Cells" width="320">
+<!--{: .article__asset.article__asset--screenshot }-->
 
 Collection view cell classes that adhere to Material Design layout and styling.
-<!--{: .intro :}-->
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
+  <li class="icon-spec"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
 </ul>
 
 - - -

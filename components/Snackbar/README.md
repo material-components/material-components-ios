@@ -1,17 +1,31 @@
+<!--docs:
+title:  "Snackbar"
+layout: detail
+section: components
+excerpt: "Snackbars provide brief feedback about an operation through a message at the bottom of the screen."
+-->
+
 # Snackbar
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Snackbar"><img src="docs/assets/snackbar.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/snackbar.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/snackbar.png" alt="Snackbar" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/snackbar.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
 contain a text action, but no icons.
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="https://material.google.com/components/snackbars-toasts.html">Snackbars</a></li>
+  <li class="icon-spec"><a href="https://material.google.com/components/snackbars-toasts.html">Snackbars</a></li>
 </ul>
 
 - - -

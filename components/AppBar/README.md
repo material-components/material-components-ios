@@ -1,18 +1,31 @@
+<!--docs:
+title:  "App Bar"
+layout: detail
+section: components
+excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
+-->
+
 # App Bar
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="App Bar"><img src="docs/assets/app_bar.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/app_bar.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/app_bar.png" alt="App Bar" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/app_bar.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.
-<!--{: .intro :}-->
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar Structure</a></li>
-  <li class="icon-link"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+  <li class="icon-spec"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar Structure</a></li>
+  <li class="icon-spec"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
 </ul>
 
 - - -

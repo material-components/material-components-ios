@@ -26,7 +26,7 @@ The `styler` allows setting the cell style as Default, Grouped, or Card Style. C
 either set the `styler.cellStyle` property directly, or use the protocol method
 `collectionView:cellStyleForSection:` to style per section.
 
-<!-- <div class="material-code-render" markdown="1"> -->
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~swift
 // Set for entire collection view.
@@ -56,13 +56,13 @@ self.styler.cellStyle = MDCCollectionViewCellStyleCard;
   return MDCCollectionViewCellStyleGrouped;
 }
 ~~~
-<!-- </div> -->
+<!--</div>-->
 
 ### Cell Height
 
 The styling delegate protocol can be used to override the default cell height of `48.0f`.
 
-<!-- <div class="material-code-render" markdown="1"> -->
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~swift
 override func collectionView(collectionView: UICollectionView,
@@ -84,13 +84,13 @@ override func collectionView(collectionView: UICollectionView,
   return 48.0f;
 }
 ~~~
-<!-- </div> -->
+<!--</div>-->
 
 ### Cell Layout
 
 The styler allows setting the cell layout as List, Grid, or Custom.
 
-<!-- <div class="material-code-render" markdown="1"> -->
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~swift
 // Set as list layout.
@@ -112,7 +112,7 @@ self.styler.cellLayoutType = MDCCollectionViewCellLayoutTypeGrid;
 self.styler.gridPadding = 8;
 self.styler.gridColumnCount = 2;
 ~~~
-<!-- </div> -->
+<!--</div>-->
 
 ### Cell Separators
 
@@ -121,7 +121,7 @@ cell customization is also available by using an `MDCCollectionViewCell` cell or
 Learn more by reading the section on [Cell Separators](../CollectionCells/#cell-separators) in the
 [CollectionCells](../CollectionCells/) component.
 
-<!-- <div class="material-code-render" markdown="1"> -->
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~swift
 // Set separator color.
@@ -151,7 +151,7 @@ self.styler.separatorLineHeight = 1.0f;
 // Whether to hide separators.
 self.styler.shouldHideSeparators = NO;
 ~~~
-<!-- </div> -->
+<!--</div>-->
 
 ### Background colors
 
@@ -159,7 +159,7 @@ A background color can be set on the collection view. Also, individual cell back
 set by using the protocol method `collectionView:cellBackgroundColorAtIndexPath:`. The default
 background colors are `#EEEEEE` for the collection view and `#FFFFFF` for the cells.
 
-<!-- <div class="material-code-render" markdown="1"> -->
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ~~~swift
 // Set collection view background color.
@@ -189,4 +189,4 @@ self.collectionView.backgroundColor = [UIColor grayColor];
   return [UIColor redColor];
 }
 ~~~
-<!-- </div> -->
+<!--</div>-->
