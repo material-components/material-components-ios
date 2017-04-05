@@ -1,10 +1,16 @@
+<!--docs:
+title:  "Contributing"
+layout: landing
+section: contributing
+-->
+
 # General Contributing Guidelines
 
 The Material Components contributing policies and procedures can be found in the main Material Components documentation repository’s [contributing page](https://github.com/material-components/material-components/blob/develop/CONTRIBUTING.md).
 
 ## iOS-specific Additions
 
-The iOS team also abides by the following policy items: 
+The iOS team also abides by the following policy items:
 
 ### Code Conventions
 
@@ -29,7 +35,7 @@ Start the title with `[ComponentName]` to identify which component a change affe
 
 #### Using assignee to indicate who should action on a PR
 
-Since PRs on github permanently stay in the `Changes requested` state it is hard to tell when the author has addressed the concerns. By change the assignee to whomever still needs to action (review or modify/justify) we can more easily keep track of what needs attention in our PR queues. 
+Since PRs on github permanently stay in the `Changes requested` state it is hard to tell when the author has addressed the concerns. By change the assignee to whomever still needs to action (review or modify/justify) we can more easily keep track of what needs attention in our PR queues.
 
 1. For a reviewer this means adding the author as an assignee once the review is finished.
 1. For an author it means adding back the reviewer (and removing themselves) as an assignee.
@@ -45,7 +51,7 @@ Occasionally it is necessary to hotfix the framework. See [hotfixing.md](hotfixi
 
 ## Finding an issue to work on
 
-MDC-iOS uses GitHub to file and track issues. 
+MDC-iOS uses GitHub to file and track issues.
 To find an issue to work on, filter the issues list by the ["is:Help wanted" label](https://github.com/material-components/material-components-ios/labels/is%3AHelp%20wanted).
 
 ## The small print

@@ -47,6 +47,11 @@
 /** Asks the receiver to return a font with an italic bold weight. FontSize must be larger tha 0. */
 - (nonnull UIFont *)boldItalicFontOfSize:(CGFloat)fontSize;
 
+/** Returns a bold version of the specified font. */
+- (nonnull UIFont *)boldFontFromFont:(nonnull UIFont *)font;
+
+/** Returns an italic version of the specified font. */
+- (nonnull UIFont *)italicFontFromFont:(nonnull UIFont *)font;
 /**
  Asks the receiver to determine if a particular font would be considered "large" for the purposes of
  calculating contrast ratios.
@@ -149,14 +154,20 @@
 /** Returns the recommended opacity of black text for the button font. */
 + (CGFloat)buttonFontOpacity;
 
+/** Returns a bold version of the specified font. */
++ (nonnull UIFont *)boldFontFromFont:(nonnull UIFont *)font;
+
+/** Returns an italic version of the specified font. */
++ (nonnull UIFont *)italicFontFromFont:(nonnull UIFont *)font;
+
 /**
  Asks the receiver to determine if a particular font would be considered "large" for the purposes of
  calculating contrast ratios.
- 
+
  Large fonts are defined as greater than 18pt normal or 14pt bold. If the passed font is nil, then
  this method returns NO.
  For more see: https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html
- 
+
  @param font The font to examine.
  @return YES if the font is non-nil and is considered "large".
  */

@@ -76,15 +76,15 @@
 - (IBAction)didTapNondismissingAlert:(id)sender {
   NSString *titleString = @"This alert requires an action.";
   NSString *messageString = @"You can't dismiss it by tapping the background. You must choose "
-    "one of the actions available.";
+                             "one of the actions available.";
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
 
   MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
-                                                         handler:^(MDCAlertAction *action) {
-                                                           NSLog(@"%@", @"AGREE pressed");
-                                                         }];
+                                                        handler:^(MDCAlertAction *action) {
+                                                          NSLog(@"%@", @"AGREE pressed");
+                                                        }];
   [materialAlertController addAction:agreeAction];
 
   MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
@@ -115,9 +115,9 @@
   materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
-                                                         handler:^(MDCAlertAction *action) {
-                                                           NSLog(@"%@", @"AGREE pressed");
-                                                         }];
+                                                        handler:^(MDCAlertAction *action) {
+                                                          NSLog(@"%@", @"AGREE pressed");
+                                                        }];
   [materialAlertController addAction:agreeAction];
 
   MDCAlertAction *okayAction = [MDCAlertAction actionWithTitle:@"OKAY"
@@ -134,6 +134,5 @@
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
-
 
 @end

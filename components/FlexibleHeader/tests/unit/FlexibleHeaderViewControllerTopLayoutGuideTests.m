@@ -161,7 +161,6 @@
   // When
   CGFloat randomHeight = arc4random_uniform(50.0) + 20.0;
   self.vc.fhvc.headerView.maximumHeight = randomHeight;
-  CGFloat initialYOffset = -self.vc.scrollView.contentInset.top;
   CGRect initialFrame =
       CGRectMake(0, self.vc.scrollView.contentInset.top, [UIScreen mainScreen].bounds.size.width,
                  [UIScreen mainScreen].bounds.size.height);

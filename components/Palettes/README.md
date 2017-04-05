@@ -1,12 +1,19 @@
+<!--docs:
+title:  "Palettes"
+layout: detail
+section: components
+excerpt: "The Palettes component provides Material color palettes."
+-->
+
 # Palettes
 
 The Palettes component provides Material colors organized into similar palettes.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="http://www.google.com/design/spec/style/color.html#color-color-palette">Color palettes</a></li>
+  <li class="icon-spec"><a href="http://www.google.com/design/spec/style/color.html#color-color-palette">Color palettes</a></li>
 </ul>
 
 - - -

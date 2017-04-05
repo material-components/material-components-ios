@@ -38,6 +38,18 @@ static const UIEdgeInsets kAccessoryInsetDefault = {0, 16.0f, 0, 16.0f};
 static const uint32_t kCellGrayColor = 0x626262;
 static const uint32_t kCellRedColor = 0xF44336;
 
+// File name of the bundle (without the '.bundle' extension) containing resources.
+static NSString *const kResourceBundleName = @"MaterialCollectionCells";
+
+// String table name containing localized strings.
+static NSString *const kStringTableName = @"MaterialCollectionCells";
+
+NSString *const kSelectedCellAccessibilityHintKey =
+    @"MaterialCollectionCellsAccessibilitySelectedHint";
+
+NSString *const kDeselectedCellAccessibilityHintKey =
+    @"MaterialCollectionCellsAccessibilityDeselectedHint";
+
 // To be used as accessory view when an accessory type is set. It has no particular functionalities
 // other than being a private class defined here, to check if an accessory view was set via an
 // accessory type, or if the user of MDCCollectionViewCell set a custom accessory view.
@@ -108,7 +120,7 @@ static const uint32_t kCellRedColor = 0xF44336;
 
   // Reset cells hidden during swipe deletion.
   self.hidden = NO;
-  
+
   [self.inkView cancelAllAnimationsAnimated:NO];
 }
 
@@ -478,7 +490,24 @@ static const uint32_t kCellRedColor = 0xF44336;
   return accessibilityTraits;
 }
 
+- (NSString *)accessibilityHint {
+  if (_attr.shouldShowSelectorStateMask) {
+    NSString *localizedHintKey =
+        self.selected ? kSelectedCellAccessibilityHintKey : kDeselectedCellAccessibilityHintKey;
+    return [[self class] localizedStringWithKey:localizedHintKey];
+  }
+  return nil;
+}
+
 #pragma mark - Private
+
++ (NSString *)localizedStringWithKey:(NSString *)key {
+  NSBundle *containingBundle = [NSBundle bundleForClass:self];
+  NSURL *resourceBundleURL =
+      [containingBundle URLForResource:kResourceBundleName withExtension:@"bundle"];
+  NSBundle *resourceBundle = [NSBundle bundleWithURL:resourceBundleURL];
+  return [resourceBundle localizedStringForKey:key value:nil table:kStringTableName];
+}
 
 - (CGRect)contentViewFrame {
   CGFloat leadingPadding =

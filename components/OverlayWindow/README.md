@@ -1,3 +1,10 @@
+<!--docs:
+title:  "OverlayWindow"
+layout: detail
+section: components
+excerpt: "A window for managing sets of overlay views."
+-->
+
 # Overlay Window
 
 Provides a window which can have an arbitrary number of overlay views that will sit above the root

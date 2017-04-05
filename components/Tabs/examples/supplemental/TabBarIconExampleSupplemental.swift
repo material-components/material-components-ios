@@ -26,6 +26,7 @@ extension TabBarIconSwiftExample {
     let alignmentButton = MDCRaisedButton()
 
     alignmentButton.setTitle("Change Alignment", for: .normal)
+    alignmentButton.setTitleColor(.white, for: .normal)
 
     self.view.addSubview(alignmentButton)
     alignmentButton.translatesAutoresizingMaskIntoConstraints = false
@@ -120,7 +121,7 @@ extension TabBarIconSwiftExample {
         + " such as switching between views"
     infoPage.addSubview(infoLabel)
 
-    // Layout the views to be equal height and width to each other and self.view, 
+    // Layout the views to be equal height and width to each other and self.view,
     // hug the edges of the scrollView and meet in the middle.
 
     NSLayoutConstraint(item: infoLabel,

@@ -16,10 +16,10 @@
 
 #import "MDCNavigationBar.h"
 
+#import "MDFTextAccessibility.h"
 #import "MaterialButtonBar.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
-#import "MDFTextAccessibility.h"
 
 #import <objc/runtime.h>
 
@@ -106,8 +106,9 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   // Update title label color based on navigationBar backgroundColor
   NSMutableDictionary *textAttr =
       [NSMutableDictionary dictionaryWithDictionary:[navBar titleTextAttributes]];
-  UIColor *textColor = [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
-                                                        targetTextAlpha:1.0
+  UIColor *textColor =
+      [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                       targetTextAlpha:1.0
                                                   font:[textAttr objectForKey:NSFontAttributeName]];
   [textAttr setObject:textColor forKey:NSForegroundColorAttributeName];
   [navBar setTitleTextAttributes:textAttr];

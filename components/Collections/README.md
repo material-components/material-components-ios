@@ -1,16 +1,29 @@
+<!--docs:
+title:  "Collections"
+layout: detail
+section: components
+excerpt: "Collection view classes that adhere to Material Design layout and styling."
+-->
+
 # Collections
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Collections"><img src="docs/assets/collections.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/collections.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/collections.png" alt="Collections" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/collections.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 Collection view classes that adhere to Material Design layout and styling.
-<!--{: .intro :}-->
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
+  <li class="icon-spec"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
 </ul>
 
 - - -

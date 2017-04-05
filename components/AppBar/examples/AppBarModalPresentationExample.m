@@ -27,7 +27,6 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-
     // Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
@@ -66,15 +65,17 @@
   self.tableView.separatorInset = UIEdgeInsetsZero;
 
   // Add optional navigation items
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Dismiss"
-                                                                    style:UIBarButtonItemStyleDone
-                                                                          target:self
-                                                                    action:@selector(dismissSelf)];
+  self.navigationItem.leftBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Dismiss"
+                                       style:UIBarButtonItemStyleDone
+                                      target:self
+                                      action:@selector(dismissSelf)];
 
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Touch"
-                                                                    style:UIBarButtonItemStyleDone
-                                                                              target:nil
-                                                                    action:nil];
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Touch"
+                                       style:UIBarButtonItemStyleDone
+                                      target:nil
+                                      action:nil];
 }
 
 - (void)dismissSelf {
@@ -124,7 +125,7 @@
   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
   if (!cell) {
     cell =
-    [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
   cell.layoutMargins = UIEdgeInsetsZero;
   return cell;
@@ -152,16 +153,20 @@
   self.tableView.layoutMargins = UIEdgeInsetsZero;
   self.tableView.separatorInset = UIEdgeInsetsZero;
 
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Detail"
-                                                                      style:UIBarButtonItemStyleDone
-                                                                              target:self
-                                                                    action:@selector(presentModal)];
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Detail"
+                                       style:UIBarButtonItemStyleDone
+                                      target:self
+                                      action:@selector(presentModal)];
 }
 
 - (void)presentModal {
   AppBarModalPresentationExamplePresented *modalVC =
       [[AppBarModalPresentationExamplePresented alloc] init];
-  [self presentViewController:modalVC animated:YES completion:^{}];
+  [self presentViewController:modalVC
+                     animated:YES
+                   completion:^{
+                   }];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -217,7 +222,7 @@
     _appBar = [[MDCAppBar alloc] init];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
     _appBar.navigationBar.titleTextAttributes =
-    @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     [self addChildViewController:_appBar.headerViewController];
 
     self.title = @"Modal Presentation";
@@ -263,7 +268,7 @@
   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
   if (!cell) {
     cell =
-    [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
   cell.layoutMargins = UIEdgeInsetsZero;
   return cell;

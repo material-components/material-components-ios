@@ -64,6 +64,20 @@
   return weight;
 }
 
+- (CGFloat)mdc_slant {
+  CGFloat slant = 0.0;
+
+  NSDictionary *fontTraits = [self.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];
+  if (fontTraits) {
+    NSNumber *slantNumber = fontTraits[UIFontSlantTrait];
+    if (slantNumber) {
+      slant = [slantNumber floatValue];
+    }
+  }
+
+  return slant;
+}
+
 - (NSString *)mdc_weightString {
   CGFloat weight = [self mdc_weight];
   NSString *weightString = [UIFont mdc_fontWeightDescription:weight];

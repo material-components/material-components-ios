@@ -232,7 +232,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.38f;
   self.preferredContentSize = [self calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
-
 - (void)actionButtonPressed:(id)sender {
   NSInteger actionIndex = [self.actionButtons indexOfObject:sender];
   MDCAlertAction *action = self.actions[actionIndex];

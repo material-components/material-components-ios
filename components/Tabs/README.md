@@ -1,25 +1,29 @@
-<!--{% if site.link_to_site == "true" %}-->
-See <a href="https://material-ext.appspot.com/mdc-ios-preview/components/Tabs/">MDC site documentation</a> for richer experience.
-<!--{% else %}See <a href="https://github.com/google/material-components-ios/tree/develop/components/Tabs">GitHub</a> for README documentation.{% endif %}-->
+<!--docs:
+title:  "Tabs"
+layout: detail
+section: components
+excerpt: "TODO(shyndman): Excerpt needed."
+-->
 
 # Tabs
 
-<div class="ios-animation right" markdown="1">
-  <video src="docs/assets/tab_bar.mp4" autoplay loop></video>
-  [![Tab Bar](docs/assets/tab_bar.png)](docs/assets/tab_bar.mp4)
+<!--{% if site.link_to_site == "true" %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/tabs.png" alt="Tabs" width="320">
 </div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/tab_bar.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 Tabs are bars of buttons used to navigate between groups of content.
-<!--{: .intro :}-->
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link">
-    <a href="https://material.google.com/components/tabs.html">
-      Tabs
-    </a>
-  </li>
+  <li class="icon-spec"><a href="https://material.google.com/components/tabs.html">Tabs</a></li>
 </ul>
 
 - - -
@@ -65,21 +69,23 @@ Tabs can also show a badge (usually a number) like UITabBar.
 To use the tab bar in your code, import the MaterialTabs umbrella header (Objective-C) or MaterialComponents module (Swift).
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+import MaterialComponents
+~~~
+
 #### Objective-C
 
 ~~~ objc
 #import "MaterialTabs.h"
 ~~~
 
-#### Swift
-~~~ swift
-import MaterialComponents
-~~~
 <!--</div>-->
 
 ### Delegate
 
-Conform your class to the MDCTabBarDelegate protocol and set it as the tab bar's delegate to handle updating the UI when the user selects a tab. 
+Conform your class to the MDCTabBarDelegate protocol and set it as the tab bar's delegate to handle updating the UI when the user selects a tab.
 
 ### Selected item
 
@@ -102,6 +108,20 @@ Configure where items are placed in the tab bar by setting the `alignment` prope
 ### Creating a tab bar
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+~~~ swift
+let tabBar = MDCTabBar(frame: view.bounds)
+tabBar.items = [
+UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
+UITabBarItem(title: "Favorites", image: UIImage(named: "heart"), tag: 0),
+]
+tabBar.itemAppearance = .titledImages
+tabBar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
+tabBar.sizeToFit()
+view.addSubview(tabBar)
+~~~
+
 #### Objective-C
 
 ~~~ objc
@@ -117,16 +137,4 @@ tabBar.autoresizingMask =
 [self.view addSubview:tabBar];
 ~~~
 
-#### Swift
-~~~ swift
-let tabBar = MDCTabBar(frame: view.bounds)
-tabBar.items = [
-    UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
-    UITabBarItem(title: "Favorites", image: UIImage(named: "heart"), tag: 0),
-]
-tabBar.itemAppearance = .titledImages
-tabBar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-tabBar.sizeToFit()
-view.addSubview(tabBar)
-~~~
 <!--</div>-->

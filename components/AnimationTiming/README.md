@@ -1,3 +1,10 @@
+<!--docs:
+title:  "Animation Timing"
+layout: detail
+section: components
+excerpt: "Material Design animation timing curves."
+-->
+
 # Animation Timing
 
 Animation timing easing curves create smooth and consistent motion. Easing curves allow elements to

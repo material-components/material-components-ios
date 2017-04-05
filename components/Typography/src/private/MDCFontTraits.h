@@ -23,15 +23,15 @@
 @interface MDCFontTraits : NSObject
 
 /**
- The size to which the font is scaled. 
- 
+ The size to which the font is scaled.
+
  This value, in points, must be greater than 0.0.
  */
 @property(nonatomic, readonly) CGFloat pointSize;
 
 /**
- The weight of the font, specified as a font weight constant. 
- 
+ The weight of the font, specified as a font weight constant.
+
  For a list of possible values, see "Font Weights” in UIFontDescriptor. Avoid passing an arbitrary
  floating-point number for weight, because a font might not include a variant for every weight.
  */

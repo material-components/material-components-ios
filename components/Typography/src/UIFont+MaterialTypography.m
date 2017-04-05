@@ -21,7 +21,7 @@
 + (UIFont *)mdc_preferredFontForMaterialTextStyle:(MDCFontTextStyle)style {
   // Due to the way iOS handles missing glyphs in fonts, we do not support using a custom font
   // loader with Dynamic Type.
-  id<MDCTypographyFontLoading>fontLoader = [MDCTypography fontLoader];
+  id<MDCTypographyFontLoading> fontLoader = [MDCTypography fontLoader];
   if (![fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
     NSLog(@"MaterialTypography : Custom font loaders are not compatible with Dynamic Type.");
   }

@@ -1,17 +1,30 @@
+<!--docs:
+title:  "Typography"
+layout: detail
+section: components
+excerpt: "The Typography component provides methods for displaying text using the type sizes and opacities from the Material Design specifications."
+-->
+
 # Typography
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Typography"><img src="docs/assets/typography.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/typography.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/typography.png" alt="Typography" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/typography.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 The Typography component provides methods for displaying text using the type sizes and opacities
 from the Material Design specifications.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
-### Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="https://www.google.com/design/spec/style/typography.html">Typography</a></li>
+  <li class="icon-spec"><a href="https://www.google.com/design/spec/style/typography.html">Typography</a></li>
 </ul>
 
 ## Installation
@@ -88,12 +101,12 @@ settings in the Material Design specifications.
 ### Font size reference
 ![Material Design Type Size](docs/assets/style_typography_styles_scale.png
                              "Shows the Material Design font sizes")
-<!--{: .illustration }-->
+<!--{: .article__asset.article__asset--illustration }-->
 
 ### Font opacity reference
 ![Material Design Type Opacity](docs/assets/style_typography_styles_contrast.png
                                 "Shows the Material Design font opacities")
-<!--{: .illustration }-->
+<!--{: .article__asset.article__asset--illustration }-->
 
 ## Examples
 
@@ -252,7 +265,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ...
 
-- (BOOL)application:(UIApplication *)application 
+- (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Before any UI is called
   [MDCTypography setFontLoader:[[CustomFontLoader alloc] init]];

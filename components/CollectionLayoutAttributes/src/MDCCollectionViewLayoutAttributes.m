@@ -49,16 +49,29 @@
 
   // Compare custom properties that affect layout.
   MDCCollectionViewLayoutAttributes *otherAttrs = (MDCCollectionViewLayoutAttributes *)object;
+  BOOL backgroundImageIdentity = NO;
+  if (self.backgroundImage && otherAttrs.backgroundImage) {
+    backgroundImageIdentity = [self.backgroundImage isEqual:otherAttrs.backgroundImage];
+  } else if (!self.backgroundImage && !otherAttrs.backgroundImage) {
+    backgroundImageIdentity = YES;
+  }
+
+  BOOL separatorColorIdentity = NO;
+  if (self.separatorColor && otherAttrs.separatorColor) {
+    separatorColorIdentity = [self.separatorColor isEqual:otherAttrs.separatorColor];
+  } else if (!self.separatorColor && !otherAttrs.separatorColor) {
+    separatorColorIdentity = YES;
+  }
+
   if ((otherAttrs.editing != self.editing) ||
       (otherAttrs.shouldShowReorderStateMask != self.shouldShowReorderStateMask) ||
       (otherAttrs.shouldShowSelectorStateMask != self.shouldShowSelectorStateMask) ||
       (otherAttrs.shouldShowGridBackground != self.shouldShowGridBackground) ||
       (otherAttrs.sectionOrdinalPosition != self.sectionOrdinalPosition) ||
-      ![otherAttrs.backgroundImage isEqual:self.backgroundImage] ||
+      !backgroundImageIdentity ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.backgroundImageViewInsets,
                                       self.backgroundImageViewInsets)) ||
-      (otherAttrs.isGridLayout != self.isGridLayout) ||
-      ![otherAttrs.separatorColor isEqual:self.separatorColor] ||
+      (otherAttrs.isGridLayout != self.isGridLayout) || !separatorColorIdentity ||
       (!UIEdgeInsetsEqualToEdgeInsets(otherAttrs.separatorInset, self.separatorInset)) ||
       (otherAttrs.separatorLineHeight != self.separatorLineHeight) ||
       (otherAttrs.shouldHideSeparators != self.shouldHideSeparators) ||
