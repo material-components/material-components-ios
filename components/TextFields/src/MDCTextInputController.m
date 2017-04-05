@@ -64,6 +64,8 @@ static NSString *const MDCTextInputControllerTextInputKey = @"MDCTextInputContro
 static NSString *const MDCTextInputControllerUnderlineViewModeKey =
     @"MDCTextInputControllerUnderlineViewModeKey";
 
+static NSString *const MDCTextInputControllerKVOKeyFont = @"font";
+
 static inline CGFloat MDCRound(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return rint(value);
@@ -94,6 +96,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 @property(nonatomic, strong) NSLayoutConstraint *characterCountY;
 @property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
+@property(nonatomic, strong) UIFont *customLeadingFont;
+@property(nonatomic, strong) UIFont *customPlaceholderFont;
+@property(nonatomic, strong) UIFont *customTrailingFont;
 @property(nonatomic, copy) NSString *errorText;
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
@@ -163,6 +168,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     _placeholderDefaultPositionFrame = textInput.frame;
 
     [self subscribeForNotifications];
+    [self subscribeForKVO];
     _textInput.underlineColor = MDCTextInputNormalUnderlineColor();
     [self updateLayout];
   }
@@ -214,6 +220,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)dealloc {
   [self unsubscribeFromNotifications];
+  [self unsubscribeFromKVO];
 }
 
 - (void)commonInitialization {
@@ -272,6 +279,23 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                          object:_textInput];
 }
 
+- (void)subscribeForKVO {
+  if (!_textInput) {
+    return;
+  }
+  [_textInput.leadingUnderlineLabel addObserver:self forKeyPath:MDCTextInputControllerKVOKeyFont options:0 context:nil];
+  [_textInput.placeholderLabel addObserver:self forKeyPath:MDCTextInputControllerKVOKeyFont options:0 context:nil];
+  [_textInput.trailingUnderlineLabel addObserver:self forKeyPath:MDCTextInputControllerKVOKeyFont options:0 context:nil];
+}
+
+- (void)unsubscribeFromKVO {
+  @try {
+    [_textInput.leadingUnderlineLabel removeObserver:self forKeyPath:MDCTextInputControllerKVOKeyFont];
+    [_textInput.placeholderLabel removeObserver:self forKeyPath:MDCTextInputControllerKVOKeyFont];
+    [_textInput.trailingUnderlineLabel removeObserver:self forKeyPath:MDCTextInputControllerKVOKeyFont];
+  } @catch (NSException *exception) { }
+}
+
 #pragma mark - Character Max Implementation
 
 - (NSUInteger)characterCount {
@@ -307,8 +331,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     return;
   }
 
-  self.textInput.leadingUnderlineLabel.font =
-      [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  if (!self.customLeadingFont) {
+    self.textInput.leadingUnderlineLabel.font =
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  }
 
   self.textInput.leadingUnderlineLabel.textColor =
       self.isDisplayingErrorText ? self.errorColor : MDCTextInputInlinePlaceholderTextColor();
@@ -317,8 +343,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 #pragma mark - Placeholder Customization
 
 - (void)updatePlaceholder {
-  self.textInput.placeholderLabel.font =
-      [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  if (!self.customPlaceholderFont) {
+    self.textInput.placeholderLabel.font =
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  }
 }
 
 - (BOOL)isPlaceholderUp {
@@ -344,7 +372,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   self.placeholderDefaultPositionFrame = self.textInput.placeholderLabel.frame;
 
   CGFloat scaleFactor = [self effectiveFloatingScale];
-  CGAffineTransform floatingPlaceholderScaleTransform = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
+  CGAffineTransform floatingPlaceholderScaleTransform =
+    CGAffineTransformMakeScale(scaleFactor, scaleFactor);
 
   CGPoint destinationPosition;
   void (^animationBlock)(void);
@@ -441,8 +470,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     return;
   }
 
-  self.textInput.trailingUnderlineLabel.font =
-      [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  if (!self.customTrailingFont) {
+    self.textInput.trailingUnderlineLabel.font =
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  }
 
   NSString *text = [NSString stringWithFormat:@"%lu / %lu", (unsigned long)[self characterCount],
                                               (unsigned long)self.characterCountMax];
@@ -576,6 +607,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
   if (_textInput != textInput) {
     [self unsubscribeFromNotifications];
+    [self unsubscribeFromKVO];
     _textInput = textInput;
     _textInput.positioningDelegate = self;
 
@@ -883,6 +915,23 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     [self animatePlaceholderToUp:NO];
   }
   [CATransaction commit];
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context {
+  if (object == _textInput.leadingUnderlineLabel && [keyPath isEqualToString:MDCTextInputControllerKVOKeyFont]) {
+    _customLeadingFont = _textInput.leadingUnderlineLabel.font;
+  }
+  if (object == _textInput.placeholderLabel && [keyPath isEqualToString:MDCTextInputControllerKVOKeyFont]) {
+    _customPlaceholderFont = _textInput.placeholderLabel.font;
+  }
+  if (object == _textInput.trailingUnderlineLabel && [keyPath isEqualToString:MDCTextInputControllerKVOKeyFont]) {
+    _customTrailingFont = _textInput.trailingUnderlineLabel.font;
+  }
 }
 
 #pragma mark - Public API

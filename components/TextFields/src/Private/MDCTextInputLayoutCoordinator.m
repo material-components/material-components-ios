@@ -129,6 +129,7 @@ static inline CGFloat MDCRound(CGFloat value) {
     [self setupUnderlineLabels];
 
     [self updateColors];
+    [self mdc_setAdjustsFontForContentSizeCategory:YES];
   }
   return self;
 }

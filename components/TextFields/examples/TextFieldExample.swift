@@ -264,6 +264,29 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldCustomFont.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
+    textFieldCustomFont.placeholderLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+
+    let textFieldCustomFontFloating = MDCTextField()
+    scrollView.addSubview(textFieldCustomFontFloating)
+    textFieldCustomFontFloating.translatesAutoresizingMaskIntoConstraints = false
+
+    textFieldCustomFontFloating.font = UIFont.preferredFont(forTextStyle: .headline)
+    textFieldCustomFontFloating.placeholder = "This is a custom font with the works"
+    textFieldCustomFontFloating.delegate = self
+    textFieldCustomFontFloating.clearButtonMode = .whileEditing
+
+    let textFieldControllerDefaultCustomFontFloating =
+      MDCTextInputController(input: textFieldCustomFontFloating)
+    textFieldControllerDefaultCustomFontFloating.presentation = .floatingPlaceholder
+    textFieldControllerDefaultCustomFontFloating.characterCountMax = 40
+    textFieldControllerDefaultCustomFontFloating.helper = "Custom Font"
+    textFieldCustomFontFloating.leadingLabel.font =
+      UIFont.preferredFont(forTextStyle: .headline)
+    textFieldCustomFontFloating.placeholderLabel.font =
+      UIFont.preferredFont(forTextStyle: .headline)
+    textFieldCustomFontFloating.trailingLabel.font =
+      UIFont.preferredFont(forTextStyle: .subheadline)
+
 
     let bundle = Bundle(for: TextFieldSwiftExample.self)
     let leftViewImagePath = bundle.path(forResource: "ic_search", ofType: "png")!
@@ -376,7 +399,8 @@ final class TextFieldSwiftExample: UIViewController {
     unstyledTextField.rightView = UIImageView(image: rightViewImage)
     unstyledTextField.rightViewMode = .always
 
-    return [textFieldControllerDefaultDisabled, textFieldControllerDefaultCustomFont,
+    return [textFieldControllerDefaultDisabled,
+            textFieldControllerDefaultCustomFont, textFieldControllerDefaultCustomFontFloating,
             textFieldControllerDefaultLeftView, textFieldControllerDefaultLeftViewFloating,
             textFieldControllerDefaultRightView, textFieldControllerDefaultRightViewFloating,
             textFieldControllerDefaultLeftRightView,
