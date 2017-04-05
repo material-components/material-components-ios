@@ -293,35 +293,30 @@ static const CGFloat MDCDialogMessageOpacity = 0.38f;
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  CGSize viewBoundsSize = CGRectStandardize(self.view.bounds).size;
-//  CGRectStandardize(self.view.bounds).size;
-//  CGRectGetWidth(self.view.bounds)
-
   // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
-  if (viewBoundsSize.width != _previousLayoutSize.width ||
-      viewBoundsSize.height != _previousLayoutSize.height) {
+  if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
+      CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
     CGSize currentPreferredContentSize = self.preferredContentSize;
     CGSize calculatedPreferredContentSize =
-        [self calculatePreferredContentSizeForBounds:viewBoundsSize];
+        [self calculatePreferredContentSizeForBounds:CGRectStandardize(self.view.bounds).size];
 
     if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
       // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
       self.preferredContentSize = calculatedPreferredContentSize;
-      viewBoundsSize = CGRectStandardize(self.view.bounds).size;
     }
 
-    _previousLayoutSize = viewBoundsSize;
+    _previousLayoutSize = CGRectStandardize(self.view.bounds).size;
   }
 
   // Used to calculate the height of the scrolling content, so we limit the width.
   CGSize boundsSize = CGRectInfinite.size;
-  boundsSize.width = viewBoundsSize.width;
+  boundsSize.width = CGRectGetWidth(self.view.bounds);
 
   // Content
   CGSize contentSize = [self calculateContentSizeThatFitsWidth:boundsSize.width];
 
   CGRect contentRect = CGRectZero;
-  contentRect.size.width = viewBoundsSize.width;
+  contentRect.size.width = CGRectGetWidth(self.view.bounds);
   contentRect.size.height = contentSize.height;
 
   self.contentScrollView.contentSize = contentRect.size;
@@ -359,7 +354,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.38f;
   }
 
   CGRect actionsFrame = CGRectZero;
-  actionsFrame.size.width = viewBoundsSize.width;
+  actionsFrame.size.width = CGRectGetWidth(self.view.bounds);
   if (0 < [self.actions count]) {
     actionsFrame.size.height = actionSize.height;
   }
@@ -403,7 +398,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.38f;
         UIUserInterfaceLayoutDirectionRightToLeft) {
       for (UIButton *button in self.actionButtons) {
         CGRect buttonRect = button.frame;
-        CGRect flippedRect = MDCRectFlippedForRTL(buttonRect, viewBoundsSize.width,
+        CGRect flippedRect = MDCRectFlippedForRTL(buttonRect,
+                                                  CGRectGetWidth(self.view.bounds),
                                                   UIUserInterfaceLayoutDirectionRightToLeft);
         button.frame = flippedRect;
       }
@@ -419,23 +415,23 @@ static const CGFloat MDCDialogMessageOpacity = 0.38f;
 
   const CGFloat requestedHeight =
       self.contentScrollView.contentSize.height + self.actionsScrollView.contentSize.height;
-  if (requestedHeight <= viewBoundsSize.height) {
+  if (requestedHeight <= CGRectGetHeight(self.view.bounds)) {
     // Simple layout case : both content and actions fit on the screen at once
     self.contentScrollView.frame = contentScrollViewRect;
 
     actionsScrollViewRect.origin.y =
-        viewBoundsSize.height - actionsScrollViewRect.size.height;
+        CGRectGetHeight(self.view.bounds) - actionsScrollViewRect.size.height;
     self.actionsScrollView.frame = actionsScrollViewRect;
   } else {
     // Complex layout case : Split the space between the two scrollviews
-    CGFloat maxActionsHeight = viewBoundsSize.height * 0.5f;
+    CGFloat maxActionsHeight = CGRectGetHeight(self.view.bounds) * 0.5f;
     actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
     actionsScrollViewRect.origin.y =
-        viewBoundsSize.height - actionsScrollViewRect.size.height;
+        CGRectGetHeight(self.view.bounds) - actionsScrollViewRect.size.height;
     self.actionsScrollView.frame = actionsScrollViewRect;
 
     contentScrollViewRect.size.height =
-        viewBoundsSize.height - actionsScrollViewRect.size.height;
+        CGRectGetHeight(self.view.bounds) - actionsScrollViewRect.size.height;
     self.contentScrollView.frame = contentScrollViewRect;
   }
 }

@@ -31,7 +31,7 @@
 @implementation DialogsAlertViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @".Dialogs", @"AlertController" ];
+  return @[ @"Dialogs", @"AlertController" ];
 }
 
 + (NSString *)catalogDescription {
