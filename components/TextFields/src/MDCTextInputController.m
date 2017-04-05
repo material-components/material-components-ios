@@ -771,10 +771,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     UIEdgeInsets insets = [self textContainerInset:UIEdgeInsetsZero];
 
     if (_presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-      self.heightConstraint.constant = insets.top +   // Labels and padding
-                                       MDCRound(MAX(self.textInput.font.lineHeight,
-                                                    self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
-                                       insets.bottom;  // Padding or labels
+      self.heightConstraint.constant =
+          insets.top +  // Labels and padding
+          MDCRound(MAX(self.textInput.font.lineHeight,
+                       self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
+          insets.bottom;                                                    // Padding or labels
 
     }  // else is .default which needs no heightConstraint.
   }
@@ -795,20 +796,23 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 #pragma mark - MDCTextFieldPositioningDelegate
 
-
+// clang-format off
 /**
  textContainerInset: is the source of truth for vertical layout. It's used to figure out the proper
  height and also where to place the placeholder / text field.
 
  The vertical layout is, at most complex, this form:
- MDCTextInputVerticalPadding +  // Top padding
+ MDCTextInputVerticalPadding +                                        // Top padding
  MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +  // Placeholder when up
- MDCTextInputVerticalHalfPadding +  // Small padding
- MDCRound(self.textInput.font.lineHeight) +  // Text field
- MDCTextInputVerticalHalfPadding +  // Small padding
- // Underline (height not counted)
- underlineOffset;  // Padding and/or labels MAX(underlineLabelsOffset,MDCTextInputVerticalPadding)
+ MDCTextInputVerticalHalfPadding +                                    // Small padding
+ MDCRound(MAX(self.textInput.font.lineHeight,                         // Text field or placeholder
+              self.textInput.placeholderLabel.font.lineHeight)) +
+ MDCTextInputVerticalHalfPadding +                                    // Small padding
+ --Underline-- (height not counted)                                   // Underline (height ignored)
+ MAX(underlineLabelsOffset,MDCTextInputVerticalPadding)               // Padding and/or labels
+
  */
+// clang-format on
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets {
   // NOTE: UITextFields have a centerY based layout. But you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
@@ -828,11 +832,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
         underlineLabelsOffset = MDCRound(self.textInput.leadingUnderlineLabel.font.lineHeight);
       }
       if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-        underlineLabelsOffset = MAX(underlineLabelsOffset,
-                                    MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight));
+        underlineLabelsOffset = MAX(
+            underlineLabelsOffset, MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight));
       }
-      CGFloat underlineOffset = MAX(underlineLabelsOffset,
-                                    MDCTextInputVerticalHalfPadding);
+      CGFloat underlineOffset = MAX(underlineLabelsOffset, MDCTextInputVerticalHalfPadding);
       underlineOffset += MDCTextInputVerticalHalfPadding;
 
       textContainerInset.top = MDCTextInputVerticalPadding +
