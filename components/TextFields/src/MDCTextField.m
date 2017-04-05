@@ -166,6 +166,14 @@ static inline CGFloat MDCRound(CGFloat value) {
   return _coordinator.placeholderLabel;
 }
 
+- (id<MDCTextInputPositioningDelegate>)positioningDelegate {
+  return _coordinator.positioningDelegate;
+}
+
+- (void)setPositioningDelegate:(id<MDCTextInputPositioningDelegate>)positioningDelegate {
+  _coordinator.positioningDelegate = positioningDelegate;
+}
+
 - (UIColor *)textColor {
   return _coordinator.textColor;
 }
@@ -248,14 +256,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)setPlaceholder:(NSString *)placeholder {
   [super setPlaceholder:placeholder];
   [self.coordinator setPlaceholder:placeholder];
-}
-
-- (id<MDCTextInputPositioningDelegate>)positioningDelegate {
-  return _coordinator.positioningDelegate;
-}
-
-- (void)setPositioningDelegate:(id<MDCTextInputPositioningDelegate>)positioningDelegate {
-  _coordinator.positioningDelegate = positioningDelegate;
 }
 
 - (void)setText:(NSString *)text {

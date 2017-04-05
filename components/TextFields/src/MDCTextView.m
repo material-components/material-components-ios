@@ -134,14 +134,6 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
   [self.coordinator setPlaceholder:placeholder];
 }
 
-- (UIFont *)placeholderFont {
-  return self.placeholderLabel.font;
-}
-
-- (void)setPlaceholderFont:(UIFont *)placeholderFont {
-  self.placeholderLabel.font = placeholderFont;
-}
-
 - (UILabel *)placeholderLabel {
   return _coordinator.placeholderLabel;
 }
