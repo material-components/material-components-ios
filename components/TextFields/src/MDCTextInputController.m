@@ -162,15 +162,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (self) {
     _textInput = textInput;
 
-    // This controller will handle Dynamic Type and all fonts for the text input
-    _textInput.mdc_adjustsFontForContentSizeCategory = NO;
-    _textInput.positioningDelegate = self;
-    _placeholderDefaultPositionFrame = textInput.frame;
-
-    [self subscribeForNotifications];
-    [self subscribeForKVO];
-    _textInput.underlineColor = MDCTextInputNormalUnderlineColor();
-    [self updateLayout];
+    [self commonInitializationWithInput];
   }
   return self;
 }
@@ -228,7 +220,23 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   _errorColor = MDCTextInputTextErrorColor();
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
   _underlineViewMode = UITextFieldViewModeWhileEditing;
-  [self mdc_setAdjustsFontForContentSizeCategory:YES];
+}
+
+- (void)commonInitializationWithInput {
+  if (!_textInput) {
+    return;
+  }
+
+  // This controller will handle Dynamic Type and all fonts for the text input
+  _mdc_adjustsFontForContentSizeCategory = _textInput.mdc_adjustsFontForContentSizeCategory;
+  _textInput.mdc_adjustsFontForContentSizeCategory = NO;
+  _textInput.positioningDelegate = self;
+  _placeholderDefaultPositionFrame = _textInput.frame;
+
+  [self subscribeForNotifications];
+  [self subscribeForKVO];
+  _textInput.underlineColor = MDCTextInputNormalUnderlineColor();
+  [self updateLayout];
 }
 
 - (void)subscribeForNotifications {
@@ -270,13 +278,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)unsubscribeFromNotifications {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter removeObserver:self
-                           name:UITextFieldTextDidBeginEditingNotification
-                         object:_textInput];
-  [defaultCenter removeObserver:self name:UITextFieldTextDidChangeNotification object:_textInput];
-  [defaultCenter removeObserver:self
-                           name:UITextFieldTextDidEndEditingNotification
-                         object:_textInput];
+
+  [defaultCenter removeObserver:self];
 }
 
 - (void)subscribeForKVO {
@@ -623,12 +626,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (_textInput != textInput) {
     [self unsubscribeFromNotifications];
     [self unsubscribeFromKVO];
-    _textInput = textInput;
-    _textInput.positioningDelegate = self;
 
-    _placeholderDefaultPositionFrame = textInput.placeholderLabel.frame;
-    [self subscribeForNotifications];
-    [self updateLayout];
+    _textInput = textInput;
+    [self commonInitializationWithInput];
   }
 }
 

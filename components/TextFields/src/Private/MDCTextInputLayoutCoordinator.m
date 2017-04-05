@@ -182,6 +182,12 @@ static inline CGFloat MDCRound(CGFloat value) {
   return copy;
 }
 
+- (void)dealloc {
+  NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+
+  [defaultCenter removeObserver:self];
+}
+
 // UITextViews are subclasses of UIScrollView and that complicates autolayout. This container is
 // just a box to give a 'real' value to constraints related to superview.
 - (void)setupRelativeSuperview {
