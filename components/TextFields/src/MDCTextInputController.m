@@ -923,15 +923,20 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey,id> *)change
                        context:(void *)context {
-  if (object == _textInput.leadingUnderlineLabel && [keyPath isEqualToString:MDCTextInputControllerKVOKeyFont]) {
+  if (![keyPath isEqualToString:MDCTextInputControllerKVOKeyFont]) {
+    return;
+  }
+
+  if (object == _textInput.leadingUnderlineLabel) {
     _customLeadingFont = _textInput.leadingUnderlineLabel.font;
   }
-  if (object == _textInput.placeholderLabel && [keyPath isEqualToString:MDCTextInputControllerKVOKeyFont]) {
+  if (object == _textInput.placeholderLabel) {
     _customPlaceholderFont = _textInput.placeholderLabel.font;
   }
-  if (object == _textInput.trailingUnderlineLabel && [keyPath isEqualToString:MDCTextInputControllerKVOKeyFont]) {
+  if (object == _textInput.trailingUnderlineLabel) {
     _customTrailingFont = _textInput.trailingUnderlineLabel.font;
   }
+  [self updateLayout];
 }
 
 #pragma mark - Public API
