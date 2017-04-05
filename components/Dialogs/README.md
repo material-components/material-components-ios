@@ -1,12 +1,20 @@
+<!--docs:
+title:  "Dialogs"
+layout: detail
+section: components
+excerpt: "The Dialogs component implements the Material Design specifications for modal presentations."
+-->
+
 # Dialogs
 
 Dialogs provides both a presentation controller for displaying a modal dialog and an alert
 controller that will display a simple modal alert.
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="https://material.google.com/components/dialogs.html">Dialogs</a></li>
+  <li class="icon-spec"><a href="https://material.google.com/components/dialogs.html">Dialogs</a></li>
 </ul>
 
 ### Dialogs Classes

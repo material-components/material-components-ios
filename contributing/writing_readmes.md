@@ -10,32 +10,27 @@ fill out have been marked with `TODO` statements.
 
     # TODO: ComponentName
 
-    TODO: screenshot.png is made on iPhone 5 simulator
-    ![TODO: ComponentName](docs/assets/screenshot.png)
-    <!--{: .ios-screenshot .right }-->
-
     TODO: Single sentence description of the component.
-    <!--{: .intro :}-->
+    <!--{: .article__intro }-->
 
-    ### Material Design Specifications
+    ## Design & API Documentation
 
     <ul class="icon-list">
-      <li class="icon-link">
+      <li class="icon-spec">
         <a href="https://www.google.com/design/spec/<TODO: link to spec>">
           TODO: link to spec
         </a>
       </li>
-    </ul>
-
-    ### API Documentation
-
-    <ul class="icon-list">
       <li class="icon-link">
         <a href="/components/<ComponentName>/apidocs/Classes/<TODO: API name>.html">
           TODO: API name
         </a>
       </li>
     </ul>
+
+    TODO: screenshot.png is made on iPhone 5 simulator
+    ![TODO: ComponentName](docs/assets/screenshot.png)
+    <!--{: .article__asset.article__asset--screenshot }-->
 
     - - -
 

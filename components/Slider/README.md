@@ -1,17 +1,30 @@
+<!--docs:
+title:  "Slider"
+layout: detail
+section: components
+excerpt: "The Slider component provides a Material Design control for selecting a value from a continuous range or discrete set of values."
+-->
+
 # Slider
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Slider"><img src="docs/assets/slider.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/slider.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/slider.png" alt="Slider" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/slider.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
-### Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/components/sliders.html">Sliders</a></li>
+  <li class="icon-spec"><a href="https://www.google.com/design/spec/components/sliders.html">Sliders</a></li>
 </ul>
 
 - - -

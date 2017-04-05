@@ -1,3 +1,9 @@
+<!--docs:
+title:  "Frequently Asked Questions"
+layout: landing
+section: howto
+-->
+
 ## Frequently Asked Questions
 
 ### How do we stay true to our brand while using Material Design?
