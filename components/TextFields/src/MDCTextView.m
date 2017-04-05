@@ -76,8 +76,10 @@ NSString *const MDCTextViewLayoutDelegateKey = @"MDCTextViewLayoutDelegateKey";
 }
 
 - (void)commonMDCTextViewInitialization {
+  // Just the default but we do support scrolling.
   self.scrollEnabled = NO;
   self.textContainer.lineFragmentPadding = 0;
+  // The default backgroundColor is white for UITextViews.
   self.backgroundColor = [UIColor clearColor];
 
   _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
