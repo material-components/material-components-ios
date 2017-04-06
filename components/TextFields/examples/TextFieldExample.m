@@ -145,7 +145,7 @@
   [self.scrollView addSubview:unstyledTextField];
   unstyledTextField.translatesAutoresizingMaskIntoConstraints = NO;
 
-  unstyledTextField.placeholder = @"Text Field w/out Controller";
+  unstyledTextField.placeholder = @"Text Field without Controller";
   unstyledTextField.delegate = self;
   unstyledTextField.clearButtonMode = UITextFieldViewModeAlways;
 
