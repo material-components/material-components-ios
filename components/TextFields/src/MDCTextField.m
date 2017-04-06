@@ -265,6 +265,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 #pragma mark - UITextField Overrides
 
+// This method doesn't have a positioning delegate mirror per se. But it uses the
+// textContainerInsets value the positioning delegate can return to inset this text rect.
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = bounds;
   UIEdgeInsets textContainerInset = [_coordinator textContainerInset];

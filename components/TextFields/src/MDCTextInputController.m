@@ -66,6 +66,14 @@ static NSString *const MDCTextInputControllerUnderlineViewModeKey =
 
 static NSString *const MDCTextInputControllerKVOKeyFont = @"font";
 
+static inline CGFloat MDCCeil(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return ceil(value);
+#else
+  return ceilf(value);
+#endif
+}
+
 static inline CGFloat MDCRound(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return rint(value);
@@ -493,9 +501,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
         [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
   }
 
-  NSString *text = [NSString stringWithFormat:@"%lu / %lu", (unsigned long)[self characterCount],
-                                              (unsigned long)self.characterCountMax];
-  self.textInput.trailingUnderlineLabel.text = text;
+  self.textInput.trailingUnderlineLabel.text = [self characterCountText];
 
   BOOL pastMax = [self characterCount] > self.characterCountMax;
   UIColor *textColor = MDCTextInputInlinePlaceholderTextColor();
@@ -519,6 +525,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   self.textInput.trailingUnderlineLabel.textColor = textColor;
+}
+
+- (NSString *)characterCountText {
+  return [NSString stringWithFormat:@"%lu / %lu", (unsigned long)[self characterCount],
+                             (unsigned long)self.characterCountMax];
 }
 
 #pragma mark - Underline Customization
@@ -850,6 +861,23 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
       textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
       textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
+
+        // The trailing label gets in the way. If it has a frame, it's used. But if not, an
+        // estimate is made of the size the text will be.
+        if (CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame) > 1.f) {
+          textContainerInset.right += MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
+        } else if (self.characterCountMax) {
+          CGRect charCountRect = [[self characterCountText] boundingRectWithSize:self.textInput.bounds.size
+                                                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                                                      attributes:@{NSFontAttributeName: self.textInput.trailingUnderlineLabel.font}
+                                                                         context:nil];
+          textContainerInset.right += MDCCeil(CGRectGetWidth(charCountRect));
+        }
+      // Space does not need to be made for the clear button because the default text rect already
+      // made space for it. However space needs to be made to allow the clear button to have some
+      // padding from the character count (trailing label) or the text from the character count.
+      textContainerInset.right += MDCTextInputFullWidthHorizontalInnerPadding;
+
       break;
   }
 
@@ -873,6 +901,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       clearButtonRect.origin.x = CGRectGetMinX(textField.trailingUnderlineLabel.frame);
       clearButtonRect.origin.x -= MDCTextInputFullWidthHorizontalInnerPadding;
       clearButtonRect.origin.x -= CGRectGetWidth(clearButtonRect);
+      clearButtonRect.origin.x = [[self class] xOriginRoundedUpTo4:CGRectGetMinX(clearButtonRect)];
     }
   }
 
@@ -903,6 +932,15 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   return editingRect;
+}
+
+// TODO: (larche) Make it keep track of the largest one and only increase size if it hits larger one
++ (CGFloat)xOriginRoundedUpTo4:(CGFloat)inputX {
+  NSInteger x = (NSInteger)MDCCeil(inputX);
+  if (x % 4 != 0) {
+    x = ((NSInteger)(inputX / 4) + 1) * 4;
+  }
+  return (CGFloat)x;
 }
 
 #pragma mark - UITextField & UITextView Notification Observation
