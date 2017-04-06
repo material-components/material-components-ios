@@ -16,6 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TextFieldExample : UIViewController
+@interface TextViewExample : UIViewController
 
 @end
