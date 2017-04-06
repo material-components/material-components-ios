@@ -42,6 +42,8 @@
 }
 
 - (void)setupTextFields {
+  // Default with Character Count and Floating Placeholder Text Fields
+
   // First the text field is added to the view hierarchy
   MDCTextField *textFieldDefaultCharMax = [[MDCTextField alloc] init];
   [self.scrollView addSubview:textFieldDefaultCharMax];
@@ -54,6 +56,7 @@
   self.textFieldControllerDefaultCharMax =
       [[MDCTextInputController alloc] initWithTextInput:textFieldDefaultCharMax];
   self.textFieldControllerDefaultCharMax.characterCountMax = 50;
+  [self.textFieldControllerDefaultCharMax mdc_setAdjustsFontForContentSizeCategory:YES];
 
   MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
   [self.scrollView addSubview:textFieldFloating];
@@ -67,7 +70,36 @@
       [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
 
   self.textFieldControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
+  [self.textFieldControllerFloating mdc_setAdjustsFontForContentSizeCategory:YES];
 
+  [NSLayoutConstraint
+   activateConstraints:[NSLayoutConstraint
+                        constraintsWithVisualFormat:@"V:|-20-[charMax]-[floating]"
+                        options:NSLayoutFormatAlignAllLeading |
+                        NSLayoutFormatAlignAllTrailing
+                        metrics:nil
+                        views:@{
+                                @"charMax" : textFieldDefaultCharMax,
+                                @"floating" : textFieldFloating
+                                }]];
+  [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeLeadingMargin
+                              multiplier:1
+                                constant:0]
+  .active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeTrailingMargin
+                              multiplier:1
+                                constant:0]
+  .active = YES;
+
+  // Full Width Text Field
   MDCTextField *textFieldFullWidth = [[MDCTextField alloc] init];
   [self.scrollView addSubview:textFieldFullWidth];
   textFieldFullWidth.translatesAutoresizingMaskIntoConstraints = NO;
@@ -81,33 +113,7 @@
       [[MDCTextInputController alloc] initWithTextInput:textFieldFullWidth];
 
   self.textFieldControllerFullWidth.presentationStyle = MDCTextInputPresentationStyleFullWidth;
-
-  [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"V:|-20-[charMax]-[floating]"
-                                                  options:NSLayoutFormatAlignAllLeading |
-                                                          NSLayoutFormatAlignAllTrailing
-                                                  metrics:nil
-                                                    views:@{
-                                                      @"charMax" : textFieldDefaultCharMax,
-                                                      @"floating" : textFieldFloating
-                                                    }]];
-  [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeLeadingMargin
-                              multiplier:1
-                                constant:0]
-      .active = YES;
-  [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeTrailingMargin
-                              multiplier:1
-                                constant:0]
-      .active = YES;
+  [self.textFieldControllerFullWidth mdc_setAdjustsFontForContentSizeCategory:YES];
 
   [NSLayoutConstraint constraintWithItem:textFieldFullWidth
                                attribute:NSLayoutAttributeTop
@@ -116,7 +122,7 @@
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
                                 constant:1]
-      .active = YES;
+  .active = YES;
   [NSLayoutConstraint constraintWithItem:textFieldFullWidth
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
@@ -124,7 +130,7 @@
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
                                 constant:0]
-      .active = YES;
+  .active = YES;
   [NSLayoutConstraint constraintWithItem:textFieldFullWidth
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
@@ -132,7 +138,41 @@
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
                                 constant:0]
-      .active = YES;
+  .active = YES;
+
+  // Unstyled Text Field
+  MDCTextField *unstyledTextField = [[MDCTextField alloc] init];
+  [self.scrollView addSubview:unstyledTextField];
+  unstyledTextField.translatesAutoresizingMaskIntoConstraints = NO;
+
+  unstyledTextField.placeholder = @"Text Field w/out Controller";
+  unstyledTextField.delegate = self;
+  unstyledTextField.clearButtonMode = UITextFieldViewModeAlways;
+
+  [NSLayoutConstraint constraintWithItem:unstyledTextField
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:textFieldFullWidth
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:1]
+  .active = YES;
+  [NSLayoutConstraint constraintWithItem:unstyledTextField
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:textFieldDefaultCharMax
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:0]
+  .active = YES;
+  [NSLayoutConstraint constraintWithItem:unstyledTextField
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:textFieldDefaultCharMax
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                constant:0]
+  .active = YES;
 }
 
 #pragma mark - UITextFieldDelegate
