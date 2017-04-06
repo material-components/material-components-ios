@@ -81,6 +81,13 @@
                         views:@{
                                 @"unstyled": textViewUnstyled
                                 }]];
+  UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(tapDidTouch)];
+  [self.view addGestureRecognizer:tapRecognizer];
+}
+
+- (void)tapDidTouch {
+  [self.view endEditing:YES];
 }
 
 + (NSArray *)catalogBreadcrumbs {

@@ -88,6 +88,14 @@
   CGFloat marginOffset = 16;
   UIEdgeInsets margins = UIEdgeInsetsMake(0, marginOffset, 0, marginOffset);
   self.scrollView.layoutMargins = margins;
+
+  UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(tapDidTouch)];
+  [self.view addGestureRecognizer:tapRecognizer];
+}
+
+- (void)tapDidTouch {
+  [self.view endEditing:YES];
 }
 
 + (NSArray *)catalogBreadcrumbs {

@@ -713,6 +713,17 @@ final class TextFieldSwiftExample: UIViewController {
                          constant: 0).isActive = true
     }
     registerKeyboardNotifications()
+    addGestureRecognizer()
+  }
+
+  func addGestureRecognizer() {
+    let tapRecognizer = UITapGestureRecognizer(target: self,
+                                               action: #selector(TextFieldSwiftExample.tapDidTouch))
+    self.scrollView.addGestureRecognizer(tapRecognizer)
+  }
+
+  func tapDidTouch() {
+    self.view.endEditing(true)
   }
 
   func registerKeyboardNotifications() {
@@ -837,15 +848,7 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
 }
 
 extension TextFieldSwiftExample: UITextViewDelegate {
-  func textView(_ textView: UITextView,
-                shouldChangeTextIn range: NSRange,
-                replacementText text: String) -> Bool {
-    if text == "\n" {
-      textView.resignFirstResponder()
-      return false
-    }
-    return true
-  }
+
 }
 
 extension TextFieldSwiftExample {
