@@ -19,6 +19,7 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputLayoutCoordinator.h"
 
+#import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
 NSString *const MDCTextFieldClearButtonColorKey = @"MDCTextFieldClearButtonColorKey";
@@ -271,32 +272,65 @@ static inline CGFloat MDCRound(CGFloat value) {
 // textContainerInsets value the positioning delegate can return to inset this text rect.
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = bounds;
+
+  // Standard textRect calculation
   UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
-  textRect.origin.x += textContainerInset.left;
+  if (self.mdc_effectiveUserInterfaceLayoutDirection ==
+      UIUserInterfaceLayoutDirectionRightToLeft) {
+    textRect.origin.x += textContainerInset.right;
+  } else {
+    textRect.origin.x += textContainerInset.left;
+  }
   textRect.size.width -= textContainerInset.left + textContainerInset.right;
 
+  // Adjustments for .leftView, .rightView
   CGFloat leftViewWidth = CGRectGetWidth([self leftViewRectForBounds:bounds]);
-  if (self.leftView.superview) {
-    // This could get undone during textRectForBounds: but now we are editing.
-    textRect.size.width -= leftViewWidth;
-    textRect.origin.x = leftViewWidth;
-  }
-
   CGFloat rightViewWidth = CGRectGetWidth([self rightViewRectForBounds:bounds]);
   rightViewWidth += MDCTextInputTextRectRightPaddingCorrection;
+
+  if (self.leftView.superview) {
+    textRect.size.width -= leftViewWidth;
+  }
   if (self.rightView.superview) {
     textRect.size.width -= rightViewWidth;
+  }
+
+  // Adjustments for RTL and clear button
+  // .leftView and .rightView 
+  if (self.mdc_effectiveUserInterfaceLayoutDirection ==
+      UIUserInterfaceLayoutDirectionRightToLeft) {
+    if (self.rightView.superview) {
+      textRect.size.width -= rightViewWidth;
+    } else {
+      CGFloat scale = [UIScreen mainScreen].scale;
+      CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
+      clearButtonWidth += MDCTextInputTextRectRightPaddingCorrection;
+      switch (self.clearButtonMode) {
+        case UITextFieldViewModeAlways:
+        case UITextFieldViewModeUnlessEditing:
+          textRect.size.width -= clearButtonWidth;
+          break;
+        default:
+          break;
+      }
+    }
   } else {
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
-    clearButtonWidth += MDCTextInputTextRectRightPaddingCorrection;
-    switch (self.clearButtonMode) {
-      case UITextFieldViewModeAlways:
-      case UITextFieldViewModeUnlessEditing:
-        textRect.size.width -= clearButtonWidth;
-        break;
-      default:
-        break;
+    if (self.leftView.superview) {
+      textRect.origin.x += leftViewWidth;
+    }
+    if (self.rightView.superview) {
+    } else {
+      CGFloat scale = [UIScreen mainScreen].scale;
+      CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
+      clearButtonWidth += MDCTextInputTextRectRightPaddingCorrection;
+      switch (self.clearButtonMode) {
+        case UITextFieldViewModeAlways:
+        case UITextFieldViewModeUnlessEditing:
+          textRect.size.width -= clearButtonWidth;
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -348,7 +382,13 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
   CGRect clearButtonRect = [super clearButtonRectForBounds:bounds];
-  clearButtonRect.origin.x = CGRectGetWidth(bounds) - CGRectGetWidth(clearButtonRect);
+
+  if (self.mdc_effectiveUserInterfaceLayoutDirection ==
+      UIUserInterfaceLayoutDirectionRightToLeft) {
+    clearButtonRect.origin.x = 0;
+  } else {
+    clearButtonRect.origin.x = CGRectGetWidth(bounds) - CGRectGetWidth(clearButtonRect);
+  }
 
   // Get the clear button if it exists.
   UIButton *clearButton = self.internalClearButton;
