@@ -735,7 +735,7 @@ final class TextFieldSwiftExample: UIViewController {
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
                                            left: 0.0,
-                                           bottom: frame.height ,
+                                           bottom: frame.height,
                                            right: 0.0)
   }
 
