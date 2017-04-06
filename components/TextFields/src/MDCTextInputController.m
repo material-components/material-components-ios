@@ -529,7 +529,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (NSString *)characterCountText {
   return [NSString stringWithFormat:@"%lu / %lu", (unsigned long)[self characterCount],
-                             (unsigned long)self.characterCountMax];
+                                    (unsigned long)self.characterCountMax];
 }
 
 #pragma mark - Underline Customization
@@ -862,17 +862,21 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
       textContainerInset.right = MDCTextInputFullWidthHorizontalPadding;
 
-        // The trailing label gets in the way. If it has a frame, it's used. But if not, an
-        // estimate is made of the size the text will be.
-        if (CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame) > 1.f) {
-          textContainerInset.right += MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
-        } else if (self.characterCountMax) {
-          CGRect charCountRect = [[self characterCountText] boundingRectWithSize:self.textInput.bounds.size
-                                                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                                                      attributes:@{NSFontAttributeName: self.textInput.trailingUnderlineLabel.font}
-                                                                         context:nil];
-          textContainerInset.right += MDCCeil(CGRectGetWidth(charCountRect));
-        }
+      // The trailing label gets in the way. If it has a frame, it's used. But if not, an
+      // estimate is made of the size the text will be.
+      if (CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame) > 1.f) {
+        textContainerInset.right +=
+            MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
+      } else if (self.characterCountMax) {
+        CGRect charCountRect = [[self characterCountText]
+            boundingRectWithSize:self.textInput.bounds.size
+                         options:NSStringDrawingUsesLineFragmentOrigin
+                      attributes:@{
+                        NSFontAttributeName : self.textInput.trailingUnderlineLabel.font
+                      }
+                         context:nil];
+        textContainerInset.right += MDCCeil(CGRectGetWidth(charCountRect));
+      }
       // Space does not need to be made for the clear button because the default text rect already
       // made space for it. However space needs to be made to allow the clear button to have some
       // padding from the character count (trailing label) or the text from the character count.
@@ -920,28 +924,28 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-//    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
-//    // Full width text boxes have their character count on the text input line
-//    if (self.characterCountMax) {
-//      editingRect.size.width -= CGRectGetWidth(textField.trailingUnderlineLabel.frame);
-//      if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
-//          UIUserInterfaceLayoutDirectionRightToLeft) {
-//        editingRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
-//      } else {
-//      }
-//    }
-            switch (textField.clearButtonMode) {
-              case UITextFieldViewModeWhileEditing:
-                editingRect.size.width -= MDCClearButtonImageSquareSize;
-              case UITextFieldViewModeUnlessEditing:
-                // The 'defaultRect' is based on the textContainerInsets so we need to compensate for
-                // the button NOT being there.
-                editingRect.size.width += MDCClearButtonImageSquareSize;
-                editingRect.size.width -= MDCTextInputFullWidthHorizontalInnerPadding;
-                break;
-              default:
-                break;
-            }
+    //    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
+    //    // Full width text boxes have their character count on the text input line
+    //    if (self.characterCountMax) {
+    //      editingRect.size.width -= CGRectGetWidth(textField.trailingUnderlineLabel.frame);
+    //      if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
+    //          UIUserInterfaceLayoutDirectionRightToLeft) {
+    //        editingRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
+    //      } else {
+    //      }
+    //    }
+    switch (textField.clearButtonMode) {
+      case UITextFieldViewModeWhileEditing:
+        editingRect.size.width -= MDCClearButtonImageSquareSize;
+      case UITextFieldViewModeUnlessEditing:
+        // The 'defaultRect' is based on the textContainerInsets so we need to compensate for
+        // the button NOT being there.
+        editingRect.size.width += MDCClearButtonImageSquareSize;
+        editingRect.size.width -= MDCTextInputFullWidthHorizontalInnerPadding;
+        break;
+      default:
+        break;
+    }
   }
 
   return editingRect;

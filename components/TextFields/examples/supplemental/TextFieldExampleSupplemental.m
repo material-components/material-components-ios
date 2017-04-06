@@ -14,7 +14,6 @@
  limitations under the License.
  */
 
-
 #import "TextFieldExampleSupplemental.h"
 
 @implementation TextFieldExample (Supplemental)
@@ -29,28 +28,28 @@
   self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
 
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"V:|[scrollView]|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"scrollView" : self.scrollView
-                                }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|[scrollView]|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"scrollView" : self.scrollView
-                                }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|[scrollView]|"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"scrollView" : self.scrollView
+                                                    }]];
 
   CGFloat marginOffset = 16;
   UIEdgeInsets margins = UIEdgeInsetsMake(0, marginOffset, 0, marginOffset);
   self.scrollView.layoutMargins = margins;
 
-  UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                  action:@selector(tapDidTouch)];
+  UITapGestureRecognizer *tapRecognizer =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidTouch)];
   [self.view addGestureRecognizer:tapRecognizer];
 }
 
@@ -68,7 +67,7 @@
 
 + (NSString *)catalogDescription {
   return @"The Material Design Text Fields take the familiar element to a new level by adding "
-  @"useful animations, character counts, helper text and error states.";
+         @"useful animations, character counts, helper text and error states.";
 }
 
 @end

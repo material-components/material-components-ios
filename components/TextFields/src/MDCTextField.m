@@ -301,9 +301,10 @@ static inline CGFloat MDCRound(CGFloat value) {
   // UITextFields have a centerY based layout. And you can change EITHER the height or the Y. Not
   // both. Don't know why. So, we have to leave the text rect as big as the bounds and move it to a
   // Y that works.
-  CGFloat actualY = (CGRectGetHeight(bounds) / 2.f) -
-    MDCRound(MAX(self.font.lineHeight,
-                 self.placeholderLabel.font.lineHeight) / 2.f); // Text field or placeholder
+  CGFloat actualY =
+      (CGRectGetHeight(bounds) / 2.f) - MDCRound(MAX(self.font.lineHeight,
+                                                     self.placeholderLabel.font.lineHeight) /
+                                                 2.f);  // Text field or placeholder
 
   actualY = textContainerInset.top - actualY;
 
@@ -366,8 +367,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
   // The clear button is a different height than the text field or placeholder. It's expected to be
   // Y-centered to the field or placeholder.
-  CGFloat actualY = textContainerInset.top + MAX(self.font.lineHeight,
-                                                 self.placeholderLabel.font.lineHeight) / 2.f;
+  CGFloat actualY = textContainerInset.top +
+                    MAX(self.font.lineHeight, self.placeholderLabel.font.lineHeight) / 2.f;
   actualY = actualY - CGRectGetHeight(clearButtonRect) / 2.f;
   clearButtonRect.origin.y = actualY;
 
