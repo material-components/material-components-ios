@@ -296,19 +296,22 @@ static inline CGFloat MDCRound(CGFloat value) {
   }
 
   // Adjustments for RTL and clear button
-  // .leftView and .rightView 
+  // .leftView and .rightView actually are leading and trailing: their placement is reversed in RTL.
+  CGFloat scale = [UIScreen mainScreen].scale;
+  CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
+  clearButtonWidth += MDCTextInputTextRectRightPaddingCorrection;
+
   if (self.mdc_effectiveUserInterfaceLayoutDirection ==
       UIUserInterfaceLayoutDirectionRightToLeft) {
+    // EITHER the rightView or clear button will be shown.
     if (self.rightView.superview) {
-      textRect.size.width -= rightViewWidth;
+      textRect.origin.x += rightViewWidth;
     } else {
-      CGFloat scale = [UIScreen mainScreen].scale;
-      CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
-      clearButtonWidth += MDCTextInputTextRectRightPaddingCorrection;
       switch (self.clearButtonMode) {
         case UITextFieldViewModeAlways:
         case UITextFieldViewModeUnlessEditing:
           textRect.size.width -= clearButtonWidth;
+          textRect.origin.x += clearButtonWidth;
           break;
         default:
           break;
@@ -319,10 +322,8 @@ static inline CGFloat MDCRound(CGFloat value) {
       textRect.origin.x += leftViewWidth;
     }
     if (self.rightView.superview) {
+
     } else {
-      CGFloat scale = [UIScreen mainScreen].scale;
-      CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
-      clearButtonWidth += MDCTextInputTextRectRightPaddingCorrection;
       switch (self.clearButtonMode) {
         case UITextFieldViewModeAlways:
         case UITextFieldViewModeUnlessEditing:
@@ -341,9 +342,7 @@ static inline CGFloat MDCRound(CGFloat value) {
       (CGRectGetHeight(bounds) / 2.f) - MDCRound(MAX(self.font.lineHeight,
                                                      self.placeholderLabel.font.lineHeight) /
                                                  2.f);  // Text field or placeholder
-
   actualY = textContainerInset.top - actualY;
-
   textRect.origin.y = actualY;
 
   return textRect;
