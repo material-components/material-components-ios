@@ -613,7 +613,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (BOOL)isDisplayingCharacterCountError {
-  return [self characterCount] > self.characterCountMax;
+  return self.characterCountMax && [self characterCount] > self.characterCountMax;
 }
 
 - (BOOL)isDisplayingErrorText {
