@@ -141,7 +141,7 @@ final class TextFieldSwiftExample: UIViewController {
     textFieldDefaultCharMax.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
-    textFieldControllerDefaultCharMax.characterCountMax = 50
+    textFieldControllerDefaultCharMax.characterMax = 50
 
     controllersWithCharacterCount.append(textFieldControllerDefaultCharMax)
 
@@ -185,7 +185,7 @@ final class TextFieldSwiftExample: UIViewController {
     let textFieldControllerFullWidthCharMax =
       MDCTextInputController(input: textFieldFullWidthCharMax)
     textFieldControllerFullWidthCharMax.presentation = .fullWidth
-    textFieldControllerFullWidthCharMax.characterCountMax = 50
+    textFieldControllerFullWidthCharMax.characterMax = 50
 
     controllersWithCharacterCount.append(textFieldControllerFullWidthCharMax)
 
@@ -216,7 +216,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     let textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
     textFieldControllerFloatingCharMax.presentation = .floatingPlaceholder
-    textFieldControllerFloatingCharMax.characterCountMax = 50
+    textFieldControllerFloatingCharMax.characterMax = 50
 
     controllersWithCharacterCount.append(textFieldControllerFloatingCharMax)
 
@@ -258,7 +258,7 @@ final class TextFieldSwiftExample: UIViewController {
     let textFieldControllerDefaultCustomFontFloating =
       MDCTextInputController(input: textFieldCustomFontFloating)
     textFieldControllerDefaultCustomFontFloating.presentation = .floatingPlaceholder
-    textFieldControllerDefaultCustomFontFloating.characterCountMax = 40
+    textFieldControllerDefaultCustomFontFloating.characterMax = 40
     textFieldControllerDefaultCustomFontFloating.helper = "Custom Font"
     textFieldCustomFontFloating.leadingLabel.font =
       UIFont.preferredFont(forTextStyle: .headline)

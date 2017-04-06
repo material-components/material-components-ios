@@ -21,6 +21,9 @@
 /** Size of an unaltered, Material clear button. */
 extern const CGFloat MDCClearButtonImageSquareSize;
 
+/** When text is manually set via .text or setText:, this notification fires. */
+extern NSString* _Nonnull const MDCTextFieldTextDidSetTextNotification;
+
 /**
   Material Design themed single line text input.
   https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field

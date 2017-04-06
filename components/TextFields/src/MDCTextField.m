@@ -24,6 +24,7 @@
 NSString *const MDCTextFieldClearButtonColorKey = @"MDCTextFieldClearButtonColorKey";
 NSString *const MDCTextFieldClearButtonImageKey = @"MDCTextFieldClearButtonImageKey";
 NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
+NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
 static const CGFloat MDCTextInputTextRectRightPaddingCorrection = -4.f;
 static const CGFloat MDCTextInputEditingRectRightPaddingCorrection = -2.f;
@@ -261,6 +262,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)setText:(NSString *)text {
   [super setText:text];
   [_coordinator didSetText];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification object:self];
 }
 
 #pragma mark - UITextField Overrides

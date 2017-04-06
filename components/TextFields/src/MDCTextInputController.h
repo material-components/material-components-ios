@@ -75,7 +75,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is 0.
  */
-@property(nonatomic, assign) IBInspectable NSUInteger characterCountMax;
+@property(nonatomic, assign) IBInspectable NSUInteger characterCountMax NS_SWIFT_NAME(characterMax);
 
 /**
  Controls when the character count will be shown and therefore whether character counting determines

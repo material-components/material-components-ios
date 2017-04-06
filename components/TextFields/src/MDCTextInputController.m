@@ -267,6 +267,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                       selector:@selector(textInputDidEndEditing:)
                           name:UITextFieldTextDidEndEditingNotification
                         object:_textInput];
+    [defaultCenter addObserver:self selector:@selector(textInputDidChange:)
+                          name:MDCTextFieldTextDidSetTextNotification
+                        object:_textInput];
   }
 
   if ([_textInput isKindOfClass:[UITextView class]]) {

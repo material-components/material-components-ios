@@ -55,7 +55,7 @@
   // Second the controller is created to manage the text field
   self.textFieldControllerDefaultCharMax =
       [[MDCTextInputController alloc] initWithTextInput:textFieldDefaultCharMax];
-  self.textFieldControllerDefaultCharMax.characterCountMax = 50;
+  self.textFieldControllerDefaultCharMax.characterCountMax = 25;
   [self.textFieldControllerDefaultCharMax mdc_setAdjustsFontForContentSizeCategory:YES];
 
   MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
@@ -173,8 +173,13 @@
                               multiplier:1
                                 constant:0]
   .active = YES;
+
+  [self performSelector:@selector(test) withObject:nil afterDelay:2];
 }
 
+- (void)test {
+  self.textFieldControllerDefaultCharMax.textInput.text = @"al;sdkjf";
+}
 #pragma mark - UITextFieldDelegate
 
 // All the usual UITextFieldDelegate methods work with MDCTextField

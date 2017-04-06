@@ -16,6 +16,7 @@
 
 import XCTest
 import MaterialComponents.MaterialTextFields
+import MaterialComponents.MaterialPalettes
 
 class TextInputTests: XCTestCase {
 
@@ -94,5 +95,12 @@ class TextInputTests: XCTestCase {
     } else {
       XCTFail("No input found on controller.")
     }
+
+    controller.characterMax = 50
+    textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
+    print(textField.trailingLabel)
+    XCTAssertTrue("51 / 50".isEqual(textField.trailingLabel.text))
+    XCTAssertEqual(MDCPalette.red().tint500, textField.underlineColor)
+    XCTAssertEqual(MDCPalette.red().tint500, textField.trailingLabel.textColor)
   }
 }
