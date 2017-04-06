@@ -39,6 +39,18 @@
   textViewUnstyled.leadingUnderlineLabel.text = @"Leading";
   textViewUnstyled.trailingUnderlineLabel.text = @"Trailing";
 
+  MDCTextView *textViewFloating = [[MDCTextView alloc] init];
+  [self.view addSubview:textViewFloating];
+  textViewFloating.translatesAutoresizingMaskIntoConstraints = NO;
+
+  textViewFloating.placeholder = @"Full Name";
+  textViewFloating.delegate = self;
+
+  MDCTextInputController *textViewControllerFloating =
+  [[MDCTextInputController alloc] initWithTextInput:textViewFloating];
+
+  textViewControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
+
   MDCTextView *textViewCharMaxFullWidth = [[MDCTextView alloc] init];
   [self.view addSubview:textViewCharMaxFullWidth];
   textViewCharMaxFullWidth.translatesAutoresizingMaskIntoConstraints = NO;
@@ -52,21 +64,9 @@
   textViewControllerDefaultCharMax.characterCountMax = 50;
   textViewControllerDefaultCharMax.presentationStyle = MDCTextInputPresentationStyleFullWidth;
 
-  MDCTextView *textViewFloating = [[MDCTextView alloc] init];
-  [self.view addSubview:textViewFloating];
-  textViewFloating.translatesAutoresizingMaskIntoConstraints = NO;
-
-  textViewFloating.placeholder = @"Full Name";
-  textViewFloating.delegate = self;
-
-  MDCTextInputController *textViewControllerFloating =
-  [[MDCTextInputController alloc] initWithTextInput:textViewFloating];
-
-  textViewControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-
   [NSLayoutConstraint
    activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"V:|-20-[unstyled]-[charMax]-[floating]"
+                        constraintsWithVisualFormat:@"V:|-20-[unstyled]-[floating]-[charMax]"
                         options:0
                         metrics:nil
                         views:@{
@@ -84,21 +84,21 @@
                                 }]];
   [NSLayoutConstraint
    activateConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|[charMaxFullWidth]|"
-                        options:0
-                        metrics:nil
-                        views:@{
-                                @"charMaxFullWidth": textViewCharMaxFullWidth
-                                }]];
-
-  [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint
                         constraintsWithVisualFormat:@"H:|-[floating]-|"
                         options:0
                         metrics:nil
                         views:@{
                                 @"floating": textViewFloating
                                 }]];
+  [NSLayoutConstraint
+   activateConstraints:[NSLayoutConstraint
+                        constraintsWithVisualFormat:@"H:|[charMaxFullWidth]|"
+                        options:0
+                        metrics:nil
+                        views:@{
+                                @"charMaxFullWidth": textViewCharMaxFullWidth
+                                }]];
+  
 
   UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                   action:@selector(tapDidTouch)];
