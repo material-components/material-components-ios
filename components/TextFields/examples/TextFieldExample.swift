@@ -669,10 +669,13 @@ final class TextFieldSwiftExample: UIViewController {
       dictionary.forEach { (key, value) in
         views[key] = value
 
+        // We have a scrollview and we're adding some elements that are subclassed from scrollviews.
+        // So constraints need to be in relation to something that doesn't have a content size. 
+        // We'll use the view controller's view.
         let leading = NSLayoutConstraint(item: value,
                            attribute: .leading,
                            relatedBy: .equal,
-                           toItem: value.superview,
+                           toItem: view,
                            attribute: .leadingMargin,
                            multiplier: 1.0,
                            constant: 0.0)
@@ -682,7 +685,7 @@ final class TextFieldSwiftExample: UIViewController {
         let trailing = NSLayoutConstraint(item: value,
                                          attribute: .trailing,
                                          relatedBy: .equal,
-                                         toItem: value.superview,
+                                         toItem: view,
                                          attribute: .trailing,
                                          multiplier: 1.0,
                                          constant: 0.0)
@@ -700,14 +703,14 @@ final class TextFieldSwiftExample: UIViewController {
       NSLayoutConstraint(item: input,
                          attribute: .leading,
                          relatedBy: .equal,
-                         toItem: input.superview,
+                         toItem: view,
                          attribute: .leading,
                          multiplier: 1.0,
                          constant: 0).isActive = true
       NSLayoutConstraint(item: input,
                          attribute: .trailing,
                          relatedBy: .equal,
-                         toItem: input.superview,
+                         toItem: view,
                          attribute: .trailing,
                          multiplier: 1.0,
                          constant: 0).isActive = true
