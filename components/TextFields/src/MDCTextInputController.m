@@ -111,6 +111,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
+@property(nonatomic, readonly) BOOL isDisplayingCharacterCountError;
 @property(nonatomic, readonly) BOOL isDisplayingErrorText;
 @property(nonatomic, readonly) BOOL isPlaceholderUp;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
@@ -503,10 +504,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   self.textInput.trailingUnderlineLabel.text = [self characterCountText];
 
-  BOOL pastMax = [self characterCount] > self.characterCountMax;
   UIColor *textColor = MDCTextInputInlinePlaceholderTextColor();
 
-  if ((pastMax && self.textInput.isEditing) || self.isDisplayingErrorText) {
+  if (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) {
     textColor = self.errorColor;
   }
 
@@ -567,7 +567,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
         break;
     }
 
-    self.textInput.underlineColor = self.isDisplayingErrorText ? self.errorColor : underlineColor;
+    self.textInput.underlineColor = (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor : underlineColor;
     self.textInput.underlineHeight = underlineHeight;
   }
 }
@@ -607,6 +607,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   } else {
     return self.textInput.leadingUnderlineLabel.text;
   }
+}
+
+- (BOOL)isDisplayingCharacterCountError {
+  return [self characterCount] > self.characterCountMax;
 }
 
 - (BOOL)isDisplayingErrorText {
