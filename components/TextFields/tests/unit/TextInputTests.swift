@@ -26,13 +26,13 @@ class TextInputTests: XCTestCase {
     XCTAssertNotNil(textField.trailingLabel)
     XCTAssertNotNil(textField.placeholderLabel)
 
-    let gray = UIColor.gray
+    let red = UIColor.red
 
-    textField.clearButtonColor = gray.copy() as? UIColor
-    XCTAssert(textField.clearButtonColor == gray)
+    textField.clearButtonColor = red.copy() as? UIColor
+    XCTAssert(textField.clearButtonColor == red)
 
-    textField.textColor = gray.copy() as? UIColor
-    XCTAssertEqual(textField.textColor, gray)
+    textField.textColor = red.copy() as? UIColor
+    XCTAssertEqual(textField.textColor, red)
 
     let testText = "Test text"
     textField.text = testText
@@ -42,8 +42,8 @@ class TextInputTests: XCTestCase {
     textField.placeholder = testPlaceholder
     XCTAssertEqual(textField.placeholder, testPlaceholder)
 
-    textField.underlineColor = gray.copy() as? UIColor
-    XCTAssertEqual(textField.underlineColor, gray)
+    textField.underlineColor = red.copy() as? UIColor
+    XCTAssertEqual(textField.underlineColor, red)
 
     let width: CGFloat = 5.0
     textField.underlineHeight = width
@@ -58,7 +58,7 @@ class TextInputTests: XCTestCase {
     XCTAssertEqual(textField.trailingLabel.text, testTrailing)
   }
 
-  func testTextFieldAssociateViews() {
+  func testTextFieldOverlayViews() {
     let textField = MDCTextField()
 
     let leftView = UILabel()
@@ -94,44 +94,5 @@ class TextInputTests: XCTestCase {
     } else {
       XCTFail("No input found on controller.")
     }
-  }
-
-  func testTextViewInputProtocolConformance() {
-    let textView = MDCTextView()
-
-    XCTAssertNotNil(textView.leadingLabel)
-    XCTAssertNotNil(textView.trailingLabel)
-    XCTAssertNotNil(textView.placeholderLabel)
-
-    let gray = UIColor.gray
-
-    textView.textColor = gray.copy() as? UIColor
-    XCTAssertEqual(textView.textColor, gray)
-
-    let testText = "Test text"
-    textView.text = testText
-    XCTAssertEqual(textView.text, testText)
-
-    let testPlaceholder = "Test placeholder"
-    textView.placeholder = testPlaceholder
-    XCTAssertEqual(textView.placeholder, testPlaceholder)
-
-    textView.underlineColor = gray.copy() as? UIColor
-    XCTAssertEqual(textView.underlineColor, gray)
-
-    let width: CGFloat = 5.0
-    textView.underlineHeight = width
-    XCTAssertEqual(textView.underlineHeight, width)
-
-    let testLeading = "Helper Test"
-    textView.leadingLabel.text = testLeading
-    XCTAssertEqual(textView.leadingLabel.text, testLeading)
-
-    let testTrailing = "NN / NN"
-    textView.trailingLabel.text = testTrailing
-    XCTAssertEqual(textView.trailingLabel.text, testTrailing)
-
-    let controller = MDCTextInputController(input: textView)
-    XCTAssertNotNil(controller.input)
   }
 }
