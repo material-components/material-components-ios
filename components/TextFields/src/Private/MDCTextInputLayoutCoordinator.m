@@ -199,7 +199,8 @@ static inline CGFloat MDCRound(CGFloat value) {
     _relativeSuperview.backgroundColor = [UIColor clearColor];
     [_textInput setContentHuggingPriority:UILayoutPriorityDefaultHigh
                                   forAxis:UILayoutConstraintAxisVertical];
-
+    [_textInput setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                                  forAxis:UILayoutConstraintAxisHorizontal];
   } else {
     _relativeSuperview = _textInput;
   }
