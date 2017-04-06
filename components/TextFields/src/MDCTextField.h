@@ -18,6 +18,9 @@
 
 #import "MDCTextInput.h"
 
+/** Size of an unaltered, Material clear button. */
+extern const CGFloat MDCClearButtonImageSquareSize;
+
 /**
   Material Design themed single line text input.
   https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field

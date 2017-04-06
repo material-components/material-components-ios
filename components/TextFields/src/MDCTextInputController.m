@@ -920,15 +920,28 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
-    // Full width text boxes have their character count on the text input line
-    if (self.characterCountMax) {
-      editingRect.size.width -= CGRectGetWidth(textField.trailingUnderlineLabel.frame);
-      if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionRightToLeft) {
-        editingRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
-      }
-    }
+//    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
+//    // Full width text boxes have their character count on the text input line
+//    if (self.characterCountMax) {
+//      editingRect.size.width -= CGRectGetWidth(textField.trailingUnderlineLabel.frame);
+//      if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
+//          UIUserInterfaceLayoutDirectionRightToLeft) {
+//        editingRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
+//      } else {
+//      }
+//    }
+            switch (textField.clearButtonMode) {
+              case UITextFieldViewModeWhileEditing:
+                editingRect.size.width -= MDCClearButtonImageSquareSize;
+              case UITextFieldViewModeUnlessEditing:
+                // The 'defaultRect' is based on the textContainerInsets so we need to compensate for
+                // the button NOT being there.
+                editingRect.size.width += MDCClearButtonImageSquareSize;
+                editingRect.size.width -= MDCTextInputFullWidthHorizontalInnerPadding;
+                break;
+              default:
+                break;
+            }
   }
 
   return editingRect;
