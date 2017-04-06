@@ -173,13 +173,8 @@
                               multiplier:1
                                 constant:0]
   .active = YES;
-
-  [self performSelector:@selector(test) withObject:nil afterDelay:2];
 }
 
-- (void)test {
-  self.textFieldControllerDefaultCharMax.textInput.text = @"al;sdkjf";
-}
 #pragma mark - UITextFieldDelegate
 
 // All the usual UITextFieldDelegate methods work with MDCTextField
