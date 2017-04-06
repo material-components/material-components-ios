@@ -21,6 +21,7 @@
 
 @interface TextFieldExample ()
 
+// Be sure to keep your controllers in memory somewhere like a property:
 @property(nonatomic, strong) MDCTextInputController *textFieldControllerDefaultCharMax;
 @property(nonatomic, strong) MDCTextInputController *textFieldControllerFloating;
 @property(nonatomic, strong) MDCTextInputController *textFieldControllerFullWidth;
