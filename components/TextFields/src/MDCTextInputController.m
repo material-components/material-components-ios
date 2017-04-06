@@ -827,7 +827,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
               self.textInput.placeholderLabel.font.lineHeight)) +
  MDCTextInputVerticalHalfPadding +                                    // Small padding
  --Underline-- (height not counted)                                   // Underline (height ignored)
- MAX(underlineLabelsOffset,MDCTextInputVerticalPadding)               // Padding and/or labels
+ MAX(underlineLabelsOffset,MDCTextInputVerticalHalfPadding)           // Padding and/or labels
  */
 // clang-format on
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets {
@@ -840,7 +840,12 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     case MDCTextInputPresentationStyleDefault:
       break;
     case MDCTextInputPresentationStyleFloatingPlaceholder: {
+
       CGFloat scale = [self effectiveFloatingScale];
+      textContainerInset.top = MDCTextInputVerticalPadding +
+      MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
+      MDCTextInputVerticalHalfPadding;
+
       // The amount of space underneath the underline is variable. It could just be
       // MDCTextInputVerticalPadding or the biggest estimated underlineLabel height +
       // MDCTextInputVerticalHalfPadding
@@ -852,12 +857,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
         underlineLabelsOffset = MAX(
             underlineLabelsOffset, MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight));
       }
-      CGFloat underlineOffset = MAX(underlineLabelsOffset, MDCTextInputVerticalHalfPadding);
-      underlineOffset += MDCTextInputVerticalHalfPadding;
-
-      textContainerInset.top = MDCTextInputVerticalPadding +
-                               MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
-                               MDCTextInputVerticalHalfPadding;
+      CGFloat underlineOffset = MDCTextInputVerticalHalfPadding + underlineLabelsOffset;
 
       // .bottom = underlineOffset + the half padding above the line but below the text field
       textContainerInset.bottom = underlineOffset + MDCTextInputVerticalHalfPadding;
