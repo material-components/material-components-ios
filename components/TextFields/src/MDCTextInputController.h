@@ -145,7 +145,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
     MDCTextInputPresentationStyle presentationStyle NS_SWIFT_NAME(presentation);
 
 /** The text input the controller is affecting. */
-@property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
+@property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
 
 /**
  Controls when the underline will be shown.
