@@ -712,6 +712,35 @@ final class TextFieldSwiftExample: UIViewController {
                          multiplier: 1.0,
                          constant: 0).isActive = true
     }
+    registerKeyboardNotifications()
+  }
+
+  func registerKeyboardNotifications() {
+    let notificationCenter = NotificationCenter.default
+    notificationCenter.addObserver(
+      self,
+      selector: #selector(TextFieldSwiftExample.keyboardWillShow(notif:)),
+      name: .UIKeyboardWillShow,
+      object: nil)
+    notificationCenter.addObserver(
+      self,
+      selector: #selector(TextFieldSwiftExample.keyboardWillHide(notif:)),
+      name: .UIKeyboardWillHide,
+      object: nil)
+  }
+
+  func keyboardWillShow(notif: Notification) {
+    guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
+      return
+    }
+    scrollView.contentInset = UIEdgeInsets(top: 0.0,
+                                           left: 0.0,
+                                           bottom: frame.height ,
+                                           right: 0.0)
+  }
+
+  func keyboardWillHide(notif: Notification) {
+    scrollView.contentInset = UIEdgeInsets()
   }
 
   func unique(from input: AnyObject, with prefix: String) -> String {
