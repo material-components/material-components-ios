@@ -19,4 +19,3 @@
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputController.h"
-#import "MDCTextView.h"

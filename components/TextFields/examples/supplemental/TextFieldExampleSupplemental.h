@@ -14,8 +14,17 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
 
-@interface TextFieldExample : UIViewController
+@import UIKit;
+
+@interface TextFieldExample : UIViewController <UITextFieldDelegate>
+
+@property(nonatomic, strong) UIScrollView *scrollView;
+
+@end
+
+@interface TextFieldExample (Supplemental)
+
+- (void)setupExampleViews;
 
 @end

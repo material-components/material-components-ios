@@ -49,16 +49,6 @@ final class TextFieldSwiftExample: UIViewController {
   }()
   var allTextFieldControllers = [MDCTextInputController]()
 
-  let multiLabel: UILabel = {
-    let multiLabel = UILabel()
-    multiLabel.translatesAutoresizingMaskIntoConstraints = false
-    multiLabel.text = "Multi Line Text Views"
-    multiLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-    multiLabel.textColor = UIColor(white: 0, alpha: MDCTypography.headlineFontOpacity())
-    multiLabel.numberOfLines = 0
-    return multiLabel
-  }()
-
   let errorLabel: UILabel = {
     let errorLabel = UILabel()
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -79,14 +69,11 @@ final class TextFieldSwiftExample: UIViewController {
     return helperLabel
   }()
 
-  var allTextViewControllers = [MDCTextInputController]()
-
   var allInputControllers = [MDCTextInputController]()
   var controllersWithCharacterCount = [MDCTextInputController]()
   var controllersFullWidth = [MDCTextInputController]()
 
   let unstyledTextField = MDCTextField()
-  let unstyledTextView = MDCTextView()
 
   let characterModeButton = MDCButton()
   let clearModeButton = MDCButton()
@@ -106,16 +93,9 @@ final class TextFieldSwiftExample: UIViewController {
                      setupFloatingTextFields(),
                      setupSpecialTextFields()].flatMap { $0 }
 
-    let textViewControllersFullWidth = setupFullWidthTextViews()
+    controllersFullWidth = textFieldControllersFullWidth
 
-    allTextViewControllers = [setupDefaultTextViews(),
-                    textViewControllersFullWidth,
-                    setupFloatingTextViews(),
-                    setupSpecialTextViews()].flatMap { $0 }
-
-    controllersFullWidth = textFieldControllersFullWidth + textViewControllersFullWidth
-
-    allInputControllers = allTextFieldControllers + allTextViewControllers
+    allInputControllers = allTextFieldControllers
 
     setupScrollView()
 
@@ -406,114 +386,6 @@ final class TextFieldSwiftExample: UIViewController {
             textFieldControllerDefaultLeftRightViewFloating]
   }
 
-  func setupDefaultTextViews() -> [MDCTextInputController] {
-    let textViewDefault = MDCTextView()
-    scrollView.addSubview(textViewDefault)
-    textViewDefault.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewDefault.delegate = self
-
-    let textViewControllerDefault = MDCTextInputController(input: textViewDefault)
-
-    let textViewDefaultPlaceholder = MDCTextView()
-    scrollView.addSubview(textViewDefaultPlaceholder)
-    textViewDefaultPlaceholder.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewDefaultPlaceholder.placeholder = "This is a multi line text view with placeholder"
-    textViewDefaultPlaceholder.delegate = self
-
-    let textViewControllerDefaultPlaceholder =
-      MDCTextInputController(input: textViewDefaultPlaceholder)
-
-    let textViewDefaultCharMax = MDCTextView()
-    scrollView.addSubview(textViewDefaultCharMax)
-    textViewDefaultCharMax.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewDefaultCharMax.placeholder = "This is a multi line text view with placeholder"
-    textViewDefaultCharMax.delegate = self
-
-    let textViewControllerDefaultCharMax = MDCTextInputController(input: textViewDefaultCharMax)
-    textViewControllerDefaultCharMax.characterCountMax = 140
-
-    controllersWithCharacterCount.append(textViewControllerDefaultCharMax)
-
-    return [textViewControllerDefault, textViewControllerDefaultPlaceholder,
-            textViewControllerDefaultCharMax]
-  }
-
-  func setupFullWidthTextViews() -> [MDCTextInputController] {
-    let textViewFullWidth = MDCTextView()
-    scrollView.addSubview(textViewFullWidth)
-    textViewFullWidth.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewFullWidth.placeholder = "This is a full width text view"
-    textViewFullWidth.delegate = self
-
-    let textViewControllerFullWidth = MDCTextInputController(input: textViewFullWidth)
-    textViewControllerFullWidth.presentation = .fullWidth
-
-    let textViewFullWidthCharMax = MDCTextView()
-    scrollView.addSubview(textViewFullWidthCharMax)
-    textViewFullWidthCharMax.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewFullWidthCharMax.placeholder = "This is a full width text view with character count"
-    textViewFullWidthCharMax.delegate = self
-
-    let textViewControllerFullWidthCharMax = MDCTextInputController(input: textViewFullWidthCharMax)
-    textViewControllerFullWidthCharMax.presentation = .fullWidth
-
-    controllersWithCharacterCount.append(textViewControllerFullWidthCharMax)
-
-    return [textViewControllerFullWidth, textViewControllerFullWidthCharMax]
-  }
-
-  func setupFloatingTextViews() -> [MDCTextInputController] {
-    let textViewFloating = MDCTextView()
-    scrollView.addSubview(textViewFloating)
-    textViewFloating.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewFloating.delegate = self
-    textViewFloating.placeholder = "This is a text view with a floating placeholder"
-
-    let textViewControllerFloating = MDCTextInputController(input: textViewFloating)
-    textViewControllerFloating.presentation = .floatingPlaceholder
-
-    let textViewFloatingCharMax = MDCTextView()
-    scrollView.addSubview(textViewFloatingCharMax)
-    textViewFloatingCharMax.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewFloatingCharMax.delegate = self
-    textViewFloatingCharMax.placeholder =
-      "This is a text view with a floating placeholder and character count"
-
-    let textViewControllerFloatingCharMax = MDCTextInputController(input: textViewFloatingCharMax)
-    textViewControllerFloatingCharMax.presentation = .floatingPlaceholder
-
-    controllersWithCharacterCount.append(textViewControllerFloatingCharMax)
-
-    return [textViewControllerFloating, textViewControllerFloatingCharMax]
-  }
-
-  func setupSpecialTextViews() -> [MDCTextInputController] {
-    let textViewCustomFont = MDCTextView()
-    scrollView.addSubview(textViewCustomFont)
-    textViewCustomFont.translatesAutoresizingMaskIntoConstraints = false
-
-    textViewCustomFont.placeholder = "This has a custom font"
-
-    let textViewControllerDefaultCustomFont = MDCTextInputController(input: textViewCustomFont)
-
-    scrollView.addSubview(unstyledTextView)
-    unstyledTextView.translatesAutoresizingMaskIntoConstraints = false
-
-    unstyledTextView.placeholder = "This text view has no controller (unstyled)"
-    unstyledTextView.leadingLabel.text = "Leading label"
-    unstyledTextView.trailingLabel.text = "Trailing label"
-    unstyledTextView.delegate = self
-
-    return [textViewControllerDefaultCustomFont]
-  }
-
   func setupControls() -> [UIView] {
     let container = UIView()
     container.translatesAutoresizingMaskIntoConstraints = false
@@ -580,7 +452,6 @@ final class TextFieldSwiftExample: UIViewController {
   func setupSectionLabels() {
     scrollView.addSubview(controlLabel)
     scrollView.addSubview(singleLabel)
-    scrollView.addSubview(multiLabel)
 
     NSLayoutConstraint(item: singleLabel,
                        attribute: .leading,
@@ -643,27 +514,16 @@ final class TextFieldSwiftExample: UIViewController {
       textFields[unique(from: input, with: prefix)] = input
     }
 
-    let allTextViews = allTextViewControllers.flatMap { $0.input }
-    let textViewsString = allTextViews.reduce("", concatenatingClosure)
-
-    var textViews = [String: UIView]()
-    allTextViews.forEach { input in
-      textViews[unique(from: input, with: prefix)] = input
-    }
-
     let visualString = "V:|-10-[controlLabel]-" + controlsString + "20-[singleLabel]-" +
-      textFieldsString + "[unstyledTextField]-20-[multiLabel]-" + textViewsString +
-    "[unstyledTextView]-20-|"
+      textFieldsString + "[unstyledTextField]-20-|"
 
     let labels: [String: UIView] = ["controlLabel": controlLabel,
                                     "singleLabel": singleLabel,
-                                    "multiLabel": multiLabel,
-                                    "unstyledTextField": unstyledTextField,
-                                    "unstyledTextView": unstyledTextView]
+                                    "unstyledTextField": unstyledTextField]
 
     var views = [String: UIView]()
 
-    let dictionaries = [labels, textFields, controls, textViews]
+    let dictionaries = [labels, textFields, controls]
 
     dictionaries.forEach { dictionary in
       dictionary.forEach { (key, value) in
@@ -858,7 +718,6 @@ extension TextFieldSwiftExample {
   func contentSizeCategoryDidChange(notif: Notification) {
     controlLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     singleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-    multiLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     errorLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
     helperLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
   }

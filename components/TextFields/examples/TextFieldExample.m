@@ -15,16 +15,9 @@
  limitations under the License.
  */
 
-#import "TextFieldExample.h"
+#import "TextFieldExampleSupplemental.h"
 
-#import "MaterialAppBar.h"
-#import "MaterialTextFields.h"
-
-@interface TextFieldExample () <UITextFieldDelegate, UITextViewDelegate>
-
-@property(nonatomic, strong) UIScrollView *scrollView;
-
-@end
+@import MaterialComponents.MaterialTextFields;
 
 @implementation TextFieldExample
 
@@ -32,11 +25,14 @@
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
-
   self.title = @"Material Text Fields";
 
-  [self setupScrollView];
+  [self setupExampleViews];
 
+  [self setupTextFields];
+}
+
+- (void)setupTextFields {
   MDCTextField *textFieldDefaultCharMax = [[MDCTextField alloc] init];
   [self.scrollView addSubview:textFieldDefaultCharMax];
   textFieldDefaultCharMax.translatesAutoresizingMaskIntoConstraints = NO;
@@ -46,65 +42,42 @@
 
   // Second the controller is created to manage the text field
   MDCTextInputController *textFieldControllerDefaultCharMax =
-      [[MDCTextInputController alloc] initWithTextInput:textFieldDefaultCharMax];
+  [[MDCTextInputController alloc] initWithTextInput:textFieldDefaultCharMax];
   textFieldControllerDefaultCharMax.characterCountMax = 50;
 
   MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
   [self.scrollView addSubview:textFieldFloating];
   textFieldFloating.translatesAutoresizingMaskIntoConstraints = NO;
 
-  textFieldFloating.placeholder = @"Full Name";
+  textFieldFloating.placeholder = @"Floating Placeholder";
   textFieldFloating.delegate = self;
   textFieldFloating.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
   MDCTextInputController *textFieldControllerFloating =
-      [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
+  [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
 
   textFieldControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-}
 
-- (void)setupScrollView {
-  self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-  [self.view addSubview:self.scrollView];
-  self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+  MDCTextField *textFieldFullWidth = [[MDCTextField alloc] init];
+  [self.scrollView addSubview:textFieldFullWidth];
+  textFieldFullWidth.translatesAutoresizingMaskIntoConstraints = NO;
 
-  [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"V:|[scrollView]|"
-                                                  options:0
-                                                  metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
-  [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"H:|[scrollView]|"
-                                                  options:0
-                                                  metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+  textFieldFullWidth.placeholder = @"Full Width";
+  textFieldFullWidth.delegate = self;
+  textFieldFullWidth.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-  CGFloat marginOffset = 16;
-  UIEdgeInsets margins = UIEdgeInsetsMake(0, marginOffset, 0, marginOffset);
-  self.scrollView.layoutMargins = margins;
+  MDCTextInputController *textFieldControllerFullWidth =
+  [[MDCTextInputController alloc] initWithTextInput:textFieldFullWidth];
 
-  UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                  action:@selector(tapDidTouch)];
-  [self.view addGestureRecognizer:tapRecognizer];
-}
+  textFieldControllerFullWidth.presentationStyle = MDCTextInputPresentationStyleFullWidth;
 
-- (void)tapDidTouch {
-  [self.view endEditing:YES];
-}
+  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[charMax]-[floating]" options:NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing metrics:nil views:@{ @"charMax": textFieldDefaultCharMax, @"floating": textFieldFloating }]];
+  [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeadingMargin multiplier:1 constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldDefaultCharMax attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailingMargin multiplier:1 constant:0].active = YES;
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Typical Use (Objective C)" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Material Design Text Fields take the familiar element to a new level by adding "
-         @"useful animations, character counts, helper text and error states.";
+  [NSLayoutConstraint constraintWithItem:textFieldFullWidth attribute:NSLayoutAttributeTopMargin relatedBy:NSLayoutRelationEqual toItem:textFieldFloating attribute:NSLayoutAttributeBottomMargin multiplier:1 constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldFullWidth attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldFullWidth attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0].active = YES;
 }
 
 @end
