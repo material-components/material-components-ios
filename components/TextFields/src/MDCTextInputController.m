@@ -941,17 +941,19 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     //      } else {
     //      }
     //    }
-    switch (textField.clearButtonMode) {
-      case UITextFieldViewModeWhileEditing:
-        editingRect.size.width -= MDCClearButtonImageSquareSize;
-      case UITextFieldViewModeUnlessEditing:
-        // The 'defaultRect' is based on the textContainerInsets so we need to compensate for
-        // the button NOT being there.
-        editingRect.size.width += MDCClearButtonImageSquareSize;
-        editingRect.size.width -= MDCTextInputFullWidthHorizontalInnerPadding;
-        break;
-      default:
-        break;
+    if (self.textInput.text.length > 0) {
+      switch (textField.clearButtonMode) {
+        case UITextFieldViewModeWhileEditing:
+          editingRect.size.width -= MDCClearButtonImageSquareSize;
+        case UITextFieldViewModeUnlessEditing:
+          // The 'defaultRect' is based on the textContainerInsets so we need to compensate for
+          // the button NOT being there.
+          editingRect.size.width += MDCClearButtonImageSquareSize;
+          editingRect.size.width -= MDCTextInputFullWidthHorizontalInnerPadding;
+          break;
+        default:
+          break;
+      }
     }
   }
 

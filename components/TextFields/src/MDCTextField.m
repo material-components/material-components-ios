@@ -307,14 +307,17 @@ static inline CGFloat MDCRound(CGFloat value) {
     if (self.rightView.superview) {
       textRect.origin.x += rightViewWidth;
     } else {
-      switch (self.clearButtonMode) {
-        case UITextFieldViewModeAlways:
-        case UITextFieldViewModeUnlessEditing:
-          textRect.size.width -= clearButtonWidth;
-          textRect.origin.x += clearButtonWidth;
-          break;
-        default:
-          break;
+      // Clear buttons are only shown if there is entered or set text to clear.
+      if (self.text.length > 0) {
+        switch (self.clearButtonMode) {
+          case UITextFieldViewModeAlways:
+          case UITextFieldViewModeUnlessEditing:
+            textRect.size.width -= clearButtonWidth;
+            textRect.origin.x += clearButtonWidth;
+            break;
+          default:
+            break;
+        }
       }
     }
   } else {
@@ -324,13 +327,15 @@ static inline CGFloat MDCRound(CGFloat value) {
     if (self.rightView.superview) {
 
     } else {
-      switch (self.clearButtonMode) {
-        case UITextFieldViewModeAlways:
-        case UITextFieldViewModeUnlessEditing:
-          textRect.size.width -= clearButtonWidth;
-          break;
-        default:
-          break;
+      if (self.text.length > 0) {
+        switch (self.clearButtonMode) {
+          case UITextFieldViewModeAlways:
+          case UITextFieldViewModeUnlessEditing:
+            textRect.size.width -= clearButtonWidth;
+            break;
+          default:
+            break;
+        }
       }
     }
   }
