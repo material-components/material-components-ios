@@ -399,6 +399,7 @@ final class TextFieldSwiftExample: UIViewController {
                         action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
                         for: .touchUpInside)
     container.addSubview(errorSwitch)
+    errorSwitch.accessibilityLabel = "Show errors"
 
     container.addSubview(helperLabel)
 
@@ -408,6 +409,7 @@ final class TextFieldSwiftExample: UIViewController {
                     action: #selector(TextFieldSwiftExample.helperSwitchDidChange(helperSwitch:)),
                     for: .touchUpInside)
     container.addSubview(helperSwitch)
+    helperSwitch.accessibilityLabel = "Helper text"
 
     let views = ["errorLabel": errorLabel, "errorSwitch": errorSwitch,
                  "helperLabel": helperLabel, "helperSwitch": helperSwitch]

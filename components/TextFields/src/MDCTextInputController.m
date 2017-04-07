@@ -984,10 +984,31 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     [self animatePlaceholderToUp:YES];
   }
   [CATransaction commit];
+
+  if (self.characterCountMax > 0) {
+    NSString *announcementString;
+    if (!announcementString.length) {
+      announcementString = [NSString stringWithFormat:@"%lu character limit", self.characterCountMax];
+    }
+
+    // Simply sending a layout change notification does not seem to
+    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
+  }
 }
 
 - (void)textInputDidChange:(NSNotification *)note {
   [self updateLayout];
+
+  // Accessibility
+  if (self.textInput.isEditing && self.characterCountMax > 0) {
+    NSString *announcementString;
+    if (!announcementString.length) {
+      announcementString = [NSString stringWithFormat:@"%lu characters remaining", self.characterCountMax - [self.characterCounter characterCountForTextInput:self.textInput]];
+    }
+
+    // Simply sending a layout change notification does not seem to
+    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
+  }
 }
 
 - (void)textInputDidEndEditing:(NSNotification *)note {
