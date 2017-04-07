@@ -21,6 +21,7 @@
 @import MaterialComponents.MaterialTextFields;
 
 @interface TextFieldInterfaceBuilderExample () <UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet MDCTextField *firstTextField;
 @property (weak, nonatomic) IBOutlet MDCTextField *lastTextField;
 @property (weak, nonatomic) IBOutlet MDCTextField *address1TextField;
@@ -33,8 +34,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1.0];
-  self.title = @"Material Text Fields";
+  self.title = @"MDCTextFields";
 
   [self setupExampleViews];
 }
