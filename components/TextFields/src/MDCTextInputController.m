@@ -992,7 +992,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     NSString *announcementString;
     if (!announcementString.length) {
       announcementString =
-          [NSString stringWithFormat:@"%lu character limit", self.characterCountMax];
+          [NSString stringWithFormat:@"%lu character limit.", self.characterCountMax];
     }
 
     // Simply sending a layout change notification does not seem to
