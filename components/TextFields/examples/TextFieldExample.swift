@@ -514,8 +514,8 @@ final class TextFieldSwiftExample: UIViewController {
       textFields[unique(from: input, with: prefix)] = input
     }
 
-    let visualString = "V:|-10-[controlLabel]-" + controlsString + "20-[singleLabel]-" +
-      textFieldsString + "[unstyledTextField]-20-|"
+    let visualString = "V:|-20-[singleLabel]-" +
+      textFieldsString + "[unstyledTextField]-10-[controlLabel]-" + controlsString + "20-|"
 
     let labels: [String: UIView] = ["controlLabel": controlLabel,
                                     "singleLabel": singleLabel,
