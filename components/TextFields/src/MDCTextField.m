@@ -67,11 +67,18 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
+    NSString *interfaceBuilderPlaceholder = super.placeholder;
     [self commonMDCTextFieldInitialization];
 
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonImageKey];
     _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonColorKey];
-    _coordinator = [aDecoder decodeObjectForKey:MDCTextFieldCoordinatorKey];
+    _coordinator = [aDecoder decodeObjectForKey:MDCTextFieldCoordinatorKey] ?:
+      [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
+
+    if (interfaceBuilderPlaceholder.length) {
+      self.placeholder = interfaceBuilderPlaceholder;
+    }
+    [self setNeedsLayout];
   }
   return self;
 }
@@ -111,6 +118,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (void)commonMDCTextFieldInitialization {
   _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
+
+  [super setBorderStyle:UITextBorderStyleNone];
 
   // Set the clear button color to black with 54% opacity.
   [self setClearButtonColor:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];

@@ -61,7 +61,7 @@
  Material Design guidelines call this 'helper text.'
  */
 @property(nonatomic, nonnull, strong, readonly)
-    IBInspectable UILabel *leadingUnderlineLabel NS_SWIFT_NAME(leadingLabel);
+    UILabel *leadingUnderlineLabel NS_SWIFT_NAME(leadingLabel);
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
@@ -106,7 +106,7 @@
  This will usually be for the character count / limit.
  */
 @property(nonatomic, nonnull, strong, readonly)
-    IBInspectable UILabel *trailingUnderlineLabel NS_SWIFT_NAME(trailingLabel);
+    UILabel *trailingUnderlineLabel NS_SWIFT_NAME(trailingLabel);
 
 /**
  The color applied to the underline.
