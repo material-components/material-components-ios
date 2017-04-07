@@ -18,7 +18,12 @@
 
 #import "MDCFeatureHighlightLayer.h"
 #import "MDFTextAccessibility.h"
+#import "MaterialFeatureHighlightStrings.h"
+#import "MaterialFeatureHighlightStrings_table.h"
 #import "MaterialTypography.h"
+
+// The Bundle for string resources.
+static NSString *const kMaterialFeatureHighlightBundle = @"MaterialFeatureHighlight.bundle";
 
 const CGFloat kMDCFeatureHighlightMinimumInnerRadius = 44.0f;
 const CGFloat kMDCFeatureHighlightInnerContentPadding = 10.0f;
@@ -76,6 +81,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
+    _titleLabel.accessibilityHint = [[self class] dismissAccessibilityHint];
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -339,6 +345,35 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   if (self.interactionBlock) {
     self.interactionBlock(accepted);
   }
+}
+
++ (NSString *)dismissAccessibilityHint {
+  NSString *key =
+      kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
+  NSString *localizedString = NSLocalizedStringFromTableInBundle(
+    key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
+  return localizedString;
+}
+
+#pragma mark - Resource bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialFeatureHighlightBundle]];
+  });
+
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 @end

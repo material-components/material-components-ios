@@ -149,6 +149,7 @@ Pod::Spec.new do |s|
     ss.ios.deployment_target = '8.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
     ss.dependency "MaterialComponents/Typography"
     ss.dependency "MDFTextAccessibility"
   end
