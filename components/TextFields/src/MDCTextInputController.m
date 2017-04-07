@@ -904,15 +904,24 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   CGRect clearButtonRect = defaultRect;
 
   // Full width text boxes have their character count on the text input line
-  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth && self.characterCountMax) {
-    if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
-        UIUserInterfaceLayoutDirectionRightToLeft) {
-      clearButtonRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
+  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
+    if (self.characterCountMax) {
+      if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionRightToLeft) {
+        clearButtonRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
+      } else {
+        clearButtonRect.origin.x = CGRectGetMinX(textField.trailingUnderlineLabel.frame);
+        clearButtonRect.origin.x -= MDCTextInputFullWidthHorizontalInnerPadding;
+        clearButtonRect.origin.x -= CGRectGetWidth(clearButtonRect);
+        clearButtonRect.origin.x = [[self class] xOriginRoundedUpTo4:CGRectGetMinX(clearButtonRect)];
+      }
     } else {
-      clearButtonRect.origin.x = CGRectGetMinX(textField.trailingUnderlineLabel.frame);
-      clearButtonRect.origin.x -= MDCTextInputFullWidthHorizontalInnerPadding;
-      clearButtonRect.origin.x -= CGRectGetWidth(clearButtonRect);
-      clearButtonRect.origin.x = [[self class] xOriginRoundedUpTo4:CGRectGetMinX(clearButtonRect)];
+      if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionRightToLeft) {
+        clearButtonRect.origin.x += MDCTextInputFullWidthHorizontalPadding;
+      } else {
+        clearButtonRect.origin.x -= MDCTextInputFullWidthHorizontalPadding;
+      }
     }
   }
 
@@ -931,16 +940,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    //    editingRect.size.width += MDCTextInputFullWidthHorizontalPadding;
-    //    // Full width text boxes have their character count on the text input line
-    //    if (self.characterCountMax) {
-    //      editingRect.size.width -= CGRectGetWidth(textField.trailingUnderlineLabel.frame);
-    //      if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
-    //          UIUserInterfaceLayoutDirectionRightToLeft) {
-    //        editingRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
-    //      } else {
-    //      }
-    //    }
+  // Full width text boxes have their character count on the text input line
     if (self.textInput.text.length > 0) {
       switch (textField.clearButtonMode) {
         case UITextFieldViewModeWhileEditing:

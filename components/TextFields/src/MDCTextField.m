@@ -268,8 +268,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 #pragma mark - UITextField Overrides
 
-// This method doesn't have a positioning delegate mirror per se. But it uses the
-// textContainerInsets value the positioning delegate can return to inset this text rect.
+ // This method doesn't have a positioning delegate mirror per se. But it uses the
+ // textContainerInsets value the positioning delegate can return to inset this text rect.
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = bounds;
 
@@ -359,18 +359,20 @@ static inline CGFloat MDCRound(CGFloat value) {
   // UITextFields show EITHER the clear button or the rightView. If the rightView has a superview,
   // then it's being shown and the clear button isn't.
   if (!self.rightView.superview) {
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
-    clearButtonWidth += MDCTextInputEditingRectClearPaddingCorrection;
-    switch (self.clearButtonMode) {
-      case UITextFieldViewModeUnlessEditing:
-        editingRect.size.width += clearButtonWidth;
-        break;
-      case UITextFieldViewModeWhileEditing:
-        editingRect.size.width -= clearButtonWidth;
-        break;
-      default:
-        break;
+    if (self.text.length > 0) {
+      CGFloat scale = [UIScreen mainScreen].scale;
+      CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
+      clearButtonWidth += MDCTextInputEditingRectClearPaddingCorrection;
+      switch (self.clearButtonMode) {
+        case UITextFieldViewModeUnlessEditing:
+          editingRect.size.width += clearButtonWidth;
+          break;
+        case UITextFieldViewModeWhileEditing:
+          editingRect.size.width -= clearButtonWidth;
+          break;
+        default:
+          break;
+      }
     }
   } else {
     editingRect.size.width += MDCTextInputEditingRectRightPaddingCorrection;
@@ -381,6 +383,7 @@ static inline CGFloat MDCRound(CGFloat value) {
     return
         [self.coordinator.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
+
   return editingRect;
 }
 

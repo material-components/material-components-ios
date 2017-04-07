@@ -51,6 +51,7 @@
 
   textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
   textFieldDefaultCharMax.delegate = self;
+  textFieldDefaultCharMax.clearButtonMode = UITextFieldViewModeAlways;
 
   // Second the controller is created to manage the text field
   self.textFieldControllerDefaultCharMax =
