@@ -6,12 +6,11 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Delegate-->
+        <!--Text Field Interface Builder Example-->
         <scene sceneID="DdG-mX-4KR">
             <objects>
                 <viewController id="1F7-Hr-r85" customClass="TextFieldInterfaceBuilderExample" sceneMemberID="viewController">
@@ -23,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="First" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k5d-7m-x5i" customClass="MDCTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Will" borderStyle="line" placeholder="First" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k5d-7m-x5i" customClass="MDCTextField">
                                 <rect key="frame" x="16" y="28" width="167.5" height="21"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -59,13 +58,6 @@
                                     <outlet property="delegate" destination="1F7-Hr-r85" id="uJr-Xb-YFW"/>
                                 </connections>
                             </textField>
-                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="343" placeholderIntrinsicHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="wCr-qw-Mbz" customClass="MDCTextField">
-                                <rect key="frame" x="16" y="121" width="343" height="40"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="delegate" destination="1F7-Hr-r85" id="Vmz-az-m2B"/>
-                                </connections>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -73,8 +65,6 @@
                             <constraint firstItem="k5d-7m-x5i" firstAttribute="top" secondItem="ut5-Wj-cOI" secondAttribute="bottom" constant="8" id="87a-8Y-8yp"/>
                             <constraint firstItem="k5d-7m-x5i" firstAttribute="width" secondItem="a2p-4w-aaS" secondAttribute="width" id="CID-Cw-5f5"/>
                             <constraint firstItem="8Is-hc-QWo" firstAttribute="top" secondItem="Hmy-ks-4V0" secondAttribute="bottom" constant="8" id="DBz-NM-bWj"/>
-                            <constraint firstItem="wCr-qw-Mbz" firstAttribute="leading" secondItem="8Is-hc-QWo" secondAttribute="leading" id="GrU-IL-ud2"/>
-                            <constraint firstItem="wCr-qw-Mbz" firstAttribute="topMargin" secondItem="8Is-hc-QWo" secondAttribute="bottom" constant="16" id="Qj8-dM-mQU"/>
                             <constraint firstItem="Hmy-ks-4V0" firstAttribute="top" secondItem="k5d-7m-x5i" secondAttribute="bottom" constant="14" id="Ue7-zn-lyF"/>
                             <constraint firstItem="k5d-7m-x5i" firstAttribute="leading" secondItem="KyB-LJ-eZ5" secondAttribute="leadingMargin" id="XFe-Le-0JV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="a2p-4w-aaS" secondAttribute="trailing" id="dBS-I5-S1J"/>
@@ -82,7 +72,6 @@
                             <constraint firstItem="8Is-hc-QWo" firstAttribute="leading" secondItem="Hmy-ks-4V0" secondAttribute="leading" id="ogF-oX-7OO"/>
                             <constraint firstItem="Hmy-ks-4V0" firstAttribute="leading" secondItem="k5d-7m-x5i" secondAttribute="leading" id="pV1-u9-gfe"/>
                             <constraint firstItem="Hmy-ks-4V0" firstAttribute="trailing" secondItem="a2p-4w-aaS" secondAttribute="trailing" id="syF-kv-Hh1"/>
-                            <constraint firstItem="wCr-qw-Mbz" firstAttribute="trailing" secondItem="8Is-hc-QWo" secondAttribute="trailing" id="x2A-PL-WBG"/>
                             <constraint firstItem="8Is-hc-QWo" firstAttribute="trailing" secondItem="Hmy-ks-4V0" secondAttribute="trailing" id="yQ5-FZ-yco"/>
                         </constraints>
                     </view>
