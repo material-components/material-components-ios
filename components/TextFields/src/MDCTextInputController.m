@@ -991,8 +991,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (self.characterCountMax > 0) {
     NSString *announcementString;
     if (!announcementString.length) {
-      announcementString =
-          [NSString stringWithFormat:@"%lu character limit.", self.characterCountMax];
+      announcementString = [NSString
+          stringWithFormat:@"%lu character limit.", (unsigned long)self.characterCountMax];
     }
 
     // Simply sending a layout change notification does not seem to
@@ -1009,8 +1009,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     if (!announcementString.length) {
       announcementString = [NSString
           stringWithFormat:@"%lu characters remaining",
-                           self.characterCountMax -
-                               [self.characterCounter characterCountForTextInput:self.textInput]];
+                           (unsigned long)(self.characterCountMax -
+                                           [self.characterCounter
+                                               characterCountForTextInput:self.textInput])];
     }
 
     // Simply sending a layout change notification does not seem to
@@ -1099,7 +1100,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (errorText) {
     NSString *announcementString = errorAccessibilityValue;
     if (!announcementString.length) {
-      announcementString = errorText.length > 0 ? [NSString stringWithFormat:@"Error: %@", errorText] : @"Error.";
+      announcementString =
+          errorText.length > 0 ? [NSString stringWithFormat:@"Error: %@", errorText] : @"Error.";
     }
 
     // Simply sending a layout change notification does not seem to
@@ -1111,7 +1113,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       valueString = self.textInput.text.copy;
     }
     if (self.textInput.placeholder.length > 0) {
-      valueString = [NSString stringWithFormat:@"%@. %@.", valueString, self.textInput.placeholder.copy];
+      valueString =
+          [NSString stringWithFormat:@"%@. %@.", valueString, self.textInput.placeholder.copy];
     }
     valueString = [NSString stringWithFormat:@"%@. Error:", valueString];
 

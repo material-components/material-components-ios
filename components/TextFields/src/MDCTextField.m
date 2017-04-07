@@ -519,9 +519,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (NSString *)accessibilityValue {
   if (self.leadingUnderlineLabel.text.length > 0) {
-    return [NSString
-        stringWithFormat:@"%@ %@", [super accessibilityValue],
-            self.leadingUnderlineLabel.accessibilityLabel];
+    return [NSString stringWithFormat:@"%@ %@", [super accessibilityValue],
+                                      self.leadingUnderlineLabel.accessibilityLabel];
   }
 
   return [super accessibilityValue];
