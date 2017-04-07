@@ -59,6 +59,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
+
     [self commonMDCTextFieldInitialization];
   }
   return self;
@@ -117,7 +119,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (void)commonMDCTextFieldInitialization {
-  _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
 
   [super setBorderStyle:UITextBorderStyleNone];
 

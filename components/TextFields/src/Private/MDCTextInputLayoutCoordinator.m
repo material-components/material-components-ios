@@ -114,10 +114,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   if (self) {
     _textInput = textInput;
 
-    _cursorColor = MDCTextInputCursorColor();
-    _textColor = MDCTextInputTextColor();
-    _underlineColor = MDCTextInputUnderlineColor();
-
+    [self commonInit];
     self.textInput.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
     // Initialize elements of UI
@@ -129,7 +126,7 @@ static inline CGFloat MDCRound(CGFloat value) {
     [self setupUnderlineLabels];
 
     [self updateColors];
-    [self mdc_setAdjustsFontForContentSizeCategory:YES];
+    [self mdc_setAdjustsFontForContentSizeCategory:NO];
   }
   return self;
 }
@@ -137,8 +134,11 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   UIView<MDCTextInput> *input = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorInputKey];
 
-  self = [self initWithTextInput:input];
+  self = [super init];
   if (self) {
+    _textInput = input;
+    [self commonInit];
+
     _hidesPlaceholderOnInput =
         [aDecoder decodeBoolForKey:MDCTextInputCoordinatorHidesPlaceholderKey];
     _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorLeadingLabelKey];
@@ -186,6 +186,12 @@ static inline CGFloat MDCRound(CGFloat value) {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
   [defaultCenter removeObserver:self];
+}
+
+- (void)commonInit {
+  _cursorColor = MDCTextInputCursorColor();
+  _textColor = MDCTextInputTextColor();
+  _underlineColor = MDCTextInputUnderlineColor();
 }
 
 // UITextViews are subclasses of UIScrollView and that complicates autolayout. This container is
