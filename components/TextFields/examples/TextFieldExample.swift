@@ -626,7 +626,7 @@ final class TextFieldSwiftExample: UIViewController {
   func errorSwitchDidChange(errorSwitch: UISwitch) {
     allInputControllers.forEach { controller in
       if errorSwitch.isOn {
-        controller.set(errorText: "Uh oh! Error. Try something else.", errorAccessibilityValue: nil)
+        controller.set(errorText: "Uh oh! Try something else.", errorAccessibilityValue: nil)
       } else {
         controller.set(errorText: nil, errorAccessibilityValue: nil)
       }

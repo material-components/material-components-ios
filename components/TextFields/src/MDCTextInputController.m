@@ -1099,11 +1099,25 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (errorText) {
     NSString *announcementString = errorAccessibilityValue;
     if (!announcementString.length) {
-      announcementString = errorText.length > 0 ? errorText : @"Error.";
+      announcementString = errorText.length > 0 ? [NSString stringWithFormat:@"Error: %@", errorText] : @"Error.";
     }
 
     // Simply sending a layout change notification does not seem to
     UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
+
+    NSString *valueString = @"";
+
+    if (self.textInput.text > 0) {
+      valueString = self.textInput.text.copy;
+    }
+    if (self.textInput.placeholder.length > 0) {
+      valueString = [NSString stringWithFormat:@"%@. %@.", valueString, self.textInput.placeholder.copy];
+    }
+    valueString = [NSString stringWithFormat:@"%@. Error:", valueString];
+
+    self.textInput.accessibilityValue = valueString;
+  } else {
+    self.textInput.accessibilityValue = nil;
   }
 }
 
