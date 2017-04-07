@@ -19,8 +19,6 @@
 @implementation TextFieldInterfaceBuilderExample (Supplemental)
 
 - (void)setupExampleViews {
-  
 }
 
 @end
-

@@ -22,7 +22,7 @@
 extern const CGFloat MDCClearButtonImageSquareSize;
 
 /** When text is manually set via .text or setText:, this notification fires. */
-extern NSString* _Nonnull const MDCTextFieldTextDidSetTextNotification;
+extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 
 /**
   Material Design themed single line text input.

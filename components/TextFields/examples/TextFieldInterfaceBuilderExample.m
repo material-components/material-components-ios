@@ -22,10 +22,10 @@
 
 @interface TextFieldInterfaceBuilderExample () <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet MDCTextField *firstTextField;
-@property (weak, nonatomic) IBOutlet MDCTextField *lastTextField;
-@property (weak, nonatomic) IBOutlet MDCTextField *address1TextField;
-@property (weak, nonatomic) IBOutlet MDCTextField *address2TextField;
+@property(weak, nonatomic) IBOutlet MDCTextField *firstTextField;
+@property(weak, nonatomic) IBOutlet MDCTextField *lastTextField;
+@property(weak, nonatomic) IBOutlet MDCTextField *address1TextField;
+@property(weak, nonatomic) IBOutlet MDCTextField *address2TextField;
 
 @end
 

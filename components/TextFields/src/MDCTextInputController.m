@@ -267,7 +267,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                       selector:@selector(textInputDidEndEditing:)
                           name:UITextFieldTextDidEndEditingNotification
                         object:_textInput];
-    [defaultCenter addObserver:self selector:@selector(textInputDidChange:)
+    [defaultCenter addObserver:self
+                      selector:@selector(textInputDidChange:)
                           name:MDCTextFieldTextDidSetTextNotification
                         object:_textInput];
   }
@@ -570,7 +571,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
         break;
     }
 
-    self.textInput.underlineColor = (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor : underlineColor;
+    self.textInput.underlineColor =
+        (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
+                                                                             : underlineColor;
     self.textInput.underlineHeight = underlineHeight;
   }
 }
@@ -840,11 +843,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     case MDCTextInputPresentationStyleDefault:
       break;
     case MDCTextInputPresentationStyleFloatingPlaceholder: {
-
       CGFloat scale = [self effectiveFloatingScale];
       textContainerInset.top = MDCTextInputVerticalPadding +
-      MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
-      MDCTextInputVerticalHalfPadding;
+                               MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
+                               MDCTextInputVerticalHalfPadding;
 
       // The amount of space underneath the underline is variable. It could just be
       // MDCTextInputVerticalPadding or the biggest estimated underlineLabel height +
@@ -913,7 +915,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
         clearButtonRect.origin.x = CGRectGetMinX(textField.trailingUnderlineLabel.frame);
         clearButtonRect.origin.x -= MDCTextInputFullWidthHorizontalInnerPadding;
         clearButtonRect.origin.x -= CGRectGetWidth(clearButtonRect);
-        clearButtonRect.origin.x = [[self class] xOriginRoundedUpTo4:CGRectGetMinX(clearButtonRect)];
+        clearButtonRect.origin.x =
+            [[self class] xOriginRoundedUpTo4:CGRectGetMinX(clearButtonRect)];
       }
     } else {
       if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
@@ -940,7 +943,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // internal implementation of textRect calls [super clearButtonRectForBounds:] in its
   // implementation, our modifications are not picked up. Adjust accordingly.
   if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-  // Full width text boxes have their character count on the text input line
+    // Full width text boxes have their character count on the text input line
     if (self.textInput.text.length > 0) {
       switch (textField.clearButtonMode) {
         case UITextFieldViewModeWhileEditing:

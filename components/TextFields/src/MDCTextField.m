@@ -72,8 +72,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonImageKey];
     _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonColorKey];
-    _coordinator = [aDecoder decodeObjectForKey:MDCTextFieldCoordinatorKey] ?:
-      [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
+    _coordinator = [aDecoder decodeObjectForKey:MDCTextFieldCoordinatorKey]
+                       ?: [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
 
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
@@ -272,20 +272,20 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)setText:(NSString *)text {
   [super setText:text];
   [_coordinator didSetText];
-  [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification
+                                                      object:self];
 }
 
 #pragma mark - UITextField Overrides
 
- // This method doesn't have a positioning delegate mirror per se. But it uses the
- // textContainerInsets value the positioning delegate can return to inset this text rect.
+// This method doesn't have a positioning delegate mirror per se. But it uses the
+// textContainerInsets value the positioning delegate can return to inset this text rect.
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = bounds;
 
   // Standard textRect calculation
   UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
-  if (self.mdc_effectiveUserInterfaceLayoutDirection ==
-      UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     textRect.origin.x += textContainerInset.right;
   } else {
     textRect.origin.x += textContainerInset.left;
@@ -310,8 +310,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
   clearButtonWidth += MDCTextInputTextRectRightPaddingCorrection;
 
-  if (self.mdc_effectiveUserInterfaceLayoutDirection ==
-      UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     // EITHER the rightView or clear button will be shown.
     if (self.rightView.superview) {
       textRect.origin.x += rightViewWidth;
@@ -334,7 +333,6 @@ static inline CGFloat MDCRound(CGFloat value) {
       textRect.origin.x += leftViewWidth;
     }
     if (self.rightView.superview) {
-
     } else {
       if (self.text.length > 0) {
         switch (self.clearButtonMode) {
@@ -399,8 +397,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
   CGRect clearButtonRect = [super clearButtonRectForBounds:bounds];
 
-  if (self.mdc_effectiveUserInterfaceLayoutDirection ==
-      UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     clearButtonRect.origin.x = 0;
   } else {
     clearButtonRect.origin.x = CGRectGetWidth(bounds) - CGRectGetWidth(clearButtonRect);
