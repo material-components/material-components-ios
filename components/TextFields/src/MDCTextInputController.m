@@ -988,7 +988,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (self.characterCountMax > 0) {
     NSString *announcementString;
     if (!announcementString.length) {
-      announcementString = [NSString stringWithFormat:@"%lu character limit", self.characterCountMax];
+      announcementString =
+          [NSString stringWithFormat:@"%lu character limit", self.characterCountMax];
     }
 
     // Simply sending a layout change notification does not seem to
@@ -1003,7 +1004,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (self.textInput.isEditing && self.characterCountMax > 0) {
     NSString *announcementString;
     if (!announcementString.length) {
-      announcementString = [NSString stringWithFormat:@"%lu characters remaining", self.characterCountMax - [self.characterCounter characterCountForTextInput:self.textInput]];
+      announcementString = [NSString
+          stringWithFormat:@"%lu characters remaining",
+                           self.characterCountMax -
+                               [self.characterCounter characterCountForTextInput:self.textInput]];
     }
 
     // Simply sending a layout change notification does not seem to

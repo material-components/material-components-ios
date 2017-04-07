@@ -520,4 +520,13 @@ static inline CGFloat MDCRound(CGFloat value) {
   [_coordinator mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 
+- (NSString *)accessibilityValue {
+  if (self.leadingUnderlineLabel.text.length > 0) {
+    return [NSString
+        stringWithFormat:@"%@ %@", [super accessibilityValue], self.leadingUnderlineLabel.text];
+  }
+
+  return [super accessibilityValue];
+}
+
 @end
