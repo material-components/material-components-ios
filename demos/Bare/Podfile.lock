@@ -1,6 +1,6 @@
 PODS:
   - CatalogByConvention (2.0.0)
-  - EarlGrey (1.7.1)
+  - EarlGrey (1.9.0)
   - MaterialComponents (23.0.1):
     - MaterialComponents/ActivityIndicator (= 23.0.1)
     - MaterialComponents/AnimationTiming (= 23.0.1)
