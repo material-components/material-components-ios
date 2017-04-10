@@ -41,14 +41,14 @@
       animation.fromValue = (__bridge id)self.path;
     } else {
       animation.fromValue = CFBridgingRelease(
-                                              CGPathCreateWithEllipseInRect(CGRectMake(center.x, center.y, 0, 0), NULL));
+          CGPathCreateWithEllipseInRect(CGRectMake(center.x, center.y, 0, 0), NULL));
     }
     self.path = (__bridge CGPathRef _Nullable)
-    CFBridgingRelease(CGPathCreateWithEllipseInRect(circleRect, NULL));
+        CFBridgingRelease(CGPathCreateWithEllipseInRect(circleRect, NULL));
     [self addAnimation:animation forKey:@"path"];
   } else {
     self.path = (__bridge CGPathRef _Nullable)
-    CFBridgingRelease(CGPathCreateWithEllipseInRect(circleRect, NULL));
+        CFBridgingRelease(CGPathCreateWithEllipseInRect(circleRect, NULL));
   }
 }
 
