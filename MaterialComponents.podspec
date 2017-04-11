@@ -44,7 +44,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Application"
     ss.dependency "MaterialComponents/private/RTL"
   end
-  
+
   s.subspec "AnimationTiming" do |ss|
     ss.ios.deployment_target = '8.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
