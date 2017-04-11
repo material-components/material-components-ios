@@ -31,7 +31,7 @@ static const CGFloat MDCTextInputTextRectRightPaddingCorrection = -4.f;
 static const CGFloat MDCTextInputEditingRectRightPaddingCorrection = -2.f;
 static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
-const CGFloat MDCClearButtonImageSquareSize = 24.f;
+const CGFloat MDCClearButtonImageSquareWidthHeight = 24.f;
 static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
 
 static inline CGFloat MDCRound(CGFloat value) {
