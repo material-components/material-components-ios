@@ -138,14 +138,14 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 #pragma mark - Clear Button Image
 
-- (UIImage *)drawnClearButtonImage:(CGSize)size {
+- (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
   if (CGSizeEqualToSize(size, CGSizeZero)) {
     size = CGSizeMake(MDCClearButtonImageSquareSize, MDCClearButtonImageSquareSize);
   }
   CGFloat scale = [UIScreen mainScreen].scale;
   CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
-  [self.clearButtonColor setFill];
+  [color setFill];
   [MDCPathForClearButtonImageFrame(bounds) fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
@@ -156,9 +156,9 @@ static inline CGFloat MDCRound(CGFloat value) {
 #pragma mark - Properties Implementation
 
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
-  if (_clearButtonColor != clearButtonColor) {
+  if (![_clearButtonColor isEqual:clearButtonColor]) {
     _clearButtonColor = clearButtonColor;
-    self.clearButtonImage = [self drawnClearButtonImage:self.clearButtonImage.size];
+    self.clearButtonImage = [self drawnClearButtonImage:self.clearButtonImage.size color:_clearButtonColor];
   }
 }
 
@@ -409,7 +409,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   if (clearButton != nil) {
     if (!self.clearButtonImage ||
         !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonRect.size)) {
-      self.clearButtonImage = [self drawnClearButtonImage:clearButtonRect.size];
+      self.clearButtonImage = [self drawnClearButtonImage:clearButtonRect.size color:self.clearButtonColor];
     }
 
     // If the image is not our image, set it.
