@@ -27,8 +27,8 @@ NSString *const MDCTextFieldClearButtonImageKey = @"MDCTextFieldClearButtonImage
 NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
-static const CGFloat MDCTextInputTextRectRightPaddingCorrection = -4.f;
-static const CGFloat MDCTextInputEditingRectRightPaddingCorrection = -2.f;
+static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
+static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 const CGFloat MDCClearButtonImageSquareWidthHeight = 24.f;
@@ -285,7 +285,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   // Adjustments for .leftView, .rightView
   CGFloat leftViewWidth = CGRectGetWidth([self leftViewRectForBounds:bounds]);
   CGFloat rightViewWidth = CGRectGetWidth([self rightViewRectForBounds:bounds]);
-  rightViewWidth += MDCTextInputTextRectRightPaddingCorrection;
+  rightViewWidth += MDCTextInputTextRectRightViewClearPaddingCorrection;
 
   if (self.leftView.superview) {
     textRect.size.width -= leftViewWidth;
@@ -298,7 +298,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   // .leftView and .rightView actually are leading and trailing: their placement is reversed in RTL.
   CGFloat scale = [UIScreen mainScreen].scale;
   CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
-  clearButtonWidth += MDCTextInputTextRectRightPaddingCorrection;
+  clearButtonWidth += MDCTextInputTextRectRightViewClearPaddingCorrection;
 
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     // EITHER the rightView or clear button will be shown.
@@ -372,7 +372,7 @@ static inline CGFloat MDCRound(CGFloat value) {
       }
     }
   } else {
-    editingRect.size.width += MDCTextInputEditingRectRightPaddingCorrection;
+    editingRect.size.width += MDCTextInputEditingRectRightViewPaddingCorrection;
   }
 
   if ([self.coordinator.positioningDelegate
