@@ -3,6 +3,7 @@ title:  "Progress View"
 layout: detail
 section: components
 excerpt: "Progress View is a determinate and linear progress indicator that implements Material Design animation and layout."
+iconId: progress_activity
 -->
 
 # Progress View

@@ -3,6 +3,7 @@ title:  "Collections"
 layout: detail
 section: components
 excerpt: "Collection view classes that adhere to Material Design layout and styling."
+iconId: list
 -->
 
 # Collections

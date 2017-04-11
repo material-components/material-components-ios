@@ -3,6 +3,7 @@ title:  "Flexible Header"
 layout: detail
 section: components
 excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
+iconId: header
 -->
 
 # Flexible Header

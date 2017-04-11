@@ -2,6 +2,7 @@
 title:  "Styling the collection view"
 layout: detail
 section: components
+iconId: list
 ---
 # Styling the collection view
 

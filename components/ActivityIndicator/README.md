@@ -3,6 +3,7 @@ title:  "Activity Indicator"
 layout: detail
 section: components
 excerpt: "Progress and activity indicators are visual indications of an app loading content."
+iconId: progress_activity
 -->
 
 # Activity Indicator
