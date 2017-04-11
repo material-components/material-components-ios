@@ -234,6 +234,13 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 #pragma mark - UITextField Property Overrides
 
+#if !defined(__IPHONE_10_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0)
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  [super setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
+  [self mdc_setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
+}
+#endif
+
 - (NSAttributedString *)attributedPlaceholder {
   return _coordinator.attributedPlaceholder;
 }
@@ -507,6 +514,16 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  // Prior to iOS 9 RTL was not automatically applied, so we don't need to apply any fixes.
+  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
+  NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
+      [processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
+    [super setAdjustsFontForContentSizeCategory:adjusts];
+    NSLog(@"The iOS 10 Code Ran");
+  } else {
+    NSLog(@"The iOS 10 Code did not run");
+  }
   [_coordinator mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 

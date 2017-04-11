@@ -241,6 +241,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // This controller will handle Dynamic Type and all fonts for the text input
   _mdc_adjustsFontForContentSizeCategory = _textInput.mdc_adjustsFontForContentSizeCategory;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
+
   _textInput.positioningDelegate = self;
   _placeholderDefaultPositionFrame = _textInput.frame;
 

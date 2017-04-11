@@ -68,6 +68,7 @@
   textFieldFloating.placeholder = @"Floating Placeholder";
   textFieldFloating.delegate = self;
   textFieldFloating.clearButtonMode = UITextFieldViewModeUnlessEditing;
+  textFieldFloating.adjustsFontForContentSizeCategory = YES;
 
   self.textFieldControllerFloating =
       [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
