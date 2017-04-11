@@ -2,6 +2,7 @@ workspace 'MDCCatalog.xcworkspace'
 project 'MDCCatalog.xcodeproj'
 
 target "MDCCatalog" do
+  platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsCatalog', :path => '../'
   pod 'MaterialComponents', :path => '../'
@@ -11,6 +12,7 @@ target "MDCCatalog" do
 end
 
 target "MDCUnitTests" do
+  platform :ios, '8.0'
   project 'MDCUnitTests.xcodeproj'
   pod 'MaterialComponentsUnitTests', :path => '../'
   pod 'MaterialComponents', :path => '../'
@@ -20,6 +22,7 @@ target "MDCUnitTests" do
 end
 
 target "MDCActionExtension" do
+  platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsCatalog', :path => '../'
   pod 'MaterialComponents', :path => '../'
@@ -34,6 +37,7 @@ TEST_TARGET = 'MDCInteractionTests'
 SCHEME_FILE = 'MDCInteractionTests.xcscheme'
 
 target TEST_TARGET do
+  platform :ios, '8.0'
   project PROJECT_NAME
   inherit! :search_paths
   pod 'EarlGrey'
