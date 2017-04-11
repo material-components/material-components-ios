@@ -98,9 +98,53 @@ class TextInputTests: XCTestCase {
 
     controller.characterMax = 50
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
-    print(textField.trailingLabel)
+
     XCTAssertTrue("51 / 50".isEqual(textField.trailingLabel.text))
     XCTAssertEqual(MDCPalette.red().tint500, textField.underlineColor)
     XCTAssertEqual(MDCPalette.red().tint500, textField.trailingLabel.textColor)
   }
+
+  func testSerializationTextField() {
+    let textField = MDCTextField()
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
+
+    let controller = MDCTextInputController(input: textField)
+    XCTAssertNotNil(controller.input)
+
+    let leadingText = "Serialized Helper Test"
+    controller.helper = leadingText
+    controller.characterMax = 40
+
+    let serializedInput = NSKeyedArchiver.archivedData(withRootObject: textField)
+    XCTAssertNotNil(serializedInput)
+
+    let unserializedInput =
+      NSKeyedUnarchiver.unarchiveObject(with: serializedInput) as? MDCTextField
+    XCTAssertNotNil(unserializedInput)
+
+    XCTAssertEqual(textField.translatesAutoresizingMaskIntoConstraints,
+                   unserializedInput?.translatesAutoresizingMaskIntoConstraints)
+    XCTAssertEqual(textField.text,
+                   unserializedInput?.text)
+
+    XCTAssertEqual(textField.leadingLabel.text,
+                   unserializedInput?.leadingLabel.text)
+
+    XCTAssertEqual(textField.trailingLabel.text, "51 / 40")
+    XCTAssertEqual(textField.trailingLabel.text, unserializedInput?.trailingLabel.text)
+
+    let serializedController = NSKeyedArchiver.archivedData(withRootObject: controller)
+    XCTAssertNotNil(serializedController)
+
+    let unserializedController =
+      NSKeyedUnarchiver.unarchiveObject(with: serializedController) as?
+      MDCTextInputController
+    XCTAssertNotNil(unserializedController)
+
+    unserializedController?.input = unserializedInput
+    XCTAssertEqual(controller.helper, unserializedController?.helper)
+    XCTAssertEqual(controller.characterMax, unserializedController?.characterMax)
+  }
+
 }

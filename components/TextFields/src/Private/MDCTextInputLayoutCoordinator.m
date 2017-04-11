@@ -144,7 +144,7 @@ static inline CGFloat MDCRound(CGFloat value) {
     _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorLeadingLabelKey];
     _mdc_adjustsFontForContentSizeCategory =
         [aDecoder decodeBoolForKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
-    _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
+    _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorPlaceholderLabelKey];
     _positioningDelegate = [aDecoder decodeObjectForKey:MDCTextInputPositioningDelegateKey];
     _relativeSuperview =
         [aDecoder decodeObjectForKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];

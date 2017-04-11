@@ -95,7 +95,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   [super encodeWithCoder:aCoder];
   [aCoder encodeObject:self.clearButtonColor forKey:MDCTextFieldClearButtonColorKey];
   [aCoder encodeObject:self.clearButtonImage forKey:MDCTextFieldClearButtonImageKey];
-  [aCoder encodeConditionalObject:self.coordinator forKey:MDCTextFieldCoordinatorKey];
+  [aCoder encodeObject:self.coordinator forKey:MDCTextFieldCoordinatorKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
@@ -103,9 +103,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
   copy.clearButtonColor = self.clearButtonColor.copy;
   copy.clearButtonImage = self.clearButtonImage.copy;
-
-  // Just a pointer value copies.
-  copy.coordinator = self.coordinator;
+  copy.coordinator = self.coordinator.copy;
 
   return copy;
 }
