@@ -49,14 +49,16 @@
   [self.scrollView addSubview:textFieldDefaultCharMax];
   textFieldDefaultCharMax.translatesAutoresizingMaskIntoConstraints = NO;
 
-  textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
+  int defaultMax = 25;
+  textFieldDefaultCharMax.placeholder = [NSString stringWithFormat:@"Enter up to %d characters",
+                                         defaultMax];
   textFieldDefaultCharMax.delegate = self;
   textFieldDefaultCharMax.clearButtonMode = UITextFieldViewModeAlways;
 
   // Second the controller is created to manage the text field
   self.textFieldControllerDefaultCharMax =
       [[MDCTextInputController alloc] initWithTextInput:textFieldDefaultCharMax];
-  self.textFieldControllerDefaultCharMax.characterCountMax = 25;
+  self.textFieldControllerDefaultCharMax.characterCountMax = defaultMax;
   [self.textFieldControllerDefaultCharMax mdc_setAdjustsFontForContentSizeCategory:YES];
 
   MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
@@ -176,40 +178,39 @@
                                 constant:0]
       .active = YES;
 
-#ifdef DEBUG
-  UITextField *appleField = [[UITextField alloc] initWithFrame:CGRectZero];
-  [self.scrollView addSubview:appleField];
-  appleField.translatesAutoresizingMaskIntoConstraints = NO;
-
-  appleField.placeholder = @"UIKit Text Field";
-  appleField.delegate = self;
-  appleField.clearButtonMode = UITextFieldViewModeWhileEditing;
-
-  [NSLayoutConstraint constraintWithItem:appleField
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:unstyledTextField
-                               attribute:NSLayoutAttributeBottom
-                              multiplier:1
-                                constant:10]
-      .active = YES;
-  [NSLayoutConstraint constraintWithItem:appleField
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:textFieldDefaultCharMax
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:0]
-      .active = YES;
-  [NSLayoutConstraint constraintWithItem:appleField
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:textFieldDefaultCharMax
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                constant:0]
-      .active = YES;
-#endif
+//  Uncomment for testing 
+//  UITextField *appleField = [[UITextField alloc] initWithFrame:CGRectZero];
+//  [self.scrollView addSubview:appleField];
+//  appleField.translatesAutoresizingMaskIntoConstraints = NO;
+//
+//  appleField.placeholder = @"UIKit Text Field";
+//  appleField.delegate = self;
+//  appleField.clearButtonMode = UITextFieldViewModeWhileEditing;
+//
+//  [NSLayoutConstraint constraintWithItem:appleField
+//                               attribute:NSLayoutAttributeTop
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:unstyledTextField
+//                               attribute:NSLayoutAttributeBottom
+//                              multiplier:1
+//                                constant:10]
+//      .active = YES;
+//  [NSLayoutConstraint constraintWithItem:appleField
+//                               attribute:NSLayoutAttributeLeading
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:textFieldDefaultCharMax
+//                               attribute:NSLayoutAttributeLeading
+//                              multiplier:1
+//                                constant:0]
+//      .active = YES;
+//  [NSLayoutConstraint constraintWithItem:appleField
+//                               attribute:NSLayoutAttributeTrailing
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:textFieldDefaultCharMax
+//                               attribute:NSLayoutAttributeTrailing
+//                              multiplier:1
+//                                constant:0]
+//      .active = YES;
 }
 
 #pragma mark - UITextFieldDelegate
