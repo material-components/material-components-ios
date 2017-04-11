@@ -85,14 +85,6 @@ static inline CGFloat MDCRound(CGFloat value) {
   return self;
 }
 
-- (instancetype)initWithLeftView:(UIView *)leftView {
-  self = [self initWithFrame:CGRectZero];
-  if (self) {
-    self.leftView = leftView;
-  }
-  return self;
-}
-
 - (void)dealloc {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter removeObserver:self name:UITextFieldTextDidBeginEditingNotification object:self];
@@ -181,7 +173,7 @@ static inline CGFloat MDCRound(CGFloat value) {
       UIButton *button = (UIButton *)view;
       // In case other buttons exist, do our best to ensure this is the clear button
       if (button.imageView.image.size.width == MDCClearButtonImageSystemSquareSize ||
-          button.imageView.image.size.width == MDCClearButtonImageSquareSize) {
+          button.imageView.image.size.width == MDCClearButtonImageSquareWidthHeight) {
         _internalClearButton = button;
         return _internalClearButton;
       }

@@ -947,11 +947,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     if (self.textInput.text.length > 0) {
       switch (textField.clearButtonMode) {
         case UITextFieldViewModeWhileEditing:
-          editingRect.size.width -= MDCClearButtonImageSquareSize;
+          editingRect.size.width -= MDCClearButtonImageSquareWidthHeight;
         case UITextFieldViewModeUnlessEditing:
           // The 'defaultRect' is based on the textContainerInsets so we need to compensate for
           // the button NOT being there.
-          editingRect.size.width += MDCClearButtonImageSquareSize;
+          editingRect.size.width += MDCClearButtonImageSquareWidthHeight;
           editingRect.size.width -= MDCTextInputFullWidthHorizontalInnerPadding;
           break;
         default:

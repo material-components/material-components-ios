@@ -19,7 +19,7 @@
 #import "MDCTextInput.h"
 
 /** Size of an unaltered, Material clear button. */
-extern const CGFloat MDCClearButtonImageSquareSize;
+extern const CGFloat MDCClearButtonImageSquareWidthHeight;
 
 /** When text is manually set via .text or setText:, this notification fires. */
 extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
@@ -41,8 +41,5 @@ extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
   Default is black with 38% opacity.
  */
 @property(nonatomic, nullable, strong) UIColor *clearButtonColor UI_APPEARANCE_SELECTOR;
-
-/** A convenience initializer for inputs that have left views. */
-- (_Nonnull instancetype)initWithLeftView:(nullable UIView *)leftView;
 
 @end
