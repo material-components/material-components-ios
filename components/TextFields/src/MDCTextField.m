@@ -139,9 +139,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 #pragma mark - Clear Button Image
 
 - (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
-  if (CGSizeEqualToSize(size, CGSizeZero)) {
-    size = CGSizeMake(MDCClearButtonImageSquareSize, MDCClearButtonImageSquareSize);
-  }
   CGFloat scale = [UIScreen mainScreen].scale;
   CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
