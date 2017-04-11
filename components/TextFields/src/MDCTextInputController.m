@@ -27,7 +27,7 @@
 
 #pragma mark - Constants
 
-static const CGFloat MDCTextInputAlmostRequiredPriority = 999;
+//static const CGFloat MDCTextInputAlmostRequiredPriority = 999;
 static const CGFloat MDCTextInputFloatingPlaceholderDefaultScale = 0.75f;
 static const CGFloat MDCTextInputFullWidthHorizontalInnerPadding = 8.f;
 static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
@@ -477,17 +477,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return placeholderRect;
 }
 
-- (NSLayoutConstraint *)placeholderYconstraint {
-  for (NSLayoutConstraint *constraint in self.textInput.constraints) {
-    if (constraint.firstItem == self.textInput.placeholderLabel &&
-        (constraint.firstAttribute == NSLayoutAttributeTop ||
-         constraint.firstAttribute == NSLayoutAttributeCenterY)) {
-      return constraint;
-    }
-  }
-  return nil;
-}
-
 - (CGFloat)effectiveFloatingScale {
   CGFloat scaleFactor = self.floatingPlaceholderScale
                             ? (CGFloat)self.floatingPlaceholderScale.floatValue
@@ -790,12 +779,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     [self.textInput.trailingUnderlineLabel
         setContentHuggingPriority:UILayoutPriorityRequired
                           forAxis:UILayoutConstraintAxisVertical];
-    [self placeholderYconstraint].priority = MDCTextInputAlmostRequiredPriority;
   } else {
     // .floatingPlaceholder and .default
-    [self placeholderYconstraint].priority = UILayoutPriorityDefaultLow;
 
-    // These constraints are deactivated via .active in case they are nil.
+    // These constraints are deactivated via .active (vs activate()) in case they are nil.
     self.characterCountY.active = NO;
     self.characterCountTrailing.active = NO;
     self.placeholderLeading.active = NO;
