@@ -146,11 +146,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (self) {
     [self commonInitialization];
 
-    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerErrorColorKey];
     _characterCounter = [aDecoder decodeObjectForKey:MDCTextInputControllerCharacterCounterKey];
     _characterCountMax = [aDecoder decodeIntegerForKey:MDCTextInputControllerCharacterCountMaxKey];
     _characterCountViewMode =
         [aDecoder decodeIntegerForKey:MDCTextInputControllerCharacterCountViewModeKey];
+    _errorColor = [aDecoder decodeObjectForKey:MDCTextInputControllerErrorColorKey];
     _floatingPlaceholderColor =
         [aDecoder decodeObjectForKey:MDCTextInputControllerFloatingPlaceholderColorKey];
     _floatingPlaceholderScale =
@@ -177,7 +177,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.characterCounter forKey:MDCTextInputControllerCharacterCounterKey];
+  if ([self.characterCounter conformsToProtocol:@protocol(NSCoding)]) {
+    [aCoder encodeObject:self.characterCounter forKey:MDCTextInputControllerCharacterCounterKey];
+  }
   [aCoder encodeInteger:self.characterCountMax forKey:MDCTextInputControllerCharacterCountMaxKey];
   [aCoder encodeInteger:self.characterCountViewMode
                  forKey:MDCTextInputControllerCharacterCountViewModeKey];

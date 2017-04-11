@@ -25,7 +25,7 @@
  of context), this object can instead choose to do sophisticated counting (ie: ignoring whitespace,
  ignoring url strings, ignoring usernames, etc).
  */
-@protocol MDCTextInputCharacterCounter <NSObject, NSCopying, NSCoding>
+@protocol MDCTextInputCharacterCounter <NSObject>
 
 /**
  Returns the count of characters for the text field.
