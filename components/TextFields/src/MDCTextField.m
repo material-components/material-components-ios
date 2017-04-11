@@ -32,7 +32,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 const CGFloat MDCClearButtonImageSquareWidthHeight = 24.f;
-static const CGFloat MDCClearButtonImageSystemSquareSize = 14.0f;
+static const CGFloat MDCClearButtonImageSystemSquareWidthHeight = 14.0f;
 
 static inline CGFloat MDCRound(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -131,6 +131,11 @@ static inline CGFloat MDCRound(CGFloat value) {
 #pragma mark - Clear Button Image
 
 - (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
+  NSAssert1(size.width >= 0, @"drawnClearButtonImage was passed a size with a width not greater than or equal to 0 %@", NSStringFromCGSize(size));
+  NSAssert1(size.height >= 0, @"drawnClearButtonImage was passed a size with a height not greater than or equal to 0 %@", NSStringFromCGSize(size));
+  if (CGSizeEqualToSize(size, CGSizeZero)) {
+    size = CGSizeMake(MDCClearButtonImageSquareWidthHeight, MDCClearButtonImageSquareWidthHeight);
+  }
   CGFloat scale = [UIScreen mainScreen].scale;
   CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
@@ -172,7 +177,7 @@ static inline CGFloat MDCRound(CGFloat value) {
     if ([view isKindOfClass:targetClass]) {
       UIButton *button = (UIButton *)view;
       // In case other buttons exist, do our best to ensure this is the clear button
-      if (button.imageView.image.size.width == MDCClearButtonImageSystemSquareSize ||
+      if (button.imageView.image.size.width == MDCClearButtonImageSystemSquareWidthHeight ||
           button.imageView.image.size.width == MDCClearButtonImageSquareWidthHeight) {
         _internalClearButton = button;
         return _internalClearButton;
