@@ -1,5 +1,5 @@
 <!--docs:
-title:  "App Bar"
+title: "App Bar"
 layout: detail
 section: components
 excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."

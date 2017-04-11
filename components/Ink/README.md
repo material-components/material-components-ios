@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Ink"
+title: "Ink"
 layout: detail
 section: components
 excerpt: "The Ink component provides a radial action in the form of a visual ripple of ink expanding outward from the user's touch."

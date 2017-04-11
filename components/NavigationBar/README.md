@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Navigation Bar"
+title: "Navigation Bar"
 layout: detail
 section: components
 excerpt: "The Navigation Bar component is a view composed of a left and right Button Bar and either a title label or a custom title view."

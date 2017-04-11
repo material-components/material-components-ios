@@ -1,5 +1,5 @@
 ---
-title:  "Editing the collection view"
+title: "Editing the collection view"
 layout: detail
 section: components
 iconId: list

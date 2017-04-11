@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Dialogs"
+title: "Dialogs"
 layout: detail
 section: components
 excerpt: "The Dialogs component implements the Material Design specifications for modal presentations."

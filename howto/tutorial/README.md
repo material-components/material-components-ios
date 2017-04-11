@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Material Components Development Guide"
+title: "Material Components Development Guide"
 layout: landing
 section: howto
 -->

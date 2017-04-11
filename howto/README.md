@@ -1,5 +1,5 @@
 <!--docs:
-title:  "How to use Material Components"
+title: "How to use Material Components"
 layout: landing
 section: howto
 -->

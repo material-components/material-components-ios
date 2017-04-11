@@ -1,5 +1,5 @@
 <!--docs:
-title:  "OverlayWindow"
+title: "OverlayWindow"
 layout: detail
 section: components
 excerpt: "A window for managing sets of overlay views."

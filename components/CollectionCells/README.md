@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Collection Cells"
+title: "Collection Cells"
 layout: detail
 section: components
 excerpt: "Collection view cell classes that adhere to Material Design layout and styling."

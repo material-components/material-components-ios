@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Tabs"
+title: "Tabs"
 layout: detail
 section: components
 excerpt: "TODO(shyndman): Excerpt needed."
