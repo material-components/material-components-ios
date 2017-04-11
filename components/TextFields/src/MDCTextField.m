@@ -520,10 +520,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
       [processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
     [super setAdjustsFontForContentSizeCategory:adjusts];
-    NSLog(@"The iOS 10 Code Ran");
-  } else {
-    NSLog(@"The iOS 10 Code did not run");
   }
+  
   [_coordinator mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 
