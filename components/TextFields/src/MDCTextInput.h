@@ -31,7 +31,7 @@
 
 @protocol MDCTextInputPositioningDelegate;
 
-/** Common API for Material Design themed text inputs. */
+/** Common API for Material Design compliant text inputs. */
 @protocol MDCTextInput <NSObject>
 
 /**

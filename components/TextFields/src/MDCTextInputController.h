@@ -45,7 +45,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 };
 
 /**
- Material Design themed states for textInputs. The logic for 'automagic' error states changes:
+ Material Design compliant states for textInputs. The logic for 'automagic' error states changes:
  underline color, underline text color.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
