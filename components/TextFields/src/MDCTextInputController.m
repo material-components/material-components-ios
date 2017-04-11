@@ -581,6 +581,16 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 }
 
+#pragma mark - Underline Labels Fonts
+
++ (UIFont *)placeholderFont {
+  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+}
+
++ (UIFont *)underlineLabelsFont {
+  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+}
+
 #pragma mark - Properties Implementation
 
 - (void)setCharacterCountViewMode:(UITextFieldViewMode)characterCountViewMode {
@@ -1061,14 +1071,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     return;
   }
   [self updateLayout];
-}
-
-+ (UIFont *)placeholderFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-}
-
-+ (UIFont *)underlineLabelsFont {
-  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
 #pragma mark - Public API
