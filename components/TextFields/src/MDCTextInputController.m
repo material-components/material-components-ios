@@ -364,7 +364,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   if (!self.customLeadingFont) {
     self.textInput.leadingUnderlineLabel.font =
-        [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+        [[self class] underlineLabelsFont];
   }
 
   self.textInput.leadingUnderlineLabel.textColor =
@@ -376,7 +376,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)updatePlaceholder {
   if (!self.customPlaceholderFont) {
     self.textInput.placeholderLabel.font =
-        [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+        [[self class] placeholderFont];
   }
 }
 
@@ -506,7 +506,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   if (!self.customTrailingFont) {
     self.textInput.trailingUnderlineLabel.font =
-        [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+        [[self class] underlineLabelsFont];
   }
 
   self.textInput.trailingUnderlineLabel.text = [self characterCountText];
@@ -1043,20 +1043,32 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
+  // Listening to outside setting of custom fonts.
   if (![keyPath isEqualToString:MDCTextInputControllerKVOKeyFont]) {
     return;
   }
 
-  if (object == _textInput.leadingUnderlineLabel) {
+  if (object == _textInput.leadingUnderlineLabel &&
+      ![_textInput.leadingUnderlineLabel.font isEqual:[[self class] underlineLabelsFont]]) {
     _customLeadingFont = _textInput.leadingUnderlineLabel.font;
-  }
-  if (object == _textInput.placeholderLabel) {
+  } else if (object == _textInput.placeholderLabel &&
+      ![_textInput.placeholderLabel.font isEqual:[[self class] placeholderFont]]) {
     _customPlaceholderFont = _textInput.placeholderLabel.font;
-  }
-  if (object == _textInput.trailingUnderlineLabel) {
+  } else if (object == _textInput.trailingUnderlineLabel &&
+      ![_textInput.trailingUnderlineLabel.font isEqual:[[self class] underlineLabelsFont]]) {
     _customTrailingFont = _textInput.trailingUnderlineLabel.font;
+  } else {
+    return;
   }
   [self updateLayout];
+}
+
++ (UIFont *)placeholderFont {
+  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+}
+
++ (UIFont *)underlineLabelsFont {
+  return [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
 #pragma mark - Public API
