@@ -104,6 +104,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 @property(nonatomic, strong) NSLayoutConstraint *characterCountY;
 @property(nonatomic, strong) NSLayoutConstraint *characterCountTrailing;
+@property(nonatomic, strong) NSLayoutConstraint *clearButtonY;
+@property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailingCharacterCountLeading;
 @property(nonatomic, strong) UIFont *customLeadingFont;
 @property(nonatomic, strong) UIFont *customPlaceholderFont;
 @property(nonatomic, strong) UIFont *customTrailingFont;
@@ -117,6 +119,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
 @property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
+@property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
 @property(nonatomic, copy) NSString *previousLeadingText;
@@ -241,7 +244,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // This controller will handle Dynamic Type and all fonts for the text input
   _mdc_adjustsFontForContentSizeCategory = _textInput.mdc_adjustsFontForContentSizeCategory;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
-
   _textInput.positioningDelegate = self;
   _placeholderDefaultPositionFrame = _textInput.frame;
 
@@ -707,6 +709,26 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                       multiplier:1
                                         constant:-1 * MDCTextInputFullWidthHorizontalPadding];
     }
+    if (!self.clearButtonTrailingCharacterCountLeading) {
+      self.clearButtonTrailingCharacterCountLeading =
+      [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.textInput.trailingUnderlineLabel
+                                   attribute:NSLayoutAttributeLeading
+                                  multiplier:1
+                                    constant:0];
+    }
+    if (!self.clearButtonY) {
+      self.clearButtonY =
+          [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
+                                       attribute:NSLayoutAttributeCenterY
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.textInput
+                                       attribute:NSLayoutAttributeCenterY
+                                      multiplier:1
+                                        constant:0];
+    }
     if (!self.placeholderLeading) {
       self.placeholderLeading =
           [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
@@ -780,8 +802,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       }
     }
     [NSLayoutConstraint activateConstraints:@[
-      self.characterCountY, self.characterCountTrailing, self.placeholderLeading,
-      self.placeholderTrailingCharacterCountLeading, self.placeholderTrailingSuperviewTrailing
+      self.characterCountY, self.characterCountTrailing, self.clearButtonTrailingCharacterCountLeading,
+      self.clearButtonY, self.placeholderLeading, self.placeholderTrailingCharacterCountLeading,
+      self.placeholderTrailingSuperviewTrailing
     ]];
 
     [self.textInput.trailingUnderlineLabel
@@ -791,8 +814,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     // .floatingPlaceholder and .default
 
     // These constraints are deactivated via .active (vs activate()) in case they are nil.
-    self.characterCountY.active = NO;
     self.characterCountTrailing.active = NO;
+    self.characterCountY.active = NO;
+    self.clearButtonY.active = NO;
+    self.clearButtonTrailingCharacterCountLeading.active = NO;
     self.placeholderLeading.active = NO;
     self.placeholderTrailingCharacterCountLeading.active = NO;
     self.placeholderTrailingSuperviewTrailing.active = NO;
@@ -955,11 +980,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     if (self.textInput.text.length > 0) {
       switch (textField.clearButtonMode) {
         case UITextFieldViewModeWhileEditing:
-          editingRect.size.width -= MDCClearButtonImageSquareWidthHeight;
+          editingRect.size.width -= CGRectGetWidth(self.textInput.clearButton.bounds);
         case UITextFieldViewModeUnlessEditing:
           // The 'defaultRect' is based on the textContainerInsets so we need to compensate for
           // the button NOT being there.
-          editingRect.size.width += MDCClearButtonImageSquareWidthHeight;
+          editingRect.size.width += CGRectGetWidth(self.textInput.clearButton.bounds);
           editingRect.size.width -= MDCTextInputFullWidthHorizontalInnerPadding;
           break;
         default:

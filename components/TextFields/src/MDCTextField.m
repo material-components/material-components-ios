@@ -14,7 +14,6 @@
  limitations under the License.
  */
 
-#import "MDCTextFieldArt.h"
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputLayoutCoordinator.h"
@@ -22,17 +21,12 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
-NSString *const MDCTextFieldClearButtonColorKey = @"MDCTextFieldClearButtonColorKey";
-NSString *const MDCTextFieldClearButtonImageKey = @"MDCTextFieldClearButtonImageKey";
 NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
 static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
-
-const CGFloat MDCClearButtonImageSquareWidthHeight = 24.f;
-static const CGFloat MDCClearButtonImageSystemSquareWidthHeight = 14.0f;
 
 static inline CGFloat MDCRound(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -44,17 +38,13 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 @interface MDCTextField ()
 
-@property(nonatomic, strong) UIImage *clearButtonImage;
 @property(nonatomic, strong) MDCTextInputLayoutCoordinator *coordinator;
-@property(nonatomic, readonly, weak) UIButton *internalClearButton;
 
 @end
 
 @implementation MDCTextField
 
 @dynamic borderStyle;
-
-@synthesize internalClearButton = _internalClearButton;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -72,8 +62,6 @@ static inline CGFloat MDCRound(CGFloat value) {
     NSString *interfaceBuilderPlaceholder = super.placeholder;
     [self commonMDCTextFieldInitialization];
 
-    _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonImageKey];
-    _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextFieldClearButtonColorKey];
     _coordinator = [aDecoder decodeObjectForKey:MDCTextFieldCoordinatorKey]
                        ?: [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
 
@@ -93,16 +81,12 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.clearButtonColor forKey:MDCTextFieldClearButtonColorKey];
-  [aCoder encodeObject:self.clearButtonImage forKey:MDCTextFieldClearButtonImageKey];
   [aCoder encodeObject:self.coordinator forKey:MDCTextFieldCoordinatorKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextField *copy = [[[self class] alloc] init];
 
-  copy.clearButtonColor = self.clearButtonColor.copy;
-  copy.clearButtonImage = self.clearButtonImage.copy;
   copy.coordinator = self.coordinator.copy;
 
   return copy;
@@ -126,32 +110,18 @@ static inline CGFloat MDCRound(CGFloat value) {
                       object:self];
 }
 
-#pragma mark - Clear Button Image
-
-- (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
-  NSAssert1(size.width >= 0, @"drawnClearButtonImage was passed a size with a width not greater than or equal to 0 %@", NSStringFromCGSize(size));
-  NSAssert1(size.height >= 0, @"drawnClearButtonImage was passed a size with a height not greater than or equal to 0 %@", NSStringFromCGSize(size));
-  if (CGSizeEqualToSize(size, CGSizeZero)) {
-    size = CGSizeMake(MDCClearButtonImageSquareWidthHeight, MDCClearButtonImageSquareWidthHeight);
-  }
-  CGFloat scale = [UIScreen mainScreen].scale;
-  CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
-  UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
-  [color setFill];
-  [MDCPathForClearButtonImageFrame(bounds) fill];
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-
-  return image;
-}
-
 #pragma mark - Properties Implementation
 
+- (UIButton *)clearButton {
+  return _coordinator.clearButton;
+}
+
+- (UIColor *)clearButtonColor {
+  return _coordinator.clearButtonColor;
+}
+
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
-  if (![_clearButtonColor isEqual:clearButtonColor]) {
-    _clearButtonColor = clearButtonColor;
-    self.clearButtonImage = [self drawnClearButtonImage:self.clearButtonImage.size color:_clearButtonColor];
-  }
+  _coordinator.clearButtonColor = clearButtonColor;
 }
 
 - (BOOL)hidesPlaceholderOnInput {
@@ -160,31 +130,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
   _coordinator.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
-}
-
-- (UIButton *)internalClearButton {
-  if (_internalClearButton != nil) {
-    return _internalClearButton;
-  }
-  Class targetClass = [UIButton class];
-  // Loop through child views until we find the UIButton that is used to display the clear button
-  // internally in UITextField.
-  NSMutableArray *toVisit = [NSMutableArray arrayWithArray:self.subviews];
-  while ([toVisit count]) {
-    UIView *view = [toVisit objectAtIndex:0];
-    if ([view isKindOfClass:targetClass]) {
-      UIButton *button = (UIButton *)view;
-      // In case other buttons exist, do our best to ensure this is the clear button
-      if (button.imageView.image.size.width == MDCClearButtonImageSystemSquareWidthHeight ||
-          button.imageView.image.size.width == MDCClearButtonImageSquareWidthHeight) {
-        _internalClearButton = button;
-        return _internalClearButton;
-      }
-    }
-    [toVisit addObjectsFromArray:view.subviews];
-    [toVisit removeObjectAtIndex:0];
-  }
-  return nil;
 }
 
 - (UILabel *)leadingUnderlineLabel {
@@ -250,6 +195,14 @@ static inline CGFloat MDCRound(CGFloat value) {
   _coordinator.attributedPlaceholder = attributedPlaceholder;
 }
 
+- (UITextFieldViewMode)clearButtonMode {
+  return _coordinator.clearButtonMode;
+}
+
+- (void)setClearButtonMode:(UITextFieldViewMode)clearButtonMode {
+  _coordinator.clearButtonMode = clearButtonMode;
+}
+
 - (void)setFont:(UIFont *)font {
   [super setFont:font];
   [_coordinator didSetFont];
@@ -306,8 +259,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
   // Adjustments for RTL and clear button
   // .leftView and .rightView actually are leading and trailing: their placement is reversed in RTL.
-  CGFloat scale = [UIScreen mainScreen].scale;
-  CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
+  CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
   clearButtonWidth += MDCTextInputTextRectRightViewClearPaddingCorrection;
 
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
@@ -367,8 +319,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   // then it's being shown and the clear button isn't.
   if (!self.rightView.superview) {
     if (self.text.length > 0) {
-      CGFloat scale = [UIScreen mainScreen].scale;
-      CGFloat clearButtonWidth = self.clearButtonImage.size.width / scale;
+      CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
       clearButtonWidth += MDCTextInputEditingRectClearPaddingCorrection;
       switch (self.clearButtonMode) {
         case UITextFieldViewModeUnlessEditing:
@@ -395,44 +346,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
-  CGRect clearButtonRect = [super clearButtonRectForBounds:bounds];
-
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    clearButtonRect.origin.x = 0;
-  } else {
-    clearButtonRect.origin.x = CGRectGetWidth(bounds) - CGRectGetWidth(clearButtonRect);
-  }
-
-  // Get the clear button if it exists.
-  UIButton *clearButton = self.internalClearButton;
-  if (clearButton != nil) {
-    if (!self.clearButtonImage ||
-        !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonRect.size)) {
-      self.clearButtonImage = [self drawnClearButtonImage:clearButtonRect.size color:self.clearButtonColor];
-    }
-
-    // If the image is not our image, set it.
-    if (clearButton.imageView.image != self.clearButtonImage) {
-      [clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
-      [clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
-      [clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
-    }
-  }
-
-  UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
-  // The clear button is a different height than the text field or placeholder. It's expected to be
-  // Y-centered to the field or placeholder.
-  CGFloat actualY = textContainerInset.top +
-                    MAX(self.font.lineHeight, self.placeholderLabel.font.lineHeight) / 2.f;
-  actualY = actualY - CGRectGetHeight(clearButtonRect) / 2.f;
-  clearButtonRect.origin.y = actualY;
-
-  if ([self.coordinator.positioningDelegate
-          respondsToSelector:@selector(clearButtonRectForBounds:defaultRect:)]) {
-    return [self.coordinator.positioningDelegate clearButtonRectForBounds:bounds
-                                                              defaultRect:clearButtonRect];
-  }
-  return clearButtonRect;
+  return self.clearButton.frame;
 }
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
@@ -469,8 +383,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 
-  CGFloat height = MDCTextInputVerticalPadding + MDCRound(self.font.lineHeight) +
-                   MDCTextInputUnderlineVerticalSpacing * 2.f;
+  CGFloat height = MDCTextInputFullPadding + MDCRound(self.font.lineHeight) +
+                   MDCTextInputHalfPadding * 2.f;
 
   CGFloat underlineLabelsHeight =
       MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
@@ -505,6 +419,10 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (void)textFieldDidChange:(NSNotification *)note {
   [_coordinator didChange];
+}
+
+- (void)textFieldDidEndEditing:(NSNotification *)note {
+  [_coordinator didEndEditing];
 }
 
 #pragma mark - Accessibility

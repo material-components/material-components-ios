@@ -17,6 +17,7 @@
 
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
+#import "MDCTextInputArt.h"
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputLayoutCoordinator.h"
 #import "MDCTextInputUnderlineView.h"
@@ -27,6 +28,11 @@
 
 NSString *const MDCTextInputCoordinatorCharacterRelativeSuperviewKey =
     @"MDCTextInputCoordinatorCharacterRelativeSuperviewKey";
+NSString *const MDCTextInputCoordinatorClearButtonKey = @"MDCTextInputCoordinatorClearButtonKey";
+NSString *const MDCTextInputCoordinatorClearButtonColorKey =
+    @"MDCTextInputCoordinatorClearButtonColorKey";
+NSString *const MDCTextInputCoordinatorClearButtonImageKey =
+    @"MDCTextInputCoordinatorClearButtonImageKey";
 NSString *const MDCTextInputCoordinatorHidesPlaceholderKey =
     @"MDCTextInputCoordinatorHidesPlaceholderKey";
 NSString *const MDCTextInputCoordinatorInputKey = @"MDCTextInputCoordinatorInputKey";
@@ -42,10 +48,13 @@ NSString *const MDCTextInputCoordinatorTrailingLabelKey =
 NSString *const MDCTextInputCoordinatorUnderlineViewKey =
     @"MDCTextInputCoordinatorUnderlineViewKey";
 
-static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2.f;
+static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 5.f;
+static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24.f;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
-const CGFloat MDCTextInputVerticalPadding = 16.f;
-const CGFloat MDCTextInputUnderlineVerticalSpacing = 8.f;
+static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2.f;
+const CGFloat MDCTextInputFullPadding = 16.f;
+const CGFloat MDCTextInputHalfPadding = 8.f;
+
 
 static inline UIColor *_Nonnull MDCTextInputCursorColor() {
   return [MDCPalette indigoPalette].tint500;
@@ -75,6 +84,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
+@property(nonatomic, strong) UIImage *clearButtonImage;
+@property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeftViewTrailing;
@@ -93,12 +104,13 @@ static inline CGFloat MDCRound(CGFloat value) {
 // We never use the text property. Instead always read from the text field.
 
 @synthesize attributedText = _do_no_use_attributedText;
-@synthesize editing = _editing;
+@synthesize clearButton = _clearButton;
+@synthesize clearButtonColor = _clearButtonColor;
+@synthesize clearButtonMode = _clearButtonMode;
 @synthesize hidesPlaceholderOnInput = _hidesPlaceholderOnInput;
 @synthesize leadingUnderlineLabel = _leadingUnderlineLabel;
 @synthesize placeholderLabel = _placeholderLabel;
 @synthesize positioningDelegate = _positioningDelegate;
-@synthesize text = _do_no_use_text;
 @synthesize textColor = _textColor;
 @synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
 @synthesize underlineColor = _underlineColor;
@@ -119,10 +131,10 @@ static inline CGFloat MDCRound(CGFloat value) {
 
     // Initialize elements of UI
     [self setupRelativeSuperview];
-    [self setupPlaceholderLabel];
 
-    // This has to happen before the underline labels are added to the hierarchy.
+    [self setupPlaceholderLabel];
     [self setupUnderlineView];
+    [self setupClearButton];
     [self setupUnderlineLabels];
 
     [self updateColors];
@@ -139,6 +151,9 @@ static inline CGFloat MDCRound(CGFloat value) {
     _textInput = input;
     [self commonInit];
 
+    _clearButton = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorClearButtonKey];
+    _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorClearButtonImageKey];
+    _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorClearButtonColorKey];
     _hidesPlaceholderOnInput =
         [aDecoder decodeBoolForKey:MDCTextInputCoordinatorHidesPlaceholderKey];
     _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorLeadingLabelKey];
@@ -156,6 +171,9 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeObject:self.clearButton forKey:MDCTextInputCoordinatorClearButtonKey];
+  [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputCoordinatorClearButtonColorKey];
+  [aCoder encodeObject:self.clearButtonImage forKey:MDCTextInputCoordinatorClearButtonImageKey];
   [aCoder encodeBool:self.hidesPlaceholderOnInput
               forKey:MDCTextInputCoordinatorHidesPlaceholderKey];
   [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputCoordinatorLeadingLabelKey];
@@ -173,6 +191,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextInputLayoutCoordinator *copy = [[[self class] alloc] init];
 
+  copy.clearButtonColor = self.clearButtonColor.copy;
+  copy.clearButtonImage = self.clearButtonImage.copy;
   copy.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   copy.positioningDelegate = self.positioningDelegate;
   copy.relativeSuperview = self.relativeSuperview.copy;
@@ -210,6 +230,42 @@ static inline CGFloat MDCRound(CGFloat value) {
   } else {
     _relativeSuperview = _textInput;
   }
+}
+
+- (void)setupClearButton {
+  _clearButton = [[UIButton alloc] initWithFrame:CGRectZero];
+  _clearButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [_clearButton setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
+                                                forAxis:UILayoutConstraintAxisHorizontal];
+  [_clearButton setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
+                                                forAxis:UILayoutConstraintAxisVertical];
+  [_clearButton setContentHuggingPriority:UILayoutPriorityDefaultLow + 1 forAxis:UILayoutConstraintAxisHorizontal];
+  [_clearButton setContentHuggingPriority:UILayoutPriorityDefaultLow + 1 forAxis:UILayoutConstraintAxisVertical];
+
+  _clearButton.opaque = NO;
+
+  [_textInput addSubview:_clearButton];
+  [_textInput sendSubviewToBack:_clearButton];
+
+  NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_clearButton attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
+  self.clearButtonWidth = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:MDCTextInputClearButtonImageSquareWidthHeight];
+  NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_underlineView attribute:NSLayoutAttributeTop multiplier:1 constant:-1 * MDCTextInputHalfPadding + MDCTextInputClearButtonImageBuiltInPadding];
+  self.placeholderTrailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationLessThanOrEqual
+                                                             toItem:_clearButton
+                                                          attribute:NSLayoutAttributeTrailing
+                                                         multiplier:1
+                                                           constant:MDCTextInputHalfPadding];
+  NSLayoutConstraint *trailingSuperview = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_relativeSuperview attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
+
+  height.priority = UILayoutPriorityDefaultLow;
+  self.clearButtonWidth.priority = UILayoutPriorityDefaultLow;
+  bottom.priority = UILayoutPriorityDefaultLow;
+  self.placeholderTrailing.priority = UILayoutPriorityDefaultLow;
+  trailingSuperview.priority = UILayoutPriorityDefaultLow;
+
+  [NSLayoutConstraint activateConstraints:@[ height, self.clearButtonWidth, bottom, self.placeholderLeading, trailingSuperview ]];
 }
 
 - (void)setupPlaceholderLabel {
@@ -344,9 +400,11 @@ static inline CGFloat MDCRound(CGFloat value) {
                                                 toItem:_relativeSuperview
                                              attribute:NSLayoutAttributeBottom
                                             multiplier:1
-                                              constant:-1 * MDCTextInputUnderlineVerticalSpacing];
+                                              constant:-1 * MDCTextInputHalfPadding];
   _underlineY.active = YES;
 }
+
+#pragma mark - Mirrored Layout Methods
 
 - (void)layoutSubviewsOfInput {
   if (self.relativeSuperview != self.textInput) {
@@ -363,11 +421,69 @@ static inline CGFloat MDCRound(CGFloat value) {
   [self updatePlaceholderAlpha];
   [self updatePlaceholderPosition];
   [self updateColors];
+  [self updateClearButton];
 }
 
 - (void)updateConstraintsOfInput {
   [self updatePlaceholderPosition];
   [self updateUnderlinePosition];
+}
+
+#pragma mark - Clear Button Implementation
+
+- (void)updateClearButton {
+  CGSize clearButtonSize = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight, MDCTextInputClearButtonImageSquareWidthHeight);
+  if (!self.clearButtonImage ||
+      !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonSize)) {
+    self.clearButtonImage = [self drawnClearButtonImage:clearButtonSize color:self.clearButtonColor];
+  }
+
+  if (self.clearButton.imageView.image != self.clearButtonImage) {
+    [self.clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
+    [self.clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
+    [self.clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
+  }
+
+  CGFloat clearButtonAlpha = 0;
+  if (self.text.length > 0) {
+    switch (self.clearButtonMode) {
+      case UITextFieldViewModeAlways:
+        clearButtonAlpha = 1;
+        break;
+      case UITextFieldViewModeWhileEditing:
+        if (self.isEditing) {
+          clearButtonAlpha = 1;
+        }
+        break;
+      case UITextFieldViewModeUnlessEditing:
+        if (!self.isEditing) {
+          clearButtonAlpha = 1;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  self.clearButton.alpha = clearButtonAlpha;
+  self.clearButtonWidth.constant = MDCTextInputClearButtonImageSquareWidthHeight * clearButtonAlpha;
+}
+
+- (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
+  NSAssert1(size.width >= 0, @"drawnClearButtonImage was passed a size with a width not greater than or equal to 0 %@", NSStringFromCGSize(size));
+  NSAssert1(size.height >= 0, @"drawnClearButtonImage was passed a size with a height not greater than or equal to 0 %@", NSStringFromCGSize(size));
+
+  if (CGSizeEqualToSize(size, CGSizeZero)) {
+    size = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight, MDCTextInputClearButtonImageSquareWidthHeight);
+  }
+  CGFloat scale = [UIScreen mainScreen].scale;
+  CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
+  UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
+  [color setFill];
+  [MDCPathForClearButtonImageFrame(bounds) fill];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+
+  return image;
 }
 
 #pragma mark - Underline View Implementation
@@ -396,7 +512,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   // Usually the underline is halfway between the text and the bottom of the view. But if there are
   // underline labels, we need to be above them.
 
-  CGFloat underlineYConstant = MDCTextInputUnderlineVerticalSpacing;
+  CGFloat underlineYConstant = MDCTextInputHalfPadding;
 
   CGFloat underlineLabelsHeight =
       MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
@@ -436,6 +552,18 @@ static inline CGFloat MDCRound(CGFloat value) {
   [self.textInput setNeedsUpdateConstraints];
 }
 
+- (void)setClearButtonColor:(UIColor *)clearButtonColor {
+  if (![_clearButtonColor isEqual:clearButtonColor]) {
+    _clearButtonColor = clearButtonColor;
+    self.clearButtonImage = [self drawnClearButtonImage:self.clearButtonImage.size color:_clearButtonColor];
+  }
+}
+
+- (void)setClearButtonMode:(UITextFieldViewMode)clearButtonMode {
+  _clearButtonMode = clearButtonMode;
+  [self updateClearButton];
+}
+
 - (void)setEnabled:(BOOL)enabled {
   _enabled = enabled;
   self.underlineView.enabled = enabled;
@@ -452,6 +580,10 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
   _hidesPlaceholderOnInput = hidesPlaceholderOnInput;
   [self updatePlaceholderAlpha];
+}
+
+- (BOOL)isEditing {
+  return self.textInput.isEditing;
 }
 
 - (NSString *)placeholder {
@@ -471,6 +603,14 @@ static inline CGFloat MDCRound(CGFloat value) {
   [self.textInput setNeedsLayout];
 }
 
+- (NSString *)text {
+  return self.textInput.text;
+}
+
+- (void)setText:(NSString *)text {
+  [self.textInput setText:text];
+}
+
 - (void)setTextColor:(UIColor *)textColor {
   if (!textColor) {
     textColor = MDCTextInputTextColor();
@@ -485,8 +625,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (UIEdgeInsets)textContainerInset {
   UIEdgeInsets textContainerInset = UIEdgeInsetsZero;
 
-  textContainerInset.top = MDCTextInputVerticalPadding;
-  textContainerInset.bottom = MDCTextInputVerticalPadding;
+  textContainerInset.top = MDCTextInputFullPadding;
+  textContainerInset.bottom = MDCTextInputFullPadding;
 
   if ([self.textInput.positioningDelegate respondsToSelector:@selector(textContainerInset:)]) {
     return [self.textInput.positioningDelegate textContainerInset:textContainerInset];
@@ -591,30 +731,28 @@ static inline CGFloat MDCRound(CGFloat value) {
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
                                                           constant:[self textContainerInset].left];
-  self.placeholderTrailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                                          attribute:NSLayoutAttributeTrailing
-                                                          relatedBy:NSLayoutRelationLessThanOrEqual
-                                                             toItem:_relativeSuperview
-                                                          attribute:NSLayoutAttributeTrailing
-                                                         multiplier:1
-                                                           constant:8];
 
   [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
-  [self.placeholderTrailing setPriority:UILayoutPriorityDefaultLow];
 
-  return @[ self.placeholderTop, self.placeholderLeading, self.placeholderTrailing ];
+  return @[ self.placeholderTop, self.placeholderLeading ];
 }
 
 #pragma mark - Text Input Events
 
 - (void)didBeginEditing {
+  [self updateClearButton];
   [self.textInput invalidateIntrinsicContentSize];
 }
 
 - (void)didChange {
+  [self updateClearButton];
   [self updatePlaceholderAlpha];
   [self updatePlaceholderPosition];
+}
+
+- (void)didEndEditing {
+  [self updateClearButton];
 }
 
 - (void)didSetFont {

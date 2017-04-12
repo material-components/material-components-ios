@@ -45,6 +45,28 @@
 /** The text displayed in the text input with style attributes. */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedText;
 
+/** 
+ A button that can appear inline that when touched clears all entered text and resets the input to 
+ an empty state.
+ */
+@property(nonatomic, nonnull, strong, readonly) UIButton *clearButton;
+
+/**
+ Color for the "clear the text" button image.
+
+ Color changes are not animated.
+
+ Default is black with 38% opacity.
+ */
+@property(nonatomic, nullable, strong) UIColor *clearButtonColor UI_APPEARANCE_SELECTOR;
+
+/** 
+ Controls when the clear button will display.
+ 
+ Note: The clear button will never display when there is no entered text. 
+ */
+@property(nonatomic, assign) UITextFieldViewMode clearButtonMode;
+
 /** A Boolean value indicating whether the text field is currently in edit mode. */
 @property(nonatomic, readonly, getter=isEditing) BOOL editing;
 

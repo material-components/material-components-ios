@@ -17,8 +17,8 @@
 
 #import "MDCTextField.h"
 
-extern const CGFloat MDCTextInputVerticalPadding;
-extern const CGFloat MDCTextInputUnderlineVerticalSpacing;
+extern const CGFloat MDCTextInputFullPadding;
+extern const CGFloat MDCTextInputHalfPadding;
 
 /** A controller for common traits shared by text inputs. */
 @interface MDCTextInputLayoutCoordinator : NSObject <MDCTextInput, NSCopying, NSCoding>
@@ -47,6 +47,9 @@ extern const CGFloat MDCTextInputUnderlineVerticalSpacing;
 
 /** Text did change event. */
 - (void)didChange;
+
+/** Text stopped being edited event. */
+- (void)didEndEditing;
 
 /** Called by the controlled text input to notify the controller that it's font was set. */
 - (void)didSetFont;

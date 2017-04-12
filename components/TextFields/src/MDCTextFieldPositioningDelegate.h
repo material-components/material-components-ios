@@ -24,7 +24,6 @@
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets;
 
 // Used only for MDCTextField
-- (CGRect)clearButtonRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 
 @end

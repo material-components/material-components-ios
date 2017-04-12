@@ -18,9 +18,6 @@
 
 #import "MDCTextInput.h"
 
-/** Size of an unaltered, Material clear button. */
-extern const CGFloat MDCClearButtonImageSquareWidthHeight;
-
 /** When text is manually set via .text or setText:, this notification fires. */
 extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 
@@ -32,14 +29,5 @@ extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 
 /** MDCTextField does not implement borders that conform to UITextBorderStyle. */
 @property(nonatomic) UITextBorderStyle borderStyle NS_UNAVAILABLE;
-
-/**
-  Color for the "clear the text" button image.
-
-  Color changes are not animated.
-
-  Default is black with 38% opacity.
- */
-@property(nonatomic, nullable, strong) UIColor *clearButtonColor UI_APPEARANCE_SELECTOR;
 
 @end
