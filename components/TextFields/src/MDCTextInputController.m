@@ -930,40 +930,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return textContainerInset;
 }
 
-- (CGRect)clearButtonRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
-  if (![self.textInput isKindOfClass:[UITextField class]]) {
-    return CGRectZero;
-  }
-
-  MDCTextField *textField = (MDCTextField *)self.textInput;
-  CGRect clearButtonRect = defaultRect;
-
-  // Full width text boxes have their character count on the text input line
-  if (self.presentationStyle == MDCTextInputPresentationStyleFullWidth) {
-    if (self.characterCountMax) {
-      if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionRightToLeft) {
-        clearButtonRect.origin.x += CGRectGetWidth(textField.trailingUnderlineLabel.frame);
-      } else {
-        clearButtonRect.origin.x = CGRectGetMinX(textField.trailingUnderlineLabel.frame);
-        clearButtonRect.origin.x -= MDCTextInputFullWidthHorizontalInnerPadding;
-        clearButtonRect.origin.x -= CGRectGetWidth(clearButtonRect);
-        clearButtonRect.origin.x =
-            [[self class] xOriginRoundedUpTo4:CGRectGetMinX(clearButtonRect)];
-      }
-    } else {
-      if (self.textInput.mdc_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionRightToLeft) {
-        clearButtonRect.origin.x += MDCTextInputFullWidthHorizontalPadding;
-      } else {
-        clearButtonRect.origin.x -= MDCTextInputFullWidthHorizontalPadding;
-      }
-    }
-  }
-
-  return clearButtonRect;
-}
-
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
   if (![self.textInput isKindOfClass:[UITextField class]]) {
     return CGRectZero;

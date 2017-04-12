@@ -257,7 +257,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                                                           attribute:NSLayoutAttributeTrailing
                                                          multiplier:1
                                                            constant:MDCTextInputHalfPadding];
-  NSLayoutConstraint *trailingSuperview = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_relativeSuperview attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
+  NSLayoutConstraint *trailingSuperview = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_relativeSuperview attribute:NSLayoutAttributeTrailing multiplier:1 constant: MDCTextInputClearButtonImageBuiltInPadding];
 
   height.priority = UILayoutPriorityDefaultLow;
   self.clearButtonWidth.priority = UILayoutPriorityDefaultLow;
