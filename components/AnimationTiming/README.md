@@ -12,6 +12,12 @@ move between positions or states. These easing curves affect an object's speed, 
 These animation curves allow acceleration and deceleration changes to be smooth across the duration
 of an animation so that movement doesn't appear mechanical.
 
+## Design & API Documentation
+
+<ul class="icon-list">
+  <li class="icon-spec"><a href="https://material.io/guidelines/motion/duration-easing.html">Duration & easing</a></li>
+</ul>
+
 ## Installation
 
 ### Requirements
