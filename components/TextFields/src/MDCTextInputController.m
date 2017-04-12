@@ -472,7 +472,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
   // Why no anchor point of (0,0)? Because our users wouldn't expect it.
   placeholderY -=
-      self.textInput.placeholderLabel.font.lineHeight * (1 - [self effectiveFloatingScale]) * .5;
+      self.textInput.placeholderLabel.font.lineHeight * (1 - [self effectiveFloatingScale]) * .5f;
 
   CGFloat estimatedWidth = MDCCeil(CGRectGetWidth([self.textInput.placeholderLabel.text
       boundingRectWithSize:CGSizeMake(CGFLOAT_MAX,
@@ -482,7 +482,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                   NSFontAttributeName : self.textInput.font
                 }
                    context:nil]));
-  CGFloat placeholderX = -1 * estimatedWidth * (1 - [self effectiveFloatingScale]) * .5;
+  CGFloat placeholderX = -1 * estimatedWidth * (1 - [self effectiveFloatingScale]) * .5f;
 
   return CGPointMake(placeholderX, placeholderY);
 }
