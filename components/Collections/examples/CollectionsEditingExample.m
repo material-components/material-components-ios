@@ -44,6 +44,9 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:HEADER_REUSE_IDENTIFIER];
 
+  NSLog(@"Registered %@", kReusableIdentifierItem);  // KM
+  NSLog(@"Registered %@ : %@", UICollectionElementKindSectionHeader, HEADER_REUSE_IDENTIFIER);  // KM
+
   // Populate content.
   _content = [NSMutableArray array];
   for (NSInteger i = 0; i < kSectionCount; i++) {
@@ -100,24 +103,42 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
   // TODO: (shepj) Pending fix for
   // https://github.com/material-components/material-components-ios/issues/1208
   // we must call super which registers classes for supplemental header and footer in editing mode
-  UICollectionReusableView *supplementaryView = [super collectionView:collectionView
-                                    viewForSupplementaryElementOfKind:kind
-                                                          atIndexPath:indexPath];
-  if (supplementaryView) {
-    return supplementaryView;
-  }
+  //  UICollectionReusableView *supplementaryView = [super collectionView:collectionView
+  //                                    viewForSupplementaryElementOfKind:kind
+  //                                                          atIndexPath:indexPath];
+  //  UICollectionReusableView *supplementaryView =
+  //  [collectionView dequeueReusableSupplementaryViewOfKind:kind
+  //  withReuseIdentifier:HEADER_REUSE_IDENTIFIER forIndexPath:indexPath]; if (supplementaryView) {
+  //    return supplementaryView;
+  //  }
 
-  MDCCollectionViewTextCell *sectionHeader =
-      [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                         withReuseIdentifier:HEADER_REUSE_IDENTIFIER
-                                                forIndexPath:indexPath];
-
+  NSString *reuseIdentifier;
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-    sectionHeader.textLabel.text =
-        [NSString stringWithFormat:@"Section %lu Header", (long)indexPath.section];
+    reuseIdentifier = HEADER_REUSE_IDENTIFIER;
+
+    NSLog(@"viewForSupplementaryElementOfKind: %@ : %@", kind, reuseIdentifier);  // KM
+
+    MDCCollectionViewTextCell *sectionHeader =
+    [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                       withReuseIdentifier:reuseIdentifier
+                                              forIndexPath:indexPath];
+
+    NSAssert(sectionHeader != nil, @"Unable to dequeue SupplementaryView");
+
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+      sectionHeader.textLabel.text =
+      [NSString stringWithFormat:@"Section %lu Header", (long)indexPath.section];
+    }
+
+    return sectionHeader;
   }
 
-  return sectionHeader;
+  NSLog(@"SUPER viewForSupplementaryElementOfKind: %@", kind);  // KM
+
+
+  return [super collectionView:collectionView
+      viewForSupplementaryElementOfKind:kind
+                            atIndexPath:indexPath];
 }
 
 #pragma mark - <MDCCollectionViewEditingDelegate>
