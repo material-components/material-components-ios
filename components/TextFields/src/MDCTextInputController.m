@@ -973,15 +973,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   return editingRect;
 }
 
-// TODO: (larche) Make it keep track of the largest one and only increase size if it hits larger one
-+ (CGFloat)xOriginRoundedUpTo4:(CGFloat)inputX {
-  NSInteger x = (NSInteger)MDCCeil(inputX);
-  if (x % 4 != 0) {
-    x = ((NSInteger)(inputX / 4) + 1) * 4;
-  }
-  return (CGFloat)x;
-}
-
 #pragma mark - UITextField & UITextView Notification Observation
 
 - (void)textInputDidBeginEditing:(NSNotification *)note {
