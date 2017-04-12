@@ -129,16 +129,19 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
 5.  ## What's next?
 
-    - [Read the Development Guide]({{ site.folder }}/howto/)
-      <!--{: .icon-guide }-->
+    <ul class="icon-list">
+      <li class="icon-list-item icon-list-item--guide">
+        <a href="{{ site.folder }}/howto">Read the Development Guide</a>
+      </li>
+      <li class="icon-list-item icon-list-item--components">
+        <a href="{{ site.folder }}/components">View the Component Documentation</a>
+      </li>
+      <li class="icon-list-item icon-list-item--sample">
+        <a href="{{ site.folder }}/howto/tutorial/#sample-code">Explore our Code Samples</a>
+      </li>
+      <li class="icon-list-item icon-list-item--github">
+        <a href="https://github.com/material-components/material-components-ios/">View the project on GitHub</a>
+      </li>
+    </ul>
 
-    - [View the Component Documentation]({{ site.folder }}/components/)
-      <!--{: .icon-components }-->
-
-    - [Explore our Code Samples]({{ site.folder }}/howto/tutorial/#sample-code)
-      <!--{: .icon-sample }-->
-
-    - [View the project on GitHub](https://github.com/material-components/material-components-ios/)
-      <!--{: .icon-github }-->
-    <!--{: .icon-list }-->
 <!--{: .step-sequence }-->

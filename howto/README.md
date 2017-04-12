@@ -9,15 +9,11 @@ section: howto
 Material Components for iOS should be immediately useable out of the box with
 Apple's standard development tool chain.
 
-- [Tutorial](tutorial/)
-  <!--{: .icon-guide }-->
-
-- [Build environment](build-env/)
-  <!--{: .icon-guide }-->
-
-- [FAQ](faq/)
-  <!--{: .icon-guide }-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--guide"><a href="tutorial/">Tutorial</a></li>
+  <li class="icon-list-item icon-list-item--guide"><a href="build-env/">Build environment</a></li>
+  <li class="icon-list-item icon-list-item--guide"><a href="faq/">FAQ</a></li>
+</ul>
 
 - - -
 
