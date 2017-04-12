@@ -57,7 +57,20 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
+                         bundle:(nullable NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self != nil) {
+    // TODO(#): Why is this nil, the decoder should have created it
+    if (!_collectionViewLayout) {
+      _collectionViewLayout = [[MDCCollectionViewFlowLayout alloc] init];
+    }
+  }
+
+  return self;
+}
+
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self != nil) {
     // TODO(#): Why is this nil, the decoder should have created it
@@ -353,8 +366,9 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     }
     return supplementaryView;
   } else {
-    NSAssert(0, @"Unknown SupplementaryElementOfKind : %@", kind);
-    return nil;
+    return [super collectionView:collectionView
+        viewForSupplementaryElementOfKind:kind
+                              atIndexPath:indexPath];
   }
 }
 
