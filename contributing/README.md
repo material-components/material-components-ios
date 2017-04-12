@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Contributing"
+title: "Contributing"
 layout: landing
 section: contributing
 -->

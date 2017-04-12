@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Build environment"
+title: "Build environment"
 layout: landing
 section: howto
 -->

@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Material Components Documentation"
+title: "Material Components Documentation"
 layout: landing-no-drawer
 section: components
 -->
