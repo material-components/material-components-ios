@@ -296,6 +296,10 @@ static inline CGFloat MDCRound(CGFloat value) {
   [NSLayoutConstraint activateConstraints:@[
     height, self.clearButtonWidth, bottom, self.placeholderLeading, trailingSuperview
   ]];
+
+  [_clearButton addTarget:self
+                   action:@selector(clearButtonDidTouch)
+         forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupPlaceholderLabel {
@@ -522,6 +526,10 @@ static inline CGFloat MDCRound(CGFloat value) {
   UIGraphicsEndImageContext();
 
   return image;
+}
+
+- (void)clearButtonDidTouch {
+  self.textInput.text = nil;
 }
 
 #pragma mark - Underline View Implementation
