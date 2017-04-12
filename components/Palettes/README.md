@@ -1,8 +1,9 @@
 <!--docs:
-title:  "Palettes"
+title: "Palettes"
 layout: detail
 section: components
 excerpt: "The Palettes component provides Material color palettes."
+iconId: color
 -->
 
 # Palettes

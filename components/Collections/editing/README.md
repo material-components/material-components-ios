@@ -1,7 +1,8 @@
 ---
-title:  "Editing the collection view"
+title: "Editing the collection view"
 layout: detail
 section: components
+iconId: list
 ---
 # Editing the collection view
 
@@ -53,19 +54,19 @@ override func collectionView(collectionView: UICollectionView,
 ~~~
 <!--</div>-->
 
-> Important: When enabling editing, if your custom view controller incorporates section headers or 
-> footers you must include the below code at the top of your implementation of the 
+> Important: When enabling editing, if your custom view controller incorporates section headers or
+> footers you must include the below code at the top of your implementation of the
 > **collectionView:viewForSupplementaryElementOfKind:atIndexPath:** method as shown below.
 > <!--<div class="material-code-render" markdown="1">-->
 > #### Objective-C
 > ~~~ objc
-> - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView 
->            viewForSupplementaryElementOfKind:(NSString *)kind 
+> - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+>            viewForSupplementaryElementOfKind:(NSString *)kind
 >                                  atIndexPath:(NSIndexPath *)indexPath
 > {
 >
->   id supplementaryView = [super collectionView:collectionView 
->              viewForSupplementaryElementOfKind:kind 
+>   id supplementaryView = [super collectionView:collectionView
+>              viewForSupplementaryElementOfKind:kind
 >                                    atIndexPath:indexPath];
 >   if (supplementaryView) {
 >     return supplementaryView;
@@ -73,16 +74,16 @@ override func collectionView(collectionView: UICollectionView,
 >
 >   // Custom Section Header Code
 > ~~~
-> 
+>
 > #### Swift
-> ~~~ swift 
-> override func collectionView(_ collectionView: UICollectionView, 
->        viewForSupplementaryElementOfKind kind: String, 
+> ~~~ swift
+> override func collectionView(_ collectionView: UICollectionView,
+>        viewForSupplementaryElementOfKind kind: String,
 >                                  at indexPath: IndexPath) -> UICollectionReusableView
 > {
 >
->   var supplementaryView = super.collectionView(collectionView, 
->                             viewForSupplementaryElementOfKind: kind, 
+>   var supplementaryView = super.collectionView(collectionView,
+>                             viewForSupplementaryElementOfKind: kind,
 >                                                            at: indexPath)
 >   if supplementaryView != nil {
 >     return supplementaryView

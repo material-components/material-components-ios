@@ -1,5 +1,5 @@
 ---
-title:  "Material Components for iOS"
+title: "Material Components for iOS"
 layout: "homepage"
 ---
 

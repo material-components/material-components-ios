@@ -1,8 +1,9 @@
 <!--docs:
-title:  "Collection Layout Attributes"
+title: "Collection Layout Attributes"
 layout: detail
 section: components
 excerpt: "Allows passing layout attributes to the cells and supplementary views."
+iconId: list
 -->
 
 # Collection Layout Attributes

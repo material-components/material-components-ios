@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Animation Timing"
+title: "Animation Timing"
 layout: detail
 section: components
 excerpt: "Material Design animation timing curves."

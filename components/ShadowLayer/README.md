@@ -1,5 +1,5 @@
 <!--docs:
-title:  "Shadow Layer"
+title: "Shadow Layer"
 layout: detail
 section: components
 excerpt: "The Shadow Layer component implements the Material Design specifications for elevation and shadows."
