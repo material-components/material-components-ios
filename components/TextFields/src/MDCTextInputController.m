@@ -386,9 +386,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 #pragma mark - Placeholder Animation
 
-- (void)animatePlaceholderToUp:(BOOL)isToUp {
-  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder ||
-      self.textInput.text.length > 0) {
+- (void)movePlaceholderToUp:(BOOL)isToUp {
+  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder) {
     return;
   }
 
@@ -406,23 +405,18 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   CGAffineTransform floatingPlaceholderScaleTransform =
       CGAffineTransformMakeScale(scaleFactor, scaleFactor);
 
-  CGPoint destinationPosition;
   void (^animationBlock)(void);
 
   if (isToUp) {
-    destinationPosition = [self placeholderFloatingPositionFrame].origin;
-
-    // Due to transform working on normal (0.5,0.5) anchor point.
-    // Why no anchor point of (0,0)? Because our users wouldn't expect it.
+    CGPoint destination = [self placeholderFloatingPosition];
     NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self.textInput
                                                            attribute:NSLayoutAttributeTop
                                                           multiplier:1
-                                                            constant:destinationPosition.y];
-    CGFloat xOffset =
-        (scaleFactor - 1.0f) * CGRectGetWidth(self.textInput.placeholderLabel.frame) / 2.0f;
+                                                            constant:destination.y];
+
     NSLayoutConstraint *leading =
         [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
                                      attribute:NSLayoutAttributeLeading
@@ -430,7 +424,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                         toItem:self.textInput
                                      attribute:NSLayoutAttributeLeading
                                     multiplier:1
-                                      constant:xOffset];
+                                      constant:destination.x];
     self.placeholderAnimationConstraints = @[ top, leading ];
 
     self.previousPlaceholderColor = self.textInput.placeholderLabel.textColor;
@@ -465,16 +459,18 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       }];
 }
 
-- (CGRect)placeholderFloatingPositionFrame {
-  CGRect placeholderRect = self.placeholderDefaultPositionFrame;
-  if (CGRectIsEmpty(placeholderRect)) {
-    return placeholderRect;
-  }
+- (CGPoint)placeholderFloatingPosition {
+  CGFloat placeholderY = MDCTextInputVerticalPadding;
 
-  placeholderRect.origin.y -=
-      MDCTextInputVerticalHalfPadding + MDCRound(self.textInput.placeholderLabel.font.lineHeight);
+  // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
+  // Why no anchor point of (0,0)? Because our users wouldn't expect it.
+  placeholderY -=
+      self.textInput.placeholderLabel.font.lineHeight * (1 - [self effectiveFloatingScale]) * .5;
 
-  return placeholderRect;
+  CGFloat estimatedWidth = MDCCeil(CGRectGetWidth([self.textInput.placeholderLabel.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, MDCCeil(self.textInput.placeholderLabel.font.lineHeight)) options:0 attributes:@{NSFontAttributeName: self.textInput.font} context:nil]));
+  CGFloat placeholderX = -1 * estimatedWidth * (1 - [self effectiveFloatingScale]) * .5;
+
+  return CGPointMake(placeholderX, placeholderY);
 }
 
 - (CGFloat)effectiveFloatingScale {
@@ -628,6 +624,18 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)setPresentationStyle:(MDCTextInputPresentationStyle)presentationStyle {
   if (_presentationStyle != presentationStyle) {
     _presentationStyle = presentationStyle;
+
+    if (self.textInput.text.length > 1 && presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
+      [CATransaction begin];
+      [CATransaction setAnimationDuration:0];
+      [self movePlaceholderToUp:YES];
+      [CATransaction commit];
+    } else {
+      [CATransaction begin];
+      [CATransaction setAnimationDuration:0];
+      [self movePlaceholderToUp:NO];
+      [CATransaction commit];
+    }
 
     [self updateLayout];
 
@@ -983,8 +991,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   [self updateLayout];
 
-  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-    [self animatePlaceholderToUp:YES];
+  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder &&
+      self.textInput.text.length == 0) {
+    [self movePlaceholderToUp:YES];
   }
   [CATransaction commit];
 
@@ -1028,8 +1037,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   [self updateLayout];
 
-  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-    [self animatePlaceholderToUp:NO];
+  if (self.presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder &&
+      self.textInput.text.length == 0) {
+    [self movePlaceholderToUp:NO];
   }
   [CATransaction commit];
 }

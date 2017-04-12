@@ -449,6 +449,11 @@ static inline CGFloat MDCRound(CGFloat value) {
   [self.textInput setFont:font];
 }
 
+- (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
+  _hidesPlaceholderOnInput = hidesPlaceholderOnInput;
+  [self updatePlaceholderAlpha];
+}
+
 - (NSString *)placeholder {
   id placeholderString = self.placeholderLabel.text;
   if ([placeholderString isKindOfClass:[NSString class]]) {
@@ -552,10 +557,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (void)updatePlaceholderAlpha {
-  if (!self.hidesPlaceholderOnInput) {
-    return;
-  }
-  CGFloat opacity = self.textInput.text.length ? 0 : 1;
+  CGFloat opacity = (self.hidesPlaceholderOnInput && self.textInput.text.length > 0) ? 0 : 1;
   self.placeholderLabel.alpha = opacity;
 }
 
