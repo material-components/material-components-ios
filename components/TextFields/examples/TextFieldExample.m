@@ -50,8 +50,8 @@
   textFieldDefaultCharMax.translatesAutoresizingMaskIntoConstraints = NO;
 
   int defaultMax = 25;
-  textFieldDefaultCharMax.placeholder = [NSString stringWithFormat:@"Enter up to %d characters",
-                                         defaultMax];
+  textFieldDefaultCharMax.placeholder =
+      [NSString stringWithFormat:@"Enter up to %d characters", defaultMax];
   textFieldDefaultCharMax.delegate = self;
   textFieldDefaultCharMax.clearButtonMode = UITextFieldViewModeAlways;
 
@@ -179,39 +179,39 @@
                                 constant:0]
       .active = YES;
 
-//  Uncomment for testing 
-//  UITextField *appleField = [[UITextField alloc] initWithFrame:CGRectZero];
-//  [self.scrollView addSubview:appleField];
-//  appleField.translatesAutoresizingMaskIntoConstraints = NO;
-//
-//  appleField.placeholder = @"UIKit Text Field";
-//  appleField.delegate = self;
-//  appleField.clearButtonMode = UITextFieldViewModeWhileEditing;
-//
-//  [NSLayoutConstraint constraintWithItem:appleField
-//                               attribute:NSLayoutAttributeTop
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:unstyledTextField
-//                               attribute:NSLayoutAttributeBottom
-//                              multiplier:1
-//                                constant:10]
-//      .active = YES;
-//  [NSLayoutConstraint constraintWithItem:appleField
-//                               attribute:NSLayoutAttributeLeading
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:textFieldDefaultCharMax
-//                               attribute:NSLayoutAttributeLeading
-//                              multiplier:1
-//                                constant:0]
-//      .active = YES;
-//  [NSLayoutConstraint constraintWithItem:appleField
-//                               attribute:NSLayoutAttributeTrailing
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:textFieldDefaultCharMax
-//                               attribute:NSLayoutAttributeTrailing
-//                              multiplier:1
-//                                constant:0]
-//      .active = YES;
+  //  Uncomment for testing
+  //  UITextField *appleField = [[UITextField alloc] initWithFrame:CGRectZero];
+  //  [self.scrollView addSubview:appleField];
+  //  appleField.translatesAutoresizingMaskIntoConstraints = NO;
+  //
+  //  appleField.placeholder = @"UIKit Text Field";
+  //  appleField.delegate = self;
+  //  appleField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  //
+  //  [NSLayoutConstraint constraintWithItem:appleField
+  //                               attribute:NSLayoutAttributeTop
+  //                               relatedBy:NSLayoutRelationEqual
+  //                                  toItem:unstyledTextField
+  //                               attribute:NSLayoutAttributeBottom
+  //                              multiplier:1
+  //                                constant:10]
+  //      .active = YES;
+  //  [NSLayoutConstraint constraintWithItem:appleField
+  //                               attribute:NSLayoutAttributeLeading
+  //                               relatedBy:NSLayoutRelationEqual
+  //                                  toItem:textFieldDefaultCharMax
+  //                               attribute:NSLayoutAttributeLeading
+  //                              multiplier:1
+  //                                constant:0]
+  //      .active = YES;
+  //  [NSLayoutConstraint constraintWithItem:appleField
+  //                               attribute:NSLayoutAttributeTrailing
+  //                               relatedBy:NSLayoutRelationEqual
+  //                                  toItem:textFieldDefaultCharMax
+  //                               attribute:NSLayoutAttributeTrailing
+  //                              multiplier:1
+  //                                constant:0]
+  //      .active = YES;
 }
 
 #pragma mark - UITextFieldDelegate

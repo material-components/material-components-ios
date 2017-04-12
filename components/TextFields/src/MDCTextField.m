@@ -93,7 +93,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (void)commonMDCTextFieldInitialization {
-
   [super setBorderStyle:UITextBorderStyleNone];
 
   // Set the clear button color to black with 54% opacity.
@@ -383,8 +382,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 
-  CGFloat height = MDCTextInputFullPadding + MDCRound(self.font.lineHeight) +
-                   MDCTextInputHalfPadding * 2.f;
+  CGFloat height =
+      MDCTextInputFullPadding + MDCRound(self.font.lineHeight) + MDCTextInputHalfPadding * 2.f;
 
   CGFloat underlineLabelsHeight =
       MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
@@ -439,7 +438,7 @@ static inline CGFloat MDCRound(CGFloat value) {
       [processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
     [super setAdjustsFontForContentSizeCategory:adjusts];
   }
-  
+
   [_coordinator mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 

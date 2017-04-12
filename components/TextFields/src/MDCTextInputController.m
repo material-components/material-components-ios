@@ -27,7 +27,7 @@
 
 #pragma mark - Constants
 
-//static const CGFloat MDCTextInputAlmostRequiredPriority = 999;
+// static const CGFloat MDCTextInputAlmostRequiredPriority = 999;
 static const CGFloat MDCTextInputFloatingPlaceholderDefaultScale = 0.75f;
 static const CGFloat MDCTextInputFullWidthHorizontalInnerPadding = 8.f;
 static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
@@ -365,8 +365,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   if (!self.customLeadingFont) {
-    self.textInput.leadingUnderlineLabel.font =
-        [[self class] underlineLabelsFont];
+    self.textInput.leadingUnderlineLabel.font = [[self class] underlineLabelsFont];
   }
 
   self.textInput.leadingUnderlineLabel.textColor =
@@ -377,8 +376,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)updatePlaceholder {
   if (!self.customPlaceholderFont) {
-    self.textInput.placeholderLabel.font =
-        [[self class] placeholderFont];
+    self.textInput.placeholderLabel.font = [[self class] placeholderFont];
   }
 }
 
@@ -469,7 +467,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   placeholderY -=
       self.textInput.placeholderLabel.font.lineHeight * (1 - [self effectiveFloatingScale]) * .5;
 
-  CGFloat estimatedWidth = MDCCeil(CGRectGetWidth([self.textInput.placeholderLabel.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, MDCCeil(self.textInput.placeholderLabel.font.lineHeight)) options:0 attributes:@{NSFontAttributeName: self.textInput.font} context:nil]));
+  CGFloat estimatedWidth = MDCCeil(CGRectGetWidth([self.textInput.placeholderLabel.text
+      boundingRectWithSize:CGSizeMake(CGFLOAT_MAX,
+                                      MDCCeil(self.textInput.placeholderLabel.font.lineHeight))
+                   options:0
+                attributes:@{
+                  NSFontAttributeName : self.textInput.font
+                }
+                   context:nil]));
   CGFloat placeholderX = -1 * estimatedWidth * (1 - [self effectiveFloatingScale]) * .5;
 
   return CGPointMake(placeholderX, placeholderY);
@@ -492,8 +497,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   if (!self.customTrailingFont) {
-    self.textInput.trailingUnderlineLabel.font =
-        [[self class] underlineLabelsFont];
+    self.textInput.trailingUnderlineLabel.font = [[self class] underlineLabelsFont];
   }
 
   self.textInput.trailingUnderlineLabel.text = [self characterCountText];
@@ -627,7 +631,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (_presentationStyle != presentationStyle) {
     _presentationStyle = presentationStyle;
 
-    if (self.textInput.text.length > 1 && presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
+    if (self.textInput.text.length > 1 &&
+        presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
       [CATransaction begin];
       [CATransaction setAnimationDuration:0];
       [self movePlaceholderToUp:YES];
@@ -711,23 +716,22 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     }
     if (!self.clearButtonTrailingCharacterCountLeading) {
       self.clearButtonTrailingCharacterCountLeading =
-      [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
-                                   attribute:NSLayoutAttributeTrailing
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.textInput.trailingUnderlineLabel
-                                   attribute:NSLayoutAttributeLeading
-                                  multiplier:1
-                                    constant:0];
-    }
-    if (!self.clearButtonY) {
-      self.clearButtonY =
           [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
-                                       attribute:NSLayoutAttributeCenterY
+                                       attribute:NSLayoutAttributeTrailing
                                        relatedBy:NSLayoutRelationEqual
-                                          toItem:self.textInput
-                                       attribute:NSLayoutAttributeCenterY
+                                          toItem:self.textInput.trailingUnderlineLabel
+                                       attribute:NSLayoutAttributeLeading
                                       multiplier:1
                                         constant:0];
+    }
+    if (!self.clearButtonY) {
+      self.clearButtonY = [NSLayoutConstraint constraintWithItem:self.textInput.clearButton
+                                                       attribute:NSLayoutAttributeCenterY
+                                                       relatedBy:NSLayoutRelationEqual
+                                                          toItem:self.textInput
+                                                       attribute:NSLayoutAttributeCenterY
+                                                      multiplier:1
+                                                        constant:0];
     }
     if (!self.placeholderLeading) {
       self.placeholderLeading =
@@ -802,9 +806,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       }
     }
     [NSLayoutConstraint activateConstraints:@[
-      self.characterCountY, self.characterCountTrailing, self.clearButtonTrailingCharacterCountLeading,
-      self.clearButtonY, self.placeholderLeading, self.placeholderTrailingCharacterCountLeading,
-      self.placeholderTrailingSuperviewTrailing
+      self.characterCountY, self.characterCountTrailing,
+      self.clearButtonTrailingCharacterCountLeading, self.clearButtonY, self.placeholderLeading,
+      self.placeholderTrailingCharacterCountLeading, self.placeholderTrailingSuperviewTrailing
     ]];
 
     [self.textInput.trailingUnderlineLabel
@@ -1050,10 +1054,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       ![_textInput.leadingUnderlineLabel.font isEqual:[[self class] underlineLabelsFont]]) {
     _customLeadingFont = _textInput.leadingUnderlineLabel.font;
   } else if (object == _textInput.placeholderLabel &&
-      ![_textInput.placeholderLabel.font isEqual:[[self class] placeholderFont]]) {
+             ![_textInput.placeholderLabel.font isEqual:[[self class] placeholderFont]]) {
     _customPlaceholderFont = _textInput.placeholderLabel.font;
   } else if (object == _textInput.trailingUnderlineLabel &&
-      ![_textInput.trailingUnderlineLabel.font isEqual:[[self class] underlineLabelsFont]]) {
+             ![_textInput.trailingUnderlineLabel.font isEqual:[[self class] underlineLabelsFont]]) {
     _customTrailingFont = _textInput.trailingUnderlineLabel.font;
   } else {
     return;

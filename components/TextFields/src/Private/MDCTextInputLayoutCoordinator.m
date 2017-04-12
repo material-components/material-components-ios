@@ -55,7 +55,6 @@ static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2.f;
 const CGFloat MDCTextInputFullPadding = 16.f;
 const CGFloat MDCTextInputHalfPadding = 8.f;
 
-
 static inline UIColor *_Nonnull MDCTextInputCursorColor() {
   return [MDCPalette indigoPalette].tint500;
 }
@@ -239,17 +238,39 @@ static inline CGFloat MDCRound(CGFloat value) {
                                                 forAxis:UILayoutConstraintAxisHorizontal];
   [_clearButton setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
                                                 forAxis:UILayoutConstraintAxisVertical];
-  [_clearButton setContentHuggingPriority:UILayoutPriorityDefaultLow + 1 forAxis:UILayoutConstraintAxisHorizontal];
-  [_clearButton setContentHuggingPriority:UILayoutPriorityDefaultLow + 1 forAxis:UILayoutConstraintAxisVertical];
+  [_clearButton setContentHuggingPriority:UILayoutPriorityDefaultLow + 1
+                                  forAxis:UILayoutConstraintAxisHorizontal];
+  [_clearButton setContentHuggingPriority:UILayoutPriorityDefaultLow + 1
+                                  forAxis:UILayoutConstraintAxisVertical];
 
   _clearButton.opaque = NO;
 
   [_textInput addSubview:_clearButton];
   [_textInput sendSubviewToBack:_clearButton];
 
-  NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_clearButton attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
-  self.clearButtonWidth = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:MDCTextInputClearButtonImageSquareWidthHeight];
-  NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_underlineView attribute:NSLayoutAttributeTop multiplier:1 constant:-1 * MDCTextInputHalfPadding + MDCTextInputClearButtonImageBuiltInPadding];
+  NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:_clearButton
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:_clearButton
+                                                            attribute:NSLayoutAttributeWidth
+                                                           multiplier:1
+                                                             constant:0];
+  self.clearButtonWidth =
+      [NSLayoutConstraint constraintWithItem:_clearButton
+                                   attribute:NSLayoutAttributeWidth
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:nil
+                                   attribute:NSLayoutAttributeNotAnAttribute
+                                  multiplier:1
+                                    constant:MDCTextInputClearButtonImageSquareWidthHeight];
+  NSLayoutConstraint *bottom = [NSLayoutConstraint
+      constraintWithItem:_clearButton
+               attribute:NSLayoutAttributeBottom
+               relatedBy:NSLayoutRelationEqual
+                  toItem:_underlineView
+               attribute:NSLayoutAttributeTop
+              multiplier:1
+                constant:-1 * MDCTextInputHalfPadding + MDCTextInputClearButtonImageBuiltInPadding];
   self.placeholderTrailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                           attribute:NSLayoutAttributeTrailing
                                                           relatedBy:NSLayoutRelationLessThanOrEqual
@@ -257,7 +278,14 @@ static inline CGFloat MDCRound(CGFloat value) {
                                                           attribute:NSLayoutAttributeTrailing
                                                          multiplier:1
                                                            constant:MDCTextInputHalfPadding];
-  NSLayoutConstraint *trailingSuperview = [NSLayoutConstraint constraintWithItem:_clearButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_relativeSuperview attribute:NSLayoutAttributeTrailing multiplier:1 constant: MDCTextInputClearButtonImageBuiltInPadding];
+  NSLayoutConstraint *trailingSuperview =
+      [NSLayoutConstraint constraintWithItem:_clearButton
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:_relativeSuperview
+                                   attribute:NSLayoutAttributeTrailing
+                                  multiplier:1
+                                    constant:MDCTextInputClearButtonImageBuiltInPadding];
 
   height.priority = UILayoutPriorityDefaultLow;
   self.clearButtonWidth.priority = UILayoutPriorityDefaultLow;
@@ -265,7 +293,9 @@ static inline CGFloat MDCRound(CGFloat value) {
   self.placeholderTrailing.priority = UILayoutPriorityDefaultLow;
   trailingSuperview.priority = UILayoutPriorityDefaultLow;
 
-  [NSLayoutConstraint activateConstraints:@[ height, self.clearButtonWidth, bottom, self.placeholderLeading, trailingSuperview ]];
+  [NSLayoutConstraint activateConstraints:@[
+    height, self.clearButtonWidth, bottom, self.placeholderLeading, trailingSuperview
+  ]];
 }
 
 - (void)setupPlaceholderLabel {
@@ -432,10 +462,11 @@ static inline CGFloat MDCRound(CGFloat value) {
 #pragma mark - Clear Button Implementation
 
 - (void)updateClearButton {
-  CGSize clearButtonSize = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight, MDCTextInputClearButtonImageSquareWidthHeight);
-  if (!self.clearButtonImage ||
-      !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonSize)) {
-    self.clearButtonImage = [self drawnClearButtonImage:clearButtonSize color:self.clearButtonColor];
+  CGSize clearButtonSize = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight,
+                                      MDCTextInputClearButtonImageSquareWidthHeight);
+  if (!self.clearButtonImage || !CGSizeEqualToSize(self.clearButtonImage.size, clearButtonSize)) {
+    self.clearButtonImage =
+        [self drawnClearButtonImage:clearButtonSize color:self.clearButtonColor];
   }
 
   if (self.clearButton.imageView.image != self.clearButtonImage) {
@@ -469,11 +500,18 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
-  NSAssert1(size.width >= 0, @"drawnClearButtonImage was passed a size with a width not greater than or equal to 0 %@", NSStringFromCGSize(size));
-  NSAssert1(size.height >= 0, @"drawnClearButtonImage was passed a size with a height not greater than or equal to 0 %@", NSStringFromCGSize(size));
+  NSAssert1(
+      size.width >= 0,
+      @"drawnClearButtonImage was passed a size with a width not greater than or equal to 0 %@",
+      NSStringFromCGSize(size));
+  NSAssert1(
+      size.height >= 0,
+      @"drawnClearButtonImage was passed a size with a height not greater than or equal to 0 %@",
+      NSStringFromCGSize(size));
 
   if (CGSizeEqualToSize(size, CGSizeZero)) {
-    size = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight, MDCTextInputClearButtonImageSquareWidthHeight);
+    size = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight,
+                      MDCTextInputClearButtonImageSquareWidthHeight);
   }
   CGFloat scale = [UIScreen mainScreen].scale;
   CGRect bounds = CGRectMake(0, 0, size.width * scale, size.height * scale);
@@ -555,7 +593,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
   if (![_clearButtonColor isEqual:clearButtonColor]) {
     _clearButtonColor = clearButtonColor;
-    self.clearButtonImage = [self drawnClearButtonImage:self.clearButtonImage.size color:_clearButtonColor];
+    self.clearButtonImage =
+        [self drawnClearButtonImage:self.clearButtonImage.size color:_clearButtonColor];
   }
 }
 

@@ -31,7 +31,6 @@
 @property(weak, nonatomic) IBOutlet MDCTextField *address2TextField;
 @property(nonatomic, strong) MDCTextInputController *address2Controller;
 
-
 @end
 
 @implementation TextFieldInterfaceBuilderExample
@@ -47,9 +46,11 @@
   self.firstController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
   self.lastController = [[MDCTextInputController alloc] initWithTextInput:self.lastTextField];
   self.lastController.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-  self.address1Controller = [[MDCTextInputController alloc] initWithTextInput:self.address1TextField];
+  self.address1Controller =
+      [[MDCTextInputController alloc] initWithTextInput:self.address1TextField];
   self.address1Controller.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-  self.address2Controller = [[MDCTextInputController alloc] initWithTextInput:self.address2TextField];
+  self.address2Controller =
+      [[MDCTextInputController alloc] initWithTextInput:self.address2TextField];
   self.address2Controller.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
 }
 
