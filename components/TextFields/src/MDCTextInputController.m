@@ -116,6 +116,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, readonly) BOOL isDisplayingCharacterCountError;
 @property(nonatomic, readonly) BOOL isDisplayingErrorText;
 @property(nonatomic, readonly) BOOL isPlaceholderUp;
+@property(nonatomic, assign) BOOL isRegisteredForKVO;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
 @property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
@@ -316,17 +317,24 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                       forKeyPath:MDCTextInputControllerKVOKeyFont
                                          options:0
                                          context:nil];
+  _isRegisteredForKVO = YES;
 }
 
 - (void)unsubscribeFromKVO {
+  if (!self.textInput || !self.isRegisteredForKVO) {
+    return;
+  }
   @try {
-    [_textInput.leadingUnderlineLabel removeObserver:self
+    [self.textInput.leadingUnderlineLabel removeObserver:self
                                           forKeyPath:MDCTextInputControllerKVOKeyFont];
-    [_textInput.placeholderLabel removeObserver:self forKeyPath:MDCTextInputControllerKVOKeyFont];
-    [_textInput.trailingUnderlineLabel removeObserver:self
+    [self.textInput.placeholderLabel removeObserver:self forKeyPath:MDCTextInputControllerKVOKeyFont];
+    [self.textInput.trailingUnderlineLabel removeObserver:self
                                            forKeyPath:MDCTextInputControllerKVOKeyFont];
   } @catch (NSException *exception) {
+    NSLog(@"%@", exception);
+    NSLog(@"");
   }
+  _isRegisteredForKVO = NO;
 }
 
 #pragma mark - Character Max Implementation
