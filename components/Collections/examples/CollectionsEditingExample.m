@@ -115,30 +115,30 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
   NSString *reuseIdentifier;
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     reuseIdentifier = HEADER_REUSE_IDENTIFIER;
-  } else if ([kind isEqualToString:@"MDCCollectionInfoBarKindHeader"]) {
-    reuseIdentifier = @"MDCCollectionInfoBarView";
-  } else if ([kind isEqualToString:@"MDCCollectionInfoBarKindFooter"]) {
-    reuseIdentifier = @"MDCCollectionInfoBarView";
-  } else {
-    NSAssert(@"Unknown supplementary view of kind: %@", kind);  // KM
-    reuseIdentifier = @"MDC_UNKNOWN_SUPPLEMENTARY_VIEW_KIND";
+
+    NSLog(@"viewForSupplementaryElementOfKind: %@ : %@", kind, reuseIdentifier);  // KM
+
+    MDCCollectionViewTextCell *sectionHeader =
+    [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                       withReuseIdentifier:reuseIdentifier
+                                              forIndexPath:indexPath];
+
+    NSAssert(sectionHeader != nil, @"Unable to dequeue SupplementaryView");
+
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+      sectionHeader.textLabel.text =
+      [NSString stringWithFormat:@"Section %lu Header", (long)indexPath.section];
+    }
+
+    return sectionHeader;
   }
 
-  NSLog(@"viewForSupplementaryElementOfKind: %@ : %@", kind, reuseIdentifier);  // KM
+  NSLog(@"SUPER viewForSupplementaryElementOfKind: %@", kind);  // KM
 
-  MDCCollectionViewTextCell *sectionHeader =
-      [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                         withReuseIdentifier:reuseIdentifier
-                                                forIndexPath:indexPath];
 
-  NSAssert(sectionHeader != nil, @"Unable to dequeue SupplementaryView");
-
-  if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-    sectionHeader.textLabel.text =
-        [NSString stringWithFormat:@"Section %lu Header", (long)indexPath.section];
-  }
-
-  return sectionHeader;
+  return [super collectionView:collectionView
+      viewForSupplementaryElementOfKind:kind
+                            atIndexPath:indexPath];
 }
 
 #pragma mark - <MDCCollectionViewEditingDelegate>
