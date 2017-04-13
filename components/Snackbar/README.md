@@ -26,7 +26,7 @@ contain a text action, but no icons.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-spec"><a href="https://material.google.com/components/snackbars-toasts.html">Snackbars</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.google.com/components/snackbars-toasts.html">Snackbars</a></li>
 </ul>
 
 - - -

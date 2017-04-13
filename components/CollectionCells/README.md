@@ -17,7 +17,7 @@ Collection view cell classes that adhere to Material Design layout and styling.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-spec"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
 </ul>
 
 - - -
