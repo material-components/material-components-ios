@@ -16,12 +16,12 @@ fill out have been marked with `TODO` statements.
     ## Design & API Documentation
 
     <ul class="icon-list">
-      <li class="icon-spec">
+      <li class="icon-list-item icon-list-item--spec">
         <a href="https://www.google.com/design/spec/<TODO: link to spec>">
           TODO: link to spec
         </a>
       </li>
-      <li class="icon-link">
+      <li class="icon-list-item icon-list-item--link">
         <a href="/components/<ComponentName>/apidocs/Classes/<TODO: API name>.html">
           TODO: API name
         </a>

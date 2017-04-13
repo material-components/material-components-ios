@@ -16,7 +16,7 @@ used Material Design elevations for components.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-spec"><a href="https://www.google.com/design/spec/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
 </ul>
 
 - - -

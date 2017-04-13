@@ -15,7 +15,7 @@ controller that will display a simple modal alert.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-spec"><a href="https://material.google.com/components/dialogs.html">Dialogs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.google.com/components/dialogs.html">Dialogs</a></li>
 </ul>
 
 ### Dialogs Classes

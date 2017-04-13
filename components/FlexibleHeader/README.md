@@ -25,7 +25,7 @@ UIScrollViewDelegate events.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-spec"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
 </ul>
 
 - - -
