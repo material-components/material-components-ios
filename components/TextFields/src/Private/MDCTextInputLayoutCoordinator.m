@@ -48,7 +48,7 @@ NSString *const MDCTextInputCoordinatorTrailingLabelKey =
 NSString *const MDCTextInputCoordinatorUnderlineViewKey =
     @"MDCTextInputCoordinatorUnderlineViewKey";
 
-static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 5.f;
+static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2.5f;
 static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24.f;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2.f;
@@ -501,6 +501,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   }
   self.clearButton.alpha = clearButtonAlpha;
   self.clearButtonWidth.constant = MDCTextInputClearButtonImageSquareWidthHeight * clearButtonAlpha;
+
+  [self.clearButton.superview bringSubviewToFront:self.clearButton];
 }
 
 - (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {

@@ -24,6 +24,7 @@
 NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
+static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
 static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
@@ -319,6 +320,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   if (!self.rightView.superview) {
     if (self.text.length > 0) {
       CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
+      clearButtonWidth += MDCTextInputClearButtonImageBuiltInPadding;
       clearButtonWidth += MDCTextInputEditingRectClearPaddingCorrection;
       switch (self.clearButtonMode) {
         case UITextFieldViewModeUnlessEditing:
