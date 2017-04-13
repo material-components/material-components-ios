@@ -498,6 +498,10 @@ static inline CGFloat MDCRound(CGFloat value) {
         break;
     }
   }
+
+  if ([self.textInput isKindOfClass:[UITextField class]] && ((UITextField *)self.textInput).rightView.superview) {
+    clearButtonAlpha = 0;
+  }
   self.clearButton.alpha = clearButtonAlpha;
   self.clearButtonWidth.constant = MDCTextInputClearButtonImageSquareWidthHeight * clearButtonAlpha;
 
