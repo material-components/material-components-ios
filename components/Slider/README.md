@@ -26,7 +26,7 @@ or discrete set of values.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/components/sliders.html">Sliders</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/sliders.html">Sliders</a></li>
 </ul>
 
 - - -

@@ -21,7 +21,7 @@
 #import "MaterialMath.h"
 #import "MaterialRTL.h"
 
-// Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
+// Blue 500 from http://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCProgressViewDefaultTintColor = 0x2196F3;
 
 // The ratio by which to desaturate the progress tint color to obtain the default track tint color.

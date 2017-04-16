@@ -20,7 +20,7 @@ path: /progress-views/
 {% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIProgressView`, with a user experience
-influenced by [Material Design specifications](https://material.google.com/components/progress-activity.html#)
+influenced by [Material Design specifications](https://material.io/guidelines/components/progress-activity.html#)
 for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
 few key methods required to achieve the desired animation of the control.
 <!--{: .article__intro }-->
@@ -28,7 +28,7 @@ few key methods required to achieve the desired animation of the control.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/progress-activity.html">Progress & activity</a></li>
 </ul>
 
 - - -

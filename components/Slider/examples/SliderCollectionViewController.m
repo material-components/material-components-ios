@@ -23,7 +23,7 @@ static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
 static CGFloat const kSliderHorizontalMargin = 16.f;
 static CGFloat const kSliderVerticalMargin = 12.f;
 
-// From http://www.google.com/design/spec/style/color.html#color-color-palette .
+// From http://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCGreenColor = 0x4CAF50;
 static const uint32_t MDCDeepOrangeColor = 0xFF5722;
 static const uint32_t MDCPurpleColor = 0x9C27B0;

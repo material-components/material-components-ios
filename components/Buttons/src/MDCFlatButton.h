@@ -26,7 +26,7 @@
  Flat buttons should be used in most situations requiring a button. For layouts with many UI
  elements in which a flat button might get visually lost, consider using a MDCRaisedButton instead.
 
- @see http://www.google.com/design/spec/components/buttons.html#buttons-flat-buttons
+ @see http://material.io/guidelines/components/buttons.html#buttons-flat-buttons
  */
 @interface MDCFlatButton : MDCButton
 

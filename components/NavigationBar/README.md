@@ -29,7 +29,7 @@ Consistent with iOS design guidelines, the title in the navigation bar is center
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="http://www.google.com/design/spec/layout/structure.html">Layout Structure</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="http://material.io/guidelines/layout/structure.html">Layout Structure</a></li>
 </ul>
 
 - - -

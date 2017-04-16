@@ -25,7 +25,7 @@ from the Material Design specifications.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/style/typography.html">Typography</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/style/typography.html">Typography</a></li>
 </ul>
 
 ## Installation

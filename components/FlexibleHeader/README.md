@@ -1,5 +1,5 @@
 <!--docs:
-title: "Flexible Header"
+title: "Flexible Headers"
 layout: detail
 section: components
 excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
@@ -26,7 +26,7 @@ UIScrollViewDelegate events.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
 </ul>
 
 - - -
