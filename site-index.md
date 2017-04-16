@@ -3,7 +3,7 @@ title: "Material Components for iOS"
 layout: "homepage"
 ---
 
-# Material Components for&nbsp;iOS
+# Material Components for iOS
 <!--{: .title }-->
 
 An easy way to create beautiful apps with modular and customizable UI&nbsp;components.

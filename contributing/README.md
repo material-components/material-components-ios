@@ -2,6 +2,7 @@
 title: "Contributing"
 layout: landing
 section: contributing
+path: /docs/contributing/
 -->
 
 # General Contributing Guidelines

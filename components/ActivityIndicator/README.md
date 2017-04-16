@@ -4,9 +4,10 @@ layout: detail
 section: components
 excerpt: "Progress and activity indicators are visual indications of an app loading content."
 iconId: progress_activity
+path: /activity-indicators/
 -->
 
-# Activity Indicator
+# Activity Indicators
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">

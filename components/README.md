@@ -2,6 +2,7 @@
 title: "Material Components Documentation"
 layout: landing-no-drawer
 section: components
+path: /listing.html
 -->
 
 # Component Documentation

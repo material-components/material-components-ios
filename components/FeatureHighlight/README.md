@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "Feature Highlight highlights a part of the screen in order to introduce users to new features and functionality."
 iconId: feature_highlight
+path: /feature-highlights/
 -->
 
 # Feature Highlight

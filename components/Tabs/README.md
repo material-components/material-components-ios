@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "TODO(shyndman): Excerpt needed."
 iconId: tabs
+path: /tabs/
 -->
 
 # Tabs

@@ -2,6 +2,7 @@
 title: "How to use Material Components"
 layout: landing
 section: howto
+path: /docs/
 -->
 
 # How to use Material Components
@@ -21,8 +22,7 @@ Apple's standard development tool chain.
 
 - [All Components](../components/)
 - [Demo Apps](../demos/)
-- [Contributing](../contributing/)
+- [Contributing](contributing/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.google.com) (external site)
-

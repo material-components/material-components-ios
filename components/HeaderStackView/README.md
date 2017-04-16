@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically stacked bar views."
 iconId: header
+path: /header-stack-views/
 -->
 
 # Header Stack View

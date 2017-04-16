@@ -2,6 +2,7 @@
 title: "Material Components Development Guide"
 layout: landing
 section: howto
+path: /docs/tutorial/
 -->
 
 ## Tutorial

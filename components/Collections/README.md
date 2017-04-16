@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "Collection view classes that adhere to Material Design layout and styling."
 iconId: list
+path: /collections/
 -->
 
 # Collections

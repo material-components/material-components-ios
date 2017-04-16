@@ -2,6 +2,7 @@
 title: "Frequently Asked Questions"
 layout: landing
 section: howto
+path: /docs/faq/
 -->
 
 ## Frequently Asked Questions

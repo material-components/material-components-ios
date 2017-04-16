@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "The Slider component provides a Material Design control for selecting a value from a continuous range or discrete set of values."
 iconId: slider
+path: /sliders/
 -->
 
 # Slider

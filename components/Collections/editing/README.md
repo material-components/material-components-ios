@@ -1,9 +1,11 @@
----
+<!--docs:
 title: "Editing the collection view"
 layout: detail
 section: components
 iconId: list
----
+path: /collections/editing/
+-->
+
 # Editing the collection view
 
 The collection view controller provides an `editor` property that conforms to the

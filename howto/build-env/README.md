@@ -2,6 +2,7 @@
 title: "Build environment"
 layout: landing
 section: howto
+path: /docs/build-env/
 -->
 
 # Build environment
