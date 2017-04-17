@@ -16,6 +16,7 @@
 
 #import "MDCCollectionViewTextCell.h"
 
+#import "MaterialMath.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
@@ -47,34 +48,18 @@ static const CGFloat kCellTextWithImagePaddingLeading = 72;
 // Cell image view padding.
 static const CGFloat kCellImagePaddingLeading = 16;
 
-static inline CGFloat Ceil(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return ceil(value);
-#else
-  return ceilf(value);
-#endif
-}
-
-static inline CGFloat Floor(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return floor(value);
-#else
-  return floorf(value);
-#endif
-}
-
 // Returns the closest pixel-aligned value higher than |value|, taking the scale factor into
 // account. At a scale of 1, equivalent to Ceil().
 static inline CGFloat AlignValueToUpperPixel(CGFloat value) {
   CGFloat scale = [[UIScreen mainScreen] scale];
-  return (CGFloat)Ceil(value * scale) / scale;
+  return (CGFloat)MDCCeil(value * scale) / scale;
 }
 
 // Returns the closest pixel-aligned value lower than |value|, taking the scale factor into
 // account. At a scale of 1, equivalent to Floor().
 static inline CGFloat AlignValueToLowerPixel(CGFloat value) {
   CGFloat scale = [[UIScreen mainScreen] scale];
-  return (CGFloat)Floor(value * scale) / scale;
+  return (CGFloat)MDCFloor(value * scale) / scale;
 }
 
 // Returns the rect resulting from applying AlignSizeToUpperPixel to the rect size.
