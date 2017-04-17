@@ -96,28 +96,27 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
-  // Must include below code snippet
-  // TODO: (shepj) Pending fix for
-  // https://github.com/material-components/material-components-ios/issues/1208
-  // we must call super which registers classes for supplemental header and footer in editing mode
-  UICollectionReusableView *supplementaryView = [super collectionView:collectionView
-                                    viewForSupplementaryElementOfKind:kind
-                                                          atIndexPath:indexPath];
-  if (supplementaryView) {
-    return supplementaryView;
-  }
-
-  MDCCollectionViewTextCell *sectionHeader =
-      [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                         withReuseIdentifier:HEADER_REUSE_IDENTIFIER
-                                                forIndexPath:indexPath];
-
+  // If you have defined your own supplementary views, deque them here
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-    sectionHeader.textLabel.text =
-        [NSString stringWithFormat:@"Section %lu Header", (long)indexPath.section];
+    MDCCollectionViewTextCell *sectionHeader =
+        [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                           withReuseIdentifier:HEADER_REUSE_IDENTIFIER
+                                                  forIndexPath:indexPath];
+
+    NSAssert(sectionHeader != nil, @"Unable to dequeue SupplementaryView");
+
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+      sectionHeader.textLabel.text =
+          [NSString stringWithFormat:@"Section %lu Header", (long)indexPath.section];
+    }
+
+    return sectionHeader;
   }
 
-  return sectionHeader;
+  // Otherwise, pass the kind to super to let MDCCollectionViewController handle the request
+  return [super collectionView:collectionView
+      viewForSupplementaryElementOfKind:kind
+                            atIndexPath:indexPath];
 }
 
 #pragma mark - <MDCCollectionViewEditingDelegate>
