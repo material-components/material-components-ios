@@ -42,15 +42,15 @@ contain a text action, but no icons.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/Snackbar'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -85,14 +85,14 @@ Before using Snackbar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialSnackbar
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 #import "MaterialSnackbar.h"
-~~~
+```
 <!--</div>-->
 
 - - -
@@ -104,19 +104,19 @@ import MaterialComponents.MaterialSnackbar
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let message = MDCSnackbarMessage()
 message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
 MDCSnackbarManager.show(message)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
 message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
 [MDCSnackbarManager showMessage:message];
-~~~
+```
 <!--</div>-->
 
 ### Display a Snackbar Message with an Action
@@ -124,7 +124,7 @@ message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuc
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let action = MDCSnackbarMessageAction()
 let actionHandler = {() in
   let answerMessage = MDCSnackbarMessage()
@@ -134,11 +134,11 @@ let actionHandler = {() in
 action.handler = actionHandler
 action.title = "OK"
 message.action = action
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
 void (^actionHandler)() = ^() {
   MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
@@ -148,5 +148,5 @@ void (^actionHandler)() = ^() {
 action.handler = actionHandler;
 action.title = @"Answer";
 message.action = action;
-~~~
+```
 <!--</div>-->

@@ -46,15 +46,15 @@ fill out have been marked with `TODO` statements.
     To add this component to your Xcode project using CocoaPods, add the
     following to your `Podfile`:
 
-    ~~~
+    ```
     pod 'MaterialComponents/TODO: ComponentName'
-    ~~~
+    ```
 
     Then, run the following command:
 
-    ~~~ bash
+    ``` bash
     pod install
-    ~~~
+    ```
 
     - - -
 
@@ -91,7 +91,7 @@ Swift language to use when writing examples.
 
     <!--<div class="material-code-render" markdown="1">-->
     #### Objective-C
-    ~~~ objc
+    ``` objc
     - (void)viewDidLoad {
       [super viewDidLoad];
 
@@ -100,15 +100,15 @@ Swift language to use when writing examples.
       // After all other views have been registered.
       MDCAppBarAddViews(self);
     }
-    ~~~
+    ```
 
     #### Swift
-    ~~~ swift
+    ``` swift
     override func viewDidLoad() {
       super.viewDidLoad()
 
       // After all other views have been registered.
       MDCAppBarAddViews(self)
     }
-    ~~~
+    ```
     <!--</div>-->

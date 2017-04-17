@@ -41,15 +41,15 @@ Tabs are bars of buttons used to navigate between groups of content.
 To add this component to your Xcode project using CocoaPods, add the
 following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/Tabs'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -72,15 +72,15 @@ To use the tab bar in your code, import the MaterialTabs umbrella header (Object
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialTabs.h"
-~~~
+```
 
 <!--</div>-->
 
@@ -111,7 +111,7 @@ Configure where items are placed in the tab bar by setting the `alignment` prope
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let tabBar = MDCTabBar(frame: view.bounds)
 tabBar.items = [
 UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
@@ -121,11 +121,11 @@ tabBar.itemAppearance = .titledImages
 tabBar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
 tabBar.sizeToFit()
 view.addSubview(tabBar)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCTabBar *tabBar = [[MDCTabBar alloc] initWitFrame:self.view.bounds];
 tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Recents" image:[UIImage imageNamed:@"phone"] tag:0],
@@ -136,6 +136,6 @@ tabBar.autoresizingMask =
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
 [tabBar sizeToFit];
 [self.view addSubview:tabBar];
-~~~
+```
 
 <!--</div>-->

@@ -43,15 +43,15 @@ few key methods required to achieve the desired animation of the control.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/ProgressView'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 $ pod install
-~~~
+```
 
 - - -
 
@@ -71,15 +71,15 @@ Before using Progress View, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialProgressView
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialProgressView.h"
-~~~
+```
 <!--</div>-->
 
 Add the progress view to your view hierarchy like you would with any other view. Note that it works
@@ -93,18 +93,18 @@ Add the progress view to a view and set the desired progress and hidden state.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let progressView = MDCProgressView()
 progressView.progress = 0
 
 let progressViewHeight = CGFloat(2)
 progressView.frame = CGRect(x: 0, y: view.bounds.height - progressViewHeight, width: view.bounds.width, height: progressViewHeight)
 view.addSubview(progressView)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 @property(nonatomic) MDCProgressView *progressView;
 ...
 
@@ -112,7 +112,7 @@ view.addSubview(progressView)
 self.progressView = [[MDCProgressView alloc] initWithFrame:myframe];
 self.progressView.progress = 0;  // You can also set a greater progress for actions already started.
 [self.view addSubview:self.progressView];
-~~~
+```
 <!--</div>-->
 
 ### Step 2: Change the progress and hidden state
@@ -122,7 +122,7 @@ Both the progress and the hidden state can be animated, with a completion block.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 func startAndShowProgressView() {
   progressView.progress = 0
   progressView.setHidden(false, animated: true)
@@ -133,11 +133,11 @@ func completeAndHideProgressView() {
     self.progressView.setHidden(true, animated: true)
   }
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 - (void)startAndShowProgressView {
   self.progressView.progress = 0;
   [self.progressView setHidden:NO animated:YES completion:nil];
@@ -149,5 +149,5 @@ func completeAndHideProgressView() {
     [weakSelf.progressView setHidden:YES animated:YES completion:nil];
   }];
 }
-~~~
+```
 <!--</div>-->

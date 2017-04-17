@@ -42,15 +42,15 @@ or discrete set of values.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/Slider'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -64,15 +64,15 @@ Before using Slider, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialSlider
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialSlider.h"
-~~~
+```
 <!--</div>-->
 
 ### Standard usage
@@ -82,7 +82,7 @@ MDCSlider can be be used like a standard `UIControl`.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -96,11 +96,11 @@ override func viewDidLoad() {
 func didChangeSliderValue(senderSlider:MDCSlider) {
   print("Did change slider value to: %@", senderSlider.value)
 }
-~~~
+```
 
 #### Objective C
 
-~~~ objc
+``` objc
 - (void)viewDidLoad {
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(50, 50, 100, 27)];
   [slider addTarget:self
@@ -112,7 +112,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 - (void)didChangeSliderValue:(MDCSlider *)slider {
   NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
 }
-~~~
+```
 <!--</div>-->
 
 ### The differences between the UISlider class and the MDCSlider class:

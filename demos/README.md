@@ -11,15 +11,15 @@ The following demo apps can be found in this directory:
 Our [catalog](../catalog/) showcases Material Components. 
 You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
 
-~~~ bash
+``` bash
 pod try MaterialComponents
-~~~
+```
 
 In case you have already checked out the repo, run the following command:
   
-~~~ bash
+``` bash
 pod install --project-directory=catalog/
-~~~
+```
 
 - - -
 
