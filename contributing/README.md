@@ -29,9 +29,9 @@ There is a [great script](../scripts/check_components) that checks for _some_ of
 Start the title with `[ComponentName]` to identify which component a change affects. Use
 `[ComponentName|OtherComponentName]` for commits affecting multiple components, which should be rare.
 
-~~~
+```
 [FooBar] Removes the deprecated fooWithBar:(Bar*)bar method.
-~~~
+```
 
 #### Using assignee to indicate who should action on a PR
 

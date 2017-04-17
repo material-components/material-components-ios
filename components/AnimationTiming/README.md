@@ -29,15 +29,15 @@ of an animation so that movement doesn't appear mechanical.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/AnimationTiming'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -50,15 +50,15 @@ Before using animation timing, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialAnimationTiming.h"
-~~~
+```
 <!--</div>-->
 
 ## Examples
@@ -72,21 +72,21 @@ be used in an animation.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let materialCurve = MDCAnimationTimingFunction.easeOut
 let timingFunction = CAMediaTimingFunction.mdc_function(withType: materialCurve)
 
 let animation = CABasicAnimation(keyPath:"transform.translation.x")
 animation.timingFunction = timingFunction
-~~~
+```
 
 #### Objc
 
-~~~ objc
+``` objc
 MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
 CAMediaTimingFunction *timingFunction = [CAMediaTimingFunction mdc_functionWithType:materialCurve];
 
 CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
 animation.timingFunction = timingFunction;
-~~~
+```
 <!--</div>-->

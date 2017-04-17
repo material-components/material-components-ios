@@ -41,15 +41,15 @@ outward from the user's touch.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/Ink'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -62,15 +62,15 @@ Before using Ink, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialInk.h"
-~~~
+```
 <!--</div>-->
 
 The Ink component exposes two interfaces that you can use to add material-like
@@ -89,20 +89,20 @@ The simplest method of using ink in your views is to use a
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let myButton = UIButton(type: .system)
 myButton.setTitle("Tap Me", for: .normal)
 let inkTouchController = MDCInkTouchController(view: myButton)
 inkTouchController?.addInkView()
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [myButton setTitle:@"Tap me" forState:UIControlStateNormal];
 MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:myButton];
 [inkTouchController addInkView];
-~~~
+```
 <!--</div>-->
 
 
@@ -116,7 +116,7 @@ touches, the following code uses the delegate's
 <!--<div class="material-code-render" markdown="1">-->
 
 #### Swift
-~~~ swift
+``` swift
 class MyDelegate: NSObject, MDCInkTouchControllerDelegate {
 
   func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
@@ -137,10 +137,10 @@ let inkTouchController = MDCInkTouchController(view: myButton)
 inkTouchController?.delegate = myDelegate
 inkTouchController?.addInkView()
 
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 @interface MyDelegate: NSObject <MDCInkTouchControllerDelegate>
 @end
 
@@ -161,7 +161,7 @@ MyDelegate *myDelegate = [[MyDelegate alloc] init];
 MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:myButton];
 inkTouchController.delegate = myDelegate;
 [inkTouchController addInkView];
-~~~
+```
 <!--</div>-->
 
 **NOTE:** The ink touch controller does not keep a strong reference to the view to which it is attaching the ink view.
@@ -174,7 +174,7 @@ own touch processing:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let myCustomView = MyCustomView(frame: CGRect.zero)
 let inkView = MDCInkView()
 inkView.inkColor = UIColor.red
@@ -185,10 +185,10 @@ inkView.startTouchBeganAnimation(at: touchPoint, completion: nil)
 ...
 // When the touches end, there is another animation
 inkView.startTouchEndedAnimation(at: touchPoint, completion: nil)
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
 MDCInkView *inkView = [MDCInkView new];
 inkView.inkColor = [UIColor redColor];
@@ -199,5 +199,5 @@ inkView.inkColor = [UIColor redColor];
 ...
 // When the touches end, there is another animation
 [inkView startTouchEndedAnimationAtPoint:touchPoint completion:nil];
-~~~
+```
 <!--</div>-->

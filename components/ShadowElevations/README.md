@@ -32,15 +32,15 @@ used Material Design elevations for components.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/ShadowElevations'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -53,7 +53,7 @@ Before using Shadow Elevations, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents
 
 class ShadowedView: UIView {
@@ -71,10 +71,10 @@ class ShadowedView: UIView {
   }
 
 }
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 #import "MaterialShadowElevations.h"
 
 @interface ShadowedView: UIView
@@ -96,5 +96,5 @@ class ShadowedView: UIView {
 }
 
 @end
-~~~
+```
 <!--</div>-->

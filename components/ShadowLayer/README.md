@@ -64,15 +64,15 @@ shadow that adheres to defined height and light source principles.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/ShadowLayer'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -86,15 +86,15 @@ Before using Shadow Layer, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialShadowLayer.h"
-~~~
+```
 <!--</div>-->
 
 
@@ -102,7 +102,7 @@ Example of a custom button based on UIButton with Material Design shadows:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 class ShadowButton: UIButton {
 
   override class var layerClass: AnyClass {
@@ -110,10 +110,10 @@ class ShadowButton: UIButton {
   }
 
 }
-~~~
+```
 
 #### Objective C
-~~~ objc
+``` objc
 @interface ShadowButton : UIButton
 
 @end
@@ -125,7 +125,7 @@ class ShadowButton: UIButton {
 }
 
 @end
-~~~
+```
 <!--</div>-->
 
 
@@ -133,7 +133,7 @@ Add the custom button to view:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let button: ShadowButton = ShadowButton.init(type: .system)
 button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
 button.setTitle("Button", for: .normal)
@@ -141,17 +141,17 @@ let buttonLayer = button.layer as! MDCShadowLayer
 buttonLayer.elevation = 6.0
 addSubview(button)
 
-~~~
+```
 
 #### Objective C
-~~~ objc
+``` objc
 ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
 button.frame = CGRectMake(100, 100, 200, 50);
 [button setTitle: @"Button" forState:UIControlStateNormal];
 [(MDCShadowLayer *)button.layer setElevation:6.f];
 [self addSubview:button];
 
-~~~
+```
 <!--</div>-->
 
 
@@ -159,7 +159,7 @@ Creating a custom UIView with a shadow:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 class ShadowedView: UIView {
 
   override class var layerClass: AnyClass {
@@ -175,10 +175,10 @@ class ShadowedView: UIView {
   }
 
 }
-~~~
+```
 
 #### Objective C
-~~~ objc
+``` objc
 @interface ShadowedView : UIView
 @end
 
@@ -197,7 +197,7 @@ class ShadowedView: UIView {
 }
 
 @end
-~~~
+```
 <!--</div>-->
 
 
@@ -206,20 +206,20 @@ animating or changing size.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 
 layer.shouldRasterize = true
 layer.rasterizationScale = UIScreen.main.scale
 
-~~~
+```
 
 #### Objective C
-~~~ objc
+``` objc
 
 self.layer.shouldRasterize = YES;
 self.layer.rasterizationScale = [UIScreen mainScreen].scale;
 
-~~~
+```
 <!--</div>-->
 
 Disable rasterization before animating MDCShadowLayer.

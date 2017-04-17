@@ -36,15 +36,15 @@ desired animation of the control.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/PageControl'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -93,15 +93,15 @@ Before using Page Control, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialPageControl
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialPageControl.h"
-~~~
+```
 <!--</div>-->
 
 Integrating the page control requires two steps. First, add a page control with companion scroll
@@ -117,7 +117,7 @@ notified of page changes.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let pageControl = MDCPageControl()
 let scrollView = UIScrollView()
 let pages = NSMutableArray()
@@ -143,11 +143,11 @@ func didChangePage(sender: MDCPageControl){
   offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width;
   scrollView.setContentOffset(offset, animated: true)
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -170,7 +170,7 @@ func didChangePage(sender: MDCPageControl){
   offset.x = (CGFloat)sender.currentPage * self.scrollView.bounds.size.width;
   [self.scrollView setContentOffset:offset animated: true];
 }
-~~~
+```
 <!--</div>-->
 
 ### Step 2: Forwarding the required scroll view delegate methods
@@ -184,7 +184,7 @@ scrolling movement of the designated scroll view.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 func scrollViewDidScroll(_ scrollView: UIScrollView) {
   pageControl.scrollViewDidScroll(scrollView)
 }
@@ -196,11 +196,11 @@ func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
   pageControl.scrollViewDidEndScrollingAnimation(scrollView)
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   [self.pageControl scrollViewDidScroll:scrollView];
 }
@@ -212,5 +212,5 @@ func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
   [self.pageControl scrollViewDidEndScrollingAnimation:scrollView];
 }
-~~~
+```
 <!--</div>-->
