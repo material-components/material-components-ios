@@ -291,6 +291,12 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/private/Application"
     end
 
+    pss.subspec "Math" do |ss|
+      ss.ios.deployment_target = '8.0'
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    end
+
     pss.subspec "Overlay" do |ss|
       ss.ios.deployment_target = '8.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
