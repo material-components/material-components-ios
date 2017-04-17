@@ -24,9 +24,9 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     To install CocoaPods, run the following commands:
 
-    ~~~ bash
+    ``` bash
     sudo gem install cocoapods
-    ~~~
+    ```
 
 
 2.  ## Create Podfile
@@ -36,10 +36,10 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     To initialize CocoaPods in your project, run the following commands:
 
-    ~~~ bash
+    ``` bash
     cd your-project-directory
     pod init
-    ~~~
+    ```
 
 3.  ## Edit Podfile
 
@@ -48,22 +48,22 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     to your target in your Podfile:
 
 
-    ~~~ ruby
+    ``` ruby
     target "MyApp" do
       ...
       pod 'MaterialComponents'
     end
-    ~~~
+    ```
 
     If you are using Swift, don’t forget to uncomment the `use_frameworks!` line
     at the top of your Podfile.
 
     Then run the command:
 
-    ~~~ bash
+    ``` bash
     pod install
     open your-project.xcworkspace
-    ~~~
+    ```
 
     Now you're ready to get started in Xcode.
 
@@ -78,7 +78,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     <!--<div class="material-code-render" markdown="1">-->
     #### Objective-C
 
-    ~~~ objc
+    ``` objc
     #import "MaterialButtons.h"
 
     @implementation ViewController
@@ -101,11 +101,11 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     }
 
     @end
-    ~~~
+    ```
 
     #### Swift
 
-    ~~~ swift
+    ``` swift
     import MaterialComponents.MaterialButtons
 
     class MDCBuildTestViewController: UIViewController {
@@ -124,7 +124,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
         }
 
     }
-    ~~~
+    ```
     <!--</div>-->
 
 5.  ## What's next?

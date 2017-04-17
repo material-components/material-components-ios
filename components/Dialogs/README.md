@@ -45,15 +45,15 @@ according to the Material spec.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/Dialogs'
-~~~
+```
 
 Then run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -71,15 +71,15 @@ Before using Dialogs, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 import MaterialComponents.MaterialDialogs
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialDialogs.h"
-~~~
+```
 <!--</div>-->
 
 ## Examples
@@ -89,7 +89,7 @@ import MaterialComponents.MaterialDialogs
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 // The following is called from the presenting view controller and has the
 // following variable defined to keep a reference to the transition
 // controller.
@@ -101,11 +101,11 @@ myDialogViewController.modalPresentationStyle = .custom
 myDialogViewController.transitioningDelegate = dialogTransitionController
 
 present(myDialogViewController, animated: true, completion:...)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 // self is the presenting view controller and which has the following property
 // defined to keep a reference to the transition controller.
 @property(nonatomic) MDCDialogTransitionController *dialogTransitionController;
@@ -116,7 +116,7 @@ myDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
 myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 [self presentViewController:myDialogViewController animated:YES completion:...];
 
-~~~
+```
 <!--</div>-->
 
 ### Present an alert
@@ -124,18 +124,18 @@ myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 // Present a modal alert
 let alertController = MDCAlertController(title: titleString, message: messageString)
 let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
 alertController.addAction(action)
 
 present(alertController, animated:true, completion:...)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 // Present a modal alert
 MDCAlertController *alertController =
 [MDCAlertController alertControllerWithTitle:titleString
@@ -150,5 +150,5 @@ MDCAlertAction *alertAction =
 [alertController addAction:alertAction];
 
 [self presentViewController:alertController animated:YES completion:...];
-~~~
+```
 <!--</div>-->

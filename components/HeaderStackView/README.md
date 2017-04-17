@@ -42,15 +42,15 @@ bar views.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/HeaderStackView'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -75,15 +75,15 @@ Before using Header Stack View, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialHeaderStackView
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialHeaderStackView.h"
-~~~
+```
 <!--</div>-->
 
 
@@ -91,43 +91,43 @@ Header Stack View provides MDCHeaderStackView, which is a UIView subclass.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let headerStackView = MDCHeaderStackView()
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCHeaderStackView *headerStackView = [[MDCHeaderStackView alloc] init];
-~~~
+```
 <!--</div>-->
 
 You may provide a top bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 headerStackView.topBar = navigationBar
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 headerStackView.topBar = navigationBar;
-~~~
+```
 <!--</div>-->
 
 You may provide a bottom bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 headerStackView.bottomBar = tabBar
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 headerStackView.bottomBar = tabBar;
-~~~
+```
 <!--</div>-->

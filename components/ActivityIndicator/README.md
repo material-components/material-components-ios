@@ -50,15 +50,15 @@ When indicators are determinate they indicate how long an operation will take wh
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/ActivityIndicator'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -76,15 +76,15 @@ Before using Activity Indicator, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialActivityIndicator.h"
-~~~
+```
 <!--</div>-->
 
 ### Indeterminate indicators
@@ -104,7 +104,7 @@ When indicators are indeterminate they request that the user wait while somethin
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let activityIndicator = MDCActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
 view.addSubview(activityIndicator)
 
@@ -113,11 +113,11 @@ activityIndicator.startAnimating()
 ...
 // Stop animation
 activityIndicator.stopAnimating()
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCActivityIndicator *activityIndicator =
     [[MDCActivityIndicator alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
 [view addSubview:activityIndicator];
@@ -127,7 +127,7 @@ MDCActivityIndicator *activityIndicator =
 ...
 // Stop animation
 [activityIndicator stopAnimating];
-~~~
+```
 <!--</div>-->
 
 ### Determinate indicators
@@ -135,7 +135,7 @@ When indicators are determinate they indicate how long an operation will take wh
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let activityIndicator = MDCActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
 activityIndicator.indicatorMode = .determinate
 activityIndicator.progress = 0.5
@@ -146,11 +146,11 @@ activityIndicator.startAnimating()
 ...
 // Stop animation
 activityIndicator.stopAnimating()
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCActivityIndicator *activityIndicator =
     [[MDCActivityIndicator alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
 activityIndicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
@@ -162,5 +162,5 @@ activityIndicator.progress = 0.5;
 ...
 // Stop animation
 [activityIndicator stopAnimating];
-~~~
+```
 <!--</div>-->
