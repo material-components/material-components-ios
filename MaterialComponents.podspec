@@ -80,6 +80,8 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
     ss.dependency "MaterialComponents/Typography"
+
+    ss.dependency "MaterialComponents/private/Math"
   end
 
   s.subspec "ButtonBar" do |ss|
@@ -108,6 +110,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Icons/ic_info"
     ss.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
     ss.dependency "MaterialComponents/private/Icons/ic_reorder"
+    ss.dependency "MaterialComponents/private/Math"
     ss.dependency "MaterialComponents/private/RTL"
   end
 
@@ -184,6 +187,8 @@ Pod::Spec.new do |s|
 
     ss.dependency "MaterialComponents/ButtonBar"
     ss.dependency "MaterialComponents/Typography"
+
+    ss.dependency "MaterialComponents/private/Math"
     ss.dependency "MaterialComponents/private/RTL"
   end
 
@@ -291,6 +296,12 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/private/Application"
     end
 
+    pss.subspec "Math" do |ss|
+      ss.ios.deployment_target = '8.0'
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    end
+
     pss.subspec "Overlay" do |ss|
       ss.ios.deployment_target = '8.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
@@ -312,6 +323,8 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/ShadowElevations"
       ss.dependency "MaterialComponents/ShadowLayer"
       ss.dependency "MaterialComponents/Typography"
+
+      ss.dependency "MaterialComponents/private/Math"
       ss.dependency "MaterialComponents/private/RTL"
     end
 
