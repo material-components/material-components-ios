@@ -310,7 +310,10 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   [super addSubview:_contentView];
 
-  self.backgroundColor = [UIColor lightGrayColor];
+  if (![MDCFlexibleHeaderView appearance].backgroundColor) {
+    self.backgroundColor = [UIColor lightGrayColor];
+  }
+
   _defaultShadowLayer.backgroundColor = self.backgroundColor.CGColor;
 
   self.layer.shadowColor = [[UIColor blackColor] CGColor];
