@@ -58,6 +58,11 @@ static inline CGFloat MDCHypot(CGFloat x, CGFloat y) {
 #endif
 }
 
+// Checks whether the provided floating point number is exactly zero.
+static inline BOOL MDCCGFloatIsExactlyZero(CGFloat value) {
+  return (value == 0.f);
+}
+
 static inline CGFloat MDCRint(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return rint(value);
