@@ -1,10 +1,3 @@
-<!--docs:
-title: "Material Components Documentation"
-layout: landing-no-drawer
-section: components
-path: /listing.html
--->
-
 # Component Documentation
 
 Material Components for iOS (MDC-iOS) help developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps.
