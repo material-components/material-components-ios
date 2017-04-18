@@ -276,8 +276,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
     if (self.leftView.superview) {
       textRect.origin.x += leftViewWidth;
     }
-    if (self.rightView.superview) {
-    } else {
+    if (!self.rightView.superview) {
       if (self.text.length > 0) {
         switch (self.clearButtonMode) {
           case UITextFieldViewModeAlways:
