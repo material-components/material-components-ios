@@ -295,8 +295,8 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   // Y that works.
   CGFloat actualY =
       (CGRectGetHeight(bounds) / 2.f) - MDCRint(MAX(self.font.lineHeight,
-                                                     self.placeholderLabel.font.lineHeight) /
-                                                 2.f);  // Text field or placeholder
+                                                    self.placeholderLabel.font.lineHeight) /
+                                                2.f);  // Text field or placeholder
   actualY = textContainerInset.top - actualY;
   textRect.origin.y = actualY;
 
@@ -378,9 +378,8 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   CGFloat height =
       MDCTextInputFullPadding + MDCRint(self.font.lineHeight) + MDCTextInputHalfPadding * 2.f;
 
-  CGFloat underlineLabelsHeight =
-      MAX(MDCRint(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
-          MDCRint(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
+  CGFloat underlineLabelsHeight = MAX(MDCRint(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
+                                      MDCRint(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
   height += underlineLabelsHeight;
   boundingSize.height = height;
 

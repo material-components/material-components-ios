@@ -325,11 +325,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
   @try {
     [self.textInput.leadingUnderlineLabel removeObserver:self
-                                          forKeyPath:MDCTextInputControllerKVOKeyFont];
+                                              forKeyPath:MDCTextInputControllerKVOKeyFont];
     [self.textInput.placeholderLabel removeObserver:self
                                          forKeyPath:MDCTextInputControllerKVOKeyFont];
     [self.textInput.trailingUnderlineLabel removeObserver:self
-                                           forKeyPath:MDCTextInputControllerKVOKeyFont];
+                                               forKeyPath:MDCTextInputControllerKVOKeyFont];
   } @catch (NSException *exception) {
   }
   _isRegisteredForKVO = NO;
