@@ -1,7 +1,7 @@
 <!--docs:
 title: "Contributing"
 layout: landing
-section: contributing
+section: docs
 path: /docs/contributing/
 -->
 

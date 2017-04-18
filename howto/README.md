@@ -1,7 +1,7 @@
 <!--docs:
 title: "How to use Material Components"
 layout: landing
-section: howto
+section: docs
 path: /docs/
 -->
 

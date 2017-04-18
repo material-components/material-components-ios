@@ -1,7 +1,7 @@
 <!--docs:
 title: "Frequently Asked Questions"
 layout: landing
-section: howto
+section: docs
 path: /docs/faq/
 -->
 

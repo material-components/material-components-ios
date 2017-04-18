@@ -1,7 +1,7 @@
 <!--docs:
 title: "Material Components Development Guide"
 layout: landing
-section: howto
+section: docs
 path: /docs/tutorial/
 -->
 
