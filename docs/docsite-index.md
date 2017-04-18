@@ -1,6 +1,7 @@
 ---
 title: "Material Components for iOS"
 layout: "homepage"
+path: /
 ---
 
 # Material Components for iOS
