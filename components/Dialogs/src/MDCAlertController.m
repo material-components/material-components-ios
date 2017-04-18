@@ -398,8 +398,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.38f;
         UIUserInterfaceLayoutDirectionRightToLeft) {
       for (UIButton *button in self.actionButtons) {
         CGRect buttonRect = button.frame;
-        CGRect flippedRect = MDCRectFlippedForRTL(buttonRect,
-                                                  CGRectGetWidth(self.view.bounds),
+        CGRect flippedRect = MDCRectFlippedForRTL(buttonRect, CGRectGetWidth(self.view.bounds),
                                                   UIUserInterfaceLayoutDirectionRightToLeft);
         button.frame = flippedRect;
       }

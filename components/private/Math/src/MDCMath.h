@@ -78,4 +78,3 @@ static inline CGFloat MDCRound(CGFloat value) {
   return roundf(value);
 #endif
 }
-
