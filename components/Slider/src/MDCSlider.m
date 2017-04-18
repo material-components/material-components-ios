@@ -26,7 +26,7 @@ static const CGFloat kSliderThumbRadius = 6.0f;
 static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
 static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
-// Blue 500 from http://material.io/guidelines/style/color.html#color-color-palette .
+// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCBlueColor = 0x2196F3;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.

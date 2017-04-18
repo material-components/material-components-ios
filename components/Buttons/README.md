@@ -26,7 +26,7 @@ floating action button.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="http://material.io/guidelines/components/buttons.html">Buttons</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/buttons.html">Buttons</a></li>
 </ul>
 
 - - -

@@ -31,7 +31,7 @@
  All buttons set the exclusiveTouch property to YES by default, which prevents users from
  simultaneously interacting with a button and other UI elements.
 
- @see http://material.io/guidelines/components/buttons.html
+ @see https://material.io/guidelines/components/buttons.html
  */
 @interface MDCButton : UIButton
 

@@ -25,7 +25,7 @@ const CGFloat MDCCollectionInfoBarFooterHeight = 48.0f;
 
 static const CGFloat MDCCollectionInfoBarLabelHorizontalPadding = 16.0f;
 
-// Colors derived from http://material.io/guidelines/style/color.html#color-color-palette .
+// Colors derived from https://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t kCollectionInfoBarBlueColor = 0x448AFF;  // Blue A200
 static const uint32_t kCollectionInfoBarRedColor = 0xF44336;   // Red 500
 
