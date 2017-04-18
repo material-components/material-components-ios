@@ -304,7 +304,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)setupPlaceholderLabel {
   _placeholderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow
+  [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
                                                      forAxis:UILayoutConstraintAxisHorizontal];
   _placeholderLabel.textAlignment = NSTextAlignmentNatural;
 
@@ -775,7 +775,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                                                       constant:[self textContainerInset].top];
 
   // This can be affected by .leftView and .rightView.
-  // See updatePlaceholderToAssociateViewsPosition()
+  // See updatePlaceholderToOverlayViewsPosition()
   self.placeholderLeading = [NSLayoutConstraint constraintWithItem:_placeholderLabel
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
@@ -783,11 +783,18 @@ static inline CGFloat MDCRound(CGFloat value) {
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
                                                           constant:[self textContainerInset].left];
+  NSLayoutConstraint *placeholderTrailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                                         attribute:NSLayoutAttributeTrailing
+                                                         relatedBy:NSLayoutRelationLessThanOrEqual
+                                                            toItem:_relativeSuperview
+                                                         attribute:NSLayoutAttributeTrailing
+                                                        multiplier:1
+                                                          constant:[self textContainerInset].right];
 
   [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];
 
-  return @[ self.placeholderTop, self.placeholderLeading ];
+  return @[ self.placeholderTop, self.placeholderLeading, placeholderTrailing ];
 }
 
 #pragma mark - Text Input Events
