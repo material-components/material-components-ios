@@ -21,7 +21,7 @@ args=$*
 # Getting the link for github repository
 GITHUB_REMOTE="git@github.com:material-components/material-components-site-generator.git"
 SITE_SOURCE_BRANCH='master'
-SITE_SOURCE_FOLDER='docsite'
+SITE_SOURCE_FOLDER='docsite-generator'
 
 # Switching to the root folder of mdc
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -38,7 +38,7 @@ if [[ -d ./$SITE_SOURCE_FOLDER ]]; then
 else
   echo "Set up site folder...";
   git clone $GITHUB_REMOTE $SITE_SOURCE_FOLDER || { echo "Failed to clone."; exit 1; }
-  echo "Please follow the instructions in docsite/README.md, then run build_site.sh to complete the build.";
+  echo "Please follow the instructions in $SITE_SOURCE_FOLDER/README.md, then run build_site.sh to complete the build.";
   exit 0
 fi
 

@@ -65,7 +65,7 @@ fastlane/report.xml
 fastlane/screenshots
 
 # material component site
-docsite
+docsite-generator
 
 # Compiled python
 *.pyc
