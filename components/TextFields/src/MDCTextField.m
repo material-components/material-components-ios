@@ -18,6 +18,7 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputLayoutCoordinator.h"
 
+#import "MaterialMath.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
@@ -28,14 +29,6 @@ static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
 static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
-
-static inline CGFloat MDCRound(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return rint(value);
-#else
-  return rintf(value);
-#endif
-}
 
 @interface MDCTextField ()
 
@@ -303,7 +296,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   // both. Don't know why. So, we have to leave the text rect as big as the bounds and move it to a
   // Y that works.
   CGFloat actualY =
-      (CGRectGetHeight(bounds) / 2.f) - MDCRound(MAX(self.font.lineHeight,
+      (CGRectGetHeight(bounds) / 2.f) - MDCRint(MAX(self.font.lineHeight,
                                                      self.placeholderLabel.font.lineHeight) /
                                                  2.f);  // Text field or placeholder
   actualY = textContainerInset.top - actualY;
@@ -385,11 +378,11 @@ static inline CGFloat MDCRound(CGFloat value) {
   boundingSize.width = UIViewNoIntrinsicMetric;
 
   CGFloat height =
-      MDCTextInputFullPadding + MDCRound(self.font.lineHeight) + MDCTextInputHalfPadding * 2.f;
+      MDCTextInputFullPadding + MDCRint(self.font.lineHeight) + MDCTextInputHalfPadding * 2.f;
 
   CGFloat underlineLabelsHeight =
-      MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
-          MDCRound(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
+      MAX(MDCRint(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
+          MDCRint(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
   height += underlineLabelsHeight;
   boundingSize.height = height;
 

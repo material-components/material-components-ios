@@ -381,6 +381,8 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/AnimationTiming"
     ss.dependency "MaterialComponents/Palettes"
     ss.dependency "MaterialComponents/Typography"
+
+    ss.dependency "MaterialComponents/private/Math"
     ss.dependency "MaterialComponents/private/RTL"
   end
 
