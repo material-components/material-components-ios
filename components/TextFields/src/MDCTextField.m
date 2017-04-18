@@ -69,8 +69,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 - (void)dealloc {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter removeObserver:self name:UITextFieldTextDidBeginEditingNotification object:self];
-  [defaultCenter removeObserver:self name:UITextFieldTextDidChangeNotification object:self];
+  [defaultCenter removeObserver:self];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {

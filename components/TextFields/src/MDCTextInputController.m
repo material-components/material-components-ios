@@ -297,7 +297,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)unsubscribeFromNotifications {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-
   [defaultCenter removeObserver:self];
 }
 

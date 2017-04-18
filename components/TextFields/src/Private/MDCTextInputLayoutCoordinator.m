@@ -203,7 +203,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (void)dealloc {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-
   [defaultCenter removeObserver:self];
 }
 
