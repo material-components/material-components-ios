@@ -68,7 +68,14 @@
   textFieldFloating.placeholder = @"Floating Placeholder";
   textFieldFloating.delegate = self;
   textFieldFloating.clearButtonMode = UITextFieldViewModeUnlessEditing;
-  textFieldFloating.adjustsFontForContentSizeCategory = YES;
+  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
+  NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
+      [processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
+    textFieldFloating.adjustsFontForContentSizeCategory = YES;
+  } else {
+    [textFieldFloating mdc_setAdjustsFontForContentSizeCategory:YES];
+  }
 
   self.textFieldControllerFloating =
       [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
