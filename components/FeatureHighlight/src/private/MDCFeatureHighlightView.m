@@ -351,7 +351,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   NSString *key =
       kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
   NSString *localizedString = NSLocalizedStringFromTableInBundle(
-    key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
+      key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
   return localizedString;
 }
 

@@ -489,9 +489,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
         (_value < _filledTrackAnchorValue && _filledTrackAnchorValue < previousValue);
     if (crossesAnchor) {
       CGFloat currentValue = _value;
-      CGFloat animationDurationToAnchor =
-          (MDCFabs(previousValue - _filledTrackAnchorValue) / MDCFabs(previousValue - currentValue)) *
-          kAnimationDuration;
+      CGFloat animationDurationToAnchor = (MDCFabs(previousValue - _filledTrackAnchorValue) /
+                                           MDCFabs(previousValue - currentValue)) *
+                                          kAnimationDuration;
       void (^afterCrossingAnchorAnimation)(BOOL) = ^void(BOOL finished) {
         UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseOut;
         [UIView animateWithDuration:(kAnimationDuration - animationDurationToAnchor)
