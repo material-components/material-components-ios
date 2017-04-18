@@ -195,6 +195,19 @@
   //  appleField.delegate = self;
   //  appleField.clearButtonMode = UITextFieldViewModeWhileEditing;
   //
+  //
+  //  NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ic_search"
+  //  withExtension:@"png"];
+  //  UIImageView *left = [[UIImageView alloc] initWithImage:[UIImage
+  //  imageWithContentsOfFile:url.path]];
+  //  UIImageView *right = [[UIImageView alloc] initWithImage:[UIImage
+  //  imageWithContentsOfFile:url.path]];
+  //
+  //  appleField.leftView = left;
+  //  appleField.leftViewMode = UITextFieldViewModeAlways;
+  //  appleField.rightView = right;
+  //  appleField.rightViewMode = UITextFieldViewModeAlways;
+  //
   //  [NSLayoutConstraint constraintWithItem:appleField
   //                               attribute:NSLayoutAttributeTop
   //                               relatedBy:NSLayoutRelationEqual
@@ -202,7 +215,7 @@
   //                               attribute:NSLayoutAttributeBottom
   //                              multiplier:1
   //                                constant:10]
-  //      .active = YES;
+  //  .active = YES;
   //  [NSLayoutConstraint constraintWithItem:appleField
   //                               attribute:NSLayoutAttributeLeading
   //                               relatedBy:NSLayoutRelationEqual
@@ -210,7 +223,7 @@
   //                               attribute:NSLayoutAttributeLeading
   //                              multiplier:1
   //                                constant:0]
-  //      .active = YES;
+  //  .active = YES;
   //  [NSLayoutConstraint constraintWithItem:appleField
   //                               attribute:NSLayoutAttributeTrailing
   //                               relatedBy:NSLayoutRelationEqual
@@ -218,7 +231,7 @@
   //                               attribute:NSLayoutAttributeTrailing
   //                              multiplier:1
   //                                constant:0]
-  //      .active = YES;
+  //  .active = YES;
 }
 
 #pragma mark - UITextFieldDelegate
