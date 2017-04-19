@@ -13,6 +13,7 @@ PODS:
     - MaterialComponents/private/RTL
   - MaterialComponents/Buttons (23.0.1):
     - MaterialComponents/Ink
+    - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
@@ -24,6 +25,7 @@ PODS:
   - MaterialComponents/Ink (23.0.1)
   - MaterialComponents/NavigationBar (23.0.1):
     - MaterialComponents/ButtonBar
+    - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
     - MDFTextAccessibility
@@ -32,6 +34,7 @@ PODS:
   - MaterialComponents/private/Icons/Base (23.0.1)
   - MaterialComponents/private/Icons/ic_arrow_back (23.0.1):
     - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/Math (23.0.1)
   - MaterialComponents/private/RTL (23.0.1)
   - MaterialComponents/ShadowElevations (23.0.1)
   - MaterialComponents/ShadowLayer (23.0.1)
@@ -52,10 +55,10 @@ EXTERNAL SOURCES:
     :path: "../supplemental"
 
 SPEC CHECKSUMS:
-  MaterialComponents: 8666bde1128660f2a3525d03d6b460d2bc34dc3b
+  MaterialComponents: cb45da1e1f228feb263d15bb94b42e9fef33e583
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   RemoteImageServiceForMDCDemos: ac07ee638c35f21cf271adeaf68a59f253dacccc
 
 PODFILE CHECKSUM: 5eb94d7fb8deeb6709b7300f5d0e0e1a75902cca
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1
