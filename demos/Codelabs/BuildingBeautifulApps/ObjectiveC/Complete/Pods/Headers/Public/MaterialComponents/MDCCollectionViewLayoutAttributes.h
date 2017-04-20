@@ -1,0 +1,1 @@
+../../../MaterialComponents/components/CollectionLayoutAttributes/src/MDCCollectionViewLayoutAttributes.h

@@ -1,0 +1,1 @@
+../../../MaterialComponents/components/Dialogs/src/MDCDialogTransitionController.h
