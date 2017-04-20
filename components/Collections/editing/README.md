@@ -1,5 +1,6 @@
 <!--docs:
 title: "Editing the collection view"
+navTitle: Editing
 layout: detail
 section: components
 iconId: list

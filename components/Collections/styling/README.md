@@ -1,5 +1,6 @@
 <!--docs:
 title: "Styling the collection view"
+navTitle: Styling
 layout: detail
 section: components
 iconId: list
