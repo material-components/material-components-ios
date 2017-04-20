@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17105B289ACF1483EF252934 /* libPods-ShrineCodelabObjc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E77988AD077916A17CF5F2D /* libPods-ShrineCodelabObjc.a */; };
 		36625A771EA869DA00A0E2AD /* HomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36625A761EA869DA00A0E2AD /* HomeHeaderView.m */; };
 		36625A791EA86D3200A0E2AD /* fishbowl.png in Resources */ = {isa = PBXBuildFile; fileRef = 36625A781EA86D3200A0E2AD /* fishbowl.png */; };
 		36DABBA51EA7F0E700906586 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DABBA41EA7F0E700906586 /* main.m */; };
@@ -21,14 +20,17 @@
 		36DABBF91EA82E5800906586 /* popsicle.png in Resources */ = {isa = PBXBuildFile; fileRef = 36DABBE11EA82E5800906586 /* popsicle.png */; };
 		36DABC301EA833A700906586 /* Clothing in Resources */ = {isa = PBXBuildFile; fileRef = 36DABC2E1EA833A700906586 /* Clothing */; };
 		36DABC311EA833A700906586 /* Home in Resources */ = {isa = PBXBuildFile; fileRef = 36DABC2F1EA833A700906586 /* Home */; };
+		EB711BFCEEE7BF2237D99896 /* libPods-BuildingBeautifulApps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D967962C61FD651D0BC490A2 /* libPods-BuildingBeautifulApps.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14F6B115B062FC99E50F1F41 /* Pods-BuildingBeautifulAppsObjcComplete.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuildingBeautifulAppsObjcComplete.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BuildingBeautifulAppsObjcComplete/Pods-BuildingBeautifulAppsObjcComplete.debug.xcconfig"; sourceTree = "<group>"; };
 		1E77988AD077916A17CF5F2D /* libPods-ShrineCodelabObjc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShrineCodelabObjc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		36625A751EA869DA00A0E2AD /* HomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeHeaderView.h; sourceTree = "<group>"; };
-		36625A761EA869DA00A0E2AD /* HomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeHeaderView.m; sourceTree = "<group>"; };
+		26364F6243F3061661E5BB6A /* Pods-BuildingBeautifulAppsObjcComplete.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuildingBeautifulAppsObjcComplete.release.xcconfig"; path = "Pods/Target Support Files/Pods-BuildingBeautifulAppsObjcComplete/Pods-BuildingBeautifulAppsObjcComplete.release.xcconfig"; sourceTree = "<group>"; };
+		36625A751EA869DA00A0E2AD /* HomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeHeaderView.h; path = ../Supplemental/HomeHeaderView.h; sourceTree = "<group>"; };
+		36625A761EA869DA00A0E2AD /* HomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeHeaderView.m; path = ../Supplemental/HomeHeaderView.m; sourceTree = "<group>"; };
 		36625A781EA86D3200A0E2AD /* fishbowl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fishbowl.png; sourceTree = "<group>"; };
-		36DABBA01EA7F0E700906586 /* ShrineCodelabObjc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShrineCodelabObjc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		36DABBA01EA7F0E700906586 /* BuildingBeautifulApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BuildingBeautifulApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36DABBA41EA7F0E700906586 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		36DABBA61EA7F0E700906586 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		36DABBA71EA7F0E700906586 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -46,7 +48,11 @@
 		36DABBE11EA82E5800906586 /* popsicle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popsicle.png; sourceTree = "<group>"; };
 		36DABC2E1EA833A700906586 /* Clothing */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Clothing; sourceTree = "<group>"; };
 		36DABC2F1EA833A700906586 /* Home */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Home; sourceTree = "<group>"; };
+		475C1BCD7153021C09BABEA7 /* Pods-BuildingBeautifulApps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuildingBeautifulApps.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BuildingBeautifulApps/Pods-BuildingBeautifulApps.debug.xcconfig"; sourceTree = "<group>"; };
+		5FF09E137DA3C50D9A38C1C3 /* libPods-BuildingBeautifulAppsObjcComplete.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BuildingBeautifulAppsObjcComplete.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84F26C556113B9B6F06AE5E0 /* Pods-BuildingBeautifulApps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuildingBeautifulApps.release.xcconfig"; path = "Pods/Target Support Files/Pods-BuildingBeautifulApps/Pods-BuildingBeautifulApps.release.xcconfig"; sourceTree = "<group>"; };
 		9D1E5807E130C987D54DAE15 /* Pods-ShrineCodelabObjc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShrineCodelabObjc.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShrineCodelabObjc/Pods-ShrineCodelabObjc.release.xcconfig"; sourceTree = "<group>"; };
+		D967962C61FD651D0BC490A2 /* libPods-BuildingBeautifulApps.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BuildingBeautifulApps.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0B0363E04251F4B2787BD47 /* Pods-ShrineCodelabObjc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShrineCodelabObjc.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShrineCodelabObjc/Pods-ShrineCodelabObjc.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17105B289ACF1483EF252934 /* libPods-ShrineCodelabObjc.a in Frameworks */,
+				EB711BFCEEE7BF2237D99896 /* libPods-BuildingBeautifulApps.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +72,8 @@
 			isa = PBXGroup;
 			children = (
 				1E77988AD077916A17CF5F2D /* libPods-ShrineCodelabObjc.a */,
+				5FF09E137DA3C50D9A38C1C3 /* libPods-BuildingBeautifulAppsObjcComplete.a */,
+				D967962C61FD651D0BC490A2 /* libPods-BuildingBeautifulApps.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -73,7 +81,7 @@
 		36DABB971EA7F0E700906586 = {
 			isa = PBXGroup;
 			children = (
-				36DABBA21EA7F0E700906586 /* ShrineCodelabObjc */,
+				36DABBA21EA7F0E700906586 /* BuildingBeautifulApps */,
 				36DABBA11EA7F0E700906586 /* Products */,
 				80F36927416F68DD55EC31B8 /* Pods */,
 				1EB15273881A22502C68AA78 /* Frameworks */,
@@ -83,12 +91,12 @@
 		36DABBA11EA7F0E700906586 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				36DABBA01EA7F0E700906586 /* ShrineCodelabObjc.app */,
+				36DABBA01EA7F0E700906586 /* BuildingBeautifulApps.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		36DABBA21EA7F0E700906586 /* ShrineCodelabObjc */ = {
+		36DABBA21EA7F0E700906586 /* BuildingBeautifulApps */ = {
 			isa = PBXGroup;
 			children = (
 				36DABBA61EA7F0E700906586 /* AppDelegate.h */,
@@ -102,7 +110,7 @@
 				36DABBB71EA7F0E700906586 /* Info.plist */,
 				36DABBA31EA7F0E700906586 /* Supporting Files */,
 			);
-			path = ShrineCodelabObjc;
+			path = BuildingBeautifulApps;
 			sourceTree = "<group>";
 		};
 		36DABBA31EA7F0E700906586 /* Supporting Files */ = {
@@ -144,6 +152,10 @@
 			children = (
 				F0B0363E04251F4B2787BD47 /* Pods-ShrineCodelabObjc.debug.xcconfig */,
 				9D1E5807E130C987D54DAE15 /* Pods-ShrineCodelabObjc.release.xcconfig */,
+				14F6B115B062FC99E50F1F41 /* Pods-BuildingBeautifulAppsObjcComplete.debug.xcconfig */,
+				26364F6243F3061661E5BB6A /* Pods-BuildingBeautifulAppsObjcComplete.release.xcconfig */,
+				475C1BCD7153021C09BABEA7 /* Pods-BuildingBeautifulApps.debug.xcconfig */,
+				84F26C556113B9B6F06AE5E0 /* Pods-BuildingBeautifulApps.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -151,9 +163,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		36DABB9F1EA7F0E700906586 /* ShrineCodelabObjc */ = {
+		36DABB9F1EA7F0E700906586 /* BuildingBeautifulApps */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 36DABBBA1EA7F0E700906586 /* Build configuration list for PBXNativeTarget "ShrineCodelabObjc" */;
+			buildConfigurationList = 36DABBBA1EA7F0E700906586 /* Build configuration list for PBXNativeTarget "BuildingBeautifulApps" */;
 			buildPhases = (
 				2ED5460D364563253D57F229 /* [CP] Check Pods Manifest.lock */,
 				36DABB9C1EA7F0E700906586 /* Sources */,
@@ -166,9 +178,9 @@
 			);
 			dependencies = (
 			);
-			name = ShrineCodelabObjc;
+			name = BuildingBeautifulApps;
 			productName = ShrineCodelabObjc;
-			productReference = 36DABBA01EA7F0E700906586 /* ShrineCodelabObjc.app */;
+			productReference = 36DABBA01EA7F0E700906586 /* BuildingBeautifulApps.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +198,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 36DABB9B1EA7F0E700906586 /* Build configuration list for PBXProject "ShrineCodelabObjc" */;
+			buildConfigurationList = 36DABB9B1EA7F0E700906586 /* Build configuration list for PBXProject "BuildingBeautifulAppsObjcStarter" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -199,7 +211,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				36DABB9F1EA7F0E700906586 /* ShrineCodelabObjc */,
+				36DABB9F1EA7F0E700906586 /* BuildingBeautifulApps */,
 			);
 		};
 /* End PBXProject section */
@@ -249,7 +261,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShrineCodelabObjc/Pods-ShrineCodelabObjc-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BuildingBeautifulApps/Pods-BuildingBeautifulApps-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8D73756F76B06B68032DC382 /* [CP] Copy Pods Resources */ = {
@@ -264,7 +276,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShrineCodelabObjc/Pods-ShrineCodelabObjc-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BuildingBeautifulApps/Pods-BuildingBeautifulApps-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -397,10 +409,10 @@
 		};
 		36DABBBB1EA7F0E700906586 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F0B0363E04251F4B2787BD47 /* Pods-ShrineCodelabObjc.debug.xcconfig */;
+			baseConfigurationReference = 475C1BCD7153021C09BABEA7 /* Pods-BuildingBeautifulApps.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = ShrineCodelabObjc/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/BuildingBeautifulApps/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.ShrineCodelabObjc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -410,10 +422,10 @@
 		};
 		36DABBBC1EA7F0E700906586 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D1E5807E130C987D54DAE15 /* Pods-ShrineCodelabObjc.release.xcconfig */;
+			baseConfigurationReference = 84F26C556113B9B6F06AE5E0 /* Pods-BuildingBeautifulApps.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = ShrineCodelabObjc/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/BuildingBeautifulApps/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.ShrineCodelabObjc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -424,7 +436,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		36DABB9B1EA7F0E700906586 /* Build configuration list for PBXProject "ShrineCodelabObjc" */ = {
+		36DABB9B1EA7F0E700906586 /* Build configuration list for PBXProject "BuildingBeautifulAppsObjcStarter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				36DABBB81EA7F0E700906586 /* Debug */,
@@ -433,7 +445,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		36DABBBA1EA7F0E700906586 /* Build configuration list for PBXNativeTarget "ShrineCodelabObjc" */ = {
+		36DABBBA1EA7F0E700906586 /* Build configuration list for PBXNativeTarget "BuildingBeautifulApps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				36DABBBB1EA7F0E700906586 /* Debug */,
