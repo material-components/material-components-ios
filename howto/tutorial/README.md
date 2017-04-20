@@ -1,11 +1,11 @@
 <!--docs:
-title: "Material Components Development Guide"
+title: "Tutorial"
 layout: landing
 section: docs
 path: /docs/tutorial/
 -->
 
-## Tutorial
+# Tutorial
 
 Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
 
