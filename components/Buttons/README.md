@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
 iconId: button
-path: /buttons/
+path: /catalog/buttons/
 -->
 
 # Buttons

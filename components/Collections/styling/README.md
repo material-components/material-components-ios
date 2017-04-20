@@ -4,7 +4,7 @@ navTitle: Styling
 layout: detail
 section: components
 iconId: list
-path: /collections/styling/
+path: /catalog/collections/styling/
 -->
 # Styling the collection view
 

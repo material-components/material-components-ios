@@ -3,7 +3,7 @@ title: "Animation Timing"
 layout: detail
 section: components
 excerpt: "Material Design animation timing curves."
-path: /animation-timing/
+path: /catalog/animation-timing/
 -->
 
 # Animation Timing

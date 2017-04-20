@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "Snackbars provide brief feedback about an operation through a message at the bottom of the screen."
 iconId: toast
-path: /snackbars/
+path: /catalog/snackbars/
 -->
 
 # Snackbar

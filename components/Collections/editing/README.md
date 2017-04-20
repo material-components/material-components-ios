@@ -4,7 +4,7 @@ navTitle: Editing
 layout: detail
 section: components
 iconId: list
-path: /collections/editing/
+path: /catalog/collections/editing/
 -->
 
 # Editing the collection view

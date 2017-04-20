@@ -3,7 +3,7 @@ title: "Typography"
 layout: detail
 section: components
 excerpt: "The Typography component provides methods for displaying text using the type sizes and opacities from the Material Design specifications."
-path: /typography/
+path: /catalog/typography/
 -->
 
 # Typography
