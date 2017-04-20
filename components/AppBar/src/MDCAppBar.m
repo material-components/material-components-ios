@@ -220,6 +220,7 @@ static const CGFloat kStatusBarHeight = 20;
                                                         action:@selector(didTapBackButton:)];
   }
   backBarButtonItem.accessibilityIdentifier = @"back_bar_button";
+  backBarButtonItem.accessibilityLabel = NSLocalizedString(@"Back", @"Back");
   return backBarButtonItem;
 }
 
