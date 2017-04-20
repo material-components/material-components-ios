@@ -864,6 +864,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 /**
  textContainerInset: is the source of truth for vertical layout. It's used to figure out the proper
  height and also where to place the placeholder / text field.
+ 
+ NOTE: It's applied before the textRect is flipped for RTL. So all calculations are done here à la
+ LTR.
 
  The vertical layout is, at most complex, this form:
  MDCTextInputVerticalPadding +                                        // Top padding
@@ -888,8 +891,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     case MDCTextInputPresentationStyleFloatingPlaceholder: {
       CGFloat scale = [self effectiveFloatingScale];
       textContainerInset.top = MDCTextInputVerticalPadding +
-                               MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
-                               MDCTextInputVerticalHalfPadding;
+      MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
+      MDCTextInputVerticalHalfPadding;
 
       // The amount of space underneath the underline is variable. It could just be
       // MDCTextInputVerticalPadding or the biggest estimated underlineLabel height +
@@ -900,7 +903,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       }
       if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
         underlineLabelsOffset = MAX(
-            underlineLabelsOffset, MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight));
+                                    underlineLabelsOffset, MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight));
       }
       CGFloat underlineOffset = MDCTextInputVerticalHalfPadding + underlineLabelsOffset;
 
@@ -908,7 +911,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       textContainerInset.bottom = underlineOffset + MDCTextInputVerticalHalfPadding;
 
     } break;
-    case MDCTextInputPresentationStyleFullWidth:
+    case MDCTextInputPresentationStyleFullWidth: {
+      textContainerInset = UIEdgeInsetsZero;
+
       textContainerInset.top = MDCTextInputFullWidthVerticalPadding;
       textContainerInset.bottom = MDCTextInputFullWidthVerticalPadding;
       textContainerInset.left = MDCTextInputFullWidthHorizontalPadding;
@@ -918,25 +923,21 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       // estimate is made of the size the text will be.
       if (CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame) > 1.f) {
         textContainerInset.right +=
-            MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
+        MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
       } else if (self.characterCountMax) {
         CGRect charCountRect = [[self characterCountText]
-            boundingRectWithSize:self.textInput.bounds.size
-                         options:NSStringDrawingUsesLineFragmentOrigin
-                      attributes:@{
-                        NSFontAttributeName : self.textInput.trailingUnderlineLabel.font
-                      }
-                         context:nil];
+                                boundingRectWithSize:self.textInput.bounds.size
+                                options:NSStringDrawingUsesLineFragmentOrigin
+                                attributes:@{
+                                             NSFontAttributeName : self.textInput.trailingUnderlineLabel.font
+                                             }
+                                context:nil];
         textContainerInset.right += MDCCeil(CGRectGetWidth(charCountRect));
       }
-      // Space does not need to be made for the clear button because the default text rect already
-      // made space for it. However space needs to be made to allow the clear button to have some
-      // padding from the character count (trailing label) or the text from the character count.
-      textContainerInset.right += MDCTextInputFullWidthHorizontalInnerPadding;
-
       break;
+    }
   }
-
+  
   return textContainerInset;
 }
 
