@@ -3,6 +3,7 @@ title: "Shadow Elevations"
 layout: detail
 section: components
 excerpt: "The Shadow Elevations component provides the most commonly-used Material Design elevations."
+iconId: shadow
 path: /shadow-elevations/
 -->
 
