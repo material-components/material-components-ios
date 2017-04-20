@@ -1,12 +1,20 @@
+<!--docs:
+title: "Palettes"
+layout: detail
+section: components
+excerpt: "The Palettes component provides Material color palettes."
+iconId: color
+-->
+
 # Palettes
 
 The Palettes component provides Material colors organized into similar palettes.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="http://www.google.com/design/spec/style/color.html#color-color-palette">Color palettes</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="http://www.google.com/design/spec/style/color.html#color-color-palette">Color palettes</a></li>
 </ul>
 
 - - -
@@ -22,15 +30,15 @@ The Palettes component provides Material colors organized into similar palettes.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/Palettes'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -43,15 +51,15 @@ Before using Palettes, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialPalettes
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialPalettes.h"
-~~~
+```
 <!--</div>-->
 
 ### Using palettes
@@ -69,13 +77,13 @@ scheme.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 view.backgroundColor = MDCPalette.green().tint500;
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 self.view.backgroundColor = [MDCPalette greenPalette].tint500;
-~~~
+```
 <!--</div>-->

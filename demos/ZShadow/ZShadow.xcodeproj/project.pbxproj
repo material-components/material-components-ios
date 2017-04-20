@@ -1,0 +1,409 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		40FBE4921E8C17CB00D03694 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FBE4911E8C17CB00D03694 /* main.m */; };
+		40FBE4951E8C17CB00D03694 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FBE4941E8C17CB00D03694 /* AppDelegate.m */; };
+		40FBE4981E8C17CB00D03694 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FBE4971E8C17CB00D03694 /* ViewController.m */; };
+		40FBE49B1E8C17CB00D03694 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40FBE4991E8C17CB00D03694 /* Main.storyboard */; };
+		40FBE49D1E8C17CB00D03694 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40FBE49C1E8C17CB00D03694 /* Assets.xcassets */; };
+		40FBE4A01E8C17CB00D03694 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40FBE49E1E8C17CB00D03694 /* LaunchScreen.storyboard */; };
+		40FEAB3D1E8C1BE200516697 /* MaterialShadowedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FEAB3C1E8C1BE200516697 /* MaterialShadowedView.m */; };
+		40FEAB401E8C1BF200516697 /* VanillaShadowedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FEAB3F1E8C1BF200516697 /* VanillaShadowedView.m */; };
+		48C92903C7DCCBA319939794 /* libPods-ZShadow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3738B8760FE0A10789B711E3 /* libPods-ZShadow.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0D9E4C9F55871AAD99B5AE69 /* Pods-ZShadow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZShadow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZShadow/Pods-ZShadow.debug.xcconfig"; sourceTree = "<group>"; };
+		3738B8760FE0A10789B711E3 /* libPods-ZShadow.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZShadow.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BAA67C8B33F73DC3D6BA75F /* Pods-ZShadow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZShadow.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZShadow/Pods-ZShadow.release.xcconfig"; sourceTree = "<group>"; };
+		40FBE48D1E8C17CB00D03694 /* ZShadow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZShadow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		40FBE4911E8C17CB00D03694 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		40FBE4931E8C17CB00D03694 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		40FBE4941E8C17CB00D03694 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		40FBE4961E8C17CB00D03694 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		40FBE4971E8C17CB00D03694 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		40FBE49A1E8C17CB00D03694 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		40FBE49C1E8C17CB00D03694 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		40FBE49F1E8C17CB00D03694 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		40FBE4A11E8C17CB00D03694 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40FEAB3B1E8C1BE200516697 /* MaterialShadowedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialShadowedView.h; sourceTree = "<group>"; };
+		40FEAB3C1E8C1BE200516697 /* MaterialShadowedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialShadowedView.m; sourceTree = "<group>"; };
+		40FEAB3E1E8C1BF200516697 /* VanillaShadowedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VanillaShadowedView.h; sourceTree = "<group>"; };
+		40FEAB3F1E8C1BF200516697 /* VanillaShadowedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VanillaShadowedView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		40FBE48A1E8C17CB00D03694 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48C92903C7DCCBA319939794 /* libPods-ZShadow.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1EC1CDD7003C093D5699355C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0D9E4C9F55871AAD99B5AE69 /* Pods-ZShadow.debug.xcconfig */,
+				3BAA67C8B33F73DC3D6BA75F /* Pods-ZShadow.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		40FBE4841E8C17CB00D03694 = {
+			isa = PBXGroup;
+			children = (
+				40FBE48F1E8C17CB00D03694 /* ZShadow */,
+				40FBE48E1E8C17CB00D03694 /* Products */,
+				1EC1CDD7003C093D5699355C /* Pods */,
+				74347121562AD895DD31C6D6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		40FBE48E1E8C17CB00D03694 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				40FBE48D1E8C17CB00D03694 /* ZShadow.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		40FBE48F1E8C17CB00D03694 /* ZShadow */ = {
+			isa = PBXGroup;
+			children = (
+				40FBE4961E8C17CB00D03694 /* ViewController.h */,
+				40FBE4971E8C17CB00D03694 /* ViewController.m */,
+				40FEAB3B1E8C1BE200516697 /* MaterialShadowedView.h */,
+				40FEAB3C1E8C1BE200516697 /* MaterialShadowedView.m */,
+				40FEAB3E1E8C1BF200516697 /* VanillaShadowedView.h */,
+				40FEAB3F1E8C1BF200516697 /* VanillaShadowedView.m */,
+				40FBE4931E8C17CB00D03694 /* AppDelegate.h */,
+				40FBE4941E8C17CB00D03694 /* AppDelegate.m */,
+				40FBE4991E8C17CB00D03694 /* Main.storyboard */,
+				40FBE49C1E8C17CB00D03694 /* Assets.xcassets */,
+				40FBE49E1E8C17CB00D03694 /* LaunchScreen.storyboard */,
+				40FBE4A11E8C17CB00D03694 /* Info.plist */,
+				40FBE4901E8C17CB00D03694 /* Supporting Files */,
+			);
+			path = ZShadow;
+			sourceTree = "<group>";
+		};
+		40FBE4901E8C17CB00D03694 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				40FBE4911E8C17CB00D03694 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		74347121562AD895DD31C6D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3738B8760FE0A10789B711E3 /* libPods-ZShadow.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		40FBE48C1E8C17CB00D03694 /* ZShadow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 40FBE4A41E8C17CB00D03694 /* Build configuration list for PBXNativeTarget "ZShadow" */;
+			buildPhases = (
+				7D1568575867B569389F7D94 /* [CP] Check Pods Manifest.lock */,
+				40FBE4891E8C17CB00D03694 /* Sources */,
+				40FBE48A1E8C17CB00D03694 /* Frameworks */,
+				40FBE48B1E8C17CB00D03694 /* Resources */,
+				CA26B949F24B119C25FAAED5 /* [CP] Embed Pods Frameworks */,
+				5F1ADE091A6361C1BF4129BD /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZShadow;
+			productName = ZShadow;
+			productReference = 40FBE48D1E8C17CB00D03694 /* ZShadow.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		40FBE4851E8C17CB00D03694 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = Google;
+				TargetAttributes = {
+					40FBE48C1E8C17CB00D03694 = {
+						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = EQHXZ8M8AV;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 40FBE4881E8C17CB00D03694 /* Build configuration list for PBXProject "ZShadow" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 40FBE4841E8C17CB00D03694;
+			productRefGroup = 40FBE48E1E8C17CB00D03694 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				40FBE48C1E8C17CB00D03694 /* ZShadow */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		40FBE48B1E8C17CB00D03694 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40FBE4A01E8C17CB00D03694 /* LaunchScreen.storyboard in Resources */,
+				40FBE49D1E8C17CB00D03694 /* Assets.xcassets in Resources */,
+				40FBE49B1E8C17CB00D03694 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5F1ADE091A6361C1BF4129BD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZShadow/Pods-ZShadow-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D1568575867B569389F7D94 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CA26B949F24B119C25FAAED5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZShadow/Pods-ZShadow-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		40FBE4891E8C17CB00D03694 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40FEAB401E8C1BF200516697 /* VanillaShadowedView.m in Sources */,
+				40FBE4981E8C17CB00D03694 /* ViewController.m in Sources */,
+				40FBE4951E8C17CB00D03694 /* AppDelegate.m in Sources */,
+				40FEAB3D1E8C1BE200516697 /* MaterialShadowedView.m in Sources */,
+				40FBE4921E8C17CB00D03694 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		40FBE4991E8C17CB00D03694 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40FBE49A1E8C17CB00D03694 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		40FBE49E1E8C17CB00D03694 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40FBE49F1E8C17CB00D03694 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		40FBE4A21E8C17CB00D03694 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		40FBE4A31E8C17CB00D03694 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		40FBE4A51E8C17CB00D03694 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D9E4C9F55871AAD99B5AE69 /* Pods-ZShadow.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				INFOPLIST_FILE = ZShadow/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.ZShadow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		40FBE4A61E8C17CB00D03694 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BAA67C8B33F73DC3D6BA75F /* Pods-ZShadow.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				INFOPLIST_FILE = ZShadow/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.ZShadow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		40FBE4881E8C17CB00D03694 /* Build configuration list for PBXProject "ZShadow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40FBE4A21E8C17CB00D03694 /* Debug */,
+				40FBE4A31E8C17CB00D03694 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		40FBE4A41E8C17CB00D03694 /* Build configuration list for PBXNativeTarget "ZShadow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40FBE4A51E8C17CB00D03694 /* Debug */,
+				40FBE4A61E8C17CB00D03694 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 40FBE4851E8C17CB00D03694 /* Project object */;
+}

@@ -388,28 +388,28 @@ Material Components for iOS is built primarily for adoption with CocoaPods. Ther
 
 We have automated some of the above checks in a set of scripts. To run all the checks against every component, run:
 
-~~~bash
+```bash
 scripts/check_components
-~~~
+```
 
 To run the checks against particular components, list their directories on the command line: 
 
-~~~bash
+```bash
 scripts/check_components components/ActivityIndicator components/Buttons
-~~~
+```
 
 Each check is a small script in the `scripts/check` directory. To run only particular checks, use the `-c` flag:
 
-~~~bash
+```bash
 scripts/check_components -c scripts/check/readme -c scripts/check/video
-~~~
+```
 
 Errors are printed out and summarized at the end of the checks:
 
-~~~bash
+```bash
 Error: '/Users/ajsecord/Source/Git/mdc-fork/components/ActivityIndicator/examples' has no Swift examples.
 The following components failed: components/ActivityIndicator.
-~~~
+```
 
 ## Creating new checks
 

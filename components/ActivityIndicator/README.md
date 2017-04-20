@@ -1,16 +1,30 @@
+<!--docs:
+title: "Activity Indicator"
+layout: detail
+section: components
+excerpt: "Progress and activity indicators are visual indications of an app loading content."
+iconId: progress_activity
+-->
+
 # Activity Indicator
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Activity Indicator"><img src="docs/assets/activity_indicator.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/activity_indicator.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/activity_indicator.png" alt="Activity Indicator" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/activity_indicator.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 Activity indicators are visual indications of an app loading content. The Activity Indicator is a circular indicator that either rotates clockwise or fills to completion clockwise when displaying progress.
-<!--{: .intro :}-->
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
 </ul>
 
 - - -
@@ -36,15 +50,15 @@ When indicators are determinate they indicate how long an operation will take wh
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/ActivityIndicator'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -62,15 +76,15 @@ Before using Activity Indicator, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialActivityIndicator.h"
-~~~
+```
 <!--</div>-->
 
 ### Indeterminate indicators
@@ -90,7 +104,7 @@ When indicators are indeterminate they request that the user wait while somethin
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let activityIndicator = MDCActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
 view.addSubview(activityIndicator)
 
@@ -99,11 +113,11 @@ activityIndicator.startAnimating()
 ...
 // Stop animation
 activityIndicator.stopAnimating()
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCActivityIndicator *activityIndicator =
     [[MDCActivityIndicator alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
 [view addSubview:activityIndicator];
@@ -113,7 +127,7 @@ MDCActivityIndicator *activityIndicator =
 ...
 // Stop animation
 [activityIndicator stopAnimating];
-~~~
+```
 <!--</div>-->
 
 ### Determinate indicators
@@ -121,7 +135,7 @@ When indicators are determinate they indicate how long an operation will take wh
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let activityIndicator = MDCActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
 activityIndicator.indicatorMode = .determinate
 activityIndicator.progress = 0.5
@@ -132,11 +146,11 @@ activityIndicator.startAnimating()
 ...
 // Stop animation
 activityIndicator.stopAnimating()
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCActivityIndicator *activityIndicator =
     [[MDCActivityIndicator alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
 activityIndicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
@@ -148,5 +162,5 @@ activityIndicator.progress = 0.5;
 ...
 // Stop animation
 [activityIndicator stopAnimating];
-~~~
+```
 <!--</div>-->

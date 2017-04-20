@@ -1,17 +1,32 @@
+<!--docs:
+title: "Snackbar"
+layout: detail
+section: components
+excerpt: "Snackbars provide brief feedback about an operation through a message at the bottom of the screen."
+iconId: toast
+-->
+
 # Snackbar
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Snackbar"><img src="docs/assets/snackbar.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/snackbar.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/snackbar.png" alt="Snackbar" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/snackbar.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
 contain a text action, but no icons.
+<!--{: .article__intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="https://material.google.com/components/snackbars-toasts.html">Snackbars</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.google.com/components/snackbars-toasts.html">Snackbars</a></li>
 </ul>
 
 - - -
@@ -27,15 +42,15 @@ contain a text action, but no icons.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/Snackbar'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -70,14 +85,14 @@ Before using Snackbar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialSnackbar
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 #import "MaterialSnackbar.h"
-~~~
+```
 <!--</div>-->
 
 - - -
@@ -89,19 +104,19 @@ import MaterialComponents.MaterialSnackbar
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let message = MDCSnackbarMessage()
 message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
 MDCSnackbarManager.show(message)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
 message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
 [MDCSnackbarManager showMessage:message];
-~~~
+```
 <!--</div>-->
 
 ### Display a Snackbar Message with an Action
@@ -109,7 +124,7 @@ message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuc
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let action = MDCSnackbarMessageAction()
 let actionHandler = {() in
   let answerMessage = MDCSnackbarMessage()
@@ -119,11 +134,11 @@ let actionHandler = {() in
 action.handler = actionHandler
 action.title = "OK"
 message.action = action
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
 void (^actionHandler)() = ^() {
   MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
@@ -133,5 +148,5 @@ void (^actionHandler)() = ^() {
 action.handler = actionHandler;
 action.title = @"Answer";
 message.action = action;
-~~~
+```
 <!--</div>-->

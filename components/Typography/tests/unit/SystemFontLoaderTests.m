@@ -97,6 +97,12 @@
   XCTAssertFalse(
       [fontLoader isLargeForContrastRatios:[fontLoader italicFontOfSize:largeIfBoldSize]]);
   XCTAssertTrue([fontLoader isLargeForContrastRatios:[fontLoader italicFontOfSize:largeSize]]);
+
+  // Bold Italic
+  XCTAssertFalse([fontLoader isLargeForContrastRatios:[fontLoader boldItalicFontOfSize:smallSize]]);
+  XCTAssertTrue(
+      [fontLoader isLargeForContrastRatios:[fontLoader boldItalicFontOfSize:largeIfBoldSize]]);
+  XCTAssertTrue([fontLoader isLargeForContrastRatios:[fontLoader boldItalicFontOfSize:largeSize]]);
 }
 
 - (void)testUIFontWeightMediumValue {

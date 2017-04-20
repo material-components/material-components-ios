@@ -1,17 +1,19 @@
+<!--docs:
+title: "How to use Material Components"
+layout: landing
+section: howto
+-->
+
 # How to use Material Components
 
 Material Components for iOS should be immediately useable out of the box with
 Apple's standard development tool chain.
 
-- [Tutorial](tutorial/)
-  <!--{: .icon-guide }-->
-
-- [Build environment](build-env/)
-  <!--{: .icon-guide }-->
-
-- [FAQ](faq/)
-  <!--{: .icon-guide }-->
-<!--{: .icon-list }-->
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--guide"><a href="tutorial/">Tutorial</a></li>
+  <li class="icon-list-item icon-list-item--guide"><a href="build-env/">Build environment</a></li>
+  <li class="icon-list-item icon-list-item--guide"><a href="faq/">FAQ</a></li>
+</ul>
 
 - - -
 
@@ -23,4 +25,4 @@ Apple's standard development tool chain.
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.google.com) (external site)
-  
+

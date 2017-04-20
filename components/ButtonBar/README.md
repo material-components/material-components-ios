@@ -1,11 +1,25 @@
+<!--docs:
+title: "Button Bar"
+layout: detail
+section: components
+excerpt: "The Button Bar component is a view that facilitates the creation and layout of a horizontally-aligned list of buttons."
+iconId: button
+-->
+
 # Button Bar
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Button Bar"><img src="docs/assets/button_bar.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/button_bar.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/button_bar.png" alt="Button Bar" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/button_bar.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
 - - -
 
@@ -20,15 +34,15 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/ButtonBar'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 
@@ -56,15 +70,15 @@ Before using Button Bar, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialButtonBar.h"
-~~~
+```
 <!--</div>-->
 
 
@@ -72,7 +86,7 @@ Create an instance of MDCButtonBar and provide it with an array of UIBarButtonIt
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let buttonBar = MDCButtonBar()
 
 let actionItem = UIBarButtonItem(
@@ -87,11 +101,11 @@ buttonBar.items = [actionItem]
 let size = buttonBar.sizeThatFits(self.view.bounds.size)
 buttonBar.frame = CGRect(x: <# x #>, y: <# y #>, width: size.width, height: size.height)
 self.view.addSubview(buttonBar)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
 
 UIBarButtonItem *actionItem =
@@ -107,7 +121,7 @@ CGPoint origin = CGPointZero;
 buttonBar.frame = CGRectMake(origin.x, origin.y, size.width, size.height);
 [self.view addSubview:buttonBar];
 
-~~~
+```
 <!--</div>-->
 
 ### UIBarButtonItem properties
@@ -134,21 +148,21 @@ MDCButtonBar instance's `items` property and reset it, like so:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 actionItem.target = <some other target>
 
 let items = buttonBar.items
 buttonBar.items = nil
 buttonBar.items = items
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 actionItem.target = <some other target>;
 
 NSArray *items = buttonBar.items;
 buttonBar.items = nil;
 buttonBar.items = items;
-~~~
+```
 <!--</div>-->

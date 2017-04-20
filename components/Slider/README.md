@@ -1,17 +1,31 @@
+<!--docs:
+title: "Slider"
+layout: detail
+section: components
+excerpt: "The Slider component provides a Material Design control for selecting a value from a continuous range or discrete set of values."
+iconId: slider
+-->
+
 # Slider
 
 <!--{% if site.link_to_site == "true" %}-->
-<a alt="Slider"><img src="docs/assets/slider.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/slider.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/slider.png" alt="Slider" width="320">
+</div>
+<!--{% else %}
+<div class="article__asset article__asset--screenshot" markdown="1">
+  <video src="docs/assets/slider.mp4" autoplay loop></video>
+</div>
+{% endif %}-->
 
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
-<!--{: .intro }-->
+<!--{: .article__intro }-->
 
-### Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/components/sliders.html">Sliders</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/components/sliders.html">Sliders</a></li>
 </ul>
 
 - - -
@@ -28,15 +42,15 @@ or discrete set of values.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/Slider'
-~~~
+```
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -50,15 +64,15 @@ Before using Slider, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialSlider
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialSlider.h"
-~~~
+```
 <!--</div>-->
 
 ### Standard usage
@@ -68,7 +82,7 @@ MDCSlider can be be used like a standard `UIControl`.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -82,11 +96,11 @@ override func viewDidLoad() {
 func didChangeSliderValue(senderSlider:MDCSlider) {
   print("Did change slider value to: %@", senderSlider.value)
 }
-~~~
+```
 
 #### Objective C
 
-~~~ objc
+``` objc
 - (void)viewDidLoad {
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(50, 50, 100, 27)];
   [slider addTarget:self
@@ -98,7 +112,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 - (void)didChangeSliderValue:(MDCSlider *)slider {
   NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
 }
-~~~
+```
 <!--</div>-->
 
 ### The differences between the UISlider class and the MDCSlider class:
