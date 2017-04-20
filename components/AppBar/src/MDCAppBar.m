@@ -24,6 +24,8 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+#import "MaterialAppBarStrings.h"
+#import "MaterialAppBarStrings_table.h"
 
 static NSString *const kBarStackKey = @"barStack";
 static NSString *const kStatusBarHeightKey = @"statusBarHeight";
@@ -31,6 +33,9 @@ static NSString *const MDCAppBarHeaderViewControllerKey = @"MDCAppBarHeaderViewC
 static NSString *const MDCAppBarNavigationBarKey = @"MDCAppBarNavigationBarKey";
 static NSString *const MDCAppBarHeaderStackViewKey = @"MDCAppBarHeaderStackViewKey";
 static const CGFloat kStatusBarHeight = 20;
+
+// The Bundle for string resources.
+static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 @class MDCAppBarViewController;
 
@@ -220,20 +225,35 @@ static const CGFloat kStatusBarHeight = 20;
                                                         action:@selector(didTapBackButton:)];
   }
   backBarButtonItem.accessibilityIdentifier = @"back_bar_button";
-  backBarButtonItem.accessibilityLabel = NSLocalizedString(@"Back", @"Back");
+  NSString *key =
+      kMaterialAppBarStringTable[kStr_MaterialAppBarBackButtonAccessibilityLabel];
+  backBarButtonItem.accessibilityLabel =
+      NSLocalizedStringFromTableInBundle(key,
+                                         kMaterialAppBarStringsTableName,
+                                         [[self class] bundle],
+                                         @"Back");
   return backBarButtonItem;
 }
 
-+ (NSBundle *)baseBundle {
+#pragma mark - Resource bundle
+
++ (NSBundle *)bundle {
   static NSBundle *bundle = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    // We may not be included by the main bundle, but rather by an embedded framework, so figure out
-    // to which bundle our code is compiled, and use that as the starting point for bundle loading.
-    bundle = [NSBundle bundleForClass:[self class]];
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialAppBarBundle]];
   });
 
   return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 - (void)viewDidLoad {
