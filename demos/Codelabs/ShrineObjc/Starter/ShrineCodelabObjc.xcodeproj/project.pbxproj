@@ -25,8 +25,8 @@
 
 /* Begin PBXFileReference section */
 		1E77988AD077916A17CF5F2D /* libPods-ShrineCodelabObjc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShrineCodelabObjc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		36625A751EA869DA00A0E2AD /* HomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeHeaderView.h; path = "Model and Cell/HomeHeaderView.h"; sourceTree = "<group>"; };
-		36625A761EA869DA00A0E2AD /* HomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeHeaderView.m; path = "Model and Cell/HomeHeaderView.m"; sourceTree = "<group>"; };
+		36625A751EA869DA00A0E2AD /* HomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeHeaderView.h; sourceTree = "<group>"; };
+		36625A761EA869DA00A0E2AD /* HomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeHeaderView.m; sourceTree = "<group>"; };
 		36625A781EA86D3200A0E2AD /* fishbowl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fishbowl.png; sourceTree = "<group>"; };
 		36DABBA01EA7F0E700906586 /* ShrineCodelabObjc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShrineCodelabObjc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36DABBA41EA7F0E700906586 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -96,9 +96,7 @@
 				36DABBA91EA7F0E700906586 /* ProductGridViewController.h */,
 				36DABBAA1EA7F0E700906586 /* ProductGridViewController.m */,
 				36DABBAF1EA7F0E700906586 /* ProductGrid.storyboard */,
-				36625A751EA869DA00A0E2AD /* HomeHeaderView.h */,
-				36625A761EA869DA00A0E2AD /* HomeHeaderView.m */,
-				36DABBC31EA8169C00906586 /* Model and Cell */,
+				36DABBC31EA8169C00906586 /* Supplemental */,
 				36DABBB21EA7F0E700906586 /* Assets.xcassets */,
 				36DABBB41EA7F0E700906586 /* LaunchScreen.storyboard */,
 				36DABBB71EA7F0E700906586 /* Info.plist */,
@@ -115,7 +113,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		36DABBC31EA8169C00906586 /* Model and Cell */ = {
+		36DABBC31EA8169C00906586 /* Supplemental */ = {
 			isa = PBXGroup;
 			children = (
 				36DABC2E1EA833A700906586 /* Clothing */,
@@ -125,9 +123,11 @@
 				36DABBC11EA8166200906586 /* Product.m */,
 				36DABBBD1EA812B200906586 /* ProductCollectionViewCell.h */,
 				36DABBBE1EA812B200906586 /* ProductCollectionViewCell.m */,
+				36625A751EA869DA00A0E2AD /* HomeHeaderView.h */,
+				36625A761EA869DA00A0E2AD /* HomeHeaderView.m */,
 				36DABBC41EA8194900906586 /* ProductStorageHelper.h */,
 			);
-			path = "Model and Cell";
+			path = Supplemental;
 			sourceTree = "<group>";
 		};
 		36DABBC71EA82E5800906586 /* Images */ = {
