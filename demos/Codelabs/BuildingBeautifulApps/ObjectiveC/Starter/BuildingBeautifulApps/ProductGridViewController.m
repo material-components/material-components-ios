@@ -21,7 +21,6 @@
 
 #import "MaterialButtons.h"
 #import "MaterialAppBar.h"
-#import "MaterialSnackbar.h"
 
 @interface ProductGridViewController ()
 
@@ -172,10 +171,6 @@
   Product *product = self.products[sender.tag];
   product.isFavorite = !product.isFavorite;
   [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:sender.tag inSection:0]]];
-
-  if (product.isFavorite) {
-    [MDCSnackbarManager showMessage:[MDCSnackbarMessage messageWithText:@"Added to favorites!"]];
-  }
 }
 
 #pragma mark - CollectionView DataSource
