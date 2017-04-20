@@ -1,0 +1,1 @@
+../../../MaterialComponents/components/private/Icons/icons/ic_check/src/MaterialIcons+ic_check.h

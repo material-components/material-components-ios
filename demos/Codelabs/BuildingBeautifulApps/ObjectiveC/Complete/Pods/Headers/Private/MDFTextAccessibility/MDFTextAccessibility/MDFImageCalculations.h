@@ -1,0 +1,1 @@
+../../../../MDFTextAccessibility/src/private/MDFImageCalculations.h
