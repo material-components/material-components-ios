@@ -353,7 +353,6 @@
 				664524AF1C6BA62A001ADBF8 /* Sources */,
 				664524B01C6BA62A001ADBF8 /* Frameworks */,
 				664524B11C6BA62A001ADBF8 /* Resources */,
-				5951872D1E1DA83700AC2110 /* SwiftLint */,
 				72ACDAA295D1F2087113246F /* [CP] Embed Pods Frameworks */,
 				8164F6F5D8C80F373A698031 /* [CP] Copy Pods Resources */,
 				64307B471DF74FEF004AE4AC /* Embed App Extensions */,
@@ -494,20 +493,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		5951872D1E1DA83700AC2110 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${SRCROOT}/../scripts/lint_all";
 		};
 		72ACDAA295D1F2087113246F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
