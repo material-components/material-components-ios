@@ -1,0 +1,1 @@
+../../../MaterialComponents/components/Collections/src/private/MDCCollectionStringResources.h

@@ -1,0 +1,1 @@
+../../../MaterialComponents/components/Ink/src/MDCInkGestureRecognizer.h

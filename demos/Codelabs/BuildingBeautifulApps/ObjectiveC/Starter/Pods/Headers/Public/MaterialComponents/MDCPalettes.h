@@ -1,0 +1,1 @@
+../../../MaterialComponents/components/Palettes/src/MDCPalettes.h
