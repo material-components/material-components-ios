@@ -20,11 +20,9 @@
 #import "HomeHeaderView.h"
 
 #import "MaterialButtons.h"
-#import "MaterialAppBar.h"
 
 @interface ProductGridViewController ()
 
-@property(nonatomic) MDCAppBar *appBar;
 @property(nonatomic) IBOutlet HomeHeaderView *headerContentView;
 @property(nonatomic) IBOutlet UIImageView *shrineLogo;
 
@@ -35,21 +33,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.bounds.size.height, 0);
-
-  self.appBar = [[MDCAppBar alloc] init];
-  [self addChildViewController:self.appBar.headerViewController];
-  [self.appBar addSubviewsToParent];
-  self.appBar.headerViewController.headerView.trackingScrollView = self.collectionView;
-  self.appBar.headerViewController.headerView.backgroundColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.maximumHeight = 440;
-  self.appBar.headerViewController.headerView.minimumHeight = 72;
-
-  if (self.isHome) {
-    [self setupHeaderContentView];
-    [self setupHeaderLogo];
-  }
-
-  self.title = self.tabBarItem.title;
 
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
   self.styler.cellLayoutType = MDCCollectionViewCellLayoutTypeGrid;
@@ -62,107 +45,10 @@
   [self updateLayout];
 }
 
-#pragma mark - Rotation
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  [self updateLayout];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-  [self updateLayout];
-}
-
 - (void)updateLayout {
-  [self sizeHeaderView];
-  switch (self.traitCollection.horizontalSizeClass) {
-    case UIUserInterfaceSizeClassCompact:
-      self.styler.gridColumnCount = 2;
-      break;
-    case UIUserInterfaceSizeClassUnspecified:
-    case UIUserInterfaceSizeClassRegular:
-      self.styler.gridColumnCount = 3;
-      break;
-  }
+  self.styler.gridColumnCount = 1;
+
   [self.collectionView.collectionViewLayout invalidateLayout];
-}
-
-#pragma mark - Header
-
-- (void)setupHeaderContentView {
-  [self.appBar.headerViewController.headerView addSubview:self.headerContentView];
-  self.headerContentView.frame = self.appBar.headerViewController.headerView.frame;
-  self.headerContentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-}
-
-- (void)sizeHeaderView {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  CGRect bounds = [UIScreen mainScreen].bounds;
-  if (self.isHome && bounds.size.width < bounds.size.height) {
-    headerView.maximumHeight = 440;
-  } else {
-    headerView.maximumHeight = 72;
-  }
-  headerView.minimumHeight = 72;
-}
-
-- (void)setupHeaderLogo {
-  [self.appBar.headerViewController.headerView addSubview:self.shrineLogo];
-  [self.shrineLogo.topAnchor constraintEqualToAnchor:self.shrineLogo.superview.topAnchor constant:24].active = YES;
-  [self.shrineLogo.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-  self.shrineLogo.translatesAutoresizingMaskIntoConstraints = NO;
-
-  self.shrineLogo.alpha = 0;
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  [self.appBar.headerViewController scrollViewDidScroll:scrollView];
-  CGFloat scrollOffsetY = scrollView.contentOffset.y;
-  CGFloat opacity = 1.0;
-
-  if (scrollOffsetY > -240) {
-    opacity = 0;
-  }
-
-  CGFloat logoOpacity = 0.0;
-
-  if (scrollOffsetY > -200) {
-    logoOpacity = 1.0;
-  }
-
-  [UIView animateWithDuration:0.5 animations:^{
-    self.headerContentView.backgroundImage.alpha = opacity;
-    self.headerContentView.descLabel.alpha = opacity;
-    self.headerContentView.titleLabel.alpha = opacity;
-
-    self.shrineLogo.alpha = logoOpacity;
-  }];
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDecelerating];
-  }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
-  }
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
-                     withVelocity:(CGPoint)velocity
-              targetContentOffset:(inout CGPoint *)targetContentOffset {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                          targetContentOffset:targetContentOffset];
-  }
 }
 
 #pragma mark - Target / Action
@@ -180,9 +66,6 @@
   cell.product = self.products[indexPath.item];
 
   cell.favoriteButton.tag = indexPath.item;
-  if (![cell.favoriteButton.allTargets containsObject:self]) {
-    [cell.favoriteButton addTarget:self action:@selector(favoriteButtonDidTouch:) forControlEvents:UIControlEventTouchUpInside];
-  }
 
   return cell;
 }

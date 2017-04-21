@@ -412,6 +412,7 @@
 			baseConfigurationReference = 475C1BCD7153021C09BABEA7 /* Pods-BuildingBeautifulApps.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/BuildingBeautifulApps/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.ShrineCodelabObjc;
@@ -425,6 +426,7 @@
 			baseConfigurationReference = 84F26C556113B9B6F06AE5E0 /* Pods-BuildingBeautifulApps.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/BuildingBeautifulApps/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.ShrineCodelabObjc;
