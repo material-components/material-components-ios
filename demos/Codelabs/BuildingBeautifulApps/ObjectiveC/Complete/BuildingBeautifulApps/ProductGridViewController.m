@@ -63,7 +63,7 @@
   [self updateLayout];
 }
 
-#pragma mark - Rotation
+#pragma mark - Rotation and Screen size
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -77,15 +77,21 @@
 
 - (void)updateLayout {
   [self sizeHeaderView];
-  switch (self.traitCollection.horizontalSizeClass) {
-    case UIUserInterfaceSizeClassCompact:
-      self.styler.gridColumnCount = 2;
-      break;
-    case UIUserInterfaceSizeClassUnspecified:
-    case UIUserInterfaceSizeClassRegular:
-      self.styler.gridColumnCount = 3;
-      break;
+
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    self.styler.gridColumnCount = 5;
+  } else {
+    switch (self.traitCollection.horizontalSizeClass) {
+      case UIUserInterfaceSizeClassCompact:
+        self.styler.gridColumnCount = 2;
+        break;
+      case UIUserInterfaceSizeClassUnspecified:
+      case UIUserInterfaceSizeClassRegular:
+        self.styler.gridColumnCount = 3;
+        break;
+    }
   }
+
   [self.collectionView.collectionViewLayout invalidateLayout];
 }
 

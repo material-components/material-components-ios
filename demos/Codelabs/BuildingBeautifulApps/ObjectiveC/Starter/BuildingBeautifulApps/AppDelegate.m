@@ -18,8 +18,6 @@
 #import "ProductGridViewController.h"
 #import "ProductStorageHelper.h"
 
-#import "MaterialSnackbar.h"
-
 @interface AppDelegate ()
 
 @end
@@ -58,8 +56,6 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.rootViewController = tabBarController;
   [self.window makeKeyAndVisible];
-
-  [MDCSnackbarManager setBottomOffset:tabBarController.tabBar.bounds.size.height];
 
   return YES;
 }
