@@ -24,8 +24,8 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
-#import "MaterialAppBarStrings.h"
-#import "MaterialAppBarStrings_table.h"
+#import "private/MaterialAppBarStrings.h"
+#import "private/MaterialAppBarStrings_table.h"
 
 static NSString *const kBarStackKey = @"barStack";
 static NSString *const kStatusBarHeightKey = @"statusBarHeight";
