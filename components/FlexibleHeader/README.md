@@ -317,12 +317,12 @@ by changing the Flexible Header's behavior.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-headerViewController.headerView.behavior = .Enabled
+headerViewController.headerView.shiftBehavior = .Enabled
 ```
 
 #### Objective-C
 ``` objc
-headerViewController.headerView.behavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
 ```
 <!--</div>-->
 
@@ -338,7 +338,7 @@ behavior by setting the `EnabledWithStatusBar` behavior and implementing
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-headerViewController.headerView.behavior = .EnabledWithStatusBar
+headerViewController.headerView.shiftBehavior = .EnabledWithStatusBar
 
 override func childViewControllerForStatusBarHidden() -> UIViewController? {
   return headerViewController
@@ -347,7 +347,7 @@ override func childViewControllerForStatusBarHidden() -> UIViewController? {
 
 #### Objective-C
 ``` objc
-headerViewController.headerView.behavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return _headerViewController;
