@@ -70,7 +70,8 @@
 }
 
 - (void)didTapButton:(id)sender {
-  UIViewController *viewController = [[BottomSheetExampleViewController alloc] init];
+  UIViewController *viewController = [[BottomSheetExampleViewController alloc] initWithNibName:nil
+                                                                                        bundle:nil];
   viewController.transitioningDelegate = self;
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   [self presentViewController:viewController animated:YES completion:nil];
@@ -83,7 +84,8 @@
   MDCBottomSheetPresentationController *presentationController =
       [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                            presentingViewController:presenting];
-  presentationController.overrideTraitCollection = [UITraitCollection traitCollectionWithHorizontalSizeClass:UIUserInterfaceSizeClassCompact];
+  presentationController.overrideTraitCollection =
+      [UITraitCollection traitCollectionWithHorizontalSizeClass:UIUserInterfaceSizeClassCompact];
   return presentationController;
 }
 
@@ -100,7 +102,8 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"...";
+  return @"The Bottom Sheet is a presentation controller for presenting view controllers as a sheet"
+      " that slides up from the bottom of the screen. The sheet can be swiped down to dismiss it.";
 }
 
 @end
