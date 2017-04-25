@@ -19,8 +19,6 @@
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
 
-@class MDCTabBarConfiguration;
-
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
 
@@ -35,25 +33,14 @@
  @see https://www.google.com/design/spec/components/tabs.html
  */
 IB_DESIGNABLE
-@interface MDCTabBar : UIView
+@interface MDCTabBar : UIView<UIBarPositioning>
 
 /** The default height for the tab bar given a configuration and item appearance. */
-+ (CGFloat)defaultHeightForConfiguration:(nonnull MDCTabBarConfiguration *)configuration
-                          itemAppearance:(MDCTabBarItemAppearance)appearance;
++ (CGFloat)defaultHeightForPosition:(UIBarPosition)position
+                     itemAppearance:(MDCTabBarItemAppearance)appearance;
 
-/** The default height for the tab bar given an item appearance and the default configuration. */
+/** The default height for the tab bar in the top position, given an item appearance. */
 + (CGFloat)defaultHeightForItemAppearance:(MDCTabBarItemAppearance)appearance;
-
-/** Designated initializer. Creates a tab bar given a configuration. */
-- (nonnull instancetype)initWithFrame:(CGRect)frame
-                        configuration:(nonnull MDCTabBarConfiguration *)configuration
-    NS_DESIGNATED_INITIALIZER;
-
-/** Redeclaration of NSCoding designated initializer. */
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
-
-/** The configuration provided at initialization. */
-@property(nonatomic, readonly, copy, nonnull) MDCTabBarConfiguration *configuration;
 
 /**
  Items displayed in the tab bar.
@@ -102,14 +89,14 @@ IB_DESIGNABLE
  Horizontal alignment of tabs within the tab bar. Changes are not animated. Default alignment is
  MDCTabBarAlignmentLeading.
 
- The default value is based on the configuration. It's recommended to use the default if possible.
+ The default value is based on the position. It's recommended to use the default if possible.
  */
 @property(nonatomic) MDCTabBarAlignment alignment;
 
 /**
  Appearance of tabs within the tab bar. Changes are not animated.
 
- The default value is based on the configuration. It's recommended to use the default if possible.
+ The default value is based on the position. It's recommended to use the default if possible.
  */
 @property(nonatomic) MDCTabBarItemAppearance itemAppearance;
 
@@ -117,7 +104,7 @@ IB_DESIGNABLE
  Indicates if all tab titles should be uppercased for display. If NO, item titles will be
  displayed verbatim.
 
- The default value is based on the configuration. It's recommended to use the default if possible.
+ The default value is based on the position. It's recommended to use the default if possible.
  */
 @property(nonatomic) BOOL displaysUppercaseTitles;
 
@@ -153,9 +140,9 @@ IB_DESIGNABLE
 
 /**
  Delegate protocol for MDCTabBar. Clients may implement this protocol to receive notifications of
- selection changes in the tab bar.
+ selection changes in the tab bar or to influence the bar's appearance.
  */
-@protocol MDCTabBarDelegate <NSObject>
+@protocol MDCTabBarDelegate <UIBarPositioningDelegate>
 
 @optional
 
@@ -170,30 +157,5 @@ IB_DESIGNABLE
  changes to the tab bar's selected item.
  */
 - (void)tabBar:(nonnull MDCTabBar *)tabBar didSelectItem:(nonnull UITabBarItem *)item;
-
-@end
-
-/**
- Fixed configuration options for tab bars.
-
- The tab bar copies the configuration passed at initialization, so all configuration changes must
- be made before creating the tab bar. 
-*/
-@interface MDCTabBarConfiguration : NSObject <NSCopying>
-
-/** Configuration which produces tabs appropriate for use above content. */
-+ (nonnull instancetype)topTabsConfiguration;
-
-/** Configuration which produces tabs appropriate for use as bottom navigation. */
-+ (nonnull instancetype)bottomNavigationConfiguration;
-
-/** Indicates if the tab bar shows items with uppercase titles by default. */
-@property(nonatomic) BOOL displaysUppercaseTitlesByDefault;
-
-/** Default tab bar alignment. */
-@property(nonatomic) MDCTabBarAlignment defaultAlignment;
-
-/** Default item appearance. */
-@property(nonatomic) MDCTabBarItemAppearance defaultItemAppearance;
 
 @end
