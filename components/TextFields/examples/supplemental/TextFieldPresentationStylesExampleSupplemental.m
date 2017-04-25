@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "TextFieldExampleSupplemental.h"
+#import "TextFieldPresentationStylesExampleSupplemental.h"
 
-@implementation TextFieldExample (Supplemental)
+@implementation TextFieldPresentationStylesExample (Supplemental)
 
 - (void)setupExampleViews {
   [self setupScrollView];
@@ -59,15 +59,10 @@
 
 @end
 
-@implementation TextFieldExample (CatalogByConvention)
+@implementation TextFieldPresentationStylesExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Typical Use (Objective C)" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Material Design Text Fields take the familiar element to a new level by adding "
-         @"useful animations, character counts, helper text and error states.";
+  return @[ @"Text Field", @"Presentation Styles (Objective C)" ];
 }
 
 @end

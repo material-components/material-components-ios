@@ -25,7 +25,7 @@ import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialTypography
 
-final class TextFieldSwiftExample: UIViewController {
+final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -81,28 +81,7 @@ final class TextFieldSwiftExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
-
-    title = "Material Text Fields"
-
-    let textFieldControllersFullWidth = setupFullWidthTextFields()
-
-    allTextFieldControllers = [setupDefaultTextFields(),
-                     textFieldControllersFullWidth,
-                     setupFloatingTextFields(),
-                     setupSpecialTextFields()].flatMap { $0 }
-
-    controllersFullWidth = textFieldControllersFullWidth
-
-    allInputControllers = allTextFieldControllers
-
-    setupScrollView()
-
-    NotificationCenter.default.addObserver(self,
-                    selector: #selector(TextFieldSwiftExample.contentSizeCategoryDidChange(notif:)),
-                    name:.UIContentSizeCategoryDidChange,
-                    object: nil)
+    setupExampleViews()
   }
 
   func setupDefaultTextFields() -> [MDCTextInputController] {
@@ -268,7 +247,7 @@ final class TextFieldSwiftExample: UIViewController {
       UIFont.preferredFont(forTextStyle: .subheadline)
     textFieldCustomFontFloating.clearButtonColor = MDCPalette.red().tint500
 
-    let bundle = Bundle(for: TextFieldSwiftExample.self)
+    let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
     let leftViewImagePath = bundle.path(forResource: "ic_search", ofType: "png")!
     let leftViewImage = UIImage(contentsOfFile: leftViewImagePath)!
 
@@ -387,241 +366,8 @@ final class TextFieldSwiftExample: UIViewController {
             textFieldControllerDefaultLeftRightViewFloating]
   }
 
-  func setupControls() -> [UIView] {
-    let container = UIView()
-    container.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.addSubview(container)
-
-    container.addSubview(errorLabel)
-
-    let errorSwitch = UISwitch()
-    errorSwitch.translatesAutoresizingMaskIntoConstraints = false
-    errorSwitch.addTarget(self,
-                        action: #selector(TextFieldSwiftExample.errorSwitchDidChange(errorSwitch:)),
-                        for: .touchUpInside)
-    container.addSubview(errorSwitch)
-    errorSwitch.accessibilityLabel = "Show errors"
-
-    container.addSubview(helperLabel)
-
-    let helperSwitch = UISwitch()
-    helperSwitch.translatesAutoresizingMaskIntoConstraints = false
-    helperSwitch.addTarget(self,
-                    action: #selector(TextFieldSwiftExample.helperSwitchDidChange(helperSwitch:)),
-                    for: .touchUpInside)
-    container.addSubview(helperSwitch)
-    helperSwitch.accessibilityLabel = "Helper text"
-
-    let views = ["errorLabel": errorLabel, "errorSwitch": errorSwitch,
-                 "helperLabel": helperLabel, "helperSwitch": helperSwitch]
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "H:|-[errorLabel]-[errorSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "H:|-[helperLabel]-[helperSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-[errorSwitch]-[helperSwitch]|", options: [], metrics: nil, views: views))
-
-    characterModeButton.translatesAutoresizingMaskIntoConstraints = false
-    characterModeButton.addTarget(self,
-                                  action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
-                                  for: .touchUpInside)
-    characterModeButton.setTitle("Character Count Mode: Always", for: .normal)
-    characterModeButton.setTitleColor(.white, for: .normal)
-    characterModeButton.mdc_adjustsFontForContentSizeCategory = true
-    scrollView.addSubview(characterModeButton)
-
-    clearModeButton.translatesAutoresizingMaskIntoConstraints = false
-    clearModeButton.addTarget(self,
-                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
-                              for: .touchUpInside)
-    clearModeButton.setTitle("Clear Button Mode: While Editing", for: .normal)
-    clearModeButton.setTitleColor(.white, for: .normal)
-    clearModeButton.mdc_adjustsFontForContentSizeCategory = true
-    scrollView.addSubview(clearModeButton)
-
-    underlineButton.translatesAutoresizingMaskIntoConstraints = false
-    underlineButton.addTarget(self,
-                              action: #selector(TextFieldSwiftExample.buttonDidTouch(button:)),
-                              for: .touchUpInside)
-
-    underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
-    underlineButton.setTitleColor(.white, for: .normal)
-    underlineButton.mdc_adjustsFontForContentSizeCategory = true
-    scrollView.addSubview(underlineButton)
-
-    return [container, characterModeButton, underlineButton, clearModeButton]
-  }
-
-  func setupSectionLabels() {
-    scrollView.addSubview(controlLabel)
-    scrollView.addSubview(singleLabel)
-
-    NSLayoutConstraint(item: singleLabel,
-                       attribute: .leading,
-                       relatedBy: .equal,
-                       toItem: view,
-                       attribute: .leadingMargin,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-
-    NSLayoutConstraint(item: singleLabel,
-                       attribute: .trailing,
-                       relatedBy: .equal,
-                       toItem: view,
-                       attribute: .trailingMargin,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-  }
-
-  func setupScrollView() {
-    view.addSubview(scrollView)
-    scrollView.translatesAutoresizingMaskIntoConstraints = false
-
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(
-      withVisualFormat: "V:|[scrollView]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: ["scrollView": scrollView]))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: ["scrollView": scrollView]))
-    let marginOffset: CGFloat = 16
-    let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
-
-    scrollView.layoutMargins = margins
-
-    setupSectionLabels()
-
-    let prefix = "view"
-    let concatenatingClosure = {
-      (accumulator, object: AnyObject) in
-      accumulator + "[" + self.unique(from: object, with: prefix) +
-        "]" + "-"
-    }
-
-    let allControls = setupControls()
-    let controlsString = allControls.reduce("", concatenatingClosure)
-
-    var controls = [String: UIView]()
-    allControls.forEach { control in
-      controls[unique(from: control, with: prefix)] =
-      control
-    }
-
-    let allTextFields = allTextFieldControllers.flatMap { $0.input }
-    let textFieldsString = allTextFields.reduce("", concatenatingClosure)
-
-    var textFields = [String: UIView]()
-    allTextFields.forEach { input in
-      textFields[unique(from: input, with: prefix)] = input
-    }
-
-    let visualString = "V:|-20-[singleLabel]-" +
-      textFieldsString + "[unstyledTextField]-10-[controlLabel]-" + controlsString + "20-|"
-
-    let labels: [String: UIView] = ["controlLabel": controlLabel,
-                                    "singleLabel": singleLabel,
-                                    "unstyledTextField": unstyledTextField]
-
-    var views = [String: UIView]()
-
-    let dictionaries = [labels, textFields, controls]
-
-    dictionaries.forEach { dictionary in
-      dictionary.forEach { (key, value) in
-        views[key] = value
-
-        // We have a scrollview and we're adding some elements that are subclassed from scrollviews.
-        // So constraints need to be in relation to something that doesn't have a content size. 
-        // We'll use the view controller's view.
-        let leading = NSLayoutConstraint(item: value,
-                           attribute: .leading,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .leadingMargin,
-                           multiplier: 1.0,
-                           constant: 0.0)
-        leading.priority = 750.0
-        leading.isActive = true
-
-        let trailing = NSLayoutConstraint(item: value,
-                                         attribute: .trailing,
-                                         relatedBy: .equal,
-                                         toItem: view,
-                                         attribute: .trailing,
-                                         multiplier: 1.0,
-                                         constant: 0.0)
-        trailing.priority = 750.0
-        trailing.isActive = true
-      }
-    }
-
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: visualString,
-                                                               options: [.alignAllCenterX],
-                                                               metrics: nil,
-                                                                 views: views))
-
-    controllersFullWidth.flatMap { $0.input }.forEach { input in
-      NSLayoutConstraint(item: input,
-                         attribute: .leading,
-                         relatedBy: .equal,
-                         toItem: view,
-                         attribute: .leading,
-                         multiplier: 1.0,
-                         constant: 0).isActive = true
-      NSLayoutConstraint(item: input,
-                         attribute: .trailing,
-                         relatedBy: .equal,
-                         toItem: view,
-                         attribute: .trailing,
-                         multiplier: 1.0,
-                         constant: 0).isActive = true
-    }
-    registerKeyboardNotifications()
-    addGestureRecognizer()
-  }
-
-  func addGestureRecognizer() {
-    let tapRecognizer = UITapGestureRecognizer(target: self,
-                                               action: #selector(TextFieldSwiftExample.tapDidTouch))
-    self.scrollView.addGestureRecognizer(tapRecognizer)
-  }
-
   func tapDidTouch() {
     self.view.endEditing(true)
-  }
-
-  func registerKeyboardNotifications() {
-    let notificationCenter = NotificationCenter.default
-    notificationCenter.addObserver(
-      self,
-      selector: #selector(TextFieldSwiftExample.keyboardWillShow(notif:)),
-      name: .UIKeyboardWillShow,
-      object: nil)
-    notificationCenter.addObserver(
-      self,
-      selector: #selector(TextFieldSwiftExample.keyboardWillHide(notif:)),
-      name: .UIKeyboardWillHide,
-      object: nil)
-  }
-
-  func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
-      return
-    }
-    scrollView.contentInset = UIEdgeInsets(top: 0.0,
-                                           left: 0.0,
-                                           bottom: frame.height,
-                                           right: 0.0)
-  }
-
-  func keyboardWillHide(notif: Notification) {
-    scrollView.contentInset = UIEdgeInsets()
-  }
-
-  func unique(from input: AnyObject, with prefix: String) -> String {
-    return prefix + String(describing: Unmanaged.passUnretained(input).toOpaque())
   }
 
   func errorSwitchDidChange(errorSwitch: UISwitch) {
@@ -640,84 +386,16 @@ final class TextFieldSwiftExample: UIViewController {
     }
   }
 
-  func buttonDidTouch(button: MDCButton) {
-    var controllersToChange = allInputControllers
-    var partialTitle = ""
-
-    if button == characterModeButton {
-      partialTitle = "Character Count Mode"
-      controllersToChange = controllersWithCharacterCount
-    } else if button == clearModeButton {
-      partialTitle = "Clear Button Mode"
-      controllersToChange = allTextFieldControllers
-    } else {
-      partialTitle = "Underline View Mode"
-    }
-
-    let closure: (UITextFieldViewMode, String) -> Void = { mode, title in
-      controllersToChange.forEach { controller in
-        if button == self.characterModeButton {
-          controller.characterMode = mode
-        } else if button == self.clearModeButton {
-          if let input = controller.input as? MDCTextField {
-            input.clearButtonMode = mode
-          }
-        } else {
-          controller.underlineMode = mode
-        }
-
-        button.setTitle(title + ": " + self.modeName(mode: mode), for: .normal)
-      }
-    }
-
-    let alert = UIAlertController(title: partialTitle,
-                                  message: nil,
-                                  preferredStyle: .alert)
-    presentAlert(alert: alert, partialTitle: partialTitle, closure: closure)
-  }
-
-  func presentAlert (alert: UIAlertController,
-                     partialTitle: String,
-    closure: @escaping (_ mode: UITextFieldViewMode, _ title: String) -> Void) -> Void {
-
-    for rawMode in 0...3 {
-      let mode = UITextFieldViewMode(rawValue: rawMode)!
-      alert.addAction(UIAlertAction(title: modeName(mode: mode),
-                                    style: .default,
-                                    handler: { _ in
-        closure(mode, partialTitle)
-      }))
-    }
-
-    present(alert, animated: true, completion: nil)
-  }
-
-  func modeName(mode: UITextFieldViewMode) -> String {
-    switch mode {
-    case .always:
-      return "Always"
-    case .whileEditing:
-      return "While Editing"
-    case .unlessEditing:
-      return "Unless Editing"
-    case .never:
-      return "Never"
-    }
-  }
 }
 
-extension TextFieldSwiftExample: UITextFieldDelegate {
+extension TextFieldKitchenSinkSwiftExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
   }
 }
 
-extension TextFieldSwiftExample: UITextViewDelegate {
-
-}
-
-extension TextFieldSwiftExample {
+extension TextFieldKitchenSinkSwiftExample {
   func contentSizeCategoryDidChange(notif: Notification) {
     controlLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     singleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
@@ -726,24 +404,3 @@ extension TextFieldSwiftExample {
   }
 }
 
-extension TextFieldSwiftExample {
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
-  }
-}
-
-extension TextFieldSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Typical Use"]
-  }
-//  func catalogShouldHideNavigation() -> Bool {
-//    return false
-//  }
-  class func catalogDescription() -> String {
-    // swiftlint:disable:next line_length
-    return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
-  }
-  class func catalogIsPrimaryDemo() -> Bool {
-    return true
-  }
-}

@@ -15,11 +15,11 @@
  limitations under the License.
  */
 
-#import "TextFieldExampleSupplemental.h"
+#import "TextFieldPresentationStylesExampleSupplemental.h"
 
 @import MaterialComponents.MaterialTextFields;
 
-@interface TextFieldExample ()
+@interface TextFieldPresentationStylesExample ()
 
 // Be sure to keep your controllers in memory somewhere like a property:
 @property(nonatomic, strong) MDCTextInputController *textFieldControllerDefaultCharMax;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation TextFieldExample
+@implementation TextFieldPresentationStylesExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
