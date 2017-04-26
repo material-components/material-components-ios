@@ -19,7 +19,7 @@
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInputArt.h"
 #import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputLayoutCoordinator.h"
+#import "MDCTextInputCommonFundament.h"
 #import "MDCTextInputUnderlineView.h"
 
 #import "MaterialAnimationTiming.h"
@@ -79,7 +79,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 #endif
 }
 
-@interface MDCTextInputLayoutCoordinator () {
+@interface MDCTextInputCommonFundament () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
@@ -98,7 +98,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 @end
 
-@implementation MDCTextInputLayoutCoordinator
+@implementation MDCTextInputCommonFundament
 
 // We never use the text property. Instead always read from the text field.
 
@@ -188,7 +188,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-  MDCTextInputLayoutCoordinator *copy = [[[self class] alloc] init];
+  MDCTextInputCommonFundament *copy = [[[self class] alloc] init];
 
   copy.clearButtonColor = self.clearButtonColor.copy;
   copy.clearButtonImage = self.clearButtonImage.copy;
@@ -754,11 +754,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (void)updatePlaceholderPosition {
-  if (self.placeholderLabel.layer.animationKeys.count > 0) {
-    // We don't need to get in the middle of animations.
-    return;
-  }
-
   self.placeholderTop.constant = [self textContainerInset].top;
 
   [self updatePlaceholderToOverlayViewsPosition];

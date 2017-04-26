@@ -21,7 +21,7 @@ extern const CGFloat MDCTextInputFullPadding;
 extern const CGFloat MDCTextInputHalfPadding;
 
 /** A controller for common traits shared by text inputs. */
-@interface MDCTextInputLayoutCoordinator : NSObject <MDCTextInput, NSCopying, NSCoding>
+@interface MDCTextInputCommonFundament : NSObject <MDCTextInput, NSCopying, NSCoding>
 
 /** The color of the caret indicating where inputted characters will be placed (in the text.) */
 @property(nonatomic, nullable, strong) UIColor *cursorColor;

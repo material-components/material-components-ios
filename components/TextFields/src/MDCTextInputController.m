@@ -27,7 +27,6 @@
 
 #pragma mark - Constants
 
-// static const CGFloat MDCTextInputAlmostRequiredPriority = 999;
 static const CGFloat MDCTextInputFloatingPlaceholderDefaultScale = 0.75f;
 static const CGFloat MDCTextInputFullWidthHorizontalInnerPadding = 8.f;
 static const CGFloat MDCTextInputFullWidthHorizontalPadding = 16.f;
@@ -118,7 +117,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, readonly) BOOL isPlaceholderUp;
 @property(nonatomic, assign) BOOL isRegisteredForKVO;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
-@property(nonatomic, assign) CGRect placeholderDefaultPositionFrame;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTop;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
@@ -246,7 +244,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   _mdc_adjustsFontForContentSizeCategory = _textInput.mdc_adjustsFontForContentSizeCategory;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
-  _placeholderDefaultPositionFrame = _textInput.frame;
 
   [self subscribeForNotifications];
   [self subscribeForKVO];
@@ -387,16 +384,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (BOOL)isPlaceholderUp {
-  return self.placeholderAnimationConstraints.count > 0;
+  return self.placeholderAnimationConstraints.count > 0 &&
+  !CGAffineTransformEqualToTransform(self.textInput.placeholderLabel.transform,
+                                    CGAffineTransformIdentity);
 }
 
 #pragma mark - Placeholder Animation
 
 - (void)movePlaceholderToUp:(BOOL)isToUp {
-  if (self.presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder) {
-    return;
-  }
-
   if (self.isPlaceholderUp && isToUp) {
     return;
   }
@@ -405,13 +400,16 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     return;
   }
 
-  self.placeholderDefaultPositionFrame = self.textInput.placeholderLabel.frame;
-
   CGFloat scaleFactor = [self effectiveFloatingScale];
   CGAffineTransform floatingPlaceholderScaleTransform =
       CGAffineTransformMakeScale(scaleFactor, scaleFactor);
 
   void (^animationBlock)(void);
+
+  // The animation is accomplished pretty simply. A constraint for vertical and a constraint for
+  // horizontal offset, both with a required priority (1000), are acivated to the placeholderLabel.
+  // A simple scale transform is also applied. Then it's animated through the UIView animation API
+  // (layoutIfNeeded). If in reverse (isToUp == NO), these things are just removed / deactivated.
 
   if (isToUp) {
     CGPoint destination = [self placeholderFloatingPosition];
@@ -637,24 +635,21 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (_presentationStyle != presentationStyle) {
     _presentationStyle = presentationStyle;
 
-    if (self.textInput.text.length > 1 &&
-        presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
-      [CATransaction begin];
-      [CATransaction setAnimationDuration:0];
-      [self movePlaceholderToUp:YES];
-      [CATransaction commit];
-    } else {
-      [CATransaction begin];
-      [CATransaction setAnimationDuration:0];
-      [self movePlaceholderToUp:NO];
-      [CATransaction commit];
+    BOOL isDirectionToUp = NO;
+    if (presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
+      isDirectionToUp = self.textInput.text.length > 1 || self.textInput.isEditing;
     }
+
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:0];
+    [self movePlaceholderToUp:isDirectionToUp];
+    [CATransaction commit];
 
     [self updateLayout];
 
     self.textInput.hidesPlaceholderOnInput =
         _presentationStyle != MDCTextInputPresentationStyleFloatingPlaceholder;
-    [self.textInput setNeedsLayout];
+    [self.textInput layoutIfNeeded];
   }
 }
 

@@ -106,6 +106,8 @@ final class TextFieldSwiftExample: UIViewController {
     city.delegate = self
     allTextFieldControllers.append(cityController)
 
+    // In iOS 9+, you could accomplish this with a UILayoutGuide. 
+    // TODO: (larche) add iOS version specific implementations
     let stateZip = UIView()
     stateZip.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(stateZip)

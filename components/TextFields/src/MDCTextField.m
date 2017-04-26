@@ -16,7 +16,7 @@
 
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputLayoutCoordinator.h"
+#import "MDCTextInputCommonFundament.h"
 
 #import "MaterialMath.h"
 #import "MaterialRTL.h"
@@ -32,7 +32,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 @interface MDCTextField ()
 
-@property(nonatomic, strong) MDCTextInputLayoutCoordinator *coordinator;
+@property(nonatomic, strong) MDCTextInputCommonFundament *coordinator;
 
 @end
 
@@ -43,7 +43,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _coordinator = [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
+    _coordinator = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     [self commonMDCTextFieldInitialization];
   }
@@ -57,7 +57,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
     [self commonMDCTextFieldInitialization];
 
     _coordinator = [aDecoder decodeObjectForKey:MDCTextFieldCoordinatorKey]
-                       ?: [[MDCTextInputLayoutCoordinator alloc] initWithTextInput:self];
+                       ?: [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
@@ -293,7 +293,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds), UIUserInterfaceLayoutDirectionLeftToRight);
   }
-  NSLog(@"TextRect %@ Editing LTR %@", NSStringFromCGRect([self textRectForBounds:bounds]), NSStringFromCGRect(editingRect));
+  //NSLog(@"TextRect %@ Editing LTR %@", NSStringFromCGRect([self textRectForBounds:bounds]), NSStringFromCGRect(editingRect));
 
   // UITextFields show EITHER the clear button or the rightView. If the rightView has a superview,
   // then it's being shown and the clear button isn't.
@@ -327,7 +327,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
         [self.coordinator.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
 
-  NSLog(@"Bounds %@ Editing %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
+  //NSLog(@"Bounds %@ Editing %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
   return editingRect;
 }
 
