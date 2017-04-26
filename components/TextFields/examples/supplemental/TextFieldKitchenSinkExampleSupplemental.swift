@@ -15,6 +15,7 @@
  */
 
 // swiftlint:disable file_length
+// swiftlint:disable line_length
 // swiftlint:disable type_body_length
 // swiftlint:disable function_body_length
 
@@ -82,7 +83,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     characterModeButton.translatesAutoresizingMaskIntoConstraints = false
     characterModeButton.addTarget(self,
-                                  action: #selector(TextFieldKitchenSinkSwiftExample.buttonDidTouch(button:)),
+                                  action: #selector(buttonDidTouch(button:)),
                                   for: .touchUpInside)
     characterModeButton.setTitle("Character Count Mode: Always", for: .normal)
     characterModeButton.setTitleColor(.white, for: .normal)
@@ -91,7 +92,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     clearModeButton.translatesAutoresizingMaskIntoConstraints = false
     clearModeButton.addTarget(self,
-                              action: #selector(TextFieldKitchenSinkSwiftExample.buttonDidTouch(button:)),
+                              action: #selector(buttonDidTouch(button:)),
                               for: .touchUpInside)
     clearModeButton.setTitle("Clear Button Mode: While Editing", for: .normal)
     clearModeButton.setTitleColor(.white, for: .normal)
@@ -100,7 +101,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     underlineButton.translatesAutoresizingMaskIntoConstraints = false
     underlineButton.addTarget(self,
-                              action: #selector(TextFieldKitchenSinkSwiftExample.buttonDidTouch(button:)),
+                              action: #selector(buttonDidTouch(button:)),
                               for: .touchUpInside)
 
     underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
@@ -306,10 +307,9 @@ extension TextFieldKitchenSinkSwiftExample {
     }
   }
 
-
   func addGestureRecognizer() {
     let tapRecognizer = UITapGestureRecognizer(target: self,
-                                               action: #selector(TextFieldKitchenSinkSwiftExample.tapDidTouch))
+                                               action: #selector(tapDidTouch(sender: )))
     self.scrollView.addGestureRecognizer(tapRecognizer)
   }
 
@@ -357,13 +357,4 @@ extension TextFieldKitchenSinkSwiftExample {
   class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Kitchen Sink"]
   }
-
-  class func catalogDescription() -> String {
-    // swiftlint:disable:next line_length
-    return "The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states."
-  }
-  class func catalogIsPrimaryDemo() -> Bool {
-    return true
-  }
 }
-

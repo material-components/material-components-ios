@@ -56,14 +56,3 @@
 
 @end
 
-@implementation TextFieldInterfaceBuilderExample (CatalogByConvention)
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Storyboard (Objective C)" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"TextFieldInterfaceBuilderExample";
-}
-
-@end

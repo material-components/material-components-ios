@@ -47,7 +47,6 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     singleLabel.numberOfLines = 0
     return singleLabel
   }()
-  var allTextFieldControllers = [MDCTextInputController]()
 
   let errorLabel: UILabel = {
     let errorLabel = UILabel()
@@ -70,6 +69,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
   }()
 
   var allInputControllers = [MDCTextInputController]()
+  var allTextFieldControllers = [MDCTextInputController]()
   var controllersWithCharacterCount = [MDCTextInputController]()
   var controllersFullWidth = [MDCTextInputController]()
 
@@ -366,7 +366,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
             textFieldControllerDefaultLeftRightViewFloating]
   }
 
-  func tapDidTouch() {
+  func tapDidTouch(sender: Any) {
     self.view.endEditing(true)
   }
 
@@ -403,4 +403,3 @@ extension TextFieldKitchenSinkSwiftExample {
     helperLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
   }
 }
-
