@@ -418,10 +418,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   // Prior to iOS 9 RTL was not automatically applied, so we don't need to apply any fixes.
-  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
-  NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
-      [processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
+  if ([super respondsToSelector:@selector(setAdjustsFontForContentSizeCategory:)]) {
     [super setAdjustsFontForContentSizeCategory:adjusts];
   }
 
