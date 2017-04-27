@@ -887,7 +887,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MDCCatalog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.willlarche.mdc-catalog";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.mdc-catalog";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MDCCatalog/MDCCatalog-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -906,7 +906,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MDCCatalog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.willlarche.mdc-catalog";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.mdc-catalog";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MDCCatalog/MDCCatalog-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
