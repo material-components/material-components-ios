@@ -600,13 +600,36 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   _errorAccessibilityValue = errorAccessibilityValue.copy;
 }
 
+- (void)setErrorColor:(UIColor *)errorColor {
+  if (![_errorColor isEqual:errorColor]) {
+    _errorColor = errorColor;
+    if (self.isDisplayingErrorText) {
+      [self updateLeadingUnderlineLabel];
+    }
+  }
+}
+
 - (void)setErrorText:(NSString *)errorText {
   _errorText = errorText.copy;
 }
 
+- (void)setFloatingPlaceholderColor:(UIColor *)floatingPlaceholderColor {
+  if (![_floatingPlaceholderColor isEqual:floatingPlaceholderColor]) {
+    _floatingPlaceholderColor = floatingPlaceholderColor.copy;
+    [self updatePlaceholder];
+  }
+}
+
+- (void)setFloatingPlaceholderScale:(NSNumber *)floatingPlaceholderScale {
+  if (![_floatingPlaceholderScale isEqualToNumber:floatingPlaceholderScale]) {
+    _floatingPlaceholderScale = floatingPlaceholderScale.copy;
+    [self updatePlaceholder];
+  }
+}
+
 - (void)setHelperText:(NSString *)helperText {
   if (self.isDisplayingErrorText) {
-    self.previousLeadingText = helperText;
+    self.previousLeadingText = helperText.copy;
   } else {
     if (![self.textInput.leadingUnderlineLabel.text isEqualToString:helperText]) {
       self.textInput.leadingUnderlineLabel.text = helperText;
@@ -620,6 +643,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     return self.previousLeadingText;
   } else {
     return self.textInput.leadingUnderlineLabel.text;
+  }
+}
+
+- (void)setInlinePlaceholderColor:(UIColor *)inlinePlaceholderColor {
+  if (![_inlinePlaceholderColor isEqual:inlinePlaceholderColor]) {
+    _inlinePlaceholderColor = inlinePlaceholderColor.copy;
+    [self updatePlaceholder];
   }
 }
 
