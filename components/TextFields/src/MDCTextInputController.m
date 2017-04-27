@@ -137,7 +137,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self commonInitialization];
+    [self commonMDCTextInputControllerInitialization];
   }
 
   return self;
@@ -146,7 +146,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
   if (self) {
-    [self commonInitialization];
+    [self commonMDCTextInputControllerInitialization];
 
     _characterCounter = [aDecoder decodeObjectForKey:MDCTextInputControllerCharacterCounterKey];
     _characterCountMax = [aDecoder decodeIntegerForKey:MDCTextInputControllerCharacterCountMaxKey];
@@ -173,7 +173,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   if (self) {
     _textInput = textInput;
 
-    [self commonInitializationWithInput];
+    [self setupInput];
   }
   return self;
 }
@@ -228,14 +228,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   [self unsubscribeFromKVO];
 }
 
-- (void)commonInitialization {
+- (void)commonMDCTextInputControllerInitialization {
   _characterCountViewMode = UITextFieldViewModeAlways;
   _errorColor = MDCTextInputTextErrorColor();
   _internalCharacterCounter = [MDCTextInputAllCharactersCounter new];
   _underlineViewMode = UITextFieldViewModeWhileEditing;
 }
 
-- (void)commonInitializationWithInput {
+- (void)setupInput {
   if (!_textInput) {
     return;
   }
@@ -667,7 +667,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     [self unsubscribeFromKVO];
 
     _textInput = textInput;
-    [self commonInitializationWithInput];
+    [self setupInput];
   }
 }
 
@@ -1118,11 +1118,13 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       valueString =
           [NSString stringWithFormat:@"%@. %@.", valueString, self.textInput.placeholder.copy];
     }
-    valueString = [NSString stringWithFormat:@"%@. Error:", valueString];
+    valueString = [NSString stringWithFormat:@"%@.", valueString];
 
     self.textInput.accessibilityValue = valueString;
+    self.textInput.leadingUnderlineLabel.accessibilityLabel = [NSString stringWithFormat:@"Error: %@.", self.textInput.leadingUnderlineLabel.text ?: @""];
   } else {
     self.textInput.accessibilityValue = nil;
+    self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
   }
 }
 

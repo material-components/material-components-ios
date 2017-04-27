@@ -58,6 +58,7 @@ final class TextFieldSwiftExample: UIViewController {
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
+  let zipController: MDCTextInputController
 
   let phone: MDCTextField = {
     let phone = MDCTextField()
@@ -67,6 +68,15 @@ final class TextFieldSwiftExample: UIViewController {
   }()
 
   var allTextFieldControllers = [MDCTextInputController]()
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    zipController = MDCTextInputController(input: zip)
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -119,7 +129,6 @@ final class TextFieldSwiftExample: UIViewController {
     allTextFieldControllers.append(stateController)
 
     stateZip.addSubview(zip)
-    let zipController = MDCTextInputController(input: zip)
     zipController.presentation = .floatingPlaceholder
     zip.delegate = self
     allTextFieldControllers.append(zipController)
@@ -234,7 +243,22 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
+    guard let rawText = textField.text else {
+      return true
+    }
 
+    let fullString = NSString(string: rawText).replacingCharacters(in: range, with: string)
+
+    if textField == zip {
+      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
+      fullString[range].characters.count > 0 {
+        zipController.set(errorText: "Error: Zip can only contain numbers", errorAccessibilityValue: nil)
+      } else if fullString.characters.count > 5 {
+        zipController.set(errorText: "Error: Zip can only contain five digits", errorAccessibilityValue: nil)
+      } else {
+        zipController.set(errorText: nil, errorAccessibilityValue: nil)
+      }
+    }
     return true
   }
 }
