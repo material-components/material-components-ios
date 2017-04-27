@@ -21,6 +21,7 @@
 #import "MDCTextInputCharacterCounter.h"
 
 #import "MaterialAnimationTiming.h"
+#import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
@@ -64,22 +65,6 @@ static NSString *const MDCTextInputControllerUnderlineViewModeKey =
     @"MDCTextInputControllerUnderlineViewModeKey";
 
 static NSString *const MDCTextInputControllerKVOKeyFont = @"font";
-
-static inline CGFloat MDCCeil(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return ceil(value);
-#else
-  return ceilf(value);
-#endif
-}
-
-static inline CGFloat MDCRound(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return rint(value);
-#else
-  return rintf(value);
-#endif
-}
 
 static inline UIColor *MDCTextInputInlinePlaceholderTextColor() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
@@ -823,7 +808,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       // Single Line Only
       // .fullWidth
       self.heightConstraint.constant =
-          2 * MDCTextInputFullWidthVerticalPadding + MDCRound(self.textInput.font.lineHeight);
+          2 * MDCTextInputFullWidthVerticalPadding + MDCRint(self.textInput.font.lineHeight);
 
       if (!self.characterCountY) {
         self.characterCountY =
@@ -862,7 +847,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     if (_presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
       self.heightConstraint.constant =
           insets.top +  // Labels and padding
-          MDCRound(MAX(self.textInput.font.lineHeight,
+          MDCRint(MAX(self.textInput.font.lineHeight,
                        self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
           insets.bottom;                                                    // Padding or labels
 
@@ -895,9 +880,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
  The vertical layout is, at most complex, this form:
  MDCTextInputVerticalPadding +                                        // Top padding
- MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +  // Placeholder when up
+ MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +  // Placeholder when up
  MDCTextInputVerticalHalfPadding +                                    // Small padding
- MDCRound(MAX(self.textInput.font.lineHeight,                         // Text field or placeholder
+ MDCRint(MAX(self.textInput.font.lineHeight,                         // Text field or placeholder
               self.textInput.placeholderLabel.font.lineHeight)) +
  MDCTextInputVerticalHalfPadding +                                    // Small padding
  --Underline-- (height not counted)                                   // Underline (height ignored)
@@ -916,7 +901,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     case MDCTextInputPresentationStyleFloatingPlaceholder: {
       CGFloat scale = [self effectiveFloatingScale];
       textContainerInset.top = MDCTextInputVerticalPadding +
-      MDCRound(self.textInput.placeholderLabel.font.lineHeight * scale) +
+      MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale) +
       MDCTextInputVerticalHalfPadding;
 
       // The amount of space underneath the underline is variable. It could just be
@@ -924,11 +909,11 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       // MDCTextInputVerticalHalfPadding
       CGFloat underlineLabelsOffset = 0;
       if (self.textInput.leadingUnderlineLabel.text.length) {
-        underlineLabelsOffset = MDCRound(self.textInput.leadingUnderlineLabel.font.lineHeight);
+        underlineLabelsOffset = MDCRint(self.textInput.leadingUnderlineLabel.font.lineHeight);
       }
       if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
         underlineLabelsOffset = MAX(
-                                    underlineLabelsOffset, MDCRound(self.textInput.trailingUnderlineLabel.font.lineHeight));
+                                    underlineLabelsOffset, MDCRint(self.textInput.trailingUnderlineLabel.font.lineHeight));
       }
       CGFloat underlineOffset = MDCTextInputVerticalHalfPadding + underlineLabelsOffset;
 
