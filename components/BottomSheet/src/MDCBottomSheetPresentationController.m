@@ -122,11 +122,11 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
       [[self presentingViewController] transitionCoordinator];
 
   // Fade in the dimming view during the transition.
-  [_dimmingView setAlpha:0.0];
+  _dimmingView.alpha = 0.0;
   [transitionCoordinator animateAlongsideTransition:
    ^(id<UIViewControllerTransitionCoordinatorContext> context) {
      _sheetView.transform = _savedTransform;
-     [_dimmingView setAlpha:1.0];
+     _dimmingView.alpha = 1.0;
    } completion:nil];
 }
 
@@ -143,7 +143,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [transitionCoordinator animateAlongsideTransition:
    ^(id<UIViewControllerTransitionCoordinatorContext> context) {
      _sheetView.transform = [self offScreenTransformForPresentedView];
-     [_dimmingView setAlpha:0.0];
+     _dimmingView.alpha = 0.0;
    } completion:nil];
 }
 

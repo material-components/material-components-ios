@@ -20,18 +20,17 @@
 #import "BottomSheetPresenterViewController.h"
 #import "MaterialBottomSheet.h"
 
-@interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
+@interface BottomSheetShortCollectionExample : BottomSheetPresenterViewController
     <UIViewControllerTransitioningDelegate>
 @end
 
-@implementation BottomSheetTypicalUseExample
+@implementation BottomSheetShortCollectionExample
 
 - (void)presentBottomSheet {
   UIViewController *viewController =
-      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:100];
+      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:6];
   viewController.transitioningDelegate = self;
   viewController.modalPresentationStyle = UIModalPresentationCustom;
-  viewController.preferredContentSize = CGSizeMake(0, 200);
   [self presentViewController:viewController animated:YES completion:nil];
 }
 
@@ -47,19 +46,14 @@
 
 @end
 
-@implementation BottomSheetTypicalUseExample (CatalogByConvention)
+@implementation BottomSheetShortCollectionExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Bottom Sheet", @"Bottom Sheet" ];
+  return @[ @"Bottom Sheet", @"Short collection view" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Bottom Sheet is a presentation controller for presenting view controllers as a sheet"
-      " that slides up from the bottom of the screen. The sheet can be dismissed by swiping down.";
+  return NO;
 }
 
 @end
