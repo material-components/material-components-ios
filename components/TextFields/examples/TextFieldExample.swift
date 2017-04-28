@@ -229,12 +229,6 @@ final class TextFieldSwiftExample: UIViewController {
       })
     }
     alert.addAction(floatingAction)
-    let fullWidthAction = UIAlertAction(title: "Full Width", style: .default) { _ in
-      self.allTextFieldControllers.forEach({ (controller) in
-        controller.presentation = .fullWidth
-      })
-    }
-    alert.addAction(fullWidthAction)
     present(alert, animated: true, completion: nil)
   }
 }
