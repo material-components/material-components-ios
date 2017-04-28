@@ -237,6 +237,15 @@ extension TextFieldKitchenSinkSwiftExample {
                          attribute: .trailing,
                          multiplier: 1.0,
                          constant: 0).isActive = true
+
+      // This constraint is necessary for the scrollview to have a content width.
+      NSLayoutConstraint(item: input,
+                         attribute: .trailing,
+                         relatedBy: .equal,
+                         toItem: scrollView,
+                         attribute: .trailing,
+                         multiplier: 1.0,
+                         constant: 0).isActive = true
     }
     registerKeyboardNotifications()
     addGestureRecognizer()
@@ -331,6 +340,7 @@ extension TextFieldKitchenSinkSwiftExample {
     guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
       return
     }
+    print(scrollView)
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
                                            left: 0.0,
                                            bottom: frame.height,
