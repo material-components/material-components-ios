@@ -1,34 +1,34 @@
 PODS:
   - CatalogByConvention (2.0.0)
   - EarlGrey (1.9.0)
-  - MaterialComponents (23.0.1):
-    - MaterialComponents/ActivityIndicator (= 23.0.1)
-    - MaterialComponents/AnimationTiming (= 23.0.1)
-    - MaterialComponents/AppBar (= 23.0.1)
-    - MaterialComponents/ButtonBar (= 23.0.1)
-    - MaterialComponents/Buttons (= 23.0.1)
-    - MaterialComponents/CollectionCells (= 23.0.1)
-    - MaterialComponents/CollectionLayoutAttributes (= 23.0.1)
-    - MaterialComponents/Collections (= 23.0.1)
-    - MaterialComponents/Dialogs (= 23.0.1)
-    - MaterialComponents/FeatureHighlight (= 23.0.1)
-    - MaterialComponents/FlexibleHeader (= 23.0.1)
-    - MaterialComponents/HeaderStackView (= 23.0.1)
-    - MaterialComponents/Ink (= 23.0.1)
-    - MaterialComponents/NavigationBar (= 23.0.1)
-    - MaterialComponents/OverlayWindow (= 23.0.1)
-    - MaterialComponents/PageControl (= 23.0.1)
-    - MaterialComponents/Palettes (= 23.0.1)
-    - MaterialComponents/private (= 23.0.1)
-    - MaterialComponents/ProgressView (= 23.0.1)
-    - MaterialComponents/ShadowElevations (= 23.0.1)
-    - MaterialComponents/ShadowLayer (= 23.0.1)
-    - MaterialComponents/Slider (= 23.0.1)
-    - MaterialComponents/Snackbar (= 23.0.1)
-    - MaterialComponents/Tabs (= 23.0.1)
-    - MaterialComponents/TextFields (= 23.0.1)
-    - MaterialComponents/Typography (= 23.0.1)
-  - MaterialComponents/ActivityIndicator (23.0.1):
+  - MaterialComponents (23.0.2):
+    - MaterialComponents/ActivityIndicator (= 23.0.2)
+    - MaterialComponents/AnimationTiming (= 23.0.2)
+    - MaterialComponents/AppBar (= 23.0.2)
+    - MaterialComponents/ButtonBar (= 23.0.2)
+    - MaterialComponents/Buttons (= 23.0.2)
+    - MaterialComponents/CollectionCells (= 23.0.2)
+    - MaterialComponents/CollectionLayoutAttributes (= 23.0.2)
+    - MaterialComponents/Collections (= 23.0.2)
+    - MaterialComponents/Dialogs (= 23.0.2)
+    - MaterialComponents/FeatureHighlight (= 23.0.2)
+    - MaterialComponents/FlexibleHeader (= 23.0.2)
+    - MaterialComponents/HeaderStackView (= 23.0.2)
+    - MaterialComponents/Ink (= 23.0.2)
+    - MaterialComponents/NavigationBar (= 23.0.2)
+    - MaterialComponents/OverlayWindow (= 23.0.2)
+    - MaterialComponents/PageControl (= 23.0.2)
+    - MaterialComponents/Palettes (= 23.0.2)
+    - MaterialComponents/private (= 23.0.2)
+    - MaterialComponents/ProgressView (= 23.0.2)
+    - MaterialComponents/ShadowElevations (= 23.0.2)
+    - MaterialComponents/ShadowLayer (= 23.0.2)
+    - MaterialComponents/Slider (= 23.0.2)
+    - MaterialComponents/Snackbar (= 23.0.2)
+    - MaterialComponents/Tabs (= 23.0.2)
+    - MaterialComponents/TextFields (= 23.0.2)
+    - MaterialComponents/Typography (= 23.0.2)
+  - MaterialComponents/ActivityIndicator (23.0.2):
     - MaterialComponents/private/Application
     - MaterialComponents/private/RTL
   - MaterialComponents/AnimationTiming (23.0.2)
@@ -160,13 +160,13 @@ PODS:
     - MaterialComponents/Ink
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/TextFields (23.0.1):
+  - MaterialComponents/TextFields (23.0.2):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/Typography (23.0.1):
+  - MaterialComponents/Typography (23.0.2):
     - MaterialComponents/private/Application
   - MDFTextAccessibility (1.2.0)
 
@@ -180,9 +180,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
   EarlGrey: 3dd4feebea192819c3af5e74f85fe5431b820de2
-  MaterialComponents: dcb934bcc59676899b5b1c54be422db57f758fe0
-  MaterialComponentsCatalog: b750a67ae74634abd0cc2449419823cb6a30d3a1
-  MaterialComponentsUnitTests: e8c5d8aa3ce89bd51e9d11a82632df45b6ed2483
+  MaterialComponents: 3e6cdcb9a2779f130c0d98407b2c419af2b340b7
+  MaterialComponentsCatalog: 1e956249208e8ce3629e3c9e2f76f6e78631ecbc
+  MaterialComponentsUnitTests: 89f93baffdd3190a6746a403830f3982bcbb85f4
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322
