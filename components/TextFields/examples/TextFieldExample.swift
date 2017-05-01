@@ -73,7 +73,7 @@ final class TextFieldSwiftExample: UIViewController {
     zipController = MDCTextInputController(input: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -116,7 +116,7 @@ final class TextFieldSwiftExample: UIViewController {
     city.delegate = self
     allTextFieldControllers.append(cityController)
 
-    // In iOS 9+, you could accomplish this with a UILayoutGuide. 
+    // In iOS 9+, you could accomplish this with a UILayoutGuide.
     // TODO: (larche) add iOS version specific implementations
     let stateZip = UIView()
     stateZip.translatesAutoresizingMaskIntoConstraints = false
@@ -138,6 +138,13 @@ final class TextFieldSwiftExample: UIViewController {
     phoneController.presentation = .floatingPlaceholder
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
+
+    var tag = 0
+    for controller in allTextFieldControllers {
+      guard let textField = controller.input as? MDCTextField else { continue }
+      textField.tag = tag
+      tag += 1
+    }
 
     let views = [ "name": name,
                   "address": address,
@@ -245,7 +252,7 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
 
     if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-      fullString[range].characters.count > 0 {
+        fullString[range].characters.count > 0 {
         zipController.set(errorText: "Error: Zip can only contain numbers", errorAccessibilityValue: nil)
       } else if fullString.characters.count > 5 {
         zipController.set(errorText: "Error: Zip can only contain five digits", errorAccessibilityValue: nil)
@@ -254,6 +261,18 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
       }
     }
     return true
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    let index = textField.tag
+    if index + 1 < allTextFieldControllers.count,
+      let nextField = allTextFieldControllers[index + 1].input as? MDCTextField {
+      nextField.becomeFirstResponder()
+    } else {
+      textField.resignFirstResponder()
+    }
+
+    return false
   }
 }
 
