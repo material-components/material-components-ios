@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "Snackbars provide brief feedback about an operation through a message at the bottom of the screen."
 iconId: toast
+path: /catalog/snackbars/
 -->
 
 # Snackbar
@@ -26,7 +27,7 @@ contain a text action, but no icons.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.google.com/components/snackbars-toasts.html">Snackbars</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/snackbars-toasts.html">Snackbars</a></li>
 </ul>
 
 - - -

@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "The Dialogs component implements the Material Design specifications for modal presentations."
 iconId: dialog
+path: /catalog/dialogs/
 -->
 
 # Dialogs
@@ -15,7 +16,7 @@ controller that will display a simple modal alert.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.google.com/components/dialogs.html">Dialogs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/dialogs.html">Dialogs</a></li>
 </ul>
 
 ### Dialogs Classes

@@ -1,20 +1,18 @@
 ---
 title: "Material Components for iOS"
 layout: "homepage"
+path: /
 ---
 
-# Material Components for&nbsp;iOS
-<!--{: .title }-->
+<ul class="benefits-list">
+  <li class="benefits-list-item">Easily convert Material Design mockups into pixel-perfect, production-ready components.</li>
+  <li class="benefits-list-item">Material Components meet industry standards for internationalization and accessibility, including Dynamic Type and right-to-left language support</li>
+  <li class="benefits-list-item">Material Components supports iOS industry standards like Swift and Objective-C, storyboards, and dynamic type</li>
+</ul>
+
+# Getting Started
 
 An easy way to create beautiful apps with modular and customizable UI&nbsp;components.
-<!--{: .subhead }-->
-
-[Get Started](#quickstart)
-[View on GitHub](https://github.com/material-components/material-components-ios)
-<!--{: .button-getstarted }-->
-
-<a name="quickstart"></a>
-<!--{: .jumplink }-->
 
 1.  ## Install CocoaPods
 
@@ -131,13 +129,13 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     <ul class="icon-list">
       <li class="icon-list-item icon-list-item--guide">
-        <a href="{{ site.folder }}/howto">Read the Development Guide</a>
+        <a href="../howto">Read the Development Guide</a>
       </li>
       <li class="icon-list-item icon-list-item--components">
-        <a href="{{ site.folder }}/components">View the Component Documentation</a>
+        <a href="../components">View the Component Documentation</a>
       </li>
       <li class="icon-list-item icon-list-item--sample">
-        <a href="{{ site.folder }}/howto/tutorial/#sample-code">Explore our Code Samples</a>
+        <a href="../howto/tutorial/#sample-code">Explore our Code Samples</a>
       </li>
       <li class="icon-list-item icon-list-item--github">
         <a href="https://github.com/material-components/material-components-ios/">View the project on GitHub</a>

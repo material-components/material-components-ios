@@ -1,10 +1,11 @@
 <!--docs:
-title: "Material Components Development Guide"
+title: "Tutorial"
 layout: landing
-section: howto
+section: docs
+path: /docs/tutorial/
 -->
 
-## Tutorial
+# Tutorial
 
 Whether new or legacy, storyboard or code, Swift or Objective C, it's easy to use Material Components in your app.
 
@@ -514,7 +515,7 @@ override func viewDidLoad() {
 ```
 <!--</div>-->
 
-**NOTE:** We used margins of 16 points to match the guidelines found in the [Material Design spec](https://material.google.com/components/buttons-floating-action-button.html#buttons-floating-action-button-floating-action-button). Lots of suggestions for padding, sizing and alignment choices can be found [there](https://material.google.com/layout/metrics-keylines.html#metrics-keylines-baseline-grids).
+**NOTE:** We used margins of 16 points to match the guidelines found in the [Material Design spec](https://material.io/guidelines/components/buttons-floating-action-button.html#buttons-floating-action-button-floating-action-button). Lots of suggestions for padding, sizing and alignment choices can be found [there](https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-baseline-grids).
 
 Build and run your app. The fab shows up but it doesn't do anything yet.
 

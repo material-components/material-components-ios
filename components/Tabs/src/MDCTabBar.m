@@ -28,7 +28,7 @@ static const CGFloat kImageTitleSpecPadding = 10;
 /// Adjustment added to spec measurements to compensate for internal paddings.
 static const CGFloat kImageTitlePaddingAdjustment = -3;
 
-// Heights based on the spec: https://www.google.com/design/spec/components/tabs.html
+// Heights based on the spec: https://material.io/guidelines/components/tabs.html
 
 /// Height for image-only tab bars, in points.
 static const CGFloat kImageOnlyBarHeight = 48;

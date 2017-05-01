@@ -52,7 +52,7 @@
 
 @end
 
-// https://material.google.com/components/dialogs.html#dialogs-specs
+// https://material.io/guidelines/components/dialogs.html#dialogs-specs
 static const UIEdgeInsets MDCDialogContentInsets = {24.0, 24.0, 24.0, 24.0};
 static const CGFloat MDCDialogContentVerticalPadding = 20.0;
 

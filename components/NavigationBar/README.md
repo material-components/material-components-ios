@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "The Navigation Bar component is a view composed of a left and right Button Bar and either a title label or a custom title view."
 iconId: toolbar
+path: /catalog/navigation-bars/
 -->
 
 # Navigation Bar
@@ -28,7 +29,7 @@ Consistent with iOS design guidelines, the title in the navigation bar is center
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="http://www.google.com/design/spec/layout/structure.html">Layout Structure</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html">Layout Structure</a></li>
 </ul>
 
 - - -

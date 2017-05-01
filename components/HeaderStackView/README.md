@@ -1,12 +1,13 @@
 <!--docs:
-title: "Header Stack View"
+title: "Header Stack Views"
 layout: detail
 section: components
 excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically stacked bar views."
 iconId: header
+path: /catalog/header-stack-views/
 -->
 
-# Header Stack View
+# Header Stack Views
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
@@ -25,7 +26,7 @@ bar views.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">App Bar</a></li>
 </ul>
 
 - - -

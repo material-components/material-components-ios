@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "The Slider component provides a Material Design control for selecting a value from a continuous range or discrete set of values."
 iconId: slider
+path: /catalog/sliders/
 -->
 
 # Slider
@@ -25,7 +26,7 @@ or discrete set of values.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/components/sliders.html">Sliders</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/sliders.html">Sliders</a></li>
 </ul>
 
 - - -

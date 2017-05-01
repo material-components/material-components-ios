@@ -30,7 +30,7 @@
 
  Note: This class is not intended to be subclassed.
 
- @see https://www.google.com/design/spec/components/tabs.html
+ @see https://material.io/guidelines/components/tabs.html
  */
 IB_DESIGNABLE
 @interface MDCTabBar : UIView
