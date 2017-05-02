@@ -1748,10 +1748,10 @@ void MDCCatalogDrawCollectionCellsTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = MDCPrimaryColor();
-  UIColor* fillColor2 = MDCSecondaryColor();
+  UIColor* fillColor = [UIColor colorWithWhite:0.0 alpha:0];
+  UIColor* fillColor2 = [UIColor colorWithWhite:0.6 alpha:0.3];
 
-  UIColor* color = [UIColor colorWithWhite:0.8 alpha:1];
+  UIColor* color = MDCPrimaryColor();
   UIColor* gradientColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
 
   // This gradient was adjusted by hand to not use macOS API
