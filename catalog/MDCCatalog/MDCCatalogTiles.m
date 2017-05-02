@@ -27,13 +27,21 @@ UIImage* MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc) {
   return image;
 }
 
+static UIColor *MDCPrimaryColor() {
+  return [UIColor colorWithWhite:0.2f alpha:1];
+}
+
+static UIColor *MDCSecondaryColor() {
+  return [UIColor colorWithWhite:0.7f alpha:1];
+}
+
 /* Auto-generated code using PaintCode and formatted with clang-format. */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wassign-enum"
 #pragma clang diagnostic ignored "-Wconversion"
 void MDCCatalogDrawActivityIndicatorTile(CGRect frame) {
-  UIColor* fillColor = [UIColor colorWithRed:0.702 green:0.898 blue:0.988 alpha:1];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fillColor = MDCSecondaryColor();
+  UIColor* fillColor2 = MDCPrimaryColor();
 
   CGRect activityIndicatorGroup =
       CGRectMake(CGRectGetMinX(frame) + 54, CGRectGetMinY(frame) + 24.1,
@@ -295,18 +303,18 @@ void MDCCatalogDrawAnimationTimingTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* strokeColor = [UIColor colorWithRed:0.649 green:0.873 blue:0.984 alpha:1];
-  UIColor* gradientColor = [UIColor colorWithRed:0.649 green:0.873 blue:0.984 alpha:1];
-  UIColor* gradientColor2 = [UIColor colorWithRed:0.149 green:0.65 blue:0.954 alpha:1];
-  UIColor* gradientColor3 = [UIColor colorWithRed:0.033 green:0.261 blue:0.537 alpha:1];
-  UIColor* fillColor1 = [UIColor colorWithRed:0.004 green:0.341 blue:0.608 alpha:0.9];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.008 green:0.467 blue:0.741 alpha:0.9];
-  UIColor* fillColor3 = [UIColor colorWithRed:0.008 green:0.533 blue:0.82 alpha:0.9];
-  UIColor* fillColor4 = [UIColor colorWithRed:0.012 green:0.608 blue:0.898 alpha:0.9];
-  UIColor* fillColor5 = [UIColor colorWithRed:0.149 green:0.651 blue:0.955 alpha:1];
-  UIColor* fillColor6 = [UIColor colorWithRed:0.31 green:0.765 blue:0.969 alpha:0.9];
-  UIColor* fillColor7 = [UIColor colorWithRed:0.506 green:0.831 blue:0.98 alpha:0.9];
-  UIColor* fillColor8 = [UIColor colorWithRed:0.702 green:0.898 blue:0.988 alpha:0.9];
+  UIColor* strokeColor = MDCSecondaryColor();
+  UIColor* gradientColor = [UIColor colorWithWhite:0.649 alpha:1];
+  UIColor* gradientColor2 = [UIColor colorWithWhite:0.149 alpha:1];
+  UIColor* gradientColor3 = [UIColor colorWithWhite:0.033 alpha:1];
+  UIColor* fillColor1 = [UIColor colorWithWhite:0.341 alpha:0.9];
+  UIColor* fillColor2 = [UIColor colorWithWhite:0.467 alpha:0.9];
+  UIColor* fillColor3 = [UIColor colorWithWhite:0.533 alpha:0.9];
+  UIColor* fillColor4 = [UIColor colorWithWhite:0.608 alpha:0.9];
+  UIColor* fillColor5 = [UIColor colorWithWhite:0.651 alpha:1];
+  UIColor* fillColor6 = [UIColor colorWithWhite:0.765 alpha:0.9];
+  UIColor* fillColor7 = [UIColor colorWithWhite:0.831 alpha:0.9];
+  UIColor* fillColor8 = [UIColor colorWithWhite:0.902 alpha:0.9];
   UIColor* fillColor9 = [fillColor8 colorWithAlphaComponent:0.5];
 
   CGFloat gradientLocations[] = {0, 0, 0.52, 1};
@@ -688,8 +696,8 @@ void MDCCatalogDrawAnimationTimingTile(CGRect frame) {
 void MDCCatalogDrawAppBarTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
-  UIColor* fillColor2 = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
+  UIColor* fillColor2 = MDCSecondaryColor();
 
   CGRect group2 = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24,
                              floor((CGRectGetWidth(frame) - 24.5) * 1.02783 + 24.45) - 23.95,
@@ -710,7 +718,6 @@ void MDCCatalogDrawAppBarTile(CGRect frame) {
 
     {
       CGContextSaveGState(context);
-      CGContextSetAlpha(context, 0.2);
       CGContextBeginTransparencyLayer(context, NULL);
 
       UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -772,8 +779,9 @@ void MDCCatalogDrawAppBarTile(CGRect frame) {
 }
 
 void MDCCatalogDrawButtonBarTile(CGRect frame) {
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
-  UIColor* fillColor2 = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+
+  UIColor* fillColor = MDCPrimaryColor();
+  UIColor* fillColor2 = MDCSecondaryColor();
 
   CGRect buttonBar = CGRectMake(CGRectGetMinX(frame) - 10, CGRectGetMinY(frame) + 24,
                                 floor((CGRectGetWidth(frame) + 10) * 0.87626 - 10) + 10.5,
@@ -1702,7 +1710,7 @@ void MDCCatalogDrawButtonBarTile(CGRect frame) {
 void MDCCatalogDrawButtonsTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
 
   CGRect group = CGRectMake(
       CGRectGetMinX(frame) + floor((CGRectGetWidth(frame) - 77.75) * 0.22200 + 0.02) + 0.48,
@@ -1740,9 +1748,10 @@ void MDCCatalogDrawCollectionCellsTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.1];
-  UIColor* color = [UIColor colorWithRed:0.506 green:0.831 blue:0.98 alpha:1];
+  UIColor* fillColor = [UIColor colorWithWhite:0.0 alpha:0];
+  UIColor* fillColor2 = [UIColor colorWithWhite:0.6 alpha:0.3];
+
+  UIColor* color = MDCPrimaryColor();
   UIColor* gradientColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
 
   // This gradient was adjusted by hand to not use macOS API
@@ -1848,9 +1857,9 @@ void MDCCatalogDrawCollectionCellsTile(CGRect frame) {
 void MDCCatalogDrawCollectionsTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
   UIColor* white40 = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.4];
-  UIColor* blue60 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.6];
+  UIColor* blue60 = fillColor;
   UIColor* white60 = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
   UIColor* white80 = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
   UIColor* white30 = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.3];
@@ -1951,7 +1960,7 @@ void MDCCatalogDrawDialogsTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* gradientColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.1];
+  UIColor* gradientColor = MDCSecondaryColor();
 
   // This gradient was adjusted by hand to not use macOS API
   CGFloat gradientLocations[] = {0.13, 1};
@@ -2009,8 +2018,8 @@ void MDCCatalogDrawDialogsTile(CGRect frame) {
 void MDCCatalogDrawFeatureHighlightTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.71 green:0.894 blue:0.98 alpha:1];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
+  UIColor* fillColor2 = MDCSecondaryColor();
   UIColor* white = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
 
   CGRect featureHighlightGroup = CGRectMake(CGRectGetMinX(frame) + 24.5, CGRectGetMinY(frame) + 24,
@@ -2119,7 +2128,8 @@ void MDCCatalogDrawFeatureHighlightTile(CGRect frame) {
 void MDCCatalogDrawFlexibleHeaderTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
+
   UIColor* blue10 = [fillColor colorWithAlphaComponent:0.1];
   UIColor* blue5 = [fillColor colorWithAlphaComponent:0.05];
 
@@ -2211,8 +2221,9 @@ void MDCCatalogDrawHeaderStackViewTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* gradientColor = [UIColor colorWithRed:0.076 green:0.59 blue:0.945 alpha:1];
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* gradientColor = MDCPrimaryColor();
+  UIColor* fillColor = MDCSecondaryColor();
+
   CGFloat fillColorRGBA[4];
   [fillColor getRed:&fillColorRGBA[0]
               green:&fillColorRGBA[1]
@@ -2224,7 +2235,7 @@ void MDCCatalogDrawHeaderStackViewTile(CGRect frame) {
                                     blue:(fillColorRGBA[2] * 0.6)
                                    alpha:(fillColorRGBA[3] * 0.6 + 0.4)];
   UIColor* fillColor2 = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
-  UIColor* blue80 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.56];
+  UIColor* blue80 = MDCPrimaryColor();
 
   CGFloat gradientLocations[] = {0.14, 0.51, 1};
 
@@ -2346,7 +2357,7 @@ void MDCCatalogDrawHeaderStackViewTile(CGRect frame) {
 void MDCCatalogDrawInkTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
   UIColor* fillColor2 = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
 
   CGRect group = CGRectMake(
@@ -2382,7 +2393,7 @@ void MDCCatalogDrawInkTile(CGRect frame) {
 void MDCCatalogDrawMiscTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
   CGFloat fillColorRGBA[4];
   [fillColor getRed:&fillColorRGBA[0]
               green:&fillColorRGBA[1]
@@ -2600,10 +2611,10 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* gradientColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-  UIColor* fillColor = [UIColor colorWithRed:0.184 green:0.571 blue:0.828 alpha:1];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.994 green:0.994 blue:0.994 alpha:1];
-  UIColor* textForeground = [UIColor colorWithRed:0.996 green:0.996 blue:0.996 alpha:0.2];
-  UIColor* gradientColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
+  UIColor* fillColor2 = MDCSecondaryColor();
+  UIColor* textForeground = [fillColor colorWithAlphaComponent:0.2];
+  UIColor* gradientColor2 = MDCPrimaryColor();
 
   CGFloat gradientLocations[] = {0.14, 0.5, 1};
   CGGradientRef gradient = CGGradientCreateWithColors(
@@ -2786,9 +2797,9 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame) {
 }
 
 void MDCCatalogDrawOverlayWindow(CGRect frame) {
-  UIColor* fillColor = [UIColor colorWithRed:0.649 green:0.873 blue:0.984 alpha:1];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.076 green:0.59 blue:0.945 alpha:1];
-  UIColor* fillColor3 = [UIColor colorWithRed:0.261 green:0.712 blue:0.959 alpha:1];
+  UIColor* fillColor = MDCSecondaryColor();
+  UIColor* fillColor2 = MDCPrimaryColor();
+  UIColor* fillColor3 = [UIColor colorWithWhite:0.5 alpha:1.0];
 
   CGRect overlayWindowGroup = CGRectMake(CGRectGetMinX(frame) + 54, CGRectGetMinY(frame) + 38,
                                          floor((CGRectGetWidth(frame) - 54) * 0.59701 + 0.5),
@@ -2907,11 +2918,11 @@ void MDCCatalogDrawPageControlTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* gradientColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-  UIColor* fillColor10 = [UIColor colorWithRed:0.506 green:0.831 blue:0.976 alpha:1];
-  UIColor* gradientColor2 = [UIColor colorWithRed:0.075 green:0.592 blue:0.945 alpha:0.3];
-  UIColor* fillColor7 = [UIColor colorWithRed:0.902 green:0.965 blue:0.996 alpha:0.5];
-  UIColor* fillColor8 = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
-  UIColor* color2 = [UIColor colorWithRed:0.902 green:0.965 blue:0.996 alpha:0.3];
+  UIColor* fillColor10 = MDCSecondaryColor();
+  UIColor* gradientColor2 = MDCPrimaryColor();
+  UIColor* fillColor7 = [gradientColor2 colorWithAlphaComponent:0.5];
+  UIColor* fillColor8 = [gradientColor2 colorWithAlphaComponent:0.8];
+  UIColor* color2 = [gradientColor2 colorWithAlphaComponent:0.3];
 
   CGFloat gradient2Locations[] = {0.28, 0.68, 0.98};
   CGGradientRef gradient2 = CGGradientCreateWithColors(
@@ -3043,15 +3054,15 @@ static NSString* const PalettesFontName = @"RobotoMono-Regular";
 void MDCCatalogDrawPalettesTile(CGRect frame) {
   CGFloat PalettesFontPointSize = [UIScreen mainScreen].bounds.size.width / 320 * 7;
 
-  UIColor* textDark = [UIColor colorWithRed:0.004 green:0.341 blue:0.608 alpha:1];
-  UIColor* textLight = [UIColor colorWithRed:0.702 green:0.898 blue:0.988 alpha:1];
-  UIColor* fill200 = [UIColor colorWithRed:0.506 green:0.831 blue:0.98 alpha:1];
-  UIColor* fill300 = [UIColor colorWithRed:0.31 green:0.765 blue:0.969 alpha:1];
-  UIColor* fill400 = [UIColor colorWithRed:0.161 green:0.714 blue:0.965 alpha:1];
-  UIColor* fill500 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
-  UIColor* fill600 = [UIColor colorWithRed:0.012 green:0.608 blue:0.898 alpha:1];
-  UIColor* fill700 = [UIColor colorWithRed:0.008 green:0.533 blue:0.82 alpha:1];
-  UIColor* fill800 = [UIColor colorWithRed:0.008 green:0.467 blue:0.741 alpha:1];
+  UIColor* textDark = MDCPrimaryColor();
+  UIColor* textLight = MDCSecondaryColor();
+  UIColor* fill200 = [UIColor colorWithWhite:0.831 alpha:1];
+  UIColor* fill300 = [UIColor colorWithWhite:0.765 alpha:1];
+  UIColor* fill400 = [UIColor colorWithWhite:0.714 alpha:1];
+  UIColor* fill500 = [UIColor colorWithWhite:0.663 alpha:1];
+  UIColor* fill600 = [UIColor colorWithWhite:0.608 alpha:1];
+  UIColor* fill700 = [UIColor colorWithWhite:0.533 alpha:1];
+  UIColor* fill800 = [UIColor colorWithWhite:0.467 alpha:1];
 
   CGRect palettesGroup = CGRectMake(CGRectGetMinX(frame) + 25, CGRectGetMinY(frame) + 24.1,
                                     floor((CGRectGetWidth(frame) - 25) * 0.84663 + 0.5),
@@ -3259,7 +3270,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame) {
 
     NSDictionary* label500FontAttributes = @{
       NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
-      NSForegroundColorAttributeName : textLight,
+      NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label500Style
     };
 
@@ -3277,7 +3288,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame) {
 
     NSDictionary* label600FontAttributes = @{
       NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
-      NSForegroundColorAttributeName : textLight,
+      NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label600Style
     };
 
@@ -3295,7 +3306,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame) {
 
     NSDictionary* label700FontAttributes = @{
       NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
-      NSForegroundColorAttributeName : textLight,
+      NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label700Style
     };
 
@@ -3313,7 +3324,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame) {
 
     NSDictionary* label800FontAttributes = @{
       NSFontAttributeName : [UIFont fontWithName:PalettesFontName size:PalettesFontPointSize],
-      NSForegroundColorAttributeName : textLight,
+      NSForegroundColorAttributeName : textDark,
       NSParagraphStyleAttributeName : label800Style
     };
 
@@ -3343,9 +3354,9 @@ void MDCCatalogDrawProgressViewTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.008 green:0.467 blue:0.741 alpha:1];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
-  UIColor* gradientColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.1];
+  UIColor* fillColor = MDCPrimaryColor();
+  UIColor* fillColor2 = [UIColor colorWithWhite:0.1 alpha:1];
+  UIColor* gradientColor = MDCSecondaryColor();
 
   CGFloat gradientLocations[] = {0.14, 1};
   CGGradientRef gradient = CGGradientCreateWithColors(
@@ -3361,7 +3372,7 @@ void MDCCatalogDrawProgressViewTile(CGRect frame) {
     CGRect gradientRectangleRect = CGRectMake(
         CGRectGetMinX(progressViewGroup) + floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
         CGRectGetMinY(progressViewGroup) +
-            floor(CGRectGetHeight(progressViewGroup) * 0.30500 + 0.5),
+            floor(CGRectGetHeight(progressViewGroup) * 0.30500),
         floor(CGRectGetWidth(progressViewGroup) * 1.00000 + 0.5) -
             floor(CGRectGetWidth(progressViewGroup) * 0.00000 + 0.5),
         floor(CGRectGetHeight(progressViewGroup) * 1.00000 - 0.1) -
@@ -3423,7 +3434,7 @@ void MDCCatalogDrawProgressViewTile(CGRect frame) {
 void MDCCatalogDrawShadowLayerTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
   UIColor* fillColor2 = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.9];
   UIColor* shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.25];
 
@@ -3565,11 +3576,11 @@ void MDCCatalogDrawSliderTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
-  UIColor* gradientColor = [UIColor colorWithRed:0.102 green:0.09 blue:0.094 alpha:0];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.209 green:0.73 blue:0.965 alpha:1];
-  UIColor* fillColor3 = [UIColor colorWithRed:0.407 green:0.798 blue:0.974 alpha:1];
-  UIColor* fillColor4 = [UIColor colorWithRed:0.605 green:0.865 blue:0.983 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
+  UIColor* gradientColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+  UIColor* fillColor2 = [UIColor colorWithWhite:0.209 alpha:1];
+  UIColor* fillColor3 = [UIColor colorWithWhite:0.407 alpha:1];
+  UIColor* fillColor4 = MDCSecondaryColor();
   UIColor* gradientColor1 = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
 
   CGFloat gradient50Locations[] = {0, 1};
@@ -3829,8 +3840,8 @@ void MDCCatalogDrawSnackbarTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* gradientColor = [UIColor colorWithRed:0.076 green:0.59 blue:0.945 alpha:1];
-  UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
+  UIColor* gradientColor = MDCSecondaryColor();
+  UIColor* fillColor = MDCPrimaryColor();
 
   CGFloat gradientLocations[] = {0, 0.14, 1};
   CGGradientRef gradient = CGGradientCreateWithColors(
@@ -3883,8 +3894,8 @@ void MDCCatalogDrawSnackbarTile(CGRect frame) {
 void MDCCatalogDrawSwitchTile(CGRect frame) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* fillColor = [UIColor colorWithRed:0.119 green:0.63 blue:0.95 alpha:1];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
+  UIColor* fillColor = MDCSecondaryColor();
+  UIColor* fillColor2 = MDCPrimaryColor();
 
   CGRect group = CGRectMake(
       CGRectGetMinX(frame) + floor((CGRectGetWidth(frame) - 56.43) * 0.59180 - 0.37) + 0.87,
@@ -3934,8 +3945,8 @@ void MDCCatalogDrawTabsTile(CGRect frame) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  UIColor* gradientColor = [UIColor colorWithRed:0.075 green:0.592 blue:0.945 alpha:0.1];
-  UIColor* fillColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
+  UIColor* gradientColor = MDCSecondaryColor();
+  UIColor* fillColor = MDCPrimaryColor();
   UIColor* fillColor2 = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
 
   CGFloat gradientLocations[] = {0, 0.86, 1};
@@ -4092,7 +4103,7 @@ void MDCCatalogDrawTabsTile(CGRect frame) {
 }
 
 void MDCCatalogDrawTypographyTile(CGRect frame) {
-  UIColor* fillColor = [UIColor colorWithRed:0.077 green:0.591 blue:0.945 alpha:1];
+  UIColor* fillColor = MDCPrimaryColor();
 
   UIBezierPath* bezierPath = [UIBezierPath bezierPath];
   [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame) + 0.48184 * CGRectGetWidth(frame),
