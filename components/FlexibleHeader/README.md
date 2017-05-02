@@ -613,8 +613,8 @@ controller.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-override func childViewControllerForStatusBarStyle() -> UIViewController? {
-  return headerViewController
+override var childViewControllerForStatusBarStyle: UIViewController? {
+   return self.headerViewController
 }
 ```
 
