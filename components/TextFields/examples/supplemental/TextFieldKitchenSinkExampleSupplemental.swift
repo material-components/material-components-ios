@@ -251,6 +251,49 @@ extension TextFieldKitchenSinkSwiftExample {
     addGestureRecognizer()
   }
 
+  func addGestureRecognizer() {
+    let tapRecognizer = UITapGestureRecognizer(target: self,
+                                               action: #selector(tapDidTouch(sender: )))
+    self.scrollView.addGestureRecognizer(tapRecognizer)
+  }
+
+  func registerKeyboardNotifications() {
+    let notificationCenter = NotificationCenter.default
+    notificationCenter.addObserver(
+      self,
+      selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillShow(notif:)),
+      name: .UIKeyboardWillShow,
+      object: nil)
+    notificationCenter.addObserver(
+      self,
+      selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillHide(notif:)),
+      name: .UIKeyboardWillHide,
+      object: nil)
+  }
+
+  func keyboardWillShow(notif: Notification) {
+    guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
+      return
+    }
+    print(scrollView)
+    scrollView.contentInset = UIEdgeInsets(top: 0.0,
+                                           left: 0.0,
+                                           bottom: frame.height,
+                                           right: 0.0)
+  }
+
+  func keyboardWillHide(notif: Notification) {
+    scrollView.contentInset = UIEdgeInsets()
+  }
+
+  func unique(from input: AnyObject, with prefix: String) -> String {
+    return prefix + String(describing: Unmanaged.passUnretained(input).toOpaque())
+  }
+
+}
+
+extension TextFieldKitchenSinkSwiftExample {
+  // The 3 'mode' buttons all are similar. The following code is shared by them
   func buttonDidTouch(button: MDCButton) {
     var controllersToChange = allInputControllers
     var partialTitle = ""
@@ -315,46 +358,6 @@ extension TextFieldKitchenSinkSwiftExample {
       return "Never"
     }
   }
-
-  func addGestureRecognizer() {
-    let tapRecognizer = UITapGestureRecognizer(target: self,
-                                               action: #selector(tapDidTouch(sender: )))
-    self.scrollView.addGestureRecognizer(tapRecognizer)
-  }
-
-  func registerKeyboardNotifications() {
-    let notificationCenter = NotificationCenter.default
-    notificationCenter.addObserver(
-      self,
-      selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillShow(notif:)),
-      name: .UIKeyboardWillShow,
-      object: nil)
-    notificationCenter.addObserver(
-      self,
-      selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillHide(notif:)),
-      name: .UIKeyboardWillHide,
-      object: nil)
-  }
-
-  func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
-      return
-    }
-    print(scrollView)
-    scrollView.contentInset = UIEdgeInsets(top: 0.0,
-                                           left: 0.0,
-                                           bottom: frame.height,
-                                           right: 0.0)
-  }
-
-  func keyboardWillHide(notif: Notification) {
-    scrollView.contentInset = UIEdgeInsets()
-  }
-
-  func unique(from input: AnyObject, with prefix: String) -> String {
-    return prefix + String(describing: Unmanaged.passUnretained(input).toOpaque())
-  }
-
 }
 
 extension TextFieldKitchenSinkSwiftExample {
