@@ -614,7 +614,7 @@ controller.
 #### Swift
 ``` swift
 override var childViewControllerForStatusBarStyle: UIViewController? {
-   return self.headerViewController
+  return headerViewController
 }
 ```
 
