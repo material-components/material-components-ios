@@ -19,10 +19,13 @@
 
 #import <UIKit/UIKit.h>
 
+@import MaterialComponents.MaterialCollections;
+
 @class MDCTabBar;
 @class MDCRaisedButton;
 
-@interface TabBarTextOnlyExample : UIViewController
+
+@interface TabBarTextOnlyExample : MDCCollectionViewController
 
 @property MDCTabBar *_Nullable tabBar;
 @property MDCRaisedButton *_Nullable alignmentButton;

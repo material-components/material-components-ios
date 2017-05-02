@@ -28,26 +28,7 @@
 @implementation TabBarTextOnlyExample (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor whiteColor];
-
-  UIBarButtonItem *toggleCaseItem = [[UIBarButtonItem alloc] initWithTitle:@"Toggle Case"
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(toggleCase:)];
-  self.navigationItem.rightBarButtonItem = toggleCaseItem;
-
-  // Button to change tab alignments.
-  self.alignmentButton = [[MDCRaisedButton alloc] init];
-  [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
-  [self.alignmentButton sizeToFit];
-  self.alignmentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), 100);
-  self.alignmentButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-                                          UIViewAutoresizingFlexibleBottomMargin |
-                                          UIViewAutoresizingFlexibleRightMargin;
-  [self.alignmentButton addTarget:self
-                           action:@selector(changeAlignment:)
-                 forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:self.alignmentButton];
+  self.view.backgroundColor = [UIColor blackColor];
 }
 
 @end

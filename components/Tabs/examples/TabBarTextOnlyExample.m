@@ -18,8 +18,11 @@
 
 #import "MaterialButtons.h"
 #import "MaterialTabs.h"
+#import "MaterialCollections.h"
 
 #import "TabBarTextOnlyExampleSupplemental.h"
+
+static NSString * const kReusableIdentifierItem = @"Cell";
 
 @implementation TabBarTextOnlyExample
 
@@ -27,6 +30,9 @@
   [super viewDidLoad];
 
   [self setupExampleViews];
+
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   [self loadTabBar];
 }
@@ -55,11 +61,11 @@
   ];
 
   // Give it a white appearance to show dark text and customize the unselected title color.
-  self.tabBar.selectedItemTintColor = [UIColor blackColor];
+  self.tabBar.selectedItemTintColor = [UIColor whiteColor];
   self.tabBar.unselectedItemTintColor = [UIColor grayColor];
-  self.tabBar.tintColor = [UIColor redColor];
-  self.tabBar.barTintColor = [UIColor whiteColor];
-  self.tabBar.inkColor = [UIColor colorWithWhite:0.0 alpha:0.1];
+  self.tabBar.tintColor = [UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1];
+  self.tabBar.barTintColor = [UIColor colorWithWhite:0.1 alpha:1];
+  self.tabBar.inkColor = [UIColor colorWithWhite:1 alpha:0.1];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
@@ -97,6 +103,31 @@
 
 - (void)setAlignment:(MDCTabBarAlignment)alignment {
   [self.tabBar setAlignment:alignment animated:YES];
+}
+
+#pragma mark - 
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return 2;
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
+  cell.textLabel.text = indexPath.row == 0 ? @"Text Alignment" : @"Toggle Case";
+  return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (indexPath.row == 0) {
+    [self changeAlignment:collectionView];
+  } else {
+    [self toggleCase:collectionView];
+  }
 }
 
 @end
