@@ -87,7 +87,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     let titleLabel = UILabel()
     titleLabel.text = self.title!.uppercased()
-    titleLabel.textColor = UIColor(white: 0.46, alpha: 1)
+    titleLabel.textColor = UIColor.white
     titleLabel.font = MDCTypography.titleFont()
     titleLabel.sizeToFit()
     if inset + titleLabel.frame.size.width > containerView.frame.size.width {
@@ -111,10 +111,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                    height: titleSize.height)
 
     self.headerViewController.headerView.addSubview(containerView)
-
     self.headerViewController.headerView.forwardTouchEvents(for: containerView)
 
-    self.headerViewController.headerView.backgroundColor = UIColor.white
+    self.headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     self.headerViewController.headerView.trackingScrollView = self.collectionView
 
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
@@ -136,6 +135,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
     self.collectionView?.collectionViewLayout.invalidateLayout()
   }
+
+  override var childViewControllerForStatusBarStyle: UIViewController? {
+    return self.headerViewController
+  }
+
+  // MARK: UICollectionViewDataSource
 
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
