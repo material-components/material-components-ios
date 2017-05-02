@@ -269,8 +269,6 @@ extension MDCNodeListViewController {
     if indexPath.section == Section.description.rawValue {
       subtitleText = node.children[indexPath.row].exampleViewControllerName()
       cell!.textLabel!.text = "Demo"
-      cell!.textLabel!.textColor = UIColor(red: 0.01, green: 0.66, blue: 0.96, alpha: 1)
-      cell!.imageView?.image = UIImage(named: "DemoMain")
     } else {
       subtitleText = node.children[indexPath.row + 1].exampleViewControllerName()
       cell!.textLabel!.text = node.children[indexPath.row + 1].title
