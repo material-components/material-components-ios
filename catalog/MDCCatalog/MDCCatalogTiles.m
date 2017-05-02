@@ -28,11 +28,11 @@ UIImage* MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc) {
 }
 
 static UIColor *MDCPrimaryColor() {
-  return [UIColor colorWithWhite:0.2 alpha:1];
+  return [UIColor colorWithWhite:0.2f alpha:1];
 }
 
 static UIColor *MDCSecondaryColor() {
-  return [UIColor colorWithWhite:0.7 alpha:1];
+  return [UIColor colorWithWhite:0.7f alpha:1];
 }
 
 /* Auto-generated code using PaintCode and formatted with clang-format. */
