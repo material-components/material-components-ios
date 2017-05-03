@@ -21,19 +21,19 @@
 
 @import MaterialComponents.MaterialCollections;
 
+@class MDCAppBar;
 @class MDCTabBar;
-@class MDCRaisedButton;
 
 
 @interface TabBarTextOnlyExample : MDCCollectionViewController
 
+@property MDCAppBar *_Nullable appBar;
 @property MDCTabBar *_Nullable tabBar;
-@property MDCRaisedButton *_Nullable alignmentButton;
 
 @end
 
 @interface TabBarTextOnlyExample (Supplemental)
 
-- (void)setupExampleViews;
+- (void)setupAppBar;
 
 @end

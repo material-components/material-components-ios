@@ -16,9 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialAppBar.h"
 #import "MaterialButtons.h"
-#import "MaterialTabs.h"
 #import "MaterialCollections.h"
+#import "MaterialTabs.h"
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
@@ -26,15 +27,21 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 
 @implementation TabBarTextOnlyExample
 
+- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+  self = [super initWithCollectionViewLayout:layout];
+  if (self) {
+    [self setupAppBar];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  [self setupExampleViews];
-
+  [self loadTabBar];
+  
+  self.appBar.headerStackView.bottomBar = self.tabBar;
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
-
-  [self loadTabBar];
 }
 
 #pragma mark - Action
@@ -51,7 +58,6 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   // Long tab bar with lots of items of varying length. Also demonstrates configurable accent color.
   self.tabBar =
       [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
-  self.tabBar.center = CGPointMake(CGRectGetMidX(self.view.bounds), 250);
   self.tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
@@ -70,7 +76,6 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.tabBar sizeToFit];
-  [self.view addSubview:self.tabBar];
 }
 
 - (void)changeAlignment:(id)sender {
@@ -105,7 +110,7 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   [self.tabBar setAlignment:alignment animated:YES];
 }
 
-#pragma mark - 
+#pragma mark - Options in Collection View
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
@@ -123,6 +128,7 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   if (indexPath.row == 0) {
     [self changeAlignment:collectionView];
   } else {
