@@ -26,7 +26,7 @@
 //@class DialogsTypicalUseViewController;
 
 @interface DialogsTypicalUseViewController : MDCCollectionViewController
-@property NSArray *_Nullable modes;
+@property(nonatomic, strong, nullable) NSArray *modes;
 @end
 
 @interface DialogsTypicalUseViewController (Supplemental)

@@ -53,14 +53,12 @@
   [self.topView addSubview:imageView];
 
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
-  self.navBar.tintColor = [UIColor whiteColor];
-  self.navBar.title = @"Header Stack View";
+  self.navBar.titleTextAttributes = [self itemTitleTextAttributes];
 
-  // Light blue 500
-  [self.navBar setBackgroundColor:[UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1]];
+  [self.navBar setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
 
   UIBarButtonItem *moreButton =
-      [[UIBarButtonItem alloc] initWithTitle:@"More"
+      [[UIBarButtonItem alloc] initWithTitle:@"Reveal"
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(didTapToggleButton:)];
