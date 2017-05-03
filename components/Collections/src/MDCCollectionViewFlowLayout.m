@@ -21,15 +21,12 @@
 #import "MDCCollectionViewStyling.h"
 #import "MaterialCollectionLayoutAttributes.h"
 #import "private/MDCCollectionGridBackgroundView.h"
-#import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionViewEditor.h"
 
 #import <tgmath.h>
 
 /** The grid background decoration view kind. */
 NSString *const kCollectionGridDecorationView = @"MDCCollectionGridDecorationView";
-
-static const NSInteger kSupplementaryViewZIndex = 99;
 
 @implementation MDCCollectionViewFlowLayout {
   NSMutableArray<NSIndexPath *> *_deletedIndexPaths;
@@ -108,9 +105,6 @@ static const NSInteger kSupplementaryViewZIndex = 99;
     [self updateAttribute:attr];
   }
 
-  // Add info bar header/footer supplementary view if necessary.
-  [self addInfoBarAttributesIfNecessary:attributes];
-
   // Begin cell appearance animation if necessary.
   [self beginCellAppearanceAnimationIfNecessary:attributes];
 
@@ -166,30 +160,6 @@ static const NSInteger kSupplementaryViewZIndex = 99;
                                                                           withIndexPath:indexPath];
     }
     [self updateAttribute:(MDCCollectionViewLayoutAttributes *)attr];
-
-  } else {
-    // Update editing info bar attributes.
-    attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind
-                                                                          withIndexPath:indexPath];
-
-    // Force the info bar supplementary views to stay fixed to their respective positions
-    // at top/bottom of the collectionView bounds.
-    CGFloat offsetY = 0;
-    CGRect currentBounds = self.collectionView.bounds;
-    attr.zIndex = kSupplementaryViewZIndex;
-
-    if ([kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
-      attr.size = CGSizeMake(CGRectGetWidth(currentBounds), MDCCollectionInfoBarHeaderHeight);
-      // Allow header to move upwards with scroll, but prevent from moving downwards with scroll.
-      CGFloat insetTop = self.collectionView.contentInset.top;
-      CGFloat boundsY = currentBounds.origin.y;
-      CGFloat maxOffsetY = MAX(boundsY + insetTop, 0);
-      offsetY = boundsY + (attr.size.height / 2) + insetTop - maxOffsetY;
-    } else if ([kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
-      attr.size = CGSizeMake(CGRectGetWidth(currentBounds), MDCCollectionInfoBarFooterHeight);
-      offsetY = currentBounds.origin.y + currentBounds.size.height - (attr.size.height / 2);
-    }
-    attr.center = CGPointMake(CGRectGetMidX(currentBounds), offsetY);
   }
   return attr;
 }
@@ -623,26 +593,6 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   }
 }
 
-- (void)addInfoBarAttributesIfNecessary:
-        (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
-  if (self.editor.isEditing && [attributes count] > 0) {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-
-    // Add header info bar if editing.
-    [attributes
-        addObject:[self layoutAttributesForSupplementaryViewOfKind:MDCCollectionInfoBarKindHeader
-                                                       atIndexPath:indexPath]];
-
-    // Add footer info bar if editing and item(s) are selected.
-    NSInteger selectedItemCount = [self.collectionView.indexPathsForSelectedItems count];
-    if (selectedItemCount > 0) {
-      [attributes
-          addObject:[self layoutAttributesForSupplementaryViewOfKind:MDCCollectionInfoBarKindFooter
-                                                         atIndexPath:indexPath]];
-    }
-  }
-}
-
 - (void)addDecorationViewIfNecessary:
         (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
   // If necessary, adds a decoration view to a section drawn below its items. This will only happen
@@ -748,12 +698,6 @@ static const NSInteger kSupplementaryViewZIndex = 99;
             [attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader];
         if (attrIsHeader && prevAttrIsItem) {
           [sortedAttributes insertObject:attr atIndex:sortedAttributes.count - 1];
-          return;
-        }
-        if ([attr.representedElementKind isEqualToString:MDCCollectionInfoBarKindHeader] ||
-            [attr.representedElementKind isEqualToString:MDCCollectionInfoBarKindFooter]) {
-          // Reduce the attributeCount here to reflect only attributes that can be animated.
-          attributeCount--;
           return;
         }
       }

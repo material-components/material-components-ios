@@ -18,36 +18,42 @@
 
 @class MDCCollectionInfoBarView;
 
-/** The info bar supplementary view kind when shown in header. */
-extern NSString *_Nonnull const MDCCollectionInfoBarKindHeader;
-
-/** The info bar supplementary view kind when shown in footer. */
-extern NSString *_Nonnull const MDCCollectionInfoBarKindFooter;
+///** The info bar supplementary view kind when shown in header. */
+//extern NSString *_Nonnull const MDCCollectionInfoBarKindHeader;
+//
+///** The info bar supplementary view kind when shown in footer. */
+//extern NSString *_Nonnull const MDCCollectionInfoBarKindFooter;
 
 /** The animation duration for the info bar. */
 extern const CGFloat MDCCollectionInfoBarAnimationDuration;
 
-/** Height for the info bar when shown in header. */
-extern const CGFloat MDCCollectionInfoBarHeaderHeight;
-
-/** Height for the info bar when shown in footer. */
-extern const CGFloat MDCCollectionInfoBarFooterHeight;
+///** Height for the info bar when shown in header. */
+//extern const CGFloat MDCCollectionInfoBarHeaderHeight;
+//
+///** Height for the info bar when shown in footer. */
+//extern const CGFloat MDCCollectionInfoBarFooterHeight;
 
 /** The available styles that the info bar can be shown within a collectionView. */
-typedef NS_ENUM(NSUInteger, MDCCollectionInfoBarViewStyle) {
-  MDCCollectionInfoBarViewStyleActionable,
-  MDCCollectionInfoBarViewStyleHUD
+typedef NS_ENUM(NSUInteger, MDCInfoBarStyle) {
+  MDCInfoBarStyleActionable,
+  MDCInfoBarStyleHUD,
+  MDCInfoBarStyleCustom
+};
+
+typedef NS_ENUM(NSUInteger, MDCInfoBarKind) {
+  MDCInfoBarKindHeader,
+  MDCInfoBarKindFooter
 };
 
 /** Delegate protocol for the MDCCollectionInfoBarView. */
 @protocol MDCCollectionInfoBarViewDelegate <NSObject>
-@required
-/**
- Allows the receiver to update the info bar after it has been created.
-
- @param infoBar The MDCCollectionInfoBarView info bar.
- */
-- (void)updateControllerWithInfoBar:(nonnull MDCCollectionInfoBarView *)infoBar;
+//@required
+///**
+// Allows the receiver to update the info bar after it has been created.
+//
+// @param infoBar The MDCCollectionInfoBarView info bar.
+// */
+//- (void)updateControllerWithInfoBar:(nonnull MDCCollectionInfoBarView *)infoBar;
 
 @optional
 /**
@@ -104,6 +110,16 @@ typedef NS_ENUM(NSUInteger, MDCCollectionInfoBarViewStyle) {
     didDismissAnimated:(BOOL)animated
         didAutoDismiss:(BOOL)didAutoDismiss;
 
+
+- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
+    shouldShowInfoBarWithKind:(nonnull NSString *)representedKind;
+
+- (nullable MDCCollectionInfoBarView *)collectionView:(nonnull UICollectionView *)collectionView
+                                       infoBarForKind:(nonnull NSString *)representedKind;
+
+//- (__kindof MDCCollectionInfoBarView *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+
+
 @end
 
 /**
@@ -111,7 +127,11 @@ typedef NS_ENUM(NSUInteger, MDCCollectionInfoBarViewStyle) {
  UICollectionReusableView that displays an animated view in either the header
  or footer.
  */
-@interface MDCCollectionInfoBarView : UICollectionReusableView
+@interface MDCCollectionInfoBarView : UIView
+
+- (nonnull instancetype)initWithStyle:(MDCInfoBarStyle)style
+                                 kind:(MDCInfoBarKind)kind
+                       collectionView:(nonnull UICollectionView *)collectionView;
 
 /** A delegate through which the MDCCollectionInfoBarView may inform of updates. */
 @property(nonatomic, weak, nullable) id<MDCCollectionInfoBarViewDelegate> delegate;
@@ -119,8 +139,13 @@ typedef NS_ENUM(NSUInteger, MDCCollectionInfoBarViewStyle) {
 /** The background view containing the message label. This view is animatable on show/dismiss. */
 @property(nonatomic, readonly, strong, nullable) UIView *backgroundView;
 
-/** Whether the background view should be shown with a shadow. */
-@property(nonatomic, assign) BOOL shouldApplyBackgroundViewShadow;
+///** Whether the background view should be shown with a shadow. */
+//@property(nonatomic, assign) BOOL shouldApplyBackgroundViewShadow;
+
+@property(nonatomic, assign) BOOL shouldApplyBorder;
+
+@property(nonatomic, strong, null_resettable) UIColor *borderColor;
+@property(nonatomic, assign) CGFloat borderWidth;
 
 /**
  The color assigned to the background view.
@@ -149,14 +174,17 @@ typedef NS_ENUM(NSUInteger, MDCCollectionInfoBarViewStyle) {
 @property(nonatomic, assign) BOOL allowsTap;
 
 /** The optional style that the info bar can be shown. */
-@property(nonatomic, assign) MDCCollectionInfoBarViewStyle style;
+@property(nonatomic, assign) MDCInfoBarStyle style;
+
+
 
 /**
  The info bar supplementary view kind as set by the collectionView model
  |collectionView:viewForSupplementaryElementOfKind:atIndexPath| method. Possible values
  are MDCCollectionInfoBarKindHeader or MDCCollectionInfoBarKindFooter.
  */
-@property(nonatomic, strong, nonnull) NSString *kind;
+@property(nonatomic, readonly, assign) MDCInfoBarKind kind;
+//@property(nonatomic, strong, nonnull) NSString *kind;
 
 /**
  The desired duration after which the info bar will be automatically dismissed. If set to

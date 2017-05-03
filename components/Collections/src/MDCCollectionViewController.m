@@ -19,7 +19,6 @@
 #import "MDCCollectionViewFlowLayout.h"
 #import "MaterialCollectionCells.h"
 #import "MaterialInk.h"
-#import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionStringResources.h"
 #import "private/MDCCollectionViewEditor.h"
 #import "private/MDCCollectionViewStyler.h"
@@ -29,8 +28,7 @@
 NSString *const MDCCollectionInfoBarKindHeader = @"MDCCollectionInfoBarKindHeader";
 NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFooter";
 
-@interface MDCCollectionViewController () <MDCCollectionInfoBarViewDelegate,
-                                           MDCInkTouchControllerDelegate>
+@interface MDCCollectionViewController () <MDCInkTouchControllerDelegate>
 @property(nonatomic, assign) BOOL currentlyActiveInk;
 @end
 
@@ -98,17 +96,28 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   // Set up ink touch controller.
   _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
   _inkTouchController.delegate = self;
+}
 
-  // Register our supplementary header and footer
-  NSString *classIdentifier = NSStringFromClass([MDCCollectionInfoBarView class]);
-  NSString *headerKind = MDCCollectionInfoBarKindHeader;
-  NSString *footerKind = MDCCollectionInfoBarKindFooter;
-  [self.collectionView registerClass:[MDCCollectionInfoBarView class]
-          forSupplementaryViewOfKind:headerKind
-                 withReuseIdentifier:classIdentifier];
-  [self.collectionView registerClass:[MDCCollectionInfoBarView class]
-          forSupplementaryViewOfKind:footerKind
-                 withReuseIdentifier:classIdentifier];
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  if (!_headerInfoBar) {
+    _headerInfoBar = [[MDCCollectionInfoBarView alloc] initWithStyle:MDCInfoBarStyleHUD
+                                                                kind:MDCInfoBarKindHeader
+                                                      collectionView:self.collectionView];
+    _headerInfoBar.message = @"abc";
+    _headerInfoBar.delegate = self;
+    [self.view addSubview:_headerInfoBar];
+  }
+
+  if (!_footerInfoBar) {
+    _footerInfoBar = [[MDCCollectionInfoBarView alloc] initWithStyle:MDCInfoBarStyleActionable
+                                                                kind:MDCInfoBarKindFooter
+                                                      collectionView:self.collectionView];
+    _footerInfoBar.message = @"DELETE";
+    _footerInfoBar.delegate = self;
+    [self.view addSubview:_footerInfoBar];
+  }
 }
 
 - (void)setCollectionView:(__kindof UICollectionView *)collectionView {
@@ -123,21 +132,6 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - <MDCCollectionInfoBarViewDelegate>
 
-- (void)updateControllerWithInfoBar:(MDCCollectionInfoBarView *)infoBar {
-  // Updates info bar styling for header/footer.
-  if ([infoBar.kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
-    _headerInfoBar = infoBar;
-    _headerInfoBar.message = MDCCollectionStringResources(infoBarGestureHintString);
-    _headerInfoBar.style = MDCCollectionInfoBarViewStyleHUD;
-    [self updateHeaderInfoBarIfNecessary];
-  } else if ([infoBar.kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
-    _footerInfoBar = infoBar;
-    _footerInfoBar.message = MDCCollectionStringResources(deleteButtonString);
-    _footerInfoBar.style = MDCCollectionInfoBarViewStyleActionable;
-    [self updateFooterInfoBarIfNecessary];
-  }
-}
-
 - (void)didTapInfoBar:(MDCCollectionInfoBarView *)infoBar {
   if ([infoBar isEqual:_footerInfoBar]) {
     [self deleteIndexPaths:self.collectionView.indexPathsForSelectedItems];
@@ -147,20 +141,37 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 - (void)infoBar:(MDCCollectionInfoBarView *)infoBar
     willShowAnimated:(BOOL)animated
      willAutoDismiss:(BOOL)willAutoDismiss {
-  if ([infoBar.kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
-    [self updateContentWithBottomInset:MDCCollectionInfoBarFooterHeight];
+  if (infoBar.kind == MDCInfoBarKindFooter) {
+    [self updateContentWithBottomInset:infoBar.bounds.size.height];
   }
 }
 
 - (void)infoBar:(MDCCollectionInfoBarView *)infoBar
     willDismissAnimated:(BOOL)animated
         willAutoDismiss:(BOOL)willAutoDismiss {
-  if ([infoBar.kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
+  if (infoBar.kind == MDCInfoBarKindHeader) {
     _headerInfoBarDismissed = willAutoDismiss;
   } else {
-    [self updateContentWithBottomInset:-MDCCollectionInfoBarFooterHeight];
+    [self updateContentWithBottomInset:-infoBar.bounds.size.height];
   }
 }
+
+//- (BOOL)collectionView:(UICollectionView *)collectionView
+//    shouldShowInfoBarWithKind:(NSString *)representedKind {
+//  if ([representedKind isEqualToString:MDCCollectionInfoBarKindHeader]) {
+//    return _editor.isEditing;
+//  }
+//  return NO;
+//}
+//
+//- (BOOL)shouldShowInfoBarWithKind:(NSString *)representedKind {
+//  if ([representedKind isEqualToString:MDCCollectionInfoBarKindHeader]) {
+//    return _editor.isEditing;
+//  }
+//  return NO;
+//}
+
+
 
 #pragma mark - <MDCCollectionViewStylingDelegate>
 
@@ -330,40 +341,6 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return ink;
 }
 
-#pragma mark - <UICollectionViewDataSource>
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-           viewForSupplementaryElementOfKind:(NSString *)kind
-                                 atIndexPath:(NSIndexPath *)indexPath {
-  // TODO (shepj): This implementation of registering cell classes in data source methods should be
-  // rethought. This causes a crash without a workaround when collections with headers or
-  // footers entering editing mode. Also, we should find a way around implementing a data source
-  // method in a super class.
-  // Issue: https://github.com/material-components/material-components-ios/issues/1208
-  // Editing info bar.
-  if ([kind isEqualToString:MDCCollectionInfoBarKindHeader] ||
-      [kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
-    NSString *identifier = NSStringFromClass([MDCCollectionInfoBarView class]);
-    UICollectionReusableView *supplementaryView =
-        [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                           withReuseIdentifier:identifier
-                                                  forIndexPath:indexPath];
-
-    // Update info bar.
-    if ([supplementaryView isKindOfClass:[MDCCollectionInfoBarView class]]) {
-      MDCCollectionInfoBarView *infoBarView = (MDCCollectionInfoBarView *)supplementaryView;
-      infoBarView.delegate = self;
-      infoBarView.kind = kind;
-      [self updateControllerWithInfoBar:infoBarView];
-    }
-    return supplementaryView;
-  } else {
-    return [super collectionView:collectionView
-        viewForSupplementaryElementOfKind:kind
-                              atIndexPath:indexPath];
-  }
-}
-
 #pragma mark - <UICollectionViewDelegate>
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
@@ -458,7 +435,9 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   _styler.allowsItemInlay = YES;
   _styler.allowsMultipleItemInlays = YES;
   [_styler applyInlayToAllItemsAnimated:YES];
-  [self updateHeaderInfoBarIfNecessary];
+
+  [_headerInfoBar showAnimated:YES];
+//  [self updateHeaderInfoBarIfNecessary];
 }
 
 - (void)collectionViewWillEndEditing:(UICollectionView *)collectionView {
@@ -586,21 +565,21 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   }
 }
 
-- (void)updateHeaderInfoBarIfNecessary {
-  if (_editor.isEditing) {
-    // Show HUD only once before autodissmissing.
-    BOOL allowsSwipeToDismissItem = NO;
-    if ([self respondsToSelector:@selector(collectionViewAllowsSwipeToDismissItem:)]) {
-      allowsSwipeToDismissItem = [self collectionViewAllowsSwipeToDismissItem:self.collectionView];
-    }
-
-    if (!_headerInfoBar.isVisible && !_headerInfoBarDismissed && allowsSwipeToDismissItem) {
-      [_headerInfoBar showAnimated:YES];
-    } else {
-      [_headerInfoBar dismissAnimated:YES];
-    }
-  }
-}
+//- (void)updateHeaderInfoBarIfNecessary {
+//  if (_editor.isEditing) {
+//    // Show HUD only once before autodissmissing.
+//    BOOL allowsSwipeToDismissItem = NO;
+//    if ([self respondsToSelector:@selector(collectionViewAllowsSwipeToDismissItem:)]) {
+//      allowsSwipeToDismissItem = [self collectionViewAllowsSwipeToDismissItem:self.collectionView];
+//    }
+//
+//    if (!_headerInfoBar.isVisible && !_headerInfoBarDismissed && allowsSwipeToDismissItem) {
+//      [_headerInfoBar showAnimated:YES];
+//    } else {
+//      [_headerInfoBar dismissAnimated:YES];
+//    }
+//  }
+//}
 
 - (void)updateFooterInfoBarIfNecessary {
   NSInteger selectedItemCount = [self.collectionView.indexPathsForSelectedItems count];

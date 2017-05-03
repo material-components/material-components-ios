@@ -20,14 +20,14 @@
 #import "MaterialTypography.h"
 
 const CGFloat MDCCollectionInfoBarAnimationDuration = 0.3f;
-const CGFloat MDCCollectionInfoBarHeaderHeight = 48.0f;
-const CGFloat MDCCollectionInfoBarFooterHeight = 48.0f;
 
-static const CGFloat MDCCollectionInfoBarLabelHorizontalPadding = 16.0f;
+static const CGFloat kInfoBarDefaultHeight = 48.0f;
+static const NSTimeInterval kInfoBarDefaultDismissal = 1.0f;
+static const CGFloat kInfoBarDefaultLabelHorizontalPadding = 16.0f;
 
 // Colors derived from http://www.google.com/design/spec/style/color.html#color-color-palette .
-static const uint32_t kCollectionInfoBarBlueColor = 0x448AFF;  // Blue A200
-static const uint32_t kCollectionInfoBarRedColor = 0xF44336;   // Red 500
+static const uint32_t kInfoBarBlueColor = 0x448AFF;  // Blue A200
+static const uint32_t kInfoBarRedColor = 0xF44336;   // Red 500
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
@@ -68,104 +68,119 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   return self;
 }
 
+- (instancetype)initWithStyle:(MDCInfoBarStyle)style
+                         kind:(MDCInfoBarKind)kind
+               collectionView:(UICollectionView *)collectionView {
+  _style = style;
+  _kind = kind;
+
+  // Determine frame based on if header or footer.
+  CGFloat offsetY = 0;
+  if (_kind == MDCInfoBarKindFooter) {
+    offsetY = collectionView.bounds.size.height - kInfoBarDefaultHeight;
+  }
+  CGRect frame = CGRectMake(0, offsetY, collectionView.bounds.size.width, kInfoBarDefaultHeight);
+
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonMDCCollectionInfoBarViewInit];
+  }
+  return self;
+}
+
 - (void)commonMDCCollectionInfoBarViewInit {
+  self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   self.backgroundColor = [UIColor clearColor];
   self.userInteractionEnabled = NO;
+
+  // Setup background view.
   _backgroundView = [[ShadowedView alloc] initWithFrame:self.bounds];
   _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _backgroundView.clipsToBounds = YES;
   _backgroundView.hidden = YES;
+  _backgroundTransformY =
+      (_kind == MDCInfoBarKindHeader) ? -kInfoBarDefaultHeight : kInfoBarDefaultHeight;
+  _backgroundView.transform = CGAffineTransformMakeTranslation(0, _backgroundTransformY);
+  _tapGesture =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+  [_backgroundView addGestureRecognizer:_tapGesture];
+  [self addSubview:_backgroundView];
 
+  // Setup label.
   _titleLabel = [[UILabel alloc]
-      initWithFrame:CGRectInset(self.bounds, MDCCollectionInfoBarLabelHorizontalPadding, 0)];
+      initWithFrame:CGRectInset(self.bounds, kInfoBarDefaultLabelHorizontalPadding, 0)];
   _titleLabel.backgroundColor = [UIColor clearColor];
   _titleLabel.textAlignment = NSTextAlignmentCenter;
   _titleLabel.font = [MDCTypography body1Font];
   _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [_backgroundView addSubview:_titleLabel];
 
-  [self addSubview:_backgroundView];
 
-  _tapGesture =
-      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-  [_backgroundView addGestureRecognizer:_tapGesture];
+  [self prepareLayout];
+}
+
+- (void)prepareLayout {
+  if (_style == MDCInfoBarStyleHUD) {
+    _allowsTap = NO;
+    _textAlignment = NSTextAlignmentLeft;
+    _tintColor = ColorFromRGB(kInfoBarBlueColor);
+    _titleColor = [UIColor whiteColor];
+    _autoDismissAfterDuration = kInfoBarDefaultDismissal;
+    _backgroundView.alpha = 0.9f;
+    self.shouldApplyBorder = NO;
+    self.isAccessibilityElement = NO;
+    self.accessibilityTraits = UIAccessibilityTraitNone;
+    self.accessibilityLabel = nil;
+  } else if (_style == MDCInfoBarStyleActionable) {
+    _allowsTap = YES;
+    _textAlignment = NSTextAlignmentCenter;
+    _tintColor = [UIColor whiteColor];
+    _titleColor = ColorFromRGB(kInfoBarRedColor);
+    _autoDismissAfterDuration = 0.0f;
+    _backgroundView.alpha = 1.0f;
+    _borderColor = [UIColor colorWithWhite:0 alpha:0.1f];
+    _borderWidth = 1.0f / [[UIScreen mainScreen] scale];
+    self.shouldApplyBorder = YES;
+    self.isAccessibilityElement = YES;
+    self.accessibilityTraits = UIAccessibilityTraitButton;
+    self.accessibilityLabel = self.message;
+  }
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  if (_shouldApplyBackgroundViewShadow) {
-    [self setShouldApplyBackgroundViewShadow:_shouldApplyBackgroundViewShadow];
+  NSLog(@"layoutSubviews");
+
+  // Adjust border offset.
+  CGFloat offsetY = (_kind == MDCInfoBarKindFooter) ? 1 : -1;
+  CGSize boundsSize = _backgroundView.bounds.size;
+  _backgroundBorderLayer.frame =
+      CGRectMake(-1, 0, boundsSize.width + 2, boundsSize.height + offsetY);
+  _backgroundBorderLayer.borderColor = _borderColor.CGColor;
+  _backgroundBorderLayer.borderWidth = _borderWidth;
+
+  _titleLabel.text = _message;
+  _titleLabel.textAlignment = _textAlignment;
+  _titleLabel.textColor = _titleColor;
+  _backgroundView.backgroundColor = _tintColor;
+}
+
+- (void)setShouldApplyBorder:(BOOL)shouldApplyBorder {
+  _shouldApplyBorder = shouldApplyBorder;
+  if (!_shouldApplyBorder) {
+    [_backgroundBorderLayer removeFromSuperlayer];
+  } else if (!_backgroundBorderLayer) {
+    _backgroundBorderLayer = [CALayer layer];
+    [_backgroundView.layer addSublayer:_backgroundBorderLayer];
   }
 }
 
-- (void)layoutSublayersOfLayer:(CALayer *)layer {
-  [super layoutSublayersOfLayer:layer];
-  // Set border layer frame.
-  _backgroundBorderLayer.frame = CGRectMake(-1, 0, CGRectGetWidth(self.backgroundView.bounds) + 2,
-                                            CGRectGetHeight(self.backgroundView.bounds) + 1);
+- (void)setBorderColor:(UIColor *)borderColor {
+  _borderColor = borderColor;
 }
 
 - (void)setTintColor:(UIColor *)tintColor {
   _tintColor = tintColor;
-  _backgroundView.backgroundColor = _tintColor;
-}
-
-- (void)setMessage:(NSString *)message {
-  _message = message;
-  _titleLabel.text = message;
-}
-
-- (void)setKind:(NSString *)kind {
-  _kind = kind;
-  if ([kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
-    _backgroundTransformY = -MDCCollectionInfoBarHeaderHeight;
-  } else {
-    _backgroundTransformY = MDCCollectionInfoBarFooterHeight;
-  }
-  _backgroundView.transform = CGAffineTransformMakeTranslation(0, _backgroundTransformY);
-}
-
-- (void)setShouldApplyBackgroundViewShadow:(BOOL)shouldApplyBackgroundViewShadow {
-  _shouldApplyBackgroundViewShadow = shouldApplyBackgroundViewShadow;
-  MDCShadowLayer *shadowLayer = (MDCShadowLayer *)_backgroundView.layer;
-  shadowLayer.elevation = shouldApplyBackgroundViewShadow ? 1 : 0;
-}
-
-- (void)setTextAlignment:(NSTextAlignment)textAlignment {
-  _textAlignment = textAlignment;
-  _titleLabel.textAlignment = textAlignment;
-}
-
-- (void)setStyle:(MDCCollectionInfoBarViewStyle)style {
-  _style = style;
-  if (style == MDCCollectionInfoBarViewStyleHUD) {
-    self.allowsTap = NO;
-    self.shouldApplyBackgroundViewShadow = NO;
-    self.textAlignment = NSTextAlignmentLeft;
-    self.tintColor = ColorFromRGB(kCollectionInfoBarBlueColor);
-    self.titleLabel.textColor = [UIColor whiteColor];
-    self.autoDismissAfterDuration = 1.0f;
-    self.backgroundView.alpha = 0.9f;
-  } else if (style == MDCCollectionInfoBarViewStyleActionable) {
-    self.allowsTap = YES;
-    self.shouldApplyBackgroundViewShadow = YES;
-    self.textAlignment = NSTextAlignmentCenter;
-    self.tintColor = [UIColor whiteColor];
-    self.titleLabel.textColor = ColorFromRGB(kCollectionInfoBarRedColor);
-    self.autoDismissAfterDuration = 0.0f;
-    self.backgroundView.alpha = 1.0f;
-    self.isAccessibilityElement = YES;
-    self.accessibilityTraits = UIAccessibilityTraitButton;
-    self.accessibilityLabel = self.message;
-
-    // Adds border to be positioned during sublayer layout.
-    self.backgroundView.clipsToBounds = YES;
-    if (!_backgroundBorderLayer) {
-      _backgroundBorderLayer = [CALayer layer];
-      _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
-      _backgroundBorderLayer.borderWidth = 1.0f / [[UIScreen mainScreen] scale];
-      [self.backgroundView.layer addSublayer:_backgroundBorderLayer];
-    }
-  }
 }
 
 - (BOOL)isVisible {
@@ -179,25 +194,26 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
     [_delegate infoBar:self willShowAnimated:animated willAutoDismiss:[self shouldAutoDismiss]];
   }
 
+
   NSTimeInterval duration = (animated) ? MDCCollectionInfoBarAnimationDuration : 0.0f;
   [UIView animateWithDuration:duration
-      delay:0
-      options:UIViewAnimationOptionCurveEaseOut
-      animations:^{
-        _backgroundView.transform = CGAffineTransformIdentity;
-      }
-      completion:^(BOOL finished) {
-        self.userInteractionEnabled = _allowsTap;
+                        delay:0
+                      options:UIViewAnimationOptionCurveEaseOut
+                   animations:^{
+                     _backgroundView.transform = CGAffineTransformIdentity;
+                   }
+                   completion:^(BOOL finished) {
+                     self.userInteractionEnabled = _allowsTap;
 
-        // Notify delegate.
-        if ([_delegate respondsToSelector:@selector(infoBar:didShowAnimated:willAutoDismiss:)]) {
-          [_delegate infoBar:self
-              didShowAnimated:animated
-              willAutoDismiss:[self shouldAutoDismiss]];
-        }
-
-        [self autoDismissIfNecessaryWithAnimation:animated];
-      }];
+                     // Notify delegate.
+                     if ([_delegate respondsToSelector:@selector(infoBar:didShowAnimated:willAutoDismiss:)]) {
+                       [_delegate infoBar:self
+                          didShowAnimated:animated
+                          willAutoDismiss:[self shouldAutoDismiss]];
+                     }
+                     
+                     [self autoDismissIfNecessaryWithAnimation:animated];
+                   }];
 }
 
 - (void)dismissAnimated:(BOOL)animated {

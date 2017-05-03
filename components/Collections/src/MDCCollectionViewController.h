@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCCollectionInfoBarView.h"
 #import "MDCCollectionViewEditing.h"
 #import "MDCCollectionViewEditingDelegate.h"
 #import "MDCCollectionViewStyling.h"
@@ -26,6 +27,9 @@
  and animation styling.
  */
 @interface MDCCollectionViewController : UICollectionViewController <
+                                             /** */
+                                             MDCCollectionInfoBarViewDelegate,
+
                                              /** Allows for editing notifications/permissions. */
                                              MDCCollectionViewEditingDelegate,
 
@@ -40,6 +44,9 @@
 
 /** The collection view editor. */
 @property(nonatomic, strong, readonly, nonnull) id<MDCCollectionViewEditing> editor;
+
+//@property (nonatomic, strong, nullable) MDCCollectionInfoBarView *headerInfoBarView;
+//@property (nonatomic, strong, nullable) MDCCollectionInfoBarView *footerInfoBarView;
 
 #pragma mark - Subclassing
 
