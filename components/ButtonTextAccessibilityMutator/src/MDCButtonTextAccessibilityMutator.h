@@ -16,6 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCButton;
+
 @interface MDCButtonTextAccessibilityMutator : NSObject
+
+- (void)mutate:(MDCButton *)button;
 
 @end

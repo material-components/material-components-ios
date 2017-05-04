@@ -17,18 +17,38 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialButtonTextAccessibilityMutator.h"
+#import "MaterialButtons.h"
+
+// A value greater than the largest value created by combining normal values of UIControlState.
+// This is a complete hack, but UIControlState doesn't expose anything useful here.
+// This assumes that UIControlState is actually a set of bitfields and ignores application-specific
+// values.
+static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1;
 
 @interface ButtonTextAccessibilityMutatorTests : XCTestCase
 @end
 
 @implementation ButtonTextAccessibilityMutatorTests
 
-- (void)testSomething {
-  // Given
-
-  // When
-
-  // Then
+- (void)testMutateChangesTextColor {
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    // Given
+    MDCButtonTextAccessibilityMutator *mutator = [[MDCButtonTextAccessibilityMutator alloc] init];
+    MDCButton *button = [[MDCButton alloc] init];
+    UIColor *color = [UIColor whiteColor];
+    // Making the background color the same as the title color.
+    [button setBackgroundColor:color forState:(UIControlState)controlState];
+    
+    XCTAssertEqualObjects([button backgroundColorForState:controlState], color);
+    [button setTitleColor:color forState:(UIControlState)controlState];
+    XCTAssertEqualObjects([button backgroundColorForState:controlState], color);
+    
+    // When
+    [mutator mutate:button];
+    
+    // Then
+    XCTAssertNotEqualObjects([button titleColorForState:controlState], color, @"for control state:%i ", controlState);
+  }
 }
 
 @end

@@ -15,7 +15,27 @@
  */
 
 #import "MDCButtonTextAccessibilityMutator.h"
+#import "MDFTextAccessibility.h"
+#import "MaterialButtons.h"
+#import "MaterialTypography.h"
 
 @implementation MDCButtonTextAccessibilityMutator
+
+- (void)mutate:(MDCButton *)button {
+  // This ensures existing titles will get uppercased.
+  UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
+  UIControlStateDisabled | UIControlStateSelected;
+  for (NSUInteger controlState = 0; controlState <= allControlStates; ++controlState) {
+    UIColor *backgroundColor = [button backgroundColorForState:(UIControlState)controlState];
+    if (backgroundColor) {
+      UIColor *color =
+          [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                           targetTextAlpha:[MDCTypography buttonFontOpacity]
+                                                   options:0];
+      [button setTitleColor:color forState:controlState];
+      NSLog(@"%@", color);
+    }
+  }
+}
 
 @end
