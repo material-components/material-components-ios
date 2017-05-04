@@ -283,13 +283,14 @@ serialize non-view classes. Tip: write a unit test for this.
 Classes that set ivar values or perform other commands from the initializer, should avoid duplicate code by writing a common initialization function to call from all initializers.
 
 ```Objective-C
+
+@implementation MDCFoo
+
 static MDCFoo *CommonInit(MDCFoo *self) {
   if (!self) return nil;
   self->_myString = @"Bananas";
   return self;
 }
-
-@implementation MDCFoo
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
