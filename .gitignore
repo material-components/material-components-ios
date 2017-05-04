@@ -48,6 +48,7 @@ xcuserdata
 #
 Pods/
 demos/**/Pods/
+catalog/Podfile.lock
 
 # Carthage
 #
