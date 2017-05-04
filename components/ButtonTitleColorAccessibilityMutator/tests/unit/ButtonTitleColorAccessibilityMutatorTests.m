@@ -16,7 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtonTextAccessibilityMutator.h"
+#import "MaterialButtonTitleColorAccessibilityMutator.h"
 #import "MaterialButtons.h"
 
 // A value greater than the largest value created by combining normal values of UIControlState.
@@ -25,15 +25,16 @@
 // values.
 static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1;
 
-@interface ButtonTextAccessibilityMutatorTests : XCTestCase
+@interface ButtonTitleColorAccessibilityMutatorTests : XCTestCase
 @end
 
-@implementation ButtonTextAccessibilityMutatorTests
+@implementation ButtonTitleColorAccessibilityMutator
 
 - (void)testMutateChangesTextColor {
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     // Given
-    MDCButtonTextAccessibilityMutator *mutator = [[MDCButtonTextAccessibilityMutator alloc] init];
+    MDCButtonTitleColorAccessibilityMutator *mutator =
+        [[MDCButtonTitleColorAccessibilityMutator alloc] init];
     MDCButton *button = [[MDCButton alloc] init];
     UIColor *color = [UIColor whiteColor];
     // Making the background color the same as the title color.

@@ -14,12 +14,4 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
-@class MDCButton;
-
-@interface MDCButtonTextAccessibilityMutator : NSObject
-
-- (void)mutate:(MDCButton *)button;
-
-@end
+#import "MDCButtonTitleColorAccessibilityMutator.h"

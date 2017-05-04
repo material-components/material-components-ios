@@ -85,7 +85,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Math"
   end
 
-  s.subspec "ButtonTextAccessibilityMutator" do |ss|
+  s.subspec "ButtonTitleColorAccessibilityMutator" do |ss|
     ss.ios.deployment_target = '8.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"

@@ -14,17 +14,17 @@
  limitations under the License.
  */
 
-#import "MDCButtonTextAccessibilityMutator.h"
+#import "MDCButtonTitleColorAccessibilityMutator.h"
 #import "MDFTextAccessibility.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
-@implementation MDCButtonTextAccessibilityMutator
+@implementation MDCButtonTitleColorAccessibilityMutator
 
 - (void)mutate:(MDCButton *)button {
-  // This ensures existing titles will get uppercased.
+  // This ensures title colors will be accessible against the buttons backgrounds.
   UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
-  UIControlStateDisabled | UIControlStateSelected;
+      UIControlStateDisabled | UIControlStateSelected;
   for (NSUInteger controlState = 0; controlState <= allControlStates; ++controlState) {
     UIColor *backgroundColor = [button backgroundColorForState:(UIControlState)controlState];
     if (backgroundColor) {
