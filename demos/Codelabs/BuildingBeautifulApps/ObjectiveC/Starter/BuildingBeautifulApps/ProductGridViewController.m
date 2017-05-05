@@ -66,6 +66,9 @@
   cell.product = self.products[indexPath.item];
 
   cell.favoriteButton.tag = indexPath.item;
+  if (![cell.favoriteButton.allTargets containsObject:self]) {
+    [cell.favoriteButton addTarget:self action:@selector(favoriteButtonDidTouch:) forControlEvents:UIControlEventTouchUpInside];
+  }
 
   return cell;
 }
