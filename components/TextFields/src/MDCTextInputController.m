@@ -833,7 +833,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   } else {
     // .floatingPlaceholder and .default
 
-    // These constraints are deactivated via .active (vs activate()) in case they are nil.
+    // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
     self.characterCountTrailing.active = NO;
     self.characterCountY.active = NO;
     self.clearButtonY.active = NO;
@@ -912,8 +912,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
         underlineLabelsOffset = MDCRint(self.textInput.leadingUnderlineLabel.font.lineHeight);
       }
       if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
-        underlineLabelsOffset = MAX(
-                                    underlineLabelsOffset, MDCRint(self.textInput.trailingUnderlineLabel.font.lineHeight));
+        underlineLabelsOffset = MAX(underlineLabelsOffset,
+                                    MDCRint(self.textInput.trailingUnderlineLabel.font.lineHeight));
       }
       CGFloat underlineOffset = MDCTextInputVerticalHalfPadding + underlineLabelsOffset;
 
