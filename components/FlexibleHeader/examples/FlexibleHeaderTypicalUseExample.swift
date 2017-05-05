@@ -46,9 +46,7 @@ open class FlexibleHeaderTypicalUseViewControllerSwift: FlexibleHeaderTypicalUse
     view.addSubview(fhvc.view)
     fhvc.didMove(toParentViewController: self)
 
-    // Light blue 500
-    fhvc.headerView.backgroundColor =
-        UIColor.init(colorLiteralRed: 0.012, green: 0.663, blue: 0.957, alpha: 1)
+    fhvc.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0);
 
     self.setupExampleViews()
   }

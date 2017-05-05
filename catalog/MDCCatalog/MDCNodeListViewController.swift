@@ -80,9 +80,13 @@ class MDCNodeListViewController: CBCNodeListViewController {
     // swiftlint:enable force_cast
 
     self.addChildViewController(appBar.headerViewController)
+    let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
+    
     appBar.headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName: UIColor.white ]
+    appBar.navigationBar.titleTextAttributes = [
+      NSForegroundColorAttributeName: UIColor.white,
+      NSFontAttributeName: appBarFont! ]
     appBar.navigationBar.titleAlignment = .center
   }
 
