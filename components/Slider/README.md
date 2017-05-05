@@ -9,15 +9,9 @@ path: /catalog/sliders/
 
 # Slider
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/slider.png" alt="Slider" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/slider.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
