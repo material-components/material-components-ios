@@ -11,7 +11,7 @@ path: /catalog/app-bars/
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/app_bar.png" alt="App Bar" width="320">
+  <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
 </div>
 <!--{% else %}
 <div class="article__asset article__asset--screenshot" markdown="1">
