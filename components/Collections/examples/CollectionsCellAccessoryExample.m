@@ -98,11 +98,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
     canEditItemAtIndexPath:(NSIndexPath *)indexPath {
-  return YES;// (indexPath.section != 0);
-}
-
-- (BOOL)collectionViewAllowsSwipeToDismissItem:(UICollectionView *)collectionView {
-  return self.editor.isEditing;
+  return (indexPath.section != 0);
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
