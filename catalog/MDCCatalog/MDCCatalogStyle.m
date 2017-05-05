@@ -35,7 +35,7 @@
 + (NSArray *)shadesOfGrey:(int)numberOfGreys {
   NSMutableArray *shades = [NSMutableArray array];
   for (int i = 0; i < numberOfGreys; i++) {
-    [shades addObject:[UIColor colorWithWhite:(0.9 - i * 0.1) alpha:1]];
+    [shades addObject:[UIColor colorWithWhite:(CGFloat)(0.9 - i * 0.1) alpha:1]];
   }
   return shades;
 }
