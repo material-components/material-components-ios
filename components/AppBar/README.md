@@ -9,7 +9,6 @@ path: /catalog/app-bars/
 
 # App Bars
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
 </div>
