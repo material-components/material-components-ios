@@ -27,7 +27,7 @@
  and animation styling.
  */
 @interface MDCCollectionViewController : UICollectionViewController <
-                                             /** */
+                                             /** Allows for infoBar notifications. */
                                              MDCCollectionInfoBarViewDelegate,
 
                                              /** Allows for editing notifications/permissions. */
@@ -45,8 +45,11 @@
 /** The collection view editor. */
 @property(nonatomic, strong, readonly, nonnull) id<MDCCollectionViewEditing> editor;
 
-//@property (nonatomic, strong, nullable) MDCCollectionInfoBarView *headerInfoBarView;
-//@property (nonatomic, strong, nullable) MDCCollectionInfoBarView *footerInfoBarView;
+/** The collection view info bar used at header. */
+@property (nonatomic, strong, nullable) MDCCollectionInfoBarView *headerInfoBar;
+
+/** The collection view info bar used at footer. */
+@property (nonatomic, strong, nullable) MDCCollectionInfoBarView *footerInfoBar;
 
 #pragma mark - Subclassing
 

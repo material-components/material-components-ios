@@ -52,29 +52,13 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   UITapGestureRecognizer *_tapGesture;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-  if (self) {
-    [self commonMDCCollectionInfoBarViewInit];
-  }
-  return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    [self commonMDCCollectionInfoBarViewInit];
-  }
-  return self;
-}
-
 - (instancetype)initWithStyle:(MDCInfoBarStyle)style
                          kind:(MDCInfoBarKind)kind
                collectionView:(UICollectionView *)collectionView {
   _style = style;
   _kind = kind;
 
-  // Determine frame based on if header or footer.
+  // Determine frame based on if this is a header or footer.
   CGFloat offsetY = 0;
   if (_kind == MDCInfoBarKindFooter) {
     offsetY = collectionView.bounds.size.height - kInfoBarDefaultHeight;
@@ -115,11 +99,11 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [_backgroundView addSubview:_titleLabel];
 
-
   [self prepareLayout];
 }
 
 - (void)prepareLayout {
+  // Set info bar defaults based on style.
   if (_style == MDCInfoBarStyleHUD) {
     _allowsTap = NO;
     _textAlignment = NSTextAlignmentLeft;
@@ -149,7 +133,6 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  NSLog(@"layoutSubviews");
 
   // Adjust border offset.
   CGFloat offsetY = (_kind == MDCInfoBarKindFooter) ? 1 : -1;
@@ -188,15 +171,20 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)showAnimated:(BOOL)animated {
-  _backgroundView.hidden = NO;
+  // Check delegate if should show.
+  if ([_delegate respondsToSelector:@selector(infoBar:shouldShowAnimated:)]) {
+    if (![_delegate infoBar:self shouldShowAnimated:animated]) {
+      return;
+    }
+  }
+
   // Notify delegate.
   if ([_delegate respondsToSelector:@selector(infoBar:willShowAnimated:willAutoDismiss:)]) {
     [_delegate infoBar:self willShowAnimated:animated willAutoDismiss:[self shouldAutoDismiss]];
   }
 
-
-  NSTimeInterval duration = (animated) ? MDCCollectionInfoBarAnimationDuration : 0.0f;
-  [UIView animateWithDuration:duration
+  _backgroundView.hidden = NO;
+  [UIView animateWithDuration:(animated) ? MDCCollectionInfoBarAnimationDuration : 0.0f
                         delay:0
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
@@ -206,7 +194,8 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
                      self.userInteractionEnabled = _allowsTap;
 
                      // Notify delegate.
-                     if ([_delegate respondsToSelector:@selector(infoBar:didShowAnimated:willAutoDismiss:)]) {
+                     if ([_delegate respondsToSelector:
+                          @selector(infoBar:didShowAnimated:willAutoDismiss:)]) {
                        [_delegate infoBar:self
                           didShowAnimated:animated
                           willAutoDismiss:[self shouldAutoDismiss]];
@@ -217,29 +206,34 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)dismissAnimated:(BOOL)animated {
+  if (!self.isVisible) {
+    return;
+  }
+
   // Notify delegate.
   if ([_delegate respondsToSelector:@selector(infoBar:willDismissAnimated:willAutoDismiss:)]) {
     [_delegate infoBar:self willDismissAnimated:animated willAutoDismiss:[self shouldAutoDismiss]];
   }
 
-  NSTimeInterval duration = (animated) ? MDCCollectionInfoBarAnimationDuration : 0.0f;
-  [UIView animateWithDuration:duration
-      delay:0
-      options:UIViewAnimationOptionCurveEaseIn
-      animations:^{
-        _backgroundView.transform = CGAffineTransformMakeTranslation(0, _backgroundTransformY);
-      }
-      completion:^(BOOL finished) {
-        self.userInteractionEnabled = NO;
-        _backgroundView.hidden = YES;
+  [UIView animateWithDuration:(animated) ? MDCCollectionInfoBarAnimationDuration : 0.0f
+                        delay:0
+                      options:UIViewAnimationOptionCurveEaseIn
+                   animations:^{
+                     _backgroundView.transform =
+                         CGAffineTransformMakeTranslation(0, _backgroundTransformY);
+                   }
+                   completion:^(BOOL finished) {
+                     self.userInteractionEnabled = NO;
+                     _backgroundView.hidden = YES;
 
-        // Notify delegate.
-        if ([_delegate respondsToSelector:@selector(infoBar:didDismissAnimated:didAutoDismiss:)]) {
-          [_delegate infoBar:self
-              didDismissAnimated:animated
-                  didAutoDismiss:[self shouldAutoDismiss]];
-        }
-      }];
+                     // Notify delegate.
+                     if ([_delegate respondsToSelector:
+                          @selector(infoBar:didDismissAnimated:didAutoDismiss:)]) {
+                       [_delegate infoBar:self
+                       didDismissAnimated:animated
+                           didAutoDismiss:[self shouldAutoDismiss]];
+                     }
+                   }];
 }
 
 #pragma mark - Private
@@ -259,7 +253,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
     dispatch_time_t popTime =
         dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_autoDismissAfterDuration * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^{
-      [self dismissAnimated:animation];
+        [self dismissAnimated:animation];
     });
   }
 }

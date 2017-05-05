@@ -707,7 +707,6 @@ NSString *const kCollectionGridDecorationView = @"MDCCollectionGridDecorationVie
     // Now assign delays and add padding to frame Y coordinate which gets removed during animation.
     [sortedAttributes enumerateObjectsUsingBlock:^(MDCCollectionViewLayoutAttributes *attr,
                                                    NSUInteger idx, BOOL *stop) {
-      // If the element is an info bar header, then don't do anything.
       attr.willAnimateCellsOnAppearance = self.styler.willAnimateCellsOnAppearance;
       attr.animateCellsOnAppearanceDuration = self.styler.animateCellsOnAppearanceDuration;
       attr.animateCellsOnAppearanceDelay =
