@@ -1,6 +1,6 @@
 # Text Fields
 
-<a alt="Text Fields"><img src="docs/assets/text_fields.png" width="320px"></a>
+<a alt="Text Fields"><img src="docs/assets/text_fields.png" width="375px"></a>
 
 Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to a new level by adding useful animations, character counts, helper text and error states.
 <!--{: .intro :}-->
