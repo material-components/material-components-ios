@@ -69,6 +69,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     self.title = "Imagery (Swift)"
 
     self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.didMove(toParentViewController: self)
   }
 
   required init?(coder aDecoder: NSCoder) {

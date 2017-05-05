@@ -35,6 +35,7 @@
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
+    [_appBar.headerViewController didMoveToParentViewController:self];
 
     // Optional: Change the App Bar's background color and tint color.
     UIColor *color = [UIColor colorWithRed:(CGFloat)0x03 / (CGFloat)255

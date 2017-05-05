@@ -98,6 +98,7 @@
     _appBar.navigationBar.titleTextAttributes =
         @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     [self addChildViewController:_appBar.headerViewController];
+    [_appBar.headerViewController didMoveToParentViewController:self];
 
     self.title = @"Delegate Forwarding";
 
