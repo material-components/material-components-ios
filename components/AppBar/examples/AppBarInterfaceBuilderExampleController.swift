@@ -41,8 +41,8 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
       [ NSForegroundColorAttributeName: UIColor.white ]
 
     addChildViewController(appBar.headerViewController)
-    let headerColor = UIColor(red: 0.01, green: 0.67, blue: 0.96, alpha: 1.0)
-    appBar.headerViewController.headerView.backgroundColor = headerColor
+    let color = UIColor(white: 0.1, alpha:1)
+    appBar.headerViewController.headerView.backgroundColor = color
   }
 
   override func viewDidLoad() {

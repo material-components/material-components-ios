@@ -44,7 +44,10 @@
 @implementation ActivityIndicatorExample (Supplemental)
 
 - (void)setupExampleViews {
+
   self.onSwitch = [[UISwitch alloc] init];
+  self.onSwitch.onTintColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  
   [self.onSwitch setOn:YES];
   [self.onSwitch addTarget:self
                     action:@selector(didChangeOnSwitch:)
@@ -59,6 +62,7 @@
   [self.view addSubview:self.onSwitchLabel];
 
   self.determinateSwitch = [[UISwitch alloc] init];
+  self.determinateSwitch.onTintColor = [UIColor colorWithWhite:0.1 alpha:1.0];
   [self.determinateSwitch setOn:YES];
   [self.determinateSwitch addTarget:self
                              action:@selector(didChangeDeterminateSwitch:)
@@ -74,6 +78,7 @@
 
   CGRect sliderFrame = CGRectMake(0, 0, 240, 27);
   self.slider = [[UISlider alloc] initWithFrame:sliderFrame];
+  self.slider.tintColor = [UIColor colorWithWhite:0.1 alpha:1.0];
   self.slider.value = kActivityInitialProgress;
   [self.slider addTarget:self
                   action:@selector(didChangeSliderValue:)

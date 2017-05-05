@@ -37,6 +37,7 @@
     _activityIndicator.delegate = self;
     _activityIndicator.radius = kActivityIndicatorRadius;
     _activityIndicator.strokeWidth = 8.f;
+    _activityIndicator.cycleColors = @[[UIColor colorWithWhite:0.1 alpha:1.0]];
 
     _activityIndicator.autoresizingMask =
         (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |

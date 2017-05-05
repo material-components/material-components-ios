@@ -39,8 +39,14 @@ static NSString *const kCategoryB = @"CategoryB";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self setupExampleViews];
-  self.title = @"Snackbar Suspension";
+  [self setupExampleViews:@[
+      @"Show Category A Message",
+      @"Show Category B Message",
+      @"Show Message with no category",
+      @"Suspend Category A",
+      @"Suspend Category B",
+      @"Suspend All"]];
+  self.title = @"Message Suspension";
 }
 
 - (void)showMessageWithPrefix:(NSString *)prefix category:(NSString *)category {
@@ -93,13 +99,20 @@ static NSString *const kCategoryB = @"CategoryB";
 
 #pragma mark - Event Handling
 
-- (void)handleShowTapped:(id)sender {
-  if (sender == self.groupAButton) {
-    [self showMessageWithPrefix:@"Category A" category:kCategoryA];
-  } else if (sender == self.groupBButton) {
-    [self showMessageWithPrefix:@"Category B" category:kCategoryB];
-  } else if (sender == self.allMessagesButton) {
-    [self showMessageWithPrefix:@"No Category" category:nil];
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+  switch (indexPath.row) {
+    case 0:
+      [self showMessageWithPrefix:@"Category A Message" category:kCategoryA];
+      break;
+    case 1:
+      [self showMessageWithPrefix:@"Category B Message" category:kCategoryB];
+      break;
+    case 2:
+      [self showMessageWithPrefix:@"No Category Message" category:nil];
+      break;
+    default:
+      break;
   }
 }
 
@@ -107,11 +120,11 @@ static NSString *const kCategoryB = @"CategoryB";
   BOOL suspended = sender.on;
 
   // Figure out which token we're dealing with based on which switch sent this message.
-  if (sender == self.groupASwitch) {
+  if (sender.tag == 3) {
     [self setSuspendedGroupA:suspended];
-  } else if (sender == self.groupBSwitch) {
+  } else if (sender.tag == 4) {
     [self setSuspendedGroupB:suspended];
-  } else if (sender == self.allMessagesSwitch) {
+  } else if (sender.tag == 5) {
     [self setSuspendedAllMessages:suspended];
   }
 }
