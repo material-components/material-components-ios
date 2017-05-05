@@ -101,7 +101,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best Gift for Teen Girls" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78U-jz-TLC">
-                            <rect key="frame" x="131" y="172" width="189" height="81.5"/>
+                            <rect key="frame" x="131" y="186" width="189" height="81.5"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="189" id="svA-re-Txy"/>
                             </constraints>
@@ -109,14 +109,14 @@
                             <color key="textColor" red="0.035294117647058823" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave the tunnel and the rain is fallin amazing things happen when you wait" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9y-di-e68">
-                            <rect key="frame" x="133" y="258.5" width="187" height="43"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose fun, exciting, and unique gifts every girl will love." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9y-di-e68">
+                            <rect key="frame" x="133" y="272.5" width="187" height="29"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="0.035294117647058823" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShrineTextLogo" translatesAutoresizingMaskIntoConstraints="NO" id="abA-kk-gjn">
-                            <rect key="frame" x="131" y="155" width="89" height="17"/>
+                            <rect key="frame" x="131" y="169" width="89" height="17"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
