@@ -9,15 +9,9 @@ path: /catalog/navigation-bars/
 
 # Navigation Bar
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/navigation_bar.png" alt="Navigation Bar" width="320">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/navigation_bar.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The Navigation Bar component is a view composed of a left and right Button Bar and either a title
 label or a custom title view.
