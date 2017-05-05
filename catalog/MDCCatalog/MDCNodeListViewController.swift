@@ -350,6 +350,7 @@ extension MDCNodeListViewController {
       } else {
         let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
         let container = MDCAppBarContainerViewController(contentViewController: contentVC)
+
         container.appBar.navigationBar.titleAlignment = .center
         container.appBar.navigationBar.tintColor = UIColor.white
         container.appBar.navigationBar.titleTextAttributes =

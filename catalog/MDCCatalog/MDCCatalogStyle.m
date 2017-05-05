@@ -28,8 +28,8 @@
   return [UIColor colorWithWhite:0.9f alpha:1];
 }
 + (UIColor *)mdcGreen {
-  // #B2FF59 ? TODO
-  return [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
+  // Green A400
+  return [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1];
 }
 
 + (NSArray *)shadesOfGrey:(int)numberOfGreys {
