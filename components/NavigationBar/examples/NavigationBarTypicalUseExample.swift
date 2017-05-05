@@ -29,7 +29,6 @@ open class NavigationBarTypicalUseSwiftExample: NavigationBarTypicalUseExample {
     navBar = MDCNavigationBar()
     navBar!.observe(navigationItem)
 
-    // Light blue 500
     navBar!.backgroundColor = UIColor(white: 0.1, alpha: 1.0);
     let mutator = MDCNavigationBarTextColorAccessibilityMutator()
     mutator.mutate(navBar!)
