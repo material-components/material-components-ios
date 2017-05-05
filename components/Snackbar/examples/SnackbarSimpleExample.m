@@ -26,6 +26,7 @@
   [self setupExampleViews:@[
       @"Simple Snackbar",
       @"Snackbar with Action Button",
+      @"Snackbar with Long Text",
       @"Attributed Text Example"
   ]];
   self.title = @"Snackbar";
@@ -33,14 +34,26 @@
 
 #pragma mark - Event Handling
 
-- (void)showSimpleSnacbBar:(id)sender {
+- (void)showSimpleSnackbar:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
   [MDCSnackbarManager showMessage:message];
 }
 
+- (void)showSnackbarWithAction:(id)sender {
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"Snackbar Message";
+  [MDCSnackbarManager showMessage:message];
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  message.action = action;
+  message.buttonTextColor =
+      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
+  [MDCSnackbarManager showMessage:message];
+}
 
-- (void)showActionSnackbar:(id)sender {
+
+- (void)showLongSnackbarMessage:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"A red flair silhouetted the jagged edge of a sublime wing.";
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
@@ -52,7 +65,9 @@
   action.handler = actionHandler;
   action.title = @"Action";
   message.action = action;
-  
+  message.buttonTextColor =
+      [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
+
   [MDCSnackbarManager showMessage:message];
 }
 
@@ -80,12 +95,15 @@
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:
-      [self showSimpleSnacbBar:nil];
+      [self showSimpleSnackbar:nil];
       break;
     case 1:
-      [self showActionSnackbar:nil];
+      [self showSnackbarWithAction:nil];
       break;
     case 2:
+      [self showLongSnackbarMessage:nil];
+      break;
+    case 3:
       [self showBoldSnackbar:nil];
     default:
       break;

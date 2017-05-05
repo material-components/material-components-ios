@@ -34,6 +34,6 @@
 
 @interface TabBarTextOnlyExample (Supplemental)
 
-- (void)setupExampleViews:(NSArray *)choices;
+- (void)setupExampleViews:(nullable NSArray *)choices;
 
 @end
