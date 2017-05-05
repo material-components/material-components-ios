@@ -29,6 +29,8 @@ static CGFloat const kStatusBarHeight = 20;
 static CGFloat const kAppBarMinHeight = 56;
 static CGFloat const kTabBarHeight = 48;
 
+static NSString * const kReusableIdentifierItem = @"Cell";
+
 @implementation TabBarTextOnlyExample (Supplemental)
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
@@ -39,7 +41,8 @@ static CGFloat const kTabBarHeight = 48;
   return self.appBar.headerViewController;
 }
 
-- (void)setupAppBar {
+- (void)setupExampleViews:(NSArray *)choices {
+  self.choices = choices;
   self.title = @"Text Tabs";
 
   self.appBar = [[MDCAppBar alloc] init];
@@ -61,6 +64,28 @@ static CGFloat const kTabBarHeight = 48;
       NSForegroundColorAttributeName: [UIColor whiteColor],
       NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
   [self.appBar addSubviewsToParent];
+  
+  
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kReusableIdentifierItem];
+}
+
+#pragma mark - UICollectionView
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return self.choices.count;
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
+  cell.textLabel.text = self.choices[indexPath.row];
+  return cell;
 }
 
 #pragma mark - UIScrollViewDelegate Forwarding.

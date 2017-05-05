@@ -27,7 +27,7 @@ static const CGFloat kFABSideOffset = 24.0f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self setupExampleViews];
+  [self setupExampleViews:@[@"Show Snackbar"]];
   self.title = @"Snackbar Overlay View";
 
   // Make sure we're listening for overlay notifications.
@@ -50,11 +50,13 @@ static const CGFloat kFABSideOffset = 24.0f;
 
 #pragma mark - Event Handling
 
-- (void)handleShowSnackbarButtonTapped:(id)sender {
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   NSString *text = @"Snackbar Message";
   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:text];
   message.duration = 5.0f;
   [MDCSnackbarManager showMessage:message];
+  return;
 }
 
 #pragma mark - Overlay Transitions

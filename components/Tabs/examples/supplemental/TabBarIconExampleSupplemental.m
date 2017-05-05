@@ -19,6 +19,7 @@
  */
 
 #import "TabBarIconExampleSupplemental.h"
+#import "MDCCatalogStyle.h"
 
 @import MaterialComponents.MaterialAppBar;
 @import MaterialComponents.MaterialButtons;
@@ -76,7 +77,7 @@
 
   self.appBar.navigationBar.titleTextAttributes = @{
     NSForegroundColorAttributeName: [UIColor whiteColor],
-    NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
+    NSFontAttributeName: [MDCCatalogStyle headerFont]] };
   
   [self.appBar addSubviewsToParent];
 

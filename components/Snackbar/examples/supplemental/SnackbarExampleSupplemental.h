@@ -18,20 +18,14 @@
 
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "MaterialCollections.h"
 
-@interface SnackbarExample : UIViewController
+@interface SnackbarExample : MDCCollectionViewController
 
 @property(nonatomic) MDCRaisedButton *snackbarButton;
+@property(nonatomic) NSArray *choices;
 
-- (void)setupExampleViews;
-
-@end
-
-@interface SnackbarActionExample : SnackbarExample
-
-@end
-
-@interface SnackbarBoldExample : SnackbarExample
+- (void)setupExampleViews:(NSArray *)choices;
 
 @end
 

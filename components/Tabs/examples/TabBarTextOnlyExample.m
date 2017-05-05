@@ -23,14 +23,13 @@
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
-static NSString * const kReusableIdentifierItem = @"Cell";
 
 @implementation TabBarTextOnlyExample
 
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self setupAppBar];
+    [self setupExampleViews:@[@"Change Alignment", @"Toggle Case"]];
   }
   return self;
 }
@@ -38,10 +37,7 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self loadTabBar];
-  
   self.appBar.headerStackView.bottomBar = self.tabBar;
-  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
-          forCellWithReuseIdentifier:kReusableIdentifierItem];
 }
 
 #pragma mark - Action
@@ -112,20 +108,6 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 
 #pragma mark - Options in Collection View
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section {
-  return 2;
-}
-
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCollectionViewTextCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
-                                                forIndexPath:indexPath];
-  cell.textLabel.text = indexPath.row == 0 ? @"Text Alignment" : @"Toggle Case";
-  return cell;
-}
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
