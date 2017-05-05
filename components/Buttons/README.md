@@ -9,15 +9,9 @@ path: /catalog/buttons/
 
 # Buttons
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/buttons.png" alt="Buttons" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/buttons.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
