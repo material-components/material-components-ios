@@ -178,7 +178,7 @@ final class TextFieldSwiftExample: UIViewController {
 
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
-                                                  options: [.alignAllTop, .alignAllBottom],
+                                                  options: [.alignAllTop],
                                                   metrics: nil,
                                                   views: stateZipViews)
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[state]|",
