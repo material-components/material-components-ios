@@ -9,15 +9,9 @@ path: /catalog/typography/
 
 # Typography
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/typography.png" alt="Typography" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/typography.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The Typography component provides methods for displaying text using the type sizes and opacities
 from the Material Design specifications.
