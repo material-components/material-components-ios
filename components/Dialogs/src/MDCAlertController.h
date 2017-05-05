@@ -25,7 +25,7 @@
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
 
- https://material.google.com/components/dialogs.html
+ https://material.io/guidelines/components/dialogs.html
 
  MDCAlertController requires iOS 8 or later.
 

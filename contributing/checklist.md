@@ -168,7 +168,7 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 ### VoiceOver Support
 
 
-Custom controls should support VoiceOver. 
+Custom controls should support VoiceOver.
 See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/iPhoneAccessibility/Accessibility_on_iPhone/Accessibility_on_iPhone.html) for further information.
 
 1. Test your control on a device in VoiceOver mode and ensure the bahavior is at least as robust as UIKit.
@@ -181,7 +181,7 @@ See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.co
 Comments are useful when used properly. In addition, they are necessary for the system of documentation generation used in MDC.
 
 1. Carefully review all comments for necessity and brevity.
-1. Make sure all classes have complete header comments that comply with [HeaderDoc](https://developer.apple.com/legacy/library/documentation/DeveloperTools/Conceptual/HeaderDoc/tags/tags.html) for [Jazzy](https://github.com/realm/jazzy) parsing. 
+1. Make sure all classes have complete header comments that comply with [HeaderDoc](https://developer.apple.com/legacy/library/documentation/DeveloperTools/Conceptual/HeaderDoc/tags/tags.html) for [Jazzy](https://github.com/realm/jazzy) parsing.
 1. Enter YES or NO
 
 
@@ -190,7 +190,7 @@ Comments are useful when used properly. In addition, they are necessary for the 
 
 Every component has to support all features outlined for it in the Material Design guidelines. It can support additional features or customization.
 
-1. Review what the [Material Design Guidelines](https://material.google.com/) says about the component and make sure the component can *at least* satisfy those requirements.
+1. Review what the [Material Design Guidelines](https://material.io/guidelines/) says about the component and make sure the component can *at least* satisfy those requirements.
 1. Enter YES or NO
 
 
@@ -312,7 +312,7 @@ Classes that set ivar values or perform other commands from the initializer, sho
 
 
 #### Articles on Auto Layout:
-[Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)  
+[Advanced Auto Layout Toolbox](https://www.objc.io/issues/3-views/advanced-auto-layout-toolbox/)
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
 
 
@@ -392,7 +392,7 @@ We have automated some of the above checks in a set of scripts. To run all the c
 scripts/check_components
 ```
 
-To run the checks against particular components, list their directories on the command line: 
+To run the checks against particular components, list their directories on the command line:
 
 ```bash
 scripts/check_components components/ActivityIndicator components/Buttons

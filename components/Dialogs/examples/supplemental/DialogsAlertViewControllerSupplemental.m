@@ -26,7 +26,32 @@
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 
-#pragma mark - DialogsAlertViewController
+
+static NSString * const kReusableIdentifierItem = @"cell";
+
+
+@implementation DialogsAlertViewController (Supplemental)
+
+- (void)loadCollectionView:(nullable NSArray *)modes {
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kReusableIdentifierItem];
+  self.modes = modes;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+  return self.modes.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                            forIndexPath:indexPath];
+  cell.textLabel.text = self.modes[indexPath.row];
+  return cell;
+}
+
+@end
 
 @implementation DialogsAlertViewController (CatalogByConvention)
 
@@ -40,10 +65,6 @@
 
 + (BOOL)catalogIsPrimaryDemo {
   return NO;
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"DialogsAlertViewController";
 }
 
 @end

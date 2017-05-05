@@ -2,15 +2,15 @@
 title: "Tabs"
 layout: detail
 section: components
-excerpt: "TODO(shyndman): Excerpt needed."
 iconId: tabs
+path: /catalog/tabs/
 -->
 
 # Tabs
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/tabs.png" alt="Tabs" width="320">
+  <img src="docs/assets/tabs.png" alt="Tabs" width="375">
 </div>
 <!--{% else %}
 <div class="article__asset article__asset--screenshot" markdown="1">
@@ -24,7 +24,7 @@ Tabs are bars of buttons used to navigate between groups of content.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.google.com/components/tabs.html">Tabs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/tabs.html">Tabs</a></li>
 </ul>
 
 - - -

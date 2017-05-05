@@ -4,19 +4,14 @@ layout: detail
 section: components
 excerpt: "The Navigation Bar component is a view composed of a left and right Button Bar and either a title label or a custom title view."
 iconId: toolbar
+path: /catalog/navigation-bars/
 -->
 
 # Navigation Bar
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/navigation_bar.png" alt="Navigation Bar" width="320">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/navigation_bar.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The Navigation Bar component is a view composed of a left and right Button Bar and either a title
 label or a custom title view.
@@ -28,7 +23,7 @@ Consistent with iOS design guidelines, the title in the navigation bar is center
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="http://www.google.com/design/spec/layout/structure.html">Layout Structure</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html">Layout Structure</a></li>
 </ul>
 
 - - -

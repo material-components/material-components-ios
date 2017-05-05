@@ -4,13 +4,14 @@ layout: detail
 section: components
 excerpt: "Progress and activity indicators are visual indications of an app loading content."
 iconId: progress_activity
+path: /catalog/activity-indicators/
 -->
 
-# Activity Indicator
+# Activity Indicators
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/activity_indicator.png" alt="Activity Indicator" width="320">
+  <img src="docs/assets/activity_indicator.png" alt="Activity Indicator" width="375">
 </div>
 <!--{% else %}
 <div class="article__asset article__asset--screenshot" markdown="1">
@@ -24,7 +25,7 @@ Activity indicators are visual indications of an app loading content. The Activi
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/progress-activity.html">Progress & activity</a></li>
 </ul>
 
 - - -

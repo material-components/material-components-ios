@@ -1,16 +1,17 @@
 <!--docs:
-title: "Flexible Header"
+title: "Flexible Headers"
 layout: detail
 section: components
 excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
 iconId: header
+path: /catalog/flexible-headers/
 -->
 
 # Flexible Header
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/flexible_header.png" alt="Flexible Header" width="320">
+  <img src="docs/assets/flexible_header.png" alt="Flexible Header" width="375">
 </div>
 <!--{% else %}
 <div class="article__asset article__asset--screenshot" markdown="1">
@@ -25,7 +26,7 @@ UIScrollViewDelegate events.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
 </ul>
 
 - - -
@@ -613,7 +614,7 @@ controller.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ``` swift
-override func childViewControllerForStatusBarStyle() -> UIViewController? {
+override var childViewControllerForStatusBarStyle: UIViewController? {
   return headerViewController
 }
 ```

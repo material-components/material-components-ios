@@ -4,12 +4,14 @@ layout: detail
 section: components
 excerpt: "Collection view cell classes that adhere to Material Design layout and styling."
 iconId: list
+path: /catalog/collection-cells/
 -->
 
 # Collection Cells
 
-<img src="docs/assets/collection_cells.png" alt="Collection Cells" width="320">
-<!--{: .article__asset.article__asset--screenshot }-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/collection_cells.png" alt="Collection Cells" width="375">
+</div>
 
 Collection view cell classes that adhere to Material Design layout and styling.
 <!--{: .article__intro }-->
@@ -17,7 +19,7 @@ Collection view cell classes that adhere to Material Design layout and styling.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/lists.html#lists-specs">Collection List Specs</a></li>
 </ul>
 
 - - -

@@ -4,19 +4,14 @@ layout: detail
 section: components
 excerpt: "Collection view classes that adhere to Material Design layout and styling."
 iconId: list
+path: /catalog/collections/
 -->
 
 # Collections
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/collections.png" alt="Collections" width="320">
+  <img src="docs/assets/collections.png" alt="Collections" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/collections.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 Collection view classes that adhere to Material Design layout and styling.
 <!--{: .article__intro }-->
@@ -24,7 +19,7 @@ Collection view classes that adhere to Material Design layout and styling.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/components/lists.html#lists-specs">Collection List Specs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/lists.html#lists-specs">Collection List Specs</a></li>
 </ul>
 
 - - -

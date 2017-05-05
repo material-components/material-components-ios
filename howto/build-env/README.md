@@ -1,7 +1,8 @@
 <!--docs:
 title: "Build environment"
 layout: landing
-section: howto
+section: docs
+path: /docs/build-env/
 -->
 
 # Build environment

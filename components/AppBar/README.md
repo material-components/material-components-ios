@@ -1,22 +1,17 @@
 <!--docs:
-title: "App Bar"
+title: "App Bars"
 layout: detail
 section: components
 excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
 iconId: toolbar
+path: /catalog/app-bars/
 -->
 
-# App Bar
+# App Bars
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/app_bar.png" alt="App Bar" width="320">
+  <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/app_bar.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.
@@ -25,8 +20,8 @@ navigation experience.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar Structure</a></li>
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">App Bar Structure</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
 </ul>
 
 - - -

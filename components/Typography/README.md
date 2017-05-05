@@ -3,19 +3,15 @@ title: "Typography"
 layout: detail
 section: components
 excerpt: "The Typography component provides methods for displaying text using the type sizes and opacities from the Material Design specifications."
+iconId: typography
+path: /catalog/typography/
 -->
 
 # Typography
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/typography.png" alt="Typography" width="320">
+  <img src="docs/assets/typography.png" alt="Typography" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/typography.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The Typography component provides methods for displaying text using the type sizes and opacities
 from the Material Design specifications.
@@ -24,7 +20,7 @@ from the Material Design specifications.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/style/typography.html">Typography</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/style/typography.html">Typography</a></li>
 </ul>
 
 ## Installation

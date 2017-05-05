@@ -84,4 +84,10 @@
 
 - (void)collectionViewWillEndEditing:(nonnull UICollectionView *)collectionView NS_REQUIRES_SUPER;
 
+/**
+ * Exposes cell width calculation for subclasses to use when calculating dynamic cell height. Note
+ * that this method is only exposed temporarily until self-sizing cells are supported.
+ */
+- (CGFloat)cellWidthAtSectionIndex:(NSInteger)section;
+
 @end

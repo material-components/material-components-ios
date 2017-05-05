@@ -4,19 +4,14 @@ layout: detail
 section: components
 excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
 iconId: button
+path: /catalog/buttons/
 -->
 
 # Buttons
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/buttons.png" alt="Buttons" width="320">
+  <img src="docs/assets/buttons.png" alt="Buttons" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/buttons.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
@@ -25,7 +20,7 @@ floating action button.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/buttons.html">Buttons</a></li>
 </ul>
 
 - - -
@@ -160,7 +155,7 @@ The default elevation for _raised buttons_ in resting state is 2 dp.
 #### Swift
 ``` swift
 let raisedButton = MDCRaisedButton()
-// See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+// See https://material.io/guidelines/what-is-material/elevation-shadows.html
 
 raisedButton.setElevation(4, for: .normal)
 raisedButton.setTitle("Tap Me Too", for: .normal)
@@ -173,7 +168,7 @@ self.view.addSubview(raisedButton)
 
 ``` objc
 MDCRaisedButton *raisedButton = [MDCRaisedButton new];
-// See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+// See https://material.io/guidelines/what-is-material/elevation-shadows.html
 
 [raisedButton setElevation:4.0f forState:UIControlStateNormal];
 [raisedButton setTitle:@"Tap Me Too" forState:UIControlStateNormal];

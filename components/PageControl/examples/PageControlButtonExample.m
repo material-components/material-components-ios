@@ -21,10 +21,6 @@
 @interface PageControlButtonExample : UIViewController <UIScrollViewDelegate>
 @end
 
-#define RGBCOLOR(r, g, b) \
-  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
-#define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
-
 @implementation PageControlButtonExample {
   UIScrollView *_scrollView;
   MDCPageControl *_pageControl;
@@ -42,9 +38,11 @@
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
   NSArray *pageColors = @[
-    HEXCOLOR(0x55C4f5), HEXCOLOR(0x35B7F3), HEXCOLOR(0x1EAAF1), HEXCOLOR(0x35B7F3),
-    HEXCOLOR(0x1EAAF1)
-  ];
+      [UIColor colorWithWhite:0.9 alpha:1.0],
+      [UIColor colorWithWhite:0.8 alpha:1.0],
+      [UIColor colorWithWhite:0.7 alpha:1.0],
+      [UIColor colorWithWhite:0.6 alpha:1.0],
+      [UIColor colorWithWhite:0.5 alpha:1.0]  ];
 
   // Scroll view configuration
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
