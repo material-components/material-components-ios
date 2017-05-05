@@ -9,15 +9,9 @@ path: /catalog/shadow-layers/
 
 # Shadow Layer
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/shadow_layer.png" width="320">
+  <img src="docs/assets/shadow_layer.png" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/shadow_layer.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 Shadow Layer implements the Material Design specifications for elevation and shadows.
 By simulating the physical properties of paper, elevation and light source, shadows give

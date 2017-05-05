@@ -8,15 +8,9 @@ path: /catalog/page-controls/
 
 # Page Control
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/page_control.png" alt="Page Control" width="320">
+  <img src="docs/assets/page_control.png" alt="Page Control" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/page_control.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
 influenced by Material Design specifications for animation and layout. The API methods are the

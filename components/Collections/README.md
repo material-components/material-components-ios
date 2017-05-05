@@ -9,15 +9,9 @@ path: /catalog/collections/
 
 # Collections
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/collections.png" alt="Collections" width="320">
+  <img src="docs/assets/collections.png" alt="Collections" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/collections.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 Collection view classes that adhere to Material Design layout and styling.
 <!--{: .article__intro }-->
