@@ -9,8 +9,9 @@ path: /catalog/collection-cells/
 
 # Collection Cells
 
-<img src="docs/assets/collection_cells.png" alt="Collection Cells" width="320">
-<!--{: .article__asset.article__asset--screenshot }-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/collection_cells.png" alt="Collection Cells" width="375">
+</div>
 
 Collection view cell classes that adhere to Material Design layout and styling.
 <!--{: .article__intro }-->
