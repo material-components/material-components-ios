@@ -4,17 +4,28 @@ layout: "homepage"
 path: /
 ---
 
+{% contentfor benefits %}
 <ul class="benefits-list">
-  <li class="benefits-list-item">Easily convert Material Design mockups into pixel-perfect, production-ready components.</li>
-  <li class="benefits-list-item">Material Components meet industry standards for internationalization and accessibility, including Dynamic Type and right-to-left language support</li>
-  <li class="benefits-list-item">Material Components supports iOS industry standards like Swift and Objective-C, storyboards, and dynamic type</li>
+  <li class="benefits-list-item">
+    <h3>Pixel-perfect &amp; up to date</h3>
+    <p>Implement <a href="https://material.io/guidelines">Material Design</a> with pixel-perfect components, maintained by Google engineers and designers</p>
+  </li>
+  <li class="benefits-list-item">
+    <h3>Flexible development</h3>
+    <p>Develop apps using components that support iOS technologies like Swift, Objective-C, and storyboards</p>
+  </li>
+  <li class="benefits-list-item">
+    <h3>Industry standards</h3>
+    <p>Take advantage of the same components used in Google’s iOS apps, which meet industry standards for internationalization and accessibility</p>
+  </li>
 </ul>
+{% endcontentfor %}
 
 # Getting Started
 
 An easy way to create beautiful apps with modular and customizable UI&nbsp;components.
 
-1.  ## Install CocoaPods
+1.  {: .step-list-item } ### Install CocoaPods
 
     [CocoaPods](https://cocoapods.org/) is the easiest way to get started.
     If you're new to CocoaPods, check out their
@@ -27,7 +38,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     ```
 
 
-2.  ## Create Podfile
+2.  {: .step-list-item } ### Create Podfile
 
     Once you've created an iOS application in Xcode you can start using
     Material Components for iOS.
@@ -39,7 +50,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     pod init
     ```
 
-3.  ## Edit Podfile
+3.  {: .step-list-item } ### Edit Podfile
 
     Once you've initialized CocoaPods, add the
     [Material Components for iOS Pod](https://cocoapods.org/pods/MaterialComponentsIOS)
@@ -65,7 +76,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     Now you're ready to get started in Xcode.
 
-4.  ## Usage
+4.  {: .step-list-item } ### Usage
 
     Now you’re ready to add a component (e.g. Buttons) to your app!
     Include the Material Components header for the component you're interested
@@ -125,7 +136,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     ```
     <!--</div>-->
 
-5.  ## What's next?
+5.  {: .step-list-item } ### What's next?
 
     <ul class="icon-list">
       <li class="icon-list-item icon-list-item--guide">
@@ -141,5 +152,4 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
         <a href="https://github.com/material-components/material-components-ios/">View the project on GitHub</a>
       </li>
     </ul>
-
-<!--{: .step-sequence }-->
+{: .step-list }
