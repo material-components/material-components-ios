@@ -131,6 +131,7 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
   super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
   self.addChildViewController(appBar.headerViewController)
+  appBar.headerViewController.didMove(toParentViewController: self)
 }
 ```
 
@@ -149,6 +150,7 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     _appBar = [[MDCAppBar alloc] init];
 
     [self addChildViewController:_appBar.headerViewController];
+    [_appBar.headerViewController didMoveToParentViewController:self];
   }
   return self;
 }

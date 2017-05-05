@@ -35,6 +35,7 @@ class AppBarDelegateForwardingExample: UITableViewController {
       [ NSForegroundColorAttributeName: UIColor.white ]
 
     self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.didMove(toParentViewController: self)
 
     self.title = "Delegate Forwarding"
 

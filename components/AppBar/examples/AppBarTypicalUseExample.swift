@@ -29,6 +29,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     // Step 2: Add the headerViewController as a child.
     self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.didMove(toParentViewController: self)
 
     let color = UIColor(
       red: CGFloat(0x03) / CGFloat(255),

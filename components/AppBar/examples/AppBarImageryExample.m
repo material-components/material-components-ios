@@ -86,6 +86,7 @@
     self.title = @"Imagery";
 
     [self addChildViewController:_appBar.headerViewController];
+    [_appBar.headerViewController didMoveToParentViewController:self];
   }
   return self;
 }

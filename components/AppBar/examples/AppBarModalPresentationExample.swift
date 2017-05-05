@@ -107,6 +107,7 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     self.title = "Modal Presentation (Swift)"
 
     self.addChildViewController(appBar.headerViewController)
+    appBar.headerViewController.didMove(toParentViewController: self)
 
     let color = UIColor(
       red: CGFloat(0x03) / CGFloat(255),
