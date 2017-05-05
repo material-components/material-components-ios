@@ -21,5 +21,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DialogsAlertViewController : UIViewController
+@import MaterialComponents.MaterialCollections;
+
+@interface DialogsAlertViewController : MDCCollectionViewController
+@property(nonatomic, strong, nullable) NSArray *modes;
+- (void)loadCollectionView:(nullable NSArray *)modes;
 @end

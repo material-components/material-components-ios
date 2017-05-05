@@ -72,14 +72,14 @@
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
 
-  UIColor *color = [[MDCPalette bluePalette] tint500];
+  UIColor *green =  [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
 
-  tabBar.barTintColor = [UIColor whiteColor];
-  tabBar.tintColor = color;
+  tabBar.barTintColor = [UIColor colorWithWhite:0.1f alpha:1.0];
+  tabBar.tintColor = green;
+  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
+  tabBar.selectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.87f];
+  tabBar.unselectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.38f];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  tabBar.selectedItemTintColor = [[UIColor blackColor] colorWithAlphaComponent:.87];
-  tabBar.unselectedItemTintColor = [[UIColor blackColor] colorWithAlphaComponent:.38];
-  tabBar.inkColor = color;
 
   self.tabBar = tabBar;
   self.appBar.headerStackView.bottomBar = self.tabBar;

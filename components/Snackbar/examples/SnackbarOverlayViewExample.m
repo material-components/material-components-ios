@@ -27,7 +27,7 @@ static const CGFloat kFABSideOffset = 24.0f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self setupExampleViews];
+  [self setupExampleViews:@[@"Show Snackbar"]];
   self.title = @"Snackbar Overlay View";
 
   // Make sure we're listening for overlay notifications.
@@ -43,6 +43,11 @@ static const CGFloat kFABSideOffset = 24.0f;
   fabFrame.origin.x = CGRectGetMaxX(self.view.bounds) - CGRectGetWidth(fabFrame) - kFABSideOffset;
   fabFrame.origin.y =
       CGRectGetMaxY(self.view.bounds) - CGRectGetHeight(fabFrame) - kFABBottomOffset;
+  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11/255.0f
+                                                          green:232/255.0f
+                                                           blue:94/255.0f
+                                                          alpha:1]
+                                 forState:UIControlStateNormal];
   self.floatingButton.frame = fabFrame;
   self.floatingButton.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin);
@@ -50,11 +55,13 @@ static const CGFloat kFABSideOffset = 24.0f;
 
 #pragma mark - Event Handling
 
-- (void)handleShowSnackbarButtonTapped:(id)sender {
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   NSString *text = @"Snackbar Message";
   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:text];
   message.duration = 5.0f;
   [MDCSnackbarManager showMessage:message];
+  return;
 }
 
 #pragma mark - Overlay Transitions

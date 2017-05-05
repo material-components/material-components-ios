@@ -20,34 +20,101 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MaterialAppBar.h"
+#import "MaterialTabs.h"
+
 #import "TabBarTextOnlyExampleSupplemental.h"
 
-#import "MaterialButtons.h"
-#import "MaterialTabs.h"
+static CGFloat const kStatusBarHeight = 20;
+static CGFloat const kAppBarMinHeight = 56;
+static CGFloat const kTabBarHeight = 48;
+
+static NSString * const kReusableIdentifierItem = @"Cell";
 
 @implementation TabBarTextOnlyExample (Supplemental)
 
-- (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor whiteColor];
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.appBar.headerViewController;
+}
 
-  UIBarButtonItem *toggleCaseItem = [[UIBarButtonItem alloc] initWithTitle:@"Toggle Case"
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(toggleCase:)];
-  self.navigationItem.rightBarButtonItem = toggleCaseItem;
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return self.appBar.headerViewController;
+}
 
-  // Button to change tab alignments.
-  self.alignmentButton = [[MDCRaisedButton alloc] init];
-  [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
-  [self.alignmentButton sizeToFit];
-  self.alignmentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds), 100);
-  self.alignmentButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-                                          UIViewAutoresizingFlexibleBottomMargin |
-                                          UIViewAutoresizingFlexibleRightMargin;
-  [self.alignmentButton addTarget:self
-                           action:@selector(changeAlignment:)
-                 forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:self.alignmentButton];
+- (void)setupExampleViews:(NSArray *)choices {
+  self.choices = choices;
+  self.title = @"Text Tabs";
+
+  self.appBar = [[MDCAppBar alloc] init];
+  [self addChildViewController:self.appBar.headerViewController];
+
+  self.appBar.headerViewController.headerView.trackingScrollView = self.collectionView;
+  self.appBar.headerViewController.headerView.shiftBehavior =
+      MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+
+  self.appBar.navigationBar.tintColor = [UIColor whiteColor];
+  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
+  self.appBar.headerViewController.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.appBar.headerViewController.headerView.minimumHeight =
+      kStatusBarHeight + kTabBarHeight;
+  self.appBar.headerViewController.headerView.maximumHeight =
+      kStatusBarHeight + kAppBarMinHeight + kTabBarHeight;
+  
+  self.appBar.navigationBar.titleTextAttributes = @{
+      NSForegroundColorAttributeName: [UIColor whiteColor],
+      NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
+  [self.appBar addSubviewsToParent];
+  
+  
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kReusableIdentifierItem];
+}
+
+#pragma mark - UICollectionView
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return self.choices.count;
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
+  cell.textLabel.text = self.choices[indexPath.row];
+  return cell;
+}
+
+#pragma mark - UIScrollViewDelegate Forwarding.
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                                                           targetContentOffset:targetContentOffset];
+  }
 }
 
 @end
@@ -55,15 +122,19 @@
 @implementation TabBarTextOnlyExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"No Icons" ];
+  return @[ @"Tab Bar", @"Text Tabs" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"The tab bar is a component for switching between views of grouped content.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 
-+ (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end
