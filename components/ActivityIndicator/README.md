@@ -9,15 +9,9 @@ path: /catalog/activity-indicators/
 
 # Activity Indicators
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/activity_indicator.png" alt="Activity Indicator" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/activity_indicator.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 Activity indicators are visual indications of an app loading content. The Activity Indicator is a circular indicator that either rotates clockwise or fills to completion clockwise when displaying progress.
 <!--{: .article__intro }-->
