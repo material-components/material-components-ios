@@ -9,15 +9,9 @@ path: /catalog/header-stack-views/
 
 # Header Stack Views
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/header_stack_view.png" alt="Header Stack View" width="320">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/header_stack_view.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The Header Stack View component is a view that coordinates the layout of two vertically stacked
 bar views.
