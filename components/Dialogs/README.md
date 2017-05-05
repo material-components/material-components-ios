@@ -10,7 +10,7 @@ path: /catalog/dialogs/
 # Dialogs
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/dialogs.png" alt="App Bar" width="375">
+  <img src="docs/assets/dialogs.png" alt="Dialogs" width="375">
 </div>
 
 Dialogs provides both a presentation controller for displaying a modal dialog and an alert
