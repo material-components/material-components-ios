@@ -11,7 +11,7 @@ path: /catalog/progress-views/
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/progress_view.png" alt="Progress View" width="320">
+  <img src="docs/assets/progress_view.png" alt="Progress View" width="375">
 </div>
 <!--{% else %}
 <div class="article__asset article__asset--screenshot" markdown="1">
