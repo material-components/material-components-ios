@@ -24,8 +24,7 @@ extern const CGFloat MDCCollectionInfoBarAnimationDuration;
 /** The available styles that the info bar can be shown within a collectionView. */
 typedef NS_ENUM(NSUInteger, MDCInfoBarStyle) {
   MDCInfoBarStyleActionable,
-  MDCInfoBarStyleHUD,
-  MDCInfoBarStyleCustom
+  MDCInfoBarStyleHUD
 };
 
 /** The info bar kind depends on if shown in the header or footer location. */

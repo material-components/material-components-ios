@@ -24,10 +24,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   NSMutableArray *_content;
   BOOL _enableEditing;
   BOOL _allowsSwipeToDismiss;
+  BOOL _useCustomInfoBar;
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell InfoBar Example" ];
+  return @[ @"Collections", @"Collections InfoBar Example" ];
 }
 
 - (void)viewDidLoad {

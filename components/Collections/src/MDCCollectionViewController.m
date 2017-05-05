@@ -99,20 +99,18 @@
   // Add header/footer infoBars if editing is allowed.
   if ([self collectionViewAllowsEditing:self.collectionView]) {
     if (!_headerInfoBar) {
-      _headerInfoBar =
-          [[MDCCollectionInfoBarView alloc] initWithStyle:MDCInfoBarStyleHUD
-                                                     kind:MDCInfoBarKindHeader
-                                           collectionView:self.collectionView];
+      _headerInfoBar = [[MDCCollectionInfoBarView alloc] initWithStyle:MDCInfoBarStyleHUD
+                                                                  kind:MDCInfoBarKindHeader
+                                                        collectionView:self.collectionView];
       _headerInfoBar.message = MDCCollectionStringResources(infoBarGestureHintString);
       _headerInfoBar.delegate = self;
       [self.view addSubview:_headerInfoBar];
     }
 
     if (!_footerInfoBar) {
-      _footerInfoBar =
-          [[MDCCollectionInfoBarView alloc] initWithStyle:MDCInfoBarStyleActionable
-                                                     kind:MDCInfoBarKindFooter
-                                           collectionView:self.collectionView];
+      _footerInfoBar = [[MDCCollectionInfoBarView alloc] initWithStyle:MDCInfoBarStyleActionable
+                                                                  kind:MDCInfoBarKindFooter
+                                                        collectionView:self.collectionView];
       _footerInfoBar.message = MDCCollectionStringResources(deleteButtonString);
       _footerInfoBar.delegate = self;
       [self.view addSubview:_footerInfoBar];
@@ -139,8 +137,8 @@
 }
 
 - (BOOL)infoBar:(MDCCollectionInfoBarView *)infoBar shouldShowAnimated:(BOOL)animated {
-  // Show the header HUD infoBar only once if editing and SwipeToDismiss allowed.
-  if (infoBar.kind == MDCInfoBarKindHeader && infoBar.style == MDCInfoBarStyleHUD) {
+  // Show the header infoBar only once if editing and SwipeToDismiss allowed.
+  if (infoBar.kind == MDCInfoBarKindHeader) {
     BOOL allowsSwipeToDismissItem = NO;
     if ([self respondsToSelector:@selector(collectionViewAllowsSwipeToDismissItem:)]) {
       allowsSwipeToDismissItem = [self collectionViewAllowsSwipeToDismissItem:self.collectionView];
@@ -151,8 +149,8 @@
             && !_headerInfoBarDismissed);
   }
 
-  // Show the footer Actionable infoBar only if editing and items selected for deletion.
-  if (infoBar.kind == MDCInfoBarKindFooter && infoBar.style == MDCInfoBarStyleActionable) {
+  // Show the footer infoBar only if editing and items selected for deletion.
+  if (infoBar.kind == MDCInfoBarKindFooter) {
     NSInteger selectedItemCount = [self.collectionView.indexPathsForSelectedItems count];
     return (_editor.isEditing
             && selectedItemCount > 0
