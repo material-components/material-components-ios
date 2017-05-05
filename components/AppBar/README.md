@@ -13,11 +13,6 @@ path: /catalog/app-bars/
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/app_bar.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.
