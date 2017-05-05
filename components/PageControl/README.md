@@ -10,7 +10,7 @@ path: /catalog/page-controls/
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/page_control.png" alt="Page Control" width="320">
+  <img src="docs/assets/page_control.png" alt="Page Control" width="375">
 </div>
 <!--{% else %}
 <div class="article__asset article__asset--screenshot" markdown="1">

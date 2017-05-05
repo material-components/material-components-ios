@@ -11,7 +11,7 @@ path: /catalog/typography/
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/typography.png" alt="Typography" width="320">
+  <img src="docs/assets/typography.png" alt="Typography" width="375">
 </div>
 <!--{% else %}
 <div class="article__asset article__asset--screenshot" markdown="1">
