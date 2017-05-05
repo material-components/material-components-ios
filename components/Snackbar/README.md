@@ -11,7 +11,7 @@ path: /catalog/snackbars/
 
 <!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/snackbar.png" alt="Snackbar" width="320">
+  <img src="docs/assets/snackbar.png" alt="Snackbar" width="375">
 </div>
 <!--{% else %}
 <div class="article__asset article__asset--screenshot" markdown="1">
