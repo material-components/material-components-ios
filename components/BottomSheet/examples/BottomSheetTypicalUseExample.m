@@ -24,14 +24,19 @@
     <UIViewControllerTransitioningDelegate>
 @end
 
-@implementation BottomSheetTypicalUseExample
+@implementation BottomSheetTypicalUseExample {
+  MDCBottomSheetTransitionController *_transitionController;
+}
 
 - (void)presentBottomSheet {
+  _transitionController = [[MDCBottomSheetTransitionController alloc] init];
+
   UIViewController *viewController =
       [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:100];
   viewController.transitioningDelegate = self;
   viewController.modalPresentationStyle = UIModalPresentationCustom;
-  viewController.preferredContentSize = CGSizeMake(0, 200);
+  viewController.preferredContentSize = CGSizeMake(500, 200);
+
   [self presentViewController:viewController animated:YES completion:nil];
 }
 
@@ -44,6 +49,20 @@
                                                            presentingViewController:presenting];
   return presentationController;
 }
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)
+    animationControllerForPresentedController:(UIViewController *)presented
+                         presentingController:(UIViewController *)presenting
+                             sourceController:(UIViewController *)source {
+  return _transitionController;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)
+    animationControllerForDismissedController:(UIViewController *)dismissed {
+  return _transitionController;
+}
+
+
 
 @end
 

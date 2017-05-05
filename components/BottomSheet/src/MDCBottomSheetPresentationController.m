@@ -59,7 +59,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 @implementation MDCBottomSheetPresentationController {
   UIView *_dimmingView;
   MDCSheetContainerView *_sheetView;
-  CGAffineTransform _savedTransform;
 }
 
 @synthesize delegate;
@@ -102,8 +101,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _sheetView.delegate = self;
   _sheetView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _savedTransform = _sheetView.transform;
-  _sheetView.transform = [self offScreenTransformForPresentedView];
 
   [containerView addSubview:_dimmingView];
   [containerView addSubview:_sheetView];
@@ -125,7 +122,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _dimmingView.alpha = 0.0;
   [transitionCoordinator animateAlongsideTransition:
    ^(id<UIViewControllerTransitionCoordinatorContext> context) {
-     _sheetView.transform = _savedTransform;
      _dimmingView.alpha = 1.0;
    } completion:nil];
 }
@@ -142,7 +138,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   [transitionCoordinator animateAlongsideTransition:
    ^(id<UIViewControllerTransitionCoordinatorContext> context) {
-     _sheetView.transform = [self offScreenTransformForPresentedView];
      _dimmingView.alpha = 0.0;
    } completion:nil];
 }
@@ -191,15 +186,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 - (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
   [self.delegate bottomSheetPresentationControllerDidDismiss:self];
-}
-
-#pragma mark - Private
-
-- (CGAffineTransform)offScreenTransformForPresentedView {
-  CGFloat yOffset = CGRectGetHeight(self.presentedViewController.view.bounds);
-  CGAffineTransform translation = CGAffineTransformMakeTranslation(0, yOffset);
-
-  return CGAffineTransformConcat(translation, _sheetView.transform);
 }
 
 @end
