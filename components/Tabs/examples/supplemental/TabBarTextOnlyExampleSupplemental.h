@@ -27,13 +27,13 @@
 
 @interface TabBarTextOnlyExample : MDCCollectionViewController
 
-@property MDCAppBar *_Nullable appBar;
-@property MDCTabBar *_Nullable tabBar;
-
+@property(nullable) MDCAppBar *appBar;
+@property(nullable) MDCTabBar *tabBar;
+@property(nullable) NSArray *choices;
 @end
 
 @interface TabBarTextOnlyExample (Supplemental)
 
-- (void)setupAppBar;
+- (void)setupExampleViews:(nullable NSArray *)choices;
 
 @end
