@@ -9,15 +9,9 @@ path: /catalog/ink/
 
 # Ink
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/ink.png" alt="Ink" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/ink.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 The Ink component provides a radial action in the form of a visual ripple of ink expanding
 outward from the user's touch.
