@@ -9,7 +9,6 @@ path: /catalog/header-stack-views/
 
 # Header Stack Views
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/header_stack_view.png" alt="Header Stack View" width="320">
 </div>
