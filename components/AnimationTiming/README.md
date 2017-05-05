@@ -10,7 +10,7 @@ path: /catalog/animation-timing/
 # Animation Timing
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/animation_timing.png" alt="Activity Indicator" width="320">
+  <img src="docs/assets/animation_timing.png" alt="Activity Indicator" width="375">
 </div>
 Animation timing easing curves create smooth and consistent motion. Easing curves allow elements to
 move between positions or states. These easing curves affect an object's speed, opacity, and scale.
