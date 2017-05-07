@@ -145,7 +145,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
       <li class="icon-list-item icon-list-item--components">
         <a href="../components">View the Component Documentation</a>
       </li>
-      <li class="icon-list-item icon-list-item--sample">
+      <li class="icon-list-item icon-list-item--code">
         <a href="../howto/tutorial/#sample-code">Explore our Code Samples</a>
       </li>
       <li class="icon-list-item icon-list-item--github">
