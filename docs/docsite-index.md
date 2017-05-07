@@ -53,7 +53,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 3.  {: .step-list-item } ### Edit Podfile
 
     Once you've initialized CocoaPods, add the
-    [Material Components for iOS Pod](https://cocoapods.org/pods/MaterialComponentsIOS)
+    [Material Components for iOS Pod](https://cocoapods.org/pods/MaterialComponents)
     to your target in your Podfile:
 
 
