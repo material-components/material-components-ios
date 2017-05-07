@@ -48,6 +48,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/ActivityIndicator'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

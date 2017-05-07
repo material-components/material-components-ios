@@ -36,7 +36,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     ``` bash
     sudo gem install cocoapods
     ```
-
+    <!--{: .code-renderer.code-renderer--install }-->
 
 2.  {: .step-list-item } ### Create Podfile
 
@@ -63,6 +63,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
       pod 'MaterialComponents'
     end
     ```
+    <!--{: .code-renderer.code-renderer--install }-->
 
     If you are using Swift, don’t forget to uncomment the `use_frameworks!` line
     at the top of your Podfile.
