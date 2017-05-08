@@ -22,7 +22,7 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
-NSString *const MDCTextFieldCoordinatorKey = @"MDCTextFieldCoordinatorKey";
+NSString *const MDCTextFieldfundamentKey = @"MDCTextFieldfundamentKey";
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
@@ -32,7 +32,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 @interface MDCTextField ()
 
-@property(nonatomic, strong) MDCTextInputCommonFundament *coordinator;
+@property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
 
 @end
 
@@ -43,7 +43,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _coordinator = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
+    _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     [self commonMDCTextFieldInitialization];
   }
@@ -56,7 +56,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
     NSString *interfaceBuilderPlaceholder = super.placeholder;
     [self commonMDCTextFieldInitialization];
 
-    _coordinator = [aDecoder decodeObjectForKey:MDCTextFieldCoordinatorKey]
+    _fundament = [aDecoder decodeObjectForKey:MDCTextFieldfundamentKey]
                        ?: [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     if (interfaceBuilderPlaceholder.length) {
@@ -74,13 +74,13 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.coordinator forKey:MDCTextFieldCoordinatorKey];
+  [aCoder encodeObject:self.fundament forKey:MDCTextFieldfundamentKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextField *copy = [[[self class] alloc] init];
 
-  copy.coordinator = self.coordinator.copy;
+  copy.fundament = self.fundament.copy;
 
   return copy;
 }
@@ -105,68 +105,68 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 #pragma mark - Properties Implementation
 
 - (UIButton *)clearButton {
-  return _coordinator.clearButton;
+  return _fundament.clearButton;
 }
 
 - (UIColor *)clearButtonColor {
-  return _coordinator.clearButtonColor;
+  return _fundament.clearButtonColor;
 }
 
 - (void)setClearButtonColor:(UIColor *)clearButtonColor {
-  _coordinator.clearButtonColor = clearButtonColor;
+  _fundament.clearButtonColor = clearButtonColor;
 }
 
 - (BOOL)hidesPlaceholderOnInput {
-  return _coordinator.hidesPlaceholderOnInput;
+  return _fundament.hidesPlaceholderOnInput;
 }
 
 - (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
-  _coordinator.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
+  _fundament.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
 }
 
 - (UILabel *)leadingUnderlineLabel {
-  return _coordinator.leadingUnderlineLabel;
+  return _fundament.leadingUnderlineLabel;
 }
 
 - (UILabel *)placeholderLabel {
-  return _coordinator.placeholderLabel;
+  return _fundament.placeholderLabel;
 }
 
 - (id<MDCTextInputPositioningDelegate>)positioningDelegate {
-  return _coordinator.positioningDelegate;
+  return _fundament.positioningDelegate;
 }
 
 - (void)setPositioningDelegate:(id<MDCTextInputPositioningDelegate>)positioningDelegate {
-  _coordinator.positioningDelegate = positioningDelegate;
+  _fundament.positioningDelegate = positioningDelegate;
 }
 
 - (UIColor *)textColor {
-  return _coordinator.textColor;
+  return _fundament.textColor;
 }
 
 - (void)setTextColor:(UIColor *)textColor {
   [super setTextColor:textColor];
-  _coordinator.textColor = textColor;
+  _fundament.textColor = textColor;
 }
 
 - (UILabel *)trailingUnderlineLabel {
-  return _coordinator.trailingUnderlineLabel;
+  return _fundament.trailingUnderlineLabel;
 }
 
 - (UIColor *)underlineColor {
-  return _coordinator.underlineColor;
+  return _fundament.underlineColor;
 }
 
 - (void)setUnderlineColor:(UIColor *)underlineColor {
-  _coordinator.underlineColor = underlineColor;
+  _fundament.underlineColor = underlineColor;
 }
 
 - (CGFloat)underlineHeight {
-  return _coordinator.underlineHeight;
+  return _fundament.underlineHeight;
 }
 
 - (void)setUnderlineHeight:(CGFloat)underlineHeight {
-  _coordinator.underlineHeight = underlineHeight;
+  _fundament.underlineHeight = underlineHeight;
 }
 
 #pragma mark - UITextField Property Overrides
@@ -179,44 +179,44 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 #endif
 
 - (NSAttributedString *)attributedPlaceholder {
-  return _coordinator.attributedPlaceholder;
+  return _fundament.attributedPlaceholder;
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   [super setAttributedPlaceholder:attributedPlaceholder];
-  _coordinator.attributedPlaceholder = attributedPlaceholder;
+  _fundament.attributedPlaceholder = attributedPlaceholder;
 }
 
 - (UITextFieldViewMode)clearButtonMode {
-  return _coordinator.clearButtonMode;
+  return _fundament.clearButtonMode;
 }
 
 - (void)setClearButtonMode:(UITextFieldViewMode)clearButtonMode {
-  _coordinator.clearButtonMode = clearButtonMode;
+  _fundament.clearButtonMode = clearButtonMode;
 }
 
 - (void)setFont:(UIFont *)font {
   [super setFont:font];
-  [_coordinator didSetFont];
+  [_fundament didSetFont];
 }
 
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
-  _coordinator.enabled = enabled;
+  _fundament.enabled = enabled;
 }
 
 - (NSString *)placeholder {
-  return self.coordinator.placeholder;
+  return self.fundament.placeholder;
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
   [super setPlaceholder:placeholder];
-  [self.coordinator setPlaceholder:placeholder];
+  [self.fundament setPlaceholder:placeholder];
 }
 
 - (void)setText:(NSString *)text {
   [super setText:text];
-  [_coordinator didSetText];
+  [_fundament didSetText];
   [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification
                                                       object:self];
 }
@@ -229,7 +229,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   CGRect textRect = bounds;
 
   // Standard textRect calculation
-  UIEdgeInsets textContainerInset = [_coordinator textContainerInset];
+  UIEdgeInsets textContainerInset = [_fundament textContainerInset];
   textRect.origin.x += textContainerInset.left;
   textRect.size.width -= textContainerInset.left + textContainerInset.right;
 
@@ -321,10 +321,10 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
     editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds), UIUserInterfaceLayoutDirectionRightToLeft);
   }
 
-  if ([self.coordinator.positioningDelegate
+  if ([self.fundament.positioningDelegate
           respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
     editingRect =
-        [self.coordinator.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
+        [self.fundament.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
 
   //NSLog(@"Bounds %@ Editing %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
@@ -350,7 +350,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 }
 
 - (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {
-  CGFloat centerY = [_coordinator textContainerInset].top +
+  CGFloat centerY = [_fundament textContainerInset].top +
   (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
   return centerY;
 }
@@ -358,7 +358,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 #pragma mark - UITextField Draw Overrides
 
 - (void)drawPlaceholderInRect:(CGRect)rect {
-  // We implement our own placeholder that is managed by the coordinator. However, to observe normal
+  // We implement our own placeholder that is managed by the fundament. However, to observe normal
   // VO placeholder behavior, we still set the placeholder on the UITextField, and need to not draw
   // it here.
 }
@@ -383,11 +383,11 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  [_coordinator layoutSubviewsOfInput];
+  [_fundament layoutSubviewsOfInput];
 }
 
 - (void)updateConstraints {
-  [_coordinator updateConstraintsOfInput];
+  [_fundament updateConstraintsOfInput];
 
   [super updateConstraints];
 }
@@ -399,21 +399,21 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 #pragma mark - UITextField Notification Observation
 
 - (void)textFieldDidBeginEditing:(NSNotification *)note {
-  [_coordinator didBeginEditing];
+  [_fundament didBeginEditing];
 }
 
 - (void)textFieldDidChange:(NSNotification *)note {
-  [_coordinator didChange];
+  [_fundament didChange];
 }
 
 - (void)textFieldDidEndEditing:(NSNotification *)note {
-  [_coordinator didEndEditing];
+  [_fundament didEndEditing];
 }
 
 #pragma mark - Accessibility
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
-  return _coordinator.mdc_adjustsFontForContentSizeCategory;
+  return _fundament.mdc_adjustsFontForContentSizeCategory;
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
@@ -422,7 +422,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
     [super setAdjustsFontForContentSizeCategory:adjusts];
   }
 
-  [_coordinator mdc_setAdjustsFontForContentSizeCategory:adjusts];
+  [_fundament mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 
 - (NSString *)accessibilityValue {
