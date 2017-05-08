@@ -22,7 +22,7 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
-NSString *const MDCTextFieldfundamentKey = @"MDCTextFieldfundamentKey";
+NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
@@ -56,7 +56,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
     NSString *interfaceBuilderPlaceholder = super.placeholder;
     [self commonMDCTextFieldInitialization];
 
-    _fundament = [aDecoder decodeObjectForKey:MDCTextFieldfundamentKey]
+    _fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey]
                        ?: [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     if (interfaceBuilderPlaceholder.length) {
@@ -74,7 +74,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.fundament forKey:MDCTextFieldfundamentKey];
+  [aCoder encodeObject:self.fundament forKey:MDCTextFieldFundamentKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
