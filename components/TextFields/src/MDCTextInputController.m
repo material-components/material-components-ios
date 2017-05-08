@@ -850,7 +850,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     } else {
       self.underlineY.constant = underlineOffsetY;
     }
-    self.underlineY.active = YES;
+
+    // If we are being presented with manual layout, we need to help the underline get to the Y
+    self.underlineY.active = self.textInput.translatesAutoresizingMaskIntoConstraints;
 
     // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
     self.characterCountTrailing.active = NO;
