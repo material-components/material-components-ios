@@ -24,7 +24,8 @@ final class TextFieldManualLayoutExample: UIViewController {
     static let largeMargin: CGFloat = 16.0
     static let smallMargin: CGFloat = 8.0
 
-    static let height: CGFloat = 82.0
+    static let floatingHeight: CGFloat = 82.0
+    static let defaultHeight: CGFloat = 62.0
 
     static let stateWidth: CGFloat = 80.0
   }
@@ -165,40 +166,45 @@ final class TextFieldManualLayoutExample: UIViewController {
 
   func updateLayout() {
     let commonWidth = view.bounds.width - 2 * LayoutConstants.largeMargin
+    var height = LayoutConstants.floatingHeight;
+    if let controller = allTextFieldControllers.first {
+      height = controller.presentation == .floatingPlaceholder ? LayoutConstants.floatingHeight : LayoutConstants.defaultHeight
+    }
+
     name.frame = CGRect(x: LayoutConstants.largeMargin,
                         y: LayoutConstants.smallMargin,
                         width: commonWidth,
-                        height: LayoutConstants.height)
+                        height: height)
 
     address.frame = CGRect(x: LayoutConstants.largeMargin,
-                           y: name.frame.minY + LayoutConstants.height + LayoutConstants.smallMargin,
+                           y: name.frame.minY + height + LayoutConstants.smallMargin,
                            width: commonWidth,
-                           height: LayoutConstants.height)
+                           height: height)
 
     city.frame = CGRect(x: LayoutConstants.largeMargin,
-                        y: address.frame.minY + LayoutConstants.height + LayoutConstants.smallMargin,
+                        y: address.frame.minY + height + LayoutConstants.smallMargin,
                         width: commonWidth,
-                        height: LayoutConstants.height)
+                        height: height)
 
     stateZip.frame = CGRect(x: LayoutConstants.largeMargin,
-                            y: city.frame.minY + LayoutConstants.height + LayoutConstants.smallMargin,
+                            y: city.frame.minY + height + LayoutConstants.smallMargin,
                             width: commonWidth,
-                            height: LayoutConstants.height)
+                            height: height)
 
     state.frame = CGRect(x: 0,
                          y: 0,
                          width: LayoutConstants.stateWidth,
-                         height: LayoutConstants.height)
+                         height: height)
 
     zip.frame = CGRect(x: LayoutConstants.stateWidth + LayoutConstants.smallMargin,
                        y: 0,
                        width: stateZip.bounds.width - LayoutConstants.stateWidth - LayoutConstants.smallMargin,
-                       height: LayoutConstants.height)
+                       height: height)
 
     phone.frame = CGRect(x: LayoutConstants.largeMargin,
-                         y: stateZip.frame.minY + LayoutConstants.height + LayoutConstants.smallMargin,
+                         y: stateZip.frame.minY + height + LayoutConstants.smallMargin,
                          width: commonWidth,
-                         height: LayoutConstants.height)
+                         height: height)
   }
 
   // MARK: - Actions
@@ -215,12 +221,14 @@ final class TextFieldManualLayoutExample: UIViewController {
       self.allTextFieldControllers.forEach({ (controller) in
         controller.presentation = .default
       })
+      self.updateLayout()
     }
     alert.addAction(defaultAction)
     let floatingAction = UIAlertAction(title: "Floating", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.presentation = .floatingPlaceholder
       })
+      self.updateLayout()
     }
     alert.addAction(floatingAction)
     present(alert, animated: true, completion: nil)
