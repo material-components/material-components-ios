@@ -5,7 +5,7 @@ section: docs
 path: /docs/
 -->
 
-# How to use Material Components
+# How to use Material Components for iOS
 
 Material Components for iOS should be immediately useable out of the box with
 Apple's standard development tool chain.
