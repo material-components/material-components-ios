@@ -153,6 +153,10 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   return _fundament.trailingUnderlineLabel;
 }
 
+- (UIView *)underline {
+  return _fundament.underline;
+}
+
 - (UIColor *)underlineColor {
   return _fundament.underlineColor;
 }

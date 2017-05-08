@@ -559,6 +559,10 @@ static inline CGFloat MDCRound(CGFloat value) {
   [self.textInput setNeedsUpdateConstraints];
 }
 
+- (UIView *)underline {
+  return self.underlineView;
+}
+
 - (void)updateUnderlinePosition {
   // Usually the underline is halfway between the text and the bottom of the view. But if there are
   // underline labels, we need to be above them.

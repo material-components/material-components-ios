@@ -130,6 +130,9 @@
 @property(nonatomic, nonnull, strong, readonly)
     UILabel *trailingUnderlineLabel NS_SWIFT_NAME(trailingLabel);
 
+/** The underline view */
+@property(nonatomic, nullable, strong, readonly) UIView *underline;
+
 /**
  The color applied to the underline.
 
