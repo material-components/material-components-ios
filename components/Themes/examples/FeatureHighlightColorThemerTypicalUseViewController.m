@@ -18,19 +18,29 @@
 
 #import "MaterialFeatureHighlight.h"
 #import "MaterialThemes.h"
+#import "MaterialPalettes.h"
 
 @implementation FeatureHighlightColorThemerTypicalUseViewController
 
 - (void)didTapButton:(id)sender {
-  MDCFeatureHighlightViewController *featureHighlightVC =
+  MDCFeatureHighlightViewController *featureHighlightController =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
-  featureHighlightVC.titleText = @"Hey a title";
-  featureHighlightVC.bodyText = @"This is the description of the feature highlight view controller.";
+  featureHighlightController.titleText = @"Hey a title";
+  featureHighlightController.bodyText =
+      @"This is the description of the feature highlight view controller.";
 
-  MDCTheme *redTheme = [MDCTheme redTheme];
-  [MDCFeatureHighlightColorThemer applyTheme:redTheme toFeatureHighlight:featureHighlightVC];
+  MDCColorScheme *colorScheme = [[MDCColorScheme alloc] init];
+  colorScheme.primaryColor = [MDCPalette redPalette].tint500;
+  colorScheme.primaryColorLight = [MDCPalette redPalette].tint100;
+  colorScheme.primaryColorDark = [MDCPalette redPalette].tint700;
+  colorScheme.secondaryColor = [MDCPalette bluePalette].tint500;
+  colorScheme.secondaryColorLight = [MDCPalette bluePalette].tint100;
+  colorScheme.secondaryColorDark = [MDCPalette bluePalette].tint700;
 
-  [self presentViewController:featureHighlightVC animated:YES completion:nil];  
+  [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
+                      toFeatureHighlightController:featureHighlightController];
+
+  [self presentViewController:featureHighlightController animated:YES completion:nil];
 }
 
 @end

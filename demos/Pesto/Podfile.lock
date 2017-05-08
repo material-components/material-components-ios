@@ -86,10 +86,10 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   MaterialComponents:
-    :path: "../../"
+    :path: ../../
 
 SPEC CHECKSUMS:
-  MaterialComponents: df10555d693f4ebd1d19b2dac5c3ec3c9341cec4
+  MaterialComponents: ef9adb91319cfab4684a0e15c7835dea555edf2b
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: 0bae51237ebf30ce3f4ecbcefedc8cf3d7af40cf

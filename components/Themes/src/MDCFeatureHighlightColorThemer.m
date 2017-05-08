@@ -18,10 +18,10 @@
 
 @implementation MDCFeatureHighlightColorThemer
 
-+ (void)applyTheme:(MDCTheme *)theme
-    toFeatureHighlight:(MDCFeatureHighlightViewController *)featureHighlightVC {
-  featureHighlightVC.innerHighlightColor = theme.accentColor;
-  featureHighlightVC.outerHighlightColor = theme.primaryColor;
++ (void)applyColorScheme:(MDCColorScheme *)colorScheme
+    toFeatureHighlightController:(MDCFeatureHighlightViewController *)featureHighlightController {
+  featureHighlightController.innerHighlightColor = colorScheme.primaryColorLight;
+  featureHighlightController.outerHighlightColor = colorScheme.primaryColor;
 }
 
 @end

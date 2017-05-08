@@ -17,11 +17,11 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialFeatureHighlight.h"
-#import "MDCTheme.h"
+#import "MDCColorScheme.h"
 
 @interface MDCFeatureHighlightColorThemer : NSObject
 
-+ (void)applyTheme:(MDCTheme *)theme
-    toFeatureHighlight:(MDCFeatureHighlightViewController *)featureHighlight;
++ (void)applyColorScheme:(MDCColorScheme *)colorScheme
+    toFeatureHighlightController:(MDCFeatureHighlightViewController *)featureHighlightController;
 
 @end

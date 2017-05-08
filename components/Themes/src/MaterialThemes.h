@@ -14,5 +14,5 @@
  limitations under the License.
  */
 
-#import "MDCTheme.h"
+#import "MDCColorScheme.h"
 #import "MDCFeatureHighlightColorThemer.h"
