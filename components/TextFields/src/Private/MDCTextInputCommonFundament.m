@@ -434,6 +434,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                                              attribute:NSLayoutAttributeBottom
                                             multiplier:1
                                               constant:-1 * MDCTextInputHalfPadding];
+  _underlineY.priority = UILayoutPriorityDefaultLow;
   _underlineY.active = YES;
 }
 

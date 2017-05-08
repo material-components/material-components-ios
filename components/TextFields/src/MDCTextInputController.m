@@ -108,6 +108,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
 @property(nonatomic, copy) NSString *previousLeadingText;
 @property(nonatomic, copy) UIColor *previousPlaceholderColor;
+@property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
 @end
 
@@ -780,6 +781,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
                                         constant:-1 * MDCTextInputFullWidthHorizontalPadding];
     }
 
+    self.underlineY.active = NO;
+
     // Multi Line Only
     // .fullWidth
     if ([self.textInput isKindOfClass:[UITextView class]]) {
@@ -833,6 +836,22 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   } else {
     // .floatingPlaceholder and .default
 
+    CGFloat leadingLineHeight = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * 2.f) / 2.f;
+    CGFloat underlineOffsetY = -1 * (leadingLineHeight + MDCTextInputVerticalHalfPadding);
+    if (!self.underlineY) {
+      self.underlineY =
+      [NSLayoutConstraint constraintWithItem:self.textInput.underline
+                                   attribute:NSLayoutAttributeCenterY
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.textInput
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1
+                                    constant:underlineOffsetY];
+    } else {
+      self.underlineY.constant = underlineOffsetY;
+    }
+    self.underlineY.active = YES;
+
     // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
     self.characterCountTrailing.active = NO;
     self.characterCountY.active = NO;
@@ -856,7 +875,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   // Default just uses the built in intrinsic content size but floating placeholder needs more
   // height and full width needs less. (Constants set above.)
-  self.heightConstraint.active = _presentationStyle != MDCTextInputPresentationStyleDefault;
+  self.heightConstraint.active = (_presentationStyle != MDCTextInputPresentationStyleDefault &&
+                                  !self.textInput.translatesAutoresizingMaskIntoConstraints);
 }
 
 - (void)updateFontsForDynamicType {
