@@ -37,7 +37,7 @@ typedef NS_ENUM(NSUInteger, MDCInfoBarKind) {
 @protocol MDCCollectionInfoBarViewDelegate <NSObject>
 @optional
 /**
- Allows the receiver to get notifed when a tap gesture has been performed on the info bar.
+ Allows the receiver to get notified when a tap gesture has been performed on the info bar.
 
  @param infoBar The MDCCollectionInfoBarView info bar.
  */
@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, MDCInfoBarKind) {
 - (BOOL)infoBar:(nonnull MDCCollectionInfoBarView *)infoBar shouldShowAnimated:(BOOL)animated;
 
 /**
- Allows the receiver to get notifed when an info bar will show.
+ Allows the receiver to get notified when an info bar will show.
 
  @param infoBar The MDCCollectionInfoBarView info bar.
  @param animated YES the transition will be animated; otherwise, NO.
@@ -66,7 +66,7 @@ typedef NS_ENUM(NSUInteger, MDCInfoBarKind) {
      willAutoDismiss:(BOOL)willAutoDismiss;
 
 /**
- Allows the receiver to get notifed after an info bar did show.
+ Allows the receiver to get notified after an info bar did show.
 
  @param infoBar The MDCCollectionInfoBarView info bar.
  @param animated YES the transition was animated; otherwise, NO.
@@ -78,7 +78,7 @@ typedef NS_ENUM(NSUInteger, MDCInfoBarKind) {
     willAutoDismiss:(BOOL)willAutoDismiss;
 
 /**
- Allows the receiver to get notifed when an info bar will dismiss.
+ Allows the receiver to get notified when an info bar will dismiss.
 
  @param infoBar The MDCCollectionInfoBarView info bar.
  @param animated YES the transition will be animated; otherwise, NO.
@@ -90,7 +90,7 @@ typedef NS_ENUM(NSUInteger, MDCInfoBarKind) {
         willAutoDismiss:(BOOL)willAutoDismiss;
 
 /**
- Allows the receiver to get notifed after an info bar has been dismissed.
+ Allows the receiver to get notified after an info bar has been dismissed.
 
  @param infoBar The MDCCollectionInfoBarView info bar.
  @param animated YES the transition was animated; otherwise, NO.

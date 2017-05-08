@@ -46,10 +46,10 @@
 @property(nonatomic, strong, readonly, nonnull) id<MDCCollectionViewEditing> editor;
 
 /** The collection view info bar used at header. */
-@property (nonatomic, strong, nullable) MDCCollectionInfoBarView *headerInfoBar;
+@property(nonatomic, strong, nullable) MDCCollectionInfoBarView *headerInfoBar;
 
 /** The collection view info bar used at footer. */
-@property (nonatomic, strong, nullable) MDCCollectionInfoBarView *footerInfoBar;
+@property(nonatomic, strong, nullable) MDCCollectionInfoBarView *footerInfoBar;
 
 #pragma mark - Subclassing
 
