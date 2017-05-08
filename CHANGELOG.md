@@ -1,4 +1,326 @@
-# release-candidate TODO: Replace me with version number. 
+# 23.1.0
+
+## API diffs
+
+### Collections
+
+#### Changes
+
+Make [MDCCollectionViewController cellWidthAtSectionIndex:] public.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Junius' Screenshots (#1393)](https://github.com/material-components/material-components-ios/commit/6cb4269240bac5b4ed98827070b2855ae8aed9da) (ianegordon)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [Remove remaining MP4s and markup. (#1396)](https://github.com/material-components/material-components-ios/commit/555476cf89f03a7a432489604286be1ad5ceb24b) (Adrian Secord)
+* [Update screenshot widths](https://github.com/material-components/material-components-ios/commit/e9630689f0be39fcc1df00fd78fc5ce5dc9c990c) (Junius Gunaratne)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### AnimationTiming
+
+#### Changes
+
+* [Added a link to the motion spec in the AnimationTiming README. (#1319)](https://github.com/material-components/material-components-ios/commit/92db31da5c115510c9b29be058f77434998fa9a7) (Scott Hyndman)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Junius' Screenshots (#1393)](https://github.com/material-components/material-components-ios/commit/6cb4269240bac5b4ed98827070b2855ae8aed9da) (ianegordon)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### AppBar
+
+#### Changes
+
+* [& [FeatureHighlight] - Remove references to g3 (#1349)](https://github.com/material-components/material-components-ios/commit/acd8d38dc54babbaf58969a2554164745c61cbb5) (Justin Shephard)
+* [- Removed Video from Readme (#1390)](https://github.com/material-components/material-components-ios/commit/4a879d363474b322f6ca64a965a28eb5291dfb61) (Justin Shephard)
+* [- Update docs photo (#1374)](https://github.com/material-components/material-components-ios/commit/94ed673c2ae0812c6f524162a042f1b40b430f10) (Justin Shephard)
+* [- Update readme docs (#1379)](https://github.com/material-components/material-components-ios/commit/6e54a23b74d81bb119f7edb7af6878b8d757a517) (Justin Shephard)
+* [Fix warnings uncovered by the Xcode 8.3 static analyzer (#1298)](https://github.com/material-components/material-components-ios/commit/2ce144abd0c1d074ac32677e242d4b9508d76f40) (ianegordon)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [Updated accessibility label on back button (#1334)](https://github.com/material-components/material-components-ios/commit/00009b2106a72e306773af8219e9ccd79fd61487) (Justin Shephard)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### ButtonBar
+
+#### Changes
+
+* [- Removed Video File and updated Readme (#1395)](https://github.com/material-components/material-components-ios/commit/01669183e34d6af48b3911ef40fe6c6bea5036de) (Justin Shephard)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Site] Catalog colors (#1377)](https://github.com/material-components/material-components-ios/commit/653aec06e954ab11db09ac20c0bfd21c2de769cb) (Will Larche)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### Buttons
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Buttons, Page Control, Typography] Fixed screenshots (#1380)](https://github.com/material-components/material-components-ios/commit/d48a3dae3edd56b2c0f86f0d6d751cb2ae2da91c) (Randall Li)
+* [[Buttons, Page Control, Typography] Removed video demos (#1387)](https://github.com/material-components/material-components-ios/commit/d7cf7999eded279d660abaed7c37e14299d3334f) (Randall Li)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[Math] New private math component (#1325)](https://github.com/material-components/material-components-ios/commit/ff5d16586947158e743eec1cc6da949662f0d7c0) (Will Larche)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### CollectionCells
+
+#### Changes
+
+* [Added new screenshot for CollectionCells. (#1381)](https://github.com/material-components/material-components-ios/commit/fd3bca404082749f354d44fb729a971d85200a98) (Adrian Secord)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[Math] New private math component (#1325)](https://github.com/material-components/material-components-ios/commit/ff5d16586947158e743eec1cc6da949662f0d7c0) (Will Larche)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### Collections
+
+#### Changes
+
+* [Eliminate static analyzer warnings. Simplify Collection supplementary views (#1316)](https://github.com/material-components/material-components-ios/commit/f018e09afe4c0a1d73d20993d0b2283638dfbdcd) (ianegordon)
+* [Fix warnings uncovered by the Xcode 8.3 static analyzer (#1298)](https://github.com/material-components/material-components-ios/commit/2ce144abd0c1d074ac32677e242d4b9508d76f40) (ianegordon)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Temporarily expose cellWidthAtSection: in MDCCollectionViewController.h  (#1358)](https://github.com/material-components/material-components-ios/commit/3a4c859f376618e6b33533b2ebe21bcc26e81ef9) (Felix Emiliano)
+* [Updated screenshot. (#1383)](https://github.com/material-components/material-components-ios/commit/b2b433f3662220c6d06d81d8ecf8ad78b0e8d34e) (Adrian Secord)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### Dialogs
+
+#### Changes
+
+* [Fix AlertController rotation layout (#1306)](https://github.com/material-components/material-components-ios/commit/74e6232777c3d10600bffaee5b1127d9de60baa3) (ianegordon)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [Screenshot (#1376)](https://github.com/material-components/material-components-ios/commit/0489e474e9f5db915e4ed9b23e3ec9be23e0467d) (ianegordon)
+* [[All] Formatting. (#1329)](https://github.com/material-components/material-components-ios/commit/d8a58feecd69219be8f1f7cc15e98ee0d19f5d49) (Will Larche)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [[All] Formatting. (#1329)](https://github.com/material-components/material-components-ios/commit/d8a58feecd69219be8f1f7cc15e98ee0d19f5d49) (Will Larche)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[AppBar] & - Remove references to g3 (#1349)](https://github.com/material-components/material-components-ios/commit/acd8d38dc54babbaf58969a2554164745c61cbb5) (Justin Shephard)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[Feature Highlight] Updated screenshot (#1385)](https://github.com/material-components/material-components-ios/commit/b30161df41415824c06b5b2b97710c833f7d5e12) (Sam Morrison)
+* [[Feature highlight] Accessibility fixes (#1284)](https://github.com/material-components/material-components-ios/commit/2a47d187edc7a4aec4566641730042fd00df114b) (Sam Morrison)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### FlexibleHeader
+
+#### Changes
+
+* [- Correct use of deprecated property in docs (#1340)](https://github.com/material-components/material-components-ios/commit/9c3f162125a0c2af06877bbe3e9743d150c00c00) (Justin Shephard)
+* [- Remove video file and updated readme (#1394)](https://github.com/material-components/material-components-ios/commit/f96c040c7ee61b38e4c3d5104315f8cc2cb56c5f) (Justin Shephard)
+* [- Update readme doc (#1378)](https://github.com/material-components/material-components-ios/commit/73c83f22871f39dff753995a5697d04380c85cf0) (Justin Shephard)
+* [- Updated doc pic (#1375)](https://github.com/material-components/material-components-ios/commit/7c5586f1caa7f67fda2d190c23f71780c6b216f5) (Justin Shephard)
+* [Ensure the MDCFlexibleHeaderView adheres to UIAppearance proxy if set (#1326)](https://github.com/material-components/material-components-ios/commit/92240a337deeec844ce53061eb289c472168202e) (Justin Shephard)
+* [Fix Swift example in the FlexibleHeader docs (#1354)](https://github.com/material-components/material-components-ios/commit/d0210fa20a460fa1185f96048b9f7c4c80394b06) (Alastair Tse)
+* [Fix warnings uncovered by the Xcode 8.3 static analyzer (#1298)](https://github.com/material-components/material-components-ios/commit/2ce144abd0c1d074ac32677e242d4b9508d76f40) (ianegordon)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### HeaderStackView
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[HeaderStack] - Remove video from Readme (#1391)](https://github.com/material-components/material-components-ios/commit/ebcb49dc14d64c80ccd5cc03c95081e7c81f7a3b) (Justin Shephard)
+* [[Site] Catalog colors (#1377)](https://github.com/material-components/material-components-ios/commit/653aec06e954ab11db09ac20c0bfd21c2de769cb) (Will Larche)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### Ink
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Junius' Screenshots (#1393)](https://github.com/material-components/material-components-ios/commit/6cb4269240bac5b4ed98827070b2855ae8aed9da) (ianegordon)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [Remove remaining MP4s and markup. (#1396)](https://github.com/material-components/material-components-ios/commit/555476cf89f03a7a432489604286be1ad5ceb24b) (Adrian Secord)
+* [Update screenshot widths](https://github.com/material-components/material-components-ios/commit/e9630689f0be39fcc1df00fd78fc5ce5dc9c990c) (Junius Gunaratne)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### NavigationBar
+
+#### Changes
+
+* [- Remove Video (#1392)](https://github.com/material-components/material-components-ios/commit/c4a33b3b5fdda1cba4547751310829cab008fdc0) (Justin Shephard)
+* [Fix warnings uncovered by the Xcode 8.3 static analyzer (#1298)](https://github.com/material-components/material-components-ios/commit/2ce144abd0c1d074ac32677e242d4b9508d76f40) (ianegordon)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[Math] New private math component (#1325)](https://github.com/material-components/material-components-ios/commit/ff5d16586947158e743eec1cc6da949662f0d7c0) (Will Larche)
+* [[Site] Catalog colors (#1377)](https://github.com/material-components/material-components-ios/commit/653aec06e954ab11db09ac20c0bfd21c2de769cb) (Will Larche)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### OverlayWindow
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### PageControl
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Buttons, Page Control, Typography] Fixed screenshots (#1380)](https://github.com/material-components/material-components-ios/commit/d48a3dae3edd56b2c0f86f0d6d751cb2ae2da91c) (Randall Li)
+* [[Buttons, Page Control, Typography] Removed video demos (#1387)](https://github.com/material-components/material-components-ios/commit/d7cf7999eded279d660abaed7c37e14299d3334f) (Randall Li)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### Palettes
+
+#### Changes
+
+* [Added Palettes screenshot. (#1373)](https://github.com/material-components/material-components-ios/commit/3dcb30a6eba5f96deec2ee2e76c0e13eec11ac86) (Adrian Secord)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### ProgressView
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Updates ProgressView to use MDCMath. (#1328)](https://github.com/material-components/material-components-ios/commit/d9b7b2f69f5d0f3bb24b2cff5b9811e09b3a9787) (Louis Romero)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[Progress view] Updated screenshot (#1384)](https://github.com/material-components/material-components-ios/commit/e87a24febee47a538a6bc8bdd8857b833f9b7174) (Sam Morrison)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### ShadowElevations
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[Shadows] Screenshot (#1382)](https://github.com/material-components/material-components-ios/commit/9599118c1ba4af03185e34b5ca3d5482936c7e71) (ianegordon)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### ShadowLayer
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Screenshot (#1389)](https://github.com/material-components/material-components-ios/commit/fc4f2b763a89b5b2f18c4c2ade109b3723806daa) (ianegordon)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### Slider
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Updated screenshot (#1386)](https://github.com/material-components/material-components-ios/commit/8321bede0888bbf967ffbc4ffe969fd6f336ff17) (Sam Morrison)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### Snackbar
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [Updated screenshot (#1388)](https://github.com/material-components/material-components-ios/commit/5e7d2ebbc76c4ba81aa6bc161fc920e6089ba030) (Sam Morrison)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### Tabs
+
+#### Changes
+
+* [Corrections for readme (#1294)](https://github.com/material-components/material-components-ios/commit/7a0e7de88a82262c8f86755124f32268796aff38) (Will Larche)
+* [Fix warnings uncovered by the Xcode 8.3 static analyzer (#1298)](https://github.com/material-components/material-components-ios/commit/2ce144abd0c1d074ac32677e242d4b9508d76f40) (ianegordon)
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Minor Tweaks to address internal feedback. (#1312)](https://github.com/material-components/material-components-ios/commit/a749a98b4f27652a87527bdd7598ea30e54dd5f2) (ianegordon)
+* [Monochromatic sweep of all catalog components (#1370)](https://github.com/material-components/material-components-ios/commit/4a46c8c19e3df6f4c353057a67f34f446441b3a4) (Alastair Tse)
+* [Remove remaining MP4s and markup. (#1396)](https://github.com/material-components/material-components-ios/commit/555476cf89f03a7a432489604286be1ad5ceb24b) (Adrian Secord)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[Site] Catalog colors (#1377)](https://github.com/material-components/material-components-ios/commit/653aec06e954ab11db09ac20c0bfd21c2de769cb) (Will Larche)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
+
+### Typography
+
+#### Changes
+
+* [Gigantic documentation update. (#1305)](https://github.com/material-components/material-components-ios/commit/9ed1d4349d90f0bcf13b95043cf9e741846da69c) (Scott Hyndman)
+* [Workaround for medium system font on iOS 8 (#1292)](https://github.com/material-components/material-components-ios/commit/2bda2c118e66ac04b6458a6eab88a24b3c10500c) (ianegordon)
+* [[All] Formatting. (#1329)](https://github.com/material-components/material-components-ios/commit/d8a58feecd69219be8f1f7cc15e98ee0d19f5d49) (Will Larche)
+* [[All] replacing ~~~ with ```. (#1324)](https://github.com/material-components/material-components-ios/commit/3f99ed2dd9aefb903918efb9253ade09e85d9a0d) (Will Larche)
+* [[Buttons, Page Control, Typography] Fixed screenshots (#1380)](https://github.com/material-components/material-components-ios/commit/d48a3dae3edd56b2c0f86f0d6d751cb2ae2da91c) (Randall Li)
+* [[Buttons, Page Control, Typography] Removed video demos (#1387)](https://github.com/material-components/material-components-ios/commit/d7cf7999eded279d660abaed7c37e14299d3334f) (Randall Li)
+* [[Docs] Docstravaganza (#1330)](https://github.com/material-components/material-components-ios/commit/4a011e75a55fa1b0c592c44578a28162ddfa81ce) (Scott Hyndman)
+* [[Docs]: Updated link list classes. (#1320)](https://github.com/material-components/material-components-ios/commit/0913aa9aaf85cfcb041e55acd3b2aa7608bb6a1d) (Scott Hyndman)
+* [[docs] Associated icons with components (#1315)](https://github.com/material-components/material-components-ios/commit/69533578ca35c968594680a3ea50abd539fbea59) (Scott Hyndman)
 
 # 23.0.2
 
