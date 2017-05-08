@@ -28,6 +28,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/CollectionLayoutAttributes'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

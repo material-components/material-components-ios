@@ -42,6 +42,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/NavigationBar'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

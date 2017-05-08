@@ -39,6 +39,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/FlexibleHeader'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
