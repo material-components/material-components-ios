@@ -5,7 +5,11 @@ section: docs
 path: /docs/
 -->
 
-# How to use Material Components for iOS
+# Supporting documentation
+
+This section includes supporting documentation aimed to both improve the onboarding experience for teams that are new to Material Components, as well as cover advanced issues for those interested in the reasoning behind our decisions and contributing to the project.
+
+## How to use Material Components for iOS
 
 Material Components for iOS should be immediately useable out of the box with
 Apple's standard development tool chain.
