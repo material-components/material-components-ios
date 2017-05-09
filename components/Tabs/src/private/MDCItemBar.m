@@ -588,13 +588,13 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       break;
   }
 
-  UIEdgeInsets oldSectionInset = _tabFlowLayout.sectionInset;
+  UIEdgeInsets oldSectionInset = _flowLayout.sectionInset;
   if (UIEdgeInsetsEqualToEdgeInsets(oldSectionInset, newSectionInset)) {
     // No inset change - only need to invalidate the layout to pick up new item sizes.
     UICollectionViewFlowLayoutInvalidationContext *delegateContext =
         [[UICollectionViewFlowLayoutInvalidationContext alloc] init];
     delegateContext.invalidateFlowLayoutDelegateMetrics = YES;
-    [_tabFlowLayout invalidateLayoutWithContext:delegateContext];
+    [_flowLayout invalidateLayoutWithContext:delegateContext];
     return;
   }
 
