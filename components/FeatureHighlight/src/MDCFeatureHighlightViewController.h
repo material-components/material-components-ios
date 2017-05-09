@@ -78,7 +78,10 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
-@property(nonatomic, strong, nullable) MDCFeatureHighlightView *featureHighlightView;
+/**
+ The feature highlight view used by the view controller.
+ */
+@property(nonatomic, strong, nonnull) MDCFeatureHighlightView *featureHighlightView;
 
 /**
  Sets the text to be displayed as the header of the help text.

@@ -98,7 +98,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     __typeof__(self) strongSelf = weakSelf;
     [strongSelf dismiss:accepted];
   };
-  
   self.view = _featureHighlightView;
 }
 
