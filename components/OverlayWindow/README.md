@@ -1,10 +1,10 @@
 <!--docs:
-title: "OverlayWindow"
+title: "Overlay Windows"
 layout: detail
 section: components
 excerpt: "A window for managing sets of overlay views."
 iconId: tooltip
-path: /catalog/overlay-windows/
+path: /catalog/snackbars/overlay-windows/
 -->
 
 # Overlay Window
@@ -31,6 +31,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/OverlayWindow'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
@@ -124,3 +125,11 @@ if ([self.window isKindOfClass:[MDCOverlayWindow class]]) {
 }
 ```
 <!--</div>-->
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../Snackbar">Snackbars</a></li>
+</ul>

@@ -15,7 +15,6 @@ path: /catalog/dialogs/
 
 Dialogs provides both a presentation controller for displaying a modal dialog and an alert
 controller that will display a simple modal alert.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -53,6 +52,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/Dialogs'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then run the following command:
 

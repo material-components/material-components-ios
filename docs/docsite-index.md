@@ -36,7 +36,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     ``` bash
     sudo gem install cocoapods
     ```
-
+    <!--{: .code-renderer.code-renderer--install }-->
 
 2.  {: .step-list-item } ### Create Podfile
 
@@ -53,7 +53,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 3.  {: .step-list-item } ### Edit Podfile
 
     Once you've initialized CocoaPods, add the
-    [Material Components for iOS Pod](https://cocoapods.org/pods/MaterialComponentsIOS)
+    [Material Components for iOS Pod](https://cocoapods.org/pods/MaterialComponents)
     to your target in your Podfile:
 
 
@@ -63,6 +63,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
       pod 'MaterialComponents'
     end
     ```
+    <!--{: .code-renderer.code-renderer--install }-->
 
     If you are using Swift, don’t forget to uncomment the `use_frameworks!` line
     at the top of your Podfile.
@@ -145,7 +146,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
       <li class="icon-list-item icon-list-item--components">
         <a href="../components">View the Component Documentation</a>
       </li>
-      <li class="icon-list-item icon-list-item--sample">
+      <li class="icon-list-item icon-list-item--code">
         <a href="../howto/tutorial/#sample-code">Explore our Code Samples</a>
       </li>
       <li class="icon-list-item icon-list-item--github">

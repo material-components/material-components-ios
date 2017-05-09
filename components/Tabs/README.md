@@ -13,7 +13,6 @@ path: /catalog/tabs/
 </div>
 
 Tabs are bars of buttons used to navigate between groups of content.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -38,6 +37,7 @@ following to your `Podfile`:
 ```
 pod 'MaterialComponents/Tabs'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

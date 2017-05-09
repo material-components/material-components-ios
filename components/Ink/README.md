@@ -15,7 +15,6 @@ path: /catalog/ink/
 
 The Ink component provides a radial action in the form of a visual ripple of ink expanding
 outward from the user's touch.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -39,6 +38,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/Ink'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

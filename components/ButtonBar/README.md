@@ -14,7 +14,6 @@ path: /catalog/button-bars/
 </div>
 
 The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
-<!--{: .article__intro }-->
 
 - - -
 
@@ -32,6 +31,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/ButtonBar'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

@@ -15,7 +15,6 @@ path: /catalog/app-bars/
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -40,6 +39,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/AppBar'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
