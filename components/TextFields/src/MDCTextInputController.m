@@ -851,7 +851,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
       self.underlineY.constant = underlineOffsetY;
     }
 
-    // If we are being presented with manual layout, we need to help the underline get to the Y
+    // If we are being presented with manual layout, we need to help the underline get to its Y
     self.underlineY.active = self.textInput.translatesAutoresizingMaskIntoConstraints;
 
     // These constraints are deactivated via .active (vs deactivate()) in case they are nil.
@@ -867,7 +867,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
     if (_presentationStyle == MDCTextInputPresentationStyleFloatingPlaceholder) {
       self.heightConstraint.constant =
-          insets.top +  // Labels and padding
+          insets.top +                                                      // Labels and padding
           MDCRint(MAX(self.textInput.font.lineHeight,
                        self.textInput.placeholderLabel.font.lineHeight)) +  // Text field
           insets.bottom;                                                    // Padding or labels
