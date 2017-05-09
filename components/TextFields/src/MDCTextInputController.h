@@ -92,7 +92,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is red.
  */
-@property(nonatomic, nullable, copy) UIColor *errorColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nullable, strong) UIColor *errorColor UI_APPEARANCE_SELECTOR;
 
 /**
  The color applied to the placeholder when floating. However, when in error state, it will be
@@ -100,7 +100,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is black with Material Design hint text opacity.
  */
-@property(nonatomic, nullable, copy)
+@property(nonatomic, nullable, strong)
     UIColor *floatingPlaceholderColor NS_SWIFT_NAME(floatingColor) UI_APPEARANCE_SELECTOR;
 
 /**
@@ -109,7 +109,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is 0.75.
  */
-@property(nonatomic, nullable, copy)
+@property(nonatomic, nullable, strong)
     NSNumber *floatingPlaceholderScale NS_SWIFT_NAME(floatingScale) UI_APPEARANCE_SELECTOR;
 
 /**
@@ -125,7 +125,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is black with Material Design hint text opacity.
  */
-@property(nonatomic, nullable, copy) UIColor *inlinePlaceholderColor NS_SWIFT_NAME(inlineColor)
+@property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor NS_SWIFT_NAME(inlineColor)
     UI_APPEARANCE_SELECTOR;
 
 /*

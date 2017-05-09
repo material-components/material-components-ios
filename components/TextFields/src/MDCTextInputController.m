@@ -107,7 +107,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingCharacterCountLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingSuperviewTrailing;
 @property(nonatomic, copy) NSString *previousLeadingText;
-@property(nonatomic, copy) UIColor *previousPlaceholderColor;
+@property(nonatomic, strong) UIColor *previousPlaceholderColor;
 @property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
 @end
@@ -194,15 +194,15 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   copy.characterCountViewMode = self.characterCountViewMode;
   copy.characterCountMax = self.characterCountMax;
   copy.errorAccessibilityValue = self.errorAccessibilityValue.copy;
-  copy.errorColor = self.errorColor.copy;
+  copy.errorColor = self.errorColor;
   copy.errorText = self.errorText.copy;
-  copy.floatingPlaceholderColor = self.floatingPlaceholderColor.copy;
+  copy.floatingPlaceholderColor = self.floatingPlaceholderColor;
   copy.floatingPlaceholderScale = self.floatingPlaceholderScale;
   copy.helperText = self.helperText.copy;
-  copy.inlinePlaceholderColor = self.inlinePlaceholderColor.copy;
+  copy.inlinePlaceholderColor = self.inlinePlaceholderColor;
   copy.presentationStyle = self.presentationStyle;
   copy.previousLeadingText = self.previousLeadingText.copy;
-  copy.previousPlaceholderColor = self.previousPlaceholderColor.copy;
+  copy.previousPlaceholderColor = self.previousPlaceholderColor;
   copy.textInput = self.textInput;  // Just a pointer value copy
   copy.underlineViewMode = self.underlineViewMode;
 
@@ -601,14 +601,14 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)setFloatingPlaceholderColor:(UIColor *)floatingPlaceholderColor {
   if (![_floatingPlaceholderColor isEqual:floatingPlaceholderColor]) {
-    _floatingPlaceholderColor = floatingPlaceholderColor.copy;
+    _floatingPlaceholderColor = floatingPlaceholderColor;
     [self updatePlaceholder];
   }
 }
 
 - (void)setFloatingPlaceholderScale:(NSNumber *)floatingPlaceholderScale {
   if (![_floatingPlaceholderScale isEqualToNumber:floatingPlaceholderScale]) {
-    _floatingPlaceholderScale = floatingPlaceholderScale.copy;
+    _floatingPlaceholderScale = floatingPlaceholderScale;
     [self updatePlaceholder];
   }
 }
@@ -634,7 +634,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)setInlinePlaceholderColor:(UIColor *)inlinePlaceholderColor {
   if (![_inlinePlaceholderColor isEqual:inlinePlaceholderColor]) {
-    _inlinePlaceholderColor = inlinePlaceholderColor.copy;
+    _inlinePlaceholderColor = inlinePlaceholderColor;
     [self updatePlaceholder];
   }
 }
@@ -674,7 +674,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
-  _previousPlaceholderColor = previousPlaceholderColor.copy;
+  _previousPlaceholderColor = previousPlaceholderColor;
 }
 
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
