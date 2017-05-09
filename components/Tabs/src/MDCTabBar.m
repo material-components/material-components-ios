@@ -479,8 +479,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)updateItemBarStyle {
   MDCItemBarStyle *style;
 
-  style = [[self class] defaultStyleForPosition:_barPosition
-                                 itemAppearance:_itemAppearance];
+  style = [[self class] defaultStyleForPosition:_barPosition itemAppearance:_itemAppearance];
 
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;

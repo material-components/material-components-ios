@@ -17,7 +17,7 @@
 
 @import MaterialComponents.MaterialTabs;
 
-@interface BottomNavigationBarExample : UIViewController<MDCTabBarDelegate>
+@interface BottomNavigationBarExample : UIViewController <MDCTabBarDelegate>
 @end
 
 @implementation BottomNavigationBarExample {
@@ -50,8 +50,10 @@
     [[UITabBarItem alloc] initWithTitle:@"Blue" image:starImage tag:0]
   ];
 
-  _colors = @[[UIColor colorWithRed:0.5 green:0 blue:0 alpha:1],
-              [UIColor colorWithRed:0 green:0 blue:0.5 alpha:1]];
+  _colors = @[
+    [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1],
+    [UIColor colorWithRed:0 green:0 blue:0.5 alpha:1]
+  ];
 
   CGRect bounds = self.view.bounds;
 
