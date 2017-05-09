@@ -112,10 +112,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
 }
 
-- (void)loadView {
-  
-}
-
 - (void)dealloc {
   [_pulseTimer invalidate];
   [_highlightedView removeObserver:self forKeyPath:@"frame"];
