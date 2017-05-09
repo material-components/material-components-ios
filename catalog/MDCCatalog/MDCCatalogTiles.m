@@ -2404,10 +2404,10 @@ void MDCCatalogDrawMiscTile(CGRect frame) {
                                     green:(fillColorRGBA[1] * 0.7)
                                      blue:(fillColorRGBA[2] * 0.7)
                                     alpha:(fillColorRGBA[3] * 0.7 + 0.3)];
-  UIColor* fillColor2 = [UIColor colorWithRed:0.605 green:0.865 blue:0.983 alpha:1];
-  UIColor* fillColor3 = [UIColor colorWithRed:0.308 green:0.764 blue:0.97 alpha:1];
-  UIColor* fillColor4 = [UIColor colorWithRed:0.407 green:0.798 blue:0.974 alpha:1];
-  UIColor* fillColor5 = [UIColor colorWithRed:0.506 green:0.831 blue:0.978 alpha:1];
+  UIColor* fillColor2 = [UIColor colorWithWhite:0.831 alpha:1];
+  UIColor* fillColor3 = [UIColor colorWithWhite:0.714 alpha:1];
+  UIColor* fillColor4 = [UIColor colorWithWhite:0.608 alpha:1];
+  UIColor* fillColor5 = [UIColor colorWithWhite:0.467 alpha:1];
 
   NSShadow* shadow = [[NSShadow alloc] init];
   [shadow setShadowColor:[color2 colorWithAlphaComponent:CGColorGetAlpha(color2.CGColor) * 0.19]];
