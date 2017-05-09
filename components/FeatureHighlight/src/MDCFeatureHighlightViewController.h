@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCFeatureHighlightView.h"
+
 /** The default alpha for the outer highlight circle. */
 extern const CGFloat kMDCFeatureHighlightOuterHighlightAlpha;
 
@@ -76,6 +78,8 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
+@property(nonatomic, strong, nullable) MDCFeatureHighlightView *featureHighlightView;
+
 /**
  Sets the text to be displayed as the header of the help text.
 
@@ -97,14 +101,14 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 
  Alpha should be set to kMDCFeatureHighlightOuterHighlightAlpha.
  */
-@property(nonatomic, strong, null_resettable) UIColor *outerHighlightColor;
+//@property(nonatomic, strong, null_resettable) UIColor *outerHighlightColor;
 
 /**
  Sets the color to be used for the inner highlight. Defaults to white.
 
  Should be opaque.
  */
-@property(nonatomic, strong, null_resettable) UIColor *innerHighlightColor;
+//@property(nonatomic, strong, null_resettable) UIColor *innerHighlightColor;
 
 /**
  Dismisses the feature highlight using the 'accept' style dismissal animation and triggers the

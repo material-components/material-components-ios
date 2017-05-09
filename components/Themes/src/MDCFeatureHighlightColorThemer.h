@@ -21,7 +21,10 @@
 
 @interface MDCFeatureHighlightColorThemer : NSObject
 
+//+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
+//    toFeatureHighlightController:(MDCFeatureHighlightViewController *)featureHighlightController;
+
 + (void)applyColorScheme:(MDCColorScheme *)colorScheme
-    toFeatureHighlightController:(MDCFeatureHighlightViewController *)featureHighlightController;
+    toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView;
 
 @end

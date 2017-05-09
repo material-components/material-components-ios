@@ -30,15 +30,17 @@
       @"This is the description of the feature highlight view controller.";
 
   MDCColorScheme *colorScheme = [[MDCColorScheme alloc] init];
-  colorScheme.primaryColor = [MDCPalette redPalette].tint500;
-  colorScheme.primaryColorLight = [MDCPalette redPalette].tint100;
-  colorScheme.primaryColorDark = [MDCPalette redPalette].tint700;
+  colorScheme.primaryColor = [MDCPalette tealPalette].tint500;
+  colorScheme.primaryColorLight = [MDCPalette tealPalette].tint100;
+  colorScheme.primaryColorDark = [MDCPalette tealPalette].tint700;
   colorScheme.secondaryColor = [MDCPalette bluePalette].tint500;
   colorScheme.secondaryColorLight = [MDCPalette bluePalette].tint100;
   colorScheme.secondaryColorDark = [MDCPalette bluePalette].tint700;
+  
+  MDCFeatureHighlightView *featureHighlightView = featureHighlightController.featureHighlightView;
 
   [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
-                      toFeatureHighlightController:featureHighlightController];
+                            toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
 
   [self presentViewController:featureHighlightController animated:YES completion:nil];
 }
