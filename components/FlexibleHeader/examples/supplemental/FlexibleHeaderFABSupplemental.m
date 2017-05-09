@@ -23,15 +23,27 @@
 
 #import "MaterialFlexibleHeader.h"
 
+static NSString * const kCell = @"cell";
+
 @implementation FlexibleHeaderFABExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Flexible Header", @"Floating Action Button" ];
+  return @[ @"Flexible Header", @"Flexible Header with FAB" ];
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }
+
++ (NSString *)catalogDescription {
+  return @"The Flexible Header is a container view whose height and vertical offset react to"
+  " UIScrollViewDelegate events.";
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return YES;
+}
+
 
 @end
 
@@ -43,8 +55,48 @@
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-
-  self.scrollView.contentSize = self.view.bounds.size;
 }
+
+- (void)loadCollectionView {
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kCell];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return 10;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView
+    cellHeightAtIndexPath:(NSIndexPath *)indexPath {
+  if (indexPath.row == 0) return 160;
+  return 56;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kCell forIndexPath:indexPath];
+  cell.textLabel.text = @"";
+  switch (indexPath.row) {
+    case 0:
+      break;
+    case 1:
+      cell.textLabel.text = @"Scroll down to shrink header.";
+      break;
+    case 2:
+      cell.textLabel.text = @"Scroll up to reveal header.";
+      break;
+    case 3:
+      cell.textLabel.text = @"Left-side swipe to go back.";
+      break;
+    default:
+      break;
+  }
+  return cell;
+}
+
+
+
 
 @end

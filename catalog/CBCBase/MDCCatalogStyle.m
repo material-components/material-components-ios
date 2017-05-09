@@ -19,8 +19,13 @@
 @implementation MDCCatalogStyle
 
 + (UIFont *)headerFont {
-  return [UIFont fontWithName:@"RobotoMono-Regular" size:14];
+  return [UIFont fontWithName:@"RobotoMono-Regular" size:16];
 }
+
++ (UIColor *)whiteColor {
+  return [UIColor colorWithWhite:1 alpha:1];
+}
+
 + (UIColor *)blackColor {
   return [UIColor colorWithWhite:0.1f alpha:1];
 }
@@ -30,6 +35,13 @@
 + (UIColor *)greenColor {
   // Green A400
   return [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1];
+}
+
++ (NSDictionary *)headerTitleAttributes {
+  return @{
+      NSForegroundColorAttributeName : [MDCCatalogStyle whiteColor],
+      NSFontAttributeName: [MDCCatalogStyle headerFont]
+  };
 }
 
 + (NSArray *)shadesOfGrey:(int)numberOfGreys {

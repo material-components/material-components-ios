@@ -25,6 +25,8 @@
 
 #import "MaterialTypography.h"
 
+#import "MDCCatalogStyle.h"
+
 // A set of UILabels in an variety of shapes to tap on.
 
 @interface ExampleShapes ()
@@ -97,7 +99,7 @@
 @implementation InkTypicalUseViewController (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
+  self.view.backgroundColor = [MDCCatalogStyle greyColor];
 
   CGRect boundedTitleLabelFrame =
       CGRectMake(0, self.boundedShapes.frame.size.height, self.boundedShapes.frame.size.width, 24);

@@ -26,6 +26,7 @@
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 #import "MaterialCollections.h"
+#import "MDCCatalogStyle.h"
 
 #pragma mark - DialogsTypicalUseViewController
 
@@ -58,16 +59,16 @@ static NSString * const kReusableIdentifierItem = @"cell";
 @implementation DialogsTypicalUseViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Dialogs", @"Dialogs" ];
+  return @[ @"Dialogs", @"Containers" ];
 }
 
 + (NSString *)catalogDescription {
-  return @"Dialogs includes a presentation controller that displays your modal interfaces in a"
+  return @"Dialogs includes a presentation controller that can display a custom interfaces in a"
           " Material spec defined context.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
-  return YES;
+  return NO;
 }
 
 @end
@@ -87,7 +88,9 @@ static NSString * const kReusableIdentifierItem = @"cell";
 
   _dismissButton = [[MDCFlatButton alloc] init];
   [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  [_dismissButton setBackgroundColor:[MDCCatalogStyle blackColor] forState:UIControlStateNormal];
+  [_dismissButton setTitleColor:[MDCCatalogStyle whiteColor] forState:UIControlStateNormal];
+  
   _dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;

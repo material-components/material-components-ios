@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MDCCatalogStyle.h"
 
 // This example builds upon AppBarTypicalUseExample.
 
@@ -94,15 +95,15 @@
   self = [super init];
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
+    _appBar.navigationBar.tintColor = [MDCCatalogStyle whiteColor];
     _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+        @{NSForegroundColorAttributeName : [MDCCatalogStyle whiteColor],
+          NSFontAttributeName: [MDCCatalogStyle headerFont]};
     [self addChildViewController:_appBar.headerViewController];
 
     self.title = @"Delegate Forwarding";
 
-    UIColor *color = [UIColor colorWithWhite:0.1 alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
+    _appBar.headerViewController.headerView.backgroundColor = [MDCCatalogStyle blackColor];
   }
   return self;
 }

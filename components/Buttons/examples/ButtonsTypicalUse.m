@@ -19,6 +19,8 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
+#import "MDCCatalogStyle.h"
+
 @interface ButtonsTypicalUseViewController ()
 
 @end
@@ -27,9 +29,9 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-  UIColor *buttonBackground = [UIColor colorWithWhite:0.1 alpha:1.0];
-  UIColor *titleColor = [UIColor whiteColor];
+  self.view.backgroundColor = [MDCCatalogStyle greyColor];
+  UIColor *buttonBackground = [MDCCatalogStyle blackColor];
+  UIColor *titleColor = [MDCCatalogStyle whiteColor];
 
   // Raised button
 

@@ -27,7 +27,7 @@ class DialogsLongAlertViewController: UIViewController {
     view.backgroundColor = UIColor.white
 
     flatButton.setTitle("PRESENT ALERT", for: UIControlState())
-    flatButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
+    flatButton.setTitleColor(CatalogStyle.blackColor, for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -77,7 +77,7 @@ class DialogsLongAlertViewController: UIViewController {
 // MARK: Catalog by convention
 extension DialogsLongAlertViewController {
   class func catalogBreadcrumbs() -> [String] {
-    return [ "Dialogs", "Swift Alert Demo"]
+    return [ "Dialogs", "Swift Alert Example"]
   }
   class func catalogDescription() -> String {
     return "Swift Alert Example"

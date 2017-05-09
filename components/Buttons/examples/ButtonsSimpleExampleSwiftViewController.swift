@@ -28,9 +28,8 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(white: 0.9, alpha: 1.0);
-    //let titleColor = UIColor.white
-    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+    view.backgroundColor = CatalogStyle.greyColor
+    let backgroundColor = CatalogStyle.blackColor
 
     let raisedButton = MDCRaisedButton()
     raisedButton.setBackgroundColor(backgroundColor, for: .normal)

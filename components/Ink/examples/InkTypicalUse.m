@@ -20,6 +20,8 @@
 
 #import "InkTypicalUseSupplemental.h"
 
+#import "MDCCatalogStyle.h"
+
 @interface InkTypicalUseViewController () <MDCInkTouchControllerDelegate>
 
 @property(nonatomic, strong) NSMutableArray *inkTouchControllers;  // MDCInkTouchControllers.
@@ -57,8 +59,8 @@
   inkTouchController.delegate = self;
   [inkTouchController addInkView];
 
-  UIColor *blueColor = [UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:0.2];
-  inkTouchController.defaultInkView.inkColor = blueColor;
+  UIColor *greenColor = [[MDCCatalogStyle greenColor] colorWithAlphaComponent:0.2f];
+  inkTouchController.defaultInkView.inkColor = greenColor;
   inkTouchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
   [_inkTouchControllers addObject:inkTouchController];
   [self.view addSubview:self.unboundedShape];

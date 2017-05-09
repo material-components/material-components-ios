@@ -1,30 +1,29 @@
 /*
  Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
+ 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
-
+ 
  http://www.apache.org/licenses/LICENSE-2.0
-
+ 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- */
+*/
 
-#import <UIKit/UIKit.h>
+import UIKit
 
-/** Shared style that should be used by CatalogByConvention as a base object. */
-@interface MDCCatalogStyle : NSObject
-
-+ (UIFont *)headerFont;
-+ (UIColor *)whiteColor;
-+ (UIColor *)blackColor;
-+ (UIColor *)greyColor;
-+ (UIColor *)greenColor;
-+ (NSDictionary *)headerTitleAttributes;
-+ (NSArray *)shadesOfGrey:(int)numberOfGreys;
-
-@end
+class CatalogStyle {
+  static let headerFont = UIFont(name: "RobotoMono-Regular", size: 16)
+  static let whiteColor = UIColor.white
+  static let blackColor = UIColor(white: 0.1, alpha: 1)
+  static let greyColor = UIColor(white: 0.9, alpha: 1)
+  static let greenColor = UIColor(red: 0, green: 0xe6/255.0, blue: 0x76/255.0, alpha: 1)
+  static let headerTitleAttributes = [
+    NSForegroundColorAttributeName: CatalogStyle.whiteColor,
+    NSFontAttributeName: CatalogStyle.headerFont
+  ]
+}

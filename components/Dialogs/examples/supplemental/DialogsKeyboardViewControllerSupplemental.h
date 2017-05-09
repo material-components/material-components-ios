@@ -24,5 +24,8 @@
 @import MaterialComponents.MaterialCollections;
 
 @interface DialogsKeyboardViewController : MDCCollectionViewController
+@end
+
+@interface DialogsKeyboardViewController (Supplemental)
 - (void)loadCollectionView;
 @end
