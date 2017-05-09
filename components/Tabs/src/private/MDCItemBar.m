@@ -399,6 +399,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     size.width = MIN(size.width, _style.maximumItemWidth);
   }
 
+  // Constrain tab width to collection bounds.
+  const CGFloat boundsWidth = CGRectGetWidth(collectionView.bounds);
+  size.width = MIN(size.width, boundsWidth);
+
   // Force height to our height.
   size.height = itemHeight;
 
