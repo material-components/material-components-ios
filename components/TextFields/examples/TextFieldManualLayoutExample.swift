@@ -49,6 +49,7 @@ final class TextFieldManualLayoutExample: UIViewController {
     city.placeholder = "City"
     return city
   }()
+  let cityController: MDCTextInputController
 
   let state: MDCTextField = {
     let state = MDCTextField()
@@ -74,6 +75,7 @@ final class TextFieldManualLayoutExample: UIViewController {
   var allTextFieldControllers = [MDCTextInputController]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    cityController = MDCTextInputController(input: city)
     zipController = MDCTextInputController(input: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
@@ -117,7 +119,6 @@ final class TextFieldManualLayoutExample: UIViewController {
     allTextFieldControllers.append(addressController)
 
     scrollView.addSubview(city)
-    let cityController = MDCTextInputController(input: city)
     cityController.presentation = .floatingPlaceholder
     city.delegate = self
     allTextFieldControllers.append(cityController)
@@ -253,6 +254,13 @@ extension TextFieldManualLayoutExample: UITextFieldDelegate {
         zipController.set(errorText: "Error: Zip can only contain five digits", errorAccessibilityValue: nil)
       } else {
         zipController.set(errorText: nil, errorAccessibilityValue: nil)
+      }
+    } else if textField == city {
+      if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
+        fullString[range].characters.count > 0 {
+        cityController.set(errorText: "Error: City can only contain letters", errorAccessibilityValue: nil)
+      } else {
+        cityController.set(errorText: nil, errorAccessibilityValue: nil)
       }
     }
     return true
