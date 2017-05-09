@@ -34,6 +34,7 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0f;
 const CGFloat kMDCFeatureHighlightNonconcentricOffset = 20.0f;
 const CGFloat kMDCFeatureHighlightMaxTextHeight = 1000.0f;
 const CGFloat kMDCFeatureHighlightTitleFontSize = 20.0f;
+const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
 
 // Animation consts
 const CGFloat kMDCFeatureHighlightInnerRadiusFactor = 1.1f;
@@ -97,14 +98,18 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapView:)];
     [self addGestureRecognizer:tapRecognizer];
 
-    self.outerHighlightColor = [UIColor blueColor];
-    self.innerHighlightColor = [UIColor whiteColor];
-
     // We want the inner and outer highlights to animate from the same origin so we start them from
     // a concentric position.
     _forceConcentricLayout = YES;
+    [self applyMDCFeatureHighlightViewDefaults];
   }
   return self;
+}
+
+- (void)applyMDCFeatureHighlightViewDefaults {
+  _outerHighlightColor =
+      [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
+  _innerHighlightColor = [UIColor whiteColor];
 }
 
 - (void)layoutAppearing {
