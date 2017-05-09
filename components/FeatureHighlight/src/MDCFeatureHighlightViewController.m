@@ -105,8 +105,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 - (void)viewWillLayoutSubviews {
   _featureHighlightView.titleLabel.text = self.titleText;
   _featureHighlightView.bodyLabel.text = self.bodyText;
-  _featureHighlightView.outerHighlightColor = self.outerHighlightColor;
-  _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
 }
 
 - (void)dealloc {
