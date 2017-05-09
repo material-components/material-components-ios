@@ -14,7 +14,6 @@ path: /catalog/collections/
 </div>
 
 Collection view classes that adhere to Material Design layout and styling.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -223,3 +222,14 @@ override func viewDidLoad() {
 }
 ```
 <!--</div>-->
+
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../CollectionCells">Collection Cells</a></li>
+  <li class="icon-list-item icon-list-item--components"><a href="../CollectionLayoutAttributes">Collection Layout Attributes</a></li>
+</ul>
+

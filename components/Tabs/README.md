@@ -13,7 +13,6 @@ path: /catalog/tabs/
 </div>
 
 Tabs are bars of buttons used to navigate between groups of content.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 

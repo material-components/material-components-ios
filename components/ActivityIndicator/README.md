@@ -1,10 +1,10 @@
 <!--docs:
-title: "Activity Indicator"
+title: "Activity Indicators"
 layout: detail
 section: components
 excerpt: "Progress and activity indicators are visual indications of an app loading content."
 iconId: progress_activity
-path: /catalog/activity-indicators/
+path: /catalog/progress-indicators/activity-indicators/
 -->
 
 # Activity Indicators
@@ -14,7 +14,6 @@ path: /catalog/activity-indicators/
 </div>
 
 Activity indicators are visual indications of an app loading content. The Activity Indicator is a circular indicator that either rotates clockwise or fills to completion clockwise when displaying progress.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -160,3 +159,11 @@ activityIndicator.progress = 0.5;
 [activityIndicator stopAnimating];
 ```
 <!--</div>-->
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../ProgressView">Progress Views</a></li>
+</ul>

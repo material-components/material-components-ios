@@ -1,10 +1,10 @@
 <!--docs:
-title: "Progress View"
+title: "Progress Views"
 layout: detail
 section: components
 excerpt: "Progress View is a determinate and linear progress indicator that implements Material Design animation and layout."
 iconId: progress_linear
-path: /catalog/progress-views/
+path: /catalog/progress-indicators/progress-views/
 -->
 
 # Progress View
@@ -17,7 +17,6 @@ This control is designed to be a drop-in replacement for `UIProgressView`, with 
 influenced by [Material Design specifications](https://material.io/guidelines/components/progress-activity.html#)
 for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
 few key methods required to achieve the desired animation of the control.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -147,3 +146,11 @@ func completeAndHideProgressView() {
 }
 ```
 <!--</div>-->
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../ActivityIndicator">Activity Indicators</a></li>
+</ul>

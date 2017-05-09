@@ -15,7 +15,6 @@ path: /catalog/dialogs/
 
 Dialogs provides both a presentation controller for displaying a modal dialog and an alert
 controller that will display a simple modal alert.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 

@@ -14,7 +14,6 @@ path: /catalog/palette/
 </div>
 
 The Palettes component provides Material colors organized into similar palettes.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 

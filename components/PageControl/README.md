@@ -16,7 +16,6 @@ This control is designed to be a drop-in replacement for `UIPageControl`, with a
 influenced by Material Design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
-<!--{: .article__intro }-->
 
 - - -
 

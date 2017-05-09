@@ -15,7 +15,6 @@ path: /catalog/typography/
 
 The Typography component provides methods for displaying text using the type sizes and opacities
 from the Material Design specifications.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 

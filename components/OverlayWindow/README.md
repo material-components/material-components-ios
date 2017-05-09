@@ -1,10 +1,10 @@
 <!--docs:
-title: "OverlayWindow"
+title: "Overlay Windows"
 layout: detail
 section: components
 excerpt: "A window for managing sets of overlay views."
 iconId: tooltip
-path: /catalog/overlay-windows/
+path: /catalog/snackbars/overlay-windows/
 -->
 
 # Overlay Window
@@ -125,3 +125,11 @@ if ([self.window isKindOfClass:[MDCOverlayWindow class]]) {
 }
 ```
 <!--</div>-->
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../Snackbar">Snackbars</a></li>
+</ul>

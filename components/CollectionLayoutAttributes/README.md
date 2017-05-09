@@ -4,13 +4,12 @@ layout: detail
 section: components
 excerpt: "Allows passing layout attributes to the cells and supplementary views."
 iconId: list
-path: /catalog/collection-layout-attributes/
+path: /catalog/collections/collection-layout-attributes/
 -->
 
 # Collection Layout Attributes
 
 Allows passing layout attributes to the cells and supplementary views.
-<!--{: .article__intro }-->
 
 - - -
 
