@@ -399,8 +399,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     size.width = MIN(size.width, _style.maximumItemWidth);
   }
 
-  // Constrain tab width to collection bounds.
-  const CGFloat boundsWidth = CGRectGetWidth(collectionView.bounds);
+  // Constrain tab width to collection content bounds.
+  const UIEdgeInsets sectionInset = _flowLayout.sectionInset;
+  const CGFloat boundsWidth =
+      CGRectGetWidth(collectionView.bounds) - sectionInset.left - sectionInset.right;
   size.width = MIN(size.width, boundsWidth);
 
   // Force height to our height.
@@ -584,14 +586,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     case MDCItemBarAlignmentCenterSelected:
       newSectionInset = [self centerSelectedInsets];
       break;
-  }
-
-  UIEdgeInsets oldSectionInset = _flowLayout.sectionInset;
-  if (UIEdgeInsetsEqualToEdgeInsets(oldSectionInset, newSectionInset) &&
-      _alignment != MDCItemBarAlignmentJustified) {
-    // No change - can bail early, except when the item alignment is "justified". When justified,
-    // the layout metrics need updating due to change in view size or orientation.
-    return;
   }
 
   // Rather than just updating the sectionInset on the existing flowLayout, a new layout object
