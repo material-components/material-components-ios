@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "Collection view cell classes that adhere to Material Design layout and styling."
 iconId: list
-path: /catalog/collection-cells/
+path: /catalog/collections/collection-cells/
 -->
 
 # Collection Cells
@@ -14,7 +14,6 @@ path: /catalog/collection-cells/
 </div>
 
 Collection view cell classes that adhere to Material Design layout and styling.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 

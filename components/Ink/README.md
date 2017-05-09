@@ -15,7 +15,6 @@ path: /catalog/ink/
 
 The Ink component provides a radial action in the form of a visual ripple of ink expanding
 outward from the user's touch.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 

@@ -1,5 +1,5 @@
 <!--docs:
-title: "Slider"
+title: "Sliders"
 layout: detail
 section: components
 excerpt: "The Slider component provides a Material Design control for selecting a value from a continuous range or discrete set of values."
@@ -15,7 +15,6 @@ path: /catalog/sliders/
 
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 

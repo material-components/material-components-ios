@@ -15,7 +15,6 @@ path: /catalog/buttons/
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 

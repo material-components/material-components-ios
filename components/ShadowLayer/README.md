@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "The Shadow Layer component implements the Material Design specifications for elevation and shadows."
 iconId: shadow
-path: /catalog/shadow-layers/
+path: /catalog/shadows/shadow-layers/
 -->
 
 # Shadow Layer
@@ -18,7 +18,6 @@ By simulating the physical properties of paper, elevation and light source, shad
 visual depth to components. Shadow Layer provides an elevation property which affects
 a shadow's depth and strength, automatically handling shadow diffusion based on the shadow's
 elevation.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -220,3 +219,11 @@ self.layer.rasterizationScale = [UIScreen mainScreen].scale;
 <!--</div>-->
 
 Disable rasterization before animating MDCShadowLayer.
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../ShadowElevations">Shadow Elevations</a></li>
+</ul>

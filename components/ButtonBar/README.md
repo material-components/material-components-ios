@@ -14,7 +14,6 @@ path: /catalog/button-bars/
 </div>
 
 The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
-<!--{: .article__intro }-->
 
 - - -
 

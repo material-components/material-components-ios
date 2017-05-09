@@ -15,7 +15,6 @@ path: /catalog/app-bars/
 
 The App Bar is a flexible navigation bar designed to provide a typical Material Design
 navigation experience.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
