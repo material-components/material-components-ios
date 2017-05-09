@@ -31,9 +31,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   UIView *_highlightedView;
 }
 
-@synthesize outerHighlightColor = _outerHighlightColor;
-@synthesize innerHighlightColor = _innerHighlightColor;
-
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
                                     andShowView:(nonnull UIView *)displayedView
                                      completion:(nullable MDCFeatureHighlightCompletion)completion {
@@ -142,22 +139,18 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 - (UIColor *)outerHighlightColor {
-  _outerHighlightColor = _featureHighlightView.outerHighlightColor;
   return _featureHighlightView.outerHighlightColor;
 }
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
-  _outerHighlightColor = outerHighlightColor;
   _featureHighlightView.outerHighlightColor = outerHighlightColor;
 }
 
 - (UIColor *)innerHighlightColor {
-  _innerHighlightColor = _featureHighlightView.innerHighlightColor;
   return _featureHighlightView.innerHighlightColor;
 }
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
-  _innerHighlightColor = innerHighlightColor;
   _featureHighlightView.innerHighlightColor = innerHighlightColor;
 }
 
