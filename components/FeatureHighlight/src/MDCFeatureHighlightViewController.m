@@ -31,6 +31,9 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   UIView *_highlightedView;
 }
 
+@synthesize outerHighlightColor = _outerHighlightColor;
+@synthesize innerHighlightColor = _innerHighlightColor;
+
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
                                     andShowView:(nonnull UIView *)displayedView
                                      completion:(nullable MDCFeatureHighlightCompletion)completion {
@@ -90,13 +93,9 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   
   _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
   _featureHighlightView.displayedView = _displayedView;
-  _featureHighlightView.titleLabel.text = self.titleText;
-  _featureHighlightView.bodyLabel.text = self.bodyText;
   _featureHighlightView.autoresizingMask =
-  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  //  _featureHighlightView.outerHighlightColor = self.outerHighlightColor;
-  //  _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
-  
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
   __weak __typeof__(self) weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
     __typeof__(self) strongSelf = weakSelf;
@@ -104,6 +103,17 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   };
   
   self.view = _featureHighlightView;
+}
+
+- (void)viewWillLayoutSubviews {
+  _featureHighlightView.titleLabel.text = self.titleText;
+  _featureHighlightView.bodyLabel.text = self.bodyText;
+  _featureHighlightView.outerHighlightColor = self.outerHighlightColor;
+  _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
+}
+
+- (void)loadView {
+  
 }
 
 - (void)dealloc {
@@ -135,20 +145,25 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   [_pulseTimer invalidate];
 }
 
-//- (UIColor *)outerHighlightColor {
-//  return self.featureHighlightView.outerHighlightColor;
-////  if (!_outerHighlightColor) {
-////    return [[UIColor greenColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
-////  }
-////  return _outerHighlightColor;
-//}
+- (UIColor *)outerHighlightColor {
+  _outerHighlightColor = _featureHighlightView.outerHighlightColor;
+  return _featureHighlightView.outerHighlightColor;
+}
 
-//- (UIColor *)innerHighlightColor {
-//  if (!_innerHighlightColor) {
-//    return [UIColor whiteColor];
-//  }
-//  return _innerHighlightColor;
-//}
+- (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
+  _outerHighlightColor = outerHighlightColor;
+  _featureHighlightView.outerHighlightColor = outerHighlightColor;
+}
+
+- (UIColor *)innerHighlightColor {
+  _innerHighlightColor = _featureHighlightView.innerHighlightColor;
+  return _featureHighlightView.innerHighlightColor;
+}
+
+- (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
+  _innerHighlightColor = innerHighlightColor;
+  _featureHighlightView.innerHighlightColor = innerHighlightColor;
+}
 
 - (void)acceptFeature {
   [self dismiss:YES];

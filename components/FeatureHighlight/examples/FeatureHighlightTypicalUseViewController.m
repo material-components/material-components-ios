@@ -23,7 +23,7 @@
 - (void)didTapButton:(id)sender {
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
-  vc.featureHighlightView.outerHighlightColor =
+  vc.outerHighlightColor =
       [UIColor colorWithRed:11/255.0
                       green:232/255.0
                        blue:94/255.0

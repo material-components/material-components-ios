@@ -101,14 +101,14 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 
  Alpha should be set to kMDCFeatureHighlightOuterHighlightAlpha.
  */
-//@property(nonatomic, strong, null_resettable) UIColor *outerHighlightColor;
+@property(nonatomic, strong, null_resettable) UIColor *outerHighlightColor;
 
 /**
  Sets the color to be used for the inner highlight. Defaults to white.
 
  Should be opaque.
  */
-//@property(nonatomic, strong, null_resettable) UIColor *innerHighlightColor;
+@property(nonatomic, strong, null_resettable) UIColor *innerHighlightColor;
 
 /**
  Dismisses the feature highlight using the 'accept' style dismissal animation and triggers the

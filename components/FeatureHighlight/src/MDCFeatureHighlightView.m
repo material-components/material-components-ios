@@ -118,6 +118,10 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
   _outerHighlightColor = outerHighlightColor;
+    if (!_outerHighlightColor) {
+      _outerHighlightColor =
+         [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
+    }
   _outerLayer.fillColor = _outerHighlightColor.CGColor;
 
   MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
@@ -146,6 +150,9 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
   _innerHighlightColor = innerHighlightColor;
+  if (!_innerHighlightColor) {
+    _innerHighlightColor = [UIColor whiteColor];
+  }
 
   _pulseLayer.fillColor = _innerHighlightColor.CGColor;
   _innerLayer.fillColor = _innerHighlightColor.CGColor;

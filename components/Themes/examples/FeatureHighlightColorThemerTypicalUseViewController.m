@@ -36,8 +36,6 @@
   colorScheme.secondaryColor = [MDCPalette bluePalette].tint500;
   colorScheme.secondaryColorLight = [MDCPalette bluePalette].tint100;
   colorScheme.secondaryColorDark = [MDCPalette bluePalette].tint700;
-  
-  MDCFeatureHighlightView *featureHighlightView = featureHighlightController.featureHighlightView;
 
   [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
                             toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
