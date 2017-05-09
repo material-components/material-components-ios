@@ -33,9 +33,13 @@
  @see https://material.io/guidelines/components/tabs.html
  */
 IB_DESIGNABLE
-@interface MDCTabBar : UIView
+@interface MDCTabBar : UIView <UIBarPositioning>
 
-/** Return the desired height for the tab bar given an item appearance. */
+/** The default height for the tab bar given a position and item appearance. */
++ (CGFloat)defaultHeightForPosition:(UIBarPosition)position
+                     itemAppearance:(MDCTabBarItemAppearance)appearance;
+
+/** The default height for the tab bar in the top position, given an item appearance. */
 + (CGFloat)defaultHeightForItemAppearance:(MDCTabBarItemAppearance)appearance;
 
 /**
@@ -84,12 +88,15 @@ IB_DESIGNABLE
 /**
  Horizontal alignment of tabs within the tab bar. Changes are not animated. Default alignment is
  MDCTabBarAlignmentLeading.
+
+ The default value is based on the position and is recommended for most applications.
  */
 @property(nonatomic) MDCTabBarAlignment alignment;
 
 /**
- Appearance of tabs within the tab bar. Changes are not animated. Default appearance is
- MDCTabBarItemAppearanceTitles.
+ Appearance of tabs within the tab bar. Changes are not animated.
+
+ The default value is based on the position and is recommended for most applications.
  */
 @property(nonatomic) MDCTabBarItemAppearance itemAppearance;
 
@@ -97,7 +104,7 @@ IB_DESIGNABLE
  Indicates if all tab titles should be uppercased for display. If NO, item titles will be
  displayed verbatim.
 
- Default is YES and is recommended whenever possible.
+ The default value is based on the position and is recommended for most applications.
  */
 @property(nonatomic) BOOL displaysUppercaseTitles;
 
@@ -133,9 +140,9 @@ IB_DESIGNABLE
 
 /**
  Delegate protocol for MDCTabBar. Clients may implement this protocol to receive notifications of
- selection changes in the tab bar.
+ selection changes in the tab bar or to change the bar's position-based appearance.
  */
-@protocol MDCTabBarDelegate <NSObject>
+@protocol MDCTabBarDelegate <UIBarPositioningDelegate>
 
 @optional
 
