@@ -78,6 +78,9 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
+/**
+ The feature highlight view used by the view controller.
+ */
 @property(nonatomic, strong, nonnull) MDCFeatureHighlightView *featureHighlightView;
 
 /**
