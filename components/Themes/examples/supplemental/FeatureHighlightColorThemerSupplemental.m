@@ -23,7 +23,7 @@
 @implementation FeatureHighlightColorThemerTypicalUseViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Themes" ];
+  return @[ @"Themes", @"Theme Feature Highlight" ];
 }
 
 + (NSString *)catalogDescription {
