@@ -101,10 +101,7 @@
 
     self.title = @"Delegate Forwarding";
 
-    UIColor *color = [UIColor colorWithRed:(CGFloat)0x03 / (CGFloat)255
-                                     green:(CGFloat)0xA9 / (CGFloat)255
-                                      blue:(CGFloat)0xF4 / (CGFloat)255
-                                     alpha:1];
+    UIColor *color = [UIColor colorWithWhite:0.1 alpha:1];
     _appBar.headerViewController.headerView.backgroundColor = color;
   }
   return self;

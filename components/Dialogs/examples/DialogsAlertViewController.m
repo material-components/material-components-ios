@@ -21,9 +21,37 @@
 
 @implementation DialogsAlertViewController
 
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  [self loadCollectionView:
+    @[ @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Dynamic Alert"]];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+  switch (indexPath.row) {
+    case 0:
+      [self didTapShowAlert:nil];
+      break;
+    case 1:
+      [self didTapShowLongAlert:nil];
+      break;
+    case 2:
+      [self didTapNondismissingAlert:nil];
+      break;
+    case 3:
+    default:
+      [self didTapDynamicAlert:nil];
+      break;
+  }
+}
+
+
+
 - (IBAction)didTapShowAlert:(id)sender {
   [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
-      setCustomTitleColor:[UIColor purpleColor]];
+      setCustomTitleColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
 
   NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";

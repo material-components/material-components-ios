@@ -51,10 +51,10 @@ static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilit
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
-// http://www.google.com/design/spec/components/buttons.html#buttons-main-buttons
+// https://material.io/guidelines/components/buttons.html#buttons-main-buttons
 static const CGFloat MDCButtonDisabledAlpha = 0.1f;
 
-// Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
+// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x2196F3;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.

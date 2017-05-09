@@ -4,9 +4,14 @@ layout: detail
 section: components
 excerpt: "The Palettes component provides Material color palettes."
 iconId: color
+path: /catalog/palette/
 -->
 
 # Palettes
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/palettes.png" alt="Palettes" width="375">
+</div>
 
 The Palettes component provides Material colors organized into similar palettes.
 <!--{: .article__intro }-->
@@ -14,7 +19,7 @@ The Palettes component provides Material colors organized into similar palettes.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="http://www.google.com/design/spec/style/color.html#color-color-palette">Color palettes</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/style/color.html#color-color-palette">Color palettes</a></li>
 </ul>
 
 - - -

@@ -1,0 +1,5 @@
+/* Accessibility hint for selected cells in edit mode. */
+"MaterialCollectionCellsAccessibilitySelectedHint" = "Double tap to deselect.";
+
+/* Accessibility hint for deselected cells in edit mode. */
+"MaterialCollectionCellsAccessibilityDeselectedHint" = "Double tap to select.";

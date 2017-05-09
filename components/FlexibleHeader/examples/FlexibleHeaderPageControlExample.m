@@ -89,14 +89,15 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  // Light blue 500
-  self.fhvc.headerView.backgroundColor =
-      [UIColor colorWithRed:0.333 green:0.769 blue:0.961 alpha:1];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1];
 
   CGFloat boundsWidth = CGRectGetWidth(self.fhvc.headerView.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.fhvc.headerView.bounds);
 
-  NSArray *pageColors = @[ ColorFromRGB(0x55C4f5), ColorFromRGB(0x35B7F3), ColorFromRGB(0x1EAAF1) ];
+  NSArray *pageColors = @[ [UIColor colorWithWhite:0.1 alpha:1],
+                           [UIColor colorWithWhite:0.2 alpha:1],
+                           [UIColor colorWithWhite:0.3 alpha:1]];
+
 
   // Scroll view configuration
   CGRect pageScrollViewFrame = CGRectMake(0, 0, boundsWidth, boundsHeight);
@@ -117,7 +118,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
     page.font = [UIFont systemFontOfSize:18];
-    page.textColor = [UIColor colorWithWhite:0 alpha:0.8];
+    page.textColor = [UIColor colorWithWhite:1 alpha:0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

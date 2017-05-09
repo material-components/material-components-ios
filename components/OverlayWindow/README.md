@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "A window for managing sets of overlay views."
 iconId: tooltip
+path: /catalog/overlay-windows/
 -->
 
 # Overlay Window

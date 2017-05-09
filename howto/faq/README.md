@@ -1,10 +1,11 @@
 <!--docs:
 title: "Frequently Asked Questions"
 layout: landing
-section: howto
+section: docs
+path: /docs/faq/
 -->
 
-## Frequently Asked Questions
+# Frequently Asked Questions
 
 ### How do we stay true to our brand while using Material Design?
 

@@ -1,9 +1,11 @@
----
+<!--docs:
 title: "Styling the collection view"
+navTitle: Styling
 layout: detail
 section: components
 iconId: list
----
+path: /catalog/collections/styling/
+-->
 # Styling the collection view
 
 `MDCCollectionViewController` provides a `styler` property that conforms to the

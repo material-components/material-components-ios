@@ -3,9 +3,15 @@ title: "Shadow Elevations"
 layout: detail
 section: components
 excerpt: "The Shadow Elevations component provides the most commonly-used Material Design elevations."
+iconId: shadow
+path: /catalog/shadow-elevations/
 -->
 
 # Shadow Elevations
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/shadows.png" alt="Shadows" width="375">
+</div>
 
 A shadow elevation specifies the degree of shadow intensity to be displayed beneath an object.
 Higher shadow elevations have greater shadow intensities, akin to raising an object above a
@@ -16,7 +22,7 @@ used Material Design elevations for components.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://www.google.com/design/spec/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
 </ul>
 
 - - -
