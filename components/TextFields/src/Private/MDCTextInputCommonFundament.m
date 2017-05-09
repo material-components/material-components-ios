@@ -125,7 +125,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   if (self) {
     _textInput = textInput;
 
-    [self commonInit];
+    [self commonMDCTextInputCommonFundamentInit];
     self.textInput.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
 
     // Initialize elements of UI
@@ -148,7 +148,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   self = [super init];
   if (self) {
     _textInput = input;
-    [self commonInit];
+    [self commonMDCTextInputCommonFundamentInit];
 
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorClearButtonKey];
     _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorClearButtonImageKey];
@@ -206,7 +206,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   [defaultCenter removeObserver:self];
 }
 
-- (void)commonInit {
+- (void)commonMDCTextInputCommonFundamentInit {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
   _underlineColor = MDCTextInputUnderlineColor();
