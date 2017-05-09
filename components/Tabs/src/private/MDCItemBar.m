@@ -588,6 +588,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       break;
   }
 
+  UIEdgeInsets oldSectionInset = _tabFlowLayout.sectionInset;
+  if (UIEdgeInsetsEqualToEdgeInsets(oldSectionInset, newSectionInset)) {
+    // No inset change - only need to invalidate the layout to pick up new item sizes.
+    UICollectionViewFlowLayoutInvalidationContext *delegateContext =
+        [[UICollectionViewFlowLayoutInvalidationContext alloc] init];
+    delegateContext.invalidateFlowLayoutDelegateMetrics = YES;
+    [_tabFlowLayout invalidateLayoutWithContext:delegateContext];
+    return;
+  }
+
   // Rather than just updating the sectionInset on the existing flowLayout, a new layout object
   // is created. This gives more control over whether the change is animated or not - as there is
   // no control when updating flow layout sectionInset (it's always animated).
