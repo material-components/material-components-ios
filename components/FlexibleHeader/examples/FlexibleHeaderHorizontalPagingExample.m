@@ -149,7 +149,7 @@ static const NSUInteger kNumberOfPages = 10;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [CatalogStyle blackColor];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle primaryColor];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -52,7 +52,7 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.view addSubview:self.infoLabel];
 
   self.button = [[MDCRaisedButton alloc] init];
-  [self.button setBackgroundColor:[CatalogStyle blackColor]];
+  [self.button setBackgroundColor:[CatalogStyle primaryColor]];
   [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Action" forState:UIControlStateNormal];
   [self.button sizeToFit];

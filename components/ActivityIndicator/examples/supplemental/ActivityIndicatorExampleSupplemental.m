@@ -71,7 +71,7 @@ static NSString * const kCell = @"Cell";
 
 
   self.onSwitch = [[UISwitch alloc] init];
-  self.onSwitch.onTintColor = [CatalogStyle blackColor];
+  self.onSwitch.onTintColor = [CatalogStyle primaryColor];
   [self.onSwitch setOn:YES];
   [self.onSwitch addTarget:self
                     action:@selector(didChangeOnSwitch:)
@@ -79,7 +79,7 @@ static NSString * const kCell = @"Cell";
 
   CGRect sliderFrame = CGRectMake(0, 0, 160, 27);
   self.slider = [[UISlider alloc] initWithFrame:sliderFrame];
-  self.slider.tintColor = [CatalogStyle blackColor];
+  self.slider.tintColor = [CatalogStyle primaryColor];
   self.slider.value = kActivityInitialProgress;
   [self.slider addTarget:self
                   action:@selector(didChangeSliderValue:)

@@ -27,7 +27,7 @@ extension TabBarIconSwiftExample {
 
     alignmentButton.setTitle("Change Alignment", for: .normal)
     alignmentButton.setTitleColor(.white, for: .normal)
-    alignmentButton.backgroundColor = CatalogStyle.blackColor
+    alignmentButton.backgroundColor = CatalogStyle.primaryColor
 
     self.view.addSubview(alignmentButton)
     alignmentButton.translatesAutoresizingMaskIntoConstraints = false
@@ -54,9 +54,9 @@ extension TabBarIconSwiftExample {
     let appBar = MDCAppBar()
 
     self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = CatalogStyle.blackColor
+    appBar.headerViewController.headerView.backgroundColor = CatalogStyle.primaryColor
     appBar.headerViewController.headerView.minimumHeight = 76 + 72
-    appBar.headerViewController.headerView.tintColor = CatalogStyle.whiteColor
+    appBar.headerViewController.headerView.tintColor = CatalogStyle.primaryTextColor
     
     appBar.navigationBar.titleTextAttributes = CatalogStyle.headerTitleAttributes
 
@@ -189,7 +189,7 @@ extension TabBarIconSwiftExample {
   func setupStarPage() -> UIView {
     let starPage = UIView(frame: CGRect())
     starPage.translatesAutoresizingMaskIntoConstraints = false
-    starPage.backgroundColor = CatalogStyle.whiteColor
+    starPage.backgroundColor = CatalogStyle.primaryTextColor
     self.scrollView.addSubview(starPage)
 
     return starPage

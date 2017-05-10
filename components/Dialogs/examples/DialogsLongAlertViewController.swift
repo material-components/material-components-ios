@@ -27,7 +27,7 @@ class DialogsLongAlertViewController: UIViewController {
     view.backgroundColor = UIColor.white
 
     flatButton.setTitle("PRESENT ALERT", for: UIControlState())
-    flatButton.setTitleColor(CatalogStyle.blackColor, for: UIControlState())
+    flatButton.setTitleColor(CatalogStyle.primaryColor, for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)

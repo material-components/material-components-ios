@@ -30,8 +30,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [CatalogStyle greyColor];
-  UIColor *buttonBackground = [CatalogStyle blackColor];
-  UIColor *titleColor = [CatalogStyle whiteColor];
+  UIColor *buttonBackground = [CatalogStyle primaryColor];
+  UIColor *titleColor = [CatalogStyle primaryTextColor];
 
   // Raised button
 
@@ -50,7 +50,7 @@
 
   MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
   [disabledRaisedButton setTitleColor:titleColor forState:UIControlStateNormal];
-  [disabledRaisedButton setBackgroundColor:buttonBackground forState:UIControlStateNormal];
+  [disabledRaisedButton setBackgroundColor:[CatalogStyle greyColor] forState:UIControlStateNormal];
   [disabledRaisedButton setTitle:@"Button" forState:UIControlStateNormal];
   [disabledRaisedButton sizeToFit];
   [disabledRaisedButton addTarget:self

@@ -78,7 +78,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [CatalogStyle blackColor];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle primaryColor];
 
   UILabel *titleLabel = [[UILabel alloc] init];
   CGRect frame = self.fhvc.headerView.bounds;

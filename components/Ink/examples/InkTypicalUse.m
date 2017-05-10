@@ -59,7 +59,7 @@
   inkTouchController.delegate = self;
   [inkTouchController addInkView];
 
-  UIColor *greenColor = [[CatalogStyle greenColor] colorWithAlphaComponent:0.2f];
+  UIColor *greenColor = [[CatalogStyle secondaryColor] colorWithAlphaComponent:0.2f];
   inkTouchController.defaultInkView.inkColor = greenColor;
   inkTouchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
   [_inkTouchControllers addObject:inkTouchController];

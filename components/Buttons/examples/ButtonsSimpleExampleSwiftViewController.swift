@@ -29,7 +29,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     super.viewDidLoad()
 
     view.backgroundColor = CatalogStyle.greyColor
-    let backgroundColor = CatalogStyle.blackColor
+    let backgroundColor = CatalogStyle.primaryColor
 
     let raisedButton = MDCRaisedButton()
     raisedButton.setBackgroundColor(backgroundColor, for: .normal)

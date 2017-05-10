@@ -95,15 +95,16 @@
   self = [super init];
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
-    _appBar.navigationBar.tintColor = [CatalogStyle whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [CatalogStyle whiteColor],
-          NSFontAttributeName: [CatalogStyle headerFont]};
+    _appBar.navigationBar.tintColor = [CatalogStyle primaryTextColor];
+    _appBar.navigationBar.titleTextAttributes = @{
+        NSForegroundColorAttributeName : [CatalogStyle primaryTextColor],
+        NSFontAttributeName: [CatalogStyle headerFont]
+    };
     [self addChildViewController:_appBar.headerViewController];
 
     self.title = @"Delegate Forwarding";
 
-    _appBar.headerViewController.headerView.backgroundColor = [CatalogStyle blackColor];
+    _appBar.headerViewController.headerView.backgroundColor = [CatalogStyle primaryColor];
   }
   return self;
 }

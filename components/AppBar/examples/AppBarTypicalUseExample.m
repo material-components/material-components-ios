@@ -38,11 +38,12 @@
     [self addChildViewController:_appBar.headerViewController];
 
     // Optional: Change the App Bar's background color and tint color.
-    _appBar.headerViewController.headerView.backgroundColor = [CatalogStyle blackColor];
-    _appBar.navigationBar.tintColor = [CatalogStyle whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [CatalogStyle whiteColor],
-          NSFontAttributeName: [CatalogStyle headerFont]};
+    _appBar.headerViewController.headerView.backgroundColor = [CatalogStyle primaryColor];
+    _appBar.navigationBar.tintColor = [CatalogStyle primaryTextColor];
+    _appBar.navigationBar.titleTextAttributes = @{
+        NSForegroundColorAttributeName : [CatalogStyle primaryTextColor],
+        NSFontAttributeName: [CatalogStyle headerFont]
+    };
   }
   return self;
 }

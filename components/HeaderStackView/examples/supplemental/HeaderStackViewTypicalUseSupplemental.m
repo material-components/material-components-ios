@@ -57,7 +57,7 @@
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navBar.titleTextAttributes = [self itemTitleTextAttributes];
 
-  [self.navBar setBackgroundColor:[CatalogStyle blackColor]];
+  [self.navBar setBackgroundColor:[CatalogStyle primaryColor]];
 
   UIBarButtonItem *moreButton =
       [[UIBarButtonItem alloc] initWithTitle:@"Reveal"

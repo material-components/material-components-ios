@@ -37,7 +37,7 @@
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navBar.titleTextAttributes = [CatalogStyle headerTitleAttributes];
   [self.navBar observeNavigationItem:self.navigationItem];
-  [self.navBar setBackgroundColor:[CatalogStyle blackColor]];
+  [self.navBar setBackgroundColor:[CatalogStyle primaryColor]];
   MDCNavigationBarTextColorAccessibilityMutator *mutator =
       [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
   [mutator mutate:self.navBar];

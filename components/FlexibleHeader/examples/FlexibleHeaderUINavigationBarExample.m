@@ -123,7 +123,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [CatalogStyle blackColor];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle primaryColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -88,8 +88,8 @@ static NSString * const kReusableIdentifierItem = @"cell";
 
   _dismissButton = [[MDCFlatButton alloc] init];
   [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [_dismissButton setBackgroundColor:[CatalogStyle blackColor] forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[CatalogStyle whiteColor] forState:UIControlStateNormal];
+  [_dismissButton setBackgroundColor:[CatalogStyle primaryColor] forState:UIControlStateNormal];
+  [_dismissButton setTitleColor:[CatalogStyle primaryTextColor] forState:UIControlStateNormal];
   
   _dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |

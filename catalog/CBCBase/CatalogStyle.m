@@ -21,25 +21,22 @@
 + (UIFont *)headerFont {
   return [UIFont fontWithName:@"RobotoMono-Regular" size:16];
 }
-
-+ (UIColor *)whiteColor {
++ (UIColor *)primaryTextColor {
   return [UIColor colorWithWhite:1 alpha:1];
 }
-
-+ (UIColor *)blackColor {
++ (UIColor *)primaryColor {
   return [UIColor colorWithWhite:0.1f alpha:1];
 }
 + (UIColor *)greyColor {
   return [UIColor colorWithWhite:0.9f alpha:1];
 }
-+ (UIColor *)greenColor {
++ (UIColor *)secondaryColor {
   // Green A400
   return [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1];
 }
-
 + (NSDictionary *)headerTitleAttributes {
   return @{
-      NSForegroundColorAttributeName : [CatalogStyle whiteColor],
+      NSForegroundColorAttributeName : [CatalogStyle primaryTextColor],
       NSFontAttributeName: [CatalogStyle headerFont]
   };
 }

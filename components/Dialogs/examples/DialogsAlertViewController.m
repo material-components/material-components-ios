@@ -53,7 +53,7 @@
 
 - (IBAction)didTapShowAlert:(id)sender {
   [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
-      setCustomTitleColor:[CatalogStyle blackColor]];
+      setCustomTitleColor:[CatalogStyle primaryColor]];
 
   NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";

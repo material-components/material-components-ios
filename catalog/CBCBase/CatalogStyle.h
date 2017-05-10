@@ -19,12 +19,19 @@
 /** Shared style that should be used by CatalogByConvention as a base object. */
 @interface CatalogStyle : NSObject
 
+/** Font used in headers: Roboto Mono 16 */
 + (UIFont *)headerFont;
-+ (UIColor *)whiteColor;
-+ (UIColor *)blackColor;
+/** Black (90%) */
++ (UIColor *)primaryColor;
+/** White */
++ (UIColor *)primaryTextColor;
+/** Green (A400) */
++ (UIColor *)secondaryColor;
+/** Page background color */
 + (UIColor *)greyColor;
-+ (UIColor *)greenColor;
+/** NSAttributedText properties for the header. */
 + (NSDictionary *)headerTitleAttributes;
+/** Outputs an array of UIColors with different shades of grey. */
 + (NSArray *)shadesOfGrey:(int)numberOfGreys;
 
 @end

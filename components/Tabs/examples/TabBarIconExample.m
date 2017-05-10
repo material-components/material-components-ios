@@ -74,11 +74,11 @@
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
 
-  tabBar.barTintColor = [CatalogStyle blackColor];
-  tabBar.tintColor = [CatalogStyle greenColor];
-  tabBar.inkColor = [[CatalogStyle whiteColor] colorWithAlphaComponent:0.1];
-  tabBar.selectedItemTintColor = [[CatalogStyle whiteColor] colorWithAlphaComponent:.87f];
-  tabBar.unselectedItemTintColor = [[CatalogStyle whiteColor] colorWithAlphaComponent:.38f];
+  tabBar.barTintColor = [CatalogStyle primaryColor];
+  tabBar.tintColor = [CatalogStyle secondaryColor];
+  tabBar.inkColor = [[CatalogStyle primaryTextColor] colorWithAlphaComponent:0.1];
+  tabBar.selectedItemTintColor = [[CatalogStyle primaryTextColor] colorWithAlphaComponent:.87f];
+  tabBar.unselectedItemTintColor = [[CatalogStyle primaryTextColor] colorWithAlphaComponent:.38f];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
 
   self.tabBar = tabBar;

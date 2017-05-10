@@ -74,8 +74,8 @@
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
 
-  self.appBar.headerViewController.headerView.tintColor = [CatalogStyle whiteColor];
-  self.appBar.headerViewController.headerView.backgroundColor = [CatalogStyle blackColor];
+  self.appBar.headerViewController.headerView.tintColor = [CatalogStyle primaryTextColor];
+  self.appBar.headerViewController.headerView.backgroundColor = [CatalogStyle primaryColor];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
 
   self.appBar.navigationBar.titleTextAttributes = [CatalogStyle headerTitleAttributes];
@@ -129,7 +129,7 @@
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  infoLabel.textColor = [CatalogStyle blackColor];
+  infoLabel.textColor = [CatalogStyle primaryColor];
   infoLabel.numberOfLines = 0;
   infoLabel.text =
       @"Tabs enable content organization at a high level, such as switching between views";

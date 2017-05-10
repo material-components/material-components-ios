@@ -17,13 +17,19 @@
 import UIKit
 
 class CatalogStyle {
+  // Font used in all headers.
   static let headerFont = UIFont(name: "RobotoMono-Regular", size: 16)
-  static let whiteColor = UIColor.white
-  static let blackColor = UIColor(white: 0.1, alpha: 1)
+  // Primary color (Black 90%)
+  static let primaryColor = UIColor(white: 0.1, alpha: 1)
+  // Primary text color
+  static let primaryTextColor = UIColor.white
+  // Secondary color (Green A400)
+  static let secondaryColor = UIColor(red: 0, green: 0xe6/255.0, blue: 0x76/255.0, alpha: 1)
+  // Grey background color.
   static let greyColor = UIColor(white: 0.9, alpha: 1)
-  static let greenColor = UIColor(red: 0, green: 0xe6/255.0, blue: 0x76/255.0, alpha: 1)
+  // NSAttributedString attributes for headers. 
   static let headerTitleAttributes: [String: Any] = [
-    NSForegroundColorAttributeName: CatalogStyle.whiteColor,
+    NSForegroundColorAttributeName: CatalogStyle.primaryTextColor,
     NSFontAttributeName: CatalogStyle.headerFont as Any
   ]
 }

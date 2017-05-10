@@ -55,7 +55,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
     self.backgroundColor = [UIColor whiteColor];
 
     _elevationLabel = [[UILabel alloc] initWithFrame:CGRectMake(24, 24, frame.size.width - 48, 64)];
-    _elevationLabel.textColor = [CatalogStyle blackColor];
+    _elevationLabel.textColor = [CatalogStyle primaryColor];
     _elevationLabel.font = [MDCTypography body2Font];
     _elevationLabel.textAlignment = NSTextAlignmentLeft;
     _elevationLabel.text = @"MDCShadowElevationFABPressed";
@@ -77,7 +77,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
     CGRect sliderRect = CGRectMake(margin, 140.f, frame.size.width - margin * 2,
                                    kShadowElevationsSliderFrameHeight);
     MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:sliderRect];
-    sliderControl.color = [CatalogStyle greenColor];
+    sliderControl.color = [CatalogStyle secondaryColor];
     sliderControl.value = kShadowElevationsDefault / kShadowElevationsMax;
     sliderControl.autoresizingMask =
         (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |

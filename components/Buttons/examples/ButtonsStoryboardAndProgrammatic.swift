@@ -113,8 +113,8 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
                          constant: 0)
     ])
 
-    let titleColor = CatalogStyle.whiteColor
-    let backgroundColor = CatalogStyle.blackColor
+    let titleColor = CatalogStyle.primaryTextColor
+    let backgroundColor = CatalogStyle.primaryColor
 
     raisedButton.setTitle("Programmatic", for: .normal)
     raisedButton.setTitleColor(titleColor, for: .normal)

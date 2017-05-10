@@ -34,10 +34,12 @@
     [self addChildViewController:_appBar.headerViewController];
 
     // Optional: Change the App Bar's background color and tint color.
-    _appBar.headerViewController.headerView.backgroundColor = [CatalogStyle blackColor];
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    _appBar.headerViewController.headerView.backgroundColor = [CatalogStyle primaryColor];
+    _appBar.navigationBar.tintColor = [CatalogStyle primaryTextColor];
+    _appBar.navigationBar.titleTextAttributes = @{
+        NSForegroundColorAttributeName : [CatalogStyle primaryTextColor],
+        NSFontAttributeName: [CatalogStyle headerFont]
+    };
 
     // Set presentation style
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -225,7 +227,7 @@
 
     self.title = @"Modal Presentation";
 
-    UIColor *color = [CatalogStyle blackColor];
+    UIColor *color = [CatalogStyle primaryColor];
     _appBar.headerViewController.headerView.backgroundColor = color;
   }
   return self;

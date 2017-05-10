@@ -158,7 +158,7 @@ static NSString *const kExampleDetailText =
   }
   if (model.circle) {
     cell.imageView.image =
-        [self imageWithSize:CGSizeMake(40, 40) color:[CatalogStyle greenColor] cornerRadius:20];
+        [self imageWithSize:CGSizeMake(40, 40) color:[CatalogStyle secondaryColor] cornerRadius:20];
   }
 
   return cell;

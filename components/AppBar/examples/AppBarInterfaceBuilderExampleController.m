@@ -47,13 +47,13 @@
 }
 
 - (void)commonAppBarInterfaceBuilderExampleSetup {
-  self.appBar.navigationBar.tintColor = [CatalogStyle whiteColor];
+  self.appBar.navigationBar.tintColor = [CatalogStyle primaryTextColor];
   self.appBar.navigationBar.titleTextAttributes =
-      @{NSForegroundColorAttributeName : [CatalogStyle whiteColor],
+      @{NSForegroundColorAttributeName : [CatalogStyle primaryTextColor],
         NSFontAttributeName: [CatalogStyle headerFont]};
 
   [self addChildViewController:self.appBar.headerViewController];
-  self.appBar.headerViewController.headerView.backgroundColor = [CatalogStyle blackColor];
+  self.appBar.headerViewController.headerView.backgroundColor = [CatalogStyle primaryColor];
 }
 
 - (void)viewDidLoad {
