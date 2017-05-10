@@ -5,6 +5,7 @@ section: components
 excerpt: "The Button Bar component is a view that facilitates the creation and layout of a horizontally-aligned list of buttons."
 iconId: button
 path: /catalog/button-bars/
+api_doc_root: true
 -->
 
 # Button Bars

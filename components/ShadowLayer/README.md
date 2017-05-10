@@ -5,6 +5,7 @@ section: components
 excerpt: "The Shadow Layer component implements the Material Design specifications for elevation and shadows."
 iconId: shadow
 path: /catalog/shadows/shadow-layers/
+api_doc_root: true
 -->
 
 # Shadow Layer

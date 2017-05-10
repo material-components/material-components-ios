@@ -5,6 +5,7 @@ section: components
 excerpt: "The Ink component provides a radial action in the form of a visual ripple of ink expanding outward from the user's touch."
 iconId: ripple
 path: /catalog/ink/
+api_doc_root: true
 -->
 
 # Ink

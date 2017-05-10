@@ -5,6 +5,7 @@ section: components
 excerpt: "Collection view cell classes that adhere to Material Design layout and styling."
 iconId: list
 path: /catalog/collections/collection-cells/
+api_doc_root: true
 -->
 
 # Collection Cells

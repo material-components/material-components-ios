@@ -5,6 +5,7 @@ section: components
 excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
 iconId: header
 path: /catalog/flexible-headers/
+api_doc_root: true
 -->
 
 # Flexible Header

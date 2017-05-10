@@ -5,6 +5,7 @@ section: components
 excerpt: "Progress and activity indicators are visual indications of an app loading content."
 iconId: progress_activity
 path: /catalog/progress-indicators/activity-indicators/
+api_doc_root: true
 -->
 
 # Activity Indicators

@@ -5,6 +5,7 @@ section: components
 excerpt: "The Slider component provides a Material Design control for selecting a value from a continuous range or discrete set of values."
 iconId: slider
 path: /catalog/sliders/
+api_doc_root: true
 -->
 
 # Slider

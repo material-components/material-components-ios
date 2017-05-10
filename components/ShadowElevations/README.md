@@ -5,6 +5,7 @@ section: components
 excerpt: "The Shadow Elevations component provides the most commonly-used Material Design elevations."
 iconId: shadow
 path: /catalog/shadows/shadow-elevations/
+api_doc_root: true
 -->
 
 # Shadow Elevations

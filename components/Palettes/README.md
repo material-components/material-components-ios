@@ -5,6 +5,7 @@ section: components
 excerpt: "The Palettes component provides Material color palettes."
 iconId: color
 path: /catalog/palette/
+api_doc_root: true
 -->
 
 # Palettes
