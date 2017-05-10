@@ -39,8 +39,8 @@
 
 + (NSDictionary *)headerTitleAttributes {
   return @{
-      NSForegroundColorAttributeName : [MDCCatalogStyle whiteColor],
-      NSFontAttributeName: [MDCCatalogStyle headerFont]
+      NSForegroundColorAttributeName : [CatalogStyle whiteColor],
+      NSFontAttributeName: [CatalogStyle headerFont]
   };
 }
 
