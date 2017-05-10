@@ -37,21 +37,15 @@ errors to allow the normal deprecation process to work:
 
 ### Xcode
 
-The core team uses **Xcode 8.1 and Swift 3.0**
+The core team uses **Xcode 8 and Swift 3.0**
 
 ### iOS
 
-iOS 7.0 support is deprecated and will be removed January 20, 2017. See issue #841.
-
-Engineering work should now support **iOS 8.0 and up**.
-
-#### iOS 8.0 and above only components:
-
-* [Dialogs](https://github.com/material-components/material-components-ios/tree/develop/components/Dialogs)
+Our components currently support **iOS 8.0 and up**.
 
 ### CocoaPods
 
-We are using CocoaPods 1.1.1.
+We are using CocoaPods 1.2.
 
 ### Ruby
 
