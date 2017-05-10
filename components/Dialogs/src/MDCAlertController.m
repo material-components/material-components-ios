@@ -62,7 +62,7 @@ static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
 static const CGFloat MDCDialogActionButtonHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
 
-static const CGFloat MDCDialogMessageOpacity = 0.38f;
+static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 @interface MDCAlertController ()
 
