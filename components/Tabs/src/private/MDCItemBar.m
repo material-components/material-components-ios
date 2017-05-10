@@ -400,9 +400,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   }
 
   // Constrain tab width to collection content bounds.
-  const UIEdgeInsets sectionInset = _flowLayout.sectionInset;
   const CGFloat boundsWidth =
-      CGRectGetWidth(collectionView.bounds) - sectionInset.left - sectionInset.right;
+      CGRectGetWidth(UIEdgeInsetsInsetRect(collectionView.bounds, _flowLayout.sectionInset));
   size.width = MIN(size.width, boundsWidth);
 
   // Force height to our height.
