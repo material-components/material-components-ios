@@ -18,7 +18,7 @@ Tabs are bars of buttons used to navigate between groups of content.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/tabs.html">Tabs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/tabs.html">Material Design guidelines: Tabs</a></li>
 </ul>
 
 - - -

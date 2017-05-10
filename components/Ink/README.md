@@ -20,7 +20,7 @@ outward from the user's touch.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/animation/responsive-interaction.html#responsive-interaction-radial-action">Radial Action</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/animation/responsive-interaction.html#responsive-interaction-radial-action">Material Design guidelines: Radial Action</a></li>
 </ul>
 
 - - -
