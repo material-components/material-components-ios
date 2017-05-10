@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCFeatureHighlightView.h"
-
 /** The default alpha for the outer highlight circle. */
 extern const CGFloat kMDCFeatureHighlightOuterHighlightAlpha;
 
@@ -77,11 +75,6 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
                                  bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 - (nonnull instancetype)init NS_UNAVAILABLE;
-
-/**
- The feature highlight view used by the view controller.
- */
-@property(nonatomic, strong, nonnull) MDCFeatureHighlightView *featureHighlightView;
 
 /**
  Sets the text to be displayed as the header of the help text.
