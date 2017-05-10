@@ -16,11 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-<<<<<<< HEAD
 //#import "MDCFeatureHighlightView+MDCAppearance.h"
 
-=======
->>>>>>> 6169ce0139ddc7d767ec73c522563e1e9aed727a
 /** The default alpha for the outer highlight circle. */
 extern const CGFloat kMDCFeatureHighlightOuterHighlightAlpha;
 
