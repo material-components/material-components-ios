@@ -26,7 +26,7 @@ Apple's standard development tool chain.
 
 - [All Components](../components/)
 - [Demo Apps](../demos/)
-- [Contributing](contributing/)
+- [Contributing](../contributing/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios)
 - [Material.io](https://www.material.io)
 - [Material Design Guidelines](https://material.io/guidelines)
