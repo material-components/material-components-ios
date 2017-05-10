@@ -21,7 +21,7 @@
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
 
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
@@ -74,7 +74,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [MDCCatalogStyle blackColor];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle blackColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,7 +85,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setBackgroundColor:[MDCCatalogStyle greenColor]
+  [self.floatingButton setBackgroundColor:[CatalogStyle greenColor]
                                  forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   self.floatingButton.center = CGPointMake(

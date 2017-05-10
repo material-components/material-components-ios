@@ -34,7 +34,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
     appBar.navigationBar.tintColor = CatalogStyle.whiteColor
     appBar.navigationBar.titleTextAttributes =
       [ NSForegroundColorAttributeName: CatalogStyle.whiteColor,
-        NSFontAttributeName: CatalogStyle.headerFont ]
+        NSFontAttributeName: CatalogStyle.headerFont! ]
   }
 
   required init?(coder aDecoder: NSCoder) {

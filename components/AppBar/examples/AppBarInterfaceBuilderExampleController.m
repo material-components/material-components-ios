@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 @interface AppBarInterfaceBuilderExample : UIViewController <UIScrollViewDelegate>
 
@@ -47,13 +47,13 @@
 }
 
 - (void)commonAppBarInterfaceBuilderExampleSetup {
-  self.appBar.navigationBar.tintColor = [MDCCatalogStyle whiteColor];
+  self.appBar.navigationBar.tintColor = [CatalogStyle whiteColor];
   self.appBar.navigationBar.titleTextAttributes =
-      @{NSForegroundColorAttributeName : [MDCCatalogStyle whiteColor],
-        NSFontAttributeName: [MDCCatalogStyle headerFont]};
+      @{NSForegroundColorAttributeName : [CatalogStyle whiteColor],
+        NSFontAttributeName: [CatalogStyle headerFont]};
 
   [self addChildViewController:self.appBar.headerViewController];
-  self.appBar.headerViewController.headerView.backgroundColor = [MDCCatalogStyle blackColor];
+  self.appBar.headerViewController.headerView.backgroundColor = [CatalogStyle blackColor];
 }
 
 - (void)viewDidLoad {

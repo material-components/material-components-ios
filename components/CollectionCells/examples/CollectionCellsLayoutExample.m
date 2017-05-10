@@ -17,7 +17,7 @@
 #import "CollectionCellsLayoutExample.h"
 
 #import "MaterialTypography.h"
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 
 @interface SimpleModel : NSObject
@@ -158,7 +158,7 @@ static NSString *const kExampleDetailText =
   }
   if (model.circle) {
     cell.imageView.image =
-        [self imageWithSize:CGSizeMake(40, 40) color:[MDCCatalogStyle greenColor] cornerRadius:20];
+        [self imageWithSize:CGSizeMake(40, 40) color:[CatalogStyle greenColor] cornerRadius:20];
   }
 
   return cell;

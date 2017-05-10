@@ -22,8 +22,8 @@ class CatalogStyle {
   static let blackColor = UIColor(white: 0.1, alpha: 1)
   static let greyColor = UIColor(white: 0.9, alpha: 1)
   static let greenColor = UIColor(red: 0, green: 0xe6/255.0, blue: 0x76/255.0, alpha: 1)
-  static let headerTitleAttributes = [
+  static let headerTitleAttributes: [String: Any] = [
     NSForegroundColorAttributeName: CatalogStyle.whiteColor,
-    NSFontAttributeName: CatalogStyle.headerFont
+    NSFontAttributeName: CatalogStyle.headerFont as Any
   ]
 }

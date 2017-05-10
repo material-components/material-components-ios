@@ -18,7 +18,7 @@
 
 #import "MaterialFlexibleHeader.h"
 
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 static const NSUInteger kNumberOfPages = 10;
 
@@ -41,7 +41,7 @@ static const NSUInteger kNumberOfPages = 10;
   _pagingScrollView.scrollsToTop = NO;
   self.title = @"Swipe Right From Left Edge to Go Back";
 
-  NSArray *pageColors = [MDCCatalogStyle shadesOfGrey:3];
+  NSArray *pageColors = [CatalogStyle shadesOfGrey:3];
 
   NSMutableArray *pageScrollViews = [NSMutableArray array];
   for (NSUInteger ix = 0; ix < kNumberOfPages; ++ix) {
@@ -149,7 +149,7 @@ static const NSUInteger kNumberOfPages = 10;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [MDCCatalogStyle blackColor];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle blackColor];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

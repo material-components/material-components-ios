@@ -22,7 +22,7 @@
 #import "MaterialFlexibleHeader.h"
 #import "MaterialPageControl.h"
 
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
@@ -84,7 +84,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [MDCCatalogStyle blackColor];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle blackColor];
 
   CGFloat boundsWidth = CGRectGetWidth(self.fhvc.headerView.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.fhvc.headerView.bounds);

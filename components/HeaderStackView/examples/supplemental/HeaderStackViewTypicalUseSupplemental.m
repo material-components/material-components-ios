@@ -24,7 +24,7 @@
 #import "MaterialHeaderStackView.h"
 #import "MaterialNavigationBar.h"
 
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 @interface ExampleInstructionsViewHeaderStackViewTypicalUse : UIView
 
@@ -57,7 +57,7 @@
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navBar.titleTextAttributes = [self itemTitleTextAttributes];
 
-  [self.navBar setBackgroundColor:[MDCCatalogStyle blackColor]];
+  [self.navBar setBackgroundColor:[CatalogStyle blackColor]];
 
   UIBarButtonItem *moreButton =
       [[UIBarButtonItem alloc] initWithTitle:@"Reveal"

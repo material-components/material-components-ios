@@ -27,6 +27,7 @@ extension TabBarIconSwiftExample {
 
     alignmentButton.setTitle("Change Alignment", for: .normal)
     alignmentButton.setTitleColor(.white, for: .normal)
+    alignmentButton.backgroundColor = CatalogStyle.blackColor
 
     self.view.addSubview(alignmentButton)
     alignmentButton.translatesAutoresizingMaskIntoConstraints = false
@@ -53,9 +54,12 @@ extension TabBarIconSwiftExample {
     let appBar = MDCAppBar()
 
     self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor.white
+    appBar.headerViewController.headerView.backgroundColor = CatalogStyle.blackColor
     appBar.headerViewController.headerView.minimumHeight = 76 + 72
-    appBar.headerViewController.headerView.tintColor = MDCPalette.blue().tint500
+    appBar.headerViewController.headerView.tintColor = CatalogStyle.whiteColor
+    
+    appBar.navigationBar.titleTextAttributes = CatalogStyle.headerTitleAttributes
+
 
     appBar.headerStackView.bottomBar = self.tabBar
     appBar.headerStackView.setNeedsLayout()
@@ -67,7 +71,8 @@ extension TabBarIconSwiftExample {
 
     appBar.addSubviewsToParent()
 
-    let badgeIncrementItem = UIBarButtonItem(title: "Add",
+    let addImage = UIImage(named: "Plus")?.withRenderingMode(.alwaysTemplate)
+    let badgeIncrementItem = UIBarButtonItem(image: addImage,
                                              style: .plain,
                                              target: self,
                                              action:#selector(incrementDidTouch(sender: )))
@@ -86,7 +91,7 @@ extension TabBarIconSwiftExample {
     scrollView.isScrollEnabled = false
     self.view.addSubview(scrollView)
 
-    scrollView.backgroundColor = UIColor.red
+    scrollView.backgroundColor = UIColor.white
 
     let views = ["scrollView": scrollView, "header": self.appBar.headerStackView]
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[header][scrollView]|",
@@ -110,12 +115,12 @@ extension TabBarIconSwiftExample {
 
     let infoPage = UIView(frame: CGRect())
     infoPage.translatesAutoresizingMaskIntoConstraints = false
-    infoPage.backgroundColor = MDCPalette.lightBlue().tint300
+    infoPage.backgroundColor = CatalogStyle.greyColor
     scrollView.addSubview(infoPage)
 
     let infoLabel = UILabel(frame: CGRect())
     infoLabel.translatesAutoresizingMaskIntoConstraints = false
-    infoLabel.textColor = UIColor.white
+    infoLabel.textColor = UIColor.black
     infoLabel.numberOfLines = 0
     infoLabel.text = "Tabs enable content organization at a high level,"
         + " such as switching between views"
@@ -184,7 +189,7 @@ extension TabBarIconSwiftExample {
   func setupStarPage() -> UIView {
     let starPage = UIView(frame: CGRect())
     starPage.translatesAutoresizingMaskIntoConstraints = false
-    starPage.backgroundColor = MDCPalette.lightBlue().tint200
+    starPage.backgroundColor = CatalogStyle.whiteColor
     self.scrollView.addSubview(starPage)
 
     return starPage

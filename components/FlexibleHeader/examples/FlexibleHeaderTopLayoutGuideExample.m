@@ -20,7 +20,7 @@
 
 #import "MaterialFlexibleHeader.h"
 
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 @interface FlexibleHeaderTopLayoutGuideExample () <MDCFlexibleHeaderViewLayoutDelegate,
                                                    UIScrollViewDelegate>
@@ -78,7 +78,7 @@
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [MDCCatalogStyle blackColor];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle blackColor];
   self.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
   [self setupScrollViewContent];
@@ -87,7 +87,7 @@
 
   // Create UIView Object
   UIView *constrainedView = [[UIView alloc] init];
-  constrainedView.backgroundColor = [MDCCatalogStyle greenColor];
+  constrainedView.backgroundColor = [CatalogStyle greenColor];
   constrainedView.translatesAutoresizingMaskIntoConstraints = NO;
   self.constrainedView = constrainedView;
   [self.view addSubview:self.constrainedView];

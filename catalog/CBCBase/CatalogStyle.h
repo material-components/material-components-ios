@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /** Shared style that should be used by CatalogByConvention as a base object. */
-@interface MDCCatalogStyle : NSObject
+@interface CatalogStyle : NSObject
 
 + (UIFont *)headerFont;
 + (UIColor *)whiteColor;

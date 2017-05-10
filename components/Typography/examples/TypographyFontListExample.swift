@@ -81,8 +81,7 @@ class TypographyFontListExampleViewController: UITableViewController {
   }
 
   let strings = [
-    "Material Design Components",
-    "A quick brown fox jumped over the lazy dog.",
+    "Material Components",
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "abcdefghijklmnopqrstuvwxyz",
     "1234567890",

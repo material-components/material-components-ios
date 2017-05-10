@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 
@@ -38,11 +38,11 @@
     [self addChildViewController:_appBar.headerViewController];
 
     // Optional: Change the App Bar's background color and tint color.
-    _appBar.headerViewController.headerView.backgroundColor = [MDCCatalogStyle blackColor];
-    _appBar.navigationBar.tintColor = [MDCCatalogStyle whiteColor];
+    _appBar.headerViewController.headerView.backgroundColor = [CatalogStyle blackColor];
+    _appBar.navigationBar.tintColor = [CatalogStyle whiteColor];
     _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [MDCCatalogStyle whiteColor],
-          NSFontAttributeName: [MDCCatalogStyle headerFont]};
+        @{NSForegroundColorAttributeName : [CatalogStyle whiteColor],
+          NSFontAttributeName: [CatalogStyle headerFont]};
   }
   return self;
 }

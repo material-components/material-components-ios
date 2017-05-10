@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ActivityIndicatorExampleSupplemental.h"
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 #import "MaterialActivityIndicator.h"
 
 @interface ActivityIndicatorExample ()
@@ -45,7 +45,7 @@
   CGRect defaultRect = CGRectMake(0, 0, 32, 32);
   self.activityIndicator1 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
   self.activityIndicator1.delegate = self;
-  self.activityIndicator1.cycleColors =  @[[MDCCatalogStyle blackColor]];
+  self.activityIndicator1.cycleColors =  @[[CatalogStyle blackColor]];
   self.activityIndicator1.progress = 0.6f;
   self.activityIndicator1.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [self.activityIndicator1 sizeToFit];
@@ -54,7 +54,7 @@
   // Initialize indeterminate indicator.
   self.activityIndicator2 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
   self.activityIndicator2.delegate = self;
-  self.activityIndicator2.cycleColors =  @[[MDCCatalogStyle blackColor]];
+  self.activityIndicator2.cycleColors =  @[[CatalogStyle blackColor]];
   self.activityIndicator2.indicatorMode = MDCActivityIndicatorModeIndeterminate;
   [self.activityIndicator2 sizeToFit];
   [self.activityIndicator2 startAnimating];
@@ -63,7 +63,7 @@
   self.activityIndicator3 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
   self.activityIndicator3.delegate = self;
   self.activityIndicator3.cycleColors =
-      @[[MDCCatalogStyle blackColor], [MDCCatalogStyle greenColor]];
+      @[[CatalogStyle blackColor], [CatalogStyle greenColor]];
   self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeIndeterminate;
   [self.activityIndicator3 sizeToFit];
   [self.activityIndicator3 startAnimating];

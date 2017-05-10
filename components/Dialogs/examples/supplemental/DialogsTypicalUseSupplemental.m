@@ -26,7 +26,7 @@
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 #import "MaterialCollections.h"
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 #pragma mark - DialogsTypicalUseViewController
 
@@ -88,8 +88,8 @@ static NSString * const kReusableIdentifierItem = @"cell";
 
   _dismissButton = [[MDCFlatButton alloc] init];
   [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [_dismissButton setBackgroundColor:[MDCCatalogStyle blackColor] forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[MDCCatalogStyle whiteColor] forState:UIControlStateNormal];
+  [_dismissButton setBackgroundColor:[CatalogStyle blackColor] forState:UIControlStateNormal];
+  [_dismissButton setTitleColor:[CatalogStyle whiteColor] forState:UIControlStateNormal];
   
   _dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |

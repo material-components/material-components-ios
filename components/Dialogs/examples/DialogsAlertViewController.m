@@ -19,6 +19,8 @@
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
+#import "CatalogStyle.h"
+
 @implementation DialogsAlertViewController
 
 
@@ -51,7 +53,7 @@
 
 - (IBAction)didTapShowAlert:(id)sender {
   [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
-      setCustomTitleColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
+      setCustomTitleColor:[CatalogStyle blackColor]];
 
   NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";

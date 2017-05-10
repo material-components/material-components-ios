@@ -20,7 +20,7 @@
 
 #import "InkTypicalUseSupplemental.h"
 
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
 @interface InkTypicalUseViewController () <MDCInkTouchControllerDelegate>
 
@@ -59,7 +59,7 @@
   inkTouchController.delegate = self;
   [inkTouchController addInkView];
 
-  UIColor *greenColor = [[MDCCatalogStyle greenColor] colorWithAlphaComponent:0.2f];
+  UIColor *greenColor = [[CatalogStyle greenColor] colorWithAlphaComponent:0.2f];
   inkTouchController.defaultInkView.inkColor = greenColor;
   inkTouchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
   [_inkTouchControllers addObject:inkTouchController];

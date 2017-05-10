@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCCatalogStyle.h"
+#import "CatalogStyle.h"
 
-@implementation MDCCatalogStyle
+@implementation CatalogStyle
 
 + (UIFont *)headerFont {
   return [UIFont fontWithName:@"RobotoMono-Regular" size:16];

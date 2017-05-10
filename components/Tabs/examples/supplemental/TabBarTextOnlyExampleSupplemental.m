@@ -24,6 +24,7 @@
 #import "MaterialTabs.h"
 
 #import "TabBarTextOnlyExampleSupplemental.h"
+#import "CatalogStyle.h"
 
 static CGFloat const kStatusBarHeight = 20;
 static CGFloat const kAppBarMinHeight = 56;
@@ -52,17 +53,15 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   self.appBar.headerViewController.headerView.shiftBehavior =
       MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
-  self.appBar.navigationBar.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.appBar.navigationBar.tintColor = [CatalogStyle whiteColor];
+  self.appBar.headerViewController.headerView.tintColor = [CatalogStyle whiteColor];
+  self.appBar.headerViewController.headerView.backgroundColor = [CatalogStyle blackColor];
   self.appBar.headerViewController.headerView.minimumHeight =
       kStatusBarHeight + kTabBarHeight;
   self.appBar.headerViewController.headerView.maximumHeight =
       kStatusBarHeight + kAppBarMinHeight + kTabBarHeight;
   
-  self.appBar.navigationBar.titleTextAttributes = @{
-      NSForegroundColorAttributeName: [UIColor whiteColor],
-      NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
+  self.appBar.navigationBar.titleTextAttributes = [CatalogStyle headerTitleAttributes];
   [self.appBar addSubviewsToParent];
   
   
