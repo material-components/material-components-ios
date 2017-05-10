@@ -121,8 +121,8 @@ self.styler.gridColumnCount = 2;
 
 The styler allows customizing cell separators for the entire collection view. Individual
 cell customization is also available by using an `MDCCollectionViewCell` cell or a subclass of it.
-Learn more by reading the section on [Cell Separators](../CollectionCells/#cell-separators) in the
-[CollectionCells](../CollectionCells/) component.
+Learn more by reading the section on [Cell Separators](../../CollectionCells/#cell-separators) in the
+[CollectionCells](../../CollectionCells/) component.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
