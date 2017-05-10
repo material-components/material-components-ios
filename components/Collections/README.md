@@ -20,6 +20,11 @@ Collection view classes that adhere to Material Design layout and styling.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/lists.html#lists-specs">Material Design guidelines: Collection List Specs</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Classes/MDCCollectionViewController.html">API: MDCCollectionViewController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewEditing.html">API: MDCCollectionViewEditing</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewEditingDelegate.html">API: MDCCollectionViewEditingDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewStyling.html">API: MDCCollectionViewStyling</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewStylingDelegate.html">API: MDCCollectionViewStylingDelegate</a></li>
 </ul>
 
 - - -

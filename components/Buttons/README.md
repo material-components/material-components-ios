@@ -21,6 +21,9 @@ floating action button.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/buttons.html">Material Design guidelines: Buttons</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCButton.html">API: MDCButton</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFlatButton.html">API: MDCFlatButton</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">API: MDCFloatingButton</a></li>
 </ul>
 
 - - -

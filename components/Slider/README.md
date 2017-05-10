@@ -21,6 +21,7 @@ or discrete set of values.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/sliders.html">Material Design guidelines: Sliders</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/sliders/api-docs/Classes/MDCSlider.html">API: MDCSlider</a></li>
 </ul>
 
 - - -

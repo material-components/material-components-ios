@@ -21,6 +21,11 @@ UIScrollViewDelegate events.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Material Design guidelines: Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">API: MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">API: MDCFlexibleHeaderView</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html">API: MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">API: MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">API: MDCFlexibleHeaderViewLayoutDelegate</a></li>
 </ul>
 
 - - -

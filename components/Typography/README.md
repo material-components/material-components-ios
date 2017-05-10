@@ -21,6 +21,8 @@ from the Material Design specifications.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/style/typography.html">Material Design guidelines: Typography</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/typography/api-docs/Classes/MDCTypography.html">API: MDCTypography</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/typography/api-docs/Protocols/MDCTypographyFontLoading.html">API: MDCTypographyFontLoading</a></li>
 </ul>
 
 ## Installation

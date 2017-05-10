@@ -20,6 +20,7 @@ The Palettes component provides Material colors organized into similar palettes.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/style/color.html#color-color-palette">Material Design guidelines: Color palettes</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/palette/api-docs/Classes/MDCPalette.html">API: MDCPalette</a></li>
 </ul>
 
 - - -
