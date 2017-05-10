@@ -17,15 +17,18 @@
 #import "MDCFeatureHighlightViewController.h"
 
 #import "private/MDCFeatureHighlightAnimationController.h"
+#import "private/MDCFeatureHighlightView.h"
 
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
+
 @end
 
 @implementation MDCFeatureHighlightViewController {
   MDCFeatureHighlightAnimationController *_animationController;
   MDCFeatureHighlightCompletion _completion;
+  MDCFeatureHighlightView *_featureHighlightView;
   NSTimer *_pulseTimer;
   UIView *_displayedView;
   UIView *_highlightedView;

@@ -14,4 +14,11 @@
  limitations under the License.
  */
 
-#import "MDCFeatureHighlightViewController.h"
+#import "private/MDCFeatureHighlightView.h"
+//
+//@interface MDCFeatureHighlightView (MDCAppearance)
+//
+//@property(nonatomic, strong) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;
+//@property(nonatomic, strong) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;
+//
+//@end
