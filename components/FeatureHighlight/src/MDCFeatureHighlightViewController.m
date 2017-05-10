@@ -17,6 +17,9 @@
 #import "MDCFeatureHighlightViewController.h"
 
 #import "private/MDCFeatureHighlightAnimationController.h"
+#import "private/MDCFeatureHighlightView.h"
+
+const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
 
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
@@ -26,6 +29,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 @implementation MDCFeatureHighlightViewController {
   MDCFeatureHighlightAnimationController *_animationController;
   MDCFeatureHighlightCompletion _completion;
+  MDCFeatureHighlightView *_featureHighlightView;
   NSTimer *_pulseTimer;
   UIView *_displayedView;
   UIView *_highlightedView;
@@ -48,8 +52,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
     super.transitioningDelegate = self;
     super.modalPresentationStyle = UIModalPresentationCustom;
-    
-    [self commonMDCFeatureHighlightViewControllerInit];
   }
   return self;
 }
@@ -85,30 +87,30 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                             completion:completion];
 }
 
-- (void)commonMDCFeatureHighlightViewControllerInit {
+- (void)dealloc {
+  [_pulseTimer invalidate];
+  [_highlightedView removeObserver:self forKeyPath:@"frame"];
+}
+
+- (void)loadView {
   _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
-  
+
   _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
   _featureHighlightView.displayedView = _displayedView;
+  _featureHighlightView.titleLabel.text = self.titleText;
+  _featureHighlightView.bodyLabel.text = self.bodyText;
   _featureHighlightView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _featureHighlightView.outerHighlightColor = self.outerHighlightColor;
+  _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
 
   __weak __typeof__(self) weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
     __typeof__(self) strongSelf = weakSelf;
     [strongSelf dismiss:accepted];
   };
+
   self.view = _featureHighlightView;
-}
-
-- (void)viewWillLayoutSubviews {
-  _featureHighlightView.titleLabel.text = self.titleText;
-  _featureHighlightView.bodyLabel.text = self.bodyText;
-}
-
-- (void)dealloc {
-  [_pulseTimer invalidate];
-  [_highlightedView removeObserver:self forKeyPath:@"frame"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -136,19 +138,17 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 - (UIColor *)outerHighlightColor {
-  return _featureHighlightView.outerHighlightColor;
-}
-
-- (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
-  _featureHighlightView.outerHighlightColor = outerHighlightColor;
+  if (!_outerHighlightColor) {
+    return [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
+  }
+  return _outerHighlightColor;
 }
 
 - (UIColor *)innerHighlightColor {
-  return _featureHighlightView.innerHighlightColor;
-}
-
-- (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
-  _featureHighlightView.innerHighlightColor = innerHighlightColor;
+  if (!_innerHighlightColor) {
+    return [UIColor whiteColor];
+  }
+  return _innerHighlightColor;
 }
 
 - (void)acceptFeature {

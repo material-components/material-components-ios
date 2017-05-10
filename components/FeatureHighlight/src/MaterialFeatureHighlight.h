@@ -15,4 +15,3 @@
  */
 
 #import "MDCFeatureHighlightViewController.h"
-#import "MDCFeatureHighlightView.h"
