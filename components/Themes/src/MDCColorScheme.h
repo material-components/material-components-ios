@@ -18,13 +18,41 @@
 
 @interface MDCColorScheme : NSObject
 
-// Material design guidelines recommend using primary and secondary colors with light and dark color
-// variants.
+
+
+/**
+ Material design guidelines recommend using primary and secondary colors with light and dark color
+ variants.
+ */
+
+/** The main, primary color used for a theme. */
 @property (nonatomic, strong) UIColor *primaryColor;
+
+/** 
+ A slightly lighter version of the primary color. Given tonal variations of a color, this color is
+ typically two color swatches lighter than the primary color.
+ */
 @property (nonatomic, strong) UIColor *primaryColorLight;
+
+/**
+ A slightly darker version of the primary color. Given tonal variations of a color, this color is
+ typically two color swatches darker than the primary color.
+ */
 @property (nonatomic, strong) UIColor *primaryColorDark;
+
+/** The secondary, accent color used for a theme. */
 @property (nonatomic, strong) UIColor *secondaryColor;
+
+/**
+ A slightly lighter version of the secondary color. Given tonal variations of a color, this color is
+ typically two color swatches lighter than the secondary color.
+ */
 @property (nonatomic, strong) UIColor *secondaryColorLight;
+
+/**
+ A slightly darker version of the secondary color. Given tonal variations of a color, this color is
+ typically two color swatches darker than the secondary color.
+ */
 @property (nonatomic, strong) UIColor *secondaryColorDark;
 
 @end

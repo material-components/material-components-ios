@@ -21,6 +21,13 @@
 
 @interface MDCFeatureHighlightColorThemer : NSObject
 
+/**
+ Applies a color scheme to theme to a MDCFeatureHighlightView.
+ 
+ @param colorScheme The color scheme to apply to MDCFeatureHighlightView. 
+ @param featureHighlightView A MDCFeatureHighlightView instance to apply a color scheme. Use a
+     UIAppearance proxy to apply a color scheme to all instances of MDCFeatureHighlightView.
+ */
 + (void)applyColorScheme:(MDCColorScheme *)colorScheme
     toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView;
 
