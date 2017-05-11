@@ -22,18 +22,6 @@
 
 @implementation FeatureHighlightColorThemerTypicalUseViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Theme Feature Highlight" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Themes";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -78,6 +66,18 @@
   location.x -= self.button.frame.size.width / 2;
   location.y -= self.button.frame.size.height / 2;
   self.button.frame = (CGRect){location, self.button.frame.size};
+}
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Themes", @"Theme Feature Highlight" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"Demonstrate theming on feature highlight.";
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return YES;
 }
 
 @end

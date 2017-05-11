@@ -15,12 +15,13 @@
  */
 
 #import "MDCAlertColorThemer.h"
+#import "MaterialButtons.h"
 
 @implementation MDCAlertColorThemer
 
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
-       toAlertController:(MDCAlertController *)alertController {
-
++ (void)applyColorScheme:(MDCColorScheme *)colorScheme {
+  [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]
+      setCustomTitleColor:colorScheme.primaryColor];
 }
 
 @end

@@ -20,7 +20,7 @@
 
 @implementation MDCDialogTransitionController
 
-static const NSTimeInterval MDCDialogTransitionDuration = 0.5;
+static const NSTimeInterval MDCDialogTransitionDuration = 0.2;
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
