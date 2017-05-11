@@ -333,7 +333,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 
 - (void)animateRejected:(NSTimeInterval)duration {
   CGPoint displayMaskCenter =
-  CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
+      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
