@@ -26,9 +26,7 @@
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 
-
 static NSString * const kReusableIdentifierItem = @"cell";
-
 
 @implementation AlertColorThemerTypicalUseViewController (Supplemental)
 
