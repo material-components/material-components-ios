@@ -20,6 +20,16 @@
 
 typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
+@interface MDCFeatureHighlightView ()
+
+@property(nonatomic, assign) CGPoint highlightPoint;
+@property(nonatomic, strong) UIView *displayedView;
+@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong) UILabel *bodyLabel;
+@property(nonatomic, strong) MDCFeatureHighlightInteractionBlock interactionBlock;
+
+@end
+
 @interface MDCFeatureHighlightView (Private)
 
 - (void)layoutAppearing;

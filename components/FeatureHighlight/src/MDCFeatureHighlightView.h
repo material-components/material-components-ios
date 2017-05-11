@@ -14,17 +14,9 @@
  limitations under the License.
  */
 
-typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
-
 @interface MDCFeatureHighlightView : UIView
 
 @property(nonatomic, strong) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;
-
-@property(nonatomic, assign) CGPoint highlightPoint;
-@property(nonatomic, strong) UIView *displayedView;
-@property(nonatomic, strong) UILabel *titleLabel;
-@property(nonatomic, strong) UILabel *bodyLabel;
-@property(nonatomic, strong) MDCFeatureHighlightInteractionBlock interactionBlock;
 
 @end
