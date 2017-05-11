@@ -383,8 +383,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   CGSize size = CGSizeMake(CGFLOAT_MAX, itemHeight);
 
   // Size cell to fit content.
+  UIUserInterfaceSizeClass sizeClass = [self horizontalSizeClass];
   size = [MDCItemBarCell sizeThatFits:size
-                  horizontalSizeClass:[self horizontalSizeClass]
+                  horizontalSizeClass:sizeClass
                                  item:item
                                 style:_style];
 
@@ -399,9 +400,12 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     size.width = MIN(size.width, _style.maximumItemWidth);
   }
 
-  // Constrain tab width to collection content bounds.
+  // Constrain tab width to bounds, insetting to fit comfortably at the edges of the scroll bounds.
+  const BOOL isRegular = (sizeClass == UIUserInterfaceSizeClassRegular);
+  const CGFloat inset = isRegular ? kRegularInset : kCompactInset;
+  const UIEdgeInsets boundsInsets = UIEdgeInsetsMake(0.0f, inset, 0.0f, inset);
   const CGFloat boundsWidth =
-      CGRectGetWidth(UIEdgeInsetsInsetRect(collectionView.bounds, _flowLayout.sectionInset));
+      CGRectGetWidth(UIEdgeInsetsInsetRect(collectionView.bounds, boundsInsets));
   size.width = MIN(size.width, boundsWidth);
 
   // Force height to our height.
