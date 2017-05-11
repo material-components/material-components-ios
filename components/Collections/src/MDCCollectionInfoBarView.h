@@ -155,10 +155,13 @@ typedef NS_ENUM(NSUInteger, MDCInfoBarKind) {
 /** Whether the background view can receive a tap gesture. */
 @property(nonatomic, assign) BOOL allowsTap;
 
-/** The optional style that the info bar can be shown. */
+/** The style that the info bar can be shown. */
 @property(nonatomic, assign) MDCInfoBarStyle style;
 
-/** The kind of info bar (either footer or header). */
+/**
+ The kind of info bar (either footer or header). This property is readonly and can only be set
+ at time of initialization.
+ */
 @property(nonatomic, readonly, assign) MDCInfoBarKind kind;
 
 /**
