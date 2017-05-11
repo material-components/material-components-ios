@@ -390,15 +390,17 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // on both the backgroundView and contentView in order to match the insets of the collection
   // view rows.
   CGRect insetFrame = attr.frame;
-  UIEdgeInsets insets = [self insetsAtSectionIndex:attr.indexPath.section];
-  if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
-    insetFrame = CGRectInset(insetFrame, insets.left / 2 + insets.right / 2, 0);
-    if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
-      insetFrame.origin.y += insets.top;
-    } else if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionFooter]) {
-      insetFrame.origin.y -= insets.bottom;
+  if (!CGRectIsEmpty(insetFrame)) {
+    UIEdgeInsets insets = [self insetsAtSectionIndex:attr.indexPath.section];
+    if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+      insetFrame = CGRectInset(insetFrame, insets.left / 2 + insets.right / 2, 0);
+      if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
+        insetFrame.origin.y += insets.top;
+      } else if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionFooter]) {
+        insetFrame.origin.y -= insets.bottom;
+      }
+      attr.frame = insetFrame;
     }
-    attr.frame = insetFrame;
   }
   return attr;
 }
