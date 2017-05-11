@@ -350,7 +350,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 
 + (NSString *)dismissAccessibilityHint {
   NSString *key =
-  kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
+      kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
   NSString *localizedString =
       NSLocalizedStringFromTableInBundle(key,
                                          kMaterialFeatureHighlightStringsTableName,
