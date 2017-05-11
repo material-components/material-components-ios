@@ -2,6 +2,7 @@
 title: "Tabs"
 layout: detail
 section: components
+excerpt: "Tabs make it easy to explore and switch between different views."
 iconId: tabs
 path: /catalog/tabs/
 -->
