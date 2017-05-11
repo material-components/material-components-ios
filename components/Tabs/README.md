@@ -2,24 +2,18 @@
 title: "Tabs"
 layout: detail
 section: components
+excerpt: "Tabs make it easy to explore and switch between different views."
 iconId: tabs
 path: /catalog/tabs/
 -->
 
 # Tabs
 
-<!--{% if site.link_to_site == "true" %}-->
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/tabs.png" alt="Tabs" width="375">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/tab_bar.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
 
 Tabs are bars of buttons used to navigate between groups of content.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -44,6 +38,7 @@ following to your `Podfile`:
 ```
 pod 'MaterialComponents/Tabs'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

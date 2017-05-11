@@ -15,7 +15,6 @@ path: /catalog/typography/
 
 The Typography component provides methods for displaying text using the type sizes and opacities
 from the Material Design specifications.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -37,6 +36,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/Typography'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

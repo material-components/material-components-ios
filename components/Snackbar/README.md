@@ -1,5 +1,5 @@
 <!--docs:
-title: "Snackbar"
+title: "Snackbars"
 layout: detail
 section: components
 excerpt: "Snackbars provide brief feedback about an operation through a message at the bottom of the screen."
@@ -16,7 +16,6 @@ path: /catalog/snackbars/
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
 contain a text action, but no icons.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -40,6 +39,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/Snackbar'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
@@ -145,3 +145,11 @@ action.title = @"Answer";
 message.action = action;
 ```
 <!--</div>-->
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../OverlayWindow">Overlay Windows</a></li>
+</ul>

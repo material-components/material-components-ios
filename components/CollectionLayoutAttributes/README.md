@@ -4,13 +4,12 @@ layout: detail
 section: components
 excerpt: "Allows passing layout attributes to the cells and supplementary views."
 iconId: list
-path: /catalog/collection-layout-attributes/
+path: /catalog/collections/collection-layout-attributes/
 -->
 
 # Collection Layout Attributes
 
 Allows passing layout attributes to the cells and supplementary views.
-<!--{: .article__intro }-->
 
 - - -
 
@@ -28,6 +27,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/CollectionLayoutAttributes'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

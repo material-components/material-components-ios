@@ -16,7 +16,6 @@ This control is designed to be a drop-in replacement for `UIPageControl`, with a
 influenced by Material Design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
-<!--{: .article__intro }-->
 
 - - -
 
@@ -34,6 +33,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/PageControl'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
@@ -60,22 +60,17 @@ final position of the new page.
 #### Example Screenshots
 
 
-![screenshot-1](docs/assets/MDCPageControl_screenshot-1.png)
+<img src="docs/assets/MDCPageControl_screenshot-1.png" alt="screenshot-1" width="375">
 <!--{: .article__asset.article__asset--screenshot }-->
 Page control showing current page in resting state.
-<!--{: .clear-after }-->
 
-
-![screenshot-2](docs/assets/MDCPageControl_screenshot-2.png)
+<img src="docs/assets/MDCPageControl_screenshot-2.png" alt="screenshot-2" width="375">
 <!--{: .article__asset.article__asset--screenshot }-->
 Page control showing animated track with current page indicator positioned along the track.
-<!--{: .clear-after }-->
 
-
-![screenshot-3](docs/assets/MDCPageControl_screenshot-3.png)
+<img src="docs/assets/MDCPageControl_screenshot-3.png" alt="screenshot-3" width="375">
 <!--{: .article__asset.article__asset--screenshot }-->
 Page control showing new current page.
-<!--{: .clear-after }-->
 
 
 - - -

@@ -14,7 +14,6 @@ path: /catalog/palette/
 </div>
 
 The Palettes component provides Material colors organized into similar palettes.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
@@ -38,6 +37,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/Palettes'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

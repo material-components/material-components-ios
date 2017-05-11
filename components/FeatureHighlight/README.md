@@ -1,5 +1,5 @@
 <!--docs:
-title: "Feature Highlight"
+title: "Feature Highlights"
 layout: detail
 section: components
 excerpt: "Feature Highlight highlights a part of the screen in order to introduce users to new features and functionality."
@@ -37,6 +37,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/FeatureHighlight'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

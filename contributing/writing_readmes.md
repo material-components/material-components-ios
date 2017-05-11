@@ -11,7 +11,6 @@ fill out have been marked with `TODO` statements.
     # TODO: ComponentName
 
     TODO: Single sentence description of the component.
-    <!--{: .article__intro }-->
 
     ## Design & API Documentation
 
