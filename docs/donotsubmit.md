@@ -4,7 +4,7 @@
 
 * Flour
 
-* Oil
+* Vegetable Oil
 
 * Secret Spice
 
