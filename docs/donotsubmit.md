@@ -22,7 +22,7 @@
 
 * Shrimp
 
-## Preperation
+## Preparation
 
 * Heat dry flour in dutch oven, stirring constantly, until it gains some color
 
