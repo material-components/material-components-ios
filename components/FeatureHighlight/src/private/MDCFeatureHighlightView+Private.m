@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCFeatureHighlightView.h"
+#import "MDCFeatureHighlightView+Private.h"
 
 #import "MDCFeatureHighlightLayer.h"
 #import "MDFTextAccessibility.h"
@@ -34,6 +34,7 @@ const CGFloat kMDCFeatureHighlightConcentricBound = 88.0f;
 const CGFloat kMDCFeatureHighlightNonconcentricOffset = 20.0f;
 const CGFloat kMDCFeatureHighlightMaxTextHeight = 1000.0f;
 const CGFloat kMDCFeatureHighlightTitleFontSize = 20.0f;
+const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
 
 // Animation consts
 const CGFloat kMDCFeatureHighlightInnerRadiusFactor = 1.1f;
@@ -58,6 +59,10 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   MDCFeatureHighlightLayer *_innerLayer;
   MDCFeatureHighlightLayer *_displayMaskLayer;
 }
+
+@end
+
+@implementation MDCFeatureHighlightView (Private)
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
@@ -97,25 +102,18 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapView:)];
     [self addGestureRecognizer:tapRecognizer];
 
-    self.outerHighlightColor = [UIColor blueColor];
-    self.innerHighlightColor = [UIColor whiteColor];
-
     // We want the inner and outer highlights to animate from the same origin so we start them from
     // a concentric position.
     _forceConcentricLayout = YES;
+    [self applyMDCFeatureHighlightViewDefaults];
   }
   return self;
 }
 
-- (void)layoutAppearing {
-  // TODO: Mask the labels during the presentation and dismissal animations.
-  _titleLabel.alpha = 1;
-  _bodyLabel.alpha = 1;
-}
-
-- (void)layoutDisappearing {
-  _titleLabel.alpha = 0;
-  _bodyLabel.alpha = 0;
+- (void)applyMDCFeatureHighlightViewDefaults {
+  _outerHighlightColor =
+      [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
+  _innerHighlightColor = [UIColor whiteColor];
 }
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
@@ -146,11 +144,15 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   _titleLabel.textColor = [_bodyLabel.textColor colorWithAlphaComponent:titleAlpha];
 }
 
-- (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
-  _innerHighlightColor = innerHighlightColor;
+- (void)layoutAppearing {
+  // TODO: Mask the labels during the presentation and dismissal animations.
+  _titleLabel.alpha = 1;
+  _bodyLabel.alpha = 1;
+}
 
-  _pulseLayer.fillColor = _innerHighlightColor.CGColor;
-  _innerLayer.fillColor = _innerHighlightColor.CGColor;
+- (void)layoutDisappearing {
+  _titleLabel.alpha = 0;
+  _bodyLabel.alpha = 0;
 }
 
 - (void)setDisplayedView:(UIView *)displayedView {
@@ -172,87 +174,6 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 
   [self setNeedsLayout];
   [self layoutIfNeeded];
-}
-
-- (void)animateDiscover:(NSTimeInterval)duration {
-  [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:0].CGColor];
-  [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor];
-
-  CGPoint displayMaskCenter =
-      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
-
-  [CATransaction begin];
-  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
-                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
-  [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter radius:_innerRadius animated:YES];
-  [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:1].CGColor animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:_innerRadius animated:YES];
-  [_outerLayer setFillColor:_outerHighlightColor.CGColor animated:YES];
-  [_outerLayer setCenter:_highlightCenter radius:_outerRadius animated:YES];
-  [CATransaction commit];
-
-  _forceConcentricLayout = NO;
-}
-
-- (void)animatePulse {
-  NSArray *keyTimes = @[ @0, @0.5, @1 ];
-  id pulseColorStart =
-      (__bridge id)
-          [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
-              .CGColor;
-  id pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
-  CGFloat radius = _innerRadius;
-
-  [CATransaction begin];
-  [CATransaction setAnimationDuration:1.0f];
-  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
-                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
-  CGFloat innerBloomRadius = radius + kMDCFeatureHighlightInnerRadiusBloomAmount;
-  CGFloat pulseBloomRadius = radius + kMDCFeatureHighlightPulseRadiusBloomAmount;
-  NSArray *innerKeyframes = @[ @(radius), @(innerBloomRadius), @(radius) ];
-  [_innerLayer animateRadiusOverKeyframes:innerKeyframes keyTimes:keyTimes center:_highlightPoint];
-  NSArray *pulseKeyframes = @[ @(radius), @(radius), @(pulseBloomRadius) ];
-  [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes keyTimes:keyTimes center:_highlightPoint];
-  [_pulseLayer animateFillColorOverKeyframes:@[ pulseColorStart, pulseColorStart, pulseColorEnd ]
-                                    keyTimes:keyTimes];
-  [CATransaction commit];
-}
-
-- (void)animateAccepted:(NSTimeInterval)duration {
-  CGPoint displayMaskCenter =
-      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
-
-  [CATransaction begin];
-  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
-                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
-  [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
-  [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
-  [_outerLayer setCenter:_highlightCenter
-                  radius:kMDCFeatureHighlightOuterRadiusFactor * _outerRadius
-                animated:YES];
-  [CATransaction commit];
-
-  _forceConcentricLayout = YES;
-}
-
-- (void)animateRejected:(NSTimeInterval)duration {
-  CGPoint displayMaskCenter =
-      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
-
-  [CATransaction begin];
-  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
-                                                functionWithName:kCAMediaTimingFunctionEaseOut]];
-  [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter radius:0 animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
-  [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
-  [_outerLayer setCenter:_highlightPoint radius:0 animated:YES];
-  [CATransaction commit];
-
-  _forceConcentricLayout = NO;
 }
 
 - (void)layoutSubviews {
@@ -302,7 +223,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 
   CGFloat leftTextBound = kMDCFeatureHighlightTextPadding;
   CGFloat rightTextBound = self.frame.size.width - MAX(titleSize.width, detailSize.width) -
-                           kMDCFeatureHighlightTextPadding;
+      kMDCFeatureHighlightTextPadding;
   CGPoint titlePos = CGPointMake(0, 0);
   titlePos.x = MIN(MAX(_highlightCenter.x - textWidth / 2, leftTextBound), rightTextBound);
   if (topHalf) {
@@ -339,7 +260,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 - (void)didTapView:(UITapGestureRecognizer *)tapGestureRecognizer {
   CGPoint pos = [tapGestureRecognizer locationInView:self];
   CGFloat dist =
-      (float)(sqrt(pow(pos.x - _highlightPoint.x, 2) + pow(pos.y - _highlightPoint.y, 2)));
+  (float)(sqrt(pow(pos.x - _highlightPoint.x, 2) + pow(pos.y - _highlightPoint.y, 2)));
   BOOL accepted = dist <= _innerRadius;
 
   if (self.interactionBlock) {
@@ -347,11 +268,94 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   }
 }
 
+- (void)animateDiscover:(NSTimeInterval)duration {
+  [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:0].CGColor];
+  [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor];
+
+  CGPoint displayMaskCenter =
+      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
+
+  [CATransaction begin];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
+                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+  [CATransaction setAnimationDuration:duration];
+  [_displayMaskLayer setCenter:displayMaskCenter radius:_innerRadius animated:YES];
+  [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:1].CGColor animated:YES];
+  [_innerLayer setCenter:_highlightPoint radius:_innerRadius animated:YES];
+  [_outerLayer setFillColor:_outerHighlightColor.CGColor animated:YES];
+  [_outerLayer setCenter:_highlightCenter radius:_outerRadius animated:YES];
+  [CATransaction commit];
+
+  _forceConcentricLayout = NO;
+}
+
+- (void)animatePulse {
+  NSArray *keyTimes = @[ @0, @0.5, @1 ];
+  id pulseColorStart =
+      (__bridge id)[_innerHighlightColor
+                    colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha].CGColor;
+  id pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
+  CGFloat radius = _innerRadius;
+
+  [CATransaction begin];
+  [CATransaction setAnimationDuration:1.0f];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
+                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+  CGFloat innerBloomRadius = radius + kMDCFeatureHighlightInnerRadiusBloomAmount;
+  CGFloat pulseBloomRadius = radius + kMDCFeatureHighlightPulseRadiusBloomAmount;
+  NSArray *innerKeyframes = @[ @(radius), @(innerBloomRadius), @(radius) ];
+  [_innerLayer animateRadiusOverKeyframes:innerKeyframes keyTimes:keyTimes center:_highlightPoint];
+  NSArray *pulseKeyframes = @[ @(radius), @(radius), @(pulseBloomRadius) ];
+  [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes keyTimes:keyTimes center:_highlightPoint];
+  [_pulseLayer animateFillColorOverKeyframes:@[ pulseColorStart, pulseColorStart, pulseColorEnd ]
+                                    keyTimes:keyTimes];
+  [CATransaction commit];
+}
+
+- (void)animateAccepted:(NSTimeInterval)duration {
+  CGPoint displayMaskCenter =
+      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
+
+  [CATransaction begin];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
+                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+  [CATransaction setAnimationDuration:duration];
+  [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
+  [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
+  [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
+  [_outerLayer setCenter:_highlightCenter
+                  radius:kMDCFeatureHighlightOuterRadiusFactor * _outerRadius
+                animated:YES];
+  [CATransaction commit];
+
+  _forceConcentricLayout = YES;
+}
+
+- (void)animateRejected:(NSTimeInterval)duration {
+  CGPoint displayMaskCenter =
+      CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
+
+  [CATransaction begin];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
+                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+  [CATransaction setAnimationDuration:duration];
+  [_displayMaskLayer setCenter:displayMaskCenter radius:0 animated:YES];
+  [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
+  [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
+  [_outerLayer setCenter:_highlightPoint radius:0 animated:YES];
+  [CATransaction commit];
+
+  _forceConcentricLayout = NO;
+}
+
 + (NSString *)dismissAccessibilityHint {
   NSString *key =
       kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
-  NSString *localizedString = NSLocalizedStringFromTableInBundle(
-      key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
+  NSString *localizedString =
+      NSLocalizedStringFromTableInBundle(key,
+                                         kMaterialFeatureHighlightStringsTableName,
+                                         [self bundle],
+                                         @"Double-tap to dismiss.");
   return localizedString;
 }
 
