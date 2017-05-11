@@ -352,7 +352,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   BOOL allowsSwipeToDismissSection = NO;
   if ([_delegate respondsToSelector:@selector(collectionViewAllowsSwipeToDismissSection:)]) {
     allowsSwipeToDismissSection =
-    [_delegate collectionViewAllowsSwipeToDismissSection:_collectionView];
+        [_delegate collectionViewAllowsSwipeToDismissSection:_collectionView];
   }
 
   return (self.isEditing || allowsSwipeToDismissItem || allowsSwipeToDismissSection);
