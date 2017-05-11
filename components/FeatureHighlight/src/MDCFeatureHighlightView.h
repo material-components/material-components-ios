@@ -16,7 +16,7 @@
 
 @interface MDCFeatureHighlightView : UIView
 
-@property(nonatomic, strong) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;
 
 @end
