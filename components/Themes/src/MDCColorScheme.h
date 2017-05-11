@@ -16,14 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCColorScheme : NSObject
-
-
-
 /**
- Material design guidelines recommend using primary and secondary colors with light and dark color
- variants.
+ A color scheme comprised of set of primary and secondary colors. Material design guidelines
+ recommend using primary and secondary colors with light and dark color variants.
  */
+@interface MDCColorScheme : NSObject
 
 /** The main, primary color used for a theme. */
 @property (nonatomic, strong) UIColor *primaryColor;

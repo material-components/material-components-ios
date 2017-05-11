@@ -19,6 +19,9 @@
 #import "MaterialFeatureHighlight.h"
 #import "MDCColorScheme.h"
 
+/**
+ Used to apply a color scheme to theme to MDCFeatureHighlightView.
+ */
 @interface MDCFeatureHighlightColorThemer : NSObject
 
 /**
