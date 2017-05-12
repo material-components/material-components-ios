@@ -74,8 +74,6 @@
 
 #### Changes
 
-* [Make MDCFeatureHighlightView public and prepare color properties for UIAppearance (#1410)](https://github.com/material-components/material-components-ios/commit/5fa6b89e612acc7c659aaba689445e63d641ca10) (Junius Gunaratne)
-* [Revert "Make MDCFeatureHighlightView public and prepare color properties for UIAppearance (#1410)" (#1419)](https://github.com/material-components/material-components-ios/commit/127b60710e58b3742e3282430f9ad110dfd41627) (Junius Gunaratne)
 * [[Docs] Misc. cleanup (#1403)](https://github.com/material-components/material-components-ios/commit/1bec0a903a273b52836def8556c17a2b826b06a2) (Scott Hyndman)
 * [[Docs] Nests components in the navigation as spec'd. (#1404)](https://github.com/material-components/material-components-ios/commit/1571a1b9ee6fd59a828860fab74a747a325214e9) (Scott Hyndman)
 
@@ -167,7 +165,6 @@
 
 #### Changes
 
-* [Disallow tabs that are wider than the screen (#1408)](https://github.com/material-components/material-components-ios/commit/14f28d7bccc22e75b76384fda346bc2375800122) (Brian Moore)
 * [[Docs] Added Tabs one-liner description.](https://github.com/material-components/material-components-ios/commit/ad1e1033a118ee6c472f6082c618e1cc56f71917) (Adrian Secord)
 * [[Docs] Misc. cleanup (#1403)](https://github.com/material-components/material-components-ios/commit/1bec0a903a273b52836def8556c17a2b826b06a2) (Scott Hyndman)
 * [[Docs] Nests components in the navigation as spec'd. (#1404)](https://github.com/material-components/material-components-ios/commit/1571a1b9ee6fd59a828860fab74a747a325214e9) (Scott Hyndman)
