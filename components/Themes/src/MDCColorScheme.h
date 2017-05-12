@@ -29,13 +29,13 @@
  A slightly lighter version of the primary color. Given tonal variations of a color, this color is
  typically two color swatches lighter than the primary color.
  */
-@property (nonatomic, strong) UIColor *primaryColorLight;
+@property (nonatomic, strong) UIColor *primaryLightColor;
 
 /**
  A slightly darker version of the primary color. Given tonal variations of a color, this color is
  typically two color swatches darker than the primary color.
  */
-@property (nonatomic, strong) UIColor *primaryColorDark;
+@property (nonatomic, strong) UIColor *primaryDarkColor;
 
 /** The secondary, accent color used for a theme. */
 @property (nonatomic, strong) UIColor *secondaryColor;
@@ -44,12 +44,12 @@
  A slightly lighter version of the secondary color. Given tonal variations of a color, this color is
  typically two color swatches lighter than the secondary color.
  */
-@property (nonatomic, strong) UIColor *secondaryColorLight;
+@property (nonatomic, strong) UIColor *secondaryLightColor;
 
 /**
  A slightly darker version of the secondary color. Given tonal variations of a color, this color is
  typically two color swatches darker than the secondary color.
  */
-@property (nonatomic, strong) UIColor *secondaryColorDark;
+@property (nonatomic, strong) UIColor *secondaryDarkColor;
 
 @end

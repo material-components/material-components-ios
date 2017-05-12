@@ -18,8 +18,9 @@
 
 @interface FeatureHighlightColorThemerTypicalUseViewController : UIViewController
 
-@property(nonatomic) UILabel *infoLabel;
-@property(nonatomic) UIButton *button;
+@property(nonatomic) UIButton *blueButton;
+@property(nonatomic) UIButton *redButton;
+@property(nonatomic) UIButton *greenButton;
 
 - (void)didTapButton:(id)sender;
 

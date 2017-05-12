@@ -20,7 +20,7 @@
 
 + (void)applyColorScheme:(MDCColorScheme *)colorScheme
     toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView {
-  featureHighlightView.innerHighlightColor = colorScheme.primaryColorLight;
+  featureHighlightView.innerHighlightColor = colorScheme.primaryLightColor;
   featureHighlightView.outerHighlightColor = colorScheme.primaryColor;
 }
 

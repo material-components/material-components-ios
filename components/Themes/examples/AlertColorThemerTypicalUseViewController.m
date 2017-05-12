@@ -26,12 +26,34 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self loadCollectionView:
-    @[ @"Show Alert" ]];
+    @[ @"Blue Themed Alert", @"Red Themed Alert", @"Green Themed Alert" ]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+
+  switch (indexPath.item) {
+    case 0: {
+      MDCColorScheme *blueScheme = [[MDCColorScheme alloc] init];
+      blueScheme.primaryColor = [MDCPalette bluePalette].tint500;
+      [MDCAlertColorThemer applyColorScheme:blueScheme];
+      break;
+    }
+    case 1: {
+      MDCColorScheme *redScheme = [[MDCColorScheme alloc] init];
+      redScheme.primaryColor = [MDCPalette redPalette].tint500;
+      [MDCAlertColorThemer applyColorScheme:redScheme];
+      break;
+    }
+    case 2: {
+      MDCColorScheme *greenScheme = [[MDCColorScheme alloc] init];
+      greenScheme.primaryColor = [MDCPalette greenPalette].tint500;
+      [MDCAlertColorThemer applyColorScheme:greenScheme];
+      break;
+    }
+  }
+
   [self didTapShowAlert:nil];
 }
 
@@ -46,16 +68,6 @@
                                                           NSLog(@"%@", @"AGREE pressed");
                                                         }];
   [materialAlertController addAction:agreeAction];
-
-  MDCColorScheme *colorScheme = [[MDCColorScheme alloc] init];
-  colorScheme.primaryColor = [MDCPalette tealPalette].tint500;
-  colorScheme.primaryColorLight = [MDCPalette tealPalette].tint100;
-  colorScheme.primaryColorDark = [MDCPalette tealPalette].tint700;
-  colorScheme.secondaryColor = [MDCPalette bluePalette].tint500;
-  colorScheme.secondaryColorLight = [MDCPalette bluePalette].tint100;
-  colorScheme.secondaryColorDark = [MDCPalette bluePalette].tint700;
-
-  [MDCAlertColorThemer applyColorScheme:colorScheme];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }

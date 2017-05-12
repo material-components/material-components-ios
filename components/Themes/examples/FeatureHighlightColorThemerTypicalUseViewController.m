@@ -20,27 +20,59 @@
 #import "MaterialThemes.h"
 #import "MaterialPalettes.h"
 
+static NSString *const kTitleText = @"Themed Feature Highlight";
+static NSString *const kBodyText =
+    @"Feature highlight can be themed with a color scheme.";
+
 @implementation FeatureHighlightColorThemerTypicalUseViewController
 
 - (void)didTapButton:(id)sender {
-  MDCFeatureHighlightViewController *featureHighlightController =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
-  featureHighlightController.titleText = @"Hey a title";
-  featureHighlightController.bodyText =
-      @"This is the description of the feature highlight view controller.";
+  if (sender == self.blueButton) {
+    MDCFeatureHighlightViewController *featureHighlightController =
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.blueButton
+                                                                completion:nil];
+    featureHighlightController.titleText = kTitleText;
+    featureHighlightController.bodyText = kBodyText;
 
-  MDCColorScheme *colorScheme = [[MDCColorScheme alloc] init];
-  colorScheme.primaryColor = [MDCPalette tealPalette].tint500;
-  colorScheme.primaryColorLight = [MDCPalette tealPalette].tint100;
-  colorScheme.primaryColorDark = [MDCPalette tealPalette].tint700;
-  colorScheme.secondaryColor = [MDCPalette bluePalette].tint500;
-  colorScheme.secondaryColorLight = [MDCPalette bluePalette].tint100;
-  colorScheme.secondaryColorDark = [MDCPalette bluePalette].tint700;
+    MDCColorScheme *colorScheme = [[MDCColorScheme alloc] init];
+    colorScheme.primaryColor = [MDCPalette bluePalette].tint500;
+    colorScheme.primaryLightColor = [MDCPalette bluePalette].tint100;
 
-  [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
-                            toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
+    [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
+                              toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
 
-  [self presentViewController:featureHighlightController animated:YES completion:nil];
+    [self presentViewController:featureHighlightController animated:YES completion:nil];
+  } else if (sender == self.redButton) {
+    MDCFeatureHighlightViewController *featureHighlightController =
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.redButton
+                                                                completion:nil];
+    featureHighlightController.titleText = kTitleText;
+    featureHighlightController.bodyText = kBodyText;
+
+    MDCColorScheme *colorScheme = [[MDCColorScheme alloc] init];
+    colorScheme.primaryColor = [MDCPalette redPalette].tint500;
+    colorScheme.primaryLightColor = [MDCPalette redPalette].tint100;
+
+    [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
+                              toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
+
+    [self presentViewController:featureHighlightController animated:YES completion:nil];
+  } else {
+    MDCFeatureHighlightViewController *featureHighlightController =
+        [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.greenButton
+                                                                completion:nil];
+    featureHighlightController.titleText = kTitleText;
+    featureHighlightController.bodyText = kBodyText;
+
+    MDCColorScheme *colorScheme = [[MDCColorScheme alloc] init];
+    colorScheme.primaryColor = [MDCPalette greenPalette].tint500;
+    colorScheme.primaryLightColor = [MDCPalette greenPalette].tint100;
+
+    [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
+                              toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
+
+    [self presentViewController:featureHighlightController animated:YES completion:nil];
+  }
 }
 
 @end

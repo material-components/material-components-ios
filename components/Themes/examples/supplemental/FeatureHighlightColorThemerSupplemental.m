@@ -27,45 +27,45 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  self.infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.infoLabel.text = @"Tap anywhere to move the button.";
-  self.infoLabel.font = [MDCTypography subheadFont];
-  self.infoLabel.textColor =
-      [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
-  [self.view addSubview:self.infoLabel];
-
-  self.button = [[MDCRaisedButton alloc] init];
-  [self.button setTitle:@"GO!" forState:UIControlStateNormal];
-  [self.button sizeToFit];
-  [self.button addTarget:self
+  self.blueButton = [[MDCRaisedButton alloc] init];
+  [self.blueButton setTitle:@"Blue Theme" forState:UIControlStateNormal];
+  [self.blueButton addTarget:self
                   action:@selector(didTapButton:)
         forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:self.button];
-
-  UITapGestureRecognizer *tapRecognizer =
-      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapBackground:)];
-  [self.view addGestureRecognizer:tapRecognizer];
+  [self.view addSubview:self.blueButton];
+  
+  self.redButton = [[MDCRaisedButton alloc] init];
+  [self.redButton setTitle:@"Red Theme" forState:UIControlStateNormal];
+  [self.redButton addTarget:self
+                      action:@selector(didTapButton:)
+            forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.redButton];
+  
+  self.greenButton = [[MDCRaisedButton alloc] init];
+  [self.greenButton setTitle:@"Green Theme" forState:UIControlStateNormal];
+  [self.greenButton addTarget:self
+                      action:@selector(didTapButton:)
+            forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.greenButton];
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  [self.button sizeToFit];
-  CGRect frame = self.button.frame;
-  frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
-  frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
-  self.button.frame = frame;
-
-  CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
-  self.infoLabel.frame = CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
-                                    labelSize.width, labelSize.height);
-}
-
-- (void)didTapBackground:(UITapGestureRecognizer *)recognizer {
-  CGPoint location = [recognizer locationInView:recognizer.view];
-  location.x -= self.button.frame.size.width / 2;
-  location.y -= self.button.frame.size.height / 2;
-  self.button.frame = (CGRect){location, self.button.frame.size};
+  CGRect frame = CGRectMake(0, 0, 150, 36);
+  frame.origin.x = CGRectGetWidth(self.view.frame) / 2 - frame.size.width / 2;
+  frame.origin.y = CGRectGetHeight(self.view.frame) / 2 - frame.size.height / 2 - 100;
+  self.blueButton.frame = frame;
+  
+  CGRect redFrame = frame;
+  redFrame.origin.x = CGRectGetWidth(self.view.frame) / 2 - redFrame.size.width / 2;
+  redFrame.origin.y = CGRectGetHeight(self.view.frame) / 2 - redFrame.size.height / 2;
+  self.redButton.frame = redFrame;
+  
+  CGRect greenFrame = frame;
+  greenFrame.origin.x = CGRectGetWidth(self.view.frame) / 2 - greenFrame.size.width / 2;
+  greenFrame.origin.y = CGRectGetHeight(self.view.frame) / 2 - greenFrame.size.height / 2 + 100;
+  self.greenButton.frame = greenFrame;
 }
 
 + (NSArray *)catalogBreadcrumbs {
