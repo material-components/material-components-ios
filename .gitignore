@@ -1,6 +1,5 @@
 # MDC
 
-/docs
 build_tests/CocoapodsObjCApp/CocoapodsObjCApp.xcworkspace
 build_tests/CocoapodsSwiftApp/CocoapodsSwiftApp.xcworkspace
 scripts/external/material-design-icons/
@@ -49,6 +48,7 @@ xcuserdata
 #
 Pods/
 demos/**/Pods/
+catalog/Podfile.lock
 
 # Carthage
 #
@@ -59,17 +59,15 @@ Carthage/Build
 
 # fastlane
 #
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the 
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
 # screenshots whenever they are needed.
 
 fastlane/report.xml
 fastlane/screenshots
 
 # material component site
-/gh-pages
-/site-source
+docsite-generator
 
 # Compiled python
 *.pyc
-
 
