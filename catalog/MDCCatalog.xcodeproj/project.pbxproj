@@ -31,6 +31,7 @@
 		868350BCFBA83A90EA697FB4 /* libPods-MDCInteractionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
+		DFA0CDB05E436A49344E2810 /* EarlGrey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				868350BCFBA83A90EA697FB4 /* libPods-MDCInteractionTests.a in Frameworks */,
+				DFA0CDB05E436A49344E2810 /* EarlGrey.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
