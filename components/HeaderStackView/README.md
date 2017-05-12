@@ -4,7 +4,8 @@ layout: detail
 section: components
 excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically stacked bar views."
 iconId: header
-path: /catalog/header-stack-views/
+path: /catalog/flexible-headers/header-stack-views/
+api_doc_root: true
 -->
 
 # Header Stack Views
@@ -15,12 +16,12 @@ path: /catalog/header-stack-views/
 
 The Header Stack View component is a view that coordinates the layout of two vertically stacked
 bar views.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">Material Design guidelines: App Bar</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/header-stack-views/api-docs/Classes/MDCHeaderStackView.html">API: MDCHeaderStackView</a></li>
 </ul>
 
 - - -
@@ -40,6 +41,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/HeaderStackView'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

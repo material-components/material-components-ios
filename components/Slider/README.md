@@ -1,10 +1,11 @@
 <!--docs:
-title: "Slider"
+title: "Sliders"
 layout: detail
 section: components
 excerpt: "The Slider component provides a Material Design control for selecting a value from a continuous range or discrete set of values."
 iconId: slider
 path: /catalog/sliders/
+api_doc_root: true
 -->
 
 # Slider
@@ -15,12 +16,12 @@ path: /catalog/sliders/
 
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/sliders.html">Sliders</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/sliders.html">Material Design guidelines: Sliders</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/sliders/api-docs/Classes/MDCSlider.html">API: MDCSlider</a></li>
 </ul>
 
 - - -
@@ -40,6 +41,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/Slider'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

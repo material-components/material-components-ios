@@ -5,6 +5,7 @@ section: components
 excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
 iconId: button
 path: /catalog/buttons/
+api_doc_root: true
 -->
 
 # Buttons
@@ -15,12 +16,14 @@ path: /catalog/buttons/
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/buttons.html">Buttons</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/buttons.html">Material Design guidelines: Buttons</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCButton.html">API: MDCButton</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFlatButton.html">API: MDCFlatButton</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">API: MDCFloatingButton</a></li>
 </ul>
 
 - - -
@@ -46,8 +49,6 @@ You should not directly instantiate an MDCButton object.
 
 - - -
 
-
-
 ## Installation
 
 ### Requirements
@@ -62,6 +63,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/Buttons'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

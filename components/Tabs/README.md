@@ -2,6 +2,7 @@
 title: "Tabs"
 layout: detail
 section: components
+excerpt: "Tabs make it easy to explore and switch between different views."
 iconId: tabs
 path: /catalog/tabs/
 -->
@@ -13,12 +14,11 @@ path: /catalog/tabs/
 </div>
 
 Tabs are bars of buttons used to navigate between groups of content.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/tabs.html">Tabs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/tabs.html">Material Design guidelines: Tabs</a></li>
 </ul>
 
 - - -
@@ -38,6 +38,7 @@ following to your `Podfile`:
 ```
 pod 'MaterialComponents/Tabs'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

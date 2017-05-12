@@ -1,9 +1,16 @@
 # Site Content Update
 
 ## Overview
-Material Components for iOS site consists of 2 parts: [document site](https://material-ext.appspot.com/mdc-ios-preview/) and API reference site of each components (e.g, [AppBar API](https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html), etc...)
+Material Components for iOS site consists of 2 parts: [document site](https
+://material-ext.appspot.com/mdc-ios-preview/) and API reference site of each
+components (e.g,
+[AppBar API](https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html), etc...)
 
-This document will walk you through the process for updating the contents on document site and API reference, or adding new sections to the document site. You only need to edit markdown files in most cases, however, if you wish to make further changes to the templates, please read to [Site Development](./site_development.md).
+This document will walk you through the process for updating the contents on
+document site and API reference, or adding new sections to the document site.
+You only need to edit markdown files in most cases, however, if you wish to make
+further changes to the templates, please read to [Site
+Development](./site_development.md).
 
 
 ## Updating Content
@@ -12,7 +19,11 @@ This document will walk you through the process for updating the contents on doc
 
 #### Syntax
 
-Material Components for iOS uses [Jekyll](https://jekyllrb.com/) to help transform Markdown files into static HTML. This means although it is consistent with GitHub Flavored Markdown for most cases, we do have some style classes and special javascript to handle complicate rendering for the website. Please refer to [Writing READMES](./writing_readmes.md) for the syntax we use.
+The Material Components site uses [Jekyll](https://jekyllrb.com/) to help
+transform Markdown files into static HTML. This means although it is consistent
+with GitHub Flavored Markdown for most cases, we do have some style classes and
+special javascript to handle complicate rendering for the website. Please refer
+to [Writing READMES](./writing_readmes.md) for the syntax we use.
 
 #### Structure
 

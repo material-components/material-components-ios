@@ -5,6 +5,7 @@ section: components
 excerpt: "Collection view classes that adhere to Material Design layout and styling."
 iconId: list
 path: /catalog/collections/
+api_doc_root: true
 -->
 
 # Collections
@@ -14,12 +15,16 @@ path: /catalog/collections/
 </div>
 
 Collection view classes that adhere to Material Design layout and styling.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/lists.html#lists-specs">Collection List Specs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/lists.html#lists-specs">Material Design guidelines: Collection List Specs</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Classes/MDCCollectionViewController.html">API: MDCCollectionViewController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewEditing.html">API: MDCCollectionViewEditing</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewEditingDelegate.html">API: MDCCollectionViewEditingDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewStyling.html">API: MDCCollectionViewStyling</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewStylingDelegate.html">API: MDCCollectionViewStylingDelegate</a></li>
 </ul>
 
 - - -
@@ -38,6 +43,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/Collections'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
@@ -222,3 +228,14 @@ override func viewDidLoad() {
 }
 ```
 <!--</div>-->
+
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../CollectionCells">Collection Cells</a></li>
+  <li class="icon-list-item icon-list-item--components"><a href="../CollectionLayoutAttributes">Collection Layout Attributes</a></li>
+</ul>
+

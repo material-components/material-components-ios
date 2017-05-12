@@ -7,3 +7,5 @@ site_short_title: iOS
 site_description: >
   Material Components for iOS is a set of user interface components that help iOS app developers build apps with material design.
 repo_url: https://github.com/material-components/material-components-ios/
+repo_stable_branch: stable
+api_doc_generator: jazzy

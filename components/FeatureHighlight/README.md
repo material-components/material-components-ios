@@ -1,5 +1,5 @@
 <!--docs:
-title: "Feature Highlight"
+title: "Feature Highlights"
 layout: detail
 section: components
 excerpt: "Feature Highlight highlights a part of the screen in order to introduce users to new features and functionality."
@@ -18,7 +18,7 @@ The Feature Highlight component is a way to visually highlight a part of the scr
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/growth-communications/feature-discovery.html">Feature Discovery</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/growth-communications/feature-discovery.html">Material Design guidelines: Feature Discovery</a></li>
 </ul>
 
 - - -
@@ -37,6 +37,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/FeatureHighlight'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

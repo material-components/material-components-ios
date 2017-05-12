@@ -4,7 +4,8 @@ layout: detail
 section: components
 excerpt: "The Shadow Elevations component provides the most commonly-used Material Design elevations."
 iconId: shadow
-path: /catalog/shadow-elevations/
+path: /catalog/shadows/shadow-elevations/
+api_doc_root: true
 -->
 
 # Shadow Elevations
@@ -17,12 +18,12 @@ A shadow elevation specifies the degree of shadow intensity to be displayed bene
 Higher shadow elevations have greater shadow intensities, akin to raising an object above a
 surface resulting in a more prominent, albeit more diffuse, shadow. This component provides commonly
 used Material Design elevations for components.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/what-is-material/elevation-shadows.html">Material Design guidelines: Elevation & Shadows</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/shadows/shadow-elevations/api-docs/Constants.html">API: Constants</a></li>
 </ul>
 
 - - -
@@ -41,6 +42,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/ShadowElevations'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
@@ -104,3 +106,11 @@ class ShadowedView: UIView {
 @end
 ```
 <!--</div>-->
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../ShadowLayer">Shadow Layer</a></li>
+</ul>

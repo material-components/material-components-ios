@@ -15,12 +15,11 @@ path: /catalog/dialogs/
 
 Dialogs provides both a presentation controller for displaying a modal dialog and an alert
 controller that will display a simple modal alert.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/dialogs.html">Dialogs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/dialogs.html">Material Design guidelines: Dialogs</a></li>
 </ul>
 
 ### Dialogs Classes
@@ -53,6 +52,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/Dialogs'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then run the following command:
 

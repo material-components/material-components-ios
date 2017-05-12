@@ -5,6 +5,7 @@ section: components
 excerpt: "The Button Bar component is a view that facilitates the creation and layout of a horizontally-aligned list of buttons."
 iconId: button
 path: /catalog/button-bars/
+api_doc_root: true
 -->
 
 # Button Bars
@@ -14,7 +15,13 @@ path: /catalog/button-bars/
 </div>
 
 The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
-<!--{: .article__intro }-->
+
+## Design & API Documentation
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/button-bars/api-docs/Classes/MDCButtonBar.html">API: MDCButtonBar</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/button-bars/api-docs/Protocols/MDCButtonBarDelegate.html">API: MDCButtonBarDelegate</a></li>
+</ul>
 
 - - -
 
@@ -32,6 +39,7 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/ButtonBar'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 

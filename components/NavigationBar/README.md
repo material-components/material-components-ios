@@ -1,10 +1,11 @@
 <!--docs:
-title: "Navigation Bar"
+title: "Navigation Bars"
 layout: detail
 section: components
 excerpt: "The Navigation Bar component is a view composed of a left and right Button Bar and either a title label or a custom title view."
 iconId: toolbar
-path: /catalog/navigation-bars/
+path: /catalog/flexible-headers/navigation-bars/
+api_doc_root: true
 -->
 
 # Navigation Bar
@@ -15,15 +16,14 @@ path: /catalog/navigation-bars/
 
 The Navigation Bar component is a view composed of a left and right Button Bar and either a title
 label or a custom title view.
-<!--{: .article__intro }-->
 
 Consistent with iOS design guidelines, the title in the navigation bar is centered by default. However, certain use cases may warrant use of a left aligned title such as: when there is a strong relationship between the title and additional content appearing in the navigation bar, or where centering the title causes ambiguity.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html">Layout Structure</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/api-docs/Classes/MDCNavigationBar.html">API: MDCNavigationBar</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/api-docs/Protocols/MDCUINavigationItemObservables.html">API: MDCUINavigationItemObservables</a></li>
 </ul>
 
 - - -
@@ -42,14 +42,13 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ``` bash
 pod 'MaterialComponents/NavigationBar'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
 ``` bash
 pod install
 ```
-
-
 
 - - -
 
