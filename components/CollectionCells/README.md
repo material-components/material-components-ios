@@ -5,6 +5,7 @@ section: components
 excerpt: "Collection view cell classes that adhere to Material Design layout and styling."
 iconId: list
 path: /catalog/collections/collection-cells/
+api_doc_root: true
 -->
 
 # Collection Cells
@@ -18,7 +19,9 @@ Collection view cell classes that adhere to Material Design layout and styling.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/lists.html#lists-specs">Collection List Specs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/lists.html#lists-specs">Material Design guidelines: Collection List Specs</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/collection-cells/api-docs/Classes/MDCCollectionViewCell.html">API: MDCCollectionViewCell</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/collection-cells/api-docs/Classes/MDCCollectionViewTextCell.html">API: MDCCollectionViewTextCell</a></li>
 </ul>
 
 - - -

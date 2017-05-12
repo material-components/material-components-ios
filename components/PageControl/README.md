@@ -4,6 +4,7 @@ layout: detail
 section: components
 excerpt: "Page Control is a drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout."
 path: /catalog/page-controls/
+api_doc_root: true
 -->
 
 # Page Control
@@ -16,6 +17,12 @@ This control is designed to be a drop-in replacement for `UIPageControl`, with a
 influenced by Material Design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
+
+## Design & API Documentation
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/page-controls/api-docs/Classes/MDCPageControl.html">API: MDCPageControl</a></li>
+</ul>
 
 - - -
 

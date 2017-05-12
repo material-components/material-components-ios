@@ -5,6 +5,7 @@ section: components
 excerpt: "Progress View is a determinate and linear progress indicator that implements Material Design animation and layout."
 iconId: progress_linear
 path: /catalog/progress-indicators/progress-views/
+api_doc_root: true
 -->
 
 # Progress View
@@ -21,7 +22,8 @@ few key methods required to achieve the desired animation of the control.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/progress-activity.html">Progress & activity</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/progress-activity.html">Material Design guidelines: Progress & activity</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Classes/MDCProgressView.html">API: MDCProgressView</a></li>
 </ul>
 
 - - -

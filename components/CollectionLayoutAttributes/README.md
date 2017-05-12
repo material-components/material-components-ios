@@ -5,11 +5,18 @@ section: components
 excerpt: "Allows passing layout attributes to the cells and supplementary views."
 iconId: list
 path: /catalog/collections/collection-layout-attributes/
+api_doc_root: true
 -->
 
 # Collection Layout Attributes
 
 Allows passing layout attributes to the cells and supplementary views.
+
+## Design & API Documentation
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/collection-layout-attributes/api-docs/Classes/MDCCollectionViewLayoutAttributes.html">API: MDCCollectionViewLayoutAttributes</a></li>
+</ul>
 
 - - -
 

@@ -5,6 +5,7 @@ section: components
 excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
 iconId: header
 path: /catalog/flexible-headers/
+api_doc_root: true
 -->
 
 # Flexible Header
@@ -19,7 +20,12 @@ UIScrollViewDelegate events.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Material Design guidelines: Scrolling Techniques</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">API: MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">API: MDCFlexibleHeaderView</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html">API: MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">API: MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">API: MDCFlexibleHeaderViewLayoutDelegate</a></li>
 </ul>
 
 - - -
