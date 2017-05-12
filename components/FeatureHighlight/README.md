@@ -18,7 +18,7 @@ The Feature Highlight component is a way to visually highlight a part of the scr
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/growth-communications/feature-discovery.html">Feature Discovery</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/growth-communications/feature-discovery.html">Material Design guidelines: Feature Discovery</a></li>
 </ul>
 
 - - -
