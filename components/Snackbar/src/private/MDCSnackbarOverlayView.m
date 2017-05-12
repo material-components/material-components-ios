@@ -102,20 +102,15 @@ static const CGFloat kMaximumHeight = 80.0f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
 
-#if TARGET_OS_IOS
-  MDCKeyboardWatcher *watcher = [MDCKeyboardWatcher sharedKeyboardWatcher];
-#endif
-
   if (self) {
-#if TARGET_OS_IOS
-    _watcher = watcher;
-#endif
     _containingView = [[UIView alloc] initWithFrame:frame];
     _containingView.translatesAutoresizingMaskIntoConstraints = NO;
     _containingView.clipsToBounds = YES;
     [self addSubview:_containingView];
 
 #if TARGET_OS_IOS
+    MDCKeyboardWatcher *watcher = [MDCKeyboardWatcher sharedKeyboardWatcher];
+    _watcher = watcher;
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
     [nc addObserver:self
@@ -198,14 +193,16 @@ static const CGFloat kMaximumHeight = 80.0f;
  change at any time during runtime.
  */
 - (CGFloat)dynamicBottomMargin {
-#if TARGET_OS_TV
-  return self.bottomOffset;
-#else
+#if TARGET_OS_IOS
   CGFloat keyboardHeight = self.watcher.keyboardOffset;
   CGFloat userHeight = self.bottomOffset;
-
   return MAX(keyboardHeight, userHeight);
-#endif // #if TARGET_OS_TV
+#elif TARGET_OS_TV
+  return self.bottomOffset;
+#else
+  NSAssert(NO, @"Unsupported target platform");
+  return 0;
+#endif
 }
 
 /**
@@ -503,7 +500,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 
 #pragma mark - Keyboard Notifications
 
-#if !TARGET_OS_TV
+#if TARGET_OS_IOS
 - (void)updatesnackbarPositionWithKeyboardUserInfo:(NSDictionary *)userInfo {
   // Always set the bottom constraint, even if there isn't a snackbar currently displayed.
   void (^updateBlock)(void) = ^{
@@ -544,7 +541,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 - (void)keyboardWillChangeFrame:(NSNotification *)notification {
   [self updatesnackbarPositionWithKeyboardUserInfo:[notification userInfo]];
 }
-#endif // #if !TARGET_OS_TV
+#endif // #if TARGET_OS_IOS
 
 #pragma mark - Bottom Offset
 
@@ -576,7 +573,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   }
 }
 
-#if !TARGET_OS_TV
+#if TARGET_OS_IOS
 
 - (void)willRotate:(NSNotification *)notification {
   UIApplication *application = [UIApplication mdc_safeSharedApplication];
@@ -615,7 +612,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   });
 }
 
-#endif // #if !TARGET_OS_TV
+#endif // #if TARGET_OS_IOS
 
 #pragma mark - Overlay Support
 

@@ -15,7 +15,7 @@
  */
 #if TARGET_OS_IOS
 
-#import "MDCDialogPresentationController+ios.h"
+#import "MDCDialogPresentationController+iOS.h"
 
 #import "MaterialKeyboardWatcher.h"
 

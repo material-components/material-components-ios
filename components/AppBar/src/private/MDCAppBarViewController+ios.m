@@ -17,7 +17,7 @@
 #if TARGET_OS_IOS
 
 #import "MDCAppBarContainerViewController.h"
-#import "MDCAppBarViewController+ios.h"
+#import "MDCAppBarViewController+iOS.h"
 
 #import "MaterialNavigationBar.h"
 #import "MaterialRTL.h"

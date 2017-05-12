@@ -514,13 +514,16 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 - (BOOL)fhv_canShiftOffscreen {
-#if TARGET_OS_TV
-  return (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
-          _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
-#else
+#if TARGET_OS_IOS
   return ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
            _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) &&
           !_trackingScrollView.pagingEnabled);
+#elif TARGET_OS_TV
+  return (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
+          _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
+#else
+  NSAssert(NO, @"Unsupported target platform");
+  return NO;
 #endif
 }
 
@@ -999,11 +1002,14 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 - (BOOL)hidesStatusBarWhenCollapsed {
-#if TARGET_OS_TV
-  return NO;
-#else
+#if TARGET_OS_IOS
   return (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar &&
           !_trackingScrollView.pagingEnabled);
+#elif TARGET_OS_TV
+  return NO;
+#else
+  NSAssert(NO, @"Unsupported target platform");
+  return NO;
 #endif
 }
 

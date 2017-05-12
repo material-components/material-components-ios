@@ -16,7 +16,7 @@
 
 #import "MDCAppBarViewController.h"
 
-#import "MDCAppBarViewController+ios.h"
+#import "MDCAppBarViewController+iOS.h"
 
 #import "MaterialNavigationBar.h"
 #import "MaterialFlexibleHeader.h"
