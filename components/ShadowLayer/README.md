@@ -5,6 +5,7 @@ section: components
 excerpt: "The Shadow Layer component implements the Material Design specifications for elevation and shadows."
 iconId: shadow
 path: /catalog/shadows/shadow-layers/
+api_doc_root: true
 -->
 
 # Shadow Layer
@@ -22,7 +23,9 @@ elevation.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/what-is-material/elevation-shadows.html">Elevation and Shadows</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/what-is-material/elevation-shadows.html">Material Design guidelines: Elevation & Shadows</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/shadows/shadow-layers/api-docs/Classes/MDCShadowLayer.html">API: MDCShadowLayer</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/shadows/shadow-layers/api-docs/Classes/MDCShadowMetrics.html">API: MDCShadowMetrics</a></li>
 </ul>
 
 ### MDCShadowLayer

@@ -21,7 +21,7 @@ of an animation so that movement doesn't appear mechanical.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/motion/duration-easing.html">Duration & easing</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/motion/duration-easing.html">Material Design guidelines: Duration & easing</a></li>
 </ul>
 
 ## Installation
