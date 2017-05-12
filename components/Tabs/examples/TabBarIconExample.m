@@ -16,6 +16,8 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
+#import "CatalogStyle.h"
+
 @import MaterialComponents.MaterialAppBar;
 @import MaterialComponents.MaterialPalettes;
 @import MaterialComponents.MaterialTabs;
@@ -57,7 +59,7 @@
 - (void)loadTabBar {
   MDCTabBar *tabBar = [MDCTabBar new];
   tabBar.delegate = self;
-  tabBar.alignment = MDCTabBarAlignmentCenterSelected;
+  tabBar.alignment = MDCTabBarAlignmentCenter;
 
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
   UIImage *infoImage =
@@ -72,13 +74,11 @@
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
 
-  UIColor *green =  [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
-
-  tabBar.barTintColor = [UIColor colorWithWhite:0.1f alpha:1.0];
-  tabBar.tintColor = green;
-  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
-  tabBar.selectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.87f];
-  tabBar.unselectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.38f];
+  tabBar.barTintColor = [CatalogStyle primaryColor];
+  tabBar.tintColor = [CatalogStyle secondaryColor];
+  tabBar.inkColor = [[CatalogStyle primaryTextColor] colorWithAlphaComponent:0.1];
+  tabBar.selectedItemTintColor = [[CatalogStyle primaryTextColor] colorWithAlphaComponent:.87f];
+  tabBar.unselectedItemTintColor = [[CatalogStyle primaryTextColor] colorWithAlphaComponent:.38f];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
 
   self.tabBar = tabBar;

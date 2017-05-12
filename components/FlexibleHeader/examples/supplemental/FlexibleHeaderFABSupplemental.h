@@ -21,12 +21,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FlexibleHeaderFABExample : UIViewController
+#import "MaterialCollections.h"
 
-@property(nonatomic, strong, nullable) UIScrollView *scrollView;
-
+@interface FlexibleHeaderFABExample : MDCCollectionViewController
 @end
 
 @interface FlexibleHeaderFABExample (Supplemental)
-
+- (void)loadCollectionView;
 @end

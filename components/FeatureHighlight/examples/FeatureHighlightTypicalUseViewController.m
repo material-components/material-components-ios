@@ -17,17 +17,14 @@
 #import "FeatureHighlightExampleSupplemental.h"
 
 #import "MaterialFeatureHighlight.h"
+#import "CatalogStyle.h"
 
 @implementation FeatureHighlightTypicalUseViewController
 
 - (void)didTapButton:(id)sender {
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
-  vc.outerHighlightColor =
-      [UIColor colorWithRed:11/255.0
-                      green:232/255.0
-                       blue:94/255.0
-                      alpha:kMDCFeatureHighlightOuterHighlightAlpha];
+  vc.outerHighlightColor = [[CatalogStyle secondaryColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
   vc.titleText = @"Hey a title";
   vc.bodyText = @"This is the description of the feature highlight view controller.";
   [self presentViewController:vc animated:YES completion:nil];

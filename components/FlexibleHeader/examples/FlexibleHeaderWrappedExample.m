@@ -20,6 +20,8 @@
 
 #import "MaterialFlexibleHeader.h"
 
+#import "CatalogStyle.h"
+
 @interface FlexibleHeaderWrappedExample () <UIScrollViewDelegate>
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
@@ -81,7 +83,7 @@
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle primaryColor];
 
   [self.scrollView setScrollEnabled:YES];
   [self.scrollView addSubview:self.wrappedViewController.view];

@@ -20,6 +20,8 @@
 
 #import "FlexibleHeaderTypicalUseSupplemental.h"
 
+#import "CatalogStyle.h"
+
 @interface FlexibleHeaderTypicalUseViewController ()
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
@@ -76,7 +78,7 @@
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle primaryColor];
 
   [self setupExampleViews];
 }

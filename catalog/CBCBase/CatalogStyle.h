@@ -1,12 +1,12 @@
 /*
  Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,12 +16,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCCatalogStyle : NSObject
+/** Shared style that should be used by CatalogByConvention as a base object. */
+@interface CatalogStyle : NSObject
 
+/** Font used in headers: Roboto Mono 16 */
 + (UIFont *)headerFont;
-+ (UIColor *)mdcBlack;
-+ (UIColor *)mdcGrey;
-+ (UIColor *)mdcGreen;
+/** Black (90%) */
++ (UIColor *)primaryColor;
+/** White */
++ (UIColor *)primaryTextColor;
+/** Green (A400) */
++ (UIColor *)secondaryColor;
+/** Page background color */
++ (UIColor *)greyColor;
+/** NSAttributedText properties for the header. */
++ (NSDictionary *)headerTitleAttributes;
+/** Outputs an array of UIColors with different shades of grey. */
 + (NSArray *)shadesOfGrey:(int)numberOfGreys;
 
 @end

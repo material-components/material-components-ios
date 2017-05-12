@@ -19,6 +19,8 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
+#import "CatalogStyle.h"
+
 @interface ButtonsTypicalUseViewController ()
 
 @end
@@ -27,9 +29,9 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-  UIColor *buttonBackground = [UIColor colorWithWhite:0.1 alpha:1.0];
-  UIColor *titleColor = [UIColor whiteColor];
+  self.view.backgroundColor = [CatalogStyle greyColor];
+  UIColor *buttonBackground = [CatalogStyle primaryColor];
+  UIColor *titleColor = [CatalogStyle primaryTextColor];
 
   // Raised button
 
@@ -48,7 +50,7 @@
 
   MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
   [disabledRaisedButton setTitleColor:titleColor forState:UIControlStateNormal];
-  [disabledRaisedButton setBackgroundColor:buttonBackground forState:UIControlStateNormal];
+  [disabledRaisedButton setBackgroundColor:[CatalogStyle greyColor] forState:UIControlStateNormal];
   [disabledRaisedButton setTitle:@"Button" forState:UIControlStateNormal];
   [disabledRaisedButton sizeToFit];
   [disabledRaisedButton addTarget:self

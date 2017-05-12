@@ -43,7 +43,7 @@ class TabBarIconSwiftExample: UIViewController {
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
     tabBar.delegate = self
-    tabBar.alignment = .centerSelected
+    tabBar.alignment = .center
 
     let bundle = Bundle(for: type(of: self))
     let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith:nil)
@@ -53,14 +53,13 @@ class TabBarIconSwiftExample: UIViewController {
                     UITabBarItem(title: "Stars", image: star, tag:0)]
     tabBar.items[1].badgeValue = "1"
 
-    let blue = MDCPalette.blue().tint500
-    tabBar.tintColor = blue
-    tabBar.inkColor = blue
+    tabBar.tintColor =  CatalogStyle.secondaryColor
+    tabBar.inkColor = UIColor.white.withAlphaComponent(0.2)
 
-    tabBar.barTintColor = UIColor.white
+    tabBar.barTintColor = CatalogStyle.primaryColor
     tabBar.itemAppearance = .titledImages
-    tabBar.selectedItemTintColor = UIColor.black.withAlphaComponent(0.87)
-    tabBar.unselectedItemTintColor = UIColor.black.withAlphaComponent(0.38)
+    tabBar.selectedItemTintColor = CatalogStyle.primaryTextColor.withAlphaComponent(0.87)
+    tabBar.unselectedItemTintColor = CatalogStyle.primaryTextColor.withAlphaComponent(0.38)
 
     return tabBar
   }()

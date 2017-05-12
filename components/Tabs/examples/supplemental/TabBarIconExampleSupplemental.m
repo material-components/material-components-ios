@@ -20,6 +20,8 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
+#import "CatalogStyle.h"
+
 @import MaterialComponents.MaterialAppBar;
 @import MaterialComponents.MaterialButtons;
 @import MaterialComponents.MaterialPalettes;
@@ -72,18 +74,18 @@
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
 
-  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.appBar.headerViewController.headerView.tintColor = [CatalogStyle primaryTextColor];
+  self.appBar.headerViewController.headerView.backgroundColor = [CatalogStyle primaryColor];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
 
-  self.appBar.navigationBar.titleTextAttributes = @{
-    NSForegroundColorAttributeName: [UIColor whiteColor],
-    NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
+  self.appBar.navigationBar.titleTextAttributes = [CatalogStyle headerTitleAttributes];
   
   [self.appBar addSubviewsToParent];
 
+  UIImage *addImage =
+      [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   UIBarButtonItem *badgeIncrementItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Add"
+      [[UIBarButtonItem alloc] initWithImage:addImage
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(incrementDidTouch:)];
@@ -123,11 +125,11 @@
   UIView *infoPage = [[UIView alloc] initWithFrame:CGRectZero];
   infoPage.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:infoPage];
-  infoPage.backgroundColor = [UIColor whiteColor];
+  infoPage.backgroundColor = [CatalogStyle greyColor];
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  infoLabel.textColor = [UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f];
+  infoLabel.textColor = [CatalogStyle primaryColor];
   infoLabel.numberOfLines = 0;
   infoLabel.text =
       @"Tabs enable content organization at a high level, such as switching between views";
@@ -162,7 +164,7 @@
   self.starPage = [[UIView alloc] initWithFrame:CGRectZero];
   self.starPage.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:self.starPage];
-  self.starPage.backgroundColor = [[MDCPalette lightBluePalette] tint200];
+  self.starPage.backgroundColor = [UIColor whiteColor];
   [self addStarCentered:YES];
 
   // Layout the views to be equal height and width to each other and self.view, hug the edges of the
@@ -259,7 +261,7 @@
 }
 
 + (BOOL)catalogIsPrimaryDemo {
-  return YES;
+  return NO;
 }
 
 + (NSString *)catalogDescription {

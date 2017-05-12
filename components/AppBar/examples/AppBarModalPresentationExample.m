@@ -18,6 +18,8 @@
 
 #import "MaterialAppBar.h"
 
+#import "CatalogStyle.h"
+
 @interface AppBarModalPresentationExamplePresented : UITableViewController
 @property(strong, nonatomic) MDCAppBar *appBar;
 @end
@@ -32,11 +34,12 @@
     [self addChildViewController:_appBar.headerViewController];
 
     // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [UIColor colorWithWhite:0.1 alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    _appBar.headerViewController.headerView.backgroundColor = [CatalogStyle primaryColor];
+    _appBar.navigationBar.tintColor = [CatalogStyle primaryTextColor];
+    _appBar.navigationBar.titleTextAttributes = @{
+        NSForegroundColorAttributeName : [CatalogStyle primaryTextColor],
+        NSFontAttributeName: [CatalogStyle headerFont]
+    };
 
     // Set presentation style
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -224,7 +227,7 @@
 
     self.title = @"Modal Presentation";
 
-    UIColor *color = [UIColor colorWithWhite:0.1 alpha:1];
+    UIColor *color = [CatalogStyle primaryColor];
     _appBar.headerViewController.headerView.backgroundColor = color;
   }
   return self;

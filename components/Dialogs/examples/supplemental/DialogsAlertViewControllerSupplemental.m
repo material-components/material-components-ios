@@ -56,15 +56,16 @@ static NSString * const kReusableIdentifierItem = @"cell";
 @implementation DialogsAlertViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Dialogs", @"AlertController" ];
+  return @[ @"Dialogs", @"Alerts" ];
 }
 
 + (NSString *)catalogDescription {
-  return @"Demonstrate Material spec'd alert controllers.";
+  return @"The dialog component can be used to display simple alert style dialogs and "
+         @" fully custom content inside a container.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
-  return NO;
+  return YES;
 }
 
 @end

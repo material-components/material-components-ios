@@ -22,7 +22,7 @@
 #import "MaterialTabs.h"
 
 #import "TabBarTextOnlyExampleSupplemental.h"
-
+#import "CatalogStyle.h"
 
 @implementation TabBarTextOnlyExample
 
@@ -65,8 +65,8 @@
   // Give it a white appearance to show dark text and customize the unselected title color.
   self.tabBar.selectedItemTintColor = [UIColor whiteColor];
   self.tabBar.unselectedItemTintColor = [UIColor grayColor];
-  self.tabBar.tintColor = [UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1];
-  self.tabBar.barTintColor = [UIColor colorWithWhite:0.1 alpha:1];
+  self.tabBar.tintColor = [CatalogStyle secondaryColor];
+  self.tabBar.barTintColor = [CatalogStyle primaryColor];
   self.tabBar.inkColor = [UIColor colorWithWhite:1 alpha:0.1];
 
   self.tabBar.autoresizingMask =

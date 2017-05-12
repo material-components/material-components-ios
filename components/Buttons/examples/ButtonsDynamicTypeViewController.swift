@@ -26,9 +26,9 @@ class ButtonsDynamicTypeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(white: 0.9, alpha:1.0)
-    let titleColor = UIColor.white
-    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+    view.backgroundColor = CatalogStyle.greyColor
+    let titleColor = CatalogStyle.primaryTextColor
+    let backgroundColor = CatalogStyle.primaryColor
 
     let flatButtonStatic = MDCRaisedButton()
     flatButtonStatic.setTitleColor(titleColor, for: .normal)

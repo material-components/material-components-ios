@@ -54,7 +54,7 @@ static NSString * const kReusableIdentifierItem = @"cell";
 @implementation DialogsKeyboardViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Dialogs", @"Dialog with an Input Field" ];
+  return @[ @"Dialogs", @"Text Field Dialog" ];
 }
 
 + (NSString *)catalogDescription {

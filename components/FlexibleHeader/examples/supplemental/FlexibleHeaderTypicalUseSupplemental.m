@@ -39,7 +39,7 @@
 }
 
 + (BOOL)catalogIsPrimaryDemo {
-  return YES;
+  return NO;
 }
 
 @end

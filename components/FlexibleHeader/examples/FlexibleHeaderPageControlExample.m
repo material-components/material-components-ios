@@ -22,15 +22,10 @@
 #import "MaterialFlexibleHeader.h"
 #import "MaterialPageControl.h"
 
+#import "CatalogStyle.h"
+
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
-// Creates a UIColor from a 24-bit RGB color encoded as an integer.
-static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
-}
 
 @interface FlexibleHeaderPageControlExample () <UIScrollViewDelegate>
 
@@ -89,7 +84,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle primaryColor];
 
   CGFloat boundsWidth = CGRectGetWidth(self.fhvc.headerView.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.fhvc.headerView.bounds);

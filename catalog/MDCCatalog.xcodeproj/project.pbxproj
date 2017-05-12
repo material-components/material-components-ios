@@ -20,7 +20,6 @@
 		64307B3F1DF74FEF004AE4AC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64307B3D1DF74FEF004AE4AC /* MainInterface.storyboard */; };
 		64307B431DF74FEF004AE4AC /* MDCActionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		64307B4A1DF76198004AE4AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64307B491DF76198004AE4AC /* Assets.xcassets */; };
-		64BD963B1EBC9EF600284D1C /* MDCCatalogStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BD963A1EBC9EF600284D1C /* MDCCatalogStyle.m */; };
 		664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B61C6BA62A001ADBF8 /* AppDelegate.swift */; };
 		664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */; };
 		664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664524BD1C6BA62A001ADBF8 /* Assets.xcassets */; };
@@ -137,8 +136,6 @@
 		64307B3E1DF74FEF004AE4AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		64307B401DF74FEF004AE4AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64307B491DF76198004AE4AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		64BD96391EBC9EF600284D1C /* MDCCatalogStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogStyle.h; sourceTree = "<group>"; };
-		64BD963A1EBC9EF600284D1C /* MDCCatalogStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogStyle.m; sourceTree = "<group>"; };
 		664524B31C6BA62A001ADBF8 /* MDCCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDCCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		664524B61C6BA62A001ADBF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCNodeListViewController.swift; sourceTree = "<group>"; };
@@ -265,8 +262,6 @@
 				66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */,
 				664524B81C6BA62A001ADBF8 /* MDCNodeListViewController.swift */,
 				665A34DE1C6BDAE700962055 /* Resources */,
-				64BD96391EBC9EF600284D1C /* MDCCatalogStyle.h */,
-				64BD963A1EBC9EF600284D1C /* MDCCatalogStyle.m */,
 			);
 			path = MDCCatalog;
 			sourceTree = "<group>";
@@ -633,7 +628,6 @@
 				6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */,
 				0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */,
 				664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */,
-				64BD963B1EBC9EF600284D1C /* MDCCatalogStyle.m in Sources */,
 				0BE1D27E1DD276D000F8544B /* MDCCatalogTiles.m in Sources */,
 				66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */,
 				664524B71C6BA62A001ADBF8 /* AppDelegate.swift in Sources */,

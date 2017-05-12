@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "CatalogStyle.h"
 
 @interface AppBarImageryExample : UITableViewController
 @property(nonatomic, strong) MDCAppBar *appBar;
@@ -45,10 +46,11 @@
 
   // We want navigation bar + status bar tint color to be white, so we set tint color here and
   // implement -preferredStatusBarStyle.
-  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.navigationBar.titleTextAttributes =
-      @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-
+  self.appBar.headerViewController.headerView.tintColor = [CatalogStyle primaryTextColor];
+  self.appBar.navigationBar.titleTextAttributes = @{
+      NSForegroundColorAttributeName : [CatalogStyle primaryTextColor],
+      NSFontAttributeName: [CatalogStyle headerFont]
+  };
   // Allow the header to show more of the image.
   self.appBar.headerViewController.headerView.maximumHeight = 200;
 

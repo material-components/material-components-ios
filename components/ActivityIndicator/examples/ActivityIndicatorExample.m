@@ -17,10 +17,10 @@
 #import <UIKit/UIKit.h>
 
 #import "ActivityIndicatorExampleSupplemental.h"
+#import "CatalogStyle.h"
 #import "MaterialActivityIndicator.h"
 
 @interface ActivityIndicatorExample ()
-
 @end
 
 @implementation ActivityIndicatorExample
@@ -29,24 +29,6 @@
   self = [super init];
   if (self) {
     self.title = @"Activity Indicator";
-    self.view.backgroundColor = [UIColor whiteColor];
-
-    CGRect activityIndicator =
-        CGRectMake(0, 0, kActivityIndicatorRadius * 2, kActivityIndicatorRadius * 2);
-    _activityIndicator = [[MDCActivityIndicator alloc] initWithFrame:activityIndicator];
-    _activityIndicator.delegate = self;
-    _activityIndicator.radius = kActivityIndicatorRadius;
-    _activityIndicator.strokeWidth = 8.f;
-    _activityIndicator.cycleColors = @[[UIColor colorWithWhite:0.1 alpha:1.0]];
-
-    _activityIndicator.autoresizingMask =
-        (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
-         UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
-    [self.view addSubview:_activityIndicator];
-
-    _activityIndicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
-    _activityIndicator.progress = kActivityInitialProgress;
-    [_activityIndicator startAnimating];
   }
   return self;
 }
@@ -57,6 +39,35 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.view.backgroundColor = [UIColor whiteColor];
+
+  // Initialize single color progress indicator
+  CGRect defaultRect = CGRectMake(0, 0, 32, 32);
+  self.activityIndicator1 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
+  self.activityIndicator1.delegate = self;
+  self.activityIndicator1.cycleColors =  @[[CatalogStyle primaryColor]];
+  self.activityIndicator1.progress = 0.6f;
+  self.activityIndicator1.indicatorMode = MDCActivityIndicatorModeDeterminate;
+  [self.activityIndicator1 sizeToFit];
+  [self.activityIndicator1 startAnimating];
+
+  // Initialize indeterminate indicator.
+  self.activityIndicator2 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
+  self.activityIndicator2.delegate = self;
+  self.activityIndicator2.cycleColors =  @[[CatalogStyle primaryColor]];
+  self.activityIndicator2.indicatorMode = MDCActivityIndicatorModeIndeterminate;
+  [self.activityIndicator2 sizeToFit];
+  [self.activityIndicator2 startAnimating];
+
+  // Initiatlize multiple color indicator
+  self.activityIndicator3 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
+  self.activityIndicator3.delegate = self;
+  self.activityIndicator3.cycleColors =
+      @[[CatalogStyle primaryColor], [CatalogStyle secondaryColor]];
+  self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeIndeterminate;
+  [self.activityIndicator3 sizeToFit];
+  [self.activityIndicator3 startAnimating];
+
   [self setupExampleViews];
 }
 

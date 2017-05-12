@@ -36,13 +36,13 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
   }
 
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
-    appBar.navigationBar.tintColor = UIColor.white
+    appBar.navigationBar.tintColor = CatalogStyle.primaryTextColor
     appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
+      [ NSForegroundColorAttributeName: CatalogStyle.primaryTextColor,
+        NSFontAttributeName: CatalogStyle.headerFont! ]
 
     addChildViewController(appBar.headerViewController)
-    let color = UIColor(white: 0.1, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
+    appBar.headerViewController.headerView.backgroundColor = CatalogStyle.primaryColor
   }
 
   override func viewDidLoad() {

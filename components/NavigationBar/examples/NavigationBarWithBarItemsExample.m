@@ -20,6 +20,8 @@
 
 #import "NavigationBarTypicalUseExampleSupplemental.h"
 
+#import "CatalogStyle.h"
+
 @interface NavigationBarWithBarItemsExample : NavigationBarTypicalUseExample
 @end
 
@@ -44,8 +46,8 @@
 
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self.navBar observeNavigationItem:self.navigationItem];
-
-  [self.navBar setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
+  self.navBar.titleTextAttributes = [CatalogStyle headerTitleAttributes];
+  [self.navBar setBackgroundColor:[CatalogStyle primaryColor]];
   MDCNavigationBarTextColorAccessibilityMutator *mutator =
       [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
   [mutator mutate:self.navBar];

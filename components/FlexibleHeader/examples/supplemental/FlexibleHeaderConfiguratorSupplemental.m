@@ -24,6 +24,8 @@
 #import "FlexibleHeaderConfiguratorControlItem.h"
 #import "MaterialFlexibleHeader.h"
 
+#import "CatalogStyle.h"
+
 static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
 @implementation FlexibleHeaderConfiguratorExample (CatalogByConvention)
@@ -76,7 +78,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.fhvc.headerView.backgroundColor = [CatalogStyle primaryColor];
 
   UILabel *titleLabel = [[UILabel alloc] init];
   CGRect frame = self.fhvc.headerView.bounds;

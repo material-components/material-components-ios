@@ -30,11 +30,11 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
     // Step 2: Add the headerViewController as a child.
     self.addChildViewController(appBar.headerViewController)
 
-    let color = UIColor(white: 0.1, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
+    appBar.headerViewController.headerView.backgroundColor = CatalogStyle.primaryColor
+    appBar.navigationBar.tintColor = CatalogStyle.primaryTextColor
     appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
+      [ NSForegroundColorAttributeName: CatalogStyle.primaryTextColor,
+        NSFontAttributeName: CatalogStyle.headerFont! ]
   }
 
   required init?(coder aDecoder: NSCoder) {
