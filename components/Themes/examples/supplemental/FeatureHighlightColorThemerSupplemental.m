@@ -33,14 +33,14 @@
                   action:@selector(didTapButton:)
         forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.blueButton];
-  
+
   self.redButton = [[MDCRaisedButton alloc] init];
   [self.redButton setTitle:@"Red Theme" forState:UIControlStateNormal];
   [self.redButton addTarget:self
                       action:@selector(didTapButton:)
             forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.redButton];
-  
+
   self.greenButton = [[MDCRaisedButton alloc] init];
   [self.greenButton setTitle:@"Green Theme" forState:UIControlStateNormal];
   [self.greenButton addTarget:self
@@ -56,12 +56,12 @@
   frame.origin.x = CGRectGetWidth(self.view.frame) / 2 - frame.size.width / 2;
   frame.origin.y = CGRectGetHeight(self.view.frame) / 2 - frame.size.height / 2 - 100;
   self.blueButton.frame = frame;
-  
+
   CGRect redFrame = frame;
   redFrame.origin.x = CGRectGetWidth(self.view.frame) / 2 - redFrame.size.width / 2;
   redFrame.origin.y = CGRectGetHeight(self.view.frame) / 2 - redFrame.size.height / 2;
   self.redButton.frame = redFrame;
-  
+
   CGRect greenFrame = frame;
   greenFrame.origin.x = CGRectGetWidth(self.view.frame) / 2 - greenFrame.size.width / 2;
   greenFrame.origin.y = CGRectGetHeight(self.view.frame) / 2 - greenFrame.size.height / 2 + 100;
