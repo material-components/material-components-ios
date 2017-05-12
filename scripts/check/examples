@@ -28,7 +28,7 @@ if [[ $COMPONENT_DIR != *"/private/"* ]]; then
   fi
 
   # Check source files for Swift examples.
-  readonly FILES=$(find "$EXAMPLES_DIR" -name '*.XXXswift')
+  readonly FILES=$(find "$EXAMPLES_DIR" -name '*.swift')
   if [[ -z "$FILES" ]]; then
     echo "Error: '$EXAMPLES_DIR' has no Swift examples."
     exit -1

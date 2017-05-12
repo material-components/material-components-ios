@@ -59,6 +59,8 @@
       .active = YES;
 
   [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
+  [self.alignmentButton setBackgroundColor:[UIColor blackColor] forState:UIControlStateNormal];
+  [self.alignmentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.alignmentButton addTarget:self
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -70,10 +72,14 @@
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
 
-  self.appBar.headerViewController.headerView.backgroundColor = [UIColor whiteColor];
+  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
+  self.appBar.headerViewController.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
-  self.appBar.headerViewController.headerView.tintColor = [[MDCPalette bluePalette] tint500];
 
+  self.appBar.navigationBar.titleTextAttributes = @{
+    NSForegroundColorAttributeName: [UIColor whiteColor],
+    NSFontAttributeName: [UIFont fontWithName:@"RobotoMono-Regular" size:14] };
+  
   [self.appBar addSubviewsToParent];
 
   UIBarButtonItem *badgeIncrementItem =
@@ -117,11 +123,11 @@
   UIView *infoPage = [[UIView alloc] initWithFrame:CGRectZero];
   infoPage.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:infoPage];
-  infoPage.backgroundColor = [[MDCPalette lightBluePalette] tint300];
+  infoPage.backgroundColor = [UIColor whiteColor];
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  infoLabel.textColor = [UIColor whiteColor];
+  infoLabel.textColor = [UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f];
   infoLabel.numberOfLines = 0;
   infoLabel.text =
       @"Tabs enable content organization at a high level, such as switching between views";
@@ -237,6 +243,11 @@
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.appBar.headerViewController;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  // Ensure that our status bar is white.
+  return UIStatusBarStyleLightContent;
 }
 
 @end

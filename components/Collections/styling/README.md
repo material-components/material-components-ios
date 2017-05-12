@@ -1,8 +1,11 @@
----
-title:  "Styling the collection view"
+<!--docs:
+title: "Styling the collection view"
+navTitle: Styling
 layout: detail
 section: components
----
+iconId: list
+path: /catalog/collections/styling/
+-->
 # Styling the collection view
 
 `MDCCollectionViewController` provides a `styler` property that conforms to the
@@ -26,24 +29,9 @@ The `styler` allows setting the cell style as Default, Grouped, or Card Style. C
 either set the `styler.cellStyle` property directly, or use the protocol method
 `collectionView:cellStyleForSection:` to style per section.
 
-<div class="material-code-render" markdown="1">
-#### Objective-C
-~~~ objc
-// Set for entire collection view.
-self.styler.cellStyle = MDCCollectionViewCellStyleCard;
-
-// Or set for specific sections.
-- (MDCCollectionViewCellStyle)collectionView:(UICollectionView *)collectionView
-                         cellStyleForSection:(NSInteger)section {
-  if (section == 2) {
-    return MDCCollectionViewCellStyleCard;
-  }
-  return MDCCollectionViewCellStyleGrouped;
-}
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+```swift
 // Set for entire collection view.
 self.styler.cellStyle = .Card
 
@@ -55,27 +43,31 @@ override func collectionView(collectionView: UICollectionView,
   }
   return .Grouped
 }
-~~~
-</div>
+```
+
+#### Objective-C
+```objc
+// Set for entire collection view.
+self.styler.cellStyle = MDCCollectionViewCellStyleCard;
+
+// Or set for specific sections.
+- (MDCCollectionViewCellStyle)collectionView:(UICollectionView *)collectionView
+                         cellStyleForSection:(NSInteger)section {
+  if (section == 2) {
+    return MDCCollectionViewCellStyleCard;
+  }
+  return MDCCollectionViewCellStyleGrouped;
+}
+```
+<!--</div>-->
 
 ### Cell Height
 
 The styling delegate protocol can be used to override the default cell height of `48.0f`.
 
-<div class="material-code-render" markdown="1">
-#### Objective-C
-~~~ objc
-- (CGFloat)collectionView:(UICollectionView *)collectionView
-    cellHeightAtIndexPath:(NSIndexPath *)indexPath {
-  if (indexPath.item == 0) {
-    return 80.0f;
-  }
-  return 48.0f;
-}
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+```swift
 override func collectionView(collectionView: UICollectionView,
                              cellHeightAtIndexPath indexPath: NSIndexPath) -> CGFloat {
   if indexPath.item == 0 {
@@ -83,27 +75,27 @@ override func collectionView(collectionView: UICollectionView,
   }
   return 48.0
 }
-~~~
-</div>
+```
+
+#### Objective-C
+```objc
+- (CGFloat)collectionView:(UICollectionView *)collectionView
+    cellHeightAtIndexPath:(NSIndexPath *)indexPath {
+  if (indexPath.item == 0) {
+    return 80.0f;
+  }
+  return 48.0f;
+}
+```
+<!--</div>-->
 
 ### Cell Layout
 
 The styler allows setting the cell layout as List, Grid, or Custom.
 
-<div class="material-code-render" markdown="1">
-#### Objective-C
-~~~ objc
-// Set as list layout.
-self.styler.cellLayoutType = MDCCollectionViewCellLayoutTypeList;
-
-// Or set as grid layout.
-self.styler.cellLayoutType = MDCCollectionViewCellLayoutTypeGrid;
-self.styler.gridPadding = 8;
-self.styler.gridColumnCount = 2;
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+```swift
 // Set as list layout.
 self.styler.cellLayoutType = .List
 
@@ -111,34 +103,30 @@ self.styler.cellLayoutType = .List
 self.styler.cellLayoutType = .Grid
 self.styler.gridPadding = 8
 self.styler.gridColumnCount = 2
-~~~
-</div>
+```
+
+#### Objective-C
+```objc
+// Set as list layout.
+self.styler.cellLayoutType = MDCCollectionViewCellLayoutTypeList;
+
+// Or set as grid layout.
+self.styler.cellLayoutType = MDCCollectionViewCellLayoutTypeGrid;
+self.styler.gridPadding = 8;
+self.styler.gridColumnCount = 2;
+```
+<!--</div>-->
 
 ### Cell Separators
 
 The styler allows customizing cell separators for the entire collection view. Individual
 cell customization is also available by using an `MDCCollectionViewCell` cell or a subclass of it.
-Learn more by reading the section on [Cell Separators](../CollectionCells/#cell-separators) in the
-[CollectionCells](../CollectionCells/) component.
+Learn more by reading the section on [Cell Separators](../../CollectionCells/#cell-separators) in the
+[CollectionCells](../../CollectionCells/) component.
 
-<div class="material-code-render" markdown="1">
-#### Objective-C
-~~~ objc
-// Set separator color.
-self.styler.separatorColor = [UIColor redColor];
-
-// Set separator insets.
-self.styler.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);
-
-// Set separator line height.
-self.styler.separatorLineHeight = 1.0f;
-
-// Whether to hide separators.
-self.styler.shouldHideSeparators = NO;
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+```swift
 // Set separator color.
 self.styler.separatorColor = UIColor.redColor()
 
@@ -150,9 +138,23 @@ self.styler.separatorLineHeight = 1.0
 
 // Whether to hide separators.
 self.styler.shouldHideSeparators = false
-~~~
-</div>
+```
 
+#### Objective-C
+```objc
+// Set separator color.
+self.styler.separatorColor = [UIColor redColor];
+
+// Set separator insets.
+self.styler.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);
+
+// Set separator line height.
+self.styler.separatorLineHeight = 1.0f;
+
+// Whether to hide separators.
+self.styler.shouldHideSeparators = NO;
+```
+<!--</div>-->
 
 ### Background colors
 
@@ -160,24 +162,9 @@ A background color can be set on the collection view. Also, individual cell back
 set by using the protocol method `collectionView:cellBackgroundColorAtIndexPath:`. The default
 background colors are `#EEEEEE` for the collection view and `#FFFFFF` for the cells.
 
-<div class="material-code-render" markdown="1">
-#### Objective-C
-~~~ objc
-// Set collection view background color.
-self.collectionView.backgroundColor = [UIColor grayColor];
-
-// Set individual cell background colors.
-- (UIColor *)collectionView:(UICollectionView *)collectionView
-    cellBackgroundColorAtIndexPath:(NSIndexPath *)indexPath {
-  if (indexPath.item == 0) {
-    return [UIColor blueColor];
-  }
-  return [UIColor redColor];
-}
-~~~
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+```swift
 // Set collection view background color.
 self.collectionView?.backgroundColor = UIColor.grayColor()
 
@@ -189,5 +176,20 @@ override func collectionView(collectionView: UICollectionView,
   }
   return UIColor.redColor()
 }
-~~~
-</div>
+```
+
+#### Objective-C
+```objc
+// Set collection view background color.
+self.collectionView.backgroundColor = [UIColor grayColor];
+
+// Set individual cell background colors.
+- (UIColor *)collectionView:(UICollectionView *)collectionView
+    cellBackgroundColorAtIndexPath:(NSIndexPath *)indexPath {
+  if (indexPath.item == 0) {
+    return [UIColor blueColor];
+  }
+  return [UIColor redColor];
+}
+```
+<!--</div>-->

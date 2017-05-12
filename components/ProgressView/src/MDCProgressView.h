@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, MDCProgressViewBackwardAnimationMode) {
 /**
  A Material linear determinate progress view.
 
- See https://www.google.com/design/spec/components/progress-activity.html
+ See https://material.io/guidelines/components/progress-activity.html
  */
 IB_DESIGNABLE
 @interface MDCProgressView : UIView

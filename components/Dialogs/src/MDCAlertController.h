@@ -25,7 +25,7 @@
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
 
- https://material.google.com/components/dialogs.html
+ https://material.io/guidelines/components/dialogs.html
 
  MDCAlertController requires iOS 8 or later.
 
@@ -98,9 +98,8 @@
 
  Default value is NO.
  */
-@property (nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
 
 /** MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:

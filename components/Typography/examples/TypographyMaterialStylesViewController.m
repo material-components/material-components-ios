@@ -19,9 +19,9 @@
 #import "MaterialTypography.h"
 
 @implementation TypographyMaterialStyleViewController {
-  NSArray <NSString *> *_strings;
-  NSArray <NSString *> *_styleNames;
-  NSArray <UIFont *> *_styleFonts;
+  NSArray<NSString *> *_strings;
+  NSArray<NSString *> *_styleNames;
+  NSArray<UIFont *> *_styleFonts;
 }
 
 - (void)viewDidLoad {
@@ -123,11 +123,12 @@
   return _styleFonts.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
   if (cell == nil) {
-    cell =
-        [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                  reuseIdentifier:@"cell"];
   }
   cell.textLabel.text = _strings[indexPath.section];
   cell.textLabel.font = _styleFonts[indexPath.row];

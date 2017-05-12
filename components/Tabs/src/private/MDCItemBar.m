@@ -343,8 +343,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     // Update UI to reflect newly selected item.
     [self didSelectItemAtIndexPath:indexPath animateTransition:YES];
     [_collectionView scrollToItemAtIndexPath:indexPath
-                               atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-                                       animated:YES];
+                            atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                    animated:YES];
   }
 }
 
@@ -362,8 +362,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSParameterAssert(_collectionView == collectionView);
 
-  MDCItemBarCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:kItemReuseID
-                                                                       forIndexPath:indexPath];
+  MDCItemBarCell *itemCell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kItemReuseID forIndexPath:indexPath];
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
 
   [self configureCell:itemCell];
@@ -400,6 +400,12 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   if (_style.maximumItemWidth > 0) {
     size.width = MIN(size.width, _style.maximumItemWidth);
   }
+
+  // Constrain tab width to collection content bounds.
+  const UIEdgeInsets sectionInset = _flowLayout.sectionInset;
+  const CGFloat boundsWidth =
+      CGRectGetWidth(collectionView.bounds) - sectionInset.left - sectionInset.right;
+  size.width = MIN(size.width, boundsWidth);
 
   // Force height to our height.
   size.height = itemHeight;
@@ -458,8 +464,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   NSIndexPath *indexPath = [self indexPathForItemAtIndex:index];
   [_collectionView selectItemAtIndexPath:indexPath
-                                   animated:animated
-                             scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+                                animated:animated
+                          scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
   [self didSelectItemAtIndexPath:indexPath animateTransition:animated];
 }
 
@@ -585,10 +591,12 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   }
 
   UIEdgeInsets oldSectionInset = _flowLayout.sectionInset;
-  if (UIEdgeInsetsEqualToEdgeInsets(oldSectionInset, newSectionInset) &&
-      _alignment != MDCItemBarAlignmentJustified) {
-    // No change - can bail early, except when the item alignment is "justified". When justified,
-    // the layout metrics need updating due to change in view size or orientation.
+  if (UIEdgeInsetsEqualToEdgeInsets(oldSectionInset, newSectionInset)) {
+    // No inset change - only need to invalidate the layout to pick up new item sizes.
+    UICollectionViewFlowLayoutInvalidationContext *delegateContext =
+        [[UICollectionViewFlowLayoutInvalidationContext alloc] init];
+    delegateContext.invalidateFlowLayoutDelegateMetrics = YES;
+    [_flowLayout invalidateLayoutWithContext:delegateContext];
     return;
   }
 

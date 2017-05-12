@@ -19,6 +19,8 @@
 
 @import UIKit;
 
+@import MaterialComponents.MaterialTabs;
+
 @class MDCAppBar;
 @class MDCRaisedButton;
 @class MDCTabBar;

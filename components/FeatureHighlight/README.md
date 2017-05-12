@@ -1,15 +1,24 @@
+<!--docs:
+title: "Feature Highlights"
+layout: detail
+section: components
+excerpt: "Feature Highlight highlights a part of the screen in order to introduce users to new features and functionality."
+iconId: feature_highlight
+path: /catalog/feature-highlights/
+-->
+
 # Feature Highlight
 
-<!--{% if site.link_to_site == "true" %}-->
-<a alt="Feature Highlight"><img src="docs/assets/feature_highlight.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/feature_highlight.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/feature_highlight.png" alt="Feature Highlight" width="375">
+</div>
 
 The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-<li class="icon-link"><a href="https://material.google.com/growth-communications/feature-discovery.html">Feature Discovery</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/growth-communications/feature-discovery.html">Feature Discovery</a></li>
 </ul>
 
 - - -
@@ -25,15 +34,16 @@ The Feature Highlight component is a way to visually highlight a part of the scr
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/FeatureHighlight'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -45,21 +55,21 @@ Before using Feature Highlight, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialFeatureHighlight
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 #import "MaterialFeatureHighlight.h"
-~~~
+```
 <!--</div>-->
 
 ### Highlighting a view
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let completion = {(accepted: Bool) in
   // perform analytics here
   // and record whether the highlight was accepted
@@ -72,10 +82,10 @@ highlightController.bodyText = "Tap the menu button to switch accounts, change s
 highlightController.outerHighlightColor =
   UIColor.blue.withAlphaComponent(kMDCFeatureHighlightOuterHighlightAlpha)
 present(highlightController, animated: true, completion:nil)
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 MDCFeatureHighlightCompletion completion = ^(BOOL accepted) {
   // perform analytics here
   // and record whether the highlight was accepted
@@ -89,24 +99,24 @@ highlightController.bodyText = @"Tap the menu button to switch accounts, change 
 highlightController.outerHighlightColor =
     [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
 [self presentViewController:highlightController animated:YES completion:nil];
-~~~
+```
 <!--</div>-->
 
 Often when highlighting a view you will want to display a different view to the one you are highlighting. For example, flipping the primary and secondary colors in the presented version.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let displayedButton = UIButton(type: .system)
 displayedButton.setTitle(highlightedButton.title(for: .normal), for: .normal)
 displayedButton.setTitleColor(highlightedButton.backgroundColor, for: .normal)
 displayedButton.backgroundColor = highlightedButton.titleColor(for: .normal)
 
 let highlightController = MDCFeatureHighlightViewController(highlightedView: highlightedButton, andShow: displayedButton, completion: completion)
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 UIButton *displayedButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [displayedButton setTitle:[highlightedButton titleForState:UIControlStateNormal]
                  forState:UIControlStateNormal];
@@ -116,5 +126,5 @@ MDCFeatureHighlightViewController *highlightController =
 [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:highlightedButton
                                                        andShowView:displayedButton
                                                         completion:completion];
-~~~
+```
 <!--</div>-->

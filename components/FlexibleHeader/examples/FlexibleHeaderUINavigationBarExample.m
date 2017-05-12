@@ -68,6 +68,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   navBar.shadowImage = [UIImage new];
   navBar.translucent = YES;
   navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  navBar.tintColor = [UIColor whiteColor];
 
   [self.fhvc.headerView addSubview:navBar];
 
@@ -120,9 +121,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  // Light blue 500
-  self.fhvc.headerView.backgroundColor =
-      [UIColor colorWithRed:0.333 green:0.769 blue:0.961 alpha:1];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -145,10 +144,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 #pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  CGFloat contentOffsetY = -scrollView.contentOffset.y;
-  if (contentOffsetY < kFlexibleHeaderMinHeight) {
-    contentOffsetY = kFlexibleHeaderMinHeight;
-  }
   [self.fhvc scrollViewDidScroll:scrollView];
 }
 

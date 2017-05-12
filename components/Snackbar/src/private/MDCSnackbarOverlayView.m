@@ -292,7 +292,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                                                                  attribute:NSLayoutAttributeBottom
                                                                 multiplier:1.0
                                                                   constant:-bottomMargin];
-      _snackbarOnscreenConstraint.active = NO; // snackbar starts off-screen.
+      _snackbarOnscreenConstraint.active = NO;  // snackbar starts off-screen.
       _snackbarOnscreenConstraint.priority = UILayoutPriorityDefaultHigh;
       [container addConstraint:_snackbarOnscreenConstraint];
 
@@ -450,16 +450,17 @@ static const CGFloat kMaximumHeight = 80.0f;
 
   // We use UIView animation inside a CATransaction in order to use the custom animation curve.
   [UIView animateWithDuration:MDCSnackbarTransitionDuration
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     // Trigger snackbar animation.
-                     [_containingView layoutIfNeeded];
-                   } completion:^(BOOL finished) {
-                     if (completion) {
-                       completion();
-                     }
-                   }];
+      delay:0
+      options:UIViewAnimationOptionCurveEaseInOut
+      animations:^{
+        // Trigger snackbar animation.
+        [_containingView layoutIfNeeded];
+      }
+      completion:^(BOOL finished) {
+        if (completion) {
+          completion();
+        }
+      }];
 
   [snackbarView animateContentOpacityFrom:fromContentOpacity
                                        to:toContentOpacity

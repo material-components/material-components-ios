@@ -1,0 +1,18 @@
+PODS:
+  - MaterialComponents/ShadowElevations (23.1.0)
+  - MaterialComponents/ShadowLayer (23.1.0)
+
+DEPENDENCIES:
+  - MaterialComponents/ShadowElevations (from `../../`)
+  - MaterialComponents/ShadowLayer (from `../../`)
+
+EXTERNAL SOURCES:
+  MaterialComponents:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  MaterialComponents: 7979134f28cca6654f9d3786e96a8d1bff26dfc6
+
+PODFILE CHECKSUM: 238ed9ba58d5e4a3638e6cea92b00109641989f8
+
+COCOAPODS: 1.2.1

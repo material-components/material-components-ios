@@ -17,13 +17,12 @@
 #import "MDCFeatureHighlightViewController.h"
 
 #import "private/MDCFeatureHighlightAnimationController.h"
-#import "private/MDCFeatureHighlightView.h"
-
-const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
+#import "private/MDCFeatureHighlightView+Private.h"
 
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
+
 @end
 
 @implementation MDCFeatureHighlightViewController {
@@ -52,6 +51,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
     super.transitioningDelegate = self;
     super.modalPresentationStyle = UIModalPresentationCustom;
+    
+    [self commonMDCFeatureHighlightViewControllerInit];
   }
   return self;
 }
@@ -70,9 +71,42 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
                                      completion:(nullable MDCFeatureHighlightCompletion)completion {
+  UIView *snapshotView = [highlightedView snapshotViewAfterScreenUpdates:YES];
+  // We have to wrap the snapshoted view because _UIReplicantViews can't be accessibility elements.
+  UIView *displayedView = [[UIView alloc] initWithFrame:snapshotView.bounds];
+  [displayedView addSubview:snapshotView];
+
+  // Copy the accessibility values from the view being highlighted.
+  displayedView.isAccessibilityElement = YES;
+  displayedView.accessibilityTraits = UIAccessibilityTraitButton;
+  displayedView.accessibilityLabel = highlightedView.accessibilityLabel;
+  displayedView.accessibilityValue = highlightedView.accessibilityValue;
+  displayedView.accessibilityHint = highlightedView.accessibilityHint;
+
   return [self initWithHighlightedView:highlightedView
-                           andShowView:[highlightedView snapshotViewAfterScreenUpdates:YES]
+                           andShowView:displayedView
                             completion:completion];
+}
+
+- (void)commonMDCFeatureHighlightViewControllerInit {
+  _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
+  
+  _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
+  _featureHighlightView.displayedView = _displayedView;
+  _featureHighlightView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
+  __weak __typeof__(self) weakSelf = self;
+  _featureHighlightView.interactionBlock = ^(BOOL accepted) {
+    __typeof__(self) strongSelf = weakSelf;
+    [strongSelf dismiss:accepted];
+  };
+  self.view = _featureHighlightView;
+}
+
+- (void)viewWillLayoutSubviews {
+  _featureHighlightView.titleLabel.text = self.titleText;
+  _featureHighlightView.bodyLabel.text = self.bodyText;
 }
 
 - (void)dealloc {
@@ -80,30 +114,11 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   [_highlightedView removeObserver:self forKeyPath:@"frame"];
 }
 
-- (void)loadView {
-  _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
-  _featureHighlightView.displayedView = _displayedView;
-  _featureHighlightView.titleLabel.text = self.titleText;
-  _featureHighlightView.bodyLabel.text = self.bodyText;
-  _featureHighlightView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _featureHighlightView.outerHighlightColor = self.outerHighlightColor;
-  _featureHighlightView.innerHighlightColor = self.innerHighlightColor;
-
-  __weak __typeof__(self) weakSelf = self;
-  _featureHighlightView.interactionBlock = ^(BOOL accepted) {
-    __typeof__(self) strongSelf = weakSelf;
-    [strongSelf dismiss:accepted];
-  };
-
-  self.view = _featureHighlightView;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
   CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                                    toView:_featureHighlightView];
+                                         toCoordinateSpace:_featureHighlightView];
   _featureHighlightView.highlightPoint = point;
 }
 
@@ -124,17 +139,19 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 - (UIColor *)outerHighlightColor {
-  if (!_outerHighlightColor) {
-    return [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
-  }
-  return _outerHighlightColor;
+  return _featureHighlightView.outerHighlightColor;
+}
+
+- (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
+  _featureHighlightView.outerHighlightColor = outerHighlightColor;
 }
 
 - (UIColor *)innerHighlightColor {
-  if (!_innerHighlightColor) {
-    return [UIColor whiteColor];
-  }
-  return _innerHighlightColor;
+  return _featureHighlightView.innerHighlightColor;
+}
+
+- (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
+  _featureHighlightView.innerHighlightColor = innerHighlightColor;
 }
 
 - (void)acceptFeature {

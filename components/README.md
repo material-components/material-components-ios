@@ -1,10 +1,9 @@
-
 # Component Documentation
 
 Material Components for iOS (MDC-iOS) help developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps.
- 
+
 Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
- 
+
 <a name="components"></a>
 <!--{: .jumplink }-->
 
@@ -133,7 +132,6 @@ Material Components for iOS are written in Objective-C and support Swift and Int
   Text styles for Material fonts and opacities.
   ](Typography/)
   <!--{: .icon-typography }-->
-<!--{: .icon-list .large-format }-->
 
 - - -
 
@@ -144,4 +142,4 @@ Material Components for iOS are written in Objective-C and support Swift and Int
 - [Contributing](../contributing/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
-- [Material Design Guidelines](https://material.google.com) (external site)
+- [Material Design Guidelines](https://material.io/guidelines) (external site)

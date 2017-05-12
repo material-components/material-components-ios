@@ -87,8 +87,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     let titleLabel = UILabel()
     titleLabel.text = self.title!.uppercased()
-    titleLabel.textColor = UIColor(white: 0.46, alpha: 1)
-    titleLabel.font = MDCTypography.titleFont()
+    titleLabel.textColor = UIColor(white: 1, alpha: 1)
+    titleLabel.font = UIFont(name: "RobotoMono-Regular", size: 14)
     titleLabel.sizeToFit()
     if inset + titleLabel.frame.size.width > containerView.frame.size.width {
       titleLabel.font = MDCTypography.body2Font()
@@ -111,10 +111,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                    height: titleSize.height)
 
     self.headerViewController.headerView.addSubview(containerView)
-
     self.headerViewController.headerView.forwardTouchEvents(for: containerView)
 
-    self.headerViewController.headerView.backgroundColor = UIColor.white
+    self.headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
     self.headerViewController.headerView.trackingScrollView = self.collectionView
 
     self.headerViewController.headerView.setShadowLayer(MDCShadowLayer()) { (layer, intensity) in
@@ -137,6 +136,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.collectionView?.collectionViewLayout.invalidateLayout()
   }
 
+  override var childViewControllerForStatusBarStyle: UIViewController? {
+    return self.headerViewController
+  }
+
+  // MARK: UICollectionViewDataSource
+
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
   }
@@ -149,7 +154,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func inkViewForView(_ view: UIView) -> MDCInkView {
     let foundInkView = MDCInkTouchController.injectedInkView(for: view)
     foundInkView.inkStyle = .unbounded
-    foundInkView.inkColor = UIColor(red: 0.012, green: 0.663, blue: 0.957, alpha: 0.2)
+    foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
     return foundInkView
   }
 
@@ -161,7 +166,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   }
 
   func inkTouchController(_ inkTouchController: MDCInkTouchController,
-                          inkViewAtTouchLocation location: CGPoint) -> MDCInkView {
+                          inkViewAtTouchLocation location: CGPoint) -> MDCInkView? {
     if let indexPath = self.collectionView!.indexPathForItem(at: location) {
       let cell = self.collectionView!.cellForItem(at: indexPath)
       return self.inkViewForView(cell!)

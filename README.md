@@ -4,8 +4,9 @@
 
 [![Build Status](https://travis-ci.org/material-components/material-components-ios.svg?branch=develop)](https://travis-ci.org/material-components/material-components-ios)
 [![Code coverage](https://img.shields.io/codecov/c/github/material-components/material-components-ios/develop.svg)](https://codecov.io/gh/material-components/material-components-ios/branch/develop)
+[![Chat](https://img.shields.io/discord/259087343246508035.svg)](https://discord.gg/material-components)
 
-Material Components for iOS (MDC-iOS) helps developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps. Learn more about how Material Design supports design and usability best practices across platforms in the  [Material Design Platform Adaptation guidelines](https://material.io/guidelines/platforms/platform-adaptation.html).
+Material Components for iOS (MDC-iOS) helps developers execute [Material Design](https://www.material.io). Developed by a core team of engineers and UX designers at Google, these components enable a reliable development workflow to build beautiful and functional iOS apps. Learn more about how Material Components for iOS supports design and usability best practices across platforms in the  [Material Design Platform Adaptation guidelines](https://material.io/guidelines/platforms/platform-adaptation.html).
 
 Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
 
@@ -17,21 +18,21 @@ Material Components for iOS are written in Objective-C and support Swift and Int
 - [Contributing](contributing/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
-- [Material Design Guidelines](https://material.google.com) (external site)
+- [Material Design Guidelines](https://material.io/guidelines) (external site)
 
 ## Trying out Material Components
 
 Our [catalog](catalog/) showcases Material Components. You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
 
-~~~ bash
+``` bash
 pod try MaterialComponents
-~~~
+```
 
 In case you have already checked out the repo, run the following command:
 
-~~~ bash
+``` bash
 pod install --project-directory=catalog/
-~~~
+```
 
 If you want to take a look at the implementation of the components, you can find the code inside the `Development Pods` folder.
 Use `cmd-1` to open the project navigator within Xcode. Peal open the `Pods` project and inside the `Development Pods` folder you will find the component source code.
@@ -49,42 +50,42 @@ check out their [getting started documentation](https://guides.cocoapods.org/usi
 
 To install CocoaPods, run the following commands:
 
-~~~ bash
+``` bash
 sudo gem install cocoapods
-~~~
+```
 
 To integrate Material Components in your existing application, first create a new Podfile:
 
-~~~ bash
+``` bash
 cd your-project-directory
 pod init
-~~~
+```
 
 Next, add the
 [Material Components for iOS pod](https://cocoapods.org/pods/MaterialComponentsIOS)
 to your target in your Podfile:
 
-~~~ ruby
+``` ruby
 target "MyApp" do
   ...
   pod 'MaterialComponents'
 end
-~~~
+```
 
 If you are using Swift, don’t forget to uncomment the `use_frameworks!` line
 at the top of your Podfile.
 
 Then run the command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 Now you're ready to get started in Xcode. Don't forget to open the workspace Cocoapods created for you instead of the original project:
 
-~~~ bash
+``` bash
 open your-project.xcworkspace
-~~~
+```
 
 ### Usage
 
@@ -92,7 +93,7 @@ The components are built upon familiar UIKit classes and can be added to a view 
 
 #### Swift
 
-~~~ swift
+``` swift
 import MaterialComponents.MaterialButtons
 
 class ViewController: UIViewController {
@@ -111,11 +112,11 @@ class ViewController: UIViewController {
     }
 
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialButtons.h"
 
 @implementation ViewController
@@ -138,7 +139,7 @@ class ViewController: UIViewController {
 }
 
 @end
-~~~
+```
 
 ## Attributions
 

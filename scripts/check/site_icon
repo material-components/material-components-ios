@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+readonly COMPONENT_DIR=$1
+readonly COMPONENT_NAME=$(basename $COMPONENT_DIR)
+readonly SCRIPTS_DIR="$(dirname $(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd))"
+readonly ROOT_DIR=$(dirname "$SCRIPTS_DIR")
+readonly ICONS_DIR="$ROOT_DIR/site-source/jekyll-site-src/images/custom_icons"
+readonly ICONS_CSS="$ROOT_DIR/site-source/jekyll-site-src/_sass/_icons.scss"
+
+if [ ! -d $ICONS_DIR ]; then
+  echo "Error: Could not find the icons directory at '$ICONS_DIR'."
+  echo "Please run scripts/build_site.sh once to install the site sources."
+  exit -1
+fi
+
+# Private components do not require an icon.
+if [[ $COMPONENT_DIR != *"/private/"* ]]; then
+  # Check for the icon on disk.
+  readonly UNDERSCORE_NAME=$($SCRIPTS_DIR/convert_name -m underscore $COMPONENT_NAME)
+  readonly ICON_NAME="ic_${UNDERSCORE_NAME}_24px.svg"
+  if [ ! -f "$ICONS_DIR/$ICON_NAME" ]; then
+    echo "Error: '$ICONS_DIR' is missing '$ICON_NAME'."
+    exit -1
+  fi
+
+  # Check for a reference to the icon in the _icons.scss.
+  GREP_OPTIONS="--quiet"
+  GREP_PATTERN="background-image:.*images/custom_icons/$ICON_NAME"
+  if ! grep $GREP_OPTIONS -- $GREP_PATTERN $ICONS_CSS; then
+    echo "Error: Could not find entry for $ICON_NAME in '$ICONS_CSS'."
+    exit -1
+  fi
+fi

@@ -24,7 +24,7 @@
  MDCDialogTransitionController is be used to setup a custom transition and animationed presentation
  and dismissal for material-styled alerts, simple dialogs and confirmation dialogs.
 
- https://material.google.com/components/dialogs.html
+ https://material.io/guidelines/components/dialogs.html
 
  This class provides a basic implementation of UIViewControllerAnimatedTransitioning and
  UIViewControllerTransitioningDelegate.

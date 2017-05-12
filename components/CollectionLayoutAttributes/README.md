@@ -1,7 +1,15 @@
+<!--docs:
+title: "Collection Layout Attributes"
+layout: detail
+section: components
+excerpt: "Allows passing layout attributes to the cells and supplementary views."
+iconId: list
+path: /catalog/collections/collection-layout-attributes/
+-->
+
 # Collection Layout Attributes
 
 Allows passing layout attributes to the cells and supplementary views.
-<!--{: .intro :}-->
 
 - - -
 
@@ -16,15 +24,16 @@ Allows passing layout attributes to the cells and supplementary views.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/CollectionLayoutAttributes'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -36,14 +45,14 @@ Before using Collection Layout Attributes, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialCollectionLayoutAttributes
-~~~
+```
 
 #### Objective-C
-~~~ objc
+``` objc
 #import "MaterialCollectionLayoutAttributes.h"
-~~~
+```
 <!--</div>-->
 
 The `MDCCollectionViewLayoutAttributes` class allows passing properties to a cell from a collection
@@ -52,7 +61,7 @@ view layout. Override the `-applyLayoutAttributes` method of any `UICollectionRe
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
   super.apply(layoutAttributes)
   if let attr = layoutAttributes as? MDCCollectionViewLayoutAttributes {
@@ -63,9 +72,9 @@ override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
     }
   }
 }
-~~~
+```
 #### Objective-C
-~~~ objc
+``` objc
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
   [super applyLayoutAttributes:layoutAttributes];
   if ([layoutAttributes isKindOfClass:[MDCCollectionViewLayoutAttributes class]]) {
@@ -77,5 +86,5 @@ override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
     }
   }
 }
-~~~
+```
 <!--</div>-->

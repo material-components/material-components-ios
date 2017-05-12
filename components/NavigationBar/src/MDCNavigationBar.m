@@ -16,28 +16,13 @@
 
 #import "MDCNavigationBar.h"
 
+#import "MDFTextAccessibility.h"
 #import "MaterialButtonBar.h"
+#import "MaterialMath.h"
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
-#import "MDFTextAccessibility.h"
 
 #import <objc/runtime.h>
-
-static inline CGFloat Ceil(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return ceil(value);
-#else
-  return ceilf(value);
-#endif
-}
-
-static inline CGFloat Floor(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return floor(value);
-#else
-  return floorf(value);
-#endif
-}
 
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarPadDefaultHeight = 64;
@@ -106,8 +91,9 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   // Update title label color based on navigationBar backgroundColor
   NSMutableDictionary *textAttr =
       [NSMutableDictionary dictionaryWithDictionary:[navBar titleTextAttributes]];
-  UIColor *textColor = [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
-                                                        targetTextAlpha:1.0
+  UIColor *textColor =
+      [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                       targetTextAlpha:1.0
                                                   font:[textAttr objectForKey:NSFontAttributeName]];
   [textAttr setObject:textColor forKey:NSForegroundColorAttributeName];
   [navBar setTitleTextAttributes:textAttr];
@@ -323,8 +309,8 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                                                  attributes:attributes
                                                     context:NULL]
                          .size;
-  titleSize.width = Ceil(titleSize.width);
-  titleSize.height = Ceil(titleSize.height);
+  titleSize.width = MDCCeil(titleSize.width);
+  titleSize.height = MDCCeil(titleSize.height);
   CGRect titleFrame = CGRectMake(textFrame.origin.x, 0, titleSize.width, titleSize.height);
   titleFrame = MDCRectFlippedForRTL(titleFrame, self.bounds.size.width,
                                     self.mdc_effectiveUserInterfaceLayoutDirection);
@@ -457,7 +443,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                         frame.size.height);
 
     case UIControlContentVerticalAlignmentCenter: {
-      CGFloat centeredY = Floor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
+      CGFloat centeredY = MDCFloor((bounds.size.height - frame.size.height) / 2) + bounds.origin.y;
       return CGRectMake(frame.origin.x, centeredY, frame.size.width, frame.size.height);
     }
 

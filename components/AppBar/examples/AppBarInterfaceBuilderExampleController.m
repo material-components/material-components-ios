@@ -51,7 +51,7 @@
       @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 
   [self addChildViewController:self.appBar.headerViewController];
-  UIColor *headerColor = [UIColor colorWithRed:0.01 green:0.67 blue:0.96 alpha:1.0];
+  UIColor *headerColor = [UIColor colorWithWhite:0.1 alpha:1];
   self.appBar.headerViewController.headerView.backgroundColor = headerColor;
 }
 

@@ -10,32 +10,26 @@ fill out have been marked with `TODO` statements.
 
     # TODO: ComponentName
 
-    TODO: screenshot.png is made on iPhone 5 simulator
-    ![TODO: ComponentName](docs/assets/screenshot.png)
-    <!--{: .ios-screenshot .right }-->
-
     TODO: Single sentence description of the component.
-    <!--{: .intro :}-->
 
-    ### Material Design Specifications
+    ## Design & API Documentation
 
     <ul class="icon-list">
-      <li class="icon-link">
-        <a href="https://www.google.com/design/spec/<TODO: link to spec>">
+      <li class="icon-list-item icon-list-item--spec">
+        <a href="https://material.io/guidelines/<TODO: link to spec>">
           TODO: link to spec
         </a>
       </li>
-    </ul>
-
-    ### API Documentation
-
-    <ul class="icon-list">
-      <li class="icon-link">
+      <li class="icon-list-item icon-list-item--link">
         <a href="/components/<ComponentName>/apidocs/Classes/<TODO: API name>.html">
           TODO: API name
         </a>
       </li>
     </ul>
+
+    TODO: screenshot.png is made on iPhone 5 simulator
+    ![TODO: ComponentName](docs/assets/screenshot.png)
+    <!--{: .article__asset.article__asset--screenshot }-->
 
     - - -
 
@@ -51,15 +45,15 @@ fill out have been marked with `TODO` statements.
     To add this component to your Xcode project using CocoaPods, add the
     following to your `Podfile`:
 
-    ~~~
+    ```
     pod 'MaterialComponents/TODO: ComponentName'
-    ~~~
+    ```
 
     Then, run the following command:
 
-    ~~~ bash
+    ``` bash
     pod install
-    ~~~
+    ```
 
     - - -
 
@@ -96,7 +90,7 @@ Swift language to use when writing examples.
 
     <!--<div class="material-code-render" markdown="1">-->
     #### Objective-C
-    ~~~ objc
+    ``` objc
     - (void)viewDidLoad {
       [super viewDidLoad];
 
@@ -105,15 +99,15 @@ Swift language to use when writing examples.
       // After all other views have been registered.
       MDCAppBarAddViews(self);
     }
-    ~~~
+    ```
 
     #### Swift
-    ~~~ swift
+    ``` swift
     override func viewDidLoad() {
       super.viewDidLoad()
 
       // After all other views have been registered.
       MDCAppBarAddViews(self)
     }
-    ~~~
+    ```
     <!--</div>-->

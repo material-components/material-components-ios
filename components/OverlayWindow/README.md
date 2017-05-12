@@ -1,3 +1,12 @@
+<!--docs:
+title: "Overlay Windows"
+layout: detail
+section: components
+excerpt: "A window for managing sets of overlay views."
+iconId: tooltip
+path: /catalog/snackbars/overlay-windows/
+-->
+
 # Overlay Window
 
 Provides a window which can have an arbitrary number of overlay views that will sit above the root
@@ -19,15 +28,16 @@ displayed message views are always visible to the user by being at the top of th
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/OverlayWindow'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -40,15 +50,15 @@ Before using the Overlay Window, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 import MaterialComponents.MaterialOverlayWindow
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialOverlayWindow.h"
-~~~
+```
 <!--</div>-->
 
 ## Examples
@@ -62,24 +72,24 @@ subclass of Overlay Window.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
   window = MDCOverlayWindow(frame: (application.keyWindow?.bounds)!)
 
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
   [[MDCOverlayWindow alloc] initWithFrame:application.keyWindow.bounds];
 
 }
-~~~
+```
 <!--</div>-->
 
 ### Using the Overlay Window
@@ -90,7 +100,7 @@ views at the top most level of the view hierarchy.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 // Set up view to be displayed in the overlay window.
 let myOverlayView = UIView()
 ...
@@ -99,11 +109,11 @@ let myOverlayView = UIView()
 if let overlayWindow = window as? MDCOverlayWindow {
   overlayWindow.activateOverlay(myOverlayView, withLevel:UIWindowLevelNormal)
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 // Set up view to be displayed in the overlay window.
 UIView *overlayView = [[UIView alloc] init];
 ...
@@ -113,5 +123,13 @@ if ([self.window isKindOfClass:[MDCOverlayWindow class]]) {
   MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)self.window;
   [overlayWindow activateOverlay:overlayView withLevel:UIWindowLevelNormal];
 }
-~~~
+```
 <!--</div>-->
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../Snackbar">Snackbars</a></li>
+</ul>

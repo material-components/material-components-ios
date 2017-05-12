@@ -1,18 +1,25 @@
+<!--docs:
+title: "Buttons"
+layout: detail
+section: components
+excerpt: "Buttons is a collection of Material Design buttons, including a flat button, a raised button and a floating action button."
+iconId: button
+path: /catalog/buttons/
+-->
+
 # Buttons
 
-<!--{% if site.link_to_site == "true" %}-->
-<a alt="Buttons"><img src="docs/assets/buttons.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/buttons.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/buttons.png" alt="Buttons" width="375">
+</div>
 
 Buttons is a collection of Material Design buttons, including a flat button, a raised button and a
 floating action button.
-<!--{: .intro }-->
 
-
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/buttons.html">Buttons</a></li>
 </ul>
 
 - - -
@@ -38,8 +45,6 @@ You should not directly instantiate an MDCButton object.
 
 - - -
 
-
-
 ## Installation
 
 ### Requirements
@@ -51,15 +56,16 @@ You should not directly instantiate an MDCButton object.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~
+```
 pod 'MaterialComponents/Buttons'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 - - -
 
@@ -73,15 +79,15 @@ Before using a Button, you'll need to import the button you want to use:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialButtons.h"
-~~~
+```
 <!--</div>-->
 
 ### Ink splash animation
@@ -113,18 +119,18 @@ simultaneously interacting with a button and other UI elements.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let flatButton = MDCFlatButton()
 flatButton.customTitleColor = UIColor.gray
 flatButton.setTitle("Tap me", for: .normal)
 flatButton.sizeToFit()
 flatButton.addTarget(self, action: "tap:", for: .touchUpInside)
 self.view.addSubview(flatButton)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCFlatButton *flatButton = [MDCFlatButton new];
 [flatButton setTitle:@"Tap Me" forState:UIControlStateNormal];
 [flatButton setCustomTitleColor:[UIColor grayColor]];
@@ -133,7 +139,7 @@ MDCFlatButton *flatButton = [MDCFlatButton new];
                action:@selector(tap:)
      forControlEvents:UIControlEventTouchUpInside];
 [self.view addSubview:flatButton];
-~~~
+```
 <!--</div>-->
 
 
@@ -145,29 +151,29 @@ The default elevation for _raised buttons_ in resting state is 2 dp.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let raisedButton = MDCRaisedButton()
-// See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+// See https://material.io/guidelines/what-is-material/elevation-shadows.html
 
 raisedButton.setElevation(4, for: .normal)
 raisedButton.setTitle("Tap Me Too", for: .normal)
 raisedButton.sizeToFit()
 raisedButton.addTarget(self, action: "tap:", for: .touchUpInside)
 self.view.addSubview(raisedButton)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCRaisedButton *raisedButton = [MDCRaisedButton new];
-// See https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+// See https://material.io/guidelines/what-is-material/elevation-shadows.html
 
 [raisedButton setElevation:4.0f forState:UIControlStateNormal];
 [raisedButton setTitle:@"Tap Me Too" forState:UIControlStateNormal];
 [raisedButton sizeToFit];
 [raisedButton addTarget:self action:@selector(didTap:) forControlEvents:UIControlEventTouchUpInside];
 [self.view addSubview:raisedButton];
-~~~
+```
 <!--</div>-->
 
 
@@ -177,17 +183,17 @@ MDCRaisedButton *raisedButton = [MDCRaisedButton new];
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let floatingButton = MDCFloatingButton()
 floatingButton.setTitle("+", for: .normal)
 floatingButton.sizeToFit()
 floatingButton.addTarget(self, action: "tap:", for: .touchUpInside)
 self.view.addSubview(floatingButton)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCFloatingButton *floatingButton = [MDCFloatingButton new];
 [floatingButton setTitle:@"+" forState:UIControlStateNormal];
 [floatingButton sizeToFit];
@@ -195,5 +201,5 @@ MDCFloatingButton *floatingButton = [MDCFloatingButton new];
                    action:@selector(didTap:)
          forControlEvents:UIControlEventTouchUpInside];
 [self.view addSubview:floatingButton];
-~~~
+```
 <!--</div>-->

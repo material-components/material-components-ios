@@ -1,19 +1,27 @@
+<!--docs:
+title: "Progress Views"
+layout: detail
+section: components
+excerpt: "Progress View is a determinate and linear progress indicator that implements Material Design animation and layout."
+iconId: progress_linear
+path: /catalog/progress-indicators/progress-views/
+-->
+
 # Progress View
 
-<!--{% if site.link_to_site == "true" %}-->
-<a alt="Progress View"><img src="docs/assets/progress_view.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/progress_view.mp4" autoplay loop></video></div>{% endif %}-->
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/progress_view.png" alt="Progress View" width="375">
+</div>
 
 This control is designed to be a drop-in replacement for `UIProgressView`, with a user experience
-influenced by [Material Design specifications](https://material.google.com/components/progress-activity.html#)
+influenced by [Material Design specifications](https://material.io/guidelines/components/progress-activity.html#)
 for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
 few key methods required to achieve the desired animation of the control.
-<!--{: .intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://material.google.com/components/progress-activity.html">Progress & activity</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/progress-activity.html">Progress & activity</a></li>
 </ul>
 
 - - -
@@ -29,15 +37,16 @@ few key methods required to achieve the desired animation of the control.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/ProgressView'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 $ pod install
-~~~
+```
 
 - - -
 
@@ -57,15 +66,15 @@ Before using Progress View, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialProgressView
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialProgressView.h"
-~~~
+```
 <!--</div>-->
 
 Add the progress view to your view hierarchy like you would with any other view. Note that it works
@@ -79,18 +88,18 @@ Add the progress view to a view and set the desired progress and hidden state.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 let progressView = MDCProgressView()
 progressView.progress = 0
 
 let progressViewHeight = CGFloat(2)
 progressView.frame = CGRect(x: 0, y: view.bounds.height - progressViewHeight, width: view.bounds.width, height: progressViewHeight)
 view.addSubview(progressView)
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 @property(nonatomic) MDCProgressView *progressView;
 ...
 
@@ -98,7 +107,7 @@ view.addSubview(progressView)
 self.progressView = [[MDCProgressView alloc] initWithFrame:myframe];
 self.progressView.progress = 0;  // You can also set a greater progress for actions already started.
 [self.view addSubview:self.progressView];
-~~~
+```
 <!--</div>-->
 
 ### Step 2: Change the progress and hidden state
@@ -108,7 +117,7 @@ Both the progress and the hidden state can be animated, with a completion block.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-~~~ swift
+``` swift
 func startAndShowProgressView() {
   progressView.progress = 0
   progressView.setHidden(false, animated: true)
@@ -119,11 +128,11 @@ func completeAndHideProgressView() {
     self.progressView.setHidden(true, animated: true)
   }
 }
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 - (void)startAndShowProgressView {
   self.progressView.progress = 0;
   [self.progressView setHidden:NO animated:YES completion:nil];
@@ -135,5 +144,13 @@ func completeAndHideProgressView() {
     [weakSelf.progressView setHidden:YES animated:YES completion:nil];
   }];
 }
-~~~
+```
 <!--</div>-->
+
+- - -
+
+## Related Components
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--components"><a href="../ActivityIndicator">Activity Indicators</a></li>
+</ul>

@@ -24,7 +24,8 @@
   _center = center;
 
   CGRect circleRect = CGRectMake(center.x - _radius, center.y - _radius, _radius * 2, _radius * 2);
-  self.path = CGPathCreateWithEllipseInRect(circleRect, NULL);
+  self.path = (__bridge CGPathRef _Nullable)(
+      CFBridgingRelease(CGPathCreateWithEllipseInRect(circleRect, NULL)));
 }
 
 - (void)setCenter:(CGPoint)center radius:(CGFloat)radius animated:(BOOL)animated {
@@ -39,13 +40,15 @@
     if (self.path) {
       animation.fromValue = (__bridge id)self.path;
     } else {
-      animation.fromValue =
-          (__bridge id)CGPathCreateWithEllipseInRect(CGRectMake(center.x, center.y, 0, 0), NULL);
+      animation.fromValue = CFBridgingRelease(
+          CGPathCreateWithEllipseInRect(CGRectMake(center.x, center.y, 0, 0), NULL));
     }
-    self.path = CGPathCreateWithEllipseInRect(circleRect, NULL);
+    self.path = (__bridge CGPathRef _Nullable)CFBridgingRelease(
+        CGPathCreateWithEllipseInRect(circleRect, NULL));
     [self addAnimation:animation forKey:@"path"];
   } else {
-    self.path = CGPathCreateWithEllipseInRect(circleRect, NULL);
+    self.path = (__bridge CGPathRef _Nullable)CFBridgingRelease(
+        CGPathCreateWithEllipseInRect(circleRect, NULL));
   }
 }
 
@@ -69,7 +72,7 @@
   for (NSNumber *radius in radii) {
     CGFloat r = radius.floatValue;
     CGRect circleRect = CGRectMake(center.x - r, center.y - r, r * 2, r * 2);
-    [values addObject:(__bridge id)CGPathCreateWithEllipseInRect(circleRect, NULL)];
+    [values addObject:CFBridgingRelease(CGPathCreateWithEllipseInRect(circleRect, NULL))];
   }
   CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"path"];
   animation.duration = [CATransaction animationDuration];

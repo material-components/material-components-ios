@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponents"
-  s.version      = "22.1.0"
+  s.version      = "23.1.0"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
   #    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
   #
   #    # Only if you have a resource bundle
-  #    ss.resources = ["components/#{ss.base_name}/Material#{ss.base_name}.bundle"]
+  #    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
   #
   #  end
   #
@@ -46,7 +46,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Application"
     ss.dependency "MaterialComponents/private/RTL"
   end
-  
+
   s.subspec "AnimationTiming" do |ss|
     ss.ios.deployment_target = '8.0'
     ss.tvos.deployment_target = '9.0'
@@ -59,6 +59,7 @@ Pod::Spec.new do |s|
     ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
     # Navigation bar contents
     ss.dependency "MaterialComponents/HeaderStackView"
@@ -85,6 +86,8 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/ShadowElevations"
     ss.dependency "MaterialComponents/ShadowLayer"
     ss.dependency "MaterialComponents/Typography"
+
+    ss.dependency "MaterialComponents/private/Math"
   end
 
   s.subspec "ButtonBar" do |ss|
@@ -102,6 +105,7 @@ Pod::Spec.new do |s|
     ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
     ss.framework = "CoreGraphics", "QuartzCore"
 
@@ -114,6 +118,7 @@ Pod::Spec.new do |s|
     ss.dependency "MaterialComponents/private/Icons/ic_info"
     ss.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
     ss.dependency "MaterialComponents/private/Icons/ic_reorder"
+    ss.dependency "MaterialComponents/private/Math"
     ss.dependency "MaterialComponents/private/RTL"
   end
 
@@ -159,6 +164,7 @@ Pod::Spec.new do |s|
     ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
     ss.dependency "MaterialComponents/Typography"
     ss.dependency "MDFTextAccessibility"
   end
@@ -197,6 +203,8 @@ Pod::Spec.new do |s|
 
     ss.dependency "MaterialComponents/ButtonBar"
     ss.dependency "MaterialComponents/Typography"
+
+    ss.dependency "MaterialComponents/private/Math"
     ss.dependency "MaterialComponents/private/RTL"
   end
 
@@ -230,6 +238,7 @@ Pod::Spec.new do |s|
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
 
+    ss.dependency "MaterialComponents/private/Math"
     ss.dependency "MaterialComponents/private/RTL"
   end
 
@@ -316,6 +325,13 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/private/Application"
     end
 
+    pss.subspec "Math" do |ss|
+      ss.ios.deployment_target = '8.0'
+      ss.tvos.deployment_target = '9.0'
+      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
+      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    end
+
     pss.subspec "Overlay" do |ss|
       ss.ios.deployment_target = '8.0'
       ss.tvos.deployment_target = '9.0'
@@ -340,6 +356,8 @@ Pod::Spec.new do |s|
       ss.dependency "MaterialComponents/ShadowElevations"
       ss.dependency "MaterialComponents/ShadowLayer"
       ss.dependency "MaterialComponents/Typography"
+
+      ss.dependency "MaterialComponents/private/Math"
       ss.dependency "MaterialComponents/private/RTL"
     end
 

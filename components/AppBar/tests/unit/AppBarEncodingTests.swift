@@ -36,8 +36,8 @@ class AppBarEncodingTests: XCTestCase {
     appBar.navigationBar.titleAlignment = .leading
 
     // When
-    var data = NSKeyedArchiver.archivedData(withRootObject: appBar)
-    var unarchivedAppBar = NSKeyedUnarchiver.unarchiveObject(with: data) as? MDCAppBar
+    let data = NSKeyedArchiver.archivedData(withRootObject: appBar)
+    let unarchivedAppBar = NSKeyedUnarchiver.unarchiveObject(with: data) as? MDCAppBar
 
     // Then
     XCTAssertEqual(appBar.headerViewController.headerView.shiftBehavior,

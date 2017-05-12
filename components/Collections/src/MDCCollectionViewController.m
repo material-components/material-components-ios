@@ -26,6 +26,9 @@
 
 #import <tgmath.h>
 
+NSString *const MDCCollectionInfoBarKindHeader = @"MDCCollectionInfoBarKindHeader";
+NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFooter";
+
 @interface MDCCollectionViewController () <MDCCollectionInfoBarViewDelegate,
                                            MDCInkTouchControllerDelegate>
 @property(nonatomic, assign) BOOL currentlyActiveInk;
@@ -42,7 +45,8 @@
 @synthesize collectionViewLayout = _collectionViewLayout;
 
 - (instancetype)init {
-  return [self initWithCollectionViewLayout:self.collectionViewLayout];
+  MDCCollectionViewFlowLayout *defaultLayout = [[MDCCollectionViewFlowLayout alloc] init];
+  return [self initWithCollectionViewLayout:defaultLayout];
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
@@ -50,6 +54,31 @@
   if (self) {
     _collectionViewLayout = layout;
   }
+  return self;
+}
+
+- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
+                         bundle:(nullable NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self != nil) {
+    // TODO(#): Why is this nil, the decoder should have created it
+    if (!_collectionViewLayout) {
+      _collectionViewLayout = [[MDCCollectionViewFlowLayout alloc] init];
+    }
+  }
+
+  return self;
+}
+
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self != nil) {
+    // TODO(#): Why is this nil, the decoder should have created it
+    if (!_collectionViewLayout) {
+      _collectionViewLayout = [[MDCCollectionViewFlowLayout alloc] init];
+    }
+  }
+
   return self;
 }
 
@@ -69,13 +98,17 @@
   // Set up ink touch controller.
   _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
   _inkTouchController.delegate = self;
-}
 
-- (UICollectionViewLayout *)collectionViewLayout {
-  if (!_collectionViewLayout) {
-    _collectionViewLayout = [[MDCCollectionViewFlowLayout alloc] init];
-  }
-  return _collectionViewLayout;
+  // Register our supplementary header and footer
+  NSString *classIdentifier = NSStringFromClass([MDCCollectionInfoBarView class]);
+  NSString *headerKind = MDCCollectionInfoBarKindHeader;
+  NSString *footerKind = MDCCollectionInfoBarKindFooter;
+  [self.collectionView registerClass:[MDCCollectionInfoBarView class]
+          forSupplementaryViewOfKind:headerKind
+                 withReuseIdentifier:classIdentifier];
+  [self.collectionView registerClass:[MDCCollectionInfoBarView class]
+          forSupplementaryViewOfKind:footerKind
+                 withReuseIdentifier:classIdentifier];
 }
 
 - (void)setCollectionView:(__kindof UICollectionView *)collectionView {
@@ -279,19 +312,19 @@
   NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
   UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
   MDCInkView *ink = nil;
-  if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
-    MDCCollectionViewCell *inkCell = (MDCCollectionViewCell *)cell;
-    if ([inkCell respondsToSelector:@selector(inkView)]) {
-      // Set cell ink.
-      ink = [cell performSelector:@selector(inkView)];
-    }
-  }
 
   if ([_styler.delegate
           respondsToSelector:@selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
     return [_styler.delegate collectionView:self.collectionView
                          inkTouchController:inkTouchController
                          inkViewAtIndexPath:indexPath];
+  }
+  if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
+    MDCCollectionViewCell *inkCell = (MDCCollectionViewCell *)cell;
+    if ([inkCell respondsToSelector:@selector(inkView)]) {
+      // Set cell ink.
+      ink = [cell performSelector:@selector(inkView)];
+    }
   }
 
   return ink;
@@ -311,11 +344,6 @@
   if ([kind isEqualToString:MDCCollectionInfoBarKindHeader] ||
       [kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
     NSString *identifier = NSStringFromClass([MDCCollectionInfoBarView class]);
-    identifier = [identifier stringByAppendingFormat:@".%@", kind];
-    [collectionView registerClass:[MDCCollectionInfoBarView class]
-        forSupplementaryViewOfKind:kind
-               withReuseIdentifier:identifier];
-
     UICollectionReusableView *supplementaryView =
         [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                            withReuseIdentifier:identifier
@@ -323,14 +351,17 @@
 
     // Update info bar.
     if ([supplementaryView isKindOfClass:[MDCCollectionInfoBarView class]]) {
-      MDCCollectionInfoBarView *infoBar = (MDCCollectionInfoBarView *)supplementaryView;
-      infoBar.delegate = self;
-      infoBar.kind = kind;
-      [self updateControllerWithInfoBar:infoBar];
+      MDCCollectionInfoBarView *infoBarView = (MDCCollectionInfoBarView *)supplementaryView;
+      infoBarView.delegate = self;
+      infoBarView.kind = kind;
+      [self updateControllerWithInfoBar:infoBarView];
     }
     return supplementaryView;
+  } else {
+    return [super collectionView:collectionView
+        viewForSupplementaryElementOfKind:kind
+                              atIndexPath:indexPath];
   }
-  return nil;
 }
 
 #pragma mark - <UICollectionViewDelegate>
@@ -345,11 +376,16 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  // Start cell ink show animation.
-  MDCInkView *inkView =
-      [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
+
+  // Start cell ink show animation.
+  MDCInkView *inkView;
+  if ([cell respondsToSelector:@selector(inkView)]) {
+    inkView = [cell performSelector:@selector(inkView)];
+  } else {
+    return;
+  }
 
   // Update ink color if necessary.
   if ([_styler.delegate respondsToSelector:@selector(collectionView:inkColorAtIndexPath:)]) {
@@ -365,11 +401,17 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  // Start cell ink evaporate animation.
-  MDCInkView *inkView =
-      [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
+
+  // Start cell ink evaporate animation.
+  MDCInkView *inkView;
+  if ([cell respondsToSelector:@selector(inkView)]) {
+    inkView = [cell performSelector:@selector(inkView)];
+  } else {
+    return;
+  }
+
   self.currentlyActiveInk = NO;
   [inkView startTouchEndedAnimationAtPoint:location completion:nil];
 }

@@ -93,14 +93,15 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     if (indexPath.section == 0) {
       supplementaryView.textLabel.text = @"Section with only header";
+    } else {
+      supplementaryView.textLabel.text = @"Section header";
     }
-    supplementaryView.textLabel.text = @"Section header";
-
   } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
     if (indexPath.section == 1) {
       supplementaryView.textLabel.text = @"Section with only footer";
+    } else {
+      supplementaryView.textLabel.text = @"Section footer";
     }
-    supplementaryView.textLabel.text = @"Section footer";
   }
 
   return supplementaryView;

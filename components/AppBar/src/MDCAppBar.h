@@ -26,7 +26,7 @@
  flexible content such as a photo.
 
  Learn more at the [Material
- spec](https://www.google.com/design/spec/patterns/scrolling-techniques.html)
+ spec](https://material.io/guidelines/patterns/scrolling-techniques.html)
 
  ### Dependencies
 

@@ -18,9 +18,10 @@
 
 #import <tgmath.h>
 
+#import "MaterialMath.h"
 #import "MaterialRTL.h"
 
-// Blue 500 from http://www.google.com/design/spec/style/color.html#color-color-palette .
+// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCProgressViewDefaultTintColor = 0x2196F3;
 
 // The ratio by which to desaturate the progress tint color to obtain the default track tint color.
@@ -278,7 +279,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
 - (void)updateProgressView {
   // Update progressView with the current progress value.
-  CGFloat progressWidth = ceil(self.progress * CGRectGetWidth(self.bounds));
+  CGFloat progressWidth = MDCCeil(self.progress * CGRectGetWidth(self.bounds));
   CGRect progressFrame = CGRectMake(0, 0, progressWidth, CGRectGetHeight(self.bounds));
   self.progressView.frame = MDCRectFlippedForRTL(progressFrame, CGRectGetWidth(self.bounds),
                                                  self.mdc_effectiveUserInterfaceLayoutDirection);

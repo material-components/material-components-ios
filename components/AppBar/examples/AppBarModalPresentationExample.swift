@@ -28,11 +28,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
     self.addChildViewController(appBar.headerViewController)
 
-    let color = UIColor(
-      red: CGFloat(0x03) / CGFloat(255),
-      green: CGFloat(0xA9) / CGFloat(255),
-      blue: CGFloat(0xF4) / CGFloat(255),
-      alpha: 1)
+    let color = UIColor(white: 0.1, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = color
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes =
@@ -108,11 +104,7 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
 
     self.addChildViewController(appBar.headerViewController)
 
-    let color = UIColor(
-      red: CGFloat(0x03) / CGFloat(255),
-      green: CGFloat(0xA9) / CGFloat(255),
-      blue: CGFloat(0xF4) / CGFloat(255),
-      alpha: 1)
+    let color = UIColor(white: 0.1, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = color
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes =

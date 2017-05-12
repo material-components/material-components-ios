@@ -19,6 +19,7 @@
 #import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
 #import "MaterialInk.h"
+#import "MaterialMath.h"
 #import "MaterialRTL.h"
 
 static const CGFloat kAnimationDuration = 0.25f;
@@ -81,40 +82,6 @@ static const CGFloat kValueLabelFontSize = 12.f;
 @end
 
 // TODO(iangordon): Properly handle broken tgmath
-static inline CGFloat Fabs(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return fabs(value);
-#else
-  return fabsf(value);
-#endif
-}
-static inline CGFloat Round(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return round(value);
-#else
-  return roundf(value);
-#endif
-}
-
-static inline CGFloat Hypot(CGFloat x, CGFloat y) {
-#if CGFLOAT_IS_DOUBLE
-  return hypot(x, y);
-#else
-  return hypotf(x, y);
-#endif
-}
-
-static inline bool CGFloatEqual(CGFloat a, CGFloat b) {
-  const CGFloat constantK = 3;
-#if CGFLOAT_IS_DOUBLE
-  const CGFloat epsilon = DBL_EPSILON;
-  const CGFloat min = DBL_MIN;
-#else
-  const CGFloat epsilon = FLT_EPSILON;
-  const CGFloat min = FLT_MIN;
-#endif
-  return (Fabs(a - b) < constantK * epsilon * Fabs(a + b) || Fabs(a - b) < min);
-}
 
 /**
  Returns the distance between two points.
@@ -125,7 +92,7 @@ static inline bool CGFloatEqual(CGFloat a, CGFloat b) {
  @return Absolute straight line distance.
  */
 static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
-  return Hypot(point1.x - point2.x, point1.y - point2.y);
+  return MDCHypot(point1.x - point2.x, point1.y - point2.y);
 }
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
@@ -524,9 +491,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
         (_value < _filledTrackAnchorValue && _filledTrackAnchorValue < previousValue);
     if (crossesAnchor) {
       CGFloat currentValue = _value;
-      CGFloat animationDurationToAnchor =
-          (Fabs(previousValue - _filledTrackAnchorValue) / Fabs(previousValue - currentValue)) *
-          kAnimationDuration;
+      CGFloat animationDurationToAnchor = (MDCFabs(previousValue - _filledTrackAnchorValue) /
+                                           MDCFabs(previousValue - currentValue)) *
+                                          kAnimationDuration;
       void (^afterCrossingAnchorAnimation)(BOOL) = ^void(BOOL finished) {
         UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseOut;
         [UIView animateWithDuration:(kAnimationDuration - animationDurationToAnchor)
@@ -676,11 +643,12 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // method, not the UIVIew block-based animation that the rest of this method uses. We use
     // the timing function and duration passed in in order to match with the other animations.
     [CATransaction begin];
-    [CATransaction setAnimationTimingFunction:
-                       [self timingFunctionFromUIViewAnimationOptions:animationOptions]];
+    [CATransaction
+        setAnimationTimingFunction:[self
+                                       timingFunctionFromUIViewAnimationOptions:animationOptions]];
     [CATransaction setAnimationDuration:duration];
     _trackOnLayer.frame =
-        CGRectMake(trackOnXValue, 0, Fabs(currentXValue - anchorXValue), _trackHeight);
+        CGRectMake(trackOnXValue, 0, MDCFabs(currentXValue - anchorXValue), _trackHeight);
     [CATransaction commit];
   } else {
     // Set background colors for disabled state.
@@ -877,10 +845,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (CGFloat)relativeValueForValue:(CGFloat)value {
   value = MAX(_minimumValue, MIN(value, _maximumValue));
-  if (CGFloatEqual(_minimumValue, _maximumValue)) {
+  if (MDCCGFloatEqual(_minimumValue, _maximumValue)) {
     return _minimumValue;
   }
-  CGFloat relValue = (value - _minimumValue) / Fabs(_minimumValue - _maximumValue);
+  CGFloat relValue = (value - _minimumValue) / MDCFabs(_minimumValue - _maximumValue);
   // For RTL we invert the value
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     relValue = 1 - relValue;
@@ -892,13 +860,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (_numDiscreteValues < 2) {
     return targetValue;
   }
-  if (CGFloatEqual(_minimumValue, _maximumValue)) {
+  if (MDCCGFloatEqual(_minimumValue, _maximumValue)) {
     return _minimumValue;
   }
 
   CGFloat scaledTargetValue = (targetValue - _minimumValue) / (_maximumValue - _minimumValue);
   CGFloat snappedValue =
-      Round((_numDiscreteValues - 1) * scaledTargetValue) / (_numDiscreteValues - 1.0f);
+      MDCRound((_numDiscreteValues - 1) * scaledTargetValue) / (_numDiscreteValues - 1.0f);
   return (1 - snappedValue) * _minimumValue + snappedValue * _maximumValue;
 }
 
@@ -1094,7 +1062,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // If we are at the maximum then make it the minimum:
     // For switch like thumb tracks where there is only 2 values we ignore the position of the tap
     // and toggle between the minimum and maximum values.
-    value = _value < CGFloatEqual(_value, _minimumValue) ? _maximumValue : _minimumValue;
+    value = _value < MDCCGFloatEqual(_value, _minimumValue) ? _maximumValue : _minimumValue;
   } else {
     value = [self valueForThumbPosition:position];
   }

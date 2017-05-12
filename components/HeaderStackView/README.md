@@ -1,17 +1,25 @@
-# Header Stack View
+<!--docs:
+title: "Header Stack Views"
+layout: detail
+section: components
+excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically stacked bar views."
+iconId: header
+path: /catalog/flexible-headers/header-stack-views/
+-->
 
-<!--{% if site.link_to_site == "true" %}-->
-<a alt="Header Stack View"><img src="docs/assets/header_stack_view.png" width="320px"></a>
-<!--{% else %}<div class="ios-animation right" markdown="1"><video src="docs/assets/header_stack_view.mp4" autoplay loop></video></div>{% endif %}-->
+# Header Stack Views
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/header_stack_view.png" alt="Header Stack View" width="320">
+</div>
 
 The Header Stack View component is a view that coordinates the layout of two vertically stacked
 bar views.
-<!--{: .intro }-->
 
-### Material Design Specifications
+## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-link"><a href="https://www.google.com/design/spec/layout/structure.html#structure-app-bar">App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">App Bar</a></li>
 </ul>
 
 - - -
@@ -28,15 +36,16 @@ bar views.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-~~~ bash
+``` bash
 pod 'MaterialComponents/HeaderStackView'
-~~~
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-~~~ bash
+``` bash
 pod install
-~~~
+```
 
 
 - - -
@@ -61,15 +70,15 @@ Before using Header Stack View, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 import MaterialComponents.MaterialHeaderStackView
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 #import "MaterialHeaderStackView.h"
-~~~
+```
 <!--</div>-->
 
 
@@ -77,43 +86,43 @@ Header Stack View provides MDCHeaderStackView, which is a UIView subclass.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 let headerStackView = MDCHeaderStackView()
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 MDCHeaderStackView *headerStackView = [[MDCHeaderStackView alloc] init];
-~~~
+```
 <!--</div>-->
 
 You may provide a top bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 headerStackView.topBar = navigationBar
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 headerStackView.topBar = navigationBar;
-~~~
+```
 <!--</div>-->
 
 You may provide a bottom bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-~~~ swift
+``` swift
 headerStackView.bottomBar = tabBar
-~~~
+```
 
 #### Objective-C
 
-~~~ objc
+``` objc
 headerStackView.bottomBar = tabBar;
-~~~
+```
 <!--</div>-->
