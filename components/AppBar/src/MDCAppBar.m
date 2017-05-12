@@ -21,12 +21,9 @@
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
-#import "MaterialTypography.h"
 #import "private/MaterialAppBarStrings.h"
 #import "private/MaterialAppBarStrings_table.h"
 
-static NSString *const kBarStackKey = @"barStack";
-static NSString *const kStatusBarHeightKey = @"statusBarHeight";
 static NSString *const MDCAppBarHeaderViewControllerKey = @"MDCAppBarHeaderViewControllerKey";
 static NSString *const MDCAppBarNavigationBarKey = @"MDCAppBarNavigationBarKey";
 static NSString *const MDCAppBarHeaderStackViewKey = @"MDCAppBarHeaderStackViewKey";
