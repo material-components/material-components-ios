@@ -188,15 +188,22 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-  MDCTextInputCommonFundament *copy = [[[self class] alloc] init];
+  MDCTextInputCommonFundament *copy = [[MDCTextInputCommonFundament alloc] initWithTextInput:self.textInput];
 
-  copy.clearButtonColor = self.clearButtonColor.copy;
-  copy.clearButtonImage = self.clearButtonImage.copy;
+  copy.clearButtonColor = [self.clearButtonColor copy];
+  copy.clearButtonImage = [self.clearButtonImage copy];
+  copy.enabled = self.isEnabled;
+  copy.hidesPlaceholderOnInput = self.hidesPlaceholderOnInput;
   copy.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   copy.positioningDelegate = self.positioningDelegate;
-  copy.relativeSuperview = self.relativeSuperview.copy;
-  copy.textColor = self.textColor.copy;
-  copy.underlineView = self.underlineView.copy;
+  if (![self.relativeSuperview isKindOfClass:[MDCTextField class]]) {
+    copy.relativeSuperview = [self.relativeSuperview copy];
+  }
+  copy.text = [self.text copy];
+  copy.textColor = [self.textColor copy];
+  copy.underlineColor = [self.underlineColor copy];
+  copy.underlineHeight = self.underlineHeight;
+  copy.underlineView = [self.underlineView copy];
 
   return copy;
 }

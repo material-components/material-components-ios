@@ -193,15 +193,15 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;
   copy.characterCountMax = self.characterCountMax;
-  copy.errorAccessibilityValue = self.errorAccessibilityValue.copy;
+  copy.errorAccessibilityValue = [self.errorAccessibilityValue copy];
   copy.errorColor = self.errorColor;
-  copy.errorText = self.errorText.copy;
+  copy.errorText = [self.errorText copy];
   copy.floatingPlaceholderColor = self.floatingPlaceholderColor;
   copy.floatingPlaceholderScale = self.floatingPlaceholderScale;
-  copy.helperText = self.helperText.copy;
+  copy.helperText = [self.helperText copy];
   copy.inlinePlaceholderColor = self.inlinePlaceholderColor;
   copy.presentationStyle = self.presentationStyle;
-  copy.previousLeadingText = self.previousLeadingText.copy;
+  copy.previousLeadingText = [self.previousLeadingText copy];
   copy.previousPlaceholderColor = self.previousPlaceholderColor;
   copy.textInput = self.textInput;  // Just a pointer value copy
   copy.underlineViewMode = self.underlineViewMode;
@@ -583,7 +583,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
-  _errorAccessibilityValue = errorAccessibilityValue.copy;
+  _errorAccessibilityValue = [errorAccessibilityValue copy];
 }
 
 - (void)setErrorColor:(UIColor *)errorColor {
@@ -596,7 +596,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (void)setErrorText:(NSString *)errorText {
-  _errorText = errorText.copy;
+  _errorText = [errorText copy];
 }
 
 - (void)setFloatingPlaceholderColor:(UIColor *)floatingPlaceholderColor {
@@ -615,7 +615,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
 - (void)setHelperText:(NSString *)helperText {
   if (self.isDisplayingErrorText) {
-    self.previousLeadingText = helperText.copy;
+    self.previousLeadingText = [helperText copy];
   } else {
     if (![self.textInput.leadingUnderlineLabel.text isEqualToString:helperText]) {
       self.textInput.leadingUnderlineLabel.text = helperText;
@@ -670,7 +670,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (void)setPreviousLeadingText:(NSString *)previousLeadingText {
-  _previousLeadingText = previousLeadingText.copy;
+  _previousLeadingText = [previousLeadingText copy];
 }
 
 - (void)setPreviousPlaceholderColor:(UIColor *)previousPlaceholderColor {
@@ -1149,7 +1149,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     NSString *valueString = @"";
 
     if (self.textInput.text > 0) {
-      valueString = self.textInput.text.copy;
+      valueString = [self.textInput.text copy];
     }
     if (self.textInput.placeholder.length > 0) {
       valueString =

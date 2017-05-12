@@ -147,4 +147,81 @@ class TextInputTests: XCTestCase {
     XCTAssertEqual(controller.characterMax, unserializedController?.characterMax)
   }
 
+  func testCopyingTextField() {
+    let textField = MDCTextField()
+
+    textField.clearButtonColor = .red
+    textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
+    textField.hidesPlaceholderOnInput = false
+    textField.isEnabled = false
+    textField.mdc_adjustsFontForContentSizeCategory = true;
+    textField.placeholder = "test"
+    textField.text = "test"
+    textField.textColor = .red
+    textField.underlineColor = .red
+    textField.underlineHeight = 10
+
+    if let textFieldCopy = textField.copy() as? MDCTextField {
+      XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
+      XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
+      XCTAssertEqual(textField.clearButtonColor, textFieldCopy.clearButtonColor)
+      XCTAssertEqual(textField.font, textFieldCopy.font)
+      XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
+      XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
+      XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory, textFieldCopy.mdc_adjustsFontForContentSizeCategory)
+      XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
+      XCTAssertEqual(textField.text, textFieldCopy.text)
+      XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
+      XCTAssertEqual(textField.underlineColor, textFieldCopy.underlineColor)
+      XCTAssertEqual(textField.underlineHeight, textFieldCopy.underlineHeight)
+    } else {
+      XCTFail("No copy or copy is wrong class")
+    }
+
+    let controller = MDCTextInputController(input: textField)
+    controller.characterMax = 49
+
+    if let controllerCopy = controller.copy() as? MDCTextInputController {
+      XCTAssertEqual(controller.characterMax, controllerCopy.characterMax)
+    } else {
+      XCTFail("No copy or copy is wrong class")
+    }
+  }
+
+  func testFontChange() {
+    let textField = MDCTextField()
+
+    textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
+    XCTAssertEqual(UIFont.systemFont(ofSize: UIFont.labelFontSize), textField.font)
+    XCTAssertNotEqual(UIFont.systemFont(ofSize: UIFont.smallSystemFontSize), textField.font)
+  }
+
+  func testMDCDynamicTypeAPI() {
+    let textField = MDCTextField()
+
+    textField.mdc_adjustsFontForContentSizeCategory = true
+    XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
+
+    if #available(iOS 10, *) {
+      XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory, textField.adjustsFontForContentSizeCategory)
+    }
+  }
+
+  func testUnderlineSetters() {
+    let textField = MDCTextField()
+
+    textField.underlineColor = .red
+    textField.underlineHeight = 10
+
+    XCTAssertEqual(textField.underlineColor, .red)
+    if let underline = textField.underline as? MDCTextInputUnderlineView {
+      XCTAssertEqual(underline.color, .red)
+      XCTAssertEqual(underline.color, textField.underlineColor)
+
+      XCTAssertEqual(underline.height, 10)
+      XCTAssertEqual(underline.height, textField.underlineHeight)
+    } else {
+      XCTFail("No underline or underline is wrong class")
+    }
+  }
 }

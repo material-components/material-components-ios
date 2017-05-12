@@ -80,7 +80,10 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTextField *copy = [[[self class] alloc] init];
 
-  copy.fundament = self.fundament.copy;
+  copy.fundament = [self.fundament copy];
+  copy.enabled = self.isEnabled;
+  copy.placeholder = [self.placeholder copy];
+  copy.text = [self.text copy];
 
   return copy;
 }
