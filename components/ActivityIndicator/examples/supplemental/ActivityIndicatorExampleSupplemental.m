@@ -24,6 +24,13 @@
 #import "ActivityIndicatorExampleSupplemental.h"
 #import "MaterialTypography.h"
 
+#define MDC_CATALOG_BLACK [UIColor colorWithWhite:0.1f alpha:1]
+#define MDC_CATALOG_GREY  [UIColor colorWithWhite:0.9f alpha:1]
+#define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1]
+
+static NSString * const kCell = @"Cell";
+
+
 @implementation ActivityIndicatorExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
@@ -45,116 +52,101 @@
 
 - (void)setupExampleViews {
 
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class] forCellWithReuseIdentifier:kCell];
+
+  // Set up container view of three activity indicators.
+  UIView *indicators = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 160)];
+  indicators.backgroundColor = MDC_CATALOG_GREY;
+
+  [indicators addSubview:self.activityIndicator1];
+  [indicators addSubview:self.activityIndicator2];
+  [indicators addSubview:self.activityIndicator3];
+
+  self.activityIndicator1.center =
+      CGPointMake(indicators.bounds.size.width / 3, indicators.bounds.size.height / 2);
+  self.activityIndicator2.center =
+      CGPointMake(indicators.bounds.size.width / 2, indicators.bounds.size.height / 2);
+  self.activityIndicator3.center =
+      CGPointMake(2 * indicators.bounds.size.width / 3, indicators.bounds.size.height / 2);
+
+  self.indicators = indicators;
+
+
   self.onSwitch = [[UISwitch alloc] init];
-  self.onSwitch.onTintColor = [UIColor colorWithWhite:0.1 alpha:1.0];
-  
+  self.onSwitch.onTintColor = MDC_CATALOG_BLACK;
   [self.onSwitch setOn:YES];
   [self.onSwitch addTarget:self
                     action:@selector(didChangeOnSwitch:)
           forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:self.onSwitch];
 
-  self.onSwitchLabel = [[UILabel alloc] init];
-  self.onSwitchLabel.text = @"Indicator Active";
-  self.onSwitchLabel.font = [MDCTypography captionFont];
-  self.onSwitchLabel.alpha = [MDCTypography captionFontOpacity];
-  [self.onSwitchLabel sizeToFit];
-  [self.view addSubview:self.onSwitchLabel];
-
-  self.determinateSwitch = [[UISwitch alloc] init];
-  self.determinateSwitch.onTintColor = [UIColor colorWithWhite:0.1 alpha:1.0];
-  [self.determinateSwitch setOn:YES];
-  [self.determinateSwitch addTarget:self
-                             action:@selector(didChangeDeterminateSwitch:)
-                   forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:self.determinateSwitch];
-
-  self.determinateSwitchLabel = [[UILabel alloc] init];
-  self.determinateSwitchLabel.text = @"Determinate Mode";
-  self.determinateSwitchLabel.font = [MDCTypography captionFont];
-  self.determinateSwitchLabel.alpha = [MDCTypography captionFontOpacity];
-  [self.determinateSwitchLabel sizeToFit];
-  [self.view addSubview:self.determinateSwitchLabel];
-
-  CGRect sliderFrame = CGRectMake(0, 0, 240, 27);
+  CGRect sliderFrame = CGRectMake(0, 0, 160, 27);
   self.slider = [[UISlider alloc] initWithFrame:sliderFrame];
-  self.slider.tintColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.slider.tintColor = MDC_CATALOG_BLACK;
   self.slider.value = kActivityInitialProgress;
   [self.slider addTarget:self
                   action:@selector(didChangeSliderValue:)
         forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:self.slider];
-
-  self.progressLabel = [[UILabel alloc] init];
-  self.progressLabel.text = @"Progress";
-  self.progressLabel.font = [MDCTypography captionFont];
-  self.progressLabel.alpha = [MDCTypography captionFontOpacity];
-  [self.progressLabel sizeToFit];
-  [self.view addSubview:self.progressLabel];
-
-  self.progressPercentLabel = [[UILabel alloc] init];
-  self.progressPercentLabel.text =
-      [NSString stringWithFormat:@"%.00f%%", kActivityInitialProgress * 100];
-  self.progressPercentLabel.font = [MDCTypography captionFont];
-  self.progressPercentLabel.alpha = [MDCTypography captionFontOpacity];
-  self.progressPercentLabel.frame = CGRectMake(0, 0, 100, 16);
-  self.progressPercentLabel.textAlignment = NSTextAlignmentCenter;
-  [self.view addSubview:self.progressPercentLabel];
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  CGFloat navHeight = self.navigationController.navigationBar.frame.size.height;
-  if (self.view.frame.size.height > self.view.frame.size.width) {
-    self.activityIndicator.center =
-        CGPointMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame) - navHeight * 2);
-    self.slider.center = CGPointMake(CGRectGetMidX(self.view.frame), 80);
-    self.progressLabel.center = CGPointMake(CGRectGetMidX(self.view.frame), 110);
-    self.onSwitch.center =
-        CGPointMake(CGRectGetMidX(self.view.frame) - 50, self.view.frame.size.height - 140);
-    self.onSwitchLabel.center =
-        CGPointMake(CGRectGetMidX(self.view.frame) + 32, self.view.frame.size.height - 140);
-    self.determinateSwitch.center =
-        CGPointMake(CGRectGetMidX(self.view.frame) - 50, self.view.frame.size.height - 90);
-    self.determinateSwitchLabel.center =
-        CGPointMake(CGRectGetMidX(self.view.frame) + 38, self.view.frame.size.height - 90);
-  } else {
-    self.activityIndicator.center =
-        CGPointMake(CGRectGetMidX(self.view.frame) - 150, CGRectGetMidY(self.view.frame) - 100);
-    self.slider.center = CGPointMake(CGRectGetMidX(self.view.frame) + 150, 20);
-    self.progressLabel.center = CGPointMake(CGRectGetMidX(self.view.frame) + 150, 50);
-    self.onSwitch.center =
-        CGPointMake(CGRectGetMidX(self.view.frame) + 90, self.view.frame.size.height - 140);
-    self.onSwitchLabel.center =
-        CGPointMake(CGRectGetMidX(self.view.frame) + 172, self.view.frame.size.height - 140);
-    self.determinateSwitch.center =
-        CGPointMake(CGRectGetMidX(self.view.frame) + 90, self.view.frame.size.height - 90);
-    self.determinateSwitchLabel.center =
-        CGPointMake(CGRectGetMidX(self.view.frame) + 178, self.view.frame.size.height - 90);
-  }
-  self.progressPercentLabel.center = self.activityIndicator.center;
-}
-
-- (void)didChangeDeterminateSwitch:(UISwitch *)determinateSwitch {
-  if (determinateSwitch.on) {
-    self.activityIndicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
-  } else {
-    self.activityIndicator.indicatorMode = MDCActivityIndicatorModeIndeterminate;
-  }
 }
 
 - (void)didChangeOnSwitch:(UISwitch *)onSwitch {
   if (onSwitch.on) {
-    [self.activityIndicator startAnimating];
+    [self.activityIndicator1 startAnimating];
+    [self.activityIndicator2 startAnimating];
+    [self.activityIndicator3 startAnimating];
   } else {
-    [self.activityIndicator stopAnimating];
+    [self.activityIndicator1 stopAnimating];
+    [self.activityIndicator2 stopAnimating];
+    [self.activityIndicator3 stopAnimating];
   }
 }
 
 - (void)didChangeSliderValue:(UISlider *)slider {
-  self.activityIndicator.progress = slider.value;
-  self.progressPercentLabel.text = [NSString stringWithFormat:@"%.00f%%", slider.value * 100];
+  self.activityIndicator1.progress = slider.value;
+  MDCCollectionViewTextCell *cell =
+      (MDCCollectionViewTextCell *)[self.collectionView cellForItemAtIndexPath:
+                                        [NSIndexPath indexPathForRow:1 inSection:0]];
+  cell.textLabel.text = [NSString stringWithFormat:@"%.00f%%", slider.value * 100];
+  [cell setNeedsDisplay];
 }
+
+#pragma mark - 
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return 3;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView
+    cellHeightAtIndexPath:(NSIndexPath *)indexPath {
+  if (indexPath.row == 0) return 160;
+  return 56;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kCell forIndexPath:indexPath];
+  cell.textLabel.text = @"";
+  switch (indexPath.row) {
+    case 0:
+      cell.accessoryView = nil;
+      cell.textLabel.text = nil;
+      [cell addSubview:self.indicators];
+      break;
+    case 1:
+      cell.accessoryView = self.slider;
+      cell.textLabel.text = @"Progress";
+      break;
+    case 2:
+      cell.accessoryView = self.onSwitch;
+      cell.textLabel.text = @"Show Indicator";
+      break;
+    default:
+      break;
+  }
+  return cell;
+}
+
 
 @end
