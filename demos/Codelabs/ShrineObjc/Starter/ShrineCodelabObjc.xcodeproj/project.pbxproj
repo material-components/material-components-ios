@@ -1,0 +1,448 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		17105B289ACF1483EF252934 /* libPods-ShrineCodelabObjc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E77988AD077916A17CF5F2D /* libPods-ShrineCodelabObjc.a */; };
+		36625A771EA869DA00A0E2AD /* HomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36625A761EA869DA00A0E2AD /* HomeHeaderView.m */; };
+		36625A791EA86D3200A0E2AD /* fishbowl.png in Resources */ = {isa = PBXBuildFile; fileRef = 36625A781EA86D3200A0E2AD /* fishbowl.png */; };
+		36DABBA51EA7F0E700906586 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DABBA41EA7F0E700906586 /* main.m */; };
+		36DABBA81EA7F0E700906586 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DABBA71EA7F0E700906586 /* AppDelegate.m */; };
+		36DABBAB1EA7F0E700906586 /* ProductGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DABBAA1EA7F0E700906586 /* ProductGridViewController.m */; };
+		36DABBB11EA7F0E700906586 /* ProductGrid.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36DABBAF1EA7F0E700906586 /* ProductGrid.storyboard */; };
+		36DABBB31EA7F0E700906586 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36DABBB21EA7F0E700906586 /* Assets.xcassets */; };
+		36DABBB61EA7F0E700906586 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36DABBB41EA7F0E700906586 /* LaunchScreen.storyboard */; };
+		36DABBBF1EA812B200906586 /* ProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DABBBE1EA812B200906586 /* ProductCollectionViewCell.m */; };
+		36DABBC21EA8166200906586 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DABBC11EA8166200906586 /* Product.m */; };
+		36DABBF91EA82E5800906586 /* popsicle.png in Resources */ = {isa = PBXBuildFile; fileRef = 36DABBE11EA82E5800906586 /* popsicle.png */; };
+		36DABC301EA833A700906586 /* Clothing in Resources */ = {isa = PBXBuildFile; fileRef = 36DABC2E1EA833A700906586 /* Clothing */; };
+		36DABC311EA833A700906586 /* Home in Resources */ = {isa = PBXBuildFile; fileRef = 36DABC2F1EA833A700906586 /* Home */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1E77988AD077916A17CF5F2D /* libPods-ShrineCodelabObjc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShrineCodelabObjc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		36625A751EA869DA00A0E2AD /* HomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeHeaderView.h; sourceTree = "<group>"; };
+		36625A761EA869DA00A0E2AD /* HomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeHeaderView.m; sourceTree = "<group>"; };
+		36625A781EA86D3200A0E2AD /* fishbowl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fishbowl.png; sourceTree = "<group>"; };
+		36DABBA01EA7F0E700906586 /* ShrineCodelabObjc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShrineCodelabObjc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		36DABBA41EA7F0E700906586 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		36DABBA61EA7F0E700906586 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		36DABBA71EA7F0E700906586 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		36DABBA91EA7F0E700906586 /* ProductGridViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProductGridViewController.h; sourceTree = "<group>"; };
+		36DABBAA1EA7F0E700906586 /* ProductGridViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProductGridViewController.m; sourceTree = "<group>"; };
+		36DABBB01EA7F0E700906586 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProductGrid.storyboard; sourceTree = "<group>"; };
+		36DABBB21EA7F0E700906586 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		36DABBB51EA7F0E700906586 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		36DABBB71EA7F0E700906586 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36DABBBD1EA812B200906586 /* ProductCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCollectionViewCell.h; sourceTree = "<group>"; };
+		36DABBBE1EA812B200906586 /* ProductCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCollectionViewCell.m; sourceTree = "<group>"; };
+		36DABBC01EA8166200906586 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
+		36DABBC11EA8166200906586 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
+		36DABBC41EA8194900906586 /* ProductStorageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductStorageHelper.h; sourceTree = "<group>"; };
+		36DABBE11EA82E5800906586 /* popsicle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popsicle.png; sourceTree = "<group>"; };
+		36DABC2E1EA833A700906586 /* Clothing */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Clothing; sourceTree = "<group>"; };
+		36DABC2F1EA833A700906586 /* Home */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Home; sourceTree = "<group>"; };
+		9D1E5807E130C987D54DAE15 /* Pods-ShrineCodelabObjc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShrineCodelabObjc.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShrineCodelabObjc/Pods-ShrineCodelabObjc.release.xcconfig"; sourceTree = "<group>"; };
+		F0B0363E04251F4B2787BD47 /* Pods-ShrineCodelabObjc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShrineCodelabObjc.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShrineCodelabObjc/Pods-ShrineCodelabObjc.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		36DABB9D1EA7F0E700906586 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17105B289ACF1483EF252934 /* libPods-ShrineCodelabObjc.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1EB15273881A22502C68AA78 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1E77988AD077916A17CF5F2D /* libPods-ShrineCodelabObjc.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		36DABB971EA7F0E700906586 = {
+			isa = PBXGroup;
+			children = (
+				36DABBA21EA7F0E700906586 /* ShrineCodelabObjc */,
+				36DABBA11EA7F0E700906586 /* Products */,
+				80F36927416F68DD55EC31B8 /* Pods */,
+				1EB15273881A22502C68AA78 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		36DABBA11EA7F0E700906586 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				36DABBA01EA7F0E700906586 /* ShrineCodelabObjc.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		36DABBA21EA7F0E700906586 /* ShrineCodelabObjc */ = {
+			isa = PBXGroup;
+			children = (
+				36DABBA61EA7F0E700906586 /* AppDelegate.h */,
+				36DABBA71EA7F0E700906586 /* AppDelegate.m */,
+				36DABBA91EA7F0E700906586 /* ProductGridViewController.h */,
+				36DABBAA1EA7F0E700906586 /* ProductGridViewController.m */,
+				36DABBAF1EA7F0E700906586 /* ProductGrid.storyboard */,
+				36DABBC31EA8169C00906586 /* Supplemental */,
+				36DABBB21EA7F0E700906586 /* Assets.xcassets */,
+				36DABBB41EA7F0E700906586 /* LaunchScreen.storyboard */,
+				36DABBB71EA7F0E700906586 /* Info.plist */,
+				36DABBA31EA7F0E700906586 /* Supporting Files */,
+			);
+			path = ShrineCodelabObjc;
+			sourceTree = "<group>";
+		};
+		36DABBA31EA7F0E700906586 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				36DABBA41EA7F0E700906586 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		36DABBC31EA8169C00906586 /* Supplemental */ = {
+			isa = PBXGroup;
+			children = (
+				36DABC2E1EA833A700906586 /* Clothing */,
+				36DABC2F1EA833A700906586 /* Home */,
+				36DABBC71EA82E5800906586 /* Images */,
+				36DABBC01EA8166200906586 /* Product.h */,
+				36DABBC11EA8166200906586 /* Product.m */,
+				36DABBBD1EA812B200906586 /* ProductCollectionViewCell.h */,
+				36DABBBE1EA812B200906586 /* ProductCollectionViewCell.m */,
+				36625A751EA869DA00A0E2AD /* HomeHeaderView.h */,
+				36625A761EA869DA00A0E2AD /* HomeHeaderView.m */,
+				36DABBC41EA8194900906586 /* ProductStorageHelper.h */,
+			);
+			path = Supplemental;
+			sourceTree = "<group>";
+		};
+		36DABBC71EA82E5800906586 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				36625A781EA86D3200A0E2AD /* fishbowl.png */,
+				36DABBE11EA82E5800906586 /* popsicle.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		80F36927416F68DD55EC31B8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F0B0363E04251F4B2787BD47 /* Pods-ShrineCodelabObjc.debug.xcconfig */,
+				9D1E5807E130C987D54DAE15 /* Pods-ShrineCodelabObjc.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		36DABB9F1EA7F0E700906586 /* ShrineCodelabObjc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36DABBBA1EA7F0E700906586 /* Build configuration list for PBXNativeTarget "ShrineCodelabObjc" */;
+			buildPhases = (
+				2ED5460D364563253D57F229 /* [CP] Check Pods Manifest.lock */,
+				36DABB9C1EA7F0E700906586 /* Sources */,
+				36DABB9D1EA7F0E700906586 /* Frameworks */,
+				36DABB9E1EA7F0E700906586 /* Resources */,
+				749A29FFDF664C69E2CF0C41 /* [CP] Embed Pods Frameworks */,
+				8D73756F76B06B68032DC382 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShrineCodelabObjc;
+			productName = ShrineCodelabObjc;
+			productReference = 36DABBA01EA7F0E700906586 /* ShrineCodelabObjc.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		36DABB981EA7F0E700906586 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Will Larche";
+				TargetAttributes = {
+					36DABB9F1EA7F0E700906586 = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 36DABB9B1EA7F0E700906586 /* Build configuration list for PBXProject "ShrineCodelabObjc" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 36DABB971EA7F0E700906586;
+			productRefGroup = 36DABBA11EA7F0E700906586 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				36DABB9F1EA7F0E700906586 /* ShrineCodelabObjc */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		36DABB9E1EA7F0E700906586 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36DABBB61EA7F0E700906586 /* LaunchScreen.storyboard in Resources */,
+				36DABBB31EA7F0E700906586 /* Assets.xcassets in Resources */,
+				36625A791EA86D3200A0E2AD /* fishbowl.png in Resources */,
+				36DABBF91EA82E5800906586 /* popsicle.png in Resources */,
+				36DABBB11EA7F0E700906586 /* ProductGrid.storyboard in Resources */,
+				36DABC301EA833A700906586 /* Clothing in Resources */,
+				36DABC311EA833A700906586 /* Home in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2ED5460D364563253D57F229 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		749A29FFDF664C69E2CF0C41 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShrineCodelabObjc/Pods-ShrineCodelabObjc-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D73756F76B06B68032DC382 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShrineCodelabObjc/Pods-ShrineCodelabObjc-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		36DABB9C1EA7F0E700906586 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36DABBA81EA7F0E700906586 /* AppDelegate.m in Sources */,
+				36DABBC21EA8166200906586 /* Product.m in Sources */,
+				36625A771EA869DA00A0E2AD /* HomeHeaderView.m in Sources */,
+				36DABBAB1EA7F0E700906586 /* ProductGridViewController.m in Sources */,
+				36DABBBF1EA812B200906586 /* ProductCollectionViewCell.m in Sources */,
+				36DABBA51EA7F0E700906586 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		36DABBAF1EA7F0E700906586 /* ProductGrid.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				36DABBB01EA7F0E700906586 /* Base */,
+			);
+			name = ProductGrid.storyboard;
+			sourceTree = "<group>";
+		};
+		36DABBB41EA7F0E700906586 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				36DABBB51EA7F0E700906586 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		36DABBB81EA7F0E700906586 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		36DABBB91EA7F0E700906586 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		36DABBBB1EA7F0E700906586 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0B0363E04251F4B2787BD47 /* Pods-ShrineCodelabObjc.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ShrineCodelabObjc/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.ShrineCodelabObjc;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		36DABBBC1EA7F0E700906586 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D1E5807E130C987D54DAE15 /* Pods-ShrineCodelabObjc.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ShrineCodelabObjc/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.ShrineCodelabObjc;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		36DABB9B1EA7F0E700906586 /* Build configuration list for PBXProject "ShrineCodelabObjc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36DABBB81EA7F0E700906586 /* Debug */,
+				36DABBB91EA7F0E700906586 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		36DABBBA1EA7F0E700906586 /* Build configuration list for PBXNativeTarget "ShrineCodelabObjc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36DABBBB1EA7F0E700906586 /* Debug */,
+				36DABBBC1EA7F0E700906586 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 36DABB981EA7F0E700906586 /* Project object */;
+}
