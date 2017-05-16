@@ -14,6 +14,13 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetPresentationController.h"
-#import "MDCBottomSheetTransitionController.h"
-#import "MDCBottomSheetViewController.h"
+#import <UIKit/UIKit.h>
+
+@interface MDCBottomSheetViewController : UIViewController
+
+@property(nonatomic, strong, nonnull, readonly) UIViewController *contentViewController;
+
+- (nonnull instancetype)initWithContentViewController:
+    (nonnull UIViewController *)contentViewController;
+
+@end

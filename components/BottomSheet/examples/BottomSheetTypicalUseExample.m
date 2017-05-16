@@ -24,45 +24,17 @@
     <UIViewControllerTransitioningDelegate>
 @end
 
-@implementation BottomSheetTypicalUseExample {
-  MDCBottomSheetTransitionController *_transitionController;
-}
+@implementation BottomSheetTypicalUseExample
 
 - (void)presentBottomSheet {
-  _transitionController = [[MDCBottomSheetTransitionController alloc] init];
-
   UIViewController *viewController =
       [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:100];
-  viewController.transitioningDelegate = self;
-  viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.preferredContentSize = CGSizeMake(500, 200);
 
-  [self presentViewController:viewController animated:YES completion:nil];
+  MDCBottomSheetViewController *bottomSheet =
+      [[MDCBottomSheetViewController alloc] initWithContentViewController:viewController];
+  [self presentViewController:bottomSheet animated:YES completion:nil];
 }
-
-- (UIPresentationController *)
-    presentationControllerForPresentedViewController:(UIViewController *)presented
-                            presentingViewController:(UIViewController *)presenting
-                                sourceViewController:(UIViewController *)source {
-  MDCBottomSheetPresentationController *presentationController =
-      [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
-                                                           presentingViewController:presenting];
-  return presentationController;
-}
-
-- (nullable id <UIViewControllerAnimatedTransitioning>)
-    animationControllerForPresentedController:(UIViewController *)presented
-                         presentingController:(UIViewController *)presenting
-                             sourceController:(UIViewController *)source {
-  return _transitionController;
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)
-    animationControllerForDismissedController:(UIViewController *)dismissed {
-  return _transitionController;
-}
-
-
 
 @end
 

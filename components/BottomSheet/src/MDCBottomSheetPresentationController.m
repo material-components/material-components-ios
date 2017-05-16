@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetPresentationController.h"
+#import "MaterialBottomSheet.h"
 
 #import "private/MDCSheetContainerView.h"
 
@@ -41,6 +41,10 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   // loaded yet (but the scrollview is still needed for scroll-tracking to work properly).
   if (![viewController isViewLoaded]) {
     (void)viewController.view;
+  }
+
+  if ([viewController isKindOfClass:[MDCBottomSheetViewController class]]) {
+    viewController = ((MDCBottomSheetViewController *)viewController).contentViewController;
   }
 
   if ([viewController.view isKindOfClass:[UIScrollView class]]) {
