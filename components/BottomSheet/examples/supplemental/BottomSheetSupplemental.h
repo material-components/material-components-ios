@@ -14,13 +14,16 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import "BottomSheetPresenterViewController.h"
 
-@interface BottomSheetDummyStaticViewController : UIViewController
+@interface BottomSheetShortCollectionExample : BottomSheetPresenterViewController
+@end
 
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-    NS_UNAVAILABLE;
+@interface BottomSheetSimpleExample : BottomSheetPresenterViewController
+@end
 
+@interface BottomSheetTallExample : BottomSheetPresenterViewController
+@end
+
+@interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
 @end

@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,11 +17,8 @@
 #import <UIKit/UIKit.h>
 
 #import "BottomSheetDummyStaticViewController.h"
-#import "BottomSheetPresenterViewController.h"
+#import "BottomSheetSupplemental.h"
 #import "MaterialBottomSheet.h"
-
-@interface BottomSheetSimpleExample : BottomSheetPresenterViewController
-@end
 
 @implementation BottomSheetSimpleExample
 
@@ -34,22 +31,6 @@
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 
-@end
-
-@implementation BottomSheetSimpleExample (CatalogByConvention)
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Bottom Sheet", @"Static content" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-@end
-
-@interface BottomSheetTallExample : BottomSheetPresenterViewController
-    <UIViewControllerTransitioningDelegate>
 @end
 
 @implementation BottomSheetTallExample
@@ -66,14 +47,4 @@
 
 @end
 
-@implementation BottomSheetTallExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Bottom Sheet", @"Custom size static content" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-@end
