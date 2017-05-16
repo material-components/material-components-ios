@@ -1,0 +1,226 @@
+/*
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+#import "MDCTabBarViewController.h"
+
+const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
+
+@interface MDCTabBarViewController()
+
+@property(nonatomic, readwrite, nonnull) MDCTabBar *tabBar;
+
+@end
+
+@implementation MDCTabBarViewController {
+  /** For showing/hiding, Animation needs to know where it wants to end up. */
+  BOOL _tabBarWantsToBeHidden;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  UIView *view = self.view;
+  view.clipsToBounds = YES;
+  view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin
+      | UIViewAutoresizingFlexibleWidth
+      | UIViewAutoresizingFlexibleRightMargin
+      | UIViewAutoresizingFlexibleTopMargin
+      | UIViewAutoresizingFlexibleHeight
+      | UIViewAutoresizingFlexibleBottomMargin;
+  MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:view.bounds];
+  tabBar.alignment = MDCTabBarAlignmentJustified;
+  tabBar.delegate = self;
+  self.tabBar = tabBar;
+  [view addSubview:tabBar];
+  [self updateTabBarItems];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  [self updateLayout];
+}
+
+#pragma mark - Properties
+
+- (BOOL)tabBarHidden {
+  return self.tabBar.hidden;
+}
+
+- (void)setTabBarHidden:(BOOL)hidden {
+  [self setTabBarHidden:hidden animated:NO];
+}
+
+- (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animated {
+  if (_tabBar.hidden != hidden) {
+    if (animated) {
+      // Before entering our animation block put the view's layout in a good state.
+      [self.view layoutIfNeeded];
+    }
+    _tabBarWantsToBeHidden = hidden;
+    // Hiding the tab bar has the side effect of growing the current viewController to use that
+    // space. This does that in its layoutSubViews.
+    [self.view setNeedsLayout];
+    if (animated) {
+      if (!hidden) {
+        // If we are showing, set the state before the animation.
+        _tabBar.hidden = hidden;
+      }
+      [UIView animateWithDuration:MDCTabBarViewControllerAnimationDuration
+                       animations:^{ [self.view layoutIfNeeded]; }
+                       completion:^(BOOL finished) {
+            // If we are hiding, set the state after the animation.
+            _tabBar.hidden = hidden;
+        }];
+    } else {
+      _tabBar.hidden = hidden;
+    }
+  }
+}
+
+- (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
+  if (![_viewControllers isEqual:viewControllers]) {
+    for (UIViewController *viewController in _viewControllers) {
+      // If the new array doesn't contain an item from the old array then remove it.
+      if (![viewControllers containsObject:viewController]) {
+       // Follow the UIKit rules for removing a child viewController.
+       [viewController willMoveToParentViewController:nil];
+        if (viewController.viewLoaded) {
+          [viewController.view removeFromSuperview];
+        }
+        [viewController removeFromParentViewController];
+      }
+    }
+    _viewControllers = [viewControllers copy];
+    [self updateTabBarItems];
+  }
+}
+
+- (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
+  if (_selectedViewController != selectedViewController) {
+#if DEBUG
+    if (selectedViewController) {
+      NSAssert([_viewControllers containsObject:selectedViewController], @"not one of us.");
+    }
+#endif
+    BOOL animated = NO;
+    UIView *oldView = _selectedViewController.view;
+    _selectedViewController = selectedViewController;
+    UIViewController *oldController = [self controllerWithView:oldView];
+    [oldController beginAppearanceTransition:NO animated:animated];
+    [selectedViewController beginAppearanceTransition:YES animated:animated];
+
+    [self transitionViewsWithoutAnimationFromViewController:oldController
+                                           toViewController:selectedViewController];
+
+    [oldController endAppearanceTransition];
+    [selectedViewController endAppearanceTransition];
+
+    if (selectedViewController) {
+      self.tabBar.selectedItem = selectedViewController.tabBarItem;
+    }
+  }
+}
+
+#pragma mark - private
+
+// Encapsulate the actual view handling.
+- (void)transitionViewsWithoutAnimationFromViewController:(UIViewController *)from
+                                         toViewController:(UIViewController *)to {
+  [self.view setNeedsLayout];
+  [self.view layoutIfNeeded];
+  from.view.hidden = YES;
+  to.view.hidden = NO;
+}
+
+// Either this has just come into existence or its array of viewControllers has changed.
+// Update the TabBar from the array of viewControllers.
+- (void)updateTabBarItems {
+  NSMutableArray *items = [NSMutableArray array];
+  BOOL hasTitles = NO;
+  BOOL hasImages = NO;
+  for (UIViewController *child in _viewControllers) {
+    UITabBarItem *tabBarItem = child.tabBarItem;
+    [items addObject:tabBarItem];
+    if (tabBarItem.title.length) {
+      hasTitles = YES;
+    }
+    if (tabBarItem.image) {
+      hasImages = YES;
+    }
+    [self addChildViewController:child];
+    UIView *view = child.view;
+    view.hidden = child != _selectedViewController;
+    [self.view addSubview:view];
+    [child didMoveToParentViewController:self];
+  }
+  // This class preserves the invariant that if the selected controller is not nil, it is contained
+  // in the array of viewControllers.
+  if (![_viewControllers containsObject:_selectedViewController]) {
+    self.selectedViewController = nil;
+  }
+  self.tabBar.items = items;
+  // The default height of the tab bar depends on the underlying UITabBarItems of
+  // the viewControllers.
+  if (hasImages && hasTitles) {
+    self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  } else if (hasImages) {
+    self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+  } else {
+    self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitles;
+  }
+}
+
+- (nullable UIViewController *)controllerWithView:(nullable UIView*)view {
+  for (UIViewController *child in _viewControllers) {
+    if (child.view == view) {
+      return child;
+    }
+  }
+  return nil;
+}
+
+- (void)updateLayout {
+  CGRect bounds = self.view.bounds;
+  CGFloat tabBarHeight = [[_tabBar class] defaultHeightForItemAppearance:_tabBar.itemAppearance];
+  CGRect currentViewFrame = bounds;
+  CGRect tabBarFrame = CGRectMake(bounds.origin.x, bounds.origin.y + bounds.size.height,
+                                  bounds.size.width, tabBarHeight);
+  if (!_tabBarWantsToBeHidden) {
+    CGRectDivide(bounds, &tabBarFrame, &currentViewFrame, tabBarHeight, CGRectMaxYEdge);
+  }
+  _tabBar.frame = tabBarFrame;
+  _selectedViewController.view.frame = currentViewFrame;
+}
+
+#pragma mark -  MDCTabBarDelegate
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+  NSUInteger index = [tabBar.items indexOfObject:item];
+  if (index < _viewControllers.count) {
+   UIViewController *newSelected = _viewControllers[index];
+    if (newSelected != self.selectedViewController) {
+      if ([_delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)]
+          && ![_delegate tabBarController:self shouldSelectViewController:newSelected]) {
+        return;
+      }
+      self.selectedViewController = newSelected;
+      if ([_delegate respondsToSelector:@selector(tabBarController:didSelectViewController:)]) {
+        [_delegate tabBarController:self didSelectViewController:newSelected];
+      }
+    }
+  }
+}
+
+@end
