@@ -21,7 +21,6 @@
 #import "MaterialBottomSheet.h"
 
 @interface BottomSheetSimpleExample : BottomSheetPresenterViewController
-    <UIViewControllerTransitioningDelegate>
 @end
 
 @implementation BottomSheetSimpleExample
@@ -29,19 +28,10 @@
 - (void)presentBottomSheet {
   BottomSheetDummyStaticViewController *viewController =
       [[BottomSheetDummyStaticViewController alloc] init];
-  viewController.transitioningDelegate = self;
-  viewController.modalPresentationStyle = UIModalPresentationCustom;
-  [self presentViewController:viewController animated:YES completion:nil];
-}
 
-- (UIPresentationController *)
-    presentationControllerForPresentedViewController:(UIViewController *)presented
-                            presentingViewController:(UIViewController *)presenting
-                                sourceViewController:(UIViewController *)source {
-  MDCBottomSheetPresentationController *presentationController =
-      [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
-                                                           presentingViewController:presenting];
-  return presentationController;
+  MDCBottomSheetViewController *bottomSheet =
+      [[MDCBottomSheetViewController alloc] initWithContentViewController:viewController];
+  [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 
 @end
@@ -67,20 +57,11 @@
 - (void)presentBottomSheet {
   BottomSheetDummyStaticViewController *viewController =
       [[BottomSheetDummyStaticViewController alloc] init];
-  viewController.transitioningDelegate = self;
-  viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.preferredContentSize = CGSizeMake(0, self.view.frame.size.height * 0.75);
-  [self presentViewController:viewController animated:YES completion:nil];
-}
 
-- (UIPresentationController *)
-    presentationControllerForPresentedViewController:(UIViewController *)presented
-                            presentingViewController:(UIViewController *)presenting
-                                sourceViewController:(UIViewController *)source {
-  MDCBottomSheetPresentationController *presentationController =
-  [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
-                                                       presentingViewController:presenting];
-  return presentationController;
+  MDCBottomSheetViewController *bottomSheet =
+      [[MDCBottomSheetViewController alloc] initWithContentViewController:viewController];
+  [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 
 @end

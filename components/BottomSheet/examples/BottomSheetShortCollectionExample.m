@@ -21,7 +21,6 @@
 #import "MaterialBottomSheet.h"
 
 @interface BottomSheetShortCollectionExample : BottomSheetPresenterViewController
-    <UIViewControllerTransitioningDelegate>
 @end
 
 @implementation BottomSheetShortCollectionExample
@@ -29,19 +28,10 @@
 - (void)presentBottomSheet {
   UIViewController *viewController =
       [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:6];
-  viewController.transitioningDelegate = self;
-  viewController.modalPresentationStyle = UIModalPresentationCustom;
-  [self presentViewController:viewController animated:YES completion:nil];
-}
 
-- (UIPresentationController *)
-    presentationControllerForPresentedViewController:(UIViewController *)presented
-                            presentingViewController:(UIViewController *)presenting
-                                sourceViewController:(UIViewController *)source {
-  MDCBottomSheetPresentationController *presentationController =
-      [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
-                                                           presentingViewController:presenting];
-  return presentationController;
+  MDCBottomSheetViewController *bottomSheet =
+      [[MDCBottomSheetViewController alloc] initWithContentViewController:viewController];
+  [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 
 @end

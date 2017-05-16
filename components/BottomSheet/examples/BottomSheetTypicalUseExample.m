@@ -21,7 +21,6 @@
 #import "MaterialBottomSheet.h"
 
 @interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
-    <UIViewControllerTransitioningDelegate>
 @end
 
 @implementation BottomSheetTypicalUseExample
