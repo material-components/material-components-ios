@@ -186,9 +186,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
     [self reload];
 
-    // Reset selection to a valid item.
+    // Reset selection to the unselected state.
     if (![_items containsObject:_selectedItem]) {
-      self.selectedItem = [_items firstObject];
+      self.selectedItem = nil;
     }
 
     // Start observing new items for changes.
