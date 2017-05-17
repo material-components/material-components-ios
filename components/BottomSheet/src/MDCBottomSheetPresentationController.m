@@ -87,7 +87,10 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 - (void)presentationTransitionWillBegin {
-  [self.delegate prepareForBottomSheetPresentation:self];
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(prepareForBottomSheetPresentation:)]) {
+    [strongDelegate prepareForBottomSheetPresentation:self];
+  }
 
   UIView *containerView = [self containerView];
 
@@ -182,14 +185,24 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     return;
   }
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  [self.delegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
+
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:
+       @selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
+    [strongDelegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
+  }
 }
 
 #pragma mark - MDCSheetContainerViewDelegate
 
 - (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  [self.delegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
+
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:
+       @selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
+    [strongDelegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
+  }
 }
 
 @end
