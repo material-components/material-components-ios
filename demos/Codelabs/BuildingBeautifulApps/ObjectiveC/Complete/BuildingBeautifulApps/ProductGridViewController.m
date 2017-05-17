@@ -136,11 +136,11 @@
 
   CGFloat logoOpacity = 0.0;
 
-  if (scrollOffsetY > -200) {
+  if (scrollOffsetY > -240) {
     logoOpacity = 1.0;
   }
 
-  [UIView animateWithDuration:0.5 animations:^{
+  [UIView animateWithDuration:0.2 animations:^{
     self.headerContentView.backgroundImage.alpha = opacity;
     self.headerContentView.descLabel.alpha = opacity;
     self.headerContentView.titleLabel.alpha = opacity;
