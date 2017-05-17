@@ -87,7 +87,7 @@
         break;
       case UIUserInterfaceSizeClassUnspecified:
       case UIUserInterfaceSizeClassRegular:
-        self.styler.gridColumnCount = 3;
+        self.styler.gridColumnCount = 4;
         break;
     }
   }
