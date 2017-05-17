@@ -182,14 +182,14 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     return;
   }
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  [self.delegate bottomSheetPresentationControllerDidDismiss:self];
+  [self.delegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
 }
 
 #pragma mark - MDCSheetContainerViewDelegate
 
 - (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  [self.delegate bottomSheetPresentationControllerDidDismiss:self];
+  [self.delegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
 }
 
 @end

@@ -40,7 +40,7 @@
 
  @param bottomSheet The MDCBottomSheetPresentationController that was dismissed.
  */
-- (void)bottomSheetPresentationControllerDidDismiss:
+- (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
 @end
