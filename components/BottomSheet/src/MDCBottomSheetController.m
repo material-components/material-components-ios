@@ -16,10 +16,11 @@
 
 #import "MaterialBottomSheet.h"
 
-@interface MDCBottomSheetViewController () <UIViewControllerTransitioningDelegate>
+@interface MDCBottomSheetController ()
+    <MDCBottomSheetPresentationControllerDelegate, UIViewControllerTransitioningDelegate>
 @end
 
-@implementation MDCBottomSheetViewController {
+@implementation MDCBottomSheetController {
   MDCBottomSheetTransitionController *_transitionController;
 }
 
@@ -71,13 +72,13 @@
 
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
-  NSAssert(NO, @"MDCBottomSheetViewController.transitioningDelegate cannot be changed.");
+  NSAssert(NO, @"MDCBottomSheetController.transitioningDelegate cannot be changed.");
   return;
 }
 
 /* Disable setter. Always use custom presentation style */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle {
-  NSAssert(NO, @"MDCBottomSheetViewController.modalPresentationStyle cannot be changed.");
+  NSAssert(NO, @"MDCBottomSheetController.modalPresentationStyle cannot be changed.");
   return;
 }
 
@@ -88,6 +89,7 @@
   MDCBottomSheetPresentationController *presentationController =
       [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                            presentingViewController:presenting];
+  presentationController.delegate = self;
   return presentationController;
 }
 
@@ -101,6 +103,11 @@
 - (id<UIViewControllerAnimatedTransitioning>)
     animationControllerForDismissedController:(UIViewController *)dismissed {
   return _transitionController;
+}
+
+- (void)bottomSheetPresentationControllerDidDismissBottomSheet:
+    (nonnull MDCBottomSheetPresentationController *)bottomSheet {
+  [self.delegate bottomSheetControllerWasDismissed:self];
 }
 
 @end

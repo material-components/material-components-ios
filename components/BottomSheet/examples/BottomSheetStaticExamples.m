@@ -26,8 +26,8 @@
   BottomSheetDummyStaticViewController *viewController =
       [[BottomSheetDummyStaticViewController alloc] init];
 
-  MDCBottomSheetViewController *bottomSheet =
-      [[MDCBottomSheetViewController alloc] initWithContentViewController:viewController];
+  MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 
@@ -40,8 +40,8 @@
       [[BottomSheetDummyStaticViewController alloc] init];
   viewController.preferredContentSize = CGSizeMake(0, self.view.frame.size.height * 0.75);
 
-  MDCBottomSheetViewController *bottomSheet =
-      [[MDCBottomSheetViewController alloc] initWithContentViewController:viewController];
+  MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 

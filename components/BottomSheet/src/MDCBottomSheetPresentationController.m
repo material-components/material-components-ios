@@ -43,8 +43,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     (void)viewController.view;
   }
 
-  if ([viewController isKindOfClass:[MDCBottomSheetViewController class]]) {
-    viewController = ((MDCBottomSheetViewController *)viewController).contentViewController;
+  if ([viewController isKindOfClass:[MDCBottomSheetController class]]) {
+    viewController = ((MDCBottomSheetController *)viewController).contentViewController;
   }
 
   if ([viewController.view isKindOfClass:[UIScrollView class]]) {

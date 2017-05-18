@@ -26,8 +26,8 @@
   BottomSheetDummyCollectionViewController *viewController =
       [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:6];
 
-  MDCBottomSheetViewController *bottomSheet =
-      [[MDCBottomSheetViewController alloc] initWithContentViewController:viewController];
+  MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 

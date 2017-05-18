@@ -16,11 +16,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCBottomSheetViewController : UIViewController
+@protocol MDCBottomSheetControllerDelegate;
+
+@interface MDCBottomSheetController : UIViewController
 
 @property(nonatomic, strong, nonnull, readonly) UIViewController *contentViewController;
 
+@property(nonatomic, weak, nullable) id<MDCBottomSheetControllerDelegate> delegate;
+
 - (nonnull instancetype)initWithContentViewController:
     (nonnull UIViewController *)contentViewController;
+
+@end
+
+@protocol MDCBottomSheetControllerDelegate <NSObject>
+
+- (void)bottomSheetControllerWasDismissed:(nonnull MDCBottomSheetController *)controller;
 
 @end
