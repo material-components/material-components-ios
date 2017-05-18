@@ -1,6 +1,6 @@
 PODS:
-  - CatalogByConvention (2.0.0)
-  - EarlGrey (1.7.2)
+  - CatalogByConvention (2.1.1)
+  - EarlGrey (1.9.2)
   - MaterialComponents (23.2.0):
     - MaterialComponents/ActivityIndicator (= 23.2.0)
     - MaterialComponents/AnimationTiming (= 23.2.0)
@@ -173,7 +173,7 @@ PODS:
   - MaterialComponentsUnitTests (23.2.0):
     - MaterialComponents
     - MDFTextAccessibility
-  - MDFTextAccessibility (1.1.4)
+  - MDFTextAccessibility (1.2.0)
 
 DEPENDENCIES:
   - CatalogByConvention
@@ -191,12 +191,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
-  EarlGrey: 704eb520225eeec801e77ad0583095f4f2624520
+  CatalogByConvention: c3a5319de04250a7cd4649127fcfca5fe3322a43
+  EarlGrey: b78a93bd5fddba9a79a8e5ec5ae8a7718453ca40
   MaterialComponents: 26ef04a2ebd41c864e70d429049242a12f0bee3e
   MaterialComponentsCatalog: 7f539b7ce8e90776a8190b95ceeceb2d5bed1161
   MaterialComponentsUnitTests: '09c3939177f936a705bf82d8e6428efb9a09f8dd'
-  MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
+  MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: f78876d357e88f474a199b0b4c5b36385a5ef25c
 
