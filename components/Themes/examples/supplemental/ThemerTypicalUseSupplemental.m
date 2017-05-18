@@ -41,7 +41,14 @@
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  self.scrollView.contentSize = self.view.bounds.size;
+  self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 600);
+  
+  self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, 100);
+  self.alertButton.center = CGPointMake(self.view.frame.size.width / 2 - 100, 200);
+  self.featureButton.center = CGPointMake(self.view.frame.size.width / 2 + 50, 200);
+  self.slider.center = CGPointMake(self.view.frame.size.width / 2, 300);
+  self.progressView.center = CGPointMake(self.view.frame.size.width / 2, 400);
+  self.floatingButton.center = CGPointMake(self.view.frame.size.width / 2, 500);
 }
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
@@ -73,23 +80,21 @@
                                   action:nil];
 
   CGRect defaultRect = CGRectMake(0, 0, 32, 32);
-  MDCActivityIndicator *activityIndicator =
+  self.activityIndicator =
       [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
-  activityIndicator.indicatorMode = MDCActivityIndicatorModeIndeterminate;
-  [activityIndicator sizeToFit];
-  [self.scrollView addSubview:activityIndicator];
-  [activityIndicator startAnimating];
-  activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, 100);
+  self.activityIndicator.indicatorMode = MDCActivityIndicatorModeIndeterminate;
+  [self.activityIndicator sizeToFit];
+  [self.scrollView addSubview:self.activityIndicator];
+  [self.activityIndicator startAnimating];
 
-  MDCRaisedButton *alertButton = [[MDCRaisedButton alloc] init];
-  [alertButton setTitle:@"Alert" forState:UIControlStateNormal];
-  [alertButton sizeToFit];
-  alertButton.center = CGPointMake(100, 100);
-  [self.scrollView addSubview:alertButton];
-  [alertButton addTarget:self
+  self.alertButton = [[MDCRaisedButton alloc] init];
+  [self.alertButton setTitle:@"Alert" forState:UIControlStateNormal];
+  [self.alertButton sizeToFit];
+  self.alertButton.center = CGPointMake(100, 100);
+  [self.scrollView addSubview:self.alertButton];
+  [self.alertButton addTarget:self
                   action:@selector(didTapShowAlert:)
         forControlEvents:UIControlEventTouchUpInside];
-  alertButton.center = CGPointMake(self.view.frame.size.width / 2 - 100, 200);
 
   self.featureButton = [[MDCRaisedButton alloc] init];
   [self.featureButton setTitle:@"Feature Highlight" forState:UIControlStateNormal];
@@ -99,25 +104,21 @@
   [self.featureButton addTarget:self
                          action:@selector(didTapShowFeature:)
                forControlEvents:UIControlEventTouchUpInside];
-  self.featureButton.center = CGPointMake(self.view.frame.size.width / 2 + 50, 200);
 
   CGRect sliderRect = CGRectMake(0, 0, 200, 32);
-  MDCSlider *slider = [[MDCSlider alloc] initWithFrame:sliderRect];
-  slider.value = 0.5f;
-  [self.scrollView addSubview:slider];
-  slider.center = CGPointMake(self.view.frame.size.width / 2, 300);
+  self.slider = [[MDCSlider alloc] initWithFrame:sliderRect];
+  self.slider.value = 0.5f;
+  [self.scrollView addSubview:self.slider];
 
   CGRect progressRect = CGRectMake(0, 0, 200, 4);
   self.progressView = [[MDCProgressView alloc] initWithFrame:progressRect];
   [self.scrollView addSubview:self.progressView];
   [self animateStep1:self.progressView];
-  self.progressView.center = CGPointMake(self.view.frame.size.width / 2, 400);
 
-  MDCFloatingButton *floatingButton =
+  self.floatingButton =
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
-  [floatingButton sizeToFit];
-  floatingButton.center = CGPointMake(self.view.frame.size.width / 2, 500);
-  [self.scrollView addSubview:floatingButton];
+  [self.floatingButton sizeToFit];
+  [self.scrollView addSubview:self.floatingButton];
 }
 
 
