@@ -107,7 +107,7 @@
 
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull MDCBottomSheetPresentationController *)bottomSheet {
-  [self.delegate bottomSheetControllerWasDismissed:self];
+  [self.delegate bottomSheetControllerDidDismissBottomSheet:self];
 }
 
 @end

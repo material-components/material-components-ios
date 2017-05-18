@@ -18,19 +18,49 @@
 
 @protocol MDCBottomSheetControllerDelegate;
 
+/**
+ A view controller for presenting other view controllers as bottom sheets.
+
+ https://material.io/guidelines/components/bottom-sheets.html
+
+ Show a bottom sheet by creating an MDCBottomSheetController instance with a contentViewController
+ and presenting it with -[UIViewController presentViewController:animated:completion].
+ MDCBottomSheetController automatically sets the appropriate presentation style and
+ transitioningDelegate for the bottom sheet behavior.
+ */
 @interface MDCBottomSheetController : UIViewController
 
+/**
+ The view controller being presented as a bottom sheet.
+ */
 @property(nonatomic, strong, nonnull, readonly) UIViewController *contentViewController;
 
+/**
+ The bottom sheet delegate.
+ */
 @property(nonatomic, weak, nullable) id<MDCBottomSheetControllerDelegate> delegate;
 
+/**
+ Initializes the controller with a content view controller.
+
+ @param contentViewController The view controller to be presented as a bottom sheet.
+ */
 - (nonnull instancetype)initWithContentViewController:
     (nonnull UIViewController *)contentViewController;
 
 @end
 
+/**
+ Delegate for MDCBottomSheetController.
+ */
 @protocol MDCBottomSheetControllerDelegate <NSObject>
 
-- (void)bottomSheetControllerWasDismissed:(nonnull MDCBottomSheetController *)controller;
+/**
+ Called when the user taps the dimmed background or swipes the bottom sheet off to dismiss the
+ bottom sheet. This method is not called if the bottom sheet is dismissed programatically.
+
+ @param controller The MDCBottomSheetController that was dismissed.
+ */
+- (void)bottomSheetControllerDidDismissBottomSheet:(nonnull MDCBottomSheetController *)controller;
 
 @end
