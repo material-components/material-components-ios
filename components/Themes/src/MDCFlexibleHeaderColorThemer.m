@@ -16,7 +16,7 @@
 
 #import "MDCFlexibleHeaderColorThemer.h"
 
-@implementation MDCFlexibleHeaderThemer
+@implementation MDCFlexibleHeaderColorThemer
 
 + (void)applyColorScheme:(MDCColorScheme *)colorScheme
     toFlexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView {

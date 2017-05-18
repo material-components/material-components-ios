@@ -22,7 +22,7 @@
 /**
  Used to apply a color scheme to theme MDCFlexibleHeaderView.
  */
-@interface MDCFlexibleHeaderThemer : NSObject
+@interface MDCFlexibleHeaderColorThemer : NSObject
 
 /**
  Applies a color scheme to theme a MDCFlexibleHeaderView.

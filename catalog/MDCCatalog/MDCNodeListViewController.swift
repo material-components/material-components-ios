@@ -82,7 +82,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.addChildViewController(appBar.headerViewController)
     let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
     
-    appBar.headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+    let scheme = MDCColorScheme()
+    scheme.primaryColor = UIColor(white: 0.1, alpha: 1.0);
+    MDCFlexibleHeaderColorThemer.apply(scheme, to: MDCFlexibleHeaderView.appearance())
+
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSForegroundColorAttributeName: UIColor.white,
@@ -360,8 +363,10 @@ extension MDCNodeListViewController {
         contentVC.title = node.title
 
         let headerView = container.appBar.headerViewController.headerView
-
-        headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+        
+        let scheme = MDCColorScheme()
+        scheme.primaryColor = UIColor(white: 0.1, alpha: 1.0);
+        MDCFlexibleHeaderColorThemer.apply(scheme, to: MDCFlexibleHeaderView.appearance())
 
         let textColor = UIColor.white
         UIBarButtonItem.appearance().setTitleTextAttributes(

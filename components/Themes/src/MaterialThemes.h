@@ -14,7 +14,17 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
-
+#import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
+#import "MDCButtonBarColorThemer.h"
+#import "MDCButtonColorThemer.h"
+#import "MDCColorScheme.h"
 #import "MDCFeatureHighlightColorThemer.h"
+#import "MDCFlexibleHeaderColorThemer.h"
+#import "MDCHeaderStackViewColorThemer.h"
+#import "MDCInkColorThemer.h"
+#import "MDCNavigationBarColorThemer.h"
+#import "MDCPageControlColorThemer.h"
+#import "MDCProgressViewColorThemer.h"
+#import "MDCSliderColorThemer.h"
+#import "MDCTabBarColorThemer.h"

@@ -155,7 +155,9 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   _strokeWidth = 2.0f;
 
   // Colors.
-  _cycleColors = [MDCActivityIndicator defaultColors];
+  if (![MDCActivityIndicator appearance].cycleColors) {
+    _cycleColors = [MDCActivityIndicator defaultColors];
+  }
   _currentColorCount = 0;
 
   // Track layer.
@@ -401,7 +403,9 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   if (_cycleColors.count > 0) {
     [self setStrokeColor:_cycleColors[_currentColorCount]];
   } else {
-    [self setStrokeColor:[MDCActivityIndicator defaultColors][0]];
+    if (![MDCActivityIndicator appearance].cycleColors) {
+      [self setStrokeColor:[MDCActivityIndicator defaultColors][0]];
+    }
   }
 }
 

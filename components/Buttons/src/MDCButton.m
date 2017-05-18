@@ -257,8 +257,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.exclusiveTouch = YES;
 
   // Default background colors.
-  [self setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
-                  forState:UIControlStateNormal];
+  if (![[MDCButton appearance] backgroundColorForState:UIControlStateNormal]) {
+    [self setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
+                    forState:UIControlStateNormal];
+  }
 
   self.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 
