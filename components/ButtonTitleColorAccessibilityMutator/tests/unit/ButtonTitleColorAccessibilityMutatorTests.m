@@ -28,7 +28,7 @@ static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1
 @interface ButtonTitleColorAccessibilityMutatorTests : XCTestCase
 @end
 
-@implementation ButtonTitleColorAccessibilityMutator
+@implementation ButtonTitleColorAccessibilityMutatorTests
 
 - (void)testMutateChangesTextColor {
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
@@ -48,7 +48,7 @@ static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1
     [mutator mutate:button];
     
     // Then
-    XCTAssertNotEqualObjects([button titleColorForState:controlState], color, @"for control state:%i ", controlState);
+    XCTAssertNotEqualObjects([button titleColorForState:controlState], color, @"for control state:%lu ",(unsigned long)controlState);
   }
 }
 
