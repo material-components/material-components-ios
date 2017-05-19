@@ -646,17 +646,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   //    }
   //  }
 //  [self updateTitleColor];
-  [self updateDisabledTitleColor];
   super.backgroundColor = self.currentBackgroundColor;
-}
-
-- (void)updateDisabledTitleColor {
-  // Disabled buttons have very low opacity, so we full-opacity text color here to make the text
-  // readable. Also, even for non-flat buttons with opaque backgrounds, the correct background color
-  // to examine is the underlying color, since disabled buttons are so transparent.
-  BOOL darkBackground = [self isDarkColor:[self underlyingColorHint]];
-  [self setTitleColor:darkBackground ? [UIColor whiteColor] : [UIColor blackColor]
-             forState:UIControlStateDisabled];
 }
 
 //- (void)updateTitleColor {
