@@ -50,9 +50,6 @@ static NSString *const MDCButtonAccessibilityLabelsKey = @"MDCButtonAccessibilit
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
-// https://material.io/guidelines/components/buttons.html#buttons-main-buttons
-static const CGFloat MDCButtonDisabledAlpha = 0.1f;
-
 // Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x2196F3;
 
@@ -163,10 +160,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       self.underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
     }
 
-    if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
-      self.disabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
-    }
-
     if ([aDecoder containsValueForKey:MDCButtonAreaInsetKey]) {
       self.hitAreaInsets = [aDecoder decodeUIEdgeInsetsForKey:MDCButtonAreaInsetKey];
     }
@@ -200,7 +193,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (_underlyingColorHint) {
     [aCoder encodeObject:_underlyingColorHint forKey:MDCButtonUnderlyingColorHintKey];
   }
-  [aCoder encodeDouble:self.disabledAlpha forKey:MDCButtonDisableAlphaKey];
   [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
@@ -208,7 +200,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)commonMDCButtonInit {
-  _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
@@ -221,7 +212,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Set up title label attributes.
   self.titleLabel.font = [MDCTypography buttonFont];
-  [self updateAlphaAndBackgroundColorAnimated:NO];
+  [self updateBackgroundColor];
 
   // Default content insets
   self.contentEdgeInsets = [self defaultContentEdgeInsets];
@@ -270,12 +261,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setUnderlyingColorHint:(UIColor *)underlyingColorHint {
   _underlyingColorHint = underlyingColorHint;
-  [self updateAlphaAndBackgroundColorAnimated:NO];
-}
-
-- (void)setDisabledAlpha:(CGFloat)disabledAlpha {
-  _disabledAlpha = disabledAlpha;
-  [self updateAlphaAndBackgroundColorAnimated:NO];
+  [self updateBackgroundColor];
 }
 
 #pragma mark - UIView
@@ -341,7 +327,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated {
   [super setEnabled:enabled];
-  [self updateAlphaAndBackgroundColorAnimated:animated];
+  [self updateBackgroundColor];
 }
 
 #pragma mark - Title Uppercasing
@@ -489,7 +475,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
   _backgroundColors[@(state)] = backgroundColor;
-  [self updateAlphaAndBackgroundColorAnimated:NO];
+  [self updateBackgroundColor];
 }
 
 #pragma mark - Elevations
@@ -507,7 +493,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // have different background color requirements than raised buttons.
   // TODO(ajsecord): Move to MDCFlatButton and update this comment.
   if (state == UIControlStateNormal) {
-    [self updateAlphaAndBackgroundColorAnimated:NO];
+    [self updateBackgroundColor];
   }
 }
 
@@ -607,19 +593,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (BOOL)shouldHaveOpaqueBackground {
   BOOL isFlatButton = MDCCGFloatIsExactlyZero([self elevationForState:UIControlStateNormal]);
   return !isFlatButton;
-}
-
-- (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
-  void (^animations)() = ^{
-    self.alpha = self.enabled ? 1.0f : _disabledAlpha;
-    [self updateBackgroundColor];
-  };
-
-  if (animated) {
-    [UIView animateWithDuration:MDCButtonAnimationDuration animations:animations];
-  } else {
-    animations();
-  }
 }
 
 - (void)updateBackgroundColor {

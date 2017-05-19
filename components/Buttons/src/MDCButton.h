@@ -66,12 +66,6 @@
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius;
 
 /**
- The alpha value that will be applied when the button is disabled. Most clients can leave this as
- the default value to get a semi-transparent button automatically.
- */
-@property(nonatomic) CGFloat disabledAlpha;
-
-/**
  If true, converts the button title to uppercase. Changing this property to NO will not update the
  current title string.
 
