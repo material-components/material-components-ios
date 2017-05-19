@@ -21,7 +21,7 @@
 
 + (void)applyColorScheme:(MDCColorScheme *)colorScheme {
   [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]
-      setCustomTitleColor:colorScheme.primaryColor];
+      setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
 }
 
 @end

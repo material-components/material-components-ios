@@ -180,7 +180,7 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   for (UIView *viewObj in _buttonViews) {
     if ([viewObj isKindOfClass:[MDCButton class]]) {
       MDCButton *buttonView = (MDCButton *)viewObj;
-      buttonView.customTitleColor = self.tintColor;
+      [buttonView setTitleColor:self.tintColor forState:UIControlStateNormal];
     }
   }
 }

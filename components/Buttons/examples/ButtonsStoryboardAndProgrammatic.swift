@@ -124,7 +124,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(raisedButton)
 
-    flatButton.customTitleColor = UIColor.gray
+    flatButton.setTitleColor(.gray, for: .normal)
     flatButton.setTitle("Programmatic", for: .normal)
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false

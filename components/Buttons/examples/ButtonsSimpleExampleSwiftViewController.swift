@@ -42,7 +42,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     view.addSubview(raisedButton)
 
     let flatButton = MDCFlatButton()
-    flatButton.customTitleColor = .gray
+    flatButton.setTitleColor(.gray, for: .normal)
     flatButton.setTitle("Touch me", for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false

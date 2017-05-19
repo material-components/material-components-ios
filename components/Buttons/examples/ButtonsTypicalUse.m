@@ -62,7 +62,7 @@
 
   MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
   [flatButton setTitle:@"Button" forState:UIControlStateNormal];
-  [flatButton setCustomTitleColor:[UIColor grayColor]];
+  [flatButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
   [flatButton sizeToFit];
   [flatButton addTarget:self
                  action:@selector(didTap:)
@@ -74,7 +74,7 @@
 
   MDCFlatButton *disabledFlatButton = [[MDCFlatButton alloc] init];
   [disabledFlatButton setTitle:@"Button" forState:UIControlStateNormal];
-  [disabledFlatButton setCustomTitleColor:[UIColor grayColor]];
+  [disabledFlatButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
   [disabledFlatButton sizeToFit];
   [disabledFlatButton addTarget:self
                          action:@selector(didTap:)
