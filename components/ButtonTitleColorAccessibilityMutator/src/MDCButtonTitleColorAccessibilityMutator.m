@@ -25,17 +25,30 @@
   // This ensures title colors will be accessible against the buttons backgrounds.
   UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
       UIControlStateDisabled | UIControlStateSelected;
+  MDFTextAccessibilityOptions options = 0;
+  if ([MDFTextAccessibility isLargeForContrastRatios:button.titleLabel.font]) {
+    options = MDFTextAccessibilityOptionsLargeFont;
+  }
   for (NSUInteger controlState = 0; controlState <= allControlStates; ++controlState) {
-    UIColor *backgroundColor = [button backgroundColorForState:(UIControlState)controlState];
+    UIColor *backgroundColor = [button backgroundColorForState:controlState];
+    if ([self isTransparentColor:backgroundColor]) {
+      // TODO(randallli): We could potentially traverse the view heirarchy instead.
+      backgroundColor = button.underlyingColorHint;
+    }
     if (backgroundColor) {
       UIColor *color =
           [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
                                            targetTextAlpha:[MDCTypography buttonFontOpacity]
-                                                   options:0];
+                                                   options:options];
       [button setTitleColor:color forState:controlState];
-      NSLog(@"%@", color);
     }
   }
 }
+
+/** Returns YES if the color is transparent (including a nil color). */
+- (BOOL)isTransparentColor:(UIColor *)color {
+  return !color || [color isEqual:[UIColor clearColor]] || CGColorGetAlpha(color.CGColor) == 0.0f;
+}
+
 
 @end

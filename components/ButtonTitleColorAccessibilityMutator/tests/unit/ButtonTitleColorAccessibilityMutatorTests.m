@@ -18,6 +18,7 @@
 
 #import "MaterialButtonTitleColorAccessibilityMutator.h"
 #import "MaterialButtons.h"
+//#import "blahs.h"
 
 // A value greater than the largest value created by combining normal values of UIControlState.
 // This is a complete hack, but UIControlState doesn't expose anything useful here.
@@ -39,17 +40,38 @@ static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1
     UIColor *color = [UIColor whiteColor];
     // Making the background color the same as the title color.
     [button setBackgroundColor:color forState:(UIControlState)controlState];
-    
-    XCTAssertEqualObjects([button backgroundColorForState:controlState], color);
     [button setTitleColor:color forState:(UIControlState)controlState];
-    XCTAssertEqualObjects([button backgroundColorForState:controlState], color);
     
     // When
     [mutator mutate:button];
     
     // Then
-    XCTAssertNotEqualObjects([button titleColorForState:controlState], color, @"for control state:%lu ",(unsigned long)controlState);
+    XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
+                             @"for control state:%i ", controlState);
   }
 }
+
+- (void)testMutateUsesUnderlyingColorIfButtonBackgroundColorIsTransparent {
+  // Given
+  NSUInteger controlState = 0;
+  MDCButtonTitleColorAccessibilityMutator *mutator =
+  [[MDCButtonTitleColorAccessibilityMutator alloc] init];
+  UIColor *color = [UIColor whiteColor];
+  MDCButton *button = [[MDCButton alloc] init];
+  button.underlyingColorHint = color;
+  [button setBackgroundColor:[UIColor clearColor] forState:controlState];
+  [button setTitleColor:color forState:(UIControlState)controlState];
+  
+  // When
+  [mutator mutate:button];
+  
+  // Then
+  XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
+                           @"for control state:%lu ", (unsigned long)controlState);
+}
+
+//- (void)testfals {
+//  XCTAssertEqual(YES, NO);
+//}
 
 @end
