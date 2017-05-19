@@ -16,6 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
+// API REVIEWERS NOTE: This is a header from the MaterialMotionTransitions library. It is a small
+// library that standardizes the mechanisms by which transitions can be customized.
+
 /**
  A transition coordinates the animated and possibly interactive presentation or dismissal of a view
  controller.
