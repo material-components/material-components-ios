@@ -34,7 +34,7 @@
 
 /**
  An optional block that may be used to calculate the frame of the presented view controller's view.
- 
+
  If provided, the block will be invoked immediately before the transition is initiated and the
  returned rect will be assigned to the presented view controller's frame.
  */
