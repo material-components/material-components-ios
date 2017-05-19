@@ -74,10 +74,10 @@
   [self.appBar addSubviewsToParent];
 
   self.navigationItem.rightBarButtonItem =
-  [[UIBarButtonItem alloc] initWithTitle:@"Right"
-                                   style:UIBarButtonItemStyleDone
-                                  target:nil
-                                  action:nil];
+      [[UIBarButtonItem alloc] initWithTitle:@"Right"
+                                       style:UIBarButtonItemStyleDone
+                                      target:nil
+                                      action:nil];
 
   CGRect defaultRect = CGRectMake(0, 0, 32, 32);
   self.activityIndicator =
@@ -120,7 +120,6 @@
   [self.floatingButton sizeToFit];
   [self.scrollView addSubview:self.floatingButton];
 }
-
 
 - (void)didTapShowAlert:(id)sender {
   NSString *titleString = @"Themed Alert";
