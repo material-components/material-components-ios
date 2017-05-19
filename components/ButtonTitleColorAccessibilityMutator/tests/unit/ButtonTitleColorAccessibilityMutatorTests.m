@@ -72,8 +72,4 @@ static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1
   }
 }
 
-//- (void)testfals {
-//  XCTAssertEqual(YES, NO);
-//}
-
 @end
