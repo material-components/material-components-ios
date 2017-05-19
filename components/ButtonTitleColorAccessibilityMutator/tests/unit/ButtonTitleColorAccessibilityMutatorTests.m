@@ -47,27 +47,29 @@ static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1
     
     // Then
     XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
-                             @"for control state:%i ", controlState);
+                             @"for control state:%lu ", (unsigned long)controlState);
   }
 }
 
 - (void)testMutateUsesUnderlyingColorIfButtonBackgroundColorIsTransparent {
-  // Given
-  NSUInteger controlState = 0;
-  MDCButtonTitleColorAccessibilityMutator *mutator =
-  [[MDCButtonTitleColorAccessibilityMutator alloc] init];
-  UIColor *color = [UIColor whiteColor];
-  MDCButton *button = [[MDCButton alloc] init];
-  button.underlyingColorHint = color;
-  [button setBackgroundColor:[UIColor clearColor] forState:controlState];
-  [button setTitleColor:color forState:(UIControlState)controlState];
-  
-  // When
-  [mutator mutate:button];
-  
-  // Then
-  XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
-                           @"for control state:%lu ", (unsigned long)controlState);
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    // Given
+    NSUInteger controlState = 0;
+    MDCButtonTitleColorAccessibilityMutator *mutator =
+    [[MDCButtonTitleColorAccessibilityMutator alloc] init];
+    UIColor *color = [UIColor whiteColor];
+    MDCButton *button = [[MDCButton alloc] init];
+    button.underlyingColorHint = color;
+    [button setBackgroundColor:[UIColor clearColor] forState:controlState];
+    [button setTitleColor:color forState:(UIControlState)controlState];
+    
+    // When
+    [mutator mutate:button];
+    
+    // Then
+    XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
+                             @"for control state:%lu ", (unsigned long)controlState);
+  }
 }
 
 //- (void)testfals {
