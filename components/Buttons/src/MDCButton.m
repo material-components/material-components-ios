@@ -164,9 +164,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       self.underlyingColorHint = [aDecoder decodeObjectForKey:MDCButtonUnderlyingColorHintKey];
     }
 
-    if ([aDecoder containsValueForKey:MDCButtonCustomTitleColorKey]) {
-      self.customTitleColor = [aDecoder decodeObjectForKey:MDCButtonCustomTitleColorKey];
-    }
+//    if ([aDecoder containsValueForKey:MDCButtonCustomTitleColorKey]) {
+//      self.customTitleColor = [aDecoder decodeObjectForKey:MDCButtonCustomTitleColorKey];
+//    }
 
     if ([aDecoder containsValueForKey:MDCButtonDisableAlphaKey]) {
       self.disabledAlpha = (CGFloat)[aDecoder decodeDoubleForKey:MDCButtonDisableAlphaKey];
@@ -206,9 +206,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     [aCoder encodeObject:_underlyingColorHint forKey:MDCButtonUnderlyingColorHintKey];
   }
   [aCoder encodeDouble:self.disabledAlpha forKey:MDCButtonDisableAlphaKey];
-  if (self.customTitleColor) {
-    [aCoder encodeObject:self.customTitleColor forKey:MDCButtonCustomTitleColorKey];
-  }
+//  if (self.customTitleColor) {
+//    [aCoder encodeObject:self.customTitleColor forKey:MDCButtonCustomTitleColorKey];
+//  }
   [aCoder encodeUIEdgeInsets:self.hitAreaInsets forKey:MDCButtonAreaInsetKey];
   [aCoder encodeObject:_userElevations forKey:MDCButtonUserElevationsKey];
   [aCoder encodeObject:_backgroundColors forKey:MDCButtonBackgroundColorsKey];
@@ -276,10 +276,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                                                 object:nil];
 }
 
-- (void)setCustomTitleColor:(UIColor *)customTitleColor {
-  _customTitleColor = customTitleColor;
-  [self updateTitleColor];
-}
+//- (void)setCustomTitleColor:(UIColor *)customTitleColor {
+//  _customTitleColor = customTitleColor;
+////  [self updateTitleColor];
+//}
 
 - (void)setUnderlyingColorHint:(UIColor *)underlyingColorHint {
   _underlyingColorHint = underlyingColorHint;
@@ -645,7 +645,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   //                                                  : _disabledBackgroundColorDark;
   //    }
   //  }
-  [self updateTitleColor];
+//  [self updateTitleColor];
   [self updateDisabledTitleColor];
   super.backgroundColor = self.currentBackgroundColor;
 }
@@ -659,24 +659,24 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
              forState:UIControlStateDisabled];
 }
 
-- (void)updateTitleColor {
-  if (_customTitleColor) {
-    [self setTitleColor:_customTitleColor forState:UIControlStateNormal];
-    return;
-  }
-
-  if (![self isTransparentColor:[self effectiveBackgroundColor]]) {
-    MDFTextAccessibilityOptions options = 0;
-    if ([MDFTextAccessibility isLargeForContrastRatios:self.titleLabel.font]) {
-      options = MDFTextAccessibilityOptionsLargeFont;
-    }
-    UIColor *color =
-        [MDFTextAccessibility textColorOnBackgroundColor:[self effectiveBackgroundColor]
-                                         targetTextAlpha:[MDCTypography buttonFontOpacity]
-                                                 options:options];
-    [self setTitleColor:color forState:UIControlStateNormal];
-  }
-}
+//- (void)updateTitleColor {
+//  if (_customTitleColor) {
+//    [self setTitleColor:_customTitleColor forState:UIControlStateNormal];
+//    return;
+//  }
+//
+//  if (![self isTransparentColor:[self effectiveBackgroundColor]]) {
+//    MDFTextAccessibilityOptions options = 0;
+//    if ([MDFTextAccessibility isLargeForContrastRatios:self.titleLabel.font]) {
+//      options = MDFTextAccessibilityOptionsLargeFont;
+//    }
+//    UIColor *color =
+//        [MDFTextAccessibility textColorOnBackgroundColor:[self effectiveBackgroundColor]
+//                                         targetTextAlpha:[MDCTypography buttonFontOpacity]
+//                                                 options:options];
+//    [self setTitleColor:color forState:UIControlStateNormal];
+//  }
+//}
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;

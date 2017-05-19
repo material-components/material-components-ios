@@ -65,15 +65,15 @@
  */
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius;
 
-/**
- A custom title color for the non-disabled states. The default is nil, which means that the button
- chooses its title color automatically based on @c underlyingColor, whether the button is opaque,
- its current background color, etc.
-
- Setting this to a non-nil color overrides that logic, and the caller is responsible for ensuring
- that the title color/background color combination meets the accessibility requirements.
- */
-@property(nonatomic, strong, nullable) UIColor *customTitleColor UI_APPEARANCE_SELECTOR;
+///**
+// A custom title color for the non-disabled states. The default is nil, which means that the button
+// chooses its title color automatically based on @c underlyingColor, whether the button is opaque,
+// its current background color, etc.
+//
+// Setting this to a non-nil color overrides that logic, and the caller is responsible for ensuring
+// that the title color/background color combination meets the accessibility requirements.
+// */
+//@property(nonatomic, strong, nullable) UIColor *customTitleColor UI_APPEARANCE_SELECTOR;
 
 /**
  The alpha value that will be applied when the button is disabled. Most clients can leave this as
