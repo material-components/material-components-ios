@@ -36,11 +36,16 @@
       backgroundColor = button.underlyingColorHint;
     }
     if (backgroundColor) {
-      UIColor *color =
-          [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
-                                           targetTextAlpha:[MDCTypography buttonFontOpacity]
-                                                   options:options];
-      [button setTitleColor:color forState:controlState];
+      UIColor *existingColor = [button titleColorForState:controlState];
+      if (![MDFTextAccessibility textColor:existingColor
+                   passesOnBackgroundColor:backgroundColor
+                                   options:options]) {
+        UIColor *color =
+            [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
+                                             targetTextAlpha:[MDCTypography buttonFontOpacity]
+                                                     options:options];
+        [button setTitleColor:color forState:controlState];
+      }
     }
   }
 }

@@ -51,6 +51,27 @@ static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1
   }
 }
 
+- (void)testMutateKeepsAccessibleTextColor {
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    // Given
+    MDCButtonTitleColorAccessibilityMutator *mutator =
+        [[MDCButtonTitleColorAccessibilityMutator alloc] init];
+    MDCButton *button = [[MDCButton alloc] init];
+    UIColor *backgroundColor = [UIColor whiteColor];
+    UIColor *titleColor = [UIColor darkTextColor];
+    // Making the background color the same as the title color.
+    [button setBackgroundColor:backgroundColor forState:(UIControlState)controlState];
+    [button setTitleColor:titleColor forState:(UIControlState)controlState];
+    
+    // When
+    [mutator mutate:button];
+    
+    // Then
+    XCTAssertEqualObjects([button titleColorForState:controlState], titleColor,
+                          @"for control state:%lu ", (unsigned long)controlState);
+  }
+}
+
 - (void)testMutateUsesUnderlyingColorIfButtonBackgroundColorIsTransparent {
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     // Given
@@ -70,6 +91,29 @@ static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1
     XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
                              @"for control state:%lu ", (unsigned long)controlState);
   }
+}
+
+- (NSString*)controlState:(UIControlState)controlState {
+  switch (controlState) {
+    case UIControlStateNormal:
+      return @"normal";
+      break;
+    case UIControlStateHighlighted:
+      return @"highlighted";
+    case UIControlStateSelected:
+      return @"selected";
+      break;
+    case (UIControlStateSelected | UIControlStateHighlighted):
+      return @"selected | highlighted";
+      break;
+    default:
+      return [NSString stringWithFormat:@"state:%lu ", (unsigned long)controlState];
+      break;
+  }
+//  if (controlState ==)
+//  NSMutableString *string = [[NSMutableString alloc] init];
+  
+  
 }
 
 @end
