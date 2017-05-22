@@ -256,10 +256,8 @@ static UIColor *randomColor() {
   MDCButton *button = [[MDCButton alloc] init];
   button.inkStyle = arc4random_uniform(2) ? MDCInkStyleBounded : MDCInkStyleUnbounded;
   button.inkMaxRippleRadius = randomNumber();
-  button.disabledAlpha = randomNumber();
   button.uppercaseTitle = arc4random_uniform(2) ? YES : NO;
   button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-  button.customTitleColor = randomColor();
   button.inkColor = randomColor();
   button.underlyingColorHint = randomColor();
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
@@ -277,8 +275,6 @@ static UIColor *randomColor() {
   XCTAssertEqual(button.inkStyle, unarchivedButton.inkStyle);
   XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius, unarchivedButton.inkMaxRippleRadius,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, unarchivedButton.disabledAlpha,
-                             kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom, unarchivedButton.hitAreaInsets.bottom,
                              kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy(button.hitAreaInsets.top, unarchivedButton.hitAreaInsets.top,
@@ -287,7 +283,6 @@ static UIColor *randomColor() {
                              kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy(button.hitAreaInsets.left, unarchivedButton.hitAreaInsets.left,
                              kEpsilonAccuracy);
-  XCTAssertEqual(button.customTitleColor, unarchivedButton.customTitleColor);
   XCTAssertEqual(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button elevationForState:controlState],
