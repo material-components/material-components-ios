@@ -61,6 +61,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
+// https://material.io/guidelines/components/buttons.html#buttons-raised-buttons
+static const uint32_t MDCRaisedButtonDisabledBackgroundColor = 0xDFDFDF;
+static const uint32_t MDCRaisedButtonDisabledTitleColor = 0xAFAfAf;
+
 static NSAttributedString *uppercaseAttributedString(NSAttributedString *string) {
   // Store the attributes.
   NSMutableArray<NSDictionary *> *attributes = [NSMutableArray array];
@@ -242,6 +246,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Default background colors.
   [self setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
                   forState:UIControlStateNormal];
+  [self setBackgroundColor:MDCColorFromRGB(MDCRaisedButtonDisabledBackgroundColor)
+                  forState:UIControlStateDisabled];
+  [self setTitleColor:MDCColorFromRGB(MDCRaisedButtonDisabledTitleColor)
+             forState:UIControlStateDisabled];
 
   self.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 
