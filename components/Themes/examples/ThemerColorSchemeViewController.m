@@ -54,66 +54,66 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
   switch (indexPath.item) {
     case 0: {
-      NSObject<MDCColorScheme> *blueScheme = [[MDCBasicColorScheme alloc] init];
-      blueScheme.primaryColor = [MDCPalette bluePalette].tint500;
-      blueScheme.primaryLightColor = [MDCPalette bluePalette].tint100;
-      blueScheme.primaryDarkColor = [MDCPalette bluePalette].tint700;
+      NSObject<MDCColorScheme> *blueScheme =
+          [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette bluePalette].tint500
+                                          primaryLightColor:[MDCPalette bluePalette].tint100
+                                           primaryDarkColor:[MDCPalette bluePalette].tint700];
       self.colorScheme = blueScheme;
       break;
     }
     case 1: {
-      NSObject<MDCColorScheme> *redScheme = [[MDCBasicColorScheme alloc] init];
-      redScheme.primaryColor = [MDCPalette redPalette].tint500;
-      redScheme.primaryLightColor = [MDCPalette redPalette].tint100;
-      redScheme.primaryDarkColor = [MDCPalette redPalette].tint700;
+      NSObject<MDCColorScheme> *redScheme =
+          [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette redPalette].tint500
+                                          primaryLightColor:[MDCPalette redPalette].tint100
+                                           primaryDarkColor:[MDCPalette redPalette].tint700];
       self.colorScheme = redScheme;
       break;
     }
     case 2: {
-      NSObject<MDCColorScheme> *greenScheme = [[MDCBasicColorScheme alloc] init];
-      greenScheme.primaryColor = [MDCPalette greenPalette].tint500;
-      greenScheme.primaryLightColor = [MDCPalette greenPalette].tint100;
-      greenScheme.primaryDarkColor = [MDCPalette greenPalette].tint700;
+      NSObject<MDCColorScheme> *greenScheme =
+          [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette greenPalette].tint500
+                                          primaryLightColor:[MDCPalette greenPalette].tint100
+                                           primaryDarkColor:[MDCPalette greenPalette].tint700];
       self.colorScheme = greenScheme;
       break;
     }
     case 3: {
-      NSObject<MDCColorScheme> *amberScheme = [[MDCBasicColorScheme alloc] init];
-      amberScheme.primaryColor = [MDCPalette amberPalette].tint500;
-      amberScheme.primaryLightColor = [MDCPalette amberPalette].tint100;
-      amberScheme.primaryDarkColor = [MDCPalette amberPalette].tint700;
+      NSObject<MDCColorScheme> *amberScheme =
+          [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette amberPalette].tint500
+                                          primaryLightColor:[MDCPalette amberPalette].tint100
+                                           primaryDarkColor:[MDCPalette amberPalette].tint700];
       self.colorScheme = amberScheme;
       break;
     }
     case 4: {
-      NSObject<MDCColorScheme> *pinkScheme = [[MDCBasicColorScheme alloc] init];
-      pinkScheme.primaryColor = [MDCPalette pinkPalette].tint500;
-      pinkScheme.primaryLightColor = [MDCPalette pinkPalette].tint100;
-      pinkScheme.primaryDarkColor = [MDCPalette pinkPalette].tint700;
+      NSObject<MDCColorScheme> *pinkScheme =
+          [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette pinkPalette].tint500
+                                          primaryLightColor:[MDCPalette pinkPalette].tint100
+                                           primaryDarkColor:[MDCPalette pinkPalette].tint700];
       self.colorScheme = pinkScheme;
       break;
     }
     case 5: {
-      NSObject<MDCColorScheme> *orangeScheme = [[MDCBasicColorScheme alloc] init];
-      orangeScheme.primaryColor = [MDCPalette orangePalette].tint500;
-      orangeScheme.primaryLightColor = [MDCPalette orangePalette].tint100;
-      orangeScheme.primaryDarkColor = [MDCPalette orangePalette].tint700;
+      NSObject<MDCColorScheme> *orangeScheme =
+          [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette orangePalette].tint500
+                                          primaryLightColor:[MDCPalette orangePalette].tint100
+                                           primaryDarkColor:[MDCPalette orangePalette].tint700];
       self.colorScheme = orangeScheme;
       break;
     }
     case 6: {
-      NSObject<MDCColorScheme> *purpleScheme = [[MDCBasicColorScheme alloc] init];
-      purpleScheme.primaryColor = [MDCPalette purplePalette].tint500;
-      purpleScheme.primaryLightColor = [MDCPalette purplePalette].tint100;
-      purpleScheme.primaryDarkColor = [MDCPalette purplePalette].tint700;
+      NSObject<MDCColorScheme> *purpleScheme =
+          [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette purplePalette].tint500
+                                          primaryLightColor:[MDCPalette purplePalette].tint100
+                                           primaryDarkColor:[MDCPalette purplePalette].tint700];
       self.colorScheme = purpleScheme;
       break;
     }
     case 7: {
-      NSObject<MDCColorScheme> *tealScheme = [[MDCBasicColorScheme alloc] init];
-      tealScheme.primaryColor = [MDCPalette tealPalette].tint500;
-      tealScheme.primaryLightColor = [MDCPalette tealPalette].tint100;
-      tealScheme.primaryDarkColor = [MDCPalette tealPalette].tint700;
+      NSObject<MDCColorScheme> *tealScheme =
+          [[MDCBasicColorScheme alloc] initWithPrimaryColor:[MDCPalette tealPalette].tint500
+                                          primaryLightColor:[MDCPalette tealPalette].tint100
+                                           primaryDarkColor:[MDCPalette tealPalette].tint700];
       self.colorScheme = tealScheme;
       break;
     }

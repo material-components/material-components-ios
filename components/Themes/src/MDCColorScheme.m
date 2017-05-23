@@ -18,4 +18,78 @@
 
 @implementation MDCBasicColorScheme
 
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor {
+  self = [super init];
+  if (self) {
+    _primaryColor = primaryColor;
+
+    // Primary light and dark colors are automatically generated if not specified.
+    _primaryLightColor = [self lighterColorForColor:primaryColor];
+    _primaryDarkColor = [self darkerColorForColor:primaryColor];
+
+    // When secondary colors are not specificed, it is assumed they are the same as the primary
+    // colors.
+    _secondaryColor = primaryColor;
+    _secondaryLightColor = _primaryLightColor;
+    _secondaryDarkColor = _primaryDarkColor;
+  }
+  return self;
+}
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                           primaryLightColor:(nonnull UIColor *)primaryLightColor
+                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor {
+  self = [super init];
+  if (self) {
+    _primaryColor = primaryColor;
+    _primaryLightColor = primaryLightColor;
+    _primaryDarkColor = primaryDarkColor;
+
+    // When secondary colors are not specificed, it is assumed they are the same as the primary
+    // colors.
+    _secondaryColor = primaryColor;
+    _secondaryLightColor = primaryLightColor;
+    _secondaryDarkColor = primaryDarkColor;
+  }
+  return self;
+}
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                           primaryLightColor:(nonnull UIColor *)primaryLightColor
+                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor
+                         secondaryLightColor:(nonnull UIColor *)secondaryLightColor
+                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor {
+  self = [super init];
+  if (self) {
+    _primaryColor = primaryColor;
+    _primaryLightColor = primaryLightColor;
+    _primaryDarkColor = primaryDarkColor;
+    _secondaryColor = secondaryColor;
+    _secondaryLightColor = secondaryLightColor;
+    _secondaryDarkColor = secondaryDarkColor;
+  }
+  return self;
+}
+
+- (UIColor *)lighterColorForColor:(UIColor *)color {
+  CGFloat r, g, b, a;
+  if ([color getRed:&r green:&g blue:&b alpha:&a])
+    return [UIColor colorWithRed:MIN(r + 0.2, 1.0)
+                           green:MIN(g + 0.2, 1.0)
+                            blue:MIN(b + 0.2, 1.0)
+                           alpha:a];
+  return nil;
+}
+
+- (UIColor *)darkerColorForColor:(UIColor *)color {
+  CGFloat r, g, b, a;
+  if ([color getRed:&r green:&g blue:&b alpha:&a])
+    return [UIColor colorWithRed:MAX(r - 0.2, 0.0)
+                           green:MAX(g - 0.2, 0.0)
+                            blue:MAX(b - 0.2, 0.0)
+                           alpha:a];
+  return nil;
+}
+
 @end
