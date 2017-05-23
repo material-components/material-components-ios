@@ -67,7 +67,7 @@
 }
 
 - (void)setPreferredContentSize:(CGSize)preferredContentSize {
-  [self.contentViewController setPreferredContentSize:preferredContentSize];
+  self.contentViewController.preferredContentSize = preferredContentSize;
 }
 
 /* Disable setter. Always use internal transition controller */
