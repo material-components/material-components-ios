@@ -1,3 +1,17 @@
+# 23.3.0
+
+## API diffs
+
+* No API changes.
+
+## Component changes
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fixes issue where the rotation animation was broken for any GOOHeaderViewController child’s view.](https://github.com/material-components/material-components-ios/commit/65ed2b4872177e3de64e7a9725388bd61358c58b) (Material Components iOS Team)
+
 # 23.2.0
 
 ## API diffs
