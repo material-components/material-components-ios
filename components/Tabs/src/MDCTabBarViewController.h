@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@
 
 /** The animation duration for the animation tab bar hiding and showing. Defaults to 0.3 seconds. */
 extern const CGFloat MDCTabBarViewControllerAnimationDuration;
-
 
 /**
  The MDCTabBarViewController class manages a set of ViewControllers, showing their UITabBarItems
