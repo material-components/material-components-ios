@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -109,11 +109,9 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
   if (_selectedViewController != selectedViewController) {
-#if DEBUG
     if (selectedViewController) {
       NSAssert([_viewControllers containsObject:selectedViewController], @"not one of us.");
     }
-#endif
     BOOL animated = NO;
     UIView *oldView = _selectedViewController.view;
     _selectedViewController = selectedViewController;
@@ -209,7 +207,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
   NSUInteger index = [tabBar.items indexOfObject:item];
   if (index < _viewControllers.count) {
-   UIViewController *newSelected = _viewControllers[index];
+    UIViewController *newSelected = _viewControllers[index];
     if (newSelected != self.selectedViewController) {
       if ([_delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)]
           && ![_delegate tabBarController:self shouldSelectViewController:newSelected]) {
