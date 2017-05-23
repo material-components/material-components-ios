@@ -145,7 +145,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 // Either this has just come into existence or its array of viewControllers has changed.
 // Update the TabBar from the array of viewControllers.
 - (void)updateTabBarItems {
-  NSMutableArray *items = [NSMutableArray array];
+  NSMutableArray<UITabBarItem *> *items = [NSMutableArray array];
   BOOL hasTitles = NO;
   BOOL hasImages = NO;
   for (UIViewController *child in _viewControllers) {
