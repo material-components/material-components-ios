@@ -16,23 +16,8 @@
 
 #import "MaterialBottomSheet.h"
 
+#import "MDCMath.h"
 #import "private/MDCSheetContainerView.h"
-
-static inline BOOL MDCFloatIsApproximatelyZero(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return (fabs(value) < DBL_EPSILON);
-#else
-  return (fabsf(value) < FLT_EPSILON);
-#endif
-}
-
-static inline CGFloat MDCRound(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return round(value);
-#else
-  return roundf(value);
-#endif
-}
 
 static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController) {
   UIScrollView *scrollView = nil;
@@ -171,7 +156,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   CGFloat preferredContentHeight = self.presentedViewController.preferredContentSize.height;
 
   // If |preferredSheetHeight| has not been specified, use half of the current height.
-  if (MDCFloatIsApproximatelyZero(preferredContentHeight)) {
+  if (MDCCGFloatEqual(preferredContentHeight, 0)) {
     preferredContentHeight = MDCRound(_sheetView.frame.size.height / 2);
   }
   _sheetView.preferredSheetHeight = preferredContentHeight;
