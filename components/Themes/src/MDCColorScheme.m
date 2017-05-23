@@ -55,6 +55,26 @@
 }
 
 - (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor {
+  self = [super init];
+  if (self) {
+    _primaryColor = primaryColor;
+
+    // Primary light and dark colors are automatically generated if not specified.
+    _primaryLightColor = [self lighterColorForColor:primaryColor];
+    _primaryDarkColor = [self darkerColorForColor:primaryColor];
+
+    _secondaryColor = secondaryColor;
+
+    // Secondary light and dark colors are automatically generated if not specified.
+    _secondaryLightColor = [self lighterColorForColor:secondaryColor];
+    _secondaryDarkColor = [self darkerColorForColor:secondaryColor];
+    
+  }
+  return self;
+}
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
                            primaryLightColor:(nonnull UIColor *)primaryLightColor
                             primaryDarkColor:(nonnull UIColor *)primaryDarkColor
                               secondaryColor:(nonnull UIColor *)secondaryColor
