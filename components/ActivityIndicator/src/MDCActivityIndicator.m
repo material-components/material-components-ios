@@ -120,7 +120,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 }
 
 + (void)initialize {
-  NSArray *defaultColors =
+  NSArray<UIColor *> *defaultColors =
       @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
          [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
          [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
@@ -393,8 +393,11 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 }
 
 - (void)setCycleColors:(NSArray<UIColor *> *)cycleColors {
-  _cycleColors = cycleColors;
-  [self setStrokeColor:cycleColors[0]];
+  _cycleColors = [cycleColors copy];
+  NSAssert(cycleColors.count > 0, @"Cycle color index is out of bounds.");
+  if (cycleColors.count > 0) {
+    [self setStrokeColor:cycleColors[0]];
+  }
 }
 
 - (void)updateStrokePath {

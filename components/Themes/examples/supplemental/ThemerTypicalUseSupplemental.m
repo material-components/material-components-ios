@@ -28,7 +28,7 @@
 - (instancetype)initWithColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
   self = [super init];
   if (self) {
-    [self commonMDCFlexibleHeaderViewControllerInit];
+    [self setupAppBar];
     self.colorScheme = colorScheme;
   }
   return self;
@@ -51,7 +51,7 @@
   self.floatingButton.center = CGPointMake(self.view.frame.size.width / 2, 500);
 }
 
-- (void)commonMDCFlexibleHeaderViewControllerInit {
+- (void)setupAppBar {
   self.title = @"Themes";
 
   self.appBar = [[MDCAppBar alloc] init];
