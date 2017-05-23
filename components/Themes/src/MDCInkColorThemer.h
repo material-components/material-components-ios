@@ -31,7 +31,7 @@
  @param inkView A MDCInkView instance to apply a color scheme. Use a UIAppearance proxy to apply a
      color scheme to all instances of MDCInkView.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                toInkView:(MDCInkView *)inkView;
 
 @end

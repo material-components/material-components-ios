@@ -20,36 +20,53 @@
  A color scheme comprised of set of primary and secondary colors. Material design guidelines
  recommend using primary and secondary colors with light and dark color variants.
  */
-@interface MDCColorScheme : NSObject
+@protocol MDCColorScheme <NSObject>
 
 /** The main, primary color used for a theme. */
-@property (nonatomic, strong) UIColor *primaryColor;
+@property (nonatomic, strong, nonnull) UIColor *primaryColor;
+
+@optional
 
 /** 
  A slightly lighter version of the primary color. Given tonal variations of a color, this color is
  typically two color swatches lighter than the primary color.
  */
-@property (nonatomic, strong) UIColor *primaryLightColor;
+@property (nonatomic, strong, nonnull) UIColor *primaryLightColor;
 
 /**
  A slightly darker version of the primary color. Given tonal variations of a color, this color is
  typically two color swatches darker than the primary color.
  */
-@property (nonatomic, strong) UIColor *primaryDarkColor;
+@property (nonatomic, strong, nonnull) UIColor *primaryDarkColor;
 
 /** The secondary, accent color used for a theme. */
-@property (nonatomic, strong) UIColor *secondaryColor;
+@property (nonatomic, strong, nonnull) UIColor *secondaryColor;
 
 /**
  A slightly lighter version of the secondary color. Given tonal variations of a color, this color is
  typically two color swatches lighter than the secondary color.
  */
-@property (nonatomic, strong) UIColor *secondaryLightColor;
+@property (nonatomic, strong, nonnull) UIColor *secondaryLightColor;
 
 /**
  A slightly darker version of the secondary color. Given tonal variations of a color, this color is
  typically two color swatches darker than the secondary color.
  */
-@property (nonatomic, strong) UIColor *secondaryDarkColor;
+@property (nonatomic, strong, nonnull) UIColor *secondaryDarkColor;
+
+@end
+
+/**
+ A basic color scheme comprised of set of primary and secondary colors with light and dark color
+ variants.
+ */
+@interface MDCBasicColorScheme : NSObject<MDCColorScheme>
+
+@property (nonatomic, strong, nonnull) UIColor *primaryColor;
+@property (nonatomic, strong, nonnull) UIColor *primaryLightColor;
+@property (nonatomic, strong, nonnull) UIColor *primaryDarkColor;
+@property (nonatomic, strong, nonnull) UIColor *secondaryColor;
+@property (nonatomic, strong, nonnull) UIColor *secondaryLightColor;
+@property (nonatomic, strong, nonnull) UIColor *secondaryDarkColor;
 
 @end

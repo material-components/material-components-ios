@@ -27,8 +27,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface ThemersExamplesViewController : MDCCollectionViewController
 
-@property(nonatomic, strong) MDCColorScheme *colorScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
+@property(nonatomic, strong) NSObject<MDCColorScheme> *colorScheme;
 
 - (void)loadCollectionView:(nullable NSArray *)modes;
 
@@ -54,7 +54,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
   switch (indexPath.item) {
     case 0: {
-      MDCColorScheme *blueScheme = [[MDCColorScheme alloc] init];
+      NSObject<MDCColorScheme> *blueScheme = [[MDCBasicColorScheme alloc] init];
       blueScheme.primaryColor = [MDCPalette bluePalette].tint500;
       blueScheme.primaryLightColor = [MDCPalette bluePalette].tint100;
       blueScheme.primaryDarkColor = [MDCPalette bluePalette].tint700;
@@ -62,7 +62,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
       break;
     }
     case 1: {
-      MDCColorScheme *redScheme = [[MDCColorScheme alloc] init];
+      NSObject<MDCColorScheme> *redScheme = [[MDCBasicColorScheme alloc] init];
       redScheme.primaryColor = [MDCPalette redPalette].tint500;
       redScheme.primaryLightColor = [MDCPalette redPalette].tint100;
       redScheme.primaryDarkColor = [MDCPalette redPalette].tint700;
@@ -70,7 +70,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
       break;
     }
     case 2: {
-      MDCColorScheme *greenScheme = [[MDCColorScheme alloc] init];
+      NSObject<MDCColorScheme> *greenScheme = [[MDCBasicColorScheme alloc] init];
       greenScheme.primaryColor = [MDCPalette greenPalette].tint500;
       greenScheme.primaryLightColor = [MDCPalette greenPalette].tint100;
       greenScheme.primaryDarkColor = [MDCPalette greenPalette].tint700;
@@ -78,7 +78,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
       break;
     }
     case 3: {
-      MDCColorScheme *amberScheme = [[MDCColorScheme alloc] init];
+      NSObject<MDCColorScheme> *amberScheme = [[MDCBasicColorScheme alloc] init];
       amberScheme.primaryColor = [MDCPalette amberPalette].tint500;
       amberScheme.primaryLightColor = [MDCPalette amberPalette].tint100;
       amberScheme.primaryDarkColor = [MDCPalette amberPalette].tint700;
@@ -86,7 +86,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
       break;
     }
     case 4: {
-      MDCColorScheme *pinkScheme = [[MDCColorScheme alloc] init];
+      NSObject<MDCColorScheme> *pinkScheme = [[MDCBasicColorScheme alloc] init];
       pinkScheme.primaryColor = [MDCPalette pinkPalette].tint500;
       pinkScheme.primaryLightColor = [MDCPalette pinkPalette].tint100;
       pinkScheme.primaryDarkColor = [MDCPalette pinkPalette].tint700;
@@ -94,7 +94,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
       break;
     }
     case 5: {
-      MDCColorScheme *orangeScheme = [[MDCColorScheme alloc] init];
+      NSObject<MDCColorScheme> *orangeScheme = [[MDCBasicColorScheme alloc] init];
       orangeScheme.primaryColor = [MDCPalette orangePalette].tint500;
       orangeScheme.primaryLightColor = [MDCPalette orangePalette].tint100;
       orangeScheme.primaryDarkColor = [MDCPalette orangePalette].tint700;
@@ -102,7 +102,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
       break;
     }
     case 6: {
-      MDCColorScheme *purpleScheme = [[MDCColorScheme alloc] init];
+      NSObject<MDCColorScheme> *purpleScheme = [[MDCBasicColorScheme alloc] init];
       purpleScheme.primaryColor = [MDCPalette purplePalette].tint500;
       purpleScheme.primaryLightColor = [MDCPalette purplePalette].tint100;
       purpleScheme.primaryDarkColor = [MDCPalette purplePalette].tint700;
@@ -110,7 +110,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
       break;
     }
     case 7: {
-      MDCColorScheme *tealScheme = [[MDCColorScheme alloc] init];
+      NSObject<MDCColorScheme> *tealScheme = [[MDCBasicColorScheme alloc] init];
       tealScheme.primaryColor = [MDCPalette tealPalette].tint500;
       tealScheme.primaryLightColor = [MDCPalette tealPalette].tint100;
       tealScheme.primaryDarkColor = [MDCPalette tealPalette].tint700;

@@ -18,7 +18,7 @@
 
 @implementation MDCProgressViewColorThemer
 
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
           toProgressView:(MDCProgressView *)progressView {
   progressView.trackTintColor = colorScheme.primaryLightColor;
   progressView.progressTintColor = colorScheme.primaryColor;

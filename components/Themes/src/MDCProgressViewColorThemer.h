@@ -31,7 +31,7 @@
  @param progressView A MDCProgressView instance to apply a color scheme. Use a UIAppearance proxy to
      apply a color scheme to all instances of MDCProgressView.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
           toProgressView:(MDCProgressView *)progressView;
 
 @end

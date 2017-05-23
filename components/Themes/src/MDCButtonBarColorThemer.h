@@ -31,7 +31,7 @@
  @param buttonBar A MDCButtonBar instance to apply a color scheme. Use a UIAppearance proxy to apply
      a color scheme to all instances of MDCButtonBar.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
              toButtonBar:(MDCButtonBar *)buttonBar;
 
 @end

@@ -31,7 +31,7 @@
  @param headerStackView A MDCHeaderStackView instance to apply a color scheme. Use a UIAppearance
      proxy to apply a color scheme to all instances of MDCHeaderStackView.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
        toHeaderStackView:(MDCHeaderStackView *)headerStackView;
 
 @end

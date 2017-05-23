@@ -18,7 +18,7 @@
 
 @implementation MDCTabBarColorThemer
 
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                 toTabBar:(MDCTabBar *)tabBar {
   tabBar.tintColor = colorScheme.primaryColor;
   tabBar.barTintColor = colorScheme.primaryColor;

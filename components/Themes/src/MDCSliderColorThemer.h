@@ -31,7 +31,7 @@
  @param slider A MDCSlider instance to apply a color scheme. Use a UIAppearance proxy to apply a
      color scheme to all instances of MDCSlider.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                 toSlider:(MDCSlider *)slider;
 
 @end

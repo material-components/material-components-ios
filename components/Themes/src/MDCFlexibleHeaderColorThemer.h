@@ -31,7 +31,7 @@
  @param flexibleHeaderView A MDCFlexibleHeaderView instance to apply a color scheme. Use a
      UIAppearance proxy to apply a color scheme to all instances of MDCFlexibleHeaderView.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toFlexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView;
 
 /**
@@ -42,7 +42,7 @@
      Use a UIAppearance proxy to apply a color scheme to all instances of
      MDCFlexibleHeaderViewController.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toMDCFlexibleHeaderController:(MDCFlexibleHeaderViewController *)flexibleHeaderController;
 
 @end

@@ -25,7 +25,7 @@
 
 @implementation ThemerTypicalUseViewController (Supplemental)
 
-- (instancetype)initWithColorScheme:(MDCColorScheme *)colorScheme {
+- (instancetype)initWithColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
   self = [super init];
   if (self) {
     [self commonMDCFlexibleHeaderViewControllerInit];

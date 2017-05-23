@@ -31,7 +31,7 @@
  @param pageControl A MDCPageControl instance to apply a color scheme. Use a UIAppearance proxy to
      apply a color scheme to all instances of MDCPageControl.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
            toPageControl:(MDCPageControl *)pageControl;
 
 @end

@@ -31,7 +31,7 @@
  @param button A MDCButton instance to apply a color scheme. Use a UIAppearance proxy to apply a
      color scheme to all instances of MDCButton.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                 toButton:(MDCButton *)button;
 
 @end

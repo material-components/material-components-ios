@@ -31,7 +31,7 @@
  @param navigationBar A MDCNavigationBar instance to apply a color scheme. Use a UIAppearance proxy
      to apply a color scheme to all instances of MDCNavigationBar.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
          toNavigationBar:(MDCNavigationBar *)navigationBar;
 
 @end

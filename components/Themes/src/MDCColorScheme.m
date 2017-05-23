@@ -16,6 +16,6 @@
 
 #import "MDCColorScheme.h"
 
-@implementation MDCColorScheme
+@implementation MDCBasicColorScheme
 
 @end

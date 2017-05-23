@@ -18,12 +18,12 @@
 
 @implementation MDCFlexibleHeaderColorThemer
 
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toFlexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView {
   flexibleHeaderView.backgroundColor = colorScheme.primaryColor;
 }
 
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toMDCFlexibleHeaderController:(MDCFlexibleHeaderViewController *)flexibleHeaderController {
   flexibleHeaderController.headerView.backgroundColor = colorScheme.primaryColor;
 }
