@@ -18,62 +18,6 @@
 
 @implementation MDCBasicColorScheme
 
-- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor {
-  self = [super init];
-  if (self) {
-    _primaryColor = primaryColor;
-
-    // Primary light and dark colors are automatically generated if not specified.
-    _primaryLightColor = [self lighterColorForColor:primaryColor];
-    _primaryDarkColor = [self darkerColorForColor:primaryColor];
-
-    // When secondary colors are not specificed, it is assumed they are the same as the primary
-    // colors.
-    _secondaryColor = primaryColor;
-    _secondaryLightColor = _primaryLightColor;
-    _secondaryDarkColor = _primaryDarkColor;
-  }
-  return self;
-}
-
-- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
-                           primaryLightColor:(nonnull UIColor *)primaryLightColor
-                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor {
-  self = [super init];
-  if (self) {
-    _primaryColor = primaryColor;
-    _primaryLightColor = primaryLightColor;
-    _primaryDarkColor = primaryDarkColor;
-
-    // When secondary colors are not specificed, it is assumed they are the same as the primary
-    // colors.
-    _secondaryColor = primaryColor;
-    _secondaryLightColor = primaryLightColor;
-    _secondaryDarkColor = primaryDarkColor;
-  }
-  return self;
-}
-
-- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
-                              secondaryColor:(nonnull UIColor *)secondaryColor {
-  self = [super init];
-  if (self) {
-    _primaryColor = primaryColor;
-
-    // Primary light and dark colors are automatically generated if not specified.
-    _primaryLightColor = [self lighterColorForColor:primaryColor];
-    _primaryDarkColor = [self darkerColorForColor:primaryColor];
-
-    _secondaryColor = secondaryColor;
-
-    // Secondary light and dark colors are automatically generated if not specified.
-    _secondaryLightColor = [self lighterColorForColor:secondaryColor];
-    _secondaryDarkColor = [self darkerColorForColor:secondaryColor];
-    
-  }
-  return self;
-}
-
 - (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
                            primaryLightColor:(nonnull UIColor *)primaryLightColor
                             primaryDarkColor:(nonnull UIColor *)primaryDarkColor
@@ -90,6 +34,38 @@
     _secondaryDarkColor = secondaryDarkColor;
   }
   return self;
+}
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor {
+  UIColor *primaryLightColor = [self lighterColorForColor:primaryColor];
+  UIColor *primaryDarkColor = [self darkerColorForColor:primaryColor];
+  return [self initWithPrimaryColor:primaryColor
+                  primaryLightColor:primaryLightColor
+                   primaryDarkColor:primaryDarkColor
+                     secondaryColor:primaryColor
+                secondaryLightColor:primaryLightColor
+                 secondaryDarkColor:primaryDarkColor];
+}
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                           primaryLightColor:(nonnull UIColor *)primaryLightColor
+                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor {
+  return [self initWithPrimaryColor:primaryColor
+                  primaryLightColor:primaryLightColor
+                   primaryDarkColor:primaryDarkColor
+                     secondaryColor:primaryColor
+                secondaryLightColor:primaryLightColor
+                 secondaryDarkColor:primaryDarkColor];
+}
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor {
+  return [self initWithPrimaryColor:primaryColor
+                  primaryLightColor:[self lighterColorForColor:primaryColor]
+                   primaryDarkColor:[self darkerColorForColor:primaryColor]
+                     secondaryColor:secondaryColor
+                secondaryLightColor:[self lighterColorForColor:secondaryColor]
+                 secondaryDarkColor:[self darkerColorForColor:secondaryColor]];
 }
 
 - (UIColor *)lighterColorForColor:(UIColor *)color {

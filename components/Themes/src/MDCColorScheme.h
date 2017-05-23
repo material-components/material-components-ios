@@ -69,6 +69,20 @@
 @property (nonatomic, strong, nonnull, readonly) UIColor *secondaryLightColor;
 @property (nonatomic, strong, nonnull, readonly) UIColor *secondaryDarkColor;
 
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+/**
+ Initializes and returns a color scheme given primary, primary light, primary dark, secondary,
+ secondary light and secondary dark colors.
+ */
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                           primaryLightColor:(nonnull UIColor *)primaryLightColor
+                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor
+                         secondaryLightColor:(nonnull UIColor *)secondaryLightColor
+                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor
+    NS_DESIGNATED_INITIALIZER;
+
 /**
  Initializes and returns a color scheme given a primary color. Primary light and primary dark colors
  are automatically generated. Secondary colors take on primary colors.
@@ -89,16 +103,5 @@
  */
 - (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
                               secondaryColor:(nonnull UIColor *)secondaryColor;
-
-/**
- Initializes and returns a color scheme given primary, primary light, primary dark, secondary,
- secondary light and secondary dark colors.
- */
-- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
-                           primaryLightColor:(nonnull UIColor *)primaryLightColor
-                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor
-                              secondaryColor:(nonnull UIColor *)secondaryColor
-                         secondaryLightColor:(nonnull UIColor *)secondaryLightColor
-                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor;
 
 @end
