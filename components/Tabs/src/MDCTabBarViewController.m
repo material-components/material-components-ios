@@ -91,10 +91,11 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
   if (![_viewControllers isEqual:viewControllers]) {
+    // For all view controllers that this is removing, follow UIViewController.h's rules for
+    // for removing a child view controller. See the comments in UIViewController.h for more
+    // information.
     for (UIViewController *viewController in _viewControllers) {
-      // If the new array doesn't contain an item from the old array then remove it.
       if (![viewControllers containsObject:viewController]) {
-        // Follow the UIKit rules for removing a child viewController.
         [viewController willMoveToParentViewController:nil];
         if (viewController.viewLoaded) {
           [viewController.view removeFromSuperview];
@@ -204,15 +205,24 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 #pragma mark -  MDCTabBarDelegate
 
+- (BOOL)tabBar:(UITabBar *)tabBar shouldSelectItem:(UITabBarItem *)item {
+  if ([_delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)]) {
+    NSUInteger index = [tabBar.items indexOfObject:item];
+    if (index < _viewControllers.count) {
+      UIViewController *newSelected = _viewControllers[index];
+      if (newSelected != self.selectedViewController) {
+        return [_delegate tabBarController:self shouldSelectViewController:newSelected];
+      }
+    }
+  }
+  return YES;
+}
+
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
   NSUInteger index = [tabBar.items indexOfObject:item];
   if (index < _viewControllers.count) {
     UIViewController *newSelected = _viewControllers[index];
     if (newSelected != self.selectedViewController) {
-      if ([_delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)] &&
-          ![_delegate tabBarController:self shouldSelectViewController:newSelected]) {
-        return;
-      }
       self.selectedViewController = newSelected;
       if ([_delegate respondsToSelector:@selector(tabBarController:didSelectViewController:)]) {
         [_delegate tabBarController:self didSelectViewController:newSelected];

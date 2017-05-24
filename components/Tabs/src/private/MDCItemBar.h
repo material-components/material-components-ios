@@ -77,7 +77,7 @@
  selection changes.
  */
 @protocol MDCItemBarDelegate <NSObject>
-
+@optional
 /**
  Called before the selected item changes by user action. This method is not called for programmatic
  changes to the bar's selected item. Return YES to allow the selection.
@@ -91,6 +91,7 @@
  */
 - (void)itemBar:(nonnull MDCItemBar *)itemBar willSelectItem:(nonnull UITabBarItem *)item;
 
+@required
 /**
  Called when the selected item changes by user action. This method is not called for programmatic
  changes to the bar's selected item.
