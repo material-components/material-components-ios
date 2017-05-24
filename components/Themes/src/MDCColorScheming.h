@@ -18,7 +18,7 @@
  A color scheme comprised of set of primary and secondary colors. Material design guidelines
  recommend using primary and secondary colors with light and dark color variants.
  */
-@protocol MDCColorScheme
+@protocol MDCColorScheming
 
 /** The main, primary color used for a theme. */
 @property (nonatomic, strong, nonnull, readonly) UIColor *primaryColor;
@@ -58,7 +58,7 @@
  A basic color scheme comprised of set of primary and secondary colors with light and dark color
  variants.
  */
-@interface MDCBasicColorScheme : NSObject <MDCColorScheme>
+@interface MDCBasicColorScheme : NSObject <MDCColorScheming>
 
 @property (nonatomic, strong, nonnull, readonly) UIColor *primaryColor;
 @property (nonatomic, strong, nonnull, readonly) UIColor *primaryLightColor;

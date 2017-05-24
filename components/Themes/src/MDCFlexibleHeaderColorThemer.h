@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCColorScheming.h"
 #import "MaterialFlexibleHeader.h"
-#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme MDCFlexibleHeaderView.
@@ -25,24 +25,23 @@
 @interface MDCFlexibleHeaderColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCFlexibleHeaderView.
- 
+ Applies a color scheme to theme a MDCFlexibleHeaderView. Use a UIAppearance proxy to apply a color
+ scheme to all instances of MDCFlexibleHeaderView.
+
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
- @param flexibleHeaderView A MDCFlexibleHeaderView instance to apply a color scheme. Use a
-     UIAppearance proxy to apply a color scheme to all instances of MDCFlexibleHeaderView.
+ @param flexibleHeaderView A MDCFlexibleHeaderView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
     toFlexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView;
 
 /**
- Applies a color scheme to theme a MDCFlexibleHeaderViewController.
- 
+ Applies a color scheme to theme a MDCFlexibleHeaderViewController. Use a UIAppearance proxy to
+ apply a color scheme to all instances of MDCFlexibleHeaderViewController.
+
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderController A MDCFlexibleHeaderViewController instance to apply a color scheme.
-     Use a UIAppearance proxy to apply a color scheme to all instances of
-     MDCFlexibleHeaderViewController.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
     toMDCFlexibleHeaderController:(MDCFlexibleHeaderViewController *)flexibleHeaderController;
 
 @end

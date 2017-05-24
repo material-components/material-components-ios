@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCColorScheming.h"
 #import "MaterialTabs.h"
-#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme MDCTabBar.
@@ -25,13 +25,13 @@
 @interface MDCTabBarColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCTabBar.
- 
+ Applies a color scheme to theme a MDCTabBar. Use a UIAppearance proxy to apply a color scheme to
+ all instances of MDCTabBar.
+
  @param colorScheme The color scheme to apply to MDCTabBar.
- @param tabBar A MDCTabBar instance to apply a color scheme. Use a UIAppearance proxy to apply a
-     color scheme to all instances of MDCTabBar.
+ @param tabBar A MDCTabBar instance to apply a color scheme. 
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
                 toTabBar:(MDCTabBar *)tabBar;
 
 @end

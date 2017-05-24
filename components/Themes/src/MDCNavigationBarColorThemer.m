@@ -18,7 +18,7 @@
 
 @implementation MDCNavigationBarColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
          toNavigationBar:(MDCNavigationBar *)navigationBar {
   navigationBar.backgroundColor = colorScheme.primaryColor;
   navigationBar.tintColor = colorScheme.primaryColor;

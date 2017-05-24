@@ -18,7 +18,7 @@
 
 @implementation MDCActivityIndicatorColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
      toActivityIndicator:(MDCActivityIndicator *)activityIndicator {
   activityIndicator.cycleColors = @[ colorScheme.primaryColor ];
 }

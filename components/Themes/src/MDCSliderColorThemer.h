@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCColorScheming.h"
 #import "MaterialSlider.h"
-#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme MDCSlider.
@@ -25,13 +25,13 @@
 @interface MDCSliderColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCSlider.
- 
+ Applies a color scheme to theme a MDCSlider. Use a UIAppearance proxy to apply a color scheme to
+ all instances of MDCSlider.
+
  @param colorScheme The color scheme to apply to MDCSlider.
- @param slider A MDCSlider instance to apply a color scheme. Use a UIAppearance proxy to apply a
-     color scheme to all instances of MDCSlider.
+ @param slider A MDCSlider instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
                 toSlider:(MDCSlider *)slider;
 
 @end

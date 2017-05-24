@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCColorScheming.h"
 #import "MaterialNavigationBar.h"
-#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme MDCNavigationBar.
@@ -25,13 +25,13 @@
 @interface MDCNavigationBarColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCNavigationBar.
- 
+ Applies a color scheme to theme a MDCNavigationBar. Use a UIAppearance proxy to apply a color
+ scheme to all instances of MDCNavigationBar.
+
  @param colorScheme The color scheme to apply to MDCNavigationBar.
- @param navigationBar A MDCNavigationBar instance to apply a color scheme. Use a UIAppearance proxy
-     to apply a color scheme to all instances of MDCNavigationBar.
+ @param navigationBar A MDCNavigationBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
          toNavigationBar:(MDCNavigationBar *)navigationBar;
 
 @end

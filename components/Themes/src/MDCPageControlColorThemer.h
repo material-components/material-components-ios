@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCColorScheming.h"
 #import "MaterialPageControl.h"
-#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme MDCSlider.
@@ -25,13 +25,13 @@
 @interface MDCPageControlColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCPageControl.
- 
+ Applies a color scheme to theme a MDCPageControl. Use a UIAppearance proxy to apply a color scheme
+ to all instances of MDCPageControl.
+
  @param colorScheme The color scheme to apply to MDCPageControl.
- @param pageControl A MDCPageControl instance to apply a color scheme. Use a UIAppearance proxy to
-     apply a color scheme to all instances of MDCPageControl.
+ @param pageControl A MDCPageControl instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
            toPageControl:(MDCPageControl *)pageControl;
 
 @end

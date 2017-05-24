@@ -18,7 +18,7 @@
 
 @implementation MDCSliderColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
                 toSlider:(MDCSlider *)slider {
   slider.trackBackgroundColor = colorScheme.primaryLightColor;
   slider.color = colorScheme.primaryColor;

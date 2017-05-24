@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCColorScheming.h"
 #import "MaterialProgressView.h"
-#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme MDCProgressView.
@@ -25,13 +25,13 @@
 @interface MDCProgressViewColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCProgressView.
- 
+ Applies a color scheme to theme a MDCProgressView. Use a UIAppearance proxy to apply a color scheme
+ to all instances of MDCProgressView.
+
  @param colorScheme The color scheme to apply to MDCProgressView.
- @param progressView A MDCProgressView instance to apply a color scheme. Use a UIAppearance proxy to
-     apply a color scheme to all instances of MDCProgressView.
+ @param progressView A MDCProgressView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
           toProgressView:(MDCProgressView *)progressView;
 
 @end

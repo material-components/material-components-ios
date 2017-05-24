@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
+#import "MDCColorScheming.h"
 
 @implementation MDCBasicColorScheme
 
@@ -69,22 +69,24 @@
 }
 
 - (UIColor *)lighterColorForColor:(UIColor *)color {
-  CGFloat r, g, b, a;
-  if ([color getRed:&r green:&g blue:&b alpha:&a])
-    return [UIColor colorWithRed:MIN(r + 0.2, 1.0)
-                           green:MIN(g + 0.2, 1.0)
-                            blue:MIN(b + 0.2, 1.0)
-                           alpha:a];
+  CGFloat hue, saturation, brightness, alpha;
+  if ([color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
+    return [UIColor colorWithHue:hue
+                      saturation:saturation
+                      brightness:MIN(brightness + 0.2, 1.0)
+                           alpha:alpha];
+  }
   return nil;
 }
 
 - (UIColor *)darkerColorForColor:(UIColor *)color {
-  CGFloat r, g, b, a;
-  if ([color getRed:&r green:&g blue:&b alpha:&a])
-    return [UIColor colorWithRed:MAX(r - 0.2, 0.0)
-                           green:MAX(g - 0.2, 0.0)
-                            blue:MAX(b - 0.2, 0.0)
-                           alpha:a];
+  CGFloat hue, saturation, brightness, alpha;
+  if ([color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
+    return [UIColor colorWithHue:hue
+                      saturation:saturation
+                      brightness:MAX(brightness - 0.2, 0.0)
+                           alpha:alpha];
+  }
   return nil;
 }
 

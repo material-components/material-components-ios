@@ -19,7 +19,7 @@
 
 @implementation MDCAlertColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme {
   [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]
       setCustomTitleColor:colorScheme.primaryColor];
 }

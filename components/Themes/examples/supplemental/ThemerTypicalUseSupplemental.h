@@ -35,14 +35,14 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 @property(nonatomic, strong) MDCRaisedButton *alertButton;
 @property(nonatomic, strong) MDCRaisedButton *featureButton;
 @property(nonatomic, strong) MDCSlider *slider;
-@property(nonatomic, strong) NSObject<MDCColorScheme> *colorScheme;
+@property(nonatomic, strong) NSObject<MDCColorScheming> *colorScheme;
 @property(nonatomic, strong) UIScrollView *scrollView;
 
 @end
 
 @interface ThemerTypicalUseViewController (Supplemental)
 
-- (instancetype)initWithColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
+- (instancetype)initWithColorScheme:(NSObject<MDCColorScheming> *)colorScheme;
 
 - (void)setupExampleViews;
 

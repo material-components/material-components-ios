@@ -394,7 +394,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
 - (void)setCycleColors:(NSArray<UIColor *> *)cycleColors {
   _cycleColors = [cycleColors copy];
-  NSAssert(cycleColors.count > 0, @"Cycle color index is out of bounds.");
+  NSAssert(cycleColors.count > 0, @"Cycle colors array cannot be empty.");
   if (cycleColors.count > 0) {
     [self setStrokeColor:cycleColors[0]];
   }

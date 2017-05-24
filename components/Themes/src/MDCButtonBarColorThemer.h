@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCColorScheming.h"
 #import "MaterialButtonBar.h"
-#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme MDCSlider.
@@ -25,13 +25,13 @@
 @interface MDCButtonBarColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCButtonBar.
- 
+ Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
+ all instances of MDCButtonBar.
+
  @param colorScheme The color scheme to apply to MDCButtonBar.
- @param buttonBar A MDCButtonBar instance to apply a color scheme. Use a UIAppearance proxy to apply
-     a color scheme to all instances of MDCButtonBar.
+ @param buttonBar A MDCButtonBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
              toButtonBar:(MDCButtonBar *)buttonBar;
 
 @end

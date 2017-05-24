@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCColorScheming.h"
 #import "MaterialHeaderStackView.h"
-#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme MDCSlider.
@@ -25,13 +25,13 @@
 @interface MDCHeaderStackViewColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCHeaderStackView.
- 
+ Applies a color scheme to theme a MDCHeaderStackView. Use a UIAppearance proxy to apply a color
+ scheme to all instances of MDCHeaderStackView.
+
  @param colorScheme The color scheme to apply to MDCHeaderStackView.
- @param headerStackView A MDCHeaderStackView instance to apply a color scheme. Use a UIAppearance
-     proxy to apply a color scheme to all instances of MDCHeaderStackView.
+ @param headerStackView A MDCHeaderStackView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
        toHeaderStackView:(MDCHeaderStackView *)headerStackView;
 
 @end

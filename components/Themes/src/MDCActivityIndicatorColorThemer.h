@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCColorScheming.h"
 #import "MaterialActivityIndicator.h"
-#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme MDCActivityIndicator.
@@ -25,13 +25,13 @@
 @interface MDCActivityIndicatorColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCActivityIndicator.
- 
+ Applies a color scheme to theme a MDCActivityIndicator. Use a UIAppearance proxy to apply a color
+ scheme to all instances of MDCActivityIndicator.
+
  @param colorScheme The color scheme to apply to MDCActivityIndicator.
- @param activityIndicator A MDCActivityIndicator instance to apply a color scheme. Use a
-     UIAppearance proxy to apply a color scheme to all instances of MDCActivityIndicator.
+ @param activityIndicator A MDCActivityIndicator instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
      toActivityIndicator:(MDCActivityIndicator *)activityIndicator;
 
 @end

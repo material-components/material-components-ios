@@ -25,7 +25,7 @@
 
 @implementation ThemerTypicalUseViewController (Supplemental)
 
-- (instancetype)initWithColorScheme:(NSObject<MDCColorScheme> *)colorScheme {
+- (instancetype)initWithColorScheme:(NSObject<MDCColorScheming> *)colorScheme {
   self = [super init];
   if (self) {
     [self setupAppBar];

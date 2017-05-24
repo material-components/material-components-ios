@@ -18,7 +18,7 @@
 #import "MDCAlertColorThemer.h"
 #import "MDCButtonBarColorThemer.h"
 #import "MDCButtonColorThemer.h"
-#import "MDCColorScheme.h"
+#import "MDCColorScheming.h"
 #import "MDCFeatureHighlightColorThemer.h"
 #import "MDCFlexibleHeaderColorThemer.h"
 #import "MDCHeaderStackViewColorThemer.h"
