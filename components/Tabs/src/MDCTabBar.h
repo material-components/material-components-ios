@@ -35,10 +35,6 @@
 IB_DESIGNABLE
 @interface MDCTabBar : UIView <UIBarPositioning>
 
-/** The default height for the tab bar given a position and item appearance. */
-+ (CGFloat)defaultHeightForPosition:(UIBarPosition)position
-                     itemAppearance:(MDCTabBarItemAppearance)appearance;
-
 /** The default height for the tab bar in the top position, given an item appearance. */
 + (CGFloat)defaultHeightForItemAppearance:(MDCTabBarItemAppearance)appearance;
 
@@ -106,7 +102,7 @@ IB_DESIGNABLE
 
  The default value is based on the position and is recommended for most applications.
  */
-@property(nonatomic) BOOL displaysUppercaseTitles;
+@property(nonatomic) IBInspectable BOOL displaysUppercaseTitles;
 
 /**
  Select an item with optional animation. Setting to nil will clear the selection.
@@ -140,7 +136,7 @@ IB_DESIGNABLE
 
 /**
  Delegate protocol for MDCTabBar. Clients may implement this protocol to receive notifications of
- selection changes in the tab bar or to change the bar's position-based appearance.
+ selection changes in the tab bar or to determine the bar's position.
  */
 @protocol MDCTabBarDelegate <UIBarPositioningDelegate>
 

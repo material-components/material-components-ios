@@ -40,13 +40,13 @@ static const CGFloat kTitleOnlyBarHeight = 48;
 static const CGFloat kTitledImageBarHeight = 72;
 
 /// Height for bottom navigation bars, in points.
-const CGFloat kBottomNavigationBarHeight = 56;
+static const CGFloat kBottomNavigationBarHeight = 56;
 
 /// Maximum width for individual items in bottom navigation bars, in points.
-const CGFloat kBottomNavigationMaximumItemWidth = 168;
+static const CGFloat kBottomNavigationMaximumItemWidth = 168;
 
 /// Title-image padding for bottom navigation bars, in points.
-const CGFloat kBottomNavigationTitleImagePadding = 3;
+static const CGFloat kBottomNavigationTitleImagePadding = 3;
 
 static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignment alignment) {
   switch (alignment) {
@@ -141,25 +141,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 + (CGFloat)defaultHeightForItemAppearance:(MDCTabBarItemAppearance)appearance {
   return [self defaultHeightForPosition:UIBarPositionAny itemAppearance:appearance];
-}
-
-+ (CGFloat)defaultHeightForPosition:(UIBarPosition)position
-                     itemAppearance:(MDCTabBarItemAppearance)appearance {
-  if ([self isTopTabsForPosition:position]) {
-    switch (appearance) {
-      case MDCTabBarItemAppearanceTitledImages:
-        return kTitledImageBarHeight;
-
-      case MDCTabBarItemAppearanceTitles:
-        return kTitleOnlyBarHeight;
-
-      case MDCTabBarItemAppearanceImages:
-        return kImageOnlyBarHeight;
-    }
-  } else {
-    // Bottom navigation has a fixed height.
-    return kBottomNavigationBarHeight;
-  }
 }
 
 - (void)setDelegate:(id<MDCTabBarDelegate>)delegate {
@@ -288,6 +269,25 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 #pragma mark - Private
+
++ (CGFloat)defaultHeightForPosition:(UIBarPosition)position
+                     itemAppearance:(MDCTabBarItemAppearance)appearance {
+  if ([self isTopTabsForPosition:position]) {
+    switch (appearance) {
+      case MDCTabBarItemAppearanceTitledImages:
+        return kTitledImageBarHeight;
+
+      case MDCTabBarItemAppearanceTitles:
+        return kTitleOnlyBarHeight;
+
+      case MDCTabBarItemAppearanceImages:
+        return kImageOnlyBarHeight;
+    }
+  } else {
+    // Bottom navigation has a fixed height.
+    return kBottomNavigationBarHeight;
+  }
+}
 
 + (MDCItemBarStyle *)defaultStyleForPosition:(UIBarPosition)position
                               itemAppearance:(MDCTabBarItemAppearance)appearance {
