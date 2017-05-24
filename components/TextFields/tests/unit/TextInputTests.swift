@@ -151,6 +151,7 @@ class TextInputTests: XCTestCase {
     let textField = MDCTextField()
 
     textField.clearButtonColor = .red
+    textField.clearButtonMode = .always
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
@@ -165,6 +166,7 @@ class TextInputTests: XCTestCase {
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
       XCTAssertEqual(textField.clearButtonColor, textFieldCopy.clearButtonColor)
+      XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)

@@ -192,6 +192,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
   copy.clearButtonColor = [self.clearButtonColor copy];
   copy.clearButtonImage = [self.clearButtonImage copy];
+  copy.clearButtonMode = self.clearButtonMode;
   copy.enabled = self.isEnabled;
   copy.hidesPlaceholderOnInput = self.hidesPlaceholderOnInput;
   copy.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
