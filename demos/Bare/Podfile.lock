@@ -24,6 +24,7 @@ PODS:
     - MaterialComponents/Slider (= 23.3.0)
     - MaterialComponents/Snackbar (= 23.3.0)
     - MaterialComponents/Tabs (= 23.3.0)
+    - MaterialComponents/Themes (= 23.3.0)
     - MaterialComponents/Typography (= 23.3.0)
   - MaterialComponents/ActivityIndicator (23.3.0):
     - MaterialComponents/private/Application
@@ -157,6 +158,8 @@ PODS:
     - MaterialComponents/Ink
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
+  - MaterialComponents/Themes (23.3.0):
+    - MaterialComponents/FeatureHighlight
   - MaterialComponents/Typography (23.3.0):
     - MaterialComponents/private/Application
   - MDFTextAccessibility (1.2.0)
@@ -169,7 +172,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: f6461aa016750c92a5ef436692d2a5eff67a9a66
+  MaterialComponents: 1eeec6cfd05ef6bba14e66b6d36cb893415e5c11
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322
