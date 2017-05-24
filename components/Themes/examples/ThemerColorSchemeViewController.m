@@ -28,7 +28,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 @interface ThemersExamplesViewController : MDCCollectionViewController
 
 @property(nonatomic, strong) MDCBasicColorScheme *colorScheme;
-@property(nonatomic, strong, nullable) NSArray<NSString *> *modes;
+@property(nonatomic, strong, nullable) NSArray <NSString *> *modes;
 
 - (void)loadCollectionView:(nullable NSArray<NSString *> *)modes;
 
