@@ -141,9 +141,10 @@ IB_DESIGNABLE
 
 /**
  Called before the selected item changes by user action. This method is not called for programmatic
- changes to the tab bar's selected item.
+ changes to the tab bar's selected item. Return YES to allow the selection.
+ If you don't implement all items changes are allowed.
  */
-- (void)tabBar:(nonnull MDCTabBar *)tabBar willSelectItem:(nonnull UITabBarItem *)item;
+- (BOOL)tabBar:(nonnull MDCTabBar *)tabBar shouldSelectItem:(nonnull UITabBarItem *)item;
 
 /**
  Called when the selected item changes by user action. This method is not called for programmatic

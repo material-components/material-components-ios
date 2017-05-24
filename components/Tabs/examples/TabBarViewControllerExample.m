@@ -1,5 +1,6 @@
 /*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights
+ Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -38,8 +39,8 @@
 }
 
 - (void)pushHidesNavigation {
-  UIViewController *vc = [TBVCSampleViewController sampleWithTitle:@"Push&Hide"
-                                                             color:UIColor.grayColor];
+  UIViewController *vc =
+      [TBVCSampleViewController sampleWithTitle:@"Push&Hide" color:UIColor.grayColor];
   [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -57,8 +58,8 @@
   [button sizeToFit];
   [child1.view addSubview:button];
   [button addTarget:self
-             action:@selector(pushHidesNavigation)
-   forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(pushHidesNavigation)
+      forControlEvents:UIControlEventTouchUpInside];
 
   UIViewController *child2 = viewControllers[2];
   // Put the button under the header.
@@ -67,11 +68,12 @@
   [button sizeToFit];
   [child2.view addSubview:button];
   [button addTarget:self
-             action:@selector(toggleTabBar)
-   forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(toggleTabBar)
+      forControlEvents:UIControlEventTouchUpInside];
 }
 
-// TabBarViewController expect that appBars be inside the tabs, so don't stick an appBar on it.
+// TabBarViewController expect that appBars be inside the tabs, so don't stick
+// an appBar on it.
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

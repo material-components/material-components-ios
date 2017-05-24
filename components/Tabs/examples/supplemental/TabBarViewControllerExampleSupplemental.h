@@ -35,6 +35,5 @@
 @end
 
 @interface TBVCSampleViewController : UIViewController
-+ (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title
-                                  color:(nonnull UIColor *)color;
++ (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title color:(nonnull UIColor *)color;
 @end

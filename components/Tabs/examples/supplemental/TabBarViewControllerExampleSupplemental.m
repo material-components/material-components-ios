@@ -27,7 +27,6 @@
 @import MaterialComponents.MaterialPalettes;
 @import MaterialComponents.MaterialTabs;
 
-
 @interface TBVCSampleView : UIView
 @end
 
@@ -75,11 +74,9 @@
   [self.view setNeedsDisplay];
 }
 
-+ (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title
-                                  color:(nonnull UIColor *)color {
++ (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title color:(nonnull UIColor *)color {
   return [self sampleWithTitle:title color:color icon:nil];
 }
-
 
 + (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title
                                   color:(nonnull UIColor *)color
@@ -109,15 +106,15 @@
 
 - (nonnull NSArray *)constructExampleViewControllers {
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  UIViewController *child1 = [TBVCSampleViewController sampleWithTitle:@"One"
-                                                                 color:UIColor.redColor];
-  UIColor *blue = [UIColor colorWithRed:0x3A/255. green:0x56/255. blue:0xFF/255. alpha:1];
+  UIViewController *child1 =
+      [TBVCSampleViewController sampleWithTitle:@"One" color:UIColor.redColor];
+  UIColor *blue = [UIColor colorWithRed:0x3A / 255. green:0x56 / 255. blue:0xFF / 255. alpha:1];
   UIViewController *child2 = [TBVCSampleViewController sampleWithTitle:@"Two" color:blue];
-  UIImage *starImage = [UIImage
-      imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
-  UIViewController *child3 = [TBVCSampleViewController
-      sampleWithTitle:@"Three" color:UIColor.blueColor icon:starImage];
-  return @[child1, child2, child3];
+  UIImage *starImage =
+      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
+  UIViewController *child3 =
+      [TBVCSampleViewController sampleWithTitle:@"Three" color:UIColor.blueColor icon:starImage];
+  return @[ child1, child2, child3 ];
 }
 
 @end
@@ -134,7 +131,7 @@
 
 + (NSString *)catalogDescription {
   return @"The tab bar controller is a view controller for switching between views of "
-      "grouped content.";
+          "grouped content.";
 }
 
 @end
