@@ -85,6 +85,13 @@
 - (BOOL)itemBar:(nonnull MDCItemBar *)itemBar shouldSelectItem:(nonnull UITabBarItem *)item;
 
 /**
+ Called before the selected item changes by user action. This method is not called for programmatic
+ changes to the bar's selected item.
+ TODO: Will be deprecated. Use itemBar:shouldSelectItem:.
+ */
+- (void)itemBar:(nonnull MDCItemBar *)itemBar willSelectItem:(nonnull UITabBarItem *)item;
+
+/**
  Called when the selected item changes by user action. This method is not called for programmatic
  changes to the bar's selected item.
  */
