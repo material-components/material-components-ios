@@ -330,14 +330,13 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   if (_collectionView == collectionView) {
     UITabBarItem *item = [self itemAtIndexPath:indexPath];
-
     // Notify delegate of impending selection.
     id<MDCItemBarDelegate> delegate = self.delegate;
-      if ([delegate respondsToSelector:@selector(itemBar:willSelectItem:)]) {
-          [delegate itemBar:self willSelectItem:item];
-      }
     if ([delegate respondsToSelector:@selector(itemBar:shouldSelectItem:)]) {
       return [delegate itemBar:self shouldSelectItem:item];
+    }
+    if ([delegate respondsToSelector:@selector(itemBar:willSelectItem:)]) {
+      [delegate itemBar:self willSelectItem:item];
     }
   }
   return YES;
