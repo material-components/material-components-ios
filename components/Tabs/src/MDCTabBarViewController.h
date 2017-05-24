@@ -29,7 +29,7 @@ extern const CGFloat MDCTabBarViewControllerAnimationDuration;
  ViewController appears.
  */
 IB_DESIGNABLE
-@interface MDCTabBarViewController : UIViewController<MDCTabBarDelegate>
+@interface MDCTabBarViewController : UIViewController <MDCTabBarDelegate>
 
 /** The tab bar controller's delegate. */
 @property(nonatomic, weak, nullable) id<MDCTabBarControllerDelegate> delegate;
@@ -82,6 +82,6 @@ IB_DESIGNABLE
  by changing the selectedViewController.
  */
 - (void)tabBarController:(nonnull MDCTabBarViewController *)tabBarController
-    didSelectViewController:(nonnull UIViewController *)viewController;
+ didSelectViewController:(nonnull UIViewController *)viewController;
 
 @end

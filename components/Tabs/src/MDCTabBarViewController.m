@@ -18,7 +18,7 @@
 
 const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
-@interface MDCTabBarViewController()
+@interface MDCTabBarViewController ()
 
 @property(nonatomic, readwrite, nonnull) MDCTabBar *tabBar;
 
@@ -33,12 +33,10 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   [super viewDidLoad];
   UIView *view = self.view;
   view.clipsToBounds = YES;
-  view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin
-      | UIViewAutoresizingFlexibleWidth
-      | UIViewAutoresizingFlexibleRightMargin
-      | UIViewAutoresizingFlexibleTopMargin
-      | UIViewAutoresizingFlexibleHeight
-      | UIViewAutoresizingFlexibleBottomMargin;
+  view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth |
+                          UIViewAutoresizingFlexibleRightMargin |
+                          UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight |
+                          UIViewAutoresizingFlexibleBottomMargin;
   MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:view.bounds];
   tabBar.alignment = MDCTabBarAlignmentJustified;
   tabBar.delegate = self;
@@ -78,11 +76,13 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
         _tabBar.hidden = hidden;
       }
       [UIView animateWithDuration:MDCTabBarViewControllerAnimationDuration
-                       animations:^{ [self.view layoutIfNeeded]; }
-                       completion:^(BOOL finished) {
+          animations:^{
+            [self.view layoutIfNeeded];
+          }
+          completion:^(BOOL finished) {
             // If we are hiding, set the state after the animation.
             _tabBar.hidden = hidden;
-        }];
+          }];
     } else {
       _tabBar.hidden = hidden;
     }
@@ -94,8 +94,8 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     for (UIViewController *viewController in _viewControllers) {
       // If the new array doesn't contain an item from the old array then remove it.
       if (![viewControllers containsObject:viewController]) {
-       // Follow the UIKit rules for removing a child viewController.
-       [viewController willMoveToParentViewController:nil];
+        // Follow the UIKit rules for removing a child viewController.
+        [viewController willMoveToParentViewController:nil];
         if (viewController.viewLoaded) {
           [viewController.view removeFromSuperview];
         }
@@ -180,7 +180,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   }
 }
 
-- (nullable UIViewController *)controllerWithView:(nullable UIView*)view {
+- (nullable UIViewController *)controllerWithView:(nullable UIView *)view {
   for (UIViewController *child in _viewControllers) {
     if (child.view == view) {
       return child;
@@ -209,8 +209,8 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   if (index < _viewControllers.count) {
     UIViewController *newSelected = _viewControllers[index];
     if (newSelected != self.selectedViewController) {
-      if ([_delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)]
-          && ![_delegate tabBarController:self shouldSelectViewController:newSelected]) {
+      if ([_delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)] &&
+          ![_delegate tabBarController:self shouldSelectViewController:newSelected]) {
         return;
       }
       self.selectedViewController = newSelected;
