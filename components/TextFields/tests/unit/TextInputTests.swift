@@ -190,6 +190,17 @@ class TextInputTests: XCTestCase {
     }
   }
 
+  func testAttributedSetters() {
+    let textField = MDCTextField()
+
+    let string = "attributed"
+    textField.attributedPlaceholder = NSAttributedString(string: string)
+    XCTAssertEqual(textField.attributedPlaceholder?.string, string)
+
+    textField.attributedText = NSAttributedString(string: string)
+    XCTAssertEqual(textField.attributedText?.string, string)
+  }
+
   func testFontChange() {
     let textField = MDCTextField()
 
