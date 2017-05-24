@@ -24,9 +24,9 @@
 extern const CGFloat MDCTabBarViewControllerAnimationDuration;
 
 /**
- The MDCTabBarViewController class manages a set of ViewControllers, showing their UITabBarItems
+ The MDCTabBarViewController class manages a set of view controllers, showing their UITabBarItems
  as tappable items in a bottom MDCTabBar. When the user taps one of those items, the corresponding
- ViewController appears.
+ view controller appears.
  */
 IB_DESIGNABLE
 @interface MDCTabBarViewController : UIViewController <MDCTabBarDelegate>
@@ -35,12 +35,12 @@ IB_DESIGNABLE
 @property(nonatomic, weak, nullable) id<MDCTabBarControllerDelegate> delegate;
 
 /** The array of view controllers managed by the tab bar controller.
-  The currently selected viewController must be one of these.
+  The currently selected view controller must be one of these.
  */
 @property(nonatomic, nonnull, copy) NSArray<UIViewController *> *viewControllers;
 
 /** The currently selected view controller. Setting it switches without animation.
-  It must be one of the items in the viewControllers array.
+  It must be one of the items in the view controllers array.
  */
 @property(nonatomic, weak, nullable) UIViewController *selectedViewController;
 
@@ -48,7 +48,7 @@ IB_DESIGNABLE
  The tab bar which allows the user to switch between view controllers.
 
  You can use this property to set colors but hide it, show it, and select
- items in it using methods of this, MDCTabBarViewController, class.
+ items in it using methods of this class.
 
  */
 @property(nonatomic, readonly, nullable) MDCTabBar *tabBar;
@@ -79,7 +79,7 @@ IB_DESIGNABLE
 /**
  Called when the user taps on a tab bar item. Not called for programmatic selection.
  MDCTabBarViewController will call your delegate once it has responded to the user's tap
- by changing the selectedViewController.
+ by changing the selected view controller.
  */
 - (void)tabBarController:(nonnull MDCTabBarViewController *)tabBarController
  didSelectViewController:(nonnull UIViewController *)viewController;
