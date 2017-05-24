@@ -27,13 +27,11 @@ class TextInputTests: XCTestCase {
     XCTAssertNotNil(textField.trailingLabel)
     XCTAssertNotNil(textField.placeholderLabel)
 
-    let red = UIColor.red
+    textField.clearButtonColor = .red
+    XCTAssertEqual(textField.clearButtonColor, .red)
 
-    textField.clearButtonColor = red.copy() as? UIColor
-    XCTAssert(textField.clearButtonColor == red)
-
-    textField.textColor = red.copy() as? UIColor
-    XCTAssertEqual(textField.textColor, red)
+    textField.textColor = .red
+    XCTAssertEqual(textField.textColor, .red)
 
     let testText = "Test text"
     textField.text = testText
@@ -43,8 +41,8 @@ class TextInputTests: XCTestCase {
     textField.placeholder = testPlaceholder
     XCTAssertEqual(textField.placeholder, testPlaceholder)
 
-    textField.underlineColor = red.copy() as? UIColor
-    XCTAssertEqual(textField.underlineColor, red)
+    textField.underlineColor = .red
+    XCTAssertEqual(textField.underlineColor, .red)
 
     let width: CGFloat = 5.0
     textField.underlineHeight = width
