@@ -100,6 +100,9 @@ class TextInputTests: XCTestCase {
     XCTAssertTrue("51 / 50".isEqual(textField.trailingLabel.text))
     XCTAssertEqual(MDCPalette.red().tint500, textField.underlineColor)
     XCTAssertEqual(MDCPalette.red().tint500, textField.trailingLabel.textColor)
+
+    controller.errorColor = .blue
+    XCTAssertEqual(controller.errorColor, .blue)
   }
 
   func testSerializationTextField() {
