@@ -276,6 +276,7 @@ Pod::Spec.new do |s|
     ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
     ss.dependency "MaterialComponents/FeatureHighlight"
+    ss.dependency "MaterialComponents/Dialogs"
   end
 
   s.subspec "Typography" do |ss|
