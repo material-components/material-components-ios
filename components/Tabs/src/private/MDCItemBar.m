@@ -1,6 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights
- Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -43,24 +42,16 @@ static const CGFloat kCompactInset = 8.0f;
 /// KVO context pointer identifying changes in MDCItemBarItem properties.
 static void *kItemPropertyContext = &kItemPropertyContext;
 
-/// Custom flow layout for item content. Selectively works around bugs with RTL
-/// and flow layout:
-/// Radar 22828797: "UICollectionView with variable-sized items does not reverse
-/// item order in RTL."
-/// - On iOS 9.0 and later when a UICollectionViewFlow layout has custom-sized
-/// items via
-///   collectionView:layout:sizeForItemAtIndexPath:, it does not perform
-///   automatic right-to-left
-///   layout of items. We work around this by detecting incorrect ordering by
-///   the superclass and
+/// Custom flow layout for item content. Selectively works around bugs with RTL and flow layout:
+/// Radar 22828797: "UICollectionView with variable-sized items does not reverse item order in RTL."
+/// - On iOS 9.0 and later when a UICollectionViewFlow layout has custom-sized items via
+///   collectionView:layout:sizeForItemAtIndexPath:, it does not perform automatic right-to-left
+///   layout of items. We work around this by detecting incorrect ordering by the superclass and
 ///   correcting the layout attributes.
 /// Radar 22828629, 22828529
-/// - On iOS 9 and later, the default scroll location for horizontally-scrolling
-/// collection views in
-///   RTL is correct, but resets to the left when scrolling an item to visible
-///   or manually scrolling
-///   the content. We work around this by padding collection content to always
-///   fill the scroll view.
+/// - On iOS 9 and later, the default scroll location for horizontally-scrolling collection views in
+///   RTL is correct, but resets to the left when scrolling an item to visible or manually scrolling
+///   the content. We work around this by padding collection content to always fill the scroll view.
 @interface MDCItemBarFlowLayout : UICollectionViewFlowLayout
 @end
 
@@ -83,8 +74,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   /// Size of the view at last layout, for deduplicating changes.
   CGSize _lastSize;
 
-  /// Horizontal size class at the last item metrics update. Used to calculate
-  /// deltas.
+  /// Horizontal size class at the last item metrics update. Used to calculate deltas.
   UIUserInterfaceSizeClass _horizontalSizeClassAtLastMetricsUpdate;
 
   /// Current style properties.
@@ -343,6 +333,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
     // Notify delegate of impending selection.
     id<MDCItemBarDelegate> delegate = self.delegate;
+      if ([delegate respondsToSelector:@selector(itemBar:willSelectItem:)]) {
+          [delegate itemBar:self willSelectItem:item];
+      }
     if ([delegate respondsToSelector:@selector(itemBar:shouldSelectItem:)]) {
       return [delegate itemBar:self shouldSelectItem:item];
     }
@@ -398,8 +391,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSParameterAssert(_collectionView == collectionView);
 
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
@@ -546,10 +539,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   [self updateFlowLayoutMetricsAnimated:animated];
 }
 
-/// Sets _selectionIndicator's bounds and center to display under the item at
-/// the given index path
-/// with no animation. May be called from an animation block to animate the
-/// transition.
+/// Sets _selectionIndicator's bounds and center to display under the item at the given index path
+/// with no animation. May be called from an animation block to animate the transition.
 - (void)updateSelectionIndicatorToIndexPath:(NSIndexPath *)indexPath {
   if (!indexPath) {
     return;
@@ -559,8 +550,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   UICollectionViewLayoutAttributes *attributes =
       [_flowLayout layoutAttributesForItemAtIndexPath:indexPath];
 
-  // Size selection indicator to a fixed height, equal in width to the selected
-  // item's cell.
+  // Size selection indicator to a fixed height, equal in width to the selected item's cell.
   CGRect selectionIndicatorBounds = attributes.bounds;
   selectionIndicatorBounds.size.height = kSelectionIndicatorHeight;
 
@@ -623,26 +613,20 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   UIEdgeInsets oldSectionInset = _flowLayout.sectionInset;
   if (UIEdgeInsetsEqualToEdgeInsets(oldSectionInset, newSectionInset) &&
       _alignment != MDCItemBarAlignmentJustified) {
-    // No change - can bail early, except when the item alignment is
-    // "justified". When justified,
-    // the layout metrics need updating due to change in view size or
-    // orientation.
+    // No change - can bail early, except when the item alignment is "justified". When justified,
+    // the layout metrics need updating due to change in view size or orientation.
     return;
   }
 
-  // Rather than just updating the sectionInset on the existing flowLayout, a
-  // new layout object
-  // is created. This gives more control over whether the change is animated or
-  // not - as there is
+  // Rather than just updating the sectionInset on the existing flowLayout, a new layout object
+  // is created. This gives more control over whether the change is animated or not - as there is
   // no control when updating flow layout sectionInset (it's always animated).
   UICollectionViewFlowLayout *flowLayout = [self generatedFlowLayout];
   flowLayout.sectionInset = newSectionInset;
   _flowLayout = flowLayout;
 
-  // This is not animated because -updateFlowLayoutMetrics may be called in an
-  // animation block and
-  // the change will be still get animated anyway - using NO avoids 'double'
-  // animation and allows
+  // This is not animated because -updateFlowLayoutMetrics may be called in an animation block and
+  // the change will be still get animated anyway - using NO avoids 'double' animation and allows
   // this method to be used without animation.
   NSAssert(_collectionView.window, @"Collection view must be in a window to update layout");
   [_collectionView setCollectionViewLayout:_flowLayout animated:NO];
@@ -693,13 +677,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
                                     layout:_flowLayout
                     sizeForItemAtIndexPath:[self indexPathForItemAtIndex:count - 1]];
 
-    // Left inset is equal to the space to the left of the first item when
-    // centered.
+    // Left inset is equal to the space to the left of the first item when centered.
     CGFloat halfFirstWidth = firstSize.width / 2.0f;
     sectionInset.left = halfBoundsWidth - halfFirstWidth;
 
-    // Right inset is equal to the space to the right of the last item when
-    // centered.
+    // Right inset is equal to the space to the right of the last item when centered.
     CGFloat halfLastWidth = lastSize.width / 2.0f;
     sectionInset.right = halfBoundsWidth - halfLastWidth;
   }
@@ -747,8 +729,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark -
 
 @implementation MDCItemBarFlowLayout {
-  /// Map from item index paths to RTL-corrected layout attributes. If no RTL
-  /// correction is in
+  /// Map from item index paths to RTL-corrected layout attributes. If no RTL correction is in
   /// effect, this will be set to nil.
   NSDictionary *_correctedAttributesForIndexPath;
 
@@ -762,8 +743,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 - (void)prepareLayout {
   [super prepareLayout];
 
-  // Post-process the superclass layout to determine which workarounds need to
-  // be applied.
+  // Post-process the superclass layout to determine which workarounds need to be applied.
   BOOL shouldRelayoutAttributesForRTL = [self shouldRelayoutAttributesForRTL];
   BOOL shouldPadContentSizeForRTL = [self shouldPadContentSizeForRTL];
 
@@ -780,8 +760,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
         UICollectionViewLayoutAttributes *attributes =
             [super layoutAttributesForItemAtIndexPath:indexPath];
 
-        // Flip attribute order for RTL. This must happen before padding because
-        // attributes are
+        // Flip attribute order for RTL. This must happen before padding because attributes are
         // flipped using the original un-padded bounds.
         if (shouldRelayoutAttributesForRTL) {
           attributes = [self flippedAttributesFromAttributes:attributes];
@@ -811,7 +790,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (nullable UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:
-    (NSIndexPath *)indexPath {
+        (NSIndexPath *)indexPath {
   if (_correctedAttributesForIndexPath) {
     return _correctedAttributesForIndexPath[indexPath];
   }
@@ -843,8 +822,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
   if (!CGSizeEqualToSize(newBounds.size, self.collectionView.bounds.size)) {
-    // Padding depends on the size of the collection view, need to relayout for
-    // size changes.
+    // Padding depends on the size of the collection view, need to relayout for size changes.
     return YES;
   }
   return [super shouldInvalidateLayoutForBoundsChange:newBounds];
@@ -854,7 +832,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 /// Computes RTL-flipped attributes given superclass-calculated attributes.
 - (UICollectionViewLayoutAttributes *)flippedAttributesFromAttributes:
-    (UICollectionViewLayoutAttributes *)attributes {
+        (UICollectionViewLayoutAttributes *)attributes {
   UICollectionViewLayoutAttributes *newAttributes = [attributes copy];
 
   CGRect itemFrame = attributes.frame;
@@ -870,8 +848,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 - (BOOL)shouldEnforceRightToLeftLayout {
   BOOL enforceRTL = NO;
 
-  // Prior to iOS 9 RTL was not automatically applied, so we don't need to apply
-  // any fixes.
+  // Prior to iOS 9 RTL was not automatically applied, so we don't need to apply any fixes.
   NSOperatingSystemVersion iOS9Version = {9, 0, 0};
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
   if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
@@ -885,30 +862,20 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   return enforceRTL;
 }
 
-/// Indicates if the superclass' layout appears to have been layed out in a
-/// left-to-right order. If
+/// Indicates if the superclass' layout appears to have been layed out in a left-to-right order. If
 /// there are zero or one items total, this always returns NO.
-/// Note: This is used to detect incorrect layouts due to radar 22828797 by
-/// detecting the actual
-/// layout ordering from superclass-generated layout frames. When there's no
-/// error (item frames are
-/// already arranged RTL), this returns NO. We use this approach for two
-/// purposes:
-/// * Robustly detecting the error condition. The bug occurs under specific
-/// conditions that would be
-///   difficult to detect reliably, and given item bars are simple linear
-///   layouts it's more robust
+/// Note: This is used to detect incorrect layouts due to radar 22828797 by detecting the actual
+/// layout ordering from superclass-generated layout frames. When there's no error (item frames are
+/// already arranged RTL), this returns NO. We use this approach for two purposes:
+/// * Robustly detecting the error condition. The bug occurs under specific conditions that would be
+///   difficult to detect reliably, and given item bars are simple linear layouts it's more robust
 ///   to detect the error and correct it.
-/// * Automatically disabling this workaround if the underlying bug is fixed in
-/// an unknown future OS
-///   version. At time of writing (iOS 9.2) the bug has not been fixed.
-///   Detecting the error directly
-///   and correcting it should allow this implementation to continue to produce
-///   correct results
+/// * Automatically disabling this workaround if the underlying bug is fixed in an unknown future OS
+///   version. At time of writing (iOS 9.2) the bug has not been fixed. Detecting the error directly
+///   and correcting it should allow this implementation to continue to produce correct results
 ///   without an immediate need for changes.
 - (BOOL)shouldRelayoutAttributesForRTL {
-  // The logic contained here only applies to horizontally-scrolling flow
-  // layouts. This should
+  // The logic contained here only applies to horizontally-scrolling flow layouts. This should
   // always be the case for MDCItemBar, but check for safety.
   NSParameterAssert(self.scrollDirection == UICollectionViewScrollDirectionHorizontal);
 
@@ -929,8 +896,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
           [super layoutAttributesForItemAtIndexPath:indexPath];
 
       CGRect frame = attributes.frame;
-      // If any adjacent pairs of attributes have centers that are ordered
-      // left-to-right, assume the
+      // If any adjacent pairs of attributes have centers that are ordered left-to-right, assume the
       // whole layout is ordered left-to-right.
       if (!CGRectIsNull(previousFrame) && (CGRectGetMidX(previousFrame) < CGRectGetMidX(frame))) {
         return YES;
@@ -941,39 +907,31 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     }
   }
 
-  // There are either fewer than 2 items (in which case order doesn't matter) or
-  // the whole thing is
+  // There are either fewer than 2 items (in which case order doesn't matter) or the whole thing is
   // ordered RTL.
   return NO;
 }
 
 /// Indicates if the collection's content is narrower than the collection view.
-/// Note: This is used to detect conditions under which collection view
-/// scrolling bugs happen in RTL
-/// layouts. If and when the underlying bugs are fixed in an unknown future iOS
-/// version, this method
-/// will continue to return YES and trigger harmless but unnecessary
-/// workarounds.
+/// Note: This is used to detect conditions under which collection view scrolling bugs happen in RTL
+/// layouts. If and when the underlying bugs are fixed in an unknown future iOS version, this method
+/// will continue to return YES and trigger harmless but unnecessary workarounds.
 - (BOOL)shouldPadContentSizeForRTL {
   if (![self shouldEnforceRightToLeftLayout]) {
     return NO;
   }
 
-  // When the content is narrower than the scroll view bounds, we need to pad
-  // all attribute frames
-  // on the left to prevent the layout from "jumping" to the origin under
-  // various situations.
-  // Must call super here to ensure we have the original collection content
-  // size.
+  // When the content is narrower than the scroll view bounds, we need to pad all attribute frames
+  // on the left to prevent the layout from "jumping" to the origin under various situations.
+  // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
   CGRect scrollBounds = self.collectionView.bounds;
   return contentSize.width < CGRectGetWidth(scrollBounds);
 }
 
 - (UICollectionViewLayoutAttributes *)paddedAttributesFromAttributes:
-    (UICollectionViewLayoutAttributes *)attributes {
-  // Must call super here to ensure we have the original collection content
-  // size.
+        (UICollectionViewLayoutAttributes *)attributes {
+  // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
   CGRect scrollBounds = self.collectionView.bounds;
 
