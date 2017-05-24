@@ -1,4 +1,10 @@
-# release-candidate TODO: Replace me with version number. 
+# 23.4.0
+
+## API diffs
+
+### FeatureHighlight
+
+Made MDCFeatureHighlightView public with two properties: innerHighlightColor and outerHighlightColor.
 
 # 23.3.0
 
