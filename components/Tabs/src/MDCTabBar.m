@@ -240,17 +240,14 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 - (BOOL)itemBar:(MDCItemBar *)itemBar shouldSelectItem:(UITabBarItem *)item {
   id<MDCTabBarDelegate> delegate = self.delegate;
+  BOOL shouldSelect = YES;
   if ([delegate respondsToSelector:@selector(tabBar:shouldSelectItem:)]) {
-    return [delegate tabBar:self shouldSelectItem:item];
+    shouldSelect = [delegate tabBar:self shouldSelectItem:item];
   }
-  return YES;
-}
-
-- (void)itemBar:(MDCItemBar *)itemBar willSelectItem:(UITabBarItem *)item {
-    id<MDCTabBarDelegate> delegate = self.delegate;
-    if ([delegate respondsToSelector:@selector(tabBar:willSelectItem:)]) {
-        [delegate tabBar:self willSelectItem:item];
-    }
+  if (shouldSelect && [delegate respondsToSelector:@selector(tabBar:willSelectItem:)]) {
+      [delegate tabBar:self willSelectItem:item];
+  }
+  return shouldSelect;
 }
 
 #pragma mark - UIView
