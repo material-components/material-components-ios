@@ -14,8 +14,6 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
 #import "MDCColorScheme.h"
 #import "MaterialTabs.h"
 
