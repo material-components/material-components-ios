@@ -192,19 +192,6 @@ Commit the results to your branch:
     git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
     git push origin release-candidate
 
-#### Verify CocoaPods podspec and trunk access
-
-Send our local podspec through the CocoaPods linter:
-
-    pod lib lint MaterialComponents.podspec
-
-CocoaPods publishes a directory of publicly available pods through its **trunk** service.
-Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
-
-    pod trunk me
-
-If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
-
 ## Testing with release-blocking clients
 
 Before you can merge the release branch into either develop or stable you **must** get the release
