@@ -358,7 +358,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   self.textInput.leadingUnderlineLabel.textColor =
-      self.isDisplayingErrorText ? self.errorColor : MDCTextInputInlinePlaceholderTextColor();
+      (self.isDisplayingErrorText || self.isDisplayingCharacterCountError) ? self.errorColor : MDCTextInputInlinePlaceholderTextColor();
 }
 
 #pragma mark - Placeholder Customization
@@ -483,14 +483,12 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)updateTrailingUnderlineLabel {
   if (!self.characterCountMax) {
     self.textInput.trailingUnderlineLabel.text = nil;
-    return;
+  } else {
+    self.textInput.trailingUnderlineLabel.text = [self characterCountText];
+    if (!self.customTrailingFont) {
+      self.textInput.trailingUnderlineLabel.font = [[self class] underlineLabelsFont];
+    }
   }
-
-  if (!self.customTrailingFont) {
-    self.textInput.trailingUnderlineLabel.font = [[self class] underlineLabelsFont];
-  }
-
-  self.textInput.trailingUnderlineLabel.text = [self characterCountText];
 
   UIColor *textColor = MDCTextInputInlinePlaceholderTextColor();
 
@@ -591,6 +589,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     _errorColor = errorColor;
     if (self.isDisplayingErrorText) {
       [self updateLeadingUnderlineLabel];
+      [self updateTrailingUnderlineLabel];
+      [self updateUnderline];
     }
   }
 }
