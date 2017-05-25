@@ -160,6 +160,7 @@ Made MDCFeatureHighlightView public with two properties: innerHighlightColor and
 #### Changes
 
 * [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
 # 23.3.0
 
 ## API diffs
