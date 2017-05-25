@@ -15,7 +15,7 @@
 
 #import "UIApplication+AppExtensions.h"
 
-#import "private/MDCFontTraits.h"
+#import "Private/MDCFontTraits.h"
 
 @implementation UIFontDescriptor (MaterialTypography)
 
