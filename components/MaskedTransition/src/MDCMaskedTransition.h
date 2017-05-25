@@ -14,7 +14,9 @@
  limitations under the License.
  */
 
-#import "MDMTransition.h"
+#import <UIKit/UIKit.h>
+
+#import <Transitioning/Transitioning.h>
 
 /**
  A masked transition will animate between two view controllers using an expanding mask effect.
