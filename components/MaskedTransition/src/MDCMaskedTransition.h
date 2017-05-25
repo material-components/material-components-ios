@@ -38,6 +38,6 @@
  If provided, the block will be invoked immediately before the transition is initiated and the
  returned rect will be assigned to the presented view controller's frame.
  */
-@property(nonatomic, copy, nullable) MDMCalculateFrameOfPresentedView calculateFrameOfPresentedView;
+@property(nonatomic, copy, nullable) CGRect (^calculateFrameOfPresentedView)(UIPresentationController * _Nonnull);
 
 @end
