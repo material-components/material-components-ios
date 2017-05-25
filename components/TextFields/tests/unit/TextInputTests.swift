@@ -78,21 +78,19 @@ class TextInputTests: XCTestCase {
   func testControllerTextField() {
     let textField = MDCTextField()
 
+    XCTAssertFalse(textField.mdc_adjustsFontForContentSizeCategory)
+    textField.mdc_adjustsFontForContentSizeCategory = true
+    XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
+
     let controller = MDCTextInputController(input: textField)
     XCTAssertNotNil(controller.input)
 
+    controller.mdc_adjustsFontForContentSizeCategory = true
+    XCTAssertTrue(controller.mdc_adjustsFontForContentSizeCategory)
+    XCTAssertFalse(textField.mdc_adjustsFontForContentSizeCategory)
+    
     let altLeading = "Alternative Helper Test"
     controller.helper = altLeading
-    if let input = controller.input as? MDCTextInput {
-      XCTAssertEqual(altLeading, input.leadingLabel.text)
-
-      let error = "Error Test"
-      controller.set(errorText: error, errorAccessibilityValue: nil)
-      XCTAssertNotEqual(altLeading, input.leadingLabel.text)
-      XCTAssertEqual(error, input.leadingLabel.text)
-    } else {
-      XCTFail("No input found on controller.")
-    }
 
     controller.characterMax = 50
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
@@ -101,8 +99,52 @@ class TextInputTests: XCTestCase {
     XCTAssertEqual(MDCPalette.red().tint500, textField.underlineColor)
     XCTAssertEqual(MDCPalette.red().tint500, textField.trailingLabel.textColor)
 
+    textField.leadingLabel.textColor = .green
+    XCTAssertEqual(.green, textField.leadingLabel.textColor)
+    XCTAssertEqual(altLeading, textField.leadingLabel.text)
+
+    let error = "Error Test"
+    controller.set(errorText: error, errorAccessibilityValue: nil)
+    XCTAssertNotEqual(altLeading, textField.leadingLabel.text)
+    XCTAssertNotEqual(.green, textField.leadingLabel.textColor)
+
     controller.errorColor = .blue
-    XCTAssertEqual(controller.errorColor, .blue)
+    XCTAssertEqual(.blue, controller.errorColor)
+
+    XCTAssertNotEqual(MDCPalette.red().tint500, textField.trailingLabel.textColor)
+    XCTAssertNotEqual(MDCPalette.red().tint500, textField.underlineColor)
+
+    XCTAssertEqual(error, textField.leadingLabel.text)
+    XCTAssertEqual(.blue, textField.leadingLabel.textColor)
+    XCTAssertEqual(.blue, textField.trailingLabel.textColor)
+    XCTAssertEqual(.blue, textField.underlineColor)
+
+    controller.set(errorText: nil, errorAccessibilityValue: nil)
+    XCTAssertNotEqual(error, textField.leadingLabel.text)
+
+    // Test errorText being reset but characterMax still exceded
+    XCTAssertEqual(.blue, textField.leadingLabel.textColor)
+    XCTAssertEqual(.blue, textField.trailingLabel.textColor)
+    XCTAssertEqual(.blue, textField.underlineColor)
+
+    textField.text = nil
+    XCTAssertNotEqual(.blue, textField.leadingLabel.textColor)
+    XCTAssertNotEqual(.blue, textField.trailingLabel.textColor)
+    XCTAssertNotEqual(.blue, textField.underlineColor)
+
+    XCTAssertNotEqual(controller.presentation, .floatingPlaceholder)
+    controller.presentation = .floatingPlaceholder
+    XCTAssertEqual(controller.presentation, .floatingPlaceholder)
+
+    controller.characterMode = .never
+    XCTAssertEqual(.clear, textField.trailingLabel.textColor)
+    controller.characterMode = .always
+    XCTAssertNotEqual(.clear, textField.trailingLabel.textColor)
+
+    controller.underlineMode = .never
+    XCTAssertEqual(.lightGray, textField.underlineColor)
+    controller.characterMode = .always
+    XCTAssertEqual(MDCPalette.indigo().tint500, textField.underlineColor)
   }
 
   func testSerializationTextField() {
