@@ -188,7 +188,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-  MDCTextInputCommonFundament *copy = [[MDCTextInputCommonFundament alloc] initWithTextInput:self.textInput];
+  MDCTextInputCommonFundament *copy =
+      [[MDCTextInputCommonFundament alloc] initWithTextInput:self.textInput];
 
   copy.clearButtonColor = [self.clearButtonColor copy];
   copy.clearButtonImage = [self.clearButtonImage copy];
@@ -508,7 +509,8 @@ static inline CGFloat MDCRound(CGFloat value) {
     }
   }
 
-  if ([self.textInput isKindOfClass:[UITextField class]] && ((UITextField *)self.textInput).rightView.superview) {
+  if ([self.textInput isKindOfClass:[UITextField class]] &&
+      ((UITextField *)self.textInput).rightView.superview) {
     clearButtonAlpha = 0;
   }
   self.clearButton.alpha = clearButtonAlpha;
@@ -791,13 +793,14 @@ static inline CGFloat MDCRound(CGFloat value) {
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1
                                                           constant:[self textContainerInset].left];
-  NSLayoutConstraint *placeholderTrailing = [NSLayoutConstraint constraintWithItem:_placeholderLabel
-                                                         attribute:NSLayoutAttributeTrailing
-                                                         relatedBy:NSLayoutRelationLessThanOrEqual
-                                                            toItem:_relativeSuperview
-                                                         attribute:NSLayoutAttributeTrailing
-                                                        multiplier:1
-                                                          constant:[self textContainerInset].right];
+  NSLayoutConstraint *placeholderTrailing =
+      [NSLayoutConstraint constraintWithItem:_placeholderLabel
+                                   attribute:NSLayoutAttributeTrailing
+                                   relatedBy:NSLayoutRelationLessThanOrEqual
+                                      toItem:_relativeSuperview
+                                   attribute:NSLayoutAttributeTrailing
+                                  multiplier:1
+                                    constant:[self textContainerInset].right];
 
   [self.placeholderTop setPriority:UILayoutPriorityDefaultLow];
   [self.placeholderLeading setPriority:UILayoutPriorityDefaultLow];

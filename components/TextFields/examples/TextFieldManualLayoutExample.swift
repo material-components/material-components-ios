@@ -167,7 +167,7 @@ final class TextFieldManualLayoutExample: UIViewController {
 
   func updateLayout() {
     let commonWidth = view.bounds.width - 2 * LayoutConstants.largeMargin
-    var height = LayoutConstants.floatingHeight;
+    var height = LayoutConstants.floatingHeight
     if let controller = allTextFieldControllers.first {
       height = controller.presentation == .floatingPlaceholder ? LayoutConstants.floatingHeight : LayoutConstants.defaultHeight
     }

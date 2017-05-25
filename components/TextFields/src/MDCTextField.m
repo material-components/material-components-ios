@@ -57,7 +57,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
     [self commonMDCTextFieldInitialization];
 
     _fundament = [aDecoder decodeObjectForKey:MDCTextFieldFundamentKey]
-                       ?: [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
+                     ?: [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
@@ -286,7 +286,8 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   textRect.origin.y = actualY;
 
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    textRect = MDCRectFlippedForRTL(textRect, CGRectGetWidth(bounds), UIUserInterfaceLayoutDirectionRightToLeft);
+    textRect = MDCRectFlippedForRTL(textRect, CGRectGetWidth(bounds),
+                                    UIUserInterfaceLayoutDirectionRightToLeft);
   }
 
   return textRect;
@@ -298,9 +299,11 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
   // The textRect comes to us flipped for RTL (if RTL) so we flip it back before adjusting.
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds), UIUserInterfaceLayoutDirectionLeftToRight);
+    editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds),
+                                       UIUserInterfaceLayoutDirectionLeftToRight);
   }
-  //NSLog(@"TextRect %@ Editing LTR %@", NSStringFromCGRect([self textRectForBounds:bounds]), NSStringFromCGRect(editingRect));
+  // NSLog(@"TextRect %@ Editing LTR %@", NSStringFromCGRect([self textRectForBounds:bounds]),
+  // NSStringFromCGRect(editingRect));
 
   // UITextFields show EITHER the clear button or the rightView. If the rightView has a superview,
   // then it's being shown and the clear button isn't.
@@ -325,7 +328,8 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   }
 
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds), UIUserInterfaceLayoutDirectionRightToLeft);
+    editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds),
+                                       UIUserInterfaceLayoutDirectionRightToLeft);
   }
 
   if ([self.fundament.positioningDelegate
@@ -334,7 +338,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
         [self.fundament.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
 
-  //NSLog(@"Bounds %@ Editing %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
+  // NSLog(@"Bounds %@ Editing %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
   return editingRect;
 }
 
@@ -358,7 +362,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 
 - (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {
   CGFloat centerY = [_fundament textContainerInset].top +
-  (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
+                    (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
   return centerY;
 }
 
@@ -435,7 +439,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 - (NSString *)accessibilityValue {
   if (self.leadingUnderlineLabel.text.length > 0) {
     return [NSString stringWithFormat:@"%@ %@", [super accessibilityValue],
-            self.leadingUnderlineLabel.accessibilityLabel];
+                                      self.leadingUnderlineLabel.accessibilityLabel];
   }
 
   return [super accessibilityValue];
