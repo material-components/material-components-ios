@@ -63,7 +63,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
 done
 
 echo checking pod push authorization ...
-if ! pod trunk me | grep -q 'MaterialComponnents'; then
+if ! pod trunk me | grep -q 'MaterialComponents'; then
   all_tests_ok=0
   echo
   echo "Failed! Register an account and session: https://guides.cocoapods.org/making/getting-setup-with-trunk.html"
