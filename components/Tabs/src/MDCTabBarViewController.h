@@ -34,13 +34,15 @@ IB_DESIGNABLE
 /** The tab bar controller's delegate. */
 @property(nonatomic, weak, nullable) id<MDCTabBarControllerDelegate> delegate;
 
-/** The array of view controllers managed by the tab bar controller.
-  The currently selected view controller must be one of these.
+/**
+ The array of view controllers managed by the tab bar controller.
+ The currently selected view controller must be one of these.
  */
 @property(nonatomic, nonnull, copy) NSArray<UIViewController *> *viewControllers;
 
-/** The currently selected view controller. Setting it switches without animation.
-  It must be one of the items in the view controllers array.
+/**
+ The currently selected view controller. Setting it switches without animation.
+ It must be one of the items in the view controllers array.
  */
 @property(nonatomic, weak, nullable) UIViewController *selectedViewController;
 
