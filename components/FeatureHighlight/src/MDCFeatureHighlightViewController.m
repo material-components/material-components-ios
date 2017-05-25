@@ -51,7 +51,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
     super.transitioningDelegate = self;
     super.modalPresentationStyle = UIModalPresentationCustom;
-    
+
     [self commonMDCFeatureHighlightViewControllerInit];
   }
   return self;
@@ -90,7 +90,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (void)commonMDCFeatureHighlightViewControllerInit {
   _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
-  
+
   _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
   _featureHighlightView.displayedView = _displayedView;
   _featureHighlightView.autoresizingMask =
