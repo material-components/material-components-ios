@@ -52,10 +52,12 @@ static NSString * const kCell = @"Cell";
 
 - (void)setupExampleViews {
 
-  [self.collectionView registerClass:[MDCCollectionViewTextCell class] forCellWithReuseIdentifier:kCell];
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kCell];
 
   // Set up container view of three activity indicators.
-  UIView *indicators = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 160)];
+  UIView *indicators =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 160)];
   indicators.backgroundColor = MDC_CATALOG_GREY;
 
   [indicators addSubview:self.activityIndicator1];
