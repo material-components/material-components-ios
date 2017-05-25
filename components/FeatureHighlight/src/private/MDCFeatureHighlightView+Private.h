@@ -16,18 +16,21 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCFeatureHighlightView.h"
+
 typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
-@interface MDCFeatureHighlightView : UIView
-
-@property(nonatomic, strong) UIColor *outerHighlightColor;
-@property(nonatomic, strong) UIColor *innerHighlightColor;
+@interface MDCFeatureHighlightView ()
 
 @property(nonatomic, assign) CGPoint highlightPoint;
 @property(nonatomic, strong) UIView *displayedView;
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *bodyLabel;
 @property(nonatomic, strong) MDCFeatureHighlightInteractionBlock interactionBlock;
+
+@end
+
+@interface MDCFeatureHighlightView (Private)
 
 - (void)layoutAppearing;
 - (void)layoutDisappearing;

@@ -21,7 +21,6 @@
 
 @implementation DialogsAlertViewController
 
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self loadCollectionView:
@@ -47,11 +46,7 @@
   }
 }
 
-
-
 - (IBAction)didTapShowAlert:(id)sender {
-  [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
-      setCustomTitleColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
 
   NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";

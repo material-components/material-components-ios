@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,5 +14,21 @@
  limitations under the License.
  */
 
-#import "MDCFeatureHighlightViewController.h"
-#import "MDCFeatureHighlightView.h"
+#import <UIKit/UIKit.h>
+
+#import "MaterialDialogs.h"
+#import "MDCColorScheme.h"
+
+/**
+ Used to apply a color scheme to theme to MDCAlertController alert dialogs.
+ */
+@interface MDCAlertColorThemer : NSObject
+
+/**
+ Applies a color scheme to theme to all MDCAlertController alert dialogs.
+ 
+ @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
+ */
++ (void)applyColorScheme:(MDCColorScheme *)colorScheme;
+
+@end
