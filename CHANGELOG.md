@@ -1,3 +1,21 @@
+# 23.4.1
+
+Fixed podspec
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Revert "Fix case-sensitive imports from private to Private. Causing compilation failures in Xcode 8.3.2 about non-portable path."](https://github.com/material-components/material-components-ios/commit/9cae7fca7bcd490a921c5ca1aacbd585cd61a021) (randallli)
+
+### Typography
+
+#### Changes
+
+* [Revert "Fix case-sensitive imports from private to Private. Causing compilation failures in Xcode 8.3.2 about non-portable path."](https://github.com/material-components/material-components-ios/commit/9cae7fca7bcd490a921c5ca1aacbd585cd61a021) (randallli)
+
 # 23.4.0
 
 ## API diffs
