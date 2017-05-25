@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCColorScheming.h"
+#import "MDCColorScheme.h"
 #import "MaterialHeaderStackView.h"
 
 /**
@@ -31,7 +31,7 @@
  @param colorScheme The color scheme to apply to MDCHeaderStackView.
  @param headerStackView A MDCHeaderStackView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
        toHeaderStackView:(MDCHeaderStackView *)headerStackView;
 
 @end

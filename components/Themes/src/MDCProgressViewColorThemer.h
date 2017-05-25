@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCColorScheming.h"
+#import "MDCColorScheme.h"
 #import "MaterialProgressView.h"
 
 /**
@@ -31,7 +31,7 @@
  @param colorScheme The color scheme to apply to MDCProgressView.
  @param progressView A MDCProgressView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
           toProgressView:(MDCProgressView *)progressView;
 
 @end

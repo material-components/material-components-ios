@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCColorScheming.h"
+#import "MDCColorScheme.h"
 #import "MaterialTabs.h"
 
 /**
@@ -31,7 +31,7 @@
  @param colorScheme The color scheme to apply to MDCTabBar.
  @param tabBar A MDCTabBar instance to apply a color scheme. 
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                 toTabBar:(MDCTabBar *)tabBar;
 
 @end

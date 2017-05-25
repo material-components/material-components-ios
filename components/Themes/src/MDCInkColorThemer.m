@@ -18,7 +18,7 @@
 
 @implementation MDCInkColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                toInkView:(MDCInkView *)inkView {
   inkView.inkColor = colorScheme.primaryLightColor;
 }

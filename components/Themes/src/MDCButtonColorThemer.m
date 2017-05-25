@@ -18,7 +18,7 @@
 
 @implementation MDCButtonColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                 toButton:(MDCButton *)button {
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [button setBackgroundColor:colorScheme.primaryLightColor forState:UIControlStateDisabled];

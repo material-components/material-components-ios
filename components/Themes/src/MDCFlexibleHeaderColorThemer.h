@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCColorScheming.h"
+#import "MDCColorScheme.h"
 #import "MaterialFlexibleHeader.h"
 
 /**
@@ -31,7 +31,7 @@
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderView A MDCFlexibleHeaderView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toFlexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView;
 
 /**
@@ -41,7 +41,7 @@
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderController A MDCFlexibleHeaderViewController instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toMDCFlexibleHeaderController:(MDCFlexibleHeaderViewController *)flexibleHeaderController;
 
 @end

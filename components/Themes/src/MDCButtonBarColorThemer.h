@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCColorScheming.h"
+#import "MDCColorScheme.h"
 #import "MaterialButtonBar.h"
 
 /**
@@ -31,7 +31,7 @@
  @param colorScheme The color scheme to apply to MDCButtonBar.
  @param buttonBar A MDCButtonBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
              toButtonBar:(MDCButtonBar *)buttonBar;
 
 @end

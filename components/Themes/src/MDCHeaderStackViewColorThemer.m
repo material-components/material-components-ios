@@ -18,7 +18,7 @@
 
 @implementation MDCHeaderStackViewColorThemer
 
-+ (void)applyColorScheme:(NSObject<MDCColorScheming> *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
        toHeaderStackView:(MDCHeaderStackView *)headerStackView {
   headerStackView.topBar.backgroundColor = colorScheme.primaryLightColor;
   headerStackView.bottomBar.backgroundColor = colorScheme.primaryColor;
