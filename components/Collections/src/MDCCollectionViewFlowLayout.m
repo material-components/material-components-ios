@@ -396,7 +396,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
       insetFrame = CGRectInset(insetFrame, insets.left / 2 + insets.right / 2, 0);
       if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
         insetFrame.origin.y += insets.top;
-      } else if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionFooter]) {
+      } else if ([attr.representedElementKind
+                  isEqualToString:UICollectionElementKindSectionFooter]) {
         insetFrame.origin.y -= insets.bottom;
       }
       attr.frame = insetFrame;
