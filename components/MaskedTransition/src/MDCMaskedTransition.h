@@ -32,7 +32,8 @@
  @param sourceView The view from which the mask should emanate. The view is assumed to be in the
                    presenting view controller's view hierarchy.
  */
-- (nonnull instancetype)initWithSourceView:(nonnull UIView *)sourceView;
+- (nonnull instancetype)initWithSourceView:(nonnull UIView *)sourceView
+    NS_DESIGNATED_INITIALIZER;
 
 /**
  An optional block that may be used to calculate the frame of the presented view controller's view.
@@ -41,5 +42,7 @@
  returned rect will be assigned to the presented view controller's frame.
  */
 @property(nonatomic, copy, nullable) CGRect (^calculateFrameOfPresentedView)(UIPresentationController * _Nonnull);
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 @end
