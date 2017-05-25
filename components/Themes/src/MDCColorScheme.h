@@ -25,7 +25,7 @@
 
 @optional
 
-/** 
+/**
  A slightly lighter version of the primary color. Given tonal variations of a color, this color is
  typically two color swatches lighter than the primary color.
  */
