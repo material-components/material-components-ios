@@ -148,7 +148,7 @@ IB_DESIGNABLE
 
 /**
  Called before the selected item changes by user action. This method is not called for programmatic
- changes to the tab bar's selected item.
+ changes to the tab bar's selected item.  TODO: Will be deprecated. Use tabBar:shouldSelectItem:.
  */
 - (void)tabBar:(nonnull MDCTabBar *)tabBar willSelectItem:(nonnull UITabBarItem *)item;
 
