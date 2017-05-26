@@ -26,6 +26,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 // This assumes that UIControlState is actually a set of bitfields and ignores application-specific
 // values.
 static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1;
+static const UIControlState kUIControlStateDisabledHighlighted =
+    UIControlStateHighlighted | UIControlStateDisabled;
 
 static CGFloat randomNumber() {
   return arc4random_uniform(100) / (CGFloat)10;
@@ -292,6 +294,47 @@ static UIColor *randomColor() {
   }
 }
 
+#pragma mark - UIButton strangeness
+
+- (void)testTitleColorForState {
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    if (controlState & kUIControlStateDisabledHighlighted) {
+      // We skip the Disabled Highlighted state because UIButton titleColorForState ignores it.
+      continue;
+    }
+    // Given
+    MDCButton *button = [[MDCButton alloc] init];
+    UIColor *color = [UIColor blueColor];
+    
+    // When
+    [button setTitleColor:color forState:controlState];
+    
+    // Then
+    XCTAssertEqualObjects([button titleColorForState:controlState], color,
+                          @"for control state:%@ ", [self controlState:controlState]);
+  }
+}
+- (void)testTitleColorForStateDisabledHighlight {
+  // This is strange that setting the color for a state does not return the value of that state.
+  // It turns out that it returns the value set to the normal state.
+
+  // Given
+  UIControlState controlState = kUIControlStateDisabledHighlighted;
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *color = [UIColor blueColor];
+  UIColor *normalColor = [UIColor greenColor];
+  [button setTitleColor:normalColor forState:UIControlStateNormal];
+  
+  // When
+  [button setTitleColor:color forState:controlState];
+  
+  // Then
+  XCTAssertEqualObjects([button titleColorForState:controlState], normalColor,
+                        @"for control state:%@ ", [self controlState:controlState]);
+  XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
+                        @"for control state:%@ ", [self controlState:controlState]);
+}
+
 #pragma mark - UIButton state changes
 
 - (void)testEnabled {
@@ -416,6 +459,25 @@ static UIColor *randomColor() {
   XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize, preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
+}
+
+#pragma mark utilities
+
+- (NSString*)controlState:(UIControlState)controlState {
+  NSMutableString *string = [NSMutableString string];
+  if (UIControlStateNormal) {
+    return @".Normal";
+  }
+  if (controlState & UIControlStateHighlighted) {
+    [string appendString:@"Highlighted "];
+  }
+  if (controlState & UIControlStateDisabled) {
+    [string appendString:@"Disabled "];
+  }
+  if (controlState & UIControlStateSelected) {
+    [string appendString:@"Selected "];
+  }
+  return [string copy];
 }
 
 @end
