@@ -69,7 +69,7 @@
 }
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Theme Feature Highlight" ];
+  return @[ @"Feature Highlight", @"Theme Feature Highlight" ];
 }
 
 + (NSString *)catalogDescription {
