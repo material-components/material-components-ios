@@ -55,7 +55,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 @implementation AlertColorThemerTypicalUseViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Themes", @"Theme Alert Dialog" ];
+  return @[ @"Dialogs", @"Theme Alert Dialog" ];
 }
 
 + (NSString *)catalogDescription {
