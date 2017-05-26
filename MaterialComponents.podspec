@@ -138,7 +138,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "Dialogs" do |ss|
-    ss.subspec "core" do |sss|
+    ss.subspec "Component" do |sss|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/*.h"
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
@@ -158,7 +158,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "FeatureHighlight" do |ss|
-    ss.subspec "core" do |sss|
+    ss.subspec "Component" do |sss|
       sss.ios.deployment_target = '8.0'
       sss.public_header_files = "components/#{ss.base_name}/src/*.h"
       sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
