@@ -62,29 +62,6 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
   fi
 done
 
-echo checking pod push authorization ...
-if ! pod trunk me | grep -q 'MaterialComponents'; then
-  all_tests_ok=0
-  echo
-  echo "Failed! Register an account and session: https://guides.cocoapods.org/making/getting-setup-with-trunk.html"
-  echo "Continuing with next test..."
-  echo
-fi
-
-echo lint podspec ...
-log_file="test_log_for_pod_lint.txt"
-if pod lib lint MaterialComponents.podspec >"$log_file" 2>&1; then
-    rm "$log_file"
-else
-  all_tests_ok=0
-    echo
-    echo "Failed to lint MaterialComponents.podspec"
-    guess_failure "$log_file"
-    echo "Log left in $log_file."
-    echo "Continuing with next test..."
-    echo
-fi
-
 # If any test failed, exit with a failure exit status so continuous integration
 # tools can react appropriately.
 if [ "$all_tests_ok" -eq 1 ]; then
