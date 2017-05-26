@@ -5,6 +5,7 @@ The following demo apps can be found in this directory:
 - [Pesto](Pesto/) - a simple recipe app, incorporating a flexible header, floating action button, and collections
 - [Shrine](Shrine/) - a demo shopping app, incorporating a flexible header, custom typography, and collections
 - [Bare](Bare/) - a skeleton example app used to measure the size of Material Components for iOS
+- [TV](TV/) - a skeleton tvOS example app, used to verify that the Material Components build against the tvOS SDK
 
 ## Trying out Material Components
 

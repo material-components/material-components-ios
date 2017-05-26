@@ -95,6 +95,7 @@
   _overlayView.backgroundColor = [UIColor clearColor];
   [self addSubview:_overlayView];
 
+#if TARGET_OS_IOS
   NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
   [nc addObserver:self
          selector:@selector(handleRotationNotification:)
@@ -104,6 +105,7 @@
   // Set a sane initial position.
   [self updateOverlayViewForOrientation:[[UIApplication mdc_safeSharedApplication]
                                             statusBarOrientation]];
+#endif
 
   // Set a sane hidden state.
   [self updateOverlayHiddenState];
@@ -115,6 +117,7 @@
 
 #pragma mark - Rotation
 
+#if TARGET_OS_IOS
 - (void)updateOverlayViewForOrientation:(UIInterfaceOrientation)orientation {
   // On iOS 8, the window orientation is corrected logically after transforms, so there is
   // no need to apply this transform correction like we do for iOS 7 and below.
@@ -160,6 +163,7 @@
       [notification.userInfo[UIApplicationStatusBarOrientationUserInfoKey] integerValue];
   [self updateOverlayViewForOrientation:orientation];
 }
+#endif // #if TARGET_OS_IOS
 
 #pragma mark - Window positioning
 

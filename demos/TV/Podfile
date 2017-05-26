@@ -1,0 +1,4 @@
+target 'TV' do
+  # Pods for TV app
+  pod 'MaterialComponents', :path => '../../'
+end

@@ -113,7 +113,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:_flowLayout];
   collectionView.backgroundColor = [UIColor clearColor];
   collectionView.clipsToBounds = YES;
+#if TARGET_OS_IOS
   collectionView.scrollsToTop = NO;
+#endif
   collectionView.showsHorizontalScrollIndicator = NO;
   collectionView.showsVerticalScrollIndicator = NO;
   collectionView.dataSource = self;

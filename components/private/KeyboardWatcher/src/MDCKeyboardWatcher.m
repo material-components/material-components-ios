@@ -17,6 +17,8 @@
 #import "MDCKeyboardWatcher.h"
 #import "UIApplication+AppExtensions.h"
 
+#if TARGET_OS_IOS
+
 NSString *const MDCKeyboardWatcherKeyboardWillShowNotification =
     @"MDCKeyboardWatcherKeyboardWillShowNotification";
 NSString *const MDCKeyboardWatcherKeyboardWillHideNotification =
@@ -268,3 +270,5 @@ static UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve ani
 }
 
 @end
+
+#endif // #if TARGET_OS_IOS

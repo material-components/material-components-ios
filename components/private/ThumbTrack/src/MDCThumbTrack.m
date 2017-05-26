@@ -135,7 +135,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   self = [super initWithFrame:frame];
   if (self) {
     self.userInteractionEnabled = YES;
+#if TARGET_OS_IOS
     [super setMultipleTouchEnabled:NO];  // We only want one touch event at a time
+#endif
     _continuousUpdateEvents = YES;
     _lastDispatchedValue = _value;
     _maximumValue = 1;

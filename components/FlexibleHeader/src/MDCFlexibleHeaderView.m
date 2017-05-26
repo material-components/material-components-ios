@@ -516,9 +516,17 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 - (BOOL)fhv_canShiftOffscreen {
+#if TARGET_OS_IOS
   return ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
            _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) &&
           !_trackingScrollView.pagingEnabled);
+#elif TARGET_OS_TV
+  return (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
+          _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
+#else
+  NSAssert(NO, @"Unsupported target platform");
+  return NO;
+#endif
 }
 
 - (BOOL)fhv_isPartiallyShifted {
@@ -1021,24 +1029,16 @@ static BOOL isRunningiOS10_3OrAbove() {
   }
 }
 
-- (BOOL)prefersStatusBarHidden {
-  return _statusBarShifter.prefersStatusBarHidden;
-}
-
 - (BOOL)hidesStatusBarWhenCollapsed {
+#if TARGET_OS_IOS
   return (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar &&
           !_trackingScrollView.pagingEnabled);
-}
-
-- (void)setstatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
-  if (_statusBarHintCanOverlapHeader == statusBarHintCanOverlapHeader) {
-    return;
-  }
-  _statusBarHintCanOverlapHeader = statusBarHintCanOverlapHeader;
-
-  _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
-
-  [self fhv_startDisplayLink];
+#elif TARGET_OS_TV
+  return NO;
+#else
+  NSAssert(NO, @"Unsupported target platform");
+  return NO;
+#endif
 }
 
 - (void)setShiftBehavior:(MDCFlexibleHeaderShiftBehavior)shiftBehavior {
@@ -1078,49 +1078,6 @@ static BOOL isRunningiOS10_3OrAbove() {
   contentOffset.y -= delta;  // Keeps the scroll view offset from jumping.
   _trackingScrollView.contentOffset = contentOffset;
   _contentInsetsAreChanging = NO;
-}
-
-- (void)interfaceOrientationWillChange {
-  NSAssert(!_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
-           NSStringFromClass([self class]), NSStringFromSelector(_cmd),
-           NSStringFromSelector(@selector(interfaceOrientationDidChange)));
-
-  _interfaceOrientationIsChanging = YES;
-
-  [_statusBarShifter interfaceOrientationWillChange];
-}
-
-- (void)interfaceOrientationIsChanging {
-  NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
-           NSStringFromClass([self class]), NSStringFromSelector(_cmd),
-           NSStringFromSelector(@selector(interfaceOrientationWillChange)));
-}
-
-- (void)interfaceOrientationDidChange {
-  NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
-           NSStringFromClass([self class]), NSStringFromSelector(_cmd),
-           NSStringFromSelector(@selector(interfaceOrientationWillChange)));
-
-  _interfaceOrientationIsChanging = NO;
-
-  // Ignore any content offset delta that occured as a result of any orientation change.
-  _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
-
-  [self fhv_updateLayout];
-
-  [_statusBarShifter interfaceOrientationDidChange];
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [self interfaceOrientationWillChange];
-  [coordinator
-      animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self interfaceOrientationIsChanging];
-      }
-      completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self interfaceOrientationDidChange];
-      }];
 }
 
 - (void)forwardTouchEventsForView:(UIView *)view {
@@ -1276,3 +1233,74 @@ static BOOL isRunningiOS10_3OrAbove() {
 
 @implementation MDCFlexibleHeaderScrollViewInfo
 @end
+
+#if TARGET_OS_IOS
+
+@implementation MDCFlexibleHeaderView (iOS)
+
+- (BOOL)prefersStatusBarHidden {
+  return _statusBarShifter.prefersStatusBarHidden;
+}
+
+- (BOOL)hidesStatusBarWhenCollapsed {
+  return (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar &&
+          !_trackingScrollView.pagingEnabled);
+}
+
+- (void)setstatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
+  if (_statusBarHintCanOverlapHeader == statusBarHintCanOverlapHeader) {
+    return;
+  }
+  _statusBarHintCanOverlapHeader = statusBarHintCanOverlapHeader;
+
+  _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
+
+  [self fhv_startDisplayLink];
+}
+
+- (void)interfaceOrientationWillChange {
+  NSAssert(!_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
+           NSStringFromClass([self class]), NSStringFromSelector(_cmd),
+           NSStringFromSelector(@selector(interfaceOrientationDidChange)));
+
+  _interfaceOrientationIsChanging = YES;
+
+  [_statusBarShifter interfaceOrientationWillChange];
+}
+
+- (void)interfaceOrientationIsChanging {
+  NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
+           NSStringFromClass([self class]), NSStringFromSelector(_cmd),
+           NSStringFromSelector(@selector(interfaceOrientationWillChange)));
+}
+
+- (void)interfaceOrientationDidChange {
+  NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
+           NSStringFromClass([self class]), NSStringFromSelector(_cmd),
+           NSStringFromSelector(@selector(interfaceOrientationWillChange)));
+
+  _interfaceOrientationIsChanging = NO;
+
+  // Ignore any content offset delta that occured as a result of any orientation change.
+  _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
+
+  [self fhv_updateLayout];
+
+  [_statusBarShifter interfaceOrientationDidChange];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [self interfaceOrientationWillChange];
+  [coordinator
+      animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self interfaceOrientationIsChanging];
+      }
+      completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self interfaceOrientationDidChange];
+      }];
+}
+
+@end
+
+#endif // #if TARGET_OS_IOS

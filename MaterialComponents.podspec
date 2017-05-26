@@ -8,9 +8,10 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/material-components/material-components-ios"
   s.license      = "Apache 2.0"
   s.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{s.version}" }
-  s.platform     = :ios
+  s.platform     = :ios,:tvos
   s.requires_arc = true
   s.ios.deployment_target = '8.0'
+  s.tvos.deployment_target = '9.0'
 
   # # Subspec explanation
   #
@@ -38,6 +39,7 @@ Pod::Spec.new do |s|
 
   s.subspec "ActivityIndicator" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
@@ -47,12 +49,14 @@ Pod::Spec.new do |s|
 
   s.subspec "AnimationTiming" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
   end
 
   s.subspec "AppBar" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
@@ -73,6 +77,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Buttons" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
@@ -87,6 +92,7 @@ Pod::Spec.new do |s|
 
   s.subspec "ButtonBar" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '8.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
@@ -96,6 +102,7 @@ Pod::Spec.new do |s|
 
   s.subspec "CollectionCells" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
@@ -117,12 +124,14 @@ Pod::Spec.new do |s|
 
   s.subspec "CollectionLayoutAttributes" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
   end
 
   s.subspec "Collections" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
@@ -139,6 +148,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Dialogs" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
@@ -151,6 +161,7 @@ Pod::Spec.new do |s|
 
   s.subspec "FeatureHighlight" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
@@ -160,6 +171,7 @@ Pod::Spec.new do |s|
 
   s.subspec "FlexibleHeader" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.dependency 'MDFTextAccessibility'
@@ -168,18 +180,21 @@ Pod::Spec.new do |s|
 
   s.subspec "HeaderStackView" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
   end
 
   s.subspec "Ink" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
   end
 
   s.subspec "NavigationBar" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
 
@@ -195,6 +210,7 @@ Pod::Spec.new do |s|
 
   s.subspec "OverlayWindow" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
@@ -203,6 +219,7 @@ Pod::Spec.new do |s|
 
   s.subspec "PageControl" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
@@ -210,12 +227,14 @@ Pod::Spec.new do |s|
 
   s.subspec "Palettes" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
   end
 
   s.subspec "ProgressView" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
 
@@ -225,18 +244,21 @@ Pod::Spec.new do |s|
 
   s.subspec "ShadowElevations" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
   end
 
   s.subspec "ShadowLayer" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
   end
 
   s.subspec "Slider" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
@@ -245,6 +267,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Snackbar" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
@@ -259,6 +282,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Tabs" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
     ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
@@ -280,6 +304,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Typography" do |ss|
     ss.ios.deployment_target = '8.0'
+    ss.tvos.deployment_target = '9.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
     ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
 
@@ -295,12 +320,14 @@ Pod::Spec.new do |s|
 
     pss.subspec "Application" do |ss|
       ss.ios.deployment_target = '8.0'
+      ss.tvos.deployment_target = '9.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
     end
 
     pss.subspec "KeyboardWatcher" do |ss|
       ss.ios.deployment_target = '8.0'
+      ss.tvos.deployment_target = '9.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
 
@@ -309,24 +336,28 @@ Pod::Spec.new do |s|
 
     pss.subspec "Math" do |ss|
       ss.ios.deployment_target = '8.0'
+      ss.tvos.deployment_target = '9.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
     end
 
     pss.subspec "Overlay" do |ss|
       ss.ios.deployment_target = '8.0'
+      ss.tvos.deployment_target = '9.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
     end
 
     pss.subspec "RTL" do |ss|
       ss.ios.deployment_target = '8.0'
+      ss.tvos.deployment_target = '9.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
     end
 
     pss.subspec "ThumbTrack" do |ss|
       ss.ios.deployment_target = '8.0'
+      ss.tvos.deployment_target = '9.0'
       ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
       ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
 

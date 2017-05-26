@@ -89,3 +89,51 @@ tests, and demonstration apps.
 
 Given the rapid change in the Swift language and coding styles, we don't enforce any particular
 style of Swift except to follow the cardinal rule: *be consistent*.
+
+## iOS and tvOS code sharing
+
+iOS and tvOS use different SDKs, so not all calls will be available on both platforms. The demo app
+in `Demos/TV` can be used to verify that an application linking MDC will compile.
+
+For small blocks of code, it's preferable to simply add a `#if TARGET_OS_IOS #endif` around the
+code.
+
+For larger blocks of code that is in the public interface, put the code into the iOS or tvOS
+category of the main class like so
+```
+// MDCWidget.h
+#if TARGET_OS_IOS
+@interface MDCWidget (iOS)
+@end
+#endif
+
+// MDCWidget.m
+#if TARGET_OS_IOS
+@implementation MDCWidget (iOS)
+@end
+#endif
+```
+
+For large blocks of code that is private implementation, put it in the private/ folder like so:
+```
+// MDCWidget+ios.h
+#if TARGET_OS_IOS
+@interface MDCWidget (iOS)
+@end
+#endif
+
+// MDCWidget+ios.m
+#if TARGET_OS_IOS
+@implementation MDCWidget (iOS)
+@end
+#endif
+```
+
+If the MDCWidget+ios.m needs to access a private ivar, simply expose it via a private category:
+```
+// MDCWidget+private.h
+#if TARGET_OS_IOS
+@interface MDCWidget (private)
+- (MDCWidgetIvar *)mdcWidgetIvar;
+@end
+#endif

@@ -47,22 +47,6 @@
 #pragma mark UIViewController methods
 
 /**
- Returns a Boolean indicating whether the status bar should be hidden or not.
-
- Must be called by the parent view controller's -prefersStatusBarHidden implementation.
- */
-- (BOOL)prefersStatusBarHidden;
-
-/**
- Calculates the status bar style based on the header view's background color.
-
- Light background colors use the default black status bar and dark background colors use the light
- status bar. If the header view's background color is not fully-opaque, then this returns
- UIStatusBarStyleDefault.
- */
-- (UIStatusBarStyle)preferredStatusBarStyle;
-
-/**
  Updates the topLayoutGuide to the correct position of a view controller paired with an instance of
  MDCFlexibleHeaderViewController.
 
@@ -90,3 +74,26 @@
     flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 @end
+
+#if TARGET_OS_IOS
+
+@interface MDCFlexibleHeaderViewController (iOS)
+/**
+ Returns a Boolean indicating whether the status bar should be hidden or not.
+
+ Must be called by the parent view controller's -prefersStatusBarHidden implementation.
+ */
+- (BOOL)prefersStatusBarHidden;
+
+/**
+ Calculates the status bar style based on the header view's background color.
+
+ Light background colors use the default black status bar and dark background colors use the light
+ status bar. If the header view's background color is not fully-opaque, then this returns
+ UIStatusBarStyleDefault.
+ */
+- (UIStatusBarStyle)preferredStatusBarStyle;
+
+@end
+
+#endif // #if TARGET_OS_IOS

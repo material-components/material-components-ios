@@ -201,9 +201,11 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 #pragma mark - Public
 
 - (void)setOffset:(CGFloat)offset {
+#if TARGET_OS_IOS
   if (![self canUpdateStatusBarFrame]) {
     return;
   }
+#endif
 
   // Bound the status bar range to [0...kStatusBarExpectedHeight].
   CGFloat statusOffsetY = MIN(kStatusBarExpectedHeight, offset);
@@ -241,6 +243,12 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   }
 }
 
+@end
+
+#if TARGET_OS_IOS
+
+@implementation MDCStatusBarShifter (iOS)
+
 - (BOOL)canUpdateStatusBarFrame {
   CGRect statusBarFrame = [[UIApplication mdc_safeSharedApplication] statusBarFrame];
   CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
@@ -261,3 +269,5 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 }
 
 @end
+
+#endif // #if TARGET_OS_IOS

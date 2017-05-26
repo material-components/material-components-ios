@@ -1,0 +1,10 @@
+target 'TV' do
+  # Pods for TV app
+
+asdfsdafsdafsadfdsfds
+f
+
+sadfsdfqweqweqweqqqqq:odvadsfaefewewd 'MaterialComponents', :path => '../../'
+  # Used to point to the local accessibility pod spec. Remove before submitting.
+:q:  pod 'MDFTextAccessibility', :path => '../../../material-text-accessibility-ios/'
+end

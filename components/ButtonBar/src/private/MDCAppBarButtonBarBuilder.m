@@ -101,7 +101,10 @@ static const UIEdgeInsets kImageOnlyButtonInset = {0, 12.0f, 0, 12.0f};
   [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
   button.disabledAlpha = kDisabledButtonAlpha;
 
+#if TARGET_OS_IOS
   button.exclusiveTouch = YES;
+#endif
+
   if (buttonItem.title != nil) {
     [button setTitle:buttonItem.title forState:UIControlStateNormal];
   }

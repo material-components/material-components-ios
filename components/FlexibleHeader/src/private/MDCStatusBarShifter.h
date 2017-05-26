@@ -58,6 +58,15 @@
 
 @property(nonatomic, weak) id<MDCStatusBarShifterDelegate> delegate;
 
+@end
+
+#if TARGET_OS_IOS
+
+/**
+ iOS specific implementation of MDCStatusBarShifter.
+ */
+@interface MDCStatusBarShifter (iOS)
+
 #pragma mark Introspection
 
 /**
@@ -84,8 +93,9 @@
 
 /** Must be called when the owning UIViewController's interface orientation has changed. */
 - (void)interfaceOrientationDidChange;
-
 @end
+
+#endif // #if TARGET_OS_IOS
 
 /**
  The MDCStatusBarShifterDelegate protocol allows a delegate to react to changes in the status bar
