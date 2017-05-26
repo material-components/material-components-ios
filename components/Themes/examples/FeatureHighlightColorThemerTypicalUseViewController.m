@@ -19,6 +19,7 @@
 #import "MaterialFeatureHighlight.h"
 #import "MaterialThemes.h"
 #import "MaterialPalettes.h"
+#import "MDCFeatureHighlightColorThemer.h"
 
 static NSString *const kTitleText = @"Themed Feature Highlight";
 static NSString *const kBodyText =

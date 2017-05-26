@@ -20,6 +20,7 @@
 #import "MaterialDialogs.h"
 #import "MaterialThemes.h"
 #import "MaterialPalettes.h"
+#import "MDCAlertColorThemer.h"
 
 @implementation AlertColorThemerTypicalUseViewController
 
