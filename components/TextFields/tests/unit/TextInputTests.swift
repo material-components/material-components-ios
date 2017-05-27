@@ -29,30 +29,31 @@ class TextInputTests: XCTestCase {
     textField.clearButtonColor = .red
     XCTAssertEqual(textField.clearButtonColor, .red)
 
-    textField.textColor = .red
-    XCTAssertEqual(textField.textColor, .red)
-
-    let testText = "Test text"
-    textField.text = testText
-    XCTAssertEqual(textField.text, testText)
-
-    let testPlaceholder = "Test placeholder"
-    textField.placeholder = testPlaceholder
-    XCTAssertEqual(textField.placeholder, testPlaceholder)
-
-    textField.underlineColor = .red
-    XCTAssertEqual(textField.underlineColor, .red)
-
-    let width: CGFloat = 5.0
-    textField.underlineHeight = width
-    XCTAssertEqual(textField.underlineHeight, width)
 
     let testLeading = "Helper Test"
     textField.leadingLabel.text = testLeading
-    XCTAssertEqual(textField.leadingLabel.text, testLeading)
+    XCTAssertEqual(testLeading, textField.leadingLabel.text)
+
+    let testPlaceholder = "Test placeholder"
+    textField.placeholder = testPlaceholder
+    XCTAssertEqual(testPlaceholder, textField.placeholder)
+
+    let testText = "Test text"
+    textField.text = testText
+    XCTAssertEqual(testText, textField.text)
+
+    textField.textColor = .red
+    XCTAssertEqual(.red, textField.textColor)
 
     let testTrailing = "NN / NN"
     textField.trailingLabel.text = testTrailing
-    XCTAssertEqual(textField.trailingLabel.text, testTrailing)
+    XCTAssertEqual(testTrailing, textField.trailingLabel.text)
+
+    textField.underlineColor = .red
+    XCTAssertEqual(.red, textField.underlineColor)
+
+    let width: CGFloat = 5.0
+    textField.underlineHeight = width
+    XCTAssertEqual(width, textField.underlineHeight)
   }
 }

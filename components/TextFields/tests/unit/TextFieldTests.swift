@@ -63,14 +63,6 @@ class TextFieldTests: XCTestCase {
       XCTFail("No copy or copy is wrong class")
     }
 
-    let controller = MDCTextInputController(input: textField)
-    controller.characterMax = 49
-
-    if let controllerCopy = controller.copy() as? MDCTextInputController {
-      XCTAssertEqual(controller.characterMax, controllerCopy.characterMax)
-    } else {
-      XCTFail("No copy or copy is wrong class")
-    }
   }
 
   func testFontChange() {
