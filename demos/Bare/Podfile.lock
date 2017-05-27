@@ -1,38 +1,37 @@
 PODS:
-  - CatalogByConvention (2.0.0)
-  - EarlGrey (1.9.0)
-  - MaterialComponents (23.0.2):
-    - MaterialComponents/ActivityIndicator (= 23.0.2)
-    - MaterialComponents/AnimationTiming (= 23.0.2)
-    - MaterialComponents/AppBar (= 23.0.2)
-    - MaterialComponents/ButtonBar (= 23.0.2)
-    - MaterialComponents/Buttons (= 23.0.2)
-    - MaterialComponents/CollectionCells (= 23.0.2)
-    - MaterialComponents/CollectionLayoutAttributes (= 23.0.2)
-    - MaterialComponents/Collections (= 23.0.2)
-    - MaterialComponents/Dialogs (= 23.0.2)
-    - MaterialComponents/FeatureHighlight (= 23.0.2)
-    - MaterialComponents/FlexibleHeader (= 23.0.2)
-    - MaterialComponents/HeaderStackView (= 23.0.2)
-    - MaterialComponents/Ink (= 23.0.2)
-    - MaterialComponents/NavigationBar (= 23.0.2)
-    - MaterialComponents/OverlayWindow (= 23.0.2)
-    - MaterialComponents/PageControl (= 23.0.2)
-    - MaterialComponents/Palettes (= 23.0.2)
-    - MaterialComponents/private (= 23.0.2)
-    - MaterialComponents/ProgressView (= 23.0.2)
-    - MaterialComponents/ShadowElevations (= 23.0.2)
-    - MaterialComponents/ShadowLayer (= 23.0.2)
-    - MaterialComponents/Slider (= 23.0.2)
-    - MaterialComponents/Snackbar (= 23.0.2)
-    - MaterialComponents/Tabs (= 23.0.2)
-    - MaterialComponents/TextFields (= 23.0.2)
-    - MaterialComponents/Typography (= 23.0.2)
-  - MaterialComponents/ActivityIndicator (23.0.2):
+  - MaterialComponents (23.4.1):
+    - MaterialComponents/ActivityIndicator (= 23.4.1)
+    - MaterialComponents/AnimationTiming (= 23.4.1)
+    - MaterialComponents/AppBar (= 23.4.1)
+    - MaterialComponents/ButtonBar (= 23.4.1)
+    - MaterialComponents/Buttons (= 23.4.1)
+    - MaterialComponents/CollectionCells (= 23.4.1)
+    - MaterialComponents/CollectionLayoutAttributes (= 23.4.1)
+    - MaterialComponents/Collections (= 23.4.1)
+    - MaterialComponents/Dialogs (= 23.4.1)
+    - MaterialComponents/FeatureHighlight (= 23.4.1)
+    - MaterialComponents/FlexibleHeader (= 23.4.1)
+    - MaterialComponents/HeaderStackView (= 23.4.1)
+    - MaterialComponents/Ink (= 23.4.1)
+    - MaterialComponents/NavigationBar (= 23.4.1)
+    - MaterialComponents/OverlayWindow (= 23.4.1)
+    - MaterialComponents/PageControl (= 23.4.1)
+    - MaterialComponents/Palettes (= 23.4.1)
+    - MaterialComponents/private (= 23.4.1)
+    - MaterialComponents/ProgressView (= 23.4.1)
+    - MaterialComponents/ShadowElevations (= 23.4.1)
+    - MaterialComponents/ShadowLayer (= 23.4.1)
+    - MaterialComponents/Slider (= 23.4.1)
+    - MaterialComponents/Snackbar (= 23.4.1)
+    - MaterialComponents/Tabs (= 23.4.1)
+    - MaterialComponents/TextFields (= 23.4.1)
+    - MaterialComponents/Themes (= 23.4.1)
+    - MaterialComponents/Typography (= 23.4.1)
+  - MaterialComponents/ActivityIndicator (23.4.1):
     - MaterialComponents/private/Application
     - MaterialComponents/private/RTL
-  - MaterialComponents/AnimationTiming (23.0.2)
-  - MaterialComponents/AppBar (23.0.2):
+  - MaterialComponents/AnimationTiming (23.4.1)
+  - MaterialComponents/AppBar (23.4.1):
     - MaterialComponents/FlexibleHeader
     - MaterialComponents/HeaderStackView
     - MaterialComponents/NavigationBar
@@ -41,17 +40,17 @@ PODS:
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ButtonBar (23.0.2):
+  - MaterialComponents/ButtonBar (23.4.1):
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
-  - MaterialComponents/Buttons (23.0.2):
+  - MaterialComponents/Buttons (23.4.1):
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/CollectionCells (23.0.2):
+  - MaterialComponents/CollectionCells (23.4.1):
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/private/Icons/ic_check
@@ -63,91 +62,101 @@ PODS:
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/CollectionLayoutAttributes (23.0.2)
-  - MaterialComponents/Collections (23.0.2):
+  - MaterialComponents/CollectionLayoutAttributes (23.4.1)
+  - MaterialComponents/Collections (23.4.1):
     - MaterialComponents/CollectionCells
     - MaterialComponents/CollectionLayoutAttributes
     - MaterialComponents/Ink
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/Dialogs (23.0.2):
+  - MaterialComponents/Dialogs (23.4.1):
+    - MaterialComponents/Dialogs/ColorThemer (= 23.4.1)
+    - MaterialComponents/Dialogs/Component (= 23.4.1)
+  - MaterialComponents/Dialogs/ColorThemer (23.4.1):
+    - MaterialComponents/Themes
+  - MaterialComponents/Dialogs/Component (23.4.1):
     - MaterialComponents/Buttons
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
-  - MaterialComponents/FeatureHighlight (23.0.2):
+  - MaterialComponents/FeatureHighlight (23.4.1):
+    - MaterialComponents/FeatureHighlight/ColorThemer (= 23.4.1)
+    - MaterialComponents/FeatureHighlight/Component (= 23.4.1)
+  - MaterialComponents/FeatureHighlight/ColorThemer (23.4.1):
+    - MaterialComponents/Themes
+  - MaterialComponents/FeatureHighlight/Component (23.4.1):
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/FlexibleHeader (23.0.2):
+  - MaterialComponents/FlexibleHeader (23.4.1):
     - MaterialComponents/private/Application
     - MDFTextAccessibility
-  - MaterialComponents/HeaderStackView (23.0.2)
-  - MaterialComponents/Ink (23.0.2)
-  - MaterialComponents/NavigationBar (23.0.2):
+  - MaterialComponents/HeaderStackView (23.4.1)
+  - MaterialComponents/Ink (23.4.1)
+  - MaterialComponents/NavigationBar (23.4.1):
     - MaterialComponents/ButtonBar
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
     - MDFTextAccessibility
-  - MaterialComponents/OverlayWindow (23.0.2):
+  - MaterialComponents/OverlayWindow (23.4.1):
     - MaterialComponents/private/Application
-  - MaterialComponents/PageControl (23.0.2)
-  - MaterialComponents/Palettes (23.0.2)
-  - MaterialComponents/private (23.0.2):
-    - MaterialComponents/private/Application (= 23.0.2)
-    - MaterialComponents/private/Icons (= 23.0.2)
-    - MaterialComponents/private/KeyboardWatcher (= 23.0.2)
-    - MaterialComponents/private/Math (= 23.0.2)
-    - MaterialComponents/private/Overlay (= 23.0.2)
-    - MaterialComponents/private/RTL (= 23.0.2)
-    - MaterialComponents/private/ThumbTrack (= 23.0.2)
-  - MaterialComponents/private/Application (23.0.2)
-  - MaterialComponents/private/Icons (23.0.2):
-    - MaterialComponents/private/Icons/Base (= 23.0.2)
-    - MaterialComponents/private/Icons/ic_arrow_back (= 23.0.2)
-    - MaterialComponents/private/Icons/ic_check (= 23.0.2)
-    - MaterialComponents/private/Icons/ic_check_circle (= 23.0.2)
-    - MaterialComponents/private/Icons/ic_chevron_right (= 23.0.2)
-    - MaterialComponents/private/Icons/ic_info (= 23.0.2)
-    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 23.0.2)
-    - MaterialComponents/private/Icons/ic_reorder (= 23.0.2)
-  - MaterialComponents/private/Icons/Base (23.0.2)
-  - MaterialComponents/private/Icons/ic_arrow_back (23.0.2):
+  - MaterialComponents/PageControl (23.4.1)
+  - MaterialComponents/Palettes (23.4.1)
+  - MaterialComponents/private (23.4.1):
+    - MaterialComponents/private/Application (= 23.4.1)
+    - MaterialComponents/private/Icons (= 23.4.1)
+    - MaterialComponents/private/KeyboardWatcher (= 23.4.1)
+    - MaterialComponents/private/Math (= 23.4.1)
+    - MaterialComponents/private/Overlay (= 23.4.1)
+    - MaterialComponents/private/RTL (= 23.4.1)
+    - MaterialComponents/private/ThumbTrack (= 23.4.1)
+  - MaterialComponents/private/Application (23.4.1)
+  - MaterialComponents/private/Icons (23.4.1):
+    - MaterialComponents/private/Icons/Base (= 23.4.1)
+    - MaterialComponents/private/Icons/ic_arrow_back (= 23.4.1)
+    - MaterialComponents/private/Icons/ic_check (= 23.4.1)
+    - MaterialComponents/private/Icons/ic_check_circle (= 23.4.1)
+    - MaterialComponents/private/Icons/ic_chevron_right (= 23.4.1)
+    - MaterialComponents/private/Icons/ic_info (= 23.4.1)
+    - MaterialComponents/private/Icons/ic_radio_button_unchecked (= 23.4.1)
+    - MaterialComponents/private/Icons/ic_reorder (= 23.4.1)
+  - MaterialComponents/private/Icons/Base (23.4.1)
+  - MaterialComponents/private/Icons/ic_arrow_back (23.4.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check (23.0.2):
+  - MaterialComponents/private/Icons/ic_check (23.4.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_check_circle (23.0.2):
+  - MaterialComponents/private/Icons/ic_check_circle (23.4.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_chevron_right (23.0.2):
+  - MaterialComponents/private/Icons/ic_chevron_right (23.4.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_info (23.0.2):
+  - MaterialComponents/private/Icons/ic_info (23.4.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_radio_button_unchecked (23.0.2):
+  - MaterialComponents/private/Icons/ic_radio_button_unchecked (23.4.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/Icons/ic_reorder (23.0.2):
+  - MaterialComponents/private/Icons/ic_reorder (23.4.1):
     - MaterialComponents/private/Icons/Base
-  - MaterialComponents/private/KeyboardWatcher (23.0.2):
+  - MaterialComponents/private/KeyboardWatcher (23.4.1):
     - MaterialComponents/private/Application
-  - MaterialComponents/private/Math (23.0.2)
-  - MaterialComponents/private/Overlay (23.0.2)
-  - MaterialComponents/private/RTL (23.0.2)
-  - MaterialComponents/private/ThumbTrack (23.0.2):
+  - MaterialComponents/private/Math (23.4.1)
+  - MaterialComponents/private/Overlay (23.4.1)
+  - MaterialComponents/private/RTL (23.4.1)
+  - MaterialComponents/private/ThumbTrack (23.4.1):
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
-  - MaterialComponents/ProgressView (23.0.2):
+  - MaterialComponents/ProgressView (23.4.1):
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
-  - MaterialComponents/ShadowElevations (23.0.2)
-  - MaterialComponents/ShadowLayer (23.0.2)
-  - MaterialComponents/Slider (23.0.2):
+  - MaterialComponents/ShadowElevations (23.4.1)
+  - MaterialComponents/ShadowLayer (23.4.1)
+  - MaterialComponents/Slider (23.4.1):
     - MaterialComponents/private/ThumbTrack
-  - MaterialComponents/Snackbar (23.0.2):
+  - MaterialComponents/Snackbar (23.4.1):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Buttons
     - MaterialComponents/OverlayWindow
@@ -155,18 +164,19 @@ PODS:
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/Overlay
     - MaterialComponents/Typography
-  - MaterialComponents/Tabs (23.0.2):
+  - MaterialComponents/Tabs (23.4.1):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Ink
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/TextFields (23.0.2):
+  - MaterialComponents/TextFields (23.4.1):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/Typography (23.0.2):
+  - MaterialComponents/Themes (23.4.1)
+  - MaterialComponents/Typography (23.4.1):
     - MaterialComponents/private/Application
   - MDFTextAccessibility (1.2.0)
 
@@ -178,11 +188,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  CatalogByConvention: be55c2263132e4f9f59299ac8a528ee8715b3275
-  EarlGrey: 3dd4feebea192819c3af5e74f85fe5431b820de2
-  MaterialComponents: 3e6cdcb9a2779f130c0d98407b2c419af2b340b7
-  MaterialComponentsCatalog: 1e956249208e8ce3629e3c9e2f76f6e78631ecbc
-  MaterialComponentsUnitTests: 89f93baffdd3190a6746a403830f3982bcbb85f4
+  MaterialComponents: cf2eef93981ed2b1a200c27248b0315b64afb434
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322
