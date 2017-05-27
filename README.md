@@ -16,7 +16,7 @@ Material Components for iOS are written in Objective-C and support Swift and Int
 - [All Components](components/)
 - [Demo Apps](demos/)
 - [Contributing](contributing/)
-- [Discord Chat Channel](https://discord.gg/ndcSZ9v)
+- [Discord Chat Channel](https://discord.gg/v9qbxUT)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.io/guidelines) (external site)
