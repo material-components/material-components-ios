@@ -43,6 +43,8 @@ class TextFieldControllerTests: XCTestCase {
 
     controller.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertTrue(controller.mdc_adjustsFontForContentSizeCategory)
+
+    // The controller takes over listening for dynamic type size changes.
     XCTAssertFalse(textField.mdc_adjustsFontForContentSizeCategory)
   }
 

@@ -16,7 +16,6 @@
 
 import XCTest
 import MaterialComponents.MaterialTextFields
-import MaterialComponents.MaterialPalettes
 
 class TextInputTests: XCTestCase {
   func testTextFieldTextInputProtocolConformance() {
