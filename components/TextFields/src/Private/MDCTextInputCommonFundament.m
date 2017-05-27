@@ -202,9 +202,9 @@ static inline CGFloat MDCRound(CGFloat value) {
     copy.relativeSuperview = [self.relativeSuperview copy];
   }
   copy.text = [self.text copy];
-  copy.textColor = [self.textColor copy];
   copy.underlineColor = [self.underlineColor copy];
   copy.underlineHeight = self.underlineHeight;
+  copy.textColor = self.textColor;
   copy.underlineView = [self.underlineView copy];
 
   return copy;
