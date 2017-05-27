@@ -143,7 +143,7 @@ class TextInputTests: XCTestCase {
 
     controller.underlineMode = .never
     XCTAssertEqual(.lightGray, textField.underlineColor)
-    controller.characterMode = .always
+    controller.underlineMode = .always
     XCTAssertEqual(MDCPalette.indigo().tint500, textField.underlineColor)
   }
 
