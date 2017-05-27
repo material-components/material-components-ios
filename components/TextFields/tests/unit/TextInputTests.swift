@@ -29,6 +29,9 @@ class TextInputTests: XCTestCase {
     textField.clearButtonColor = .red
     XCTAssertEqual(textField.clearButtonColor, .red)
 
+    let font = UIFont.boldSystemFont(ofSize: 6)
+    textField.font = font
+    XCTAssertEqual(font, textField.font)
 
     let testLeading = "Helper Test"
     textField.leadingLabel.text = testLeading
