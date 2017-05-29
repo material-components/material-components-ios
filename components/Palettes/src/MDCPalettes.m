@@ -18,20 +18,22 @@
 #import "private/MDCPaletteExpansions.h"
 #import "private/MDCPaletteNames.h"
 
-const NSString *MDCPaletteTint50Name = MDC_PALETTE_TINT_50_INTERNAL_NAME;
-const NSString *MDCPaletteTint100Name = MDC_PALETTE_TINT_100_INTERNAL_NAME;
-const NSString *MDCPaletteTint200Name = MDC_PALETTE_TINT_200_INTERNAL_NAME;
-const NSString *MDCPaletteTint300Name = MDC_PALETTE_TINT_300_INTERNAL_NAME;
-const NSString *MDCPaletteTint400Name = MDC_PALETTE_TINT_400_INTERNAL_NAME;
-const NSString *MDCPaletteTint500Name = MDC_PALETTE_TINT_500_INTERNAL_NAME;
-const NSString *MDCPaletteTint600Name = MDC_PALETTE_TINT_600_INTERNAL_NAME;
-const NSString *MDCPaletteTint700Name = MDC_PALETTE_TINT_700_INTERNAL_NAME;
-const NSString *MDCPaletteTint800Name = MDC_PALETTE_TINT_800_INTERNAL_NAME;
-const NSString *MDCPaletteTint900Name = MDC_PALETTE_TINT_900_INTERNAL_NAME;
-const NSString *MDCPaletteAccent100Name = MDC_PALETTE_ACCENT_100_INTERNAL_NAME;
-const NSString *MDCPaletteAccent200Name = MDC_PALETTE_ACCENT_200_INTERNAL_NAME;
-const NSString *MDCPaletteAccent400Name = MDC_PALETTE_ACCENT_400_INTERNAL_NAME;
-const NSString *MDCPaletteAccent700Name = MDC_PALETTE_ACCENT_700_INTERNAL_NAME;
+
+const MDCPaletteTint MDCPaletteTint50Name = MDC_PALETTE_TINT_50_INTERNAL_NAME;
+const MDCPaletteTint MDCPaletteTint100Name = MDC_PALETTE_TINT_100_INTERNAL_NAME;
+const MDCPaletteTint MDCPaletteTint200Name = MDC_PALETTE_TINT_200_INTERNAL_NAME;
+const MDCPaletteTint MDCPaletteTint300Name = MDC_PALETTE_TINT_300_INTERNAL_NAME;
+const MDCPaletteTint MDCPaletteTint400Name = MDC_PALETTE_TINT_400_INTERNAL_NAME;
+const MDCPaletteTint MDCPaletteTint500Name = MDC_PALETTE_TINT_500_INTERNAL_NAME;
+const MDCPaletteTint MDCPaletteTint600Name = MDC_PALETTE_TINT_600_INTERNAL_NAME;
+const MDCPaletteTint MDCPaletteTint700Name = MDC_PALETTE_TINT_700_INTERNAL_NAME;
+const MDCPaletteTint MDCPaletteTint800Name = MDC_PALETTE_TINT_800_INTERNAL_NAME;
+const MDCPaletteTint MDCPaletteTint900Name = MDC_PALETTE_TINT_900_INTERNAL_NAME;
+
+const MDCPaletteAccent MDCPaletteAccent100Name = MDC_PALETTE_ACCENT_100_INTERNAL_NAME;
+const MDCPaletteAccent MDCPaletteAccent200Name = MDC_PALETTE_ACCENT_200_INTERNAL_NAME;
+const MDCPaletteAccent MDCPaletteAccent400Name = MDC_PALETTE_ACCENT_400_INTERNAL_NAME;
+const MDCPaletteAccent MDCPaletteAccent700Name = MDC_PALETTE_ACCENT_700_INTERNAL_NAME;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
@@ -42,8 +44,8 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 }
 
 @interface MDCPalette () {
-  NSDictionary<const NSString *, UIColor *> *_tints;
-  NSDictionary<const NSString *, UIColor *> *_accents;
+  NSDictionary<MDCPaletteTint, UIColor *> *_tints;
+  NSDictionary<MDCPaletteAccent, UIColor *> *_accents;
 }
 
 @end
@@ -538,43 +540,43 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   ];
 
   NSMutableDictionary *tints = [[NSMutableDictionary alloc] init];
-  for (NSString *name in tintNames) {
+  for (MDCPaletteTint name in tintNames) {
     [tints setObject:MDCPaletteTintFromTargetColor(target500Color, name) forKey:name];
   }
 
   NSArray *accentNames = @[
-    MDCPaletteAccent100Name, MDCPaletteAccent200Name, MDCPaletteAccent400Name,
-    MDCPaletteAccent700Name
+      MDCPaletteAccent100Name, MDCPaletteAccent200Name, MDCPaletteAccent400Name,
+      MDCPaletteAccent700Name
   ];
   NSMutableDictionary *accents = [[NSMutableDictionary alloc] init];
-  for (NSString *name in accentNames) {
+  for (MDCPaletteAccent name in accentNames) {
     [accents setObject:MDCPaletteAccentFromTargetColor(target500Color, name) forKey:name];
   }
 
   return [self paletteWithTints:tints accents:accents];
 }
 
-+ (instancetype)paletteWithTints:(NSDictionary<NSString *, UIColor *> *)tints
-                         accents:(NSDictionary<NSString *, UIColor *> *)accents {
++ (instancetype)paletteWithTints:(NSDictionary<MDCPaletteTint, UIColor *> *)tints
+                         accents:(NSDictionary<MDCPaletteAccent, UIColor *> *)accents {
   return [[self alloc] initWithTints:tints accents:accents];
 }
 
-- (instancetype)initWithTints:(NSDictionary<const NSString *, UIColor *> *)tints
-                      accents:(NSDictionary<const NSString *, UIColor *> *)accents {
+- (instancetype)initWithTints:(NSDictionary<MDCPaletteTint, UIColor *> *)tints
+                      accents:(NSDictionary<MDCPaletteAccent, UIColor *> *)accents {
   self = [super init];
   if (self) {
     _accents = accents ? [accents copy] : @{};
 
     // Check if all the accent colors are present.
-    NSDictionary<const NSString *, UIColor *> *allTints = tints;
-    NSMutableSet<const NSString *> *requiredTintKeys =
+    NSDictionary<MDCPaletteTint, UIColor *> *allTints = tints;
+    NSMutableSet<MDCPaletteAccent> *requiredTintKeys =
         [NSMutableSet setWithSet:[[self class] requiredTintKeys]];
     [requiredTintKeys minusSet:[NSSet setWithArray:[tints allKeys]]];
     if ([requiredTintKeys count] != 0) {
       NSAssert(NO, @"Missing accent colors for the following keys: %@.", requiredTintKeys);
-      NSMutableDictionary<const NSString *, UIColor *> *replacementTints =
+      NSMutableDictionary<MDCPaletteTint, UIColor *> *replacementTints =
           [NSMutableDictionary dictionaryWithDictionary:_accents];
-      for (NSString *tintKey in requiredTintKeys) {
+      for (MDCPaletteTint tintKey in requiredTintKeys) {
         [replacementTints setObject:[UIColor clearColor] forKey:tintKey];
       }
       allTints = replacementTints;
@@ -643,7 +645,7 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
 
 #pragma mark - Private methods
 
-+ (nonnull NSSet<const NSString *> *)requiredTintKeys {
++ (nonnull NSSet<MDCPaletteTint> *)requiredTintKeys {
   return [NSSet setWithArray:@[
     MDCPaletteTint50Name, MDCPaletteTint100Name, MDCPaletteTint200Name, MDCPaletteTint300Name,
     MDCPaletteTint400Name, MDCPaletteTint500Name, MDCPaletteTint600Name, MDCPaletteTint700Name,
