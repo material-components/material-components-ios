@@ -18,7 +18,6 @@
 #import "private/MDCPaletteExpansions.h"
 #import "private/MDCPaletteNames.h"
 
-
 const MDCPaletteTint MDCPaletteTint50Name = MDC_PALETTE_TINT_50_INTERNAL_NAME;
 const MDCPaletteTint MDCPaletteTint100Name = MDC_PALETTE_TINT_100_INTERNAL_NAME;
 const MDCPaletteTint MDCPaletteTint200Name = MDC_PALETTE_TINT_200_INTERNAL_NAME;
@@ -545,8 +544,8 @@ static inline UIColor *ColorFromRGB(uint32_t rgbValue) {
   }
 
   NSArray *accentNames = @[
-      MDCPaletteAccent100Name, MDCPaletteAccent200Name, MDCPaletteAccent400Name,
-      MDCPaletteAccent700Name
+    MDCPaletteAccent100Name, MDCPaletteAccent200Name, MDCPaletteAccent400Name,
+    MDCPaletteAccent700Name
   ];
   NSMutableDictionary *accents = [[NSMutableDictionary alloc] init];
   for (MDCPaletteAccent name in accentNames) {
