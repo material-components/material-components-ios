@@ -241,28 +241,29 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   textRect.size.width -= textContainerInset.left + textContainerInset.right;
 
   // Adjustments for .leftView, .rightView
-  CGFloat leftViewWidth = CGRectGetWidth([self leftViewRectForBounds:bounds]);
-  CGFloat rightViewWidth = CGRectGetWidth([self rightViewRectForBounds:bounds]);
+  // When in RTL mode, the .rightView is presented using the leftViewRectForBounds frame and the
+  // .leftView is presented using the rightViewRectForBounds frame.
+  // To keep things simple, we correct this so .leftView gets the value for leftViewRectForBounds
+  // and .rightView gets the value for rightViewRectForBounds.
+
+  CGFloat leftViewWidth = self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft ? CGRectGetWidth([self rightViewRectForBounds:bounds]) : CGRectGetWidth([self leftViewRectForBounds:bounds]);
+  CGFloat rightViewWidth = self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft ? CGRectGetWidth([self leftViewRectForBounds:bounds]) : CGRectGetWidth([self rightViewRectForBounds:bounds]);
+
   rightViewWidth += MDCTextInputTextRectRightViewClearPaddingCorrection;
 
   if (self.leftView.superview) {
+    textRect.origin.x += leftViewWidth;
     textRect.size.width -= leftViewWidth;
   }
+
   if (self.rightView.superview) {
     textRect.size.width -= rightViewWidth;
-  }
+    // If there is a rightView, the clearButton will not be shown.
+  } else {
+    CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
+    clearButtonWidth += MDCTextInputTextRectRightViewClearPaddingCorrection;
 
-  // Adjustments for RTL and clear button
-  // .leftView and .rightView actually are leading and trailing: their placement is reversed in RTL.
-  CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
-  clearButtonWidth += MDCTextInputTextRectRightViewClearPaddingCorrection;
-
-  if (self.leftView.superview) {
-    textRect.origin.x += leftViewWidth;
-  }
-  // If there is a rightView, the clearButton will not be shown.
-  if (!self.rightView.superview) {
-    // Clear buttons are only shown if there is entered or set text to clear.
+    // Clear buttons are only shown if there is entered text or programatically set text to clear.
     if (self.text.length > 0) {
       switch (self.clearButtonMode) {
         case UITextFieldViewModeAlways:
@@ -285,7 +286,10 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   actualY = textContainerInset.top - actualY;
   textRect.origin.y = actualY;
 
+  NSLog(@"1. TextRect LTR %@", NSStringFromCGRect(textRect));
+
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    // Now that the text field is laid out as if it were LTR, we can flip it if necessary.
     textRect = MDCRectFlippedForRTL(textRect, CGRectGetWidth(bounds),
                                     UIUserInterfaceLayoutDirectionRightToLeft);
   }
@@ -300,14 +304,16 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   // The textRect comes to us flipped for RTL (if RTL) so we flip it back before adjusting.
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds),
-                                       UIUserInterfaceLayoutDirectionLeftToRight);
+                                       UIUserInterfaceLayoutDirectionRightToLeft);
   }
-  // NSLog(@"TextRect %@ Editing LTR %@", NSStringFromCGRect([self textRectForBounds:bounds]),
-  // NSStringFromCGRect(editingRect));
+  NSLog(@"2. TextRect %@ Editing LTR %@", NSStringFromCGRect([self textRectForBounds:bounds]),
+  NSStringFromCGRect(editingRect));
 
   // UITextFields show EITHER the clear button or the rightView. If the rightView has a superview,
   // then it's being shown and the clear button isn't.
-  if (!self.rightView.superview) {
+  if (self.rightView.superview) {
+    editingRect.size.width += MDCTextInputEditingRectRightViewPaddingCorrection;
+  } else {
     if (self.text.length > 0) {
       CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
       clearButtonWidth += MDCTextInputClearButtonImageBuiltInPadding;
@@ -323,8 +329,6 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
           break;
       }
     }
-  } else {
-    editingRect.size.width += MDCTextInputEditingRectRightViewPaddingCorrection;
   }
 
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
@@ -338,7 +342,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
         [self.fundament.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
   }
 
-  // NSLog(@"Bounds %@ Editing %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
+  NSLog(@"3. Bounds %@ Editing %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
   return editingRect;
 }
 
