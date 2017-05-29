@@ -25,10 +25,11 @@
 NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
+// The image we use for the clear button has a little too much air around it. So we have to shrink
+// by this amount on each side.
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
-static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
-static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
+static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
 
 @interface MDCTextField ()
 
@@ -261,7 +262,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
     // If there is a rightView, the clearButton will not be shown.
   } else {
     CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
-    clearButtonWidth += MDCTextInputTextRectRightViewClearPaddingCorrection;
+    clearButtonWidth += 2 * MDCTextInputClearButtonImageBuiltInPadding;
 
     // Clear buttons are only shown if there is entered text or programatically set text to clear.
     if (self.text.length > 0) {
@@ -306,7 +307,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
     editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds),
                                        UIUserInterfaceLayoutDirectionRightToLeft);
   }
-  NSLog(@"2. TextRect %@ Editing LTR %@", NSStringFromCGRect([self textRectForBounds:bounds]),
+  NSLog(@"2. TextRect %@ TextRect LTR %@", NSStringFromCGRect([self textRectForBounds:bounds]),
   NSStringFromCGRect(editingRect));
 
   // UITextFields show EITHER the clear button or the rightView. If the rightView has a superview,
@@ -316,8 +317,12 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
   } else {
     if (self.text.length > 0) {
       CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
-      clearButtonWidth += MDCTextInputClearButtonImageBuiltInPadding;
-      clearButtonWidth += MDCTextInputEditingRectClearPaddingCorrection;
+
+      // The width is adjusted by the padding twice: once for the right side, once for left.
+      clearButtonWidth += 2 * MDCTextInputClearButtonImageBuiltInPadding;
+
+      // The clear button's width is already subtracted from the textRect.width if .always or
+      // .unlessEditing.
       switch (self.clearButtonMode) {
         case UITextFieldViewModeUnlessEditing:
           editingRect.size.width += clearButtonWidth;
@@ -336,13 +341,14 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
                                        UIUserInterfaceLayoutDirectionRightToLeft);
   }
 
+  NSLog(@"3. Editing LTR %@", NSStringFromCGRect(editingRect));
   if ([self.fundament.positioningDelegate
           respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
     editingRect =
         [self.fundament.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
+    NSLog(@"4. Bounds %@ Editing RTL %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
   }
 
-  NSLog(@"3. Bounds %@ Editing %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
   return editingRect;
 }
 
