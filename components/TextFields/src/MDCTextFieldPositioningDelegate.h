@@ -29,14 +29,14 @@
 /** 
  The actual input view and the rendered inputted text's position is determined by applying these insets to the bounds.
  
- defaultInsets is the value of text container insets that the MDCTextInput has calculated by default.
+ @param defaultInsets The value of text container insets that the MDCTextInput has calculated by default.
  */
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets;
 
 /**
  The area that inputted text should be displayed while isEditing = true.
  
- The defaultRect is the default value of the editing rect. It is usually the text rect shrunk or enlarged depending on rightView, leftView, or clearButton presences.
+ @param defaultRect The default value of the editing rect. It is usually the text rect shrunk or enlarged depending on rightView, leftView, or clearButton presences.
  */
 
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
