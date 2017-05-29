@@ -231,7 +231,7 @@ static const CGFloat MDCTextInputEditingRectClearPaddingCorrection = -8.f;
 #pragma mark - UITextField Overrides
 
 // This method doesn't have a positioning delegate mirror per se. But it uses the
-// textContainerInsets value the positioning delegate can return to inset this text rect.
+// textContainerInsets' value that the positioning delegate can return to inset this text rect.
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = bounds;
 

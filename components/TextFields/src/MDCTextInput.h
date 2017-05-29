@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- The Material Design guideslines have many suggestions for handling text input. The inputs that
+ The Material Design guidelines have many suggestions for handling text input. The inputs that
  conform to this protocol have all the API necessary to achieve those suggestions.
 
  They are, however, dumb; they do not handle error state nor validation.

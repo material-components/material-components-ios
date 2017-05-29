@@ -16,14 +16,29 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ MDCTextInputPositioningDelegate allows objects outside an MDCTextInput, like MDCTextInputController, to pass the MDCTextInput important layout information. 
+ 
+ Usually, these methods are direct mirrors of internal methods with the addition of a default value.
+ */
+
 @protocol MDCTextInputPositioningDelegate <NSObject>
 
 @optional
 
-// Used for MDCTextField and MDCTextView
+/** 
+ The actual input view and the rendered inputted text's position is determined by applying these insets to the bounds.
+ 
+ defaultInsets is the value of text container insets that the MDCTextInput has calculated by default.
+ */
 - (UIEdgeInsets)textContainerInset:(UIEdgeInsets)defaultInsets;
 
-// Used only for MDCTextField
+/**
+ The area that inputted text should be displayed while isEditing = true.
+ 
+ The defaultRect is the default value of the editing rect. It is usually the text rect shrunk or enlarged depending on rightView, leftView, or clearButton presences.
+ */
+
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 
 @end
