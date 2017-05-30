@@ -1156,9 +1156,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     }
     if (self.textInput.placeholder.length > 0) {
       valueString =
-          [NSString stringWithFormat:@"%@. %@.", valueString, self.textInput.placeholder.copy];
+          [NSString stringWithFormat:@"%@. %@", valueString, self.textInput.placeholder];
     }
-    valueString = [NSString stringWithFormat:@"%@.", valueString];
+    valueString  = [valueString stringByAppendingString:@"."];
 
     self.textInput.accessibilityValue = valueString;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = [NSString

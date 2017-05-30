@@ -197,8 +197,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   MDCTextInputCommonFundament *copy =
       [[MDCTextInputCommonFundament alloc] initWithTextInput:self.textInput];
 
-  copy.clearButtonColor = [self.clearButtonColor copy];
-  copy.clearButtonImage = [self.clearButtonImage copy];
+  copy.clearButtonColor = self.clearButtonColor;
+  copy.clearButtonImage = self.clearButtonImage;
   copy.clearButtonMode = self.clearButtonMode;
   copy.enabled = self.isEnabled;
   copy.hidesPlaceholderOnInput = self.hidesPlaceholderOnInput;
