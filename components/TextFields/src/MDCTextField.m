@@ -22,7 +22,7 @@
 #import "MaterialRTL.h"
 #import "MaterialTypography.h"
 
-NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
+static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 
 // The image we use for the clear button has a little too much air around it. So we have to shrink
