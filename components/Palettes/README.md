@@ -85,7 +85,7 @@ scheme.
 #### Swift
 
 ``` swift
-view.backgroundColor = MDCPalette.green().tint500;
+view.backgroundColor = MDCPalette.green.tint500;
 ```
 
 #### Objective-C
