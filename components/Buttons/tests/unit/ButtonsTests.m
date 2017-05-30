@@ -144,23 +144,6 @@ static UIColor *randomColor() {
   }
 }
 
-- (void)testResetElevationForState {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    // And given
-    CGFloat defaultValue = [button elevationForState:controlState];
-
-    // When
-    [button setElevation:randomNumberNotEqualTo(defaultValue) forState:controlState];
-    [button resetElevationForState:controlState];
-
-    // Then
-    XCTAssertEqual([button elevationForState:controlState], defaultValue);
-  }
-}
-
 - (void)testDefaultElevationsForState {
   // Given
   MDCButton *button = [[MDCButton alloc] init];

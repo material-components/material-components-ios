@@ -505,11 +505,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 }
 
-- (void)resetElevationForState:(UIControlState)state {
-  [_userElevations removeObjectForKey:@(state)];
-  [self shadowLayer].elevation = [self elevationForState:self.state];
-}
-
 #pragma mark - Private methods
 
 - (UIColor *)currentBackgroundColor {

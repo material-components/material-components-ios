@@ -123,13 +123,6 @@
  */
 - (void)setElevation:(CGFloat)elevation forState:(UIControlState)state;
 
-/**
- Resets the elevation for a particular control state back to the button's default behavior.
-
- @param state The control state to reset the elevation.
- */
-- (void)resetElevationForState:(UIControlState)state;
-
 /*
  Indicates whether the button should automatically update its font when the device’s
  UIContentSizeCategory is changed.
