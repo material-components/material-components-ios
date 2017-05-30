@@ -37,19 +37,19 @@
   switch (indexPath.item) {
     case 0: {
       MDCColorScheme *blueScheme = [[MDCColorScheme alloc] init];
-      blueScheme.primaryColor = [MDCPalette bluePalette].tint500;
+      blueScheme.primaryColor = MDCPalette.bluePalette.tint500;
       [MDCAlertColorThemer applyColorScheme:blueScheme];
       break;
     }
     case 1: {
       MDCColorScheme *redScheme = [[MDCColorScheme alloc] init];
-      redScheme.primaryColor = [MDCPalette redPalette].tint500;
+      redScheme.primaryColor = MDCPalette.redPalette.tint500;
       [MDCAlertColorThemer applyColorScheme:redScheme];
       break;
     }
     case 2: {
       MDCColorScheme *greenScheme = [[MDCColorScheme alloc] init];
-      greenScheme.primaryColor = [MDCPalette greenPalette].tint500;
+      greenScheme.primaryColor = MDCPalette.greenPalette.tint500;
       [MDCAlertColorThemer applyColorScheme:greenScheme];
       break;
     }
