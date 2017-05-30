@@ -1,4 +1,3 @@
-//
 /*
  Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
