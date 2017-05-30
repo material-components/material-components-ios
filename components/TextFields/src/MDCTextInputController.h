@@ -175,6 +175,10 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  @param errorAccessibilityValue Optional override of default underline text accessibility value.
                                 (Copied.)
 
+ This method is usually called from whatever object is the UITextFieldDelegate for the MDCTextField.
+ That object is responsible for validation of the text and calling this method if the error state
+ needs to change.
+
  When errorText != nil, the text input is in an error state:
  - The error text appears in the underline text with the errorColor as text color.
  - The input rectangle's underline, placeholder and character are colored to the errorColor.
