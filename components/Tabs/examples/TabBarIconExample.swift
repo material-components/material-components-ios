@@ -53,7 +53,7 @@ class TabBarIconSwiftExample: UIViewController {
                     UITabBarItem(title: "Stars", image: star, tag:0)]
     tabBar.items[1].badgeValue = "1"
 
-    let blue = MDCPalette.blue().tint500
+    let blue = MDCPalette.blue.tint500
     tabBar.tintColor = blue
     tabBar.inkColor = blue
 

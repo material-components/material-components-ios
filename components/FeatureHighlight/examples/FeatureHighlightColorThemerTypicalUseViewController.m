@@ -36,8 +36,8 @@ static NSString *const kBodyText =
     featureHighlightController.bodyText = kBodyText;
 
     MDCColorScheme *colorScheme = [[MDCColorScheme alloc] init];
-    colorScheme.primaryColor = [MDCPalette bluePalette].tint500;
-    colorScheme.primaryLightColor = [MDCPalette bluePalette].tint100;
+    colorScheme.primaryColor = MDCPalette.bluePalette.tint500;
+    colorScheme.primaryLightColor = MDCPalette.bluePalette.tint100;
 
     [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
                               toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
@@ -51,8 +51,8 @@ static NSString *const kBodyText =
     featureHighlightController.bodyText = kBodyText;
 
     MDCColorScheme *colorScheme = [[MDCColorScheme alloc] init];
-    colorScheme.primaryColor = [MDCPalette redPalette].tint500;
-    colorScheme.primaryLightColor = [MDCPalette redPalette].tint100;
+    colorScheme.primaryColor = MDCPalette.redPalette.tint500;
+    colorScheme.primaryLightColor = MDCPalette.redPalette.tint100;
 
     [MDCFeatureHighlightColorThemer applyColorScheme:colorScheme
                               toFeatureHighlightView:[MDCFeatureHighlightView appearance]];

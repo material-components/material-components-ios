@@ -28,23 +28,23 @@ class PaletteTests: XCTestCase {
   }
 
   func testBasics() {
-    let color = MDCPalette.red().tint50
+    let color = MDCPalette.red.tint50
     XCTAssertEqual(color, colorFromRGB(0xFFEBEE))
   }
 
   func testCaching() {
-    let first = MDCPalette.red()
-    let second = MDCPalette.red()
+    let first = MDCPalette.red
+    let second = MDCPalette.red
     XCTAssertTrue(first === second)
   }
 
   func testAccentlessPalette() {
-    let brownPalette = MDCPalette.brown()
+    let brownPalette = MDCPalette.brown
     XCTAssertNil(brownPalette.accent100)
   }
 
   func testGeneratedPalette() {
-    let palette = MDCPalette.init(generatedFrom: UIColor(red: 1, green: 0, blue: 0, alpha: 1))
+    let palette = MDCPalette(generatedFrom: UIColor(red: 1, green: 0, blue: 0, alpha: 1))
     XCTAssertNotNil(palette.tint50)
     XCTAssertNotNil(palette.tint100)
     XCTAssertNotNil(palette.tint200)
