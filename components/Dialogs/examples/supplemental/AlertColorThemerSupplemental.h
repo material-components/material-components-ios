@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,11 +14,19 @@
  limitations under the License.
  */
 
+/* IMPORTANT:
+ This file contains supplemental code used to populate the examples with dummy data and/or
+ instructions. It is not necessary to import this file to use Material Components for iOS.
+ */
+
 #import <UIKit/UIKit.h>
 
-@interface MDCFeatureHighlightView : UIView
+@import MaterialComponents.MaterialCollections;
 
-@property(nonatomic, strong) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;
-@property(nonatomic, strong) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;
+@interface AlertColorThemerTypicalUseViewController : MDCCollectionViewController
+
+@property(nonatomic, strong, nullable) NSArray *modes;
+
+- (void)loadCollectionView:(nullable NSArray *)modes;
 
 @end

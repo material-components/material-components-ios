@@ -1,4 +1,6 @@
 target 'Pesto' do
+  platform :ios, '8.0'
+  project 'Pesto.xcodeproj'
   pod 'MaterialComponents/AnimationTiming', :path => '../../'
   pod 'MaterialComponents/AppBar', :path => '../../'
   pod 'MaterialComponents/Collections', :path => '../../'
@@ -7,6 +9,5 @@ target 'Pesto' do
   pod 'MaterialComponents/ShadowElevations', :path => '../../'
   pod 'MaterialComponents/ShadowLayer', :path => '../../'
   pod 'MaterialComponents/Typography', :path => '../../'
-
 end
 
