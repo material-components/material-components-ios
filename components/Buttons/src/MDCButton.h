@@ -116,8 +116,6 @@
 /**
  Sets the elevation for a particular control state.
 
- Use resetElevationForState: to reset the button's behavior to the default for a particular state.
-
  @param elevation The elevation to set.
  @param state The state to set.
  */
