@@ -156,7 +156,7 @@ class TextFieldTests: XCTestCase {
     if let underline = textField.underline as? MDCTextInputUnderlineView {
       XCTAssertEqual(underline.color, .red)
       XCTAssertEqual(underline.color, textField.underlineColor)
-      
+
       XCTAssertEqual(underline.height, 10)
       XCTAssertEqual(underline.height, textField.underlineHeight)
     } else {

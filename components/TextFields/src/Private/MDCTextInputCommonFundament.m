@@ -462,12 +462,18 @@ static inline CGFloat MDCRound(CGFloat value) {
   }
 
   [self updatePlaceholderAlpha];
-  [self updatePlaceholderPosition];
+
+  if ([self needsUpdateConstraintsForPlaceholderToOverlayViewsPosition] ||
+      [self needsUpdateUnderlinePosition]) {
+    [self.textInput setNeedsUpdateConstraints];
+  }
+
   [self updateColors];
   [self updateClearButton];
 }
 
 - (void)updateConstraintsOfInput {
+  [self updateClearButtonConstraint];
   [self updatePlaceholderPosition];
   [self updateUnderlinePosition];
 }
@@ -482,12 +488,32 @@ static inline CGFloat MDCRound(CGFloat value) {
         [self drawnClearButtonImage:clearButtonSize color:self.clearButtonColor];
   }
 
-  if (self.clearButton.imageView.image != self.clearButtonImage) {
+  if (![self.clearButton imageForState:UIControlStateNormal]) {
     [self.clearButton setImage:self.clearButtonImage forState:UIControlStateNormal];
     [self.clearButton setImage:self.clearButtonImage forState:UIControlStateHighlighted];
     [self.clearButton setImage:self.clearButtonImage forState:UIControlStateSelected];
   }
 
+  CGFloat clearButtonAlpha = [self clearButtonAlpha];
+  self.clearButton.alpha = clearButtonAlpha;
+
+  if (self.clearButtonWidth.constant !=
+      MDCTextInputClearButtonImageSquareWidthHeight * clearButtonAlpha) {
+    [self.textInput setNeedsUpdateConstraints];
+  }
+
+  [self.clearButton.superview bringSubviewToFront:self.clearButton];
+}
+
+- (void)updateClearButtonConstraint {
+  CGFloat constant = MDCTextInputClearButtonImageSquareWidthHeight * [self clearButtonAlpha];
+  if (self.clearButtonWidth.constant != constant) {
+    self.clearButtonWidth.constant = constant;
+    [self.textInput invalidateIntrinsicContentSize];
+  }
+}
+
+- (CGFloat)clearButtonAlpha {
   CGFloat clearButtonAlpha = 0;
   if (self.text.length > 0) {
     switch (self.clearButtonMode) {
@@ -513,10 +539,8 @@ static inline CGFloat MDCRound(CGFloat value) {
       ((UITextField *)self.textInput).rightView.superview) {
     clearButtonAlpha = 0;
   }
-  self.clearButton.alpha = clearButtonAlpha;
-  self.clearButtonWidth.constant = MDCTextInputClearButtonImageSquareWidthHeight * clearButtonAlpha;
 
-  [self.clearButton.superview bringSubviewToFront:self.clearButton];
+  return clearButtonAlpha;
 }
 
 - (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
@@ -574,7 +598,7 @@ static inline CGFloat MDCRound(CGFloat value) {
   return self.underlineView;
 }
 
-- (void)updateUnderlinePosition {
+- (CGFloat)underlineYConstant {
   // Usually the underline is halfway between the text and the bottom of the view. But if there are
   // underline labels, we need to be above them.
 
@@ -586,10 +610,16 @@ static inline CGFloat MDCRound(CGFloat value) {
   underlineYConstant += underlineLabelsHeight;
   underlineYConstant *= -1;
 
-  if (self.underlineY.constant != underlineYConstant) {
-    self.underlineY.constant = underlineYConstant;
-    [self.textInput invalidateIntrinsicContentSize];
-  }
+  return underlineYConstant;
+}
+
+- (BOOL)needsUpdateUnderlinePosition {
+  return self.underlineY.constant != [self underlineYConstant];
+}
+
+- (void)updateUnderlinePosition {
+  self.underlineY.constant = [self underlineYConstant];
+  [self.textInput invalidateIntrinsicContentSize];
 }
 
 #pragma mark - Properties Implementation
@@ -726,6 +756,19 @@ static inline CGFloat MDCRound(CGFloat value) {
   }
 }
 
+- (BOOL)needsUpdateConstraintsForPlaceholderToOverlayViewsPosition {
+  if (![self.textInput isKindOfClass:[MDCTextField class]]) {
+    return NO;
+  }
+
+  MDCTextField *textField = (MDCTextField *)self.textInput;
+
+  return (textField.leftView.superview && !self.placeholderLeadingLeftViewTrailing) ||
+         (!textField.leftView.superview && self.placeholderLeadingLeftViewTrailing) ||
+         (textField.rightView.superview && !self.placeholderTrailingRightViewLeading) ||
+         (!textField.rightView.superview && self.placeholderTrailingRightViewLeading);
+}
+
 - (void)updatePlaceholderToOverlayViewsPosition {
   if (![self.textInput isKindOfClass:[MDCTextField class]]) {
     return;
@@ -761,6 +804,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   } else if (!textField.rightView.superview && self.placeholderTrailingRightViewLeading) {
     self.placeholderTrailingRightViewLeading = nil;
   }
+
+  [textField invalidateIntrinsicContentSize];
 }
 
 - (void)updatePlaceholderAlpha {

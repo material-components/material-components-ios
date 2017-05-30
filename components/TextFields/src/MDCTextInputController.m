@@ -358,7 +358,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   }
 
   self.textInput.leadingUnderlineLabel.textColor =
-      (self.isDisplayingErrorText || self.isDisplayingCharacterCountError) ? self.errorColor : MDCTextInputInlinePlaceholderTextColor();
+      (self.isDisplayingErrorText || self.isDisplayingCharacterCountError)
+          ? self.errorColor
+          : MDCTextInputInlinePlaceholderTextColor();
 }
 
 #pragma mark - Placeholder Customization

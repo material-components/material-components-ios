@@ -247,10 +247,14 @@ static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
   // To keep things simple, we correct this so .leftView gets the value for leftViewRectForBounds
   // and .rightView gets the value for rightViewRectForBounds.
 
-  CGFloat leftViewWidth = self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft ? CGRectGetWidth([self rightViewRectForBounds:bounds]) : CGRectGetWidth([self leftViewRectForBounds:bounds]);
-  CGFloat rightViewWidth = self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft ? CGRectGetWidth([self leftViewRectForBounds:bounds]) : CGRectGetWidth([self rightViewRectForBounds:bounds]);
-
-  rightViewWidth += MDCTextInputTextRectRightViewClearPaddingCorrection;
+  CGFloat leftViewWidth =
+      self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
+          ? CGRectGetWidth([self rightViewRectForBounds:bounds])
+          : CGRectGetWidth([self leftViewRectForBounds:bounds]);
+  CGFloat rightViewWidth =
+      self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
+          ? CGRectGetWidth([self leftViewRectForBounds:bounds])
+          : CGRectGetWidth([self rightViewRectForBounds:bounds]);
 
   if (self.leftView.superview) {
     textRect.origin.x += leftViewWidth;
