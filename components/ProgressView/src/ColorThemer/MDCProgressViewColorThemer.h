@@ -14,21 +14,22 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
-#import "MaterialDialogs.h"
 #import "MDCColorScheme.h"
+#import "MaterialProgressView.h"
 
 /**
- Used to apply a color scheme to theme to MDCAlertController alert dialogs.
+ Used to apply a color scheme to theme MDCProgressView.
  */
-@interface MDCAlertColorThemer : NSObject
+@interface MDCProgressViewColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to all MDCAlertController alert dialogs.
- 
- @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
+ Applies a color scheme to theme a MDCProgressView. Use a UIAppearance proxy to apply a color scheme
+ to all instances of MDCProgressView.
+
+ @param colorScheme The color scheme to apply to MDCProgressView.
+ @param progressView A MDCProgressView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+          toProgressView:(MDCProgressView *)progressView;
 
 @end

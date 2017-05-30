@@ -14,21 +14,14 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import "MDCNavigationBarColorThemer.h"
 
-#import "MaterialDialogs.h"
-#import "MDCColorScheme.h"
+@implementation MDCNavigationBarColorThemer
 
-/**
- Used to apply a color scheme to theme to MDCAlertController alert dialogs.
- */
-@interface MDCAlertColorThemer : NSObject
-
-/**
- Applies a color scheme to theme to all MDCAlertController alert dialogs.
- 
- @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
- */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+         toNavigationBar:(MDCNavigationBar *)navigationBar {
+  navigationBar.backgroundColor = colorScheme.primaryColor;
+  navigationBar.tintColor = colorScheme.primaryColor;
+}
 
 @end

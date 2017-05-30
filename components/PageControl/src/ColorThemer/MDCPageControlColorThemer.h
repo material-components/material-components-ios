@@ -14,21 +14,22 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
-#import "MaterialDialogs.h"
 #import "MDCColorScheme.h"
+#import "MaterialPageControl.h"
 
 /**
- Used to apply a color scheme to theme to MDCAlertController alert dialogs.
+ Used to apply a color scheme to theme MDCSlider.
  */
-@interface MDCAlertColorThemer : NSObject
+@interface MDCPageControlColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to all MDCAlertController alert dialogs.
- 
- @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
+ Applies a color scheme to theme a MDCPageControl. Use a UIAppearance proxy to apply a color scheme
+ to all instances of MDCPageControl.
+
+ @param colorScheme The color scheme to apply to MDCPageControl.
+ @param pageControl A MDCPageControl instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+           toPageControl:(MDCPageControl *)pageControl;
 
 @end

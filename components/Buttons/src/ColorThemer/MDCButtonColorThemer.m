@@ -14,21 +14,14 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import "MDCButtonColorThemer.h"
 
-#import "MaterialDialogs.h"
-#import "MDCColorScheme.h"
+@implementation MDCButtonColorThemer
 
-/**
- Used to apply a color scheme to theme to MDCAlertController alert dialogs.
- */
-@interface MDCAlertColorThemer : NSObject
-
-/**
- Applies a color scheme to theme to all MDCAlertController alert dialogs.
- 
- @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
- */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+                toButton:(MDCButton *)button {
+  [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [button setBackgroundColor:colorScheme.primaryLightColor forState:UIControlStateDisabled];
+}
 
 @end

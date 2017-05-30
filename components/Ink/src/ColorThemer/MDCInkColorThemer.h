@@ -14,21 +14,22 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
-#import "MaterialDialogs.h"
 #import "MDCColorScheme.h"
+#import "MaterialInk.h"
 
 /**
- Used to apply a color scheme to theme to MDCAlertController alert dialogs.
+ Used to apply a color scheme to theme MDCInkView.
  */
-@interface MDCAlertColorThemer : NSObject
+@interface MDCInkColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to all MDCAlertController alert dialogs.
- 
- @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
+ Applies a color scheme to theme a MDCInkView. Use a UIAppearance proxy to apply a color scheme to
+ all instances of MDCInkView.
+
+ @param colorScheme The color scheme to apply to MDCInkView.
+ @param inkView A MDCInkView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+               toInkView:(MDCInkView *)inkView;
 
 @end

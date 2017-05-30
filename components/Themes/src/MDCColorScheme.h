@@ -14,42 +14,92 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
 /**
  A color scheme comprised of set of primary and secondary colors. Material design guidelines
  recommend using primary and secondary colors with light and dark color variants.
  */
-@interface MDCColorScheme : NSObject
+@protocol MDCColorScheme
 
 /** The main, primary color used for a theme. */
-@property (nonatomic, strong) UIColor *primaryColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *primaryColor;
 
-/** 
+@optional
+
+/**
  A slightly lighter version of the primary color. Given tonal variations of a color, this color is
  typically two color swatches lighter than the primary color.
  */
-@property (nonatomic, strong) UIColor *primaryLightColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *primaryLightColor;
 
 /**
  A slightly darker version of the primary color. Given tonal variations of a color, this color is
  typically two color swatches darker than the primary color.
  */
-@property (nonatomic, strong) UIColor *primaryDarkColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *primaryDarkColor;
 
 /** The secondary, accent color used for a theme. */
-@property (nonatomic, strong) UIColor *secondaryColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *secondaryColor;
 
 /**
  A slightly lighter version of the secondary color. Given tonal variations of a color, this color is
  typically two color swatches lighter than the secondary color.
  */
-@property (nonatomic, strong) UIColor *secondaryLightColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *secondaryLightColor;
 
 /**
  A slightly darker version of the secondary color. Given tonal variations of a color, this color is
  typically two color swatches darker than the secondary color.
  */
-@property (nonatomic, strong) UIColor *secondaryDarkColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *secondaryDarkColor;
+
+@end
+
+/**
+ A basic color scheme comprised of set of primary and secondary colors with light and dark color
+ variants.
+ */
+@interface MDCBasicColorScheme : NSObject <MDCColorScheme>
+
+@property (nonatomic, strong, nonnull, readonly) UIColor *primaryColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *primaryLightColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *primaryDarkColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *secondaryColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *secondaryLightColor;
+@property (nonatomic, strong, nonnull, readonly) UIColor *secondaryDarkColor;
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+/**
+ Initializes and returns a color scheme given primary, primary light, primary dark, secondary,
+ secondary light and secondary dark colors.
+ */
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                           primaryLightColor:(nonnull UIColor *)primaryLightColor
+                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor
+                         secondaryLightColor:(nonnull UIColor *)secondaryLightColor
+                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor
+    NS_DESIGNATED_INITIALIZER;
+
+/**
+ Initializes and returns a color scheme given a primary color. Primary light and primary dark colors
+ are automatically generated. Secondary colors take on primary colors.
+ */
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor;
+
+/**
+ Initializes and returns a color scheme given primary, primary light and primary dark colors.
+ Secondary colors take on primary colors.
+ */
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                           primaryLightColor:(nonnull UIColor *)primaryLightColor
+                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor;
+
+/**
+ Initializes and returns a color scheme given primary and secondary colors. Light and dark colors
+ are automatically generated.
+ */
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor;
 
 @end

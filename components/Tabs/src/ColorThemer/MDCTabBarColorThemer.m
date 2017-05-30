@@ -14,21 +14,17 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import "MDCTabBarColorThemer.h"
 
-#import "MaterialDialogs.h"
-#import "MDCColorScheme.h"
+@implementation MDCTabBarColorThemer
 
-/**
- Used to apply a color scheme to theme to MDCAlertController alert dialogs.
- */
-@interface MDCAlertColorThemer : NSObject
-
-/**
- Applies a color scheme to theme to all MDCAlertController alert dialogs.
- 
- @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
- */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+                toTabBar:(MDCTabBar *)tabBar {
+  tabBar.tintColor = colorScheme.primaryColor;
+  tabBar.barTintColor = colorScheme.primaryColor;
+  tabBar.selectedItemTintColor = colorScheme.primaryDarkColor;
+  tabBar.unselectedItemTintColor = colorScheme.primaryLightColor;
+  tabBar.inkColor = colorScheme.primaryLightColor;
+}
 
 @end

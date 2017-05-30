@@ -31,7 +31,7 @@
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a color scheme. Use a
      UIAppearance proxy to apply a color scheme to all instances of MDCFeatureHighlightView.
  */
-+ (void)applyColorScheme:(MDCColorScheme *)colorScheme
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView;
 
 @end

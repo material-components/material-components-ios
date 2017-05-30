@@ -14,21 +14,22 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
-#import "MaterialDialogs.h"
 #import "MDCColorScheme.h"
+#import "MaterialButtonBar.h"
 
 /**
- Used to apply a color scheme to theme to MDCAlertController alert dialogs.
+ Used to apply a color scheme to theme MDCSlider.
  */
-@interface MDCAlertColorThemer : NSObject
+@interface MDCButtonBarColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to all MDCAlertController alert dialogs.
- 
- @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
+ Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
+ all instances of MDCButtonBar.
+
+ @param colorScheme The color scheme to apply to MDCButtonBar.
+ @param buttonBar A MDCButtonBar instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+             toButtonBar:(MDCButtonBar *)buttonBar;
 
 @end

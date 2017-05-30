@@ -14,14 +14,22 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import "MDCColorScheme.h"
+#import "MaterialNavigationBar.h"
 
-@interface FeatureHighlightColorThemerTypicalUseViewController : UIViewController
+/**
+ Used to apply a color scheme to theme MDCNavigationBar.
+ */
+@interface MDCNavigationBarColorThemer : NSObject
 
-@property(nonatomic) UIButton *blueButton;
-@property(nonatomic) UIButton *redButton;
-@property(nonatomic) UIButton *greenButton;
+/**
+ Applies a color scheme to theme a MDCNavigationBar. Use a UIAppearance proxy to apply a color
+ scheme to all instances of MDCNavigationBar.
 
-- (void)didTapButton:(id)sender;
+ @param colorScheme The color scheme to apply to MDCNavigationBar.
+ @param navigationBar A MDCNavigationBar instance to apply a color scheme.
+ */
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+         toNavigationBar:(MDCNavigationBar *)navigationBar;
 
 @end

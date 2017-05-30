@@ -14,21 +14,22 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-
-#import "MaterialDialogs.h"
 #import "MDCColorScheme.h"
+#import "MaterialHeaderStackView.h"
 
 /**
- Used to apply a color scheme to theme to MDCAlertController alert dialogs.
+ Used to apply a color scheme to theme MDCSlider.
  */
-@interface MDCAlertColorThemer : NSObject
+@interface MDCHeaderStackViewColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to all MDCAlertController alert dialogs.
- 
- @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
+ Applies a color scheme to theme a MDCHeaderStackView. Use a UIAppearance proxy to apply a color
+ scheme to all instances of MDCHeaderStackView.
+
+ @param colorScheme The color scheme to apply to MDCHeaderStackView.
+ @param headerStackView A MDCHeaderStackView instance to apply a color scheme.
  */
-+ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
++ (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+       toHeaderStackView:(MDCHeaderStackView *)headerStackView;
 
 @end
