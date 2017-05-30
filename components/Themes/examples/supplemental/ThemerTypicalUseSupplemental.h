@@ -24,6 +24,14 @@
 #import "MaterialAppBar.h"
 #import "MaterialThemes.h"
 
+#import "MDCActivityIndicatorColorThemer.h"
+#import "MDCAlertColorThemer.h"
+#import "MDCButtonColorThemer.h"
+#import "MDCFeatureHighlightColorThemer.h"
+#import "MDCFlexibleHeaderColorThemer.h"
+#import "MDCSliderColorThemer.h"
+#import "MDCProgressViewColorThemer.h"
+
 static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
 @interface ThemerTypicalUseViewController : UIViewController

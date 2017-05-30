@@ -14,8 +14,10 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
+#import <UIKit/UIKit.h>
+
 #import "MaterialFeatureHighlight.h"
+#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme to MDCFeatureHighlightView.
@@ -23,11 +25,11 @@
 @interface MDCFeatureHighlightColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to a MDCFeatureHighlightView. Use a UIAppearance proxy to apply a
- color scheme to all instances of MDCFeatureHighlightView.
-
- @param colorScheme The color scheme to apply to MDCFeatureHighlightView.
- @param featureHighlightView A MDCFeatureHighlightView instance to apply a color scheme.
+ Applies a color scheme to theme to a MDCFeatureHighlightView.
+ 
+ @param colorScheme The color scheme to apply to MDCFeatureHighlightView. 
+ @param featureHighlightView A MDCFeatureHighlightView instance to apply a color scheme. Use a
+     UIAppearance proxy to apply a color scheme to all instances of MDCFeatureHighlightView.
  */
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
     toFeatureHighlightView:(MDCFeatureHighlightView *)featureHighlightView;

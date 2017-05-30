@@ -14,8 +14,10 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
+#import <UIKit/UIKit.h>
+
 #import "MaterialDialogs.h"
+#import "MDCColorScheme.h"
 
 /**
  Used to apply a color scheme to theme to MDCAlertController alert dialogs.
@@ -24,7 +26,7 @@
 
 /**
  Applies a color scheme to theme to all MDCAlertController alert dialogs.
-
+ 
  @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
  */
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme;
