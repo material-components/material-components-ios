@@ -460,14 +460,11 @@ static inline CGFloat MDCRound(CGFloat value) {
   if (!_textInput) {
     return;
   }
+  [_underline addObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyColor options:0 context:nil];
   [_underline addObserver:self
-                                     forKeyPath:MDCTextInputUnderlineKVOKeyColor
-                                        options:0
-                                        context:nil];
-  [_underline addObserver:self
-                                forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight
-                                   options:0
-                                   context:nil];
+               forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight
+                  options:0
+                  context:nil];
   _isRegisteredForKVO = YES;
 }
 
@@ -476,10 +473,8 @@ static inline CGFloat MDCRound(CGFloat value) {
     return;
   }
   @try {
-    [self.underline removeObserver:self
-                                              forKeyPath:MDCTextInputUnderlineKVOKeyColor];
-    [self.underline removeObserver:self
-                                         forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight];
+    [self.underline removeObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyColor];
+    [self.underline removeObserver:self forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight];
   } @catch (NSException *exception) {
   }
   _isRegisteredForKVO = NO;
