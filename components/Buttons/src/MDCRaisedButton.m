@@ -24,6 +24,9 @@
 #pragma mark - Subclassing
 
 - (CGFloat)defaultElevationForState:(UIControlState)state {
+  if (state & UIControlStateDisabled) {
+    return MDCShadowElevationNone;
+  }
   return (((state & UIControlStateSelected) == UIControlStateSelected)
               ? MDCShadowElevationRaisedButtonPressed
               : MDCShadowElevationRaisedButtonResting);

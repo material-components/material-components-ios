@@ -336,6 +336,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated {
   [super setEnabled:enabled];
   [self updateBackgroundColor];
+  [self animateButtonToHeightForState:self.state];
 }
 
 #pragma mark - Title Uppercasing
