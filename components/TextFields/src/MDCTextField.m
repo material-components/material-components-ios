@@ -29,7 +29,6 @@ NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSe
 // by this amount on each side.
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
-static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
 
 @interface MDCTextField ()
 
@@ -291,8 +290,6 @@ static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
   actualY = textContainerInset.top - actualY;
   textRect.origin.y = actualY;
 
-  NSLog(@"1. TextRect LTR %@", NSStringFromCGRect(textRect));
-
   if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     // Now that the text field is laid out as if it were LTR, we can flip it if necessary.
     textRect = MDCRectFlippedForRTL(textRect, CGRectGetWidth(bounds),
@@ -311,8 +308,6 @@ static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
     editingRect = MDCRectFlippedForRTL(editingRect, CGRectGetWidth(bounds),
                                        UIUserInterfaceLayoutDirectionRightToLeft);
   }
-  NSLog(@"2. TextRect %@ TextRect LTR %@", NSStringFromCGRect([self textRectForBounds:bounds]),
-  NSStringFromCGRect(editingRect));
 
   // UITextFields show EITHER the clear button or the rightView. If the rightView has a superview,
   // then it's being shown and the clear button isn't.
@@ -345,12 +340,10 @@ static const CGFloat MDCTextInputTextRectRightViewClearPaddingCorrection = -4.f;
                                        UIUserInterfaceLayoutDirectionRightToLeft);
   }
 
-  NSLog(@"3. Editing LTR %@", NSStringFromCGRect(editingRect));
   if ([self.fundament.positioningDelegate
           respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
     editingRect =
         [self.fundament.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
-    NSLog(@"4. Bounds %@ Editing RTL %@", NSStringFromCGRect(bounds), NSStringFromCGRect(editingRect));
   }
 
   return editingRect;
