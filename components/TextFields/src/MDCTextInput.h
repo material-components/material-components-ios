@@ -70,7 +70,7 @@
 @property(nonatomic, assign) UITextFieldViewMode clearButtonMode;
 
 /** A Boolean value indicating whether the text field is currently in edit mode. */
-@property(nonatomic, readonly, getter=isEditing) BOOL editing;
+@property(nonatomic, assign, readonly, getter=isEditing) BOOL editing;
 
 /** The font of the text in the input. */
 @property(nonatomic, nullable, strong) UIFont *font;

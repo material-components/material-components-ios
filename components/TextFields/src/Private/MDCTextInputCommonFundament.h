@@ -27,13 +27,13 @@ extern const CGFloat MDCTextInputHalfPadding;
 @property(nonatomic, nullable, strong) UIColor *cursorColor;
 
 /** Whether the text field is enabled. */
-@property(nonatomic, getter=isEnabled) BOOL enabled;
+@property(nonatomic, assign, getter=isEnabled) BOOL enabled;
 
 /** The color of the input's text. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
 /** Inset set on the text container based upon the text input's style. */
-@property(nonatomic, readonly) UIEdgeInsets textContainerInset;
+@property(nonatomic, assign, readonly) UIEdgeInsets textContainerInset;
 
 /** Designated initializer with the controlled text input. */
 - (nonnull instancetype)initWithTextInput:(UIView<MDCTextInput> *_Nonnull)textInput

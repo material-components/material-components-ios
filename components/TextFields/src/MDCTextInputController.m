@@ -98,9 +98,9 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) MDCTextInputAllCharactersCounter *internalCharacterCounter;
-@property(nonatomic, readonly) BOOL isDisplayingCharacterCountError;
-@property(nonatomic, readonly) BOOL isDisplayingErrorText;
-@property(nonatomic, readonly) BOOL isPlaceholderUp;
+@property(nonatomic, assign, readonly) BOOL isDisplayingCharacterCountError;
+@property(nonatomic, assign, readonly) BOOL isDisplayingErrorText;
+@property(nonatomic, assign, readonly) BOOL isPlaceholderUp;
 @property(nonatomic, assign) BOOL isRegisteredForKVO;
 @property(nonatomic, strong) NSArray<NSLayoutConstraint *> *placeholderAnimationConstraints;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;

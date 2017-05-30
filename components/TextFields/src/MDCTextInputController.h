@@ -137,7 +137,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default value is NO.
  */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+@property(nonatomic, assign, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /** The behavioral style applied to the text input. */

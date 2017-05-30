@@ -28,6 +28,6 @@ extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 @interface MDCTextField : UITextField <MDCTextInput>
 
 /** MDCTextField does not implement borders that conform to UITextBorderStyle. */
-@property(nonatomic) UITextBorderStyle borderStyle NS_UNAVAILABLE;
+@property(nonatomic, assign) UITextBorderStyle borderStyle NS_UNAVAILABLE;
 
 @end
