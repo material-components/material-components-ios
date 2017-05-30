@@ -16,47 +16,53 @@
 
 #import <UIKit/UIKit.h>
 
+/** Tint color name. */
+typedef NSString *MDCPaletteTint NS_EXTENSIBLE_STRING_ENUM;
+
 /** The name of the tint 50 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint50Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint50Name;
 
 /** The name of the tint 100 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint100Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint100Name;
 
 /** The name of the tint 200 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint200Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint200Name;
 
 /** The name of the tint 300 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint300Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint300Name;
 
 /** The name of the tint 400 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint400Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint400Name;
 
 /** The name of the tint 500 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint500Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint500Name;
 
 /** The name of the tint 600 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint600Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint600Name;
 
 /** The name of the tint 700 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint700Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint700Name;
 
 /** The name of the tint 800 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint800Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint800Name;
 
 /** The name of the tint 900 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteTint900Name;
+CG_EXTERN const MDCPaletteTint _Nonnull MDCPaletteTint900Name;
+
+/** Accent color name. */
+typedef NSString *MDCPaletteAccent NS_EXTENSIBLE_STRING_ENUM;
 
 /** The name of the accent 100 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteAccent100Name;
+CG_EXTERN const MDCPaletteAccent _Nonnull MDCPaletteAccent100Name;
 
 /** The name of the accent 200 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteAccent200Name;
+CG_EXTERN const MDCPaletteAccent _Nonnull MDCPaletteAccent200Name;
 
 /** The name of the accent 400 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteAccent400Name;
+CG_EXTERN const MDCPaletteAccent _Nonnull MDCPaletteAccent400Name;
 
 /** The name of the accent 700 color when creating a custom palette. */
-CG_EXTERN const NSString *_Nonnull MDCPaletteAccent700Name;
+CG_EXTERN const MDCPaletteAccent _Nonnull MDCPaletteAccent700Name;
 
 /**
  A palette of Material colors.
@@ -211,9 +217,9 @@ CG_EXTERN const NSString *_Nonnull MDCPaletteAccent700Name;
  @param accents An optional dictionary mapping MDCPaletteAccent.*Name keys to UIColors.
  @return An palette containing the custom colors.
  */
-+ (nonnull instancetype)paletteWithTints:(nonnull NSDictionary<const NSString *, UIColor *> *)tints
++ (nonnull instancetype)paletteWithTints:(nonnull NSDictionary<MDCPaletteTint, UIColor *> *)tints
                                  accents:
-                                     (nullable NSDictionary<const NSString *, UIColor *> *)accents;
+                                     (nullable NSDictionary<MDCPaletteAccent, UIColor *> *)accents;
 
 /**
  Returns an initialized palette object with a custom set of tints and accents.
@@ -227,8 +233,8 @@ CG_EXTERN const NSString *_Nonnull MDCPaletteAccent700Name;
  @param accents An optional dictionary mapping MDCPaletteAccent.*Name keys to UIColors.
  @return An initialized MDCPalette object containing the custom colors.
  */
-- (nonnull instancetype)initWithTints:(nonnull NSDictionary<const NSString *, UIColor *> *)tints
-                              accents:(nullable NSDictionary<const NSString *, UIColor *> *)accents;
+- (nonnull instancetype)initWithTints:(nonnull NSDictionary<MDCPaletteTint, UIColor *> *)tints
+                              accents:(nullable NSDictionary<MDCPaletteAccent, UIColor *> *)accents;
 
 /** The 50 tint color, the lightest tint of the palette. */
 @property(nonatomic, nonnull, readonly) UIColor *tint50;
