@@ -26,26 +26,26 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-NSString *const MDCTextInputCoordinatorCharacterRelativeSuperviewKey =
+static NSString *const MDCTextInputCoordinatorCharacterRelativeSuperviewKey =
     @"MDCTextInputCoordinatorCharacterRelativeSuperviewKey";
-NSString *const MDCTextInputCoordinatorClearButtonKey = @"MDCTextInputCoordinatorClearButtonKey";
-NSString *const MDCTextInputCoordinatorClearButtonColorKey =
+static NSString *const MDCTextInputCoordinatorClearButtonKey = @"MDCTextInputCoordinatorClearButtonKey";
+static NSString *const MDCTextInputCoordinatorClearButtonColorKey =
     @"MDCTextInputCoordinatorClearButtonColorKey";
-NSString *const MDCTextInputCoordinatorClearButtonImageKey =
+static NSString *const MDCTextInputCoordinatorClearButtonImageKey =
     @"MDCTextInputCoordinatorClearButtonImageKey";
-NSString *const MDCTextInputCoordinatorHidesPlaceholderKey =
+static NSString *const MDCTextInputCoordinatorHidesPlaceholderKey =
     @"MDCTextInputCoordinatorHidesPlaceholderKey";
-NSString *const MDCTextInputCoordinatorInputKey = @"MDCTextInputCoordinatorInputKey";
-NSString *const MDCTextInputCoordinatorLeadingLabelKey = @"MDCTextInputCoordinatorLeadingLabelKey";
-NSString *const MDCTextInputCoordinatorMDCAdjustsFontsKey =
+static NSString *const MDCTextInputCoordinatorInputKey = @"MDCTextInputCoordinatorInputKey";
+static NSString *const MDCTextInputCoordinatorLeadingLabelKey = @"MDCTextInputCoordinatorLeadingLabelKey";
+static NSString *const MDCTextInputCoordinatorMDCAdjustsFontsKey =
     @"MDCTextInputCoordinatorMDCAdjustsFontsKey";
-NSString *const MDCTextInputPositioningDelegateKey = @"MDCTextInputPositioningDelegateKey";
-NSString *const MDCTextInputCoordinatorPlaceholderLabelKey =
+static NSString *const MDCTextInputPositioningDelegateKey = @"MDCTextInputPositioningDelegateKey";
+static NSString *const MDCTextInputCoordinatorPlaceholderLabelKey =
     @"MDCTextInputCoordinatorPlaceholderLabelKey";
-NSString *const MDCTextInputCoordinatorTextColorKey = @"MDCTextInputCoordinatorTextColorKey";
-NSString *const MDCTextInputCoordinatorTrailingLabelKey =
+static NSString *const MDCTextInputCoordinatorTextColorKey = @"MDCTextInputCoordinatorTextColorKey";
+static NSString *const MDCTextInputCoordinatorTrailingLabelKey =
     @"MDCTextInputCoordinatorTrailingLabelKey";
-NSString *const MDCTextInputCoordinatorUnderlineViewKey =
+static NSString *const MDCTextInputCoordinatorUnderlineViewKey =
     @"MDCTextInputCoordinatorUnderlineViewKey";
 
 static NSString *const MDCTextInputUnderlineKVOKeyColor = @"color";
