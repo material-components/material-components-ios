@@ -65,14 +65,6 @@ as well as new features:
 * Custom layouts
 * Persistable placeholder
 
-#### Text View
-
-The text view has all the same features of the text field (except associate views and clear button) but also adds behavior already found in UITextView:
-
-* Multiline input
-* Clickable URLs
-* Scrollable text
-
 #### Text Input Controller
 
 This class holds all the 'magic' logic necessary to make the naturally 'dumb' text field and text view behave with:
@@ -177,37 +169,5 @@ textFieldFloating.clearButtonMode = UITextFieldViewModeUnlessEditing;
 MDCTextInputController *textFieldControllerFloating = [[MDCTextInputController alloc] initWithTextInput:textFieldFloating];
 
 textFieldControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
-~~~
-<!--</div>-->
-
-### Text View (Multiline) with Floating Placeholder
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-~~~ swift
-let textViewFloating = MDCTextView()
-scrollView.addSubview(textViewFloating)
-
-textViewFloating = "Full Name"
-textViewFloating = self
-
-let textViewControllerFloating = MDCTextInputController(input: textViewFloating)
-
-textViewControllerFloating.presentation = .floatingPlaceholder
-~~~
-
-#### Objective-C
-
-~~~ objc
-MDCTextView *textViewFloating = [[MDCTextView alloc] init];
-[self.scrollView addSubview:textViewFloating];
-
-textViewFloating.placeholder = @"Full Name";
-textViewFloating.delegate = self;
-
-MDCTextInputController *textViewControllerFloating = [[MDCTextInputController alloc] initWithTextInput:textViewFloating];
-
-textViewControllerFloating.presentationStyle = MDCTextInputPresentationStyleFloatingPlaceholder;
 ~~~
 <!--</div>-->
