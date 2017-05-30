@@ -517,6 +517,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 }
 
 - (NSString *)characterCountText {
+  // TODO: (larche) Localize
   return [NSString stringWithFormat:@"%lu / %lu", (unsigned long)[self characterCount],
                                     (unsigned long)self.characterCountMax];
 }
@@ -1139,6 +1140,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
   [self updateLayout];
 
   // Accessibility
+  // TODO: (larche) Localize
   if (errorText) {
     NSString *announcementString = errorAccessibilityValue;
     if (!announcementString.length) {
