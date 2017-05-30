@@ -48,6 +48,9 @@ NSString *const MDCTextInputCoordinatorTrailingLabelKey =
 NSString *const MDCTextInputCoordinatorUnderlineViewKey =
     @"MDCTextInputCoordinatorUnderlineViewKey";
 
+static NSString *const MDCTextInputUnderlineKVOKeyColor = @"color";
+static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
+
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2.5f;
 static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24.f;
 static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
@@ -85,6 +88,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 @property(nonatomic, strong) UIImage *clearButtonImage;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
+@property(nonatomic, assign) BOOL isRegisteredForKVO;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderHeight;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeftViewTrailing;
@@ -136,6 +140,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 
     [self updateColors];
     [self mdc_setAdjustsFontForContentSizeCategory:NO];
+
+    [self subscribeForKVO];
   }
   return self;
 }
@@ -163,6 +169,8 @@ static inline CGFloat MDCRound(CGFloat value) {
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTrailingLabelKey];
     _underline = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorUnderlineViewKey];
+
+    [self subscribeForKVO];
   }
   return self;
 }
@@ -208,8 +216,8 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (void)dealloc {
-  NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter removeObserver:self];
+  [self unsubscribeFromNotifications];
+  [self unsubscribeFromKVO];
 }
 
 - (void)commonMDCTextInputCommonFundamentInit {
@@ -443,6 +451,40 @@ static inline CGFloat MDCRound(CGFloat value) {
   _underlineY.active = YES;
 }
 
+- (void)unsubscribeFromNotifications {
+  NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+  [defaultCenter removeObserver:self];
+}
+
+- (void)subscribeForKVO {
+  if (!_textInput) {
+    return;
+  }
+  [_underline addObserver:self
+                                     forKeyPath:MDCTextInputUnderlineKVOKeyColor
+                                        options:0
+                                        context:nil];
+  [_underline addObserver:self
+                                forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight
+                                   options:0
+                                   context:nil];
+  _isRegisteredForKVO = YES;
+}
+
+- (void)unsubscribeFromKVO {
+  if (!self.textInput || !self.isRegisteredForKVO) {
+    return;
+  }
+  @try {
+    [self.underline removeObserver:self
+                                              forKeyPath:MDCTextInputUnderlineKVOKeyColor];
+    [self.underline removeObserver:self
+                                         forKeyPath:MDCTextInputUnderlineKVOKeyLineHeight];
+  } @catch (NSException *exception) {
+  }
+  _isRegisteredForKVO = NO;
+}
+
 #pragma mark - Mirrored Layout Methods
 
 - (void)layoutSubviewsOfInput {
@@ -569,23 +611,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 #pragma mark - Underline View Implementation
-
-//- (void)setUnderlineColor:(UIColor *)underlineColor {
-//  if (!underlineColor) {
-//    underlineColor = MDCTextInputUnderlineColor();
-//  }
-//
-//  if (_underlineColor != underlineColor) {
-//    _underlineColor = underlineColor;
-//    [self updateColors];
-//  }
-//}
-
-
-//- (void)setUnderlineHeight:(CGFloat)underlineHeight {
-//  self.underlineView.lineHeight = underlineHeight;
-//  [self.textInput setNeedsUpdateConstraints];
-//}
 
 - (CGFloat)underlineYConstant {
   // Usually the underline is halfway between the text and the bottom of the view. But if there are
@@ -867,6 +892,29 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)didSetText {
   [self didChange];
   [self.textInput setNeedsLayout];
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(void *)context {
+  // Listening to outside setting of underline properties.
+  if (object != self.underline) {
+    return;
+  }
+
+  if ([keyPath isEqualToString:MDCTextInputUnderlineKVOKeyColor]) {
+    if (!self.underline.color) {
+      self.underline.color = MDCTextInputUnderlineColor();
+    }
+    [self updateColors];
+  } else if ([keyPath isEqualToString:MDCTextInputUnderlineKVOKeyLineHeight]) {
+    [self.textInput setNeedsUpdateConstraints];
+  } else {
+    return;
+  }
 }
 
 #pragma mark - Accessibility
