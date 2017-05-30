@@ -23,6 +23,7 @@
 #import "MDCTextInputUnderlineView.h"
 
 #import "MaterialAnimationTiming.h"
+#import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
@@ -72,14 +73,6 @@ static inline UIColor *MDCTextInputTextColor() {
 
 static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
-}
-
-static inline CGFloat MDCRound(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return rint(value);
-#else
-  return rintf(value);
-#endif
 }
 
 @interface MDCTextInputCommonFundament () {
@@ -614,8 +607,8 @@ static inline CGFloat MDCRound(CGFloat value) {
   CGFloat underlineYConstant = MDCTextInputHalfPadding;
 
   CGFloat underlineLabelsHeight =
-      MAX(MDCRound(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
-          MDCRound(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
+      MAX(MDCRint(CGRectGetHeight(self.leadingUnderlineLabel.bounds)),
+          MDCRint(CGRectGetHeight(self.trailingUnderlineLabel.bounds)));
   underlineYConstant += underlineLabelsHeight;
   underlineYConstant *= -1;
 

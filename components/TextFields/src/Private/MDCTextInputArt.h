@@ -16,13 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-static inline CGFloat MDCFloor(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return floor(value);
-#else
-  return floorf(value);
-#endif
-}
+#import "MaterialMath.h"
 
 #pragma mark - Drawing
 
