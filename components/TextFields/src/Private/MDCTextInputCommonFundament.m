@@ -93,7 +93,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 @property(nonatomic, strong) NSLayoutConstraint *placeholderTrailingRightViewLeading;
 @property(nonatomic, strong) UIView *relativeSuperview;
 @property(nonatomic, weak) UIView<MDCTextInput> *textInput;
-@property(nonatomic, strong) MDCTextInputUnderlineView *underlineView;
 @property(nonatomic, strong) NSLayoutConstraint *underlineY;
 
 @end
@@ -112,8 +111,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 @synthesize positioningDelegate = _positioningDelegate;
 @synthesize textColor = _textColor;
 @synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
-@synthesize underlineColor = _underlineColor;
-@synthesize underlineView = _underlineView;
+@synthesize underline = _underline;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
@@ -164,7 +162,7 @@ static inline CGFloat MDCRound(CGFloat value) {
         [aDecoder decodeObjectForKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
     _textColor = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
     _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTrailingLabelKey];
-    _underlineView = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorUnderlineViewKey];
+    _underline = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorUnderlineViewKey];
   }
   return self;
 }
@@ -184,7 +182,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                 forKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
   [aCoder encodeObject:self.textColor forKey:MDCTextInputCoordinatorTextColorKey];
   [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputCoordinatorTrailingLabelKey];
-  [aCoder encodeObject:self.underlineView forKey:MDCTextInputCoordinatorUnderlineViewKey];
+  [aCoder encodeObject:self.underline forKey:MDCTextInputCoordinatorUnderlineViewKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
@@ -202,10 +200,9 @@ static inline CGFloat MDCRound(CGFloat value) {
     copy.relativeSuperview = [self.relativeSuperview copy];
   }
   copy.text = [self.text copy];
-  copy.underlineColor = [self.underlineColor copy];
-  copy.underlineHeight = self.underlineHeight;
   copy.textColor = self.textColor;
-  copy.underlineView = [self.underlineView copy];
+  copy.underline.lineHeight = self.underline.lineHeight;
+  copy.underline.color = self.underline.color;
 
   return copy;
 }
@@ -218,7 +215,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)commonMDCTextInputCommonFundamentInit {
   _cursorColor = MDCTextInputCursorColor();
   _textColor = MDCTextInputTextColor();
-  _underlineColor = MDCTextInputUnderlineColor();
 }
 
 // UITextViews are subclasses of UIScrollView and that complicates autolayout. This container is
@@ -275,7 +271,7 @@ static inline CGFloat MDCRound(CGFloat value) {
       constraintWithItem:_clearButton
                attribute:NSLayoutAttributeBottom
                relatedBy:NSLayoutRelationEqual
-                  toItem:_underlineView
+                  toItem:_underline
                attribute:NSLayoutAttributeTop
               multiplier:1
                 constant:-1 * MDCTextInputHalfPadding + MDCTextInputClearButtonImageBuiltInPadding];
@@ -413,14 +409,14 @@ static inline CGFloat MDCRound(CGFloat value) {
 }
 
 - (void)setupUnderlineView {
-  _underlineView = [[MDCTextInputUnderlineView alloc] initWithFrame:CGRectZero];
-  _underlineView.color = self.underlineColor;
-  _underlineView.translatesAutoresizingMaskIntoConstraints = NO;
+  _underline = [[MDCTextInputUnderlineView alloc] initWithFrame:CGRectZero];
+  _underline.color = MDCTextInputUnderlineColor();
+  _underline.translatesAutoresizingMaskIntoConstraints = NO;
 
-  [self.textInput addSubview:_underlineView];
-  [self.textInput sendSubviewToBack:_underlineView];
+  [self.textInput addSubview:_underline];
+  [self.textInput sendSubviewToBack:_underline];
 
-  [NSLayoutConstraint constraintWithItem:_underlineView
+  [NSLayoutConstraint constraintWithItem:_underline
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:_relativeSuperview
@@ -428,7 +424,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                               multiplier:1
                                 constant:0]
       .active = YES;
-  [NSLayoutConstraint constraintWithItem:_underlineView
+  [NSLayoutConstraint constraintWithItem:_underline
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
                                   toItem:_relativeSuperview
@@ -436,7 +432,7 @@ static inline CGFloat MDCRound(CGFloat value) {
                               multiplier:1
                                 constant:0]
       .active = YES;
-  _underlineY = [NSLayoutConstraint constraintWithItem:_underlineView
+  _underlineY = [NSLayoutConstraint constraintWithItem:_underline
                                              attribute:NSLayoutAttributeCenterY
                                              relatedBy:NSLayoutRelationEqual
                                                 toItem:_relativeSuperview
@@ -574,29 +570,22 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 #pragma mark - Underline View Implementation
 
-- (void)setUnderlineColor:(UIColor *)underlineColor {
-  if (!underlineColor) {
-    underlineColor = MDCTextInputUnderlineColor();
-  }
+//- (void)setUnderlineColor:(UIColor *)underlineColor {
+//  if (!underlineColor) {
+//    underlineColor = MDCTextInputUnderlineColor();
+//  }
+//
+//  if (_underlineColor != underlineColor) {
+//    _underlineColor = underlineColor;
+//    [self updateColors];
+//  }
+//}
 
-  if (_underlineColor != underlineColor) {
-    _underlineColor = underlineColor;
-    [self updateColors];
-  }
-}
 
-- (CGFloat)underlineHeight {
-  return self.underlineView.lineHeight;
-}
-
-- (void)setUnderlineHeight:(CGFloat)underlineHeight {
-  self.underlineView.lineHeight = underlineHeight;
-  [self.textInput setNeedsUpdateConstraints];
-}
-
-- (UIView *)underline {
-  return self.underlineView;
-}
+//- (void)setUnderlineHeight:(CGFloat)underlineHeight {
+//  self.underlineView.lineHeight = underlineHeight;
+//  [self.textInput setNeedsUpdateConstraints];
+//}
 
 - (CGFloat)underlineYConstant {
   // Usually the underline is halfway between the text and the bottom of the view. But if there are
@@ -663,7 +652,7 @@ static inline CGFloat MDCRound(CGFloat value) {
 
 - (void)setEnabled:(BOOL)enabled {
   _enabled = enabled;
-  self.underlineView.enabled = enabled;
+  self.underline.enabled = enabled;
 }
 
 - (UIFont *)font {
@@ -742,8 +731,6 @@ static inline CGFloat MDCRound(CGFloat value) {
 - (void)updateColors {
   self.textInput.tintColor = self.cursorColor;
   self.textInput.textColor = self.textColor;
-
-  self.underlineView.color = self.underlineColor;
 }
 
 - (void)updateFontsForDynamicType {

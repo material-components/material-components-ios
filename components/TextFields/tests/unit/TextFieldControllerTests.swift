@@ -62,7 +62,7 @@ class TextFieldControllerTests: XCTestCase {
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
     XCTAssertTrue("51 / 50".isEqual(textField.trailingLabel.text))
-    XCTAssertEqual(MDCPalette.red().tint500, textField.underlineColor)
+    XCTAssertEqual(MDCPalette.red().tint500, textField.underline?.color)
     XCTAssertEqual(MDCPalette.red().tint500, textField.trailingLabel.textColor)
   }
 
@@ -93,11 +93,11 @@ class TextFieldControllerTests: XCTestCase {
 
     XCTAssertNotEqual(MDCPalette.red().tint500, textField.leadingLabel.textColor)
     XCTAssertNotEqual(MDCPalette.red().tint500, textField.trailingLabel.textColor)
-    XCTAssertNotEqual(MDCPalette.red().tint500, textField.underlineColor)
+    XCTAssertNotEqual(MDCPalette.red().tint500, textField.underline?.color)
 
     XCTAssertEqual(.blue, textField.leadingLabel.textColor)
     XCTAssertEqual(.blue, textField.trailingLabel.textColor)
-    XCTAssertEqual(.blue, textField.underlineColor)
+    XCTAssertEqual(.blue, textField.underline?.color)
 
     // If the controller is also in a character max error state, the leading label should still be 
     // showing the text from the error that was set.
@@ -113,14 +113,14 @@ class TextFieldControllerTests: XCTestCase {
     // Test error text being reset but character max still exceded.
     XCTAssertEqual(.blue, textField.leadingLabel.textColor)
     XCTAssertEqual(.blue, textField.trailingLabel.textColor)
-    XCTAssertEqual(.blue, textField.underlineColor)
+    XCTAssertEqual(.blue, textField.underline?.color)
 
     // Removing the text should remove the error state from character max and therefore remove 
     // anything from showing the error color.
     textField.text = nil
     XCTAssertNotEqual(.blue, textField.leadingLabel.textColor)
     XCTAssertNotEqual(.blue, textField.trailingLabel.textColor)
-    XCTAssertNotEqual(.blue, textField.underlineColor)
+    XCTAssertNotEqual(.blue, textField.underline?.color)
   }
 
   func testPresentation() {
@@ -137,8 +137,8 @@ class TextFieldControllerTests: XCTestCase {
     XCTAssertNotEqual(.clear, textField.trailingLabel.textColor)
 
     controller.underlineMode = .never
-    XCTAssertEqual(.lightGray, textField.underlineColor)
+    XCTAssertEqual(.lightGray, textField.underline?.color)
     controller.underlineMode = .always
-    XCTAssertEqual(MDCPalette.indigo().tint500, textField.underlineColor)
+    XCTAssertEqual(MDCPalette.indigo().tint500, textField.underline?.color)
   }
 }

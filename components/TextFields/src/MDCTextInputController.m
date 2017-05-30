@@ -19,6 +19,7 @@
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
+#import "MDCTextInputUnderlineView.h"
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
@@ -233,7 +234,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   [self subscribeForNotifications];
   [self subscribeForKVO];
-  _textInput.underlineColor = MDCTextInputNormalUnderlineColor();
+  _textInput.underline.color = MDCTextInputNormalUnderlineColor();
   [self updateLayout];
 }
 
@@ -525,7 +526,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 - (void)updateUnderline {
   if (_presentationStyle == MDCTextInputPresentationStyleFullWidth) {
     // Hide the underline.
-    self.textInput.underlineColor = [UIColor clearColor];
+    self.textInput.underline.color = [UIColor clearColor];
   } else {
     UIColor *underlineColor;
     UIColor *activeColor = MDCTextInputActiveUnderlineColor();
@@ -555,10 +556,10 @@ static inline UIColor *MDCTextInputTextErrorColor() {
         break;
     }
 
-    self.textInput.underlineColor =
+    self.textInput.underline.color =
         (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
                                                                              : underlineColor;
-    self.textInput.underlineHeight = underlineHeight;
+    self.textInput.underline.lineHeight = underlineHeight;
   }
 }
 

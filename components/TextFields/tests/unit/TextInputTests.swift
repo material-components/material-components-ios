@@ -51,11 +51,11 @@ class TextInputTests: XCTestCase {
     textField.trailingLabel.text = testTrailing
     XCTAssertEqual(testTrailing, textField.trailingLabel.text)
 
-    textField.underlineColor = .red
-    XCTAssertEqual(.red, textField.underlineColor)
+    textField.underline?.color = .red
+    XCTAssertEqual(.red, textField.underline?.color)
 
     let width: CGFloat = 5.0
-    textField.underlineHeight = width
-    XCTAssertEqual(width, textField.underlineHeight)
+    textField.underline?.height = width
+    XCTAssertEqual(width, textField.underline?.height)
   }
 }

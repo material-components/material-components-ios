@@ -29,6 +29,8 @@
    - https://github.com/adamwaite/Validator
  */
 
+@class MDCTextInputUnderlineView;
+
 @protocol MDCTextInputPositioningDelegate;
 
 /** Common API for Material Design compliant text inputs. */
@@ -131,16 +133,6 @@
     UILabel *trailingUnderlineLabel NS_SWIFT_NAME(trailingLabel);
 
 /** The underline view */
-@property(nonatomic, nullable, strong, readonly) UIView *underline;
-
-/**
- The color applied to the underline.
-
- Default is black with Material Design hint text opacity.
- */
-@property(nonatomic, nullable, strong) UIColor *underlineColor UI_APPEARANCE_SELECTOR;
-
-/** The thickness of the underline. */
-@property(nonatomic, assign) CGFloat underlineHeight UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nullable, strong, readonly) MDCTextInputUnderlineView *underline;
 
 @end

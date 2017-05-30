@@ -41,8 +41,8 @@ class TextFieldTests: XCTestCase {
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red
-    textField.underlineColor = .red
-    textField.underlineHeight = 10
+    textField.underline?.color = .red
+    textField.underline?.height = 10
 
     if let textFieldCopy = textField.copy() as? MDCTextField {
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
@@ -57,12 +57,11 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
       XCTAssertEqual(textField.text, textFieldCopy.text)
       XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
-      XCTAssertEqual(textField.underlineColor, textFieldCopy.underlineColor)
-      XCTAssertEqual(textField.underlineHeight, textFieldCopy.underlineHeight)
+      XCTAssertEqual(textField.underline?.color, textFieldCopy.underline?.color)
+      XCTAssertEqual(textField.underline?.height, textFieldCopy.underline?.height)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
-
   }
 
   func testFontChange() {
@@ -149,16 +148,16 @@ class TextFieldTests: XCTestCase {
   func testUnderlineSetters() {
     let textField = MDCTextField()
 
-    textField.underlineColor = .red
-    textField.underlineHeight = 10
+    textField.underline?.color = .red
+    textField.underline?.height = 10
 
-    XCTAssertEqual(textField.underlineColor, .red)
-    if let underline = textField.underline as? MDCTextInputUnderlineView {
+    XCTAssertEqual(textField.underline?.color, .red)
+    if let underline = textField.underline {
       XCTAssertEqual(underline.color, .red)
-      XCTAssertEqual(underline.color, textField.underlineColor)
+      XCTAssertEqual(underline.color, textField.underline?.color)
 
       XCTAssertEqual(underline.height, 10)
-      XCTAssertEqual(underline.height, textField.underlineHeight)
+      XCTAssertEqual(underline.height, textField.underline?.height)
     } else {
       XCTFail("No underline or underline is wrong class")
     }

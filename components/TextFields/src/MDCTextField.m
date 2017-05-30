@@ -156,24 +156,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return _fundament.trailingUnderlineLabel;
 }
 
-- (UIView *)underline {
+- (MDCTextInputUnderlineView *)underline {
   return _fundament.underline;
-}
-
-- (UIColor *)underlineColor {
-  return _fundament.underlineColor;
-}
-
-- (void)setUnderlineColor:(UIColor *)underlineColor {
-  _fundament.underlineColor = underlineColor;
-}
-
-- (CGFloat)underlineHeight {
-  return _fundament.underlineHeight;
-}
-
-- (void)setUnderlineHeight:(CGFloat)underlineHeight {
-  _fundament.underlineHeight = underlineHeight;
 }
 
 #pragma mark - UITextField Property Overrides
