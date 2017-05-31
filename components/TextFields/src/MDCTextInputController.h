@@ -195,7 +195,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  Note: The characterCountMax property also affects these same MDCTextInput properties.
  */
 - (void)setErrorText:(nullable NSString *)errorText
-    errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue
-    NS_SWIFT_NAME(setErrorText(_:errorAccessibilityValue:));
+    errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue;
 
 @end
