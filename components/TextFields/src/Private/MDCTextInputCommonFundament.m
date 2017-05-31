@@ -27,27 +27,27 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCTextInputCoordinatorCharacterRelativeSuperviewKey =
-    @"MDCTextInputCoordinatorCharacterRelativeSuperviewKey";
-static NSString *const MDCTextInputCoordinatorClearButtonKey = @"MDCTextInputCoordinatorClearButtonKey";
-static NSString *const MDCTextInputCoordinatorClearButtonColorKey =
-    @"MDCTextInputCoordinatorClearButtonColorKey";
-static NSString *const MDCTextInputCoordinatorClearButtonImageKey =
-    @"MDCTextInputCoordinatorClearButtonImageKey";
-static NSString *const MDCTextInputCoordinatorHidesPlaceholderKey =
-    @"MDCTextInputCoordinatorHidesPlaceholderKey";
-static NSString *const MDCTextInputCoordinatorInputKey = @"MDCTextInputCoordinatorInputKey";
-static NSString *const MDCTextInputCoordinatorLeadingLabelKey = @"MDCTextInputCoordinatorLeadingLabelKey";
-static NSString *const MDCTextInputCoordinatorMDCAdjustsFontsKey =
-    @"MDCTextInputCoordinatorMDCAdjustsFontsKey";
+static NSString *const MDCTextInputFundamentCharacterRelativeSuperviewKey =
+    @"MDCTextInputFundamentCharacterRelativeSuperviewKey";
+static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
+static NSString *const MDCTextInputFundamentClearButtonColorKey =
+    @"MDCTextInputFundamentClearButtonColorKey";
+static NSString *const MDCTextInputFundamentClearButtonImageKey =
+    @"MDCTextInputFundamentClearButtonImageKey";
+static NSString *const MDCTextInputFundamentHidesPlaceholderKey =
+    @"MDCTextInputFundamentHidesPlaceholderKey";
+static NSString *const MDCTextInputFundamentInputKey = @"MDCTextInputFundamentInputKey";
+static NSString *const MDCTextInputFundamentLeadingLabelKey = @"MDCTextInputFundamentLeadingLabelKey";
+static NSString *const MDCTextInputFundamentMDCAdjustsFontsKey =
+    @"MDCTextInputFundamentMDCAdjustsFontsKey";
 static NSString *const MDCTextInputPositioningDelegateKey = @"MDCTextInputPositioningDelegateKey";
-static NSString *const MDCTextInputCoordinatorPlaceholderLabelKey =
-    @"MDCTextInputCoordinatorPlaceholderLabelKey";
-static NSString *const MDCTextInputCoordinatorTextColorKey = @"MDCTextInputCoordinatorTextColorKey";
-static NSString *const MDCTextInputCoordinatorTrailingLabelKey =
-    @"MDCTextInputCoordinatorTrailingLabelKey";
-static NSString *const MDCTextInputCoordinatorUnderlineViewKey =
-    @"MDCTextInputCoordinatorUnderlineViewKey";
+static NSString *const MDCTextInputFundamentPlaceholderLabelKey =
+    @"MDCTextInputFundamentPlaceholderLabelKey";
+static NSString *const MDCTextInputFundamentTextColorKey = @"MDCTextInputFundamentTextColorKey";
+static NSString *const MDCTextInputFundamentTrailingLabelKey =
+    @"MDCTextInputFundamentTrailingLabelKey";
+static NSString *const MDCTextInputFundamentUnderlineViewKey =
+    @"MDCTextInputFundamentUnderlineViewKey";
 
 static NSString *const MDCTextInputUnderlineKVOKeyColor = @"color";
 static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
@@ -140,28 +140,28 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  UIView<MDCTextInput> *input = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorInputKey];
+  UIView<MDCTextInput> *input = [aDecoder decodeObjectForKey:MDCTextInputFundamentInputKey];
 
   self = [super init];
   if (self) {
     _textInput = input;
     [self commonMDCTextInputCommonFundamentInit];
 
-    _clearButton = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorClearButtonKey];
-    _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorClearButtonImageKey];
-    _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorClearButtonColorKey];
+    _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
+    _clearButtonImage = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonImageKey];
+    _clearButtonColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonColorKey];
     _hidesPlaceholderOnInput =
-        [aDecoder decodeBoolForKey:MDCTextInputCoordinatorHidesPlaceholderKey];
-    _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorLeadingLabelKey];
+        [aDecoder decodeBoolForKey:MDCTextInputFundamentHidesPlaceholderKey];
+    _leadingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentLeadingLabelKey];
     _mdc_adjustsFontForContentSizeCategory =
-        [aDecoder decodeBoolForKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
-    _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorPlaceholderLabelKey];
+        [aDecoder decodeBoolForKey:MDCTextInputFundamentMDCAdjustsFontsKey];
+    _placeholderLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentPlaceholderLabelKey];
     _positioningDelegate = [aDecoder decodeObjectForKey:MDCTextInputPositioningDelegateKey];
     _relativeSuperview =
-        [aDecoder decodeObjectForKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
-    _textColor = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTextColorKey];
-    _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorTrailingLabelKey];
-    _underline = [aDecoder decodeObjectForKey:MDCTextInputCoordinatorUnderlineViewKey];
+        [aDecoder decodeObjectForKey:MDCTextInputFundamentCharacterRelativeSuperviewKey];
+    _textColor = [aDecoder decodeObjectForKey:MDCTextInputFundamentTextColorKey];
+    _trailingUnderlineLabel = [aDecoder decodeObjectForKey:MDCTextInputFundamentTrailingLabelKey];
+    _underline = [aDecoder decodeObjectForKey:MDCTextInputFundamentUnderlineViewKey];
 
     [self subscribeForKVO];
   }
@@ -169,21 +169,21 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.clearButton forKey:MDCTextInputCoordinatorClearButtonKey];
-  [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputCoordinatorClearButtonColorKey];
-  [aCoder encodeObject:self.clearButtonImage forKey:MDCTextInputCoordinatorClearButtonImageKey];
+  [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
+  [aCoder encodeObject:self.clearButtonColor forKey:MDCTextInputFundamentClearButtonColorKey];
+  [aCoder encodeObject:self.clearButtonImage forKey:MDCTextInputFundamentClearButtonImageKey];
   [aCoder encodeBool:self.hidesPlaceholderOnInput
-              forKey:MDCTextInputCoordinatorHidesPlaceholderKey];
-  [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputCoordinatorLeadingLabelKey];
+              forKey:MDCTextInputFundamentHidesPlaceholderKey];
+  [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputFundamentLeadingLabelKey];
   [aCoder encodeBool:self.mdc_adjustsFontForContentSizeCategory
-              forKey:MDCTextInputCoordinatorMDCAdjustsFontsKey];
-  [aCoder encodeObject:self.placeholderLabel forKey:MDCTextInputCoordinatorPlaceholderLabelKey];
+              forKey:MDCTextInputFundamentMDCAdjustsFontsKey];
+  [aCoder encodeObject:self.placeholderLabel forKey:MDCTextInputFundamentPlaceholderLabelKey];
   [aCoder encodeObject:self.positioningDelegate forKey:MDCTextInputPositioningDelegateKey];
   [aCoder encodeObject:self.relativeSuperview
-                forKey:MDCTextInputCoordinatorCharacterRelativeSuperviewKey];
-  [aCoder encodeObject:self.textColor forKey:MDCTextInputCoordinatorTextColorKey];
-  [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputCoordinatorTrailingLabelKey];
-  [aCoder encodeObject:self.underline forKey:MDCTextInputCoordinatorUnderlineViewKey];
+                forKey:MDCTextInputFundamentCharacterRelativeSuperviewKey];
+  [aCoder encodeObject:self.textColor forKey:MDCTextInputFundamentTextColorKey];
+  [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputFundamentTrailingLabelKey];
+  [aCoder encodeObject:self.underline forKey:MDCTextInputFundamentUnderlineViewKey];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
