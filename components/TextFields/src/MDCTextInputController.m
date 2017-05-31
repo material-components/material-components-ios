@@ -462,7 +462,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
   CGFloat estimatedWidth = MDCCeil(CGRectGetWidth([self.textInput.placeholderLabel.text
       boundingRectWithSize:CGSizeMake(CGFLOAT_MAX,
-                                      MDCCeil(self.textInput.placeholderLabel.font.lineHeight))
+                                      self.textInput.placeholderLabel.font.lineHeight)
                    options:0
                 attributes:@{
                   NSFontAttributeName : self.textInput.font
