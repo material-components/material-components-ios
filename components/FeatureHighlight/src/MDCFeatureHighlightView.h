@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 @interface MDCFeatureHighlightView : UIView
 
 @property(nonatomic, strong) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;

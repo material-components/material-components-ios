@@ -162,7 +162,7 @@
   self.starPage = [[UIView alloc] initWithFrame:CGRectZero];
   self.starPage.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:self.starPage];
-  self.starPage.backgroundColor = [[MDCPalette lightBluePalette] tint200];
+  self.starPage.backgroundColor = MDCPalette.lightBluePalette.tint200;
   [self addStarCentered:YES];
 
   // Layout the views to be equal height and width to each other and self.view, hug the edges of the

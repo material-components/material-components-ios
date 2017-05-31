@@ -16,6 +16,78 @@
 
 #import "MDCColorScheme.h"
 
-@implementation MDCColorScheme
+@implementation MDCBasicColorScheme
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                           primaryLightColor:(nonnull UIColor *)primaryLightColor
+                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor
+                         secondaryLightColor:(nonnull UIColor *)secondaryLightColor
+                          secondaryDarkColor:(nonnull UIColor *)secondaryDarkColor {
+  self = [super init];
+  if (self) {
+    _primaryColor = primaryColor;
+    _primaryLightColor = primaryLightColor;
+    _primaryDarkColor = primaryDarkColor;
+    _secondaryColor = secondaryColor;
+    _secondaryLightColor = secondaryLightColor;
+    _secondaryDarkColor = secondaryDarkColor;
+  }
+  return self;
+}
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor {
+  UIColor *primaryLightColor = [self lighterColorForColor:primaryColor];
+  UIColor *primaryDarkColor = [self darkerColorForColor:primaryColor];
+  return [self initWithPrimaryColor:primaryColor
+                  primaryLightColor:primaryLightColor
+                   primaryDarkColor:primaryDarkColor
+                     secondaryColor:primaryColor
+                secondaryLightColor:primaryLightColor
+                 secondaryDarkColor:primaryDarkColor];
+}
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                           primaryLightColor:(nonnull UIColor *)primaryLightColor
+                            primaryDarkColor:(nonnull UIColor *)primaryDarkColor {
+  return [self initWithPrimaryColor:primaryColor
+                  primaryLightColor:primaryLightColor
+                   primaryDarkColor:primaryDarkColor
+                     secondaryColor:primaryColor
+                secondaryLightColor:primaryLightColor
+                 secondaryDarkColor:primaryDarkColor];
+}
+
+- (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
+                              secondaryColor:(nonnull UIColor *)secondaryColor {
+  return [self initWithPrimaryColor:primaryColor
+                  primaryLightColor:[self lighterColorForColor:primaryColor]
+                   primaryDarkColor:[self darkerColorForColor:primaryColor]
+                     secondaryColor:secondaryColor
+                secondaryLightColor:[self lighterColorForColor:secondaryColor]
+                 secondaryDarkColor:[self darkerColorForColor:secondaryColor]];
+}
+
+- (UIColor *)lighterColorForColor:(UIColor *)color {
+  CGFloat hue, saturation, brightness, alpha;
+  if ([color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
+    return [UIColor colorWithHue:hue
+                      saturation:saturation
+                      brightness:(CGFloat)fminf((float)brightness + 0.2f, 1.0f)
+                           alpha:alpha];
+  }
+  return nil;
+}
+
+- (UIColor *)darkerColorForColor:(UIColor *)color {
+  CGFloat hue, saturation, brightness, alpha;
+  if ([color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
+    return [UIColor colorWithHue:hue
+                      saturation:saturation
+                      brightness:(CGFloat)fmaxf((float)brightness - 0.2f, 0.0f)
+                           alpha:alpha];
+  }
+  return nil;
+}
 
 @end
