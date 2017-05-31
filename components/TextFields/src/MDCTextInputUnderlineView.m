@@ -34,10 +34,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _color = MDCTextInputUnderlineColor();
-    _enabled = YES;
-    _lineHeight = MDCTextInputUnderlineDefaultHeight;
-
     [self commonMDCUnderlineViewInit];
   }
   return self;
@@ -46,16 +42,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
+    [self commonMDCUnderlineViewInit];
+
     _color = [coder decodeObjectForKey:MDCTextInputUnderlineColorKey];
     _enabled = [coder decodeBoolForKey:MDCTextInputUnderlineEnabledKey];
     _lineHeight = (CGFloat)[coder decodeFloatForKey:MDCTextInputUnderlineLineHeightKey];
-
-    [self commonMDCUnderlineViewInit];
   }
   return self;
 }
 
 - (void)commonMDCUnderlineViewInit {
+  _color = MDCTextInputUnderlineColor();
+  _enabled = YES;
+  _lineHeight = MDCTextInputUnderlineDefaultHeight;
+
   [self setContentHuggingPriority:UILayoutPriorityDefaultHigh
                           forAxis:UILayoutConstraintAxisVertical];
   [self setClipsToBounds:NO];
