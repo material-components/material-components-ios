@@ -75,7 +75,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is 0.
  */
-@property(nonatomic, assign) IBInspectable NSUInteger characterCountMax NS_SWIFT_NAME(characterMax);
+@property(nonatomic, assign) IBInspectable NSUInteger characterCountMax;
 
 /**
  Controls when the character count will be shown and therefore whether character counting determines
@@ -83,8 +83,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is UITextFieldViewModeNever.
  */
-@property(nonatomic, assign) UITextFieldViewMode characterCountViewMode NS_SWIFT_NAME(characterMode)
-    ;
+@property(nonatomic, assign) UITextFieldViewMode characterCountViewMode;
 
 /**
  The color used to denote error state in the underline, the errorText's label, the placeholder and
@@ -101,7 +100,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  Default is black with Material Design hint text opacity.
  */
 @property(nonatomic, nullable, strong)
-    UIColor *floatingPlaceholderColor NS_SWIFT_NAME(floatingColor) UI_APPEARANCE_SELECTOR;
+    UIColor *floatingPlaceholderColor UI_APPEARANCE_SELECTOR;
 
 /**
  The scale of the the floating placeholder label in comparison to the inline placeholder specified
@@ -110,7 +109,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  Default is 0.75.
  */
 @property(nonatomic, nullable, strong)
-    NSNumber *floatingPlaceholderScale NS_SWIFT_NAME(floatingScale) UI_APPEARANCE_SELECTOR;
+    NSNumber *floatingPlaceholderScale UI_APPEARANCE_SELECTOR;
 
 /**
  Text displayed in the leading underline label.
@@ -118,15 +117,14 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  This text should give context or instruction to the user. If error text is set, it is
  not shown.
  */
-@property(nonatomic, nullable, copy) IBInspectable NSString *helperText NS_SWIFT_NAME(helper);
+@property(nonatomic, nullable, copy) IBInspectable NSString *helperText;
 
 /**
  The color applied to the placeholder when inline (not floating).
 
  Default is black with Material Design hint text opacity.
  */
-@property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor NS_SWIFT_NAME(inlineColor)
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, nullable, strong) UIColor *inlinePlaceholderColor UI_APPEARANCE_SELECTOR;
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
@@ -142,10 +140,10 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
 /** The behavioral style applied to the text input. */
 @property(nonatomic, assign)
-    MDCTextInputPresentationStyle presentationStyle NS_SWIFT_NAME(presentation);
+    MDCTextInputPresentationStyle presentationStyle;
 
 /** The text input the controller is affecting. */
-@property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput NS_SWIFT_NAME(input);
+@property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
 
 /**
  Controls when the underline will be shown.
@@ -154,8 +152,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
 
  Default is UITextFieldViewModeAlways.
  */
-@property(nonatomic, assign) UITextFieldViewMode underlineViewMode NS_SWIFT_NAME(underlineMode)
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) UITextFieldViewMode underlineViewMode UI_APPEARANCE_SELECTOR;
 
 /**
  Convenience init. Never fails.
@@ -199,6 +196,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputPresentationStyle) {
  */
 - (void)setErrorText:(nullable NSString *)errorText
     errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue
-    NS_SWIFT_NAME(set(errorText:errorAccessibilityValue:));
+    NS_SWIFT_NAME(setErrorText(_:errorAccessibilityValue:));
 
 @end

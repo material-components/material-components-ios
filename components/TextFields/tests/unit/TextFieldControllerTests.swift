@@ -22,10 +22,10 @@ class TextFieldControllerTests: XCTestCase {
     let textField = MDCTextField()
 
     let controller = MDCTextInputController(input: textField)
-    controller.characterMax = 49
+    controller.characterCountMax = 49
 
     if let controllerCopy = controller.copy() as? MDCTextInputController {
-      XCTAssertEqual(controller.characterMax, controllerCopy.characterMax)
+      XCTAssertEqual(controller.characterCountMax, controllerCopy.characterCountMax)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
@@ -39,7 +39,7 @@ class TextFieldControllerTests: XCTestCase {
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
 
     let controller = MDCTextInputController(input: textField)
-    XCTAssertNotNil(controller.input)
+    XCTAssertNotNil(controller.textInput)
 
     controller.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertTrue(controller.mdc_adjustsFontForContentSizeCategory)
@@ -53,17 +53,17 @@ class TextFieldControllerTests: XCTestCase {
     let controller = MDCTextInputController(input: textField)
 
     let altLeading = "Alternative Helper Test"
-    controller.helper = altLeading
+    controller.helperText = altLeading
 
-    controller.characterMax = 50
+    controller.characterCountMax = 50
 
     // By setting the folowing text with is 51 characters when the max is set to 50 characters, it 
     // should trigger an error state.
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
-    XCTAssertTrue("51 / 50".isEqual(textField.trailingLabel.text))
+    XCTAssertTrue("51 / 50".isEqual(textField.trailingUnderlineLabel.text))
     XCTAssertEqual(MDCPalette.red.tint500, textField.underline?.color)
-    XCTAssertEqual(MDCPalette.red.tint500, textField.trailingLabel.textColor)
+    XCTAssertEqual(MDCPalette.red.tint500, textField.trailingUnderlineLabel.textColor)
   }
 
   func testErrors() {
@@ -73,53 +73,53 @@ class TextFieldControllerTests: XCTestCase {
     // Helper text is shown on the leading underline label. Make sure the color and content are as 
     // expected.
     let altLeading = "Alternative Helper Test"
-    controller.helper = altLeading
-    textField.leadingLabel.textColor = .green
-    XCTAssertEqual(.green, textField.leadingLabel.textColor)
-    XCTAssertEqual(altLeading, textField.leadingLabel.text)
+    controller.helperText = altLeading
+    textField.leadingUnderlineLabel.textColor = .green
+    XCTAssertEqual(.green, textField.leadingUnderlineLabel.textColor)
+    XCTAssertEqual(altLeading, textField.leadingUnderlineLabel.text)
 
     // Setting error text should change the color and content of the leading underline label
     let error = "Error Test"
-    controller.set(errorText: error, errorAccessibilityValue: nil)
-    XCTAssertNotEqual(altLeading, textField.leadingLabel.text)
-    XCTAssertEqual(error, textField.leadingLabel.text)
+    controller.setErrorText(error, errorAccessibilityValue: nil)
+    XCTAssertNotEqual(altLeading, textField.leadingUnderlineLabel.text)
+    XCTAssertEqual(error, textField.leadingUnderlineLabel.text)
 
     // Setting an error should change the leading label's text color.
-    XCTAssertNotEqual(.green, textField.leadingLabel.textColor)
+    XCTAssertNotEqual(.green, textField.leadingUnderlineLabel.textColor)
 
     // Setting error color should change the color of the underline, leading, and trailing colors.
     controller.errorColor = .blue
     XCTAssertEqual(.blue, controller.errorColor)
 
-    XCTAssertNotEqual(MDCPalette.red.tint500, textField.leadingLabel.textColor)
-    XCTAssertNotEqual(MDCPalette.red.tint500, textField.trailingLabel.textColor)
+    XCTAssertNotEqual(MDCPalette.red.tint500, textField.leadingUnderlineLabel.textColor)
+    XCTAssertNotEqual(MDCPalette.red.tint500, textField.trailingUnderlineLabel.textColor)
     XCTAssertNotEqual(MDCPalette.red.tint500, textField.underline?.color)
 
-    XCTAssertEqual(.blue, textField.leadingLabel.textColor)
-    XCTAssertEqual(.blue, textField.trailingLabel.textColor)
+    XCTAssertEqual(.blue, textField.leadingUnderlineLabel.textColor)
+    XCTAssertEqual(.blue, textField.trailingUnderlineLabel.textColor)
     XCTAssertEqual(.blue, textField.underline?.color)
 
     // If the controller is also in a character max error state, the leading label should still be 
     // showing the text from the error that was set.
-    controller.characterMax = 50
+    controller.characterCountMax = 50
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
-    XCTAssertEqual(error, textField.leadingLabel.text)
+    XCTAssertEqual(error, textField.leadingUnderlineLabel.text)
 
     // Removing the error should set the leading text back to its previous text.
-    controller.set(errorText: nil, errorAccessibilityValue: nil)
-    XCTAssertNotEqual(error, textField.leadingLabel.text)
-    XCTAssertEqual(altLeading, textField.leadingLabel.text)
+    controller.setErrorText(nil, errorAccessibilityValue: nil)
+    XCTAssertNotEqual(error, textField.leadingUnderlineLabel.text)
+    XCTAssertEqual(altLeading, textField.leadingUnderlineLabel.text)
 
     // Test error text being reset but character max still exceded.
-    XCTAssertEqual(.blue, textField.leadingLabel.textColor)
-    XCTAssertEqual(.blue, textField.trailingLabel.textColor)
+    XCTAssertEqual(.blue, textField.leadingUnderlineLabel.textColor)
+    XCTAssertEqual(.blue, textField.trailingUnderlineLabel.textColor)
     XCTAssertEqual(.blue, textField.underline?.color)
 
     // Removing the text should remove the error state from character max and therefore remove 
     // anything from showing the error color.
     textField.text = nil
-    XCTAssertNotEqual(.blue, textField.leadingLabel.textColor)
-    XCTAssertNotEqual(.blue, textField.trailingLabel.textColor)
+    XCTAssertNotEqual(.blue, textField.leadingUnderlineLabel.textColor)
+    XCTAssertNotEqual(.blue, textField.trailingUnderlineLabel.textColor)
     XCTAssertNotEqual(.blue, textField.underline?.color)
   }
 
@@ -127,18 +127,18 @@ class TextFieldControllerTests: XCTestCase {
     let textField = MDCTextField()
     let controller = MDCTextInputController(input: textField)
 
-    XCTAssertNotEqual(controller.presentation, .floatingPlaceholder)
-    controller.presentation = .floatingPlaceholder
-    XCTAssertEqual(controller.presentation, .floatingPlaceholder)
+    XCTAssertNotEqual(controller.presentationStyle, .floatingPlaceholder)
+    controller.presentationStyle = .floatingPlaceholder
+    XCTAssertEqual(controller.presentationStyle, .floatingPlaceholder)
 
-    controller.characterMode = .never
-    XCTAssertEqual(.clear, textField.trailingLabel.textColor)
-    controller.characterMode = .always
-    XCTAssertNotEqual(.clear, textField.trailingLabel.textColor)
+    controller.characterCountViewMode = .never
+    XCTAssertEqual(.clear, textField.trailingUnderlineLabel.textColor)
+    controller.characterCountViewMode = .always
+    XCTAssertNotEqual(.clear, textField.trailingUnderlineLabel.textColor)
 
-    controller.underlineMode = .never
+    controller.underlineViewMode = .never
     XCTAssertEqual(.lightGray, textField.underline?.color)
-    controller.underlineMode = .always
+    controller.underlineViewMode = .always
     XCTAssertEqual(MDCPalette.indigo.tint500, textField.underline?.color)
   }
 }

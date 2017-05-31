@@ -21,8 +21,8 @@ class TextInputTests: XCTestCase {
   func testTextFieldTextInputProtocolConformance() {
     let textField = MDCTextField()
 
-    XCTAssertNotNil(textField.leadingLabel)
-    XCTAssertNotNil(textField.trailingLabel)
+    XCTAssertNotNil(textField.leadingUnderlineLabel)
+    XCTAssertNotNil(textField.trailingUnderlineLabel)
     XCTAssertNotNil(textField.placeholderLabel)
 
     textField.clearButtonColor = .red
@@ -33,8 +33,8 @@ class TextInputTests: XCTestCase {
     XCTAssertEqual(font, textField.font)
 
     let testLeading = "Helper Test"
-    textField.leadingLabel.text = testLeading
-    XCTAssertEqual(testLeading, textField.leadingLabel.text)
+    textField.leadingUnderlineLabel.text = testLeading
+    XCTAssertEqual(testLeading, textField.leadingUnderlineLabel.text)
 
     let testPlaceholder = "Test placeholder"
     textField.placeholder = testPlaceholder
@@ -48,14 +48,14 @@ class TextInputTests: XCTestCase {
     XCTAssertEqual(.red, textField.textColor)
 
     let testTrailing = "NN / NN"
-    textField.trailingLabel.text = testTrailing
-    XCTAssertEqual(testTrailing, textField.trailingLabel.text)
+    textField.trailingUnderlineLabel.text = testTrailing
+    XCTAssertEqual(testTrailing, textField.trailingUnderlineLabel.text)
 
     textField.underline?.color = .red
     XCTAssertEqual(.red, textField.underline?.color)
 
     let width: CGFloat = 5.0
-    textField.underline?.height = width
-    XCTAssertEqual(width, textField.underline?.height)
+    textField.underline?.lineHeight = width
+    XCTAssertEqual(width, textField.underline?.lineHeight)
   }
 }

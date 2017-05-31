@@ -42,7 +42,7 @@ class TextFieldTests: XCTestCase {
     textField.text = "test"
     textField.textColor = .red
     textField.underline?.color = .red
-    textField.underline?.height = 10
+    textField.underline?.lineHeight = 10
 
     if let textFieldCopy = textField.copy() as? MDCTextField {
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
@@ -58,7 +58,7 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.text, textFieldCopy.text)
       XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
       XCTAssertEqual(textField.underline?.color, textFieldCopy.underline?.color)
-      XCTAssertEqual(textField.underline?.height, textFieldCopy.underline?.height)
+      XCTAssertEqual(textField.underline?.lineHeight, textFieldCopy.underline?.lineHeight)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
@@ -108,11 +108,11 @@ class TextFieldTests: XCTestCase {
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
     let controller = MDCTextInputController(input: textField)
-    XCTAssertNotNil(controller.input)
+    XCTAssertNotNil(controller.textInput)
 
     let leadingText = "Serialized Helper Test"
-    controller.helper = leadingText
-    controller.characterMax = 40
+    controller.helperText = leadingText
+    controller.characterCountMax = 40
 
     let serializedInput = NSKeyedArchiver.archivedData(withRootObject: textField)
     XCTAssertNotNil(serializedInput)
@@ -126,11 +126,11 @@ class TextFieldTests: XCTestCase {
     XCTAssertEqual(textField.text,
                    unserializedInput?.text)
 
-    XCTAssertEqual(textField.leadingLabel.text,
-                   unserializedInput?.leadingLabel.text)
+    XCTAssertEqual(textField.leadingUnderlineLabel.text,
+                   unserializedInput?.leadingUnderlineLabel.text)
 
-    XCTAssertEqual(textField.trailingLabel.text, "51 / 40")
-    XCTAssertEqual(textField.trailingLabel.text, unserializedInput?.trailingLabel.text)
+    XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
+    XCTAssertEqual(textField.trailingUnderlineLabel.text, unserializedInput?.trailingUnderlineLabel.text)
 
     let serializedController = NSKeyedArchiver.archivedData(withRootObject: controller)
     XCTAssertNotNil(serializedController)
@@ -140,24 +140,24 @@ class TextFieldTests: XCTestCase {
     MDCTextInputController
     XCTAssertNotNil(unserializedController)
 
-    unserializedController?.input = unserializedInput
-    XCTAssertEqual(controller.helper, unserializedController?.helper)
-    XCTAssertEqual(controller.characterMax, unserializedController?.characterMax)
+    unserializedController?.textInput = unserializedInput
+    XCTAssertEqual(controller.helperText, unserializedController?.helperText)
+    XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
   }
 
   func testUnderlineSetters() {
     let textField = MDCTextField()
 
     textField.underline?.color = .red
-    textField.underline?.height = 10
+    textField.underline?.lineHeight = 10
 
     XCTAssertEqual(textField.underline?.color, .red)
     if let underline = textField.underline {
       XCTAssertEqual(underline.color, .red)
       XCTAssertEqual(underline.color, textField.underline?.color)
 
-      XCTAssertEqual(underline.height, 10)
-      XCTAssertEqual(underline.height, textField.underline?.height)
+      XCTAssertEqual(underline.lineHeight, 10)
+      XCTAssertEqual(underline.lineHeight, textField.underline?.lineHeight)
     } else {
       XCTFail("No underline or underline is wrong class")
     }

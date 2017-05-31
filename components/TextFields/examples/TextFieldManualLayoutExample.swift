@@ -108,18 +108,18 @@ final class TextFieldManualLayoutExample: UIViewController {
   func setupTextFields() {
     scrollView.addSubview(name)
     let nameController = MDCTextInputController(input: name)
-    nameController.presentation = .floatingPlaceholder
+    nameController.presentationStyle = .floatingPlaceholder
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
     let addressController = MDCTextInputController(input: address)
-    addressController.presentation = .floatingPlaceholder
+    addressController.presentationStyle = .floatingPlaceholder
     address.delegate = self
     allTextFieldControllers.append(addressController)
 
     scrollView.addSubview(city)
-    cityController.presentation = .floatingPlaceholder
+    cityController.presentationStyle = .floatingPlaceholder
     city.delegate = self
     allTextFieldControllers.append(cityController)
 
@@ -127,24 +127,24 @@ final class TextFieldManualLayoutExample: UIViewController {
 
     stateZip.addSubview(state)
     let stateController = MDCTextInputController(input: state)
-    stateController.presentation = .floatingPlaceholder
+    stateController.presentationStyle = .floatingPlaceholder
     state.delegate = self
     allTextFieldControllers.append(stateController)
 
     stateZip.addSubview(zip)
-    zipController.presentation = .floatingPlaceholder
+    zipController.presentationStyle = .floatingPlaceholder
     zip.delegate = self
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
     let phoneController = MDCTextInputController(input: phone)
-    phoneController.presentation = .floatingPlaceholder
+    phoneController.presentationStyle = .floatingPlaceholder
     phone.delegate = self
     allTextFieldControllers.append(phoneController)
 
     var tag = 0
     for controller in allTextFieldControllers {
-      guard let textField = controller.input as? MDCTextField else { continue }
+      guard let textField = controller.textInput as? MDCTextField else { continue }
       textField.tag = tag
       tag += 1
     }
@@ -169,7 +169,7 @@ final class TextFieldManualLayoutExample: UIViewController {
     let commonWidth = view.bounds.width - 2 * LayoutConstants.largeMargin
     var height = LayoutConstants.floatingHeight
     if let controller = allTextFieldControllers.first {
-      height = controller.presentation == .floatingPlaceholder ? LayoutConstants.floatingHeight : LayoutConstants.defaultHeight
+      height = controller.presentationStyle == .floatingPlaceholder ? LayoutConstants.floatingHeight : LayoutConstants.defaultHeight
     }
 
     name.frame = CGRect(x: LayoutConstants.largeMargin,
@@ -220,14 +220,14 @@ final class TextFieldManualLayoutExample: UIViewController {
                                   preferredStyle: .actionSheet)
     let defaultAction = UIAlertAction(title: "Default", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
-        controller.presentation = .default
+        controller.presentationStyle = .default
       })
       self.updateLayout()
     }
     alert.addAction(defaultAction)
     let floatingAction = UIAlertAction(title: "Floating", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
-        controller.presentation = .floatingPlaceholder
+        controller.presentationStyle = .floatingPlaceholder
       })
       self.updateLayout()
     }
@@ -249,18 +249,18 @@ extension TextFieldManualLayoutExample: UITextFieldDelegate {
     if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
         fullString[range].characters.count > 0 {
-        zipController.set(errorText: "Error: Zip can only contain numbers", errorAccessibilityValue: nil)
+        zipController.setErrorText("Error: Zip can only contain numbers", errorAccessibilityValue: nil)
       } else if fullString.characters.count > 5 {
-        zipController.set(errorText: "Error: Zip can only contain five digits", errorAccessibilityValue: nil)
+        zipController.setErrorText("Error: Zip can only contain five digits", errorAccessibilityValue: nil)
       } else {
-        zipController.set(errorText: nil, errorAccessibilityValue: nil)
+        zipController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
         fullString[range].characters.count > 0 {
-        cityController.set(errorText: "Error: City can only contain letters", errorAccessibilityValue: nil)
+        cityController.setErrorText("Error: City can only contain letters", errorAccessibilityValue: nil)
       } else {
-        cityController.set(errorText: nil, errorAccessibilityValue: nil)
+        cityController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     }
     return true
@@ -269,7 +269,7 @@ extension TextFieldManualLayoutExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     let index = textField.tag
     if index + 1 < allTextFieldControllers.count,
-      let nextField = allTextFieldControllers[index + 1].input as? MDCTextField {
+      let nextField = allTextFieldControllers[index + 1].textInput as? MDCTextField {
       nextField.becomeFirstResponder()
     } else {
       textField.resignFirstResponder()

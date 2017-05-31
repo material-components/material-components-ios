@@ -169,12 +169,12 @@ extension TextFieldKitchenSinkSwiftExample {
       control
     }
 
-    let allTextFields = allTextFieldControllers.flatMap { $0.input }
+    let allTextFields = allTextFieldControllers.flatMap { $0.textInput }
     let textFieldsString = allTextFields.reduce("", concatenatingClosure)
 
     var textFields = [String: UIView]()
-    allTextFields.forEach { input in
-      textFields[unique(from: input, with: prefix)] = input
+    allTextFields.forEach { textInput in
+      textFields[unique(from: textInput, with: prefix)] = textInput
     }
 
     let visualString = "V:|-20-[singleLabel]-" +
@@ -222,15 +222,15 @@ extension TextFieldKitchenSinkSwiftExample {
                                                                metrics: nil,
                                                                views: views))
 
-    controllersFullWidth.flatMap { $0.input }.forEach { input in
-      NSLayoutConstraint(item: input,
+    controllersFullWidth.flatMap { $0.textInput }.forEach { textInput in
+      NSLayoutConstraint(item: textInput,
                          attribute: .leading,
                          relatedBy: .equal,
                          toItem: view,
                          attribute: .leading,
                          multiplier: 1.0,
                          constant: 0).isActive = true
-      NSLayoutConstraint(item: input,
+      NSLayoutConstraint(item: textInput,
                          attribute: .trailing,
                          relatedBy: .equal,
                          toItem: view,
@@ -239,7 +239,7 @@ extension TextFieldKitchenSinkSwiftExample {
                          constant: 0).isActive = true
 
       // This constraint is necessary for the scrollview to have a content width.
-      NSLayoutConstraint(item: input,
+      NSLayoutConstraint(item: textInput,
                          attribute: .trailing,
                          relatedBy: .equal,
                          toItem: scrollView,
@@ -311,13 +311,13 @@ extension TextFieldKitchenSinkSwiftExample {
     let closure: (UITextFieldViewMode, String) -> Void = { mode, title in
       controllersToChange.forEach { controller in
         if button == self.characterModeButton {
-          controller.characterMode = mode
+          controller.characterCountViewMode = mode
         } else if button == self.clearModeButton {
-          if let input = controller.input as? MDCTextField {
+          if let input = controller.textInput as? MDCTextField {
             input.clearButtonMode = mode
           }
         } else {
-          controller.underlineMode = mode
+          controller.underlineViewMode = mode
         }
 
         button.setTitle(title + ": " + self.modeName(mode: mode), for: .normal)

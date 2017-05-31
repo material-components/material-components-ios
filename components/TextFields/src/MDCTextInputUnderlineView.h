@@ -25,7 +25,7 @@
 @property(nonatomic, strong) UIColor *color;
 @property(nonatomic, strong) CAShapeLayer *disabledUnderline;
 @property(nonatomic, assign) BOOL enabled;
-@property(nonatomic, assign) CGFloat lineHeight NS_SWIFT_NAME(height);
+@property(nonatomic, assign) CGFloat lineHeight;
 @property(nonatomic, strong) CAShapeLayer *underline;
 
 @end

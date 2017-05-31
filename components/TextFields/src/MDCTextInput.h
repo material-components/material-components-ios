@@ -84,8 +84,7 @@
  This will usually be used for placeholder text to be displayed when no text has been entered. The
  Material Design guidelines call this 'helper text.'
  */
-@property(nonatomic, nonnull, strong, readonly)
-    UILabel *leadingUnderlineLabel NS_SWIFT_NAME(leadingLabel);
+@property(nonatomic, nonnull, strong, readonly) UILabel *leadingUnderlineLabel;
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
@@ -129,8 +128,7 @@
 
  This will usually be for the character count / limit.
  */
-@property(nonatomic, nonnull, strong, readonly)
-    UILabel *trailingUnderlineLabel NS_SWIFT_NAME(trailingLabel);
+@property(nonatomic, nonnull, strong, readonly) UILabel *trailingUnderlineLabel;
 
 /** The underline view */
 @property(nonatomic, nullable, strong, readonly) MDCTextInputUnderlineView *underline;
