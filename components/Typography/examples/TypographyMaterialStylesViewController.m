@@ -107,6 +107,21 @@
   NSString *sizeCategory = notification.userInfo[UIContentSizeCategoryNewValueKey];
   NSLog(@"New size category : %@", sizeCategory);
 
+  // Update font array to reflect new size category
+  _styleFonts = @[
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody2],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
+                  ];
+
   [self.tableView reloadData];
 }
 
