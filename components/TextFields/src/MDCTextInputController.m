@@ -657,7 +657,6 @@ static inline UIColor *MDCTextInputTextErrorColor() {
     }
 
     [CATransaction begin];
-    [CATransaction setAnimationDuration:0];
     [UIView performWithoutAnimation:^{
       [self movePlaceholderToUp:isDirectionToUp];
     }];
