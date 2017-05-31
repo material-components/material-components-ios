@@ -21,7 +21,7 @@ class TextFieldControllerTests: XCTestCase {
   func testCopying() {
     let textField = MDCTextField()
 
-    let controller = MDCTextInputController(input: textField)
+    let controller = MDCTextInputController(textInput: textField)
     controller.characterCountMax = 49
 
     if let controllerCopy = controller.copy() as? MDCTextInputController {
@@ -38,7 +38,7 @@ class TextFieldControllerTests: XCTestCase {
     textField.mdc_adjustsFontForContentSizeCategory = true
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
 
-    let controller = MDCTextInputController(input: textField)
+    let controller = MDCTextInputController(textInput: textField)
     XCTAssertNotNil(controller.textInput)
 
     controller.mdc_adjustsFontForContentSizeCategory = true
@@ -50,7 +50,7 @@ class TextFieldControllerTests: XCTestCase {
 
   func testCharacterMax() {
     let textField = MDCTextField()
-    let controller = MDCTextInputController(input: textField)
+    let controller = MDCTextInputController(textInput: textField)
 
     let altLeading = "Alternative Helper Test"
     controller.helperText = altLeading
@@ -68,7 +68,7 @@ class TextFieldControllerTests: XCTestCase {
 
   func testErrors() {
     let textField = MDCTextField()
-    let controller = MDCTextInputController(input: textField)
+    let controller = MDCTextInputController(textInput: textField)
 
     // Helper text is shown on the leading underline label. Make sure the color and content are as 
     // expected.
@@ -125,7 +125,7 @@ class TextFieldControllerTests: XCTestCase {
 
   func testPresentation() {
     let textField = MDCTextField()
-    let controller = MDCTextInputController(input: textField)
+    let controller = MDCTextInputController(textInput: textField)
 
     XCTAssertNotEqual(controller.presentationStyle, .floatingPlaceholder)
     controller.presentationStyle = .floatingPlaceholder

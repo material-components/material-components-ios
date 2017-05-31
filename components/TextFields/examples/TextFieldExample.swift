@@ -69,8 +69,8 @@ final class TextFieldSwiftExample: UIViewController {
   var allTextFieldControllers = [MDCTextInputController]()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    cityController = MDCTextInputController(input: city)
-    zipController = MDCTextInputController(input: zip)
+    cityController = MDCTextInputController(textInput: city)
+    zipController = MDCTextInputController(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -99,13 +99,13 @@ final class TextFieldSwiftExample: UIViewController {
 
   func setupTextFields() {
     scrollView.addSubview(name)
-    let nameController = MDCTextInputController(input: name)
+    let nameController = MDCTextInputController(textInput: name)
     nameController.presentationStyle = .floatingPlaceholder
     name.delegate = self
     allTextFieldControllers.append(nameController)
 
     scrollView.addSubview(address)
-    let addressController = MDCTextInputController(input: address)
+    let addressController = MDCTextInputController(textInput: address)
     addressController.presentationStyle = .floatingPlaceholder
     address.delegate = self
     allTextFieldControllers.append(addressController)
@@ -122,7 +122,7 @@ final class TextFieldSwiftExample: UIViewController {
     scrollView.addSubview(stateZip)
 
     stateZip.addSubview(state)
-    let stateController = MDCTextInputController(input: state)
+    let stateController = MDCTextInputController(textInput: state)
     stateController.presentationStyle = .floatingPlaceholder
     state.delegate = self
     allTextFieldControllers.append(stateController)
@@ -133,7 +133,7 @@ final class TextFieldSwiftExample: UIViewController {
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
-    let phoneController = MDCTextInputController(input: phone)
+    let phoneController = MDCTextInputController(textInput: phone)
     phoneController.presentationStyle = .floatingPlaceholder
     phone.delegate = self
     allTextFieldControllers.append(phoneController)

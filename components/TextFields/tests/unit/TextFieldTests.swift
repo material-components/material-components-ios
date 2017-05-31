@@ -107,7 +107,7 @@ class TextFieldTests: XCTestCase {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
-    let controller = MDCTextInputController(input: textField)
+    let controller = MDCTextInputController(textInput: textField)
     XCTAssertNotNil(controller.textInput)
 
     let leadingText = "Serialized Helper Test"

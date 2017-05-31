@@ -93,7 +93,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldDefault.clearButtonMode = .whileEditing
     textFieldDefault.backgroundColor = .white
 
-    let textFieldControllerDefault = MDCTextInputController(input: textFieldDefault)
+    let textFieldControllerDefault = MDCTextInputController(textInput: textFieldDefault)
 
     textFieldControllerDefault.presentationStyle = .default
 
@@ -107,7 +107,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldDefaultPlaceholder.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultPlaceholder =
-      MDCTextInputController(input: textFieldDefaultPlaceholder)
+      MDCTextInputController(textInput: textFieldDefaultPlaceholder)
 
     textFieldControllerDefaultPlaceholder.presentationStyle = .default
 
@@ -119,7 +119,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldDefaultCharMax.delegate = self
     textFieldDefaultCharMax.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultCharMax = MDCTextInputController(input: textFieldDefaultCharMax)
+    let textFieldControllerDefaultCharMax = MDCTextInputController(textInput: textFieldDefaultCharMax)
     textFieldControllerDefaultCharMax.characterCountMax = 50
 
     controllersWithCharacterCount.append(textFieldControllerDefaultCharMax)
@@ -137,7 +137,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldFullWidth.clearButtonMode = .whileEditing
     textFieldFullWidth.backgroundColor = .white
 
-    let textFieldControllerFullWidth = MDCTextInputController(input: textFieldFullWidth)
+    let textFieldControllerFullWidth = MDCTextInputController(textInput: textFieldFullWidth)
     textFieldControllerFullWidth.presentationStyle = .fullWidth
 
     let textFieldFullWidthPlaceholder = MDCTextField()
@@ -149,7 +149,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldFullWidthPlaceholder.clearButtonMode = .whileEditing
 
     let textFieldControllerFullWidthPlaceholder =
-      MDCTextInputController(input: textFieldFullWidthPlaceholder)
+      MDCTextInputController(textInput: textFieldFullWidthPlaceholder)
     textFieldControllerFullWidthPlaceholder.presentationStyle = .fullWidth
 
     let textFieldFullWidthCharMax = MDCTextField()
@@ -162,7 +162,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldFullWidthCharMax.clearButtonMode = .whileEditing
 
     let textFieldControllerFullWidthCharMax =
-      MDCTextInputController(input: textFieldFullWidthCharMax)
+      MDCTextInputController(textInput: textFieldFullWidthCharMax)
     textFieldControllerFullWidthCharMax.presentationStyle = .fullWidth
     textFieldControllerFullWidthCharMax.characterCountMax = 50
 
@@ -181,7 +181,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldFloating.delegate = self
     textFieldFloating.clearButtonMode = .whileEditing
 
-    let textFieldControllerFloating = MDCTextInputController(input: textFieldFloating)
+    let textFieldControllerFloating = MDCTextInputController(textInput: textFieldFloating)
 
     textFieldControllerFloating.presentationStyle = .floatingPlaceholder
 
@@ -193,7 +193,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldFloatingCharMax.delegate = self
     textFieldFloatingCharMax.clearButtonMode = .whileEditing
 
-    let textFieldControllerFloatingCharMax = MDCTextInputController(input: textFieldFloatingCharMax)
+    let textFieldControllerFloatingCharMax = MDCTextInputController(textInput: textFieldFloatingCharMax)
     textFieldControllerFloatingCharMax.presentationStyle = .floatingPlaceholder
     textFieldControllerFloatingCharMax.characterCountMax = 50
 
@@ -211,7 +211,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldDisabled.delegate = self
     textFieldDisabled.isEnabled = false
 
-    let textFieldControllerDefaultDisabled = MDCTextInputController(input: textFieldDisabled)
+    let textFieldControllerDefaultDisabled = MDCTextInputController(textInput: textFieldDisabled)
 
     let textFieldCustomFont = MDCTextField()
     scrollView.addSubview(textFieldCustomFont)
@@ -222,7 +222,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldCustomFont.delegate = self
     textFieldCustomFont.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultCustomFont = MDCTextInputController(input: textFieldCustomFont)
+    let textFieldControllerDefaultCustomFont = MDCTextInputController(textInput: textFieldCustomFont)
     textFieldCustomFont.placeholderLabel.font = UIFont.preferredFont(forTextStyle: .headline)
 
     let textFieldCustomFontFloating = MDCTextField()
@@ -235,7 +235,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldCustomFontFloating.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultCustomFontFloating =
-      MDCTextInputController(input: textFieldCustomFontFloating)
+      MDCTextInputController(textInput: textFieldCustomFontFloating)
     textFieldControllerDefaultCustomFontFloating.presentationStyle = .floatingPlaceholder
     textFieldControllerDefaultCustomFontFloating.characterCountMax = 40
     textFieldControllerDefaultCustomFontFloating.helperText = "Custom Font"
@@ -262,7 +262,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldLeftView.delegate = self
     textFieldLeftView.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultLeftView = MDCTextInputController(input: textFieldLeftView)
+    let textFieldControllerDefaultLeftView = MDCTextInputController(textInput: textFieldLeftView)
 
     let textFieldLeftViewFloating = MDCTextField()
     textFieldLeftViewFloating.leftViewMode = .always
@@ -276,7 +276,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldLeftViewFloating.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultLeftViewFloating =
-      MDCTextInputController(input: textFieldLeftViewFloating)
+      MDCTextInputController(textInput: textFieldLeftViewFloating)
     textFieldControllerDefaultLeftViewFloating.presentationStyle = .floatingPlaceholder
 
     let rightViewImagePath = bundle.path(forResource: "ic_done", ofType: "png")!
@@ -293,7 +293,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldRightView.delegate = self
     textFieldRightView.clearButtonMode = .whileEditing
 
-    let textFieldControllerDefaultRightView = MDCTextInputController(input: textFieldRightView)
+    let textFieldControllerDefaultRightView = MDCTextInputController(textInput: textFieldRightView)
 
     let textFieldRightViewFloating = MDCTextField()
     textFieldRightViewFloating.rightViewMode = .always
@@ -307,7 +307,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldRightViewFloating.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultRightViewFloating =
-      MDCTextInputController(input: textFieldRightViewFloating)
+      MDCTextInputController(textInput: textFieldRightViewFloating)
     textFieldControllerDefaultRightViewFloating.presentationStyle = .floatingPlaceholder
 
     let textFieldLeftRightView = MDCTextField()
@@ -325,7 +325,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldLeftRightView.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultLeftRightView =
-      MDCTextInputController(input: textFieldLeftRightView)
+      MDCTextInputController(textInput: textFieldLeftRightView)
 
     let textFieldLeftRightViewFloating = MDCTextField()
     textFieldLeftRightViewFloating.leftViewMode = .always
@@ -342,7 +342,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldLeftRightViewFloating.clearButtonMode = .whileEditing
 
     let textFieldControllerDefaultLeftRightViewFloating =
-      MDCTextInputController(input: textFieldLeftRightViewFloating)
+      MDCTextInputController(textInput: textFieldLeftRightViewFloating)
     textFieldControllerDefaultLeftRightViewFloating.presentationStyle = .floatingPlaceholder
 
     scrollView.addSubview(unstyledTextField)
