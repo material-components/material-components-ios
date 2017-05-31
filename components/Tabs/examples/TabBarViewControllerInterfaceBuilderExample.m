@@ -16,6 +16,7 @@
 
 @import UIKit;
 
+@import MaterialComponents.MaterialPalettes;
 @import MaterialComponents.MaterialTabs;
 
 @interface TabBarViewControllerInterfaceBuilderExample : MDCTabBarViewController
@@ -31,8 +32,9 @@
     [self.storyboard instantiateViewControllerWithIdentifier:@"blue"],
     [self.storyboard instantiateViewControllerWithIdentifier:@"green"],
   ];
-  // Default is white text on a white background.
-  self.tabBar.backgroundColor = [UIColor grayColor];
+  self.tabBar.backgroundColor = MDCPalette.greyPalette.tint100;
+  self.tabBar.unselectedItemTintColor = MDCPalette.greyPalette.tint900;
+  self.tabBar.selectedItemTintColor = MDCPalette.bluePalette.tint500;
 }
 
 @end
