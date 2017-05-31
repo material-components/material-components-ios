@@ -945,8 +945,8 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 
       // .bottom = underlineOffset + the half padding above the line but below the text field
       textContainerInset.bottom = underlineOffset + MDCTextInputVerticalHalfPadding;
-
-    } break;
+      break;
+    }
     case MDCTextInputPresentationStyleFullWidth: {
       textContainerInset = UIEdgeInsetsZero;
 
