@@ -72,7 +72,10 @@
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
                   ];
 
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentSizeCategoryDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
 
   /*
   UIKIT_EXTERN const CGFloat UIFontWeightUltraLight NS_AVAILABLE_IOS(8_2);
@@ -95,14 +98,16 @@
   NSLog(@"UIFontWeightBold %f", UIFontWeightBold);
   NSLog(@"UIFontWeightHeavy %f", UIFontWeightHeavy);
   NSLog(@"UIFontWeightBlack %f", UIFontWeightBlack);
+
+  UIFont *defaultFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  NSLog (@"Font Family : %@", defaultFont.familyName);
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
   NSString *sizeCategory = notification.userInfo[UIContentSizeCategoryNewValueKey];
   NSLog(@"New size category : %@", sizeCategory);
 
-  [self.tableView beginUpdates];
-  [self.tableView endUpdates];
+  [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource

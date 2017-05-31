@@ -33,10 +33,27 @@
   MDCFontTraits *materialTraits =
       [MDCFontTraits traitsForTextStyle:style sizeCategory:sizeCategory];
 
+  // Store the system font family name to ensure that we load the system font.
+  // If we do not explicitly include this UIFontDescriptorFamilyAttribute in the
+  // FontDescriptor the OS will default to Helvetica.
+  static NSString *systemFontFamilyName;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    UIFont *systemFont;
+    if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+      systemFont = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
+    } else {
+      // TODO: Remove this fallback once we are 8.2+
+      systemFont = [UIFont systemFontOfSize:12];
+    }
+    systemFontFamilyName = [systemFont.familyName copy];
+  });
+
   NSDictionary *traits = @{ UIFontWeightTrait : @(materialTraits.weight) };
   NSDictionary *attributes = @{
     UIFontDescriptorSizeAttribute : @(materialTraits.pointSize),
-    UIFontDescriptorTraitsAttribute : traits
+    UIFontDescriptorTraitsAttribute : traits,
+    UIFontDescriptorFamilyAttribute : systemFontFamilyName
   };
 
   UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] initWithFontAttributes:attributes];
