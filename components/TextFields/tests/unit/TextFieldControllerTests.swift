@@ -62,8 +62,8 @@ class TextFieldControllerTests: XCTestCase {
     textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
 
     XCTAssertTrue("51 / 50".isEqual(textField.trailingLabel.text))
-    XCTAssertEqual(MDCPalette.red().tint500, textField.underline?.color)
-    XCTAssertEqual(MDCPalette.red().tint500, textField.trailingLabel.textColor)
+    XCTAssertEqual(MDCPalette.red.tint500, textField.underline?.color)
+    XCTAssertEqual(MDCPalette.red.tint500, textField.trailingLabel.textColor)
   }
 
   func testErrors() {
@@ -91,9 +91,9 @@ class TextFieldControllerTests: XCTestCase {
     controller.errorColor = .blue
     XCTAssertEqual(.blue, controller.errorColor)
 
-    XCTAssertNotEqual(MDCPalette.red().tint500, textField.leadingLabel.textColor)
-    XCTAssertNotEqual(MDCPalette.red().tint500, textField.trailingLabel.textColor)
-    XCTAssertNotEqual(MDCPalette.red().tint500, textField.underline?.color)
+    XCTAssertNotEqual(MDCPalette.red.tint500, textField.leadingLabel.textColor)
+    XCTAssertNotEqual(MDCPalette.red.tint500, textField.trailingLabel.textColor)
+    XCTAssertNotEqual(MDCPalette.red.tint500, textField.underline?.color)
 
     XCTAssertEqual(.blue, textField.leadingLabel.textColor)
     XCTAssertEqual(.blue, textField.trailingLabel.textColor)
@@ -139,6 +139,6 @@ class TextFieldControllerTests: XCTestCase {
     controller.underlineMode = .never
     XCTAssertEqual(.lightGray, textField.underline?.color)
     controller.underlineMode = .always
-    XCTAssertEqual(MDCPalette.indigo().tint500, textField.underline?.color)
+    XCTAssertEqual(MDCPalette.indigo.tint500, textField.underline?.color)
   }
 }
