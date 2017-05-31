@@ -381,11 +381,7 @@ static inline UIColor *MDCTextInputTextErrorColor() {
 #pragma mark - Placeholder Animation
 
 - (void)movePlaceholderToUp:(BOOL)isToUp {
-  if (self.isPlaceholderUp && isToUp) {
-    return;
-  }
-
-  if (!self.isPlaceholderUp && !isToUp) {
+  if (self.isPlaceholderUp == isToUp) {
     return;
   }
 
