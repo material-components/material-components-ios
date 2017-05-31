@@ -101,10 +101,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 
   if (_disabledUnderline) {
-    if (path) {
-      _disabledUnderline.frame = bounds;
-      _disabledUnderline.path = path;
-    }
+    _disabledUnderline.frame = bounds;
+    _disabledUnderline.path = path;
   }
   CGPathRelease(path);
 }
