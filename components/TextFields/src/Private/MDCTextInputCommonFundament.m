@@ -36,7 +36,6 @@ static NSString *const MDCTextInputFundamentClearButtonImageKey =
     @"MDCTextInputFundamentClearButtonImageKey";
 static NSString *const MDCTextInputFundamentHidesPlaceholderKey =
     @"MDCTextInputFundamentHidesPlaceholderKey";
-static NSString *const MDCTextInputFundamentInputKey = @"MDCTextInputFundamentInputKey";
 static NSString *const MDCTextInputFundamentLeadingLabelKey = @"MDCTextInputFundamentLeadingLabelKey";
 static NSString *const MDCTextInputFundamentMDCAdjustsFontsKey =
     @"MDCTextInputFundamentMDCAdjustsFontsKey";
@@ -140,11 +139,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  UIView<MDCTextInput> *input = [aDecoder decodeObjectForKey:MDCTextInputFundamentInputKey];
-
   self = [super init];
   if (self) {
-    _textInput = input;
     [self commonMDCTextInputCommonFundamentInit];
 
     _clearButton = [aDecoder decodeObjectForKey:MDCTextInputFundamentClearButtonKey];
