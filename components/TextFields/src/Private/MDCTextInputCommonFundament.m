@@ -568,11 +568,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (UIImage *)drawnClearButtonImage:(CGSize)size color:(UIColor *)color {
   NSAssert1(
       size.width >= 0,
-      @"drawnClearButtonImage was passed a size with a width not greater than or equal to 0 %@",
+      @"drawnClearButtonImage was passed a size with a width less than 0 %@",
       NSStringFromCGSize(size));
   NSAssert1(
       size.height >= 0,
-      @"drawnClearButtonImage was passed a size with a height not greater than or equal to 0 %@",
+      @"drawnClearButtonImage was passed a size with a height less than 0 %@",
       NSStringFromCGSize(size));
 
   if (CGSizeEqualToSize(size, CGSizeZero)) {
