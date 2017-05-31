@@ -103,7 +103,9 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
         [viewController removeFromParentViewController];
       }
     }
+    // Update the property.
     _viewControllers = [viewControllers copy];
+    // Show the newly-visible view controller.
     [self updateTabBarItems];
   }
 }
@@ -230,5 +232,14 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     }
   }
 }
+
+- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar {
+  if (_tabBar == bar) {
+    return UIBarPositionBottom;
+  } else {
+    return UIBarPositionAny;
+  }
+}
+
 
 @end

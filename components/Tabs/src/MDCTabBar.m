@@ -245,7 +245,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     shouldSelect = [delegate tabBar:self shouldSelectItem:item];
   }
   if (shouldSelect && [delegate respondsToSelector:@selector(tabBar:willSelectItem:)]) {
-      [delegate tabBar:self willSelectItem:item];
+    [delegate tabBar:self willSelectItem:item];
   }
   return shouldSelect;
 }

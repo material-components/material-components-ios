@@ -29,7 +29,7 @@ extern const CGFloat MDCTabBarViewControllerAnimationDuration;
  view controller appears.
  */
 IB_DESIGNABLE
-@interface MDCTabBarViewController : UIViewController <MDCTabBarDelegate>
+@interface MDCTabBarViewController : UIViewController <MDCTabBarDelegate, UIBarPositioningDelegate>
 
 /** The tab bar controller's delegate. */
 @property(nonatomic, weak, nullable) id<MDCTabBarControllerDelegate> delegate;
@@ -48,10 +48,8 @@ IB_DESIGNABLE
 
 /**
  The tab bar which allows the user to switch between view controllers.
-
  You can use this property to set colors but hide it, show it, and select
  items in it using methods of this class.
-
  */
 @property(nonatomic, readonly, nullable) MDCTabBar *tabBar;
 

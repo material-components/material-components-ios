@@ -424,6 +424,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 + (NSArray *)observableItemKeys {
   static dispatch_once_t onceToken;
   static NSArray *s_keys = nil;
+  // clang-format off
   dispatch_once(&onceToken, ^{
     s_keys = @[
       NSStringFromSelector(@selector(title)),
@@ -432,6 +433,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       NSStringFromSelector(@selector(accessibilityIdentifier))
     ];
   });
+  // clang-format on
   return s_keys;
 }
 
