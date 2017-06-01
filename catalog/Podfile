@@ -41,6 +41,9 @@ target TEST_TARGET do
   project PROJECT_NAME
   inherit! :search_paths
   pod 'EarlGrey'
+  pod 'MaterialComponentsInteractionTests', :path => '../'
+
+  use_frameworks!
 end
 
 post_install do |installer|

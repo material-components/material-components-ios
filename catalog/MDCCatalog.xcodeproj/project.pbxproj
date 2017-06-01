@@ -12,6 +12,7 @@
 		0B50E1A81D91B63800DED250 /* EarlGrey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0BE1D27E1DD276D000F8544B /* MDCCatalogTiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1D27D1DD276D000F8544B /* MDCCatalogTiles.m */; };
 		360D6F7F1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */; };
+		3E1C4160795E86D433CCD5EC /* Pods_MDCInteractionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C7A4643F6E1705AF139EA4B /* Pods_MDCInteractionTests.framework */; };
 		404564F21E007C5E004C9D0A /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */; };
 		4097C8B59D0DD1F00845D250 /* Pods_MDCActionExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */; };
 		5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D090E341C9AEB8C0061344A /* Localizable.strings */; };
@@ -28,7 +29,6 @@
 		66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */; };
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
-		868350BCFBA83A90EA697FB4 /* libPods-MDCInteractionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 		DFA0CDB05E436A49344E2810 /* EarlGrey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; };
@@ -149,10 +149,10 @@
 		66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCInkTouchController+Injection.m"; sourceTree = "<group>"; };
 		665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDCCatalog-Bridging-Header.h"; sourceTree = "<group>"; };
 		6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileView.swift; sourceTree = "<group>"; };
-		76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCInteractionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCActionExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FBFFE5E47AD9F7C0D7E3DAA /* Pods-MDCInteractionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCInteractionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
+		9C7A4643F6E1705AF139EA4B /* Pods_MDCInteractionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCInteractionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B751AB4E0A8D312CE6977EDB /* Pods-MDCInteractionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCInteractionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests.release.xcconfig"; sourceTree = "<group>"; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		DE1944851CBD9E40009E0321 /* MDCCatalogTiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTiles.h; sourceTree = "<group>"; };
@@ -166,8 +166,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				868350BCFBA83A90EA697FB4 /* libPods-MDCInteractionTests.a in Frameworks */,
 				DFA0CDB05E436A49344E2810 /* EarlGrey.framework in Frameworks */,
+				3E1C4160795E86D433CCD5EC /* Pods_MDCInteractionTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,8 +288,8 @@
 			isa = PBXGroup;
 			children = (
 				1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */,
-				76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */,
 				88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */,
+				9C7A4643F6E1705AF139EA4B /* Pods_MDCInteractionTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
