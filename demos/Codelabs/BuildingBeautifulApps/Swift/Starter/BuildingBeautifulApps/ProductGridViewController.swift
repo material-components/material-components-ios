@@ -47,12 +47,16 @@ final class ProductGridViewController : MDCCollectionViewController {
         collectionView?.collectionViewLayout.invalidateLayout()
     }
     
+    //MARK: Target / Action
     func favoriteButtonDidTouch(_ sender: UIButton) {
         let product = self.products[sender.tag]
         product.isFavorite = !product.isFavorite
         collectionView?.reloadItems(at: [IndexPath(item: sender.tag, section: 0)])
     }
+}
 
+//MARK: Collection View delegate
+extension ProductGridViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return products.count
     }
@@ -75,8 +79,9 @@ final class ProductGridViewController : MDCCollectionViewController {
     
     
     override func collectionView(_ collectionView: UICollectionView, cellHeightAt indexPath: IndexPath) -> CGFloat {
-        return collectionView.bounds.size.width - CGFloat((styler.gridColumnCount + 1) * (styler.gridColumnCount * 5/4) / styler.gridColumnCount)
+        let base = (collectionView.bounds.size.width - CGFloat((styler.gridColumnCount + 1) * styler.gridColumnCount))
+        let adjustment = CGFloat(5.0/4.0) / CGFloat(styler.gridColumnCount)
+        let height = base * adjustment
+        return height
     }
-    
 }
-
