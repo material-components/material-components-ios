@@ -18,6 +18,7 @@
 
 #import "MaterialRTL.h"
 #import "UIApplication+AppExtensions.h"
+#import "private/MDCActivityIndicator+Private.h"
 
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
 static const NSTimeInterval kMDCActivityIndicatorAnimateOutDuration = 0.1f;
@@ -35,17 +36,6 @@ static const CGFloat kStrokeLength = 0.75f;
  */
 static const CGFloat kSingleCycleRotation =
     2 * kStrokeLength + kCycleRotation + 1.0f / kMDCActivityIndicatorTotalDetentCount;
-
-/*
- States for the internal state machine. The states represent the last animation completed.
- It provides information required to select the next animation.
- */
-typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
-  MDCActivityIndicatorStateIndeterminate,
-  MDCActivityIndicatorStateTransitionToDeterminate,
-  MDCActivityIndicatorStateDeterminate,
-  MDCActivityIndicatorStateTransitionToIndeterminate,
-};
 
 @interface MDCActivityIndicator ()
 
