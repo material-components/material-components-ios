@@ -14,13 +14,24 @@
  limitations under the License.
  */
 
-import UIKit
+import Foundation
 
-class HomeHeaderView: UIView {
-
-    @IBOutlet weak var backgroundImage: UIImageView?
-    @IBOutlet weak var descLabel: UILabel?
-    @IBOutlet weak var titleLabel: UILabel?
-    @IBOutlet weak var textLogo: UIImageView?
-
+final class Product {
+    
+    var imagePath: String?
+    let price: String
+    var isFavorite: Bool = false
+    
+    init() {
+        self.price = String(describing: arc4random() % 100)
+    }
+    
+    func isEqual(_ object: Any) -> Bool {
+        if let product = object as? Product {
+            return product.price == self.price && product.imagePath == self.imagePath && product.isFavorite == self.isFavorite
+        }
+        
+        return false
+    }
+    
 }
