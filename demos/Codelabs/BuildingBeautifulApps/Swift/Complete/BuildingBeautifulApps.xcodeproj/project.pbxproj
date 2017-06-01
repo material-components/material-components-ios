@@ -162,7 +162,6 @@
 				TargetAttributes = {
 					46E6DB6A1EDF351A00259426 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 6D5VRUPLNQ;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -379,10 +378,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = 6D5VRUPLNQ;
-				INFOPLIST_FILE = BuildingBeautifulApps/Info.plist;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/BuildingBeautifulApps/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.ShrineCodelabSwift.BuildingBeautifulApps;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.codelab.BuildingBeautifulAppsSwiftComplete;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -394,10 +393,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = 6D5VRUPLNQ;
-				INFOPLIST_FILE = BuildingBeautifulApps/Info.plist;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/BuildingBeautifulApps/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.ShrineCodelabSwift.BuildingBeautifulApps;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.mux.codelab.BuildingBeautifulAppsSwiftComplete;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
