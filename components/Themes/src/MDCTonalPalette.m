@@ -19,50 +19,38 @@
 @implementation MDCTonalPalette
 
 - (nonnull instancetype)initWithColors:(nonnull NSArray<UIColor *> *)colors
-                             mainColor:(UIColor *)mainColor
-                            lightColor:(UIColor *)lightColor
-                             darkColor:(UIColor *)darkColor {
+                        mainColorIndex:(NSUInteger)mainColorIndex
+                       lightColorIndex:(NSUInteger)lightColorIndex
+                        darkColorIndex:(NSUInteger)darkColorIndex {
   self = [super init];
   if (self) {
     _colors = [colors copy];
-    _mainColor = mainColor;
-    _lightColor = lightColor;
-    _darkColor = darkColor;
+    if (mainColorIndex > colors.count - 1) {
+      NSAssert(NO, @"Main color index is greater than color index size.");
+    }
+    if (lightColorIndex > colors.count - 1) {
+      NSAssert(NO, @"Light color index is greater than color index size.");
+    }
+    if (darkColorIndex > colors.count - 1) {
+      NSAssert(NO, @"Dark color index is greater than color index size.");
+    }
+    _mainColorIndex = mainColorIndex;
+    _lightColorIndex = lightColorIndex;
+    _darkColorIndex = darkColorIndex;
   }
   return self;
 }
 
-- (NSUInteger)mainColorIndex {
-  for (NSUInteger i = 0; i < _colors.count; i++) {
-    UIColor *color = _colors[i];
-    if (CGColorEqualToColor(_mainColor.CGColor, color.CGColor)) {
-      return i;
-    }
-  }
-  NSAssert(YES, @"Main color not found in color array.");
-  return 0;
+- (UIColor *)mainColor {
+  return _colors[_mainColorIndex];
 }
 
-- (NSUInteger)lightColorIndex {
-  for (NSUInteger i = 0; i < _colors.count; i++) {
-    UIColor *color = _colors[i];
-    if (CGColorEqualToColor(_lightColor.CGColor, color.CGColor)) {
-      return i;
-    }
-  }
-  NSAssert(YES, @"Light color not found in color array.");
-  return 0;
+- (UIColor *)lightColor {
+  return _colors[_lightColorIndex];
 }
 
-- (NSUInteger)darkColorIndex {
-  for (NSUInteger i = 0; i < _colors.count; i++) {
-    UIColor *color = _colors[i];
-    if (CGColorEqualToColor(_darkColor.CGColor, color.CGColor)) {
-      return i;
-    }
-  }
-  NSAssert(YES, @"Dark color not found in color array.");
-  return 0;
+- (UIColor *)darkColor {
+  return _colors[_darkColorIndex];
 }
 
 @end

@@ -65,9 +65,9 @@
  light and dark colors within the color array.
  */
 - (nonnull instancetype)initWithColors:(nonnull NSArray<UIColor *> *)colors
-                             mainColor:(nonnull UIColor *)mainColor
-                            lightColor:(nonnull UIColor *)lightColor
-                             darkColor:(nonnull UIColor *)darkColor
+                        mainColorIndex:(NSUInteger)mainColorIndex
+                       lightColorIndex:(NSUInteger)lightColorIndex
+                        darkColorIndex:(NSUInteger)darkColorIndex
     NS_DESIGNATED_INITIALIZER;
 
 @end
