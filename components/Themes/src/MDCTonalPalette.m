@@ -26,13 +26,13 @@
   if (self) {
     _colors = [colors copy];
     if (mainColorIndex > colors.count - 1) {
-      NSAssert(NO, @"Main color index is greater than color index size.");
+      NSAssert(NO, @"Main color index is greater than color array size.");
     }
     if (lightColorIndex > colors.count - 1) {
-      NSAssert(NO, @"Light color index is greater than color index size.");
+      NSAssert(NO, @"Light color index is greater than color array size.");
     }
     if (darkColorIndex > colors.count - 1) {
-      NSAssert(NO, @"Dark color index is greater than color index size.");
+      NSAssert(NO, @"Dark color index is greater than color array size.");
     }
     _mainColorIndex = mainColorIndex;
     _lightColorIndex = lightColorIndex;
