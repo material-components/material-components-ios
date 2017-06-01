@@ -23,12 +23,15 @@ final class Product {
     var isFavorite: Bool = false
     
     init() {
-        self.price = String(describing: arc4random() % 100)
+      // Random price
+      self.price = "$" + String(describing: arc4random() % 100)
     }
     
     func isEqual(_ object: Any) -> Bool {
         if let product = object as? Product {
-            return product.price == self.price && product.imagePath == self.imagePath && product.isFavorite == self.isFavorite
+            return product.price == self.price &&
+              product.imagePath == self.imagePath &&
+              product.isFavorite == self.isFavorite
         }
         
         return false
