@@ -16,34 +16,36 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCBasicColorScheme;
+
 /** A function that will perform drawing operations in @c frame. */
-typedef void (*MDCDrawFunc)(CGRect);
+typedef void (*MDCDrawFunc)(CGRect, MDCBasicColorScheme*);
 
 /** Render the drawing operations in @c drawFunc into a new image. */
-UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc);
+UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, MDCBasicColorScheme *colorScheme);
 
 /* Draw various tiles. */
-void MDCCatalogDrawActivityIndicatorTile(CGRect frame);
-void MDCCatalogDrawAnimationTimingTile(CGRect frame);
-void MDCCatalogDrawAppBarTile(CGRect frame);
-void MDCCatalogDrawButtonBarTile(CGRect frame);
-void MDCCatalogDrawButtonsTile(CGRect frame);
-void MDCCatalogDrawCollectionCellsTile(CGRect frame);
-void MDCCatalogDrawCollectionsTile(CGRect frame);
-void MDCCatalogDrawDialogsTile(CGRect frame);
-void MDCCatalogDrawFeatureHighlightTile(CGRect frame);
-void MDCCatalogDrawFlexibleHeaderTile(CGRect frame);
-void MDCCatalogDrawHeaderStackViewTile(CGRect frame);
-void MDCCatalogDrawInkTile(CGRect frame);
-void MDCCatalogDrawMiscTile(CGRect frame);
-void MDCCatalogDrawNavigationBarTile(CGRect frame);
-void MDCCatalogDrawOverlayWindow(CGRect frame);
-void MDCCatalogDrawPageControlTile(CGRect frame);
-void MDCCatalogDrawPalettesTile(CGRect frame);
-void MDCCatalogDrawProgressViewTile(CGRect frame);
-void MDCCatalogDrawShadowLayerTile(CGRect frame);
-void MDCCatalogDrawSliderTile(CGRect frame);
-void MDCCatalogDrawSnackbarTile(CGRect frame);
-void MDCCatalogDrawSwitchTile(CGRect frame);
-void MDCCatalogDrawTabsTile(CGRect frame);
-void MDCCatalogDrawTypographyTile(CGRect frame);
+void MDCCatalogDrawActivityIndicatorTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawAnimationTimingTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawAppBarTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawButtonBarTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawButtonsTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawCollectionCellsTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawCollectionsTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawDialogsTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawFeatureHighlightTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawHeaderStackViewTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawInkTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawMiscTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawNavigationBarTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawOverlayWindow(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawPageControlTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawPalettesTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawProgressViewTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawShadowLayerTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawSliderTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawSnackbarTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawSwitchTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawTabsTile(CGRect frame, MDCBasicColorScheme *colorScheme);
+void MDCCatalogDrawTypographyTile(CGRect frame, MDCBasicColorScheme *colorScheme);

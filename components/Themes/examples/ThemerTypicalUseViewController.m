@@ -45,6 +45,8 @@
   [MDCProgressViewColorThemer applyColorScheme:self.colorScheme
                                 toProgressView:[MDCProgressView appearance]];
 
+  UIApplication *app = [UIApplication mdc_safeSharedApplication];
+  app.delegate;
   [self setupExampleViews];
 }
 
