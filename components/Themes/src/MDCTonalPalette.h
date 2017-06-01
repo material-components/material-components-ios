@@ -62,7 +62,9 @@
 
 /**
  Initializes and returns a color scheme given an array of colors and specified indices of the main,
- light and dark colors within the color array.
+ light and dark colors within the color array. Indices that are out of bounds of the color array are
+ not acceptable. However, there can be duplicate indices (i.e. the main color index can potentially
+ be the same as the light or dark color index).
  */
 - (nonnull instancetype)initWithColors:(nonnull NSArray<UIColor *> *)colors
                         mainColorIndex:(NSUInteger)mainColorIndex
