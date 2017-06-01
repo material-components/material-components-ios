@@ -16,10 +16,10 @@
 
 import Foundation
 
-enum ProductCategory: Int {
-    case home
-    case clothing
-    case popsicles
+enum ProductCategory: String {
+    case home = "/Home/"
+    case clothing = "/Clothing/"
+    case popsicles = "popsicle"
 }
 
 func productsFor(category: ProductCategory) -> [Product] {
@@ -33,19 +33,19 @@ func productsFor(category: ProductCategory) -> [Product] {
     case .popsicles:
         // 16 popsicles
         for _ in 0...16 {
-            if let path = Bundle.main.path(forResource: "popsicle", ofType: pngExtension) {
+            if let path = Bundle.main.path(forResource: category.rawValue, ofType: pngExtension) {
                 files.append(path)
             }
         }
     case .clothing:
-        folderPath = resourcePath + ("/Clothing/")
+        folderPath = resourcePath + category.rawValue
         if let fileNames = try? FileManager.default.contentsOfDirectory(atPath: folderPath as String) {
             for fileName in fileNames {
                 files.append(folderPath + fileName)
             }
         }
     case .home:
-        folderPath = resourcePath + ("/Home/")
+        folderPath = resourcePath + category.rawValue
         if let fileNames = try? FileManager.default.contentsOfDirectory(atPath: folderPath as String) {
             for fileName in fileNames {
                 files.append(folderPath + fileName)

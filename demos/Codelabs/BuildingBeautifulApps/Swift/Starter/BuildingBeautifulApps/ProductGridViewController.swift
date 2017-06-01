@@ -47,7 +47,7 @@ final class ProductGridViewController : MDCCollectionViewController {
         collectionView?.collectionViewLayout.invalidateLayout()
     }
     
-    //MARK: Target / Action
+    // MARK: Target / Action
     func favoriteButtonDidTouch(_ sender: UIButton) {
         let product = self.products[sender.tag]
         product.isFavorite = !product.isFavorite
@@ -55,7 +55,7 @@ final class ProductGridViewController : MDCCollectionViewController {
     }
 }
 
-//MARK: Collection View delegate
+// MARK: Collection view delegate
 extension ProductGridViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return products.count
