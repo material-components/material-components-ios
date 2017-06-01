@@ -19,29 +19,50 @@
 @implementation MDCTonalPalette
 
 - (nonnull instancetype)initWithColors:(nonnull NSArray<UIColor *> *)colors
-                        mainColorIndex:(int)mainColorIndex
-                       lightColorIndex:(int)lightColorIndex
-                        darkColorIndex:(int)darkColorIndex {
+                             mainColor:(UIColor *)mainColor
+                            lightColor:(UIColor *)lightColor
+                             darkColor:(UIColor *)darkColor {
   self = [super init];
   if (self) {
-    _colors = colors;
-    _mainColorIndex = mainColorIndex;
-    _lightColorIndex = lightColorIndex;
-    _darkColorIndex = darkColorIndex;
+    _colors = [colors copy];
+    _mainColor = mainColor;
+    _lightColor = lightColor;
+    _darkColor = darkColor;
   }
   return self;
 }
 
-- (UIColor *)mainColor {
-  return _colors[_mainColorIndex];
+- (NSUInteger)mainColorIndex {
+  for (NSUInteger i = 0; i < _colors.count; i++) {
+    UIColor *color = _colors[i];
+    if (CGColorEqualToColor(_mainColor.CGColor, color.CGColor)) {
+      return i;
+    }
+  }
+  NSAssert(YES, @"Main color not found in color array.");
+  return 0;
 }
 
-- (UIColor *)lightColor {
-  return _colors[_lightColorIndex];
+- (NSUInteger)lightColorIndex {
+  for (NSUInteger i = 0; i < _colors.count; i++) {
+    UIColor *color = _colors[i];
+    if (CGColorEqualToColor(_mainColor.CGColor, color.CGColor)) {
+      return i;
+    }
+  }
+  NSAssert(YES, @"Light color not found in color array.");
+  return 0;
 }
 
-- (UIColor *)darkColor {
-  return _colors[_darkColorIndex];
+- (NSUInteger)darkColorIndex {
+  for (NSUInteger i = 0; i < _colors.count; i++) {
+    UIColor *color = _colors[i];
+    if (CGColorEqualToColor(_mainColor.CGColor, color.CGColor)) {
+      return i;
+    }
+  }
+  NSAssert(YES, @"Dark color not found in color array.");
+  return 0;
 }
 
 @end

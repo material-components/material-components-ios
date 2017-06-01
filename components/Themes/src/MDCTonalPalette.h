@@ -26,22 +26,22 @@
 /**
  The colors that comprise a tonal palette.
  */
-@property (nonatomic, strong, nonnull, readonly) NSArray<UIColor *> *colors;
+@property (nonatomic, copy, nonnull, readonly) NSArray<UIColor *> *colors;
 
 /**
  The index of the main color of a tonal palette.
  */
-@property (nonatomic, readonly) int mainColorIndex;
+@property (nonatomic, readonly) NSUInteger mainColorIndex;
 
 /**
  The index of the light color of a tonal palette.
  */
-@property (nonatomic, readonly) int lightColorIndex;
+@property (nonatomic, readonly) NSUInteger lightColorIndex;
 
 /**
  The index of the dark color of a tonal palette.
  */
-@property (nonatomic, readonly) int darkColorIndex;
+@property (nonatomic, readonly) NSUInteger darkColorIndex;
 
 /**
  The main color of a tonal palette.
@@ -65,9 +65,9 @@
  light and dark colors within the color array.
  */
 - (nonnull instancetype)initWithColors:(nonnull NSArray<UIColor *> *)colors
-                        mainColorIndex:(int)mainColorIndex
-                       lightColorIndex:(int)lightColorIndex
-                        darkColorIndex:(int)darkColorIndex
+                             mainColor:(nonnull UIColor *)mainColor
+                            lightColor:(nonnull UIColor *)lightColor
+                             darkColor:(nonnull UIColor *)darkColor
     NS_DESIGNATED_INITIALIZER;
 
 @end
