@@ -46,7 +46,7 @@
 - (NSUInteger)lightColorIndex {
   for (NSUInteger i = 0; i < _colors.count; i++) {
     UIColor *color = _colors[i];
-    if (CGColorEqualToColor(_mainColor.CGColor, color.CGColor)) {
+    if (CGColorEqualToColor(_lightColor.CGColor, color.CGColor)) {
       return i;
     }
   }
@@ -57,7 +57,7 @@
 - (NSUInteger)darkColorIndex {
   for (NSUInteger i = 0; i < _colors.count; i++) {
     UIColor *color = _colors[i];
-    if (CGColorEqualToColor(_mainColor.CGColor, color.CGColor)) {
+    if (CGColorEqualToColor(_darkColor.CGColor, color.CGColor)) {
       return i;
     }
   }
