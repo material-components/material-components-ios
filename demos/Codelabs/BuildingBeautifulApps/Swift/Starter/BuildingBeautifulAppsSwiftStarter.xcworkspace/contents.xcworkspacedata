@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/larche/material-components-ios-joel/demos/Codelabs/BuildingBeautifulApps/Swift/Starter/BuildingBeautifulAppsSwiftStarter.xcodeproj">
+      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:BuildingBeautifulAppsSwiftStarter.xcodeproj">
    </FileRef>
 </Workspace>
