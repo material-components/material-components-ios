@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */; };
-		0B50E19C1D91B0BD00DED250 /* MDCInteractionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B50E19B1D91B0BD00DED250 /* MDCInteractionTests.m */; };
 		0B50E1A81D91B63800DED250 /* EarlGrey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0BE1D27E1DD276D000F8544B /* MDCCatalogTiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1D27D1DD276D000F8544B /* MDCCatalogTiles.m */; };
 		360D6F7F1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */; };
@@ -29,7 +28,7 @@
 		66519B071CCA980600E5423E /* MDCInkTouchController+Injection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */; };
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
-		868350BCFBA83A90EA697FB4 /* libPods-MDCInteractionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */; };
+		AB6F8002250EF87B42EC0B65 /* Pods_MDCEarlGreyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 		DFA0CDB05E436A49344E2810 /* EarlGrey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; };
@@ -89,13 +88,14 @@
 
 /* Begin PBXFileReference section */
 		0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogWindow.swift; sourceTree = "<group>"; };
-		0B50E1991D91B0BD00DED250 /* MDCInteractionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDCInteractionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0B50E19B1D91B0BD00DED250 /* MDCInteractionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDCInteractionTests.m; sourceTree = "<group>"; };
+		0B50E1991D91B0BD00DED250 /* MDCEarlGreyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDCEarlGreyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B50E19D1D91B0BD00DED250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BE1D27D1DD276D000F8544B /* MDCCatalogTiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTiles.m; sourceTree = "<group>"; };
+		0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCEarlGreyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1259AD212C335B693CDA9EEA /* Pods-MDCActionExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCActionExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCActionExtension/Pods-MDCActionExtension.release.xcconfig"; sourceTree = "<group>"; };
 		183654B47DCDF28C315C006B /* Pods-MDCActionExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCActionExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCActionExtension/Pods-MDCActionExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCCatalog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		34BE42412FB69BDDF92EA27E /* Pods-MDCEarlGreyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCEarlGreyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCEarlGreyTests/Pods-MDCEarlGreyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 		36C870B71E8AD6A20032EA7D /* RobotoMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Medium.ttf"; sourceTree = "<group>"; };
 		404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -151,11 +151,9 @@
 		66519B061CCA980600E5423E /* MDCInkTouchController+Injection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDCInkTouchController+Injection.m"; sourceTree = "<group>"; };
 		665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDCCatalog-Bridging-Header.h"; sourceTree = "<group>"; };
 		6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogTileView.swift; sourceTree = "<group>"; };
-		76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MDCInteractionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCActionExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8FBFFE5E47AD9F7C0D7E3DAA /* Pods-MDCInteractionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCInteractionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
-		B751AB4E0A8D312CE6977EDB /* Pods-MDCInteractionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCInteractionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests.release.xcconfig"; sourceTree = "<group>"; };
+		BB1A0ED4DB4091C5905AE474 /* Pods-MDCEarlGreyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCEarlGreyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCEarlGreyTests/Pods-MDCEarlGreyTests.release.xcconfig"; sourceTree = "<group>"; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		DE1944851CBD9E40009E0321 /* MDCCatalogTiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTiles.h; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
@@ -168,8 +166,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				868350BCFBA83A90EA697FB4 /* libPods-MDCInteractionTests.a in Frameworks */,
 				DFA0CDB05E436A49344E2810 /* EarlGrey.framework in Frameworks */,
+				AB6F8002250EF87B42EC0B65 /* Pods_MDCEarlGreyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,13 +190,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0B50E19A1D91B0BD00DED250 /* MDCInteractionTests */ = {
+		0B50E19A1D91B0BD00DED250 /* MDCEarlGreyTests */ = {
 			isa = PBXGroup;
 			children = (
-				0B50E19B1D91B0BD00DED250 /* MDCInteractionTests.m */,
 				0B50E19D1D91B0BD00DED250 /* Info.plist */,
 			);
-			path = MDCInteractionTests;
+			path = MDCEarlGreyTests;
 			sourceTree = "<group>";
 		};
 		5D090E331C9AEB8C0061344A /* Localizable */ = {
@@ -233,7 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				664524B51C6BA62A001ADBF8 /* MDCCatalog */,
-				0B50E19A1D91B0BD00DED250 /* MDCInteractionTests */,
+				0B50E19A1D91B0BD00DED250 /* MDCEarlGreyTests */,
 				64307B391DF74FEF004AE4AC /* MDCActionExtension */,
 				664524B41C6BA62A001ADBF8 /* Products */,
 				E165A9868676B4998575E09A /* Pods */,
@@ -245,7 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				664524B31C6BA62A001ADBF8 /* MDCCatalog.app */,
-				0B50E1991D91B0BD00DED250 /* MDCInteractionTests.xctest */,
+				0B50E1991D91B0BD00DED250 /* MDCEarlGreyTests.xctest */,
 				E94681B7591B9CD40924C92C /* EarlGrey.framework */,
 				64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */,
 			);
@@ -291,8 +288,8 @@
 			isa = PBXGroup;
 			children = (
 				1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */,
-				76B2366A3D84884625446809 /* libPods-MDCInteractionTests.a */,
 				88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */,
+				0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -302,10 +299,10 @@
 			children = (
 				90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */,
 				C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */,
-				8FBFFE5E47AD9F7C0D7E3DAA /* Pods-MDCInteractionTests.debug.xcconfig */,
-				B751AB4E0A8D312CE6977EDB /* Pods-MDCInteractionTests.release.xcconfig */,
 				183654B47DCDF28C315C006B /* Pods-MDCActionExtension.debug.xcconfig */,
 				1259AD212C335B693CDA9EEA /* Pods-MDCActionExtension.release.xcconfig */,
+				34BE42412FB69BDDF92EA27E /* Pods-MDCEarlGreyTests.debug.xcconfig */,
+				BB1A0ED4DB4091C5905AE474 /* Pods-MDCEarlGreyTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -313,9 +310,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0B50E1981D91B0BD00DED250 /* MDCInteractionTests */ = {
+		0B50E1981D91B0BD00DED250 /* MDCEarlGreyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0B50E1A21D91B0BD00DED250 /* Build configuration list for PBXNativeTarget "MDCInteractionTests" */;
+			buildConfigurationList = 0B50E1A21D91B0BD00DED250 /* Build configuration list for PBXNativeTarget "MDCEarlGreyTests" */;
 			buildPhases = (
 				82C64B6BDC3E7B5783054EF2 /* [CP] Check Pods Manifest.lock */,
 				0B50E1951D91B0BD00DED250 /* Sources */,
@@ -331,9 +328,9 @@
 			dependencies = (
 				0B50E19F1D91B0BD00DED250 /* PBXTargetDependency */,
 			);
-			name = MDCInteractionTests;
-			productName = MDCInteractionTests;
-			productReference = 0B50E1991D91B0BD00DED250 /* MDCInteractionTests.xctest */;
+			name = MDCEarlGreyTests;
+			productName = MDCEarlGreyTests;
+			productReference = 0B50E1991D91B0BD00DED250 /* MDCEarlGreyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		64307B371DF74FEF004AE4AC /* MDCActionExtension */ = {
@@ -389,6 +386,7 @@
 				TargetAttributes = {
 					0B50E1981D91B0BD00DED250 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 664524B21C6BA62A001ADBF8;
 					};
@@ -451,7 +449,7 @@
 			projectRoot = "";
 			targets = (
 				664524B21C6BA62A001ADBF8 /* MDCCatalog */,
-				0B50E1981D91B0BD00DED250 /* MDCInteractionTests */,
+				0B50E1981D91B0BD00DED250 /* MDCEarlGreyTests */,
 				64307B371DF74FEF004AE4AC /* MDCActionExtension */,
 			);
 		};
@@ -502,7 +500,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCEarlGreyTests/Pods-MDCEarlGreyTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		72ACDAA295D1F2087113246F /* [CP] Embed Pods Frameworks */ = {
@@ -577,7 +575,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCInteractionTests/Pods-MDCInteractionTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCEarlGreyTests/Pods-MDCEarlGreyTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CF1E8983301BB250EA61087B /* [CP] Check Pods Manifest.lock */ = {
@@ -617,7 +615,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B50E19C1D91B0BD00DED250 /* MDCInteractionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,32 +720,37 @@
 /* Begin XCBuildConfiguration section */
 		0B50E1A01D91B0BD00DED250 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FBFFE5E47AD9F7C0D7E3DAA /* Pods-MDCInteractionTests.debug.xcconfig */;
+			baseConfigurationReference = 34BE42412FB69BDDF92EA27E /* Pods-MDCEarlGreyTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = MDCInteractionTests/Info.plist;
+				INFOPLIST_FILE = MDCEarlGreyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCInteractionTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCEarlGreyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MDCCatalog.app/MDCCatalog";
 			};
 			name = Debug;
 		};
 		0B50E1A11D91B0BD00DED250 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B751AB4E0A8D312CE6977EDB /* Pods-MDCInteractionTests.release.xcconfig */;
+			baseConfigurationReference = BB1A0ED4DB4091C5905AE474 /* Pods-MDCEarlGreyTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = MDCInteractionTests/Info.plist;
+				INFOPLIST_FILE = MDCEarlGreyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCInteractionTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCEarlGreyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MDCCatalog.app/MDCCatalog";
 			};
 			name = Release;
@@ -916,7 +918,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0B50E1A21D91B0BD00DED250 /* Build configuration list for PBXNativeTarget "MDCInteractionTests" */ = {
+		0B50E1A21D91B0BD00DED250 /* Build configuration list for PBXNativeTarget "MDCEarlGreyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0B50E1A01D91B0BD00DED250 /* Debug */,

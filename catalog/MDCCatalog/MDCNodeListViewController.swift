@@ -287,6 +287,7 @@ extension MDCNodeListViewController {
     }
     cell!.accessoryType = .disclosureIndicator
 
+    cell!.accessibilityIdentifier = "Cell" + cell!.textLabel!.text!
     return cell!
   }
 

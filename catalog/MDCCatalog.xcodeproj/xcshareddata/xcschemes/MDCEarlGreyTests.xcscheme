@@ -6,6 +6,33 @@
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
    </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "NO">
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0B50E1981D91B0BD00DED250"
+               BuildableName = "MDCEarlGreyTests.xctest"
+               BlueprintName = "MDCEarlGreyTests"
+               ReferencedContainer = "container:MDCCatalog.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "DYLD_INSERT_LIBRARIES"
+            value = "@executable_path/EarlGrey.framework/EarlGrey"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
+      <AdditionalOptions>
+      </AdditionalOptions>
+   </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -33,31 +60,4 @@
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
-   <TestAction
-      buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "NO">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0B50E1981D91B0BD00DED250"
-               BuildableName = "MDCInteractionTests.xctest"
-               BlueprintName = "MDCInteractionTests"
-               ReferencedContainer = "container:MDCCatalog.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
-      <AdditionalOptions>
-      </AdditionalOptions>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "DYLD_INSERT_LIBRARIES"
-            value = "@executable_path/EarlGrey.framework/EarlGrey"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
-   </TestAction>
 </Scheme>
