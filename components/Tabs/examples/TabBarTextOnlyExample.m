@@ -64,14 +64,11 @@
   ];
 
   // Give it a white appearance to show dark text and customize the unselected title color.
-  UIColor *primaryColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
-  UIColor *primaryLightColor = [MDCColorSchemeView appearance].colorScheme.primaryLightColor;
-  UIColor *primaryDarkColor = [MDCColorSchemeView appearance].colorScheme.primaryDarkColor;
 
-  self.tabBar.selectedItemTintColor = primaryLightColor;
-  self.tabBar.unselectedItemTintColor = [primaryLightColor colorWithAlphaComponent:0.5];
+  self.tabBar.selectedItemTintColor = [UIColor whiteColor];
+  self.tabBar.unselectedItemTintColor = [UIColor grayColor];
   self.tabBar.tintColor = [UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1];
-  self.tabBar.barTintColor = primaryColor;
+  self.tabBar.barTintColor = [UIColor colorWithWhite:0.1 alpha:1];
   self.tabBar.inkColor = [UIColor colorWithWhite:1 alpha:0.1];
 
   self.tabBar.autoresizingMask =

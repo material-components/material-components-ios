@@ -53,13 +53,9 @@ static NSString * const kCell = @"Cell";
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCell];
 
-  UIColor *primaryColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
-  UIColor *primaryLightColor = [MDCColorSchemeView appearance].colorScheme.primaryLightColor;
-
   // Set up container view of three activity indicators.
   UIView *indicators =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 160)];
-  indicators.backgroundColor = primaryLightColor;
 
   [indicators addSubview:self.activityIndicator1];
   [indicators addSubview:self.activityIndicator2];
@@ -74,9 +70,7 @@ static NSString * const kCell = @"Cell";
 
   self.indicators = indicators;
 
-
   self.onSwitch = [[UISwitch alloc] init];
-  self.onSwitch.onTintColor = primaryColor;
   [self.onSwitch setOn:YES];
   [self.onSwitch addTarget:self
                     action:@selector(didChangeOnSwitch:)
@@ -84,7 +78,6 @@ static NSString * const kCell = @"Cell";
 
   CGRect sliderFrame = CGRectMake(0, 0, 160, 27);
   self.slider = [[UISlider alloc] initWithFrame:sliderFrame];
-  self.slider.tintColor = primaryColor;
   self.slider.value = kActivityInitialProgress;
   [self.slider addTarget:self
                   action:@selector(didChangeSliderValue:)

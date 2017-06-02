@@ -73,8 +73,9 @@ class MDCCatalogTileView: UIView {
     let left = (self.frame.width - defaultSize.width) / 2
     let top = (self.frame.height - defaultSize.height) / 2
     imageView.frame = CGRect(x: left, y: top, width: defaultSize.width, height: defaultSize.height)
-    
-    let colorScheme = MDCColorSchemeView.appearance().colorScheme
+
+    let appDelegate = UIApplication.shared.delegate as! MDCAppDelegate
+    let colorScheme = appDelegate.colorScheme
 
     switch componentNameString {
     case "Activity Indicator":

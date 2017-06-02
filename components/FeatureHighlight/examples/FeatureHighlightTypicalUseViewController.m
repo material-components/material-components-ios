@@ -16,6 +16,7 @@
 
 #import "FeatureHighlightExampleSupplemental.h"
 
+#import "MDCFeatureHighlightColorThemer.h"
 #import "MaterialFeatureHighlight.h"
 #import "MaterialThemes.h"
 
@@ -24,10 +25,7 @@
 - (void)didTapButton:(id)sender {
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
-  
-  UIColor *primaryColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
-  vc.outerHighlightColor =
-      [primaryColor colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
+
   vc.titleText = @"Hey a title";
   vc.bodyText = @"This is the description of the feature highlight view controller.";
   [self presentViewController:vc animated:YES completion:nil];

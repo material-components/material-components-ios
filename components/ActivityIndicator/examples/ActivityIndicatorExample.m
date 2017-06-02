@@ -17,7 +17,10 @@
 #import <UIKit/UIKit.h>
 
 #import "ActivityIndicatorExampleSupplemental.h"
+
+#import "MDCActivityIndicatorColorThemer.h"
 #import "MaterialActivityIndicator.h"
+#import "MaterialPalettes.h"
 
 #define MDC_CATALOG_BLACK [UIColor colorWithWhite:0.1f alpha:1]
 #define MDC_CATALOG_GREY  [UIColor colorWithWhite:0.9f alpha:1]
@@ -43,15 +46,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
-  
-  UIColor *primaryColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
-  UIColor *primaryLightColor = [MDCColorSchemeView appearance].colorScheme.primaryLightColor;
 
   // Initialize single color progress indicator
   CGRect defaultRect = CGRectMake(0, 0, 32, 32);
   self.activityIndicator1 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
   self.activityIndicator1.delegate = self;
-  self.activityIndicator1.cycleColors =  @[ primaryColor ];
   self.activityIndicator1.progress = 0.6f;
   self.activityIndicator1.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [self.activityIndicator1 sizeToFit];
@@ -60,7 +59,6 @@
   // Initialize indeterminate indicator.
   self.activityIndicator2 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
   self.activityIndicator2.delegate = self;
-  self.activityIndicator2.cycleColors =  @[ primaryColor ];
   self.activityIndicator2.indicatorMode = MDCActivityIndicatorModeIndeterminate;
   [self.activityIndicator2 sizeToFit];
   [self.activityIndicator2 startAnimating];
@@ -68,7 +66,10 @@
   // Initiatlize multiple color indicator
   self.activityIndicator3 = [[MDCActivityIndicator alloc] initWithFrame:defaultRect];
   self.activityIndicator3.delegate = self;
-  self.activityIndicator3.cycleColors =  @[ primaryColor, primaryLightColor ];
+  self.activityIndicator3.cycleColors =  @[ [MDCPalette bluePalette].tint500,
+                                            [MDCPalette redPalette].tint500,
+                                            [MDCPalette greenPalette].tint500,
+                                            [MDCPalette yellowPalette].tint500 ];
   self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeIndeterminate;
   [self.activityIndicator3 sizeToFit];
   [self.activityIndicator3 startAnimating];

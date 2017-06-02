@@ -26,9 +26,12 @@
 
 #import "MDCActivityIndicatorColorThemer.h"
 #import "MDCAlertColorThemer.h"
+#import "MDCButtonBarColorThemer.h"
 #import "MDCButtonColorThemer.h"
 #import "MDCFeatureHighlightColorThemer.h"
 #import "MDCFlexibleHeaderColorThemer.h"
+#import "MDCHeaderStackViewColorThemer.h"
+#import "MDCNavigationBarColorThemer.h"
 #import "MDCSliderColorThemer.h"
 #import "MDCProgressViewColorThemer.h"
 

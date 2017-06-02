@@ -21,6 +21,7 @@
 
 #import "HeaderStackViewTypicalUseSupplemental.h"
 
+#import "MDCHeaderStackViewColorThemer.h"
 #import "MaterialHeaderStackView.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialThemes.h"
@@ -55,9 +56,6 @@
 
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navBar.titleTextAttributes = [self itemTitleTextAttributes];
-
-  UIColor *primaryColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
-  [self.navBar setBackgroundColor:primaryColor];
 
   UIBarButtonItem *moreButton =
       [[UIBarButtonItem alloc] initWithTitle:@"Reveal"

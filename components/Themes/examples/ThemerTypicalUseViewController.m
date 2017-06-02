@@ -36,18 +36,24 @@
   [MDCActivityIndicatorColorThemer applyColorScheme:self.colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
   [MDCAlertColorThemer applyColorScheme:self.colorScheme];
+  [MDCButtonBarColorThemer applyColorScheme:self.colorScheme toButtonBar:[MDCButtonBar appearance]];
   [MDCButtonColorThemer applyColorScheme:self.colorScheme toButton:[MDCButton appearance]];
   [MDCFeatureHighlightColorThemer applyColorScheme:self.colorScheme
                             toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
   [MDCFlexibleHeaderColorThemer applyColorScheme:self.colorScheme
                             toFlexibleHeaderView:[MDCFlexibleHeaderView appearance]];
+  [MDCHeaderStackViewColorThemer applyColorScheme:self.colorScheme
+                                toHeaderStackView:[MDCHeaderStackView appearance]];
+  [MDCNavigationBarColorThemer applyColorScheme:self.colorScheme
+                                toNavigationBar:[MDCNavigationBar appearance]];
   [MDCSliderColorThemer applyColorScheme:self.colorScheme toSlider:[MDCSlider appearance]];
   [MDCProgressViewColorThemer applyColorScheme:self.colorScheme
                                 toProgressView:[MDCProgressView appearance]];
 
-  [MDCColorSchemeView appearance].colorScheme = self.colorScheme;
+  NSDictionary *userInfo = @{ @"colorScheme" : self.colorScheme };
   [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
-                                                      object:self];
+                                                      object:self
+                                                    userInfo:userInfo];
 
   [self setupExampleViews];
 }

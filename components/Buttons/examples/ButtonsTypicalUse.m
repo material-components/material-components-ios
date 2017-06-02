@@ -16,6 +16,7 @@
 
 #import "ButtonsTypicalUseSupplemental.h"
 
+#import "MDCButtonColorThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialThemes.h"
 #import "MaterialTypography.h"
@@ -28,16 +29,14 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  UIColor *primaryColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
+
   self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-  UIColor *buttonBackground = primaryColor;
   UIColor *titleColor = [UIColor whiteColor];
 
   // Raised button
 
   MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
   [raisedButton setTitleColor:titleColor forState:UIControlStateNormal];
-  [raisedButton setBackgroundColor:buttonBackground forState:UIControlStateNormal];
   [raisedButton setTitle:@"Button" forState:UIControlStateNormal];
   [raisedButton sizeToFit];
   [raisedButton addTarget:self
@@ -50,7 +49,6 @@
 
   MDCRaisedButton *disabledRaisedButton = [[MDCRaisedButton alloc] init];
   [disabledRaisedButton setTitleColor:titleColor forState:UIControlStateNormal];
-  [disabledRaisedButton setBackgroundColor:buttonBackground forState:UIControlStateNormal];
   [disabledRaisedButton setTitle:@"Button" forState:UIControlStateNormal];
   [disabledRaisedButton sizeToFit];
   [disabledRaisedButton addTarget:self
@@ -89,7 +87,6 @@
 
   MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
   [floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
-  [floatingButton setBackgroundColor:buttonBackground forState:UIControlStateNormal];
   [floatingButton sizeToFit];
   [floatingButton addTarget:self
                      action:@selector(didTap:)

@@ -20,9 +20,10 @@ import CatalogByConvention
 import MaterialComponents
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class MDCAppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
+  var colorScheme: MDCBasicColorScheme?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
                    launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -42,10 +43,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
-    let colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
-                                          primaryLightColor: .init(white: 0.7, alpha: 1),
-                                          primaryDarkColor: .init(white: 0, alpha: 1))
-    MDCColorSchemeView.appearance().colorScheme = colorScheme;
+    colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
+                                      primaryLightColor: .init(white: 0.7, alpha: 1),
+                                      primaryDarkColor: .init(white: 0, alpha: 1))
+
+    MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
+    MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
+    MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
+    MDCFeatureHighlightColorThemer.apply(colorScheme, to: MDCFeatureHighlightView.appearance())
+    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
+    MDCHeaderStackViewColorThemer.apply(colorScheme, to: MDCHeaderStackView.appearance())
+    MDCNavigationBarColorThemer.apply(colorScheme, to: MDCNavigationBar.appearance())
 
     return true
   }

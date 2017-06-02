@@ -53,10 +53,8 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   self.appBar.headerViewController.headerView.shiftBehavior =
       MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
-  UIColor *primaryColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
   self.appBar.navigationBar.tintColor = [UIColor whiteColor];
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.backgroundColor = primaryColor;
   self.appBar.headerViewController.headerView.minimumHeight =
       kStatusBarHeight + kTabBarHeight;
   self.appBar.headerViewController.headerView.maximumHeight =

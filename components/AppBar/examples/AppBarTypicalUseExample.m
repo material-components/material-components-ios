@@ -37,9 +37,7 @@
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [MDCColorSchemeView appearance].colorScheme.primaryColor;
-    _appBar.headerViewController.headerView.backgroundColor = color;
+    // Optional: Change the App Bar's tint color.
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
     _appBar.navigationBar.titleTextAttributes =
         @{NSForegroundColorAttributeName : [UIColor whiteColor]};

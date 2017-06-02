@@ -15,4 +15,3 @@
  */
 
 #import "MDCColorScheme.h"
-#import "MDCColorSchemeView.h"
