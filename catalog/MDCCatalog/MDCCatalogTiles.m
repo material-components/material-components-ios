@@ -292,7 +292,7 @@ void MDCCatalogDrawActivityIndicatorTile(CGRect frame, NSObject<MDCColorScheme> 
   }
 }
 
-void MDCCatalogDrawAnimationTimingTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawAnimationTimingTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -686,7 +686,7 @@ void MDCCatalogDrawAnimationTimingTile(CGRect frame, MDCBasicColorScheme *colorS
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawAppBarTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawAppBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryColor;
@@ -771,7 +771,7 @@ void MDCCatalogDrawAppBarTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
   }
 }
 
-void MDCCatalogDrawButtonBarTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawButtonBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
 
   UIColor* fillColor = colorScheme.primaryColor;
   UIColor* fillColor2 = colorScheme.primaryLightColor;
@@ -1700,7 +1700,7 @@ void MDCCatalogDrawButtonBarTile(CGRect frame, MDCBasicColorScheme *colorScheme)
   }
 }
 
-void MDCCatalogDrawButtonsTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawButtonsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryColor;
@@ -1737,7 +1737,7 @@ void MDCCatalogDrawButtonsTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
   [ovalPath fill];
 }
 
-void MDCCatalogDrawCollectionCellsTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawCollectionCellsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -1847,7 +1847,7 @@ void MDCCatalogDrawCollectionCellsTile(CGRect frame, MDCBasicColorScheme *colorS
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawCollectionsTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawCollectionsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryColor;
@@ -1949,7 +1949,7 @@ void MDCCatalogDrawCollectionsTile(CGRect frame, MDCBasicColorScheme *colorSchem
   }
 }
 
-void MDCCatalogDrawDialogsTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawDialogsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -2010,7 +2010,7 @@ void MDCCatalogDrawDialogsTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawFeatureHighlightTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawFeatureHighlightTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryColor;
@@ -2120,7 +2120,7 @@ void MDCCatalogDrawFeatureHighlightTile(CGRect frame, MDCBasicColorScheme *color
   }
 }
 
-void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryColor;
@@ -2212,7 +2212,7 @@ void MDCCatalogDrawFlexibleHeaderTile(CGRect frame, MDCBasicColorScheme *colorSc
   }
 }
 
-void MDCCatalogDrawHeaderStackViewTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawHeaderStackViewTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -2349,7 +2349,7 @@ void MDCCatalogDrawHeaderStackViewTile(CGRect frame, MDCBasicColorScheme *colorS
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawInkTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawInkTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryColor;
@@ -2385,7 +2385,7 @@ void MDCCatalogDrawInkTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
   }
 }
 
-void MDCCatalogDrawMiscTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawMiscTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryColor;
@@ -2601,7 +2601,7 @@ void MDCCatalogDrawMiscTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
   }
 }
 
-void MDCCatalogDrawNavigationBarTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawNavigationBarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -2791,7 +2791,7 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame, MDCBasicColorScheme *colorSch
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawOverlayWindow(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawOverlayWindow(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* fillColor = colorScheme.primaryLightColor;
   UIColor* fillColor2 = colorScheme.primaryColor;
   UIColor* fillColor3 = [UIColor colorWithWhite:0.5 alpha:1.0];
@@ -2908,7 +2908,7 @@ void MDCCatalogDrawOverlayWindow(CGRect frame, MDCBasicColorScheme *colorScheme)
   [overlapRectanglePath fill];
 }
 
-void MDCCatalogDrawPageControlTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawPageControlTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -3046,7 +3046,7 @@ void MDCCatalogDrawPageControlTile(CGRect frame, MDCBasicColorScheme *colorSchem
 
 static NSString* const PalettesFontName = @"RobotoMono-Regular";
 
-void MDCCatalogDrawPalettesTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawPalettesTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGFloat PalettesFontPointSize = [UIScreen mainScreen].bounds.size.width / 320 * 7;
 
   UIColor* textDark = colorScheme.primaryColor;
@@ -3345,7 +3345,7 @@ void MDCCatalogDrawPalettesTile(CGRect frame, MDCBasicColorScheme *colorScheme) 
   }
 }
 
-void MDCCatalogDrawProgressViewTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawProgressViewTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -3427,7 +3427,7 @@ void MDCCatalogDrawProgressViewTile(CGRect frame, MDCBasicColorScheme *colorSche
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawShadowLayerTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawShadowLayerTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryColor;
@@ -3568,7 +3568,7 @@ void MDCCatalogDrawShadowLayerTile(CGRect frame, MDCBasicColorScheme *colorSchem
   }
 }
 
-void MDCCatalogDrawSliderTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawSliderTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -3832,7 +3832,7 @@ void MDCCatalogDrawSliderTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawSnackbarTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawSnackbarTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -3887,7 +3887,7 @@ void MDCCatalogDrawSnackbarTile(CGRect frame, MDCBasicColorScheme *colorScheme) 
   CGColorSpaceRelease(colorSpace);
 }
 
-void MDCCatalogDrawSwitchTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawSwitchTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
   UIColor* fillColor = colorScheme.primaryLightColor;
@@ -3937,7 +3937,7 @@ void MDCCatalogDrawSwitchTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
   [ovalPath fill];
 }
 
-void MDCCatalogDrawTabsTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawTabsTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -4100,7 +4100,7 @@ void MDCCatalogDrawTabsTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
 
 static NSString* const TextFieldFontName = @"RobotoMono-Medium";
 
-void MDCCatalogDrawTextFieldTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawTextFieldTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* fillColor = colorScheme.primaryLightColor;
   UIColor* textForeground = colorScheme.primaryColor;
   
@@ -4134,7 +4134,7 @@ void MDCCatalogDrawTextFieldTile(CGRect frame, MDCBasicColorScheme *colorScheme)
 
 }
 
-void MDCCatalogDrawTypographyTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawTypographyTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* fillColor = colorScheme.primaryColor;
   
   UIBezierPath* bezierPath = [UIBezierPath bezierPath];
