@@ -91,6 +91,7 @@ final class ProductGridViewController : MDCCollectionViewController {
         } else {
             headerView.maximumHeight = 72
         }
+      headerView.minimumHeight = 72
     }
     
     func setupHeaderLogo() {
