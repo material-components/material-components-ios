@@ -123,6 +123,8 @@ class MDCCatalogTileView: UIView {
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawSwitchTile, colorScheme)
     case "Tab Bar":
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTabsTile, colorScheme)
+    case "Text Field":
+      newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTextFieldTile, colorScheme)
     case "Typography and Fonts":
       newImage = MDCDrawImage(defaultSize, MDCCatalogDrawTypographyTile, colorScheme)
     default:
