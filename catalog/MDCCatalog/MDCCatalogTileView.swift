@@ -16,6 +16,8 @@ limitations under the License.
 
 import UIKit
 
+import MaterialComponents
+
 class MDCCatalogTileView: UIView {
 
   fileprivate var componentNameString = "Misc"
@@ -72,8 +74,7 @@ class MDCCatalogTileView: UIView {
     let top = (self.frame.height - defaultSize.height) / 2
     imageView.frame = CGRect(x: left, y: top, width: defaultSize.width, height: defaultSize.height)
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let colorScheme = appDelegate.colorScheme
+    let colorScheme = MDCColorSchemeView.appearance().colorScheme
 
     switch componentNameString {
     case "Activity Indicator":

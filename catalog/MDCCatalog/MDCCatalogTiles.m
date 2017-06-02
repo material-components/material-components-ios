@@ -19,7 +19,7 @@
 #import "MaterialThemes.h"
 #import "MDCCatalogTiles.h"
 
-UIImage* MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, MDCBasicColorScheme *colorScheme) {
+UIImage* MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDCColorScheme> *colorScheme) {
   CGFloat scale = [UIScreen mainScreen].scale;
   UIGraphicsBeginImageContextWithOptions(frame.size, false, scale);
   drawFunc(frame, colorScheme);
@@ -32,7 +32,7 @@ UIImage* MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, MDCBasicColorScheme *c
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wassign-enum"
 #pragma clang diagnostic ignored "-Wconversion"
-void MDCCatalogDrawActivityIndicatorTile(CGRect frame, MDCBasicColorScheme *colorScheme) {
+void MDCCatalogDrawActivityIndicatorTile(CGRect frame, NSObject<MDCColorScheme> *colorScheme) {
   UIColor* fillColor = colorScheme.primaryLightColor;
   UIColor* fillColor2 = colorScheme.primaryColor;
 

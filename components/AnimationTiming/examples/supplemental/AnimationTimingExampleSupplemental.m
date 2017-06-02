@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 
 #import "AnimationTimingExampleSupplemental.h"
+#import "MaterialThemes.h"
 #import "MaterialTypography.h"
 
 const CGFloat kTopMargin = 16.f;
@@ -129,11 +130,12 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   static NSArray *defaultColors;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
+    UIColor *primaryColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
     defaultColors = @[
-      [UIColor colorWithWhite:0.1 alpha:1.0],
-      [UIColor colorWithWhite:0.2 alpha:1.0],
-      [UIColor colorWithWhite:0.3 alpha:1.0],
-      [UIColor colorWithWhite:0.4 alpha:1.0]
+      [primaryColor colorWithAlphaComponent:0.8],
+      [primaryColor colorWithAlphaComponent:0.6],
+      [primaryColor colorWithAlphaComponent:0.4],
+      [primaryColor colorWithAlphaComponent:0.2]
     ];
   });
   return defaultColors;

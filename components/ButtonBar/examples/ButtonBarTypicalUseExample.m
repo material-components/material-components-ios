@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtonBar.h"
+#import "MaterialThemes.h"
 
 @interface ButtonBarTypicalUseExample : UIViewController
 @end
@@ -76,11 +77,11 @@
 #pragma mark - Visual configuration
 
 - (UIColor *)buttonBarBackgroundColor {
-  return [UIColor colorWithWhite:0.8 alpha:1.0];
+  return [MDCColorSchemeView appearance].colorScheme.primaryLightColor;
 }
 
 - (NSDictionary *)itemTitleTextAttributes {
-  UIColor *textColor = [UIColor colorWithWhite:0 alpha:0.8];
+  UIColor *textColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
   return @{NSForegroundColorAttributeName : textColor};
 }
 

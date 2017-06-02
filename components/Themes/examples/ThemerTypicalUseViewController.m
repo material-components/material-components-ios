@@ -45,8 +45,10 @@
   [MDCProgressViewColorThemer applyColorScheme:self.colorScheme
                                 toProgressView:[MDCProgressView appearance]];
 
-  UIApplication *app = [UIApplication mdc_safeSharedApplication];
-  app.delegate;
+  [MDCColorSchemeView appearance].colorScheme = self.colorScheme;
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
+                                                      object:self];
+
   [self setupExampleViews];
 }
 

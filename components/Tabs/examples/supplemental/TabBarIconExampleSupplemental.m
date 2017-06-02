@@ -24,6 +24,7 @@
 @import MaterialComponents.MaterialButtons;
 @import MaterialComponents.MaterialPalettes;
 @import MaterialComponents.MaterialTabs;
+@import MaterialComponents.MaterialThemes;
 
 @implementation TabBarIconExample (Supplemental)
 
@@ -72,8 +73,9 @@
   self.appBar = [[MDCAppBar alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
 
+  UIColor *primaryColor = [MDCColorSchemeView appearance].colorScheme.primaryColor;
   self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.appBar.headerViewController.headerView.backgroundColor = primaryColor;
   self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
 
   self.appBar.navigationBar.titleTextAttributes = @{

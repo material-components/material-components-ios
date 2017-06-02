@@ -14,5 +14,18 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 #import "MDCColorScheme.h"
-#import "MDCColorSchemeView.h"
+
+/**
+ A view with a color scheme property that can be used as an appearance proxy to get a color scheme.
+ */
+@interface MDCColorSchemeView : UIView
+
+/**
+ A color scheme associated with a view.
+ */
+@property (nonatomic, strong, nonnull) NSObject<MDCColorScheme> *colorScheme;
+
+@end

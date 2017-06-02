@@ -14,5 +14,8 @@
  limitations under the License.
  */
 
-#import "MDCColorScheme.h"
 #import "MDCColorSchemeView.h"
+
+@implementation MDCColorSchemeView
+
+@end
