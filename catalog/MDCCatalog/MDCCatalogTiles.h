@@ -19,7 +19,7 @@
 @protocol MDCColorScheme;
 
 /** A function that will perform drawing operations in @c frame. */
-typedef void (*MDCDrawFunc)(CGRect, NSObject<MDCColorScheme>*);
+typedef void (*MDCDrawFunc)(CGRect frame, NSObject<MDCColorScheme> *colorScheme);
 
 /** Render the drawing operations in @c drawFunc into a new image. */
 UIImage *MDCDrawImage(CGRect frame, MDCDrawFunc drawFunc, NSObject<MDCColorScheme> *colorScheme);
