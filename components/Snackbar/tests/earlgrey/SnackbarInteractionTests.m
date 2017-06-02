@@ -17,11 +17,11 @@
 @import XCTest;
 @import EarlGrey;
 
-@interface SnackbarInteractionTests : XCTestCase
+@interface SnackbarEarlGreyTests : XCTestCase
 
 @end
 
-@implementation SnackbarInteractionTests
+@implementation SnackbarEarlGreyTests
 
 - (void)testSliding {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"collectionView")] performAction:grey_scrollToContentEdge(kGREYContentEdgeBottom)];
