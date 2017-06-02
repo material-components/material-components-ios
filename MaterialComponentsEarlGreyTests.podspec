@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "MaterialComponentsInteractionTests"
+  s.name         = "MaterialComponentsEarlGreyTests"
   s.version      = "23.4.1"
   s.authors      = "The Material Components authors."
   s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{s.version}" }
   s.platform     = :ios, '8.0'
   s.requires_arc = true
-  s.source_files = 'components/*/tests/interaction/*.{h,m,swift}', 'components/private/*/tests/interaction/*.{h,m,swift}'
+  s.source_files = 'components/*/tests/earlgrey/*.{h,m,swift}', 'components/private/*/tests/earlgrey/*.{h,m,swift}'
   s.framework    = 'XCTest'
   s.dependency 'MaterialComponents'
   s.dependency 'MDFTextAccessibility'
