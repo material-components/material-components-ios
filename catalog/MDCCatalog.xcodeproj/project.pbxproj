@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0B4A5E6D1CC9307A00D2AC5D /* MDCCatalogWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */; };
-		0B50E19C1D91B0BD00DED250 /* MDCInteractionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B50E19B1D91B0BD00DED250 /* MDCInteractionTests.m */; };
 		0B50E1A81D91B63800DED250 /* EarlGrey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0BE1D27E1DD276D000F8544B /* MDCCatalogTiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1D27D1DD276D000F8544B /* MDCCatalogTiles.m */; };
 		360D6F7F1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */; };
@@ -89,7 +88,6 @@
 /* Begin PBXFileReference section */
 		0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogWindow.swift; sourceTree = "<group>"; };
 		0B50E1991D91B0BD00DED250 /* MDCEarlGreyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDCEarlGreyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0B50E19B1D91B0BD00DED250 /* MDCInteractionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDCInteractionTests.m; sourceTree = "<group>"; };
 		0B50E19D1D91B0BD00DED250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BE1D27D1DD276D000F8544B /* MDCCatalogTiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTiles.m; sourceTree = "<group>"; };
 		0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCEarlGreyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,7 +191,6 @@
 		0B50E19A1D91B0BD00DED250 /* MDCEarlGreyTests */ = {
 			isa = PBXGroup;
 			children = (
-				0B50E19B1D91B0BD00DED250 /* MDCInteractionTests.m */,
 				0B50E19D1D91B0BD00DED250 /* Info.plist */,
 			);
 			path = MDCEarlGreyTests;
@@ -614,7 +611,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B50E19C1D91B0BD00DED250 /* MDCInteractionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
