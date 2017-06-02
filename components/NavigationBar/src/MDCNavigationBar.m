@@ -460,10 +460,13 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 - (CGRect)mdc_frameAlignedHorizontally:(CGRect)frame
                              alignment:(MDCNavigationBarTitleAlignment)alignment {
   switch (alignment) {
-    case MDCNavigationBarTitleAlignmentCenter:
-      return CGRectMake(CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2, frame.origin.y,
-                        frame.size.width, frame.size.height);
-
+    case MDCNavigationBarTitleAlignmentCenter: {
+      CGFloat xOrigin = CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2;
+      if (frame.origin.x <= xOrigin) {
+        return CGRectMake(xOrigin, frame.origin.y,
+                          frame.size.width, frame.size.height);
+      }
+    }
     case MDCNavigationBarTitleAlignmentLeading:
       return CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
   }
