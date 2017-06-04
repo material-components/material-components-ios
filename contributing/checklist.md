@@ -277,12 +277,33 @@ serialize non-view classes. Tip: write a unit test for this.
 1. Enter YES or NO
 
 
-### commonMDCClassInit (If necessary)
+### Common Initialization Function (If necessary)
 
 
-Classes that set ivar values or perform other commands from the initializer, should avoid duplicate code by writing a `common*MDCClass*init` method to call from all initializers.
+Classes that set ivar values or perform other commands from the initializer, should avoid duplicate code by writing a common initialization function to call from all initializers.
 
-1. The method should be named `common` + the name of the class prefixed with MDC + `init`.
+```Objective-C
+
+@implementation MDCFoo
+
+static MDCFoo *CommonInit(MDCFoo *self) {
+  if (!self) return nil;
+  self->_myString = @"Bananas";
+  return self;
+}
+
+- (nonnull instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  return CommonInit(self);
+}
+
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  return CommonInit(self);
+}
+@end
+```
+
 1. The method should be called from all initializers (initWithFrame:, initWithCoder:, etc.)
 1. Enter YES, NO or N/A
 
