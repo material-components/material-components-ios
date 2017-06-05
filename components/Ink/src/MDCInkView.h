@@ -108,4 +108,14 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  */
 - (void)cancelAllAnimationsAnimated:(BOOL)animated;
 
+/**
+ Initializes MDCInkView.
+
+ @param frame MDCInkView frame.
+ @return MDCInkView.
+ */
+- (nonnull instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
 @end

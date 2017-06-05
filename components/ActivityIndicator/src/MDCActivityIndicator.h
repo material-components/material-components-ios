@@ -113,6 +113,16 @@ IB_DESIGNABLE
  */
 - (void)stopAnimating;
 
+/**
+ Initializes MDCActivityIndicator.
+
+ @param frame ActivityIndicator frame.
+ @return MDCActivityIndicator.
+ */
+- (nonnull instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
 @end
 
 /**

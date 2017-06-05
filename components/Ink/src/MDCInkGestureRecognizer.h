@@ -58,4 +58,13 @@
 /** Returns YES if the touch's current location is still within the target bounds. */
 - (BOOL)isTouchWithinTargetBounds;
 
+/**
+ Initializes MDCInkGestureRecognizer.
+
+ @param target The target that receives actions.
+ @param action Selector that responds to an action.
+ @return MDCInkGestureRecognizer.
+ */
+- (instancetype)initWithTarget:(id)target action:(SEL)action NS_DESIGNATED_INITIALIZER;
+
 @end
