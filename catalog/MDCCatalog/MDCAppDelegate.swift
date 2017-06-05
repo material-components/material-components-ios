@@ -47,13 +47,22 @@ class MDCAppDelegate: UIResponder, UIApplicationDelegate {
                                       primaryLightColor: .init(white: 0.7, alpha: 1),
                                       primaryDarkColor: .init(white: 0, alpha: 1))
 
+    // Apply color scheme to material design components using component themers.
     MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
+    MDCAlertColorThemer.apply(colorScheme)
     MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
     MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
     MDCFeatureHighlightColorThemer.apply(colorScheme, to: MDCFeatureHighlightView.appearance())
     MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
     MDCHeaderStackViewColorThemer.apply(colorScheme, to: MDCHeaderStackView.appearance())
     MDCNavigationBarColorThemer.apply(colorScheme, to: MDCNavigationBar.appearance())
+    MDCPageControlColorThemer.apply(colorScheme, to: MDCPageControl.appearance())
+    MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
+    MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
+    
+    // Apply color scheme to UIKit components.
+    UISlider.appearance().tintColor = colorScheme?.primaryColor;
+    UISwitch.appearance().tintColor = colorScheme?.primaryColor;
 
     return true
   }

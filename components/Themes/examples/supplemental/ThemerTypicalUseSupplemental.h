@@ -32,8 +32,10 @@
 #import "MDCFlexibleHeaderColorThemer.h"
 #import "MDCHeaderStackViewColorThemer.h"
 #import "MDCNavigationBarColorThemer.h"
-#import "MDCSliderColorThemer.h"
 #import "MDCProgressViewColorThemer.h"
+#import "MDCPageControlColorThemer.h"
+#import "MDCSliderColorThemer.h"
+
 
 static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
