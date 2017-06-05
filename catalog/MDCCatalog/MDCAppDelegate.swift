@@ -59,7 +59,8 @@ class MDCAppDelegate: UIResponder, UIApplicationDelegate {
     MDCPageControlColorThemer.apply(colorScheme, to: MDCPageControl.appearance())
     MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
     MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
-    
+    MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
+
     // Apply color scheme to UIKit components.
     UISlider.appearance().tintColor = colorScheme?.primaryColor;
     UISwitch.appearance().tintColor = colorScheme?.primaryColor;
