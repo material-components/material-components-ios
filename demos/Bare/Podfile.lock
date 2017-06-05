@@ -24,6 +24,7 @@ PODS:
     - MaterialComponents/Slider (= 23.4.1)
     - MaterialComponents/Snackbar (= 23.4.1)
     - MaterialComponents/Tabs (= 23.4.1)
+    - MaterialComponents/TextFields (= 23.4.1)
     - MaterialComponents/Themes (= 23.4.1)
     - MaterialComponents/Typography (= 23.4.1)
   - MaterialComponents/ActivityIndicator (23.4.1):
@@ -70,12 +71,22 @@ PODS:
     - MaterialComponents/ShadowLayer
     - MaterialComponents/Typography
   - MaterialComponents/Dialogs (23.4.1):
+    - MaterialComponents/Dialogs/ColorThemer (= 23.4.1)
+    - MaterialComponents/Dialogs/Component (= 23.4.1)
+  - MaterialComponents/Dialogs/ColorThemer (23.4.1):
+    - MaterialComponents/Themes
+  - MaterialComponents/Dialogs/Component (23.4.1):
     - MaterialComponents/Buttons
     - MaterialComponents/private/KeyboardWatcher
     - MaterialComponents/private/RTL
     - MaterialComponents/ShadowElevations
     - MaterialComponents/ShadowLayer
   - MaterialComponents/FeatureHighlight (23.4.1):
+    - MaterialComponents/FeatureHighlight/ColorThemer (= 23.4.1)
+    - MaterialComponents/FeatureHighlight/Component (= 23.4.1)
+  - MaterialComponents/FeatureHighlight/ColorThemer (23.4.1):
+    - MaterialComponents/Themes
+  - MaterialComponents/FeatureHighlight/Component (23.4.1):
     - MaterialComponents/Typography
     - MDFTextAccessibility
   - MaterialComponents/FlexibleHeader (23.4.1):
@@ -158,9 +169,13 @@ PODS:
     - MaterialComponents/Ink
     - MaterialComponents/private/RTL
     - MaterialComponents/Typography
-  - MaterialComponents/Themes (23.4.1):
-    - MaterialComponents/Dialogs
-    - MaterialComponents/FeatureHighlight
+  - MaterialComponents/TextFields (23.4.1):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/Palettes
+    - MaterialComponents/private/Math
+    - MaterialComponents/private/RTL
+    - MaterialComponents/Typography
+  - MaterialComponents/Themes (23.4.1)
   - MaterialComponents/Typography (23.4.1):
     - MaterialComponents/private/Application
   - MDFTextAccessibility (1.2.0)
@@ -173,7 +188,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: baaab2cdd2d4a4f75eb40beae6df360e5fedd3a2
+  MaterialComponents: cf2eef93981ed2b1a200c27248b0315b64afb434
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: 8c6ad4fe8e5aa667e06c9b43f3f5d4d6430b1322

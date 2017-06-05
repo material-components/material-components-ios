@@ -33,14 +33,17 @@ end
 
 # EarlGrey configuration
 PROJECT_NAME = 'MDCCatalog'
-TEST_TARGET = 'MDCInteractionTests'
-SCHEME_FILE = 'MDCInteractionTests.xcscheme'
+TEST_TARGET = 'MDCEarlGreyTests'
+SCHEME_FILE = 'MDCEarlGreyTests.xcscheme'
 
 target TEST_TARGET do
   platform :ios, '8.0'
   project PROJECT_NAME
   inherit! :search_paths
   pod 'EarlGrey'
+  pod 'MaterialComponentsEarlGreyTests', :path => '../'
+
+  use_frameworks!
 end
 
 post_install do |installer|

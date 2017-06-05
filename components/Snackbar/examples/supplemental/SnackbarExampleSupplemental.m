@@ -43,6 +43,8 @@ static NSString * const kCellIdentifier = @"Cell";
       [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier
                                                 forIndexPath:indexPath];
   cell.textLabel.text = self.choices[indexPath.row];
+
+  cell.accessibilityIdentifier = cell.textLabel.text;
   return cell;
 }
 

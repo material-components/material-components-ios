@@ -373,6 +373,19 @@ Pod::Spec.new do |s|
     end
   end
 
+  s.subspec "TextFields" do |ss|
+    ss.ios.deployment_target = '8.0'
+    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
+    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+
+    ss.dependency "MaterialComponents/AnimationTiming"
+    ss.dependency "MaterialComponents/Palettes"
+    ss.dependency "MaterialComponents/Typography"
+
+    ss.dependency "MaterialComponents/private/Math"
+    ss.dependency "MaterialComponents/private/RTL"
+  end
+
   s.subspec "Themes" do |ss|
     ss.ios.deployment_target = '8.0'
     ss.public_header_files = "components/#{ss.base_name}/src/*.h"
