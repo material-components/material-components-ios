@@ -25,7 +25,7 @@
 
 @implementation MaterialThemesTests
 
-- (void)testEncodingDecoding {
+- (void)testTonalPaletteEncodingDecoding {
 
   // Given
   NSArray<UIColor *> *tonalColors = @[ [MDCPalette purplePalette].tint50,
