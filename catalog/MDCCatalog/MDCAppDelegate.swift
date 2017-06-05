@@ -23,7 +23,7 @@ import MaterialComponents
 class MDCAppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-  var colorScheme: MDCBasicColorScheme?
+  var colorScheme: (MDCColorScheme & NSObjectProtocol)!
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
                    launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
