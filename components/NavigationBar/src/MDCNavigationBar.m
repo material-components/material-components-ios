@@ -467,6 +467,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                           frame.size.width, frame.size.height);
       }
     }
+    // Intentional Fall Through
     case MDCNavigationBarTitleAlignmentLeading:
       return CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
   }
