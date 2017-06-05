@@ -100,7 +100,7 @@ static NSString *const MDCTonalPaletteDarkColorIndexKey = @"MDCTonalPaletteDarkC
 
 - (instancetype)copyWithZone:(NSZone *)zone {
   MDCTonalPalette *copy = [[[self class] allocWithZone:zone] init];
-  if(copy) {
+  if (copy) {
     copy.colors = [self colors];
     copy.mainColorIndex = [self mainColorIndex];
     copy.lightColorIndex = [self lightColorIndex];

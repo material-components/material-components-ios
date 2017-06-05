@@ -105,7 +105,7 @@
 
 - (id)copyWithZone:(NSZone *)zone {
   MDCBasicColorScheme *copy = [[[self class] allocWithZone:zone] init];
-  if(copy) {
+  if (copy) {
     copy.primaryColor = [self primaryColor];
     copy.primaryLightColor = [self primaryLightColor];
     copy.primaryDarkColor = [self primaryDarkColor];

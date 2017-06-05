@@ -64,7 +64,7 @@
 
 - (id)copyWithZone:(NSZone *)zone {
   MDCTonalColorScheme *copy = [[[self class] allocWithZone:zone] init];
-  if(copy) {
+  if (copy) {
     copy.primaryTonalPalette = [self primaryTonalPalette];
     copy.secondaryTonalPalette = [self secondaryTonalPalette];
   }
