@@ -56,7 +56,7 @@ static NSString *const MDCTonalPaletteDarkColorIndexKey = @"MDCTonalPaletteDarkC
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-  self = [self initWithColors:@[ [UIColor blackColor] ] mainColorIndex:0 lightColorIndex:0 darkColorIndex:0];
+  self = [super init];
   if (self) {
     if ([coder containsValueForKey:MDCTonalPaletteColorsKey]) {
       _colors = [coder decodeObjectForKey:MDCTonalPaletteColorsKey];
