@@ -461,13 +461,17 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
                              alignment:(MDCNavigationBarTitleAlignment)alignment {
   switch (alignment) {
     case MDCNavigationBarTitleAlignmentCenter: {
+      // Center-Aligned Frame's x-origin
       CGFloat xOrigin = CGRectGetMaxX(self.bounds) / 2 - frame.size.width / 2;
+
+      // Input Frame's x-origin begins with leading alignment to max x-point of leading button bar.
+      // IF: Input x-origin is less than/equal to center-aligned frame's x-origin, then center align
       if (frame.origin.x <= xOrigin) {
         return CGRectMake(xOrigin, frame.origin.y,
                           frame.size.width, frame.size.height);
       }
     }
-    // Intentional Fall Through
+    // Intentional Fall Through. ELSE: switch to leading alignment
     case MDCNavigationBarTitleAlignmentLeading:
       return CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
   }
