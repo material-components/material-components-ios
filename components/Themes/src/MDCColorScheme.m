@@ -16,6 +16,17 @@
 
 #import "MDCColorScheme.h"
 
+@interface MDCBasicColorScheme ()
+
+@property (nonatomic, strong, nonnull) UIColor *primaryColor;
+@property (nonatomic, strong, nonnull) UIColor *primaryLightColor;
+@property (nonatomic, strong, nonnull) UIColor *primaryDarkColor;
+@property (nonatomic, strong, nonnull) UIColor *secondaryColor;
+@property (nonatomic, strong, nonnull) UIColor *secondaryLightColor;
+@property (nonatomic, strong, nonnull) UIColor *secondaryDarkColor;
+
+@end
+
 @implementation MDCBasicColorScheme
 
 - (nonnull instancetype)initWithPrimaryColor:(nonnull UIColor *)primaryColor
@@ -88,6 +99,21 @@
                            alpha:alpha];
   }
   return nil;
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+  MDCBasicColorScheme *copy = [[[self class] allocWithZone:zone] init];
+  if (copy) {
+    copy.primaryColor = [self primaryColor];
+    copy.primaryLightColor = [self primaryLightColor];
+    copy.primaryDarkColor = [self primaryDarkColor];
+    copy.secondaryColor = [self secondaryColor];
+    copy.secondaryLightColor = [self secondaryLightColor];
+    copy.secondaryDarkColor = [self secondaryDarkColor];
+  }
+  return copy;
 }
 
 @end
