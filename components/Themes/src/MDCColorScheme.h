@@ -58,7 +58,7 @@
  A basic color scheme comprised of set of primary and secondary colors with light and dark color
  variants.
  */
-@interface MDCBasicColorScheme : NSObject <MDCColorScheme>
+@interface MDCBasicColorScheme : NSObject <MDCColorScheme, NSCopying>
 
 @property (nonatomic, strong, nonnull, readonly) UIColor *primaryColor;
 @property (nonatomic, strong, nonnull, readonly) UIColor *primaryLightColor;

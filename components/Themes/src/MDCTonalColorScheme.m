@@ -30,27 +30,38 @@
 }
 
 - (UIColor *)primaryColor {
-  return _primaryTonalPalette.colors[_primaryTonalPalette.mainColorIndex];
+  return _primaryTonalPalette.mainColor;
 }
 
 - (UIColor *)primaryLightColor {
-  return _primaryTonalPalette.colors[_primaryTonalPalette.lightColorIndex];
+  return _primaryTonalPalette.lightColor;
 }
 
 - (UIColor *)primaryDarkColor {
-  return _primaryTonalPalette.colors[_primaryTonalPalette.darkColorIndex];
+  return _primaryTonalPalette.darkColor;
 }
 
 - (UIColor *)secondaryColor {
-  return _secondaryTonalPalette.colors[_secondaryTonalPalette.mainColorIndex];
+  return _secondaryTonalPalette.mainColor;
 }
 
 - (UIColor *)secondaryLightColor {
-  return _secondaryTonalPalette.colors[_secondaryTonalPalette.lightColorIndex];
+  return _secondaryTonalPalette.lightColor;
 }
 
 - (UIColor *)secondaryDarkColor {
-  return _secondaryTonalPalette.colors[_secondaryTonalPalette.darkColorIndex];
+  return _secondaryTonalPalette.darkColor;
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+  MDCTonalColorScheme *tonalColorScheme = [[[self class] allocWithZone:zone] init];
+  if(tonalColorScheme) {
+    _primaryTonalPalette = [self primaryTonalPalette];
+    _secondaryTonalPalette = [self secondaryTonalPalette];
+  }
+  return tonalColorScheme;
 }
 
 @end

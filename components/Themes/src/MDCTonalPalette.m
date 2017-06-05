@@ -53,4 +53,17 @@
   return _colors[_darkColorIndex];
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+  MDCTonalPalette *tonalPalette = [[[self class] allocWithZone:zone] init];
+  if(tonalPalette) {
+    _colors = [self colors];
+    _mainColorIndex = [self mainColorIndex];
+    _lightColorIndex = [self lightColorIndex];
+    _darkColorIndex = [self darkColorIndex];
+  }
+  return tonalPalette;
+}
+
 @end

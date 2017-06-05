@@ -90,4 +90,19 @@
   return nil;
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+  MDCBasicColorScheme *basicColorScheme = [[[self class] allocWithZone:zone] init];
+  if(basicColorScheme) {
+    _primaryColor = [self primaryColor];
+    _primaryLightColor = [self primaryLightColor];
+    _primaryDarkColor = [self primaryDarkColor];
+    _secondaryColor = [self secondaryColor];
+    _secondaryLightColor = [self secondaryLightColor];
+    _secondaryDarkColor = [self secondaryDarkColor];
+  }
+  return basicColorScheme;
+}
+
 @end

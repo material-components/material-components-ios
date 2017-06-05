@@ -21,7 +21,7 @@
  A tonal color scheme is a color scheme based on a primary tonal color palette and secondary tonal
  color palette. The tonal color palettes are used for the color scheme color properties.
  */
-@interface MDCTonalColorScheme : NSObject <MDCColorScheme>
+@interface MDCTonalColorScheme : NSObject <MDCColorScheme, NSCopying>
 
 /** The main, primary color used for a theme. */
 @property (nonatomic, strong, nonnull, readonly) UIColor *primaryColor;
