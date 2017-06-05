@@ -25,7 +25,7 @@
 
 static NSString *const kReusableIdentifierItem = @"cell";
 
-@interface ThemersExamplesViewController : MDCCollectionViewController
+@interface ThemerColorSchemeViewController : MDCCollectionViewController
 
 @property(nonatomic, strong) MDCBasicColorScheme *colorScheme;
 @property(nonatomic, strong, nullable) NSArray<NSString *> *modes;
@@ -34,7 +34,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @end
 
-@implementation ThemersExamplesViewController
+@implementation ThemerColorSchemeViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -150,7 +150,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @end
 
-@implementation ThemersExamplesViewController (CatalogByConvention)
+@implementation ThemerColorSchemeViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Themes", @"Theme Examples" ];
