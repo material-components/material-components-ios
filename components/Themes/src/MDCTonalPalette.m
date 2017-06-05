@@ -16,6 +16,15 @@
 
 #import "MDCTonalPalette.h"
 
+@interface MDCTonalPalette ()
+
+@property (nonatomic, copy, nonnull) NSArray<UIColor *> *colors;
+@property (nonatomic) NSUInteger mainColorIndex;
+@property (nonatomic) NSUInteger lightColorIndex;
+@property (nonatomic) NSUInteger darkColorIndex;
+
+@end
+
 @implementation MDCTonalPalette
 
 - (nonnull instancetype)initWithColors:(nonnull NSArray<UIColor *> *)colors
@@ -55,15 +64,15 @@
 
 #pragma mark - NSCopying
 
-- (id)copyWithZone:(NSZone *)zone {
-  MDCTonalPalette *tonalPalette = [[[self class] allocWithZone:zone] init];
-  if(tonalPalette) {
-    _colors = [self colors];
-    _mainColorIndex = [self mainColorIndex];
-    _lightColorIndex = [self lightColorIndex];
-    _darkColorIndex = [self darkColorIndex];
+- (instancetype)copyWithZone:(NSZone *)zone {
+  MDCTonalPalette *copy = [[[self class] allocWithZone:zone] init];
+  if(copy) {
+    copy.colors = [self colors];
+    copy.mainColorIndex = [self mainColorIndex];
+    copy.lightColorIndex = [self lightColorIndex];
+    copy.darkColorIndex = [self darkColorIndex];
   }
-  return tonalPalette;
+  return copy;
 }
 
 @end

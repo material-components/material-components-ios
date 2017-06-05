@@ -16,6 +16,13 @@
 
 #import "MDCTonalColorScheme.h"
 
+@interface MDCTonalColorScheme ()
+
+@property (nonatomic, strong, nonnull) MDCTonalPalette *primaryTonalPalette;
+@property (nonatomic, strong, nonnull) MDCTonalPalette *secondaryTonalPalette;
+
+@end
+
 @implementation MDCTonalColorScheme
 
 - (nonnull instancetype)initWithPrimaryTonalPalette:(nonnull MDCTonalPalette *)primaryTonalPalette
@@ -56,12 +63,12 @@
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
-  MDCTonalColorScheme *tonalColorScheme = [[[self class] allocWithZone:zone] init];
-  if(tonalColorScheme) {
-    _primaryTonalPalette = [self primaryTonalPalette];
-    _secondaryTonalPalette = [self secondaryTonalPalette];
+  MDCTonalColorScheme *copy = [[[self class] allocWithZone:zone] init];
+  if(copy) {
+    copy.primaryTonalPalette = [self primaryTonalPalette];
+    copy.secondaryTonalPalette = [self secondaryTonalPalette];
   }
-  return tonalColorScheme;
+  return copy;
 }
 
 @end
