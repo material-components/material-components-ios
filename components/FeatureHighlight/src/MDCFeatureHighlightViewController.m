@@ -138,6 +138,19 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   [_pulseTimer invalidate];
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  [coordinator animateAlongsideTransition:
+   ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+     CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
+                                                       toView:_featureHighlightView];
+
+     _featureHighlightView.highlightPoint = point;
+     [_featureHighlightView layoutIfNeeded];
+   } completion:nil];
+}
+
 - (UIColor *)outerHighlightColor {
   return _featureHighlightView.outerHighlightColor;
 }
