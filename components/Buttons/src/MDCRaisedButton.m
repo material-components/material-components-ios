@@ -27,7 +27,7 @@
   if (state & UIControlStateDisabled) {
     return MDCShadowElevationNone;
   }
-  return (((state & UIControlStateSelected) == UIControlStateSelected)
+  return (((state & UIControlStateHighlighted) == UIControlStateHighlighted)
               ? MDCShadowElevationRaisedButtonPressed
               : MDCShadowElevationRaisedButtonResting);
 }

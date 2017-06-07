@@ -316,7 +316,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   BOOL inside = CGRectContainsPoint(self.bounds, location);
   if (inside && _shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:UIControlStateNormal];
+    [self animateButtonToHeightForState:self.state];
   }
 }
 
@@ -553,7 +553,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)handleBeginTouches:(NSSet *)touches {
   [_inkView startTouchBeganAnimationAtPoint:[self locationFromTouches:touches] completion:nil];
   if (_shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:UIControlStateSelected];
+    [self animateButtonToHeightForState:self.state];
   }
 }
 
@@ -565,7 +565,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)evaporateInkToPoint:(CGPoint)toPoint {
   [_inkView startTouchEndedAnimationAtPoint:toPoint completion:nil];
   if (_shouldRaiseOnTouch) {
-    [self animateButtonToHeightForState:UIControlStateNormal];
+    [self animateButtonToHeightForState:self.state];
   }
 }
 
@@ -586,7 +586,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     return 0;
   }
 
-  if ((state & UIControlStateSelected) == UIControlStateSelected) {
+  // Highlighted is the state we actually want to watch for.
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     CGFloat normalElevation = [self elevationForState:UIControlStateNormal];
     return normalElevation > 0 ? 2 * normalElevation : 1;
   }
