@@ -1,4 +1,25 @@
-# release-candidate TODO: Replace me with version number. 
+# 24.0.0
+
+## API diffs
+
+### Palettes
+
+* Added typedef for NSString so we can differentiate tints from accents
+* Added more palettes: Red, Pink, Purple etc.
+
+### Tabs
+
+* MDCTabBarDelegate conforms to UIBarPositioningDelegate protocol.
+* Added MDCTabBarViewController.
+
+### TextFields
+
+* New Component: Single line text input.
+
+### Themes
+
+* ColorScheme colors are now nonnull, readonly
+* New classes: TonalColorScheme, TonalPalette
 
 # 23.4.1
 
