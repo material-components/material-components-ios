@@ -43,15 +43,20 @@ class MDCAppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
-    colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
-                                      primaryLightColor: .init(white: 0.7, alpha: 1),
-                                      primaryDarkColor: .init(white: 0, alpha: 1))
+    let stgColors = STGColors.sharedInstance()
+    colorScheme = MDCBasicColorScheme(primaryColor: (stgColors?.color(withName: "primaryColor")!)!,
+                                      primaryLightColor: (stgColors?.color(withName: "primaryLightColor")!)!,
+                                      primaryDarkColor: (stgColors?.color(withName: "primaryDarkColor")!)!,
+                                      secondaryColor:(stgColors?.color(withName: "secondaryColor")!)!,
+                                      secondaryLightColor:(stgColors?.color(withName: "secondaryLightColor")!)!,
+                                      secondaryDarkColor:(stgColors?.color(withName: "secondaryDarkColor")!)!)
 
     // Apply color scheme to material design components using component themers.
     MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
     MDCAlertColorThemer.apply(colorScheme)
     MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
     MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
+    MDCButtonColorThemer.applySecondaryColorScheme(colorScheme, to: MDCFloatingButton.appearance())
     MDCFeatureHighlightColorThemer.apply(colorScheme, to: MDCFeatureHighlightView.appearance())
     MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
     MDCHeaderStackViewColorThemer.apply(colorScheme, to: MDCHeaderStackView.appearance())

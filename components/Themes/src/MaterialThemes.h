@@ -17,3 +17,4 @@
 #import "MDCColorScheme.h"
 #import "MDCTonalColorScheme.h"
 #import "MDCTonalPalette.h"
+#import "STGColors.h"

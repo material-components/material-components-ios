@@ -29,6 +29,7 @@
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
 		AB6F8002250EF87B42EC0B65 /* Pods_MDCEarlGreyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */; };
+		DE2C50DF1EE750CE003F116F /* colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = DE2C50DE1EE750CE003F116F /* colors.plist */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 		DFA0CDB05E436A49344E2810 /* EarlGrey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94681B7591B9CD40924C92C /* EarlGrey.framework */; };
@@ -156,6 +157,7 @@
 		BB1A0ED4DB4091C5905AE474 /* Pods-MDCEarlGreyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCEarlGreyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCEarlGreyTests/Pods-MDCEarlGreyTests.release.xcconfig"; sourceTree = "<group>"; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		DE1944851CBD9E40009E0321 /* MDCCatalogTiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCCatalogTiles.h; sourceTree = "<group>"; };
+		DE2C50DE1EE750CE003F116F /* colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = colors.plist; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
 		DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
 		E94681B7591B9CD40924C92C /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = "${SRCROOT}/Pods/EarlGrey/EarlGrey/EarlGrey.framework"; sourceTree = SRCROOT; };
@@ -273,13 +275,14 @@
 		665A34DE1C6BDAE700962055 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				36C870B71E8AD6A20032EA7D /* RobotoMono-Medium.ttf */,
-				404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */,
-				360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */,
-				5D090E331C9AEB8C0061344A /* Localizable */,
 				664524BD1C6BA62A001ADBF8 /* Assets.xcassets */,
-				664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */,
+				DE2C50DE1EE750CE003F116F /* colors.plist */,
 				664524C21C6BA62A001ADBF8 /* Info.plist */,
+				664524BF1C6BA62A001ADBF8 /* LaunchScreen.storyboard */,
+				5D090E331C9AEB8C0061344A /* Localizable */,
+				404564F11E007C5E004C9D0A /* Roboto-Medium.ttf */,
+				36C870B71E8AD6A20032EA7D /* RobotoMono-Medium.ttf */,
+				360D6F7E1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */,
 				5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */,
 				664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */,
+				DE2C50DF1EE750CE003F116F /* colors.plist in Resources */,
 				360D6F7F1DDE4C5200DF8DB7 /* RobotoMono-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
