@@ -44,12 +44,24 @@ class MDCAppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.makeKeyAndVisible()
 
     let stgColors = STGColors.sharedInstance()
-    colorScheme = MDCBasicColorScheme(primaryColor: (stgColors?.color(withName: "primaryColor")!)!,
-                                      primaryLightColor: (stgColors?.color(withName: "primaryLightColor")!)!,
-                                      primaryDarkColor: (stgColors?.color(withName: "primaryDarkColor")!)!,
-                                      secondaryColor:(stgColors?.color(withName: "secondaryColor")!)!,
-                                      secondaryLightColor:(stgColors?.color(withName: "secondaryLightColor")!)!,
-                                      secondaryDarkColor:(stgColors?.color(withName: "secondaryDarkColor")!)!)
+    let primaryColor = stgColors?.color(withName: "primaryColor",
+                                        fromPalette: "primaryPalette")!
+    let primaryLightColor = stgColors?.color(withName: "primaryLightColor",
+                                             fromPalette: "primaryPalette")!
+    let primaryDarkColor = stgColors?.color(withName: "primaryDarkColor",
+                                            fromPalette: "primaryPalette")!
+    let secondaryColor = stgColors?.color(withName: "secondaryColor",
+                                          fromPalette: "secondaryPalette")!
+    let secondaryLightColor = stgColors?.color(withName: "secondaryLightColor",
+                                               fromPalette: "secondaryPalette")!
+    let secondaryDarkColor = stgColors?.color(withName: "secondaryDarkColor",
+                                              fromPalette: "secondaryPalette")!
+    colorScheme = MDCBasicColorScheme(primaryColor: primaryColor!,
+                                      primaryLightColor: primaryLightColor!,
+                                      primaryDarkColor: primaryDarkColor!,
+                                      secondaryColor:secondaryColor!,
+                                      secondaryLightColor:secondaryLightColor!,
+                                      secondaryDarkColor:secondaryDarkColor!)
 
     // Apply color scheme to material design components using component themers.
     MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
