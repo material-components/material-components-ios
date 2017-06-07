@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
+
 /**
  A color scheme comprised of set of primary and secondary colors. Material design guidelines
  recommend using primary and secondary colors with light and dark color variants.
