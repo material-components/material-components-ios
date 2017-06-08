@@ -67,6 +67,21 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
+  
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.colorThemeChanged),
+      name: NSNotification.Name(rawValue: "ColorThemeChangeNotification"),
+      object: nil)
+  }
+
+  func colorThemeChanged(notification: NSNotification) {
+    let colorScheme = notification.userInfo?["colorScheme"]
+    let appDelegate = UIApplication.shared.delegate as! MDCAppDelegate
+    appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
+
+    collectionView?.collectionViewLayout.invalidateLayout()
+    collectionView?.reloadData()
   }
 
   convenience init(node: CBCNode) {

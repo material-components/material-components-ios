@@ -24,8 +24,6 @@
 #import "ActivityIndicatorExampleSupplemental.h"
 #import "MaterialTypography.h"
 
-#define MDC_CATALOG_BLACK [UIColor colorWithWhite:0.1f alpha:1]
-#define MDC_CATALOG_GREY  [UIColor colorWithWhite:0.9f alpha:1]
 #define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1]
 
 static NSString * const kCell = @"Cell";
@@ -58,7 +56,6 @@ static NSString * const kCell = @"Cell";
   // Set up container view of three activity indicators.
   UIView *indicators =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 160)];
-  indicators.backgroundColor = MDC_CATALOG_GREY;
 
   [indicators addSubview:self.activityIndicator1];
   [indicators addSubview:self.activityIndicator2];
@@ -73,9 +70,7 @@ static NSString * const kCell = @"Cell";
 
   self.indicators = indicators;
 
-
   self.onSwitch = [[UISwitch alloc] init];
-  self.onSwitch.onTintColor = MDC_CATALOG_BLACK;
   [self.onSwitch setOn:YES];
   [self.onSwitch addTarget:self
                     action:@selector(didChangeOnSwitch:)
@@ -83,7 +78,6 @@ static NSString * const kCell = @"Cell";
 
   CGRect sliderFrame = CGRectMake(0, 0, 160, 27);
   self.slider = [[UISlider alloc] initWithFrame:sliderFrame];
-  self.slider.tintColor = MDC_CATALOG_BLACK;
   self.slider.value = kActivityInitialProgress;
   [self.slider addTarget:self
                   action:@selector(didChangeSliderValue:)

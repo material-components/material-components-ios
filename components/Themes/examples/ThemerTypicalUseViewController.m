@@ -32,18 +32,36 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  // Apply color scheme to components for theming.
+  // Apply color scheme to material design components using component themers.
   [MDCActivityIndicatorColorThemer applyColorScheme:self.colorScheme
                                 toActivityIndicator:[MDCActivityIndicator appearance]];
   [MDCAlertColorThemer applyColorScheme:self.colorScheme];
+  [MDCButtonBarColorThemer applyColorScheme:self.colorScheme toButtonBar:[MDCButtonBar appearance]];
   [MDCButtonColorThemer applyColorScheme:self.colorScheme toButton:[MDCButton appearance]];
   [MDCFeatureHighlightColorThemer applyColorScheme:self.colorScheme
                             toFeatureHighlightView:[MDCFeatureHighlightView appearance]];
   [MDCFlexibleHeaderColorThemer applyColorScheme:self.colorScheme
                             toFlexibleHeaderView:[MDCFlexibleHeaderView appearance]];
-  [MDCSliderColorThemer applyColorScheme:self.colorScheme toSlider:[MDCSlider appearance]];
+  [MDCHeaderStackViewColorThemer applyColorScheme:self.colorScheme
+                                toHeaderStackView:[MDCHeaderStackView appearance]];
+  [MDCNavigationBarColorThemer applyColorScheme:self.colorScheme
+                                toNavigationBar:[MDCNavigationBar appearance]];
+  [MDCPageControlColorThemer applyColorScheme:self.colorScheme
+                                toPageControl:[MDCPageControl appearance]];
   [MDCProgressViewColorThemer applyColorScheme:self.colorScheme
                                 toProgressView:[MDCProgressView appearance]];
+  [MDCSliderColorThemer applyColorScheme:self.colorScheme toSlider:[MDCSlider appearance]];
+  [MDCTabBarColorThemer applyColorScheme:self.colorScheme toTabBar:[MDCTabBar appearance]];
+
+  // Apply color scheme to UIKit components.
+  [UISlider appearance].tintColor = self.colorScheme.primaryColor;
+  [UISwitch appearance].tintColor = self.colorScheme.primaryColor;
+
+  // Send notification that color scheme has changed so existing components can update if necessary.
+  NSDictionary *userInfo = @{ @"colorScheme" : self.colorScheme };
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"ColorThemeChangeNotification"
+                                                      object:self
+                                                    userInfo:userInfo];
 
   [self setupExampleViews];
 }

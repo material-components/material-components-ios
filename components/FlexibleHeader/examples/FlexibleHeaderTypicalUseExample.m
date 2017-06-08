@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCFlexibleHeaderColorThemer.h"
 #import "MaterialFlexibleHeader.h"
 
 #import "FlexibleHeaderTypicalUseSupplemental.h"
@@ -75,8 +76,6 @@
   self.fhvc.view.frame = self.view.bounds;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
-
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
 
   [self setupExampleViews];
 }

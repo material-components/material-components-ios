@@ -20,6 +20,7 @@
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
 #import "MaterialTabs.h"
+#import "MaterialThemes.h"
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 
@@ -62,12 +63,10 @@
     [[UITabBarItem alloc] initWithTitle:@"A Variety of Titles of Varying Length" image:nil tag:0],
   ];
 
-  // Give it a white appearance to show dark text and customize the unselected title color.
+  // Give change the selected item tint color and the tab bar tint color. For other color properties
+  // rely on the UIAppearance proxy.
   self.tabBar.selectedItemTintColor = [UIColor whiteColor];
-  self.tabBar.unselectedItemTintColor = [UIColor grayColor];
-  self.tabBar.tintColor = [UIColor colorWithRed:11/255.0 green:232/255.0 blue:94/255.0 alpha:1];
-  self.tabBar.barTintColor = [UIColor colorWithWhite:0.1 alpha:1];
-  self.tabBar.inkColor = [UIColor colorWithWhite:1 alpha:0.1];
+  self.tabBar.tintColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;

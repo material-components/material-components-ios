@@ -32,4 +32,7 @@
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
                 toButton:(MDCButton *)button;
 
++ (void)applySecondaryColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+                         toButton:(MDCButton *)button;
+
 @end

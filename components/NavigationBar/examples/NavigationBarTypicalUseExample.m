@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialNavigationBar.h"
+#import "MaterialThemes.h"
 
 #import "NavigationBarTypicalUseExampleSupplemental.h"
 
@@ -35,7 +36,7 @@
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   [self.navBar observeNavigationItem:self.navigationItem];
-  [self.navBar setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
+
   MDCNavigationBarTextColorAccessibilityMutator *mutator =
       [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
   [mutator mutate:self.navBar];

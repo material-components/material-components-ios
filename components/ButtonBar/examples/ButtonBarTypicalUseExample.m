@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtonBar.h"
+#import "MaterialThemes.h"
 
 @interface ButtonBarTypicalUseExample : UIViewController
 @end
@@ -27,7 +28,6 @@
   [super viewDidLoad];
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
-  buttonBar.backgroundColor = [self buttonBarBackgroundColor];
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;
@@ -48,7 +48,8 @@
   // Set the title text attributes before assigning to buttonBar.items
   // because of https://github.com/material-components/material-components-ios/issues/277
   for (UIBarButtonItem *item in items) {
-    [item setTitleTextAttributes:[self itemTitleTextAttributes] forState:UIControlStateNormal];
+    [item setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
+                        forState:UIControlStateNormal];
   }
 
   buttonBar.items = items;
@@ -71,17 +72,6 @@
 
 - (void)didTapActionButton:(id)sender {
   NSLog(@"Did tap action item: %@", sender);
-}
-
-#pragma mark - Visual configuration
-
-- (UIColor *)buttonBarBackgroundColor {
-  return [UIColor colorWithWhite:0.8 alpha:1.0];
-}
-
-- (NSDictionary *)itemTitleTextAttributes {
-  UIColor *textColor = [UIColor colorWithWhite:0 alpha:0.8];
-  return @{NSForegroundColorAttributeName : textColor};
 }
 
 @end

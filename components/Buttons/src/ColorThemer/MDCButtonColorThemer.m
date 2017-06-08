@@ -24,4 +24,10 @@
   [button setBackgroundColor:colorScheme.primaryLightColor forState:UIControlStateDisabled];
 }
 
++ (void)applySecondaryColorScheme:(NSObject<MDCColorScheme> *)colorScheme
+                         toButton:(MDCButton *)button {
+  [button setBackgroundColor:colorScheme.secondaryColor forState:UIControlStateNormal];
+  [button setBackgroundColor:colorScheme.secondaryLightColor forState:UIControlStateDisabled];
+}
+
 @end
