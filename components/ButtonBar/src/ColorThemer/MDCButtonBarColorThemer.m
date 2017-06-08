@@ -23,7 +23,9 @@
              toButtonBar:(MDCButtonBar *)buttonBar {
   buttonBar.backgroundColor = colorScheme.primaryColor;
 
-  // When a button bar is contained in a navigation bar, use the navigation bar's background color.
+  // When a button bar is contained in a navigation bar do not color the button bar. This is useful
+  // for when an app bar with imagery in the flexible header has a button bar. If the button bar has
+  // a color then the imagery is obstucted by the solid color of the button bar.
   [MDCButtonBar appearanceWhenContainedIn:[MDCNavigationBar class], nil].backgroundColor
       = nil;
 }
