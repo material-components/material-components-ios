@@ -15,12 +15,17 @@
  */
 
 #import "MDCButtonBarColorThemer.h"
+#import "MaterialAppBar.h"
 
 @implementation MDCButtonBarColorThemer
 
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
              toButtonBar:(MDCButtonBar *)buttonBar {
   buttonBar.backgroundColor = colorScheme.primaryColor;
+
+  // When a button bar is contained in a navigation bar, use the navigation bar's background color.
+  [MDCButtonBar appearanceWhenContainedIn:[MDCNavigationBar class], nil].backgroundColor
+      = nil;
 }
 
 @end

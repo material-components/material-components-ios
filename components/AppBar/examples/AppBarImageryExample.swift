@@ -43,8 +43,11 @@ class AppBarImagerySwiftExample: UITableViewController {
 
     // We want navigation bar + status bar tint color to be white, so we set tint color here and
     // implement -preferredStatusBarStyle.
+    appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes =
       [ NSForegroundColorAttributeName: UIColor.white ]
+
+    // Make sure navigation bar background color is clear so the image view is visible.
     appBar.navigationBar.backgroundColor = UIColor.clear
 
     // Allow the header to show more of the image.
