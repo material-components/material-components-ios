@@ -111,12 +111,22 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 }
 
 - (void)applyMDCFeatureHighlightViewDefaults {
-  _outerHighlightColor =
-      [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
-  _innerHighlightColor = [UIColor whiteColor];
+  _outerHighlightColor = [self MDCFeatureHighlightDefaultOuterHighlightColor];
+  _innerHighlightColor = [self MDCFeatureHighlightDefaultInnerHighlightColor];
+}
+
+- (UIColor *)MDCFeatureHighlightDefaultOuterHighlightColor {
+  return [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
+}
+
+- (UIColor *)MDCFeatureHighlightDefaultInnerHighlightColor {
+  return [UIColor whiteColor];
 }
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
+  if (!outerHighlightColor) {
+    outerHighlightColor = [self MDCFeatureHighlightDefaultOuterHighlightColor];
+  }
   _outerHighlightColor = outerHighlightColor;
   _outerLayer.fillColor = _outerHighlightColor.CGColor;
 
@@ -142,6 +152,16 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
                                                          options:options];
   titleAlpha = MAX([MDCTypography titleFontOpacity], titleAlpha);
   _titleLabel.textColor = [_bodyLabel.textColor colorWithAlphaComponent:titleAlpha];
+}
+
+- (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
+  if (!innerHighlightColor) {
+    innerHighlightColor = [self MDCFeatureHighlightDefaultInnerHighlightColor];
+  }
+  _innerHighlightColor = innerHighlightColor;
+
+  _pulseLayer.fillColor = _innerHighlightColor.CGColor;
+  _innerLayer.fillColor = _innerHighlightColor.CGColor;
 }
 
 - (void)layoutAppearing {

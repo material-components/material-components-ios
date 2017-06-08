@@ -53,7 +53,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   _tintedProgressView = [[MDCProgressView alloc] init];
   _tintedProgressView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_tintedProgressView];
-  _tintedProgressView.progressTintColor = [[MDCPalette redPalette] tint500];
+  _tintedProgressView.progressTintColor = MDCPalette.redPalette.tint500;
   // Reset the track tint color to be based off of the progress tint color.
   _tintedProgressView.trackTintColor = nil;
   // Hide the progress view at setup time.
@@ -62,8 +62,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   _fullyColoredProgressView = [[MDCProgressView alloc] init];
   _fullyColoredProgressView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_fullyColoredProgressView];
-  _fullyColoredProgressView.progressTintColor = [[MDCPalette greenPalette] tint500];
-  _fullyColoredProgressView.trackTintColor = [[MDCPalette yellowPalette] tint500];
+  _fullyColoredProgressView.progressTintColor = MDCPalette.greenPalette.tint500;
+  _fullyColoredProgressView.trackTintColor = MDCPalette.yellowPalette.tint500;
   // Hide the progress view at setup time.
   _fullyColoredProgressView.hidden = YES;
 

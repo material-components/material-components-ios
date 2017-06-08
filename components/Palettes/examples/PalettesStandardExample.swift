@@ -20,25 +20,25 @@ class PalettesStandardExampleViewController: PalettesExampleViewController {
   convenience init() {
     self.init(style: .grouped)
     self.palettes = [
-      ("Red", MDCPalette.red()),
-      ("Pink", MDCPalette.pink()),
-      ("Purple", MDCPalette.purple()),
-      ("Deep Purple", MDCPalette.deepPurple()),
-      ("Indigo", MDCPalette.indigo()),
-      ("Blue", MDCPalette.blue()),
-      ("Light Blue", MDCPalette.lightBlue()),
-      ("Cyan", MDCPalette.cyan()),
-      ("Teal", MDCPalette.teal()),
-      ("Green", MDCPalette.green()),
-      ("Light Green", MDCPalette.lightGreen()),
-      ("Lime", MDCPalette.lime()),
-      ("Yellow", MDCPalette.yellow()),
-      ("Amber", MDCPalette.amber()),
-      ("Orange", MDCPalette.orange()),
-      ("Deep Orange", MDCPalette.deepOrange()),
-      ("Brown", MDCPalette.brown()),
-      ("Grey", MDCPalette.grey()),
-      ("Blue Grey", MDCPalette.blueGrey())
+      ("Red", .red),
+      ("Pink", .pink),
+      ("Purple", .purple),
+      ("Deep Purple", .deepPurple),
+      ("Indigo", .indigo),
+      ("Blue", .blue),
+      ("Light Blue", .lightBlue),
+      ("Cyan", .cyan),
+      ("Teal", .teal),
+      ("Green", .green),
+      ("Light Green", .lightGreen),
+      ("Lime", .lime),
+      ("Yellow", .yellow),
+      ("Amber", .amber),
+      ("Orange", .orange),
+      ("Deep Orange", .deepOrange),
+      ("Brown", .brown),
+      ("Grey", .grey),
+      ("Blue Grey", .blueGrey)
     ]
   }
 }

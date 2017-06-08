@@ -18,6 +18,7 @@
 
 #import "MaterialRTL.h"
 #import "UIApplication+AppExtensions.h"
+#import "private/MDCActivityIndicator+Private.h"
 
 static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
 static const NSTimeInterval kMDCActivityIndicatorAnimateOutDuration = 0.1f;
@@ -35,17 +36,6 @@ static const CGFloat kStrokeLength = 0.75f;
  */
 static const CGFloat kSingleCycleRotation =
     2 * kStrokeLength + kCycleRotation + 1.0f / kMDCActivityIndicatorTotalDetentCount;
-
-/*
- States for the internal state machine. The states represent the last animation completed.
- It provides information required to select the next animation.
- */
-typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
-  MDCActivityIndicatorStateIndeterminate,
-  MDCActivityIndicatorStateTransitionToDeterminate,
-  MDCActivityIndicatorStateDeterminate,
-  MDCActivityIndicatorStateTransitionToIndeterminate,
-};
 
 @interface MDCActivityIndicator ()
 
@@ -119,6 +109,15 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   return self;
 }
 
++ (void)initialize {
+  NSArray<UIColor *> *defaultColors =
+      @[ [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
+         [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
+         [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
+         [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1] ];
+  [MDCActivityIndicator appearance].cycleColors = defaultColors;
+}
+
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -155,7 +154,6 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   _strokeWidth = 2.0f;
 
   // Colors.
-  _cycleColors = [MDCActivityIndicator defaultColors];
   _currentColorCount = 0;
 
   // Track layer.
@@ -384,6 +382,14 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   }];
 }
 
+- (void)setCycleColors:(NSArray<UIColor *> *)cycleColors {
+  _cycleColors = [cycleColors copy];
+  NSAssert(cycleColors.count > 0, @"Cycle colors array cannot be empty.");
+  if (cycleColors.count > 0) {
+    [self setStrokeColor:cycleColors[0]];
+  }
+}
+
 - (void)updateStrokePath {
   CGFloat offsetRadius = _radius - _strokeLayer.lineWidth / 2.0f;
   UIBezierPath *strokePath = [UIBezierPath bezierPathWithArcCenter:_strokeLayer.position
@@ -400,8 +406,6 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 - (void)updateStrokeColor {
   if (_cycleColors.count > 0) {
     [self setStrokeColor:_cycleColors[_currentColorCount]];
-  } else {
-    [self setStrokeColor:[MDCActivityIndicator defaultColors][0]];
   }
 }
 
@@ -779,20 +783,6 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   setPropBlock();
 
   [CATransaction commit];
-}
-
-+ (NSArray<UIColor *> *)defaultColors {
-  static NSArray *defaultColors;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    defaultColors = @[
-      [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-      [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
-      [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
-      [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1]
-    ];
-  });
-  return defaultColors;
 }
 
 @end
