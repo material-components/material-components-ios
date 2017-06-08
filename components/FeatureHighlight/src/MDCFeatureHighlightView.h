@@ -20,5 +20,7 @@
 
 @property(nonatomic, strong) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong) UIColor *titleColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong) UIColor *bodyColor UI_APPEARANCE_SELECTOR;
 
 @end
