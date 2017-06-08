@@ -1,1 +1,0 @@
-../../../MaterialComponents/components/CollectionCells/src/MDCCollectionViewCell.h
