@@ -59,10 +59,6 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   MDCFeatureHighlightLayer *_displayMaskLayer;
 }
 
-@end
-
-@implementation MDCFeatureHighlightView (Private)
-
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
     self.backgroundColor = [UIColor clearColor];
