@@ -1,3 +1,152 @@
+# 24.0.0
+
+## API diffs
+
+### Palettes
+
+* Added typedef for NSString so we can differentiate tints from accents
+* Added more palettes: Red, Pink, Purple etc.
+
+### Tabs
+
+* MDCTabBarDelegate conforms to UIBarPositioningDelegate protocol.
+* Added MDCTabBarViewController.
+
+### TextFields
+
+* New Component: Single line text input.
+
+### Themes
+
+* ColorScheme colors are now nonnull, readonly
+* New classes: TonalColorScheme, TonalPalette
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [Exposed enum and private method to be used for subclassing (#1481)](https://github.com/material-components/material-components-ios/commit/9a08ecaa5c2cc5bf040418607d7767b40ec5123e) (Justin Shephard)
+
+### ButtonBar
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Buttons
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Dialogs
+
+#### Changes
+
+* [![ColorThemer] Reorganize source to create separate targets for each color themer. (#1466)](https://github.com/material-components/material-components-ios/commit/1c7ca931421d45dbddd703aaf1bbea474f28afe0) (Randall Li)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [Shorten transition duration (#1465)](https://github.com/material-components/material-components-ios/commit/eb9351d1c3fdb1e981b679c0a40e7d803d1c32f6) (ianegordon)
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+
+### FeatureHighlight
+
+#### Changes
+
+* [![ColorThemer] Reorganize source to create separate targets for each color themer. (#1466)](https://github.com/material-components/material-components-ios/commit/1c7ca931421d45dbddd703aaf1bbea474f28afe0) (Randall Li)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [[Feature Highlight] Restore innerHighlightColor setter and fix null_resettable colors (#1485)](https://github.com/material-components/material-components-ios/commit/984135f874ec156a6a1d51b517aaae5e00945dfc) (Sam Morrison)
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### HeaderStackView
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Ink
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### NavigationBar
+
+#### Changes
+
+* [- Update handling of center-aligned titles (#1479)](https://github.com/material-components/material-components-ios/commit/d1c2a32339ef9fba687c0f031e3de601670e89c1) (Justin Shephard)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### PageControl
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Palettes
+
+#### Changes
+
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+* [[Palette] Swift enums for MDCPaletteTint/Accent. (#1469)](https://github.com/material-components/material-components-ios/commit/49ed5eb513c5e757d2f5f00bd50b840953e5091b) (Martin Petrov)
+
+### ProgressView
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+
+### Slider
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Snackbar
+
+#### Changes
+
+* [[Testing] Interaction tests infrastructure (#1473)](https://github.com/material-components/material-components-ios/commit/2fa4850f4edd4a0e0cf75cd23acf860508e3e385) (Will Larche)
+
+### Tabs
+
+#### Changes
+
+* [Add MDCTabViewController (#1482)](https://github.com/material-components/material-components-ios/commit/f88dc55511d1d634ee6e84208b8f22fdf681f19e) (ianegordon)
+* [Bottom navigation support (#1411)](https://github.com/material-components/material-components-ios/commit/a680e30a567d64c586bf0a80f564063e014db02d) (Brian Moore)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+
+### TextFields
+
+#### Changes
+
+* [Correcting broken image in readme. (#1489)](https://github.com/material-components/material-components-ios/commit/8c5f0a8846ee3767ea2d4a40f89fadb906e89b55) (Will Larche)
+* [Single line text fields (#1318)](https://github.com/material-components/material-components-ios/commit/acf47c10d1bec3ab632adf87c8f5e18cfbaee421) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [![ColorThemer] Reorganize source to create separate targets for each color themer. (#1466)](https://github.com/material-components/material-components-ios/commit/1c7ca931421d45dbddd703aaf1bbea474f28afe0) (Randall Li)
+* [Add support for material design tonal palettes (#1471)](https://github.com/material-components/material-components-ios/commit/5d24dca8835dc1e76e89be61f87a88ba2cb60810) (Junius Gunaratne)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Typography
+
+#### Changes
+
+* [MDCPreferredFontForStyle now includes the system font family. (#1472)](https://github.com/material-components/material-components-ios/commit/843675b37482a89cb7a587fe556cde512b1a0183) (ianegordon)
+
 # 23.4.1
 
 Fixed podspec

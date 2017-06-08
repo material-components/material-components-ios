@@ -16,7 +16,7 @@
 
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputCommonFundament.h"
+#import "private/MDCTextInputCommonFundament.h"
 
 #import "MaterialMath.h"
 #import "MaterialRTL.h"
