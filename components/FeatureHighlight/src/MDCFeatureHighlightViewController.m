@@ -44,11 +44,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     _animationController = [[MDCFeatureHighlightAnimationController alloc] init];
     _animationController.presenting = YES;
 
-    [_highlightedView addObserver:self
-                       forKeyPath:@"frame"
-                          options:NSKeyValueObservingOptionNew
-                          context:nil];
-
     super.transitioningDelegate = self;
     super.modalPresentationStyle = UIModalPresentationCustom;
 
@@ -111,7 +106,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (void)dealloc {
   [_pulseTimer invalidate];
-  [_highlightedView removeObserver:self forKeyPath:@"frame"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -188,18 +182,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                                self->_completion(accepted);
                              }
                            }];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSString *, id> *)change
-                       context:(void *)context {
-  if (object == _highlightedView && [keyPath isEqualToString:@"frame"]) {
-    CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
-                                                      toView:_featureHighlightView];
-    _featureHighlightView.highlightPoint = point;
-    [_featureHighlightView layoutIfNeeded];
-  }
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate

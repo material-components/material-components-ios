@@ -193,7 +193,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   _highlightPoint = highlightPoint;
 
   [self setNeedsLayout];
-  [self layoutIfNeeded];
+//  [self layoutIfNeeded];
 }
 
 - (void)layoutSubviews {
@@ -231,15 +231,26 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
     }
   }
 
-  _displayedView.center = _highlightPoint;
-  _innerLayer.center = _highlightPoint;
-  _pulseLayer.center = _highlightPoint;
-
-  if (_forceConcentricLayout) {
-    _outerLayer.center = _highlightPoint;
+  CGPoint outerCenter = _forceConcentricLayout ? _highlightPoint : _highlightCenter;
+  if (self.layer.animationKeys) {
+    // If our layer has an animationKeys array then we must be inside an animation (because we're
+    // resizing or rotating), so we want to use the current animation's properties for our various
+    // layers' CAAnimations.
+    CAAnimation *animation = [self.layer animationForKey:self.layer.animationKeys.firstObject];
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:animation.timingFunction];
+    [CATransaction setAnimationDuration:animation.duration];
+    [_innerLayer setPosition:_highlightPoint animated:YES];
+    [_pulseLayer setPosition:_highlightPoint animated:YES];
+    [_outerLayer setPosition:outerCenter animated:YES];
+    [CATransaction commit];
   } else {
-    _outerLayer.center = _highlightCenter;
+    _innerLayer.position = _highlightPoint;
+    _pulseLayer.position = _highlightPoint;
+    _outerLayer.position = outerCenter;
   }
+  _displayedView.center = _highlightPoint;
+
 
   CGFloat leftTextBound = kMDCFeatureHighlightTextPadding;
   CGFloat rightTextBound = self.frame.size.width - MAX(titleSize.width, detailSize.width) -
@@ -295,15 +306,21 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   CGPoint displayMaskCenter =
       CGPointMake(_displayedView.frame.size.width / 2, _displayedView.frame.size.height / 2);
 
+  [_displayMaskLayer setPosition:displayMaskCenter];
+  [_innerLayer setPosition:_highlightPoint];
+  [_pulseLayer setPosition:_highlightPoint];
+  [_outerLayer setPosition:_highlightPoint];
+
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
                                              functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter radius:_innerRadius animated:YES];
+  [_displayMaskLayer setRadius:_innerRadius animated:YES];
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:1].CGColor animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:_innerRadius animated:YES];
+  [_innerLayer setRadius:_innerRadius animated:YES];
   [_outerLayer setFillColor:_outerHighlightColor.CGColor animated:YES];
-  [_outerLayer setCenter:_highlightCenter radius:_outerRadius animated:YES];
+  [_outerLayer setPosition:_highlightCenter animated:YES];
+  [_outerLayer setRadius:_outerRadius animated:YES];
   [CATransaction commit];
 
   _forceConcentricLayout = NO;
@@ -324,9 +341,9 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   CGFloat innerBloomRadius = radius + kMDCFeatureHighlightInnerRadiusBloomAmount;
   CGFloat pulseBloomRadius = radius + kMDCFeatureHighlightPulseRadiusBloomAmount;
   NSArray *innerKeyframes = @[ @(radius), @(innerBloomRadius), @(radius) ];
-  [_innerLayer animateRadiusOverKeyframes:innerKeyframes keyTimes:keyTimes center:_highlightPoint];
+  [_innerLayer animateRadiusOverKeyframes:innerKeyframes keyTimes:keyTimes];
   NSArray *pulseKeyframes = @[ @(radius), @(radius), @(pulseBloomRadius) ];
-  [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes keyTimes:keyTimes center:_highlightPoint];
+  [_pulseLayer animateRadiusOverKeyframes:pulseKeyframes keyTimes:keyTimes];
   [_pulseLayer animateFillColorOverKeyframes:@[ pulseColorStart, pulseColorStart, pulseColorEnd ]
                                     keyTimes:keyTimes];
   [CATransaction commit];
@@ -340,12 +357,13 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
                                              functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter radius:0.0 animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
+  [_displayMaskLayer setPosition:displayMaskCenter animated:YES];
+  [_displayMaskLayer setRadius:0.0 animated:YES];
+  [_innerLayer setPosition:_highlightPoint animated:YES];
+  [_innerLayer setRadius:0.0 animated:YES];
   [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
-  [_outerLayer setCenter:_highlightCenter
-                  radius:kMDCFeatureHighlightOuterRadiusFactor * _outerRadius
-                animated:YES];
+  [_outerLayer setPosition:_highlightCenter animated:YES];
+  [_outerLayer setRadius:kMDCFeatureHighlightOuterRadiusFactor * _outerRadius animated:YES];
   [CATransaction commit];
 
   _forceConcentricLayout = YES;
@@ -359,10 +377,13 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
                                              functionWithName:kCAMediaTimingFunctionEaseOut]];
   [CATransaction setAnimationDuration:duration];
-  [_displayMaskLayer setCenter:displayMaskCenter radius:0 animated:YES];
-  [_innerLayer setCenter:_highlightPoint radius:0 animated:YES];
+  [_displayMaskLayer setPosition:displayMaskCenter animated:YES];
+  [_displayMaskLayer setRadius:0 animated:YES];
+  [_innerLayer setPosition:_highlightPoint animated:YES];
+  [_innerLayer setRadius:0 animated:YES];
   [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor animated:YES];
-  [_outerLayer setCenter:_highlightPoint radius:0 animated:YES];
+  [_outerLayer setPosition:_highlightPoint animated:YES];
+  [_outerLayer setRadius:0 animated:YES];
   [CATransaction commit];
 
   _forceConcentricLayout = NO;

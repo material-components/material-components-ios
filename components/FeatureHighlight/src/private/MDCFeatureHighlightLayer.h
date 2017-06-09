@@ -18,15 +18,14 @@
 
 @interface MDCFeatureHighlightLayer : CAShapeLayer
 
-@property(nonatomic, assign) CGPoint center;
+- (void)setPosition:(CGPoint)position animated:(BOOL)animated;
 
-- (void)setCenter:(CGPoint)center radius:(CGFloat)radius animated:(BOOL)animated;
+- (void)setRadius:(CGFloat)radius animated:(BOOL)animated;
 
 - (void)setFillColor:(CGColorRef)fillColor animated:(BOOL)animated;
 
 - (void)animateRadiusOverKeyframes:(NSArray *)radii
-                          keyTimes:(NSArray *)keyTimes
-                            center:(CGPoint)center;
+                          keyTimes:(NSArray *)keyTimes;
 
 - (void)animateFillColorOverKeyframes:(NSArray *)colors keyTimes:(NSArray *)keyTimes;
 
