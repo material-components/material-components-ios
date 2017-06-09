@@ -39,6 +39,10 @@ static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
   return [[[self class] alloc] initWithFrame:CGRectZero shape:shape];
 }
 
+- (instancetype)init {
+  return [self initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
   return [self initWithFrame:frame shape:MDCFloatingButtonShapeDefault];
 }
