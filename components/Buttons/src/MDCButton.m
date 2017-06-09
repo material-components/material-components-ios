@@ -110,6 +110,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return [MDCShadowLayer class];
 }
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonMDCButtonInit];
+  }
+  return self;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -215,12 +223,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [aCoder encodeObject:_accessibilityLabelForState forKey:MDCButtonAccessibilityLabelsKey];
 }
 
-+ (void)initialize {
-  // Default background colors.
-  [[MDCButton appearance] setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
-                                    forState:UIControlStateNormal];
-}
-
 - (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _shouldRaiseOnTouch = YES;
@@ -261,6 +263,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
+
+  // Default background colors.
+  [self setBackgroundColor:MDCColorFromRGB(MDCButtonDefaultBackgroundColor)
+                  forState:UIControlStateNormal];
 
   self.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 

@@ -14,6 +14,9 @@
  limitations under the License.
  */
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 /**
  A tonal palette consists of a main color and variants of the main color that are lighter and darker
  shades of the main color. Material design guidelines recommend one main color with nine color
