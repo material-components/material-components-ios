@@ -15,21 +15,21 @@
  */
 
 #import "MDCColorScheme.h"
-#import "MaterialButtonBar.h"
+#import "MaterialAppBar.h"
 
 /**
- Used to apply a color scheme to theme MDCButtonBar.
+ Used to apply a color scheme to theme MDCAppBar.
  */
-@interface MDCButtonBarColorThemer : NSObject
+@interface MDCAppBarColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCButtonBar. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCButtonBar.
+ Applies a color scheme to theme a MDCAppBar. Use a UIAppearance proxy to apply a color scheme to
+ all instances of MDCAppBar.
 
- @param colorScheme The color scheme to apply to MDCButtonBar.
- @param buttonBar A MDCButtonBar instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to MDCAppBar.
+ @param appBar A MDCAppBar instance to apply a color scheme.
  */
 + (void)applyColorScheme:(NSObject<MDCColorScheme> *)colorScheme
-             toButtonBar:(MDCButtonBar *)buttonBar;
+                toAppBar:(MDCAppBar *)appBar;
 
 @end

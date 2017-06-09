@@ -60,23 +60,31 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "AppBar" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+    ss.subspec "Component" do |sss|
+      sss.ios.deployment_target = '8.0'
+      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
+      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+      sss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
 
-    # Navigation bar contents
-    ss.dependency "MaterialComponents/HeaderStackView"
-    ss.dependency "MaterialComponents/NavigationBar"
-    ss.dependency "MaterialComponents/Typography"
+      # Navigation bar contents
+      sss.dependency "MaterialComponents/HeaderStackView"
+      sss.dependency "MaterialComponents/NavigationBar"
+      sss.dependency "MaterialComponents/Typography"
 
-    # Flexible header + shadow
-    ss.dependency "MaterialComponents/FlexibleHeader"
-    ss.dependency "MaterialComponents/ShadowElevations"
-    ss.dependency "MaterialComponents/ShadowLayer"
+      # Flexible header + shadow
+      sss.dependency "MaterialComponents/FlexibleHeader"
+      sss.dependency "MaterialComponents/ShadowElevations"
+      sss.dependency "MaterialComponents/ShadowLayer"
 
-    ss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
-    ss.dependency "MaterialComponents/private/RTL"
+      sss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
+      sss.dependency "MaterialComponents/private/RTL"
+    end
+    ss.subspec "ColorThemer" do |sss|
+      sss.ios.deployment_target = '8.0'
+      sss.public_header_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.h"
+      sss.source_files = "components/#{ss.base_name}/src/#{sss.base_name}/*.{h,m}", "components/#{ss.base_name}/src/#{sss.base_name}/private/*.{h,m}"
+      sss.dependency "MaterialComponents/Themes"
+    end
   end
 
   s.subspec "Buttons" do |ss|
