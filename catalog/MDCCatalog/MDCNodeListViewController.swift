@@ -82,7 +82,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.addChildViewController(appBar.headerViewController)
     let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
 
-    let appDelegate = UIApplication.shared.delegate as! MDCAppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
     MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
 
@@ -365,7 +365,7 @@ extension MDCNodeListViewController {
 
         let headerView = container.appBar.headerViewController.headerView
 
-        let appDelegate = UIApplication.shared.delegate as! MDCAppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let colorScheme = appDelegate.colorScheme
         MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
 

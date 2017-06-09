@@ -21,7 +21,6 @@
 #import "MaterialFlexibleHeader.h"
 #import "MaterialPalettes.h"
 #import "MaterialProgressView.h"
-#import "MaterialThemes.h"
 
 @interface ThemerTypicalUseViewController ()
 

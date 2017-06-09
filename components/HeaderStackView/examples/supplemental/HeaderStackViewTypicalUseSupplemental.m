@@ -21,10 +21,8 @@
 
 #import "HeaderStackViewTypicalUseSupplemental.h"
 
-#import "MDCHeaderStackViewColorThemer.h"
 #import "MaterialHeaderStackView.h"
 #import "MaterialNavigationBar.h"
-#import "MaterialThemes.h"
 
 @interface ExampleInstructionsViewHeaderStackViewTypicalUse : UIView
 

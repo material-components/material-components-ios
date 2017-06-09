@@ -17,7 +17,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
-#import "MaterialThemes.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 

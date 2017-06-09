@@ -20,7 +20,7 @@ import CatalogByConvention
 import MaterialComponents
 
 @UIApplicationMain
-class MDCAppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   var colorScheme: (MDCColorScheme & NSObjectProtocol)!

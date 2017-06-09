@@ -18,7 +18,6 @@
 
 #import "ActivityIndicatorExampleSupplemental.h"
 
-#import "MDCActivityIndicatorColorThemer.h"
 #import "MaterialActivityIndicator.h"
 #import "MaterialPalettes.h"
 

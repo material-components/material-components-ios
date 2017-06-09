@@ -22,7 +22,6 @@
 
 #import "MaterialAppBar.h"
 #import "MaterialTabs.h"
-#import "MaterialThemes.h"
 
 #import "TabBarTextOnlyExampleSupplemental.h"
 

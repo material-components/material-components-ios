@@ -77,7 +77,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   func colorThemeChanged(notification: NSNotification) {
     let colorScheme = notification.userInfo?["colorScheme"]
-    let appDelegate = UIApplication.shared.delegate as! MDCAppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     appDelegate.colorScheme = colorScheme as? (MDCColorScheme & NSObjectProtocol)!
 
     collectionView?.collectionViewLayout.invalidateLayout()

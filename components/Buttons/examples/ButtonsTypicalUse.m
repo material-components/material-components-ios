@@ -16,9 +16,7 @@
 
 #import "ButtonsTypicalUseSupplemental.h"
 
-#import "MDCButtonColorThemer.h"
 #import "MaterialButtons.h"
-#import "MaterialThemes.h"
 #import "MaterialTypography.h"
 
 @interface ButtonsTypicalUseViewController ()

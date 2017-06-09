@@ -74,7 +74,7 @@ class MDCCatalogTileView: UIView {
     let top = (self.frame.height - defaultSize.height) / 2
     imageView.frame = CGRect(x: left, y: top, width: defaultSize.width, height: defaultSize.height)
 
-    let appDelegate = UIApplication.shared.delegate as! MDCAppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let colorScheme = appDelegate.colorScheme
 
     switch componentNameString {

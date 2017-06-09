@@ -16,9 +16,7 @@
 
 #import "FeatureHighlightExampleSupplemental.h"
 
-#import "MDCFeatureHighlightColorThemer.h"
 #import "MaterialFeatureHighlight.h"
-#import "MaterialThemes.h"
 
 @implementation FeatureHighlightTypicalUseViewController
 
