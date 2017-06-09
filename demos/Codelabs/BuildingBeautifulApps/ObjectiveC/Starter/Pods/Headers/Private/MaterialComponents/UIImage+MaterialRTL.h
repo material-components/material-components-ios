@@ -1,1 +1,0 @@
-../../../MaterialComponents/components/private/RTL/src/UIImage+MaterialRTL.h
