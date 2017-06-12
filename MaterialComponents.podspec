@@ -36,6 +36,14 @@ Pod::Spec.new do |s|
   #  end
   #
 
+  s.subspec "ActionMenu" do |ss|
+    ss.subspec "Component" do |sss|
+      sss.ios.deployment_target = '8.0'
+      sss.public_header_files = "components/#{ss.base_name}/src/*.h"
+      sss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+    end
+  end
+
   s.subspec "ActivityIndicator" do |ss|
     ss.subspec "Component" do |sss|
       sss.ios.deployment_target = '8.0'
