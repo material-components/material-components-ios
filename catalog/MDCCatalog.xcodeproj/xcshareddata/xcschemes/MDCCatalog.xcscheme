@@ -44,8 +44,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0B50E1981D91B0BD00DED250"
-               BuildableName = "MDCInteractionTests.xctest"
-               BlueprintName = "MDCInteractionTests"
+               BuildableName = "MDCEarlGreyTests.xctest"
+               BlueprintName = "MDCEarlGreyTests"
                ReferencedContainer = "container:MDCCatalog.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -59,15 +59,15 @@
             ReferencedContainer = "container:MDCCatalog.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = 'DYLD_INSERT_LIBRARIES'
-            value = '@executable_path/EarlGrey.framework/EarlGrey'
-            isEnabled = 'YES'>
+            key = "DYLD_INSERT_LIBRARIES"
+            value = "@executable_path/EarlGrey.framework/EarlGrey"
+            isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"

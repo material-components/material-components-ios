@@ -1,3 +1,355 @@
+# 24.0.2
+
+Hotfix: Fixed missing bump of version numbers.
+
+# 24.0.1
+
+Hotfix: Added missing dependencies in our podspec from ColorThemer subspecs to Component subspecs.
+
+# 24.0.0
+
+## API diffs
+
+### Palettes
+
+* Added typedef for NSString so we can differentiate tints from accents
+* Added more palettes: Red, Pink, Purple etc.
+
+### Tabs
+
+* MDCTabBarDelegate conforms to UIBarPositioningDelegate protocol.
+* Added MDCTabBarViewController.
+
+### TextFields
+
+* New Component: Single line text input.
+
+### Themes
+
+* ColorScheme colors are now nonnull, readonly
+* New classes: TonalColorScheme, TonalPalette
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [Exposed enum and private method to be used for subclassing (#1481)](https://github.com/material-components/material-components-ios/commit/9a08ecaa5c2cc5bf040418607d7767b40ec5123e) (Justin Shephard)
+
+### ButtonBar
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Buttons
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Dialogs
+
+#### Changes
+
+* [![ColorThemer] Reorganize source to create separate targets for each color themer. (#1466)](https://github.com/material-components/material-components-ios/commit/1c7ca931421d45dbddd703aaf1bbea474f28afe0) (Randall Li)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [Shorten transition duration (#1465)](https://github.com/material-components/material-components-ios/commit/eb9351d1c3fdb1e981b679c0a40e7d803d1c32f6) (ianegordon)
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+
+### FeatureHighlight
+
+#### Changes
+
+* [![ColorThemer] Reorganize source to create separate targets for each color themer. (#1466)](https://github.com/material-components/material-components-ios/commit/1c7ca931421d45dbddd703aaf1bbea474f28afe0) (Randall Li)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [[Feature Highlight] Restore innerHighlightColor setter and fix null_resettable colors (#1485)](https://github.com/material-components/material-components-ios/commit/984135f874ec156a6a1d51b517aaae5e00945dfc) (Sam Morrison)
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### HeaderStackView
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Ink
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### NavigationBar
+
+#### Changes
+
+* [- Update handling of center-aligned titles (#1479)](https://github.com/material-components/material-components-ios/commit/d1c2a32339ef9fba687c0f031e3de601670e89c1) (Justin Shephard)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### PageControl
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Palettes
+
+#### Changes
+
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+* [[Palette] Swift enums for MDCPaletteTint/Accent. (#1469)](https://github.com/material-components/material-components-ios/commit/49ed5eb513c5e757d2f5f00bd50b840953e5091b) (Martin Petrov)
+
+### ProgressView
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+
+### Slider
+
+#### Changes
+
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Snackbar
+
+#### Changes
+
+* [[Testing] Interaction tests infrastructure (#1473)](https://github.com/material-components/material-components-ios/commit/2fa4850f4edd4a0e0cf75cd23acf860508e3e385) (Will Larche)
+
+### Tabs
+
+#### Changes
+
+* [Add MDCTabViewController (#1482)](https://github.com/material-components/material-components-ios/commit/f88dc55511d1d634ee6e84208b8f22fdf681f19e) (ianegordon)
+* [Bottom navigation support (#1411)](https://github.com/material-components/material-components-ios/commit/a680e30a567d64c586bf0a80f564063e014db02d) (Brian Moore)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+* [[MDCPalette] Use class properties (#1470)](https://github.com/material-components/material-components-ios/commit/ec1feb81a5701e1b6dd7c368b593ef7b1e77e12f) (Martin Petrov)
+
+### TextFields
+
+#### Changes
+
+* [Correcting broken image in readme. (#1489)](https://github.com/material-components/material-components-ios/commit/8c5f0a8846ee3767ea2d4a40f89fadb906e89b55) (Will Larche)
+* [Single line text fields (#1318)](https://github.com/material-components/material-components-ios/commit/acf47c10d1bec3ab632adf87c8f5e18cfbaee421) (Will Larche)
+
+### Themes
+
+#### Changes
+
+* [![ColorThemer] Reorganize source to create separate targets for each color themer. (#1466)](https://github.com/material-components/material-components-ios/commit/1c7ca931421d45dbddd703aaf1bbea474f28afe0) (Randall Li)
+* [Add support for material design tonal palettes (#1471)](https://github.com/material-components/material-components-ios/commit/5d24dca8835dc1e76e89be61f87a88ba2cb60810) (Junius Gunaratne)
+* [Component themers and usage example for catalog (#1443)](https://github.com/material-components/material-components-ios/commit/71d441a065316430d1f13f7a5cbc47ed62ecfbd3) (Junius Gunaratne)
+
+### Typography
+
+#### Changes
+
+* [MDCPreferredFontForStyle now includes the system font family. (#1472)](https://github.com/material-components/material-components-ios/commit/843675b37482a89cb7a587fe556cde512b1a0183) (ianegordon)
+
+# 23.4.1
+
+Fixed podspec
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Revert "Fix case-sensitive imports from private to Private. Causing compilation failures in Xcode 8.3.2 about non-portable path."](https://github.com/material-components/material-components-ios/commit/9cae7fca7bcd490a921c5ca1aacbd585cd61a021) (randallli)
+
+### Typography
+
+#### Changes
+
+* [Revert "Fix case-sensitive imports from private to Private. Causing compilation failures in Xcode 8.3.2 about non-portable path."](https://github.com/material-components/material-components-ios/commit/9cae7fca7bcd490a921c5ca1aacbd585cd61a021) (randallli)
+
+# 23.4.0
+
+## API diffs
+
+### FeatureHighlight
+
+Made MDCFeatureHighlightView public with two properties: innerHighlightColor and outerHighlightColor.
+
+## Component changes
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+* [[catalog] Restyle Activity Indicator example (#1433)](https://github.com/material-components/material-components-ios/commit/3ae88076c727611c6549ff00a1c8381abaeb6ba2) (Alastair Tse)
+
+### AnimationTiming
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### AppBar
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### ButtonBar
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### Buttons
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### CollectionCells
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### Collections
+
+#### Changes
+
+* [Fixes SwipeToDismiss ability to swipe when not editing. Closes #1207, #1300, #1301. (#1427)](https://github.com/material-components/material-components-ios/commit/33ceb64ee60fd6817454ee473667e73d396fff38) (Chris Cox)
+* [Fixes indent. (#1428)](https://github.com/material-components/material-components-ios/commit/52ea84adbd4e0bd77fb31cc98eec22091b904a91) (Chris Cox)
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### Dialogs
+
+#### Changes
+
+* [Adding MDC themes (#1401)](https://github.com/material-components/material-components-ios/commit/0cb6ce6d5f989e9827e39af1b857ca80c9de7081) (Junius Gunaratne)
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Keep feature highlight view implementation in private with limited public properties (#1422)](https://github.com/material-components/material-components-ios/commit/6d8f757609ab8788c4ed4b1defaa68ef1937e98e) (Junius Gunaratne)
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### HeaderStackView
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### Ink
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### NavigationBar
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### PageControl
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### Palettes
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### ProgressView
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### ShadowElevations
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### ShadowLayer
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### Slider
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### Snackbar
+
+#### Changes
+
+* [Add accessibilityHint to MDCSnackbarMessage actions (#1449)](https://github.com/material-components/material-components-ios/commit/7272a1ece883b14a0d57ea8fb587cf77f64f7c9c) (Sam Morrison)
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### Tabs
+
+#### Changes
+
+* [MDCTabBar should not crash if the selection is reset to nil. or array set to empty. Fix. (#1434)](https://github.com/material-components/material-components-ios/commit/2a95590d4ee580fa9afec06b7c66bfe5dd772f61) (David Phillip Oster)
+* [Revert "Disallow tabs that are wider than the screen (#1408)" (#1431)](https://github.com/material-components/material-components-ios/commit/c76549c287d74b401a99b457a25878d1f03862c6) (Brian Moore)
+* [Until you select an item in MDCTabBar, it should be in the unselected state. Fixed. (#1441)](https://github.com/material-components/material-components-ios/commit/be6888729216d9411579aea37f24b818eb7892b5) (David Phillip Oster)
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+### Themes
+
+#### Changes
+
+* [Adding MDC themes (#1401)](https://github.com/material-components/material-components-ios/commit/0cb6ce6d5f989e9827e39af1b857ca80c9de7081) (Junius Gunaratne)
+
+### Typography
+
+#### Changes
+
+* [[Docs] Adds API documentation roots and tidies up here and there. (#1425)](https://github.com/material-components/material-components-ios/commit/eed028eacbbee04170f15529ad721fe30bfdffdd) (Scott Hyndman)
+
+# 23.3.0
+
+## API diffs
+
+* No API changes.
+
+## Component changes
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fixes issue where the rotation animation was broken for any GOOHeaderViewController child’s view.](https://github.com/material-components/material-components-ios/commit/65ed2b4872177e3de64e7a9725388bd61358c58b) (Material Components iOS Team)
+
 # 23.2.0
 
 ## API diffs

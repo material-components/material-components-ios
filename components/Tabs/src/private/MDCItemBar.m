@@ -186,9 +186,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
     [self reload];
 
-    // Reset selection to a valid item.
+    // Reset selection to the unselected state.
     if (![_items containsObject:_selectedItem]) {
-      self.selectedItem = [_items firstObject];
+      self.selectedItem = nil;
     }
 
     // Start observing new items for changes.
@@ -329,12 +329,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 - (BOOL)collectionView:(UICollectionView *)collectionView
     shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   if (_collectionView == collectionView) {
-    UITabBarItem *item = [self itemAtIndexPath:indexPath];
-
     // Notify delegate of impending selection.
     id<MDCItemBarDelegate> delegate = self.delegate;
-    if ([delegate respondsToSelector:@selector(itemBar:willSelectItem:)]) {
-      [delegate itemBar:self willSelectItem:item];
+    if ([delegate respondsToSelector:@selector(itemBar:shouldSelectItem:)]) {
+      UITabBarItem *item = [self itemAtIndexPath:indexPath];
+      return [delegate itemBar:self shouldSelectItem:item];
     }
   }
   return YES;
@@ -425,13 +424,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 + (NSArray *)observableItemKeys {
   static dispatch_once_t onceToken;
   static NSArray *s_keys = nil;
+  // clang-format off
   dispatch_once(&onceToken, ^{
     s_keys = @[
-      NSStringFromSelector(@selector(title)), NSStringFromSelector(@selector(image)),
+      NSStringFromSelector(@selector(title)),
+      NSStringFromSelector(@selector(image)),
       NSStringFromSelector(@selector(badgeValue)),
       NSStringFromSelector(@selector(accessibilityIdentifier))
     ];
   });
+  // clang-format on
   return s_keys;
 }
 

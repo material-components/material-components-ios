@@ -48,6 +48,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
 
 class MDCNodeListViewController: CBCNodeListViewController {
   let appBar = MDCAppBar()
+  let scheme = MDCBasicColorScheme(primaryColor: UIColor(white: 0.1, alpha: 1.0))
   let sectionNames = ["Description", "Additional Examples"]
   let descriptionSectionHeight = CGFloat(100)
   let additionalExamplesSectionHeight = CGFloat(50)
@@ -81,8 +82,9 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     self.addChildViewController(appBar.headerViewController)
     let appBarFont = UIFont(name: "RobotoMono-Regular", size: 16)
-    
-    appBar.headerViewController.headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+
+    MDCFlexibleHeaderColorThemer.apply(scheme, to: MDCFlexibleHeaderView.appearance())
+
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [
       NSForegroundColorAttributeName: UIColor.white,
@@ -285,6 +287,7 @@ extension MDCNodeListViewController {
     }
     cell!.accessoryType = .disclosureIndicator
 
+    cell!.accessibilityIdentifier = "Cell" + cell!.textLabel!.text!
     return cell!
   }
 
@@ -361,7 +364,7 @@ extension MDCNodeListViewController {
 
         let headerView = container.appBar.headerViewController.headerView
 
-        headerView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+        MDCFlexibleHeaderColorThemer.apply(scheme, to: MDCFlexibleHeaderView.appearance())
 
         let textColor = UIColor.white
         UIBarButtonItem.appearance().setTitleTextAttributes(

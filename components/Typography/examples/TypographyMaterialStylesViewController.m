@@ -72,7 +72,10 @@
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
                   ];
 
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentSizeCategoryDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
 
   /*
   UIKIT_EXTERN const CGFloat UIFontWeightUltraLight NS_AVAILABLE_IOS(8_2);
@@ -95,14 +98,31 @@
   NSLog(@"UIFontWeightBold %f", UIFontWeightBold);
   NSLog(@"UIFontWeightHeavy %f", UIFontWeightHeavy);
   NSLog(@"UIFontWeightBlack %f", UIFontWeightBlack);
+
+  UIFont *defaultFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  NSLog (@"Font Family : %@", defaultFont.familyName);
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
   NSString *sizeCategory = notification.userInfo[UIContentSizeCategoryNewValueKey];
   NSLog(@"New size category : %@", sizeCategory);
 
-  [self.tableView beginUpdates];
-  [self.tableView endUpdates];
+  // Update font array to reflect new size category
+  _styleFonts = @[
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody2],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
+                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
+                  ];
+
+  [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource

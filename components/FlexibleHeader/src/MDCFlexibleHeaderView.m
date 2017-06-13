@@ -370,15 +370,14 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   [super layoutSubviews];
 
   [self fhv_updateShadowPath];
+  [CATransaction begin];
   BOOL disableActions = [CATransaction disableActions];
   [CATransaction setDisableActions:YES];
   _defaultShadowLayer.frame = self.bounds;
   _customShadowLayer.frame = self.bounds;
   _shadowLayer.frame = self.bounds;
-  [_defaultShadowLayer layoutIfNeeded];
-  [_customShadowLayer layoutIfNeeded];
-  [_shadowLayer layoutIfNeeded];
   [CATransaction setDisableActions:disableActions];
+  [CATransaction commit];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {

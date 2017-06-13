@@ -123,6 +123,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     self.view.addSubview(self.headerViewController.view)
     self.headerViewController.didMove(toParentViewController: self)
+
+    self.collectionView?.accessibilityIdentifier = "collectionView"
   }
 
   override func viewWillAppear(_ animated: Bool) {
