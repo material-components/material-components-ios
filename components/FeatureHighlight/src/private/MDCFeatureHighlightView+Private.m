@@ -193,7 +193,6 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   _highlightPoint = highlightPoint;
 
   [self setNeedsLayout];
-//  [self layoutIfNeeded];
 }
 
 - (void)layoutSubviews {
