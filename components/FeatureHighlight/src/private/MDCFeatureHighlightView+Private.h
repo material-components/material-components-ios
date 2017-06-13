@@ -34,6 +34,7 @@ typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
 - (void)layoutAppearing;
 - (void)layoutDisappearing;
+- (void)updateOuterHighlight;
 
 - (void)animateDiscover:(NSTimeInterval)duration;
 - (void)animateAccepted:(NSTimeInterval)duration;

@@ -142,6 +142,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
      _featureHighlightView.highlightPoint = point;
      [_featureHighlightView layoutIfNeeded];
+     [_featureHighlightView updateOuterHighlight];
    } completion:nil];
 }
 

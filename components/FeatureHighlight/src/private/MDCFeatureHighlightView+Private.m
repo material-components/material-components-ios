@@ -251,7 +251,6 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   }
   _displayedView.center = _highlightPoint;
 
-
   CGFloat leftTextBound = kMDCFeatureHighlightTextPadding;
   CGFloat rightTextBound = self.frame.size.width - MAX(titleSize.width, detailSize.width) -
       kMDCFeatureHighlightTextPadding;
@@ -310,6 +309,7 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   [_innerLayer setPosition:_highlightPoint];
   [_pulseLayer setPosition:_highlightPoint];
   [_outerLayer setPosition:_highlightPoint];
+  [_outerLayer setRadius:0.0 animated:NO];
 
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
@@ -387,6 +387,19 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   [CATransaction commit];
 
   _forceConcentricLayout = NO;
+}
+
+- (void)updateOuterHighlight {
+  if (self.layer.animationKeys) {
+    CAAnimation *animation = [self.layer animationForKey:self.layer.animationKeys.firstObject];
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:animation.timingFunction];
+    [CATransaction setAnimationDuration:animation.duration];
+    [_outerLayer setRadius:_outerRadius animated:YES];
+    [CATransaction commit];
+  } else {
+    [_outerLayer setRadius:_outerRadius animated:NO];
+  }
 }
 
 + (NSString *)dismissAccessibilityHint {

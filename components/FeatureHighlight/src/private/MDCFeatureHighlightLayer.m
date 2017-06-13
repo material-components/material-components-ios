@@ -36,6 +36,9 @@
 }
 
 - (void)setRadius:(CGFloat)radius animated:(BOOL)animated {
+  if (_radius == radius) {
+    return;
+  }
   _radius = radius;
 
   CGRect circleRect = CGRectMake(-radius, -radius, radius * 2, radius * 2);
