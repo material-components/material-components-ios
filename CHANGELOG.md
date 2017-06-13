@@ -1,3 +1,9 @@
+# release-candidate TODO: Replace me with version number. 
+
+# 24.0.2
+
+Hotfix: Fixed missing bump of version numbers.
+
 # 24.0.1
 
 Hotfix: Added missing dependencies in our podspec from ColorThemer subspecs to Component subspecs.
