@@ -15,6 +15,7 @@ PODS:
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
   - MaterialComponents/ButtonBar/ColorThemer (24.0.0):
+    - MaterialComponents/ButtonBar/Component
     - MaterialComponents/Buttons
     - MaterialComponents/private/RTL
     - MaterialComponents/Themes
@@ -31,6 +32,7 @@ PODS:
     - MaterialComponents/Typography
     - MDFTextAccessibility
   - MaterialComponents/Buttons/ColorThemer (24.0.0):
+    - MaterialComponents/Buttons/Component
     - MaterialComponents/Ink
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowElevations
@@ -71,6 +73,7 @@ PODS:
     - MaterialComponents/private/Application
     - MDFTextAccessibility
   - MaterialComponents/FlexibleHeader/ColorThemer (24.0.0):
+    - MaterialComponents/FlexibleHeader/Component
     - MaterialComponents/private/Application
     - MaterialComponents/Themes
     - MDFTextAccessibility
@@ -81,18 +84,21 @@ PODS:
     - MaterialComponents/HeaderStackView/ColorThemer (= 24.0.0)
     - MaterialComponents/HeaderStackView/Component (= 24.0.0)
   - MaterialComponents/HeaderStackView/ColorThemer (24.0.0):
+    - MaterialComponents/HeaderStackView/Component
     - MaterialComponents/Themes
   - MaterialComponents/HeaderStackView/Component (24.0.0)
   - MaterialComponents/Ink (24.0.0):
     - MaterialComponents/Ink/ColorThemer (= 24.0.0)
     - MaterialComponents/Ink/Component (= 24.0.0)
   - MaterialComponents/Ink/ColorThemer (24.0.0):
+    - MaterialComponents/Ink/Component
     - MaterialComponents/Themes
   - MaterialComponents/Ink/Component (24.0.0)
   - MaterialComponents/NavigationBar (24.0.0):
     - MaterialComponents/NavigationBar/ColorThemer (= 24.0.0)
     - MaterialComponents/NavigationBar/Component (= 24.0.0)
   - MaterialComponents/NavigationBar/ColorThemer (24.0.0):
+    - MaterialComponents/NavigationBar/Component
     - MaterialComponents/Themes
   - MaterialComponents/NavigationBar/Component (24.0.0):
     - MaterialComponents/ButtonBar
@@ -140,7 +146,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  MaterialComponents: a6c45e15b229515e4137ae6aec3de1fc4a09ea42
+  MaterialComponents: 65d6fa160977bfbe8557a4f3c85f74f68e278861
   MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
 
 PODFILE CHECKSUM: cdec7a9b5bf338e8f41916eb1ec5588703a9dc16
