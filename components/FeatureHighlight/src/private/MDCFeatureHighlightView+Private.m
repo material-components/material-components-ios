@@ -17,6 +17,9 @@
 #import "MDCFeatureHighlightView+Private.h"
 
 #import "MDCFeatureHighlightLayer.h"
+#import "MDCFeatureHighlightDismissGestureRecognizer.h"
+#import "MDFTextAccessibility.h"
+
 #import "MaterialFeatureHighlightStrings.h"
 #import "MaterialFeatureHighlightStrings_table.h"
 #import "MaterialTypography.h"
@@ -45,19 +48,25 @@ const CGFloat kMDCFeatureHighlightInnerRadiusBloomAmount =
 const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
     (kMDCFeatureHighlightPulseRadiusFactor - 1) * kMDCFeatureHighlightMinimumInnerRadius;
 
+static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
+  return CGPointMake(a.x + b.x, a.y + b.y);
+}
+
 @implementation MDCFeatureHighlightView {
   BOOL _forceConcentricLayout;
   UIView *_highlightView;
   CGPoint _highlightPoint;
-  CGPoint _highlightCenter;
   CGFloat _innerRadius;
   CGPoint _outerCenter;
   CGFloat _outerRadius;
+  CGFloat _outerRadiusScale;
   MDCFeatureHighlightLayer *_outerLayer;
   MDCFeatureHighlightLayer *_pulseLayer;
   MDCFeatureHighlightLayer *_innerLayer;
   MDCFeatureHighlightLayer *_displayMaskLayer;
 }
+
+@synthesize highlightRadius = _outerRadius;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
@@ -97,10 +106,17 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapView:)];
     [self addGestureRecognizer:tapRecognizer];
 
+    MDCFeatureHighlightDismissGestureRecognizer *panRecognizer =
+        [[MDCFeatureHighlightDismissGestureRecognizer alloc]
+             initWithTarget:self action:@selector(didGestureDismiss:)];
+    [self addGestureRecognizer:panRecognizer];
+
     // We want the inner and outer highlights to animate from the same origin so we start them from
     // a concentric position.
     _forceConcentricLayout = YES;
     [self applyMDCFeatureHighlightViewDefaults];
+
+    _outerRadiusScale = 1.0;
   }
   return self;
 }
@@ -281,6 +297,46 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
   }
 }
 
+- (void)didGestureDismiss:(MDCFeatureHighlightDismissGestureRecognizer *)dismissRecognizer {
+  CGFloat progress = dismissRecognizer.progress;
+
+  if (dismissRecognizer.state == UIGestureRecognizerStateChanged) {
+    [self layoutInProgressDismissal:progress];
+  } else if (dismissRecognizer.state == UIGestureRecognizerStateEnded) {
+    if (progress > 0.6) {
+      [self animateDismissalCancelled];
+    } else {
+      if (self.interactionBlock) {
+        self.interactionBlock(NO);
+      }
+    }
+  }
+}
+
+- (void)layoutInProgressDismissal:(CGFloat)progress {
+  _outerRadiusScale = progress;
+  [self updateOuterHighlight];
+
+  // Square progress to ease-in the translation
+  CGFloat translationProgress = (1 - progress*progress);
+  CGPoint pointOffset = CGPointMake((_highlightPoint.x - _highlightCenter.x) * translationProgress,
+                                    (_highlightPoint.y - _highlightCenter.y) * translationProgress);
+  CGPoint center = CGPointAddedToPoint(_highlightCenter, pointOffset);
+  [_outerLayer setPosition:center animated:NO];
+  [_outerLayer removeAllAnimations];
+}
+
+- (void)animateDismissalCancelled {
+  _outerRadiusScale = 1;
+  [CATransaction begin];
+  [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
+                                             functionWithName:kCAMediaTimingFunctionEaseOut]];
+  [CATransaction setAnimationDuration:0.25];
+  [_outerLayer setRadius:_outerRadius * _outerRadiusScale animated:YES];
+  [_outerLayer setPosition:_highlightCenter animated:YES];
+  [CATransaction commit];
+}
+
 - (void)animateDiscover:(NSTimeInterval)duration {
   [_innerLayer setFillColor:[_innerHighlightColor colorWithAlphaComponent:0].CGColor];
   [_outerLayer setFillColor:[_outerHighlightColor colorWithAlphaComponent:0].CGColor];
@@ -373,15 +429,16 @@ const CGFloat kMDCFeatureHighlightPulseRadiusBloomAmount =
 }
 
 - (void)updateOuterHighlight {
+  CGFloat scaledRadius = _outerRadius * _outerRadiusScale;
   if (self.layer.animationKeys) {
     CAAnimation *animation = [self.layer animationForKey:self.layer.animationKeys.firstObject];
     [CATransaction begin];
     [CATransaction setAnimationTimingFunction:animation.timingFunction];
     [CATransaction setAnimationDuration:animation.duration];
-    [_outerLayer setRadius:_outerRadius animated:YES];
+    [_outerLayer setRadius:scaledRadius animated:YES];
     [CATransaction commit];
   } else {
-    [_outerLayer setRadius:_outerRadius animated:NO];
+    [_outerLayer setRadius:scaledRadius animated:NO];
   }
 }
 
